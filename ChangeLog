@@ -4,6 +4,7 @@
         * fix small leak in efm when performing dnd onto mounted drive icon
         * fixed small leak in e_import_config_dialog_show during failure case
         * fixed small leak in e_import_dialog_show during failure case
+        * fixed small leak in illume2 policy config
 
 2013-01-22 Massimo Maiurana
 

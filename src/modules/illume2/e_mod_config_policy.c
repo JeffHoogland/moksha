@@ -73,7 +73,7 @@ _e_mod_illume_config_policy_ui(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Co
           {
              e_widget_ilist_append(ow, NULL, p->api->label, 
                                    _e_mod_illume_config_policy_list_changed, NULL, 
-                                   strdup(p->api->name));
+                                   p->api->name);
 
              if ((p) && (_e_illume_cfg->policy.name) && 
                  (!strcmp(_e_illume_cfg->policy.name, p->api->name))) 
