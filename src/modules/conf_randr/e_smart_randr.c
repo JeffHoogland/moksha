@@ -174,9 +174,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
      {
         Eina_List *outputs = NULL;
 
-        printf("Checking Crtc: %d\n", crtc->xid);
-        printf("\tGeom: %d %d %d %d\n", crtc->geometry.x, 
-               crtc->geometry.y, crtc->geometry.w, crtc->geometry.h);
+        /* printf("Checking Crtc: %d\n", crtc->xid); */
+        /* printf("\tGeom: %d %d %d %d\n", crtc->geometry.x,  */
+        /*        crtc->geometry.y, crtc->geometry.w, crtc->geometry.h); */
 
         EINA_LIST_FOREACH(crtc->outputs, ll, output)
           outputs = eina_list_append(outputs, output);
@@ -191,14 +191,15 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                {
                   if (!(eina_list_data_find(outputs, output) == output))
                     {
-                       E_Randr_Crtc_Info *pcrtc;
+                       E_Randr_Crtc_Info *pcrtc = NULL;
 
-                       pcrtc = eina_list_last_data_get(output->possible_crtcs);
+                       if (!(pcrtc = 
+                             eina_list_last_data_get(output->possible_crtcs)))
+                         continue;
+
                        if (!output->crtc) output->crtc = pcrtc;
                        if ((output->crtc) && 
                            (output->crtc != pcrtc)) continue;
-                       printf("\tAssigned Crtc %d To Output: %d\n", 
-                              pcrtc->xid, output->xid);
                        outputs = eina_list_append(outputs, output);
                     }
                }
@@ -229,7 +230,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                    * if we are in a cloned situation here, and what output 
                    * we are cloned to */
                   if ((!e_config->randr_serialized_setup) && 
-                      (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE))
+		      ((output->policy == ECORE_X_RANDR_OUTPUT_POLICY_CLONE) || 
+			  (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE)))
                     {
                        /* if we have a previous crtc, check if that is the 
                         * one we are cloned to */
@@ -237,9 +239,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                          {
                             /* we have a previous crtc. compare geometry */
                             if ((crtc->geometry.x == pcrtc->geometry.x) && 
-                                (crtc->geometry.y == pcrtc->geometry.y) && 
-                                (crtc->geometry.w == pcrtc->geometry.w) && 
-                                (crtc->geometry.h == pcrtc->geometry.h))
+                                (crtc->geometry.y == pcrtc->geometry.y))
                               {
                                  pmon = 
                                    _e_smart_randr_monitor_find(sd, pcrtc->xid);
@@ -250,7 +250,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                    * output is set to cloned, then see if we can create the 
                    * cloned representation */
                   else if ((e_config->randr_serialized_setup) && 
-                           (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_CLONE))
+                           ((output->policy == ECORE_X_RANDR_OUTPUT_POLICY_CLONE) || 
+			       (output->policy == ECORE_X_RANDR_OUTPUT_POLICY_NONE)))
                     {
                        /* if we have a previous crtc, check if that is the 
                         * one we are cloned to */
@@ -258,9 +259,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                          {
                             /* we have a previous crtc. compare geometry */
                             if ((crtc->geometry.x == pcrtc->geometry.x) && 
-                                (crtc->geometry.y == pcrtc->geometry.y) && 
-                                (crtc->geometry.w == pcrtc->geometry.w) && 
-                                (crtc->geometry.h == pcrtc->geometry.h))
+                                (crtc->geometry.y == pcrtc->geometry.y))
                               {
                                  pmon = 
                                    _e_smart_randr_monitor_find(sd, pcrtc->xid);
@@ -324,8 +323,11 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        e_layout_child_move(mon, cx, cy);
 
                        /* if we are cloned, then tell randr */
-                       if (pmon)
-                         e_smart_monitor_clone_add(pmon, mon);
+                       if (pmon) 
+                         {
+                            e_smart_monitor_cloned_set(mon, EINA_TRUE);
+                            e_smart_monitor_clone_add(pmon, mon);
+                         }
                     }
                }
           }
@@ -343,10 +345,10 @@ e_smart_randr_monitors_create(Evas_Object *obj)
         /* find a crtc that matches the geometry of this output's crtc */
         EINA_LIST_FOREACH(E_RANDR_12->crtcs, ll, crtc)
           {
+	     if (crtc->xid == output->crtc->xid) continue;
+
              if ((crtc->geometry.x == output->crtc->geometry.x) && 
-                 (crtc->geometry.y == output->crtc->geometry.y) && 
-                 (crtc->geometry.w == output->crtc->geometry.w) && 
-                 (crtc->geometry.h == output->crtc->geometry.h))
+                 (crtc->geometry.y == output->crtc->geometry.y))
                {
                   if ((pmon = _e_smart_randr_monitor_find(sd, crtc->xid)))
                     break;
@@ -367,6 +369,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              /* tell the monitor which output it references */
              e_smart_monitor_output_set(mon, output);
 
+	     /* tell the monitor which crtc it references */
+	     e_smart_monitor_crtc_set(mon, output->crtc);
+
              /* with the layout and output assigned, we can 
               * tell the monitor to setup
               * 
@@ -380,15 +385,20 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              cw = output->crtc->geometry.w;
              ch = output->crtc->geometry.h;
 
-             if ((cw == 0) || (ch == 0))
-               {
-                  cw = 640;
-                  ch = 480;
-               }
+	     if ((cw == 0) || (ch == 0))
+	       e_smart_monitor_current_geometry_get(mon, NULL, NULL, 
+						    &cw, &ch);
 
-             /* set geometry so that when we "unclone" this 
+	     /* set geometry so that when we "unclone" this 
               * one, it will unclone to the right */
-             if ((pmon) && (crtc)) cx += crtc->geometry.w;
+	     if (pmon)
+	       {
+		  E_Randr_Output_Info *poutput;
+
+		  /* get the output from this previous monitor */
+		  if ((poutput = e_smart_monitor_output_get(pmon)))
+		    cx += poutput->crtc->geometry.w;
+	       }
 
              /* resize this monitor to it's current size */
              e_layout_child_resize(mon, cw, ch);
@@ -397,8 +407,11 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              e_layout_child_move(mon, cx, cy);
 
              /* if we are cloned, then tell randr */
-             if (pmon)
-               e_smart_monitor_clone_add(pmon, mon);
+	     if (pmon) 
+	       {
+		  e_smart_monitor_cloned_set(mon, EINA_TRUE);
+		  e_smart_monitor_clone_add(pmon, mon);
+	       }
           }
      }
 }
@@ -675,6 +688,7 @@ _e_smart_randr_changed_set(Evas_Object *obj)
      {
         E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
 
+        /* determine if this monitor changed */
         changes = e_smart_monitor_changes_get(mon);
         if (changes > E_SMART_MONITOR_CHANGED_NONE)
           {
@@ -791,7 +805,7 @@ _e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_
    E_Smart_Data *sd;
    Eina_List *l = NULL;
    Evas_Object *mon;
-   Eina_Rectangle o;
+   Evas_Coord ox = 0, oy = 0;
 
    /* data is the randr object */
    if (!(o_randr = data)) return;
@@ -799,25 +813,22 @@ _e_smart_randr_monitor_cb_moving(void *data, Evas_Object *obj, void *event EINA_
    /* try to get the RandR objects smart data */
    if (!(sd = evas_object_smart_data_get(o_randr))) return;
 
-   /* NB FIXME: Hmmmm, this may need to use the geometry of the actual 
-    * frame object for comparison */
-
-   /* get the current geometry of the monitor we were passed in */
-   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+   /* get the current frame geometry of the monitor we were passed in */
+   e_smart_monitor_frame_geometry_get(obj, &ox, &oy, NULL, NULL);
 
    /* loop the list of monitors */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
      {
-        Eina_Rectangle m;
+        Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
 
         /* if this monitor is the one we want to skip, than skip it */
         if (mon == obj) continue;
 
-        /* get the current geometry of this monitor */
-        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+        /* get the geometry of the monitor frame */
+        e_smart_monitor_frame_geometry_get(mon, &fx, &fy, &fw, &fh);
 
         /* check if the moved monitor is inside an existing one */
-        if (E_INSIDE(o.x, o.y, m.x, m.y, m.w, m.h))
+        if (E_INSIDE(ox, oy, fx, fy, fw, fh))
           {
              /* turn on the drop zone so tell user they can drop here */
              e_smart_monitor_drop_zone_set(mon, EINA_TRUE);
@@ -841,7 +852,7 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_U
    E_Smart_Data *sd;
    Eina_List *l = NULL;
    Evas_Object *mon;
-   Eina_Rectangle o;
+   Evas_Coord ox = 0, oy = 0;
 
    /* data is the randr object */
    if (!(o_randr = data)) return;
@@ -849,22 +860,22 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_U
    /* try to get the RandR objects smart data */
    if (!(sd = evas_object_smart_data_get(o_randr))) return;
 
-   /* get the current geometry of the monitor we were passed in */
-   e_layout_child_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+   /* get the current frame geometry of the monitor we were passed in */
+   e_smart_monitor_frame_geometry_get(obj, &ox, &oy, NULL, NULL);
 
    /* loop the list of monitors */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
      {
-        Eina_Rectangle m;
+        Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
 
         /* if this monitor is the one we want to skip, than skip it */
         if (mon == obj) continue;
 
-        /* get the current geometry of this monitor */
-        e_layout_child_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+        /* get the geometry of the monitor frame */
+        e_smart_monitor_frame_geometry_get(mon, &fx, &fy, &fw, &fh);
 
         /* check if the moved monitor is inside an existing one */
-        if (E_INSIDE(o.x, o.y, m.x, m.y, m.w, m.h))
+        if (E_INSIDE(ox, oy, fx, fy, fw, fh))
           {
              /* clone this monitor into the obj monitor */
              e_smart_monitor_clone_add(mon, obj);

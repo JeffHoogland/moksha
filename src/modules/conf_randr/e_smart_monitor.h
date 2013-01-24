@@ -13,7 +13,8 @@ enum _E_Smart_Monitor_Changes
    E_SMART_MONITOR_CHANGED_ROTATION = (1 << 3),
    E_SMART_MONITOR_CHANGED_REFRESH = (1 << 4),
    E_SMART_MONITOR_CHANGED_RESOLUTION = (1 << 5),
-   E_SMART_MONITOR_CHANGED_ENABLED = (1 << 6)
+   E_SMART_MONITOR_CHANGED_ENABLED = (1 << 6),
+   E_SMART_MONITOR_CHANGED_CLONED = (1 << 7),
 };
 
 Evas_Object *e_smart_monitor_add(Evas *evas);
@@ -34,7 +35,9 @@ Eina_Bool e_smart_monitor_current_enabled_get(Evas_Object *obj);
 
 void e_smart_monitor_clone_add(Evas_Object *obj, Evas_Object *mon);
 void e_smart_monitor_clone_del(Evas_Object *obj, Evas_Object *mon);
+void e_smart_monitor_cloned_set(Evas_Object *obj, Eina_Bool cloned);
 void e_smart_monitor_drop_zone_set(Evas_Object *obj, Eina_Bool can_drop);
+void e_smart_monitor_frame_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 
 # endif
 #endif
