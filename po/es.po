@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2013-01-23 17:10+0400\n"
-"PO-Revision-Date: 2013-01-24 00:32+0100\n"
+"PO-Revision-Date: 2013-01-27 16:25+0100\n"
 "Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -3080,7 +3080,7 @@ msgstr "Estilo"
 
 #: src/bin/e_int_shelf_config.c:219
 msgid "Auto-hide the shelf"
-msgstr "Ocultar el panel automáticamente"
+msgstr "Ocultar panel automáticamente"
 
 #: src/bin/e_int_shelf_config.c:224
 msgid "Show on mouse in"
@@ -3825,7 +3825,7 @@ msgstr "Error al ocultar el panel"
 
 #: src/bin/e_shelf.c:892
 msgid "Shelf autohiding will not work properly<br>with the current configuration; set your shelf to<br>\"Below Everything\" or disable autohiding."
-msgstr "La ocultación del panel no funcionará correctamente con la configuración actual.<br> Asigne el panel a<br>\"Debajo de todo\" o deshabilite la ocultación."
+msgstr "La ocultación del panel no funcionará correctamente con la configuración actual.<br> Establezca el panel a<br>\"Debajo de todo\" o deshabilite la ocultación."
 
 #: src/bin/e_shelf.c:1122
 msgid "Add New Shelf"
@@ -3833,7 +3833,7 @@ msgstr "Agregar un nuevo panel"
 
 #: src/bin/e_shelf.c:1143
 msgid "Shelf Error"
-msgstr "Error del panel"
+msgstr "Error de panel"
 
 #: src/bin/e_shelf.c:1143
 msgid "A shelf with that name already exists!"
@@ -3842,12 +3842,12 @@ msgstr "Ya existe un panel con ese nombre!"
 #: src/bin/e_shelf.c:1657
 #: src/bin/e_shelf.c:2486
 msgid "Stop Moving Gadgets"
-msgstr "Detener herramientas en movimiento"
+msgstr "Parar de mover"
 
 #: src/bin/e_shelf.c:1659
 #: src/bin/e_shelf.c:2488
 msgid "Begin Moving Gadgets"
-msgstr "Iniciar herramientas en movimiento"
+msgstr "Mover"
 
 #: src/bin/e_shelf.c:1787
 msgid "Are you sure you want to delete this shelf?"
@@ -3855,7 +3855,7 @@ msgstr "¿Está seguro de que quiere borrar este panel?"
 
 #: src/bin/e_shelf.c:1789
 msgid "You requested to delete this shelf.<br><br>Are you sure you want to delete it?"
-msgstr "Eligió borrar este panel.<br><br>¿Está seguro de querer borrarlo?"
+msgstr "Eligió borrar este panel.<br><br>¿Está seguro de querer hacerlo?"
 
 #: src/bin/e_shelf.c:2343
 msgid "A shelf with that name and id already exists!"
@@ -4392,7 +4392,7 @@ msgstr "Mostrar alerta cuando la batería esté baja"
 
 #: src/modules/battery/e_mod_config.c:138
 msgid "Use desktop notifications for alert"
-msgstr "Usar las notificaciones de escritorio para las alertas."
+msgstr "Usar las notificaciones de escritorio para las alertas"
 
 #: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
@@ -4473,6 +4473,7 @@ msgid "udev"
 msgstr "udev"
 
 #: src/modules/battery/e_mod_config.c:302
+#, fuzzy
 msgid "Fuzzy Mode"
 msgstr "Modo difuso"
 
@@ -4555,6 +4556,7 @@ msgid "Date"
 msgstr "Fecha"
 
 #: src/modules/clock/e_mod_config.c:105
+#, fuzzy
 msgid "Full"
 msgstr "Lleno"
 
@@ -4586,7 +4588,7 @@ msgstr "Días"
 
 #: src/modules/clock/e_mod_main.c:865
 msgid "Toggle calendar"
-msgstr "ALternar calendario"
+msgstr "Alternar calendario"
 
 #: src/modules/comp/e_mod_comp.c:3655
 #: src/modules/comp/e_mod_comp.c:3677
@@ -4628,10 +4630,12 @@ msgid "Visible"
 msgstr "Visible"
 
 #: src/modules/comp/e_mod_config.c:270
+#, fuzzy
 msgid "Focus-Out"
 msgstr "Perder foco"
 
 #: src/modules/comp/e_mod_config.c:275
+#, fuzzy
 msgid "Focus-In"
 msgstr "Enfocar"
 
@@ -4818,7 +4822,7 @@ msgstr "Sincronizar ventanas"
 
 #: src/modules/comp/e_mod_config.c:1175
 msgid "Loose sync"
-msgstr "Perder sincronización"
+msgstr "Sincronización débil"
 
 #: src/modules/comp/e_mod_config.c:1177
 msgid "Grab Server during draw"
@@ -4857,10 +4861,12 @@ msgid "Tear-free updates (VSynced)"
 msgstr "Sincronización de pantalla (VSYNC)"
 
 #: src/modules/comp/e_mod_config.c:1201
+#, fuzzy
 msgid "Texture from pixmap"
 msgstr "Textura desde un mapa de píxeles"
 
 #: src/modules/comp/e_mod_config.c:1208
+#, fuzzy
 msgid "Assume swapping method:"
 msgstr "Assume swapping method:"
 
@@ -4891,11 +4897,11 @@ msgstr "Motor"
 
 #: src/modules/comp/e_mod_config.c:1233
 msgid "Send flush"
-msgstr "Send flush"
+msgstr "Vaciar caché automáticamente"
 
 #: src/modules/comp/e_mod_config.c:1235
 msgid "Send dump"
-msgstr "Send dump"
+msgstr "Vaciar memoria automáticamente"
 
 #: src/modules/comp/e_mod_config.c:1237
 #: src/modules/comp/e_mod_config.c:1518
@@ -5102,13 +5108,14 @@ msgstr "Iniciar servicios de GNOME al inicio"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:112
 msgid "Start KDE services on login"
-msgstr "niciar servicios de KDE al inicio"
+msgstr "Iniciar servicios de KDE al inicio"
 
 #: src/modules/conf_applications/e_mod_main.c:21
 msgid "Create Application Launcher"
 msgstr "Crear lanzador de aplicación"
 
 #: src/modules/conf_applications/e_mod_main.c:62
+#, fuzzy
 msgid "IBar Other"
 msgstr "IBar Other"
 
@@ -5127,7 +5134,7 @@ msgstr "Seleccionar un perfil"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:138
 msgid "Scratch"
-msgstr "Scratch"
+msgstr "Asistente"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:141
 msgid "Reset"
@@ -5245,7 +5252,7 @@ msgstr "Voltear cuando se arrastren objetos al borde de la pantalla"
 
 #: src/modules/conf_display/e_int_config_desks.c:194
 msgid "Wrap desktops around when flipping"
-msgstr "Envolver escritorios cuando se voltean"
+msgstr "Rotar de escritorio al llegar al final"
 
 #: src/modules/conf_display/e_int_config_desks.c:200
 #: src/modules/conf_display/e_int_config_desk.c:192
@@ -5270,7 +5277,7 @@ msgstr "Zoom"
 
 #: src/modules/conf_display/e_int_config_desks.c:223
 msgid "Animation speed"
-msgstr "Velocidad de las animaciones"
+msgstr "Duración de las animaciones"
 
 #: src/modules/conf_display/e_int_config_desks.c:226
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
@@ -5282,7 +5289,7 @@ msgstr "%1.1f s"
 
 #: src/modules/conf_display/e_int_config_desks.c:231
 msgid "Flip Animation"
-msgstr "Animación de cambio"
+msgstr "Animación"
 
 #: src/modules/conf_display/e_int_config_desk.c:54
 msgid "Desk Settings"
@@ -6485,7 +6492,7 @@ msgstr "¿Está seguro de que quiere borrar  \"%s\"?"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:391
 msgid "Confirm Shelf Deletion"
-msgstr "Confirmar borrado del panel"
+msgstr "Confirmar borrado de panel"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:103
 msgid "Wallpaper Settings"
@@ -7165,12 +7172,11 @@ msgstr "Preferencias del tema de las aplicaciones"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
 msgid "Match Enlightenment theme if possible"
-msgstr "Ajustar al tema si es posible"
+msgstr "Adaptarse al tema de Enlightenment, si es posible"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
-#, fuzzy
 msgid "Enable X Application Settings"
-msgstr "Preferencias del tema de las aplicaciones"
+msgstr "Habilitar tema de las aplicaciones X"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:501
 msgid "GTK Applications"
@@ -9167,7 +9173,7 @@ msgstr "Ignorar maximizadas"
 
 #: src/modules/physics/e_mod_config.c:143
 msgid "Ignore Shelves"
-msgstr "Ignorar cointenedores"
+msgstr "Ignorar paneles"
 
 #: src/modules/physics/e_mod_config.c:146
 msgid "Ignore"
@@ -9193,7 +9199,7 @@ msgstr "El módulo de físicas no se pudo iniciar"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
 msgid "Syscon Settings"
-msgstr "Opciones de Syscon"
+msgstr "Opciones del control del sistema"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
