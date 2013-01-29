@@ -1,3 +1,7 @@
+2013-01-29 Mike Blumenkrantz
+
+        * fixed bug where dragging files into sidebar would move them instead of creating links
+
 2013-01-23 Mike Blumenkrantz
 
         * module error dialog is no longer remembered across restarts
