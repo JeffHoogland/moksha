@@ -11092,7 +11092,7 @@ _e_fm2_live_process(Evas_Object *obj)
                                       _e_fm2_icon_label_set(ic, ic->obj);
                                    }
                               }
-                            else
+                            else if (!eina_str_has_extension(ic->info.file, ".part"))
                               {
                                  int realized;
 
