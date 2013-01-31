@@ -1,5 +1,6 @@
 2013-01-31 Mike Blumenkrantz
 
+        * fixed window autoraise triggering from pointer slide
         * 0.17.1 release
 
 2013-01-29 Mike Blumenkrantz

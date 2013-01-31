@@ -46,3 +46,4 @@ Fixes:
     * fixed possible NULL deref in desktop editor
     * fixed possible NULL deref in e_sys when debugging
     * fixed bug where dragging files into sidebar would move them instead of creating links
+    * fixed window autoraise triggering from pointer slide

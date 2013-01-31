@@ -10187,6 +10187,7 @@ cleanup:
    ecore_timer_del(warp_timer);
    warp_timer = NULL;
    e_border_focus_lock_set(EINA_FALSE);
+   e_focus_event_mouse_in(warp_timer_border);
    warp_timer_border = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
