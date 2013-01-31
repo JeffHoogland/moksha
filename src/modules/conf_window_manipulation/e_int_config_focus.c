@@ -341,7 +341,7 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
     * make sense to have one but not the other.
     */
 
-   ob = e_widget_check_add(evas, _("Slide pointer to a new focused window"), 
+   ob = e_widget_check_add(evas, _("Slide pointer to a new window which is focused"), 
                            &(cfdata->pointer_slide));
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
