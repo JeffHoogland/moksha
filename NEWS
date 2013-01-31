@@ -2,8 +2,12 @@ Changes since 0.17.1:
 ---------------------
 
 Additions:
+    * e_config_xkb functions
 
 Deprecations:
+
+Changes:
+    * e_xkb_layout API now deals directly with E_Config_XKB_Layout structs
 
 Removed:
 
@@ -13,6 +17,7 @@ Fixes:
     * fixed window autoraise triggering from pointer slide
     * fixed opening of links in filemanager in some cases
     * filemanager now ignores changes to .part files
+    * fixed bugs where keyboard layouts could not be applied or selected
 
 
 Changes since 0.17.0:

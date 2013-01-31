@@ -2872,8 +2872,13 @@ ACT_FN_GO(backlight_adjust, )
 
 ACT_FN_GO(kbd_layout, )
 {
+   unsigned int x;
+
    if (!params) return;
-   e_xkb_layout_set(params);
+   errno = 0;
+   x = strtoul(params, NULL, 10);
+   if (errno || (x > eina_list_count(e_config->xkb.used_layouts) - 1)) return;
+   e_xkb_layout_set(eina_list_nth(e_config->xkb.used_layouts, x));
 }
 
 ACT_FN_GO(kbd_layout_next, __UNUSED__)

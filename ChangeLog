@@ -1,5 +1,6 @@
 2013-01-31 Mike Blumenkrantz
 
+        * fixed a number of bugs where keyboard layouts could not be applied or selected
         * filemanager now ignores changes to .part files
         * fixed opening of links in filemanager in some cases
         * fixed window autoraise triggering from pointer slide

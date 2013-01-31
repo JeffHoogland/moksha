@@ -224,8 +224,8 @@ e_desklock_show(Eina_Bool suspend)
         if (e_config->desklock_language)
           e_intl_language_set(e_config->desklock_language);
 
-        if (e_config->xkb.desklock_layout)
-          e_xkb_layout_set(e_config->xkb.desklock_layout);
+        if (e_config->xkb.lock_layout)
+          e_xkb_layout_set(e_config->xkb.lock_layout);
         _e_custom_desklock_exe =
           ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
         _e_desklock_state = EINA_TRUE;
@@ -310,8 +310,8 @@ works:
    if (e_config->desklock_language)
      e_intl_language_set(e_config->desklock_language);
 
-   if (e_config->xkb.desklock_layout)
-     e_xkb_layout_set(e_config->xkb.desklock_layout);
+   if (e_config->xkb.lock_layout)
+     e_xkb_layout_set(e_config->xkb.lock_layout);
 
    total_zone_num = _e_desklock_zone_num_get();
    EINA_LIST_FOREACH(managers, l, man)
@@ -382,10 +382,10 @@ e_desklock_hide(void)
    if (e_config->desklock_language)
      e_intl_language_set(e_config->language);
 
-   if (e_config->xkb.cur_layout == e_config->xkb.desklock_layout)
+   if (e_config_xkb_layout_eq(e_config->xkb.current_layout, e_config->xkb.lock_layout))
      {
-        if (e_config->xkb.selected_layout)
-          e_xkb_layout_set(e_config->xkb.selected_layout);
+        if (e_config->xkb.sel_layout)
+          e_xkb_layout_set(e_config->xkb.sel_layout);
      }
 
    _e_desklock_state = EINA_FALSE;

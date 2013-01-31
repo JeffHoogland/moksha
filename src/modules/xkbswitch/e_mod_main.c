@@ -29,7 +29,7 @@ typedef struct _Instance
 
    Evas_Object     *o_xkbswitch;
    Evas_Object     *o_xkbflag;
-   Eina_Stringshare *cur_layout;
+   E_Config_XKB_Layout *layout;
 
    E_Menu          *lmenu;
 } Instance;
@@ -117,52 +117,54 @@ _xkb_update_icon(int cur_group)
 {
    Instance *inst;
    Eina_List *l;
-   E_Config_XKB_Layout *layout;
-   const char *name = NULL;
+   E_Config_XKB_Layout *cl;
 
    EINA_SAFETY_ON_NULL_RETURN(e_config->xkb.used_layouts);
    //INF("ui: %d", cur_group);
-   layout = eina_list_nth(e_config->xkb.used_layouts, cur_group);
-   if (layout) name = layout->name;
-   EINA_SAFETY_ON_NULL_RETURN(name);
-   if (strchr(name, '/')) name = strchr(name, '/') + 1;
-   if (e_config->xkb.cur_layout != name)
-     eina_stringshare_replace(&e_config->xkb.cur_layout, name);
+   cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
+   EINA_SAFETY_ON_NULL_RETURN(cl);
+   if (!e_config_xkb_layout_eq(cl, e_config->xkb.current_layout))
+     {
+        e_config_xkb_layout_free(e_config->xkb.current_layout);
+        e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
+     }
 
    if (e_config->xkb.only_label)
      {
         EINA_LIST_FOREACH(instances, l, inst)
           {
-             if (e_config->xkb.cur_layout == inst->cur_layout) continue;
-             eina_stringshare_replace(&inst->cur_layout, e_config->xkb.cur_layout);
-             if (inst->o_xkbflag)
+             if (!e_config_xkb_layout_eq(e_config->xkb.current_layout, inst->layout))
                {
-                  evas_object_del(inst->o_xkbflag);
-                  inst->o_xkbflag = NULL;
+                  e_config_xkb_layout_free(inst->layout);
+                  inst->layout = e_config->xkb.current_layout;
                }
+             E_FN_DEL(evas_object_del, inst->o_xkbflag);
              e_theme_edje_object_set(inst->o_xkbswitch,
                                      "base/theme/modules/xkbswitch",
                                      "e/modules/xkbswitch/noflag");
              edje_object_part_text_set(inst->o_xkbswitch,
-                                       "e.text.label", name);
+                                       "e.text.label", cl->name);
           }
      }
    else
      {
         EINA_LIST_FOREACH(instances, l, inst)
           {
-             if (e_config->xkb.cur_layout == inst->cur_layout) continue;
-             eina_stringshare_replace(&inst->cur_layout, e_config->xkb.cur_layout);
+             if (!e_config_xkb_layout_eq(e_config->xkb.current_layout, inst->layout))
+               {
+                  e_config_xkb_layout_free(inst->layout);
+                  inst->layout = e_config->xkb.current_layout;
+               }
              if (!inst->o_xkbflag)
                inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
              e_theme_edje_object_set(inst->o_xkbswitch,
                                      "base/theme/modules/xkbswitch",
                                      "e/modules/xkbswitch/main");
-             e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
+             e_xkb_e_icon_flag_setup(inst->o_xkbflag, cl->name);
              edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                       inst->o_xkbflag);
              edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
-                                       e_xkb_layout_name_reduce(name));
+                                       e_xkb_layout_name_reduce(cl->name));
           }
      }
 }
@@ -173,19 +175,12 @@ static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
 {
    Instance *inst;
-   const char *name;
-
-   name = e_config->xkb.cur_layout;
-   if (!name) name = e_config->xkb.selected_layout;
-   if ((!name) && e_config->xkb.used_layouts)
-     name = ((E_Config_XKB_Layout *)
-             eina_list_data_get(e_config->xkb.used_layouts))->name;
 
    /* The instance */
    inst = E_NEW(Instance, 1);
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
-   inst->cur_layout = eina_stringshare_ref(name);
+   inst->layout = e_xkb_layout_get();
    if (e_config->xkb.only_label)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
@@ -195,7 +190,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
                              "base/theme/modules/xkbswitch",
                              "e/modules/xkbswitch/main");
    edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
-                             e_xkb_layout_name_reduce(name));
+                             e_xkb_layout_name_reduce(inst->layout->name));
    /* The gadcon client */
    inst->gcc = e_gadcon_client_new(gc, gcname, id, style, inst->o_xkbswitch);
    inst->gcc->data = inst;
@@ -203,7 +198,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (!e_config->xkb.only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
-        e_xkb_e_icon_flag_setup(inst->o_xkbflag, name);
+        e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
         /* The icon is part of the gadget. */
         edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                  inst->o_xkbflag);
@@ -241,7 +236,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
         evas_object_del(inst->o_xkbswitch);
         evas_object_del(inst->o_xkbflag);
      }
-   eina_stringshare_del(inst->cur_layout);
    E_FREE(inst);
 }
 
@@ -357,8 +351,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
         if (inst->lmenu)
           {
-             E_Config_XKB_Layout *cl;
-             const char *cur;
+             E_Config_XKB_Layout *cl, *cur;
              E_Menu_Item *mi;
              Eina_List *l;
              int dir;
@@ -383,7 +376,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
                   e_menu_item_radio_set(mi, 1);
                   e_menu_item_radio_group_set(mi, 1);
-                  if (cur == name)
+                  if (e_config_xkb_layout_eq(cur, cl))
                     e_menu_item_toggle_set(mi, 1);
                   e_xkb_flag_file_get(buf, sizeof(buf), name);
                   e_menu_item_icon_file_set(mi, buf);
@@ -493,19 +486,19 @@ static void
 _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Eina_List *l;
-   void *ndata;
    int cur_group = -1, grp = -1;
-   E_Config_XKB_Layout *cl = data;
+   E_Config_XKB_Layout *cl2, *cl = data;
 
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, ndata)
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
      {
         grp++;
-        if (ndata == data) cur_group = grp;
+        if (cl2 == cl) cur_group = grp;
      }
    if (cur_group == -1) return;
-   if (cl->name == e_xkb_layout_get()) return;
-   e_xkb_layout_set(cl->name);
-   eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
+   if (e_config_xkb_layout_eq(cl, e_xkb_layout_get())) return;
+   e_xkb_layout_set(cl);
+   e_config_xkb_layout_free(e_config->xkb.sel_layout);
+   e_config->xkb.sel_layout = e_config_xkb_layout_dup(cl);
    _xkb_update_icon(cur_group);
 }
 

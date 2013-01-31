@@ -952,6 +952,10 @@ e_config_init(void)
    E_CONFIG_LIST(D, T, xkb.used_options, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
+
+   E_CONFIG_SUB(D, T, xkb.current_layout, _e_config_xkb_option_edd);
+   E_CONFIG_SUB(D, T, xkb.sel_layout, _e_config_xkb_option_edd);
+   E_CONFIG_SUB(D, T, xkb.lock_layout, _e_config_xkb_option_edd);
    E_CONFIG_VAL(D, T, xkb.selected_layout, STR);
    E_CONFIG_VAL(D, T, xkb.cur_layout, STR);
    E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);
@@ -1003,7 +1007,6 @@ e_config_shutdown(void)
 EAPI void
 e_config_load(void)
 {
-   E_Config *tcfg = NULL;
    int reload = 0;
 
    e_config = e_config_domain_load("e", _e_config_edd);
@@ -1059,27 +1062,27 @@ e_config_load(void)
      }
    if (e_config->config_version < E_CONFIG_FILE_VERSION)
      {
-        /* we need an upgrade of some sort */
-        tcfg = e_config_domain_system_load("e", _e_config_edd);
-        if (!tcfg)
+        if (e_config->config_version - (E_CONFIG_FILE_EPOCH * 1000000) == 4)
           {
-             const char *pprofile;
+             E_Config_XKB_Layout *cl;
+             Eina_List *l;
 
-             pprofile = e_config_profile_get();
-             if (pprofile) pprofile = eina_stringshare_add(pprofile);
-             e_config_profile_set("standard");
-             tcfg = e_config_domain_system_load("e", _e_config_edd);
-             e_config_profile_set(pprofile);
-             if (pprofile) eina_stringshare_del(pprofile);
-          }
-        /* can't find your profile or standard or default - try default after
-         * a wipe */
-        if (!tcfg)
-          {
-             e_config_profile_set("default");
-             e_config_profile_del(e_config_profile_get());
-             e_config_save_block_set(1);
-             e_sys_action_do(E_SYS_RESTART, NULL);
+            if (e_config->xkb.cur_layout || e_config->xkb.selected_layout || e_config->xkb.desklock_layout)
+              {
+                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+                   {
+                      if (cl->name == e_config->xkb.cur_layout)
+                        e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
+                      if (cl->name == e_config->xkb.selected_layout)
+                        e_config->xkb.sel_layout = e_config_xkb_layout_dup(cl);
+                      if (cl->name == e_config->xkb.desklock_layout)
+                        e_config->xkb.lock_layout = e_config_xkb_layout_dup(cl);
+                      if (((!!e_config->xkb.current_layout) == (!!e_config->xkb.cur_layout)) &&
+                          ((!!e_config->xkb.sel_layout) == (!!e_config->xkb.selected_layout)) &&
+                          ((!!e_config->xkb.lock_layout) == (!!e_config->xkb.desklock_layout)))
+                        break;
+                   }
+              }
           }
      }
 
@@ -1828,7 +1831,6 @@ _e_config_free(E_Config *ecf)
    E_Path_Dir *epd;
    E_Remember *rem;
    E_Config_Env_Var *evr;
-   E_Config_XKB_Layout *cl;
    E_Config_XKB_Option *op;
    E_Config_Desktop_Window_Profile *wp;
 
@@ -1842,14 +1844,7 @@ _e_config_free(E_Config *ecf)
 
    eina_stringshare_del(ecf->xkb.default_model);
 
-   EINA_LIST_FREE(ecf->xkb.used_layouts, cl)
-     {
-        eina_stringshare_del(cl->name);
-        eina_stringshare_del(cl->model);
-        eina_stringshare_del(cl->variant);
-        E_FREE(cl);
-     }
-
+   E_FREE_LIST(ecf->xkb.used_layouts, e_config_xkb_layout_free);
    EINA_LIST_FREE(ecf->xkb.used_options, op)
      {
         eina_stringshare_del(op->name);
@@ -1986,6 +1981,9 @@ _e_config_free(E_Config *ecf)
    eina_stringshare_del(ecf->xkb.selected_layout);
    eina_stringshare_del(ecf->xkb.cur_layout);
    eina_stringshare_del(ecf->xkb.desklock_layout);
+   e_config_xkb_layout_free(ecf->xkb.current_layout);
+   e_config_xkb_layout_free(ecf->xkb.sel_layout);
+   e_config_xkb_layout_free(ecf->xkb.lock_layout);
    if (ecf->transition_start) eina_stringshare_del(ecf->transition_start);
    if (ecf->transition_desk) eina_stringshare_del(ecf->transition_desk);
    if (ecf->transition_change) eina_stringshare_del(ecf->transition_change);

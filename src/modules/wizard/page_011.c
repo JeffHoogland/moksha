@@ -113,7 +113,7 @@ implement_layout(void)
         e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, nl);
         e_xkb_update(-1);
      }
-   e_xkb_layout_set(layout);
+   e_xkb_layout_set(nl);
 }
 
 EAPI int

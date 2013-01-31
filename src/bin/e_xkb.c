@@ -9,7 +9,21 @@ EAPI int E_EVENT_XKB_CHANGED = 0;
 static Eina_Bool
 _e_xkb_init_timer(void *data)
 {
-   e_xkb_layout_set(data);
+   Eina_List *l;
+   E_Config_XKB_Layout *cl2, *cl = data;
+   int cur_group = -1;
+
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
+     {
+        cur_group++;
+        if (!cl->name) continue;
+        if (e_config_xkb_layout_eq(cl, cl2))
+          {
+             INF("Setting keyboard layout: %s|%s|%s", cl->name, cl->model, cl->variant);
+             e_xkb_update(cur_group);
+             break;
+          }
+     }
    return EINA_FALSE;
 }
 
@@ -20,16 +34,11 @@ e_xkb_init(void)
    E_EVENT_XKB_CHANGED = ecore_event_type_new();
    e_xkb_update(-1);
    if (e_config->xkb.cur_layout)
-     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.cur_layout);
+     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
    else if (e_config->xkb.selected_layout)
-     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.selected_layout);
+     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.sel_layout);
    else if (e_config->xkb.used_layouts)
-     {
-        E_Config_XKB_Layout *cl;
-
-        cl = eina_list_data_get(e_config->xkb.used_layouts);
-        ecore_timer_add(1.5, _e_xkb_init_timer, cl->name);
-     }
+      ecore_timer_add(1.5, _e_xkb_init_timer, eina_list_data_get(e_config->xkb.used_layouts));
    return 1;
 }
 
@@ -133,7 +142,7 @@ e_xkb_update(int cur_group)
                }
           }
      }
-   fprintf(stderr, "SET XKB RUN: %s\n", eina_strbuf_string_get(buf));
+   INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
    ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
@@ -152,7 +161,7 @@ e_xkb_layout_next(void)
    cl = eina_list_data_get(l);
    eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
    eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
-   INF("Setting keyboard layout: %s", cl->name);
+   INF("Setting keyboard layout: %s|%s|%s", cl->name, cl->model, cl->variant);
    e_xkb_update(e_config->xkb.cur_group);
    _e_xkb_update_event(e_config->xkb.cur_group);
    e_config_save_queue();
@@ -173,7 +182,7 @@ e_xkb_layout_prev(void)
    cl = eina_list_data_get(l);
    eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
    eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
-   INF("Setting keyboard layout: %s", cl->name);
+   INF("Setting keyboard layout: %s|%s|%s", cl->name, cl->model, cl->variant);
    e_xkb_update(e_config->xkb.cur_group);
    _e_xkb_update_event(e_config->xkb.cur_group);
    e_config_save_queue();
@@ -182,35 +191,35 @@ e_xkb_layout_prev(void)
 /* always use this function to get the current layout's name
  * to ensure the most accurate results!!!
  */
-EAPI const char *
+EAPI E_Config_XKB_Layout *
 e_xkb_layout_get(void)
 {
-   E_Config_XKB_Layout *cl;
    unsigned int n = 0;
 
-   if (e_config->xkb.cur_layout) return e_config->xkb.cur_layout;
+   if (e_config->xkb.current_layout) return e_config->xkb.current_layout;
    if (_e_xkb_cur_group >= 0)
      n = _e_xkb_cur_group;
-   cl = eina_list_nth(e_config->xkb.used_layouts, n);
-   return cl ? cl->name : NULL;
+   return eina_list_nth(e_config->xkb.used_layouts, n);
 }
 
 EAPI void
-e_xkb_layout_set(const char *name)
+e_xkb_layout_set(const E_Config_XKB_Layout *cl)
 {
    Eina_List *l;
-   E_Config_XKB_Layout *cl;
+   E_Config_XKB_Layout *cl2;
    int cur_group = -1;
 
-   if (!name) return;
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+   EINA_SAFETY_ON_NULL_RETURN(cl);
+   if (e_config_xkb_layout_eq(e_config->xkb.current_layout, cl)) return;
+   e_config_xkb_layout_free(e_config->xkb.current_layout);
+   e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
      {
         cur_group++;
         if (!cl->name) continue;
-        if ((cl->name == name) || (!strcmp(cl->name, name)))
+        if (e_config_xkb_layout_eq(cl, cl2))
           {
-             eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
-             INF("Setting keyboard layout: %s", name);
+             INF("Setting keyboard layout: %s|%s|%s", cl->name, cl->model, cl->variant);
              e_xkb_update(cur_group);
              break;
           }
@@ -221,8 +230,13 @@ e_xkb_layout_set(const char *name)
 EAPI const char *
 e_xkb_layout_name_reduce(const char *name)
 {
-   if ((name) && (strchr(name, '/'))) name = strchr(name, '/') + 1;
-   return name;
+   const char *s;
+
+   if (!name) return NULL;
+   s = strchr(name, '/');
+   if (s) s++;
+   else s = name;
+   return s;
 }
 
 EAPI void
@@ -246,6 +260,38 @@ e_xkb_flag_file_get(char *buf, size_t bufsize, const char *name)
    if (!ecore_file_exists(buf))
      snprintf(buf, bufsize, "%s/data/flags/unknown_flag.png",
               e_prefix_data_get());
+}
+
+EAPI Eina_Bool
+e_config_xkb_layout_eq(const E_Config_XKB_Layout *a, const E_Config_XKB_Layout *b)
+{
+   if (a == b) return EINA_TRUE;
+   if ((!a) || (!b)) return EINA_FALSE;
+   return ((a->name == b->name) && (a->model == b->model) && (a->variant == b->variant));
+}
+
+EAPI void
+e_config_xkb_layout_free(E_Config_XKB_Layout *cl)
+{
+   if (!cl) return;
+
+   eina_stringshare_del(cl->name);
+   eina_stringshare_del(cl->model);
+   eina_stringshare_del(cl->variant);
+   free(cl);
+}
+
+EAPI E_Config_XKB_Layout *
+e_config_xkb_layout_dup(const E_Config_XKB_Layout *cl)
+{
+   E_Config_XKB_Layout *cl2;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(cl, NULL);
+   cl2 = E_NEW(E_Config_XKB_Layout, 1);
+   cl2->name = eina_stringshare_ref(cl->name);
+   cl2->model = eina_stringshare_ref(cl->model);
+   cl2->variant = eina_stringshare_ref(cl->variant);
+   return cl2;
 }
 
 static void
