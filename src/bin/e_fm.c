@@ -5726,7 +5726,7 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
    if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
      return -1;
 
-   e_fm2_path_set(ic->sd->obj, ic->sd->dev, buf);
+   e_fm2_path_set(ic->sd->obj, ic->info.link ? "/" : ic->sd->dev, buf);
    return 1;
 }
 
