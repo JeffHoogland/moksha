@@ -350,8 +350,7 @@ static DBusMessage *
 _e_msgbus_profile_list_cb(E_DBus_Object *obj __UNUSED__,
                           DBusMessage   *msg)
 {
-   Eina_List *l;
-   const char *name;
+   char *name;
    DBusMessage *reply;
    DBusMessageIter iter;
    DBusMessageIter arr;
@@ -360,9 +359,10 @@ _e_msgbus_profile_list_cb(E_DBus_Object *obj __UNUSED__,
    dbus_message_iter_init_append(reply, &iter);
    dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
 
-   EINA_LIST_FOREACH(e_config_profile_list(), l, name)
+   EINA_LIST_FREE(e_config_profile_list(), name)
      {
         dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &name);
+        free(name);
      }
    dbus_message_iter_close_container(&iter, &arr);
 
