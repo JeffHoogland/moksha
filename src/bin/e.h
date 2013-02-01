@@ -248,7 +248,7 @@ typedef struct _E_Rect         E_Rect;
        }                                                          \
   }
 
-#ifndef eina_list_last_data_get
+#if (EINA_VERSION_MAJOR == 1) && (EINA_VERSION_MINOR < 8)
 # define eina_list_last_data_get(X) eina_list_data_get(eina_list_last(X))
 #endif
 
