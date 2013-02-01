@@ -18,6 +18,7 @@ Fixes:
     * fixed opening of links in filemanager in some cases
     * filemanager now ignores changes to .part files
     * fixed bugs where keyboard layouts could not be applied or selected
+    * fixed leak in profile list dbus method
 
 
 Changes since 0.17.0:
@@ -68,4 +69,3 @@ Fixes:
     * fixed possible NULL deref in desktop editor
     * fixed possible NULL deref in e_sys when debugging
     * fixed bug where dragging files into sidebar would move them instead of creating links
-    * fixed leak in profile list dbus method
