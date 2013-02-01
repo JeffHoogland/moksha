@@ -1062,7 +1062,7 @@ e_config_load(void)
      }
    if (e_config->config_version < E_CONFIG_FILE_VERSION)
      {
-        if (e_config->config_version - (E_CONFIG_FILE_EPOCH * 1000000) == 4)
+        if (e_config->config_version - (E_CONFIG_FILE_EPOCH * 1000000) < 5)
           {
              E_Config_XKB_Layout *cl;
              Eina_List *l;
