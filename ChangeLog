@@ -1,6 +1,7 @@
 2013-02-01 Mike Blumenkrantz
 
         * fixed leak in profile list dbus method
+        * fixed behavior of Up/Down keys in filemanager when typebuf was visible
 
 2013-01-31 Mike Blumenkrantz
 

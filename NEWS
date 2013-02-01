@@ -19,6 +19,7 @@ Fixes:
     * filemanager now ignores changes to .part files
     * fixed bugs where keyboard layouts could not be applied or selected
     * fixed leak in profile list dbus method
+    * fixed behavior of Up/Down keys in filemanager when typebuf was visible
 
 
 Changes since 0.17.0:

@@ -7718,24 +7718,14 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
      }
    else if (!strcmp(ev->key, "Up"))
      {
-        if (sd->typebuf_visible)
-          /* FIXME: icon mode, typebuf extras */
-          /* is there a way to use this atm? */
-          // _e_fm2_typebuf_history_prev(obj);
-          _e_fm2_typebuf_match(obj, -1);
-        else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
+        if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
           _e_fm2_icon_sel_prev(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
         else
           _e_fm2_icon_sel_up(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
      }
    else if (!strcmp(ev->key, "Down"))
      {
-        if (sd->typebuf_visible)
-          /* FIXME: icon mode, typebuf extras */
-          /* is there a way to use this? */
-          //_e_fm2_typebuf_history_next(obj);
-          _e_fm2_typebuf_match(obj, 1);
-        else if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
+        if (_e_fm2_view_mode_get(sd) == E_FM2_VIEW_MODE_LIST)
           _e_fm2_icon_sel_next(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
         else
           _e_fm2_icon_sel_down(obj, evas_key_modifier_is_set(ev->modifiers, "Shift"));
