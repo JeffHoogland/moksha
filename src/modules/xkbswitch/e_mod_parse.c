@@ -88,7 +88,7 @@ parse_rules(void)
              if (n) *n = '\0';
 
              /* means end of section */
-             if (!buf[0]) break;
+             if (eina_strlen_bounded(buf, 3) < 2) break;
              /* get rid of initial 2 spaces here */
              p = buf + 2;
              tmp = strdup(p);
@@ -125,7 +125,7 @@ parse_rules(void)
              n = strchr(buf, '\n');
              if (n) *n = '\0';
 
-             if (!buf[0]) break;
+             if (eina_strlen_bounded(buf, 3) < 2) break;
 
              p = buf + 2;
              tmp = strdup(p);
@@ -167,7 +167,7 @@ parse_rules(void)
              n = strchr(buf, '\n');
              if (n) *n = '\0';
 
-             if (!buf[0]) break;
+             if (eina_strlen_bounded(buf, 3) < 2) break;
 
              p = buf + 2;
              tmp = strdup(p);
@@ -210,7 +210,7 @@ parse_rules(void)
              n = strchr(buf, '\n');
              if (n) *n = '\0';
 
-             if (!buf[0]) break;
+             if (eina_strlen_bounded(buf, 3) < 2) break;
 
              p = buf + 2;
              tmp = strdup(p);

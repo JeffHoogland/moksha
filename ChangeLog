@@ -1,3 +1,8 @@
+2013-02-04 Mike Blumenkrantz
+
+        * fix possible crash in xkb rule parsing
+        * fix list update on deletion of personal app launchers
+
 2013-02-01 Mike Blumenkrantz
 
         * fixed leak in profile list dbus method

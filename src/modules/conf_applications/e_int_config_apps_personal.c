@@ -199,14 +199,18 @@ _btn_cb_del(void *data, void *data2 __UNUSED__)
    E_Config_Dialog_Data *cfdata = data;
    const Eina_List *l;
    const E_Ilist_Item *it;
+   int x = -1;
 
    EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->obj.list), l, it)
      {
         const char *file;
 
+        x++;
         if (!it->selected) continue;
         file = e_widget_ilist_item_data_get(it);
-        if (file) ecore_file_unlink(file);
+        if (!file) break;
+        ecore_file_unlink(file);
+        e_widget_ilist_remove_num(cfdata->obj.list, x);
      }
 }
 
