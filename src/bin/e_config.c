@@ -107,80 +107,9 @@ _e_config_profile_name_get(Eet_File *ef)
    return s;
 }
 
-/* externally accessible functions */
-EINTERN int
-e_config_init(void)
+static void
+_e_config_edd_init(Eina_Bool old)
 {
-   E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
-   E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
-   E_EVENT_CONFIG_LOADED = ecore_event_type_new();
-
-   /* if environment var set - use this profile name */
-   _e_config_profile = eina_stringshare_add(getenv("E_CONF_PROFILE"));
-
-   if (!_e_config_profile)
-     {
-        Eet_File *ef;
-        char buf[PATH_MAX];
-
-        /* try user profile config */
-        e_user_dir_concat_static(buf, "config/profile.cfg");
-        ef = eet_open(buf, EET_FILE_MODE_READ);
-        if (ef)
-          {
-             _e_config_profile = _e_config_profile_name_get(ef);
-             eet_close(ef);
-             ef = NULL;
-          }
-        if (!_e_config_profile)
-          {
-             int i;
-
-             for (i = 1; i <= _e_config_revisions; i++)
-               {
-                  e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
-                  ef = eet_open(buf, EET_FILE_MODE_READ);
-                  if (ef)
-                    {
-                       _e_config_profile = _e_config_profile_name_get(ef);
-                       eet_close(ef);
-                       ef = NULL;
-                       if (_e_config_profile) break;
-                    }
-               }
-             if (!_e_config_profile)
-               {
-                  /* use system if no user profile config */
-                  e_prefix_data_concat_static(buf, "data/config/profile.cfg");
-                  ef = eet_open(buf, EET_FILE_MODE_READ);
-               }
-          }
-        if (ef)
-          {
-             _e_config_profile = _e_config_profile_name_get(ef);
-             eet_close(ef);
-             ef = NULL;
-          }
-        if (!_e_config_profile)
-          {
-             /* no profile config - try other means */
-             char *lnk = NULL;
-
-             /* check symlink - if default is a symlink to another dir */
-             e_prefix_data_concat_static(buf, "data/config/default");
-             lnk = ecore_file_readlink(buf);
-             /* if so use just the filename as the profile - must be a local link */
-             if (lnk)
-               {
-                  _e_config_profile = eina_stringshare_add(ecore_file_file_get(lnk));
-                  free(lnk);
-               }
-             else
-               _e_config_profile = eina_stringshare_add("default");
-          }
-        if (!getenv("E_CONF_PROFILE"))
-          e_util_env_set("E_CONF_PROFILE", _e_config_profile);
-     }
 
    _e_config_gadcon_client_edd = E_CONFIG_DD_NEW("E_Config_Gadcon_Client", E_Config_Gadcon_Client);
 #undef T
@@ -953,9 +882,18 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, xkb.only_label, INT);
    E_CONFIG_VAL(D, T, xkb.default_model, STR);
 
-   E_CONFIG_SUB(D, T, xkb.current_layout, _e_config_xkb_option_edd);
-   E_CONFIG_SUB(D, T, xkb.sel_layout, _e_config_xkb_option_edd);
-   E_CONFIG_SUB(D, T, xkb.lock_layout, _e_config_xkb_option_edd);
+   if (old)
+     {
+        E_CONFIG_SUB(D, T, xkb.current_layout, _e_config_xkb_option_edd);
+        E_CONFIG_SUB(D, T, xkb.sel_layout, _e_config_xkb_option_edd);
+        E_CONFIG_SUB(D, T, xkb.lock_layout, _e_config_xkb_option_edd);
+     }
+   else
+     {
+        E_CONFIG_SUB(D, T, xkb.current_layout, _e_config_xkb_layout_edd);
+        E_CONFIG_SUB(D, T, xkb.sel_layout, _e_config_xkb_layout_edd);
+        E_CONFIG_SUB(D, T, xkb.lock_layout, _e_config_xkb_layout_edd);
+     }
    E_CONFIG_VAL(D, T, xkb.selected_layout, STR);
    E_CONFIG_VAL(D, T, xkb.cur_layout, STR);
    E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);
@@ -964,16 +902,11 @@ e_config_init(void)
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
 
    E_CONFIG_VAL(D, T, use_desktop_window_profile, INT);
-   e_config_load();
-
-   e_config_save_queue();
-   return 1;
 }
 
-EINTERN int
-e_config_shutdown(void)
+static void
+_e_config_edd_shutdown(void)
 {
-   eina_stringshare_del(_e_config_profile);
    E_CONFIG_DD_FREE(_e_config_edd);
    E_CONFIG_DD_FREE(_e_config_module_edd);
    E_CONFIG_DD_FREE(_e_config_font_default_edd);
@@ -1001,6 +934,95 @@ e_config_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_xkb_layout_edd);
    E_CONFIG_DD_FREE(_e_config_xkb_option_edd);
    //E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
+}
+
+/* externally accessible functions */
+EINTERN int
+e_config_init(void)
+{
+   E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
+   E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
+   E_EVENT_CONFIG_LOADED = ecore_event_type_new();
+
+   /* if environment var set - use this profile name */
+   _e_config_profile = eina_stringshare_add(getenv("E_CONF_PROFILE"));
+
+   if (!_e_config_profile)
+     {
+        Eet_File *ef;
+        char buf[PATH_MAX];
+
+        /* try user profile config */
+        e_user_dir_concat_static(buf, "config/profile.cfg");
+        ef = eet_open(buf, EET_FILE_MODE_READ);
+        if (ef)
+          {
+             _e_config_profile = _e_config_profile_name_get(ef);
+             eet_close(ef);
+             ef = NULL;
+          }
+        if (!_e_config_profile)
+          {
+             int i;
+
+             for (i = 1; i <= _e_config_revisions; i++)
+               {
+                  e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
+                  ef = eet_open(buf, EET_FILE_MODE_READ);
+                  if (ef)
+                    {
+                       _e_config_profile = _e_config_profile_name_get(ef);
+                       eet_close(ef);
+                       ef = NULL;
+                       if (_e_config_profile) break;
+                    }
+               }
+             if (!_e_config_profile)
+               {
+                  /* use system if no user profile config */
+                  e_prefix_data_concat_static(buf, "data/config/profile.cfg");
+                  ef = eet_open(buf, EET_FILE_MODE_READ);
+               }
+          }
+        if (ef)
+          {
+             _e_config_profile = _e_config_profile_name_get(ef);
+             eet_close(ef);
+             ef = NULL;
+          }
+        if (!_e_config_profile)
+          {
+             /* no profile config - try other means */
+             char *lnk = NULL;
+
+             /* check symlink - if default is a symlink to another dir */
+             e_prefix_data_concat_static(buf, "data/config/default");
+             lnk = ecore_file_readlink(buf);
+             /* if so use just the filename as the profile - must be a local link */
+             if (lnk)
+               {
+                  _e_config_profile = eina_stringshare_add(ecore_file_file_get(lnk));
+                  free(lnk);
+               }
+             else
+               _e_config_profile = eina_stringshare_add("default");
+          }
+        if (!getenv("E_CONF_PROFILE"))
+          e_util_env_set("E_CONF_PROFILE", _e_config_profile);
+     }
+
+   _e_config_edd_init(EINA_FALSE);
+   e_config_load();
+
+   e_config_save_queue();
+   return 1;
+}
+
+EINTERN int
+e_config_shutdown(void)
+{
+   eina_stringshare_del(_e_config_profile);
+   _e_config_edd_shutdown();
    return 1;
 }
 
@@ -1051,8 +1073,54 @@ e_config_load(void)
              e_config = e_config_domain_load("e", _e_config_edd);
           }
      }
-   if (!e_config)
+while (!e_config)
      {
+        _e_config_edd_shutdown();
+        _e_config_edd_init(EINA_TRUE);
+        e_config = e_config_domain_load("e", _e_config_edd);
+        /* I made a c&p error here and fucked the world, so this ugliness
+         * will be my public mark of shame until E19 :/
+         * -zmike, 2013
+         */
+        if (e_config)
+          {
+             Eina_List *l;
+             E_Config_XKB_Layout *cl;
+             int set = 0;
+
+             /* this is essentially CONFIG_VERSION_CHECK(7) */
+             INF("Performing config upgrade to %d.%d", 1, 7);
+             _e_config_edd_shutdown();
+             _e_config_edd_init(EINA_FALSE);
+             set += !!e_config->xkb.current_layout;
+             set += !!e_config->xkb.sel_layout;
+             set += !!e_config->xkb.lock_layout;
+             EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+               {
+                  if (e_config->xkb.current_layout && (e_config->xkb.current_layout->name == cl->name))
+                    {
+                       e_config->xkb.current_layout->model = eina_stringshare_ref(cl->model);
+                       e_config->xkb.current_layout->variant = eina_stringshare_ref(cl->variant);
+                       set--;
+                    }
+                  if (e_config->xkb.sel_layout && (e_config->xkb.sel_layout->name == cl->name))
+                    {
+                       e_config->xkb.sel_layout->model = eina_stringshare_ref(cl->model);
+                       e_config->xkb.sel_layout->variant = eina_stringshare_ref(cl->variant);
+                       set--;
+                    }
+                  if (e_config->xkb.lock_layout && (e_config->xkb.lock_layout->name == cl->name))
+                    {
+                       e_config->xkb.lock_layout->model = eina_stringshare_ref(cl->model);
+                       e_config->xkb.lock_layout->variant = eina_stringshare_ref(cl->variant);
+                       set--;
+                    }
+                  if (!set) break;
+               }
+             break;
+          }
+#undef T
+#undef D
         e_config_profile_set("default");
         if (!reload) e_config_profile_del(e_config_profile_get());
         e_config_save_block_set(1);
