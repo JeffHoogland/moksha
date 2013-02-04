@@ -218,16 +218,7 @@ static void
 _widget_list_selection_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
-   const Eina_List *l;
-   const E_Ilist_Item *it;
-   int selnum = 0;
 
-   EINA_LIST_FOREACH(e_widget_ilist_items_get(cfdata->obj.list), l, it)
-     {
-        if (!it->selected) continue;
-        selnum++;
-     }
-   if (selnum == 0) e_widget_disabled_set(cfdata->obj.del, 1);
-   else e_widget_disabled_set(cfdata->obj.del, 0);
+   e_widget_disabled_set(cfdata->obj.del, !e_widget_ilist_selected_count_get(cfdata->obj.list));
 }
 

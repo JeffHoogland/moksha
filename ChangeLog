@@ -2,6 +2,7 @@
 
         * fix possible crash in xkb rule parsing
         * fix list update on deletion of personal app launchers
+        * fix button toggling in personal app launchers dialog
 
 2013-02-01 Mike Blumenkrantz
 
