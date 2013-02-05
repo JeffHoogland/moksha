@@ -1190,20 +1190,9 @@ _e_container_resize_handle(E_Container *con)
 
              EINA_LIST_FREE(zones, zone)
                {
-                  Eina_List *shelves, *ll2, *del_shelves;
-                  E_Shelf *es;
                   E_Border_List *bl;
                   E_Border *bd;
 
-                  /* delete any shelves on this zone */
-                  shelves = e_shelf_list();
-                  del_shelves = NULL;
-                  EINA_LIST_FOREACH(shelves, ll2, es)
-                    {
-                       if (es->zone == zone)
-                         del_shelves = eina_list_append(del_shelves, es);
-                    }
-                  E_FREE_LIST(del_shelves, e_object_del);
                   bl = e_container_border_list_first(zone->container);
                   while ((bd = e_container_border_list_next(bl)))
                     {

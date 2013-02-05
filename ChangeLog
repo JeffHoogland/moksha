@@ -1,3 +1,7 @@
+2013-02-05 Mike Blumenkrantz
+
+        * remove unnecessary shelf deletion when changing resolution
+
 2013-02-04 Mike Blumenkrantz
 
         * fix possible crash in xkb rule parsing

@@ -40,6 +40,7 @@ Improvements:
     * Better messages in UI
     * Added three more files for input methods used in asian countries
     * Desktop->Shelves menu now shows shelf names
+    * remove unnecessary shelf deletion when changing resolution
 
 Fixes:
     * Fixed crash when changing ibar source
