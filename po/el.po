@@ -7,7 +7,7 @@
 # Giorgos RageCryX Koutsikos <ragecryx@yahoo.gr>, 2009.
 # George Koutsikos <ragecryx@yahoo.gr>, 2011.
 # 
-# Efstathios Iosifidis <iosifidis@opensuse.org>, 2012., 2013.
+# Efstathios Iosifidis <iosifidis@opensuse.org>, 2012.
 #
 msgid ""
 msgstr ""
