@@ -1613,15 +1613,13 @@ e_fm2_window_object_set(Evas_Object *obj, E_Object *eobj)
    e_drop_handler_xds_set(sd->drop_handler, _e_fm2_cb_dnd_drop);
 }
 
-EAPI void
-e_fm2_icons_update(Evas_Object *obj)
+static void
+_e_fm2_icons_update_helper(E_Fm2_Smart_Data *sd, Eina_Bool icon_only)
 {
    Eina_List *l;
    E_Fm2_Icon *ic;
    char buf[PATH_MAX], *pfile;
    int bufused, buffree;
-
-   EFM_SMART_CHECK();
 
    if ((!sd->realpath) || (!sd->icons)) return;
    bufused = eina_strlcpy(buf, sd->realpath, sizeof(buf));
@@ -1661,13 +1659,26 @@ e_fm2_icons_update(Evas_Object *obj)
                }
           }
 
-        if (ic->realized)
+        if (!ic->realized) continue;
+        if (icon_only)
           {
              E_FN_DEL(evas_object_del, ic->obj_icon);
              _e_fm2_icon_icon_set(ic);
           }
+        else
+          {
+             _e_fm2_icon_unrealize(ic);
+             _e_fm2_icon_realize(ic);
+          }
      }
    e_fm2_custom_file_flush();
+}
+
+EAPI void
+e_fm2_icons_update(Evas_Object *obj)
+{
+   EFM_SMART_CHECK();
+   _e_fm2_icons_update_helper(sd, EINA_FALSE);
 }
 
 EAPI void
@@ -1989,7 +2000,7 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, v
 static Eina_Bool
 _e_fm2_icon_cache_update(void *data, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_fm2_icons_update(data);
+   _e_fm2_icons_update_helper(data, EINA_TRUE);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -8368,7 +8379,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_resize(obj, 0, 0);
 
    E_LIST_HANDLER_APPEND(sd->handlers, E_EVENT_CONFIG_ICON_THEME, _e_fm2_cb_theme, sd->obj);
-   E_LIST_HANDLER_APPEND(sd->handlers, EFREET_EVENT_ICON_CACHE_UPDATE, _e_fm2_icon_cache_update, sd->obj);
+   E_LIST_HANDLER_APPEND(sd->handlers, EFREET_EVENT_ICON_CACHE_UPDATE, _e_fm2_icon_cache_update, sd);
 
    _e_fm2_list = eina_list_append(_e_fm2_list, sd->obj);
 }
