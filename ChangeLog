@@ -1,6 +1,7 @@
 2013-02-06 Mike Blumenkrantz
 
         * moved "allow windows above fullscreen windows" option to geometry settings dialog
+        * fix filemanager efreet cache listeners and updates
 
 2013-02-05 Mike Blumenkrantz
 

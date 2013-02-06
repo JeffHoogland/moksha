@@ -164,7 +164,6 @@ struct _E_Fm2_Smart_Data
    E_Fm2_Icon     *iop_icon;
 
    Eina_List *handlers;
-   Ecore_Event_Handler *efreet_cache_update;
    Efreet_Desktop *desktop;
 };
 
@@ -1124,9 +1123,6 @@ e_fm2_path_set(Evas_Object *obj, const char *dev, const char *path)
              if ((m->volume->efm_mode != EFM_MODE_USING_HAL_MOUNT) && (!sd->mount->mounted)) return;
           }
      }
-   if (sd->efreet_cache_update)
-     ecore_event_handler_del(sd->efreet_cache_update);
-   sd->efreet_cache_update = NULL;
    if (!sd->realpath) return;
 
    if (!sd->mount || sd->mount->mounted)
@@ -1667,8 +1663,8 @@ e_fm2_icons_update(Evas_Object *obj)
 
         if (ic->realized)
           {
-             _e_fm2_icon_unrealize(ic);
-             _e_fm2_icon_realize(ic);
+             E_FN_DEL(evas_object_del, ic->obj_icon);
+             _e_fm2_icon_icon_set(ic);
           }
      }
    e_fm2_custom_file_flush();
@@ -4559,12 +4555,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
      }
 
    if (_e_fm2_file_is_desktop(ic->info.file))
-     {
-        _e_fm2_icon_desktop_load(ic);
-        if (!ic->sd->efreet_cache_update)
-          ic->sd->efreet_cache_update =
-            ecore_event_handler_add(EFREET_EVENT_DESKTOP_CACHE_UPDATE, (Ecore_Event_Handler_Cb)_e_fm2_icon_cache_update, ic->sd->obj);
-     }
+     _e_fm2_icon_desktop_load(ic);
 
    if (cf)
      {
@@ -8377,7 +8368,7 @@ _e_fm2_smart_add(Evas_Object *obj)
    evas_object_resize(obj, 0, 0);
 
    E_LIST_HANDLER_APPEND(sd->handlers, E_EVENT_CONFIG_ICON_THEME, _e_fm2_cb_theme, sd->obj);
-   E_LIST_HANDLER_APPEND(sd->handlers, EFREET_EVENT_DESKTOP_CACHE_BUILD, _e_fm2_icon_cache_update, sd->obj);
+   E_LIST_HANDLER_APPEND(sd->handlers, EFREET_EVENT_ICON_CACHE_UPDATE, _e_fm2_icon_cache_update, sd->obj);
 
    _e_fm2_list = eina_list_append(_e_fm2_list, sd->obj);
 }
@@ -8391,9 +8382,6 @@ _e_fm2_smart_del(Evas_Object *obj)
    if (!sd) return;
 
    E_FREE_LIST(sd->handlers, ecore_event_handler_del);
-
-   if (sd->efreet_cache_update)
-     ecore_event_handler_del(sd->efreet_cache_update);
 
    _e_fm2_client_monitor_list_end(obj);
    if (sd->realpath) _e_fm2_client_monitor_del(sd->id, sd->realpath);
