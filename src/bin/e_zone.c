@@ -534,6 +534,7 @@ noflip:
         zone->flip.es = es;
         e_shelf_toggle(es, 1);
      }
+   ok = 0;
    switch (edge)
      {
       case E_ZONE_EDGE_LEFT:
