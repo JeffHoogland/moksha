@@ -168,7 +168,7 @@ e_widget_preview_file_get(Evas_Object *obj, const char **file, const char **grou
 }
 
 static void
-_e_widget_preview_edje_preloaded(void *data, Evas_Object *obj,
+_e_widget_preview_edje_preloaded(void *data, Evas_Object *obj EINA_UNUSED,
                                  const char *emission EINA_UNUSED,
                                  const char *source EINA_UNUSED)
 {
