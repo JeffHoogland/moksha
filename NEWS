@@ -28,6 +28,7 @@ Fixes:
     * moved "allow windows above fullscreen windows" option to geometry settings dialog
     * fix filemanager efreet cache listeners and updates
     * fix clock timerfd usage to actually detect date changes
+    * enable image preloading for all e_widget_preview using edje
 
 
 Changes since 0.17.0:

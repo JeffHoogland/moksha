@@ -1,3 +1,7 @@
+2013-02-07 Cedric Bail
+
+	* enable image preloading for all e_widget_preview using edje
+
 2013-02-07 Carsten Haitzler
 
         * fix clock timerfd usage to actually detect a date change.
