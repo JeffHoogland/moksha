@@ -1,3 +1,8 @@
+2013-02-07 Carsten Haitzler
+
+        * fix clock timerfd usage to actually detect a date change.
+        * improve clock to also listen to /etc/timezone changes too.
+
 2013-02-06 Mike Blumenkrantz
 
         * moved "allow windows above fullscreen windows" option to geometry settings dialog
