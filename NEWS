@@ -29,6 +29,7 @@ Fixes:
     * fix filemanager efreet cache listeners and updates
     * fix clock timerfd usage to actually detect date changes
     * enable image preloading for all e_widget_preview using edje
+    * keyboard mapping change now also disables for window class "vmware"
 
 
 Changes since 0.17.0:

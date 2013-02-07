@@ -1,3 +1,7 @@
+2013-02-07 Mike Blumenkrantz
+
+        * keyboard mapping change now also disables for window class "vmware"
+
 2013-02-07 Cedric Bail
 
 	* enable image preloading for all e_widget_preview using edje
