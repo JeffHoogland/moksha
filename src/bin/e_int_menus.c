@@ -67,7 +67,6 @@ static Eina_Bool   _e_int_menus_efreet_desktop_cache_update(void *d, int type, v
 /* local subsystem globals */
 static Eina_Hash *_e_int_menus_augmentation = NULL;
 static Eina_List *_e_int_menus_augmentation_disabled = NULL;
-static Eina_List *_e_int_menus_app_threads = NULL;
 static Eina_Hash *_e_int_menus_app_menus = NULL;
 static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
@@ -532,7 +531,6 @@ e_int_menus_init(void)
 EINTERN void
 e_int_menus_shutdown(void)
 {
-   E_FREE_LIST(_e_int_menus_app_threads, ecore_thread_cancel);
    if (_e_int_menus_app_cleaner) ecore_timer_del(_e_int_menus_app_cleaner);
    _e_int_menus_app_cleaner = NULL;
    eina_hash_free(_e_int_menus_app_menus_waiting);
@@ -704,62 +702,8 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 static Eina_Bool
 _e_int_menus_app_cleaner_cb(void *d __UNUSED__)
 {
-   if (_e_int_menus_app_threads) return EINA_TRUE;
    eina_hash_free_buckets(_e_int_menus_app_menus);
    return EINA_TRUE;
-}
-
-static void
-_e_int_menus_app_thread_notify_cb(void *data, Ecore_Thread *eth __UNUSED__, void *msg)
-{
-   Efreet_Menu *menu = msg;
-   E_Menu *m;
-   const char *dir = data;
-
-   if (!msg) return;
-   eina_hash_add(_e_int_menus_app_menus, dir, menu);
-   m = eina_hash_set(_e_int_menus_app_menus_waiting, dir, NULL);
-   if (!m) return;
-   e_object_del_attach_func_set(E_OBJECT(m), NULL);
-
-   if (_e_int_menus_app_cleaner)
-     ecore_timer_reset(_e_int_menus_app_cleaner);
-   else
-     _e_int_menus_app_cleaner = ecore_timer_add(300, _e_int_menus_app_cleaner_cb, NULL);
-   eina_stringshare_del(dir);
-   _e_int_menus_apps_scan(m, menu);
-   e_menu_pre_activate_callback_set(m, NULL, NULL);
-   e_object_data_set(E_OBJECT(m), menu);
-   e_object_free_attach_func_set(E_OBJECT(m),
-                                 _e_int_menus_apps_free_hook2);
-}
-
-static void
-_e_int_menus_app_thread_end_cb(void *data, Ecore_Thread *eth)
-{
-   char buf[PATH_MAX];
-   const char *dir;
-
-   _e_int_menus_app_threads = eina_list_remove(_e_int_menus_app_threads, eth);
-   if (data || (!e_config->menu_apps_show)) return;
-
-   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
-   dir = eina_stringshare_add(buf);
-
-   if (eina_hash_find(_e_int_menus_app_menus, dir))
-     eina_stringshare_del(dir);
-   else
-     _e_int_menus_apps_thread_new(NULL, dir);
-}
-
-static void
-_e_int_menus_app_thread_cb(void *data, Ecore_Thread *eth)
-{
-   const char *dir = data;
-   Efreet_Menu *menu;
-
-   menu = efreet_menu_parse(dir);
-   ecore_thread_feedback(eth, menu);
 }
 
 static void
@@ -776,7 +720,7 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
 {
    Efreet_Menu *menu = NULL;
    E_Menu *mn = NULL;
-   Ecore_Thread *eth;
+   char buf[PATH_MAX];
 
    if (dir)
      {
@@ -806,9 +750,35 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
    if (dir && m)
      eina_hash_add(_e_int_menus_app_menus_waiting, dir, m);
 
-   eth = ecore_thread_feedback_run(_e_int_menus_app_thread_cb, _e_int_menus_app_thread_notify_cb,
-                                   _e_int_menus_app_thread_end_cb, _e_int_menus_app_thread_end_cb, dir, EINA_FALSE);
-   _e_int_menus_app_threads = eina_list_append(_e_int_menus_app_threads, eth);
+   menu = efreet_menu_parse(dir);
+
+   eina_hash_add(_e_int_menus_app_menus, dir, menu); 
+   mn = eina_hash_set(_e_int_menus_app_menus_waiting, dir, NULL);
+   if (!mn) goto on_end;
+   e_object_del_attach_func_set(E_OBJECT(mn), NULL);
+
+   if (_e_int_menus_app_cleaner)   
+     ecore_timer_reset(_e_int_menus_app_cleaner); 
+   else
+     _e_int_menus_app_cleaner = ecore_timer_add(300, _e_int_menus_app_cleaner_cb, NULL);
+   eina_stringshare_del(dir);  
+   _e_int_menus_apps_scan(m, menu);           
+   e_menu_pre_activate_callback_set(m, NULL, NULL);   
+   e_object_data_set(E_OBJECT(m), menu);   
+   e_object_free_attach_func_set(E_OBJECT(m),        
+				 _e_int_menus_apps_free_hook2);
+
+   if (!e_config->menu_apps_show) goto on_end;
+
+   e_user_dir_concat_static(buf, "applications/menu/favorite.menu");  
+   dir = eina_stringshare_add(buf);
+
+   if (eina_hash_find(_e_int_menus_app_menus, dir))
+     eina_stringshare_del(dir);
+   else
+     _e_int_menus_apps_thread_new(NULL, dir);
+
+ on_end:
    if (m) e_object_del_attach_func_set(E_OBJECT(m), _e_int_menus_apps_menu_del);
    return NULL;
 }

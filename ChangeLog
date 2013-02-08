@@ -1,3 +1,7 @@
+2013-02-08 Cedric Bail
+
+	* remove call to efreet_menu_parse from a thread.
+
 2013-02-07 Mike Blumenkrantz
 
         * keyboard mapping change now also disables for window class "vmware"

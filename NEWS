@@ -30,6 +30,7 @@ Fixes:
     * fix clock timerfd usage to actually detect date changes
     * enable image preloading for all e_widget_preview using edje
     * keyboard mapping change now also disables for window class "vmware"
+    * don't call efreet_menu_parse from a thread
 
 
 Changes since 0.17.0:
