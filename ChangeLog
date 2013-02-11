@@ -2,6 +2,7 @@
 
         * fixed bug where pointer warping to new clients would start at a random location
         * fix crash when locking screen from Start gadget and then activating gadget again
+        * fixed bug where e_layout would ignore frozen state and crash
 
 2013-02-08 Cedric Bail
 

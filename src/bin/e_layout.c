@@ -151,7 +151,7 @@ e_layout_child_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    if ((li->x == x) && (li->y == y)) return;
    li->x = x;
    li->y = y;
-   _e_layout_smart_move_resize_item(li);
+   if (li->sd->frozen <= 0) _e_layout_smart_move_resize_item(li);
 }
 
 EAPI void
@@ -166,7 +166,7 @@ e_layout_child_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    if ((li->w == w) && (li->h == h)) return;
    li->w = w;
    li->h = h;
-   _e_layout_smart_move_resize_item(li);
+   if (li->sd->frozen <= 0) _e_layout_smart_move_resize_item(li);
 }
 
 EAPI void
@@ -452,7 +452,7 @@ _e_layout_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->w = w;
    sd->h = h;
    sd->changed = 1;
-   _e_layout_smart_reconfigure(sd);
+   if (sd->frozen <= 0) _e_layout_smart_reconfigure(sd);
 }
 
 static void
