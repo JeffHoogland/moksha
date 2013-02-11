@@ -167,16 +167,6 @@ e_widget_preview_file_get(Evas_Object *obj, const char **file, const char **grou
    edje_object_file_get(wd->o_thumb, file, group);
 }
 
-static void
-_e_widget_preview_edje_preloaded(void *data, Evas_Object *obj EINA_UNUSED,
-                                 const char *emission EINA_UNUSED,
-                                 const char *source EINA_UNUSED)
-{
-   E_Widget_Data *wd = data;
-
-   evas_object_show(wd->o_thumb);
-}
-
 EAPI int
 e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
 {
@@ -187,9 +177,6 @@ e_widget_preview_edje_set(Evas_Object *obj, const char *file, const char *group)
    if (wd->o_thumb) evas_object_del(wd->o_thumb);
    wd->o_thumb = edje_object_add(e_livethumb_evas_get(wd->img));
    ret = edje_object_file_set(wd->o_thumb, file, group);
-   edje_object_signal_callback_add(wd->o_thumb,
-                                   "preload,done", "",
-                                   _e_widget_preview_edje_preloaded, wd);
    e_livethumb_thumb_set(wd->img, wd->o_thumb);
 
    e_widget_change(obj);

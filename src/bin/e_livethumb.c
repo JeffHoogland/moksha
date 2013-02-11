@@ -67,6 +67,14 @@ e_livethumb_vsize_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
    if (h) *h = sd->vh;
 }
 
+static void
+_e_livethumb_edje_preloaded(void *data EINA_UNUSED, Evas_Object *obj,
+                            const char *emission EINA_UNUSED,
+                            const char *source EINA_UNUSED)
+{
+   evas_object_show(obj);
+}
+
 EAPI void
 e_livethumb_thumb_set(Evas_Object *obj, Evas_Object *thumb)
 {
@@ -77,7 +85,17 @@ e_livethumb_thumb_set(Evas_Object *obj, Evas_Object *thumb)
         return;
      }
    sd->thumb_obj = thumb;
-   evas_object_show(sd->thumb_obj);
+   if (!strcmp(evas_object_type_get(thumb), "edje"))
+     {
+        edje_object_signal_callback_add(thumb,
+                                        "preload,done", "",
+                                        _e_livethumb_edje_preloaded, NULL);
+        edje_object_preload(thumb, EINA_FALSE);
+     }
+   else
+     {
+        evas_object_show(sd->thumb_obj);
+     }
    evas_object_move(sd->thumb_obj, 0, 0);
    evas_object_resize(sd->thumb_obj, sd->vw, sd->vh);
 }
