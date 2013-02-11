@@ -1359,7 +1359,10 @@ _e_menu_cb_intercept_item_move(void *data, Evas_Object *o, Evas_Coord x, Evas_Co
    evas_object_move(mi->event_object, x, y);
    evas_object_move(o, x, y);
    if ((mi->submenu) && (mi->submenu->parent_item))
-     _e_menu_reposition(mi->submenu);
+     {
+        mi->submenu->zone = mi->menu->zone;
+        _e_menu_reposition(mi->submenu);
+     }
 }
 
 static void
