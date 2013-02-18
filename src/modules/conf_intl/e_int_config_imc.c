@@ -109,8 +109,7 @@ e_int_config_imc(E_Container *con, const char *params __UNUSED__)
 static void
 _fill_data(E_Config_Dialog_Data *cfdata)
 {
-   if (e_config->input_method)
-     cfdata->imc_current = eina_stringshare_add(e_config->input_method);
+   cfdata->imc_current = eina_stringshare_ref(e_config->input_method);
 
    if (cfdata->imc_current)
      {
@@ -119,10 +118,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
         path = e_intl_imc_system_path_get();
         if (!strncmp(cfdata->imc_current, path, strlen(path)))
           cfdata->fmdir = 1;
-        cfdata->imc_disable = 0;
      }
-   else
-     cfdata->imc_disable = 1;
+   cfdata->imc_disable = !cfdata->imc_current;
 }
 
 static void *
@@ -179,19 +176,11 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   if (cfdata->imc_current)
-     {
-        if (e_config->input_method)
-          {
-             eina_stringshare_del(e_config->input_method);
-             e_config->input_method = NULL;
-          }
+   eina_stringshare_replace(&e_config->input_method, NULL);
+   if (!cfdata->imc_disable)
+     e_config->input_method = eina_stringshare_ref(cfdata->imc_current);
 
-        if (!cfdata->imc_disable)
-          e_config->input_method = eina_stringshare_ref(cfdata->imc_current);
-
-        e_intl_input_method_set(e_config->input_method);
-     }
+   e_intl_input_method_set(e_config->input_method);
 
    e_config_save_queue();
    return 1;
@@ -307,6 +296,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    e_widget_on_change_hook_set(ob, _e_imc_list_change_cb, cfdata);
    e_widget_size_min_set(ob, 175, 175);
    cfdata->gui.imc_basic_list = ob;
+   _e_imc_imc_toggle(cfdata, NULL);
 
    evas_event_freeze(evas_object_evas_get(ob));
    edje_freeze();
