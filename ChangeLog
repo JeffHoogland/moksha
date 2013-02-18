@@ -1,6 +1,7 @@
 2013-02-18 Mike Blumenkrantz
 
         * fixed disable of input methods in input method config dialog
+        * fixed pointer warp when pointer was inside warp window but not directly over it
 
 2013-02-11 Mike Blumenkrantz
 

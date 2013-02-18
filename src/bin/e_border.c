@@ -10110,23 +10110,11 @@ e_border_focus_track_thaw(void)
    focus_track_frozen--;
 }
 
-EAPI E_Border *
-e_border_under_pointer_get(E_Desk *desk,
-                           E_Border *exclude)
+static E_Border *
+_e_border_under_pointer_helper(E_Desk *desk, E_Border *exclude, int x, int y)
 {
    E_Border *bd = NULL, *cbd;
    Eina_List *l;
-   int x, y;
-
-   /* We need to ensure that we can get the container window for the
-    * zone of either the given desk or the desk of the excluded
-    * window, so return if neither is given */
-   if (desk)
-     ecore_x_pointer_xy_get(desk->zone->container->win, &x, &y);
-   else if (exclude)
-     ecore_x_pointer_xy_get(exclude->desk->zone->container->win, &x, &y);
-   else
-     return NULL;
 
    EINA_LIST_FOREACH(e_border_raise_stack_get(), l, cbd)
      {
@@ -10146,6 +10134,25 @@ e_border_under_pointer_get(E_Desk *desk,
           }
      }
    return bd;
+}
+
+EAPI E_Border *
+e_border_under_pointer_get(E_Desk *desk,
+                           E_Border *exclude)
+{
+   int x, y;
+
+   /* We need to ensure that we can get the container window for the
+    * zone of either the given desk or the desk of the excluded
+    * window, so return if neither is given */
+   if (desk)
+     ecore_x_pointer_xy_get(desk->zone->container->win, &x, &y);
+   else if (exclude)
+     ecore_x_pointer_xy_get(exclude->desk->zone->container->win, &x, &y);
+   else
+     return NULL;
+
+   return _e_border_under_pointer_helper(desk, exclude, x, y);
 }
 
 static Eina_Bool
@@ -10196,6 +10203,7 @@ EAPI int
 e_border_pointer_warp_to_center(E_Border *bd)
 {
    int x, y;
+   E_Border *cbd = NULL;
 
    /* Do not slide pointer when disabled (probably breaks focus
     * on sloppy/mouse focus but requested by users). */
@@ -10205,7 +10213,10 @@ e_border_pointer_warp_to_center(E_Border *bd)
    ecore_x_pointer_xy_get(bd->zone->container->win, &x, &y);
    if ((x >= bd->x) && (x <= (bd->x + bd->w)) &&
        (y >= bd->y) && (y <= (bd->y + bd->h)))
-     return 0;
+     {
+        cbd = _e_border_under_pointer_helper(bd->desk, bd, x, y);
+        if (cbd == bd) return 0;
+     }
 
    warp_to_x = bd->x + (bd->w / 2);
    if (warp_to_x < (bd->zone->x + 1))
@@ -10218,6 +10229,15 @@ e_border_pointer_warp_to_center(E_Border *bd)
      warp_to_y = bd->zone->y + ((bd->y + bd->h - bd->zone->y) / 2);
    else if (warp_to_y > (bd->zone->y + bd->zone->h))
      warp_to_y = (bd->zone->y + bd->zone->h + bd->y) / 2;
+
+   /* TODO: handle case where another border is over the exact center,
+    * find a place where the requested border is not overlapped?
+    *
+   if (!cbd) cbd = _e_border_under_pointer_helper(bd->desk, bd, x, y);
+   if (cbd != bd)
+     {
+     }
+   */
 
    warp_to = 1;
    warp_to_win = bd->zone->container->win;
