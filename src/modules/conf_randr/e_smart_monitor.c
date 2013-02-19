@@ -1107,8 +1107,6 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
-   Ecore_X_Randr_Orientation orient;
-   int rotation = 0;
    Evas_Coord cw = 0, ch = 0;
    Evas_Coord mw = 0, mh = 0;
 
@@ -1124,10 +1122,7 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    sd->rotating = EINA_FALSE;
 
    /* get current orientation based on rotation */
-   orient = _e_smart_monitor_orientation_get(sd->rotation);
-
-   /* update current orientation */
-   sd->crtc.orient = orient;
+   sd->crtc.orient = _e_smart_monitor_orientation_get(sd->rotation);
 
    /* get the degrees of rotation based on this orient
     * 
@@ -1139,18 +1134,15 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
     * EX: User manually rotates to 80 degrees. We take that 80 and 
     * factor in some fuziness to get 90 degrees. We need to take that 90 
     * and return an 'orientation' */
-   rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
-
-   /* update current rotation */
-   sd->rotation = rotation;
+   sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
 
    /* get current size */
    cw = sd->crtc.w;
    ch = sd->crtc.h;
 
    /* calculate new size based on orientation */
-   if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-       (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+   if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
      {
         cw = sd->crtc.h;
         ch = sd->crtc.w;
