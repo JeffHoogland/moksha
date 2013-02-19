@@ -31,6 +31,8 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 Evas_Object *
 e_smart_randr_add(Evas *evas)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    static Evas_Smart *smart = NULL;
    static const Evas_Smart_Class sc = 
      {
@@ -58,6 +60,8 @@ e_smart_randr_virtual_size_calc(Evas_Object *obj)
    Eina_List *l = NULL;
    E_Randr_Crtc_Config *crtc;
    Evas_Coord vw = 0, vh = 0;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -107,6 +111,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    Eina_List *l = NULL;
    E_Randr_Crtc_Config *crtc;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -127,6 +133,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              /* for each output, try to create a monitor */
              if (!(mon = e_smart_monitor_add(evas)))
                continue;
+
+             /* add this monitor to our list */
+             sd->monitors = eina_list_append(sd->monitors, mon);
 
              /* tell monitor what crtc it uses */
              e_smart_monitor_crtc_set(mon, crtc);
@@ -153,6 +162,8 @@ _e_smart_add(Evas_Object *obj)
    E_Smart_Data *sd;
    Evas *evas;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to allocate the smart data structure */
    if (!(sd = E_NEW(E_Smart_Data, 1))) return;
 
@@ -171,6 +182,8 @@ _e_smart_del(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas_Object *mon;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -194,6 +207,8 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -206,6 +221,8 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -217,6 +234,10 @@ static void
 _e_smart_show(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -227,6 +248,10 @@ _e_smart_show(Evas_Object *obj)
    /* show the layout object */
    if (sd->o_layout) evas_object_show(sd->o_layout);
 
+   /* show any monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     evas_object_show(mon);
+
    /* set visibility flag */
    sd->visible = EINA_TRUE;
 }
@@ -235,12 +260,20 @@ static void
 _e_smart_hide(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if it is not visible, we have nothing to do */
    if (!sd->visible) return;
+
+   /* hide any monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     evas_object_hide(mon);
 
    /* hide the layout object */
    if (sd->o_layout) evas_object_hide(sd->o_layout);
