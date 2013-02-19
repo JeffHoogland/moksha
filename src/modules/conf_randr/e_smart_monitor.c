@@ -49,6 +49,7 @@ struct _E_Smart_Data
      {
         Ecore_X_Randr_Crtc id;
         Evas_Coord x, y, w, h;
+        Ecore_X_Randr_Orientation orient;
      } crtc;
 
    /* output config */
@@ -124,6 +125,8 @@ static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj E
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
+static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
+
 /* external functions exposed by this widget */
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -178,6 +181,9 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
 
    /* get the root window */
    root = ecore_x_window_root_first_get();
+
+   /* get current orientation */
+   sd->crtc.orient = ecore_x_randr_crtc_orientation_get(root, crtc);
 
    /* get possible orientations for this crtc */
    orients = ecore_x_randr_crtc_orientations_get(root, crtc);
@@ -1041,9 +1047,13 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    ev = event;
 
-   /* check for valid mouse movement */
-   if (((ev->cur.canvas.x - ev->prev.canvas.x) == 0) && 
-       ((ev->cur.canvas.y - ev->prev.canvas.y) == 0))
+   /* check for valid mouse movement
+    * 
+    * NB: This smells quite odd to me. How can we get a mouse_move event 
+    * (and end up in here) when the coordinates say otherwise ??
+    * Must be a synthetic event and we are not interested in those */
+   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
+       (ev->cur.canvas.y == ev->prev.canvas.y))
      return;
 
    /* calculate difference in mouse movement */
@@ -1092,8 +1102,79 @@ static void
 _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
+   int rotation = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
+
+   /* get the amount of rotation from the mouse event */
+   rotation = _e_smart_monitor_rotation_amount_get(sd, ev);
+}
+
+static int 
+_e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev)
+{
+   Evas_Coord cx = 0, cy = 0;
+   Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+   double a = 0.0, b = 0.0, c = 0.0, r = 0.0;
+   double ax = 0.0, ay = 0.0, bx = 0.0, by = 0.0;
+   double dotprod = 0.0;
+
+   /* return a single rotation amount based on 
+    * mouse movement in both directions */
+
+   /* if there was no movement, return 0
+    * 
+    * NB: This smells quite odd to me. How can we get a mouse_move event 
+    * (and end up in here) when the coordinates say otherwise ??
+    * Must be a synthetic event and we are not interested in those */
+   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
+       (ev->cur.canvas.y == ev->prev.canvas.y))
+     return 0;
+
+   /* get the geometry of the frame */
+   evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
+
+   /* if the mouse is moved outside the frame then get out
+    * 
+    * NB: This could be coded into one giant OR statement, but I am feeling 
+    * lazy today ;) */
+   if ((ev->cur.canvas.x > (fx + fw))) return 0;
+   else if ((ev->cur.canvas.x < fx)) return 0;
+   if ((ev->cur.canvas.y > (fy + fh))) return 0;
+   else if ((ev->cur.canvas.y < fy)) return 0;
+
+   /* get center point
+    * 
+    * NB: This COULD be used to provide a greater amount of rotation 
+    * depending on distance of movement from center */
+   cx = (fx + (fw / 2));
+   cy = (fy + (fh / 2));
+
+   ax = ((fx + fw) - cx);
+   ay = (fy - cy);
+
+   bx = (ev->cur.canvas.x - cx);
+   by = (ev->cur.canvas.y - cy);
+
+   /* calculate degrees of rotation
+    * 
+    * NB: A HUGE Thank You to Daniel for the help here !! */
+   a = sqrt((ax * ax) + (ay * ay));
+   b = sqrt((bx * bx) + (by * by));
+   if ((a < 1) || (b < 1)) return 0;
+
+   c = sqrt((ev->cur.canvas.x - (fx + fw)) * 
+            (ev->cur.canvas.x - (fx + fw)) +
+            (ev->cur.canvas.y - fy) * 
+            (ev->cur.canvas.y - fy));
+
+   r = acos(((a * a) + (b * b) - (c * c)) / (2 * (a * b)));
+   r = r * 180 / M_PI;
+
+   dotprod = ((ay * bx) + (-ax * by));
+   if (dotprod > 0) r = 360 - r;
+
+   return r;
 }
