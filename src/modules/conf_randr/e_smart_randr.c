@@ -195,6 +195,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* add this monitor to our list */
                   sd->monitors = eina_list_append(sd->monitors, mon);
 
+                  /* pack this monitor into the grid */
+                  evas_object_grid_pack(sd->o_grid, mon, cx, cy, cw, ch);
+
                   /* tell monitor what the virtual grid is */
                   e_smart_monitor_grid_set(mon, sd->o_grid);
 
@@ -204,8 +207,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* tell monitor what output it uses */
                   e_smart_monitor_output_set(mon, outputs[j]);
 
-                  /* pack this monitor into the grid */
-                  evas_object_grid_pack(sd->o_grid, mon, cx, cy, cw, ch);
+                  /* tell monitor to set the background preview */
+                  e_smart_monitor_background_set(mon, cx, cy);
                }
 
              /* free any allocated memory from ecore_x_randr */
