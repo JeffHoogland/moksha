@@ -3,6 +3,9 @@
 #include "e_smart_monitor.h"
 
 #define RESIZE_FUZZ 60
+#define ROTATE_FUZZ 45
+
+#define BG_DBG 1
 
 /* local structure */
 typedef struct _E_Smart_Data E_Smart_Data;
@@ -30,8 +33,10 @@ struct _E_Smart_Data
         Evas_Coord vw, vh;
      } grid;
 
+#ifdef BG_DBG
    /* test object */
-   /* Evas_Object *o_bg; */
+   Evas_Object *o_bg;
+#endif
 
    /* base object */
    Evas_Object *o_base;
@@ -129,10 +134,13 @@ static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj 
 static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
-static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
+static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event);
 
 static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
 static inline int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
+static inline Ecore_X_Randr_Orientation _e_smart_monitor_orientation_get(int rotation);
+
+static void _e_smart_monitor_map_apply(Evas_Object *obj, int rotation);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -385,10 +393,12 @@ _e_smart_add(Evas_Object *obj)
    /* grab the canvas */
    sd->evas = evas_object_evas_get(obj);
 
+#ifdef BG_DBG
    /* create the bg test object */
-   /* sd->o_bg = evas_object_rectangle_add(sd->evas); */
-   /* evas_object_color_set(sd->o_bg, 255, 0, 0, 255); */
-   /* evas_object_smart_member_add(sd->o_bg, obj); */
+   sd->o_bg = evas_object_rectangle_add(sd->evas);
+   evas_object_color_set(sd->o_bg, 255, 0, 0, 255);
+   evas_object_smart_member_add(sd->o_bg, obj);
+#endif
 
    /* create the base object */
    sd->o_base = edje_object_add(sd->evas);
@@ -522,7 +532,10 @@ _e_smart_del(Evas_Object *obj)
      }
 
    evas_object_del(sd->o_base);
-   /* evas_object_del(sd->o_bg); */
+
+#ifdef BG_DBG
+   evas_object_del(sd->o_bg);
+#endif
 
    /* free the list of modes */
    EINA_LIST_FREE(sd->modes, mode)
@@ -551,7 +564,9 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->x = x;
    sd->y = y;
 
-   /* evas_object_move(sd->o_bg, x, y); */
+#ifdef BG_DBG
+   evas_object_move(sd->o_bg, x, y);
+#endif
    evas_object_move(sd->o_base, x, y);
 }
 
@@ -572,10 +587,13 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
 
    /* set livethumb thumbnail size */
-   if (!sd->resizing) e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
+   if ((!sd->resizing) && (!sd->rotating))
+     e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
 
    evas_object_resize(sd->o_base, w, h);
-   /* evas_object_resize(sd->o_bg, w, h + 30); */
+#ifdef BG_DBG
+   evas_object_resize(sd->o_bg, w, h + 30);
+#endif
 }
 
 static void 
@@ -592,7 +610,9 @@ _e_smart_show(Evas_Object *obj)
    if (sd->visible) return;
 
    evas_object_show(sd->o_base);
-   /* evas_object_show(sd->o_bg); */
+#ifdef BG_DBG
+   evas_object_show(sd->o_bg);
+#endif
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
@@ -612,7 +632,9 @@ _e_smart_hide(Evas_Object *obj)
    if (!sd->visible) return;
 
    evas_object_hide(sd->o_base);
-   /* evas_object_hide(sd->o_bg); */
+#ifdef BG_DBG
+   evas_object_hide(sd->o_bg);
+#endif
 
    /* set visibility flag */
    sd->visible = EINA_FALSE;
@@ -629,7 +651,9 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    evas_object_clip_set(sd->o_base, clip);
-   /* evas_object_clip_set(sd->o_bg, clip); */
+#ifdef BG_DBG
+   evas_object_clip_set(sd->o_bg, clip);
+#endif
 }
 
 static void 
@@ -643,7 +667,9 @@ _e_smart_clip_unset(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    evas_object_clip_unset(sd->o_base);
-   /* evas_object_clip_unset(sd->o_bg); */
+#ifdef BG_DBG
+   evas_object_clip_unset(sd->o_bg);
+#endif
 }
 
 /* local functions */
@@ -1066,7 +1092,8 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* get the degree of rotation */
-   sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
+   sd->rotation = 0;
+   /* sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient); */
 
    /* record current size of monitor */
    /* evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch); */
@@ -1080,6 +1107,10 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
+   Ecore_X_Randr_Orientation orient;
+   int rotation = 0;
+   Evas_Coord cw = 0, ch = 0;
+   Evas_Coord mw = 0, mh = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1089,11 +1120,85 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
-   /* record current size of monitor */
-   /* evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch); */
-
    /* set resizing flag */
    sd->rotating = EINA_FALSE;
+
+   /* get current orientation based on rotation */
+   orient = _e_smart_monitor_orientation_get(sd->rotation);
+
+   /* run a comparison based on orientation
+    * 
+    * NB: This is done so that after the user is done rotating, if we 
+    * do not need to change the size of the monitor object, we can just 
+    * remove the map and get out. This saves us some function calls below */
+   if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     {
+        if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+            (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+          {
+             /* remove the map */
+             evas_object_map_set(sd->o_frame, NULL);
+             evas_object_map_enable_set(sd->o_frame, EINA_FALSE);
+             return;
+          }
+     }
+   else
+     {
+        if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+          {
+             /* remove the map */
+             evas_object_map_set(sd->o_frame, NULL);
+             evas_object_map_enable_set(sd->o_frame, EINA_FALSE);
+             return;
+          }
+     }
+
+   /* update current orientation */
+   sd->crtc.orient = orient;
+
+   /* get the degrees of rotation based on this orient
+    * 
+    * NB: I know this seems redundant but it is needed however. The 
+    * above orientation_get call will return the proper orientation 
+    * for the amount which the user has rotated. Because of this, we need 
+    * to take that orient and get the proper rotation angle.
+    * 
+    * EX: User manually rotates to 80 degrees. We take that 80 and 
+    * factor in some fuziness to get 90 degrees. We need to take that 90 
+    * and return an 'orientation' */
+   rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
+
+   /* update current rotation */
+   sd->rotation = rotation;
+
+   /* get current size */
+   cw = sd->crtc.w;
+   ch = sd->crtc.h;
+
+   /* calculate new size based on orientation */
+   if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+       (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+     {
+        cw = sd->crtc.h;
+        ch = sd->crtc.w;
+     }
+
+   /* get the current pack options so we can compare */
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &mw, &mh);
+
+   /* remove the map */
+   evas_object_map_set(sd->o_frame, NULL);
+   evas_object_map_enable_set(sd->o_frame, EINA_FALSE);
+
+   /* if the pack options are different, set them */
+   if ((cw != mw) || (ch != mh))
+     evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, cw, ch);
+
+   /* TODO: update current size */
+   sd->crtc.w = cw;
+   sd->crtc.h = ch;
 }
 
 static void 
@@ -1161,7 +1266,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 }
 
 static void 
-_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
+_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    int rotation = 0;
@@ -1184,6 +1289,7 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    sd->rotation = rotation;
 
    /* apply rotation map */
+   _e_smart_monitor_map_apply(sd->o_frame, sd->rotation);
 }
 
 static int 
@@ -1269,4 +1375,58 @@ _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient)
       default:
         return 0;
      }
+}
+
+static inline Ecore_X_Randr_Orientation 
+_e_smart_monitor_orientation_get(int rotation)
+{
+   rotation %= 360;
+
+   /* find the closest orientation based on rotation within fuziness */
+   if (((rotation - ROTATE_FUZZ) <= 0) ||
+       ((rotation + ROTATE_FUZZ) <= 0))
+     return ECORE_X_RANDR_ORIENTATION_ROT_0;
+   else if (((rotation - ROTATE_FUZZ) <= 90) ||
+            ((rotation + ROTATE_FUZZ) <= 90))
+     return ECORE_X_RANDR_ORIENTATION_ROT_90;
+   else if (((rotation - ROTATE_FUZZ) <= 180) ||
+            ((rotation + ROTATE_FUZZ) <=180))
+     return ECORE_X_RANDR_ORIENTATION_ROT_180;
+   else if (((rotation - ROTATE_FUZZ) <= 270) ||
+            ((rotation + ROTATE_FUZZ) <= 270))
+     return ECORE_X_RANDR_ORIENTATION_ROT_270;
+   else if (((rotation - ROTATE_FUZZ) < 360) ||
+            ((rotation + ROTATE_FUZZ) < 360))
+     return ECORE_X_RANDR_ORIENTATION_ROT_0;
+
+   /* return a default */
+   return ECORE_X_RANDR_ORIENTATION_ROT_0;
+}
+
+static void 
+_e_smart_monitor_map_apply(Evas_Object *obj, int rotation)
+{
+   Evas_Coord fx = 0, fy = 0, fw = 0, fh = 0;
+   static Evas_Map *map = NULL;
+
+   /* create a new map if needed */
+   if (!map) 
+     {
+        map = evas_map_new(4);
+        evas_map_smooth_set(map, EINA_TRUE);
+        evas_map_alpha_set(map, EINA_TRUE);
+     }
+
+   /* get the frame geometry */
+   evas_object_geometry_get(obj, &fx, &fy, &fw, &fh);
+
+   /* setup map */
+   evas_map_util_points_populate_from_geometry(map, fx, fy, fw, fh, rotation);
+
+   /* apply current rotation */
+   evas_map_util_rotate(map, rotation, (fx + (fw / 2)), (fy + (fh / 2)));
+
+   /* tell the frame to use this map */
+   evas_object_map_set(obj, map);
+   evas_object_map_enable_set(obj, EINA_TRUE);
 }
