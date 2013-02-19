@@ -85,6 +85,9 @@ _basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data
    /* try to create randr smart widget */
    if ((cfdata->o_randr = e_smart_randr_add(evas)))
      {
+        /* tell randr widget to create monitors */
+        e_smart_randr_monitors_create(cfdata->o_randr);
+
         /* append randr widget to list object */
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
      }
