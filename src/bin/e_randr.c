@@ -34,7 +34,11 @@ e_randr_init(void)
         return EINA_FALSE;
      }
 
-   /* try to restore settings */
+   /* try to restore settings
+    * 
+    * NB: When we restore, check the resolutions (current vs saved)
+    * and if there is no change then we do not need to call 
+    * screen_reset as this triggers a full comp refresh */
 
    /* tell randr that we are interested in receiving events
     * 
