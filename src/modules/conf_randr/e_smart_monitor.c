@@ -219,12 +219,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    sd->crtc.w = cw;
    sd->crtc.h = ch;
 
-   /* set monitor position text */
-   _e_smart_monitor_position_set(sd, sd->crtc.x, sd->crtc.y);
-
-   /* set monitor resolution text */
-   _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
-
    /* get the root window */
    root = ecore_x_window_root_first_get();
 
@@ -285,10 +279,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
      }
 
    /* fill in current values */
-   sd->current.x = sd->crtc.x;
-   sd->current.y = sd->crtc.y;
-   sd->current.w = sd->crtc.w;
-   sd->current.h = sd->crtc.h;
    sd->current.mode = sd->crtc.mode;
    sd->current.orient = sd->crtc.orient;
 
@@ -383,7 +373,7 @@ e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid, Evas_Coord gx, Eva
 }
 
 void 
-e_smart_monitor_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
+e_smart_monitor_grid_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
 {
    E_Smart_Data *sd;
 
@@ -428,6 +418,28 @@ e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy)
 
    /* set the background image */
    _e_smart_monitor_background_set(sd, desk->x, desk->y);
+}
+
+void 
+e_smart_monitor_current_geometry_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   sd->current.x = x;
+   sd->current.y = y;
+   sd->current.w = w;
+   sd->current.h = h;
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, x, y);
+
+   /* set monitor resolution text */
+   _e_smart_monitor_resolution_set(sd, w, h);
 }
 
 /* smart functions */
@@ -1164,6 +1176,9 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
+   /* if the monitor is disabled, get out */
+   if (!sd->current.enabled) return;
+
    /* call appropriate function based on current action */
    if (sd->resizing) 
      _e_smart_monitor_resize_event(sd, mon, event);
@@ -1246,7 +1261,7 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
 
    /* record current size of monitor */
    evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
-                             &sd->crtc.w, &sd->crtc.h);
+                             &sd->current.w, &sd->current.h);
 
    /* set resizing flag */
    sd->resizing = EINA_TRUE;
@@ -1268,7 +1283,7 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 
    /* record current size of monitor */
    evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
-                             &sd->crtc.w, &sd->crtc.h);
+                             &sd->current.w, &sd->current.h);
 
    /* set resizing flag */
    sd->resizing = EINA_FALSE;
@@ -1497,11 +1512,12 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    dx = (ev->cur.canvas.x - ev->prev.canvas.x);
    dy = (ev->cur.canvas.y - ev->prev.canvas.y);
-   if ((dx == 0) && (dy == 0)) return;
 
    /* convert monitor size to canvas size */
+   printf("Virtual: %d %d\n", sd->current.w, sd->current.h);
    _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, 
                                             &mw, &mh);
+   printf("Canvas: %d %d\n", mw, mh);
 
    /* factor in resize difference and convert to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), 
@@ -1510,6 +1526,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* update current size values */
    sd->current.w = nw;
    sd->current.h = nh;
+   printf("New Virtual: %d %d\n", nw, nh);
 
    /* based on orientation, try to find a valid mode */
    if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
