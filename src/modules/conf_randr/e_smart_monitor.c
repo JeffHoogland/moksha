@@ -1002,11 +1002,11 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* try to find a mode that matches this new size */
    if ((mode = _e_smart_monitor_mode_find(sd, nw, nh, EINA_FALSE)))
      {
-        /* TODO: update current mode */
-
+        /* update monitor size in the grid */
         evas_object_grid_pack(sd->grid.obj, mon, 
                               sd->cx, sd->cy, mode->width, mode->height);
 
+        /* update resolution text */
         _e_smart_monitor_resolution_set(sd, mode->width, mode->height);
      }
 }
