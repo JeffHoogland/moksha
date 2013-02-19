@@ -84,6 +84,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(evas, 0, 0);
 
    /* try to create randr smart widget */
+   if ((cfdata->o_randr = e_smart_randr_add(evas)))
+     {
+        /* append randr widget to list object */
+        e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
+     }
+
    return o;
 }
 
