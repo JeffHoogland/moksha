@@ -1,6 +1,16 @@
 #ifndef E_MOD_MAIN_H
 # define E_MOD_MAIN_H
 
+# define LOGFNS 1
+
+# ifdef LOGFNS
+#  include <stdio.h>
+#  define LOGFN(fl, ln, fn) printf("-CONF-RANDR: %25s: %5i - %s\n", fl, ln, fn);
+# else
+#  define LOGFN(fl, ln, fn)
+# endif
+
+
 # ifndef ECORE_X_RANDR_1_2
 #  define ECORE_X_RANDR_1_2 ((1 << 16) | 2)
 # endif
