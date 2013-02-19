@@ -1,10 +1,5 @@
 #include "e.h"
 
-#define E_RANDR_VERSION_1_1 ((1 << 16) | 1)
-#define E_RANDR_VERSION_1_2 ((1 << 16) | 2)
-#define E_RANDR_VERSION_1_3 ((1 << 16) | 3)
-#define E_RANDR_VERSION_1_4 ((1 << 16) | 4)
-
 /* local function prototypes */
 static Eina_Bool _e_randr_config_load(void);
 static void _e_randr_config_new(void);
@@ -149,7 +144,6 @@ _e_randr_config_load(void)
    E_CONFIG_VAL(D, T, version, INT);
    E_CONFIG_VAL(D, T, screen.width, INT);
    E_CONFIG_VAL(D, T, screen.height, INT);
-   E_CONFIG_VAL(D, T, screen.timestamp, DOUBLE);
    E_CONFIG_LIST(D, T, crtcs, _e_randr_crtc_edd);
 
    /* try to load the randr config */
@@ -274,6 +268,9 @@ _e_randr_config_new(void)
 
                        /* assign crtc for this output */
                        output_cfg->crtc = crtcs[i];
+
+                       /* set this output policy */
+                       output_cfg->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
                        /* TODO: Add code to determine policy */
 
                        /* get if this output is the primary */
