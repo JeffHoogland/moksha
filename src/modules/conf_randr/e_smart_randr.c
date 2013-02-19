@@ -87,6 +87,12 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
              /* pack this monitor into the layout */
              e_layout_pack(sd->o_layout, mon);
+
+             /* move this monitor to proper position */
+             e_layout_child_move(mon, crtc->x, crtc->y);
+
+             /* resize this monitor to proper size */
+             e_layout_child_resize(mon, crtc->w, crtc->h);
           }
      }
 }
