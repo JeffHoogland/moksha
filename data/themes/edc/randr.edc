@@ -128,7 +128,9 @@ group { name: "e/conf/randr/main/frame";
             rel1.to: "e.swallow.preview";
             rel1.relative: 0.0 1.0;
             rel1.offset: 0 -27;
-            rel2.to: "e.swallow.preview";
+            rel2.relative: 1.0 0.0;
+            rel2.to_x: "e.swallow.preview";
+            rel2.to_y: "e.event.indicator";
             box {
                layout: "horizontal";
                padding: 2 0;
@@ -410,7 +412,8 @@ group { name: "e/conf/randr/main/frame";
       part { name: "e.event.indicator"; type: RECT;
          description { state: "default" 0.0;
             color: 0 0 0 0;
-            max: 21 21;
+            max: 15 15;
+//            max: 21 21;
             align: 0.0 1.0;
          }
       }
