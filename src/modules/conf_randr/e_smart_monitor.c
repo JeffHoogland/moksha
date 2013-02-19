@@ -9,6 +9,9 @@ struct _E_Smart_Data
    /* canvas variable */
    Evas *evas;
 
+   /* geometry */
+   int x, y, w, h;
+
    /* crtc config */
    E_Randr_Crtc_Config *crtc;
 
@@ -114,6 +117,12 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* if there is no position change, then get out */
+   if ((sd->x == x) && (sd->y == y)) return;
+
+   sd->x = x;
+   sd->y = y;
 }
 
 static void 
@@ -123,6 +132,12 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* if there is no size change, then get out */
+   if ((sd->w == w) && (sd->h == h)) return;
+
+   sd->w = w;
+   sd->h = h;
 }
 
 static void 
