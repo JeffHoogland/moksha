@@ -23,11 +23,12 @@ struct _E_Smart_Data
      {
         /* reference to the grid we are packed into */
         Evas_Object *obj;
-        Evas_Coord x, y, w, h;
-     } grid;
 
-   /* virtual size of the grid */
-   Evas_Coord vw, vh;
+        Evas_Coord x, y, w, h;
+
+        /* virtual size of the grid */
+        Evas_Coord vw, vh;
+     } grid;
 
    /* test object */
    /* Evas_Object *o_bg; */
@@ -44,11 +45,11 @@ struct _E_Smart_Data
    /* background thumbnail */
    Evas_Object *o_thumb;
 
-   /* crtc config */
-   Ecore_X_Randr_Crtc crtc;
-
-   /* crtc geometry */
-   Evas_Coord cx, cy, cw, ch;
+   struct 
+     {
+        Ecore_X_Randr_Crtc id;
+        Evas_Coord x, y, w, h;
+     } crtc;
 
    /* output config */
    Ecore_X_Randr_Output output;
@@ -161,19 +162,19 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* set the crtc config */
-   sd->crtc = crtc;
+   sd->crtc.id = crtc;
 
    /* record the crtc geometry */
-   sd->cx = cx;
-   sd->cy = cy;
-   sd->cw = cw;
-   sd->ch = ch;
+   sd->crtc.x = cx;
+   sd->crtc.y = cy;
+   sd->crtc.w = cw;
+   sd->crtc.h = ch;
 
    /* set monitor position text */
-   _e_smart_monitor_position_set(sd, sd->cx, sd->cy);
+   _e_smart_monitor_position_set(sd, sd->crtc.x, sd->crtc.y);
 
    /* set monitor resolution text */
-   _e_smart_monitor_resolution_set(sd, sd->cw, sd->ch);
+   _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
 
    /* get the root window */
    root = ecore_x_window_root_first_get();
@@ -184,6 +185,8 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    /* check if orientation is possible and disable if not */
    if (orients <= ECORE_X_RANDR_ORIENTATION_ROT_0)
      edje_object_signal_emit(sd->o_frame, "e,state,rotate,disabled", "e");
+
+   /* TODO: check crtc current mode to determine if enabled */
 }
 
 void 
@@ -270,8 +273,8 @@ e_smart_monitor_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   sd->vw = vw;
-   sd->vh = vh;
+   sd->grid.vw = vw;
+   sd->grid.vh = vh;
 }
 
 void 
@@ -301,7 +304,7 @@ e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy)
    sd->zone_num = zone->num;
 
    /* get the desk */
-   if (!(desk = e_desk_at_xy_get(zone, sd->cx, sd->cy)))
+   if (!(desk = e_desk_at_xy_get(zone, sd->crtc.x, sd->crtc.y)))
      desk = e_desk_current_get(zone);
 
    /* set the background image */
@@ -693,8 +696,8 @@ _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event
        ((ev->zone < 0) || (ev->zone == (int)sd->zone_num)))
      {
         /* check this bg event happened on our desktop */
-        if (((ev->desk_x < 0) || (ev->desk_x == sd->cx)) && 
-            ((ev->desk_y < 0) || (ev->desk_y == sd->cy)))
+        if (((ev->desk_x < 0) || (ev->desk_x == sd->crtc.x)) && 
+            ((ev->desk_y < 0) || (ev->desk_y == sd->crtc.y)))
           {
              /* set the livethumb preview to the background of this desktop */
              _e_smart_monitor_background_set(sd, ev->desk_x, ev->desk_y);
@@ -763,15 +766,15 @@ _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
 static inline void 
 _e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy)
 {
-   if (cx) *cx = (vx * ((double)(sd->grid.w) / sd->vw)) + sd->grid.x;
-   if (cy) *cy = (vy * ((double)(sd->grid.h) / sd->vh)) + sd->grid.y;
+   if (cx) *cx = (vx * ((double)(sd->grid.w) / sd->grid.vw)) + sd->grid.x;
+   if (cy) *cy = (vy * ((double)(sd->grid.h) / sd->grid.vh)) + sd->grid.y;
 }
 
 static inline void 
 _e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy)
 {
-   if (vx) *vx = ((cx - sd->grid.x) * sd->vw) / (double)sd->grid.w;
-   if (vy) *vy = ((cy - sd->grid.y) * sd->vh) / (double)sd->grid.h;
+   if (vx) *vx = ((cx - sd->grid.x) * sd->grid.vw) / (double)sd->grid.w;
+   if (vy) *vy = ((cy - sd->grid.y) * sd->grid.vh) / (double)sd->grid.h;
 }
 
 static Ecore_X_Randr_Mode_Info *
@@ -954,7 +957,8 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
    evas_pointer_canvas_xy_get(sd->evas, &sd->rx, &sd->ry);
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch);
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
+                             &sd->crtc.w, &sd->crtc.h);
 
    /* set resizing flag */
    sd->resizing = EINA_TRUE;
@@ -975,7 +979,8 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch);
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
+                             &sd->crtc.w, &sd->crtc.h);
 
    /* set resizing flag */
    sd->resizing = EINA_FALSE;
@@ -1055,7 +1060,8 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((dx == 0) && (dy == 0)) return;
 
    /* convert monitor size to canvas size */
-   _e_smart_monitor_coord_virtual_to_canvas(sd, sd->cw, sd->ch, &mw, &mh);
+   _e_smart_monitor_coord_virtual_to_canvas(sd, sd->crtc.w, sd->crtc.h, 
+                                            &mw, &mh);
 
    /* factor in resize difference and convert to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), &nw, &nh);
@@ -1067,15 +1073,15 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if (nh > sd->max.mode_height) nh = sd->max.mode_height;
 
    /* update current size values */
-   sd->cw = nw;
-   sd->ch = nh;
+   sd->crtc.w = nw;
+   sd->crtc.h = nh;
 
    /* try to find a mode that matches this new size */
    if ((mode = _e_smart_monitor_mode_find(sd, nw, nh, EINA_FALSE)))
      {
         /* update monitor size in the grid */
-        evas_object_grid_pack(sd->grid.obj, mon, 
-                              sd->cx, sd->cy, mode->width, mode->height);
+        evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
+                              mode->width, mode->height);
 
         /* update resolution text */
         _e_smart_monitor_resolution_set(sd, mode->width, mode->height);
