@@ -7,6 +7,7 @@ Evas_Object *e_smart_monitor_add(Evas *evas);
 void e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc);
 void e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output);
 void e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid);
+void e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy);
 
 # endif
 #endif

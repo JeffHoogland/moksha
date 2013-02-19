@@ -32,11 +32,26 @@ struct _E_Smart_Data
    /* stand object */
    Evas_Object *o_stand;
 
+   /* background thumbnail */
+   Evas_Object *o_thumb;
+
    /* crtc config */
    Ecore_X_Randr_Crtc crtc;
 
+   /* crtc geometry */
+   Evas_Coord cx, cy, cw, ch;
+
    /* output config */
    Ecore_X_Randr_Output output;
+
+   /* container number */
+   unsigned int con_num;
+
+   /* zone number */
+   unsigned int zone_num;
+
+   /* event handler for background image updates */
+   Ecore_Event_Handler *bg_update_hdl;
 
    /* list of modes */
    Eina_List *modes;
@@ -58,6 +73,8 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 /* local function prototypes */
 static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
+static void _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy);
+static Eina_Bool _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -88,6 +105,7 @@ void
 e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
 {
    E_Smart_Data *sd;
+   Ecore_X_Window root = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -96,6 +114,13 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
 
    /* set the crtc config */
    sd->crtc = crtc;
+
+   /* get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get the geometry of this crtc and record it */
+   ecore_x_randr_crtc_geometry_get(root, crtc, 
+                                   &sd->cx, &sd->cy, &sd->cw, &sd->ch);
 }
 
 void 
@@ -175,7 +200,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
      }
 
    /* set the align hints */
-   /* evas_object_size_hint_align_set(sd->o_base, 0.0, 0.0); */
    evas_object_size_hint_align_set(sd->o_frame, 0.0, 0.0);
 
    /* get the smallest mode */
@@ -193,6 +217,38 @@ e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    sd->grid = grid;
+}
+
+void 
+e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy)
+{
+   E_Smart_Data *sd;
+   E_Manager *man;
+   E_Container *con;
+   E_Zone *zone;
+   E_Desk *desk;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* get the current manager */
+   man = e_manager_current_get();
+
+   /* get the current container */
+   con = e_container_current_get(man);
+   sd->con_num = con->num;
+
+   /* get the zone number */
+   if (!(zone = e_container_zone_at_point_get(con, dx, dy)))
+     zone = e_util_zone_current_get(man);
+   sd->zone_num = zone->num;
+
+   /* get the desk */
+   if (!(desk = e_desk_at_xy_get(zone, sd->cx, sd->cy)))
+     desk = e_desk_current_get(zone);
+
+   /* set the background image */
+   _e_smart_monitor_background_set(sd, desk->x, desk->y);
 }
 
 /* smart functions */
@@ -225,12 +281,23 @@ _e_smart_add(Evas_Object *obj)
    e_theme_edje_object_set(sd->o_frame, "base/theme/widgets", 
                            "e/conf/randr/main/frame");
    edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
+   /* TODO: Add callback functions */
 
    /* create the stand */
    sd->o_stand = edje_object_add(sd->evas);
    e_theme_edje_object_set(sd->o_stand, "base/theme/widgets", 
                            "e/conf/randr/main/stand");
    edje_object_part_swallow(sd->o_base, "e.swallow.stand", sd->o_stand);
+
+   /* create the background preview */
+   sd->o_thumb = e_livethumb_add(sd->evas);
+   edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
+   /* TODO: Add callback functions */
+
+   /* setup event handler for bg image updates */
+   sd->bg_update_hdl = 
+     ecore_event_handler_add(E_EVENT_BG_UPDATE, 
+                             _e_smart_monitor_background_update, sd);
 
    /* set the objects smart data */
    evas_object_smart_data_set(obj, sd);
@@ -247,6 +314,10 @@ _e_smart_del(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   /* delete the bg update handler */
+   ecore_event_handler_del(sd->bg_update_hdl);
+
+   evas_object_del(sd->o_thumb);
    evas_object_del(sd->o_stand);
    evas_object_del(sd->o_frame);
    evas_object_del(sd->o_base);
@@ -287,7 +358,6 @@ static void
 _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
-   /* Evas_Coord gx, gy, gw, gh; */
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -299,6 +369,9 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    sd->w = w;
    sd->h = h;
+
+   /* set livethumb thumbnail size */
+   e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
 
    evas_object_resize(sd->o_base, w, h);
    /* evas_object_resize(sd->o_bg, w, h + 30); */
@@ -317,8 +390,6 @@ _e_smart_show(Evas_Object *obj)
    /* if we are already visible, then nothing to do */
    if (sd->visible) return;
 
-   evas_object_show(sd->o_frame);
-   evas_object_show(sd->o_stand);
    evas_object_show(sd->o_base);
    /* evas_object_show(sd->o_bg); */
 
@@ -339,8 +410,6 @@ _e_smart_hide(Evas_Object *obj)
    /* if we are already hidden, then nothing to do */
    if (!sd->visible) return;
 
-   evas_object_hide(sd->o_frame);
-   evas_object_hide(sd->o_stand);
    evas_object_hide(sd->o_base);
    /* evas_object_hide(sd->o_bg); */
 
@@ -356,7 +425,6 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   evas_object_clip_set(sd->o_frame, clip);
    evas_object_clip_set(sd->o_base, clip);
    /* evas_object_clip_set(sd->o_bg, clip); */
 }
@@ -369,7 +437,6 @@ _e_smart_clip_unset(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   evas_object_clip_unset(sd->o_frame);
    evas_object_clip_unset(sd->o_base);
    /* evas_object_clip_unset(sd->o_bg); */
 }
@@ -435,4 +502,56 @@ _e_smart_monitor_modes_sort(const void *data1, const void *data2)
      }
 
    return 1;
+}
+
+static void 
+_e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy)
+{
+   const char *bg = NULL;
+
+   /* check for valid smart data */
+   if (!sd) return;
+
+   /* try to get the background file for this desktop */
+   if ((bg = e_bg_file_get(sd->con_num, sd->zone_num, dx, dy)))
+     {
+        Evas_Object *o;
+
+        /* try to get the livethumb object, create if needed */
+        if (!(o = e_livethumb_thumb_get(sd->o_thumb)))
+          o = edje_object_add(e_livethumb_evas_get(sd->o_thumb));
+
+        /* tell the object to use this edje file & group */
+        edje_object_file_set(o, bg, "e/desktop/background");
+
+        /* tell the livethumb to use this object */
+        e_livethumb_thumb_set(sd->o_thumb, o);
+     }
+}
+
+static Eina_Bool 
+_e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event)
+{
+   E_Smart_Data *sd;
+   E_Event_Bg_Update *ev;
+
+   /* try to get the smart data */
+   if (!(sd = data)) return ECORE_CALLBACK_PASS_ON;
+
+   ev = event;
+
+   /* check this bg event happened on our container */
+   if (((ev->container < 0) || (ev->container == (int)sd->con_num)) && 
+       ((ev->zone < 0) || (ev->zone == (int)sd->zone_num)))
+     {
+        /* check this bg event happened on our desktop */
+        if (((ev->desk_x < 0) || (ev->desk_x == sd->cx)) && 
+            ((ev->desk_y < 0) || (ev->desk_y == sd->cy)))
+          {
+             /* set the livethumb preview to the background of this desktop */
+             _e_smart_monitor_background_set(sd, ev->desk_x, ev->desk_y);
+          }
+     }
+
+   return ECORE_CALLBACK_PASS_ON;
 }
