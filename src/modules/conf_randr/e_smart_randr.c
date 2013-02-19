@@ -36,6 +36,8 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
+static Evas_Object *_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc);
+
 /* external functions exposed by this widget */
 Evas_Object *
 e_smart_randr_add(Evas *evas)
@@ -210,40 +212,40 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              int noutput = 0, j = 0;
              intptr_t *o;
 
-             /* printf("Checking Crtc: %d\n", crtcs[i]); */
+             printf("Checking Crtc: %d\n", crtcs[i]);
+
+             /* TODO: Add EFL 1.8 check here and optimize this code */
 
              /* get the geometry for this crtc */
              ecore_x_randr_crtc_geometry_get(root, crtcs[i], 
                                              &cx, &cy, &cw, &ch);
-             /* printf("\tGeometry: %d %d %d %d\n", cx, cy, cw, ch); */
+             printf("\tGeometry: %d %d %d %d\n", cx, cy, cw, ch);
 
              routputs = 
                ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutput);
-             /* printf("\t\tNum Of Outputs: %d\n", noutput); */
+             printf("\t\tNum Of Outputs: %d\n", noutput);
 
              if ((noutput == 0) || (!routputs))
                {
-                  /* int p = 0; */
-
                   /* find Possible outputs */
                   routputs = 
                     ecore_x_randr_crtc_possible_outputs_get(root, crtcs[i], 
                                                             &noutput);
                   /* printf("\t\tNum Of Possible: %d\n", noutput); */
                   if ((!noutput) || (!routputs)) continue;
-
-                  /* for (p = 0; p < noutput; p++) */
-                  /*   { */
-                  /*      printf("\t\t\tOutput %d Crtc Is: %d\n", routputs[p],  */
-                  /*             ecore_x_randr_output_crtc_get(root, routputs[p])); */
-                  /*   } */
                }
 
+             /* loop possible outputs */
              for (j = 0; j < noutput; j++)
                {
                   Ecore_X_Randr_Crtc rcrtc;
 
+                  /* get this outputs crtc */
                   rcrtc = ecore_x_randr_output_crtc_get(root, routputs[j]);
+
+                  /* if crtc is not 0 (disabled), then check if it matches 
+                   * the one we are currently working with. If it does not 
+                   * match, then this is not a possible output for us */
                   if ((rcrtc != 0) && (rcrtc != crtcs[i]))
                     continue;
 
@@ -266,6 +268,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
                   output = (int)(long)o;
 
+                  printf("\t\t\tOutput %d Crtc Is: %d\n", output, 
+                         ecore_x_randr_output_crtc_get(root, output));
+
                   if ((cw == 0) && (ch == 0))
                     {
                        Ecore_X_Randr_Mode *modes;
@@ -280,7 +285,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
                        /* get the size of the largest mode */
                        ecore_x_randr_mode_size_get(root, modes[0], &mw, &mh);
-                       /* printf("\t\t\t\tOutput Size: %d %d\n", mw, mh); */
 
                        /* free any allocated memory from ecore_x_randr */
                        free(modes);
@@ -318,6 +322,56 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
                   /* tell monitor to set the background preview */
                   e_smart_monitor_background_set(mon, cx, cy);
+
+                  /* if we have a previous crtc */
+                  if (i > 0)
+                    {
+                       /* check if this crtc is a clone of that one */
+                       Ecore_X_Randr_Crtc pcrtc = 0;
+                       Evas_Coord px = 0, py = 0;
+
+                       pcrtc = crtcs[i - 1];
+
+                       /* get the geometry for this previous crtc */
+                       ecore_x_randr_crtc_geometry_get(root, pcrtc, 
+                                                       &px, &py, NULL, NULL);
+
+                       /* check if the geometry's match */
+                       if ((px == cx) && (py == cy))
+                         {
+                            Ecore_X_Randr_Orientation orient, porient;
+
+                            orient = 
+                              ecore_x_randr_crtc_orientation_get(root, crtcs[i]);
+
+                            porient = 
+                              ecore_x_randr_crtc_orientation_get(root, pcrtc);
+
+                            /* check orientation */
+                            if ((porient == orient))
+                              {
+                                 Ecore_X_Randr_Mode mode = 0, pmode = 0;
+
+                                 mode = 
+                                   ecore_x_randr_crtc_mode_get(root, crtcs[i]);
+                                 pmode = 
+                                   ecore_x_randr_crtc_mode_get(root, pcrtc);
+
+                                 /* check mode */
+                                 if ((pmode == mode))
+                                   {
+                                      Evas_Object *pmon;
+
+                                      /* find monitor for this prev crtc */
+                                      if ((pmon = _e_smart_randr_monitor_crtc_find(sd, pcrtc)))
+                                        {
+                                           /* tell This monitor it is cloned into previous */
+                                           e_smart_monitor_clone_set(mon, pmon);
+                                        }
+                                   }
+                              }
+                         }
+                    }
                }
 
              /* free any allocated memory from ecore_x_randr */
@@ -553,4 +607,23 @@ _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *o
    /* loop the monitors and update grid geometry */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
      e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
+}
+
+static Evas_Object *
+_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc)
+{
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   if ((!sd) || (!crtc)) return NULL;
+
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Ecore_X_Randr_Crtc mcrtc;
+
+        if ((mcrtc = e_smart_monitor_crtc_get(mon)))
+          if ((mcrtc == crtc)) return mon;
+     }
+
+   return NULL;
 }
