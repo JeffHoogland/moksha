@@ -182,16 +182,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    /* set monitor resolution text */
    _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
 
-   /* FIXME: Big Fat Fixme here !!!
-    * 
-    * This code uses a lot of ecore_x_randr_crtc functions, which means 
-    * a LOT of X Round Trips !!! :(
-    * 
-    * Ideally, we should have an ecore_x_randr_crtc_info_get function that 
-    * will return the XRRCrtcInfo structure so we can fetch it only once, 
-    * use it for our purposes, and be done
-    */
-
    /* get the root window */
    root = ecore_x_window_root_first_get();
 
