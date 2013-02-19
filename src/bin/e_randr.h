@@ -29,6 +29,7 @@ struct _E_Randr_Output_Config
    unsigned int *clones; // array of clones (each element of type ecore_x_randr output id (xid)
    unsigned long clone_count; // number of clones
    unsigned char connected; // connection status 0 == connected, 1 == disconnected
+   unsigned char exists; // is this output present in X ?
 };
 
 struct _E_Randr_Crtc_Config
@@ -37,6 +38,7 @@ struct _E_Randr_Crtc_Config
    int x, y, width, height; // geometry
    unsigned int orient; // value of the ecore_x_randr_orientation
    unsigned int mode; // ecore_x_randr mode id (xid)
+   unsigned char exists; // is this crtc present in X ?
    Eina_List *outputs; // list of outputs for this crtc
 };
 
