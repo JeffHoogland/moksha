@@ -494,14 +494,23 @@ _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void
      {
         if (crtc_cfg->xid == ev->crtc)
           {
-             crtc_cfg->x = ev->geo.x;
-             crtc_cfg->y = ev->geo.y;
-             crtc_cfg->width = ev->geo.w;
-             crtc_cfg->height = ev->geo.h;
-             crtc_cfg->orient = ev->orientation;
-             crtc_cfg->mode = ev->mode;
+             if ((crtc_cfg->x != ev->geo.x) || 
+                 (crtc_cfg->y != ev->geo.y) || 
+                 (crtc_cfg->width != ev->geo.w) || 
+                 (crtc_cfg->height != ev->geo.h) || 
+                 (crtc_cfg->orient != ev->orientation) || 
+                 (crtc_cfg->mode != ev->mode))
+               {
+                  crtc_cfg->x = ev->geo.x;
+                  crtc_cfg->y = ev->geo.y;
+                  crtc_cfg->width = ev->geo.w;
+                  crtc_cfg->height = ev->geo.h;
+                  crtc_cfg->orient = ev->orientation;
+                  crtc_cfg->mode = ev->mode;
 
-             changed = EINA_TRUE;
+                  changed = EINA_TRUE;
+               }
+
              break;
           }
      }
@@ -546,11 +555,19 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
           {
              if (output_cfg->xid == ev->output)
                {
-                  output_cfg->crtc = ev->crtc;
-                  output_cfg->connected = 
-                    ((ev->connection) ? EINA_FALSE : EINA_TRUE);
+                  Eina_Bool connected = EINA_FALSE;
 
-                  changed = EINA_TRUE;
+                  connected = ((ev->connection) ? EINA_FALSE : EINA_TRUE);
+
+                  if ((output_cfg->crtc != ev->crtc) || 
+                      (output_cfg->connected != connected))
+                    {
+                       output_cfg->crtc = ev->crtc;
+                       output_cfg->connected = connected;
+
+                       changed = EINA_TRUE;
+                    }
+
                   break;
                }
           }
