@@ -13,7 +13,8 @@ struct _E_Config_Dialog_Data
 static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata EINA_UNUSED);
+static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+static void _randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 
 /* public functions */
 E_Config_Dialog *
@@ -86,6 +87,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      {
         Evas_Coord mw = 0, mh = 0;
 
+        /* hook into randr widget changed callback */
+        evas_object_smart_callback_add(cfdata->o_randr, "randr_changed", 
+                                       _randr_cb_changed, cfd);
+
         /* tell randr widget to calculate virtual size */
         e_smart_randr_virtual_size_calc(cfdata->o_randr);
 
@@ -109,8 +114,25 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata EINA_UNUSED)
+_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
-   /* return success */
+   e_smart_randr_changes_apply(cfdata->o_randr);
+
+   /* FIXME: NB: TODO: TESTING !!! */
+   /* ecore_x_randr_crtc_clone_set(ecore_x_window_root_first_get(), 96, 95); */
+   /* ecore_x_randr_screen_reset(ecore_x_window_root_first_get()); */
+
    return 1;
+}
+
+static void 
+_randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   E_Config_Dialog *cfd;
+   Eina_Bool changed = EINA_FALSE;
+
+   if (!(cfd = data)) return;
+
+   changed = e_smart_randr_changed_get(obj);
+   e_config_dialog_changed_set(cfd, changed);
 }
