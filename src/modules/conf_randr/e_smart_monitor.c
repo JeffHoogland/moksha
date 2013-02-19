@@ -91,6 +91,7 @@ static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *ev
 static void _e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
 static void _e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
 
+static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event);
 static void _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
@@ -100,6 +101,8 @@ static void _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas
 
 static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+
+static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -261,6 +264,8 @@ e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -275,6 +280,8 @@ e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy)
    E_Container *con;
    E_Zone *zone;
    E_Desk *desk;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -331,6 +338,9 @@ _e_smart_add(Evas_Object *obj)
    edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
 
    /* add callbacks for frame events */
+   evas_object_event_callback_add(sd->o_frame, EVAS_CALLBACK_MOUSE_MOVE, 
+                                  _e_smart_monitor_frame_cb_mouse_move, obj);
+
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,in", "e", 
                                    _e_smart_monitor_frame_cb_resize_in, NULL);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,out", "e", 
@@ -413,6 +423,9 @@ _e_smart_del(Evas_Object *obj)
    if (sd->o_frame)
      {
         /* delete the event callbacks */
+        evas_object_event_callback_del(sd->o_frame, EVAS_CALLBACK_MOUSE_MOVE, 
+                                       _e_smart_monitor_frame_cb_mouse_move);
+
         edje_object_signal_callback_del(sd->o_frame, "e,action,resize,in", "e", 
                                         _e_smart_monitor_frame_cb_resize_in);
         edje_object_signal_callback_del(sd->o_frame, "e,action,resize,out", "e", 
@@ -540,6 +553,8 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -551,6 +566,8 @@ static void
 _e_smart_clip_unset(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -605,6 +622,8 @@ _e_smart_monitor_modes_sort(const void *data1, const void *data2)
 {
    const Ecore_X_Randr_Mode_Info *m1, *m2 = NULL;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    if (!(m1 = data1)) return 1;
    if (!(m2 = data2)) return -1;
 
@@ -626,6 +645,8 @@ static void
 _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy)
 {
    const char *bg = NULL;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* check for valid smart data */
    if (!sd) return;
@@ -653,6 +674,8 @@ _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event
    E_Smart_Data *sd;
    E_Event_Bg_Update *ev;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the smart data */
    if (!(sd = data)) return ECORE_CALLBACK_PASS_ON;
 
@@ -679,6 +702,8 @@ _e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y)
 {
    char buff[1024];
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    snprintf(buff, sizeof(buff), "%d + %d", x, y);
    edje_object_part_text_set(sd->o_frame, "e.text.position", buff);
 }
@@ -687,6 +712,8 @@ static void
 _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h)
 {
    char buff[1024];
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    snprintf(buff, sizeof(buff), "%d x %d", w, h);
    edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
@@ -697,6 +724,8 @@ _e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr)
 {
    Evas_Object *ow;
    E_Win *win;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to find the E_Win for this object */
    if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
@@ -713,6 +742,8 @@ _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
    Evas_Object *ow;
    E_Win *win;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to find the E_Win for this object */
    if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
      return;
@@ -725,6 +756,8 @@ _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
 static void 
 _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer to indicate we can be clicked */
    _e_smart_monitor_pointer_push(obj, "hand");
 }
@@ -732,6 +765,8 @@ _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSE
 static void 
 _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer back to default */
    _e_smart_monitor_pointer_pop(obj, "hand");
 }
@@ -740,6 +775,8 @@ static void
 _e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Up *ev;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
    if (ev->button != 1) return;
@@ -753,6 +790,8 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNU
 {
    Evas_Event_Mouse_Down *ev;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    ev = event;
    if (ev->button != 1) return;
 
@@ -761,8 +800,26 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNU
 }
 
 static void 
+_e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* call appropriate function based on current action */
+   if (sd->resizing) _e_smart_monitor_resize_event(sd, mon, event);
+}
+
+static void 
 _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer to indicate we can be resized */
    _e_smart_monitor_pointer_push(obj, "resize_br");
 }
@@ -770,6 +827,8 @@ _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, co
 static void 
 _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer back to default */
    _e_smart_monitor_pointer_pop(obj, "resize_br");
 }
@@ -777,6 +836,8 @@ _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, c
 static void 
 _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer to indicate we can be rotated */
    _e_smart_monitor_pointer_push(obj, "rotate");
 }
@@ -784,6 +845,8 @@ _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, co
 static void 
 _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer back to default */
    _e_smart_monitor_pointer_pop(obj, "rotate");
 }
@@ -791,6 +854,8 @@ _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, c
 static void 
 _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer to indicate we can be toggled */
    _e_smart_monitor_pointer_push(obj, "plus");
 }
@@ -798,6 +863,8 @@ _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj,
 static void 
 _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* set the mouse pointer back to default */
    _e_smart_monitor_pointer_pop(obj, "plus");
 }
@@ -807,6 +874,8 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the monitor object */
    if (!(mon = data)) return;
@@ -830,6 +899,8 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    Evas_Object *mon;
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the monitor object */
    if (!(mon = data)) return;
 
@@ -838,4 +909,14 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 
    /* set resizing flag */
    sd->resizing = EINA_FALSE;
+}
+
+static void 
+_e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ev = event;
 }
