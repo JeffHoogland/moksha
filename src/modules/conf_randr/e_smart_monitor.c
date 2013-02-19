@@ -12,6 +12,9 @@ struct _E_Smart_Data
    /* geometry */
    int x, y, w, h;
 
+   /* test object */
+   Evas_Object *o_base;
+
    /* crtc config */
    E_Randr_Crtc_Config *crtc;
 
@@ -23,9 +26,9 @@ struct _E_Smart_Data
 
    /* visibility flag */
    Eina_Bool visible : 1;
-}
+};
 
-/* local function prototypes */
+/* smart function prototypes */
 static void _e_smart_add(Evas_Object *obj);
 static void _e_smart_del(Evas_Object *obj);
 static void _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
@@ -35,6 +38,7 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 
+/* local function prototypes */
 static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 
@@ -42,6 +46,8 @@ static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
 {
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    static Evas_Smart *smart = NULL;
    static const Evas_Smart_Class sc = 
      {
@@ -66,6 +72,8 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Config *crtc)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -78,6 +86,8 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -88,17 +98,22 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
    _e_smart_monitor_modes_fill(sd);
 }
 
-/* local functions */
+/* smart functions */
 static void 
 _e_smart_add(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to allocate the smart data structure */
    if (!(sd = E_NEW(E_Smart_Data, 1))) return;
 
    /* grab the canvas */
    sd->evas = evas_object_evas_get(obj);
+
+   sd->o_base = evas_object_rectangle_add(sd->evas);
+   evas_object_color_set(sd->o_base, 255, 0, 0, 255);
 
    /* set the objects smart data */
    evas_object_smart_data_set(obj, sd);
@@ -110,8 +125,12 @@ _e_smart_del(Evas_Object *obj)
    E_Smart_Data *sd;
    Ecore_X_Randr_Mode_Info *mode;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   evas_object_del(sd->o_base);
 
    /* free the list of modes */
    EINA_LIST_FREE(sd->modes, mode)
@@ -129,6 +148,8 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
@@ -137,12 +158,16 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    sd->x = x;
    sd->y = y;
+
+   evas_object_move(sd->o_base, x, y);
 }
 
 static void 
 _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -152,6 +177,8 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    sd->w = w;
    sd->h = h;
+
+   evas_object_resize(sd->o_base, w, h);
 }
 
 static void 
@@ -159,11 +186,15 @@ _e_smart_show(Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if we are already visible, then nothing to do */
    if (sd->visible) return;
+
+   evas_object_show(sd->o_base);
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
@@ -174,11 +205,15 @@ _e_smart_hide(Evas_Object *obj)
 {
    E_Smart_Data *sd;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if we are already hidden, then nothing to do */
    if (!sd->visible) return;
+
+   evas_object_hide(sd->o_base);
 
    /* set visibility flag */
    sd->visible = EINA_FALSE;
@@ -191,6 +226,8 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   evas_object_clip_set(sd->o_base, clip);
 }
 
 static void 
@@ -200,14 +237,19 @@ _e_smart_clip_unset(Evas_Object *obj)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   evas_object_clip_unset(sd->o_base);
 }
 
+/* local functions */
 static void 
 _e_smart_monitor_modes_fill(E_Smart_Data *sd)
 {
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Mode *modes;
    int num = 0, i = 0;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* safety check */
    if (!sd) return;
