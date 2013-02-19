@@ -51,6 +51,55 @@ e_smart_randr_add(Evas *evas)
 }
 
 void 
+e_smart_randr_virtual_size_calc(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Ecore_X_Window root = 0;
+   Eina_List *l = NULL;
+   E_Randr_Crtc_Config *crtc;
+   Evas_Coord vw = 0, vh = 0;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* grab the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* loop the list of crtcs in our config */
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc)
+     {
+        Eina_List *o = NULL;
+        E_Randr_Output_Config *output;
+
+        /* loop the list of outputs in this crtc */
+        EINA_LIST_FOREACH(crtc->outputs, o, output)
+          {
+             Ecore_X_Randr_Mode *modes;
+             Evas_Coord mw = 0, mh = 0;
+             int num = 0;
+
+             /* get the modes for this output
+              * 
+              * NB: Xrandr returns these modes in order of largest first */
+             modes = ecore_x_randr_output_modes_get(root, output->xid, &num, NULL);
+             if (!modes) continue;
+
+             /* get the size of the largest mode */
+             ecore_x_randr_mode_size_get(root, modes[0], &mw, &mh);
+
+             vw += MAX(mw, mh);
+             vh += MAX(mw, mh);
+
+             /* free any allocated memory from ecore_x_randr */
+             free(modes);
+          }
+     }
+
+   /* set the layout virtual size */
+   e_layout_virtual_size_set(sd->o_layout, vw, vh);
+}
+
+void 
 e_smart_randr_monitors_create(Evas_Object *obj)
 {
    E_Smart_Data *sd;
