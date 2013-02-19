@@ -77,6 +77,13 @@ static void _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy);
 static Eina_Bool _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event);
 static void _e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y);
 static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h);
+static void _e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr);
+static void _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr);
+
+static void _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
+static void _e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -311,7 +318,16 @@ _e_smart_add(Evas_Object *obj)
    /* create the background preview */
    sd->o_thumb = e_livethumb_add(sd->evas);
    edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
-   /* TODO: Add callback functions */
+
+   /* add callbacks for thumbnail events */
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_IN, 
+                                  _e_smart_monitor_thumb_cb_mouse_in, NULL);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_OUT, 
+                                  _e_smart_monitor_thumb_cb_mouse_out, NULL);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_UP, 
+                                  _e_smart_monitor_thumb_cb_mouse_up, NULL);
+   evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_DOWN, 
+                                  _e_smart_monitor_thumb_cb_mouse_down, NULL);
 
    /* setup event handler for bg image updates */
    sd->bg_update_hdl = 
@@ -336,7 +352,22 @@ _e_smart_del(Evas_Object *obj)
    /* delete the bg update handler */
    ecore_event_handler_del(sd->bg_update_hdl);
 
-   evas_object_del(sd->o_thumb);
+   if (sd->o_thumb)
+     {
+        /* delete the event callbacks */
+        evas_object_event_callback_del(sd->o_thumb, EVAS_CALLBACK_MOUSE_IN, 
+                                       _e_smart_monitor_thumb_cb_mouse_in);
+        evas_object_event_callback_del(sd->o_thumb, EVAS_CALLBACK_MOUSE_OUT, 
+                                       _e_smart_monitor_thumb_cb_mouse_out);
+        evas_object_event_callback_del(sd->o_thumb, EVAS_CALLBACK_MOUSE_UP, 
+                                       _e_smart_monitor_thumb_cb_mouse_up);
+        evas_object_event_callback_del(sd->o_thumb, EVAS_CALLBACK_MOUSE_DOWN, 
+                                       _e_smart_monitor_thumb_cb_mouse_down);
+
+        /* delete the object */
+        evas_object_del(sd->o_thumb);
+     }
+
    evas_object_del(sd->o_stand);
    evas_object_del(sd->o_frame);
    evas_object_del(sd->o_base);
@@ -591,4 +622,72 @@ _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h)
 
    snprintf(buff, sizeof(buff), "%d x %d", w, h);
    edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
+}
+
+static void 
+_e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr)
+{
+   Evas_Object *ow;
+   E_Win *win;
+
+   /* try to find the E_Win for this object */
+   if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
+     return;
+   if (!(win = evas_object_data_get(ow, "E_Win"))) return;
+
+   /* tell E to set the pointer type */
+   e_pointer_type_push(win->pointer, obj, ptr);
+}
+
+static void 
+_e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
+{
+   Evas_Object *ow;
+   E_Win *win;
+
+   /* try to find the E_Win for this object */
+   if (!(ow = evas_object_name_find(evas_object_evas_get(obj), "E_Win")))
+     return;
+   if (!(win = evas_object_data_get(ow, "E_Win"))) return;
+
+   /* tell E to unset the pointer type */
+   e_pointer_type_pop(win->pointer, obj, ptr);
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   /* set the mouse pointer to indicate we can be clicked */
+   _e_smart_monitor_pointer_push(obj, "hand");
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   /* set the mouse pointer back to default */
+   _e_smart_monitor_pointer_pop(obj, "hand");
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+{
+   Evas_Event_Mouse_Up *ev;
+
+   ev = event;
+   if (ev->button != 1) return;
+
+   /* reset mouse pointer */
+   _e_smart_monitor_pointer_pop(obj, "move");
+}
+
+static void 
+_e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+{
+   Evas_Event_Mouse_Down *ev;
+
+   ev = event;
+   if (ev->button != 1) return;
+
+   /* reset mouse pointer */
+   _e_smart_monitor_pointer_push(obj, "move");
 }
