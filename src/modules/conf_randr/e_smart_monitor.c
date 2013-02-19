@@ -704,6 +704,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
           }
      }
 
+   /* record current values */
    mode = sd->current.mode;
    cx = sd->current.x;
    cy = sd->current.y;
@@ -711,6 +712,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    ch = sd->current.h;
    orient = sd->current.orient;
 
+   /* if we are cloned, we need to use the parent values */
    if ((sd->cloned) && (sd->parent))
      {
         E_Smart_Data *psd;
@@ -726,6 +728,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
           }
      }
 
+   /* apply the settings */
    if (!sd->current.enabled)
      ecore_x_randr_crtc_settings_set(root, sd->crtc.id, NULL, 
                                      0, 0, 0, 0, 
