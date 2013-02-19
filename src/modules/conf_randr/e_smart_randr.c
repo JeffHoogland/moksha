@@ -45,7 +45,11 @@ static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Ev
 
 static Evas_Object *_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc);
 static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
-static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+
+static void _e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
+static void _e_smart_randr_monitor_position_normalize(E_Smart_Data *sd);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -277,6 +281,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                                                  _e_smart_randr_monitor_cb_changed, obj);
                   evas_object_smart_callback_add(mon, "monitor_moved", 
                                                  _e_smart_randr_monitor_cb_moved, obj);
+                  evas_object_smart_callback_add(mon, "monitor_resized", 
+                                                 _e_smart_randr_monitor_cb_resized, obj);
 
                   /* add this monitor to our list */
                   sd->monitors = eina_list_append(sd->monitors, mon);
@@ -504,6 +510,8 @@ _e_smart_del(Evas_Object *obj)
                                        _e_smart_randr_monitor_cb_changed);
         evas_object_smart_callback_del(mon, "monitor_moved", 
                                        _e_smart_randr_monitor_cb_moved);
+        evas_object_smart_callback_del(mon, "monitor_resized", 
+                                       _e_smart_randr_monitor_cb_resized);
         evas_object_del(mon);
      }
 
@@ -703,22 +711,111 @@ _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void
 }
 
 static void 
-_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
 {
    E_Smart_Data *sd;
-   Evas_Object *randr, *mon;
-   Eina_List *l = NULL;
-   Evas_Coord minx = 0, miny = 0;
+   Evas_Object *randr;
 
    if (!(randr = data)) return;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(randr))) return;
 
-   /* ONE MONITOR MUST BE AT 0 X and ONE MUST BE AT 0 Y */
-
    /* normalize output positions so that upper left corner of all 
     * outputs is at 0,0 */
+   _e_smart_randr_monitor_position_normalize(sd);
+
+   /* tell main dialog that something changed and to enable apply button */
+   evas_object_smart_callback_call(randr, "randr_changed", NULL);
+}
+
+static void 
+_e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   E_Smart_Data *sd;
+   Evas_Object *randr, *mon;
+   Eina_List *l = NULL;
+
+   if (!(randr = data)) return;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(randr))) return;
+
+   /* move any monitors which are adjacent to this one to their new 
+    * positions due to the resize, specifying this resized monitor as 
+    * the one to skip */
+   _e_smart_randr_monitor_position_update(sd, obj, obj);
+
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        /* skip the monitor which was currently resized */
+        if ((mon == obj)) continue;
+
+        /* move any monitors which are adjacent to this one to their new 
+         * positions due to the resize, specifying this resized monitor as 
+         * the one to skip */
+        _e_smart_randr_monitor_position_update(sd, mon, obj);
+     }
+
+   /* tell main dialog that something changed and to enable apply button */
+   evas_object_smart_callback_call(randr, "randr_changed", NULL);
+}
+
+static void 
+_e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip)
+{
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Rectangle o;
+
+   /* get the current geometry of the monitor we were passed in */
+   e_smart_monitor_current_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   /* loop the list of monitors */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Eina_Rectangle m;
+
+        /* if this monitor is the one we want to skip, than skip it */
+        if (((skip) && (mon == skip)) || (mon == obj))
+          continue;
+
+        /* get the current geometry of this monitor */
+        e_smart_monitor_current_geometry_get(mon, &m.x, &m.y, &m.w, &m.h);
+
+        /* check if this monitor is adjacent to the original one, 
+         * if it is, then we need to move it */
+        if ((m.x == o.x) || (m.y == o.y))
+          {
+             if ((m.x == o.x))
+               {
+                  if ((m.y >= o.y))
+                    {
+                       /* vertical positioning */
+                       e_smart_monitor_current_geometry_set(mon, m.x, 
+                                                            (o.y + o.h), 
+                                                            m.w, m.h);
+                    }
+               }
+             else if ((m.y == o.y))
+               {
+                  if ((m.x >= o.x))
+                    {
+                       /* horizontal positioning */
+                       e_smart_monitor_current_geometry_set(mon, (o.x + o.w),
+                                                            m.y, m.w, m.h);
+                    }
+               }
+          }
+     }
+}
+
+static void 
+_e_smart_randr_monitor_position_normalize(E_Smart_Data *sd)
+{
+   Evas_Object *mon;
+   Eina_List *l = NULL;
+   Evas_Coord minx = 0, miny = 0;
 
    minx = 32768;
    miny = 32768;
@@ -749,7 +846,4 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_U
              e_smart_monitor_current_geometry_set(mon, mx, my, mw, mh);
           }
      }
-
-   /* tell main dialog that something changed and to enable apply button */
-   evas_object_smart_callback_call(randr, "randr_changed", NULL);
 }
