@@ -37,6 +37,7 @@ static void _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas
 static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 static Evas_Object *_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc);
+static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -263,6 +264,10 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   if (!(mon = e_smart_monitor_add(evas)))
                     continue;
 
+                  /* hook into monitor changed callback */
+                  evas_object_smart_callback_add(mon, "monitor_changed", 
+                                                 _e_smart_randr_monitor_cb_changed, obj);
+
                   /* add this monitor to our list */
                   sd->monitors = eina_list_append(sd->monitors, mon);
 
@@ -395,6 +400,52 @@ e_smart_randr_min_size_get(Evas_Object *obj, Evas_Coord *mw, Evas_Coord *mh)
    if (mh) *mh = (sd->vh / 10);
 }
 
+Eina_Bool 
+e_smart_randr_changed_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Eina_Bool changed = EINA_FALSE;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
+
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        E_Smart_Monitor_Changes changes = E_SMART_MONITOR_CHANGED_NONE;
+
+        changes = e_smart_monitor_changes_get(mon);
+        if (changes > E_SMART_MONITOR_CHANGED_NONE)
+          {
+             changed = EINA_TRUE;
+             break;
+          }
+     }
+
+   return changed;
+}
+
+void 
+e_smart_randr_changes_apply(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+   Eina_Bool need_reset = EINA_FALSE;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* tell each monitor to apply it's changes */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     if (e_smart_monitor_changes_apply(mon))
+       need_reset = EINA_TRUE;
+
+   if (need_reset) 
+     ecore_x_randr_screen_reset(ecore_x_window_root_first_get());
+}
+
 /* local functions */
 static void 
 _e_smart_add(Evas_Object *obj)
@@ -442,7 +493,11 @@ _e_smart_del(Evas_Object *obj)
 
    /* free the monitors */
    EINA_LIST_FREE(sd->monitors, mon)
-     evas_object_del(mon);
+     {
+        evas_object_smart_callback_del(mon, "monitor_changed", 
+                                       _e_smart_randr_monitor_cb_changed);
+        evas_object_del(mon);
+     }
 
    /* remove grid move callback */
    evas_object_event_callback_del(sd->o_grid, EVAS_CALLBACK_MOVE, 
@@ -626,4 +681,15 @@ _e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc)
      }
 
    return NULL;
+}
+
+static void 
+_e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+{
+   Evas_Object *randr;
+
+   if (!(randr = data)) return;
+
+   /* tell main dialog that something changed and to enable apply button */
+   evas_object_smart_callback_call(randr, "randr_changed", NULL);
 }
