@@ -80,6 +80,9 @@ struct _E_Smart_Data
 
    /* rotating flag */
    Eina_Bool rotating : 1;
+
+   /* current rotation */
+   int rotation;
 };
 
 /* smart function prototypes */
@@ -222,6 +225,9 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    /* get current mode */
    sd->crtc.mode = ecore_x_randr_crtc_mode_get(root, crtc);
 #endif
+
+   /* get the degree of rotation */
+   sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
 
    /* check crtc current mode to determine if enabled */
    if (sd->crtc.mode != 0)
@@ -1059,6 +1065,9 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
+   /* get the degree of rotation */
+   sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
+
    /* record current size of monitor */
    /* evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch); */
 
@@ -1168,10 +1177,11 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if (rotation == 0) return;
 
    /* factor in any existing rotation */
-   /* rotation += ; */
+   rotation += sd->rotation;
    rotation %= 360;
 
    /* update current rotation value */
+   sd->rotation = rotation;
 
    /* apply rotation map */
 }
