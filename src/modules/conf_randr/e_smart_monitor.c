@@ -104,10 +104,9 @@ e_smart_monitor_add(Evas *evas)
 }
 
 void 
-e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
+e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord cx, Evas_Coord cy, Evas_Coord cw, Evas_Coord ch)
 {
    E_Smart_Data *sd;
-   Ecore_X_Window root = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -117,12 +116,11 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
    /* set the crtc config */
    sd->crtc = crtc;
 
-   /* get the root window */
-   root = ecore_x_window_root_first_get();
-
-   /* get the geometry of this crtc and record it */
-   ecore_x_randr_crtc_geometry_get(root, crtc, 
-                                   &sd->cx, &sd->cy, &sd->cw, &sd->ch);
+   /* record the crtc geometry */
+   sd->cx = cx;
+   sd->cy = cy;
+   sd->cw = cw;
+   sd->ch = ch;
 
    /* set monitor position text */
    _e_smart_monitor_position_set(sd, sd->cx, sd->cy);
