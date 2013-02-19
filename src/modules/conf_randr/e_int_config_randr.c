@@ -12,7 +12,7 @@ struct _E_Config_Dialog_Data
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata EINA_UNUSED);
 
 /* public functions */
@@ -42,7 +42,6 @@ e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
                              "E", "screen/screen_setup",
                              "preferences-system-screen-resolution", 
                              0, v, NULL);
-   e_dialog_resizable_set(cfd->dia, 1);
 
    return cfd;
 }
@@ -75,7 +74,7 @@ _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
 
@@ -85,6 +84,8 @@ _basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data
    /* try to create randr smart widget */
    if ((cfdata->o_randr = e_smart_randr_add(evas)))
      {
+        Evas_Coord mw = 0, mh = 0;
+
         /* tell randr widget to calculate virtual size */
         e_smart_randr_virtual_size_calc(cfdata->o_randr);
 
@@ -93,7 +94,16 @@ _basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data
 
         /* append randr widget to list object */
         e_widget_list_object_append(o, cfdata->o_randr, 1, 1, 0.5);
+
+        /* ask randr widget to calculate min size */
+        e_smart_randr_min_size_get(cfdata->o_randr, &mw, &mh);
+
+        /* set min size of the list widget */
+        e_widget_size_min_set(o, mw, mh);
      }
+
+   e_util_win_auto_resize_fill(cfd->dia->win);
+   e_win_centered_set(cfd->dia->win, 1);
 
    return o;
 }
