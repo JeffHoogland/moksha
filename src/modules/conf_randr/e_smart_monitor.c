@@ -92,6 +92,9 @@ static void _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Ob
 static void _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 
+static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+
 /* external functions exposed by this widget */
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -335,6 +338,11 @@ _e_smart_add(Evas_Object *obj)
    edje_object_signal_callback_add(sd->o_frame, "e,action,indicator,out", "e", 
                                    _e_smart_monitor_frame_cb_indicator_out, NULL);
 
+   edje_object_signal_callback_add(sd->o_frame, "e,action,resize,start", "e", 
+                                   _e_smart_monitor_frame_cb_resize_start, obj);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,resize,stop", "e", 
+                                   _e_smart_monitor_frame_cb_resize_stop, obj);
+
    /* create the stand */
    sd->o_stand = edje_object_add(sd->evas);
    e_theme_edje_object_set(sd->o_stand, "base/theme/widgets", 
@@ -411,6 +419,11 @@ _e_smart_del(Evas_Object *obj)
                                         _e_smart_monitor_frame_cb_indicator_in);
         edje_object_signal_callback_del(sd->o_frame, "e,action,indicator,out", "e", 
                                         _e_smart_monitor_frame_cb_indicator_out);
+
+        edje_object_signal_callback_del(sd->o_frame, "e,action,resize,start", "e", 
+                                        _e_smart_monitor_frame_cb_resize_start);
+        edje_object_signal_callback_del(sd->o_frame, "e,action,resize,stop", "e", 
+                                        _e_smart_monitor_frame_cb_resize_stop);
 
         /* delete the object */
         evas_object_del(sd->o_frame);
@@ -778,4 +791,30 @@ _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj
 {
    /* set the mouse pointer back to default */
    _e_smart_monitor_pointer_pop(obj, "plus");
+}
+
+static void 
+_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+}
+
+static void 
+_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
 }
