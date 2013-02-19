@@ -3,6 +3,20 @@
 # ifndef E_SMART_MONITOR_H
 #  define E_SMART_MONITOR_H
 
+typedef enum _E_Smart_Monitor_Changes E_Smart_Monitor_Changes;
+enum _E_Smart_Monitor_Changes
+{
+   E_SMART_MONITOR_CHANGED_NONE = 0,
+     E_SMART_MONITOR_CHANGED_CRTC = (1 << 0),
+     E_SMART_MONITOR_CHANGED_MODE = (1 << 1),
+     E_SMART_MONITOR_CHANGED_POSITION = (1 << 2),
+     E_SMART_MONITOR_CHANGED_ROTATION = (1 << 3),
+     E_SMART_MONITOR_CHANGED_REFRESH = (1 << 4),
+     E_SMART_MONITOR_CHANGED_RESOLUTION = (1 << 5),
+     E_SMART_MONITOR_CHANGED_ENABLED = (1 << 6),
+     E_SMART_MONITOR_CHANGED_CLONED = (1 << 7),
+};
+
 Evas_Object *e_smart_monitor_add(Evas *evas);
 void e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord cx, Evas_Coord cy, Evas_Coord cw, Evas_Coord ch);
 Ecore_X_Randr_Crtc e_smart_monitor_crtc_get(Evas_Object *obj);
