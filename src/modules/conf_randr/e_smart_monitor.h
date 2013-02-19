@@ -21,7 +21,9 @@ void e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid, Evas_Coord gx
 void e_smart_monitor_grid_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh);
 void e_smart_monitor_background_set(Evas_Object *obj, Evas_Coord dx, Evas_Coord dy);
 void e_smart_monitor_current_geometry_set(Evas_Object *obj, Evas_Coord x, Evas_Coord y, Evas_Coord w, Evas_Coord h);
+void e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 void e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent);
+Evas_Object *e_smart_monitor_clone_parent_get(Evas_Object *obj);
 E_Smart_Monitor_Changes e_smart_monitor_changes_get(Evas_Object *obj);
 Eina_Bool e_smart_monitor_changes_apply(Evas_Object *obj);
 
