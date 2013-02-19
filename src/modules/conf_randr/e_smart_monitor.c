@@ -1102,16 +1102,16 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
 
    /* take current object position, translate to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, sd->x, sd->y, 
-                                            &sd->crtc.x, &sd->crtc.y);
+                                            &sd->current.x, &sd->current.y);
 
    /* TODO: "Normalize" this new position. ie: 1076y should be 1080y */
 
    /* repack into the grid with updated position */
-   evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
-                         sd->crtc.w, sd->crtc.h);
+   evas_object_grid_pack(sd->grid.obj, mon, sd->current.x, sd->current.y, 
+                         sd->current.w, sd->current.h);
 
    /* set monitor position text */
-   _e_smart_monitor_position_set(sd, sd->crtc.x, sd->crtc.y);
+   _e_smart_monitor_position_set(sd, sd->current.x, sd->current.y);
 }
 
 static void 
