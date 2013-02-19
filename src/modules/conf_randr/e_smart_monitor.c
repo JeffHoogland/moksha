@@ -152,6 +152,8 @@ void
 e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord cx, Evas_Coord cy, Evas_Coord cw, Evas_Coord ch)
 {
    E_Smart_Data *sd;
+   Ecore_X_Randr_Orientation orients;
+   Ecore_X_Window root = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -172,6 +174,16 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
 
    /* set monitor resolution text */
    _e_smart_monitor_resolution_set(sd, sd->cw, sd->ch);
+
+   /* get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get possible orientations for this crtc */
+   orients = ecore_x_randr_crtc_orientations_get(root, crtc);
+
+   /* check if orientation is possible and disable if not */
+   if (orients <= ECORE_X_RANDR_ORIENTATION_ROT_0)
+     edje_object_signal_emit(sd->o_frame, "e,state,rotate,disabled", "e");
 }
 
 void 
