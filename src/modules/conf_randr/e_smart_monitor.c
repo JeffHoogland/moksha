@@ -77,26 +77,41 @@ struct _E_Smart_Data
    /* list of modes */
    Eina_List *modes;
 
-   /* visibility flag */
-   Eina_Bool visible : 1;
-
-   /* resizing flag */
-   Eina_Bool resizing : 1;
-
    /* coordinates where the user clicked to start resizing */
    Evas_Coord rx, ry;
 
    /* coordinates where the user clicked to start moving */
    Evas_Coord mx, my;
 
+   struct 
+     {
+        /* current geometry */
+        Evas_Coord x, y, w, h;
+
+        /* current orientation */
+        Ecore_X_Randr_Orientation orient;
+
+        /* current mode */
+        Ecore_X_Randr_Mode mode;
+
+        /* current rotation */
+        int rotation;
+
+        /* current refresh rate */
+        int refresh_rate;
+
+        /* current enabled */
+        Eina_Bool enabled : 1;
+     } current;
+
+   /* visibility flag */
+   Eina_Bool visible : 1;
+
+   /* resizing flag */
+   Eina_Bool resizing : 1;
+
    /* rotating flag */
    Eina_Bool rotating : 1;
-
-   /* current rotation */
-   int rotation;
-
-   /* current refresh rate */
-   int refresh_rate;
 
    /* moving flag */
    Eina_Bool moving : 1;
@@ -250,9 +265,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    sd->crtc.mode = ecore_x_randr_crtc_mode_get(root, crtc);
 #endif
 
-   /* get the degree of rotation */
-   sd->rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
-
    /* check crtc current mode to determine if enabled */
    if (sd->crtc.mode != 0)
      {
@@ -269,11 +281,23 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
 
              /* free any memory allocated from ecore_x_randr */
              free(mode);
-
-             /* record starting refresh rate */
-             sd->refresh_rate = (int)sd->crtc.refresh_rate;
           }
      }
+
+   /* fill in current values */
+   sd->current.x = sd->crtc.x;
+   sd->current.y = sd->crtc.y;
+   sd->current.w = sd->crtc.w;
+   sd->current.h = sd->crtc.h;
+   sd->current.mode = sd->crtc.mode;
+   sd->current.orient = sd->crtc.orient;
+   sd->current.enabled = ((sd->crtc.mode != 0) ? EINA_TRUE : EINA_FALSE);
+
+   /* get the degree of rotation */
+   sd->current.rotation = _e_smart_monitor_rotation_get(sd->current.orient);
+
+   /* record starting refresh rate */
+   sd->current.refresh_rate = (int)sd->crtc.refresh_rate;
 }
 
 void 
@@ -928,7 +952,7 @@ _e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bo
                        rate = _e_smart_monitor_mode_refresh_rate_get(mode);
 
                        /* compare mode rate to "current" rate */
-                       if ((int)rate == sd->refresh_rate)
+                       if ((int)rate == sd->current.refresh_rate)
                          return mode;
                     }
                   else
@@ -974,7 +998,7 @@ _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj)
    root = ecore_x_window_root_first_get();
 
    /* try to get current mode info */
-   if (!(cmode = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
+   if (!(cmode = ecore_x_randr_mode_info_get(root, sd->current.mode)))
      return;
 
    /* remove the old refresh rate list */
@@ -998,7 +1022,7 @@ _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj)
              char buff[1024];
 
              /* create new radio group if needed */
-             if (!rg) rg = e_widget_radio_group_new(&sd->refresh_rate);
+             if (!rg) rg = e_widget_radio_group_new(&sd->current.refresh_rate);
 
              /* get the refresh rate for this mode */
              rate = _e_smart_monitor_mode_refresh_rate_get(mode);
@@ -1262,11 +1286,11 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* reset the degree of rotation */
-   sd->rotation = 0;
+   sd->current.rotation = 0;
 
    /* record current size of monitor */
    evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
-                             &sd->crtc.w, &sd->crtc.h);
+                             &sd->current.w, &sd->current.h);
 
    /* set resizing flag */
    sd->rotating = EINA_TRUE;
@@ -1291,8 +1315,6 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    /* set rotating flag */
    sd->rotating = EINA_FALSE;
 
-//   thumb = e_livethumb_thumb_get(sd->o_thumb);
-
    /* get the degrees of rotation based on this orient
     * 
     * NB: I know this seems redundant but it is needed however. The 
@@ -1303,15 +1325,15 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
     * EX: User manually rotates to 80 degrees. We take that 80 and 
     * factor in some fuziness to get 90 degrees. We need to take that 90 
     * and return an 'orientation' */
-   rotation = _e_smart_monitor_rotation_get(sd->crtc.orient);
+   rotation = _e_smart_monitor_rotation_get(sd->current.orient);
 
    /* get current orientation based on rotation */
-   orient = _e_smart_monitor_orientation_get(sd->rotation + rotation);
+   orient = _e_smart_monitor_orientation_get(sd->current.rotation + rotation);
 
    rot = _e_smart_monitor_rotation_get(orient);
 
    /* if we just flipped axis, we can remove map and get out */
-   if (((sd->rotation + rotation) % 180) == 0)
+   if (((sd->current.rotation + rotation) % 180) == 0)
      {
         /* remove the map from the frame so that controls revert to normal */
         evas_object_map_set(sd->o_frame, NULL);
@@ -1321,7 +1343,7 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
         _e_smart_monitor_thumb_map_apply(sd->o_thumb, rot);
 
         /* update the orientation */
-        sd->crtc.orient = orient;
+        sd->current.orient = orient;
 
         return;
      }
@@ -1334,49 +1356,53 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
        (orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
      {
-        if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
-            (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+        if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
           {
              /* repack the monitor to new size */
-             evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
-                                   sd->crtc.w, sd->crtc.h);
+             evas_object_grid_pack(sd->grid.obj, mon, 
+                                   sd->current.x, sd->current.y, 
+                                   sd->current.w, sd->current.h);
 
              /* update resolution text */
-             _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
+             _e_smart_monitor_resolution_set(sd, sd->current.w, sd->current.h);
           }
-        else if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-                 (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+        else if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+                 (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
           {
              /* repack the monitor to new size */
-             evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
-                                   sd->crtc.h, sd->crtc.w);
+             evas_object_grid_pack(sd->grid.obj, mon, 
+                                   sd->current.x, sd->current.y, 
+                                   sd->current.h, sd->current.w);
 
              /* update resolution text */
-             _e_smart_monitor_resolution_set(sd, sd->crtc.h, sd->crtc.w);
+             _e_smart_monitor_resolution_set(sd, sd->current.h, sd->current.w);
           }
      }
    else if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
             (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
      {
-        if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-            (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+        if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+            (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
           {
              /* repack the monitor to new size */
-             evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
-                                   sd->crtc.w, sd->crtc.h);
+             evas_object_grid_pack(sd->grid.obj, mon, 
+                                   sd->current.x, sd->current.y, 
+                                   sd->current.w, sd->current.h);
 
              /* update resolution text */
-             _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
+             _e_smart_monitor_resolution_set(sd, sd->current.w, sd->current.h);
           }
-        else if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
-                 (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+        else if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+                 (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
           {
              /* repack the monitor to new size */
-             evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
-                                   sd->crtc.h, sd->crtc.w);
+             evas_object_grid_pack(sd->grid.obj, mon, 
+                                   sd->current.x, sd->current.y, 
+                                   sd->current.h, sd->current.w);
 
              /* update resolution text */
-             _e_smart_monitor_resolution_set(sd, sd->crtc.h, sd->crtc.w);
+             _e_smart_monitor_resolution_set(sd, sd->current.h, sd->current.w);
           }
      }
 
@@ -1384,7 +1410,7 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    _e_smart_monitor_thumb_map_apply(sd->o_thumb, rot);
 
    /* update current orientation */
-   sd->crtc.orient = orient;
+   sd->current.orient = orient;
 }
 
 static void 
@@ -1407,7 +1433,7 @@ _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSE
    root = ecore_x_window_root_first_get();
 
    /* try to get current mode info */
-   if (!(cmode = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
+   if (!(cmode = ecore_x_randr_mode_info_get(root, sd->current.mode)))
      return;
 
    /* loop the modes and find the current one */
@@ -1422,10 +1448,10 @@ _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSE
              rate = (int)_e_smart_monitor_mode_refresh_rate_get(mode);
 
              /* compare refresh rates */
-             if (rate == sd->refresh_rate)
+             if (rate == sd->current.refresh_rate)
                {
                   /* set new mode */
-                  sd->crtc.mode = mode->xid;
+                  sd->current.mode = mode->xid;
                   break;
                }
           }
@@ -1471,7 +1497,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((dx == 0) && (dy == 0)) return;
 
    /* convert monitor size to canvas size */
-   _e_smart_monitor_coord_virtual_to_canvas(sd, sd->crtc.w, sd->crtc.h, 
+   _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, 
                                             &mw, &mh);
 
    /* factor in resize difference and convert to virtual */
@@ -1479,15 +1505,17 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
                                             &nw, &nh);
 
    /* update current size values */
-   sd->crtc.w = nw;
-   sd->crtc.h = nh;
+   sd->current.w = nw;
+   sd->current.h = nh;
 
    /* based on orientation, try to find a valid mode */
-   if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
-       (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
-     mode = _e_smart_monitor_mode_find(sd, sd->crtc.w, sd->crtc.h, EINA_FALSE);
+   if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+       (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+     mode = _e_smart_monitor_mode_find(sd, sd->current.w, 
+                                       sd->current.h, EINA_FALSE);
    else
-     mode = _e_smart_monitor_mode_find(sd, sd->crtc.h, sd->crtc.w, EINA_FALSE);
+     mode = _e_smart_monitor_mode_find(sd, sd->current.h, 
+                                       sd->current.w, EINA_FALSE);
 
    if (mode)
      {
@@ -1497,15 +1525,16 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
         ch = mode->height;
 
         /* if we are rotated, we need to swap sizes */
-        if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-            (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
+        if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
+            (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
           {
              cw = mode->height;
              ch = mode->width;
           }
 
         /* update monitor size in the grid */
-        evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, cw, ch);
+        evas_object_grid_pack(sd->grid.obj, mon, 
+                              sd->current.x, sd->current.y, cw, ch);
 
         /* update resolution text */
         _e_smart_monitor_resolution_set(sd, cw, ch);
@@ -1533,10 +1562,10 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, vo
    rotation %= 360;
 
    /* update current rotation value */
-   sd->rotation = rotation;
+   sd->current.rotation = rotation;
 
    /* apply rotation map */
-   _e_smart_monitor_frame_map_apply(sd->o_frame, sd->rotation);
+   _e_smart_monitor_frame_map_apply(sd->o_frame, sd->current.rotation);
 }
 
 static void 
