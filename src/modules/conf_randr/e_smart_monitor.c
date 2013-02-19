@@ -132,6 +132,8 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    Evas_Coord aw = 1, ah = 1;
    unsigned char *edid = NULL;
    unsigned long edid_length = 0;
+   Ecore_X_Window root = 0;
+   const char *name = NULL;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -149,9 +151,17 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    mode = eina_list_last_data_get(sd->modes);
    mw = mode->width;
    mh = mode->height;
+   aw = mw;
+   ah = mh;
 
    sd->max.mode_width = mw;
    sd->max.mode_height = mh;
+
+   /* get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get output name */
+   name = ecore_x_randr_output_name_get(root, sd->output, NULL);
 
    /* FIXME: ideally this should probably be based on the current mode */
 
@@ -159,6 +169,10 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
      {
         Ecore_X_Randr_Edid_Aspect_Ratio aspect = 0;
+
+        /* get output name */
+        if (!name)
+          name = ecore_x_randr_edid_display_name_get(edid, edid_length);
 
         /* get the aspect */
         aspect = 
@@ -189,15 +203,16 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
              ah = (9 * mh) / mw;
              break;
            default:
-             aw = mw;
-             ah = mh;
              break;
           }
-
-        /* set the aspect hints */
-        evas_object_size_hint_aspect_set(sd->o_frame, 
-                                         EVAS_ASPECT_CONTROL_BOTH, aw, ah);
      }
+
+   /* set monitor name */
+   edje_object_part_text_set(sd->o_frame, "e.text.name", name);
+
+   /* set the aspect hints */
+   evas_object_size_hint_aspect_set(sd->o_frame, 
+                                    EVAS_ASPECT_CONTROL_BOTH, aw, ah);
 
    /* set the align hints */
    evas_object_size_hint_align_set(sd->o_frame, 0.0, 0.0);
