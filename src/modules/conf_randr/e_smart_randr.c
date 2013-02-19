@@ -84,6 +84,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
              /* tell monitor what output it uses */
              e_smart_monitor_output_set(mon, output);
+
+             /* pack this monitor into the layout */
+             e_layout_pack(sd->o_layout, mon);
           }
      }
 }
