@@ -216,10 +216,16 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
            default:
              break;
           }
+
+        /* free any memory allocated from ecore_x_randr */
+        free(edid);
      }
 
    /* set monitor name */
    edje_object_part_text_set(sd->o_frame, "e.text.name", name);
+
+   /* free any memory allocated from ecore_x_randr */
+   free(name);
 
    /* set the aspect hints */
    evas_object_size_hint_aspect_set(sd->o_frame, 
