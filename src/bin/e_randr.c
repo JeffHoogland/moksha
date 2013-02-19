@@ -12,14 +12,11 @@ static Eina_Bool _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type 
 static Eina_Bool _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
 static Eina_Bool _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED);
 
-static Eina_Bool _e_randr_poller_cb_check(void *data EINA_UNUSED);
-
 /* local variables */
 static Eina_List *_randr_event_handlers = NULL;
 static E_Config_DD *_e_randr_edd = NULL;
 static E_Config_DD *_e_randr_crtc_edd = NULL;
 static E_Config_DD *_e_randr_output_edd = NULL;
-static Ecore_Poller *_e_randr_poller = NULL;
 
 /* external variables */
 EAPI E_Randr_Config *e_randr_cfg = NULL;
@@ -63,12 +60,6 @@ e_randr_init(void)
                               _e_randr_event_cb_property_change, NULL);
      }
 
-   /* setup poller for when hotplug events happen and the video card 
-    * may not report them */
-   _e_randr_poller = 
-     ecore_poller_add(ECORE_POLLER_CORE, e_randr_cfg->poll_interval, 
-                      _e_randr_poller_cb_check, NULL);
-
    return EINA_TRUE;
 }
 
@@ -77,9 +68,6 @@ e_randr_shutdown(void)
 {
    /* check if randr is available */
    if (!ecore_x_randr_query()) return 1;
-
-   /* remove the poller */
-   if (_e_randr_poller) ecore_poller_del(_e_randr_poller);
 
    if (ecore_x_randr_version_get() >= E_RANDR_VERSION_1_2)
      {
@@ -135,6 +123,7 @@ _e_randr_config_load(void)
                                    (char *)(&(eroc.clone_count)) -
                                    (char *)(&(eroc)), NULL, NULL);
    E_CONFIG_VAL(D, T, connected, UCHAR);
+   E_CONFIG_VAL(D, T, exists, UCHAR);
 
    /* define edd for crtc config */
    _e_randr_crtc_edd = 
@@ -150,6 +139,7 @@ _e_randr_config_load(void)
    E_CONFIG_VAL(D, T, height, INT);
    E_CONFIG_VAL(D, T, orient, UINT);
    E_CONFIG_VAL(D, T, mode, UINT);
+   E_CONFIG_VAL(D, T, exists, UCHAR);
    E_CONFIG_LIST(D, T, outputs, _e_randr_output_edd);
 
    /* define edd for randr config */
@@ -269,6 +259,7 @@ _e_randr_config_new(void)
 
              /* assign the xid */
              crtc_cfg->xid = crtcs[i];
+             crtc_cfg->exists = EINA_TRUE;
 
              /* record the geometry of this crtc in our config */
              ecore_x_randr_crtc_geometry_get(root, crtcs[i], 
@@ -308,8 +299,6 @@ _e_randr_config_new(void)
                        /* set this output policy */
                        output_cfg->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
 
-                       /* TODO: Add code to determine policy */
-
                        /* get if this output is the primary */
                        output_cfg->primary = EINA_FALSE;
                        if (outputs[j] == primary) 
@@ -322,17 +311,19 @@ _e_randr_config_new(void)
 
                        /* get the clones for this output */
                        output_cfg->clones = 
-                         ecore_x_randr_output_clones_get(root, outputs[i], 
+                         ecore_x_randr_output_clones_get(root, outputs[j], 
                                                          &clone_count);
                        
                        output_cfg->clone_count = (long)clone_count;
 
                        status = 
-                         ecore_x_randr_output_connection_status_get(root, outputs[i]);
+                         ecore_x_randr_output_connection_status_get(root, outputs[j]);
 
                        output_cfg->connected = EINA_FALSE;
                        if (status == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
                          output_cfg->connected = EINA_TRUE;
+
+                       output_cfg->exists = EINA_TRUE;
 
                        /* add this output to the list for this crtc */
                        crtc_cfg->outputs = 
@@ -410,6 +401,11 @@ _e_randr_config_restore(void)
 
    /* grab the root window */
    root = ecore_x_window_root_first_get();
+
+   /* FIXME: !!
+    * 
+    * Optimize and redo this !!!
+    */
 
    /* try to get the list of crtcs */
    if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
@@ -504,7 +500,7 @@ _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void
    ev = event;
    if (ev->crtc == 0) return ECORE_CALLBACK_RENEW;
 
-   printf("E_RANDR Event: Crtc Change\n");
+   printf("E_RANDR Event: Crtc Change: %d\n", ev->crtc);
 
    EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
      {
@@ -549,8 +545,11 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
    /* TODO: NB: Hmmm, this is problematic :( The spec says we should get an 
     * event here when an output is disconnected (hotplug) if 
     * the hardware (video card) is capable of detecting this HOWEVER, in my 
-    * tests, my nvidia card does not detect this */
-   printf("E_RANDR Event: Output Change\n");
+    * tests, my nvidia card does not detect this.
+    * 
+    * To work around this, we have added a poller to check X randr config 
+    * against what we have saved in e_randr_cfg */
+   printf("E_RANDR Event: Output Change: %d\n", ev->output);
 
    EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
      {
@@ -578,8 +577,12 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
                   if ((output_cfg->crtc != ev->crtc) || 
                       (output_cfg->connected != connected))
                     {
+                       printf("Output Changed: %d\n", ev->output);
+                       printf("\tConnected: %d\n", connected);
+
                        output_cfg->crtc = ev->crtc;
                        output_cfg->connected = connected;
+                       output_cfg->exists = connected;
 
                        changed = EINA_TRUE;
                     }
@@ -601,11 +604,5 @@ _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, 
 
    /* ev = event; */
    printf("E_RANDR Event: Property Change\n");
-   return ECORE_CALLBACK_RENEW;
-}
-
-static Eina_Bool 
-_e_randr_poller_cb_check(void *data EINA_UNUSED)
-{
    return ECORE_CALLBACK_RENEW;
 }
