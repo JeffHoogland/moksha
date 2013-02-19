@@ -58,6 +58,12 @@ struct _E_Smart_Data
 
    /* visibility flag */
    Eina_Bool visible : 1;
+
+   /* resizing flag */
+   Eina_Bool resizing : 1;
+
+   /* coordinates where the user clicked to start resizing */
+   Evas_Coord rx, ry;
 };
 
 /* smart function prototypes */
@@ -484,6 +490,9 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    evas_object_resize(sd->o_base, w, h);
    /* evas_object_resize(sd->o_bg, w, h + 30); */
+
+   /* if user is manually resizing the object, then update the size text */
+   if (sd->resizing) _e_smart_monitor_resolution_set(sd, sd->cw, sd->ch);
 }
 
 static void 
@@ -804,6 +813,15 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
 
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* record current position of mouse */
+   evas_pointer_canvas_xy_get(sd->evas, &sd->rx, &sd->ry);
+
+   /* record current size of monitor */
+   evas_object_grid_pack_get(sd->grid, mon, NULL, NULL, &sd->cw, &sd->ch);
+
+   /* set resizing flag */
+   sd->resizing = EINA_TRUE;
 }
 
 static void 
@@ -817,4 +835,7 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* set resizing flag */
+   sd->resizing = EINA_FALSE;
 }
