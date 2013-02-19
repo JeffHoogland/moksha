@@ -75,6 +75,8 @@ static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 static void _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy);
 static Eina_Bool _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event);
+static void _e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y);
+static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -569,4 +571,22 @@ _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event
      }
 
    return ECORE_CALLBACK_PASS_ON;
+}
+
+static void 
+_e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y)
+{
+   char buff[1024];
+
+   snprintf(buff, sizeof(buff), "%d + %d", x, y);
+   edje_object_part_text_set(sd->o_frame, "e.text.position", buff);
+}
+
+static void 
+_e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h)
+{
+   char buff[1024];
+
+   snprintf(buff, sizeof(buff), "%d x %d", w, h);
+   edje_object_part_text_set(sd->o_frame, "e.text.resolution", buff);
 }
