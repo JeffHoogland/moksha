@@ -54,9 +54,38 @@ void
 e_smart_randr_monitors_create(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Evas *evas;
+   Eina_List *l = NULL;
+   E_Randr_Crtc_Config *crtc;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* grab the canvas of the layout widget */
+   evas = evas_object_evas_get(sd->o_layout);
+
+   /* loop the list of crtcs in our config */
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc)
+     {
+        Eina_List *o = NULL;
+        E_Randr_Output_Config *output;
+
+        /* loop the list of outputs in this crtc */
+        EINA_LIST_FOREACH(crtc->outputs, o, output)
+          {
+             Evas_Object *mon;
+
+             /* for each output, try to create a monitor */
+             if (!(mon = e_smart_monitor_add(evas)))
+               continue;
+
+             /* tell monitor what crtc it uses */
+             e_smart_monitor_crtc_set(mon, crtc);
+
+             /* tell monitor what output it uses */
+             e_smart_monitor_output_set(mon, output);
+          }
+     }
 }
 
 /* local functions */
