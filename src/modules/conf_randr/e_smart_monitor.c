@@ -2,6 +2,8 @@
 #include "e_mod_main.h"
 #include "e_smart_monitor.h"
 
+#define RESIZE_FUZZ 60
+
 /* local structure */
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
@@ -17,8 +19,14 @@ struct _E_Smart_Data
         Evas_Coord mode_width, mode_height;
      } min, max;
 
-   /* reference to the grid we are packed into */
-   Evas_Object *grid;
+   struct 
+     {
+        /* reference to the grid we are packed into */
+        Evas_Object *obj;
+        Evas_Coord x, y, w, h;
+     } grid;
+
+   Evas_Coord vw, vh;
 
    /* test object */
    /* Evas_Object *o_bg; */
@@ -85,6 +93,10 @@ static void _e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_C
 static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h);
 static void _e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr);
 static void _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr);
+
+static inline void _e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy);
+static inline void _e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy);
+static Ecore_X_Randr_Mode_Info *_e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_refresh);
 
 static void _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
 static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
@@ -260,7 +272,7 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 }
 
 void 
-e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid)
+e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid, Evas_Coord gx, Evas_Coord gy, Evas_Coord gw, Evas_Coord gh)
 {
    E_Smart_Data *sd;
 
@@ -269,7 +281,25 @@ e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   sd->grid = grid;
+   sd->grid.obj = grid;
+   sd->grid.x = gx;
+   sd->grid.y = gy;
+   sd->grid.w = gw;
+   sd->grid.h = gh;
+}
+
+void 
+e_smart_monitor_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   sd->vw = vw;
+   sd->vh = vh;
 }
 
 void 
@@ -499,13 +529,10 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
 
    /* set livethumb thumbnail size */
-   e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
+   if (!sd->resizing) e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
 
    evas_object_resize(sd->o_base, w, h);
    /* evas_object_resize(sd->o_bg, w, h + 30); */
-
-   /* if user is manually resizing the object, then update the size text */
-   if (sd->resizing) _e_smart_monitor_resolution_set(sd, sd->cw, sd->ch);
 }
 
 static void 
@@ -622,7 +649,7 @@ _e_smart_monitor_modes_sort(const void *data1, const void *data2)
 {
    const Ecore_X_Randr_Mode_Info *m1, *m2 = NULL;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    if (!(m1 = data1)) return 1;
    if (!(m2 = data2)) return -1;
@@ -751,6 +778,65 @@ _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
 
    /* tell E to unset the pointer type */
    e_pointer_type_pop(win->pointer, obj, ptr);
+}
+
+static inline void 
+_e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy)
+{
+   if (cx) *cx = (vx * ((double)(sd->grid.w) / sd->vw)) + sd->grid.x;
+   if (cy) *cy = (vy * ((double)(sd->grid.h) / sd->vh)) + sd->grid.y;
+}
+
+static inline void 
+_e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy)
+{
+   if (vx) *vx = ((cx - sd->grid.x) * sd->vw) / (double)sd->grid.w;
+   if (vy) *vy = ((cy - sd->grid.y) * sd->vh) / (double)sd->grid.h;
+}
+
+static Ecore_X_Randr_Mode_Info *
+_e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_refresh)
+{
+   Ecore_X_Randr_Mode_Info *mode = NULL;
+   Eina_List *l = NULL;
+
+   /* are we skipping refresh rate check ? */
+   if (!skip_refresh)
+     {
+        /* loop the modes */
+        EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+          {
+             if ((((int)mode->width - RESIZE_FUZZ) <= w) || 
+                 (((int)mode->width + RESIZE_FUZZ) <= w))
+               {
+                  if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
+                      (((int)mode->height + RESIZE_FUZZ) <= h))
+                    {
+                       /* TODO: Compare refresh rates */
+                       return mode;
+                    }
+               }
+          }
+     }
+
+   /* if we got here, then we found no mode which matches the current 
+    * refresh rate and size. Search again, ignoring refresh rate */
+
+   /* loop the modes */
+   EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
+     {
+        if ((((int)mode->width - RESIZE_FUZZ) <= w) || 
+            (((int)mode->width + RESIZE_FUZZ) <= w))
+          {
+             if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
+                 (((int)mode->height + RESIZE_FUZZ) <= h))
+               {
+                  return mode;
+               }
+          }
+     }
+
+   return NULL;
 }
 
 static void 
@@ -887,7 +973,7 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
    evas_pointer_canvas_xy_get(sd->evas, &sd->rx, &sd->ry);
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid, mon, NULL, NULL, &sd->cw, &sd->ch);
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch);
 
    /* set resizing flag */
    sd->resizing = EINA_TRUE;
@@ -907,6 +993,9 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
+   /* record current size of monitor */
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch);
+
    /* set resizing flag */
    sd->resizing = EINA_FALSE;
 }
@@ -915,8 +1004,57 @@ static void
 _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
+   Evas_Coord dx = 0, dy = 0;
+   double mw = 0, mh = 0;
+   double nw = 0, nh = 0;
+   Ecore_X_Randr_Mode_Info *mode = NULL;
 
-   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
+
+   /* check for valid mouse movement */
+   if (((ev->cur.canvas.x - ev->prev.canvas.x) == 0) && 
+       ((ev->cur.canvas.y - ev->prev.canvas.y) == 0))
+     return;
+
+   /* calculate difference in mouse movement */
+   dx = (sd->rx - ev->cur.canvas.x);
+   dy = (sd->ry - ev->cur.canvas.y);
+
+   /* factor in drag resistance to measure movement */
+   if (((dx * dx) + (dy * dy)) < 
+       (e_config->drag_resist * e_config->drag_resist))
+     return;
+
+   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
+   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
+   if ((dx == 0) && (dy == 0)) return;
+
+   /* convert monitor size to canvas size */
+   _e_smart_monitor_coord_virtual_to_canvas(sd, sd->cw, sd->ch, &mw, &mh);
+
+   /* factor in resize difference and convert to virtual */
+   _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), &nw, &nh);
+
+   /* check new size against min & max modes */
+   if (nw < sd->min.mode_width) nw = sd->min.mode_width;
+   if (nw > sd->max.mode_width) nw = sd->max.mode_width;
+   if (nh < sd->min.mode_height) nh = sd->min.mode_height;
+   if (nh > sd->max.mode_height) nh = sd->max.mode_height;
+
+   /* update current size values */
+   sd->cw = nw;
+   sd->ch = nh;
+
+   /* try to find a mode that matches this new size */
+   if ((mode = _e_smart_monitor_mode_find(sd, nw, nh, EINA_FALSE)))
+     {
+        /* TODO: update current mode */
+
+        evas_object_grid_pack(sd->grid.obj, mon, 
+                              sd->cx, sd->cy, mode->width, mode->height);
+
+        _e_smart_monitor_resolution_set(sd, mode->width, mode->height);
+     }
 }
