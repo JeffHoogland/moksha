@@ -22,17 +22,6 @@ struct _E_Smart_Data
         Evas_Coord mode_width, mode_height;
      } min, max;
 
-   struct 
-     {
-        /* reference to the grid we are packed into */
-        Evas_Object *obj;
-
-        Evas_Coord x, y, w, h;
-
-        /* virtual size of the grid */
-        Evas_Coord vw, vh;
-     } grid;
-
 #ifdef BG_DBG
    /* test object */
    Evas_Object *o_bg;
@@ -64,6 +53,17 @@ struct _E_Smart_Data
 
    /* output config */
    Ecore_X_Randr_Output output;
+
+   struct 
+     {
+        /* reference to the grid we are packed into */
+        Evas_Object *obj;
+
+        Evas_Coord x, y, w, h;
+
+        /* virtual size of the grid */
+        Evas_Coord vw, vh;
+     } grid;
 
    /* container number */
    unsigned int con_num;
@@ -115,6 +115,15 @@ struct _E_Smart_Data
 
    /* moving flag */
    Eina_Bool moving : 1;
+
+   /* cloned flag */
+   Eina_Bool cloned : 1;
+
+   /* parent monitor we are cloned into */
+   Evas_Object *parent;
+
+   /* mini representation when cloned */
+   Evas_Object *o_clone;
 };
 
 /* smart function prototypes */
@@ -159,6 +168,7 @@ static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj 
 static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 
 static void _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
@@ -294,6 +304,19 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    sd->current.refresh_rate = (int)sd->crtc.refresh_rate;
 }
 
+Ecore_X_Randr_Crtc 
+e_smart_monitor_crtc_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return 0;
+
+   return sd->crtc.id;
+}
+
 void 
 e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 {
@@ -341,6 +364,7 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 
    /* set monitor name */
    edje_object_part_text_set(sd->o_frame, "e.text.name", name);
+   printf("Created Monitor %s For Crtc %d\n", name, sd->crtc.id);
 
    /* free any memory allocated from ecore_x_randr */
    free(name);
@@ -443,6 +467,88 @@ e_smart_monitor_current_geometry_set(Evas_Object *obj, Evas_Coord x, Evas_Coord 
    _e_smart_monitor_resolution_set(sd, w, h);
 }
 
+void 
+e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
+{
+   E_Smart_Data *sd, *psd = NULL;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* try to get the objects smart data */
+   if (parent)
+     if (!(psd = evas_object_smart_data_get(parent))) return;
+
+   sd->cloned = ((parent != NULL) ? EINA_TRUE : EINA_FALSE);
+   sd->parent = parent;
+
+   if (sd->cloned)
+     {
+        Evas_Coord fw = 0, fh = 0;
+        Evas_Object *box;
+
+        printf("Cloning %d Into %d\n", sd->crtc.id, psd->crtc.id);
+
+        evas_object_hide(obj);
+
+        _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, &fw, &fh);
+        if (fw < 1) fw = (sd->current.w / 10);
+        if (fh < 1) fh = (sd->current.h / 10);
+
+        fw *= 0.25;
+        fh *= 0.25;
+        if (fw < 32) fw = 32;
+        if (fh < 25) fh = 25;
+
+        /* create clone on the parent's canvas */
+        sd->o_clone = edje_object_add(psd->evas);
+        e_theme_edje_object_set(sd->o_clone, "base/theme/widgets", 
+                                "e/conf/randr/main/mini");
+
+        edje_object_part_unswallow(sd->o_frame, sd->o_thumb);
+        evas_object_hide(sd->o_thumb);
+        edje_object_part_swallow(sd->o_clone, "e.swallow.preview", sd->o_thumb);
+        evas_object_show(sd->o_thumb);
+
+        if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
+            (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
+          {
+             evas_object_size_hint_min_set(sd->o_clone, fw, fh);
+             evas_object_resize(sd->o_clone, fw, fh);
+          }
+        else
+          {
+             evas_object_size_hint_min_set(sd->o_clone, fh, fw);
+             evas_object_resize(sd->o_clone, fh, fw);
+          }
+
+        evas_object_move(sd->o_clone, 0, 0);
+        evas_object_show(sd->o_clone);
+
+        edje_object_part_box_append(psd->o_frame, "e.box.clone", sd->o_clone);
+
+        box = (Evas_Object *)edje_object_part_object_get(psd->o_frame, "e.box.clone");
+        evas_object_size_hint_min_get(box, &fw, &fh);
+        if (fw < 1) fw = 1;
+        if (fh < 1) fh = 1;
+        evas_object_resize(box, fw, fh);
+     }
+   else
+     {
+        if (sd->o_clone)
+          {
+             edje_object_part_unswallow(sd->o_clone, sd->o_thumb);
+             evas_object_hide(sd->o_thumb);
+             edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
+             evas_object_show(sd->o_thumb);
+             evas_object_del(sd->o_clone);
+          }
+        evas_object_show(obj);
+     }
+}
+
 /* smart functions */
 static void 
 _e_smart_add(Evas_Object *obj)
@@ -460,7 +566,7 @@ _e_smart_add(Evas_Object *obj)
 #ifdef BG_DBG
    /* create the bg test object */
    sd->o_bg = evas_object_rectangle_add(sd->evas);
-   evas_object_color_set(sd->o_bg, 255, 0, 0, 255);
+   evas_object_color_set(sd->o_bg, 255, 0, 0, 128);
    evas_object_smart_member_add(sd->o_bg, obj);
 #endif
 
@@ -501,6 +607,9 @@ _e_smart_add(Evas_Object *obj)
                                    _e_smart_monitor_frame_cb_rotate_start, obj);
    edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,stop", "e", 
                                    _e_smart_monitor_frame_cb_rotate_stop, obj);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,indicator,toggle", "e", 
+                                   _e_smart_monitor_frame_cb_indicator_toggle, 
+                                   obj);
 
    /* create the background preview */
    sd->o_thumb = e_livethumb_add(sd->evas);
@@ -594,6 +703,8 @@ _e_smart_del(Evas_Object *obj)
                                         _e_smart_monitor_frame_cb_rotate_start);
         edje_object_signal_callback_del(sd->o_frame, "e,action,rotate,stop", "e", 
                                         _e_smart_monitor_frame_cb_rotate_stop);
+        edje_object_signal_callback_del(sd->o_frame, "e,action,indicator,toggle", "e", 
+                                        _e_smart_monitor_frame_cb_indicator_toggle);
 
         /* delete the object */
         evas_object_del(sd->o_frame);
@@ -666,14 +777,14 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->w = w;
    sd->h = h;
 
-   /* set livethumb thumbnail size */
-   if ((!sd->resizing) && (!sd->rotating) && (!sd->moving))
-     e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
-
    evas_object_resize(sd->o_base, w, h);
 #ifdef BG_DBG
    evas_object_resize(sd->o_bg, w, h + 30);
 #endif
+
+   /* set livethumb thumbnail size */
+   if ((!sd->resizing) && (!sd->rotating) && (!sd->moving))
+     e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
 }
 
 static void 
@@ -687,12 +798,19 @@ _e_smart_show(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if we are already visible, then nothing to do */
-   if (sd->visible) return;
+//   if (sd->visible) return;
 
-   evas_object_show(sd->o_base);
+   if (!sd->cloned)
+     {
+        evas_object_show(sd->o_stand);
+        evas_object_show(sd->o_frame);
+        evas_object_show(sd->o_base);
 #ifdef BG_DBG
-   evas_object_show(sd->o_bg);
+        evas_object_show(sd->o_bg);
 #endif
+     }
+   else
+     evas_object_show(sd->o_clone);
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
@@ -709,12 +827,19 @@ _e_smart_hide(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* if we are already hidden, then nothing to do */
-   if (!sd->visible) return;
+//   if (!sd->visible) return;
 
-   evas_object_hide(sd->o_base);
+   if (sd->cloned)
+     {
+        evas_object_hide(sd->o_stand);
+        evas_object_hide(sd->o_frame);
+        evas_object_hide(sd->o_base);
 #ifdef BG_DBG
-   evas_object_hide(sd->o_bg);
+        evas_object_hide(sd->o_bg);
 #endif
+     }
+   else
+     evas_object_hide(sd->o_clone);
 
    /* set visibility flag */
    sd->visible = EINA_FALSE;
@@ -1090,7 +1215,7 @@ static void
 _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Up *ev;
-   Evas_Object *mon;
+   Evas_Object *mon, *below;
    E_Smart_Data *sd;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -1104,6 +1229,17 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
+   if (sd->cloned)
+     {
+        /* reset moving flag */
+        sd->moving = EINA_FALSE;
+
+        /* unclone this monitor */
+        e_smart_monitor_clone_set(mon, NULL);
+
+        return;
+     }
+
    /* if we are not moving, then there is nothing to do in this routine */
    if (!sd->moving) return;
 
@@ -1113,11 +1249,45 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
    /* reset mouse pointer */
    _e_smart_monitor_pointer_pop(obj, "move");
 
+   /* any objects below this monitor ? */
+   if ((below = evas_object_below_get(mon)))
+     {
+        const char *type;
+
+        /* compare object type and make sure it's a monitor */
+        if (!(type = evas_object_type_get(below))) return;
+        if (!strcmp(type, "smart_monitor"))
+          {
+             E_Smart_Data *osd;
+             Evas_Coord fx, fy, fw, fh;
+
+             /* try to get the monitor smart data */
+             if (!(osd = evas_object_smart_data_get(below))) return;
+             if (!osd->visible) return;
+
+             /* grab geometry of this frame */
+             evas_object_geometry_get(osd->o_frame, &fx, &fy, &fw, &fh);
+
+             /* determine if monitor is being dragged over another one */
+             if (E_INSIDE(sd->x, sd->y, fx, fy, (fw / 2), (fh / 2)))
+               {
+                  e_smart_monitor_clone_set(mon, below);
+                  edje_object_signal_emit(osd->o_frame, "e,state,drop,off", "e");
+                  return;
+               }
+             else if (E_INSIDE((sd->x + sd->w), sd->y, 
+                               (fx + (fw / 2)), fy, fw, (fh / 2)))
+               {
+                  e_smart_monitor_clone_set(mon, below);
+                  edje_object_signal_emit(osd->o_frame, "e,state,drop,off", "e");
+                  return;
+               }
+          }
+     }
+
    /* take current object position, translate to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, sd->x, sd->y, 
                                             &sd->current.x, &sd->current.y);
-
-   /* TODO: "Normalize" this new position. ie: 1076y should be 1080y */
 
    /* repack into the grid with updated position */
    evas_object_grid_pack(sd->grid.obj, mon, sd->current.x, sd->current.y, 
@@ -1436,6 +1606,40 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 }
 
 static void 
+_e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* check current enabled value */
+   if (sd->current.enabled)
+     {
+        /* toggle value */
+        sd->current.enabled = EINA_FALSE;
+
+        /* tell frame edje object it is now disabled */
+        edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+     }
+   else
+     {
+        /* toggle value */
+        sd->current.enabled = EINA_TRUE;
+
+        /* tell frame edje object it is now disabled */
+        edje_object_signal_emit(sd->o_frame, "e,state,enabled", "e");
+     }
+
+   /* TODO: handle changes */
+}
+
+static void 
 _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
 {
    Evas_Object *mon;
@@ -1593,6 +1797,8 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    Evas_Coord dx = 0, dy = 0;
+   Evas_Coord nx = 0, ny = 0;
+   Evas_Object *obj;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1603,18 +1809,51 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
        (ev->cur.canvas.y == ev->prev.canvas.y))
      return;
 
+   /* calculate difference in movement */
    dx = (ev->cur.canvas.x - ev->prev.canvas.x);
    dy = (ev->cur.canvas.y - ev->prev.canvas.y);
 
-   if (((sd->x + dx) < sd->grid.x) || ((sd->y + dy) < sd->grid.y)) 
-     return;
+   nx = (sd->x + dx);
+   ny = (sd->y + dy);
 
-   if ((((sd->x + dx) + sd->w) > (sd->grid.x + sd->grid.w)) || 
-       (((sd->y + dy) + sd->h) > (sd->grid.y + sd->grid.h)))
+   /* make sure movement is restricted to be within the grid */
+   if ((nx < sd->grid.x) || (ny < sd->grid.y))  return;
+   if (((nx + sd->w) > (sd->grid.x + sd->grid.w)) || 
+       ((ny + sd->h) > (sd->grid.y + sd->grid.h)))
      return;
 
    /* move the monitor */
-   evas_object_move(mon, sd->x + dx, sd->y + dy);
+   evas_object_move(mon, nx, ny);
+
+   /* any objects below this monitor ? */
+   if ((obj = evas_object_below_get(mon)))
+     {
+        const char *type;
+
+        /* compare object type and make sure it's a monitor */
+        if (!(type = evas_object_type_get(obj))) return;
+        if (!strcmp(type, "smart_monitor"))
+          {
+             E_Smart_Data *osd;
+             Evas_Coord fx, fy, fw, fh;
+
+             /* try to get the monitor smart data */
+             if (!(osd = evas_object_smart_data_get(obj))) return;
+             if (!osd->visible) return;
+
+             /* grab geometry of this frame */
+             evas_object_geometry_get(osd->o_frame, &fx, &fy, &fw, &fh);
+
+             /* determine if monitor is being dragged over another one */
+             if (E_INSIDE(nx, ny, fx, fy, (fw / 2), (fh / 2)))
+               edje_object_signal_emit(osd->o_frame, "e,state,drop,on", "e");
+             else if (E_INSIDE((nx + sd->w), ny, 
+                               (fx + (fw / 2)), fy, fw, (fh / 2)))
+               edje_object_signal_emit(osd->o_frame, "e,state,drop,on", "e");
+             else
+               edje_object_signal_emit(osd->o_frame, "e,state,drop,off", "e");
+          }
+     }
 }
 
 static int 
