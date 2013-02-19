@@ -50,6 +50,8 @@ struct _E_Smart_Data
         Ecore_X_Randr_Crtc id;
         Evas_Coord x, y, w, h;
         Ecore_X_Randr_Orientation orient;
+        Ecore_X_Randr_Mode mode;
+        double refresh_rate;
      } crtc;
 
    /* output config */
@@ -103,6 +105,7 @@ static void _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr);
 static inline void _e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy);
 static inline void _e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy);
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_refresh);
+static inline double _e_smart_monitor_mode_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode);
 
 static void _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
 static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
@@ -179,6 +182,16 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    /* set monitor resolution text */
    _e_smart_monitor_resolution_set(sd, sd->crtc.w, sd->crtc.h);
 
+   /* FIXME: Big Fat Fixme here !!!
+    * 
+    * This code uses a lot of ecore_x_randr_crtc functions, which means 
+    * a LOT of X Round Trips !!! :(
+    * 
+    * Ideally, we should have an ecore_x_randr_crtc_info_get function that 
+    * will return the XRRCrtcInfo structure so we can fetch it only once, 
+    * use it for our purposes, and be done
+    */
+
    /* get the root window */
    root = ecore_x_window_root_first_get();
 
@@ -192,7 +205,27 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    if (orients <= ECORE_X_RANDR_ORIENTATION_ROT_0)
      edje_object_signal_emit(sd->o_frame, "e,state,rotate,disabled", "e");
 
-   /* TODO: check crtc current mode to determine if enabled */
+   /* get current mode */
+   sd->crtc.mode = ecore_x_randr_crtc_mode_get(root, crtc);
+
+   /* check crtc current mode to determine if enabled */
+   if (sd->crtc.mode != 0)
+     {
+        Ecore_X_Randr_Mode_Info *mode;
+
+        /* TODO: set enabled flag */
+
+        /* try to get current refresh rate for this mode */
+        if ((mode = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
+          {
+             /* record current refresh rate */
+             sd->crtc.refresh_rate = 
+               _e_smart_monitor_mode_refresh_rate_get(mode);
+
+             /* free any memory allocated from ecore_x_randr */
+             free(mode);
+          }
+     }
 }
 
 void 
@@ -789,28 +822,6 @@ _e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bo
    Ecore_X_Randr_Mode_Info *mode = NULL;
    Eina_List *l = NULL;
 
-   /* are we skipping refresh rate check ? */
-   if (!skip_refresh)
-     {
-        /* loop the modes */
-        EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
-          {
-             if ((((int)mode->width - RESIZE_FUZZ) <= w) || 
-                 (((int)mode->width + RESIZE_FUZZ) <= w))
-               {
-                  if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
-                      (((int)mode->height + RESIZE_FUZZ) <= h))
-                    {
-                       /* TODO: Compare refresh rates */
-                       return mode;
-                    }
-               }
-          }
-     }
-
-   /* if we got here, then we found no mode which matches the current 
-    * refresh rate and size. Search again, ignoring refresh rate */
-
    /* loop the modes */
    EINA_LIST_REVERSE_FOREACH(sd->modes, l, mode)
      {
@@ -820,12 +831,39 @@ _e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bo
              if ((((int)mode->height - RESIZE_FUZZ) <= h) || 
                  (((int)mode->height + RESIZE_FUZZ) <= h))
                {
-                  return mode;
+                  if (!skip_refresh)
+                    {
+                       double rate = 0.0;
+
+                       /* get the refresh rate for this mode */
+                       rate = _e_smart_monitor_mode_refresh_rate_get(mode);
+
+                       /* TODO compare mode rate to "current" rate */
+                       if ((int)rate == sd->crtc.refresh_rate)
+                         return mode;
+                    }
+                  else
+                    return mode;
                }
           }
      }
 
    return NULL;
+}
+
+static inline double 
+_e_smart_monitor_mode_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode)
+{
+   double rate = 0.0;
+
+   if (mode)
+     {
+        if ((mode->hTotal) && (mode->vTotal))
+          rate = ((float)mode->dotClock / 
+                  ((float)mode->hTotal * (float)mode->vTotal));
+     }
+
+   return rate;
 }
 
 static void 
@@ -1110,6 +1148,17 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* get the amount of rotation from the mouse event */
    rotation = _e_smart_monitor_rotation_amount_get(sd, ev);
+
+   /* if we have no rotation to map, get out */
+   if (rotation == 0) return;
+
+   /* factor in any existing rotation */
+   /* rotation += ; */
+   rotation %= 360;
+
+   /* update current rotation value */
+
+   /* apply rotation map */
 }
 
 static int 
