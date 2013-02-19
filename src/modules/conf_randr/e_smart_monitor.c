@@ -489,8 +489,6 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
         Evas_Coord fw = 0, fh = 0;
         Evas_Object *box;
 
-        printf("Cloning %d Into %d\n", sd->crtc.id, psd->crtc.id);
-
         evas_object_hide(obj);
 
         _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, &fw, &fh);
@@ -506,12 +504,15 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
         sd->o_clone = edje_object_add(psd->evas);
         e_theme_edje_object_set(sd->o_clone, "base/theme/widgets", 
                                 "e/conf/randr/main/mini");
+        evas_object_smart_member_add(sd->o_clone, obj);
 
+        /* remove the thumbnail from monitor frame */
         edje_object_part_unswallow(sd->o_frame, sd->o_thumb);
-        evas_object_hide(sd->o_thumb);
-        edje_object_part_swallow(sd->o_clone, "e.swallow.preview", sd->o_thumb);
-        evas_object_show(sd->o_thumb);
 
+        /* put the thumbnail into the clone */
+        edje_object_part_swallow(sd->o_clone, "e.swallow.preview", sd->o_thumb);
+
+        /* based on orientation, size the clone accordingly */
         if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
             (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
           {
@@ -527,8 +528,10 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
         evas_object_move(sd->o_clone, 0, 0);
         evas_object_show(sd->o_clone);
 
+        /* pack the clone into the parent box */
         edje_object_part_box_append(psd->o_frame, "e.box.clone", sd->o_clone);
 
+        /* calculate min size for the box */
         box = (Evas_Object *)edje_object_part_object_get(psd->o_frame, "e.box.clone");
         evas_object_size_hint_min_get(box, &fw, &fh);
         if (fw < 1) fw = 1;
@@ -539,12 +542,26 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
      {
         if (sd->o_clone)
           {
+             evas_object_smart_member_del(sd->o_clone);
+
              edje_object_part_unswallow(sd->o_clone, sd->o_thumb);
-             evas_object_hide(sd->o_thumb);
              edje_object_part_swallow(sd->o_frame, "e.swallow.preview", sd->o_thumb);
-             evas_object_show(sd->o_thumb);
              evas_object_del(sd->o_clone);
           }
+
+        sd->o_clone = NULL;
+
+        /* set monitor position text */
+        _e_smart_monitor_position_set(sd, sd->current.x, sd->current.y);
+
+        /* set monitor position text */
+        _e_smart_monitor_resolution_set(sd, sd->current.w, sd->current.h);
+
+        /* repack monitor into original position (before cloning) */
+        evas_object_grid_pack(sd->grid.obj, obj, 
+                              sd->current.x, sd->current.y, 
+                              sd->current.w, sd->current.h);
+
         evas_object_show(obj);
      }
 }
@@ -656,6 +673,8 @@ _e_smart_del(Evas_Object *obj)
 
    /* delete the refresh rate object */
    if (sd->o_refresh) evas_object_del(sd->o_refresh);
+
+   if (sd->o_clone) evas_object_del(sd->o_clone);
 
    if (sd->o_thumb)
      {
@@ -784,7 +803,14 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* set livethumb thumbnail size */
    if ((!sd->resizing) && (!sd->rotating) && (!sd->moving))
-     e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
+     {
+        Evas_Coord mw = 0, mh = 0;
+
+        _e_smart_monitor_coord_virtual_to_canvas(sd, sd->max.mode_width, 
+                                                 sd->max.mode_height, 
+                                                 &mw, &mh);
+        e_livethumb_vsize_set(sd->o_thumb, mw, mh);
+     }
 }
 
 static void 
@@ -808,12 +834,18 @@ _e_smart_show(Evas_Object *obj)
 #ifdef BG_DBG
         evas_object_show(sd->o_bg);
 #endif
+
+        if (!sd->current.enabled)
+          edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
+
+        /* set visibility flag */
+        sd->visible = EINA_TRUE;
      }
    else
-     evas_object_show(sd->o_clone);
-
-   /* set visibility flag */
-   sd->visible = EINA_TRUE;
+     {
+        if (sd->o_clone) evas_object_show(sd->o_clone);
+        sd->visible = EINA_FALSE;
+     }
 }
 
 static void 
@@ -838,7 +870,7 @@ _e_smart_hide(Evas_Object *obj)
         evas_object_hide(sd->o_bg);
 #endif
      }
-   else
+   else if (sd->o_clone)
      evas_object_hide(sd->o_clone);
 
    /* set visibility flag */
@@ -1326,8 +1358,9 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Ob
    sd->my = ev->canvas.y;
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
-                             &sd->crtc.w, &sd->crtc.h);
+   evas_object_grid_pack_get(sd->grid.obj, mon, 
+                             &sd->current.x, &sd->current.y, 
+                             &sd->current.w, &sd->current.h);
 
    /* raise the monitor */
    evas_object_raise(mon);
@@ -1431,7 +1464,8 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
    evas_pointer_canvas_xy_get(sd->evas, &sd->rx, &sd->ry);
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
+   evas_object_grid_pack_get(sd->grid.obj, mon, 
+                             &sd->current.x, &sd->current.y, 
                              &sd->current.w, &sd->current.h);
 
    /* set resizing flag */
@@ -1478,7 +1512,8 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
    sd->current.rotation = 0;
 
    /* record current size of monitor */
-   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
+   evas_object_grid_pack_get(sd->grid.obj, mon, 
+                             &sd->current.x, &sd->current.y, 
                              &sd->current.w, &sd->current.h);
 
    /* set resizing flag */
@@ -1692,7 +1727,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    Evas_Coord dx = 0, dy = 0;
-   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord cw = 0, ch = 0;
    Evas_Coord nw = 0, nh = 0;
    Ecore_X_Randr_Mode_Info *mode = NULL;
 
@@ -1723,10 +1758,10 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* convert monitor size to canvas size */
    _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, 
-                                            &mw, &mh);
+                                            &cw, &ch);
 
    /* factor in resize difference and convert to virtual */
-   _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), 
+   _e_smart_monitor_coord_canvas_to_virtual(sd, (cw + dx), (ch + dy), 
                                             &nw, &nh);
 
    /* update current size values */
@@ -1744,25 +1779,34 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    if (mode)
      {
-        Evas_Coord cw = 0, ch = 0;
+        Evas_Coord mw = 0, mh = 0;
 
-        cw = mode->width;
-        ch = mode->height;
+        mw = mode->width;
+        mh = mode->height;
 
         /* if we are rotated, we need to swap sizes */
         if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
             (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
           {
-             cw = mode->height;
-             ch = mode->width;
+             mw = mode->height;
+             mh = mode->width;
           }
+
+        /* if ((sd->current.x + mw) > sd->grid.vw) */
+        /*   sd->current.x = (sd->grid.vw - mw); */
+
+        /* if ((sd->current.h + mh) > sd->grid.vh) */
+        /*   sd->current.y = (sd->grid.vh - mh); */
 
         /* update monitor size in the grid */
         evas_object_grid_pack(sd->grid.obj, mon, 
-                              sd->current.x, sd->current.y, cw, ch);
+                              sd->current.x, sd->current.y, mw, mh);
+
+        /* update position text */
+        _e_smart_monitor_position_set(sd, sd->current.x, sd->current.y);
 
         /* update resolution text */
-        _e_smart_monitor_resolution_set(sd, cw, ch);
+        _e_smart_monitor_resolution_set(sd, mw, mh);
      }
 }
 
@@ -1824,6 +1868,10 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* move the monitor */
    evas_object_move(mon, nx, ny);
+
+   /* take current object position, translate to virtual */
+   /* _e_smart_monitor_coord_canvas_to_virtual(sd, nx, ny,  */
+   /*                                          &sd->current.x, &sd->current.y); */
 
    /* any objects below this monitor ? */
    if ((obj = evas_object_below_get(mon)))
