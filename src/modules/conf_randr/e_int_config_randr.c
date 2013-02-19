@@ -7,6 +7,8 @@
 struct _E_Config_Dialog_Data
 {
    Evas_Object *o_randr;
+
+   int restore;
 };
 
 /* local function prototypes */
@@ -14,6 +16,8 @@ static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+static int _basic_check(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+
 static void _randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 
 /* public functions */
@@ -36,6 +40,7 @@ e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check;
    v->override_auto_apply = EINA_TRUE;
 
    /* create new dialog */
@@ -56,6 +61,8 @@ _create_data(E_Config_Dialog *cfd EINA_UNUSED)
    /* try to allocate the config data structure */
    if (!(cfdata = E_NEW(E_Config_Dialog_Data, 1)))
      return NULL;
+
+   cfdata->restore = e_randr_cfg->restore;
 
    return cfdata;
 }
@@ -78,6 +85,8 @@ static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
+   Evas_Object *ow;
+   Evas_Coord mw = 0, mh = 0, ch = 0;
 
    /* create the base list widget */
    o = e_widget_list_add(evas, 0, 0);
@@ -85,8 +94,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    /* try to create randr smart widget */
    if ((cfdata->o_randr = e_smart_randr_add(evas)))
      {
-        Evas_Coord mw = 0, mh = 0;
-
         /* hook into randr widget changed callback */
         evas_object_smart_callback_add(cfdata->o_randr, "randr_changed", 
                                        _randr_cb_changed, cfd);
@@ -102,10 +109,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
         /* ask randr widget to calculate min size */
         e_smart_randr_min_size_get(cfdata->o_randr, &mw, &mh);
-
-        /* set min size of the list widget */
-        e_widget_size_min_set(o, mw, mh);
      }
+
+   ow = e_widget_check_add(evas, _("Restore On Startup"), &(cfdata->restore));
+   e_widget_list_object_append(o, ow, 1, 0, 0.5);
+   e_widget_size_min_get(ow, NULL, &ch);
+
+   /* set min size of the list widget */
+   e_widget_size_min_set(o, mw, mh + ch);
 
    e_util_win_auto_resize_fill(cfd->dia->win);
    e_win_centered_set(cfd->dia->win, 1);
@@ -116,13 +127,18 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
+   e_randr_cfg->restore = cfdata->restore;
+   e_randr_config_save();
+
    e_smart_randr_changes_apply(cfdata->o_randr);
 
-   /* FIXME: NB: TODO: TESTING !!! */
-   /* ecore_x_randr_crtc_clone_set(ecore_x_window_root_first_get(), 96, 95); */
-   /* ecore_x_randr_screen_reset(ecore_x_window_root_first_get()); */
-
    return 1;
+}
+
+static int 
+_basic_check(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+{
+   return (e_randr_cfg->restore != cfdata->restore);
 }
 
 static void 
