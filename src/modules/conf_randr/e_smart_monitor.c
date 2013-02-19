@@ -155,10 +155,8 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 
    /* get the largest mode */
    mode = eina_list_last_data_get(sd->modes);
-   mw = mode->width;
-   mh = mode->height;
-   aw = mw;
-   ah = mh;
+   aw = mw = mode->width;
+   ah = mh = mode->height;
 
    sd->max.mode_width = mw;
    sd->max.mode_height = mh;
