@@ -1120,40 +1120,11 @@ _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    /* try to get the monitor smart data */
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
-   /* set resizing flag */
+   /* set rotating flag */
    sd->rotating = EINA_FALSE;
 
    /* get current orientation based on rotation */
    orient = _e_smart_monitor_orientation_get(sd->rotation);
-
-   /* run a comparison based on orientation
-    * 
-    * NB: This is done so that after the user is done rotating, if we 
-    * do not need to change the size of the monitor object, we can just 
-    * remove the map and get out. This saves us some function calls below */
-   if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-       (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
-     {
-        if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
-            (orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
-          {
-             /* remove the map */
-             evas_object_map_set(sd->o_frame, NULL);
-             evas_object_map_enable_set(sd->o_frame, EINA_FALSE);
-             return;
-          }
-     }
-   else
-     {
-        if ((orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
-            (orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
-          {
-             /* remove the map */
-             evas_object_map_set(sd->o_frame, NULL);
-             evas_object_map_enable_set(sd->o_frame, EINA_FALSE);
-             return;
-          }
-     }
 
    /* update current orientation */
    sd->crtc.orient = orient;
