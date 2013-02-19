@@ -12,11 +12,14 @@ static Eina_Bool _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type 
 static Eina_Bool _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
 static Eina_Bool _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED);
 
+static Eina_Bool _e_randr_poller_cb_check(void *data EINA_UNUSED);
+
 /* local variables */
 static Eina_List *_randr_event_handlers = NULL;
 static E_Config_DD *_e_randr_edd = NULL;
 static E_Config_DD *_e_randr_crtc_edd = NULL;
 static E_Config_DD *_e_randr_output_edd = NULL;
+static Ecore_Poller *_e_randr_poller = NULL;
 
 /* external variables */
 EAPI E_Randr_Config *e_randr_cfg = NULL;
@@ -60,6 +63,12 @@ e_randr_init(void)
                               _e_randr_event_cb_property_change, NULL);
      }
 
+   /* setup poller for when hotplug events happen and the video card 
+    * may not report them */
+   _e_randr_poller = 
+     ecore_poller_add(ECORE_POLLER_CORE, e_randr_cfg->poll_interval, 
+                      _e_randr_poller_cb_check, NULL);
+
    return EINA_TRUE;
 }
 
@@ -68,6 +77,9 @@ e_randr_shutdown(void)
 {
    /* check if randr is available */
    if (!ecore_x_randr_query()) return 1;
+
+   /* remove the poller */
+   if (_e_randr_poller) ecore_poller_del(_e_randr_poller);
 
    if (ecore_x_randr_version_get() >= E_RANDR_VERSION_1_2)
      {
@@ -589,5 +601,11 @@ _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, 
 
    /* ev = event; */
    printf("E_RANDR Event: Property Change\n");
+   return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool 
+_e_randr_poller_cb_check(void *data EINA_UNUSED)
+{
    return ECORE_CALLBACK_RENEW;
 }
