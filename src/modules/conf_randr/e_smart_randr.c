@@ -7,8 +7,13 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
+   Evas_Object *o_base;
+   Evas_Object *o_grid;
+
    /* layout object */
-   Evas_Object *o_layout;
+   /* Evas_Object *o_layout; */
+
+   Evas_Coord vw, vh;
 
    /* visible flag */
    Eina_Bool visible : 1;
@@ -57,11 +62,16 @@ e_smart_randr_virtual_size_calc(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Ecore_X_Window root = 0;
-   Eina_List *l = NULL;
-   E_Randr_Crtc_Config *crtc;
+   Ecore_X_Randr_Crtc *crtcs;
    Evas_Coord vw = 0, vh = 0;
+   int ncrtcs = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* NB: The old code here used to get the modes from the e_randr_cfg.
+    * I changed it to get directly from Xrandr because of attempts to 
+    * run this in Xephyr. Getting the information from e_randr_cfg was not 
+    * practical in those cases */
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
@@ -69,38 +79,63 @@ e_smart_randr_virtual_size_calc(Evas_Object *obj)
    /* grab the root window */
    root = ecore_x_window_root_first_get();
 
-   /* loop the list of crtcs in our config */
-   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc)
+   /* try to get the list of crtcs */
+   if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
      {
-        Eina_List *o = NULL;
-        E_Randr_Output_Config *output;
+        int i = 0;
+        Ecore_X_Randr_Output *outputs;
 
-        /* loop the list of outputs in this crtc */
-        EINA_LIST_FOREACH(crtc->outputs, o, output)
+        /* loop the list of crtcs and try to get the outputs on each */
+        for (i = 0; i < ncrtcs; i++)
           {
-             Ecore_X_Randr_Mode *modes;
-             Evas_Coord mw = 0, mh = 0;
-             int num = 0;
+             int noutput = 0, j = 0;
 
-             /* get the modes for this output
-              * 
-              * NB: Xrandr returns these modes in order of largest first */
-             modes = ecore_x_randr_output_modes_get(root, output->xid, &num, NULL);
-             if (!modes) continue;
+             if (!(outputs = 
+                   ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutput)))
+               continue;
 
-             /* get the size of the largest mode */
-             ecore_x_randr_mode_size_get(root, modes[0], &mw, &mh);
+             /* loop the outputs and get the largest mode */
+             for (j = 0; j < noutput; j++)
+               {
+                  Ecore_X_Randr_Mode *modes;
+                  Evas_Coord mw = 0, mh = 0;
+                  int nmode = 0;
 
-             vw += MAX(mw, mh);
-             vh += MAX(mw, mh);
+                  /* try to get the list of modes for this output */
+                  modes = 
+                    ecore_x_randr_output_modes_get(root, outputs[j], 
+                                                   &nmode, NULL);
+                  if (!modes) continue;
+
+                  /* get the size of the largest mode */
+                  ecore_x_randr_mode_size_get(root, modes[0], &mw, &mh);
+
+                  vw += MAX(mw, mh);
+                  vh += MAX(mw, mh);
+
+                  /* free any allocated memory from ecore_x_randr */
+                  free(modes);
+               }
 
              /* free any allocated memory from ecore_x_randr */
-             free(modes);
+             free(outputs);
           }
+
+        /* free any allocated memory from ecore_x_randr */
+        free(crtcs);
      }
 
-   /* set the layout virtual size */
-   e_layout_virtual_size_set(sd->o_layout, vw, vh);
+   if ((vw == 0) || (vh == 0))
+     {
+        /* by default, set virtual size to the current screen size */
+        ecore_x_randr_screen_current_size_get(root, &vw, &vh, NULL, NULL);
+     }
+
+   sd->vw = vw;
+   sd->vh = vh;
+
+   /* set the grid size */
+   evas_object_grid_size_set(sd->o_grid, vw, vh);
 }
 
 void 
@@ -108,51 +143,93 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Evas *evas;
-   Eina_List *l = NULL;
-   E_Randr_Crtc_Config *crtc;
+   Ecore_X_Window root = 0;
+   Ecore_X_Randr_Crtc *crtcs;
+   int ncrtcs = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* NB: The old code here used to get the outputs from the e_randr_cfg.
+    * I changed it to get directly from Xrandr because of attempts to 
+    * run this in Xephyr. Getting the information from e_randr_cfg was not 
+    * practical in those cases */
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   /* grab the canvas of the layout widget */
-   evas = evas_object_evas_get(sd->o_layout);
+   /* grab the canvas of the grid object */
+   evas = evas_object_evas_get(sd->o_grid);
 
-   /* loop the list of crtcs in our config */
-   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc)
+   /* grab the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* try to get the list of crtcs */
+   if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
      {
-        Eina_List *o = NULL;
-        E_Randr_Output_Config *output;
+        int i = 0;
+        Ecore_X_Randr_Output *outputs;
 
-        /* loop the list of outputs in this crtc */
-        EINA_LIST_FOREACH(crtc->outputs, o, output)
+        /* loop the list of crtcs and try to get the outputs on each */
+        for (i = 0; i < ncrtcs; i++)
           {
-             Evas_Object *mon;
+             Evas_Coord cx = 0, cy = 0, cw = 0, ch = 0;
+             int noutput = 0, j = 0;
 
-             /* for each output, try to create a monitor */
-             if (!(mon = e_smart_monitor_add(evas)))
+             if (!(outputs = 
+                   ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutput)))
                continue;
 
-             /* add this monitor to our list */
-             sd->monitors = eina_list_append(sd->monitors, mon);
+             /* get the geometry for this crtc */
+             ecore_x_randr_crtc_geometry_get(root, crtcs[i], 
+                                             &cx, &cy, &cw, &ch);
 
-             /* tell monitor what crtc it uses */
-             e_smart_monitor_crtc_set(mon, crtc);
+             /* loop the outputs and create monitors for each */
+             for (j = 0; j < noutput; j++)
+               {
+                  Evas_Object *mon;
 
-             /* tell monitor what output it uses */
-             e_smart_monitor_output_set(mon, output);
+                  /* for each output, try to create a monitor */
+                  if (!(mon = e_smart_monitor_add(evas)))
+                    continue;
 
-             /* pack this monitor into the layout */
-             e_layout_pack(sd->o_layout, mon);
+                  /* add this monitor to our list */
+                  sd->monitors = eina_list_append(sd->monitors, mon);
 
-             /* move this monitor to proper position */
-             e_layout_child_move(mon, crtc->x, crtc->y);
+                  /* tell monitor what the virtual grid is */
+                  e_smart_monitor_grid_set(mon, sd->o_grid);
 
-             /* resize this monitor to proper size */
-             e_layout_child_resize(mon, crtc->width, crtc->height);
+                  /* tell monitor what the virtual grid size is */
+                  e_smart_monitor_virtual_size_set(mon, sd->vw, sd->vh);
+
+                  /* tell monitor what crtc it uses */
+                  e_smart_monitor_crtc_set(mon, crtcs[i]);
+
+                  /* tell monitor what output it uses */
+                  e_smart_monitor_output_set(mon, outputs[j]);
+
+                  /* pack this monitor into the grid */
+                  evas_object_grid_pack(sd->o_grid, mon, cx, cy, cw, ch);
+               }
+
+             /* free any allocated memory from ecore_x_randr */
+             free(outputs);
           }
+
+        /* free any allocated memory from ecore_x_randr */
+        free(crtcs);
      }
+}
+
+void 
+e_smart_randr_min_size_get(Evas_Object *obj, Evas_Coord *mw, Evas_Coord *mh)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   if (mw) *mw = (sd->vw / 10);
+   if (mh) *mh = (sd->vh / 10);
 }
 
 /* local functions */
@@ -170,8 +247,13 @@ _e_smart_add(Evas_Object *obj)
    /* grab the canvas */
    evas = evas_object_evas_get(obj);
 
-   /* create the layout object */
-   sd->o_layout = e_layout_add(evas);
+   sd->o_base = edje_object_add(evas);
+   e_theme_edje_object_set(sd->o_base, "base/theme/widgets", 
+                           "e/conf/randr/main");
+   evas_object_smart_member_add(sd->o_base, obj);
+
+   sd->o_grid = evas_object_grid_add(evas);
+   edje_object_part_swallow(sd->o_base, "e.swallow.content", sd->o_grid);
 
    /* set the object's smart data */
    evas_object_smart_data_set(obj, sd);
@@ -192,8 +274,8 @@ _e_smart_del(Evas_Object *obj)
    EINA_LIST_FREE(sd->monitors, mon)
      evas_object_del(mon);
 
-   /* delete the layout object */
-   if (sd->o_layout) evas_object_del(sd->o_layout);
+   /* delete the base object */
+   evas_object_del(sd->o_base);
 
    /* try to free the allocated structure */
    E_FREE(sd);
@@ -212,8 +294,8 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   /* move the layout object */
-   if (sd->o_layout) evas_object_move(sd->o_layout, x, y);
+   /* move the base object */
+   evas_object_move(sd->o_base, x, y);
 }
 
 static void 
@@ -226,8 +308,8 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
-   /* resize the layout object */
-   if (sd->o_layout) evas_object_resize(sd->o_layout, w, h);
+   /* resize the base object */
+   evas_object_resize(sd->o_base, w, h);
 }
 
 static void 
@@ -245,8 +327,8 @@ _e_smart_show(Evas_Object *obj)
    /* if it is already visible, get out */
    if (sd->visible) return;
 
-   /* show the layout object */
-   if (sd->o_layout) evas_object_show(sd->o_layout);
+   /* show the base object */
+   evas_object_show(sd->o_base);
 
    /* show any monitors */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
@@ -275,8 +357,8 @@ _e_smart_hide(Evas_Object *obj)
    EINA_LIST_FOREACH(sd->monitors, l, mon)
      evas_object_hide(mon);
 
-   /* hide the layout object */
-   if (sd->o_layout) evas_object_hide(sd->o_layout);
+   /* hide the base object */
+   evas_object_hide(sd->o_base);
 
    /* set visibility flag */
    sd->visible = EINA_FALSE;
@@ -291,7 +373,7 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* set the clip */
-   if (sd->o_layout) evas_object_clip_set(sd->o_layout, clip);
+   evas_object_clip_set(sd->o_base, clip);
 }
 
 static void 
@@ -303,5 +385,5 @@ _e_smart_clip_unset(Evas_Object *obj)
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
    /* unset the clip */
-   if (sd->o_layout) evas_object_clip_unset(sd->o_layout);
+   evas_object_clip_unset(sd->o_base);
 }
