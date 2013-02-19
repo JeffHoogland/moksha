@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_int_config_randr.h"
+#include "e_smart_randr.h"
 
 /* local structures */
 struct _E_Config_Dialog_Data
@@ -11,7 +12,7 @@ struct _E_Config_Dialog_Data
 /* local function prototypes */
 static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
 static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
-static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+static Evas_Object *_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 
 /* public functions */
@@ -23,10 +24,6 @@ e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
 
    /* check for existing dialog */
    if (e_config_dialog_find("E", "screen/screen_setup"))
-     return NULL;
-
-   /* check for valid XRandR protocol version */
-   if (e_randr_screen_info.randr_version < ECORE_X_RANDR_1_2)
      return NULL;
 
    /* try to allocate dialog view */
@@ -78,8 +75,10 @@ _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 }
 
 static Evas_Object *
-_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
+   Evas_Object *o;
+
    /* create the base list widget */
    o = e_widget_list_add(evas, 0, 0);
 
