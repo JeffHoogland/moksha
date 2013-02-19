@@ -78,7 +78,7 @@ group { name: "e/conf/randr/main/frame";
    images.image: "sym_up_light_normal.png" COMP;
    images.image: "sym_up_light_selected.png" COMP;
    styles {
-      style { name: "randr_monitor_style";
+      style { name: "randr_name_style";
          base: "font=Sans font_size=10 text_class=randr_monitor align=center color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word";
          tag: "br" "\n";
          tag: "hilight" "+ font=Sans:style=Bold";
@@ -196,7 +196,7 @@ group { name: "e/conf/randr/main/frame";
             rel2.relative: 0.5 0.5;
             rel2.to: "e.swallow.preview";
             align: 0.5 1.0;
-            text { style: "randr_monitor_style";
+            text { style: "randr_name_style";
                min: 1.0 1.0;
             }
          }
