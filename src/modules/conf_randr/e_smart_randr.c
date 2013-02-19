@@ -201,8 +201,8 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* tell monitor what the virtual grid is */
                   e_smart_monitor_grid_set(mon, sd->o_grid);
 
-                  /* tell monitor what crtc it uses */
-                  e_smart_monitor_crtc_set(mon, crtcs[i]);
+                  /* tell monitor what crtc it uses and it's current position */
+                  e_smart_monitor_crtc_set(mon, crtcs[i], cx, cy, cw, ch);
 
                   /* tell monitor what output it uses */
                   e_smart_monitor_output_set(mon, outputs[j]);
