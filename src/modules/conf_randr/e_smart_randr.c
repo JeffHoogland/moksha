@@ -175,6 +175,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    Ecore_X_Randr_Crtc *crtcs;
    int ncrtcs = 0;
    Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
+   Evas_Coord nx = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -255,7 +256,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                {
                   Evas_Object *mon;
                   Ecore_X_Randr_Output output;
-                  static Evas_Coord nx = 0;
 
                   /* for each output, try to create a monitor */
                   if (!(mon = e_smart_monitor_add(evas)))
@@ -280,7 +280,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
                        /* get the size of the largest mode */
                        ecore_x_randr_mode_size_get(root, modes[0], &mw, &mh);
-                       /* printf("\t\t\tOutput Size: %d %d\n", mw, mh); */
+                       /* printf("\t\t\t\tOutput Size: %d %d\n", mw, mh); */
 
                        /* free any allocated memory from ecore_x_randr */
                        free(modes);
