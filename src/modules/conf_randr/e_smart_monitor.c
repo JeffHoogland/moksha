@@ -1753,7 +1753,7 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
    else
      sd->changes &= ~(E_SMART_MONITOR_CHANGED_MODE);
 
-   evas_object_smart_callback_call(mon, "monitor_changed", NULL);
+   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
 }
 
 static void 
@@ -1905,7 +1905,7 @@ ret:
    else
      sd->changes &= ~(E_SMART_MONITOR_CHANGED_ORIENTATION);
 
-   evas_object_smart_callback_call(mon, "monitor_changed", NULL);
+   evas_object_smart_callback_call(mon, "monitor_resized", NULL);
 }
 
 static void 
