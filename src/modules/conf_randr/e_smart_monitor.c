@@ -1177,7 +1177,7 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* if the monitor is disabled, get out */
-   if (!sd->current.enabled) return;
+   /* if (!sd->current.enabled) return; */
 
    /* call appropriate function based on current action */
    if (sd->resizing) 
@@ -1514,10 +1514,8 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    dy = (ev->cur.canvas.y - ev->prev.canvas.y);
 
    /* convert monitor size to canvas size */
-   printf("Virtual: %d %d\n", sd->current.w, sd->current.h);
    _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, 
                                             &mw, &mh);
-   printf("Canvas: %d %d\n", mw, mh);
 
    /* factor in resize difference and convert to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), 
@@ -1526,7 +1524,6 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    /* update current size values */
    sd->current.w = nw;
    sd->current.h = nh;
-   printf("New Virtual: %d %d\n", nw, nh);
 
    /* based on orientation, try to find a valid mode */
    if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
