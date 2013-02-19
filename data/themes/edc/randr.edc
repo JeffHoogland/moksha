@@ -116,6 +116,11 @@ group { name: "e/conf/randr/main/frame";
             rel1.to: "e.swallow.preview";
             rel2.to: "e.swallow.preview";
          }
+         description { state: "off" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 64;
+//            color: 64 64 64 255;
+         }
       }
       part { name: "e.box.clone"; type: BOX;
          clip_to: "clone_clip";
@@ -492,6 +497,7 @@ group { name: "e/conf/randr/main/frame";
       program {
          signal: "e,state,enabled"; source: "e";
          action: STATE_SET "default" 0.0;
+         target: "clip";
          target: "led";
          after: "pulse1";
       }
@@ -506,6 +512,7 @@ group { name: "e/conf/randr/main/frame";
          signal: "e,state,disabled"; source: "e";
          action: STATE_SET "off" 0.0;
          target: "led";
+         target: "clip";
       }
       program {
          signal: "e,state,drop,on"; source: "e";
