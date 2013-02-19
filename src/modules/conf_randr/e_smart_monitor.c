@@ -172,8 +172,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 {
    E_Smart_Data *sd;
    Ecore_X_Randr_Mode_Info *mode;
-   Evas_Coord mw = 0, mh = 0;
-   Evas_Coord aw = 1, ah = 1;
    unsigned char *edid = NULL;
    unsigned long edid_length = 0;
    Ecore_X_Window root = 0;
@@ -193,11 +191,8 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 
    /* get the largest mode */
    mode = eina_list_last_data_get(sd->modes);
-   aw = mw = mode->width;
-   ah = mh = mode->height;
-
-   sd->max.mode_width = mw;
-   sd->max.mode_height = mh;
+   sd->max.mode_width = mode->width;
+   sd->max.mode_height = mode->height;
 
    /* get the root window */
    root = ecore_x_window_root_first_get();
@@ -205,48 +200,12 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    /* get output name */
    name = ecore_x_randr_output_name_get(root, sd->output, NULL);
 
-   /* FIXME: ideally this should probably be based on the current mode */
-
    /* get the edid for this output */
    if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
      {
-        Ecore_X_Randr_Edid_Aspect_Ratio aspect = 0;
-
         /* get output name */
         if (!name)
           name = ecore_x_randr_edid_display_name_get(edid, edid_length);
-
-        /* get the aspect */
-        aspect = 
-          ecore_x_randr_edid_display_aspect_ratio_preferred_get(edid, 
-                                                                edid_length);
-
-        /* calculate aspect size */
-        switch (aspect)
-          {
-           case ECORE_X_RANDR_EDID_ASPECT_RATIO_4_3:
-             aw = 4;
-             ah = (3 * mh) / mw;
-             break;
-           case ECORE_X_RANDR_EDID_ASPECT_RATIO_16_9:
-             aw = 16;
-             ah = (9 * mh) / mw;
-             break;
-           case ECORE_X_RANDR_EDID_ASPECT_RATIO_16_10:
-             aw = 16;
-             ah = (10 * mh) / mw;
-             break;
-           case ECORE_X_RANDR_EDID_ASPECT_RATIO_5_4:
-             aw = 5;
-             ah = (4 * mh) / mw;
-             break;
-           case ECORE_X_RANDR_EDID_ASPECT_RATIO_15_9:
-             aw = 15;
-             ah = (9 * mh) / mw;
-             break;
-           default:
-             break;
-          }
 
         /* free any memory allocated from ecore_x_randr */
         free(edid);
@@ -257,13 +216,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 
    /* free any memory allocated from ecore_x_randr */
    free(name);
-
-   /* set the aspect hints */
-   evas_object_size_hint_aspect_set(sd->o_frame, 
-                                    EVAS_ASPECT_CONTROL_BOTH, aw, ah);
-
-   /* set the align hints */
-   evas_object_size_hint_align_set(sd->o_frame, 0.0, 0.0);
 
    /* get the smallest mode */
    mode = eina_list_nth(sd->modes, 0);
