@@ -3,6 +3,13 @@
 #include "e_smart_randr.h"
 #include "e_smart_monitor.h"
 
+/*
+ * TODO:
+ * 
+ * Add Poller for Output Change events to listen for hotplug (4 seconds)
+ * 
+ */
+
 /* local structures */
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
@@ -38,6 +45,7 @@ static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Ev
 
 static Evas_Object *_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc);
 static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -267,9 +275,17 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* hook into monitor changed callback */
                   evas_object_smart_callback_add(mon, "monitor_changed", 
                                                  _e_smart_randr_monitor_cb_changed, obj);
+                  evas_object_smart_callback_add(mon, "monitor_moved", 
+                                                 _e_smart_randr_monitor_cb_moved, obj);
 
                   /* add this monitor to our list */
                   sd->monitors = eina_list_append(sd->monitors, mon);
+
+                  /* tell monitor what the grid's virtual size is */
+                  e_smart_monitor_grid_virtual_size_set(mon, sd->vw, sd->vh);
+
+                  /* tell monitor what the grid is and it's geometry */
+                  e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
 
                   output = (int)(long)o;
 
@@ -294,30 +310,20 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        /* free any allocated memory from ecore_x_randr */
                        free(modes);
 
-                       /* pack this monitor into the grid */
-                       evas_object_grid_pack(sd->o_grid, mon, nx, 0, mw, mh);
-
-                       /* tell monitor what it's current position is */
+                       /* tell monitor what it's current position is
+                        * NB: This also packs into the grid */
                        e_smart_monitor_current_geometry_set(mon, nx, 0, mw, mh);
 
                        nx += mw;
                     }
                   else
                     {
-                       /* pack this monitor into the grid */
-                       evas_object_grid_pack(sd->o_grid, mon, cx, cy, cw, ch);
-
-                       /* tell monitor what it's current position is */
+                       /* tell monitor what it's current position is
+                        * NB: This also packs into the grid */
                        e_smart_monitor_current_geometry_set(mon, cx, cy, cw, ch);
 
                        nx += cw;
                     }
-
-                  /* tell monitor what the grid's virtual size is */
-                  e_smart_monitor_grid_virtual_size_set(mon, sd->vw, sd->vh);
-
-                  /* tell monitor what the grid is and it's geometry */
-                  e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
 
                   /* tell monitor what crtc it uses and current position */
                   e_smart_monitor_crtc_set(mon, crtcs[i], cx, cy, cw, ch);
@@ -496,6 +502,8 @@ _e_smart_del(Evas_Object *obj)
      {
         evas_object_smart_callback_del(mon, "monitor_changed", 
                                        _e_smart_randr_monitor_cb_changed);
+        evas_object_smart_callback_del(mon, "monitor_moved", 
+                                       _e_smart_randr_monitor_cb_moved);
         evas_object_del(mon);
      }
 
@@ -689,6 +697,58 @@ _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void
    Evas_Object *randr;
 
    if (!(randr = data)) return;
+
+   /* tell main dialog that something changed and to enable apply button */
+   evas_object_smart_callback_call(randr, "randr_changed", NULL);
+}
+
+static void 
+_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+{
+   E_Smart_Data *sd;
+   Evas_Object *randr, *mon;
+   Eina_List *l = NULL;
+   Evas_Coord minx = 0, miny = 0;
+
+   if (!(randr = data)) return;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(randr))) return;
+
+   /* ONE MONITOR MUST BE AT 0 X and ONE MUST BE AT 0 Y */
+
+   /* normalize output positions so that upper left corner of all 
+    * outputs is at 0,0 */
+
+   minx = 32768;
+   miny = 32768;
+
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        Evas_Coord mx = 0, my = 0;
+
+        /* get the geometry for this monitor */
+        e_smart_monitor_current_geometry_get(mon, &mx, &my, NULL, NULL);
+        if (mx < minx) minx = mx;
+        if (my < miny) miny = my;
+     }
+
+   if ((minx) || (miny))
+     {
+        EINA_LIST_FOREACH(sd->monitors, l, mon)
+          {
+             Evas_Coord mx = 0, my = 0, mw = 0, mh = 0;
+
+             /* get the geometry for this monitor */
+             e_smart_monitor_current_geometry_get(mon, &mx, &my, &mw, &mh);
+
+             mx -= minx;
+             my -= miny;
+
+             /* move monitor to new position */
+             e_smart_monitor_current_geometry_set(mon, mx, my, mw, mh);
+          }
+     }
 
    /* tell main dialog that something changed and to enable apply button */
    evas_object_smart_callback_call(randr, "randr_changed", NULL);
