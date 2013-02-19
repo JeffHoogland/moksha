@@ -28,6 +28,7 @@ struct _E_Randr_Output_Config
    unsigned char *edid; // monitor's edid
    unsigned int *clones; // array of clones (each element of type ecore_x_randr output id (xid)
    unsigned long clone_count; // number of clones
+   unsigned char connected; // connection status 0 == connected, 1 == disconnected
 };
 
 struct _E_Randr_Crtc_Config
@@ -49,6 +50,8 @@ struct _E_Randr_Config
      } screen;
 
    Eina_List *crtcs;
+
+   unsigned char restore;
 };
 
 EINTERN Eina_Bool e_randr_init(void);
