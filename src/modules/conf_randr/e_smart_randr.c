@@ -7,12 +7,13 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
+   /* base object */
    Evas_Object *o_base;
+
+   /* grid object */
    Evas_Object *o_grid;
 
-   /* layout object */
-   /* Evas_Object *o_layout; */
-
+   /* virtual size */
    Evas_Coord vw, vh;
 
    /* visible flag */
@@ -31,6 +32,9 @@ static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
+
+static void _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -146,6 +150,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Crtc *crtcs;
    int ncrtcs = 0;
+   Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -159,6 +164,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
    /* grab the canvas of the grid object */
    evas = evas_object_evas_get(sd->o_grid);
+
+   /* get the geometry of the grid */
+   evas_object_geometry_get(sd->o_grid, &gx, &gy, &gw, &gh);
 
    /* grab the root window */
    root = ecore_x_window_root_first_get();
@@ -199,7 +207,10 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   evas_object_grid_pack(sd->o_grid, mon, cx, cy, cw, ch);
 
                   /* tell monitor what the virtual grid is */
-                  e_smart_monitor_grid_set(mon, sd->o_grid);
+                  e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
+
+                  /* tell monitor what the grid virtual size is */
+                  e_smart_monitor_virtual_size_set(mon, sd->vw, sd->vh);
 
                   /* tell monitor what crtc it uses and current position */
                   e_smart_monitor_crtc_set(mon, crtcs[i], cx, cy, cw, ch);
@@ -252,8 +263,15 @@ _e_smart_add(Evas_Object *obj)
                            "e/conf/randr/main");
    evas_object_smart_member_add(sd->o_base, obj);
 
+   /* create the virtual grid */
    sd->o_grid = evas_object_grid_add(evas);
    edje_object_part_swallow(sd->o_base, "e.swallow.content", sd->o_grid);
+
+   /* setup grid move callback */
+   evas_object_event_callback_add(sd->o_grid, EVAS_CALLBACK_MOVE, 
+                                  _e_smart_randr_grid_cb_move, sd);
+   evas_object_event_callback_add(sd->o_grid, EVAS_CALLBACK_RESIZE, 
+                                  _e_smart_randr_grid_cb_resize, sd);
 
    /* set the object's smart data */
    evas_object_smart_data_set(obj, sd);
@@ -273,6 +291,15 @@ _e_smart_del(Evas_Object *obj)
    /* free the monitors */
    EINA_LIST_FREE(sd->monitors, mon)
      evas_object_del(mon);
+
+   /* remove grid move callback */
+   evas_object_event_callback_del(sd->o_grid, EVAS_CALLBACK_MOVE, 
+                                  _e_smart_randr_grid_cb_move);
+   evas_object_event_callback_del(sd->o_grid, EVAS_CALLBACK_RESIZE, 
+                                  _e_smart_randr_grid_cb_resize);
+
+   /* delete the grid object */
+   evas_object_del(sd->o_grid);
 
    /* delete the base object */
    evas_object_del(sd->o_base);
@@ -386,4 +413,42 @@ _e_smart_clip_unset(Evas_Object *obj)
 
    /* unset the clip */
    evas_object_clip_unset(sd->o_base);
+}
+
+static void 
+_e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+{
+   E_Smart_Data *sd;
+   Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   /* try to get the smart data */
+   if (!(sd = data)) return;
+
+   /* get the grid geometry */
+   evas_object_geometry_get(sd->o_grid, &gx, &gy, &gw, &gh);
+
+   /* loop the monitors and update grid geometry */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
+}
+
+static void 
+_e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+{
+   E_Smart_Data *sd;
+   Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
+   Eina_List *l = NULL;
+   Evas_Object *mon;
+
+   /* try to get the smart data */
+   if (!(sd = data)) return;
+
+   /* get the grid geometry */
+   evas_object_geometry_get(sd->o_grid, &gx, &gy, &gw, &gh);
+
+   /* loop the monitors and update grid geometry */
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
 }
