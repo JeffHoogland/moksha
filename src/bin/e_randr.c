@@ -5,11 +5,12 @@ static Eina_Bool _e_randr_config_load(void);
 static void _e_randr_config_new(void);
 static void _e_randr_config_free(void);
 static Eina_Bool _e_randr_config_cb_timer(void *data);
+static void _e_randr_config_restore(void);
 
 static Eina_Bool _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
 static Eina_Bool _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
 static Eina_Bool _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
-static Eina_Bool _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
+static Eina_Bool _e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED);
 
 /* local variables */
 static Eina_List *_randr_event_handlers = NULL;
@@ -33,12 +34,6 @@ e_randr_init(void)
         /* NB: We should probably print an error here */
         return EINA_FALSE;
      }
-
-   /* try to restore settings
-    * 
-    * NB: When we restore, check the resolutions (current vs saved)
-    * and if there is no change then we do not need to call 
-    * screen_reset as this triggers a full comp refresh */
 
    /* tell randr that we are interested in receiving events
     * 
@@ -106,6 +101,7 @@ static Eina_Bool
 _e_randr_config_load(void)
 {
    E_Randr_Output_Config eroc;
+   Eina_Bool do_restore = EINA_TRUE;
 
    /* define edd for output config */
    _e_randr_output_edd = 
@@ -126,6 +122,7 @@ _e_randr_config_load(void)
                                    (char *)(&(eroc.clones)) - (char *)(&(eroc)),
                                    (char *)(&(eroc.clone_count)) -
                                    (char *)(&(eroc)), NULL, NULL);
+   E_CONFIG_VAL(D, T, connected, UCHAR);
 
    /* define edd for crtc config */
    _e_randr_crtc_edd = 
@@ -153,6 +150,7 @@ _e_randr_config_load(void)
    E_CONFIG_VAL(D, T, screen.width, INT);
    E_CONFIG_VAL(D, T, screen.height, INT);
    E_CONFIG_LIST(D, T, crtcs, _e_randr_crtc_edd);
+   E_CONFIG_VAL(D, T, restore, UCHAR);
 
    /* try to load the randr config */
    if ((e_randr_cfg = e_config_domain_load("e_randr", _e_randr_edd)))
@@ -161,6 +159,7 @@ _e_randr_config_load(void)
         if (e_randr_cfg->version < (E_RANDR_CONFIG_FILE_EPOCH * 1000000))
           {
              /* config is too old */
+             do_restore = EINA_FALSE;
              _e_randr_config_free();
              ecore_timer_add(1.0, _e_randr_config_cb_timer,
                              _("Settings data needed upgrading. Your old settings have<br>"
@@ -175,6 +174,7 @@ _e_randr_config_load(void)
         else if (e_randr_cfg->version > E_RANDR_CONFIG_FILE_VERSION)
           {
              /* config is too new */
+             do_restore = EINA_FALSE;
              _e_randr_config_free();
              ecore_timer_add(1.0, _e_randr_config_cb_timer,
                              _("Your settings are NEWER than Enlightenment. This is very<br>"
@@ -187,16 +187,23 @@ _e_randr_config_load(void)
      }
 
    /* if config was too old or too new, then reload a fresh one */
-   if (!e_randr_cfg) _e_randr_config_new();
+   if (!e_randr_cfg) 
+     {
+        do_restore = EINA_FALSE;
+        _e_randr_config_new();
+     }
 
    /* e_randr_config_new could return without actually creating a new config */
    if (!e_randr_cfg) return EINA_FALSE;
 
    /* handle upgrading any old config */
-   if (e_randr_cfg->version < E_RANDR_CONFIG_FILE_VERSION)
-     {
-        printf("TODO: Upgrade Old Randr Config !!\n");
-     }
+   /* if (e_randr_cfg->version < E_RANDR_CONFIG_FILE_VERSION) */
+   /*   { */
+
+   /*   } */
+
+   if ((do_restore) && (e_randr_cfg->restore))
+     _e_randr_config_restore();
 
    return EINA_TRUE;
 }
@@ -215,6 +222,9 @@ _e_randr_config_new(void)
 
    /* set version */
    e_randr_cfg->version = E_RANDR_CONFIG_FILE_VERSION;
+
+   /* by default, restore config */
+   e_randr_cfg->restore = EINA_TRUE;
 
    /* grab the root window once */
    root = ecore_x_window_root_first_get();
@@ -266,6 +276,8 @@ _e_randr_config_new(void)
                   for (j = 0; j < noutputs; j++)
                     {
                        E_Randr_Output_Config *output_cfg = NULL;
+                       Ecore_X_Randr_Connection_Status status = 1;
+                       int clone_count = 0;
 
                        /* try to create new output config */
                        if (!(output_cfg = E_NEW(E_Randr_Output_Config, 1)))
@@ -295,7 +307,16 @@ _e_randr_config_new(void)
                        /* get the clones for this output */
                        output_cfg->clones = 
                          ecore_x_randr_output_clones_get(root, outputs[i], 
-                                                         &output_cfg->clone_count);
+                                                         &clone_count);
+                       
+                       output_cfg->clone_count = (long)clone_count;
+
+                       status = 
+                         ecore_x_randr_output_connection_status_get(root, outputs[i]);
+
+                       output_cfg->connected = EINA_FALSE;
+                       if (status == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+                         output_cfg->connected = EINA_TRUE;
 
                        /* add this output to the list for this crtc */
                        crtc_cfg->outputs = 
@@ -317,7 +338,7 @@ _e_randr_config_new(void)
    /* E_CONFIG_LIMIT(); */
 
    /* save the new config */
-   e_config_domain_save("e_randr", _e_randr_edd, e_randr_cfg);
+   e_randr_config_save();
 }
 
 static void 
@@ -356,13 +377,103 @@ _e_randr_config_cb_timer(void *data)
    return EINA_FALSE;
 }
 
+static void 
+_e_randr_config_restore(void)
+{
+   Ecore_X_Window root = 0;
+   Ecore_X_Randr_Crtc *crtcs;
+   int ncrtcs = 0;
+   Eina_Bool need_reset = EINA_FALSE;
+
+   /* try to restore settings
+    * 
+    * NB: When we restore, check the resolutions (current vs saved)
+    * and if there is no change then we do not need to call 
+    * screen_reset as this triggers a full comp refresh. We can 
+    * accomplish this simply by checking the mode */
+
+   /* grab the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* try to get the list of crtcs */
+   if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
+     {
+        int i = 0;
+
+        for (i = 0; i < ncrtcs; i++)
+          {
+             Eina_List *l;
+             E_Randr_Crtc_Config *crtc_cfg;
+             Ecore_X_Randr_Mode mode;
+             Ecore_X_Randr_Output *outputs;
+             int noutputs = 0;
+
+             /* get the mode */
+             mode = ecore_x_randr_crtc_mode_get(root, crtcs[i]);
+
+             /* get the outputs */
+             outputs = 
+               ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs);
+
+             /* loop our config and find this crtc */
+             EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+               {
+                  /* try to find this crtc */
+                  if (crtc_cfg->xid != crtcs[i]) continue;
+
+                  /* apply the stored settings */
+                  if (!crtc_cfg->mode)
+                    ecore_x_randr_crtc_settings_set(root, crtc_cfg->xid, 
+                                                    NULL, 0, 0, 0, 0, 
+                                                    ECORE_X_RANDR_ORIENTATION_ROT_0);
+                  else
+                    ecore_x_randr_crtc_settings_set(root, crtc_cfg->xid, 
+                                                    outputs, noutputs, 
+                                                    crtc_cfg->x, crtc_cfg->y, 
+                                                    crtc_cfg->mode, 
+                                                    crtc_cfg->orient);
+
+                  if (crtc_cfg->mode != mode)
+                    need_reset = EINA_TRUE;
+
+                  break;
+               }
+
+             /* free any allocated memory from ecore_x_randr */
+             free(outputs);
+          }
+
+        /* free any allocated memory from ecore_x_randr */
+        free(crtcs);
+     }
+
+   if (need_reset) ecore_x_randr_screen_reset(root);
+}
+
 static Eina_Bool 
 _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
    Ecore_X_Event_Screen_Change *ev;
+   Eina_Bool changed = EINA_FALSE;
 
    ev = event;
+
    printf("E_RANDR Event: Screen Change\n");
+
+   if (e_randr_cfg->screen.width != ev->size.width)
+     {
+        e_randr_cfg->screen.width = ev->size.width;
+        changed = EINA_TRUE;
+     }
+
+   if (e_randr_cfg->screen.height != ev->size.height)
+     {
+        e_randr_cfg->screen.height = ev->size.height;
+        changed = EINA_TRUE;
+     }
+
+   if (changed) e_randr_config_save();
+
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -370,9 +481,33 @@ static Eina_Bool
 _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
    Ecore_X_Event_Randr_Crtc_Change *ev;
+   Eina_List *l = NULL;
+   E_Randr_Crtc_Config *crtc_cfg;
+   Eina_Bool changed = EINA_FALSE;
 
    ev = event;
+   if (ev->crtc == 0) return ECORE_CALLBACK_RENEW;
+
    printf("E_RANDR Event: Crtc Change\n");
+
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+     {
+        if (crtc_cfg->xid == ev->crtc)
+          {
+             crtc_cfg->x = ev->geo.x;
+             crtc_cfg->y = ev->geo.y;
+             crtc_cfg->width = ev->geo.w;
+             crtc_cfg->height = ev->geo.h;
+             crtc_cfg->orient = ev->orientation;
+             crtc_cfg->mode = ev->mode;
+
+             changed = EINA_TRUE;
+             break;
+          }
+     }
+
+   if (changed) e_randr_config_save();
+
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -380,18 +515,58 @@ static Eina_Bool
 _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
    Ecore_X_Event_Randr_Output_Change *ev;
+   Eina_List *l = NULL;
+   E_Randr_Crtc_Config *crtc_cfg;
+   Eina_Bool changed = EINA_FALSE;
 
    ev = event;
+
+   /* TODO: NB: Hmmm, this is problematic :( The spec says we should get an 
+    * event here when an output is disconnected (hotplug) if 
+    * the hardware (video card) is capable of detecting this HOWEVER, in my 
+    * tests, my nvidia card does not detect this */
    printf("E_RANDR Event: Output Change\n");
+
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+     {
+        Eina_List *o;
+        E_Randr_Output_Config *output_cfg;
+
+        if (ev->crtc != crtc_cfg->xid) continue;
+
+        if ((crtc_cfg->mode != ev->mode) || 
+            (crtc_cfg->orient != ev->orientation))
+          {
+             crtc_cfg->mode = ev->mode;
+             crtc_cfg->orient = ev->orientation;
+             changed = EINA_TRUE;
+          }
+
+        EINA_LIST_FOREACH(crtc_cfg->outputs, o, output_cfg)
+          {
+             if (output_cfg->xid == ev->output)
+               {
+                  output_cfg->crtc = ev->crtc;
+                  output_cfg->connected = 
+                    ((ev->connection) ? EINA_FALSE : EINA_TRUE);
+
+                  changed = EINA_TRUE;
+                  break;
+               }
+          }
+     }
+
+   if (changed) e_randr_config_save();
+
    return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool 
-_e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_e_randr_event_cb_property_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
 {
-   Ecore_X_Event_Randr_Output_Property_Notify *ev;
+   /* Ecore_X_Event_Randr_Output_Property_Notify *ev; */
 
-   ev = event;
+   /* ev = event; */
    printf("E_RANDR Event: Property Change\n");
    return ECORE_CALLBACK_RENEW;
 }
