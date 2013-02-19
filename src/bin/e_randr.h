@@ -51,6 +51,7 @@ struct _E_Randr_Config
 
    Eina_List *crtcs;
 
+   int poll_interval;
    unsigned char restore;
 };
 
