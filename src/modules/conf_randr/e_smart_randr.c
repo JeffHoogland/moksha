@@ -129,7 +129,7 @@ e_smart_randr_virtual_size_calc(Evas_Object *obj)
         free(crtcs);
      }
 
-   if ((vw == 0) || (vh == 0))
+   if ((vw == 0) && (vh == 0))
      {
         /* by default, set virtual size to the current screen size */
         ecore_x_randr_screen_current_size_get(root, &vw, &vh, NULL, NULL);
@@ -423,6 +423,8 @@ _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj
    Eina_List *l = NULL;
    Evas_Object *mon;
 
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the smart data */
    if (!(sd = data)) return;
 
@@ -441,6 +443,8 @@ _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *o
    Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
    Eina_List *l = NULL;
    Evas_Object *mon;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    /* try to get the smart data */
    if (!(sd = data)) return;
