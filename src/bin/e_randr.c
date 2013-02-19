@@ -151,6 +151,7 @@ _e_randr_config_load(void)
    E_CONFIG_VAL(D, T, screen.height, INT);
    E_CONFIG_LIST(D, T, crtcs, _e_randr_crtc_edd);
    E_CONFIG_VAL(D, T, restore, UCHAR);
+   E_CONFIG_VAL(D, T, poll_interval, INT);
 
    /* try to load the randr config */
    if ((e_randr_cfg = e_config_domain_load("e_randr", _e_randr_edd)))
@@ -225,6 +226,9 @@ _e_randr_config_new(void)
 
    /* by default, restore config */
    e_randr_cfg->restore = EINA_TRUE;
+
+   /* by default, use 4 sec poll interval */
+   e_randr_cfg->poll_interval = 32;
 
    /* grab the root window once */
    root = ecore_x_window_root_first_get();
@@ -335,7 +339,7 @@ _e_randr_config_new(void)
      }
 
    /* set limits */
-   /* E_CONFIG_LIMIT(); */
+   E_CONFIG_LIMIT(e_randr_cfg->poll_interval, 1, 1024);
 
    /* save the new config */
    e_randr_config_save();
