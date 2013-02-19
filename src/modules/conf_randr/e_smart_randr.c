@@ -255,7 +255,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                {
                   Evas_Object *mon;
                   Ecore_X_Randr_Output output;
-                  Ecore_X_Randr_Crtc rcrtc;
                   static Evas_Coord nx = 0;
 
                   /* for each output, try to create a monitor */
@@ -266,7 +265,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   sd->monitors = eina_list_append(sd->monitors, mon);
 
                   output = (int)(long)o;
-                  /* printf("\t\tOutput %d Crtc Is: %d\n", output, rcrtc); */
 
                   if ((cw == 0) && (ch == 0))
                     {
