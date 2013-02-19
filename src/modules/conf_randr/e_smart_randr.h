@@ -6,6 +6,7 @@
 Evas_Object *e_smart_randr_add(Evas *evas);
 void e_smart_randr_virtual_size_calc(Evas_Object *obj);
 void e_smart_randr_monitors_create(Evas_Object *obj);
+void e_smart_randr_min_size_get(Evas_Object *obj, Evas_Coord *mw, Evas_Coord *mh);
 
 # endif
 #endif
