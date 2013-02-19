@@ -123,6 +123,12 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
    /* get the geometry of this crtc and record it */
    ecore_x_randr_crtc_geometry_get(root, crtc, 
                                    &sd->cx, &sd->cy, &sd->cw, &sd->ch);
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, sd->cx, sd->cy);
+
+   /* set monitor resolution text */
+   _e_smart_monitor_resolution_set(sd, sd->cw, sd->ch);
 }
 
 void 
