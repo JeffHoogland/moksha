@@ -12,6 +12,9 @@ struct _E_Smart_Data
 
    /* visible flag */
    Eina_Bool visible : 1;
+
+   /* list of monitors */
+   Eina_List *monitors;
 };
 
 /* local function prototypes */
@@ -80,9 +83,14 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Evas_Object *mon;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* free the monitors */
+   EINA_LIST_FREE(sd->monitors, mon)
+     evas_object_del(mon);
 
    /* delete the layout object */
    if (sd->o_layout) evas_object_del(sd->o_layout);
