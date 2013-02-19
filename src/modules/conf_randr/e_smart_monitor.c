@@ -9,6 +9,12 @@ struct _E_Smart_Data
    /* canvas variable */
    Evas *evas;
 
+   /* crtc config */
+   E_Randr_Crtc_Config *crtc;
+
+   /* output config */
+   E_Randr_Output_Config *output;
+
    /* visibility flag */
    Eina_Bool visible : 1;
 }
@@ -44,6 +50,30 @@ e_smart_monitor_add(Evas *evas)
 
    /* return a newly created smart randr widget */
    return evas_object_smart_add(evas, smart);
+}
+
+void 
+e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Config *crtc)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* set the crtc config */
+   sd->crtc = crtc;
+}
+
+void 
+e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* set the output config */
+   sd->output = output;
 }
 
 /* local functions */
