@@ -26,6 +26,7 @@ struct _E_Smart_Data
         Evas_Coord x, y, w, h;
      } grid;
 
+   /* virtual size of the grid */
    Evas_Coord vw, vh;
 
    /* test object */
@@ -72,6 +73,9 @@ struct _E_Smart_Data
 
    /* coordinates where the user clicked to start resizing */
    Evas_Coord rx, ry;
+
+   /* rotating flag */
+   Eina_Bool rotating : 1;
 };
 
 /* smart function prototypes */
@@ -113,8 +117,11 @@ static void _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas
 
 static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
 
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
+static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -340,6 +347,10 @@ _e_smart_add(Evas_Object *obj)
                                    _e_smart_monitor_frame_cb_resize_start, obj);
    edje_object_signal_callback_add(sd->o_frame, "e,action,resize,stop", "e", 
                                    _e_smart_monitor_frame_cb_resize_stop, obj);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,start", "e", 
+                                   _e_smart_monitor_frame_cb_rotate_start, obj);
+   edje_object_signal_callback_add(sd->o_frame, "e,action,rotate,stop", "e", 
+                                   _e_smart_monitor_frame_cb_rotate_stop, obj);
 
    /* create the stand */
    sd->o_stand = edje_object_add(sd->evas);
@@ -425,6 +436,10 @@ _e_smart_del(Evas_Object *obj)
                                         _e_smart_monitor_frame_cb_resize_start);
         edje_object_signal_callback_del(sd->o_frame, "e,action,resize,stop", "e", 
                                         _e_smart_monitor_frame_cb_resize_stop);
+        edje_object_signal_callback_del(sd->o_frame, "e,action,rotate,start", "e", 
+                                        _e_smart_monitor_frame_cb_rotate_start);
+        edje_object_signal_callback_del(sd->o_frame, "e,action,rotate,stop", "e", 
+                                        _e_smart_monitor_frame_cb_rotate_stop);
 
         /* delete the object */
         evas_object_del(sd->o_frame);
@@ -851,6 +866,7 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
 
    /* call appropriate function based on current action */
    if (sd->resizing) _e_smart_monitor_resize_event(sd, mon, event);
+   if (sd->rotating) _e_smart_monitor_rotate_event(sd, mon, event);
 }
 
 static void 
@@ -953,6 +969,48 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 }
 
 static void 
+_e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* record current size of monitor */
+   /* evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch); */
+
+   /* set resizing flag */
+   sd->rotating = EINA_TRUE;
+}
+
+static void 
+_e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+{
+   Evas_Object *mon;
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* record current size of monitor */
+   /* evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, &sd->cw, &sd->ch); */
+
+   /* set resizing flag */
+   sd->rotating = EINA_FALSE;
+}
+
+static void 
 _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
@@ -1009,4 +1067,14 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
         /* update resolution text */
         _e_smart_monitor_resolution_set(sd, mode->width, mode->height);
      }
+}
+
+static void 
+_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+
+//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ev = event;
 }
