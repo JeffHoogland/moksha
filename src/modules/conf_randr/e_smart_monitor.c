@@ -217,7 +217,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
         sd->crtc.mode = crtc_info->mode;
 
         /* free any memory allocated from ecore_x_randr */
-        free(crtc_info);
+        ecore_x_randr_crtc_info_free(crtc_info);
      }
 #else
    /* get current orientation */
@@ -886,7 +886,7 @@ _e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bo
                        rate = _e_smart_monitor_mode_refresh_rate_get(mode);
 
                        /* TODO compare mode rate to "current" rate */
-                       if ((int)rate == sd->crtc.refresh_rate)
+                       if ((int)rate == (int)sd->crtc.refresh_rate)
                          return mode;
                     }
                   else
@@ -965,6 +965,8 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
    Evas_Object *mon;
    E_Smart_Data *sd;
 
+//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
    /* try to get the monitor object */
    if (!(mon = data)) return;
 
@@ -972,8 +974,10 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
    if (!(sd = evas_object_smart_data_get(mon))) return;
 
    /* call appropriate function based on current action */
-   if (sd->resizing) _e_smart_monitor_resize_event(sd, mon, event);
-   if (sd->rotating) _e_smart_monitor_rotate_event(sd, mon, event);
+   if (sd->resizing) 
+     _e_smart_monitor_resize_event(sd, mon, event);
+   else if (sd->rotating) 
+     _e_smart_monitor_rotate_event(sd, mon, event);
 }
 
 static void 
@@ -1213,12 +1217,15 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if (nh > sd->max.mode_height) nh = sd->max.mode_height;
 
    /* update current size values */
-   sd->crtc.w = nw;
-   sd->crtc.h = nh;
+   sd->crtc.w = (int)nw;
+   sd->crtc.h = (int)nh;
+
+   printf("Find Mode For Size: %d %d\n", (int)nw, (int)nh);
 
    /* try to find a mode that matches this new size */
-   if ((mode = _e_smart_monitor_mode_find(sd, nw, nh, EINA_FALSE)))
+   if ((mode = _e_smart_monitor_mode_find(sd, (int)nw, (int)nh, EINA_FALSE)))
      {
+        printf("Found Mode\n");
         /* update monitor size in the grid */
         evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
                               mode->width, mode->height);
