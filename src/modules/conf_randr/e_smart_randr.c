@@ -6,6 +6,9 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
+   /* layout object */
+   Evas_Object *o_layout;
+
    /* visible flag */
    Eina_Bool visible : 1;
 };
@@ -55,6 +58,12 @@ _e_smart_add(Evas_Object *obj)
 
    /* grab the canvas */
    evas = evas_object_evas_get(obj);
+
+   /* create the layout object */
+   sd->o_layout = e_layout_add(evas);
+
+   /* set the object's smart data */
+   evas_object_smart_data_set(obj, sd);
 }
 
 static void 
@@ -64,6 +73,9 @@ _e_smart_del(Evas_Object *obj)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* delete the layout object */
+   if (sd->o_layout) evas_object_del(sd->o_layout);
 
    /* try to free the allocated structure */
    E_FREE(sd);
@@ -79,6 +91,9 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* move the layout object */
+   if (sd->o_layout) evas_object_move(sd->o_layout, x, y);
 }
 
 static void 
@@ -88,6 +103,9 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* resize the layout object */
+   if (sd->o_layout) evas_object_resize(sd->o_layout, w, h);
 }
 
 static void 
@@ -100,6 +118,9 @@ _e_smart_show(Evas_Object *obj)
 
    /* if it is already visible, get out */
    if (sd->visible) return;
+
+   /* show the layout object */
+   if (sd->o_layout) evas_object_show(sd->o_layout);
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
@@ -116,6 +137,9 @@ _e_smart_hide(Evas_Object *obj)
    /* if it is not visible, we have nothing to do */
    if (!sd->visible) return;
 
+   /* hide the layout object */
+   if (sd->o_layout) evas_object_hide(sd->o_layout);
+
    /* set visibility flag */
    sd->visible = EINA_FALSE;
 }
@@ -127,6 +151,9 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* set the clip */
+   if (sd->o_layout) evas_object_clip_set(sd->o_layout, clip);
 }
 
 static void 
@@ -136,4 +163,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* unset the clip */
+   if (sd->o_layout) evas_object_clip_unset(sd->o_layout);
 }
