@@ -12,14 +12,33 @@ struct _E_Smart_Data
    /* geometry */
    int x, y, w, h;
 
+   Evas_Coord vw, vh;
+
+   struct 
+     {
+        Evas_Coord mode_width, mode_height;
+     } min, max;
+
+   /* reference to the grid we are packed into */
+   Evas_Object *grid;
+
    /* test object */
+   /* Evas_Object *o_bg; */
+
+   /* base object */
    Evas_Object *o_base;
 
+   /* frame object */
+   Evas_Object *o_frame;
+
+   /* stand object */
+   Evas_Object *o_stand;
+
    /* crtc config */
-   E_Randr_Crtc_Config *crtc;
+   Ecore_X_Randr_Crtc crtc;
 
    /* output config */
-   E_Randr_Output_Config *output;
+   Ecore_X_Randr_Output output;
 
    /* list of modes */
    Eina_List *modes;
@@ -68,7 +87,7 @@ e_smart_monitor_add(Evas *evas)
 }
 
 void 
-e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Config *crtc)
+e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc)
 {
    E_Smart_Data *sd;
 
@@ -82,9 +101,14 @@ e_smart_monitor_crtc_set(Evas_Object *obj, E_Randr_Crtc_Config *crtc)
 }
 
 void 
-e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
+e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 {
    E_Smart_Data *sd;
+   Ecore_X_Randr_Mode_Info *mode;
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord aw = 1, ah = 1;
+   unsigned char *edid = NULL;
+   unsigned long edid_length = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -96,6 +120,93 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
 
    /* since we now have the output, let's be preemptive and fill in modes */
    _e_smart_monitor_modes_fill(sd);
+   if (!sd->modes) return;
+
+   /* get the largest mode */
+   mode = eina_list_last_data_get(sd->modes);
+   mw = mode->width;
+   mh = mode->height;
+
+   sd->max.mode_width = mw;
+   sd->max.mode_height = mh;
+
+   /* FIXME: ideally this should probably be based on the current mode */
+
+   /* get the edid for this output */
+   if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
+     {
+        Ecore_X_Randr_Edid_Aspect_Ratio aspect = 0;
+
+        /* get the aspect */
+        aspect = 
+          ecore_x_randr_edid_display_aspect_ratio_preferred_get(edid, 
+                                                                edid_length);
+
+        /* calculate aspect size */
+        switch (aspect)
+          {
+           case ECORE_X_RANDR_EDID_ASPECT_RATIO_4_3:
+             aw = 4;
+             ah = (3 * mh) / mw;
+             break;
+           case ECORE_X_RANDR_EDID_ASPECT_RATIO_16_9:
+             aw = 16;
+             ah = (9 * mh) / mw;
+             break;
+           case ECORE_X_RANDR_EDID_ASPECT_RATIO_16_10:
+             aw = 16;
+             ah = (10 * mh) / mw;
+             break;
+           case ECORE_X_RANDR_EDID_ASPECT_RATIO_5_4:
+             aw = 5;
+             ah = (4 * mh) / mw;
+             break;
+           case ECORE_X_RANDR_EDID_ASPECT_RATIO_15_9:
+             aw = 15;
+             ah = (9 * mh) / mw;
+             break;
+           default:
+             aw = mw;
+             ah = mh;
+             break;
+          }
+
+        /* set the aspect hints */
+        evas_object_size_hint_aspect_set(sd->o_frame, 
+                                         EVAS_ASPECT_CONTROL_BOTH, aw, ah);
+     }
+
+   /* set the align hints */
+   /* evas_object_size_hint_align_set(sd->o_base, 0.0, 0.0); */
+   evas_object_size_hint_align_set(sd->o_frame, 0.0, 0.0);
+
+   /* get the smallest mode */
+   mode = eina_list_nth(sd->modes, 0);
+   sd->min.mode_width = mode->width;
+   sd->min.mode_height = mode->height;
+}
+
+void 
+e_smart_monitor_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   sd->vw = vw;
+   sd->vh = vh;
+}
+
+void 
+e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   sd->grid = grid;
 }
 
 /* smart functions */
@@ -112,8 +223,28 @@ _e_smart_add(Evas_Object *obj)
    /* grab the canvas */
    sd->evas = evas_object_evas_get(obj);
 
-   sd->o_base = evas_object_rectangle_add(sd->evas);
-   evas_object_color_set(sd->o_base, 255, 0, 0, 255);
+   /* create the bg test object */
+   /* sd->o_bg = evas_object_rectangle_add(sd->evas); */
+   /* evas_object_color_set(sd->o_bg, 255, 0, 0, 255); */
+   /* evas_object_smart_member_add(sd->o_bg, obj); */
+
+   /* create the base object */
+   sd->o_base = edje_object_add(sd->evas);
+   e_theme_edje_object_set(sd->o_base, "base/theme/widgets", 
+                           "e/conf/randr/main/monitor");
+   evas_object_smart_member_add(sd->o_base, obj);
+
+   /* create the frame object */
+   sd->o_frame = edje_object_add(sd->evas);
+   e_theme_edje_object_set(sd->o_frame, "base/theme/widgets", 
+                           "e/conf/randr/main/frame");
+   edje_object_part_swallow(sd->o_base, "e.swallow.frame", sd->o_frame);
+
+   /* create the stand */
+   sd->o_stand = edje_object_add(sd->evas);
+   e_theme_edje_object_set(sd->o_stand, "base/theme/widgets", 
+                           "e/conf/randr/main/stand");
+   edje_object_part_swallow(sd->o_base, "e.swallow.stand", sd->o_stand);
 
    /* set the objects smart data */
    evas_object_smart_data_set(obj, sd);
@@ -130,7 +261,10 @@ _e_smart_del(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   evas_object_del(sd->o_stand);
+   evas_object_del(sd->o_frame);
    evas_object_del(sd->o_base);
+   /* evas_object_del(sd->o_bg); */
 
    /* free the list of modes */
    EINA_LIST_FREE(sd->modes, mode)
@@ -159,6 +293,7 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
    sd->x = x;
    sd->y = y;
 
+   /* evas_object_move(sd->o_bg, x, y); */
    evas_object_move(sd->o_base, x, y);
 }
 
@@ -166,6 +301,7 @@ static void
 _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 {
    E_Smart_Data *sd;
+   /* Evas_Coord gx, gy, gw, gh; */
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -179,6 +315,7 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
 
    evas_object_resize(sd->o_base, w, h);
+   /* evas_object_resize(sd->o_bg, w, h + 30); */
 }
 
 static void 
@@ -194,7 +331,10 @@ _e_smart_show(Evas_Object *obj)
    /* if we are already visible, then nothing to do */
    if (sd->visible) return;
 
+   evas_object_show(sd->o_frame);
+   evas_object_show(sd->o_stand);
    evas_object_show(sd->o_base);
+   /* evas_object_show(sd->o_bg); */
 
    /* set visibility flag */
    sd->visible = EINA_TRUE;
@@ -213,7 +353,10 @@ _e_smart_hide(Evas_Object *obj)
    /* if we are already hidden, then nothing to do */
    if (!sd->visible) return;
 
+   evas_object_hide(sd->o_frame);
+   evas_object_hide(sd->o_stand);
    evas_object_hide(sd->o_base);
+   /* evas_object_hide(sd->o_bg); */
 
    /* set visibility flag */
    sd->visible = EINA_FALSE;
@@ -227,7 +370,9 @@ _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   evas_object_clip_set(sd->o_frame, clip);
    evas_object_clip_set(sd->o_base, clip);
+   /* evas_object_clip_set(sd->o_bg, clip); */
 }
 
 static void 
@@ -238,7 +383,9 @@ _e_smart_clip_unset(Evas_Object *obj)
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
 
+   evas_object_clip_unset(sd->o_frame);
    evas_object_clip_unset(sd->o_base);
+   /* evas_object_clip_unset(sd->o_bg); */
 }
 
 /* local functions */
@@ -258,7 +405,7 @@ _e_smart_monitor_modes_fill(E_Smart_Data *sd)
    root = ecore_x_window_root_first_get();
 
    /* try to get the modes for this output from ecore_x_randr */
-   modes = ecore_x_randr_output_modes_get(root, sd->output->xid, &num, NULL);
+   modes = ecore_x_randr_output_modes_get(root, sd->output, &num, NULL);
    if (!modes) return;
 
    /* loop the returned modes */
