@@ -469,6 +469,24 @@ e_smart_monitor_current_geometry_set(Evas_Object *obj, Evas_Coord x, Evas_Coord 
 
    /* set monitor resolution text */
    _e_smart_monitor_resolution_set(sd, w, h);
+
+   evas_object_grid_pack(sd->grid.obj, obj, x, y, w, h);
+}
+
+void 
+e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   if (x) *x = sd->current.x;
+   if (y) *y = sd->current.y;
+   if (w) *w = sd->current.w;
+   if (h) *h = sd->current.h;
 }
 
 void 
@@ -555,6 +573,14 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
                                    sd->current.x, sd->current.y, 
                                    sd->current.w, sd->current.h);
           }
+        else
+          {
+             /* sizes are equal */
+             sd->current.mode = psd->current.mode;
+             sd->current.refresh_rate = psd->current.refresh_rate;
+             sd->current.orient = psd->current.orient;
+             sd->changes |= E_SMART_MONITOR_CHANGED_MODE;
+          }
 
         _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, &fw, &fh);
         if (fw < 1) fw = (sd->current.w / 10);
@@ -602,6 +628,16 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
         if (fw < 1) fw = 1;
         if (fh < 1) fh = 1;
         evas_object_resize(box, fw, fh);
+
+        if ((psd->current.x != 0) || (psd->current.y != 0))
+          {
+             psd->current.x = 0;
+             psd->current.y = 0;
+
+             evas_object_grid_pack(psd->grid.obj, parent, 
+                                   psd->current.x, psd->current.y, 
+                                   psd->current.w, psd->current.h);
+          }
      }
    else
      {
@@ -654,6 +690,19 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
      psd->changes &= ~(E_SMART_MONITOR_CHANGED_MODE);
 
    evas_object_smart_callback_call(parent, "monitor_changed", NULL);
+}
+
+Evas_Object *
+e_smart_monitor_clone_parent_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
+
+   return sd->parent;
 }
 
 E_Smart_Monitor_Changes 
@@ -719,23 +768,27 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
 
         if ((psd = evas_object_smart_data_get(sd->parent)))
           {
-             mode = psd->current.mode;
              cx = psd->current.x;
              cy = psd->current.y;
              cw = psd->current.w;
              ch = psd->current.h;
+             mode = psd->current.mode;
              orient = psd->current.orient;
+
+             ecore_x_randr_crtc_clone_set(root, psd->crtc.id, sd->crtc.id);
           }
      }
-
-   /* apply the settings */
-   if (!sd->current.enabled)
-     ecore_x_randr_crtc_settings_set(root, sd->crtc.id, NULL, 
-                                     0, 0, 0, 0, 
-                                     ECORE_X_RANDR_ORIENTATION_ROT_0);
    else
-     ecore_x_randr_crtc_settings_set(root, sd->crtc.id, outputs, 
-                                     noutputs, cx, cy, mode, orient);
+     {
+        /* apply the settings */
+        if (!sd->current.enabled)
+          ecore_x_randr_crtc_settings_set(root, sd->crtc.id, NULL, 
+                                          0, 0, 0, 0, 
+                                          ECORE_X_RANDR_ORIENTATION_ROT_0);
+        else
+          ecore_x_randr_crtc_settings_set(root, sd->crtc.id, outputs, 
+                                          noutputs, cx, cy, mode, orient);
+     }
 
    /* free any allocated memory from ecore_x_randr */
    free(outputs);
@@ -1499,6 +1552,7 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
                {
                   e_smart_monitor_clone_set(mon, below);
                   edje_object_signal_emit(osd->o_frame, "e,state,drop,off", "e");
+                  evas_object_smart_callback_call(mon, "monitor_moved", NULL);
                   return;
                }
              else if (E_INSIDE((sd->x + sd->w), sd->y, 
@@ -1506,6 +1560,7 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
                {
                   e_smart_monitor_clone_set(mon, below);
                   edje_object_signal_emit(osd->o_frame, "e,state,drop,off", "e");
+                  evas_object_smart_callback_call(mon, "monitor_moved", NULL);
                   return;
                }
           }
@@ -1524,6 +1579,8 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
      sd->changes |= E_SMART_MONITOR_CHANGED_POSITION;
    else
      sd->changes &= ~(E_SMART_MONITOR_CHANGED_POSITION);
+
+   evas_object_smart_callback_call(mon, "monitor_moved", NULL);
 }
 
 static void 
@@ -2078,13 +2135,13 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    ev = event;
 
    /* skip synthetic events */
-   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
-       (ev->cur.canvas.y == ev->prev.canvas.y))
+   if ((ev->cur.output.x == ev->prev.output.x) && 
+       (ev->cur.output.y == ev->prev.output.y))
      return;
 
    /* calculate difference in movement */
-   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
-   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
+   dx = (ev->cur.output.x - ev->prev.output.x);
+   dy = (ev->cur.output.y - ev->prev.output.y);
 
    nx = (sd->x + dx);
    ny = (sd->y + dy);
@@ -2151,8 +2208,8 @@ _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev
     * NB: This smells quite odd to me. How can we get a mouse_move event 
     * (and end up in here) when the coordinates say otherwise ??
     * Must be a synthetic event and we are not interested in those */
-   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
-       (ev->cur.canvas.y == ev->prev.canvas.y))
+   if ((ev->cur.output.x == ev->prev.output.x) && 
+       (ev->cur.output.y == ev->prev.output.y))
      return 0;
 
    /* get the geometry of the frame */
