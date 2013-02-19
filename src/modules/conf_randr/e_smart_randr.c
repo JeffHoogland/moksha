@@ -1,6 +1,7 @@
 #include "e.h"
 #include "e_mod_main.h"
 #include "e_smart_randr.h"
+#include "e_smart_monitor.h"
 
 /* local structures */
 typedef struct _E_Smart_Data E_Smart_Data;
@@ -44,6 +45,15 @@ e_smart_randr_add(Evas *evas)
 
    /* return a newly created smart randr widget */
    return evas_object_smart_add(evas, smart);
+}
+
+void 
+e_smart_randr_monitors_create(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
 }
 
 /* local functions */
