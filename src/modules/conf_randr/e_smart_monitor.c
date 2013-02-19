@@ -179,8 +179,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 {
    E_Smart_Data *sd;
    Ecore_X_Randr_Mode_Info *mode;
-   unsigned char *edid = NULL;
-   unsigned long edid_length = 0;
    Ecore_X_Window root = 0;
    char *name = NULL;
 
@@ -205,17 +203,20 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    root = ecore_x_window_root_first_get();
 
    /* get output name */
-   name = ecore_x_randr_output_name_get(root, sd->output, NULL);
-
-   /* get the edid for this output */
-   if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
+   if (!(name = ecore_x_randr_output_name_get(root, sd->output, NULL)))
      {
-        /* get output name */
-        if (!name)
-          name = ecore_x_randr_edid_display_name_get(edid, edid_length);
+        unsigned char *edid = NULL;
+        unsigned long edid_length = 0;
 
-        /* free any memory allocated from ecore_x_randr */
-        free(edid);
+        /* get the edid for this output */
+        if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
+          {
+             /* get output name */
+             name = ecore_x_randr_edid_display_name_get(edid, edid_length);
+
+             /* free any memory allocated from ecore_x_randr */
+             free(edid);
+          }
      }
 
    /* set monitor name */
@@ -1074,7 +1075,7 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
 
-//   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
 }
