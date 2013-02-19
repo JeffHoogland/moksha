@@ -7,14 +7,10 @@ typedef enum _E_Smart_Monitor_Changes E_Smart_Monitor_Changes;
 enum _E_Smart_Monitor_Changes
 {
    E_SMART_MONITOR_CHANGED_NONE = 0,
-     E_SMART_MONITOR_CHANGED_CRTC = (1 << 0),
-     E_SMART_MONITOR_CHANGED_MODE = (1 << 1),
-     E_SMART_MONITOR_CHANGED_POSITION = (1 << 2),
-     E_SMART_MONITOR_CHANGED_ROTATION = (1 << 3),
-     E_SMART_MONITOR_CHANGED_REFRESH = (1 << 4),
-     E_SMART_MONITOR_CHANGED_RESOLUTION = (1 << 5),
-     E_SMART_MONITOR_CHANGED_ENABLED = (1 << 6),
-     E_SMART_MONITOR_CHANGED_CLONED = (1 << 7),
+     E_SMART_MONITOR_CHANGED_MODE = (1 << 0),
+     E_SMART_MONITOR_CHANGED_POSITION = (1 << 1),
+     E_SMART_MONITOR_CHANGED_ORIENTATION = (1 << 2),
+     E_SMART_MONITOR_CHANGED_ENABLED = (1 << 3)
 };
 
 Evas_Object *e_smart_monitor_add(Evas *evas);
