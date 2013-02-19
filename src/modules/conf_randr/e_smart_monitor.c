@@ -129,6 +129,7 @@ static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, vo
 static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
+static inline int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -1240,4 +1241,22 @@ _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev
    if (dotprod > 0) r = 360 - r;
 
    return r;
+}
+
+static inline int 
+_e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient)
+{
+   /* return numerical rotation degree based on orientation */
+   switch (orient)
+     {
+      case ECORE_X_RANDR_ORIENTATION_ROT_90:
+        return 90;
+      case ECORE_X_RANDR_ORIENTATION_ROT_180:
+        return 180;
+      case ECORE_X_RANDR_ORIENTATION_ROT_270:
+        return 270;
+      case ECORE_X_RANDR_ORIENTATION_ROT_0:
+      default:
+        return 0;
+     }
 }
