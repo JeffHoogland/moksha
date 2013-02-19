@@ -86,6 +86,9 @@ struct _E_Smart_Data
    /* coordinates where the user clicked to start resizing */
    Evas_Coord rx, ry;
 
+   /* coordinates where the user clicked to start moving */
+   Evas_Coord mx, my;
+
    /* rotating flag */
    Eina_Bool rotating : 1;
 
@@ -94,6 +97,9 @@ struct _E_Smart_Data
 
    /* current refresh rate */
    int refresh_rate;
+
+   /* moving flag */
+   Eina_Bool moving : 1;
 };
 
 /* smart function prototypes */
@@ -116,8 +122,8 @@ static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas
 static void _e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr);
 static void _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr);
 
-static inline void _e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy);
-static inline void _e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy);
+static inline void _e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, Evas_Coord vx, Evas_Coord vy, Evas_Coord *cx, Evas_Coord *cy);
+static inline void _e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, Evas_Coord cx, Evas_Coord cy, Evas_Coord *vx, Evas_Coord *vy);
 static Ecore_X_Randr_Mode_Info *_e_smart_monitor_mode_find(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h, Eina_Bool skip_refresh);
 static inline double _e_smart_monitor_mode_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode);
 static void _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj);
@@ -143,6 +149,7 @@ static void _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *ob
 
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event);
+static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
 static inline int _e_smart_monitor_rotation_get(Ecore_X_Randr_Orientation orient);
@@ -263,6 +270,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
              /* free any memory allocated from ecore_x_randr */
              free(mode);
 
+             /* record starting refresh rate */
              sd->refresh_rate = (int)sd->crtc.refresh_rate;
           }
      }
@@ -464,9 +472,9 @@ _e_smart_add(Evas_Object *obj)
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_OUT, 
                                   _e_smart_monitor_thumb_cb_mouse_out, NULL);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_UP, 
-                                  _e_smart_monitor_thumb_cb_mouse_up, NULL);
+                                  _e_smart_monitor_thumb_cb_mouse_up, obj);
    evas_object_event_callback_add(sd->o_thumb, EVAS_CALLBACK_MOUSE_DOWN, 
-                                  _e_smart_monitor_thumb_cb_mouse_down, NULL);
+                                  _e_smart_monitor_thumb_cb_mouse_down, obj);
 
    /* create the stand */
    sd->o_stand = edje_object_add(sd->evas);
@@ -589,6 +597,17 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 #ifdef BG_DBG
    evas_object_move(sd->o_bg, x, y);
 #endif
+
+   if (sd->moving)
+     {
+        Evas_Coord cx = 0, cy = 0;
+
+        /* convert position to virtual */
+        _e_smart_monitor_coord_canvas_to_virtual(sd, sd->x, sd->y, &cx, &cy);
+
+        /* set monitor position text */
+        _e_smart_monitor_position_set(sd, cx, cy);
+     }
 }
 
 static void 
@@ -608,7 +627,7 @@ _e_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
    sd->h = h;
 
    /* set livethumb thumbnail size */
-   if ((!sd->resizing) && (!sd->rotating))
+   if ((!sd->resizing) && (!sd->rotating) && (!sd->moving))
      e_livethumb_vsize_set(sd->o_thumb, sd->w, sd->h);
 
    evas_object_resize(sd->o_base, w, h);
@@ -871,17 +890,19 @@ _e_smart_monitor_pointer_pop(Evas_Object *obj, const char *ptr)
 }
 
 static inline void 
-_e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, double vx, double vy, double *cx, double *cy)
+_e_smart_monitor_coord_virtual_to_canvas(E_Smart_Data *sd, Evas_Coord vx, Evas_Coord vy, Evas_Coord *cx, Evas_Coord *cy)
 {
-   if (cx) *cx = (vx * ((double)(sd->grid.w) / sd->grid.vw)) + sd->grid.x;
-   if (cy) *cy = (vy * ((double)(sd->grid.h) / sd->grid.vh)) + sd->grid.y;
+   if (cx) *cx = sd->grid.x + (vx * ((double)sd->grid.w / sd->grid.vw));
+   if (cy) *cy = sd->grid.y + (vy * ((double)sd->grid.h / sd->grid.vh));
 }
 
 static inline void 
-_e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, double cx, double cy, double *vx, double *vy)
+_e_smart_monitor_coord_canvas_to_virtual(E_Smart_Data *sd, Evas_Coord cx, Evas_Coord cy, Evas_Coord *vx, Evas_Coord *vy)
 {
-   if (vx) *vx = ((cx - sd->grid.x) * sd->grid.vw) / (double)sd->grid.w;
-   if (vy) *vy = ((cy - sd->grid.y) * sd->grid.vh) / (double)sd->grid.h;
+   if ((sd->grid.w) && (vx)) 
+     *vx = ((cx - sd->grid.x) * sd->grid.vw) / sd->grid.w;
+   if ((sd->grid.h) && (vy)) 
+     *vy = ((cy - sd->grid.y) * sd->grid.vh) / sd->grid.h;
 }
 
 static Ecore_X_Randr_Mode_Info *
@@ -1026,31 +1047,80 @@ _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUS
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+_e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Up *ev;
+   Evas_Object *mon;
+   E_Smart_Data *sd;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
    if (ev->button != 1) return;
+
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* if we are not moving, then there is nothing to do in this routine */
+   if (!sd->moving) return;
+
+   /* reset moving flag */
+   sd->moving = EINA_FALSE;
 
    /* reset mouse pointer */
    _e_smart_monitor_pointer_pop(obj, "move");
+
+   /* take current object position, translate to virtual */
+   _e_smart_monitor_coord_canvas_to_virtual(sd, sd->x, sd->y, 
+                                            &sd->crtc.x, &sd->crtc.y);
+
+   /* TODO: "Normalize" this new position. ie: 1076y should be 1080y */
+
+   /* repack into the grid with updated position */
+   evas_object_grid_pack(sd->grid.obj, mon, sd->crtc.x, sd->crtc.y, 
+                         sd->crtc.w, sd->crtc.h);
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, sd->crtc.x, sd->crtc.y);
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+_e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Down *ev;
+   Evas_Object *mon;
+   E_Smart_Data *sd;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
    ev = event;
    if (ev->button != 1) return;
 
-   /* reset mouse pointer */
+   /* try to get the monitor object */
+   if (!(mon = data)) return;
+
+   /* try to get the monitor smart data */
+   if (!(sd = evas_object_smart_data_get(mon))) return;
+
+   /* set mouse pointer */
    _e_smart_monitor_pointer_push(obj, "move");
+
+   /* set moving flag */
+   sd->moving = EINA_TRUE;
+
+   /* record the clicked position */
+   sd->mx = ev->canvas.x;
+   sd->my = ev->canvas.y;
+
+   /* record current size of monitor */
+   evas_object_grid_pack_get(sd->grid.obj, mon, NULL, NULL, 
+                             &sd->crtc.w, &sd->crtc.h);
+
+   /* raise the monitor */
+   evas_object_raise(mon);
 }
 
 static void 
@@ -1072,6 +1142,8 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
      _e_smart_monitor_resize_event(sd, mon, event);
    else if (sd->rotating) 
      _e_smart_monitor_rotate_event(sd, mon, event);
+   else if (sd->moving)
+     _e_smart_monitor_move_event(sd, mon, event);
 }
 
 static void 
@@ -1368,8 +1440,8 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    Evas_Coord dx = 0, dy = 0;
-   double mw = 0, mh = 0;
-   double nw = 0, nh = 0;
+   Evas_Coord mw = 0, mh = 0;
+   Evas_Coord nw = 0, nh = 0;
    Ecore_X_Randr_Mode_Info *mode = NULL;
 
 //   LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -1406,11 +1478,9 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    _e_smart_monitor_coord_canvas_to_virtual(sd, (mw + dx), (mh + dy), 
                                             &nw, &nh);
 
-   /* TODO: check new size against min & max modes */
-
    /* update current size values */
-   sd->crtc.w = (int)nw;
-   sd->crtc.h = (int)nh;
+   sd->crtc.w = nw;
+   sd->crtc.h = nh;
 
    /* based on orientation, try to find a valid mode */
    if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
@@ -1426,6 +1496,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
         cw = mode->width;
         ch = mode->height;
 
+        /* if we are rotated, we need to swap sizes */
         if ((sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_90) || 
             (sd->crtc.orient == ECORE_X_RANDR_ORIENTATION_ROT_270))
           {
@@ -1458,7 +1529,7 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, vo
    if (rotation == 0) return;
 
    /* factor in any existing rotation */
-   rotation += sd->rotation;
+   /* rotation += sd->rotation; */
    rotation %= 360;
 
    /* update current rotation value */
@@ -1466,6 +1537,35 @@ _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, vo
 
    /* apply rotation map */
    _e_smart_monitor_frame_map_apply(sd->o_frame, sd->rotation);
+}
+
+static void 
+_e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
+{
+   Evas_Event_Mouse_Move *ev;
+   Evas_Coord dx = 0, dy = 0;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   ev = event;
+
+   /* skip synthetic events */
+   if ((ev->cur.canvas.x == ev->prev.canvas.x) && 
+       (ev->cur.canvas.y == ev->prev.canvas.y))
+     return;
+
+   dx = (ev->cur.canvas.x - ev->prev.canvas.x);
+   dy = (ev->cur.canvas.y - ev->prev.canvas.y);
+
+   if (((sd->x + dx) < sd->grid.x) || ((sd->y + dy) < sd->grid.y)) 
+     return;
+
+   if ((((sd->x + dx) + sd->w) > (sd->grid.x + sd->grid.w)) || 
+       (((sd->y + dy) + sd->h) > (sd->grid.y + sd->grid.h)))
+     return;
+
+   /* move the monitor */
+   evas_object_move(mon, sd->x + dx, sd->y + dy);
 }
 
 static int 
@@ -1476,6 +1576,7 @@ _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev
    double a = 0.0, b = 0.0, c = 0.0, r = 0.0;
    double ax = 0.0, ay = 0.0, bx = 0.0, by = 0.0;
    double dotprod = 0.0;
+   double mx = 0.0, my = 0.0;
 
    /* return a single rotation amount based on 
     * mouse movement in both directions */
@@ -1492,15 +1593,6 @@ _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev
    /* get the geometry of the frame */
    evas_object_geometry_get(sd->o_frame, &fx, &fy, &fw, &fh);
 
-   /* if the mouse is moved outside the frame then get out
-    * 
-    * NB: This could be coded into one giant OR statement, but I am feeling 
-    * lazy today ;) */
-   if ((ev->cur.canvas.x > (fx + fw))) return 0;
-   else if ((ev->cur.canvas.x < fx)) return 0;
-   if ((ev->cur.canvas.y > (fy + fh))) return 0;
-   else if ((ev->cur.canvas.y < fy)) return 0;
-
    /* get center point
     * 
     * NB: This COULD be used to provide a greater amount of rotation 
@@ -1508,23 +1600,25 @@ _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev
    cx = (fx + (fw / 2));
    cy = (fy + (fh / 2));
 
+   mx = ev->cur.output.x;
+   my = ev->cur.output.y;
+
    ax = ((fx + fw) - cx);
    ay = (fy - cy);
 
-   bx = (ev->cur.canvas.x - cx);
-   by = (ev->cur.canvas.y - cy);
+   bx = (mx - cx);
+   by = (my - cy);
 
    /* calculate degrees of rotation
     * 
     * NB: A HUGE Thank You to Daniel for the help here !! */
    a = sqrt((ax * ax) + (ay * ay));
    b = sqrt((bx * bx) + (by * by));
-   if ((a < 1) || (b < 1)) return 0;
 
-   c = sqrt((ev->cur.canvas.x - (fx + fw)) * 
-            (ev->cur.canvas.x - (fx + fw)) +
-            (ev->cur.canvas.y - fy) * 
-            (ev->cur.canvas.y - fy));
+   c = sqrt((mx - (fx + fw)) * 
+            (mx - (fx + fw)) +
+            (my - fy) * 
+            (my - fy));
 
    r = acos(((a * a) + (b * b) - (c * c)) / (2 * (a * b)));
    r = r * 180 / M_PI;
@@ -1623,7 +1717,6 @@ _e_smart_monitor_thumb_map_apply(Evas_Object *o_thumb, int rotation)
 
    /* get the frame geometry */
    evas_object_geometry_get(o_thumb, &fx, &fy, &fw, &fh);
-   printf("Thumb Map Apply : %d %d %d %d\n", fx, fy, fw, fh);
 
    /* setup map */
    evas_map_util_points_populate_from_geometry(map, fx, fy, fw, fh, rotation);
