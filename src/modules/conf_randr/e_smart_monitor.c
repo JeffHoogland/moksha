@@ -18,6 +18,9 @@ struct _E_Smart_Data
    /* output config */
    E_Randr_Output_Config *output;
 
+   /* list of modes */
+   Eina_List *modes;
+
    /* visibility flag */
    Eina_Bool visible : 1;
 }
@@ -31,6 +34,9 @@ static void _e_smart_show(Evas_Object *obj);
 static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
+
+static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
+static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 
 /* external functions exposed by this widget */
 Evas_Object *
@@ -77,6 +83,9 @@ e_smart_monitor_output_set(Evas_Object *obj, E_Randr_Output_Config *output)
 
    /* set the output config */
    sd->output = output;
+
+   /* since we now have the output, let's be preemptive and fill in modes */
+   _e_smart_monitor_modes_fill(sd);
 }
 
 /* local functions */
@@ -99,9 +108,14 @@ static void
 _e_smart_del(Evas_Object *obj)
 {
    E_Smart_Data *sd;
+   Ecore_X_Randr_Mode_Info *mode;
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   /* free the list of modes */
+   EINA_LIST_FREE(sd->modes, mode)
+     ecore_x_randr_mode_info_free(mode);
 
    /* try to free the allocated structure */
    E_FREE(sd);
@@ -186,4 +200,64 @@ _e_smart_clip_unset(Evas_Object *obj)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return;
+}
+
+static void 
+_e_smart_monitor_modes_fill(E_Smart_Data *sd)
+{
+   Ecore_X_Window root = 0;
+   Ecore_X_Randr_Mode *modes;
+   int num = 0, i = 0;
+
+   /* safety check */
+   if (!sd) return;
+
+   /* try to get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* try to get the modes for this output from ecore_x_randr */
+   modes = ecore_x_randr_output_modes_get(root, sd->output->xid, &num, NULL);
+   if (!modes) return;
+
+   /* loop the returned modes */
+   for (i = 0; i < num; i++)
+     {
+        Ecore_X_Randr_Mode_Info *mode;
+
+        /* try to get the mode info */
+        if (!(mode = ecore_x_randr_mode_info_get(root, modes[i])))
+          continue;
+
+        /* append the mode info to our list of modes */
+        sd->modes = eina_list_append(sd->modes, mode);
+     }
+
+   /* free any memory allocated from ecore_x_randr */
+   free(modes);
+
+   /* sort the list of modes (smallest to largest) */
+   if (sd->modes)
+     sd->modes = eina_list_sort(sd->modes, 0, _e_smart_monitor_modes_sort);
+}
+
+static int 
+_e_smart_monitor_modes_sort(const void *data1, const void *data2)
+{
+   const Ecore_X_Randr_Mode_Info *m1, *m2 = NULL;
+
+   if (!(m1 = data1)) return 1;
+   if (!(m2 = data2)) return -1;
+
+   /* second one compares to previous to determine position */
+   if (m2->width < m1->width) return 1;
+   if (m2->width > m1->width) return -1;
+
+   /* width are same, compare heights */
+   if ((m2->width == m1->width))
+     {
+        if (m2->height < m1->height) return 1;
+        if (m2->height > m1->height) return -1;
+     }
+
+   return 1;
 }
