@@ -291,7 +291,10 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    sd->current.h = sd->crtc.h;
    sd->current.mode = sd->crtc.mode;
    sd->current.orient = sd->crtc.orient;
+
    sd->current.enabled = ((sd->crtc.mode != 0) ? EINA_TRUE : EINA_FALSE);
+   if (!sd->current.enabled)
+     edje_object_signal_emit(sd->o_frame, "e,state,disabled", "e");
 
    /* get the degree of rotation */
    sd->current.rotation = _e_smart_monitor_rotation_get(sd->current.orient);
