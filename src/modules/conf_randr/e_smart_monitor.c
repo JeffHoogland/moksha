@@ -12,8 +12,6 @@ struct _E_Smart_Data
    /* geometry */
    int x, y, w, h;
 
-   Evas_Coord vw, vh;
-
    struct 
      {
         Evas_Coord mode_width, mode_height;
@@ -184,18 +182,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    mode = eina_list_nth(sd->modes, 0);
    sd->min.mode_width = mode->width;
    sd->min.mode_height = mode->height;
-}
-
-void 
-e_smart_monitor_virtual_size_set(Evas_Object *obj, Evas_Coord vw, Evas_Coord vh)
-{
-   E_Smart_Data *sd;
-
-   /* try to get the objects smart data */
-   if (!(sd = evas_object_smart_data_get(obj))) return;
-
-   sd->vw = vw;
-   sd->vh = vh;
 }
 
 void 
