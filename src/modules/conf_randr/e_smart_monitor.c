@@ -5,7 +5,7 @@
 #define RESIZE_FUZZ 80
 #define ROTATE_FUZZ 45
 
-#define BG_DBG 1
+//#define BG_DBG 1
 
 /* local structure */
 typedef struct _E_Smart_Data E_Smart_Data;
@@ -124,6 +124,9 @@ struct _E_Smart_Data
 
    /* mini representation when cloned */
    Evas_Object *o_clone;
+
+   /* record what changed */
+   E_Smart_Monitor_Changes changes;
 };
 
 /* smart function prototypes */
@@ -364,7 +367,6 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
 
    /* set monitor name */
    edje_object_part_text_set(sd->o_frame, "e.text.name", name);
-   printf("Created Monitor %s For Crtc %d\n", name, sd->crtc.id);
 
    /* free any memory allocated from ecore_x_randr */
    free(name);
@@ -490,6 +492,39 @@ e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent)
         Evas_Object *box;
 
         evas_object_hide(obj);
+
+        /* check if parent is larger */
+        if ((psd->current.w > sd->current.w) || 
+            (psd->current.h > sd->current.h))
+          {
+             /* NB: X RandR does not allow clones of different size or mode.
+              * They both must match. Because of that, if the parent is 
+              * larger, then we need to resize the parent down and set the mode */
+
+             /* set the parent mode to this mode */
+             psd->current.mode = sd->current.mode;
+             psd->current.orient = sd->current.orient;
+             psd->current.w = sd->current.w;
+             psd->current.h = sd->current.h;
+
+             _e_smart_monitor_resolution_set(psd, psd->current.w, psd->current.h);
+             evas_object_grid_pack(psd->grid.obj, parent, 
+                                   psd->current.x, psd->current.y, 
+                                   psd->current.w, psd->current.h);
+          }
+        else if ((sd->current.w > psd->current.w) || 
+                 (sd->current.h > psd->current.h))
+          {
+             sd->current.mode = psd->current.mode;
+             sd->current.orient = psd->current.orient;
+             sd->current.w = psd->current.w;
+             sd->current.h = psd->current.h;
+
+             _e_smart_monitor_resolution_set(sd, sd->current.w, sd->current.h);
+             evas_object_grid_pack(sd->grid.obj, obj, 
+                                   sd->current.x, sd->current.y, 
+                                   sd->current.w, sd->current.h);
+          }
 
         _e_smart_monitor_coord_virtual_to_canvas(sd, sd->current.w, sd->current.h, &fw, &fh);
         if (fw < 1) fw = (sd->current.w / 10);
