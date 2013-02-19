@@ -122,6 +122,10 @@ _e_randr_config_load(void)
                                    (char *)(&(eroc.edid)) - (char *)(&(eroc)),
                                    (char *)(&(eroc.edid_count)) -
                                    (char *)(&(eroc)), NULL, NULL);
+   eet_data_descriptor_element_add(D, "clones", EET_T_UINT, EET_G_VAR_ARRAY,
+                                   (char *)(&(eroc.clones)) - (char *)(&(eroc)),
+                                   (char *)(&(eroc.clone_count)) -
+                                   (char *)(&(eroc)), NULL, NULL);
 
    /* define edd for crtc config */
    _e_randr_crtc_edd = 
@@ -288,6 +292,11 @@ _e_randr_config_new(void)
                          ecore_x_randr_output_edid_get(root, outputs[j], 
                                                        &output_cfg->edid_count);
 
+                       /* get the clones for this output */
+                       output_cfg->clones = 
+                         ecore_x_randr_output_clones_get(root, outputs[i], 
+                                                         &output_cfg->clone_count);
+
                        /* add this output to the list for this crtc */
                        crtc_cfg->outputs = 
                          eina_list_append(crtc_cfg->outputs, output_cfg);
@@ -327,7 +336,9 @@ _e_randr_config_free(void)
         /* loop the config outputs on this crtc and free them */
         EINA_LIST_FREE(crtc->outputs, output)
           {
+             if (output->clones) free(output->clones);
              if (output->edid) free(output->edid);
+
              E_FREE(output);
           }
 

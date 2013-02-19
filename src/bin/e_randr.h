@@ -26,6 +26,8 @@ struct _E_Randr_Output_Config
    unsigned char primary; // flag to indicate if primary output
    unsigned long edid_count; // monitor's edid length
    unsigned char *edid; // monitor's edid
+   unsigned int *clones; // array of clones (each element of type ecore_x_randr output id (xid)
+   unsigned long clone_count; // number of clones
 };
 
 struct _E_Randr_Crtc_Config
