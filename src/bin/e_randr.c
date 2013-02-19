@@ -271,6 +271,7 @@ _e_randr_config_new(void)
 
                        /* set this output policy */
                        output_cfg->policy = ECORE_X_RANDR_OUTPUT_POLICY_NONE;
+
                        /* TODO: Add code to determine policy */
 
                        /* get if this output is the primary */
