@@ -103,6 +103,7 @@ e_toolbar_new(Evas *evas, const char *name, E_Win *fwin, Evas_Object *fm2)
    e_gadcon_toolbar_set(tbar->gadcon, tbar);
    e_gadcon_xdnd_window_set(tbar->gadcon, tbar->fwin->evas_win);
    e_gadcon_dnd_window_set(tbar->gadcon, tbar->fwin->evas_win);
+   e_gadcon_ecore_evas_set(tbar->gadcon, tbar->fwin->ecore_evas);
    e_gadcon_util_menu_attach_func_set(tbar->gadcon,
                                       _e_toolbar_menu_items_append, tbar);
    e_gadcon_populate(tbar->gadcon);
