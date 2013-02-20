@@ -402,11 +402,6 @@ _e_randr_config_restore(void)
    /* grab the root window */
    root = ecore_x_window_root_first_get();
 
-   /* FIXME: !!
-    * 
-    * Optimize and redo this !!!
-    */
-
    /* try to get the list of crtcs */
    if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
      {
