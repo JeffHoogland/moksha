@@ -62,13 +62,7 @@ _create_data(E_Config_Dialog *cfd EINA_UNUSED)
    if (!(cfdata = E_NEW(E_Config_Dialog_Data, 1)))
      return NULL;
 
-   /* NB: For now, disable restore on startup until the randr event 
-    * issues are worked out. Reasoning is that we cannot restore 
-    * potentially inaccurate configurations due to config not being updated 
-    * when randr events come in */
-
-   /* cfdata->restore = e_randr_cfg->restore; */
-   cfdata->restore = EINA_FALSE;
+   cfdata->restore = e_randr_cfg->restore;
 
    return cfdata;
 }
@@ -118,7 +112,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      }
 
    ow = e_widget_check_add(evas, _("Restore On Startup"), &(cfdata->restore));
-   e_widget_disabled_set(ow, EINA_TRUE);
    e_widget_list_object_append(o, ow, 1, 0, 0.5);
    e_widget_size_min_get(ow, NULL, &ch);
 
