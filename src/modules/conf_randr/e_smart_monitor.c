@@ -2054,10 +2054,10 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    if ((sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_0) || 
        (sd->current.orient == ECORE_X_RANDR_ORIENTATION_ROT_180))
      mode = _e_smart_monitor_mode_find(sd, sd->current.w, 
-                                       sd->current.h, EINA_FALSE);
+                                       sd->current.h, EINA_TRUE);
    else
      mode = _e_smart_monitor_mode_find(sd, sd->current.h, 
-                                       sd->current.w, EINA_FALSE);
+                                       sd->current.w, EINA_TRUE);
 
    if (mode)
      {
