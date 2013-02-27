@@ -399,6 +399,12 @@ e_smart_monitor_grid_set(Evas_Object *obj, Evas_Object *grid, Evas_Coord gx, Eva
    sd->grid.y = gy;
    sd->grid.w = gw;
    sd->grid.h = gh;
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, sd->current.x, sd->current.y);
+
+   evas_object_grid_pack(sd->grid.obj, obj, sd->current.x, 
+                         sd->current.y, sd->current.w, sd->current.h);
 }
 
 void 
