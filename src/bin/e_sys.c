@@ -35,12 +35,12 @@ static E_Obj_Dialog *_e_sys_dialog = NULL;
 static E_Dialog *_e_sys_logout_confirm_dialog = NULL;
 static Ecore_Timer *_e_sys_susp_hib_check_timer = NULL;
 static double _e_sys_susp_hib_check_last_tick = 0.0;
-static void (*_e_sys_suspend_func) (void) = NULL;
-static void (*_e_sys_hibernate_func) (void) = NULL;
-static void (*_e_sys_reboot_func) (void) = NULL;
-static void (*_e_sys_shutdown_func) (void) = NULL;
-static void (*_e_sys_logout_func) (void) = NULL;
-static void (*_e_sys_resume_func) (void) = NULL;
+static void (*_e_sys_suspend_func)(void) = NULL;
+static void (*_e_sys_hibernate_func)(void) = NULL;
+static void (*_e_sys_reboot_func)(void) = NULL;
+static void (*_e_sys_shutdown_func)(void) = NULL;
+static void (*_e_sys_logout_func)(void) = NULL;
+static void (*_e_sys_resume_func)(void) = NULL;
 
 static const int E_LOGOUT_AUTO_TIME = 60;
 static const int E_LOGOUT_WAIT_TIME = 15;
@@ -237,12 +237,12 @@ e_sys_con_extra_action_list_get(void)
 }
 
 EAPI void
-e_sys_handlers_set(void (*suspend_func) (void),
-                   void (*hibernate_func) (void),
-                   void (*reboot_func) (void),
-                   void (*shutdown_func) (void),
-                   void (*logout_func) (void),
-                   void (*resume_func) (void))
+e_sys_handlers_set(void (*suspend_func)(void),
+                   void (*hibernate_func)(void),
+                   void (*reboot_func)(void),
+                   void (*shutdown_func)(void),
+                   void (*logout_func)(void),
+                   void (*resume_func)(void))
 {
    _e_sys_suspend_func = suspend_func;
    _e_sys_hibernate_func = hibernate_func;
@@ -279,7 +279,7 @@ _e_sys_susp_hib_check(void)
    if (_e_sys_susp_hib_check_timer)
      ecore_timer_del(_e_sys_susp_hib_check_timer);
    _e_sys_susp_hib_check_last_tick = ecore_time_unix_get();
-   _e_sys_susp_hib_check_timer = 
+   _e_sys_susp_hib_check_timer =
      ecore_timer_add(0.1, _e_sys_susp_hib_check_timer_cb, NULL);
 }
 
@@ -843,9 +843,9 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
                     {
                        if (e_config->desklock_on_suspend)
                          e_desklock_show(EINA_TRUE);
-                       
+
                        _e_sys_susp_hib_check();
-                       
+
                        _e_sys_begin_time = ecore_time_get();
                        _e_sys_exe = ecore_exe_run(buf, NULL);
                        od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
@@ -878,30 +878,29 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
           }
         else
           {
-             ecore_event_add(E_EVENT_SYS_HIBERNATE, NULL, NULL, NULL);
-             if (_e_sys_hibernate_func)
-               {
-                  _e_sys_hibernate_func();
-                  return 0;
+                  if (raw)
+                    {
+                  _e_sys_susp_hib_check();
+                       if (e_config->desklock_on_suspend)
+                         e_desklock_show(EINA_TRUE);
+                       _e_sys_begin_time = ecore_time_get();
+                       _e_sys_exe = ecore_exe_run(buf, NULL);
                }
              else
                {
-                  if (raw)
+                  ecore_event_add(E_EVENT_SYS_HIBERNATE, NULL, NULL, NULL);
+                  if (_e_sys_hibernate_func)
                     {
-                       if (e_config->desklock_on_suspend)
-                         e_desklock_show(EINA_TRUE);
-                       
-                       _e_sys_susp_hib_check();
-                       _e_sys_begin_time = ecore_time_get();
-                       _e_sys_exe = ecore_exe_run(buf, NULL);
+                       _e_sys_hibernate_func();
+                       return 0;
                     }
                   else
                     {
                        if (e_config->desklock_on_suspend)
                          e_desklock_show(EINA_TRUE);
-                       
+
                        _e_sys_susp_hib_check();
-                       
+
                        _e_sys_begin_time = ecore_time_get();
                        _e_sys_exe = ecore_exe_run(buf, NULL);
                        od = e_obj_dialog_new(e_container_current_get(e_manager_current_get()),
@@ -926,7 +925,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
      }
    return 1;
 }
-   
+
 static void
 _e_sys_dialog_cb_delete(E_Obj_Dialog *od __UNUSED__)
 {

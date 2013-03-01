@@ -1,3 +1,7 @@
+2013-03-01 Sebastian Dransfeld
+
+        * Fix sys hibernate by checking raw condition first
+
 2015-03-25 Samuel F. Baggen (Thanatermesis)
 
 		* included improvement in XDG_DATA_DIRS by zmike
