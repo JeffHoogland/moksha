@@ -434,6 +434,3 @@ install-data-hook:
 endif
 installed_headersdir = $(prefix)/include/enlightenment
 installed_headers_DATA = $(ENLIGHTENMENTHEADERS)
-
-EXTRA_DIST = \
-	     e_randr_private.h
