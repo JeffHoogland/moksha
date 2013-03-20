@@ -255,6 +255,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
                   /* get this outputs crtc */
                   rcrtc = ecore_x_randr_output_crtc_get(root, routputs[j]);
+                  if (!rcrtc) continue;
 
                   /* if crtc is not 0 (disabled), then check if it matches 
                    * the one we are currently working with. If it does not 
