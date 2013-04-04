@@ -10224,7 +10224,7 @@ msgstr "Variante"
 
 #: src/modules/notification/e_mod_main.c:66
 msgid "Enter Presentation Mode"
-msgstr "Entra in modalità presentazione"
+msgstr "Ingresso in modalità presentazione"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
@@ -10250,7 +10250,7 @@ msgstr ""
 
 #: src/modules/notification/e_mod_main.c:89
 msgid "Enter Offline Mode"
-msgstr "Entra in modalità non in linea"
+msgstr "Ingresso in modalità non in linea"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
