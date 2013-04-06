@@ -13,6 +13,7 @@ Removed:
 
 Improvements:
     * clock listens to /etc/timezone changes now too
+    * updated Catalan translations
 
 Fixes:
     * fixed window autoraise triggering from pointer slide
