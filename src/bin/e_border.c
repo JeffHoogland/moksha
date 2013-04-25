@@ -7321,7 +7321,8 @@ _e_border_eval0(E_Border *bd)
         pclass = bd->client.icccm.class;
         bd->client.icccm.name = eina_stringshare_add(nname);
         bd->client.icccm.class = eina_stringshare_add(nclass);
-        if (bd->client.icccm.class && (!strcmp(bd->client.icccm.class, "Vmplayer")))
+        if ((!e_util_strcasecmp(bd->client.icccm.class, "vmplayer")) || 
+            (!e_util_strcasecmp(bd->client.icccm.class, "vmware")))
           e_bindings_mapping_change_enable(EINA_FALSE);
         free(nname);
         free(nclass);

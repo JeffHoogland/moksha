@@ -11,6 +11,7 @@ Removed:
 
 Improvements:
     * improve efm mouse movement detection for icons
+    * add check for vmware window in another spot to disable key remapping
 
 Fixes:
 
