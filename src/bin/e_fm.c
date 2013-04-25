@@ -4859,7 +4859,10 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
         edje_object_signal_emit(ic->obj_icon, "e,state,selected", "e");
         selectraise = edje_object_data_get(ic->obj, "selectraise");
         if ((selectraise) && (!strcmp(selectraise, "on")))
-          evas_object_stack_below(ic->obj, ic->sd->drop);
+          {
+             evas_object_stack_below(ic->obj, ic->sd->drop);
+             evas_object_stack_above(ic->rect, ic->obj);
+          }
      }
 
    if (ic->info.removable)
@@ -5004,6 +5007,7 @@ _e_fm2_icon_select(E_Fm2_Icon *ic)
         selectraise = edje_object_data_get(ic->obj, "selectraise");
         if ((selectraise) && (!strcmp(selectraise, "on")))
           evas_object_stack_below(ic->obj, ic->sd->drop);
+        evas_object_stack_above(ic->rect, ic->obj);
      }
 }
 
@@ -5030,7 +5034,10 @@ _e_fm2_icon_deselect(E_Fm2_Icon *ic)
         if ((selectraise) && (!strcmp(selectraise, "on")))
           {
              if ((stacking) && (!strcmp(stacking, "below")))
-               evas_object_stack_above(ic->obj, ic->sd->underlay);
+               {
+                  evas_object_stack_above(ic->obj, ic->sd->underlay);
+                  evas_object_stack_above(ic->rect, ic->obj);
+               }
           }
      }
 }
