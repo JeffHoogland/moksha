@@ -14,6 +14,7 @@ Improvements:
     * add check for vmware window in another spot to disable key remapping
 
 Fixes:
+    * fixed theme bug which prevented windows from unshading correctly when animations were disabled
 
 
 

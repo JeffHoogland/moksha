@@ -592,10 +592,11 @@ group { name: "e/widgets/border/default/border";
 //      program {
 //         signal: "e,state,shading"; source: "e";
 //      }
-//      program {
-//         signal: "e,state,unshaded"; source: "e";
-//      }
       program {
+         signal: "e,state,unshaded"; source: "e";
+         after: "unshading";
+      }
+      program { name: "unshading";
          signal: "e,state,unshading"; source: "e";
          action: STATE_SET "default" 0.0;
          target: "e.swallow.client";

@@ -1,3 +1,7 @@
+2013-04-26 Mike Blumenkrantz
+
+        * fixed theme bug which prevented windows from unshading correctly when animations were disabled
+
 2013-04-25 Mike Blumenkrantz
 
         * improve efm mouse movement detection for icons
