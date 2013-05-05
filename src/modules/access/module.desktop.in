@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Access
+Name[ca]=Accessibilitat
 Name[es]=Accesibilidad
 Name[gl]=Accesibilidade
 Name[pt]=Acessibilidade
@@ -8,6 +9,7 @@ Name[ru]=Доступность
 Icon=preferences-desktop-accessibility
 X-Enlightenment-ModuleType=utils
 Comment=Accessibility module designed to improve ease of use for the vision impaired and the blind.
+Comment[ca]=Mòdul d'accessibilitat dissenyat per a facilitar l'ús a persones amb discapacitat visual.
 Comment[es]=Módulo de accesibilidad diseñado para facilitar el uso a ciegos y discapacitados visuales.
 Comment[fr]=Module d'accessibilité permettant d'améliorer l'expérience utilisateur des déficients visuels.
 Comment[gl]=Módulo de accesibilidade programado para facilitar o uso a cegos e discapacitados visuais.

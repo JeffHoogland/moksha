@@ -1,16 +1,17 @@
 [Desktop Entry]
 Type=Link
 Name=Composite
-Name[ru]=Композитный режим
+Name[ca]=Composite
 Name[eo]=Kunmetado
 Name[es]=Composición
 Name[gl]=Composición
 Name[de]=Composite-Grafik
-Name[tr]=Birleşiklik
 Name[pt]=Composição
+Name[tr]=Birleşiklik
+Name[ru]=Композитный режим
 Icon=e-module-comp
 Comment=Enlightenment Composite Manager
-Comment[ru]=Композитный менеджер для Enlightenment
+Comment[ca]=Administrador de Composite a l'Enlightenment.
 Comment[de]=Composite-Manager für Enlightenment
 Comment[eo]=Administrilo de kunmetado por Enlightenment
 Comment[es]=Administrador de composición de Enlightenment.
@@ -18,5 +19,6 @@ Comment[fr]=Gestionnaire de composite intégré.
 Comment[gl]=Xestor de composición de Enlightenment.
 Comment[it]=Composite manager per Enlightenment.
 Comment[pt]=Gestão de composição integrada
+Comment[ru]=Композитный менеджер для Enlightenment
 Comment[tr]=Enlightenment için birleşiklik yöneticisi
 X-Enlightenment-ModuleType=look

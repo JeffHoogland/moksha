@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Physics
+Name[ca]=Física
 Name[es]=Física
 Name[gl]=Física
 Name[pt]=Física
 Name[ru]=Физика
 Icon=e-module-physics
 Comment=Enlightenment Physics Professor
+Comment[ca]=El professor de física de l'Enlightenment
 Comment[es]=El profesor de física de Enlightenment
 Comment[gl]=O profesor de física de Enlightenment
 Comment[it]=Il professore di fisica di Enlightenment

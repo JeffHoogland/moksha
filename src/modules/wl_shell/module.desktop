@@ -4,6 +4,7 @@ Name=Wayland Shell
 Name[eo]=Ĉelo de Wayland
 Icon=e-module-wl_shell
 Comment=Enlightenment Wayland Shell
+Comment[ca]=Shell de l'Enlightenment per a Wayland
 Comment[eo]=Ĉelo de Enlightenment por Wayland
 Comment[it]=Shell di Enlightenment per Wayland
 X-Enlightenment-ModuleType=look

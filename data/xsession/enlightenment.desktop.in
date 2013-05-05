@@ -1,20 +1,22 @@
 [Desktop Entry]
 Name=Enlightenment
-Name[ru]=Enlightenment
+Name[ca]=Enlightenment
 Name[el]=Enlightenment
 Name[eo]=Enlightenment
+Name[ru]=Enlightenment
 Name[tr]=Enlightenment
 Comment=Log in using Enlightenment (Version @VERSION@)
-Comment[ru]=Войти используя Enlightenment (Версия @VERSION@)
+Comment[ca]=Iniciar sessió amb Enlightenment (Versió @VERSION@)
 Comment[el]=Είσοδος με το Enlightenment (Έκδοση @VERSION@)
 Comment[eo]=Ensaluti pere de Enlightenment (Versio @VERSION@)
 Comment[es]=Iniciar sesión usando Enlightenment (Versión @VERSION@)
 Comment[fr]=Ouvrir une session Enlightenment (Version @VERSION@)
 Comment[gl]=Iniciar sesión usando Enlightenment (Versión @VERSION@)
+Comment[ko]=Enlightenment 로그인(버전 @VERSION@)
 Comment[it]=Accedi con Enlightenment (Versione @VERSION@)
 Comment[pt]=Iniciar sessão no Enlightenment (Versão @VERSION@)
+Comment[ru]=Войти используя Enlightenment (Версия @VERSION@)
 Comment[tr]=Enlightenment kullanarak giriş yaın (Version @VERSION@)
-Comment[ko]=Enlightenment 로그인(버전 @VERSION@)
 Type=Application
 Icon=@prefix@/share/enlightenment/data/images/enlightenment.png
 Exec=@prefix@/bin/enlightenment_start

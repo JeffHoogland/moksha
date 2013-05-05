@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Tiling
+Name[ca]=Mosaic
 Name[es]=Mosaico
 Name[fr]=Pavage
 Name[gl]=Mosaico
 Name[ru]=Мозаичный режим
 Icon=e-module-tiling
 Comment=Positions/resizes your windows tilingly.
+Comment[ca]=Posiciona/redimensiona les finestres en mosaics.
 Comment[es]=Posicione/redimensione sus ventanas en mosaicos.
 Comment[fr]=Place/Redimensionne les fenêtres sans les superposer.
 Comment[gl]=Posicione/redimensione as súas xanelas en mosaicos.

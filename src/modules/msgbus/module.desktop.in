@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=DBus Extension
-Name[ru]=Расширение DBus
+Name[ca]=Extensió DBus
 Name[cs]=DBus rozšíření
 Name[de]=Erweiterung für D-Bus
 Name[eo]=DBus kromaĵo
@@ -13,6 +13,7 @@ Name[it]=Estensione DBus
 Name[ja]=
 Name[pt]=Extensão DBus
 Name[pt_BR]=
+Name[ru]=Расширение DBus
 Name[tr]=DBus Uzantısı
 Name[zh_CN]=
 Name[zh_TW]=

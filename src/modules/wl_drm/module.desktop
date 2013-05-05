@@ -3,6 +3,7 @@ Type=Link
 Name=Wayland Drm
 Icon=e-module-wl_drm
 Comment=Enlightenment DRM Composite Manager
+Comment[ca]=Administrador de composició DRM de l'Enlightenment
 Comment[eo]=Administrilo de kunmetaĵo Enlightenment DRM
 Comment[es]=Administrador de composición DRM de Enlightenment
 Comment[gl]=Xestor de composición DRM de Enlightenment

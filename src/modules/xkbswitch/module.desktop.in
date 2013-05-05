@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Keyboard
+Name[ca]=Teclat
 Name[es]=Teclado
 Name[fr]=Clavier
 Name[gl]=Teclado
@@ -9,6 +10,7 @@ Name[ru]=Клавиатура
 Icon=preferences-desktop-keyboard
 X-Enlightenment-ModuleType=utils
 Comment=Keyboard layout configuration and switcher
+Comment[ca]=Configuració i commutació de les disposicions del teclat.
 Comment[es]=Configuración y conmutador de las disposiciones del teclado.
 Comment[fr]=Pour configurer et basculer l'agencement du clavier.
 Comment[gl]=Configuración e alteración das disposicións do teclado.

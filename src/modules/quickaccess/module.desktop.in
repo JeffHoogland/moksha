@@ -1,12 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Quickaccess
+Name[ca]=Accés ràpid
 Name[es]=Acceso rápido
 Name[gl]=Acceso rápido
 Name[pt]=Acesso rápido
 Name[ru]=Быстрый доступ
 Icon=e-module-quickaccess
 Comment=Enlightenment Quickaccess Launcher
+Comment[ca]=Llançador de l'accés ràpid de l'Enlightenment
 Comment[es]=Lanzador del acceso rápido de Enlightenment
 Comment[gl]=Iniciador do acceso rápido de Enlightenment
 Comment[it]=Lanciatore ad accesso rapido di Enlightenment

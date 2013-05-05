@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Settings - Screen Setup
+Name[ca]=Resolució de pantalla
 Name[cs]=Nastavení - rozlišení obrazovky
 Name[de]=Konfiguration - Bildschirm
 Name[eo]=Agordo - Ekrandistingivo
@@ -18,6 +19,7 @@ Name[zh_CN]=
 Name[zh_TW]=
 Icon=e-module-conf_randr
 Comment=Used to configure your screen's resolution.
+Comment[ca]=Per a configurar la resolució del monitor.
 Comment[cs]=Použit k nastavení rozlišení obrazovky.
 Comment[de]=
 Comment[eo]=Agordi sian ekrandistingivon.
