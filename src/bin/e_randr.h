@@ -14,7 +14,7 @@ typedef struct _E_Randr_Config E_Randr_Config;
 #define E_RANDR_VERSION_1_4 ((1 << 16) | 4)
 
 #define E_RANDR_CONFIG_FILE_EPOCH 1
-#define E_RANDR_CONFIG_FILE_GENERATION 1
+#define E_RANDR_CONFIG_FILE_GENERATION 2
 #define E_RANDR_CONFIG_FILE_VERSION \
    ((E_RANDR_CONFIG_FILE_EPOCH * 1000000) + E_RANDR_CONFIG_FILE_GENERATION)
 
@@ -55,6 +55,7 @@ struct _E_Randr_Config
 
    int poll_interval;
    unsigned char restore;
+   unsigned long config_timestamp;
 };
 
 EINTERN Eina_Bool e_randr_init(void);
