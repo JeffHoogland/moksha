@@ -357,7 +357,8 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
         unsigned long edid_length = 0;
 
         /* get the edid for this output */
-        if ((edid = ecore_x_randr_output_edid_get(0, sd->output, &edid_length)))
+        if ((edid = 
+             ecore_x_randr_output_edid_get(root, sd->output, &edid_length)))
           {
              /* get output name */
              name = ecore_x_randr_edid_display_name_get(edid, edid_length);
