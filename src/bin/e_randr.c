@@ -1034,7 +1034,7 @@ _e_randr_config_output_preferred_mode_get(E_Randr_Output_Config *cfg)
    modes = ecore_x_randr_output_modes_get(root, cfg->xid, &n, &p);
    if ((!modes) || (n == 0)) return 0;
 
-   mode = modes[p];
+   mode = modes[p - 1];
    free(modes);
 
    return mode;
