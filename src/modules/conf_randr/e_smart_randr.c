@@ -262,7 +262,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                        /* get the size of the preferred mode for this output */
                        _e_smart_randr_monitor_preferred_mode_size_get(outputs[i], 
                                                                       &mw, &mh);
-                       printf("Preferred Size: %d %d\n", mw, mh);
 
                        /* tell monitor what it's current position is
                         * NB: This also packs into the grid */
@@ -297,7 +296,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   /* get the size of the preferred mode for this output */
                   _e_smart_randr_monitor_preferred_mode_size_get(outputs[i], 
                                                                  &mw, &mh);
-                  printf("Preferred Size: %d %d\n", mw, mh);
 
                   /* no crtc assigned to this output. it's disabled */
                   e_smart_monitor_crtc_set(mon, crtc, nx, 0, mw, mh);
