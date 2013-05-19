@@ -187,6 +187,8 @@ static inline Ecore_X_Randr_Orientation _e_smart_monitor_orientation_get(int rot
 static void _e_smart_monitor_frame_map_apply(Evas_Object *o_frame, int rotation);
 static void _e_smart_monitor_thumb_map_apply(Evas_Object *o_thumb, int rotation);
 
+static Ecore_X_Randr_Crtc _e_smart_monitor_crtc_find(Ecore_X_Randr_Output output);
+
 /* external functions exposed by this widget */
 Evas_Object *
 e_smart_monitor_add(Evas *evas)
@@ -238,7 +240,7 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
 
    /* check ecore_x_randr version */
 #if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
-   Ecore_X_Randr_Crtc_Info *crtc_info = NULL;
+   Ecore_X_Randr_Crtc_Info *crtc_info;
 
    if ((crtc_info = ecore_x_randr_crtc_info_get(root, crtc)))
      {
@@ -760,8 +762,31 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
           }
      }
 
+   /* if this monitor gets re-enabled, we need to set a mode */
+   if ((sd->current.enabled) && (!sd->current.mode))
+     {
+        Ecore_X_Randr_Mode_Info *info;
+
+        info = _e_smart_monitor_mode_find(sd, sd->current.w, 
+                                          sd->current.h, EINA_FALSE);
+        if (info) 
+          {
+             sd->current.mode = info->xid;
+             ecore_x_randr_mode_info_free(info);
+          }
+     }
+
+   /* if this monitor gets re-enabled, we need to assign a crtc */
+   if ((sd->current.enabled) && (!sd->crtc.id))
+     {
+        /* find a crtc */
+        sd->crtc.id = _e_smart_monitor_crtc_find(sd->output);
+     }
+
    /* record current values */
    mode = sd->current.mode;
+   if (!sd->current.enabled) mode = 0;
+
    cx = sd->current.x;
    cy = sd->current.y;
    cw = sd->current.w;
@@ -787,14 +812,10 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
      }
    else
      {
-        /* apply the settings */
-        if (!sd->current.enabled)
-          ecore_x_randr_crtc_settings_set(root, sd->crtc.id, NULL, 
-                                          0, 0, 0, 0, 
-                                          ECORE_X_RANDR_ORIENTATION_ROT_0);
-        else
-          ecore_x_randr_crtc_settings_set(root, sd->crtc.id, outputs, 
-                                          noutputs, cx, cy, mode, orient);
+        /* try to apply the settings */
+        if (!ecore_x_randr_crtc_settings_set(root, sd->crtc.id, outputs, 
+                                             noutputs, cx, cy, mode, orient))
+          printf("FAILED TO APPLY MONITOR SETTINGS !!!\n");
      }
 
    /* free any allocated memory from ecore_x_randr */
@@ -996,7 +1017,7 @@ _e_smart_del(Evas_Object *obj)
 
    /* free the list of modes */
    EINA_LIST_FREE(sd->modes, mode)
-     ecore_x_randr_mode_info_free(mode);
+     if (mode) ecore_x_randr_mode_info_free(mode);
 
    /* try to free the allocated structure */
    E_FREE(sd);
@@ -2356,4 +2377,55 @@ _e_smart_monitor_thumb_map_apply(Evas_Object *o_thumb, int rotation)
    /* tell the frame to use this map */
    evas_object_map_set(o_thumb, map);
    evas_object_map_enable_set(o_thumb, EINA_TRUE);
+}
+
+static Ecore_X_Randr_Crtc 
+_e_smart_monitor_crtc_find(Ecore_X_Randr_Output output)
+{
+   Ecore_X_Randr_Crtc ret = 0;
+   Ecore_X_Window root = 0;
+   Ecore_X_Randr_Crtc *crtcs;
+   int ncrtcs = 0;
+
+   /* get root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get possible crtcs for this output */
+   if ((crtcs = ecore_x_randr_output_possible_crtcs_get(root, output, &ncrtcs)))
+     {
+        Ecore_X_Randr_Output *outputs;
+        int i = 0, noutputs = 0;
+
+        for (i = 0; i < ncrtcs; i++)
+          {
+             int j = 0;
+
+             /* get any outputs on this crtc */
+             outputs = 
+               ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs);
+
+             /* if this crtc has no outputs, we can use it */
+             if ((!outputs) || (noutputs == 0))
+               ret = crtcs[i];
+             else
+               {
+                  /* loop the outputs */
+                  for (j = 0; j < noutputs; j++)
+                    {
+                       /* check if it is this output */
+                       if (outputs[j] == output)
+                         {
+                            ret = crtcs[i];
+                            break;
+                         }
+                    }
+               }
+
+             if (ret) break;
+          }
+
+        free(crtcs);
+     }
+
+   return ret;
 }
