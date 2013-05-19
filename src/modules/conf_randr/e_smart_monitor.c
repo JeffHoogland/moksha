@@ -216,7 +216,7 @@ void
 e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord cx, Evas_Coord cy, Evas_Coord cw, Evas_Coord ch)
 {
    E_Smart_Data *sd;
-   Ecore_X_Randr_Orientation orients;
+   Ecore_X_Randr_Orientation orients = ECORE_X_RANDR_ORIENTATION_ROT_0;
    Ecore_X_Window root = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
