@@ -148,7 +148,7 @@ e_smart_randr_virtual_size_calc(Evas_Object *obj)
              free(modes);
           }
 
-        free(outputs);
+        free(routputs);
      }
 
    if ((vw == 0) && (vh == 0))
