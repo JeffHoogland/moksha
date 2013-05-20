@@ -2401,11 +2401,10 @@ _e_smart_monitor_crtc_find(Ecore_X_Randr_Output output)
              int j = 0;
 
              /* get any outputs on this crtc */
-             outputs = 
-               ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs);
-
-             /* if this crtc has no outputs, we can use it */
-             if ((!outputs) || (noutputs == 0))
+             if (!(outputs = 
+                   ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs)))
+               ret = crtcs[i];
+             else if (noutputs == 0)
                ret = crtcs[i];
              else
                {
@@ -2421,6 +2420,7 @@ _e_smart_monitor_crtc_find(Ecore_X_Randr_Output output)
                     }
                }
 
+             free(outputs);
              if (ret) break;
           }
 

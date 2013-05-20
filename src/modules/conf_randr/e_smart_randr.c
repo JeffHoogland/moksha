@@ -806,8 +806,14 @@ _e_smart_randr_monitor_preferred_mode_size_get(Ecore_X_Randr_Output output, Evas
 
    root = ecore_x_window_root_first_get();
 
-   modes = ecore_x_randr_output_modes_get(root, output, &n, &p);
-   if ((!modes) || (n == 0)) return;
+   if (!(modes = ecore_x_randr_output_modes_get(root, output, &n, &p)))
+     return;
+
+   if (n == 0)
+     {
+        if (modes) free(modes);
+        return;
+     }
 
    ecore_x_randr_mode_size_get(root, modes[p - 1], mw, mh);
 
@@ -886,11 +892,10 @@ _e_smart_randr_crtc_find(Ecore_X_Randr_Output output)
              int j = 0;
 
              /* get any outputs on this crtc */
-             outputs = 
-               ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs);
-
-             /* if this crtc has no outputs, we can use it */
-             if ((!outputs) || (noutputs == 0))
+             if (!(outputs = 
+                   ecore_x_randr_crtc_outputs_get(root, crtcs[i], &noutputs)))
+               ret = crtcs[i];
+             else if (noutputs == 0)
                ret = crtcs[i];
              else
                {
@@ -906,6 +911,7 @@ _e_smart_randr_crtc_find(Ecore_X_Randr_Output output)
                     }
                }
 
+             free(outputs);
              if (ret) break;
           }
 
