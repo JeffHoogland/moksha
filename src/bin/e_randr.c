@@ -989,8 +989,15 @@ _e_randr_config_output_crtc_find(E_Randr_Output_Config *cfg)
    root = ecore_x_window_root_first_get();
 
    /* get a list of possible crtcs for this output */
-   possible = ecore_x_randr_output_possible_crtcs_get(root, cfg->xid, &num);
-   if ((!possible) || (num == 0)) return NULL;
+   if (!(possible = 
+         ecore_x_randr_output_possible_crtcs_get(root, cfg->xid, &num)))
+     return NULL;
+
+   if (num == 0)
+     {
+        if (possible) free(possible);
+        return NULL;
+     }
 
    /* loop the possible crtcs */
    for (i = 0; i < num; i++)
@@ -1031,8 +1038,14 @@ _e_randr_config_output_preferred_mode_get(E_Randr_Output_Config *cfg)
    root = ecore_x_window_root_first_get();
 
    /* get the list of modes for this output */
-   modes = ecore_x_randr_output_modes_get(root, cfg->xid, &n, &p);
-   if ((!modes) || (n == 0)) return 0;
+   if (!(modes = ecore_x_randr_output_modes_get(root, cfg->xid, &n, &p)))
+     return 0;
+
+   if (n == 0)
+     {
+        if (modes) free(modes);
+        return 0;
+     }
 
    mode = modes[p - 1];
    free(modes);
