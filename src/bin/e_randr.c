@@ -156,6 +156,7 @@ _e_randr_config_load(void)
    E_CONFIG_VAL(D, T, restore, UCHAR);
    E_CONFIG_VAL(D, T, poll_interval, INT);
    E_CONFIG_VAL(D, T, config_timestamp, ULL);
+   E_CONFIG_VAL(D, T, primary, INT);
 
    /* try to load the randr config */
    if ((e_randr_cfg = e_config_domain_load("e_randr", _e_randr_edd)))
@@ -232,7 +233,7 @@ _e_randr_config_new(void)
    root = ecore_x_window_root_first_get();
 
    /* get which output is primary */
-   primary = ecore_x_randr_primary_output_get(root);
+   e_randr_cfg->primary = ecore_x_randr_primary_output_get(root);
 
    /* record the current screen size in our config */
    ecore_x_randr_screen_current_size_get(root, &e_randr_cfg->screen.width, 
@@ -277,7 +278,7 @@ _e_randr_config_new(void)
                        /* assign crtc for this output */
                        output_cfg->crtc = crtcs[i];
                        output_cfg->exists = EINA_TRUE;
-                       if (outputs[j] == primary)
+                       if ((int)outputs[j] == e_randr_cfg->primary)
                          output_cfg->primary = EINA_TRUE;
 
                        if (!primary)
@@ -288,10 +289,10 @@ _e_randr_config_new(void)
                                  /* if no primary is set, then we should 
                                   * use the first output listed by xrandr */
                                  output_cfg->primary = EINA_TRUE;
-                                 primary = outputs[j];
+                                 e_randr_cfg->primary = (int)outputs[j];
 
                                  ecore_x_randr_primary_output_set(root, 
-                                                                  primary);
+                                                                  e_randr_cfg->primary);
                               }
                          }
 
@@ -550,7 +551,8 @@ _e_randr_config_restore(void)
                                                        crtc_cfg->orient);
 
                        EINA_LIST_FOREACH(valid_outputs, o, out)
-                         if (out->primary)
+                         if ((out->primary) && 
+                             ((int)out->xid == e_randr_cfg->primary))
                            {
                               ecore_x_randr_primary_output_set(root, out->xid);
                               break;
@@ -574,6 +576,7 @@ _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
 {
    Ecore_X_Event_Screen_Change *ev;
    Eina_Bool changed = EINA_FALSE;
+   Ecore_X_Randr_Output primary = 0;
 
    ev = event;
 
@@ -583,6 +586,14 @@ _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
    /* check if this event's root window is Our root window */
    if (ev->root != e_manager_current_get()->root) 
      return ECORE_CALLBACK_RENEW;
+
+   primary = ecore_x_randr_primary_output_get(ev->root);
+
+   if (e_randr_cfg->primary != (int)primary)
+     {
+        e_randr_cfg->primary = (int)primary;
+        changed = EINA_TRUE;
+     }
 
    if (e_randr_cfg->screen.width != ev->size.width)
      {
@@ -861,13 +872,7 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
 
    /* if we added or removed any outputs, we need to reset */
    if ((output_new) || (output_removed))
-     {
-        /* we need to inform X about the changes */
-        /* easier just to call the restore function with the updated config */
-        /* _e_randr_config_restore(); */
-
-        ecore_x_randr_screen_reset(ev->win);
-     }
+     ecore_x_randr_screen_reset(ev->win);
 
    return ECORE_CALLBACK_RENEW;
 }
