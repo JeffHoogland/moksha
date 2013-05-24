@@ -212,6 +212,7 @@ _e_randr_config_new(void)
 {
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Crtc *crtcs = NULL;
+   Ecore_X_Randr_Output primary = 0;
    int ncrtcs = 0, i = 0;
 
    /* create new randr cfg */
@@ -229,6 +230,9 @@ _e_randr_config_new(void)
 
    /* grab the root window once */
    root = ecore_x_window_root_first_get();
+
+   /* get which output is primary */
+   primary = ecore_x_randr_primary_output_get(root);
 
    /* record the current screen size in our config */
    ecore_x_randr_screen_current_size_get(root, &e_randr_cfg->screen.width, 
@@ -273,6 +277,23 @@ _e_randr_config_new(void)
                        /* assign crtc for this output */
                        output_cfg->crtc = crtcs[i];
                        output_cfg->exists = EINA_TRUE;
+                       if (outputs[j] == primary)
+                         output_cfg->primary = EINA_TRUE;
+
+                       if (!primary)
+                         {
+                            /* X has no primary output set */
+                            if (j == 0)
+                              {
+                                 /* if no primary is set, then we should 
+                                  * use the first output listed by xrandr */
+                                 output_cfg->primary = EINA_TRUE;
+                                 primary = outputs[j];
+
+                                 ecore_x_randr_primary_output_set(root, 
+                                                                  primary);
+                              }
+                         }
 
                        /* add this output to the list for this crtc */
                        crtc_cfg->outputs = 
@@ -527,6 +548,14 @@ _e_randr_config_restore(void)
                                                        crtc_cfg->y, 
                                                        crtc_cfg->mode, 
                                                        crtc_cfg->orient);
+
+                       EINA_LIST_FOREACH(valid_outputs, o, out)
+                         if (out->primary)
+                           {
+                              ecore_x_randr_primary_output_set(root, out->xid);
+                              break;
+                           }
+
                        free(couts);
                     }
                }
