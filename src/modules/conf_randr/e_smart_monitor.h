@@ -7,10 +7,11 @@ typedef enum _E_Smart_Monitor_Changes E_Smart_Monitor_Changes;
 enum _E_Smart_Monitor_Changes
 {
    E_SMART_MONITOR_CHANGED_NONE = 0,
-     E_SMART_MONITOR_CHANGED_MODE = (1 << 0),
-     E_SMART_MONITOR_CHANGED_POSITION = (1 << 1),
-     E_SMART_MONITOR_CHANGED_ORIENTATION = (1 << 2),
-     E_SMART_MONITOR_CHANGED_ENABLED = (1 << 3)
+   E_SMART_MONITOR_CHANGED_MODE = (1 << 0),
+   E_SMART_MONITOR_CHANGED_POSITION = (1 << 1),
+   E_SMART_MONITOR_CHANGED_ORIENTATION = (1 << 2),
+   E_SMART_MONITOR_CHANGED_ENABLED = (1 << 3),
+   E_SMART_MONITOR_CHANGED_PRIMARY = (1 << 4)
 };
 
 Evas_Object *e_smart_monitor_add(Evas *evas);
@@ -26,6 +27,8 @@ void e_smart_monitor_clone_set(Evas_Object *obj, Evas_Object *parent);
 Evas_Object *e_smart_monitor_clone_parent_get(Evas_Object *obj);
 E_Smart_Monitor_Changes e_smart_monitor_changes_get(Evas_Object *obj);
 Eina_Bool e_smart_monitor_changes_apply(Evas_Object *obj);
+const char *e_smart_monitor_name_get(Evas_Object *obj);
+Ecore_X_Randr_Output e_smart_monitor_output_get(Evas_Object *obj);
 
 # endif
 #endif

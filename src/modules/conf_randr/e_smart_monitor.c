@@ -54,6 +54,7 @@ struct _E_Smart_Data
 
    /* output config */
    Ecore_X_Randr_Output output;
+   Eina_Bool primary : 1;
 
    struct 
      {
@@ -375,7 +376,8 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
      }
 
    /* set if it's primary */
-   if (output == primary)
+   sd->primary = (output == primary);
+   if (sd->primary)
      edje_object_signal_emit(sd->o_frame, "e,state,primary,on", "e"); 
    else
      edje_object_signal_emit(sd->o_frame, "e,state,primary,off", "e");
@@ -743,7 +745,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
 {
    E_Smart_Data *sd;
    Ecore_X_Window root = 0;
-   Ecore_X_Randr_Output *outputs;
+   Ecore_X_Randr_Output *outputs, primary = 0;
    int noutputs = 0;
    Ecore_X_Randr_Mode_Info *mode_info;
    Ecore_X_Randr_Mode mode;
@@ -754,6 +756,14 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
 
    /* try to get the objects smart data */
    if (!(sd = evas_object_smart_data_get(obj))) return EINA_FALSE;
+
+   primary = (Ecore_X_Randr_Output)e_randr_cfg->primary;
+   sd->primary = (sd->output == primary);
+
+   if (sd->primary)
+     edje_object_signal_emit(sd->o_frame, "e,state,primary,on", "e");
+   else
+     edje_object_signal_emit(sd->o_frame, "e,state,primary,off", "e");
 
    /* if we have no changes to apply, get out */
    if (sd->changes <= E_SMART_MONITOR_CHANGED_NONE) return EINA_FALSE;
@@ -853,6 +863,28 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    sd->changes = E_SMART_MONITOR_CHANGED_NONE;
 
    return EINA_TRUE;
+}
+
+const char *
+e_smart_monitor_name_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
+
+   /* get output name */
+   return edje_object_part_text_get(sd->o_frame, "e.text.name");
+}
+
+Ecore_X_Randr_Output 
+e_smart_monitor_output_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return 0;
+   return sd->output;
 }
 
 /* smart functions */

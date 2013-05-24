@@ -403,6 +403,16 @@ e_smart_randr_changes_apply(Evas_Object *obj)
      ecore_x_randr_screen_reset(ecore_x_window_root_first_get());
 }
 
+Eina_List *
+e_smart_randr_monitors_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return NULL;
+   return sd->monitors;
+}
+
 /* local functions */
 static void 
 _e_smart_add(Evas_Object *obj)

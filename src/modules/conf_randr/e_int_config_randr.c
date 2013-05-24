@@ -2,13 +2,14 @@
 #include "e_mod_main.h"
 #include "e_int_config_randr.h"
 #include "e_smart_randr.h"
+#include "e_smart_monitor.h"
 
 /* local structures */
 struct _E_Config_Dialog_Data
 {
    Evas_Object *o_randr;
 
-   int restore;
+   int restore, primary;
 };
 
 /* local function prototypes */
@@ -63,6 +64,7 @@ _create_data(E_Config_Dialog *cfd EINA_UNUSED)
      return NULL;
 
    cfdata->restore = e_randr_cfg->restore;
+   cfdata->primary = e_randr_cfg->primary;
 
    return cfdata;
 }
@@ -86,7 +88,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o;
    Evas_Object *ow;
-   Evas_Coord mw = 0, mh = 0, ch = 0;
+   Evas_Coord mw = 0, mh = 0, ch = 0, fh = 0;
+   E_Radio_Group *rg;
+   Eina_List *l;
+   Evas_Object *mon, *of;
 
    /* create the base list widget */
    o = e_widget_list_add(evas, 0, 0);
@@ -111,12 +116,28 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         e_smart_randr_min_size_get(cfdata->o_randr, &mw, &mh);
      }
 
+   of = e_widget_framelist_add(evas, _("Primary Output"), 0);
+   rg = e_widget_radio_group_new(&(cfdata->primary));
+   EINA_LIST_FOREACH(e_smart_randr_monitors_get(cfdata->o_randr), l, mon)
+     {
+        int output;
+        const char *name;
+
+        name = e_smart_monitor_name_get(mon);
+        output = (int)e_smart_monitor_output_get(mon);
+
+        ow = e_widget_radio_add(evas, name, output, rg);
+        e_widget_framelist_object_append(of, ow);
+     }
+   e_widget_list_object_append(o, of, 1, 0, 0.5);
+   e_widget_size_min_get(of, NULL, &fh);
+
    ow = e_widget_check_add(evas, _("Restore On Startup"), &(cfdata->restore));
    e_widget_list_object_append(o, ow, 1, 0, 0.5);
    e_widget_size_min_get(ow, NULL, &ch);
 
    /* set min size of the list widget */
-   e_widget_size_min_set(o, mw, mh + ch);
+   e_widget_size_min_set(o, mw, mh + fh + ch);
 
    e_util_win_auto_resize_fill(cfd->dia->win);
    e_win_centered_set(cfd->dia->win, 1);
@@ -127,8 +148,17 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
+   Eina_Bool change_primary = EINA_FALSE;
+
+   change_primary = (e_randr_cfg->primary != cfdata->primary);
+
+   e_randr_cfg->primary = cfdata->primary;
    e_randr_cfg->restore = cfdata->restore;
    e_randr_config_save();
+
+   if (change_primary)
+     ecore_x_randr_primary_output_set(ecore_x_window_root_first_get(), 
+                                      (Ecore_X_Randr_Output)cfdata->primary);
 
    e_smart_randr_changes_apply(cfdata->o_randr);
 
@@ -138,7 +168,8 @@ _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 static int 
 _basic_check(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 {
-   return (e_randr_cfg->restore != cfdata->restore);
+   return ((e_randr_cfg->restore != cfdata->restore) || 
+           (e_randr_cfg->primary != cfdata->primary));
 }
 
 static void 
