@@ -98,6 +98,19 @@ group { name: "e/conf/randr/main/frame";
       public refresh_open;
    }
    parts {
+      part { name: "primary"; type: IMAGE;
+         description { state: "default" 0.0;
+            image.normal: "glow_small.png";
+            image.border: 7 7 7 7;
+            rel1.offset: -4 -4;
+            rel2.offset: 3 3;
+            visible: 0;
+         }
+         description { state: "on" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
       part { name: "base";
          description { state: "default" 0.0;
             image.normal: "screen_bg.png";
@@ -531,6 +544,16 @@ group { name: "e/conf/randr/main/frame";
          signal: "e,state,rotate_disabled"; source: "e";
          action: STATE_SET "disabled" 0.0;
          target: "e.event.rotate";
+      }
+      program {
+         signal: "e,state,primary,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "primary";
+      }
+      program {
+         signal: "e,state,primary,on"; source: "e";
+         action: STATE_SET "on" 0.0;
+         target: "primary";
       }
       program {
          signal: "mouse,in"; source: "e.event.resize";
