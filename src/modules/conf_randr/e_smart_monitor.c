@@ -330,6 +330,7 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    E_Smart_Data *sd;
    Ecore_X_Randr_Mode_Info *mode;
    Ecore_X_Window root = 0;
+   Ecore_X_Randr_Output primary = 0;
    char *name = NULL;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -352,6 +353,9 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
    /* get the root window */
    root = ecore_x_window_root_first_get();
 
+   /* get the primary output */
+   primary = ecore_x_randr_primary_output_get(root);
+
    /* get output name */
    if (!(name = ecore_x_randr_output_name_get(root, sd->output, NULL)))
      {
@@ -369,6 +373,12 @@ e_smart_monitor_output_set(Evas_Object *obj, Ecore_X_Randr_Output output)
              free(edid);
           }
      }
+
+   /* set if it's primary */
+   if (output == primary)
+     edje_object_signal_emit(sd->o_frame, "e,state,primary,on", "e"); 
+   else
+     edje_object_signal_emit(sd->o_frame, "e,state,primary,off", "e");
 
    /* set monitor name */
    edje_object_part_text_set(sd->o_frame, "e.text.name", name);
