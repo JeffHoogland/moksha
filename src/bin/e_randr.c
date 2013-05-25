@@ -524,7 +524,7 @@ _e_randr_config_restore(void)
 
                   if (ocount > 0)
                     {
-                       Ecore_X_Randr_Output *couts, primary = 0;
+                       Ecore_X_Randr_Output *couts;
                        Eina_List *o;
                        E_Randr_Output_Config *out;
                        Eina_Bool primary_set = EINA_FALSE;
@@ -551,8 +551,6 @@ _e_randr_config_restore(void)
                                                        crtc_cfg->mode, 
                                                        crtc_cfg->orient);
 
-                       /* get the current primary output */
-                       primary = ecore_x_randr_primary_output_get(root);
                        EINA_LIST_FOREACH(valid_outputs, o, out)
                          {
                             if ((out->primary) && 
