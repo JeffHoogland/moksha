@@ -529,28 +529,6 @@ _e_randr_config_restore(void)
                        E_Randr_Output_Config *out;
                        Eina_Bool primary_set = EINA_FALSE;
 
-                       /* get the current primary output */
-                       primary = ecore_x_randr_primary_output_get(root);
-                       EINA_LIST_FOREACH(valid_outputs, o, out)
-                         {
-                            if ((out->primary) && 
-                                ((int)out->xid == e_randr_cfg->primary))
-                              {
-                                 ecore_x_randr_primary_output_set(root, out->xid);
-                                 primary_set = EINA_TRUE;
-                                 break;
-                              }
-                         }
-
-                       if (!primary_set)
-                         {
-                            /* if no primary was set, set it to the first output */
-                            out = eina_list_nth(valid_outputs, 0);
-                            ecore_x_randr_primary_output_set(root, out->xid);
-                            e_randr_cfg->primary = (int)out->xid;
-                            e_randr_config_save();
-                         }
-
                        couts = malloc(ocount * sizeof(Ecore_X_Randr_Output));
                        EINA_LIST_FOREACH(valid_outputs, o, out)
                          {
@@ -572,6 +550,28 @@ _e_randr_config_restore(void)
                                                        crtc_cfg->y, 
                                                        crtc_cfg->mode, 
                                                        crtc_cfg->orient);
+
+                       /* get the current primary output */
+                       primary = ecore_x_randr_primary_output_get(root);
+                       EINA_LIST_FOREACH(valid_outputs, o, out)
+                         {
+                            if ((out->primary) && 
+                                ((int)out->xid == e_randr_cfg->primary))
+                              {
+                                 ecore_x_randr_primary_output_set(root, out->xid);
+                                 primary_set = EINA_TRUE;
+                                 break;
+                              }
+                         }
+
+                       if (!primary_set)
+                         {
+                            /* if no primary was set, set it to the first output */
+                            out = eina_list_nth(valid_outputs, 0);
+                            ecore_x_randr_primary_output_set(root, out->xid);
+                            e_randr_cfg->primary = (int)out->xid;
+                            e_randr_config_save();
+                         }
 
                        free(couts);
                     }
