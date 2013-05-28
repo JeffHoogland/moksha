@@ -383,6 +383,7 @@ _e_randr_config_restore(void)
         Eina_List *valid_crtcs = NULL;
         Eina_List *l;
         E_Randr_Crtc_Config *crtc_cfg;
+        Eina_Bool primary_set = EINA_FALSE;
 
         printf("\tHave Crtcs\n");
 
@@ -459,7 +460,14 @@ _e_randr_config_restore(void)
                     {
                        Eina_List *ll;
                        E_Randr_Output_Config *output_cfg;
-                       /* Eina_Bool output_found = EINA_FALSE; */
+                       Ecore_X_Randr_Connection_Status status = 
+                         ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
+
+                       status = 
+                         ecore_x_randr_output_connection_status_get(root, 
+                                                                    outputs[j]);
+                       if (status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+                         continue;
 
                        printf("\t\t\t\tChecking for Output: %d in Our Config\n", outputs[j]);
 
@@ -470,8 +478,6 @@ _e_randr_config_restore(void)
                             if (output_cfg->xid != outputs[j]) continue;
 
                             /* we have this output */
-                            /* output_found = EINA_TRUE; */
-
                             printf("\t\t\t\tFound Output In Config: %d\n", outputs[j]);
 
                             /* add this output config to the list of 
@@ -482,18 +488,6 @@ _e_randr_config_restore(void)
 
                             break;
                          }
-
-                       /* if (!output_found) */
-                       /*   { */
-                       /*      printf("\t\t\tOutput Not Found, Creating New\n"); */
-
-                       /*      if ((output_cfg =  */
-                       /*           _e_randr_output_config_new(outputs[j]))) */
-                       /*        { */
-                       /*           valid_outputs =  */
-                       /*             eina_list_append(valid_outputs, output_cfg); */
-                       /*        } */
-                       /*   } */
                     }
 
                   free(outputs);
@@ -527,7 +521,6 @@ _e_randr_config_restore(void)
                        Ecore_X_Randr_Output *couts;
                        Eina_List *o;
                        E_Randr_Output_Config *out;
-                       Eina_Bool primary_set = EINA_FALSE;
 
                        couts = malloc(ocount * sizeof(Ecore_X_Randr_Output));
                        EINA_LIST_FOREACH(valid_outputs, o, out)
@@ -551,14 +544,17 @@ _e_randr_config_restore(void)
                                                        crtc_cfg->mode, 
                                                        crtc_cfg->orient);
 
-                       EINA_LIST_FOREACH(valid_outputs, o, out)
+                       if (!primary_set)
                          {
-                            if ((out->primary) && 
-                                ((int)out->xid == e_randr_cfg->primary))
+                            EINA_LIST_FOREACH(valid_outputs, o, out)
                               {
-                                 ecore_x_randr_primary_output_set(root, out->xid);
-                                 primary_set = EINA_TRUE;
-                                 break;
+                                 if ((out->primary) && 
+                                     ((int)out->xid == e_randr_cfg->primary))
+                                   {
+                                      ecore_x_randr_primary_output_set(root, out->xid);
+                                      primary_set = EINA_TRUE;
+                                      break;
+                                   }
                               }
                          }
 
@@ -569,6 +565,7 @@ _e_randr_config_restore(void)
                             ecore_x_randr_primary_output_set(root, out->xid);
                             e_randr_cfg->primary = (int)out->xid;
                             e_randr_config_save();
+                            primary_set = EINA_TRUE;
                          }
 
                        free(couts);
