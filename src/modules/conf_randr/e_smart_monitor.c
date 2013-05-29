@@ -773,8 +773,10 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
 
    /* get the outputs for this crtc */
    outputs = ecore_x_randr_crtc_outputs_get(root, sd->crtc.id, &noutputs);
-   if ((!outputs) || (noutputs < 1))
+   if (noutputs < 1)
      {
+        free(outputs);
+
         if ((outputs = malloc(sizeof(Ecore_X_Randr_Output))))
           {
              outputs[0] = sd->output;
