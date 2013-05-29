@@ -11,6 +11,10 @@ static Eina_Bool _e_randr_config_output_update(E_Randr_Output_Config *cfg);
 static E_Randr_Crtc_Config *_e_randr_config_output_crtc_find(E_Randr_Output_Config *cfg);
 static Ecore_X_Randr_Mode _e_randr_config_output_preferred_mode_get(E_Randr_Output_Config *cfg);
 static E_Randr_Output_Config *_e_randr_config_output_new(unsigned int id);
+static E_Randr_Crtc_Config *_e_randr_config_crtc_find(Ecore_X_Randr_Crtc crtc);
+static E_Randr_Output_Config *_e_randr_config_output_find(Ecore_X_Randr_Output output);
+static void _e_randr_config_screen_size_calculate(int *sw, int *sh);
+static void _e_randr_config_mode_geometry(Ecore_X_Randr_Mode mode, Ecore_X_Randr_Orientation orient, Eina_Rectangle *rect);
 
 static Eina_Bool _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
 static Eina_Bool _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
@@ -363,266 +367,221 @@ _e_randr_config_restore(void)
 {
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Crtc *crtcs;
+   /* Ecore_X_Randr_Output primary = 0; */
    int ncrtcs = 0;
-   int sw = 0, sh = 0;
+   int sw = 0, sh = 0, cw = 0, ch = 0;
 
-   printf("E_RANDR Restore\n");
+   printf("E_RANDR CONFIG RESTORE\n");
 
-   /* grab the root window */
+   /* grab the X server so that we can apply settings without triggering 
+    * any randr event updates until we are done */
+   ecore_x_grab();
+
+   /* get existing primary output */
+   /* primary = ecore_x_randr_primary_output_get(root); */
+
+   /* get existing screen size */
+   ecore_x_randr_screen_current_size_get(root, &cw, &ch, NULL, NULL);
+
+   /* calculate new screen size */
+   _e_randr_config_screen_size_calculate(&sw, &sh);
+   printf("\tCalculated Screen Size: %d %d\n", sw, sh);
+
+   /* get the root window */
    root = ecore_x_window_root_first_get();
 
-   /* get the current screen size */
-   ecore_x_randr_screen_current_size_get(root, &sw, &sh, NULL, NULL);
-   printf("\tCurrent Screen Size: %d %d\n", sw, sh);
-
-   /* set the screen size */
-   /* NB: Disabled for now as our saved screen size may not be valid 
-    * if any of our saved outputs are missing in X */
-   /* ecore_x_randr_screen_current_size_set(root, e_randr_cfg->screen.width,  */
-   /*                                       e_randr_cfg->screen.height, -1, -1); */
-
-   /* try to get the list of existing crtcs from X */
+   /* get a list of crtcs from X */
    if ((crtcs = ecore_x_randr_crtcs_get(root, &ncrtcs)))
      {
-        int i = 0;
-        Eina_List *valid_crtcs = NULL;
-        Eina_List *l;
-        E_Randr_Crtc_Config *crtc_cfg;
-        Eina_Bool primary_set = EINA_FALSE;
+        Ecore_X_Randr_Output *outputs;
+        int c = 0, noutputs = 0;
 
-        printf("\tHave Crtcs\n");
-
-        /* for each crtc that X has, check our config and see if we have it */
-        for (i = 0; i < ncrtcs; i++)
+        /* loop the X crtcs */
+        for (c = 0; c < ncrtcs; c++)
           {
-             Eina_Bool crtc_found = EINA_FALSE;
+             E_Randr_Crtc_Config *cfg;
+             Evas_Coord x, y, w, h;
+             Ecore_X_Randr_Mode mode = 0;
+             Ecore_X_Randr_Orientation orient = 
+               ECORE_X_RANDR_ORIENTATION_ROT_0;
+             Eina_Rectangle rect;
 
-             printf("\t\tChecking For Crtc: %d in Our Config\n", crtcs[i]);
+             /* Firstly, disable any crtcs which are disabled in our config OR 
+              * which are larger than the target size */
 
-             /* loop our config and find this crtc */
-             EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+             /* try to find this crtc in our config */
+             if ((cfg = _e_randr_config_crtc_find(crtcs[c])))
                {
-                  /* try to find this crtc */
-                  if (crtc_cfg->xid != crtcs[i]) continue;
-
-                  crtc_found = EINA_TRUE;
-                  printf("\t\t\tFound Crtc in Config\n");
-                  valid_crtcs = eina_list_append(valid_crtcs, crtc_cfg);
-               }
-
-             if (!crtc_found)
-               {
-                  printf("\t\t\tCrtc Not Found in Config\n");
-                  printf("\t\t\t\tCreating New\n");
-                  /* create new crtc config */
-                  if ((crtc_cfg = E_NEW(E_Randr_Crtc_Config, 1)))
-                    {
-                       /* assign id */
-                       crtc_cfg->xid = crtcs[i];
-                       crtc_cfg->exists = EINA_TRUE;
-
-                       /* fill in crtc_cfg values from X */
-                       _e_randr_config_crtc_update(crtc_cfg);
-
-                       printf("\t\t\t\tNew Crtc Geom: %d %d %d %d\n",
-                              crtc_cfg->x, crtc_cfg->y, crtc_cfg->width, 
-                              crtc_cfg->height);
-                       printf("\t\t\t\tNew Crtc Mode: %d\n", crtc_cfg->mode);
-
-                       /* append to randr cfg */
-                       e_randr_cfg->crtcs = 
-                         eina_list_append(e_randr_cfg->crtcs, crtc_cfg);
-
-                       e_randr_config_save();
-
-                       /* append to our short list */
-                       valid_crtcs = eina_list_append(valid_crtcs, crtc_cfg);
-                    }
-               }
-          }
-
-        free(crtcs);
-
-        printf("\t\tLooping Valid Crtcs\n");
-
-        /* for each X crtc that we have config for, check outputs */
-        EINA_LIST_FOREACH(valid_crtcs, l, crtc_cfg)
-          {
-             Ecore_X_Randr_Output *outputs;
-             int noutputs;
-             Eina_List *valid_outputs = NULL;
-
-             /* we have this crtc. try to get list of outputs from X */
-             if ((outputs = 
-                  ecore_x_randr_crtc_outputs_get(root, crtc_cfg->xid, &noutputs)))
-               {
-                  int j = 0;
-
-                  printf("\t\t\tHave X Outputs For Crtc: %d\n", crtc_cfg->xid);
-
-                  /* loop the X outputs and find a matching config */
-                  for (j = 0; j < noutputs; j++)
-                    {
-                       Eina_List *ll;
-                       E_Randr_Output_Config *output_cfg;
-                       Ecore_X_Randr_Connection_Status status = 
-                         ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
-
-                       status = 
-                         ecore_x_randr_output_connection_status_get(root, 
-                                                                    outputs[j]);
-                       if (status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
-                         continue;
-
-                       printf("\t\t\t\tChecking for Output: %d in Our Config\n", outputs[j]);
-
-                       /* loop our outputs for this crtc */
-                       EINA_LIST_FOREACH(crtc_cfg->outputs, ll, output_cfg)
-                         {
-                            /* try to find this output */
-                            if (output_cfg->xid != outputs[j]) continue;
-
-                            /* we have this output */
-                            printf("\t\t\t\tFound Output In Config: %d\n", outputs[j]);
-
-                            /* add this output config to the list of 
-                             * ones that we are going to restore for 
-                             * this crtc */
-                            valid_outputs = 
-                              eina_list_append(valid_outputs, output_cfg);
-
-                            break;
-                         }
-                    }
-
-                  free(outputs);
+                  x = cfg->x;
+                  y = cfg->y;
+                  w = cfg->width;
+                  h = cfg->height;
+                  mode = cfg->mode;
+                  orient = cfg->orient;
                }
              else
                {
-                  printf("\t\t\tNo Outputs For Crtc: %d\n", crtc_cfg->xid);
-                  /* crtc has no outputs assigned */
-                  /* Need to check possibles */
-               }
+                  /* this crtc is not in our config. get values from X */
+#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
+                  Ecore_X_Randr_Crtc_Info *cinfo;
 
-             /* apply settings for this crtc */
-             printf("\t\t\t\tApplying Crtc Settings: %d\n", crtc_cfg->xid);
-
-             if (!crtc_cfg->mode)
-               {
-                  printf("\t\t\t\t\tCRTC HAS NO MODE !!!\n");
-                  ecore_x_randr_crtc_settings_set(root, crtc_cfg->xid, 
-                                                  NULL, 0, 0, 0, 0, 
-                                                  ECORE_X_RANDR_ORIENTATION_ROT_0);
-               }
-             else 
-               {
-                  int ocount, c = 0;
-
-                  ocount = eina_list_count(valid_outputs);
-                  printf("\t\t\t\t\tNum Outputs: %d\n", ocount);
-
-                  if (ocount > 0)
+                  /* get crtc info from X */
+                  if ((cinfo = ecore_x_randr_crtc_info_get(root, crtcs[c])))
                     {
-                       Ecore_X_Randr_Output *couts;
-                       Eina_List *o;
-                       E_Randr_Output_Config *out;
-                       Eina_Bool need_size_set = EINA_FALSE;
+                       x = cinfo->x;
+                       y = cinfo->y;
+                       w = cinfo->width;
+                       h = cinfo->height;
+                       mode = cinfo->mode;
+                       orient = cinfo->rotation;
 
-                       couts = malloc(ocount * sizeof(Ecore_X_Randr_Output));
-                       EINA_LIST_FOREACH(valid_outputs, o, out)
-                         {
-                            couts[c] = out->xid;
-                            c++;
-                         }
-
-                       switch (crtc_cfg->orient)
-                         {
-                          case ECORE_X_RANDR_ORIENTATION_ROT_0:
-                          case ECORE_X_RANDR_ORIENTATION_ROT_180:
-                            if (sw < (crtc_cfg->x + crtc_cfg->width))
-                              {
-                                 sw += crtc_cfg->width;
-                                 need_size_set = EINA_TRUE;
-                              }
-                            if (sh < (crtc_cfg->y + crtc_cfg->height))
-                              {
-                                 sh = (crtc_cfg->y + crtc_cfg->height);
-                                 need_size_set = EINA_TRUE;
-                              }
-                            break;
-                          case ECORE_X_RANDR_ORIENTATION_ROT_90:
-                          case ECORE_X_RANDR_ORIENTATION_ROT_270:
-                            if (sw < (crtc_cfg->x + crtc_cfg->width))
-                              {
-                                 sw = (crtc_cfg->x + crtc_cfg->width);
-                                 need_size_set = EINA_TRUE;
-                              }
-                            if (sh < (crtc_cfg->y + crtc_cfg->height))
-                              {
-                                 sh += crtc_cfg->height;
-                                 need_size_set = EINA_TRUE;
-                              }
-                            break;
-                          default:
-                            break;
-                         }
-
-                       if (need_size_set)
-                         {
-
-                            printf("\t\t\t\t\tNew Screen Size: %d %d\n", 
-                                   sw, sh);
-                            ecore_x_randr_screen_current_size_set(root, 
-                                                                  sw, sh, 
-                                                                  -1, -1);
-                            need_size_set = EINA_FALSE;
-                         }
-
-                       printf("\t\t\t\t\tCrtc Settings: %d %d %d %d %d %d\n", 
-                              crtc_cfg->xid, crtc_cfg->x, crtc_cfg->y, 
-                              crtc_cfg->width, crtc_cfg->height, 
-                              crtc_cfg->mode);
-
-                       ecore_x_randr_crtc_settings_set(root, crtc_cfg->xid, 
-                                                       couts, ocount, 
-                                                       crtc_cfg->x, 
-                                                       crtc_cfg->y, 
-                                                       crtc_cfg->mode, 
-                                                       crtc_cfg->orient);
-
-                       if (!primary_set)
-                         {
-                            EINA_LIST_FOREACH(valid_outputs, o, out)
-                              {
-                                 if ((out->primary) && 
-                                     ((int)out->xid == e_randr_cfg->primary))
-                                   {
-                                      ecore_x_randr_primary_output_set(root, out->xid);
-                                      primary_set = EINA_TRUE;
-                                      break;
-                                   }
-                              }
-                         }
-
-                       if (!primary_set)
-                         {
-                            /* if no primary was set, set it to the first output */
-                            out = eina_list_nth(valid_outputs, 0);
-                            ecore_x_randr_primary_output_set(root, out->xid);
-                            e_randr_cfg->primary = (int)out->xid;
-                            e_randr_config_save();
-                            primary_set = EINA_TRUE;
-                         }
-
-                       free(couts);
+                       ecore_x_randr_crtc_info_free(cinfo);
                     }
+#else
+                  /* get geometry of this crtc */
+                  ecore_x_randr_crtc_geometry_get(root, crtcs[c], 
+                                                  &x, &y, &w, &h);
+
+                  /* get mode */
+                  mode = ecore_x_randr_crtc_mode_get(root, crtcs[c]);
+
+                  /* get orientation */
+                  orient = ecore_x_randr_crtc_orientation_get(root, crtcs[c]);
+#endif
                }
-             eina_list_free(valid_outputs);
+
+             /* at this point, we should have geometry, mode and orientation.
+              * We can now proceed to calculate crtc size */
+             _e_randr_config_mode_geometry(mode, orient, &rect);
+
+             x += rect.x;
+             y += rect.y;
+             w = rect.w;
+             h = rect.h;
+
+             /* if it fits within the screen and is "enabled", skip it */
+             if (((x + w) <= sw) && ((y + h) <= sh) && (mode != 0))
+               continue;
+
+             /* it does not fit or disabled in our config. disable it in X */
+             ecore_x_randr_crtc_settings_set(root, crtcs[c], NULL, 0, 0, 0, 0, 
+                                             ECORE_X_RANDR_ORIENTATION_ROT_0);
           }
-        eina_list_free(valid_crtcs);
+
+        /* apply the new screen size */
+        if ((sw != cw) || (sh != ch))
+          ecore_x_randr_screen_current_size_set(root, sw, sh, -1, -1);
+
+        /* apply any stored crtc settings */
+        for (c = 0; c < ncrtcs; c++)
+          {
+             E_Randr_Crtc_Config *cfg;
+
+             /* try to find this crtc in our config */
+             if ((cfg = _e_randr_config_crtc_find(crtcs[c])))
+               {
+                  Eina_List *l, *valid = NULL;
+                  E_Randr_Output_Config *output_cfg;
+                  Ecore_X_Randr_Output *coutputs;
+                  int count = 0;
+
+                  /* loop any outputs in this crtc cfg */
+                  EINA_LIST_FOREACH(cfg->outputs, l, output_cfg)
+                    {
+                       Ecore_X_Randr_Connection_Status status = 
+                         ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
+
+                       /* get connection status */
+                       status = 
+                         ecore_x_randr_output_connection_status_get(root, 
+                                                                    output_cfg->xid);
+
+                       /* skip this output if it is not connected */
+                       if (status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+                         continue;
+
+                       /* append to the list of valid outputs */
+                       valid = eina_list_append(valid, output_cfg);
+                    }
+
+                  count = eina_list_count(valid);
+
+                  /* try to allocate space for x randr outputs */
+                  if ((coutputs = calloc(count, sizeof(Ecore_X_Randr_Output))))
+                    {
+                       int o = 0;
+
+                       /* for each entry in valid outputs, place in X list */
+                       EINA_LIST_FOREACH(valid, l, output_cfg)
+                         {
+                            coutputs[o] = output_cfg->xid;
+                            o++;
+                         }
+
+                    }
+
+                  /* apply our stored crtc settings */
+                  ecore_x_randr_crtc_settings_set(root, crtcs[c], coutputs, 
+                                                  count, cfg->x, cfg->y, 
+                                                  cfg->mode, cfg->orient);
+
+                  /* cleanup */
+                  eina_list_free(valid);
+                  free(coutputs);
+               }
+          }
+
+        /* free list of crtcs */
+        free(crtcs);
+
+        /* apply primary if we have one set */
+        if (e_randr_cfg->primary)
+          {
+             Eina_Bool primary_set = EINA_FALSE;
+
+             /* get list of valid outputs */
+             if ((outputs = ecore_x_randr_outputs_get(root, &noutputs)))
+               {
+                  /* loop valid outputs and check that our primary exists */
+                  for (c = 0; c < noutputs; c++)
+                    {
+                       Ecore_X_Randr_Connection_Status status = 
+                         ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
+
+                       /* skip if this output is not one we are looking for */
+                       if ((int)outputs[c] != e_randr_cfg->primary)
+                         continue;
+
+                       /* check that this output is actually connected */
+                       status = 
+                         ecore_x_randr_output_connection_status_get(root, 
+                                                                    outputs[c]);
+
+                       /* if it is actually connected, set primary */
+                       if (status == ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+                         {
+                            ecore_x_randr_primary_output_set(root, outputs[c]);
+                            primary_set = EINA_TRUE;
+                            break;
+                         }
+                    }
+
+                  /* free list of outputs */
+                  free(outputs);
+               }
+
+             /* fallback to no primary */
+             if (!primary_set)
+               ecore_x_randr_primary_output_set(root, 0);
+          }
+        else
+          ecore_x_randr_primary_output_set(root, 0);
      }
 
-//   if (need_reset) ecore_x_randr_screen_reset(root);
+   /* release the server grab */
+   ecore_x_ungrab();
+
+   ecore_x_randr_screen_reset(root);
 }
 
 static Eina_Bool 
@@ -1149,4 +1108,230 @@ _e_randr_config_output_new(unsigned int id)
      }
 
    return cfg;
+}
+
+static E_Randr_Crtc_Config *
+_e_randr_config_crtc_find(Ecore_X_Randr_Crtc crtc)
+{
+   Eina_List *l;
+   E_Randr_Crtc_Config *crtc_cfg;
+
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+     {
+        if (crtc_cfg->xid == crtc)
+          return crtc_cfg;
+     }
+
+   return NULL;
+}
+
+static E_Randr_Output_Config *
+_e_randr_config_output_find(Ecore_X_Randr_Output output)
+{
+   Eina_List *l;
+   E_Randr_Crtc_Config *crtc_cfg;
+   E_Randr_Output_Config *output_cfg;
+
+   EINA_LIST_FOREACH(e_randr_cfg->crtcs, l, crtc_cfg)
+     {
+        Eina_List *ll;
+
+        EINA_LIST_FOREACH(crtc_cfg->outputs, ll, output_cfg)
+          {
+             if (output_cfg->xid == output)
+               return output_cfg;
+          }
+     }
+
+   return NULL;
+}
+
+static void 
+_e_randr_config_screen_size_calculate(int *sw, int *sh)
+{
+   Ecore_X_Window root = 0;
+   Ecore_X_Randr_Output *outputs;
+   int noutputs = 0;
+   int minw = 0, minh = 0;
+   int maxw = 0, maxh = 0;
+
+   /* get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get the min and max screen size */
+   ecore_x_randr_screen_size_range_get(root, &minw, &minh, &maxw, &maxh);
+
+   /* get outputs from X */
+   if ((outputs = ecore_x_randr_outputs_get(root, &noutputs)))
+     {
+        int i = 0;
+
+        /* loop X outputs */
+        for (i = 0; i < noutputs; i++)
+          {
+             E_Randr_Output_Config *output_cfg;
+             Ecore_X_Randr_Connection_Status status = 
+               ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
+             Ecore_X_Randr_Orientation orient = 
+               ECORE_X_RANDR_ORIENTATION_ROT_0;
+             Ecore_X_Randr_Mode mode = 0;
+             int x = 0, y = 0, w = 0, h = 0;
+             Eina_Rectangle rect;
+
+             /* get connection status */
+             status = 
+               ecore_x_randr_output_connection_status_get(root, outputs[i]);
+
+             /* skip this output if it is not connected */
+             if (status != ECORE_X_RANDR_CONNECTION_STATUS_CONNECTED)
+               continue;
+
+             /* see if we have this output in our config */
+             if ((output_cfg = _e_randr_config_output_find(outputs[i])))
+               {
+                  E_Randr_Crtc_Config *crtc_cfg;
+
+                  /* try to find the crtc config for this output */
+                  if ((crtc_cfg = _e_randr_config_crtc_find(output_cfg->crtc)))
+                    {
+                       /* if this crtc is disabled in our config, skip it
+                        * 
+                        * NB: Since we will end up disabling this crtc, then 
+                        * we should not use it to calculate screen size */
+                       if (!crtc_cfg->mode) continue;
+
+                       /* get geometry and mode */
+                       x = crtc_cfg->x;
+                       y = crtc_cfg->y;
+                       w = crtc_cfg->width;
+                       h = crtc_cfg->height;
+                       mode = crtc_cfg->mode;
+                       orient = crtc_cfg->orient;
+                    }
+               }
+
+             /* if we have no config for this output. get values from X */
+             if ((!w) || (!h))
+               {
+                  Ecore_X_Randr_Crtc crtc = 0;
+
+#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
+                  Ecore_X_Randr_Crtc_Info *cinfo;
+
+                  /* get crtc info from X */
+                  if ((cinfo = ecore_x_randr_crtc_info_get(root, crtc)))
+                    {
+                       x = cinfo->x;
+                       y = cinfo->y;
+                       w = cinfo->width;
+                       h = cinfo->height;
+                       mode = cinfo->mode;
+                       orient = cinfo->rotation;
+
+                       ecore_x_randr_crtc_info_free(cinfo);
+                    }
+#else
+                  /* get geometry of this crtc */
+                  ecore_x_randr_crtc_geometry_get(root, crtc, &x, &y, &w, &h);
+
+                  /* get mode */
+                  mode = ecore_x_randr_crtc_mode_get(root, crtc);
+
+                  /* get orientation */
+                  orient = ecore_x_randr_crtc_orientation_get(root, crtc);
+#endif
+               }
+
+             /* at this point, we should have geometry, mode and orientation.
+              * We can now proceed to calculate screen size */
+
+             _e_randr_config_mode_geometry(mode, orient, &rect);
+
+             x += rect.x;
+             y += rect.y;
+             w = rect.w;
+             h = rect.h;
+
+             if ((x + w) > *sw)
+               *sw = (x + w);
+             if ((y + h) > *sh)
+               *sh = (y + h);
+          }
+
+        /* free any space allocated */
+        free(outputs);
+     }
+
+   if ((*sw > maxw) || (*sh > maxh))
+     {
+        printf("Calculated Screen Size %dx%d is Larger Than Max %dx%d!!!\n", 
+               *sw, *sh, maxw, maxh);
+     }
+   else
+     {
+        if (*sw < minw) *sw = minw;
+        if (*sh < minh) *sh = minh;
+     }
+}
+
+static void 
+_e_randr_config_mode_geometry(Ecore_X_Randr_Mode mode, Ecore_X_Randr_Orientation orient, Eina_Rectangle *rect)
+{
+   Ecore_X_Window root = 0;
+   Evas_Point p[4];
+   int mw = 0, mh = 0;
+   int mode_width = 0, mode_height = 0;
+   int i = 0;
+   Eina_Rectangle tmp;
+
+   /* get the root window */
+   root = ecore_x_window_root_first_get();
+
+   /* get the size of this mode */
+   ecore_x_randr_mode_size_get(root, mode, &mode_width, &mode_height);
+
+   /* based on orientation, calculate mode sizes */
+   switch (orient)
+     {
+      case ECORE_X_RANDR_ORIENTATION_ROT_0:
+      case ECORE_X_RANDR_ORIENTATION_ROT_180:
+        mw = mode_width;
+        mh = mode_height;
+        break;
+      case ECORE_X_RANDR_ORIENTATION_ROT_90:
+      case ECORE_X_RANDR_ORIENTATION_ROT_270:
+        mw = mode_height;
+        mh = mode_width;
+        break;
+      default:
+        break;
+     }
+
+   p[0].x = 0;
+   p[0].y = 0;
+   p[1].x = mw;
+   p[1].y = 0;
+   p[2].x = mw;
+   p[2].y = mh;
+   p[3].x = 0;
+   p[3].y = mh;
+
+   for (i = 0; i < 4; i++)
+     {
+        double x = 0.0, y = 0.0;
+
+        x = p[i].x;
+        y = p[i].y;
+
+        eina_rectangle_coords_from(&tmp, floor(x), floor(y), ceil(x), ceil(y));
+        if (i == 0)
+          *rect = tmp;
+        else
+          {
+             if (tmp.x < rect->x) rect->x = tmp.x;
+             if (tmp.y < rect->y) rect->y = tmp.y;
+             if (tmp.w > rect->w) rect->w = tmp.w;
+             if (tmp.h > rect->h) rect->h = tmp.h;
+          }
+     }
 }
