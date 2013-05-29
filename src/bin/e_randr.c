@@ -364,11 +364,16 @@ _e_randr_config_restore(void)
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Crtc *crtcs;
    int ncrtcs = 0;
+   int sw = 0, sh = 0;
 
    printf("E_RANDR Restore\n");
 
    /* grab the root window */
    root = ecore_x_window_root_first_get();
+
+   /* get the current screen size */
+   ecore_x_randr_screen_current_size_get(root, &sw, &sh, NULL, NULL);
+   printf("\tCurrent Screen Size: %d %d\n", sw, sh);
 
    /* set the screen size */
    /* NB: Disabled for now as our saved screen size may not be valid 
@@ -521,6 +526,7 @@ _e_randr_config_restore(void)
                        Ecore_X_Randr_Output *couts;
                        Eina_List *o;
                        E_Randr_Output_Config *out;
+                       Eina_Bool need_size_set = EINA_FALSE;
 
                        couts = malloc(ocount * sizeof(Ecore_X_Randr_Output));
                        EINA_LIST_FOREACH(valid_outputs, o, out)
@@ -529,13 +535,53 @@ _e_randr_config_restore(void)
                             c++;
                          }
 
-                       printf("\t\t\t\t\tCrtc Settings: %d %d %d %d\n", crtc_cfg->xid, 
-                              crtc_cfg->x, crtc_cfg->y, crtc_cfg->mode);
+                       switch (crtc_cfg->orient)
+                         {
+                          case ECORE_X_RANDR_ORIENTATION_ROT_0:
+                          case ECORE_X_RANDR_ORIENTATION_ROT_180:
+                            if (sw < (crtc_cfg->x + crtc_cfg->width))
+                              {
+                                 sw += crtc_cfg->width;
+                                 need_size_set = EINA_TRUE;
+                              }
+                            if (sh < (crtc_cfg->y + crtc_cfg->height))
+                              {
+                                 sh = (crtc_cfg->y + crtc_cfg->height);
+                                 need_size_set = EINA_TRUE;
+                              }
+                            break;
+                          case ECORE_X_RANDR_ORIENTATION_ROT_90:
+                          case ECORE_X_RANDR_ORIENTATION_ROT_270:
+                            if (sw < (crtc_cfg->x + crtc_cfg->width))
+                              {
+                                 sw = (crtc_cfg->x + crtc_cfg->width);
+                                 need_size_set = EINA_TRUE;
+                              }
+                            if (sh < (crtc_cfg->y + crtc_cfg->height))
+                              {
+                                 sh += crtc_cfg->height;
+                                 need_size_set = EINA_TRUE;
+                              }
+                            break;
+                          default:
+                            break;
+                         }
 
-                       /* Evas_Coord mw, mh; */
-                       /* get the size of the mode */
-                       /* ecore_x_randr_mode_size_get(root, crtc_cfg->mode, &mw, &mh); */
-                       /* printf("\t\t\t\t\t\tMode Size: %d %d\n", mw, mh); */
+                       if (need_size_set)
+                         {
+
+                            printf("\t\t\t\t\tNew Screen Size: %d %d\n", 
+                                   sw, sh);
+                            ecore_x_randr_screen_current_size_set(root, 
+                                                                  sw, sh, 
+                                                                  -1, -1);
+                            need_size_set = EINA_FALSE;
+                         }
+
+                       printf("\t\t\t\t\tCrtc Settings: %d %d %d %d %d %d\n", 
+                              crtc_cfg->xid, crtc_cfg->x, crtc_cfg->y, 
+                              crtc_cfg->width, crtc_cfg->height, 
+                              crtc_cfg->mode);
 
                        ecore_x_randr_crtc_settings_set(root, crtc_cfg->xid, 
                                                        couts, ocount, 
@@ -806,6 +852,7 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
              if ((crtc_cfg = _e_randr_config_output_crtc_find(output_cfg)))
                {
                   Ecore_X_Randr_Mode mode;
+                  int ocount, c = 0;
 
                   /* we found a valid crtc for this output */
                   output_cfg->crtc = crtc_cfg->xid;
@@ -831,10 +878,7 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
                   crtc_cfg->outputs = 
                     eina_list_append(crtc_cfg->outputs, output_cfg);
 
-                  printf("APPLY NEW OUTPUT: %d\n", output_cfg->xid);
                   /* tell X about this new output */
-                  int ocount, c = 0;
-
                   ocount = eina_list_count(crtc_cfg->outputs);
                   printf("\tNum Outputs: %d\n", ocount);
 
@@ -853,11 +897,6 @@ _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
 
                        printf("\tCrtc Settings: %d %d %d %d\n", crtc_cfg->xid, 
                               crtc_cfg->x, crtc_cfg->y, crtc_cfg->mode);
-
-                       /* Evas_Coord mw, mh; */
-                       /* get the size of the mode */
-                       /* ecore_x_randr_mode_size_get(root, crtc_cfg->mode, &mw, &mh); */
-                       /* printf("\t\t\t\t\t\tMode Size: %d %d\n", mw, mh); */
 
                        ecore_x_randr_crtc_settings_set(ev->win, crtc_cfg->xid, 
                                                        couts, ocount, 
