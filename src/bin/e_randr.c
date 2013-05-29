@@ -580,8 +580,6 @@ _e_randr_config_restore(void)
 
    /* release the server grab */
    ecore_x_ungrab();
-
-   ecore_x_randr_screen_reset(root);
 }
 
 static Eina_Bool 
