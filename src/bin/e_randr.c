@@ -400,7 +400,7 @@ _e_randr_config_restore(void)
         for (c = 0; c < ncrtcs; c++)
           {
              E_Randr_Crtc_Config *cfg;
-             Evas_Coord x, y, w, h;
+             Evas_Coord x = 0, y = 0, w = 0, h = 0;
              Ecore_X_Randr_Mode mode = 0;
              Ecore_X_Randr_Orientation orient = 
                ECORE_X_RANDR_ORIENTATION_ROT_0;
