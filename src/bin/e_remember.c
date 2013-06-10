@@ -723,6 +723,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
           }
         bd->changes.size = 1;
         bd->changes.shape = 1;
+        BD_CHANGED(bd);
      }
    if ((rem->apply & E_REMEMBER_APPLY_POS) && (!bd->re_manage))
      {
@@ -836,6 +837,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
         bd->y += bd->zone->y;
         bd->placed = 1;
         bd->changes.pos = 1;
+        BD_CHANGED(bd);
      }
    if (rem->apply & E_REMEMBER_APPLY_LAYER)
      {

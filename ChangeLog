@@ -3,6 +3,10 @@
         * fixed bug where e widgets would not unset focus
         * fixed bug with filemanager setting path with too many spaces when opened from menu
 
+2013-06-10 Mike Blumenkrantz
+
+        * fix remember size/position apply
+
 2013-04-26 Mike Blumenkrantz
 
         * fixed theme bug which prevented windows from unshading correctly when animations were disabled

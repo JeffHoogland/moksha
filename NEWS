@@ -111,3 +111,4 @@ Fixes:
     * fixed bug where dragging files into sidebar would move them instead of creating links
     * fixed bug where e widgets would not unset focus
     * fixed bug with filemanager setting path with too many spaces when opened from menu
+    * fix remember size/position apply
