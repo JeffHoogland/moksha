@@ -205,7 +205,7 @@ _e_mod_menu_populate_item(void *data, Eio_File *handler __UNUSED__, const Eina_F
      {
         e_util_menu_item_theme_icon_set(mi, "folder");
         eina_stringshare_ref(dev);
-        e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "/", info->path + info->name_start));
+        e_object_data_set(E_OBJECT(mi), eina_stringshare_printf("%s/%s", path ?: "", info->path + info->name_start));
      }
    e_menu_item_submenu_pre_callback_set(mi, _e_mod_menu_populate, dev);
    //fprintf(stderr, "PATH SET: %s\n", e_object_data_get(E_OBJECT(mi)));
