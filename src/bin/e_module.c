@@ -82,7 +82,7 @@ e_module_all_load(void)
    EINA_LIST_FOREACH(e_config->modules, l, em)
      {
         if (!em) continue;
-        if ((em->delayed) && (em->enabled) & (!e_config->no_module_delay))
+        if ((em->delayed) && (em->enabled) && (!e_config->no_module_delay))
           {
              if (!_e_module_idler)
                _e_module_idler = ecore_idle_enterer_add(_e_module_cb_idler, NULL);
