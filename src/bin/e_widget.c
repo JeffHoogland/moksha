@@ -244,7 +244,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
         Evas_Object *sobj = NULL;
         int focus_next = 0;
 
-        if (!sd->focused)
+        if ((!sd->disabled) && (!sd->focused))
           {
              e_widget_focus_set(obj, forward);
              sd->focused = 1;
@@ -258,7 +258,7 @@ e_widget_focus_jump(Evas_Object *obj, int forward)
                   EINA_LIST_FOREACH(sd->subobjs, l, sobj)
                     {
                        if (!e_widget_can_focus_get(sobj)) continue;
-                       if ((focus_next) && (!e_widget_disabled_get(sobj)))
+                       if (focus_next)
                          {
                             /* the previous focused item was unfocused - so focus
                              * the next one (that can be focused) */
@@ -450,7 +450,11 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
              if (!o) break;
              parent = o;
           }
-        e_widget_focus_jump(parent, 1);
+        if (!e_widget_focus_jump(parent, 1))
+          {
+             sd->focused = 0;
+             if (sd->focus_func) sd->focus_func(obj);
+          }
      }
    if (sd->disable_func) sd->disable_func(obj);
 }
