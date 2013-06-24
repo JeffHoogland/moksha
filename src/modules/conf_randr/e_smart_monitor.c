@@ -1052,6 +1052,8 @@ _e_smart_del(Evas_Object *obj)
         evas_object_del(sd->o_frame);
      }
 
+   _e_smart_monitor_pointer_pop(obj, NULL);
+
    /* delete the base object */
    evas_object_del(sd->o_base);
 
