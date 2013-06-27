@@ -807,7 +807,12 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
 
    /* record current values */
    mode = sd->current.mode;
-   if (!sd->current.enabled) mode = 0;
+   if (!sd->current.enabled)
+     {
+        mode = 0;
+        noutputs = 0;
+        free(outputs);
+     }
 
    cx = sd->current.x;
    cy = sd->current.y;
@@ -852,7 +857,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    sd->crtc.orient = orient;
    sd->crtc.enabled = sd->current.enabled;
 
-   if ((mode_info = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
+   if ((sd->crtc.mode) && (mode_info = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
      {
         sd->crtc.refresh_rate = 
           _e_smart_monitor_mode_refresh_rate_get(mode_info);
