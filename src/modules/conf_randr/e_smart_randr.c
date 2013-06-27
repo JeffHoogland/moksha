@@ -209,6 +209,7 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              Evas_Coord cx = 0, cy = 0, cw = 0, ch = 0;
              Ecore_X_Randr_Connection_Status status = 
                ECORE_X_RANDR_CONNECTION_STATUS_UNKNOWN;
+             Ecore_X_Randr_Mode mode = 0;
 
              /* ask X if this output is connected */
              status = 
@@ -242,63 +243,35 @@ e_smart_randr_monitors_create(Evas_Object *obj)
              /* tell monitor what the grid is and it's geometry */
              e_smart_monitor_grid_set(mon, sd->o_grid, gx, gy, gw, gh);
 
-             /* try to get the crtc of this output */
-             if ((crtc = ecore_x_randr_output_crtc_get(root, outputs[i])))
+             /* try to get the crtc of this output. If it does not have one 
+              * we will try to find a usable one */
+             if (!(crtc = ecore_x_randr_output_crtc_get(root, outputs[i])))
+               crtc = _e_smart_randr_crtc_find(outputs[i]);
+
+             /* get the geometry for this crtc */
+             ecore_x_randr_crtc_geometry_get(root, crtc, 
+                                             &cx, &cy, &cw, &ch);
+
+             e_smart_monitor_crtc_set(mon, crtc, cx, cy, cw, ch);
+
+             mode = ecore_x_randr_crtc_mode_get(root, crtc);
+
+             /* if this crtc has no mode, or it's size is 0, 
+              * then it's disabled */
+             if ((!mode) || ((cw == 0) && (ch == 0)))
                {
-                  Ecore_X_Randr_Mode mode = 0;
-
-                  /* get the geometry for this crtc */
-                  ecore_x_randr_crtc_geometry_get(root, crtc, 
-                                                  &cx, &cy, &cw, &ch);
-
-                  e_smart_monitor_crtc_set(mon, crtc, cx, cy, cw, ch);
-
-                  mode = ecore_x_randr_crtc_mode_get(root, crtc);
-
-                  /* if this crtc has no mode, or it's size is 0, 
-                   * then it's disabled */
-                  if ((!mode) || ((cw == 0) && (ch == 0)))
-                    {
-                       /* get the size of the preferred mode for this output */
-                       _e_smart_randr_monitor_preferred_mode_size_get(outputs[i], 
-                                                                      &mw, &mh);
-
-                       /* tell monitor what it's current position is
-                        * NB: This also packs into the grid */
-                       e_smart_monitor_current_geometry_set(mon, nx, 0, mw, mh);
-
-                       /* tell monitor to set the background preview */
-                       e_smart_monitor_background_set(mon, nx, 0);
-
-                       crtcx = nx;
-                       crtcy = 0;
-                       nx += mw;
-                    }
-                  else
-                    {
-                       /* tell monitor what it's current position is
-                        * NB: This also packs into the grid */
-                       e_smart_monitor_current_geometry_set(mon, cx, cy, 
-                                                            cw, ch);
-
-                       /* tell monitor to set the background preview */
-                       e_smart_monitor_background_set(mon, cx, cy);
-
-                       crtcx = cx;
-                       crtcy = cy;
-                       nx += cw;
-                    }
-               }
-             else
-               {
-                  crtc = _e_smart_randr_crtc_find(outputs[i]);
-
                   /* get the size of the preferred mode for this output */
                   _e_smart_randr_monitor_preferred_mode_size_get(outputs[i], 
                                                                  &mw, &mh);
+                  if ((mw == 0) && (mh == 0))
+                    ecore_x_randr_crtc_size_get(root, crtc, &mw, &mh);
 
-                  /* no crtc assigned to this output. it's disabled */
-                  e_smart_monitor_crtc_set(mon, crtc, nx, 0, mw, mh);
+                  /* safety */
+                  if ((mw == 0) && (mh == 0))
+                    {
+                       mw = 640;
+                       mh = 480;
+                    }
 
                   /* tell monitor what it's current position is
                    * NB: This also packs into the grid */
@@ -310,6 +283,20 @@ e_smart_randr_monitors_create(Evas_Object *obj)
                   crtcx = nx;
                   crtcy = 0;
                   nx += mw;
+               }
+             else
+               {
+                  /* tell monitor what it's current position is
+                   * NB: This also packs into the grid */
+                  e_smart_monitor_current_geometry_set(mon, cx, cy, 
+                                                       cw, ch);
+
+                  /* tell monitor to set the background preview */
+                  e_smart_monitor_background_set(mon, cx, cy);
+
+                  crtcx = cx;
+                  crtcy = cy;
+                  nx += cw;
                }
 
              /* tell monitor what output it uses */
@@ -812,6 +799,7 @@ _e_smart_randr_monitor_preferred_mode_size_get(Ecore_X_Randr_Output output, Evas
 
    if (mw) *mw = 0;
    if (mh) *mh = 0;
+
    if (!output) return;
 
    root = ecore_x_window_root_first_get();
@@ -819,13 +807,10 @@ _e_smart_randr_monitor_preferred_mode_size_get(Ecore_X_Randr_Output output, Evas
    if (!(modes = ecore_x_randr_output_modes_get(root, output, &n, &p)))
      return;
 
-   if (n == 0)
-     {
-        if (modes) free(modes);
-        return;
-     }
-
-   ecore_x_randr_mode_size_get(root, modes[p - 1], mw, mh);
+   if ((n > 0) && (p > 0))
+     ecore_x_randr_mode_size_get(root, modes[p - 1], mw, mh);
+   else if (n > 0)
+     ecore_x_randr_mode_size_get(root, modes[0], mw, mh);
 
    free(modes);
 }
