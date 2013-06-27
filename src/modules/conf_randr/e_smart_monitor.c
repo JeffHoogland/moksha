@@ -811,7 +811,8 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
      {
         mode = 0;
         noutputs = 0;
-        free(outputs);
+        if (outputs) free(outputs);
+        outputs = NULL;
      }
 
    cx = sd->current.x;
@@ -846,7 +847,8 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
      }
 
    /* free any allocated memory from ecore_x_randr */
-   free(outputs);
+   if (outputs) free(outputs);
+   outputs = NULL;
 
    /* update crtc values to match current values */
    sd->crtc.x = cx;
