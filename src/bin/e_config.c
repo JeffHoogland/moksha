@@ -6,10 +6,6 @@
 #define DEF_MENUCLICK             0.25
 #endif
 
-#define RANDR_SERIALIZED_SETUP_11 ((int)((1 << 16) | 1))
-#define RANDR_SERIALIZED_SETUP_12 ((int)((1 << 16) | 2))
-#define RANDR_SERIALIZED_SETUP_13 ((int)((1 << 16) | 3))
-
 EAPI E_Config * e_config = NULL;
 
 static int _e_config_revisions = 9;
@@ -50,15 +46,6 @@ static E_Config_DD *_e_config_shelf_desk_edd = NULL;
 static E_Config_DD *_e_config_mime_icon_edd = NULL;
 static E_Config_DD *_e_config_syscon_action_edd = NULL;
 static E_Config_DD *_e_config_env_var_edd = NULL;
-static E_Config_DD *_e_config_randr_size_edd = NULL;
-static E_Config_DD *_e_config_randr_edid_hash_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_setup_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_setup_11_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_setup_12_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_output_policy_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_output_edd = NULL;
-static E_Config_DD *_e_config_randr_mode_info_edd = NULL;
-static E_Config_DD *_e_config_randr_serialized_crtc_edd = NULL;
 static E_Config_DD *_e_config_xkb_layout_edd = NULL;
 static E_Config_DD *_e_config_xkb_option_edd = NULL;
 
@@ -452,103 +439,6 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, val, STR);
    E_CONFIG_VAL(D, T, unset, UCHAR);
 
-   _e_config_randr_size_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Screen_Size", Ecore_X_Randr_Screen_Size);
-#undef T
-#undef D
-#define T Ecore_X_Randr_Screen_Size
-#define D _e_config_randr_size_edd
-   E_CONFIG_VAL(D, T, width, INT);
-   E_CONFIG_VAL(D, T, height, INT);
-
-   _e_config_randr_edid_hash_edd = E_CONFIG_DD_NEW("E_Randr_Edid_Hash", E_Randr_Edid_Hash);
-#undef T
-#undef D
-#define T E_Randr_Edid_Hash
-#define D _e_config_randr_edid_hash_edd
-   E_CONFIG_VAL(D, T, hash, INT);
-
-   _e_config_randr_serialized_setup_11_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup_11", E_Randr_Serialized_Setup_11);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Setup_11
-#define D _e_config_randr_serialized_setup_11_edd
-   E_CONFIG_VAL(D, T, size.width, INT);
-   E_CONFIG_VAL(D, T, size.height, INT);
-   E_CONFIG_VAL(D, T, size.width_mm, INT);
-   E_CONFIG_VAL(D, T, size.height_mm, INT);
-   E_CONFIG_VAL(D, T, orientation, INT);
-   E_CONFIG_VAL(D, T, refresh_rate, SHORT);
-
-   _e_config_randr_serialized_output_policy_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Output_Policy", E_Randr_Serialized_Output_Policy);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Output_Policy
-#define D _e_config_randr_serialized_output_policy_edd
-   E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, policy, INT);
-
-   _e_config_randr_serialized_output_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Output", E_Randr_Serialized_Output);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Output
-#define D _e_config_randr_serialized_output_edd
-   E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, backlight_level, DOUBLE);
-
-   _e_config_randr_mode_info_edd = E_CONFIG_DD_NEW("Ecore_X_Randr_Mode_Info", Ecore_X_Randr_Mode_Info);
-#undef T
-#undef D
-#define T Ecore_X_Randr_Mode_Info
-#define D _e_config_randr_mode_info_edd
-   E_CONFIG_VAL(D, T, xid, INT);
-   E_CONFIG_VAL(D, T, width, UINT);
-   E_CONFIG_VAL(D, T, height, UINT);
-   E_CONFIG_VAL(D, T, dotClock, LL);
-   E_CONFIG_VAL(D, T, hSyncStart, UINT);
-   E_CONFIG_VAL(D, T, hSyncEnd, UINT);
-   E_CONFIG_VAL(D, T, hTotal, UINT);
-   E_CONFIG_VAL(D, T, hSkew, UINT);
-   E_CONFIG_VAL(D, T, vSyncStart, UINT);
-   E_CONFIG_VAL(D, T, vSyncEnd, UINT);
-   E_CONFIG_VAL(D, T, vTotal, UINT);
-   E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, nameLength, UINT);
-   /* Work around a possible ABI break due to poor type choice. */
-   if (sizeof (int) == sizeof (unsigned long))
-     E_CONFIG_VAL(D, T, modeFlags, INT);
-   else if (sizeof (unsigned long long) == sizeof (unsigned long))
-     E_CONFIG_VAL(D, T, modeFlags, LL);
-
-   _e_config_randr_serialized_crtc_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Crtc", E_Randr_Serialized_Crtc);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Crtc
-#define D _e_config_randr_serialized_crtc_edd
-   E_CONFIG_LIST(D, T, outputs, _e_config_randr_serialized_output_edd);
-   E_CONFIG_SUB(D, T, mode_info, _e_config_randr_mode_info_edd);
-   E_CONFIG_VAL(D, T, index, INT);
-   E_CONFIG_VAL(D, T, pos.x, INT);
-   E_CONFIG_VAL(D, T, pos.y, INT);
-   E_CONFIG_VAL(D, T, orientation, INT);
-
-   _e_config_randr_serialized_setup_12_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup_12", E_Randr_Serialized_Setup_12);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Setup_12
-#define D _e_config_randr_serialized_setup_12_edd
-   E_CONFIG_VAL(D, T, timestamp, DOUBLE);
-   E_CONFIG_LIST(D, T, crtcs, _e_config_randr_serialized_crtc_edd);
-   E_CONFIG_LIST(D, T, edid_hashes, _e_config_randr_edid_hash_edd);
-
-   _e_config_randr_serialized_setup_edd = E_CONFIG_DD_NEW("E_Randr_Serialized_Setup", E_Randr_Serialized_Setup);
-#undef T
-#undef D
-#define T E_Randr_Serialized_Setup
-#define D _e_config_randr_serialized_setup_edd
-   E_CONFIG_SUB(D, T, serialized_setup_11, _e_config_randr_serialized_setup_11_edd);
-   E_CONFIG_LIST(D, T, serialized_setups_12, _e_config_randr_serialized_setup_12_edd);
-   E_CONFIG_LIST(D, T, outputs_policies, _e_config_randr_serialized_output_policy_edd);
-
    _e_config_xkb_layout_edd = E_CONFIG_DD_NEW("E_Config_XKB_Layout",
                                               E_Config_XKB_Layout);
 #undef T
@@ -722,9 +612,6 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, desklock_custom_desklock_cmd, STR);
    E_CONFIG_VAL(D, T, desklock_ask_presentation, UCHAR);
    E_CONFIG_VAL(D, T, desklock_ask_presentation_timeout, DOUBLE);
-
-   //randr specifics
-   E_CONFIG_SUB(D, T, randr_serialized_setup, _e_config_randr_serialized_setup_edd);
 
    E_CONFIG_VAL(D, T, screensaver_enable, INT);
    E_CONFIG_VAL(D, T, screensaver_timeout, INT);
@@ -933,7 +820,6 @@ _e_config_edd_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_env_var_edd);
    E_CONFIG_DD_FREE(_e_config_xkb_layout_edd);
    E_CONFIG_DD_FREE(_e_config_xkb_option_edd);
-   //E_CONFIG_DD_FREE(_e_config_randr_serialized_setup_edd);
 }
 
 /* externally accessible functions */
@@ -2071,10 +1957,6 @@ _e_config_free(E_Config *ecf)
         if (sca->button) eina_stringshare_del(sca->button);
         if (sca->icon) eina_stringshare_del(sca->icon);
         E_FREE(sca);
-     }
-   if (ecf->randr_serialized_setup)
-     {
-        e_randr_serialized_setup_free(ecf->randr_serialized_setup);
      }
    EINA_LIST_FREE(ecf->env_vars, evr)
      {

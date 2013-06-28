@@ -234,8 +234,6 @@ struct _E_Config
    int                       mouse_accel_denominator; // GUI
    int                       mouse_accel_threshold; // GUI
 
-   E_Randr_Serialized_Setup *randr_serialized_setup;   // GUI
-
    int                       border_raise_on_mouse_action; // GUI
    int                       border_raise_on_focus; // GUI
    int                       desk_flip_wrap; // GUI
