@@ -7,6 +7,11 @@
 
         * fix remember size/position apply
 
+2013-05-24 Christopher Michael
+
+	* added support for hotplugging monitors in randr code
+        * added support for setting Primary Output used by randr protocol
+
 2013-04-26 Mike Blumenkrantz
 
         * fixed theme bug which prevented windows from unshading correctly when animations were disabled
