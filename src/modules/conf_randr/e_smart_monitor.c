@@ -239,8 +239,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    /* get the root window */
    root = ecore_x_window_root_first_get();
 
-   /* check ecore_x_randr version */
-#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
    Ecore_X_Randr_Crtc_Info *crtc_info;
 
    if ((crtc_info = ecore_x_randr_crtc_info_get(root, crtc)))
@@ -261,20 +259,6 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
         /* free any memory allocated from ecore_x_randr */
         ecore_x_randr_crtc_info_free(crtc_info);
      }
-#else
-   /* get current orientation */
-   sd->crtc.orient = ecore_x_randr_crtc_orientation_get(root, crtc);
-
-   /* get possible orientations for this crtc */
-   orients = ecore_x_randr_crtc_orientations_get(root, crtc);
-
-   /* check if orientation is possible and disable if not */
-   if (orients <= ECORE_X_RANDR_ORIENTATION_ROT_0)
-     edje_object_signal_emit(sd->o_frame, "e,state,rotate,disabled", "e");
-
-   /* get current mode */
-   sd->crtc.mode = ecore_x_randr_crtc_mode_get(root, crtc);
-#endif
 
    /* check crtc current mode to determine if enabled */
    if (sd->crtc.mode != 0)
