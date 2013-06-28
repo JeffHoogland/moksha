@@ -894,7 +894,6 @@ _e_randr_config_crtc_update(E_Randr_Crtc_Config *cfg)
    /* grab the root window */
    root = ecore_x_window_root_first_get();
 
-#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
    Ecore_X_Randr_Crtc_Info *cinfo;
 
    /* get crtc info from X */
@@ -917,40 +916,6 @@ _e_randr_config_crtc_update(E_Randr_Crtc_Config *cfg)
 
         ecore_x_randr_crtc_info_free(cinfo);
      }
-#else
-   Evas_Coord x, y, w, h;
-   unsigned int orient, mode;
-
-   /* get geometry of this crtc */
-   ecore_x_randr_crtc_geometry_get(root, ev->crtc, &x, &y, &w, &h);
-   if ((cfg->x != x) || (cfg->y != y) || 
-       (cfg->width != w) || (cfg->height != h))
-     {
-        cfg->x = x;
-        cfg->y = y;
-        cfg->width = w;
-        cfg->height = h;
-
-        ret = EINA_TRUE;
-     }
-
-   /* get orientation */
-   orient = ecore_x_randr_crtc_orientation_get(root, cfg->xid);
-   if (cfg->orient != orient)
-     {
-        cfg->orient = orient;
-        ret = EINA_TRUE;
-     }
-
-   /* get mode */
-   mode = ecore_x_randr_crtc_mode_get(root, cfg->xid);
-   if (cfg->mode != mode)
-     {
-        cfg->mode = mode;
-        ret = EINA_TRUE;
-     }
-#endif
-
    return ret;
 }
 
