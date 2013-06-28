@@ -1067,7 +1067,6 @@ static void
 _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 {
    E_Smart_Data *sd;
-   Evas_Coord cx = 0, cy = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1084,12 +1083,6 @@ _e_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
 #ifdef BG_DBG
    evas_object_move(sd->o_bg, x, y);
 #endif
-
-   /* convert position to virtual */
-   _e_smart_monitor_coord_canvas_to_virtual(sd, sd->x, sd->y, &cx, &cy);
-
-   /* set monitor position text */
-   _e_smart_monitor_position_set(sd, cx, cy);
 }
 
 static void 
@@ -1638,6 +1631,9 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
    /* repack into the grid with updated position */
    evas_object_grid_pack(sd->grid.obj, mon, sd->current.x, sd->current.y, 
                          sd->current.w, sd->current.h);
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, sd->current.x, sd->current.y);
 
    /* update changes */
    if ((sd->crtc.x != sd->current.x) || (sd->crtc.y != sd->current.y))
@@ -2193,6 +2189,7 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    Evas_Event_Mouse_Move *ev;
    Evas_Coord dx = 0, dy = 0;
    Evas_Coord nx = 0, ny = 0;
+   Evas_Coord px = 0, py = 0;
    Evas_Object *obj;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
@@ -2221,8 +2218,10 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
    evas_object_move(mon, nx, ny);
 
    /* take current object position, translate to virtual */
-   /* _e_smart_monitor_coord_canvas_to_virtual(sd, nx, ny,  */
-   /*                                          &sd->current.x, &sd->current.y); */
+   _e_smart_monitor_coord_canvas_to_virtual(sd, nx, ny, &px, &py);
+
+   /* set monitor position text */
+   _e_smart_monitor_position_set(sd, px, py);
 
    /* any objects below this monitor ? */
    if ((obj = evas_object_below_get(mon)))
