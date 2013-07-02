@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Enlightenment DR17\n"
 "Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
-"POT-Creation-Date: 2013-05-22 20:53+0200\n"
-"PO-Revision-Date: 2013-05-22 18:39+0000\n"
+"POT-Creation-Date: 2013-06-28 12:10+0200\n"
+"PO-Revision-Date: 2013-06-29 00:16+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Enlightenment French Team <enlightenment-"
 "intl@lists.sourceforge.net>\n"
@@ -24,8 +24,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2013-05-23 06:22+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2013-06-30 06:43+0000\n"
+"X-Generator: Launchpad (build 16692)\n"
 "X-Poedit-Country: FRANCE\n"
 "Language: fr\n"
 "X-Poedit-Language: French\n"
@@ -363,7 +363,7 @@ msgstr "Afficher le bureau"
 
 #: src/bin/e_actions.c:3121
 msgid "Show The Shelf"
-msgstr "Afficher le rack"
+msgstr "Afficher le rayon"
 
 #: src/bin/e_actions.c:3126
 msgid "Flip Desktop To..."
@@ -828,7 +828,7 @@ msgstr "Sélectionner"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:1045
+#: src/bin/e_config.c:931
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -847,7 +847,7 @@ msgstr ""
 "pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne "
 "occasionnée.<br>"
 
-#: src/bin/e_config.c:1062
+#: src/bin/e_config.c:948
 msgid ""
 "Your settings are NEWER than Enlightenment. This is very<br>strange. This "
 "should not happen unless you downgraded<br>Enlightenment or copied the "
@@ -863,11 +863,11 @@ msgstr ""
 "de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
-#: src/bin/e_config.c:1580 src/bin/e_config.c:2209
+#: src/bin/e_config.c:1466 src/bin/e_config.c:2091
 msgid "Enlightenment Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration d`Enlightenment"
 
-#: src/bin/e_config.c:1583
+#: src/bin/e_config.c:1469
 #, c-format
 msgid ""
 "Enlightenment has had an error while moving config "
@@ -878,7 +878,7 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1593 src/bin/e_config.c:2222
+#: src/bin/e_config.c:1479 src/bin/e_config.c:2104
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
 #: src/bin/e_fm.c:9970 src/bin/e_fm.c:10696 src/bin/e_fm_prop.c:624
@@ -897,19 +897,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2100
+#: src/bin/e_config.c:1982
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2000
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2004
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2008
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -917,16 +917,16 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2012
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2016
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2138
+#: src/bin/e_config.c:2020
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -934,60 +934,60 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2142
+#: src/bin/e_config.c:2024
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2146
+#: src/bin/e_config.c:2028
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2150
+#: src/bin/e_config.c:2032
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2154
+#: src/bin/e_config.c:2036
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2158
+#: src/bin/e_config.c:2040
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2162
+#: src/bin/e_config.c:2044
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2166
+#: src/bin/e_config.c:2048
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2170
+#: src/bin/e_config.c:2052
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2174
+#: src/bin/e_config.c:2056
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2178
+#: src/bin/e_config.c:2060
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2182
+#: src/bin/e_config.c:2064
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2186
+#: src/bin/e_config.c:2068
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2190
+#: src/bin/e_config.c:2072
 msgid "The error is unknown to Enlightenment."
 msgstr "Enlightenment ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2212
+#: src/bin/e_config.c:2094
 #, c-format
 msgid ""
 "Enlightenment has had an error while writing<br>its config "
@@ -1989,7 +1989,7 @@ msgstr "Utiliser"
 
 #: src/bin/e_import_config_dialog.c:295
 msgid "Picture Import Error"
-msgstr "Erreur lors de l'importation du fichier"
+msgstr "Erreur lors de l'importation de l'image"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
@@ -2749,7 +2749,7 @@ msgstr "Gadgets disponibles"
 
 #: src/bin/e_int_gadcon_config.c:786
 msgid "Shelf Contents"
-msgstr "Contenu du rack"
+msgstr "Contenu du rayon"
 
 #: src/bin/e_int_gadcon_config.c:792
 msgid "Toolbar Contents"
@@ -2854,20 +2854,20 @@ msgstr "Fenêtre sans titre"
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
-msgstr ""
+msgstr "Rayon %s"
 
 #: src/bin/e_int_menus.c:1665
 msgid "Add a Shelf"
-msgstr "Ajouter un rack"
+msgstr "Ajouter un rayon"
 
 #: src/bin/e_int_menus.c:1672
 msgid "Delete a Shelf"
-msgstr "Supprimer un rack"
+msgstr "Supprimer un rayon"
 
 #: src/bin/e_int_shelf_config.c:44
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
-msgstr "Paramétrage du rack"
+msgstr "Paramétrage du rayon"
 
 #: src/bin/e_int_shelf_config.c:143
 msgid "Above Everything"
@@ -2883,7 +2883,7 @@ msgstr "En dessous de tout"
 
 #: src/bin/e_int_shelf_config.c:149
 msgid "Allow windows to overlap the shelf"
-msgstr "Les fenêtres peuvent masquer ce rack"
+msgstr "Les fenêtres peuvent masquer ce rayon"
 
 #: src/bin/e_int_shelf_config.c:199
 #, c-format
@@ -2901,7 +2901,7 @@ msgstr "Style"
 
 #: src/bin/e_int_shelf_config.c:219
 msgid "Auto-hide the shelf"
-msgstr "Auto-masquage du rack"
+msgstr "Auto-masquage du rayon"
 
 #: src/bin/e_int_shelf_config.c:224
 msgid "Show on mouse in"
@@ -3702,32 +3702,32 @@ msgstr "Coin droit inférieur"
 #: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1121
 #, c-format
 msgid "Shelf #%d"
-msgstr ""
+msgstr "Rayon n°%d"
 
 #: src/bin/e_shelf.c:892
 msgid "Shelf Autohide Error"
-msgstr "Erreur d'auto-masquage du rack"
+msgstr "Erreur d'auto-masquage du rayon"
 
 #: src/bin/e_shelf.c:892
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
-"L’auto-masquage du rack ne va pas fonctionner correctement<br>avec la "
+"L’auto-masquage du rayon ne va pas fonctionner correctement<br>avec la "
 "configuration actuelle; configurez votre rack en<br>\"En dessous de tout\" "
 "ou désactivez l'auto-masquage."
 
 #: src/bin/e_shelf.c:1122
 msgid "Add New Shelf"
-msgstr "Ajouter un rack"
+msgstr "Ajouter un rayon"
 
 #: src/bin/e_shelf.c:1143
 msgid "Shelf Error"
-msgstr "Erreur de rack"
+msgstr "Erreur de rayon"
 
 #: src/bin/e_shelf.c:1143
 msgid "A shelf with that name already exists!"
-msgstr "Il existe déjà un rack avec ce nom !"
+msgstr "Il existe déjà un rayon avec ce nom !"
 
 #: src/bin/e_shelf.c:1657 src/bin/e_shelf.c:2486
 msgid "Stop Moving Gadgets"
@@ -3739,22 +3739,23 @@ msgstr "Déplacer les gadgets"
 
 #: src/bin/e_shelf.c:1787
 msgid "Are you sure you want to delete this shelf?"
-msgstr "Voulez-vous vraiment supprimer ce rack ?"
+msgstr "Voulez-vous vraiment supprimer ce rayon ?"
 
 #: src/bin/e_shelf.c:1789
 msgid ""
 "You requested to delete this shelf.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Vous avez demandé à supprimer ce rack.<br><br>Voulez-vous vraiment le faire ?"
+"Vous avez demandé à supprimer ce rayon.<br><br>Voulez-vous vraiment le "
+"faire ?"
 
 #: src/bin/e_shelf.c:2343
 msgid "A shelf with that name and id already exists!"
-msgstr "Un rack avec ce nom et id existe déjà !"
+msgstr "Un rayon avec ce nom et id existe déjà !"
 
 #: src/bin/e_shelf.c:2362
 msgid "Rename Shelf"
-msgstr "Renommer le rack"
+msgstr "Renommer le rayon"
 
 #: src/bin/e_shelf.c:2436 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:859
@@ -4579,7 +4580,7 @@ msgstr ""
 
 #: src/modules/comp/e_mod_config.c:106
 msgid "Composite Settings"
-msgstr "Options du compositeur"
+msgstr "Paramètres de l'extension Composite"
 
 #: src/modules/comp/e_mod_config.c:265
 msgid "Visible"
@@ -6437,10 +6438,18 @@ msgstr "Performance"
 msgid "Power Management"
 msgstr "Gestion de l'énergie"
 
-#: src/modules/conf_randr/e_int_config_randr.c:46
+#: src/modules/conf_randr/e_int_config_randr.c:48
 #: src/modules/conf_randr/e_mod_main.c:24
 msgid "Screen Setup"
 msgstr "Configuration de l'écran"
+
+#: src/modules/conf_randr/e_int_config_randr.c:119
+msgid "Primary Output"
+msgstr ""
+
+#: src/modules/conf_randr/e_int_config_randr.c:135
+msgid "Restore On Startup"
+msgstr ""
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
 #, c-format
@@ -6454,7 +6463,7 @@ msgstr "Voulez-vous vraiment supprimer « %s » ?"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 msgid "Confirm Shelf Deletion"
-msgstr "Confirmer la suppression du rack"
+msgstr "Confirmer la suppression du rayon"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:103
 msgid "Wallpaper Settings"
@@ -6584,7 +6593,7 @@ msgstr "Fond de base de la boîte de dialogue"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:96
 msgid "Shelf Background Base"
-msgstr "Fond de base du rack"
+msgstr "Arrière-plan de base du rayon"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:97
 msgid "File Manager Background Base"
@@ -7311,7 +7320,7 @@ msgstr "Nouvelles fenêtres"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:194
 msgid "Animate"
-msgstr "Animation"
+msgstr "Animer"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:206
 msgid "Linear"
@@ -7351,7 +7360,7 @@ msgstr "Plus de rebond"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:251
 msgid "Shading"
-msgstr "Enroulement"
+msgstr "Ombrage"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:261
 msgid "Keep windows within the visual screen limits"
@@ -7577,7 +7586,7 @@ msgstr "Déplacer après redimensionnement"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:277
 msgid "Adjust windows on shelf hide"
-msgstr "Ajuster les fenêtres lors de l'auto-masquage du rack"
+msgstr "Ajuster les fenêtres lors de l'auto-masquage du rayon"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:285
 msgid "Follow Move"
@@ -8968,7 +8977,7 @@ msgstr "Afficher la légende de la bordure"
 
 #: src/modules/ibox/e_mod_config.c:155
 msgid "Show windows from all screens"
-msgstr "Afficher les fenêtres des autres écrans"
+msgstr "Afficher les fenêtres de tous les écrans"
 
 #: src/modules/ibox/e_mod_config.c:160
 msgid "Show windows from current screen"
@@ -9085,7 +9094,7 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"Vous ne pouvez pas utiliser le bouton droit de la souris<br>dans le rack "
+"Vous ne pouvez pas utiliser le bouton droit de la souris<br>dans le rayon "
 "pour cette action car il est déjà utilisé<br>par le code interne, pour les "
 "menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
 
@@ -9790,6 +9799,8 @@ msgstr "Zone de notification : erreur"
 #: src/modules/systray/e_mod_main.c:498
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
+"La zone de notification ne peut pas définir son arrière-plan invisible pour "
+"correspondre à son rayon."
 
 #: src/modules/systray/e_mod_main.c:940
 msgid "Another systray exists"
@@ -9804,7 +9815,7 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
-"La zone de notification ne fonctionne pas dans un rack « en dessous de "
+"La zone de notification ne fonctionne pas dans un rayon « en dessous de "
 "tout »."
 
 #: src/modules/systray/e_mod_main.c:1161
