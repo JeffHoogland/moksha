@@ -1,8 +1,11 @@
 [Desktop Entry]
-Type=Link
-Name=Illume-Bluetooth
-Icon=e-module-illume-bluetooth
-X-Enlightenment-ModuleType=mobile
 Comment=
 Comment[fr]=
 Comment[it]=
+Encoding=UTF-8
+Icon=e-module-illume-bluetooth
+Name=Illume-Bluetooth
+Name[eo]=Bludento Illume
+Name[fr]=Bluetooth Illume
+Type=Link
+X-Enlightenment-ModuleType=mobile

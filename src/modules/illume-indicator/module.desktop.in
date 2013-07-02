@@ -1,8 +1,11 @@
 [Desktop Entry]
-Type=Link
-Name=Illume-Indicator
-Icon=e-module-illume-indicator
-X-Enlightenment-ModuleType=mobile
 Comment=
 Comment[fr]=
 Comment[it]=
+Encoding=UTF-8
+Icon=e-module-illume-indicator
+Name=Illume-Indicator
+Name[eo]=Illume-Indikilo
+Name[fr]=Indicateur Illume
+Type=Link
+X-Enlightenment-ModuleType=mobile

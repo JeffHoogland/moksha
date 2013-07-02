@@ -1,8 +1,11 @@
 [Desktop Entry]
-Type=Link
-Name=Illume-Keyboard-Toggle
-Icon=e-module-illume-kbd-toggle
-X-Enlightenment-ModuleType=mobile
 Comment=
 Comment[fr]=
 Comment[it]=
+Encoding=UTF-8
+Icon=e-module-illume-kbd-toggle
+Name=Illume-Keyboard-Toggle
+Name[eo]=Baskulo de klavaro Illume
+Name[fr]=Bascule clavier Illume
+Type=Link
+X-Enlightenment-ModuleType=mobile

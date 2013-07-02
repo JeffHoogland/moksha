@@ -1,8 +1,10 @@
 [Desktop Entry]
-Type=Link
-Name=Illume-Mode-Toggle
-Icon=e-module-illume-mode-toggle
-X-Enlightenment-ModuleType=mobile
 Comment=
 Comment[fr]=
 Comment[it]=
+Encoding=UTF-8
+Icon=e-module-illume-mode-toggle
+Name=Illume-Mode-Toggle
+Name[eo]=Baskulilo de reĝimo Illume
+Type=Link
+X-Enlightenment-ModuleType=mobile

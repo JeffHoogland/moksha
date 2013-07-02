@@ -1,8 +1,9 @@
 [Desktop Entry]
-Type=Link
-Name=Illume-Softkey
-Icon=e-module-illume-softkey
-X-Enlightenment-ModuleType=mobile
 Comment=
 Comment[fr]=
 Comment[it]=
+Encoding=UTF-8
+Icon=e-module-illume-softkey
+Name=Illume-Softkey
+Type=Link
+X-Enlightenment-ModuleType=mobile
