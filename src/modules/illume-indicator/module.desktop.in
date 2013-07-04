@@ -1,11 +1,11 @@
 [Desktop Entry]
-Comment=
-Comment[fr]=
-Comment[it]=
 Encoding=UTF-8
-Icon=e-module-illume-indicator
+Type=Link
 Name=Illume-Indicator
 Name[eo]=Illume-Indikilo
 Name[fr]=Indicateur Illume
-Type=Link
+Comment=
+Comment[fr]=
+Comment[it]=
+Icon=e-module-illume-indicator
 X-Enlightenment-ModuleType=mobile

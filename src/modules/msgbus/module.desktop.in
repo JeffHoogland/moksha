@@ -1,6 +1,6 @@
 [Desktop Entry]
 Encoding=UTF-8
-Icon=e-module-msgbus
+Type=Link
 Name=DBus Extension
 Name[ca]=Extensió DBus
 Name[cs]=DBus rozšíření
@@ -18,5 +18,5 @@ Name[ru]=Расширение DBus
 Name[tr]=DBus Uzantısı
 Name[zh_CN]=
 Name[zh_TW]=
-Type=Link
+Icon=e-module-msgbus
 X-Enlightenment-ModuleType=system

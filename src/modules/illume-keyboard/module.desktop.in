@@ -1,11 +1,11 @@
 [Desktop Entry]
-Comment=
-Comment[fr]=
-Comment[it]=
 Encoding=UTF-8
-Icon=e-module-illume-keyboard
+Type=Link
 Name=Illume-Keyboard
 Name[eo]=Illume-Klavaro
 Name[fr]=Clavier Illume
-Type=Link
+Comment=
+Comment[fr]=
+Comment[it]=
+Icon=e-module-illume-keyboard
 X-Enlightenment-ModuleType=mobile

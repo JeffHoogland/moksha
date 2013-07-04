@@ -1,10 +1,10 @@
 [Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Illume-Home-Toggle
+Name[eo]=Baskulilo de hejmo Illume
 Comment=
 Comment[fr]=
 Comment[it]=
-Encoding=UTF-8
 Icon=e-module-illume-home-toggle
-Name=Illume-Home-Toggle
-Name[eo]=Baskulilo de hejmo Illume
-Type=Link
 X-Enlightenment-ModuleType=mobile

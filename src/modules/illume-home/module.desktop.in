@@ -1,12 +1,12 @@
 [Desktop Entry]
-Comment=
-Comment[fr]=
-Comment[it]=
 Encoding=UTF-8
-Icon=e-module-illume-home
+Type=Link
 Name=Illume-Home
 Name[eo]=Illume-Hejmo
 Name[fr]=Accueil Illume
 Name[sr]=Домаћа додирна
-Type=Link
+Comment=
+Comment[fr]=
+Comment[it]=
+Icon=e-module-illume-home
 X-Enlightenment-ModuleType=mobile

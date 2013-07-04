@@ -1,9 +1,9 @@
 [Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Illume2
 Comment=
 Comment[fr]=
 Comment[it]=
-Encoding=UTF-8
 Icon=e-module-illume2
-Name=Illume2
-Type=Link
 X-Enlightenment-ModuleType=mobile

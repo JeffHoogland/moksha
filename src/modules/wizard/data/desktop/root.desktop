@@ -1,4 +1,10 @@
 [Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Root
+Name[eo]=Radiko
+Name[fr]=Dossier racine
+Name[ru]=Корневой каталог
 Comment=The Root Filesystem base
 Comment[eo]=La radika dosiersistemo
 Comment[es]=El sistema de archivos root
@@ -7,13 +13,7 @@ Comment[gl]=O sistema de ficheiros root
 Comment[it]=Il filesystem principale
 Comment[pt]=O sistema de ficheiros root
 Comment[ru]=Корень файловой системы
-Encoding=UTF-8
 Icon=computer
-Name=Root
-Name[eo]=Radiko
-Name[fr]=Dossier racine
-Name[ru]=Корневой каталог
 NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;
-Type=Link
 URL=file:/
 X-Enlightenment-Type=Mount
