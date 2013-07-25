@@ -217,7 +217,6 @@ _e_randr_config_new(void)
 {
    Ecore_X_Window root = 0;
    Ecore_X_Randr_Crtc *crtcs = NULL;
-   Ecore_X_Randr_Output primary = 0;
    int ncrtcs = 0, i = 0;
 
    /* create new randr cfg */
@@ -282,10 +281,11 @@ _e_randr_config_new(void)
                        /* assign crtc for this output */
                        output_cfg->crtc = crtcs[i];
                        output_cfg->exists = EINA_TRUE;
-                       if ((int)outputs[j] == e_randr_cfg->primary)
+                       if ((e_randr_cfg->primary) && 
+                           ((int)outputs[j] == e_randr_cfg->primary))
                          output_cfg->primary = EINA_TRUE;
 
-                       if (!primary)
+                       if (!e_randr_cfg->primary)
                          {
                             /* X has no primary output set */
                             if (j == 0)
