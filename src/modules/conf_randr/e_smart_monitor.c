@@ -776,10 +776,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
         info = _e_smart_monitor_mode_find(sd, sd->current.w, 
                                           sd->current.h, EINA_FALSE);
         if (info) 
-          {
-             sd->current.mode = info->xid;
-             ecore_x_randr_mode_info_free(info);
-          }
+          sd->current.mode = info->xid;
      }
 
    /* if this monitor gets re-enabled, we need to assign a crtc */
@@ -843,7 +840,8 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
    sd->crtc.orient = orient;
    sd->crtc.enabled = sd->current.enabled;
 
-   if ((sd->crtc.mode) && (mode_info = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
+   if ((sd->crtc.mode) && 
+       (mode_info = ecore_x_randr_mode_info_get(root, sd->crtc.mode)))
      {
         sd->crtc.refresh_rate = 
           _e_smart_monitor_mode_refresh_rate_get(mode_info);
