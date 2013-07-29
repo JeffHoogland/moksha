@@ -3,7 +3,7 @@
 rm -rf autom4te.cache
 rm -f aclocal.m4 ltmain.sh config.cache
 
-autoreconf --symlink --install || exit 1
+autoreconf --force --install || exit 1
 
 if [ -z "$NOCONFIGURE" ]; then
   exec ./configure -C "$@"

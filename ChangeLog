@@ -1,3 +1,11 @@
+2013-08-02 Eduardo Lima (Etrunko)
+
+        * 0.17.4 release
+
+2013-05-11 Rafael Antognolli
+
+        * 0.17.3 release
+
 2013-06-17 Mike Blumenkrantz
 
         * fixed bug where e widgets would not unset focus

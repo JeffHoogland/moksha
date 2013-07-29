@@ -2,13 +2,13 @@
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 m4_define([v_maj], [0])
 m4_define([v_min], [17])
-m4_define([v_mic], [3])
+m4_define([v_mic], [4])
 
 m4_define([v_rev], m4_esyscmd([(svnversion "${SVN_REPO_PATH:-.}" | grep -v '\(export\|Unversioned directory\)' || echo 0) | awk -F : '{printf("%s\n", $1);}' | tr -d ' :MSP\n']))
 m4_if(v_rev, [0], [m4_define([v_rev], m4_esyscmd([git log 2> /dev/null | (grep -m1 git-svn-id || echo 0) | sed -e 's/.*@\([0-9]*\).*/\1/' | tr -d '\n']))])
 ##--   When released, remove the dnl on the below line
 m4_undefine([v_rev])
-m4_define([relname], [0.17.3])
+m4_define([relname], [0.17.4])
 ##--   When doing snapshots - change soname. remove dnl on below line
 dnl m4_define([relname], [ver-pre-svn-08])
 dnl m4_define([v_rel], [-release relname])
@@ -75,7 +75,7 @@ EFL_CHECK_PATH_MAX
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 
-efl_version="1.7.6"
+efl_version="1.7.8"
 AC_SUBST(efl_version)
 
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
@@ -594,7 +594,7 @@ if test "x$want_elementary" != "xno"; then
    fi
    if test "x$have_elementary" = "xyes"; then
       AC_DEFINE([HAVE_ELEMENTARY], 1, "Have Elementary support")
-      requirements_e="${requirements_e} elementary > 1.6.9.0"
+      requirements_e="${requirements_e} elementary >= ${efl_version}"
    fi
 fi
 
