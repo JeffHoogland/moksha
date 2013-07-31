@@ -656,7 +656,8 @@ static void
 _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
 {
    E_Smart_Data *sd;
-   Evas_Object *randr;
+   Evas_Object *randr, *mon;
+   Eina_List *l = NULL;
 
    if (!(randr = data)) return;
 
@@ -666,6 +667,22 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *
    /* normalize output positions so that upper left corner of all 
     * outputs is at 0,0 */
    _e_smart_randr_monitor_position_normalize(sd);
+
+   /* move any monitors which are adjacent to this one to their new 
+    * positions due to the resize, specifying this resized monitor as 
+    * the one to skip */
+   _e_smart_randr_monitor_position_update(sd, randr, randr);
+
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        /* skip the monitor which was currently resized */
+        if ((mon == randr)) continue;
+
+        /* move any monitors which are adjacent to this one to their new 
+         * positions due to the resize, specifying this resized monitor as 
+         * the one to skip */
+        _e_smart_randr_monitor_position_update(sd, mon, randr);
+     }
 
    /* tell main dialog that something changed and to enable apply button */
    evas_object_smart_callback_call(randr, "randr_changed", NULL);
