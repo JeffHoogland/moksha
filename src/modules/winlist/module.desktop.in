@@ -2,6 +2,8 @@
 Encoding=UTF-8
 Type=Link
 Name=Window Switcher
+Name[Name]=Window Switcher
+Name[ab]=
 Name[ca]=Alternador de finestres
 Name[cs]=Přepínač oken
 Name[de]=Fensterwechsel-Liste
@@ -12,6 +14,8 @@ Name[fr]=Liste de commutation
 Name[gl]=Alternador de xanelas
 Name[hu]=Ablak lista/váltó
 Name[it]=Commutatore finestre
+Name[ja]=
+Name[ko]=
 Name[pt]=Alternador de janelas
 Name[ru]=Список переключения окон
 Name[sr]=Измењивач прозора
