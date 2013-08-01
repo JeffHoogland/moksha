@@ -747,6 +747,29 @@ _e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_
                e_smart_monitor_current_geometry_set(mon, m.x, (o.y + o.h), 
                                                     m.w, m.h);
           }
+
+        /* handle move case for obj */
+        else if ((o.x >= (m.x + (m.w / 3))) && 
+                 (((o.x <= ((m.x + m.w) + SNAP_FUZZ)) || 
+                   (o.x <= ((m.x + m.w) - SNAP_FUZZ)))))
+          {
+             /* don't move the monitor IF this movement would place it 
+              * outside the virual grid */
+             if (((m.x + m.w) + o.w) <= sd->vw)
+               e_smart_monitor_current_geometry_set(obj, (m.x + m.w),
+                                                    o.y, o.w, o.h);
+          }
+        else if ((o.y >= (m.y + (m.h / 3))) && 
+                 (((o.y <= ((m.y + op.h) + SNAP_FUZZ)) || 
+                   (o.y <= ((m.y + op.h) - SNAP_FUZZ)))))
+          {
+             /* don't move the monitor IF this movement would place it 
+              * outside the virual grid */
+             if (((m.y + m.h) + o.h) <= sd->vh)
+               e_smart_monitor_current_geometry_set(obj, o.x, (m.y + m.h), 
+                                                    o.w, o.h);
+          }
+
      }
 }
 
