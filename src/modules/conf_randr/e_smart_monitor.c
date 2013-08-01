@@ -106,6 +106,11 @@ struct _E_Smart_Data
         Eina_Bool enabled : 1;
      } current;
 
+   struct 
+     {
+        Evas_Coord x, y, w, h;
+     } prev;
+
    /* visibility flag */
    Eina_Bool visible : 1;
 
@@ -235,6 +240,11 @@ e_smart_monitor_crtc_set(Evas_Object *obj, Ecore_X_Randr_Crtc crtc, Evas_Coord c
    sd->crtc.y = cy;
    sd->crtc.w = cw;
    sd->crtc.h = ch;
+
+   sd->current.x = cx;
+   sd->current.y = cy;
+   sd->current.w = cw;
+   sd->current.h = ch;
 
    /* get the root window */
    root = ecore_x_window_root_first_get();
@@ -492,6 +502,22 @@ e_smart_monitor_current_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord
    if (y) *y = sd->current.y;
    if (w) *w = sd->current.w;
    if (h) *h = sd->current.h;
+}
+
+void 
+e_smart_monitor_previous_geometry_get(Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h)
+{
+   E_Smart_Data *sd;
+
+   LOGFN(__FILE__, __LINE__, __FUNCTION__);
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+
+   if (x) *x = sd->prev.x;
+   if (y) *y = sd->prev.y;
+   if (w) *w = sd->prev.w;
+   if (h) *h = sd->prev.h;
 }
 
 void 
@@ -1584,6 +1610,10 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
    /* reset mouse pointer */
    _e_smart_monitor_pointer_pop(obj, "move");
 
+   if ((sd->current.x == sd->prev.x) && 
+       (sd->current.y == sd->prev.y)) 
+     return;
+
    /* any objects below this monitor ? */
    if ((below = evas_object_below_get(mon)))
      {
@@ -1672,8 +1702,8 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Ob
 
    /* record current size of monitor */
    evas_object_grid_pack_get(sd->grid.obj, mon, 
-                             &sd->current.x, &sd->current.y, 
-                             &sd->current.w, &sd->current.h);
+                             &sd->prev.x, &sd->prev.y, 
+                             &sd->prev.w, &sd->prev.h);
 
    /* raise the monitor */
    evas_object_raise(mon);
@@ -1781,8 +1811,16 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
                              &sd->current.x, &sd->current.y, 
                              &sd->current.w, &sd->current.h);
 
+   sd->prev.x = sd->current.x;
+   sd->prev.y = sd->current.y;
+   sd->prev.w = sd->current.w;
+   sd->prev.h = sd->current.h;
+
    /* set resizing flag */
    sd->resizing = EINA_TRUE;
+
+   /* raise the monitor */
+   evas_object_raise(mon);
 }
 
 static void 
@@ -1836,6 +1874,11 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
    evas_object_grid_pack_get(sd->grid.obj, mon, 
                              &sd->current.x, &sd->current.y, 
                              &sd->current.w, &sd->current.h);
+
+   sd->prev.x = sd->current.x;
+   sd->prev.y = sd->current.y;
+   sd->prev.w = sd->current.w;
+   sd->prev.h = sd->current.h;
 
    /* set resizing flag */
    sd->rotating = EINA_TRUE;
@@ -2217,6 +2260,9 @@ _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 
    /* take current object position, translate to virtual */
    _e_smart_monitor_coord_canvas_to_virtual(sd, nx, ny, &px, &py);
+
+   sd->current.x = px;
+   sd->current.y = py;
 
    /* set monitor position text */
    _e_smart_monitor_position_set(sd, px, py);

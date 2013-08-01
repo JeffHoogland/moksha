@@ -3,6 +3,8 @@
 #include "e_smart_randr.h"
 #include "e_smart_monitor.h"
 
+#define SNAP_FUZZ 100
+
 /*
  * TODO:
  * 
@@ -653,11 +655,10 @@ _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void
 }
 
 static void 
-_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED)
 {
    E_Smart_Data *sd;
-   Evas_Object *randr, *mon;
-   Eina_List *l = NULL;
+   Evas_Object *randr;
 
    if (!(randr = data)) return;
 
@@ -671,18 +672,7 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *
    /* move any monitors which are adjacent to this one to their new 
     * positions due to the resize, specifying this resized monitor as 
     * the one to skip */
-   _e_smart_randr_monitor_position_update(sd, randr, randr);
-
-   EINA_LIST_FOREACH(sd->monitors, l, mon)
-     {
-        /* skip the monitor which was currently resized */
-        if ((mon == randr)) continue;
-
-        /* move any monitors which are adjacent to this one to their new 
-         * positions due to the resize, specifying this resized monitor as 
-         * the one to skip */
-        _e_smart_randr_monitor_position_update(sd, mon, randr);
-     }
+   _e_smart_randr_monitor_position_update(sd, obj, obj);
 
    /* tell main dialog that something changed and to enable apply button */
    evas_object_smart_callback_call(randr, "randr_changed", NULL);
@@ -692,8 +682,7 @@ static void
 _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED)
 {
    E_Smart_Data *sd;
-   Evas_Object *randr, *mon;
-   Eina_List *l = NULL;
+   Evas_Object *randr;
 
    if (!(randr = data)) return;
 
@@ -705,17 +694,6 @@ _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA
     * the one to skip */
    _e_smart_randr_monitor_position_update(sd, obj, obj);
 
-   EINA_LIST_FOREACH(sd->monitors, l, mon)
-     {
-        /* skip the monitor which was currently resized */
-        if ((mon == obj)) continue;
-
-        /* move any monitors which are adjacent to this one to their new 
-         * positions due to the resize, specifying this resized monitor as 
-         * the one to skip */
-        _e_smart_randr_monitor_position_update(sd, mon, obj);
-     }
-
    /* tell main dialog that something changed and to enable apply button */
    evas_object_smart_callback_call(randr, "randr_changed", NULL);
 }
@@ -725,10 +703,12 @@ _e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_
 {
    Eina_List *l = NULL;
    Evas_Object *mon;
-   Eina_Rectangle o;
+   Eina_Rectangle o, op;
 
    /* get the current geometry of the monitor we were passed in */
    e_smart_monitor_current_geometry_get(obj, &o.x, &o.y, &o.w, &o.h);
+
+   e_smart_monitor_previous_geometry_get(obj, &op.x, &op.y, &op.w, &op.h);
 
    /* loop the list of monitors */
    EINA_LIST_FOREACH(sd->monitors, l, mon)
@@ -744,27 +724,28 @@ _e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_
 
         /* check if this monitor is adjacent to the original one, 
          * if it is, then we need to move it */
-        if ((m.x == o.x) || (m.y == o.y))
+
+        /* check for any monitors that are on this X axis
+         * (within a certain threshold of distance) */
+        if ((m.x >= (op.x + (op.w / 3))) && 
+            (((m.x <= ((op.x + op.w) + SNAP_FUZZ)) || 
+              (m.x <= ((op.x + op.w) - SNAP_FUZZ)))))
           {
-             if ((m.x == o.x))
-               {
-                  if ((m.y >= o.y))
-                    {
-                       /* vertical positioning */
-                       e_smart_monitor_current_geometry_set(mon, m.x, 
-                                                            (o.y + o.h), 
-                                                            m.w, m.h);
-                    }
-               }
-             else if ((m.y == o.y))
-               {
-                  if ((m.x >= o.x))
-                    {
-                       /* horizontal positioning */
-                       e_smart_monitor_current_geometry_set(mon, (o.x + o.w),
-                                                            m.y, m.w, m.h);
-                    }
-               }
+             /* don't move the monitor IF this movement would place it 
+              * outside the virual grid */
+             if (((o.x + o.w) + m.w) <= sd->vw)
+               e_smart_monitor_current_geometry_set(mon, (o.x + o.w),
+                                                    m.y, m.w, m.h);
+          }
+        else if ((m.y >= (op.y + (op.h / 3))) && 
+                 (((m.y <= ((op.y + op.h) + SNAP_FUZZ)) || 
+                   (m.y <= ((op.y + op.h) - SNAP_FUZZ)))))
+          {
+             /* don't move the monitor IF this movement would place it 
+              * outside the virual grid */
+             if (((o.y + o.h) + m.h) <= sd->vh)
+               e_smart_monitor_current_geometry_set(mon, m.x, (o.y + o.h), 
+                                                    m.w, m.h);
           }
      }
 }
