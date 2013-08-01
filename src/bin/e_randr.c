@@ -422,6 +422,7 @@ _e_randr_config_restore(void)
              else
                {
                   /* this crtc is not in our config. get values from X */
+#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
                   Ecore_X_Randr_Crtc_Info *cinfo;
 
                   /* get crtc info from X */
@@ -436,6 +437,17 @@ _e_randr_config_restore(void)
 
                        ecore_x_randr_crtc_info_free(cinfo);
                     }
+#else
+                  /* get geometry of this crtc */
+                  ecore_x_randr_crtc_geometry_get(root, crtcs[c], 
+                                                  &x, &y, &w, &h);
+
+                  /* get mode */
+                  mode = ecore_x_randr_crtc_mode_get(root, crtcs[c]);
+
+                  /* get orientation */
+                  orient = ecore_x_randr_crtc_orientation_get(root, crtcs[c]);
+#endif
                }
 
              /* at this point, we should have geometry, mode and orientation.
@@ -1166,6 +1178,7 @@ _e_randr_config_screen_size_calculate(int *sw, int *sh)
                {
                   Ecore_X_Randr_Crtc crtc = 0;
 
+#if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
                   Ecore_X_Randr_Crtc_Info *cinfo;
 
                   /* get crtc info from X */
@@ -1180,6 +1193,16 @@ _e_randr_config_screen_size_calculate(int *sw, int *sh)
 
                        ecore_x_randr_crtc_info_free(cinfo);
                     }
+#else
+                  /* get geometry of this crtc */
+                  ecore_x_randr_crtc_geometry_get(root, crtc, &x, &y, &w, &h);
+
+                  /* get mode */
+                  mode = ecore_x_randr_crtc_mode_get(root, crtc);
+
+                  /* get orientation */
+                  orient = ecore_x_randr_crtc_orientation_get(root, crtc);
+#endif
                }
 
              /* at this point, we should have geometry, mode and orientation.
