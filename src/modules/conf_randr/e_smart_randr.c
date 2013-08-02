@@ -307,7 +307,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
 
              if (eina_list_count(connected) > 0)
                {
-                  Eina_List *l;
                   intptr_t *o;
                   Evas_Object *pmon;
 
