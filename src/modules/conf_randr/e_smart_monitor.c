@@ -904,6 +904,19 @@ e_smart_monitor_output_get(Evas_Object *obj)
    return sd->output;
 }
 
+void 
+e_smart_monitor_indicator_available_set(Evas_Object *obj, Eina_Bool available)
+{
+   E_Smart_Data *sd;
+
+   /* try to get the objects smart data */
+   if (!(sd = evas_object_smart_data_get(obj))) return 0;
+   if (available)
+     edje_object_signal_emit(sd->o_frame, "e,state,indicator,enabled", "e");
+   else
+     edje_object_signal_emit(sd->o_frame, "e,state,indicator,disabled", "e");
+}
+
 /* smart functions */
 static void 
 _e_smart_add(Evas_Object *obj)
