@@ -1178,6 +1178,8 @@ _e_randr_config_screen_size_calculate(int *sw, int *sh)
                {
                   Ecore_X_Randr_Crtc crtc = 0;
 
+                  crtc = ecore_x_randr_output_crtc_get(root, outputs[i]);
+
 #if ((ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 8))
                   Ecore_X_Randr_Crtc_Info *cinfo;
 
