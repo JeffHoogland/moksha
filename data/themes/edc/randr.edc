@@ -426,8 +426,11 @@ group { name: "e/conf/randr/main/frame";
          description { state: "default" 0.0;
             color: 0 0 0 0;
             max: 15 15;
-//            max: 21 21;
             align: 0.0 1.0;
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
          }
       }
       part { name: "e.event.resize"; type: RECT;
@@ -554,6 +557,16 @@ group { name: "e/conf/randr/main/frame";
          signal: "e,state,primary,on"; source: "e";
          action: STATE_SET "on" 0.0;
          target: "primary";
+      }
+      program {
+         signal: "e,state,indicator,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.event.indicator";
+      }
+      program {
+         signal: "e,state,indicator,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "e.event.indicator";
       }
       program {
          signal: "mouse,in"; source: "e.event.resize";
