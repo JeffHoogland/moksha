@@ -89,9 +89,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    Evas_Object *o;
    Evas_Object *ow;
    Evas_Coord mw = 0, mh = 0, ch = 0, fh = 0;
-   E_Radio_Group *rg;
-   Eina_List *l;
-   Evas_Object *mon, *of;
+   Eina_List *l, *monitors = NULL;
 
    /* create the base list widget */
    o = e_widget_list_add(evas, 0, 0);
@@ -116,21 +114,29 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         e_smart_randr_min_size_get(cfdata->o_randr, &mw, &mh);
      }
 
-   of = e_widget_framelist_add(evas, _("Primary Output"), 0);
-   rg = e_widget_radio_group_new(&(cfdata->primary));
-   EINA_LIST_FOREACH(e_smart_randr_monitors_get(cfdata->o_randr), l, mon)
+   monitors = e_smart_randr_monitors_get(cfdata->o_randr);
+   if (eina_list_count(monitors) > 1)
      {
-        int output;
-        const char *name;
+        E_Radio_Group *rg;
+        Evas_Object *mon, *of;
 
-        name = e_smart_monitor_name_get(mon);
-        output = (int)e_smart_monitor_output_get(mon);
+        of = e_widget_framelist_add(evas, _("Primary Output"), 0);
+        rg = e_widget_radio_group_new(&(cfdata->primary));
+        EINA_LIST_FOREACH(monitors, l, mon)
+          {
+             int output;
+             const char *name;
 
-        ow = e_widget_radio_add(evas, name, output, rg);
-        e_widget_framelist_object_append(of, ow);
+             name = e_smart_monitor_name_get(mon);
+             output = (int)e_smart_monitor_output_get(mon);
+
+             ow = e_widget_radio_add(evas, name, output, rg);
+             e_widget_framelist_object_append(of, ow);
+          }
+
+        e_widget_list_object_append(o, of, 1, 0, 0.5);
+        e_widget_size_min_get(of, NULL, &fh);
      }
-   e_widget_list_object_append(o, of, 1, 0, 0.5);
-   e_widget_size_min_get(of, NULL, &fh);
 
    ow = e_widget_check_add(evas, _("Restore On Startup"), &(cfdata->restore));
    e_widget_list_object_append(o, ow, 1, 0, 0.5);
