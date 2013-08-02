@@ -30,6 +30,7 @@ E_Smart_Monitor_Changes e_smart_monitor_changes_get(Evas_Object *obj);
 Eina_Bool e_smart_monitor_changes_apply(Evas_Object *obj);
 const char *e_smart_monitor_name_get(Evas_Object *obj);
 Ecore_X_Randr_Output e_smart_monitor_output_get(Evas_Object *obj);
+void e_smart_monitor_indicator_available_set(Evas_Object *obj, Eina_Bool available);
 
 # endif
 #endif
