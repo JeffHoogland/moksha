@@ -174,7 +174,9 @@ e_smart_randr_monitors_create(Evas_Object *obj)
    Ecore_X_Window root = 0;
    Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
    Ecore_X_Randr_Output *outputs;
-   int noutputs = 0;
+   Evas_Object *mon;
+   Eina_List *l = NULL;
+   int noutputs = 0, count = 0;
 
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -205,7 +207,6 @@ e_smart_randr_monitors_create(Evas_Object *obj)
         /* loop these outputs */
         for (i = 0; i < noutputs; i++)
           {
-             Evas_Object *mon;
              Ecore_X_Randr_Crtc crtc = 0;
              Evas_Coord mw = 0, mh = 0, crtcx = 0, crtcy = 0;
              Evas_Coord cx = 0, cy = 0, cw = 0, ch = 0;
@@ -331,6 +332,17 @@ e_smart_randr_monitors_create(Evas_Object *obj)
           }
 
         free(outputs);
+     }
+
+   /* check if we have only one monitor. If so, we will disable the 
+    * indicator toggle so dumb people cannot turn off their only monitor */
+   count = eina_list_count(sd->monitors);
+   EINA_LIST_FOREACH(sd->monitors, l, mon)
+     {
+        if (count > 1)
+          e_smart_monitor_indicator_available_set(mon, EINA_TRUE);
+        else
+          e_smart_monitor_indicator_available_set(mon, EINA_FALSE);
      }
 }
 
