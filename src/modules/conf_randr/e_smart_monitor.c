@@ -910,7 +910,7 @@ e_smart_monitor_indicator_available_set(Evas_Object *obj, Eina_Bool available)
    E_Smart_Data *sd;
 
    /* try to get the objects smart data */
-   if (!(sd = evas_object_smart_data_get(obj))) return 0;
+   if (!(sd = evas_object_smart_data_get(obj))) return;
    if (available)
      edje_object_signal_emit(sd->o_frame, "e,state,indicator,enabled", "e");
    else
