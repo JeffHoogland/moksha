@@ -58,6 +58,12 @@ e_xinerama_fake_screen_add(int x, int y, int w, int h)
    fake_screens = eina_list_append(fake_screens, scr);
 }
 
+EAPI Eina_Bool
+e_xinerama_fake_screens_exist(void)
+{
+   return !!fake_screens;
+}
+
 /* local subsystem functions */
 static void
 _e_xinerama_clean(void)
