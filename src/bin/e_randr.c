@@ -371,6 +371,9 @@ _e_randr_config_restore(void)
    int ncrtcs = 0;
    int sw = 0, sh = 0, cw = 0, ch = 0;
 
+   /* don't try to restore if we have fake screens */
+   if (e_xinerama_fake_screens_exist()) return;
+
    printf("E_RANDR CONFIG RESTORE\n");
 
    /* grab the X server so that we can apply settings without triggering 
