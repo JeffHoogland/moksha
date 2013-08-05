@@ -795,7 +795,7 @@ e_smart_monitor_changes_apply(Evas_Object *obj)
      }
 
    /* if this monitor gets re-enabled, we need to set a mode */
-   if ((sd->current.enabled) && (!sd->current.mode))
+   if ((sd->current.enabled) && (!sd->crtc.mode))
      {
         Ecore_X_Randr_Mode_Info *info;
 
