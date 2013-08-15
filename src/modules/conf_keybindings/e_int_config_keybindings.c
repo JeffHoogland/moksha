@@ -1175,8 +1175,8 @@ _grab_key_down_cb(void *data,
                   if (i++ >= n) break;
                }
 
-             e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n - 1, 1);
-             e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n - 1);
+             e_widget_ilist_nth_show(cfdata->gui.o_binding_list, n, 1);
+             e_widget_ilist_selected_set(cfdata->gui.o_binding_list, n);
           }
         e_object_del(E_OBJECT(cfdata->locals.eg));
      }
