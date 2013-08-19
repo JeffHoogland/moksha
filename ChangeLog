@@ -1,3 +1,6 @@
+2013-08-02 Deon Thomas (PrinceAMD)
+	* fixed stall on startup because xinerama started before randr (backports).
+
 2013-08-02 Eduardo Lima (Etrunko)
 
         * 0.17.4 release
