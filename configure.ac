@@ -263,7 +263,13 @@ AC_GNU_GETTEXT([external], [need-ngettext])
 po_makefile_in=po/Makefile.in
 have_po="yes"
 ],[
+m4_ifdef([AM_GNU_GETTEXT], [
+AM_GNU_GETTEXT([external], [need-ngettext])
+po_makefile_in=po/Makefile.in
+have_po="yes"
+],[
 have_po="no"
+])
 ])
 AC_SUBST(LTLIBINTL)
 if test "x$LIBINTL" = "x"; then
