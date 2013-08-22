@@ -258,8 +258,8 @@ m4_ifdef([AM_GNU_GETTEXT_VERSION], [
 AM_GNU_GETTEXT_VERSION([0.17])
 ])
 
-m4_ifdef([AM_GNU_GETTEXT], [
-AM_GNU_GETTEXT([external], [need-ngettext])
+m4_ifdef([AC_GNU_GETTEXT], [
+AC_GNU_GETTEXT([external], [need-ngettext])
 po_makefile_in=po/Makefile.in
 have_po="yes"
 ],[
