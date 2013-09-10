@@ -1,3 +1,20 @@
+Changes since 0.17.4:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Changes:
+
+Removed:
+
+Improvements:
+
+Fixes:
+	* fixed stall on startup because xinerama started before randr (backports).
+
+
 Changes since 0.17.3:
 ---------------------
 

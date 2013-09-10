@@ -1,3 +1,7 @@
+2013-10-14 Eduardo Lima (Etrunko)
+
+        * 0.17.5 release
+
 2013-10-14 Mike Blumenkrantz
 
         * Fix event clipping on filemanager icons
@@ -11,6 +15,7 @@
         * Fix bug where new files could not be created repeatedly
 
 2013-08-02 Deon Thomas (PrinceAMD)
+
 	* fixed stall on startup because xinerama started before randr (backports).
 
 2013-08-02 Eduardo Lima (Etrunko)
