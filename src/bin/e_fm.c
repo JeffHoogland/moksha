@@ -83,6 +83,7 @@ struct _E_Fm2_Smart_Data
    {
       Ecore_Thread   *thread;
       const char *filename;
+      Eina_Bool done : 1;
    } new_file;
 
    E_Fm2_Icon      *last_selected;
@@ -4867,6 +4868,19 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
 
    if (ic->info.removable)
      _e_fm2_icon_removable_update(ic);
+   if (ic->sd->new_file.thread && (!ic->sd->new_file.filename))
+     {
+        /* we got the file through the scanner :/ */
+        const char *file = ecore_thread_global_data_find("efm_pending_filename");
+
+        if (!e_util_strcmp(ic->info.file, file))
+          {
+             _e_fm2_file_rename(ic, NULL, NULL);
+             ic->sd->new_file.done = 1;
+          }
+        if (file)
+          ecore_thread_global_data_del("efm_pending_filename");
+     }
    if (ic->sd->new_file.filename)
      {
         if (ic->info.file == ic->sd->new_file.filename)
@@ -9500,10 +9514,13 @@ _e_fm2_new_dir_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
 {
    E_Fm2_Smart_Data *sd = data;
 
-   if (filename)
-     sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
-   else
-     e_util_dialog_internal(_("Error"), _("Could not create a directory!"));
+   if (!sd->new_file.done)
+     {
+        if (filename)
+          sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
+        else
+          e_util_dialog_internal(_("Error"), _("Could not create a directory!"));
+     }
    free(filename);
 }
 
@@ -9512,10 +9529,13 @@ _e_fm2_new_file_notify(void *data, Ecore_Thread *eth __UNUSED__, char *filename)
 {
    E_Fm2_Smart_Data *sd = data;
 
-   if (filename)
-     sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
-   else
-     e_util_dialog_internal(_("Error"), _("Could not create a file!"));
+   if (!sd->new_file.done)
+     {
+        if (filename)
+          sd->new_file.filename = eina_stringshare_add(ecore_file_file_get(filename));
+        else
+          e_util_dialog_internal(_("Error"), _("Could not create a file!"));
+     }
    free(filename);
 }
 
@@ -9535,6 +9555,7 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
      {
         if (dir && ecore_file_mkdir(buf))
           {
+             ecore_thread_global_data_set("efm_pending_filename", strdup(buf), free);
              ecore_thread_feedback(eth, strdup(buf));
              return;
           }
@@ -9544,6 +9565,7 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
              if (fd)
                {
                   close(fd);
+                  ecore_thread_global_data_set("efm_pending_filename", strdup(buf), free);
                   ecore_thread_feedback(eth, strdup(buf));
                   return;
                }
@@ -9560,6 +9582,8 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
           {
              if (dir && ecore_file_mkdir(buf))
                {
+
+                  ecore_thread_global_data_set("efm_pending_filename", strdup(buf), free);
                   ecore_thread_feedback(eth, strdup(buf));
                   return;
                }
@@ -9569,6 +9593,7 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
                   if (fd)
                     {
                        close(fd);
+                       ecore_thread_global_data_set("efm_pending_filename", strdup(buf), free);
                        ecore_thread_feedback(eth, strdup(buf));
                        return;
                     }
