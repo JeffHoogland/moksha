@@ -1,3 +1,7 @@
+2013-09-20 Mike Blumenkrantz
+
+        * Check mouse location when clicking menus, only activate items when clicking in the menu
+
 2013-09-19 Mike Blumenkrantz
 
         * Fix bug where new files could not be created repeatedly

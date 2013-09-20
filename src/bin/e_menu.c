@@ -2969,7 +2969,16 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
          */
      }
    else
-     ret = _e_menu_active_call();
+     {
+        E_Menu *m = _e_menu_active_get();
+
+        if (m && E_INSIDE(ev->root.x, ev->root.y,
+                          m->zone->x + m->cur.x,
+                          m->zone->y + m->cur.y,
+                          m->zone->x + m->cur.x + m->cur.w,
+                          m->zone->y + m->cur.y + m->cur.h))
+          ret = _e_menu_active_call();
+     }
    _e_menu_activate_maybe_drag = 0;
    _e_menu_activate_dragging = 0;
    if (ret == 1)
