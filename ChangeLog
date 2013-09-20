@@ -1,3 +1,7 @@
+2013-09-19 Mike Blumenkrantz
+
+        * Fix bug where new files could not be created repeatedly
+
 2013-08-02 Deon Thomas (PrinceAMD)
 	* fixed stall on startup because xinerama started before randr (backports).
 
