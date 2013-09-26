@@ -65,7 +65,15 @@ _mixer_fill_cards_info(E_Config_Dialog_Data *cfdata)
      }
 
    if (cfdata->card_num < 0)
-     cfdata->card_num = 0;
+     {
+        card = eina_list_nth(cfdata->cards, 0);
+        if (card)
+          {
+             cfdata->card_num = 0;
+             eina_stringshare_del(cfdata->card);
+             cfdata->card = eina_stringshare_ref(card);
+          }
+     }
 }
 
 static void
