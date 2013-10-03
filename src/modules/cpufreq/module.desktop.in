@@ -2,7 +2,6 @@
 Encoding=UTF-8
 Type=Link
 Name=Cpufreq
-Name[Name]=Cpufreq
 Name[ab]=
 Name[ca]=Freqüència de la CPU
 Name[cs]=Frekvence procesoru
