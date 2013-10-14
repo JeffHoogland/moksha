@@ -1,3 +1,7 @@
+2013-10-14 Mike Blumenkrantz
+
+        * Fix event clipping on filemanager icons
+
 2013-09-20 Mike Blumenkrantz
 
         * Check mouse location when clicking menus, only activate items when clicking in the menu

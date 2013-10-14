@@ -4826,6 +4826,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    evas_object_stack_above(ic->rect, ic->obj);
    _e_fm2_icon_label_set(ic, ic->obj);
    evas_object_clip_set(ic->obj, ic->sd->clip);
+   evas_object_clip_set(ic->rect, ic->sd->clip);
    evas_object_move(ic->obj,
                     ic->sd->x + ic->x - ic->sd->pos.x,
                     ic->sd->y + ic->y - ic->sd->pos.y);
