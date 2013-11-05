@@ -1,5 +1,7 @@
-2013-10-14 Eduardo Lima (Etrunko)
+2013-11-05 Tom Hacohen
+	* wsod: Fixed gdb hangs when generating backtraces.
 
+2013-10-14 Eduardo Lima (Etrunko)
         * 0.17.5 release
 
 2013-10-14 Mike Blumenkrantz
