@@ -165,7 +165,7 @@ main(int argc,
                  "-ex 'set logging file %s' "
                  "-ex 'set logging on' "
                  "-ex 'thread apply all backtrace full' "
-                 "-ex detach &> /dev/null < /dev/zero",
+                 "-ex detach > /dev/null 2>&1 < /dev/zero",
                  cmd,
 		 pid,
 		 output ?: "e-output.txt");
