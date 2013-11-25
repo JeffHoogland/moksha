@@ -45,6 +45,7 @@ static void _e_entry_cb_paste(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_select_all(void *data, E_Menu *m, E_Menu_Item *mi);
 static void _e_entry_cb_delete(void *data, E_Menu *m , E_Menu_Item *mi );
 static void _e_entry_mouse_down_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _entry_recalc_size(Evas_Object *object);
 /* local subsystem globals */
 static Evas_Smart *_e_entry_smart = NULL;
 static int _e_entry_smart_use = 0;
@@ -128,6 +129,9 @@ e_entry_text_set(Evas_Object *entry, const char *_text)
    sd->changing--;
    evas_object_smart_callback_call(entry, "changed", NULL);
    free(text);
+
+   edje_object_size_min_calc(sd->entry_object, &sd->min_width, &sd->height);
+   _entry_recalc_size(entry);
 }
 
 /**
