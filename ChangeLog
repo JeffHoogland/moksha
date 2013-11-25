@@ -1,4 +1,9 @@
+2013-11-25 Tom Hacohen
+
+	* Entry: Fixed issues with entry not scrolling to cursor.
+
 2013-11-05 Tom Hacohen
+
 	* wsod: Fixed gdb hangs when generating backtraces.
 
 2013-10-14 Eduardo Lima (Etrunko)

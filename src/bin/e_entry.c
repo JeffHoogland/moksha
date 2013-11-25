@@ -698,6 +698,13 @@ _entry_recalc_size(Evas_Object *object)
    evas_object_geometry_get(sd->entry_object, NULL, NULL, &pw, &ph);
    if ((w == pw) && (h == ph)) return;
    evas_object_resize(sd->entry_object, w, h);
+
+     {
+        Evas_Coord cx, cy, cw, ch;
+        edje_object_part_text_cursor_geometry_get(sd->entry_object,
+              ENTRY_PART_NAME, &cx, &cy, &cw, &ch);
+        e_scrollframe_child_region_show(sd->scroll_object, cx, cy, cw, ch);
+     }
 }
 
 static void

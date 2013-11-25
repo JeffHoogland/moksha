@@ -147,3 +147,4 @@ Fixes:
     * fixed bug with filemanager setting path with too many spaces when opened from menu
     * fix remember size/position apply
     * wsod: Fixed gdb hangs when generating backtraces.
+    * Entry: Fixed issues with entry not scrolling to cursor.
