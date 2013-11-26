@@ -1,3 +1,7 @@
+2013-11-26 dieter.e
+
+        * fixed potential crashes when switching desktops and closing windows
+
 2013-11-25 Tom Hacohen
 
 	* Entry: Fixed issues with entry not scrolling to cursor.

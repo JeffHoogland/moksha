@@ -5006,6 +5006,19 @@ _e_border_free(E_Border *bd)
 
         focused = NULL;
      }
+
+   if (warp_timer_border == bd)
+     {
+        warp_to = 0;
+        warp_timer_border = NULL;
+        if (warp_timer)
+          {
+             ecore_timer_del(warp_timer);
+             warp_timer = NULL;
+             e_border_focus_lock_set(EINA_FALSE);
+          }
+     }
+
    E_FREE_LIST(bd->handlers, ecore_event_handler_del);
    if (bd->remember)
      {
@@ -5114,6 +5127,7 @@ _e_border_del(E_Border *bd)
    E_Event_Border_Remove *ev;
    E_Border *child;
 
+   bd->take_focus = bd->want_focus = 0;
    if (bd == focused)
      {
         focused = NULL;
@@ -5123,6 +5137,18 @@ _e_border_del(E_Border *bd)
      focusing = NULL;
 
    focus_next = eina_list_remove(focus_next, bd);
+
+   if (warp_timer_border == bd)
+     {
+        warp_to = 0;
+        warp_timer_border = NULL;
+        if (warp_timer)
+          {
+             ecore_timer_del(warp_timer);
+             warp_timer = NULL;
+             e_border_focus_lock_set(EINA_FALSE);
+          }
+     }
 
    if (bd->fullscreen) bd->desk->fullscreen_borders--;
 
