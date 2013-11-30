@@ -517,8 +517,7 @@ main(int argc, char **argv)
                               {
                                  /* call e_sys gdb */
                                  snprintf(buffer, 4096,
-                                          "%s/enlightenment/utils/enlightenment_sys gdb %i %s/.e-crashdump.txt",
-                                          eina_prefix_lib_get(pfx),
+                                          "gdb %i %s/.e-crashdump.txt",
                                           child,
                                           home);
                                  r = system(buffer);
