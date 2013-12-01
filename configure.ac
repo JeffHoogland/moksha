@@ -75,7 +75,24 @@ EFL_CHECK_PATH_MAX
 AC_CHECK_FUNCS(setenv)
 AC_CHECK_FUNCS(unsetenv)
 AC_CHECK_FUNCS(clearenv)
-AC_CHECK_HEADERS([features.h])
+AC_CHECK_HEADERS(features.h)
+
+case "$host_os" in
+   darwin*)
+      AC_DEFINE([environ], [(*_NSGetEnviron())],
+                ["apple doesn't follow POSIX in this case."])
+      ;;
+   *)
+      ;;
+esac
+AC_TRY_COMPILE([
+#define _GNU_SOURCE 1
+#include <unistd.h>
+    ],[
+extern char **environ;
+    ],[
+AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
+    ])
 
 efl_version="1.7.9"
 AC_SUBST(efl_version)

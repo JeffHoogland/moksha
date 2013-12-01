@@ -8,6 +8,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#ifdef HAVE_ENVIRON
+# define _GNU_SOURCE 1
+#endif
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
@@ -21,6 +24,10 @@
 #include <alloca.h>
 #endif
 #include <Eina.h>
+
+#ifdef HAVE_ENVIRON
+extern char **environ;
+#endif
 
 /* local subsystem functions */
 #ifdef HAVE_EEZE_MOUNT
@@ -147,17 +154,111 @@ main(int argc,
    /* sanitize environment */
 #ifdef HAVE_UNSETENV
 # define NOENV(x) unsetenv(x)
-#else
-# define NOENV(x)
-#endif
+   /* pass 1 - just nuke known dangerous env vars brutally if possible via
+    * unsetenv(). if you don't have unsetenv... there's pass 2 and 3 */
    NOENV("IFS");
+   NOENV("CDPATH");
+   NOENV("LOCALDOMAIN");
+   NOENV("RES_OPTIONS");
+   NOENV("HOSTALIASES");
+   NOENV("NLSPATH");
+   NOENV("PATH_LOCALE");
+   NOENV("COLORTERM");
+   NOENV("LANG");
+   NOENV("LANGUAGE");
+   NOENV("LINGUAS");
+   NOENV("TERM");
    NOENV("LD_PRELOAD");
-   NOENV("PYTHONPATH");
    NOENV("LD_LIBRARY_PATH");
-#ifdef HAVE_CLEARENV
-     clearenv();
+   NOENV("SHLIB_PATH");
+   NOENV("LIBPATH");
+   NOENV("AUTHSTATE");
+   NOENV("DYLD_*");
+   NOENV("KRB_CONF*");
+   NOENV("KRBCONFDIR");
+   NOENV("KRBTKFILE");
+   NOENV("KRB5_CONFIG*");
+   NOENV("KRB5_KTNAME");
+   NOENV("VAR_ACE");
+   NOENV("USR_ACE");
+   NOENV("DLC_ACE");
+   NOENV("TERMINFO");
+   NOENV("TERMINFO_DIRS");
+   NOENV("TERMPATH");
+   NOENV("TERMCAP");
+   NOENV("ENV");
+   NOENV("BASH_ENV");
+   NOENV("PS4");
+   NOENV("GLOBIGNORE");
+   NOENV("SHELLOPTS");
+   NOENV("JAVA_TOOL_OPTIONS");
+   NOENV("PERLIO_DEBUG");
+   NOENV("PERLLIB");
+   NOENV("PERL5LIB");
+   NOENV("PERL5OPT");
+   NOENV("PERL5DB");
+   NOENV("FPATH");
+   NOENV("NULLCMD");
+   NOENV("READNULLCMD");
+   NOENV("ZDOTDIR");
+   NOENV("TMPPREFIX");
+   NOENV("PYTHONPATH");
+   NOENV("PYTHONHOME");
+   NOENV("PYTHONINSPECT");
+   NOENV("RUBYLIB");
+   NOENV("RUBYOPT");
+# ifdef HAVE_ENVIRON
+   if (environ)
+     {
+        int again;
+        char *tmp, *p;
+
+        /* go over environment array again and again... safely */
+        do
+          {
+             again = 0;
+
+             /* walk through and find first entry that we don't like */
+             for (i = 0; environ[i]; i++)
+               {
+                  /* if it begins with any of these, it's possibly nasty */
+                  if ((!strncmp(environ[i], "LD_", 3)) ||
+                      (!strncmp(environ[i], "_RLD_", 5)) ||
+                      (!strncmp(environ[i], "LC_", 3)) ||
+                      (!strncmp(environ[i], "LDR_", 3)))
+                    {
+                       /* unset it */
+                       tmp = strdup(environ[i]);
+                       if (!tmp) abort();
+                       p = strchr(tmp, '=');
+                       if (!p) abort();
+                       *p = 0;
+                       NOENV(p);
+                       free(tmp);
+                       /* and mark our do to try again from the start in case
+                        * unsetenv changes environ ptr */
+                       again = 1;
+                       break;
+                    }
+               }
+          }
+        while (again);
+     }
+# endif
 #endif
-   /* set path and ifs to minimal defaults */
+
+   /* pass 2 - clear entire environment so it doesn't exist at all. if you
+    * can't do this... you're possibly in trouble... but the worst is still
+    * fixed in pass 3 */
+#ifdef HAVE_CLEARENV
+   clearenv();
+#else
+# ifdef HAVE_ENVIRON
+   environ = NULL;
+# endif
+#endif
+
+   /* pass 3 - set path and ifs to minimal defaults */
    putenv("PATH=/bin:/usr/bin");
    putenv("IFS= \t\n");
 
