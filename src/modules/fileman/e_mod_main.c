@@ -372,8 +372,8 @@ e_mod_fileman_path_find(E_Zone *zone)
         path->zone = zone->container->num + zone->num;
         path->dev = eina_stringshare_add("desktop");
         fileman_config->paths = eina_list_append(fileman_config->paths, path);
+        path->desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
      }
-   path->desktop_mode = E_FM2_VIEW_MODE_CUSTOM_ICONS;
    if ((zone->container->num == 0) && (zone->num == 0))
      path->path = eina_stringshare_add("/");
    else
