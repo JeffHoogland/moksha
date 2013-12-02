@@ -4763,14 +4763,26 @@ _e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emi
 static void
 _e_fm2_icon_position(E_Fm2_Icon *ic)
 {
+   Eina_Bool list = _e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST;
    evas_object_move(ic->obj,
                     ic->sd->x + ic->x - ic->sd->pos.x,
                     ic->sd->y + ic->y - ic->sd->pos.y);
    evas_object_resize(ic->obj, ic->w, ic->h);
-   evas_object_move(ic->rect,
-                    ic->sd->x + ic->x - ic->sd->pos.x,
-                    ic->sd->y + ic->y - ic->sd->pos.y);
-   evas_object_resize(ic->rect, ic->w, ic->h);
+   if (list)
+     {
+        /* only resize vertically for list view */
+        evas_object_move(ic->rect,
+                         ic->sd->x + ic->x - ic->sd->pos.x,
+                         ic->sd->y + ic->y - ic->sd->pos.y + (0.1 * ic->h));
+        evas_object_resize(ic->rect, ic->w, ic->h * 0.8);
+     }
+   else
+     {
+        evas_object_move(ic->rect,
+                         ic->sd->x + ic->x - ic->sd->pos.x + (0.1 * ic->w),
+                         ic->sd->y + ic->y - ic->sd->pos.y + (0.1 * ic->h));
+        evas_object_resize(ic->rect, ic->w * 0.8, ic->h * 0.8);
+     }
 }
 
 static void
