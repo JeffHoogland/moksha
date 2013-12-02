@@ -4761,6 +4761,19 @@ _e_fm2_icon_label_click(void *data, Evas_Object *obj __UNUSED__, const char *emi
 }
 
 static void
+_e_fm2_icon_position(E_Fm2_Icon *ic)
+{
+   evas_object_move(ic->obj,
+                    ic->sd->x + ic->x - ic->sd->pos.x,
+                    ic->sd->y + ic->y - ic->sd->pos.y);
+   evas_object_resize(ic->obj, ic->w, ic->h);
+   evas_object_move(ic->rect,
+                    ic->sd->x + ic->x - ic->sd->pos.x,
+                    ic->sd->y + ic->y - ic->sd->pos.y);
+   evas_object_resize(ic->rect, ic->w, ic->h);
+}
+
+static void
 _e_fm2_icon_realize(E_Fm2_Icon *ic)
 {
    Evas *e;
@@ -4827,14 +4840,7 @@ _e_fm2_icon_realize(E_Fm2_Icon *ic)
    _e_fm2_icon_label_set(ic, ic->obj);
    evas_object_clip_set(ic->obj, ic->sd->clip);
    evas_object_clip_set(ic->rect, ic->sd->clip);
-   evas_object_move(ic->obj,
-                    ic->sd->x + ic->x - ic->sd->pos.x,
-                    ic->sd->y + ic->y - ic->sd->pos.y);
-   evas_object_move(ic->rect,
-                    ic->sd->x + ic->x - ic->sd->pos.x,
-                    ic->sd->y + ic->y - ic->sd->pos.y);
-   evas_object_resize(ic->obj, ic->w, ic->h);
-   evas_object_resize(ic->rect, ic->w, ic->h);
+   _e_fm2_icon_position(ic);
 
    evas_object_event_callback_add(ic->rect, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_icon_mouse_down, ic);
    evas_object_event_callback_add(ic->rect, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_icon_mouse_up, ic);
@@ -8316,14 +8322,7 @@ _e_fm2_obj_icons_place(E_Fm2_Smart_Data *sd)
                     {
                        e_thumb_icon_end(ic->obj_icon);
                     }
-                  evas_object_move(ic->obj,
-                                   sd->x + ic->x - sd->pos.x,
-                                   sd->y + ic->y - sd->pos.y);
-                  evas_object_move(ic->rect,
-                                   sd->x + ic->x - sd->pos.x,
-                                   sd->y + ic->y - sd->pos.y);
-                  evas_object_resize(ic->obj, ic->w, ic->h);
-                  evas_object_resize(ic->rect, ic->w, ic->h);
+                  _e_fm2_icon_position(ic);
                   _e_fm2_icon_thumb(ic, ic->obj_icon, 0);
                   if (_e_fm2_view_mode_get(ic->sd) != E_FM2_VIEW_MODE_LIST) continue;
                   /* FIXME: this is probably something that should be unnecessary,
