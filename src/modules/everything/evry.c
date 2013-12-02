@@ -1577,6 +1577,9 @@ _evry_state_pop(Evry_Selector *sel, int immediate)
 
    if (!s->delete_me)
      {
+        if (win->state_clearing == s)
+          win->state_clearing = NULL;
+        ecore_timer_del(s->clear_timer);
         E_FREE(s->inp);
         E_FREE(s);
      }
