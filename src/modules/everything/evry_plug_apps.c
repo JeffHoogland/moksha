@@ -383,6 +383,7 @@ _item_desktop_add(Plugin *p, Efreet_Desktop *desktop, int match)
 {
    Evry_Item_App *app = NULL;
 
+   if (desktop->no_display) return;
    if ((app = eina_hash_find(p->added, desktop->exec)))
      {
         if (eina_list_data_find_list(p->base.items, app))
