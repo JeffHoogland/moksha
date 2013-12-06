@@ -233,7 +233,7 @@ main(int argc,
                        p = strchr(tmp, '=');
                        if (!p) abort();
                        *p = 0;
-                       NOENV(p);
+                       NOENV(tmp);
                        free(tmp);
                        /* and mark our do to try again from the start in case
                         * unsetenv changes environ ptr */
