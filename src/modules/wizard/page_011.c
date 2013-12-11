@@ -149,10 +149,11 @@ wizard_page_show(E_Wizard_Page *pg)
      {
         Layout *lay;
         const char *label;
+        char buf[PATH_MAX];
 
         lay = l->data;
-        ic = e_icon_add(pg->evas);
-        e_xkb_e_icon_flag_setup(ic, lay->name);
+        e_xkb_flag_file_get(buf, sizeof(buf), lay->name);
+        ic = e_util_icon_add(buf, pg->evas);
         label = lay->label;
         if (!label) label = "Unknown";
         e_widget_ilist_append(ob, ic, _(label), NULL, NULL, lay->name);
