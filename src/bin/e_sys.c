@@ -509,6 +509,7 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
                   e_dialog_show(dia);
                   _e_sys_logout_begin_time = now;
                }
+             if (_e_sys_resume_func) _e_sys_resume_func();
              return ECORE_CALLBACK_RENEW;
           }
      }
