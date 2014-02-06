@@ -414,6 +414,10 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    if (e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err)) goto error;
    EINA_SAFETY_ON_TRUE_GOTO(err, error);
 
+   /* skip partitions with presentation hide set */
+   if (e_ukit_property_bool_get(ret, "DevicePresentationHide", &err)) goto error;
+   EINA_SAFETY_ON_TRUE_GOTO(err, error);
+
    /* skip volumes with volume.ignore set */
    if (e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err)) goto error;
    EINA_SAFETY_ON_TRUE_GOTO(err, error);
