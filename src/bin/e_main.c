@@ -1,9 +1,14 @@
 #include "e.h"
+
+#ifdef __linux__
+# include <sys/prctl.h>
+#endif
+
+#define MAX_LEVEL 80
+
 #ifdef HAVE_ECORE_IMF
 # include <Ecore_IMF.h>
 #endif
-
-#define MAX_LEVEL 64
 
 #define TS_DO
 #ifdef TS_DO
@@ -170,6 +175,15 @@ main(int argc, char **argv)
    double t = 0.0, tstart = 0.0;
    char *s = NULL, buff[32];
    struct sigaction action;
+
+#ifdef __linux__
+# ifdef PR_SET_PTRACER
+#  ifdef PR_SET_PTRACER_ANY
+   prctl(PR_SET_PTRACER, PR_SET_PTRACER_ANY);
+#  endif
+# endif
+#endif
+   
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_unix_get();
 #endif
