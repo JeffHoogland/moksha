@@ -52,7 +52,7 @@ group { name: "e/widgets/border/default/border";
             color_class: "border_top";
             image.normal: "vgrad_med_lighter.png";
             rel2.to_y: "title2";
-            rel2.offset: -1 -4;
+            rel2.offset: -1 0;
             fill.smooth: 0;
             TILED_HORIZ(120)
          }
