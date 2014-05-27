@@ -1386,6 +1386,7 @@ msgstr "%s mevcut değil."
 msgid "%u file"
 msgid_plural "%u files"
 msgstr[0] "%u dosya"
+msgstr[1] "%u dosya"
 
 #: src/bin/e_fm.c:3083
 msgid "Mount Error"
@@ -6854,6 +6855,7 @@ msgstr "Kocaman"
 msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d piksel"
+msgstr[1] "%d piksel"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
 msgid "Enable Custom Font Classes"
@@ -8018,6 +8020,7 @@ msgstr "Eylemler"
 msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] "%d öge"
+msgstr[1] "%d öge"
 
 #: src/modules/everything/evry_plug_aggregator.c:302
 msgid "No plugins loaded"
@@ -8247,6 +8250,7 @@ msgstr "Aç"
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d dosya"
+msgstr[1] "%d dosya"
 
 #: src/modules/fileman/e_fwin.c:2617
 msgid "Known Applications"
