@@ -444,12 +444,13 @@ main(int argc, char **argv)
              pid_t result;
              int status;
              Eina_Bool done = EINA_FALSE;
+             Eina_Bool remember_sigill = EINA_FALSE;
+             Eina_Bool remember_sigusr1 = EINA_FALSE;
+	     Eina_Bool bad_kernel = EINA_FALSE;
 #ifdef HAVE_SYS_PTRACE_H
              if (!really_know)
                ptrace(PT_ATTACH, child, NULL, NULL);
-#endif
              result = waitpid(child, &status, 0);
-#ifdef HAVE_SYS_PTRACE_H
              if ((!really_know) && (!stop_ptrace))
                {
                   if (WIFSTOPPED(status))
@@ -497,7 +498,7 @@ main(int argc, char **argv)
                             if (r != 0 ||
                                 (sig.si_signo != SIGSEGV &&
                                  sig.si_signo != SIGFPE &&
-                                 sig.si_signo != SIGBUS &&
+//                                 sig.si_signo != SIGBUS &&
                                  sig.si_signo != SIGABRT))
                               {
 #ifdef HAVE_SYS_PTRACE_H
@@ -513,11 +514,31 @@ main(int argc, char **argv)
 #endif
                             /* And call gdb if available */
                             r = 0;
-                            if (home)
+			    /* Check if patch to prevent ptrace to another process is present in the kernel. */
+			    {
+			       int fd;
+			       char c;
+
+			       fd = open("/proc/sys/kernel/yama/ptrace_scope", O_RDONLY);
+			       if (fd != -1)
+				 {
+				    if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
+				      bad_kernel = EINA_TRUE;
+				 }
+			       close(fd);
+			    }
+
+                            if (home && !bad_kernel)
                               {
                                  /* call e_sys gdb */
-                                 snprintf(buffer, 4096,
-                                          "gdb %i %s/.e-crashdump.txt",
+                                 snprintf(buffer, sizeof(buffer),
+                                          "gdb "
+                                          "--pid=%i "
+                                          "-batch "
+                                          "-ex 'set logging file %s/.e-crashdump.txt' "
+					  "-ex 'set logging on' "
+                                          "-ex 'thread apply all backtrace full' "
+                                          "-ex detach > /dev/null 2>&1 < /dev/zero",
                                           child,
                                           home);
                                  r = system(buffer);
@@ -536,13 +557,13 @@ main(int argc, char **argv)
                             /* call e_alert */
                             snprintf(buffer, 4096,
                                      backtrace_str ?
-                                     "%s/enlightenment/utils/enlightenment_alert %i %i '%s' %i" :
-                                     "%s/enlightenment/utils/enlightenment_alert %i %i '%s' %i",
+                                     "%s/enlightenment/utils/enlightenment_alert %i %i %i '%s'" :
+                                     "%s/enlightenment/utils/enlightenment_alert %i %i %i",
                                      eina_prefix_lib_get(pfx),
                                      sig.si_signo == SIGSEGV && remember_sigusr1 ? SIGILL : sig.si_signo,
                                      child,
-                                     backtrace_str,
-                                     r);
+                                     r,
+                                     backtrace_str);
                             r = system(buffer);
 
                             /* kill e */
