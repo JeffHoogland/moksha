@@ -444,8 +444,6 @@ main(int argc, char **argv)
              pid_t result;
              int status;
              Eina_Bool done = EINA_FALSE;
-             Eina_Bool remember_sigill = EINA_FALSE;
-             Eina_Bool remember_sigusr1 = EINA_FALSE;
 	     Eina_Bool bad_kernel = EINA_FALSE;
 #ifdef HAVE_SYS_PTRACE_H
              if (!really_know)
