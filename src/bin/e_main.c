@@ -152,6 +152,13 @@ _xdg_data_dirs_augment(void)
         snprintf(buf, sizeof(buf), "%s:/usr/local/share:/usr/share", newpath);
         e_util_env_set("XDG_DATA_DIRS", buf);
      }
+
+   /* set menu prefix so we get our e menu */
+   if (!getenv("XDG_MENU_PREFIX"))
+     {
+        e_util_env_set("XDG_MENU_PREFIX", "e-");
+     }
+
 }
 
 static void
