@@ -18,7 +18,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
    char buf[PATH_MAX];
 
-   snprintf(buf, sizeof(buf), "%s/etc/xdg/menus/enlightenment.menu",
+   snprintf(buf, sizeof(buf), "%s/etc/xdg/menus/e-applications.menu",
             e_prefix_get());
    e_config->default_system_menu = eina_stringshare_add(buf);
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */

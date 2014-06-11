@@ -162,7 +162,7 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
         tdesc = NULL;
         e_user_homedir_concat(buf, sizeof(buf), 
                               ".config/menus/applications.menu");
-        snprintf(buf2, sizeof(buf2), "%s/etc/xdg/menus/enlightenment.menu", 
+        snprintf(buf2, sizeof(buf2), "%s/etc/xdg/menus/e-applications.menu", 
                  e_prefix_get());
         if (!strcmp("/etc/xdg/menus/applications.menu", file))
           {

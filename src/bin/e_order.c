@@ -32,12 +32,12 @@ e_order_init(void)
              char buf[PATH_MAX];
 
              E_FREE(menu_file);
-             snprintf(buf, sizeof(buf), "/etc/xdg/menus/enlightenment.menu");
+             snprintf(buf, sizeof(buf), "/etc/xdg/menus/e-applications.menu");
              if (ecore_file_exists(buf)) menu_file = strdup(buf);
              else
                {
                   snprintf(buf, sizeof(buf),
-                           "%s/etc/xdg/menus/enlightenment.menu",
+                           "%s/etc/xdg/menus/e-applications.menu",
                            e_prefix_get());
                   if (ecore_file_exists(buf)) menu_file = strdup(buf);
                }
