@@ -132,12 +132,13 @@ EAPI Eina_Bool e_nopause = EINA_FALSE;
 static void
 _xdg_data_dirs_augment(void)
 {
-   const char *s = getenv("XDG_DATA_DIRS");
+   const char *s;
    const char *p = e_prefix_get();
    char newpath[4096], buf[4096];
 
    if (!p) return;
-   
+
+   s = getenv("XDG_DATA_DIRS");
    snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
    if (s)
      {
@@ -152,6 +153,23 @@ _xdg_data_dirs_augment(void)
         snprintf(buf, sizeof(buf), "%s:/usr/local/share:/usr/share", newpath);
         e_util_env_set("XDG_DATA_DIRS", buf);
      }
+
+   s = getenv("XDG_CONFIG_DIRS");
+   snprintf(newpath, sizeof(newpath), "%s/etc/xdg", p);
+   if (s)
+     {
+        if (strncmp(s, newpath, strlen(newpath)))
+          {
+             snprintf(buf, sizeof(buf), "%s:%s", newpath, s);
+             e_util_env_set("XDG_CONFIG_DIRS", buf);
+          }
+     }
+   else
+     {
+        snprintf(buf, sizeof(buf), "%s:/etc/xdg", newpath);
+        e_util_env_set("XDG_CONFIG_DIRS", buf);
+     }
+
 
    /* set menu prefix so we get our e menu */
    if (!getenv("XDG_MENU_PREFIX"))
