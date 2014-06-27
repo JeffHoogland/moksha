@@ -1,3 +1,9 @@
+2014-06-27 Samuel F. Baggen (Thanatermesis)
+
+        * highlight correct keybinding when modifying an existing binding (backports)
+        * XDG menu prefix merge fixes (backports)
+        * fixed backtraces generating (backports)
+
 2013-12-05 Eduardo Lima (Etrunko)
 
         * 0.17.6 release
