@@ -1,3 +1,8 @@
+2014-08-09 Samuel F. Baggen (Thanatermesis)
+
+		* fix for window border titles and sizes (backports)
+		* fix for text that looked "cut" in some elements like wizard buttons (backports)
+
 2014-06-27 Samuel F. Baggen (Thanatermesis)
 
         * highlight correct keybinding when modifying an existing binding (backports)

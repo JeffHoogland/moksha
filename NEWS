@@ -6,6 +6,7 @@ Additions:
 Deprecations:
 
 Changes:
+    * backports / fixes for make it working with efl/elementary in versions bigger than 1.9, maybe not works correctly with lower versions now
 
 Removed:
 
