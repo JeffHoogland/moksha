@@ -167,6 +167,7 @@ group { name: "e/widgets/about/main";
             rel2.offset: 3 3;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.0 0.0;
                text_class: "about_title";
             }
@@ -184,6 +185,7 @@ group { name: "e/widgets/about/main";
             rel2.offset: -4 3;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 1.0 0.0;
                text_class: "about_version";
             }
@@ -221,6 +223,7 @@ group { name: "e/widgets/about/main";
             align: 0.5 1.0;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "button";
             }

@@ -35,6 +35,7 @@ group { name: "e/theme/about";
             text { font: "Sans:style=Bold"; size: 64;
                text: "Dark";
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
             }
          }
@@ -55,6 +56,7 @@ group { name: "e/theme/about";
             text { font: "Sans"; size: 10;
                text: "The default theme for Enlightenment";
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 1.0;
             }
          }
@@ -107,6 +109,7 @@ group { name: "e/theme/about";
             min: 85 0;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "button";
             }
@@ -145,6 +148,7 @@ group { name: "e/theme/about";
             min: 85 0;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "button";
             }

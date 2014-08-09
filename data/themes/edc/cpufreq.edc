@@ -225,6 +225,7 @@ group { name: "e/modules/cpufreq/main";
             color_class: "module_label";
             text { font: "Sans"; size: 6;
                min: 1 1;
+               ellipsis: -1;
                text_class: "module_small";
             }
          }

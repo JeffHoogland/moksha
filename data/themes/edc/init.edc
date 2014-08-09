@@ -107,6 +107,7 @@ group { name: "e/init/splash";
             text { font: "Sans"; size: 8;
                text: "0.17.0";
                min: 1 1;
+               ellipsis: -1;
                align: 1.0 1.0;
                text_class: "init_version";
             }

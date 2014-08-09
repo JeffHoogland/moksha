@@ -55,6 +55,7 @@ group { name: "e/widgets/radio";
             color_class: "radio_text";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.0 0.5;
                text_class: "radio_button";
             }

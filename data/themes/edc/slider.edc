@@ -92,6 +92,7 @@ group { name: "e/widgets/slider_horizontal";
          description { state: "active" 0.0;
             inherit: "default" 0.0;
             text.min: 1 1;
+            text.ellipsis: -1;
             visible: 1;
             max: 99999 99999;
          }
@@ -318,6 +319,7 @@ group { name: "e/widgets/slider_vertical";
          description { state: "active" 0.0;
             inherit: "default" 0.0;
             text.min: 1 1;
+            text.ellipsis: -1;
             visible: 1;
             max: 99999 99999;
          }

@@ -11,6 +11,7 @@ group { name: "e/widgets/fontpreview";
             color3: 0 0 0 128;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "_e_font_preview";
             }

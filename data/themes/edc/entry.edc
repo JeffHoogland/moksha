@@ -74,6 +74,7 @@ group { name: "e/widgets/entry/text";
                text: "";
                style: "entry_textblock_style";
                min: 1 1;
+               ellipsis: -1;
                align: 0.0 0.5;
             }
          }

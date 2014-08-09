@@ -69,6 +69,7 @@ group { name: "e/modules/conf_edgebindings/selection";
             text { font: "Sans"; size: 10;
                text_class: "label";
                min: 1 1;
+               ellipsis: -1;
             }
          }
       }
@@ -224,6 +225,7 @@ offset: -5 -45;
             text {
                style: "edge_binding_style";
                min: 1 1;
+               ellipsis: -1;
             }
          }
       }

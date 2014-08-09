@@ -61,6 +61,7 @@ group { name: "e/modules/conf_colors/preview/text";
             text { font: "Sans"; size: 10;
                text: "Text";
                min: 1 1;
+               ellipsis: -1;
             }
          }
       }
@@ -74,6 +75,7 @@ group { name: "e/modules/conf_colors/preview/text";
             text { font: "Sans:style=Bold"; size: 16;
                text: "Ab";
                min: 1 1;
+               ellipsis: -1;
             }
          }
       }

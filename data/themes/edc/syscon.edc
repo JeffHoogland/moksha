@@ -79,6 +79,7 @@ group { name: "e/widgets/syscon/main";
             align: 0.5 1.0;
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "button";
             }
@@ -178,6 +179,7 @@ group { name: "e/widgets/syscon/item/button";
             color_class: "button_text";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "button";
             }

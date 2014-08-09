@@ -104,6 +104,7 @@ group { name: "e/wizard/main";
             text { font: "Sans"; size: 10;
                text: "Next"; 
                min: 1 1;
+               ellipsis: -1;
             }
          }
          description { state: "disabled" 0.0;

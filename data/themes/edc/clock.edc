@@ -435,6 +435,8 @@ group { name: "e/modules/clock/digital";
              inherit: "default" 0.0;
              visible: 1;
              fixed: 1 1;
+             text.min: 1 1;
+             text.ellipsis: -1;
           }
        }
                        
@@ -818,6 +820,7 @@ group { name: "e/modules/clock/calendar/dayname";
             text { font: "Sans"; size: 8;
                text: "WWe";
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "module_small";
             }
@@ -880,6 +883,7 @@ group { name: "e/modules/clock/calendar/day";
             text { font: "Sans"; size: 10;
                text: "00";
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
             }
          }
@@ -911,6 +915,7 @@ group { name: "e/modules/clock/calendar/day";
             text { font: "Sans"; size: 10;
                text_source: "e.text.label";
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
             }
             visible: 0;

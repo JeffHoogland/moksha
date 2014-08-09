@@ -11,6 +11,7 @@ group { name: "e/widgets/label";
             color_class: "label_text";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.0 0.5;
                text_class: "label";
             }

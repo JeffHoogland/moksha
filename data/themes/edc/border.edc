@@ -1025,6 +1025,7 @@ group { name: "e/widgets/border/default/move";
             color_class: "move_text";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                text_class: "move_text";
             }
          }

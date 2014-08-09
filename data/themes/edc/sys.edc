@@ -47,6 +47,7 @@ group { name: "e/sys/logout";
             min: 20 80;
             text { style: "sys_style";
                min: 1 1;
+               ellipsis: -1;
             }
          }
       }

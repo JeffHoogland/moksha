@@ -261,6 +261,7 @@ group { name: "e/widgets/toolbar/item";
             color_class: "menu_item";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "menu_item";
             }

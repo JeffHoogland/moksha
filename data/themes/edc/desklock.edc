@@ -121,6 +121,7 @@ group { name: "e/desklock/login_box";
                min: 1 1;
                align: 0.0 0.5;
                text_class: "desklock_passwd";
+               ellipsis: -1;
             }
             fixed: 1 1;
          }

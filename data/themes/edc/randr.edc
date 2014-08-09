@@ -217,7 +217,8 @@ group { name: "e/conf/randr/main/frame";
             rel2.to: "e.swallow.preview";
             align: 0.5 1.0;
             text { style: "randr_name_style";
-               min: 1.0 1.0;
+               min: 1 1;
+               ellipsis: -1;
             }
          }
       }
@@ -231,7 +232,8 @@ group { name: "e/conf/randr/main/frame";
             rel2.to: "e.swallow.preview";
             align: 0.5 0.0;
             text { style: "randr_resolution_style";
-               min: 1.0 1.0;
+               min: 1 1;
+               ellipsis: -1;
             }
          }
       }
@@ -246,7 +248,8 @@ group { name: "e/conf/randr/main/frame";
             rel2.to: "e.swallow.preview";
             align: 0.5 0.0;
             text { style: "randr_position_style";
-               min: 1.0 1.0;
+               min: 1 1;
+               ellipsis: -1;
             }
          }
       }

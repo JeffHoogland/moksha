@@ -87,6 +87,7 @@ group { name: "e/fileman/default/list/variable";
                min: 1 1;
                align: 0.0 0.5;
                text_class: "ilist_item";
+               ellipsis: 0.0;
             }
          }
          description { state: "selected" 0.0;
@@ -111,6 +112,7 @@ group { name: "e/fileman/default/list/variable";
                text_source: "e.text.label";
                align: 0.0 0.5;
                text_class: "ilist_item";
+               ellipsis: 0.0;
             }
             visible: 0;
          }
@@ -139,6 +141,7 @@ group { name: "e/fileman/default/list/variable";
                text_source: "e.text.label";
                align: 0.0 0.5;
                text_class: "ilist_item";
+               ellipsis: 0.0;
             }
             visible: 0;
          }

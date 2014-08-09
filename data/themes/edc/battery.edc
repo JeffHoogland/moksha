@@ -319,6 +319,7 @@ group { name: "e/modules/battery/popup";
             text { font: "Sans:style=Bold"; size: 10;
                text: "Your battery is low!";
                min: 1 1;
+               ellipsis: -1;
                text_class: "module_large";
             }
          }
@@ -334,6 +335,7 @@ group { name: "e/modules/battery/popup";
             text { font: "Sans"; size: 10;
                text: "AC power is recommended.";
                min: 1 1;
+               ellipsis: -1;
                text_class: "module_normal";
             }
          }

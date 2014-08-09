@@ -37,6 +37,7 @@ group { name: "e/ilist";
             color_class: "ilist_typebuf";
             text { font: "Sans:style=Bold"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.5 0.5;
                text_class: "ilist_typebuf";
             }
@@ -146,6 +147,7 @@ group { name: "e/widgets/ilist";
             color_class: "ilist_item";
             text { font: "Sans"; size: 10;
                min: 1 1;
+               ellipsis: -1;
                align: 0.0 0.5;
                text_class: "ilist_item";
             }
