@@ -274,7 +274,7 @@ ALL_LINGUAS="bg ca cs da de el eo es fi fr fr_CH he hu it ja ko nb nl pl pt_BR r
 AC_SUBST(ALL_LINGUAS)
 
 m4_ifdef([AM_GNU_GETTEXT_VERSION], [
-AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT_VERSION([0.18])
 ])
 
 m4_ifdef([AC_GNU_GETTEXT], [
