@@ -139,7 +139,13 @@ _xdg_data_dirs_augment(void)
    if (!p) return;
 
    s = getenv("XDG_DATA_DIRS");
-   snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
+
+   // if our prefix is already /usr we should not append /usr/share here yet
+   if (strcmp(p, "/usr") == 0)
+     snprintf(newpath, sizeof(newpath), "%s", e_prefix_data_get());
+   else
+     snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
+
    if (s)
      {
         if (strncmp(s, newpath, strlen(newpath)))
