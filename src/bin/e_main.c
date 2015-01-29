@@ -140,8 +140,8 @@ _xdg_data_dirs_augment(void)
 
    s = getenv("XDG_DATA_DIRS");
 
-   // don't add e_prefix path if it is already /usr or /usr/local
-   if ((strcmp(p, "/usr") == 0) || (strcmp(p, "/usr/local") == 0))
+   // if our prefix is already /usr we should not append /usr/share here yet
+   if (strcmp(p, "/usr") == 0)
      snprintf(newpath, sizeof(newpath), "%s", e_prefix_data_get());
    else
      snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
