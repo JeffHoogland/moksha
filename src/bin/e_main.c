@@ -129,6 +129,20 @@ EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
 EAPI Eina_Bool e_nopause = EINA_FALSE;
 
+static Eina_Bool
+_xdg_check_str(const char *env, const char *str)
+{
+   const char *p;
+   size_t len;
+
+   len = strlen(str);
+   for (p = strstr(env, str); p; p++, p = strstr(p, str))
+     {
+        if ((!p[len]) || (p[len] == ':')) return EINA_TRUE;
+     }
+   return EINA_FALSE;
+}
+
 static void
 _xdg_data_dirs_augment(void)
 {
@@ -139,18 +153,27 @@ _xdg_data_dirs_augment(void)
    if (!p) return;
 
    s = getenv("XDG_DATA_DIRS");
-   snprintf(newpath, sizeof(newpath), "%s:%s/share", e_prefix_data_get(), p);
    if (s)
      {
-        if (strncmp(s, newpath, strlen(newpath)))
+        Eina_Bool pfxdata, pfx;
+
+        pfxdata = !_xdg_check_str(s, e_prefix_data_get());
+        snprintf(newpath, sizeof(newpath), "%s/share", p);
+        pfx = !_xdg_check_str(s, newpath);
+        if (pfxdata || pfx)
           {
-             snprintf(buf, sizeof(buf), "%s:%s", newpath, s);
+             snprintf(buf, sizeof(buf), "%s%s%s%s%s",
+               pfxdata ? e_prefix_data_get() : "",
+               pfxdata ? ":" : "",
+               pfx ? newpath : "",
+               pfx ? ":" : "",
+               s);
              e_util_env_set("XDG_DATA_DIRS", buf);
           }
      }
    else
      {
-        snprintf(buf, sizeof(buf), "%s:/usr/local/share:/usr/share", newpath);
+        snprintf(buf, sizeof(buf), "%s:%s/share:/usr/local/share:/usr/share", e_prefix_data_get(), p);
         e_util_env_set("XDG_DATA_DIRS", buf);
      }
 
@@ -158,7 +181,7 @@ _xdg_data_dirs_augment(void)
    snprintf(newpath, sizeof(newpath), "%s/etc/xdg", p);
    if (s)
      {
-        if (strncmp(s, newpath, strlen(newpath)))
+        if (!_xdg_check_str(s, newpath))
           {
              snprintf(buf, sizeof(buf), "%s:%s", newpath, s);
              e_util_env_set("XDG_CONFIG_DIRS", buf);
