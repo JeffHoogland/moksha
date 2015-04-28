@@ -7,7 +7,6 @@ xsession \
 input_methods \
 etc \
 icons \
-backgrounds \
 flags \
 favorites \
 desktop

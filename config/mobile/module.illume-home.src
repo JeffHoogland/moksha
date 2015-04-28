@@ -1,6 +1,0 @@
-group "Illume-Home_Cfg" struct {
-    value "version" int: 0;
-    value "icon_size" int: 120;
-    value "single_click" int: 1;
-    value "single_click_delay" int: 250;
-}
