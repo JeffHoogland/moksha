@@ -1,4 +1,4 @@
-Enlightenment 0.17.0
+Moksha 0.1.0
 
 Requirements:
 -------------
@@ -9,9 +9,6 @@ Must:
   xcb xcb-shape xcb-keysyms
   [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
   engine in evas, buffer engine in evas]
-
-NOTE: Users of DR16 will need to rename the $prefix/bin/enlightenment
-file prior to installing DR17 or it will be overwritten.
 
 You can also use the configure --prefix option to put e17 in a separate tree
 of its own (recommended) like:
