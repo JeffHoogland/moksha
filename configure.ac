@@ -1029,14 +1029,11 @@ data/tools/Makefile
 data/etc/Makefile
 data/etc/sysactions.conf
 data/icons/Makefile
-data/backgrounds/Makefile
 doc/Makefile
 doc/Doxyfile
 doc/e.dox
 config/Makefile
 config/default/Makefile
-config/standard/Makefile
-config/mobile/Makefile
 $po_makefile_in
 ])
 
