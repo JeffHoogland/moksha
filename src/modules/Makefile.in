@@ -369,7 +369,6 @@ am__installdirs = "$(DESTDIR)$(accesspkgdir)" \
 	"$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" \
 	"$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" \
 	"$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" \
-	"$(DESTDIR)$(wizard_desksdir)" \
 	"$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"
 LTLIBRARIES = $(accesspkg_LTLIBRARIES) $(backlightpkg_LTLIBRARIES) \
 	$(batterypkg_LTLIBRARIES) $(clockpkg_LTLIBRARIES) \
@@ -1569,7 +1568,7 @@ DATA = $(access_DATA) $(backlight_DATA) $(battery_DATA) $(clock_DATA) \
 	$(quickaccess_DATA) $(shot_DATA) $(start_DATA) $(syscon_DATA) \
 	$(systray_DATA) $(tasks_DATA) $(temperature_DATA) \
 	$(tiling_DATA) $(winlist_DATA) $(wizard_DATA) \
-	$(wizard_desks_DATA) $(wizard_desktop_DATA) $(xkbswitch_DATA)
+	$(wizard_desktop_DATA) $(xkbswitch_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -2116,10 +2115,6 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_FILEMAN_OPINFO_TRUE@fileman_opinfo_module_la_SOURCES = fileman_opinfo/e_mod_main.c
 @USE_MODULE_WIZARD_TRUE@wizarddir = $(MDIR)/wizard
 @USE_MODULE_WIZARD_TRUE@wizard_DATA = wizard/data/def-ibar.txt
-@USE_MODULE_WIZARD_TRUE@wizard_desksdir = $(MDIR)/wizard/extra_desktops
-@USE_MODULE_WIZARD_TRUE@wizard_desks_DATA = wizard/data/extra_desktops/mplayer.desktop \
-@USE_MODULE_WIZARD_TRUE@		    wizard/data/extra_desktops/xterm.desktop
-
 @USE_MODULE_WIZARD_TRUE@wizard_desktopdir = $(MDIR)/wizard/desktop
 @USE_MODULE_WIZARD_TRUE@wizard_desktop_DATA = wizard/data/desktop/home.desktop \
 @USE_MODULE_WIZARD_TRUE@		      wizard/data/desktop/root.desktop \
@@ -7997,27 +7992,6 @@ uninstall-wizardDATA:
 	@list='$(wizard_DATA)'; test -n "$(wizarddir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(wizarddir)'; $(am__uninstall_files_from_dir)
-install-wizard_desksDATA: $(wizard_desks_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(wizard_desks_DATA)'; test -n "$(wizard_desksdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(wizard_desksdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(wizard_desksdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(wizard_desksdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(wizard_desksdir)" || exit $$?; \
-	done
-
-uninstall-wizard_desksDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(wizard_desks_DATA)'; test -n "$(wizard_desksdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(wizard_desksdir)'; $(am__uninstall_files_from_dir)
 install-wizard_desktopDATA: $(wizard_desktop_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(wizard_desktop_DATA)'; test -n "$(wizard_desktopdir)" || list=; \
@@ -8220,7 +8194,7 @@ check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(comppkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(illume2pkgdir)" "$(DESTDIR)$(illume2policyillumedir)" "$(DESTDIR)$(illume2policytabletdir)" "$(DESTDIR)$(illume_bluetoothpkgdir)" "$(DESTDIR)$(illume_home_togglepkgdir)" "$(DESTDIR)$(illume_homepkgdir)" "$(DESTDIR)$(illume_indicatorpkgdir)" "$(DESTDIR)$(illume_kbd_togglepkgdir)" "$(DESTDIR)$(illume_keyboardpkgdir)" "$(DESTDIR)$(illume_mode_togglepkgdir)" "$(DESTDIR)$(illume_softkeypkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(compdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(illume2dir)" "$(DESTDIR)$(illume2keyboardsdir)" "$(DESTDIR)$(illume_bluetoothdir)" "$(DESTDIR)$(illume_homedir)" "$(DESTDIR)$(illume_home_toggledir)" "$(DESTDIR)$(illume_indicatordir)" "$(DESTDIR)$(illume_kbd_toggledir)" "$(DESTDIR)$(illume_keyboarddir)" "$(DESTDIR)$(illume_mode_toggledir)" "$(DESTDIR)$(illume_softkeydir)" "$(DESTDIR)$(illumedictsdir)" "$(DESTDIR)$(illumekeyboardsdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desksdir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
+	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(comppkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(illume2pkgdir)" "$(DESTDIR)$(illume2policyillumedir)" "$(DESTDIR)$(illume2policytabletdir)" "$(DESTDIR)$(illume_bluetoothpkgdir)" "$(DESTDIR)$(illume_home_togglepkgdir)" "$(DESTDIR)$(illume_homepkgdir)" "$(DESTDIR)$(illume_indicatorpkgdir)" "$(DESTDIR)$(illume_kbd_togglepkgdir)" "$(DESTDIR)$(illume_keyboardpkgdir)" "$(DESTDIR)$(illume_mode_togglepkgdir)" "$(DESTDIR)$(illume_softkeypkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(compdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(illume2dir)" "$(DESTDIR)$(illume2keyboardsdir)" "$(DESTDIR)$(illume_bluetoothdir)" "$(DESTDIR)$(illume_homedir)" "$(DESTDIR)$(illume_home_toggledir)" "$(DESTDIR)$(illume_indicatordir)" "$(DESTDIR)$(illume_kbd_toggledir)" "$(DESTDIR)$(illume_keyboarddir)" "$(DESTDIR)$(illume_mode_toggledir)" "$(DESTDIR)$(illume_softkeydir)" "$(DESTDIR)$(illumedictsdir)" "$(DESTDIR)$(illumekeyboardsdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -8509,9 +8483,9 @@ install-data-am: install-accessDATA install-accesspkgLTLIBRARIES \
 	install-temperaturepkgLTLIBRARIES install-tempgetPROGRAMS \
 	install-tilingDATA install-tilingpkgLTLIBRARIES \
 	install-winlistDATA install-winlistpkgLTLIBRARIES \
-	install-wizardDATA install-wizard_desksDATA \
-	install-wizard_desktopDATA install-wizardpkgLTLIBRARIES \
-	install-xkbswitchDATA install-xkbswitchpkgLTLIBRARIES
+	install-wizardDATA install-wizard_desktopDATA \
+	install-wizardpkgLTLIBRARIES install-xkbswitchDATA \
+	install-xkbswitchpkgLTLIBRARIES
 	@$(NORMAL_INSTALL)
 	$(MAKE) $(AM_MAKEFLAGS) install-data-hook
 install-dvi: install-dvi-recursive
@@ -8639,9 +8613,9 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-temperaturepkgLTLIBRARIES uninstall-tempgetPROGRAMS \
 	uninstall-tilingDATA uninstall-tilingpkgLTLIBRARIES \
 	uninstall-winlistDATA uninstall-winlistpkgLTLIBRARIES \
-	uninstall-wizardDATA uninstall-wizard_desksDATA \
-	uninstall-wizard_desktopDATA uninstall-wizardpkgLTLIBRARIES \
-	uninstall-xkbswitchDATA uninstall-xkbswitchpkgLTLIBRARIES
+	uninstall-wizardDATA uninstall-wizard_desktopDATA \
+	uninstall-wizardpkgLTLIBRARIES uninstall-xkbswitchDATA \
+	uninstall-xkbswitchpkgLTLIBRARIES
 
 .MAKE: $(am__recursive_targets) install-am install-data-am \
 	install-strip
@@ -8768,20 +8742,20 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	install-temperaturepkgLTLIBRARIES install-tempgetPROGRAMS \
 	install-tilingDATA install-tilingpkgLTLIBRARIES \
 	install-winlistDATA install-winlistpkgLTLIBRARIES \
-	install-wizardDATA install-wizard_desksDATA \
-	install-wizard_desktopDATA install-wizardpkgLTLIBRARIES \
-	install-xkbswitchDATA install-xkbswitchpkgLTLIBRARIES \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
-	uninstall-am uninstall-backlightDATA \
-	uninstall-backlightpkgLTLIBRARIES uninstall-batgetPROGRAMS \
-	uninstall-batteryDATA uninstall-batterypkgLTLIBRARIES \
-	uninstall-clockDATA uninstall-clockpkgLTLIBRARIES \
-	uninstall-compDATA uninstall-comppkgLTLIBRARIES \
-	uninstall-confDATA uninstall-conf_applicationsDATA \
+	install-wizardDATA install-wizard_desktopDATA \
+	install-wizardpkgLTLIBRARIES install-xkbswitchDATA \
+	install-xkbswitchpkgLTLIBRARIES installcheck installcheck-am \
+	installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-accessDATA \
+	uninstall-accesspkgLTLIBRARIES uninstall-am \
+	uninstall-backlightDATA uninstall-backlightpkgLTLIBRARIES \
+	uninstall-batgetPROGRAMS uninstall-batteryDATA \
+	uninstall-batterypkgLTLIBRARIES uninstall-clockDATA \
+	uninstall-clockpkgLTLIBRARIES uninstall-compDATA \
+	uninstall-comppkgLTLIBRARIES uninstall-confDATA \
+	uninstall-conf_applicationsDATA \
 	uninstall-conf_applicationspkgLTLIBRARIES \
 	uninstall-conf_dialogsDATA \
 	uninstall-conf_dialogspkgLTLIBRARIES \
@@ -8856,9 +8830,9 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-temperaturepkgLTLIBRARIES uninstall-tempgetPROGRAMS \
 	uninstall-tilingDATA uninstall-tilingpkgLTLIBRARIES \
 	uninstall-winlistDATA uninstall-winlistpkgLTLIBRARIES \
-	uninstall-wizardDATA uninstall-wizard_desksDATA \
-	uninstall-wizard_desktopDATA uninstall-wizardpkgLTLIBRARIES \
-	uninstall-xkbswitchDATA uninstall-xkbswitchpkgLTLIBRARIES
+	uninstall-wizardDATA uninstall-wizard_desktopDATA \
+	uninstall-wizardpkgLTLIBRARIES uninstall-xkbswitchDATA \
+	uninstall-xkbswitchpkgLTLIBRARIES
 
 
 @USE_MODULE_CONNMAN_TRUE@.PHONY: connman install-connman
