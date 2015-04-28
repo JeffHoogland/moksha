@@ -1,10 +1,6 @@
 wizarddir = $(MDIR)/wizard
 wizard_DATA = wizard/data/def-ibar.txt
 
-wizard_desksdir= $(MDIR)/wizard/extra_desktops
-wizard_desks_DATA = wizard/data/extra_desktops/mplayer.desktop \
-		    wizard/data/extra_desktops/xterm.desktop
-
 wizard_desktopdir = $(MDIR)/wizard/desktop
 wizard_desktop_DATA = wizard/data/desktop/home.desktop \
 		      wizard/data/desktop/root.desktop \
