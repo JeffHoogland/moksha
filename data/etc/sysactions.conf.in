@@ -45,8 +45,8 @@
 
 action:   halt      /sbin/shutdown -h now
 action:   reboot    /sbin/shutdown -r now
-action:   suspend   @SUSPEND@
-action:   hibernate @HIBERNATE@
+action:   suspend   sudo pm-suspend
+action:   hibernate sudo pm-hibernate
 action:   /bin/mount /bin/mount
 action:   /bin/umount /bin/umount
 action:   /usr/bin/eject /usr/bin/eject
