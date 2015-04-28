@@ -1,0 +1,287 @@
+group { name: "e/shelf/default/base";
+   alias: "e/shelf/alternate/base";
+   data {
+      /* this tells e the shelf is shaped, not rectangular */
+//      item: "shaped" "1";
+      /* this tells e the number of pixels of the shelf to leave "exposed"
+       * when auto-hiding the shelf */
+      item: "hidden_state_size" "2";
+      /* This makes the border hide instantly after the given amount of
+       * seconds - in this case 3 seconds. This means there will be no
+       * visible part of the shelf after this time at all as it will be
+       * totally hidden */
+//      item: "instant_delay" "3.0";
+   }
+   images.image: "vgrad_med.png" COMP;
+   images.image: "vgrad_tall.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "holes_vert.png" COMP;
+   images.image: "holes_horiz.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "bg"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med.png";
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "vgrad_tall.png";
+            fill.smooth: 0;
+            TILED_HORIZ(40)
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "dots_start"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.offset: 2 2;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 5 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.offset: 2 2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -3 5;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "dots_end"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -6 2;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 2 -6;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.offset: 1 0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "dots_start";
+            rel2.offset: -2 -1;
+            rel2.to_x: "dots_end";
+            rel2.relative: 0.0 1.0;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 0 1;
+            rel1.relative: 0.0 1.0;
+            rel1.to_y: "dots_start";
+            rel2.offset: -1 -2;
+            rel2.to_y: "dots_end";
+            rel2.relative: 1.0 0.0;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            FIXED_SIZE(69, 5)
+         }
+      }
+      programs  {
+#define ORIENT_SATE(_ORIENT, _STATE) \
+         program { \
+            signal: "e,state,orientation,"_ORIENT; source: "e"; \
+            action: STATE_SET _STATE 0.0; \
+            target: "bg"; \
+            target: "e.swallow.content"; \
+            target: "dots_start"; \
+            target: "dots_end"; \
+         }
+      }
+      ORIENT_SATE("top", "default")
+      ORIENT_SATE("top_left", "default")
+      ORIENT_SATE("top_right", "default")
+      ORIENT_SATE("bottom", "default")
+      ORIENT_SATE("bottom_left", "default")
+      ORIENT_SATE("bottom_right", "default")
+      ORIENT_SATE("left", "vert")
+      ORIENT_SATE("left_top", "vert")
+      ORIENT_SATE("left_bottom", "vert")
+      ORIENT_SATE("right", "vert")
+      ORIENT_SATE("right_top", "vert")
+      ORIENT_SATE("right_bottom", "vert")
+#undef ORIENT_SATE
+   }
+}
+
+group { name: "e/shelf/default/inset";
+   alias: "e/shelf/alternate/inset";
+   alias: "e/shelf/invisible/inset";
+   images.image: "horiz_bar_inset.png" COMP;
+   images.image: "vert_bar_inset.png" COMP;
+   parts {
+      part { name: "base"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: 3 1;
+            rel2.offset: -4 -2;
+            color: 255 255 255 255;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 1 3;
+            rel2.offset: -2 -4;
+            color: 255 255 255 255;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            rel1.offset: 4 1;
+            rel2.offset: -5 -2;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 1 4;
+            rel2.offset: -2 -5;
+         }
+      }
+      part { name: "inset"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 2 0;
+            rel2.offset: -3 -1;
+            image.normal: "horiz_bar_inset.png";
+            image.border: 7 7 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 0 2;
+            rel2.offset: -1 -3;
+            image.normal: "vert_bar_inset.png";
+            image.border: 1 1 8 6;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+   }
+   programs {
+#define ORIENT_SATE(_ORIENT, _STATE) \
+         program { \
+            signal: "e,state,orientation,"_ORIENT; source: "e"; \
+            action: STATE_SET _STATE 0.0; \
+            target: "e.swallow.content"; \
+            target: "inset"; \
+            target: "clip"; \
+         }
+      ORIENT_SATE("top", "default")
+      ORIENT_SATE("top_left", "default")
+      ORIENT_SATE("top_right", "default")
+      ORIENT_SATE("bottom", "default")
+      ORIENT_SATE("bottom_left", "default")
+      ORIENT_SATE("bottom_right", "default")
+      ORIENT_SATE("left", "vert")
+      ORIENT_SATE("left_top", "vert")
+      ORIENT_SATE("left_bottom", "vert")
+      ORIENT_SATE("right", "vert")
+      ORIENT_SATE("right_top", "vert")
+      ORIENT_SATE("right_bottom", "vert")
+#undef ORIENT_SATE
+   }
+}
+
+group { name: "e/shelf/invisible/base";
+   inherit: "e/shelf/default/base";
+   data {
+      item: "shaped" "1";
+   }
+   parts {
+      part { name: "bg";
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "vert" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "bevel";
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "shine";
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "dots_start";
+         description { state: "default" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 -1;
+            min: 0 0;
+            max: 0 0;
+            visible: 0;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 -1;
+            min: 0 0;
+            max: 0 0;
+            visible: 0;
+         }
+      }
+      part { name: "dots_end";
+         description { state: "default" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 -1;
+            min: 0 0;
+            max: 0 0;
+            visible: 0;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 -1;
+            min: 0 0;
+            max: 0 0;
+            visible: 0;
+         }
+      }
+   }
+}
+
+group { name: "e/shelf/default/plain";
+   alias: "e/shelf/alternate/plain";
+   alias: "e/shelf/invisible/plain";
+   parts {
+      part { name: "base"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         clip_to: "clip";
+         description { state: "default" 0.0;
+            rel1.offset: 1 1;
+            rel2.offset: -2 -2;
+         }
+      }
+   }
+}

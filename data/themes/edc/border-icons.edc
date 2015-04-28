@@ -1,0 +1,42 @@
+#define ICON(_NAME, _FILE) \
+   group { \
+      name: "e/widgets/border/default/"_NAME; \
+      max: 16 16; \
+      parts { \
+         part { name: "icon"; mouse_events: 0; \
+            description { state: "default" 0.0; \
+               max: 16 16; \
+               aspect: 1.0 1.0; aspect_preference: BOTH; \
+               image.image: _FILE COMP; \
+               image.normal: _FILE; \
+            } \
+         } \
+      } \
+   }
+
+   ICON("basic", "icon_border_more.png")
+   ICON("close", "icon_border_close.png")
+   ICON("kill", "icon_border_kill.png")
+   ICON("stacking", "icon_border_stack_norm.png")
+   ICON("stack_on_top", "icon_border_stack_top.png")
+   ICON("stack_normal", "icon_border_stack_norm.png")
+   ICON("stack_below", "icon_border_stack_bot.png")
+   ICON("move_icon", "icon_border_move.png")
+   ICON("resize_icon", "icon_border_resize.png");
+   ICON("maximize", "icon_border_maximize.png")
+   ICON("fullscreen", "icon_border_maximize.png")
+   ICON("minimize", "icon_border_minimize.png")
+   ICON("stick", "icon_border_pin.png")
+   ICON("sendto", "icon_border_sendto.png")
+   ICON("skip", "icon_border_skip.png")
+   ICON("skip_pager", "icon_border_pager.png")
+   ICON("skip_taskbar", "icon_border_skip.png")
+   ICON("skip_winlist", "icon_border_skip.png")
+   ICON("borderless", "icon_border_border.png")
+   ICON("remember", "icon_border_remember.png")
+   ICON("shade", "icon_border_shaded.png")
+   ICON("locks", "icon_border_lock.png")
+   ICON("locks_user", "icon_border_lock.png")
+   ICON("locks_application", "icon_border_lock.png")
+   ICON("properties", "icon_border_properties.png")
+#undef ICON

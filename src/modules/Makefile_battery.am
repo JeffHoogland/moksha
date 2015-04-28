@@ -1,0 +1,39 @@
+batterydir = $(MDIR)/battery
+battery_DATA = battery/e-module-battery.edj \
+	       battery/module.desktop
+
+EXTRA_DIST += $(battery_DATA)
+
+batterypkgdir = $(MDIR)/battery/$(MODULE_ARCH)
+batterypkg_LTLIBRARIES = battery/module.la
+
+battery_module_la_CFLAGS = $(AM_CFLAGS)
+battery_module_la_SOURCES  = battery/e_mod_main.h \
+			     battery/e_mod_main.c \
+			     battery/e_mod_config.c
+
+if HAVE_EEZE
+battery_module_la_SOURCES += battery/e_mod_udev.c
+else
+if HAVE_OPENBSD
+battery_module_la_SOURCES += battery/e_mod_openbsd.c
+else
+battery_module_la_SOURCES += battery/e_mod_dbus.c
+endif
+endif
+
+if HAVE_ENOTIFY
+battery_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+battery_module_la_LIBADD = @ENOTIFY_LIBS@
+endif
+
+batgetdir = $(batterypkgdir)
+batget_PROGRAMS = battery/batget
+
+battery_batget_SOURCES = battery/batget.c
+battery_batget_LDADD   = @BATTERY_LIBS@
+battery_batget_LDFLAGS = @BATTERY_LDFLAGS@
+
+.PHONY: battery install-battery
+battery: $(batterypkg_LTLIBRARIES) $(battery_DATA) $(batget_PROGRAMS)
+install-battery: install-batteryDATA install-batterypkgLTLIBRARIES install-batgetPROGRAMS

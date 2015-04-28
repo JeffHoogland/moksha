@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/@PACKAGE@
+plugindir=@libdir@/enlightenment/modules/everything/plugins
+
+Name: e17-everything
+Description: Everything Module for Enlightenment
+Requires: enlightenment
+Version: @VERSION@
+Libs: -L${libdir}
+Libs.private: 
+Cflags: -I${includedir}

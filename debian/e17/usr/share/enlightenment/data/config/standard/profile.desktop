@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Computer (Standard Enlightenment)
+Name[eo]=Komputilo (kutima Enlightenment)
+Name[es]=Ordenador (Enlightenment estándar)
+Name[fr]=Ordinateur (Enlightenment standard)
+Name[gl]=Ordenador (Enlightenment estándar)
+Name[it]=Computer (Enlightenment standard)
+Name[ko]=컴퓨터 (표준 Enlightenment)
+Name[pt]=Computador (Enlightenment padrão)
+Name[ru]=Компьютер (Стандартный Enlightenment)
+Comment=Configuration for devices with keyboards and mice<br>like your average PC Desktop, Laptop or Netbook<br>with Enlightenment's traditional keyboard bindings<br>and mouse controls.
+Comment[eo]=Agordoj por aparatoj kun klavaro kaj muso<br>samkiel via kutima PC aŭ portebla komputilo<br>kun kutima klavaraj bindaĵoj de Enlightenment kaj musaj kontroloj.
+Comment[es]=Configuración para dispositivos con teclado y<br>ratón, como puede ser un PC de escritorio, portátil o Netbook,<br>con las asociaciones de teclado y ratón<br>tradicionales de Enlightenment.
+Comment[fr]=Configuration pour les machines avec clavier et<br>souris comme les PC de bureau et les portables,<br>offrant raccourcis et contrôles traditionnels.
+Comment[gl]=Configuración para dispositivos con teclado e<br>rato, tal como un PC de escritorio, portátil ou Netbook,<br>coas asociacións de teclado e rato<br>tradicionais de Enlightenment.
+Comment[it]=Configurazione per macchine con tastiera e mouse,<br>come i normali computer fissi e portatili,<br>con le tradizionali associazioni di tasti e controlli<br>del mouse.
+Comment[ko]=일반적인 PC 데스크탑, 노트북, 넷북 환경과 같이 키보드와 마우스 기반 환경 설정. Enlightenment 의 전통적인 키보드 바인딩 및 마우스 동작 지원.
+Comment[pt]=Configuração de dispositivos com teclados e ratos como os computadores de secretária ou portáteis, com os atalhos padrão do Enlightenment.
+Comment[ru]=Конфигурация для устройств с клавиатурой и мышью,<br>таких как обычный компьютер или ноутбук,<br>с традиционными для Enlightenment'а сочетаниями<br>клавиш и управлением мышью.
+Icon=enlightenment-standard

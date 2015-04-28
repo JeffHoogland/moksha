@@ -1,0 +1,1012 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** INIT SPLASH ***/
+
+   /* this first group is used for the primary screen (or only screen) so in
+    * a multi-monitor setup whichever is first (screen 0) will get this
+    * splash on it */
+
+   group {
+      name: "e/init/splash";
+      /* images used */
+      images {
+         image: "O/exq-bglight.png" COMP;
+         image: "O/exq-logo.png" COMP;
+         image: "O/exq-dot.png" COMP;
+         image: "O/exq-dot-glow.png" COMP;
+      }
+      script {
+         public is_ready;
+         public do_end;
+      }
+      parts {
+         part {
+            name: "base";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 255;
+            }
+         }
+         part {
+            name: "light";
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.222222222;
+               rel1.relative: 0.104166667 0.515625;
+               rel2.relative: 0.895833333 0.796875;
+               aspect: 2.111111111 2.111111111;
+               aspect_preference: HORIZONTAL;
+               max: 380 180;
+               image.normal: "O/exq-bglight.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "logoclip";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "logo";
+            clip_to: "logoclip";
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.774193548;
+               rel1.relative: 0.272916667 0.315625;
+               rel2.relative: 0.727083333 0.6546875;
+               aspect: 0.557603687 0.557603687;
+               aspect_preference: BOTH;
+               max: 121 217;
+               image.normal: "O/exq-logo.png";
+            }
+         }
+         part {
+            name: "e.text.title";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to_y: "logo";
+                  relative: 0.05 -0.4;
+               }
+               rel2 {
+                  to_y: "logo";
+                  relative: 0.95 -0.2;
+               }
+               color: 255 255 255 0;
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  // fit: 0 1;
+                  text_class: "init_title";
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "e.text.status";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "e.text.title";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to: "e.text.title";
+                  relative: 1.0 1.5;
+               }
+               color: 255 255 255 0;
+               text {
+                  font: "Sans";
+                  size: 10;
+                  // fit: 0 1;
+                  text_class: "init_text";
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         part {
+            name: "e.text.version";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            description {
+               state: "default" 0.0;
+               align: 1.0 1.0;
+               rel1 {
+                  relative: 1.0 1.0;
+                  offset: -2  -2;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+                  offset: -2  -2;
+               }
+               color: 255 255 255 64;
+               color3: 0 0 0 32;
+               text {
+                  text: "0.17.0";
+                  font: "Sans";
+                  size: 8;
+                  min: 1 1;
+                  align: 0.0 0.0;
+                  text_class: "init_version";
+               }
+            }
+         }
+         part {
+            name: "p0-0";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to: "logo";
+                  relative: -0.5 0.9;
+               }
+               rel2 {
+                  to: "logo";
+                  relative: -0.5 0.9;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: -0.5 0.8;
+               rel2.relative: -0.5 0.8;
+            }
+         }
+         part {
+            name: "p0-1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               rel1.to: "p0-0";
+               rel2.to: "p0-0";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "p0-0.1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               min: 22 11;
+               max: 22 11;
+               rel1 {
+                  to_x: "p0-0";
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "p0-0";
+                  to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part {
+            name: "p0-0.2";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to_x: "p0-0";
+                  to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 {
+                  to_x: "p0-0";
+                  to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         part {
+            name: "p1-0";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to: "logo";
+                  relative: 0.0 0.9;
+               }
+               rel2 {
+                  to: "logo";
+                  relative: 0.0 0.9;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.0 0.8;
+               rel2.relative: 0.0 0.8;
+            }
+         }
+         part {
+            name: "p1-1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               rel1.to: "p1-0";
+               rel2.to: "p1-0";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "p1-0.1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               min: 22 11;
+               max: 22 11;
+               rel1 {
+                  to_x: "p1-0";
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "p1-0";
+                  to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part {
+            name: "p1-0.2";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to_x: "p1-0";
+                  to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 {
+                  to_x: "p1-0";
+                  to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         part {
+            name: "p2-0";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to: "logo";
+                  relative: 0.5 0.9;
+               }
+               rel2 {
+                  to: "logo";
+                  relative: 0.5 0.9;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 0.5 0.8;
+               rel2.relative: 0.5 0.8;
+            }
+         }
+         part {
+            name: "p2-1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               rel1.to: "p2-0";
+               rel2.to: "p2-0";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "p2-0.1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               min: 22 11;
+               max: 22 11;
+               rel1 {
+                  to_x: "p2-0";
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "p2-0";
+                  to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part {
+            name: "p2-0.2";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to_x: "p2-0";
+                  to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 {
+                  to_x: "p2-0";
+                  to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         part {
+            name: "p3-0";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to: "logo";
+                  relative: 1.0 0.9;
+               }
+               rel2 {
+                  to: "logo";
+                  relative: 1.0 0.9;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 1.0 0.8;
+               rel2.relative: 1.0 0.8;
+            }
+         }
+         part {
+            name: "p3-1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               rel1.to: "p3-0";
+               rel2.to: "p3-0";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "p3-0.1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               min: 22 11;
+               max: 22 11;
+               rel1 {
+                  to_x: "p3-0";
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "p3-0";
+                  to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part {
+            name: "p3-0.2";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to_x: "p3-0";
+                  to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 {
+                  to_x: "p3-0";
+                  to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+         part {
+            name: "p4-0";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to: "logo";
+                  relative: 1.5 0.9;
+               }
+               rel2 {
+                  to: "logo";
+                  relative: 1.5 0.9;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               rel1.relative: 1.5 0.8;
+               rel2.relative: 1.5 0.8;
+            }
+         }
+         part {
+            name: "p4-1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               rel1.to: "p4-0";
+               rel2.to: "p4-0";
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "p4-0.1";
+            description {
+               state: "default" 0.0;
+               image.normal: "O/exq-dot-glow.png";
+               color: 255 255 255 0;
+               min: 22 11;
+               max: 22 11;
+               rel1 {
+                  to_x: "p4-0";
+                  to_y: "logo";
+                  relative: 0.0 1.0;
+               }
+               rel2 {
+                  to_x: "p4-0";
+                  to_y: "logo";
+                  relative: 1.0 1.0;
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+            }
+         }
+         part {
+            name: "p4-0.2";
+            description {
+               state: "default" 0.0;
+               min: 22 22;
+               max: 22 22;
+               rel1 {
+                  to_x: "p4-0";
+                  to_y: "logo";
+                  relative: 0.0 1.1;
+               }
+               rel2 {
+                  to_x: "p4-0";
+                  to_y: "logo";
+                  relative: 1.0 1.1;
+               }
+               image.normal: "O/exq-dot.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 16;
+            }
+            description {
+               state: "visible2" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 4;
+               rel1.relative: 0.0 1.2;
+               rel2.relative: 1.0 1.2;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "init";
+            signal: "load";
+            source: "";
+            script {
+               set_int(is_ready, 0);
+               set_int(do_end, 0);
+            }
+         }
+         program {
+            name: "show1";
+            signal: "show";
+            source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "light";
+         }
+         program {
+            name: "show2";
+            signal: "show";
+            source: "";
+            in: 0.1 0.0;
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.4;
+            target: "logoclip";
+            target: "e.text.title";
+         }
+         program {
+            name: "show3";
+            signal: "show";
+            source: "";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.2;
+            target: "p0-0";
+            target: "p0-0.1";
+            target: "p0-0.2";
+            target: "p1-0";
+            target: "p1-0.1";
+            target: "p1-0.2";
+            target: "p2-0";
+            target: "p2-0.1";
+            target: "p2-0.2";
+            target: "p3-0";
+            target: "p3-0.1";
+            target: "p3-0.2";
+            target: "p4-0";
+            target: "p4-0.1";
+            target: "p4-0.2";
+            target: "e.text.status";
+            after: "pulsate1";
+            after: "pulsate1.2";
+            after: "pulsate2";
+            after: "pulsate2.2";
+            after: "pulsate3";
+            after: "pulsate3.2";
+            after: "pulsate4";
+            after: "pulsate4.2";
+            after: "pulsate5";
+            after: "pulsate5.2";
+            after: "ready";
+         }
+         program {
+            name: "pulsate1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2;
+            after: "pulsate1.1";
+            target: "p0-1";
+         }
+         program {
+            name: "pulsate1.1";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            after: "pulsate1";
+            target: "p0-1";
+         }
+         program {
+            name: "pulsate1.2";
+            action: STATE_SET "visible2" 0.0;
+            transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2;
+            after: "pulsate1.2.1";
+            target: "p0-0";
+            target: "p0-0.1";
+            target: "p0-0.2";
+         }
+         program {
+            name: "pulsate1.2.1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.7;
+            after: "pulsate1.2";
+            target: "p0-0";
+            target: "p0-0.1";
+            target: "p0-0.2";
+         }
+         program {
+            name: "pulsate2";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2;
+            after: "pulsate2.1";
+            target: "p1-1";
+         }
+         program {
+            name: "pulsate2.1";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            after: "pulsate2";
+            target: "p1-1";
+         }
+         program {
+            name: "pulsate2.2";
+            action: STATE_SET "visible2" 0.0;
+            transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2;
+            after: "pulsate2.2.1";
+            target: "p1-0";
+            target: "p1-0.1";
+            target: "p1-0.2";
+         }
+         program {
+            name: "pulsate2.2.1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.7;
+            after: "pulsate2.2";
+            target: "p1-0";
+            target: "p1-0.1";
+            target: "p1-0.2";
+         }
+         program {
+            name: "pulsate3";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2;
+            after: "pulsate3.1";
+            target: "p2-1";
+         }
+         program {
+            name: "pulsate3.1";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            after: "pulsate3";
+            target: "p2-1";
+         }
+         program {
+            name: "pulsate3.2";
+            action: STATE_SET "visible2" 0.0;
+            transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2;
+            after: "pulsate3.2.1";
+            target: "p2-0";
+            target: "p2-0.1";
+            target: "p2-0.2";
+         }
+         program {
+            name: "pulsate3.2.1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.7;
+            after: "pulsate3.2";
+            target: "p2-0";
+            target: "p2-0.1";
+            target: "p2-0.2";
+         }
+         program {
+            name: "pulsate4";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2;
+            after: "pulsate4.1";
+            target: "p3-1";
+         }
+         program {
+            name: "pulsate4.1";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            after: "pulsate4";
+            target: "p3-1";
+         }
+         program {
+            name: "pulsate4.2";
+            action: STATE_SET "visible2" 0.0;
+            transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2;
+            after: "pulsate4.2.1";
+            target: "p3-0";
+            target: "p3-0.1";
+            target: "p3-0.2";
+         }
+         program {
+            name: "pulsate4.2.1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.7;
+            after: "pulsate4.2";
+            target: "p3-0";
+            target: "p3-0.1";
+            target: "p3-0.2";
+         }
+         program {
+            name: "pulsate5";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            in: 0.2 0.2;
+            after: "pulsate5.1";
+            target: "p4-1";
+         }
+         program {
+            name: "pulsate5.1";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.5;
+            after: "pulsate5";
+            target: "p4-1";
+         }
+         program {
+            name: "pulsate5.2";
+            action: STATE_SET "visible2" 0.0;
+            transition: SINUSOIDAL 0.6;
+            in: 0.2 0.2;
+            after: "pulsate5.2.1";
+            target: "p4-0";
+            target: "p4-0.1";
+            target: "p4-0.2";
+         }
+         program {
+            name: "pulsate5.2.1";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.7;
+            after: "pulsate5.2";
+            target: "p4-0";
+            target: "p4-0.1";
+            target: "p4-0.2";
+         }
+         program {
+            name: "exit1";
+            action: STATE_SET "default" 0.0;
+            transition: ACCELERATE 2.0;
+            target: "light";
+            target: "logoclip";
+            after: "exit4";
+         }
+         program {
+            name: "exit4";
+            action: SIGNAL_EMIT "e,state,done_ok" "e";
+         }
+         program {
+            name: "ready";
+            script {
+               new val;
+               val = get_int(do_end);
+               if (val == 1)
+                  run_program(PROGRAM:"exit1"); 
+               else
+                  set_int(is_ready, 1);
+            }
+         }
+         program {
+            name: "done1";
+            /* when e tells the splash screen it is done
+             * starting up, the init splash gets this signal */
+            signal: "e,state,done";
+            source: "e";
+            script {
+               new val;
+               val = get_int(is_ready);
+               if (val == 1)
+                  run_program(PROGRAM:"exit1"); 
+               else
+                  set_int(do_end, 1);
+            }
+         }
+      }
+   }
+   /* this group is used for other screens/xinerama zones etc. other than
+    * the primary as only the primary shows the full splash - this just
+    * shows the below image. it can animate etc. but not display status
+    * etc. */
+   group {
+      name: "e/init/extra_screen";
+      parts {
+         part {
+            name: "base";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 255;
+            }
+         }
+      }
+   }
+
+

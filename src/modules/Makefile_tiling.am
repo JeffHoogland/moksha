@@ -1,0 +1,33 @@
+tilingdir = $(MDIR)/tiling
+tiling_DATA = tiling/e-module-tiling.edj \
+	      tiling/module.desktop
+CLEANFILES += tiling/e-module-tiling.edj
+
+EXTRA_DIST += $(tiling_DATA) \
+	      tiling/e-module-tiling.edc \
+	      tiling/module.desktop.in \
+	      tiling/images/module_icon.png \
+	      tiling/images/arrow_e.png \
+	      tiling/images/arrow_ne.png \
+	      tiling/images/arrow_n.png \
+	      tiling/images/arrow_nw.png \
+	      tiling/images/arrow_se.png \
+	      tiling/images/arrow_s.png \
+	      tiling/images/arrow_sw.png \
+	      tiling/images/arrow_w.png
+
+tilingpkgdir = $(MDIR)/tiling/$(MODULE_ARCH)
+tilingpkg_LTLIBRARIES = tiling/module.la
+
+TILING_EDJE_FLAGS = $(EDJE_FLAGS) -id $(srcdir)/tiling/images
+
+tiling/%.edj: tiling/%.edc Makefile
+	$(EDJE_CC) $(TILING_EDJE_FLAGS) $< $@
+
+tiling_module_la_SOURCES = tiling/e_mod_tiling.c \
+			   tiling/e_mod_tiling.h \
+			   tiling/e_mod_config.c
+
+.PHONY: tiling install-tiling
+tiling: $(tilingpkg_LTLIBRARIES) $(tiling_DATA)
+install-tiling: install-tilingDATA install-tilingpkgLTLIBRARIES

@@ -1,0 +1,218 @@
+group { name: "e/modules/mixer/main";
+   images.image: "speaker.png" COMP;
+   images.image: "speaker_shadow.png" COMP;
+   images.image: "led_dot_white.png" COMP;
+   max: 160 160;
+   min: 16 16;
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_INT_SET) && (id == 0)) {
+            new m, l, r;
+
+            m = getarg(2);
+            l = getarg(3);
+            r = getarg(4);
+            
+            if (m) {
+               run_program(PROGRAM:"mute");
+            } else {
+               run_program(PROGRAM:"unmute");
+            }
+            
+            if (l <= 0) {
+               run_program(PROGRAM:"l0-off");
+               run_program(PROGRAM:"l1-off");
+               run_program(PROGRAM:"l2-off");
+               run_program(PROGRAM:"l3-off");
+               run_program(PROGRAM:"l4-off");
+            } else if (l <= 20) {
+               run_program(PROGRAM:"l0-on");
+               run_program(PROGRAM:"l1-off");
+               run_program(PROGRAM:"l2-off");
+               run_program(PROGRAM:"l3-off");
+               run_program(PROGRAM:"l4-off");
+            } else if (l <= 40) {
+               run_program(PROGRAM:"l0-on");
+               run_program(PROGRAM:"l1-on");
+               run_program(PROGRAM:"l2-off");
+               run_program(PROGRAM:"l3-off");
+               run_program(PROGRAM:"l4-off");
+            } else if (l <= 60) {
+               run_program(PROGRAM:"l0-on");
+               run_program(PROGRAM:"l1-on");
+               run_program(PROGRAM:"l2-on");
+               run_program(PROGRAM:"l3-off");
+               run_program(PROGRAM:"l4-off");
+            } else if (l <= 80) {
+               run_program(PROGRAM:"l0-on");
+               run_program(PROGRAM:"l1-on");
+               run_program(PROGRAM:"l2-on");
+               run_program(PROGRAM:"l3-on");
+               run_program(PROGRAM:"l4-off");
+            } else {
+               run_program(PROGRAM:"l0-on");
+               run_program(PROGRAM:"l1-on");
+               run_program(PROGRAM:"l2-on");
+               run_program(PROGRAM:"l3-on");
+               run_program(PROGRAM:"l4-on");
+            }
+
+            if (r <= 0) {
+               run_program(PROGRAM:"r0-off");
+               run_program(PROGRAM:"r1-off");
+               run_program(PROGRAM:"r2-off");
+               run_program(PROGRAM:"r3-off");
+               run_program(PROGRAM:"r4-off");
+            } else if (r <= 20) {
+               run_program(PROGRAM:"r0-on");
+               run_program(PROGRAM:"r1-off");
+               run_program(PROGRAM:"r2-off");
+               run_program(PROGRAM:"r3-off");
+               run_program(PROGRAM:"r4-off");
+            } else if (r <= 40) {
+               run_program(PROGRAM:"r0-on");
+               run_program(PROGRAM:"r1-on");
+               run_program(PROGRAM:"r2-off");
+               run_program(PROGRAM:"r3-off");
+               run_program(PROGRAM:"r4-off");
+            } else if (r <= 60) {
+               run_program(PROGRAM:"r0-on");
+               run_program(PROGRAM:"r1-on");
+               run_program(PROGRAM:"r2-on");
+               run_program(PROGRAM:"r3-off");
+               run_program(PROGRAM:"r4-off");
+            } else if (r <= 80) {
+               run_program(PROGRAM:"r0-on");
+               run_program(PROGRAM:"r1-on");
+               run_program(PROGRAM:"r2-on");
+               run_program(PROGRAM:"r3-on");
+               run_program(PROGRAM:"r4-off");
+            } else {
+               run_program(PROGRAM:"r0-on");
+               run_program(PROGRAM:"r1-on");
+               run_program(PROGRAM:"r2-on");
+               run_program(PROGRAM:"r3-on");
+               run_program(PROGRAM:"r4-on");
+            }
+         }
+      }
+   }
+   parts {
+      part { name: "speaker_shadow";
+         description { state: "default" 0.0;
+            rel1.to: "speaker";
+            rel1.relative: 0.0 (4/160);
+            rel1.offset: 0 1;
+            rel2.to: "speaker";
+            rel2.relative: 1.0 (164/160);
+            rel2.offset: -1 0;
+            image.normal: "speaker_shadow.png";
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "speaker";
+         description { state: "default" 0.0;
+            aspect: 1 1; aspect_preference: BOTH;
+            image.normal: "speaker.png";
+         }
+      }
+      part { name: "state"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: -1.0 -1.0;
+            rel2.relative: 2.0 2.0;
+            color: 51 153 255 255;
+         }
+         description { state: "mute" 0.0;
+            inherit: "default" 0.0;
+            color: 255 153 51 255;
+         }
+      }
+#define LED(_NAME, _BASE, _X, _SIZE) \
+      part { name: _NAME; type: RECT; \
+         clip_to: "state"; \
+         description { state: "default" 0.0; \
+            rel1.relative: ((_BASE+(_X*8))/160) (80/160); \
+            rel2.relative: ((_BASE+(_X*8))/160) (80/160); \
+            min: 1 1; \
+            max: 1 1; \
+            visible: 0; \
+            color: 255 255 255 0; \
+         } \
+         description { state: "active" 0.0; \
+            inherit: "default" 0.0; \
+            visible: 1; \
+            color: 255 255 255 255; \
+         } \
+      } \
+      part { name: _NAME"g"; \
+         clip_to: "state"; \
+         description { state: "default" 0.0; \
+            rel1.to: _NAME; \
+            rel2.to: _NAME; \
+            image.normal: "led_dot_white.png"; \
+            min: _SIZE _SIZE; \
+            visible: 0; \
+            color: 255 255 255 0; \
+         } \
+         description { state: "active" 0.0; \
+            inherit: "default" 0.0; \
+            visible: 1; \
+            color: 255 255 255 255; \
+         } \
+      }
+      LED("r0", 99,  0,  1)
+      LED("r1", 99,  1,  9)
+      LED("r2", 99,  2, 15)
+      LED("r3", 99,  3, 21)
+      LED("r4", 99,  4, 27)
+      LED("l0", 61,  0,  1)
+      LED("l1", 61, -1,  9)
+      LED("l2", 61, -2, 15)
+      LED("l3", 61, -3, 21)
+      LED("l4", 61, -4, 27)
+#undef LED
+      part { name: "over"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "speaker";
+            rel2.to: "speaker";
+            color: 255 255 255 0;
+         }
+      }
+   }
+   programs {
+      program { name: "mute";
+         action: STATE_SET "mute" 0.0;
+         transition: LINEAR 0.3;
+         target: "state";
+      }
+      program { name: "unmute";
+         action: STATE_SET "default" 0.0;
+         transition: LINEAR 0.2;
+         target: "state";
+      }
+#define PROG(_NAME) \
+      program { name: _NAME"-on"; \
+         action: STATE_SET "active" 0.0; \
+         target: _NAME; \
+         target: _NAME"g"; \
+      } \
+      program { name: _NAME"-off"; \
+         action: STATE_SET "default" 0.0; \
+         target: _NAME; \
+         target: _NAME"g"; \
+      }
+      PROG("r0")
+      PROG("r1")
+      PROG("r2")
+      PROG("r3")
+      PROG("r4")
+      PROG("l0")
+      PROG("l1")
+      PROG("l2")
+      PROG("l3")
+      PROG("l4")
+#undef PROG
+   }
+}
+
+

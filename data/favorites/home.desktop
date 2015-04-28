@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Home
+Name[eo]=Hejmo
+Name[es]=Carpeta personal
+Name[fr]=Accueil
+Name[gl]=Cartafol persoal
+Name[pt]=Pasta pessoal
+Name[ru]=Домашний каталог
+Comment=The Directory containing all your personal files
+Comment[eo]=La dosierujo enhavante viajn proprajn dosieroj
+Comment[es]=El directorio que contiene todos sus archivos personales
+Comment[fr]=Le dossier contenant vos fichiers personnels
+Comment[gl]=O directorio que contén tódolos seus ficheiros persoais
+Comment[it]=La directory contenente i vostri file personali
+Comment[pt]=O diretório com os ficheiros do utilizador
+Comment[ru]=Каталог содержащий ваши личные файлы
+Icon=user-home
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;
+URL=file:$HOME
+X-Enlightenment-Type=Mount

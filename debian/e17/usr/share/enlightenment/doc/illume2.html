@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>Illume2 Documentation</title>
+  <meta name="generator" content="Bluefish 1.0.7">
+  <meta name="CREATED" content="20041227;10170000">
+  <meta name="CHANGED" content="20041227;10253900">
+  <style>
+	<!--
+		@page { size: 8.5in 11in }
+		TD P.western { font-size: 8pt }
+		TD P.cjk { font-family: "Bitstream Vera Sans"; font-size: 8pt }
+		P.western { font-size: 8pt }
+		P.cjk { font-family: "Bitstream Vera Sans"; font-size: 8pt }
+		A.western:link { font-size: 8pt }
+		A.cjk:link { font-family: "Bitstream Vera Sans"; font-size: 8pt }
+		A.sdfootnotesym-western { font-size: 8pt }
+		A.sdfootnotesym-cjk { font-family: "Bitstream Vera Sans"; font-size: 8pt }
+		A.sdendnotesym-western { font-size: 8pt }
+		A.sdendnotesym-cjk { font-family: "Bitstream Vera Sans"; font-size: 8pt }
+	-->
+	</style>
+</head>
+<body dir="ltr" lang="en-US">
+<table style="page-break-before: always;" border="0" cellpadding="0"
+ cellspacing="0" width="100%">
+  <col width="256*"> <tbody>
+    <tr>
+      <td valign="top" width="100%">
+      <p class="western" style="margin-bottom: 0in;" align="center"><img
+ src="illume2.png" name="Graphic1" align="left" border="0"
+ height="233" width="160"><font face="Bitstream Vera Sans"><font
+ size="5"><b>Illume2</b></font></font></p>
+      <p class="western" style="margin-bottom: 0in;"><br>
+      </p>
+      <p class="western" style="margin-bottom: 0in;" align="center"><font
+ style="font-size: 6pt; font-family: sans-serif;">Version
+0.17.0</font><big><big><big><font face="Bitstream Vera Sans"><font
+ style="font-size: 6pt;" size="1"><big><big><big><big> </big></big></big></big></font></font>
+      </big></big></big></p>
+      <p class="western" style="margin-bottom: 0in;"><br>
+      </p>
+      <p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;"><b>What is Illume2?</b> </font> </p>
+      <p style="font-family: sans-serif;" class="western"><font
+ style="font-size: 8pt;">Illume2 is a module for Enlightenment 
+(<a href="http://www.enlightenment.org">www.enlightenment.org</a>) that
+modifies the user interface of enlightenment to work cleanly and nicely on a
+mobile device - such as an <a href="http://www.openmoko.com">OpenMoko</a>
+phone. It is currently geared more for a 480x640 (VGA) portrait mode screen
+but can be trivially modified to work on QVGA or any other resolution. The
+Final goal is to have it work on a wide range of resolutions seamlessly.
+</p>
+<p style="font-family: sans-serif;" class="western"><font style="font-size: 8pt;">
+It combines an application launcher interface along with an application
+manager and switcher, as well as forcing certain simple layout policies on
+applications (such as making their main windows borderless and fullscreen
+except for Illume's control bar).</font></p>
+<p style="font-family: sans-serif;" class="western">
+	<font style="font-size: 8pt;">
+		<b>Please be aware that illume2 code and documentation is subject to change as ideas evolve.</b>
+	</font>
+</p>
+     </td>
+    </tr>
+  </tbody>
+</table>
+<hr style="font-family: sans-serif;">
+
+<p style="font-family: sans-serif;" class="western">
+	<font style="font-size: 8pt;"><b>First, let's define some terms</b>
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Status Bar</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+		Also known as the Indicator window, this is the bar across the top of the screen that is mostly thin and holds gadgets like the battery charge, signal strength etc.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Softkey</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+		This is the bar at the bottom of applications that almost always has the back-button on the bottom-right and possibly other buttons for actions.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Basic App</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+		This is an app that has minimal or no effort made to use toolkits that support the target or the programmer just wanted to avoid writing the code to use the API’s to support it. These API’s currently draw the “status bar” and ‘softkey” at the bottom for example. These apps will not have “softkeys” or “status bars” in them. They will be simply like xterm, or for that matter any other normal linux gui app. It will work, and controls will be provided outside of the app window.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Conformant App</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+	This is an application that either uses the toolkits provided AND uses them appropriately to provide and/or account for controls that conform to the UI designs/standards desired for the platform.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Fullscreen App</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+This is a mode that any application can request for its window. This mode intends to get ALL (or as much of the screen without interference) as possible. This is useful for watching movies, games and anything else that needs screen real-estate as losing it is a major loss to the application functionality, look and feel. An application, when fullscreen, should always provide an easy/obvious way to exit or exit fullscreen mode (without requiring a keyboard).
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Focused Window</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+This is the window that is the one that receives all keyboard input (from a physical or virtual keyboard). In X11 there can be only 1 window that has focus (ignoring MPX here).
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Multihead</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+This is a mode of X11 display where you can have 2 root windows on 2 screens. They can be different sizes (resolutions) even different screen depths (one 8bit, one 16bit for example). Input is managed with each root window having mouse input sent as if it were a stand-alone xserver screeen except that the mouse and keyboard can only be active on 1 of the root windows at once, and the mouse exits the other root window screen when it enders the current one.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Xinerama</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+	This is a modern multi-screen display system for X11 where you have a single framebuffer (a single root window) where 1 or more screens “view” regions of that root window. This means all screens have the same depth (all 16bit or all 32bit or all 8bit), but they can be different resolutions. The single keyboard and mouse input is handled as if it were 1 big screen with 2 input regions and 1 keyboard attached.
+	</font>
+</p>
+
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Policy</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+	Illume2 allows for layout code to be separated into a 'policy'. Policies are modularized code (very similar to Enlightenment modules) that handle arranging windows on screen. Illume2 allows for dynamic switching of the active policy.
+	</font>
+</p>
+
+
+<p style="font-family: sans-serif;" class="western">
+	<font style="font-size: 8pt;"><b>Policies</b>
+	</font>
+</p>
+<p class="western" style="margin-left: 0.79in; font-family: sans-serif;">
+	<font style="font-size: 8pt;"><b>Requirements</b> (please note that these requirements are subject to change)
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+		A policy is <b>required</b> to implement 2 basic functions so that illume2 may dynamically load it:
+		<ul>
+			<li><b>init</b> - This is the function that illume2 will call to initialize the policy. It is expected that in here the policy will assign any other functions it handles.</li>
+			<li><b>shutdown</b> - This function will be called by illume2 when the policy is being unloaded. This occurs when policy is changed to a different one, or when illume2 module is unloaded. This is the ideal place for a policy to do any cleanup it needs to.</li>
+		</ul>
+	</font>
+</p>
+<p class="western" style="margin-left: 1.68in; font-family: sans-serif;">
+	<font style="font-size: 8pt;">
+		A policy may <b>optionally</b> implement the following functions:
+		<ul>
+			<li><b>border_add</b> - This function gets called by illume2 when a border is added to the screen.</li>
+			<li><b>border_del</b> - This function gets called by illume2 when a border is removed from the screen.</li>
+			<li><b>border_focus_in</b> - This function gets called by illume2 when a border receives focus.</li>
+			<li><b>border_focus_out</b> - This function gets called by illume2 when a border losses focus.</li>
+			<li><b>border_activate</b> - This function gets called by illume2 when a border is activated (usually from a NETWM ACTIVATE request).</li>
+			<li><b>border_property_change</b> - This function gets called by illume2 when a property on any given border changes. This is ideal for handling events like a border changing between fullscreen and non-fullscreen.</li>
+			<li><b>zone_layout</b> - This function gets called by illume2 when the actual screen layout needs updating. Typically used to position windows.</li>
+			<li><b>zone_move_resize</b> - This function gets called by illume2 when a zone gets moved or resized. Typically called when the screen resolution changes.</li>	
+			<li><b>drag_start</b> - This function gets called by illume2 when the indicator window gets moved by the user.</li>
+			<li><b>drag_end</b> - This function gets called by illume2 when the indicator window is finished moving (in response to the user moving it).</li>
+	</ul>
+	</font>
+</p>
+
+</body>
+</html>

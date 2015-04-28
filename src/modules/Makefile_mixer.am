@@ -1,0 +1,42 @@
+mixerdir = $(MDIR)/mixer
+mixer_DATA = mixer/e-module-mixer.edj \
+	     mixer/module.desktop
+
+EXTRA_DIST += $(mixer_DATA)
+
+mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
+mixerpkg_LTLIBRARIES = mixer/module.la
+
+mixer_module_la_CFLAGS = $(AM_CFLAGS)
+
+mixer_module_la_SOURCES = mixer/e_mod_main.c \
+			  mixer/e_mod_main.h \
+			  mixer/app_mixer.c \
+			  mixer/conf_gadget.c \
+			  mixer/conf_module.c \
+			  mixer/e_mod_system.h \
+			  mixer/msg.c \
+			  mixer/Pulse.h \
+			  mixer/pa.h \
+			  mixer/pa.c \
+			  mixer/serial.c \
+			  mixer/sink.c \
+			  mixer/sys_pulse.c \
+			  mixer/tag.c
+
+if HAVE_ALSA
+mixer_module_la_SOURCES += mixer/sys_alsa.c
+else
+mixer_module_la_SOURCES += mixer/sys_dummy.c
+endif
+
+mixer_module_la_LIBADD = @SOUND_LIBS@
+
+if HAVE_ENOTIFY
+mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+mixer_module_la_LIBADD += @ENOTIFY_LIBS@
+endif
+
+.PHONY: mixer install-mixer
+mixer: $(mixerpkg_LTLIBRARIES) $(mixer_DATA)
+install-mixer: install-mixerDATA install-mixerpkgLTLIBRARIES

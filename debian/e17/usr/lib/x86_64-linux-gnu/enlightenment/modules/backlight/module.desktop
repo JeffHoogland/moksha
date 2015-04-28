@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Backlight
+Name[ca]=Il·luminació
+Name[eo]=Fona lumo
+Name[es]=Iluminación
+Name[fr]=Rétroéclairage
+Name[gl]=Iluminación
+Name[pt]=Iluminação
+Name[ru]=Подсветка
+Comment=Backlight control slider gadget
+Comment[ca]=Cursor per a controlar la retroil·luminació.
+Comment[eo]=Akcesorajo de kontrolo-ŝovilo de fona lumo
+Comment[es]=Deslizador para controlar la iluminación.
+Comment[fr]=Slider de contrôle du rétroéclairage.
+Comment[gl]=Cursor para controlar a iluminación.
+Comment[it]=Fornisce un cursore per il controllo della retroilluminazione.
+Comment[pt]=Um cursor para controlar a iluminação do monitor
+Comment[ru]=Слайдер для управления подсветкой
+Icon=e-module-backlight
+X-Enlightenment-ModuleType=utils

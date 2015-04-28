@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Wayland Shell
+Name[eo]=Ĉelo de Wayland
+Name[fr]=Shell Wayland
+Comment=Enlightenment Wayland Shell
+Comment[ca]=Shell de l'Enlightenment per a Wayland
+Comment[eo]=Ĉelo de Enlightenment por Wayland
+Comment[fr]=Shell Wayland pour Enlightenment
+Comment[it]=Shell di Enlightenment per Wayland
+Icon=e-module-wl_shell
+X-Enlightenment-ModuleType=look

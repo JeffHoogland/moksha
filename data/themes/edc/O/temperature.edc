@@ -1,0 +1,214 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: TEMPERATURE ***/
+
+   group {
+      name: "e/modules/temperature/main";
+      images {
+         image: "O/temp_base.png" COMP;
+         image: "O/temp_mid.png" COMP;
+         image: "O/temp_over.png" COMP;
+      }
+      min: 16 16;
+      max: 128 128;
+      script {
+         public message(Msg_Type:type, id, ...) {
+            if ((type == MSG_FLOAT) && (id == 1)) {
+               new Float:val;
+               val = getfarg(2);
+               set_drag(PART:"temp_top", 0.0, val);
+            }
+         }
+      }
+      parts {
+         part {
+            name: "base";
+            clip_to: "fade_clip";
+            description {
+               state: "default" 0.0;
+               aspect: 0.387 0.387;
+               aspect_preference: BOTH;
+               align: 0.5 0.5;
+               max: 48 124;
+               rel1 {
+                  relative: 0.0 0.0;
+               }
+               rel2 {
+                  relative: 1.0 1.0;
+               }
+               image {
+                  normal: "O/temp_base.png";
+               }
+            }
+         }
+         part {
+            name: "temp";
+            clip_to: "temp_clip";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "base";
+               }
+               rel2 {
+                  to: "base";
+               }
+               image {
+                  normal: "O/temp_mid.png";
+               }
+            }
+         }
+         part {
+            name: "overlay";
+            clip_to: "fade_clip";
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "base";
+               }
+               rel2 {
+                  to: "base";
+               }
+               image {
+                  normal: "O/temp_over.png";
+               }
+            }
+         }
+         part {
+            name: "e.text.reading";
+            type: TEXT;
+            scale: 1;
+            effect: OUTLINE_SOFT_SHADOW;
+            clip_to: "fade_clip";
+            description {
+               state: "default" 0.0;
+               align: 1.0 0.0;
+               rel1 {
+                  relative: 1.0  0.0;
+                  to_x: "temp";
+               }
+               rel2 {
+                  relative: 1.0  0.0;
+               }
+               color: 255 255 255 0;
+               color2: 0 0 0 0;
+               color3: 0 0 0 0;
+               color_class: "module_label";
+               text {
+                  font: "Sans:style=Bold";
+                  size: 8;
+                  min: 1 1;
+                  align: 0.0 0.0;
+                  text_class: "module_small";
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 255;
+               color2: 0 0 0 128;
+               color3: 0 0 0 32;
+            }
+         }
+         part {
+            name: "fade_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "faded" 0.0;
+               color: 255 255 255 128;
+            }
+         }
+         part {
+            name: "temp_clip";
+            type: RECT;
+            clip_to: "fade_clip";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to_x: "base";
+                  to_y: "temp_top";
+               }
+               rel2 {
+                  to: "base";
+               }
+            }
+         }
+         part {
+            name: "temp_top";
+            type: RECT;
+            dragable {
+               x: 0 0 0;
+               y: -1 1 0;
+               confine: "temp_limit";
+            }
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+            }
+         }
+         part {
+            name: "temp_limit";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1 {
+                  relative: 0.0 0.081;
+                  to: "base";
+               }
+               rel2 {
+                  relative: 1.0 0.637;
+                  to: "base";
+               }
+            }
+         }
+         part {
+            name: "over";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "hover1";
+            signal: "mouse,in";
+            source: "over";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.3;
+            target: "e.text.reading";
+         }
+         program {
+            name: "hover2";
+            signal: "mouse,out";
+            source: "over";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 1.0;
+            target: "e.text.reading";
+         }
+         program {
+            name: "known";
+            signal: "e,state,known";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "fade_clip";
+         }
+         program {
+            name: "unknown";
+            signal: "e,state,unknown";
+            source: "e";
+            action: STATE_SET "faded" 0.0;
+            target: "fade_clip";
+         }
+      }
+   }
+
+

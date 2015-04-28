@@ -1,0 +1,4 @@
+group "Cpufreq_Config" struct {
+  value "poll_interval" int: 32;
+  value "restore_governor" int: 1;
+}

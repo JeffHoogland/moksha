@@ -1,0 +1,13 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${prefix}/lib/x86_64-linux-gnu
+includedir=${prefix}/include/enlightenment
+plugindir=${prefix}/lib/x86_64-linux-gnu/enlightenment/modules/everything/plugins
+
+Name: e17-everything
+Description: Everything Module for Enlightenment
+Requires: enlightenment
+Version: 0.17.6
+Libs: -L${libdir}
+Libs.private: 
+Cflags: -I${includedir}

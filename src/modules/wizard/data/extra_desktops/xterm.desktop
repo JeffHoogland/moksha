@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=XTerm
+Name[eo]=XTerm
+Name[fr]=XTerm
+GenericName=Terminal
+GenericName[eo]=Terminalo
+GenericName[fr]=Console
+GenericName[ru]=Терминал
+Comment=Run commands in a shell
+Comment[eo]=Lanĉi komandojn en ĉelo
+Comment[es]=Ejecute comandos en una consola
+Comment[fr]=Lancer des commandes dans le shell
+Comment[gl]=Execute comandos nunha consola
+Comment[it]=Esegue comandi in una shell
+Comment[pt]=Execução de comandos na consola
+Comment[ru]=Запуск команд в командной оболочке
+Icon=xterm
+Exec=xterm
+Categories=Utility;TerminalEmulator;System;
+StartupWMClass=XTerm

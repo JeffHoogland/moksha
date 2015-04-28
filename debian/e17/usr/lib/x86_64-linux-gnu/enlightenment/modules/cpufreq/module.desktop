@@ -1,0 +1,26 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Cpufreq
+Name[ca]=Freqüència de la CPU
+Name[cs]=Frekvence procesoru
+Name[eo]=Ĉeforgana ofteco
+Name[fr]=FréqCPU
+Name[hu]=Processzor frekvencia
+Name[pt]=Frequência do cpu
+Name[ru]=Частота процессора
+Name[tr]=İşlemci ölçekleme
+Comment=Gadget to monitor and change the CPU frequency.
+Comment[ca]=Mòdul per a monitoritzar i canviar la freqüència de la CPU.
+Comment[cs]=Gadget pro monitorování a změnu frekvence CPU.
+Comment[eo]=Elrigardi kaj ŝanĝi ĉeforganan oftecon.
+Comment[es]=Dispositivo para monitorear y cambiar la frecuencia del CPU.
+Comment[fr]=Permet le monitorage et le changement de fréquence du CPU.
+Comment[gl]=Módulo para monitorizar e cambiar a frecuencia do CPU.
+Comment[hu]=A processzor frekvenciáját felügyelő és beállító modul.
+Comment[it]=Modulo per il monitoraggio e la variazione della frequenza della CPU.
+Comment[pt]=Permite-lhe vigiar e alterar a frequência do CPU
+Comment[ru]=Гаджет для отображения и смены частоты ЦПУ.
+Comment[tr]=İşlemci frekansını değiştiren ve izleyen bir araç.
+Icon=e-module-cpufreq
+X-Enlightenment-ModuleType=system

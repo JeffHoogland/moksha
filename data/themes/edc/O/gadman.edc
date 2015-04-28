@@ -1,0 +1,1202 @@
+   group {
+      name: "e/gadman/full_bg";
+      parts {
+         part {
+            name: "bg";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+            description {
+               state: "visible" 0.0;
+               color: 0 0 0 128;
+            }
+         }
+         part {
+            name: "custom_bg";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               color: 255 255 255 200;
+            }
+         }
+         part {
+            name: "e.swallow.bg";
+            type: SWALLOW;
+            clip_to: "custom_bg";
+            description {
+               state: "default" 0.0;
+            }
+         }
+         part {
+            name: "grabber";
+            type: RECT;
+            mouse_events: 1;
+            repeat_events: 1;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "show";
+            signal: "e,state,visibility,show";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.4;
+            target: "bg";
+         }
+         program {
+            name: "show_now";
+            signal: "e,state,visibility,show,now";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.0;
+            target: "bg";
+         }
+         program {
+            name: "hide";
+            signal: "e,state,visibility,hide";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4;
+            target: "bg";
+            after: "hide_stop";
+         }
+         program {
+            name: "hide_now";
+            signal: "e,state,visibility,hide,now";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.0;
+            target: "bg";
+            after: "hide_stop";
+         }
+         program {
+            name: "show_custom";
+            signal: "e,state,visibility,show,custom";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.4;
+            target: "custom_bg";
+         }
+         program {
+            name: "show_custom_now";
+            signal: "e,state,visibility,show,custom,now";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.0;
+            target: "custom_bg";
+         }
+         program {
+            name: "hide_custom";
+            signal: "e,state,visibility,hide,custom";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.4;
+            target: "custom_bg";
+            after: "hide_stop";
+         }
+         program {
+            name: "hide_custom_now";
+            signal: "e,state,visibility,hide,custom,now";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.0;
+            target: "custom_bg";
+            after: "hide_stop";
+         }
+         program {
+            name: "hide_stop";
+            action: SIGNAL_EMIT "e,action,hide,stop" "";
+         }
+      }
+   }
+   group {
+      name: "e/gadman/frame";
+      images.image: "O/inset_raised.png" COMP;
+      parts {
+         part {
+            name: "bg_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1.to: "overlay";
+               rel2.to: "overlay";
+               color: 255 255 255 255;
+            }
+            description {
+               state: "plain" 0.0;
+               rel1.relative: 0.0 0.0;
+               rel2.relative: 0.0 0.0;
+               color: 255 255 255 255;
+            }
+         }
+         part {
+            name: "items_clip";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "overlay";
+                  offset: 4  4;
+               }
+               rel2 {
+                  to: "overlay";
+                  offset: -5  -5;
+               }
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "items_clip";
+            description {
+               state: "default" 0.0;
+               rel1.offset: 4  4;
+               rel2.offset: -5  -5;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               rel1.relative: 0.5 0.5;
+               rel2.relative: 0.5 0.5;
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "overlay";
+            mouse_events: 0;
+            clip_to: "bg_clip";
+            description {
+               state: "default" 0.0;
+               image {
+                  normal: "O/inset_raised.png";
+                  border: 7 7 7 7;
+                  middle: 0;
+               }
+               fill.smooth: 0;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.5 0.5;
+               rel2.relative: 0.5 0.5;
+               color: 255 255 255 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "inset";
+            signal: "e,state,visibility,inset";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "bg_clip";
+         }
+         program {
+            name: "plain";
+            signal: "e,state,visibility,plain";
+            source: "e";
+            action: STATE_SET "plain" 0.0;
+            target: "bg_clip";
+         }
+         program {
+            name: "hide";
+            signal: "e,state,visibility,hide";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            transition: ACCELERATE 0.4;
+            target: "items_clip";
+            target: "overlay";
+            target: "e.swallow.content";
+         }
+         program {
+            name: "hide_now";
+            signal: "e,state,visibility,hide,now";
+            source: "e";
+            action: STATE_SET "hidden" 0.0;
+            transition: LINEAR 0.0;
+            target: "items_clip";
+            target: "overlay";
+            target: "e.swallow.content";
+         }
+         program {
+            name: "show";
+            signal: "e,state,visibility,show";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: DECELERATE 0.4;
+            target: "items_clip";
+            target: "overlay";
+            target: "e.swallow.content";
+         }
+         program {
+            name: "show_now";
+            signal: "e,state,visibility,show,now";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.0;
+            target: "items_clip";
+            target: "overlay";
+            target: "e.swallow.content";
+         }
+      }
+   }
+   group {
+      name: "e/gadman/control";
+      images {
+         image: "O/gadman_frame.png" COMP;
+         image: "O/gadman_border.png" COMP;
+         image: "O/gadman_top.png" COMP;
+         image: "O/gadman_bottom.png" COMP;
+         image: "O/gadman_left.png" COMP;
+         image: "O/gadman_right.png" COMP;
+      }
+      parts {
+         part {
+            name: "hclip";
+            mouse_events: 0;
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               visible: 1;
+               rel1.offset: -85 -85;
+               rel2.offset: 74 74;
+            }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible : 0;
+            }
+         }
+         part {
+            name: "vclip";
+            mouse_events: 0;
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               visible: 1;
+               rel1.offset: -85 -85;
+               rel2.offset: 84 84;
+            }
+            description {
+               state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible : 0;
+            }
+         }
+         part {
+            name: "overlay";
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  to: "border";
+                  offset: 4 4;
+               }
+               rel2 {
+                  to: "border";
+                  offset: -5 -5;
+               }
+               image.normal: "O/gadman_frame.png";
+               fill.size.relative: 0 0;
+               fill.size.offset: 24 24;
+            }
+         }
+         part {
+            name: "left_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 12 24;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: 3 0;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: 3 -1;
+               }
+               image.normal: "O/gadman_left.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: -32 -12;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: -18 11;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: -24 -6;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: -10 5;
+               }
+            }
+         }
+         part {
+            name: "left_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 12 24;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: 3 0;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: 3 -1;
+               }
+               image.normal: "O/gadman_left.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: -32 -12;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: -18 11;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0 0.5;
+                  offset: -24 -6;
+               }
+               rel2 {
+                  relative: 0.0 0.5;
+                  offset: -10 5;
+               }
+            }
+         }
+         part {
+            name: "right_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 12 24;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: -3 0;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: -3 -1;
+               }
+               image.normal: "O/gadman_right.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: 32 -12;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: 18 11;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: 24 -6;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: 10 5;
+               }
+            }
+         }
+         part {
+            name: "right_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 12 24;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: -3 0;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: -3 -1;
+               }
+               image.normal: "O/gadman_right.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: 32 -12;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: 18 11;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 1.0 0.5;
+                  offset: 24 -6;
+               }
+               rel2 {
+                  relative: 1.0 0.5;
+                  offset: 10 5;
+               }
+            }
+         }
+         part {
+            name: "top_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 24 12;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: 0 3;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: -1 3;
+               }
+               image.normal: "O/gadman_top.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: -12 -32;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: 11 -18;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: -6 -24;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: 5 -9;
+               }
+            }
+         }
+         part {
+            name: "top_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 24 12;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: 0 3;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: -1 3;
+               }
+               image.normal: "O/gadman_top.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: -12 -32;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: 11 -18;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 0.0;
+                  offset: -6 -24;
+               }
+               rel2 {
+                  relative: 0.5 0.0;
+                  offset: 5 -9;
+               }
+            }
+         }
+         part {
+            name: "bottom_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 24 12;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: 0 -3;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: -1 -3;
+               }
+               image.normal: "O/gadman_bottom.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: -12 18;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: 11 31;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: -6 10;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: 5 24;
+               }
+            }
+         }
+         part {
+            name: "bottom_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               max: 24 12;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: 0 -3;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: -1 -3;
+               }
+               image.normal: "O/gadman_bottom.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: -12 18;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: 11 31;
+               }
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.5 1.0;
+                  offset: -6 10;
+               }
+               rel2 {
+                  relative: 0.5 1.0;
+                  offset: 5 24;
+               }
+            }
+         }
+         part {
+            name: "v1";
+            mouse_events: 1;
+            clip_to: "vclip";
+            description {
+               state: "default" 0.0;
+               rel2.relative: 1.0 0.0;
+               rel2.offset: -1 9;
+            }
+         }
+         part {
+            name: "v2";
+            mouse_events: 1;
+            clip_to: "vclip";
+            description {
+               state: "default" 0.0;
+               rel1.relative: 0.0 1.0;
+               rel1.offset: 0 -8;
+            }
+         }
+         part {
+            name: "h1";
+            mouse_events: 1;
+            clip_to: "hclip";
+            description {
+               state: "default" 0.0;
+               rel2.relative: 0.0 1.0;
+               rel2.offset: 9 -1;
+            }
+         }
+         part {
+            name: "h2";
+            mouse_events: 1;
+            clip_to: "hclip";
+            description {
+               state: "default" 0.0;
+               rel1.relative: 1.0 0.0;
+               rel1.offset: -8 0;
+            }
+         }
+         part {
+            name: "border";
+            mouse_events: 1;
+            repeat_events: 1;
+            description {
+               state: "default" 0.0;
+               image {
+                  normal: "O/gadman_border.png";
+                  border: 10 10 10 10;
+                  middle: 0;
+               }
+               fill.smooth: 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "api_hsize_on";
+            signal: "e,state,hsize,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "hclip";
+         }
+         program {
+            name: "api_hsize_off";
+            signal: "e,state,hsize,off";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "hclip";
+         }
+         program {
+            name: "api_vsize_on";
+            signal: "e,state,vsize,on";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "vclip";
+         }
+         program {
+            name: "api_vsize_off";
+            signal: "e,state,vsize,off";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "vclip";
+         }
+         /*
+         program {
+            name: "api_move_on";
+            signal: "e,state,move,on";
+            source: "e";
+         }
+         program {
+            name: "api_move_off";
+            signal: "e,state,move,off";
+            source: "e";
+         }
+         program {
+            name: "api_active";
+            signal: "e,state,focused";
+            source: "e";
+         }
+         program {
+            name: "api_inactive";
+            signal: "e,state,unfocused";
+            source: "e";
+         }
+         */
+         // MOVE PROGRAMS
+         program {
+            name: "mv_down";
+            signal: "mouse,down,1";
+            source: "overlay";
+            action: SIGNAL_EMIT "e,action,move,start" "";
+         }
+         program {
+            name: "mv_up";
+            signal: "mouse,up,1";
+            source: "overlay";
+            action: SIGNAL_EMIT "e,action,move,stop" "";
+         }
+         program {
+            name: "mv_move";
+            signal: "mouse,move";
+            source: "overlay";
+            action: SIGNAL_EMIT "e,action,move,go" "";
+         }
+         program {
+            name: "h1_down1";
+            signal: "mouse,down,1";
+            source: "h1";
+            action: STATE_SET "clicked" 0.0;
+            target: "h1";
+         }
+         program {
+            name: "h1_up1";
+            signal: "mouse,up,1";
+            source: "h1";
+            action: STATE_SET "default" 0.0;
+            target: "h1";
+         }
+         program {
+            name: "h1_down2";
+            signal: "mouse,down,1";
+            source: "h1";
+            action: SIGNAL_EMIT "e,action,resize,left,start" "";
+         }
+         program {
+            name: "h1_up2";
+            signal: "mouse,up,1";
+            source: "h1";
+            action: SIGNAL_EMIT "e,action,resize,left,stop" "";
+         }
+         program {
+            name: "h1_move";
+            signal: "mouse,move";
+            source: "h1";
+            action: SIGNAL_EMIT "e,action,resize,left,go" "";
+         }
+         program {
+            name: "h2_down1";
+            signal: "mouse,down,1";
+            source: "h2";
+            action: STATE_SET "clicked" 0.0;
+            target: "h2";
+         }
+         program {
+            name: "h2_up1";
+            signal: "mouse,up,1";
+            source: "h2";
+            action: STATE_SET "default" 0.0;
+            target: "h2";
+         }
+         program {
+            name: "h2_down2";
+            signal: "mouse,down,1";
+            source: "h2";
+            action: SIGNAL_EMIT "e,action,resize,right,start" "";
+         }
+         program {
+            name: "h2_up2";
+            signal: "mouse,up,1";
+            source: "h2";
+            action: SIGNAL_EMIT "e,action,resize,right,stop" "";
+         }
+         program {
+            name: "h2_move";
+            signal: "mouse,move";
+            source: "h2";
+            action: SIGNAL_EMIT "e,action,resize,right,go" "";
+         }
+         program {
+            name: "v1_down1";
+            signal: "mouse,down,1";
+            source: "v1";
+            action: STATE_SET "clicked" 0.0;
+            target: "v1";
+         }
+         program {
+            name: "v1_up1";
+            signal: "mouse,up,1";
+            source: "v1";
+            action: STATE_SET "default" 0.0;
+            target: "v1";
+         }
+         program {
+            name: "v1_down2";
+            signal: "mouse,down,1";
+            source: "v1";
+            action: SIGNAL_EMIT "e,action,resize,up,start" "";
+         }
+         program {
+            name: "v1_up2";
+            signal: "mouse,up,1";
+            source: "v1";
+            action: SIGNAL_EMIT "e,action,resize,up,stop" "";
+         }
+         program {
+            name: "v1_move";
+            signal: "mouse,move";
+            source: "v1";
+            action: SIGNAL_EMIT "e,action,resize,up,go" "";
+         }
+         program {
+            name: "v2_down1";
+            signal: "mouse,down,1";
+            source: "v2";
+            action: STATE_SET "clicked" 0.0;
+            target: "v2";
+         }
+         program {
+            name: "v2_up1";
+            signal: "mouse,up,1";
+            source: "v2";
+            action: STATE_SET "default" 0.0;
+            target: "v2";
+         }
+         program {
+            name: "v2_down2";
+            signal: "mouse,down,1";
+            source: "v2";
+            action: SIGNAL_EMIT "e,action,resize,down,start" "";
+         }
+         program {
+            name: "v2_up2";
+            signal: "mouse,up,1";
+            source: "v2";
+            action: SIGNAL_EMIT "e,action,resize,down,stop" "";
+         }
+         program {
+            name: "v2_move";
+            signal: "mouse,move";
+            source: "v2";
+            action: SIGNAL_EMIT "e,action,resize,down,go" "";
+         }
+         // LEFT ARROW
+         program {
+            name: "start_left1";
+            signal: "mouse,in";
+            source: "h1";
+            after: "left1_1";
+         }
+         program {
+            name: "start_left2";
+            signal: "mouse,in";
+            source: "h1";
+            in: 0.4 0.0;
+            after: "left2_1";
+         }
+         program {
+            name: "left1_1";
+            action: STATE_SET "1" 0.0;
+            target: "left_arrow1";
+            transition: LINEAR 0.4;
+            after: "left1_2";
+         }
+         program {
+            name: "left1_2";
+            action: STATE_SET "2" 0.0;
+            target: "left_arrow1";
+            transition: LINEAR 0.4;
+            after: "left1_r";
+         }
+         program {
+            name: "left1_r";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow1";
+            after: "left1_1";
+         }
+         program {
+            name: "left2_1";
+            action: STATE_SET "1" 0.0;
+            target: "left_arrow2";
+            transition: LINEAR 0.4;
+            after: "left2_2";
+         }
+         program {
+            name: "left2_2";
+            action: STATE_SET "2" 0.0;
+            target: "left_arrow2";
+            transition: LINEAR 0.4;
+            after: "left2_r";
+         }
+         program {
+            name: "left2_r";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow2";
+            after: "left2_1";
+         }
+         program {
+            name: "stop_left1";
+            signal: "mouse,out";
+            source: "h1";
+            action: ACTION_STOP;
+            target: "left1_1";
+            target: "left1_2";
+            target: "left1_r";
+            target: "left2_1";
+            target: "left2_2";
+            target: "left2_r";
+            target: "start_left2";
+            after: "stop_left2";
+         }
+         program {
+            name: "stop_left2";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow1";
+            target: "left_arrow2";
+         }
+         // RIGHT ARROW
+         program {
+            name: "start_right1";
+            signal: "mouse,in";
+            source: "h2";
+            after: "right1_1";
+         }
+         program {
+            name: "start_right2";
+            signal: "mouse,in";
+            source: "h2";
+            in: 0.4 0.0;
+            after: "right2_1";
+         }
+         program {
+            name: "right1_1";
+            action: STATE_SET "1" 0.0;
+            target: "right_arrow1";
+            transition: LINEAR 0.4;
+            after: "right1_2";
+         }
+         program {
+            name: "right1_2";
+            action: STATE_SET "2" 0.0;
+            target: "right_arrow1";
+            transition: LINEAR 0.4;
+            after: "right1_r";
+         }
+         program {
+            name: "right1_r";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow1";
+            after: "right1_1";
+         }
+         program {
+            name: "right2_1";
+            action: STATE_SET "1" 0.0;
+            target: "right_arrow2";
+            transition: LINEAR 0.4;
+            after: "right2_2";
+         }
+         program {
+            name: "right2_2";
+            action: STATE_SET "2" 0.0;
+            target: "right_arrow2";
+            transition: LINEAR 0.4;
+            after: "right2_r";
+         }
+         program {
+            name: "right2_r";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow2";
+            after: "right2_1";
+         }
+         program {
+            name: "stop_right1";
+            signal: "mouse,out";
+            source: "h2";
+            action: ACTION_STOP;
+            target: "right1_1";
+            target: "right1_2";
+            target: "right1_r";
+            target: "right2_1";
+            target: "right2_2";
+            target: "right2_r";
+            target: "start_right2";
+            after: "stop_right2";
+         }
+         program {
+            name: "stop_right2";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow1";
+            target: "right_arrow2";
+         }
+         // TOP ARROW
+         program {
+            name: "start_top1";
+            signal: "mouse,in";
+            source: "v1";
+            after: "top1_1";
+         }
+         program {
+            name: "start_top2";
+            signal: "mouse,in";
+            source: "v1";
+            in: 0.4 0.0;
+            after: "top2_1";
+         }
+         program {
+            name: "top1_1";
+            action: STATE_SET "1" 0.0;
+            target: "top_arrow1";
+            transition: LINEAR 0.4;
+            after: "top1_2";
+         }
+         program {
+            name: "top1_2";
+            action: STATE_SET "2" 0.0;
+            target: "top_arrow1";
+            transition: LINEAR 0.4;
+            after: "top1_r";
+         }
+         program {
+            name: "top1_r";
+            action: STATE_SET "default" 0.0;
+            target: "top_arrow1";
+            after: "top1_1";
+         }
+         program {
+            name: "top2_1";
+            action: STATE_SET "1" 0.0;
+            target: "top_arrow2";
+            transition: LINEAR 0.4;
+            after: "top2_2";
+         }
+         program {
+            name: "top2_2";
+            action: STATE_SET "2" 0.0;
+            target: "top_arrow2";
+            transition: LINEAR 0.4;
+            after: "top2_r";
+         }
+         program {
+            name: "top2_r";
+            action: STATE_SET "default" 0.0;
+            target: "top_arrow2";
+            after: "top2_1";
+         }
+         program {
+            name: "stop_top1";
+            signal: "mouse,out";
+            source: "v1";
+            action: ACTION_STOP;
+            target: "top1_1";
+            target: "top1_2";
+            target: "top1_r";
+            target: "top2_1";
+            target: "top2_2";
+            target: "top2_r";
+            target: "start_top2";
+            after: "stop_top2";
+         }
+         program {
+            name: "stop_top2";
+            action: STATE_SET "default" 0.0;
+            target: "top_arrow1";
+            target: "top_arrow2";
+         }
+         // BOTTOM ARROW
+         program {
+            name: "start_bottom1";
+            signal: "mouse,in";
+            source: "v2";
+            after: "bottom1_1";
+         }
+         program {
+            name: "start_bottom2";
+            signal: "mouse,in";
+            source: "v2";
+            in: 0.4 0.0;
+            after: "bottom2_1";
+         }
+         program {
+            name: "bottom1_1";
+            action: STATE_SET "1" 0.0;
+            target: "bottom_arrow1";
+            transition: LINEAR 0.4;
+            after: "bottom1_2";
+         }
+         program {
+            name: "bottom1_2";
+            action: STATE_SET "2" 0.0;
+            target: "bottom_arrow1";
+            transition: LINEAR 0.4;
+            after: "bottom1_r";
+         }
+         program {
+            name: "bottom1_r";
+            action: STATE_SET "default" 0.0;
+            target: "bottom_arrow1";
+            after: "bottom1_1";
+         }
+         program {
+            name: "bottom2_1";
+            action: STATE_SET "1" 0.0;
+            target: "bottom_arrow2";
+            transition: LINEAR 0.4;
+            after: "bottom2_2";
+         }
+         program {
+            name: "bottom2_2";
+            action: STATE_SET "2" 0.0;
+            target: "bottom_arrow2";
+            transition: LINEAR 0.4;
+            after: "bottom2_r";
+         }
+         program {
+            name: "bottom2_r";
+            action: STATE_SET "default" 0.0;
+            target: "bottom_arrow2";
+            after: "bottom2_1";
+         }
+         program {
+            name: "stop_bottom1";
+            signal: "mouse,out";
+            source: "v2";
+            action: ACTION_STOP;
+            target: "bottom1_1";
+            target: "bottom1_2";
+            target: "bottom1_r";
+            target: "bottom2_1";
+            target: "bottom2_2";
+            target: "bottom2_r";
+            target: "start_bottom2";
+            after: "stop_bottom2";
+         }
+         program {
+            name: "stop_bottom2";
+            action: STATE_SET "default" 0.0;
+            target: "bottom_arrow1";
+            target: "bottom_arrow2";
+         }
+      }
+   }

@@ -1,0 +1,17 @@
+conf_edgebindingsdir = $(MDIR)/conf_edgebindings
+conf_edgebindings_DATA = conf_edgebindings/e-module-conf_edgebindings.edj \
+			 conf_edgebindings/module.desktop
+
+EXTRA_DIST += $(conf_edgebindings_DATA)
+
+conf_edgebindingspkgdir = $(MDIR)/conf_edgebindings/$(MODULE_ARCH)
+conf_edgebindingspkg_LTLIBRARIES = conf_edgebindings/module.la
+
+conf_edgebindings_module_la_SOURCES = conf_edgebindings/e_mod_main.c \
+			      conf_edgebindings/e_mod_main.h \
+			      conf_edgebindings/e_int_config_edgebindings.c \
+			      conf_edgebindings/e_int_config_signalbindings.c
+
+.PHONY: conf_edgebindings install-conf_edgebindings
+conf_edgebindings: $(conf_edgebindingspkg_LTLIBRARIES) $(conf_edgebindings_DATA)
+install-conf_edgebindings: install-conf_edgebindingsDATA install-conf_edgebindingspkgLTLIBRARIES

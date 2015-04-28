@@ -1,0 +1,146 @@
+group { name: "e/transpreview/0";
+   images.image: "img_example_1.png" LOSSY 92;
+   parts {
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "bg";
+         clip_to: "clip";
+         description {state: "default" 0.0;
+            image.normal: "img_example_1.png";
+            ASPECT_FILL((400/300))
+         }
+      }
+   }
+}
+
+group { name: "e/transpreview/1";
+   images.image: "img_example_2.png" LOSSY 92;
+   parts {
+      part { name: "clip"; type: RECT;
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "bg";
+         clip_to: "clip";
+         description {state: "default" 0.0;
+            image.normal: "img_example_2.png";
+            ASPECT_FILL((400/300))
+         }
+      }
+   }
+}
+
+group { name: "e/transitions/crossfade";
+   parts {
+      part { name: "e.swallow.bg.old"; type: SWALLOW;
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "e.swallow.bg.new"; type: SWALLOW;
+         clip_to: "bg_new_clip";
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "bg_new_clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+         description { state: "done" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,action,start"; source: "e";
+         action: STATE_SET "done" 0.0;
+         transition: SINUSOIDAL 1.0;
+         target: "bg_new_clip";
+         after: "go2";
+      }
+      program { name: "go2";
+         action: SIGNAL_EMIT "e,state,done" "";
+      }
+   }
+}
+
+group { name: "e/transitions/vswipe";
+   images.image: "vgrad_shadow_bi.png" COMP;
+   parts {
+      part { name: "e.swallow.bg.old"; type: SWALLOW;
+         clip_to: "bg_prev_clip";
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "e.swallow.bg.new"; type: SWALLOW;
+         clip_to: "bg_new_clip";
+         description { state: "default" 0.0;
+         }
+      }
+      part { name: "divideold";
+         clip_to: "bg_prev_clip";
+         description { state: "default" 0.0;
+            image.normal: "vgrad_shadow_bi.png";
+            rel1.to: "bg_prev_clip";
+            rel1.relative: 0.0 0.0;
+            rel2.to: "bg_prev_clip";
+            rel2.relative: 1.0 0.0;
+            min: 0 80;
+            max: 99999 80;
+            TILED_HORIZ(80)
+         }
+      }
+      part { name: "dividenew";
+         clip_to: "bg_new_clip";
+         description { state: "default" 0.0;
+            image.normal: "vgrad_shadow_bi.png";
+            rel1.to: "bg_new_clip";
+            rel1.relative: 0.0 1.0;
+            rel2.to: "bg_new_clip";
+            rel2.relative: 1.0 1.0;
+            min: 0 80;
+            max: 99999 80;
+            TILED_HORIZ(80)
+         }
+      }
+      part { name: "bg_prev_clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: 0 -40;
+            rel2.offset: -1 39;
+         }
+         description { state: "done" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 0 39;
+         }
+      }
+      part { name: "bg_new_clip"; type: RECT;
+         description { state: "default" 0.0;
+            rel2.relative: 1.0 0.0;
+            rel1.offset: 0 -40;
+            rel2.offset: -1 -40;
+         }
+         description { state: "done" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 1.0 1.0;
+            rel2.offset: -1 39;
+         }
+      }
+      programs {
+         program {
+            signal: "e,action,start"; source: "e";
+            action: STATE_SET "done" 0.0;
+            transition: SINUSOIDAL 1.0;
+            target: "bg_new_clip";
+            target: "bg_prev_clip";
+            after: "go2";
+         }
+         program { name: "go2";
+            action: SIGNAL_EMIT "e,state,done" "";
+         }
+      }
+   }
+}

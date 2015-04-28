@@ -1,0 +1,49 @@
+group { name: "e/widgets/preview";
+   images.image: "inset_shadow.png" COMP;
+   images.image: "bevel_in.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.content";
+            rel2.to: "e.swallow.content";
+            color: 64 64 64 255;
+         }
+      }
+      part { name: "clipper"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.content";
+            rel2.to: "e.swallow.content";
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            rel1.offset: 1 1;
+            rel2.offset: -2 -2;
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow.png";
+            image.border: 5 5 7 3;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            fill.smooth: 0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "inset"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_in.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel1.offset: -1 -1;
+            rel2.to: "bg";
+            rel2.offset: 0 0;
+            fill.smooth: 0;
+         }
+      }
+   }
+}

@@ -1,0 +1,151 @@
+Changes since 0.17.4:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Changes:
+    * backports / fixes for make it working with efl/elementary in versions bigger than 1.9, maybe not works correctly with lower versions now
+
+Removed:
+
+Improvements:
+
+Fixes:
+	* fixed stall on startup because xinerama started before randr (backports).
+
+
+Changes since 0.17.3:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Changes:
+
+Removed:
+
+Improvements:
+
+Fixes:
+
+
+
+Changes since 0.17.2:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Changes:
+
+Removed:
+
+Improvements:
+    * improve efm mouse movement detection for icons
+    * add check for vmware window in another spot to disable key remapping
+
+Fixes:
+    * fixed theme bug which prevented windows from unshading correctly when animations were disabled
+
+
+
+Changes since 0.17.1:
+---------------------
+
+Additions:
+    * e_config_xkb functions
+
+Deprecations:
+
+Changes:
+    * e_xkb_layout API now deals directly with E_Config_XKB_Layout structs
+
+Removed:
+
+Improvements:
+    * clock listens to /etc/timezone changes now too
+    * updated Catalan translations
+
+Fixes:
+    * fixed window autoraise triggering from pointer slide
+    * fixed opening of links in filemanager in some cases
+    * filemanager now ignores changes to .part files
+    * fixed bugs where keyboard layouts could not be applied or selected
+    * fixed leak in profile list dbus method
+    * fixed behavior of Up/Down keys in filemanager when typebuf was visible
+    * fix possible crash in xkb rule parsing
+    * fix list update on deletion of personal app launchers
+    * fix button toggling in personal app launchers dialog
+    * fix bug where edge flips would stop functioning after dragging to an invalid edge containing a shelf
+    * moved "allow windows above fullscreen windows" option to geometry settings dialog
+    * fix filemanager efreet cache listeners and updates
+    * fix clock timerfd usage to actually detect date changes
+    * enable image preloading for all e_widget_preview using edje
+    * keyboard mapping change now also disables for window class "vmware"
+    * don't call efreet_menu_parse from a thread
+    * fixed bug where pointer warping to new clients would start at a random location
+    * fix crash when locking screen from Start gadget and then activating gadget again
+    * fixed bug where e_layout would ignore frozen state and crash
+    * fixed disable of input methods in input method config dialog
+    * fixed pointer warp when pointer was inside warp window but not directly over it
+    * toolbar gadgets no longer crash when trying to display a popup
+
+
+Changes since 0.17.0:
+---------------------
+
+Additions:
+
+Deprecations:
+
+Removed:
+
+Improvements:
+    * Mixer settings dialog is now resizable
+    * No longer build illume edj files
+    * Better messages in UI
+    * Added three more files for input methods used in asian countries
+    * Desktop->Shelves menu now shows shelf names
+    * remove unnecessary shelf deletion when changing resolution
+
+Fixes:
+    * Fixed crash when changing ibar source
+    * Fixed SIGFPE in tiling module and functionality of toggle_rows_count
+    * Fixed error in Evry when trying to call edje functions on non-edje object
+    * Fix construction of variant list for setxkbmap
+    * Fix E17 restart after manually monitoring it
+    * Fix build with uClibc
+    * Restore default keybindings no longer restores two bindings for ctrl+alt+f
+    * entry/scrollframe: Fixed issues with submembers.
+    * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
+    * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected
+    * Fixed bug where disabled slider widgets could be changed with mouse wheel
+    * Fixed bug where fileman config slider widgets were not properly disabled
+    * Tasks gadgets now apply the selected style
+    * Fixed crash when changing desktops configuration
+    * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
+    * Fixed bug with desktop config profile where conf module version variable was misnamed
+    * fixed bug where internal dialogs would not redraw after unfullscreening
+    * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
+    * fixed window border hide bug where after iconification hides leave ghosts
+    * fixed bug where backlight settings would try to update dummy backlight devices
+    * fixed gadget dragging on desktop near screen edges
+    * fixed bug where "don't composite fullscreen windows" option would cause some windows to stop appearing
+    * module error dialog is no longer remembered across restarts
+    * fix small leak in efm when performing dnd onto mounted drive icon
+    * fixed small leak in e_import_config_dialog_show during failure case
+    * fixed small leak in e_import_dialog_show during failure case
+    * fixed small leak in illume2 policy config
+    * fixed path setting in import dialog
+    * fixed possible NULL deref in desktop editor
+    * fixed possible NULL deref in e_sys when debugging
+    * fixed bug where dragging files into sidebar would move them instead of creating links
+    * fixed bug where e widgets would not unset focus
+    * fixed bug with filemanager setting path with too many spaces when opened from menu
+    * fix remember size/position apply
+    * wsod: Fixed gdb hangs when generating backtraces.
+    * Entry: Fixed issues with entry not scrolling to cursor.

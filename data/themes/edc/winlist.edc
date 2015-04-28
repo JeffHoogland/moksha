@@ -1,0 +1,303 @@
+group { name: "e/widgets/winlist/main";
+   images.image: "vgrad_med_lighter.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "shine.png" COMP;
+   images.image: "vert_bar_inset.png" COMP;
+   parts {
+      part { name: "base"; type: RECT; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 1.0;
+            rel1.to_y: "top";
+            color: 64 64 64 255;
+         }
+      }
+      part { name: "top"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med_lighter.png";
+            rel2.to_y: "e.text.title";
+            rel2.offset: -1 1;
+            align: 0.0 0.0;
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+            fixed: 0 1;
+         }
+      }
+      part { name: "e.text.title"; type: TEXT; mouse_events: 0;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            color_class: "menu_title";
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 1 3;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -2 3;
+            align: 0.5 0.0;
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+            text { font: "Sans:style=Bold"; size: 10;
+               text_class: "menu_title";
+               align: 0.5 0.0;
+               min: 0 1;
+            }
+            fixed: 0 1;
+         }
+      }
+      part { name: "e.swallow.icon"; type: SWALLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            FIXED_SIZE(48, 48)
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 6 6;
+            rel1.to_y: "top";
+            rel2.relative: 1.0 1.0;
+            rel2.offset: 6 6;
+            rel2.to_y: "top";
+        }
+      }
+      part { name: "e.text.label"; type: TEXT;
+         scale: 1;
+         effect: SHADOW BOTTOM;
+         description { state: "default" 0.0;
+            color_class: "winlist_label";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: 6 0;
+            rel1.to: "e.swallow.icon";
+            rel2.offset: -7 -1;
+            rel2.to_y: "e.swallow.icon";
+            align: 0.0 0.5;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            text { font: "Sans:style=Bold"; size: 10;
+               text_class: "winlist_label";
+               align: 0.0 0.5;
+               min: 0 1;
+            }
+            fixed: 0 1;
+         }
+      }
+      part { name: "list_clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 0 6;
+            rel1.to_y: "e.swallow.icon";
+            rel2.offset: -1 -7;
+         }
+      }
+      part { name: "e.swallow.list"; type: SWALLOW;
+         clip_to: "list_clip";
+         description { state: "default" 0.0;
+            rel1.to_y: "list_clip";
+            rel2.to_y: "list_clip";
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "inset"; mouse_events: 0;
+         description { state: "default" 0.0;
+            rel1.offset: 0 -1;
+            rel1.to: "list_clip";
+            rel2.offset: -1 0;
+            rel2.to: "list_clip";
+            image.normal: "vert_bar_inset.png";
+            image.border: 1 1 8 6;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "top";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "top";
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+}
+
+group { name: "e/widgets/winlist/item";
+   images.image: "shadow_rounded_horiz.png" COMP;
+   images.image: "vgrad_med_dark.png" COMP;
+   images.image: "bevel_horiz_out.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "e.text.label"; type: TEXT; mouse_events: 0;
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: 2 3;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "icon";
+            rel2.offset: -3 -3;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "ilist_item";
+            text { font: "Sans"; size: 10;
+               min: 0 1;
+               align: 0.0 0.5;
+               text_class: "ilist_item";
+            }
+         }
+         description { state: "iconified" 0.0;
+            inherit: "default" 0.0;
+            color: 21 21 21 255;
+            color3: 255 255 255 25;
+         }
+      }
+      part { name: "sel_shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shadow_rounded_horiz.png";
+            image.border: 0 0 9 9;
+            rel1.offset: 0 -4;
+            rel2.offset: -1 5;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "sel_base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med_dark.png";
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "sel_bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_horiz_out.png";
+            image.border: 0 0 2 2;
+            image.middle: 0;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "icon"; type: SPACER;
+         description { state: "default" 0.0;
+            align: 0.0 0.5;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+            rel1.offset: 2 2;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 2 -3;
+         }
+      }
+      part { name: "e.swallow.icon"; type: SWALLOW; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 0.5 0.5;
+            rel1.to: "icon";
+            rel2.to: "icon";
+         }
+         description { state: "iconified" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.25 0.25;
+            rel2.relative: 0.75 0.75; 
+        }
+      }
+      part { name: "label3"; type: TEXT; mouse_events: 0;
+         effect: GLOW;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.offset: -2 -3;
+            rel1.to: "e.text.label";
+            rel2.offset: 2 1;
+            rel2.to: "e.text.label";
+            color: 51 153 255 255;
+            color2: 51 153 255 24;
+            color3: 51 153 255 18;
+            color_class: "ilist_item_selected";
+            text { font: "Sans"; size: 10;
+               text_source: "e.text.label";
+               align: 0.0 0.5;
+               text_class: "ilist_item";
+            }
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "sel_shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel1.to: "sel_base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            rel2.to: "sel_base";
+            FIXED_SIZE(69, 5)
+            visible: 0;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "event"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+         description { state: "iconified" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,selected"; source: "e";
+         action: STATE_SET "selected" 0.0;
+         target: "sel_shadow";
+         target: "sel_base";
+         target: "sel_bevel";
+         target: "sel_shine";
+         target: "label3";
+      }
+      program {
+         signal: "e,state,unselected"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "sel_shadow";
+         target: "sel_base";
+         target: "sel_bevel";
+         target: "sel_shine";
+         target: "label3";
+      }
+      program {
+         signal: "e,state,iconified"; source: "e";
+         action: STATE_SET "iconified" 0.0;
+         target: "e.swallow.icon";
+         target: "e.text.label";
+      }
+      program {
+         signal: "e,state,invisible"; source: "e";
+         action: STATE_SET "iconified" 0.0;
+         target: "e.swallow.icon";
+         target: "e.text.label";
+      }
+//      program {
+//         signal: "e,state,shaded"; source: "e";
+//      }
+   }
+}

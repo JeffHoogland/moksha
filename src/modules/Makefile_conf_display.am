@@ -1,0 +1,21 @@
+conf_displaydir = $(MDIR)/conf_display
+conf_display_DATA = conf_display/module.desktop
+
+EXTRA_DIST += $(conf_display_DATA)
+
+conf_displaypkgdir = $(MDIR)/conf_display/$(MODULE_ARCH)
+conf_displaypkg_LTLIBRARIES = conf_display/module.la
+
+conf_display_module_la_SOURCES = conf_display/e_mod_main.c \
+				 conf_display/e_mod_main.h \
+				 conf_display/e_int_config_display.c \
+				 conf_display/e_int_config_screensaver.c \
+				 conf_display/e_int_config_dpms.c \
+				 conf_display/e_int_config_desklock.c \
+				 conf_display/e_int_config_desklock_fsel.c \
+				 conf_display/e_int_config_desks.c \
+				 conf_display/e_int_config_desk.c
+
+.PHONY: conf_display install-conf_display
+conf_display: $(conf_displaypkg_LTLIBRARIES) $(conf_display_DATA)
+install-conf_display: install-conf_displayDATA install-conf_displaypkgLTLIBRARIES

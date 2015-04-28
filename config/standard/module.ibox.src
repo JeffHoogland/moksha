@@ -1,0 +1,20 @@
+group "IBox_Config" struct {
+  group "items" list {
+    group "IBox_Config_Item" struct {
+      value "id" string: "0";
+      value "show_label" int: 0;
+      value "show_zone" int: 1;
+      value "show_desk" int: 0;
+      value "icon_label" int: 0;
+    }
+  }
+  group "items" list {
+    group "IBox_Config_Item" struct {
+      value "id" string: "ibox.1";
+      value "show_label" int: 0;
+      value "show_zone" int: 1;
+      value "show_desk" int: 0;
+      value "icon_label" int: 0;
+    }
+  }
+}

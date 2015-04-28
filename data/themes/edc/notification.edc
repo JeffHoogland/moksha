@@ -1,0 +1,189 @@
+group { name: "e/modules/notification/logo";
+   images.image: "glow_exclam.png" COMP;
+   parts {
+      part { name: "base"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "glow_exclam.png";
+            max: 48 48;
+            aspect: 1.0 1.0;
+         }
+      }
+   }
+}
+
+group { name: "e/modules/notification/main";
+   images.image: "darken_rounded_square.png" COMP;
+   images.image: "sym_close_light_normal.png" COMP;
+   images.image: "sym_close_light_selected.png" COMP;
+   data.item: "app_icon_max" "48 48";
+   data.item: "shaped" "1";
+   styles {   
+      style { name: "notification_style_nowrap";
+         base: "font=Sans font_size=10 align=left color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=none text_class=notification_body";
+         tag:  "subject"  "+ text_class=module_large style=glow color=#3399ffff glow_color=#3399ff18 align=center glow2_color=#3399ff12";
+         tag:  "body"  "+ text_class=module_normal";
+         tag:  "br" "\n";
+         tag:  "ps" "ps";
+         tag:  "b" "+ font=Sans:style=Bold text_class=module_bold";
+         tag:  "i" "+ font=Sans:style=Oblique text_class=module_italic";
+         tag:  "u" "+ underline=on underline_color=#3399ffff";
+         tag:  "img" ""; // images not supported
+         tag:  "a" ""; // links not supported
+      }
+      style { name: "notification_style";
+         base: "font=Sans font_size=10 align=left color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=word text_class=notification_body";
+         tag:  "subject"  "+ text_class=module_large style=glow color=#3399ffff glow_color=#3399ff18 align=center glow2_color=#3399ff12";
+         tag:  "body"  "+ text_class=module_normal";
+         tag:  "br" "\n";
+         tag:  "ps" "ps";
+         tag:  "b" "+ font=Sans:style=Bold text_class=module_bold";
+         tag:  "i" "+ font=Sans:style=Oblique text_class=module_italic";
+         tag:  "u" "+ underline=on underline_color=#3399ffff";
+         tag:  "img" ""; // images not supported
+         tag:  "a" ""; // links not supported
+      }
+   }
+   
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "darken_rounded_square.png";
+            image.border: 15 15 15 15;
+         }
+      }
+      part { name: "titleclip"; type: RECT;
+         description { state: "default" 0.0;
+            rel2.to_x: "e.event.close";
+            rel2.relative: 0.0 1.0;
+         }
+      }
+      part { name: "bodyclip"; type: RECT;
+         description { state: "default" 0.0;
+            rel2.offset: -13 -13;
+            min: 220 80;
+         }
+      }
+      part { name: "notification.swallow.app_icon"; type: SWALLOW; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 0.0 0.5;
+            aspect: 1.0 1.0;
+            aspect_preference: BOTH;
+            rel1.offset: 12 12;
+            rel2.offset: 12 -13;
+            rel2.relative: 0.0 1.0;
+            min: 24 24;
+         }
+      }
+      part { name: "notification.textblock.message"; type: TEXTBLOCK; mouse_events: 0;
+         clip_to: "bodyclip";
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            rel1.to_x: "notification.swallow.app_icon";
+            rel1.to_y: "notification.text.title";
+            rel1.relative: 1.0 1.0;
+            rel1.offset: 4 4;
+            rel2.offset: -27 -13;
+            text { style: "notification_style";
+               min: 0 1;
+            }
+            fixed: 1 1;
+         }
+      }
+      part { name: "message"; type: TEXTBLOCK; mouse_events: 0;
+         description { state: "default" 0.0;
+            align: 0.0 0.0;
+            max: 500 99999;
+            rel1.to_x: "notification.swallow.app_icon";
+            rel1.to_y: "notification.text.title";
+            rel1.relative: 1.0 1.0;
+            rel1.offset: 4 4;
+            rel2.offset: -27 -13;
+            text { style: "notification_style_nowrap";
+               text_source: "notification.textblock.message";
+               min: 0 1;
+            }
+            visible: 0;
+         }
+      }
+      part { name: "notification.text.title"; type: TEXT; mouse_events: 0;
+         clip_to: "titleclip";
+         effect: SHADOW BOTTOM;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.to_x: "notification.swallow.app_icon";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: 4 12;
+            rel2.relative: 0.0 0.0;
+            rel2.to_x: "e.event.close";
+            rel2.offset: -5 12;
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            align: 0.0 0.0;
+            color_class: "notification_title";
+            text { font: "Sans:style=Bold"; size: 10;
+               text: "title goes here blah blah";
+               min: 0 1;
+               align: 0.0 0.5;
+               text_class: "notification_title";
+            }
+            fixed: 0 1;
+         }
+      }
+      part { name: "close";
+         description { state: "default" 0.0;
+            image.normal: "sym_close_light_normal.png";
+            rel1.to: "e.event.close";
+            rel2.to: "e.event.close";
+            min: 15 15;
+            max: 15 15;
+            fixed: 1 1;
+         }
+         description { state: "selected" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "sym_close_light_selected.png";
+         }
+      }
+      part { name: "e.event.close"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -13 12;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -13 12;
+            align: 1.0 0.0;
+            min: 15 15;
+            color: 0 0 0 0;
+            fixed: 1 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "e.event.close";
+         action: STATE_SET "selected" 0.0;
+         target: "close";
+      }
+      program {
+         signal: "mouse,up,1"; source: "e.event.close";
+         action: STATE_SET "default" 0.0;
+         target: "close";
+      }
+      program {
+         signal: "mouse,clicked,1"; source: "e.event.close";
+         action: SIGNAL_EMIT "notification,close" "theme";
+      }
+      program {
+         signal: "mouse,clicked,1"; source: "base";
+         action: SIGNAL_EMIT "notification,find" "theme";
+      }
+//      program {
+//         signal: "notification,new"; source: "notification";
+//      }
+//      program {
+//         signal: "notification,del"; source: "notification";
+//      }
+//      program {
+//         signal: "notification,deleted"; source: "notification";
+//      }
+   }
+}

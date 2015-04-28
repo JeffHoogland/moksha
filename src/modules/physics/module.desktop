@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Physics
+Name[ca]=Física
+Name[eo]=Fiziko
+Name[es]=Física
+Name[fr]=Physiques
+Name[gl]=Física
+Name[pt]=Física
+Name[ru]=Физика
+Comment=Enlightenment Physics Professor
+Comment[ca]=El professor de física de l'Enlightenment
+Comment[eo]=Profesoro de Enlightenment pri fiziko
+Comment[es]=El profesor de física de Enlightenment
+Comment[fr]=Professeur de physique pour Enlightenment
+Comment[gl]=O profesor de física de Enlightenment
+Comment[it]=Il professore di fisica di Enlightenment
+Comment[pt]=Professor de física do Enlightenment
+Icon=e-module-physics
+X-Enlightenment-ModuleType=look

@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Mobile
+Name[eo]=Poŝtelefono
+Name[es]=Móvil
+Name[fr]=Écran tactile
+Name[gl]=Móbil
+Name[ko]=터치스크린
+Name[pt]=Ecrã tátil
+Name[ru]=Мобильные устройства
+Comment=EXPERIMENTAL!<br>Configuration set up to work best with touchscreen<br>phones, tablets and similar devices.
+Comment[eo]=EKSPERIMENTA!<br>Agordoj kongruas plej kun tuŝekranaj telefonoj,<br> tabulkomputiloj aŭ similaj aparatoj.
+Comment[es]=¡EXPERIMENTAL!<br>Configuración adaptada para el uso en móviles<br>de pantalla táctil, tablets y dispositivos similares.
+Comment[fr]=EXPÉRIMENTAL !<br>Configuration adaptée aux écrans tactiles<br>des téléphones, tablettes et apparentés.
+Comment[gl]=EXPERIMENTAL!<br>Configuración adaptada para o uso en móbiles<br>de pantalla táctil, tablets e dispositivos similares.
+Comment[it]=SPERIMENTALE!<br>Configurazione adatta per l'uso in smartphone<br>con interfaccia tattile, tablets e similari.
+Comment[ko]=실험 단계중!<br>터치스크린 기반의 휴대폰, 태블릿 등과 같은 장치에 맞는 설정.
+Comment[pt]=EXPERIMENTAL!<br>Configuração de ecrãs táteis como os dos telefones, tablets e similares.
+Comment[ru]=Экспериментально!<br>Конфигурация предназначенная специально для сенсорных<br>экранов телефонов, планшетов и прочих подобных устройств.
+Icon=enlightenment-mobile

@@ -1,0 +1,17 @@
+group { name: "e/widgets/deskpreview/desk";
+   inherit: "e/widgets/preview";
+   parts {
+      part { name: "e.swallow.content";
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+         }
+      }
+      part { name: "e.event.menu"; type: RECT;
+         insert_after: "inset";
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+}

@@ -1,0 +1,2861 @@
+images {
+   image: "module_icon.png" COMP;
+
+   image: "arrow_n.png" COMP;
+   image: "arrow_nw.png" COMP;
+   image: "arrow_w.png" COMP;
+   image: "arrow_sw.png" COMP;
+   image: "arrow_s.png" COMP;
+   image: "arrow_se.png" COMP;
+   image: "arrow_e.png" COMP;
+   image: "arrow_ne.png" COMP;
+}
+collections {
+    group {
+        name: "icon";
+        parts {
+            part {
+                name: "image";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    aspect: 1.0 1.0;
+                    aspect_preference: BOTH;
+                    image.normal: "module_icon.png";
+                }
+            }
+        }
+    }
+
+    group { name: "modules/tiling/move/left/composite"; // {{{
+        min: 101 54;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 101 54;
+                    max: 101 54;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_nw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 77 29;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 101 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_nw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 42 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 63 29;
+                        to: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_sw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 29;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_sw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_nw";
+                target: "arrow_w";
+                target: "arrow_sw";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_nw";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_sw";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_w";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_nw";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_sw";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_w";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/move/left"; // {{{
+        min: 101 54;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 101 54;
+                    max: 101 54;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_nw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 77 29;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 101 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_nw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 42 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 63 29;
+                        to: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_sw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 29;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_sw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_nw";
+                target: "arrow_w";
+                target: "arrow_sw";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_nw";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_sw";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_w";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_nw";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_sw";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_w";
+            }
+        }
+    } // }}}
+
+    group { name: "modules/tiling/move/down/composite"; // {{{
+        min: 54 101;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 54 101;
+                    max: 54 101;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_sw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 29 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 53 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_sw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 38;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  29 59;
+                        to: "_";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_se";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 29 76;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 53 101;
+                        to: "_";
+                    }
+                    image.normal: "arrow_se.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_sw";
+                target: "arrow_s";
+                target: "arrow_se";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_sw";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_se";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_s";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_sw";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_se";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_s";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/move/down"; // {{{
+        min: 54 101;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 54 101;
+                    max: 54 101;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_sw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 29 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 53 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_sw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 38;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  29 59;
+                        to: "_";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_se";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 29 76;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 53 101;
+                        to: "_";
+                    }
+                    image.normal: "arrow_se.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_sw";
+                target: "arrow_s";
+                target: "arrow_se";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_sw";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_se";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_s";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_sw";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_se";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_s";
+            }
+        }
+    } // }}}
+
+    group { name: "modules/tiling/move/right/composite"; // {{{
+        min: 101 54;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 101 54;
+                    max: 101 54;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_se";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_se.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 38 25;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  59 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_ne";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset:  77 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 101 24;
+                        to: "_";
+                    }
+                    image.normal: "arrow_ne.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_se";
+                target: "arrow_e";
+                target: "arrow_ne";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_se";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_ne";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_e";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_se";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_ne";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_e";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/move/right"; // {{{
+        min: 101 54;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 101 54;
+                    max: 101 54;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_se";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_se.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 38 25;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  59 54;
+                        to: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_ne";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset:  77 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 101 24;
+                        to: "_";
+                    }
+                    image.normal: "arrow_ne.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_se";
+                target: "arrow_e";
+                target: "arrow_ne";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_se";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_ne";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_e";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_se";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_ne";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_e";
+            }
+        }
+    } // }}}
+
+    group { name: "modules/tiling/move/up/composite"; // {{{
+        min: 54 101;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 54 101;
+                    max: 54 101;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_ne";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 76;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 101;
+                        to: "_";
+                    }
+                    image.normal: "arrow_ne.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 25 38;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  54 59;
+                        to: "_";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_nw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset:  0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_nw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_ne";
+                target: "arrow_n";
+                target: "arrow_nw";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_ne";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_nw";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_n";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_ne";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_nw";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_n";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/move/up"; // {{{
+        min: 54 101;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 54 101;
+                    max: 54 101;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_ne";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 76;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 101;
+                        to: "_";
+                    }
+                    image.normal: "arrow_ne.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 25 38;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset:  54 59;
+                        to: "_";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_nw";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset:  0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 0;
+                        offset: 24 25;
+                        to: "_";
+                    }
+                    image.normal: "arrow_nw.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_ne";
+                target: "arrow_n";
+                target: "arrow_nw";
+                after: "in1a";
+            }
+            program {
+                name: "in1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_ne";
+                after: "in2a";
+                after: "in2b";
+            }
+            program {
+                name: "in1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_nw";
+            }
+            program {
+                name: "in2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_n";
+                after: "in3a";
+                after: "in3b";
+            }
+            program {
+                name: "in2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.4;
+                target: "arrow_ne";
+            }
+            program {
+                name: "in3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.4;
+                target: "arrow_nw";
+                after: "in1a";
+                after: "in1b";
+            }
+            program {
+                name: "in3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.6;
+                target: "arrow_n";
+            }
+        }
+    } // }}}
+
+    group { name: "modules/tiling/transition/horizontal/composite"; // {{{
+        min: 29 221;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 29 221;
+                    max: 29 221;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_n_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 1 0;
+                        offset: 0 21;
+                        to: "_";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_3";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_3";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_2";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_2";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_1";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_1";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 10;
+                        to_x: "_";
+                        to_y: "arrow_n_0";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 31;
+                        to_x: "_";
+                        to_y: "arrow_n_0";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_0";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_0";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_1";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_1";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_2";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_2";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_n_0";
+                target: "arrow_n_1";
+                target: "arrow_n_2";
+                target: "arrow_n_3";
+                target: "arrow_s_0";
+                target: "arrow_s_1";
+                target: "arrow_s_2";
+                target: "arrow_s_3";
+                after: "n0a";
+                after: "s0a";
+            }
+            program {
+                name: "n0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_0";
+                after: "n1a";
+                after: "n1b";
+            }
+            program {
+                name: "n0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_3";
+            }
+            program {
+                name: "n1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_1";
+                after: "n2a";
+                after: "n2b";
+            }
+            program {
+                name: "n1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_0";
+            }
+            program {
+                name: "n2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_2";
+                after: "n3a";
+                after: "n3b";
+            }
+            program {
+                name: "n2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_1";
+            }
+            program {
+                name: "n3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_3";
+                after: "n0a";
+                after: "n0b";
+            }
+            program {
+                name: "n3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_2";
+            }
+            program {
+                name: "s0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_0";
+                after: "s1a";
+                after: "s1b";
+            }
+            program {
+                name: "s0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_3";
+            }
+            program {
+                name: "s1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_1";
+                after: "s2a";
+                after: "s2b";
+            }
+            program {
+                name: "s1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_0";
+            }
+            program {
+                name: "s2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_2";
+                after: "s3a";
+                after: "s3b";
+            }
+            program {
+                name: "s2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_1";
+            }
+            program {
+                name: "s3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_3";
+                after: "s0a";
+                after: "s0b";
+            }
+            program {
+                name: "s3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_2";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/transition/horizontal"; // {{{
+        min: 29 221;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 29 221;
+                    max: 29 221;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_n_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 1 0;
+                        offset: 0 21;
+                        to: "_";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_3";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_3";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_2";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_2";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_n_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_n_1";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_n_1";
+                    }
+                    image.normal: "arrow_n.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 10;
+                        to_x: "_";
+                        to_y: "arrow_n_0";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 31;
+                        to_x: "_";
+                        to_y: "arrow_n_0";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_0";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_0";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_1";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_1";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_s_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 1;
+                        offset: 0 6;
+                        to_x: "_";
+                        to_y: "arrow_s_2";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 0 27;
+                        to_x: "_";
+                        to_y: "arrow_s_2";
+                    }
+                    image.normal: "arrow_s.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_n_0";
+                target: "arrow_n_1";
+                target: "arrow_n_2";
+                target: "arrow_n_3";
+                target: "arrow_s_0";
+                target: "arrow_s_1";
+                target: "arrow_s_2";
+                target: "arrow_s_3";
+                after: "n0a";
+                after: "s0a";
+            }
+            program {
+                name: "n0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_0";
+                after: "n1a";
+                after: "n1b";
+            }
+            program {
+                name: "n0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_3";
+            }
+            program {
+                name: "n1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_1";
+                after: "n2a";
+                after: "n2b";
+            }
+            program {
+                name: "n1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_0";
+            }
+            program {
+                name: "n2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_2";
+                after: "n3a";
+                after: "n3b";
+            }
+            program {
+                name: "n2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_1";
+            }
+            program {
+                name: "n3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_n_3";
+                after: "n0a";
+                after: "n0b";
+            }
+            program {
+                name: "n3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_n_2";
+            }
+            program {
+                name: "s0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_0";
+                after: "s1a";
+                after: "s1b";
+            }
+            program {
+                name: "s0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_3";
+            }
+            program {
+                name: "s1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_1";
+                after: "s2a";
+                after: "s2b";
+            }
+            program {
+                name: "s1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_0";
+            }
+            program {
+                name: "s2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_2";
+                after: "s3a";
+                after: "s3b";
+            }
+            program {
+                name: "s2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_1";
+            }
+            program {
+                name: "s3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_s_3";
+                after: "s0a";
+                after: "s0b";
+            }
+            program {
+                name: "s3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_s_2";
+            }
+        }
+    } // }}}
+
+    group { name: "modules/tiling/transition/vertical/composite"; // {{{
+        min: 221 29;
+        data {
+            item: "shaped" "1";
+        }
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 221 29;
+                    max: 221 29;
+                    state: "default" 0.0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_w_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 1;
+                        offset: 21 0;
+                        to: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_3";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_3";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_2";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_2";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_1";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_1";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 10 0;
+                        to_x: "arrow_w_0";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 31 0;
+                        to_x: "arrow_w_0";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_0";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_0";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_1";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_1";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_2";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_2";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_w_0";
+                target: "arrow_w_1";
+                target: "arrow_w_2";
+                target: "arrow_w_3";
+                target: "arrow_e_0";
+                target: "arrow_e_1";
+                target: "arrow_e_2";
+                target: "arrow_e_3";
+                after: "w0a";
+                after: "e0a";
+            }
+            program {
+                name: "w0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_0";
+                after: "w1a";
+                after: "w1b";
+            }
+            program {
+                name: "w0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_3";
+            }
+            program {
+                name: "w1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_1";
+                after: "w2a";
+                after: "w2b";
+            }
+            program {
+                name: "w1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_0";
+            }
+            program {
+                name: "w2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_2";
+                after: "w3a";
+                after: "w3b";
+            }
+            program {
+                name: "w2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_1";
+            }
+            program {
+                name: "w3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_3";
+                after: "w0a";
+                after: "w0b";
+            }
+            program {
+                name: "w3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_2";
+            }
+            program {
+                name: "e0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_0";
+                after: "e1a";
+                after: "e1b";
+            }
+            program {
+                name: "e0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_3";
+            }
+            program {
+                name: "e1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_1";
+                after: "e2a";
+                after: "e2b";
+            }
+            program {
+                name: "e1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_0";
+            }
+            program {
+                name: "e2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_2";
+                after: "e3a";
+                after: "e3b";
+            }
+            program {
+                name: "e2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_1";
+            }
+            program {
+                name: "e3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_3";
+                after: "e0a";
+                after: "e0b";
+            }
+            program {
+                name: "e3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_2";
+            }
+        }
+    } // }}}
+    group { name: "modules/tiling/transition/vertical"; // {{{
+        min: 221 29;
+        parts {
+            part {
+                name: "_";
+                type: RECT;
+                mouse_events: 0;
+                description {
+                    min: 221 29;
+                    max: 221 29;
+                    state: "default" 0.0;
+                    color: 0 0 0 255;
+                    rel1 {
+                        relative: 0.0 0.0;
+                        offset: 0 0;
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: -1 -1;
+                    }
+                }
+            }
+            part {
+                name: "arrow_w_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 0 0;
+                        offset: 0 0;
+                        to: "_";
+                    }
+                    rel2 {
+                        relative: 0 1;
+                        offset: 21 0;
+                        to: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_3";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_3";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_2";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_2";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_w_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_w_1";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_w_1";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_w.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_0";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 10 0;
+                        to_x: "arrow_w_0";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 31 0;
+                        to_x: "arrow_w_0";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_1";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_0";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_0";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_2";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_1";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_1";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+            part {
+                name: "arrow_e_3";
+                mouse_events: 0;
+                description {
+                    state: "default" 0.0;
+                    visible: 0;
+                    color: 255 255 255 0;
+                    rel1 {
+                        relative: 1 0;
+                        offset: 6 0;
+                        to_x: "arrow_e_2";
+                        to_y: "_";
+                    }
+                    rel2 {
+                        relative: 1 1;
+                        offset: 27 0;
+                        to_x: "arrow_e_2";
+                        to_y: "_";
+                    }
+                    image.normal: "arrow_e.png";
+                    fill.smooth: 0;
+                }
+                description {
+                    state: "visible" 0.0;
+                    inherit: "default" 0.0;
+                    visible: 1;
+                    color: 255 255 255 255;
+                }
+            }
+        }
+        programs {
+            program {
+                name: "init";
+                signal: "load";
+                source: "";
+                action: STATE_SET "default" 0.0;
+                target: "arrow_w_0";
+                target: "arrow_w_1";
+                target: "arrow_w_2";
+                target: "arrow_w_3";
+                target: "arrow_e_0";
+                target: "arrow_e_1";
+                target: "arrow_e_2";
+                target: "arrow_e_3";
+                after: "w0a";
+                after: "e0a";
+            }
+            program {
+                name: "w0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_0";
+                after: "w1a";
+                after: "w1b";
+            }
+            program {
+                name: "w0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_3";
+            }
+            program {
+                name: "w1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_1";
+                after: "w2a";
+                after: "w2b";
+            }
+            program {
+                name: "w1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_0";
+            }
+            program {
+                name: "w2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_2";
+                after: "w3a";
+                after: "w3b";
+            }
+            program {
+                name: "w2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_1";
+            }
+            program {
+                name: "w3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_w_3";
+                after: "w0a";
+                after: "w0b";
+            }
+            program {
+                name: "w3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_w_2";
+            }
+            program {
+                name: "e0a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_0";
+                after: "e1a";
+                after: "e1b";
+            }
+            program {
+                name: "e0b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_3";
+            }
+            program {
+                name: "e1a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_1";
+                after: "e2a";
+                after: "e2b";
+            }
+            program {
+                name: "e1b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_0";
+            }
+            program {
+                name: "e2a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_2";
+                after: "e3a";
+                after: "e3b";
+            }
+            program {
+                name: "e2b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_1";
+            }
+            program {
+                name: "e3a";
+                action: STATE_SET "visible" 0.0;
+                transition: SINUSOIDAL 0.25;
+                target: "arrow_e_3";
+                after: "e0a";
+                after: "e0b";
+            }
+            program {
+                name: "e3b";
+                action: STATE_SET "default" 0.0;
+                transition: DECELERATE 0.75;
+                target: "arrow_e_2";
+            }
+        }
+    } // }}}
+}

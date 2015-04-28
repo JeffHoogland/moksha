@@ -1,0 +1,20 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Wayland Screenshot
+Name[ca]=Wayland Capturador de pantalla
+Name[eo]=Ekrankopiilo de Wayland
+Name[es]=Wayland Capturador de pantalla
+Name[fr]=Copie d'écran de Wayland
+Name[gl]=Wayland Capturador de pantalla
+Name[pt]=Wayland - Captura de ecrã
+Comment=Enlightenment Wayland Screenshot Module
+Comment[ca]=Mòdul de l'Enlightenment per a capturar la pantalla de Wayland
+Comment[eo]=Modulo de Enlightenment por ekrankopii en Wayland
+Comment[es]=Módulo de Enlightenment para capturar la pantalla en Wayland
+Comment[fr]=Module de capture d'écran Wayland pour Enlightenment
+Comment[gl]=Módulo de Enlightenment para capturar a pantalla en Wayland
+Comment[it]=Modulo di Enlightenment per screenshot in Wayland
+Comment[pt]=Módulo de captura de ecrã
+Icon=e-module-wl_screenshot.edj
+X-Enlightenment-ModuleType=look

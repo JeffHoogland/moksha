@@ -1,0 +1,12 @@
+# list of desktop files to put in ibar by default minus the .desktop extension
+# each line is 1 entry in ibar and it is a list of desktop files to
+# look for in order of preference - first found is put in to ibar
+
+terminology xterm rxvt urxvt gnome-terminal konsole xfce4-terminal exo-terminal-emulator lxde-x-terminal-emulator lxterminal mlterm roxterm Terminal terminator vala-terminal
+sylpheed claws-mail thunderbird evolution KMail
+firefox iceweasel chromium-browser chromium eve epiphany midori konqueror opera rekonq dooble
+xchat pidgin konversation kvirc loqui lostirc quassel qutim
+enjoy banshee rhythmbox amarok listen audacious xmms2
+gimp
+inkscape
+libreoffice-startcenter openoffice.org-startcenter koffice

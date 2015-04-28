@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Keyboard
+Name[ca]=Teclat
+Name[eo]=Klavaro
+Name[es]=Teclado
+Name[fr]=Clavier
+Name[gl]=Teclado
+Name[pt]=Teclado
+Name[ru]=Клавиатура
+Comment=Keyboard layout configuration and switcher
+Comment[ca]=Configuració i commutació de les disposicions del teclat.
+Comment[eo]=Agordo de klavara arango kaj interŝanĝilo
+Comment[es]=Configuración y conmutador de las disposiciones del teclado.
+Comment[fr]=Pour configurer et basculer l'agencement du clavier.
+Comment[gl]=Configuración e alteración das disposicións do teclado.
+Comment[it]=Per configurare e commutare il layout di tastiera.
+Comment[pt]=Configuração e alteração dos esquemas de teclado
+Comment[ru]=Настройка и переключение раскладки клавиатуры
+Icon=preferences-desktop-keyboard
+X-Enlightenment-ModuleType=utils

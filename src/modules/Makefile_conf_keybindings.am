@@ -1,0 +1,17 @@
+conf_keybindingsdir = $(MDIR)/conf_keybindings
+conf_keybindings_DATA = conf_keybindings/module.desktop
+
+EXTRA_DIST += $(conf_keybindings_DATA)
+
+conf_keybindingspkgdir = $(MDIR)/conf_keybindings/$(MODULE_ARCH)
+conf_keybindingspkg_LTLIBRARIES = conf_keybindings/module.la
+
+conf_keybindings_module_la_SOURCES = conf_keybindings/e_mod_main.c \
+			     conf_keybindings/e_mod_main.h \
+			     conf_keybindings/e_int_config_keybindings.c \
+			     conf_keybindings/e_int_config_mousebindings.c \
+			     conf_keybindings/e_int_config_acpibindings.c
+
+.PHONY: conf_keybindings install-conf_keybindings
+conf_keybindings: $(conf_keybindingspkg_LTLIBRARIES) $(conf_keybindings_DATA)
+install-conf_keybindings: install-conf_keybindingsDATA install-conf_keybindingspkgLTLIBRARIES

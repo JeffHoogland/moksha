@@ -1,0 +1,13 @@
+ - Module icon
+   - Show 'connecting' animation
+   - Show strength when available
+
+ - Treat ReportError() calls from ConnMan. When a connection fail,
+   ReportError() indicates the reason so we can decide if we should
+   show a message to user asking the password again
+
+ - Streamline the Cancel() and Release() callbacks because they are very
+   similar
+
+ - Search for entries with the same type when we receive an
+   'Informational' field so we can use it in an useful manner

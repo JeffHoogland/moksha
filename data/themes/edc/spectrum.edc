@@ -1,0 +1,139 @@
+group { name: "e/widgets/spectrum";
+   images.image: "inset_shadow.png" COMP;
+   images.image: "bevel_in.png" COMP;
+   images.image: "dot_pattern.png" COMP;
+   images.image: "col_sel_end_bottom.png" COMP;
+   images.image: "col_sel_end_top.png" COMP;
+   images.image: "col_sel_end_left.png" COMP;
+   images.image: "col_sel_end_right.png" COMP;
+   parts {
+      part { name: "bg"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.content";
+            rel2.to: "e.swallow.content";
+            color: 48 48 48 255;
+         }
+      }
+      part { name: "pat";
+         description { state: "default" 0.0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            image.normal: "dot_pattern.png";
+            TILED_PATTERN(256, 256)
+         }
+      }
+      part { name: "clipper"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.content";
+            rel2.to: "e.swallow.content";
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            rel1.offset: 3 3;
+            rel2.offset: -4 -4;
+         }
+      }
+      part { name: "shadow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "inset_shadow.png";
+            image.border: 5 5 7 3;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel2.to: "bg";
+            fill.smooth: 0;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "e.dragable.cursor"; type: RECT;
+         dragable.confine: "e.swallow.content";
+         dragable.x: 1 1 0;
+         dragable.y: 1 1 0;
+         description { state: "default" 0.0;
+            min: 1 1;
+            max: 1 1;
+            fixed: 1 1;
+            visible: 0;
+            rel1.to: "e.swallow.content";
+            rel1.relative: 0.5 0.5;
+            rel2.to: "e.swallow.content";
+            rel2.relative: 0.5 0.5;
+         }
+      }
+      part { name: "end1"; mouse_events: 0;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            image.normal: "col_sel_end_top.png";
+            FIXED_SIZE(11, 8)
+            align: 0.5 0.0;
+            rel1.to: "cursor_x";
+            rel2.to: "cursor_x";
+         }
+      }
+      part { name: "end2"; mouse_events: 0;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            image.normal: "col_sel_end_bottom.png";
+            FIXED_SIZE(11, 8)
+            align: 0.5 1.0;
+            rel1.to: "cursor_x";
+            rel2.to: "cursor_x";
+         }
+      }
+      part { name: "end3"; mouse_events: 0;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            image.normal: "col_sel_end_left.png";
+            FIXED_SIZE(8, 11)
+            align: 0.0 0.5;
+            rel1.to: "cursor_y";
+            rel2.to: "cursor_y";
+         }
+      }
+      part { name: "end4"; mouse_events: 0;
+         clip_to: "clipper";
+         description { state: "default" 0.0;
+            image.normal: "col_sel_end_right.png";
+            FIXED_SIZE(8, 11)
+            align: 1.0 0.5;
+            rel1.to: "cursor_y";
+            rel2.to: "cursor_y";
+         }
+      }
+      part { name: "cursor_x"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to_x: "e.dragable.cursor";
+            rel1.to_y: "e.swallow.content";
+            rel2.to_x: "e.dragable.cursor";
+            rel2.to_y: "e.swallow.content";
+            color: 255 255 255 150;
+         }
+      }
+      part { name: "cursor_y"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to_x: "e.swallow.content";
+            rel1.to_y: "e.dragable.cursor";
+            rel2.to_x: "e.swallow.content";
+            rel2.to_y: "e.dragable.cursor";
+            color: 255 255 255 150;
+         }
+      }
+      part { name: "inset";
+         description { state: "default" 0.0;
+            image.normal: "bevel_in.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            rel1.to: "bg";
+            rel1.offset: -1 -1;
+            rel2.to: "bg";
+            rel2.offset: 0 0;
+            fill.smooth: 0;
+         }
+      }
+   }
+}

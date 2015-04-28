@@ -1,0 +1,672 @@
+group { name: "e/modules/illume_home_toggle/main";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   images.image: "home_inset.png" COMP;
+   images.image: "home_hilight.png" COMP;
+   images.image: "home_glow.png" COMP;
+   min: 16 16;
+   max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "home_hilight"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "home";
+            rel2.offset: -1 0;
+            rel2.to: "home";
+            image.normal: "home_hilight.png";
+         }
+      }
+      part { name: "home"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "home_inset.png";
+         }
+      }
+      part { name: "home_glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "home";
+            rel2.to: "home";
+            image.normal: "home_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "home_glow";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "home_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,home" "";
+      }
+   }
+}
+
+group { name: "e/modules/illume_kbd_toggle/main";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   images.image: "kbd_inset.png" COMP;
+   images.image: "kbd_hilight.png" COMP;
+   images.image: "kbd_glow.png" COMP;
+   min: 16 16;
+   max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "kbd_hilight"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "kbd";
+            rel2.offset: -1 0;
+            rel2.to: "kbd";
+            image.normal: "kbd_hilight.png";
+         }
+      }
+      part { name: "kbd"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "kbd_inset.png";
+         }
+      }
+      part { name: "kbd_glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "kbd";
+            rel2.to: "kbd";
+            image.normal: "kbd_glow.png";
+            visible: 0;
+         }
+         description { state: "on" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "on"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+            visible: 0;
+         }
+         description { state: "on" 0.0;
+            color: 0 0 0 0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,vkbd,enable" "";
+      }
+      
+      program {
+         signal: "mouse,down,1"; source: "on";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "on";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "on";
+         action: SIGNAL_EMIT "e,action,vkbd,disable" "";
+      }
+      
+      program {
+         signal: "e,state,vkbd,on"; source: "e";
+         action: STATE_SET "on" 0.0;
+         target: "on";
+         target: "kbd_glow";
+      }
+      program {
+         signal: "e,state,vkbd,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "on";
+         target: "kbd_glow";
+      }
+   }
+}
+
+group { name: "e/modules/illume_mode_toggle/main";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   images.image: "split_h_glow.png" COMP;
+   images.image: "split_h_hilight.png" COMP;
+   images.image: "split_h_inset.png" COMP;
+   images.image: "split_none_glow.png" COMP;
+   images.image: "split_none_hilight.png" COMP;
+   images.image: "split_none_inset.png" COMP;
+   images.image: "split_v_glow.png" COMP;
+   images.image: "split_v_hilight.png" COMP;
+   images.image: "split_v_inset.png" COMP;
+   min: 16 16;
+   max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      
+      part { name: "split_none_hilight"; mouse_events: 0;
+         clip_to: "split_none_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "split_none";
+            rel2.offset: -1 0;
+            rel2.to: "split_none";
+            image.normal: "split_none_hilight.png";
+         }
+      }
+      part { name: "split_none"; mouse_events: 0;
+         clip_to: "split_none_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "split_none_inset.png";
+         }
+      }
+      part { name: "split_none_glow"; mouse_events: 0;
+         clip_to: "split_none_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "split_none";
+            rel2.to: "split_none";
+            image.normal: "split_none_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      
+      part { name: "split_h_hilight"; mouse_events: 0;
+         clip_to: "split_h_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "split_h";
+            rel2.offset: -1 0;
+            rel2.to: "split_h";
+            image.normal: "split_h_hilight.png";
+         }
+      }
+      part { name: "split_h"; mouse_events: 0;
+         clip_to: "split_h_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "split_h_inset.png";
+         }
+      }
+      part { name: "split_h_glow"; mouse_events: 0;
+         clip_to: "split_h_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "split_h";
+            rel2.to: "split_h";
+            image.normal: "split_h_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "split_h_on"; type: RECT;
+         clip_to: "split_h_clip";
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      
+      part { name: "split_v_hilight"; mouse_events: 0;
+         clip_to: "split_v_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "split_v";
+            rel2.offset: -1 0;
+            rel2.to: "split_v";
+            image.normal: "split_v_hilight.png";
+         }
+      }
+      part { name: "split_v"; mouse_events: 0;
+         clip_to: "split_v_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "split_v_inset.png";
+         }
+      }
+      part { name: "split_v_glow"; mouse_events: 0;
+         clip_to: "split_v_clip";
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "split_v";
+            rel2.to: "split_v";
+            image.normal: "split_v_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "split_v_on"; type: RECT;
+         clip_to: "split_v_clip";
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+
+      part { name: "split_none_clip"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 1;
+         }
+         description { state: "split_h" 0.0;
+            visible: 0;
+         }
+         description { state: "split_v" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "split_h_clip"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "split_h" 0.0;
+            visible: 1;
+         }
+         description { state: "split_v" 0.0;
+            visible: 0;
+         }
+      }
+      part { name: "split_v_clip"; type: RECT;
+         description { state: "default" 0.0;
+            visible: 0;
+         }
+         description { state: "split_h" 0.0;
+            visible: 0;
+         }
+         description { state: "split_v" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,mode,dual,top" "";
+      }
+
+      program {
+         signal: "mouse,down,1"; source: "split_v_on";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,up,1"; source: "split_v_on";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "split_v_on";
+         action: SIGNAL_EMIT "e,action,mode,dual,left" "";
+      }
+      
+      program {
+         signal: "mouse,down,1"; source: "split_h_on";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,up,1"; source: "split_h_on";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "split_none_glow";
+         target: "split_h_glow";
+         target: "split_v_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "split_h_on";
+         action: SIGNAL_EMIT "e,action,mode,single" "";
+      }
+      
+      program {
+         signal: "e,mode,single"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "split_none_clip";
+         target: "split_h_clip";
+         target: "split_v_clip";
+      }
+      program {
+         signal: "e,mode,dual,top"; source: "e";
+         action: STATE_SET "split_v" 0.0;
+         target: "split_none_clip";
+         target: "split_h_clip";
+         target: "split_v_clip";
+      }
+      program {
+         signal: "e,mode,dual,left"; source: "e";
+         action: STATE_SET "split_h" 0.0;
+         target: "split_none_clip";
+         target: "split_h_clip";
+         target: "split_v_clip";
+      }
+   }
+}
+
+group { name: "modules/illume-indicator/window";
+   data {
+//      item: "shaped" "1";
+   }
+   images.image: "vgrad_med.png" COMP;
+   images.image: "vgrad_tall.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "holes_vert.png" COMP;
+   images.image: "holes_horiz.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "bg"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med.png";
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "vgrad_tall.png";
+            fill.smooth: 0;
+            TILED_HORIZ(40)
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "dots_start"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.offset: 2 2;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 5 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.offset: 2 2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -3 5;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "dots_end"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -6 2;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 2 -6;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.offset: 1 0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "dots_start";
+            rel2.offset: -2 -1;
+            rel2.to_x: "dots_end";
+            rel2.relative: 0.0 1.0;
+         }
+         description { state: "vert" 0.0;
+            rel1.offset: 0 1;
+            rel1.relative: 0.0 1.0;
+            rel1.to_y: "dots_start";
+            rel2.offset: -1 -2;
+            rel2.to_y: "dots_end";
+            rel2.relative: 1.0 0.0;
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+}
+
+group { name: "modules/illume-softkey/window";
+   data {
+//      item: "shaped" "1";
+   }
+   images.image: "vgrad_med.png" COMP;
+   images.image: "vgrad_tall.png" COMP;
+   images.image: "bevel_out.png" COMP;
+   images.image: "holes_vert.png" COMP;
+   images.image: "holes_horiz.png" COMP;
+   images.image: "shine.png" COMP;
+   parts {
+      part { name: "bg"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "vgrad_med.png";
+            fill.smooth: 0;
+            TILED_HORIZ(120)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "vgrad_tall.png";
+            fill.smooth: 0;
+            TILED_HORIZ(40)
+         }
+      }
+      part { name: "bevel"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "bevel_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "dots_start"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.offset: 2 2;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 5 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.offset: 2 2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -3 5;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "dots_end"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -6 2;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(4, 14)
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 2 -6;
+            rel2.offset: -3 -3;
+            FIXED_SIZE(14, 4)
+         }
+      }
+      part { name: "e.box.extra_buttons"; type: BOX;
+         description { state: "default" 0.0;
+            rel1.offset: 1 0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "dots_start";
+            rel2.offset: -2 -1;
+            rel2.to_x: "dots_start";
+            rel2.relative: 1.0 1.0;
+            align: 0.0 0.5;
+            box { layout: "horizontal";
+               padding: 4 0;
+               align: 0.0 0.5;
+               min: 1 1;
+            }
+         }
+      }
+      part { name: "e.box.buttons"; type: BOX;
+         description { state: "default" 0.0;
+            rel1.offset: 4 0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "e.box.extra_buttons";
+            rel2.offset: -2 -1;
+            rel2.to_x: "dots_end";
+            rel2.relative: 0.0 1.0;
+            align: 1.0 0.5;
+            box { layout: "horizontal";
+               padding: 4 0;
+               align: 1.0 0.5;
+               min: 1 1;
+            }
+         }
+      }
+      part { name: "shine"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "shine.png";
+            rel1.offset: 0 -2;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 2;
+            FIXED_SIZE(69, 5)
+         }
+      }
+   }
+}

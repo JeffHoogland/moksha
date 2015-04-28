@@ -1,0 +1,66 @@
+group { name: "e/modules/backlight/main";
+   images.image: "bulb_glow.png" COMP;
+   images.image: "bulb_off.png" COMP;
+   images.image: "bulb_on.png" COMP;
+   images.image: "bulb_over.png" COMP;
+   min: 16 16;
+   max: 160 160;
+   script {
+      public message(Msg_Type:type, id, ...) {
+         if ((type == MSG_FLOAT) && (id == 0)) {
+            new Float:val;
+            val = getfarg(2);
+            set_tween_state(PART:"glow", val, "default", 0.0, "full", 0.0);
+            set_tween_state(PART:"glow2", val, "default", 0.0, "full", 0.0);
+         }
+      }
+   }
+   parts {
+      part { name: "glow";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel1.relative: (76/152) (69/152);
+            rel2.to: "base";
+            rel2.relative: (76/152) (69/152);
+            image.normal: "bulb_glow.png";
+            color: 255 255 255 0;
+            max: 138 138;
+         }
+         description { state: "full" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: (7/152) (0/152);
+            rel2.relative: (145/152) (138/152);
+            color: 255 255 255 255;
+         }
+      }
+      part { name: "base";
+         description { state: "default" 0.0;
+            rel1.relative: (4/160) (4/160);
+            rel2.relative: (156/160) (156/160);
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            image.normal: "bulb_off.png";
+            max: 152 152;
+         }
+      }
+      part { name: "glow2";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "bulb_on.png";
+            color: 255 255 255 0;
+         }
+         description { state: "full" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
+      part { name: "over";
+         description { state: "default" 0.0;
+            rel1.to: "base";
+            rel2.to: "base";
+            image.normal: "bulb_over.png";
+         }
+      }
+   }
+}
+

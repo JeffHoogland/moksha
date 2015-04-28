@@ -1,0 +1,230 @@
+/////////////////////////////////////////////////////////////////////////////
+/*** MOD: WIZARD ***/
+
+   group { name: "e/wizard/firstpage";
+      images {
+         image: "O/logo_black_128.png" COMP;
+      }
+      parts {
+         part { name: "base";
+            description { state: "default" 0.0;
+               max: 128 128;
+               image.normal: "O/logo_black_128.png";
+               aspect: 1.0 1.0;
+               aspect_preference: BOTH;
+            }
+         }
+      }
+   }
+   group { name: "e/wizard/extra";
+      images {
+         image: "O/bg_shadow.png" COMP;
+         image: "O/wizard_pattern.png" COMP;
+      }
+      parts {
+         part { name: "base";
+            description { state: "default" 0.0;
+               image.normal: "O/wizard_pattern.png";
+               fill {
+                  smooth: 0;
+                  size {
+                     relative: 0.0 0.0;
+                     offset: 200 200;
+                  }
+               }
+            }
+         }
+         part { name: "shadow";
+            description { state: "default" 0.0;
+               image.normal: "O/bg_shadow.png";
+               fill.smooth: 0;
+            }
+         }
+         part { name: "fade"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 0 0 0 255;
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               visible: 0;
+            }
+         }
+      }
+      programs {
+         program { name: "fade_in";
+            signal: "show";
+            source: "";
+            action: STATE_SET "hidden" 0.0;
+            transition: DECELERATE 0.5;
+            target: "fade";
+         }
+      }
+   }
+   group { name: "e/wizard/main";
+      images {
+         image: "O/bg_shadow.png" COMP;
+         image: "O/wizard_pattern.png" COMP;
+         image: "O/wizard_bt1.png" COMP;
+         image: "O/wizard_bt2.png" COMP;
+      }
+      parts {
+         part { name: "base";
+            description { state: "default" 0.0;
+               image.normal: "O/wizard_pattern.png";
+               fill {
+                  smooth: 0;
+                  size {
+                     relative: 0.0 0.0;
+                     offset: 200 200;
+                  }
+               }
+            }
+         }
+         part { name: "e.swallow.content"; type: SWALLOW;
+            description { state: "default" 0.0;
+               rel1 {
+                  to_y: "e.text.title";
+                  relative: 0.2 1.0;
+                  offset: 8 8;
+               }
+               rel2 {
+                  to_y: "e.text.label";
+                  relative: 0.8 0.0;
+                  offset: -9 -21;
+               }
+            }
+         }
+         part { name: "e.text.title"; type: TEXT;
+            effect: SOFT_SHADOW;
+            scale: 1;
+            description { state: "default" 0.0;
+               rel1.relative: 0.05 0.05;
+               rel2.relative: 0.95 0.10;
+               color: 255 255 255 255;
+               color3: 0 0 0 32;
+               text {
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  min: 0 1;
+                  text_class: "init_title";
+               }
+            }
+         }
+         part { name: "button";
+            description { state: "default" 0.0;
+               image.normal: "O/wizard_bt1.png";
+               image.border: 12 12 12 12;
+               rel1 {
+                  to: "e.text.label";
+                  offset: -12 -12;
+               }
+               rel2 {
+                  to: "e.text.label";
+                  offset: 11 11;
+               }
+            }
+            description { state: "clicked" 0.0;
+               inherit: "default" 0.0;
+               image.normal: "O/wizard_bt2.png";
+            }
+         }
+         part { name: "e.text.label"; type: TEXT;
+            effect: SHADOW BOTTOM;
+            scale: 1;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               min: 64 32;
+               align: 0.5 1.0;
+               rel1.relative: 0.5  0.95;
+               rel2.relative: 0.5  0.95;
+               color: 32 32 32 255;
+               color3: 255 255 255 128;
+               text {
+                  text: "Next";
+                  font: "Sans:style=Bold";
+                  size: 16;
+                  min: 1 1;
+               }
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               color: 128 128 128 255;
+               color3: 255 255 255 64;
+            }
+         }
+         part { name: "block"; type: RECT;
+            mouse_events: 1;
+            description { state: "default" 0.0;
+               rel1.to: "e.text.label";
+               rel2.to: "e.text.label";
+               visible: 0;
+               color: 0 0 0 0;
+            }
+            description { state: "disabled" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+            }
+         }
+         part { name: "shadow2";
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               image.normal: "O/bg_shadow.png";
+               fill.smooth: 0;
+            }
+         }
+         part { name: "fade"; type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 0 0 0 255;
+            }
+            description { state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               color: 0 0 0 0;
+               visible: 0;
+            }
+         }
+      }
+      programs {
+         program { name: "fade_in";
+            signal: "show";
+            source: "";
+            action: STATE_SET "hidden" 0.0;
+            transition: DECELERATE 0.5;
+            target: "fade";
+         }
+         program { name: "button_click";
+            signal: "mouse,down,1";
+            source: "button";
+            action: STATE_SET "clicked" 0.0;
+            target: "button";
+         }
+         program { name: "button_unclick";
+            signal: "mouse,up,1";
+            source: "button";
+            action: STATE_SET "default" 0.0;
+            target: "button";
+         }
+         program { name: "button_unclick2";
+            signal: "mouse,clicked,1";
+            source: "button";
+            action: SIGNAL_EMIT "e,action,next" "";
+         }
+         program { name: "button_enable";
+            signal: "e,state,next,enable";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "block";
+            target: "e.text.label";
+         }
+         program { name: "button_disable";
+            signal: "e,state,next,disable";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "block";
+            target: "e.text.label";
+         }
+      }
+   }
+

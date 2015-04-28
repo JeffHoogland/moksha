@@ -1,0 +1,106 @@
+From: Kim Woelders <kim@woelders.dk>
+To: enlightenment-devel@lists.sourceforge.net
+Subject: Re: [E-devel] Re: bugs with iconification/deiconification in e17.
+Date: Fri, 02 Dec 2005 19:14:46 +0100
+Sender: enlightenment-devel-admin@lists.sourceforge.net
+
+Carsten Haitzler (The Rasterman) wrote:
+> On Fri, 02 Dec 2005 09:19:20 +0200 <vkojouharov@gmail.com>
+> babbled:
+> 
+> 
+>>On Thu, 2005-12-01 at 18:26 +0100, Kim Woelders wrote:
+>>
+>>>Carsten Haitzler (The Rasterman) wrote:
+>>>
+>>>>On Wed, 30 Nov 2005 19:44:37 +0200
+>>>><vkojouharov@gmail.com> babbled:
+>>>
+>>>...
+>>>
+>>>>>The other app is with deiconifying a window. Some programs (actually,
+>>>>>only alltray comes to mind right now) use xlib to do the whole
+>>>>>iconification thing. For the alltray instance, it seems to use
+>>>>>XSetWMHints, set the state to NormalState, and basically that's it. And
+>>>>>it seems to work for a lot of window managers too, so that must be a
+>>>>>proper way to do it. But that doesn't work for e17, and the window stays
+>>>>>iconified.
+>>>>
+>>>>
+>>>>e waits for a map request. it doesn't respond to a change in hints for a
+>>>>map. we can make it do so though :) i will write these down in the TODO.
+>>>>
+>>>
+>>>I don't think a client can deiconify by changing a hint. e16 doesn't but
+>>>does work with alltray. The normal way is to map the client window. In
+>>>some cases clients send a _NET_ACTIVE_WINDOW message, but IIRC always to
+>>>deiconify some other client as in tasklist and pager type 
+>>
+>>I'm just curious here, what does alltray use to deiconify a window? cuz
+>>that's the only relevant thing I could find in the code
+> 
+> 
+> it prbably SHOULD use XMapWindow() or XMapRaised()
+> 
+After having taken a peek at what is does in e16.8 on "alltray xterm",
+the short version is that it uses XMapWindow() to map the client (which
+actually is an alltray window containing the reparented real client)
+first time. After that, when having been iconified, it sends a
+_NET_ACTIVE_WINDOW client message to deiconify.
+
+/Kim
+
+
+
+
+
+
+
+
+
+
+
+dj2 raster, heres an interesting bug for you
+dj2 i have twinview setup on my box
+dj2 i can move the mouse between the 2 heads and e17 sees tehm as 2 heads
+dj2 (2 pages etc)
+dj2 if i try to drag a window between the 2 heads (say from left to right)
+the mouse will lmove as expected
+dj2 but when the window hits the right edge of the left monitor it will
+appear again off the left edge of the left monitor
+dj2 tho the mouse is now on the right monitor
+raster xdpyinfo
+raster see how many screens u have
+raster screen #0:...
+raster is there a screen #1 ?
+dj2 number of screens: 2
+dj2 yea screen #0 and screen #1
+
+NB: in multihead if the mouse exits a screen during move or resize - either
+disallow it (warp back to previous position ) or limit resize/move
+
+
+
+
+From: Daniel Kasak <dkasak@nusconsulting.com.au>
+To: enlightenment-devel@lists.sourceforge.net
+Subject: [E-devel] Crasher ... switch to an app that's closing
+Date: Mon, 20 Mar 2006 11:07:12 +1100
+Sender: enlightenment-devel-admin@lists.sourceforge.net
+
+Hi all.
+
+I have a sort-of reproducible bug.
+If you try to switch to an app which is in the process of shutting down, 
+and you do it at *just* the right moment, Enlightenment-0.17 will crash.
+I've done this only about 3 times over probably more than a year of usage.
+
+This particular time, I hit the 'close' button on a vmware-player 
+window. When this app gets the close signal, it actually minimises 
+itself, and then proceeds to shutdown ( which includes saving the 
+current VM state, which takes a while, hence the minimising first ). 
+After hitting close, I went to switch to another app by middle-clicking 
+on the desktop, but I missed the other app, and hit vmware-player 
+accidentally. Then everything came down in a heap :)
+
+Sorry I don't have any debugging info.

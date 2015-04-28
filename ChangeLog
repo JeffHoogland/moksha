@@ -1,0 +1,267 @@
+2013-03-01 Sebastian Dransfeld
+
+        * Fix sys hibernate by checking raw condition first
+
+2015-03-25 Samuel F. Baggen (Thanatermesis)
+
+		* included improvement in XDG_DATA_DIRS by zmike
+		* gettext version should match the one required in efl/elm
+
+2014-08-09 Samuel F. Baggen (Thanatermesis)
+
+		* fix for window border titles and sizes (backports)
+		* fix for text that looked "cut" in some elements like wizard buttons (backports)
+
+2014-06-27 Samuel F. Baggen (Thanatermesis)
+
+        * highlight correct keybinding when modifying an existing binding (backports)
+        * XDG menu prefix merge fixes (backports)
+        * fixed backtraces generating (backports)
+
+2013-12-05 Eduardo Lima (Etrunko)
+
+        * 0.17.6 release
+
+2013-11-26 dieter.e
+
+        * fixed potential crashes when switching desktops and closing windows
+
+2013-11-25 Tom Hacohen
+
+	* Entry: Fixed issues with entry not scrolling to cursor.
+
+2013-11-05 Tom Hacohen
+
+	* wsod: Fixed gdb hangs when generating backtraces.
+
+2013-10-14 Eduardo Lima (Etrunko)
+        * 0.17.5 release
+
+2013-10-14 Mike Blumenkrantz
+
+        * Fix event clipping on filemanager icons
+
+2013-09-20 Mike Blumenkrantz
+
+        * Check mouse location when clicking menus, only activate items when clicking in the menu
+
+2013-09-19 Mike Blumenkrantz
+
+        * Fix bug where new files could not be created repeatedly
+
+2013-08-02 Deon Thomas (PrinceAMD)
+
+	* fixed stall on startup because xinerama started before randr (backports).
+
+2013-08-02 Eduardo Lima (Etrunko)
+
+        * 0.17.4 release
+
+2013-05-11 Rafael Antognolli
+
+        * 0.17.3 release
+
+2013-06-17 Mike Blumenkrantz
+
+        * fixed bug where e widgets would not unset focus
+        * fixed bug with filemanager setting path with too many spaces when opened from menu
+
+2013-06-10 Mike Blumenkrantz
+
+        * fix remember size/position apply
+
+2013-05-24 Christopher Michael
+
+	* added support for hotplugging monitors in randr code
+        * added support for setting Primary Output used by randr protocol
+
+2013-04-26 Mike Blumenkrantz
+
+        * fixed theme bug which prevented windows from unshading correctly when animations were disabled
+
+2013-04-25 Mike Blumenkrantz
+
+        * improve efm mouse movement detection for icons
+        * add check for vmware window in another spot to disable key remapping
+
+2013-04-09  Rafael Antognolli
+
+        * 0.17.2.1 release
+
+2013-04-08  maxerba
+
+        * Update Esperanto translations.
+
+2013-04-06  Joan Coll
+
+        * Update Catalan translations.
+
+2013-04-04  Rafael Antognolli
+
+        * 0.17.2 release
+
+2013-02-20 Mike Blumenkrantz
+
+        * toolbar gadgets no longer crash when trying to display a popup
+
+2013-02-18 Mike Blumenkrantz
+
+        * fixed disable of input methods in input method config dialog
+        * fixed pointer warp when pointer was inside warp window but not directly over it
+
+2013-02-11 Mike Blumenkrantz
+
+        * fixed bug where pointer warping to new clients would start at a random location
+        * fix crash when locking screen from Start gadget and then activating gadget again
+        * fixed bug where e_layout would ignore frozen state and crash
+
+2013-02-08 Cedric Bail
+
+	* remove call to efreet_menu_parse from a thread.
+
+2013-02-07 Mike Blumenkrantz
+
+        * keyboard mapping change now also disables for window class "vmware"
+
+2013-02-07 Cedric Bail
+
+	* enable image preloading for all e_widget_preview using edje
+
+2013-02-07 Carsten Haitzler
+
+        * fix clock timerfd usage to actually detect a date change.
+        * improve clock to also listen to /etc/timezone changes too.
+
+2013-02-06 Mike Blumenkrantz
+
+        * moved "allow windows above fullscreen windows" option to geometry settings dialog
+        * fix filemanager efreet cache listeners and updates
+
+2013-02-05 Mike Blumenkrantz
+
+        * fix bug where edge flips would stop functioning after dragging to an invalid edge containing a shelf
+        * remove unnecessary shelf deletion when changing resolution
+
+2013-02-04 Mike Blumenkrantz
+
+        * fix possible crash in xkb rule parsing
+        * fix list update on deletion of personal app launchers
+        * fix button toggling in personal app launchers dialog
+
+2013-02-01 Mike Blumenkrantz
+
+        * fixed leak in profile list dbus method
+        * fixed behavior of Up/Down keys in filemanager when typebuf was visible
+
+2013-01-31 Mike Blumenkrantz
+
+        * fixed a number of bugs where keyboard layouts could not be applied or selected
+        * filemanager now ignores changes to .part files
+        * fixed opening of links in filemanager in some cases
+        * fixed window autoraise triggering from pointer slide
+        * 0.17.1 release
+
+2013-01-29 Mike Blumenkrantz
+
+        * fixed bug where dragging files into sidebar would move them instead of creating links
+
+2013-01-23 Mike Blumenkrantz
+
+        * module error dialog is no longer remembered across restarts
+        * fix small leak in efm when performing dnd onto mounted drive icon
+        * fixed small leak in e_import_config_dialog_show during failure case
+        * fixed small leak in e_import_dialog_show during failure case
+        * fixed small leak in illume2 policy config
+        * fixed path setting in import dialog
+        * fixed possible NULL deref in desktop editor
+        * fixed possible NULL deref in e_sys when debugging
+
+2013-01-22 Massimo Maiurana
+
+        * Added three more files for input methods used in asian countries
+
+2013-01-22 Igor Murzov
+
+        * Marked some messages for translation
+        * Better gettext usage in a few places
+        * Fixed some typos and improved some messages a bit
+
+2013-01-22 Mike Blumenkrantz
+
+        * Desktop->Shelves menu now shows shelf names
+        * No longer build illume edj files
+        * fixed gadget dragging on desktop near screen edges
+        * fixed bug where backlight settings would try to update dummy backlight devices
+        * fixed bug where "don't composite fullscreen windows" option would cause some windows to stop appearing
+
+2013-01-11 Mike Blumenkrantz
+
+        * fixed bug where backlight settings would try to update dummy backlight devices
+
+2013-01-10 Carsten Haitzler
+
+        * fixed bug where starting with a nonexistent config could cause a crash instead of simply restarting
+        * fixed window border hide bug where after iconification hides leave ghosts
+
+2013-01-10 Mike Blumenkrantz
+
+        * fixed bug where internal dialogs would not redraw after unfullscreening
+
+2013-01-10 Deon Thomas
+
+        * Fixed bug with desktop config profile where conf module version variable was misnamed
+
+2013-01-09 Mike Blumenkrantz
+
+        * fixed bug where window border insets were not applied to initial positioning geometry, causing them to be placed incorrectly
+
+2013-01-08 Mike Blumenkrantz
+
+        * Fixed bug where keyboard resizing of windows would not be possible if timeout was set to zero
+        * Fixed crash when clicking apply in wallpaper settings dialog and no wallpaper is selected
+        * Fixed bug where disabled slider widgets could be changed with mouse wheel
+        * Fixed bug where fileman config slider widgets were not properly disabled
+        * Tasks gadgets now apply the selected style
+
+2013-01-07 Tom "TAsn" Hacohen
+	* e_entry + e_scrollable: Fixed issues with smart members.
+
+2013-01-07 Mike Blumenkrantz
+ 
+        * Restore default keybindings no longer restores two bindings for ctrl+alt+f
+
+2013-01-07  Thomas Petazzoni
+
+	* Fix build with uClibc.
+
+2013-01-04 Lucas De Marchi
+
+        * Fixed crash when changing desktops configuration
+
+2013-01-03  Cedric Bail
+
+	* Fix E17 restart after manually monitoring it
+
+2012-12-28  Tomas Cech
+
+        * Fix construction of variant list for setxkbmap
+
+2012-12-28  Carsten Haitzler
+
+        * Increased maximum menu size, improved menu autoscrolling
+
+2012-12-28  Hannes Janetzek
+
+        * Fixed error in Evry when trying to call edje functions on non-edje object
+
+2012-12-24  Mike Blumenkrantz
+
+        * Fixed crash when changing ibar source
+
+2012-12-24  Boris Faure
+
+        * Fixed SIGFPE in tiling module and functionality of toggle_rows_count
+
+2012-12-21
+
+        Initial release

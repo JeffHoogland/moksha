@@ -1,0 +1,23 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Screen
+Name[ca]=Pantalla
+Name[eo]=Ekrano
+Name[es]=Pantalla
+Name[fr]=Écran
+Name[gl]=Pantalla
+Name[it]=Schermo
+Name[pt]=Ecrã
+Name[ru]=Экран
+Comment=Used to configure your screen.
+Comment[ca]=Configuració de la pantalla.
+Comment[eo]=Agordi vian ekranon
+Comment[es]=Usado para configurar su pantalla.
+Comment[fr]=Paramétrage de l'écran.
+Comment[gl]=Usado para configurar a súa pantalla.
+Comment[it]=Usato per la configurazione dello schermo.
+Comment[pt]=Definições do ecrã
+Comment[ru]=Используется для настройки экрана.
+Icon=preferences-desktop-display
+X-Enlightenment-ModuleType=settings

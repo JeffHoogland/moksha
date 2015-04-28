@@ -1,0 +1,12 @@
+
+--- v1.0
+[ ] Respect more ICCCM
+[ ] Show how many columns are configured. (?)
+[ ] Remove remaining bugs ☺.
+
+--- v0.9
+[X] Toggle between horizontal and vertical columns
+[X] Handle correctly multiple screens
+[X] Setting whether to display the window title
+[X] Setting to choose hint keys
+[X] Save original border and restore it when untiling

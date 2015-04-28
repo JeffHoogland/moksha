@@ -1,0 +1,17 @@
+gadmandir = $(MDIR)/gadman
+gadman_DATA = gadman/e-module-gadman.edj \
+	      gadman/module.desktop
+
+EXTRA_DIST += $(gadman_DATA)
+
+gadmanpkgdir = $(MDIR)/gadman/$(MODULE_ARCH)
+gadmanpkg_LTLIBRARIES = gadman/module.la
+
+gadman_module_la_SOURCES = gadman/e_mod_main.c \
+			   gadman/e_mod_config.c \
+			   gadman/e_mod_gadman.c \
+			   gadman/e_mod_gadman.h
+
+.PHONY: gadman install-gadman
+gadman: $(gadmanpkg_LTLIBRARIES) $(gadman_DATA)
+install-gadman: install-gadmanDATA install-gadmanpkgLTLIBRARIES

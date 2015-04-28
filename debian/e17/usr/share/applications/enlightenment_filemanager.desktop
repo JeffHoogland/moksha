@@ -1,0 +1,27 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Enlightenment File Manager
+Name[eo]=Dosieradministrilo de Enlightenment
+Name[es]=Administrador de archivos de Enlightenment
+Name[fr]=Gestionnaire de fichiers d'Enlightenment
+Name[gl]=Xestor de ficheiros de Enlightenment
+Name[it]=Filemanager di Enlightenment
+Name[pt]=Gestor de ficheiros do Enlightenment
+Name[ru]=Файловый менеджер для Enlightenment
+Comment=File Manager provided by Enlightenment
+Comment[eo]=La dosieradministrilo provizita de Enlightenment
+Comment[es]=El administrador de ficheros proporcionado por Enlightenment
+Comment[fr]=Explorateur de fichier fourni par Enlightenment
+Comment[gl]=O xestor de ficheiros fornecido por Enlightenment
+Comment[it]=Il filemanager fornito da Enlightenment
+Comment[pt]=Gestor de ficheiros para o Enlightenment
+Comment[ru]=Файловый менеджер встроенный в Enlightenment
+Icon=system-file-manager
+OnlyShowIn=X-Enlightenment;
+Exec=enlightenment_filemanager %U
+Terminal=false
+MimeType=inode/directory;
+Categories=FileManager;Utility;Core;System;FileTools;
+StartupNotify=false
+StartupWMClass=e_fm

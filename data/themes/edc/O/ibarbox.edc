@@ -1,0 +1,892 @@
+   group {
+      name: "e/modules/ibox/icon";
+      alias: "e/modules/ibar/icon";
+      images.image: "O/exclam.png" COMP;
+      data {
+         item: "raise_on_hilight" "0";
+         // 1 or 0 if u want an icon holder to raise when the mouse (or keyboard) hilights it
+         // item: "item_list" "item item2 item3";
+      }
+      parts {
+         part {
+            name: "item_clip";
+            type: RECT;
+            mouse_events: 0;
+            description { state: "default" 0.0;
+               color: 255 255 255 255;
+            }
+            description { state: "disabled" 0.0;
+               color: 255 255 255 64;
+            }
+         }
+         part {
+            name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "item_clip";
+            description { state: "default" 0.0;
+               rel1.offset: 2   2;
+               rel2.offset: -3   -3;
+            }
+            description { state: "bigger" 0.0;
+            }
+         }
+         part {
+            name: "urgent_area";
+            type: RECT;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+            }
+            description {
+               state: "uw0" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -3 -2;
+               rel2.offset: -4 -3;
+            }
+            description {
+               state: "uw1" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: 5 -2;
+               rel2.offset: 4 -3;
+            }
+            description {
+               state: "uw2" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -1 4;
+               rel2.offset: -2 3;
+            }
+            description {
+               state: "uw3" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -2 -1;
+               rel2.offset: -3 -2;
+            }
+            description {
+               state: "uw4" 0.0;
+               inherit: "default" 0.0;
+               rel1.offset: -4 1;
+               rel2.offset: -5 0;
+            }
+         }
+         part {
+            name: "urgent";
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1.to: "urgent_area";
+               rel2.to: "urgent_area";
+               image.normal: "O/exclam.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               rel1 {
+                  relative: -0.5  -0.5;
+               }
+               rel2 {
+                  relative: 1.5  1.5;
+               }
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "over";
+            type: RECT;
+            repeat_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 0 0 0 0;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "starting";
+            signal: "e,state,starting";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "item_clip";
+         }
+         program {
+            name: "started";
+            signal: "e,state,started";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "item_clip";
+         }
+         program {
+            name: "hover_out";
+            signal: "mouse,out";
+            source: "over";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.2;
+            target: "e.swallow.content";
+         }
+         program {
+            name: "set_urgent";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: LINEAR 0.2;
+            target: "urgent";
+         }
+         program {
+            name: "set_not_urgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.6;
+            target: "urgent";
+         }
+         program {
+            name: "urgentw0";
+            signal: "e,state,urgent";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "urgent_area";
+            transition: DECELERATE 0.1;
+            after: "urgentw1";
+         }
+         program {
+            name: "urgentw1";
+            action: STATE_SET "uw1" 0.0;
+            target: "urgent_area";
+            transition: DECELERATE 0.1;
+            after: "urgentw2";
+         }
+         program {
+            name: "urgentw2";
+            action: STATE_SET "uw2" 0.0;
+            target: "urgent_area";
+            transition: DECELERATE 0.1;
+            after: "urgentw3";
+         }
+         program {
+            name: "urgentw3";
+            action: STATE_SET "uw3" 0.0;
+            target: "urgent_area";
+            transition: DECELERATE 0.1;
+            after: "urgentw4";
+         }
+         program {
+            name: "urgentw4";
+            action: STATE_SET "uw4" 0.0;
+            target: "urgent_area";
+            transition: DECELERATE 0.1;
+            after: "urgentw0";
+         }
+         program {
+            name: "not_urgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            action: ACTION_STOP;
+            target: "urgentw0";
+            target: "urgentw1";
+            target: "urgentw2";
+            target: "urgentw3";
+            target: "urgentw4";
+            after: "not_urgent2";
+         }
+         program {
+            name: "not_urgent2";
+            action: STATE_SET "default" 0.0;
+            target: "urgent";
+            target: "urgent_area";
+         }
+      }
+   }
+   group {
+      name: "e/modules/ibox/icon_overlay";
+      alias: "e/modules/ibar/icon_overlay";
+      data {
+         // item: "item_list", "item item2 item3";
+      }
+      script {
+         public urgent;
+      }
+      parts {
+         part {
+            name: "base";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "background";
+            type: RECT;
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1.to: "base";
+               rel2.to: "base";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               visible: 1;
+               rel1.to: "base";
+               rel2.to: "base";
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               visible: 1;
+               rel1 {
+                  relative: -0.5  -0.5;
+                  to: "base";
+               }
+               rel2 {
+                  relative: 1.5  1.5;
+                  to: "base";
+               }
+               color: 255 255 255 0;
+            }
+            description {
+               state: "huge" 0.0;
+               visible: 1;
+               rel1 {
+                  relative: -2.0  -2.0;
+                  to: "base";
+               }
+               rel2 {
+                  relative: 3.0  3.0;
+                  to: "base";
+               }
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "e.swallow.content";
+            type: SWALLOW;
+            clip_to: "background";
+            description {
+               state: "default" 0.0;
+               rel1.to: "background";
+               rel2.to: "background";
+            }
+         }
+         part {
+            name: "urgent";
+            description {
+               state: "default" 0.0;
+               visible: 0;
+               rel1.to: "base";
+               rel2.to: "base";
+               image.normal: "O/exclam.png";
+               color: 255 255 255 0;
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               color: 255 255 255 255;
+            }
+            description {
+               state: "hidden" 0.0;
+               inherit: "default" 0.0;
+               visible: 1;
+               rel1 {
+                  relative: -0.5  -0.5;
+                  to: "base";
+               }
+               rel2 {
+                  relative: 1.5  1.5;
+                  to: "base";
+               }
+               color: 255 255 255 0;
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            effect: SOFT_SHADOW;
+            mouse_events: 0;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1 {
+                  relative: 0.0  1.0;
+                  offset: 0    -1;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -1    -1;
+               }
+               color: 255 255 255 0;
+               color3: 0 0 0 0;
+               color_class: "module_label";
+               text {
+                  font: "Sans:style=Bold";
+                  size: 10;
+                  min: 1 1;
+                  align: 0.5 0.5;
+                  text_class: "module_normal";
+               }
+            }
+            description {
+               state: "visible" 0.0;
+               inherit: "default" 0.0;
+               rel1 {
+                  relative: 0.0  0.0;
+                  offset: 0    0;
+               }
+               rel2 {
+                  relative: 1.0  1.0;
+                  offset: -1    -1;
+               }
+               color: 255 255 255 255;
+               color3: 0 0 0 42;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "go_active";
+            signal: "e,state,focused";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            target: "background";
+            after: "go_active2";
+         }
+         program {
+            name: "go_activeB";
+            signal: "e,action,show,label";
+            source: "e";
+            action: STATE_SET "visible" 0.0;
+            transition: SINUSOIDAL 0.5;
+            target: "e.text.label";
+         }
+         program {
+            name: "go_active2";
+            action: STATE_SET "hidden" 0.0;
+            transition: LINEAR 0.5;
+            target: "background";
+            after: "go_active";
+         }
+         program {
+            name: "go_passive";
+            signal: "e,state,unfocused";
+            source: "e";
+            action: ACTION_STOP;
+            target: "go_active";
+            target: "go_active2";
+            after: "go_passive2";
+         }
+         program {
+            name: "go_passiveB";
+            signal: "e,action,hide,label";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 1.0;
+            target: "e.text.label";
+         }
+         program {
+            name: "go_passive2";
+            action: STATE_SET "default" 0.0;
+            target: "background";
+            script {
+               if (get_int(urgent) == 1) {
+                  run_program(PROGRAM:"go_urgent");
+               }
+            }
+         }
+         program {
+            name: "init";
+            signal: "load";
+            source: "";
+            script {
+               set_int(urgent, 0);
+            }
+         }
+         program {
+            name: "set_urgent";
+            signal: "e,state,urgent";
+            source: "e";
+            script {
+               set_int(urgent, 1);
+            }
+         }
+         program {
+            name: "go_urgent";
+            action: STATE_SET "visible" 0.0;
+            target: "background";
+            target: "urgent";
+            after: "go_urgent2";
+         }
+         program {
+            name: "go_urgent2";
+            action: STATE_SET "hidden" 0.0;
+            transition: LINEAR 0.5;
+            target: "background";
+            target: "urgent";
+            after: "go_urgent";
+         }
+         program {
+            name: "unset_urgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            script {
+               set_int(urgent, 0);
+            }
+         }
+         program {
+            name: "go_unurgent";
+            signal: "e,state,not_urgent";
+            source: "e";
+            action: ACTION_STOP;
+            target: "go_urgent";
+            target: "go_urgent2";
+            after: "go_unurgent2";
+         }
+         program {
+            name: "go_unurgent2";
+            action: STATE_SET "default" 0.0;
+            transition: SINUSOIDAL 0.3;
+            target: "background";
+            target: "urgent";
+         }
+         program {
+            name: "exec_exec";
+            signal: "e,action,exec";
+            source: "e";
+            after: "exec_start";
+         }
+         program {
+            name: "exec_start";
+            signal: "e,action,start";
+            source: "e";
+            action: ACTION_STOP;
+            target: "go_active";
+            target: "go_active2";
+            target: "go_passive";
+            target: "go_passive2";
+            target: "go_big";
+            target: "go_big2";
+            after: "go_big";
+         }
+         program {
+            name: "go_big";
+            action: STATE_SET "visible" 0.0;
+            target: "background";
+            after: "go_big2";
+         }
+         program {
+            name: "go_big2";
+            action: STATE_SET "huge" 0.0;
+            transition: LINEAR 0.5;
+            target: "background";
+         }
+      }
+   }
+   group {
+      name: "e/modules/ibox/drop";
+      alias: "e/modules/ibar/drop";
+      images.image: "O/inset_raised.png" COMP;
+      parts {
+         part {
+            name: "bg";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image {
+                  normal: "O/inset_raised.png";
+                  border: 7 7 7 7;
+                  middle: 0;
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/modules/ibox/drop_overlay";
+      alias: "e/modules/ibar/drop_overlay";
+      images {
+         image: "O/gadman_top.png" COMP;
+         image: "O/gadman_bottom.png" COMP;
+         image: "O/gadman_left.png" COMP;
+         image: "O/gadman_right.png" COMP;
+      }
+      parts {
+         part {
+            name: "left_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               rel1.relative: -1.0 0.5;
+               rel2.relative: -1.0 0.5;
+               image.normal: "O/gadman_right.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: -0.8 0.2;
+               rel2.relative: -0.7 0.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 0.5;
+               rel2.relative: 0.2 0.5;
+            }
+         }
+         part {
+            name: "left_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               rel1.relative: -1.0 0.5;
+               rel2.relative: -1.0 0.5;
+               image.normal: "O/gadman_right.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: -0.8 0.2;
+               rel2.relative: -0.7 0.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 0.5;
+               rel2.relative: 0.2 0.5;
+            }
+         }
+         part {
+            name: "right_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               rel1.relative: 2.0 0.5;
+               rel2.relative: 2.0 0.5;
+               image.normal: "O/gadman_left.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 1.8 0.2;
+               rel2.relative: 1.7 0.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.8 0.5;
+               rel2.relative: 0.8 0.5;
+            }
+         }
+         part {
+            name: "right_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: VERTICAL;
+               rel1.relative: 2.0 0.5;
+               rel2.relative: 2.0 0.5;
+               image.normal: "O/gadman_left.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 1.8 0.2;
+               rel2.relative: 1.7 0.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.8 0.5;
+               rel2.relative: 0.8 0.5;
+            }
+         }
+         part {
+            name: "top_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: HORIZONTAL;
+               rel1.relative: 0.5 -1.0;
+               rel2.relative: 0.5 -1.0;
+               image.normal: "O/gadman_bottom.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 -0.8;
+               rel2.relative: 0.8 -0.7;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.5 0.2;
+               rel2.relative: 0.5 0.2;
+            }
+         }
+         part {
+            name: "top_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: HORIZONTAL;
+               rel1.relative: 0.5 -1.0;
+               rel2.relative: 0.5 -1.0;
+               image.normal: "O/gadman_bottom.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 -0.8;
+               rel2.relative: 0.8 -0.7;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.5 0.2;
+               rel2.relative: 0.5 0.2;
+            }
+         }
+         part {
+            name: "bottom_arrow1";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: HORIZONTAL;
+               rel1.relative: 0.5 2.0;
+               rel2.relative: 0.5 2.0;
+               image.normal: "O/gadman_top.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 1.7;
+               rel2.relative: 0.8 1.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.5 0.8;
+               rel2.relative: 0.5 0.8;
+            }
+         }
+         part {
+            name: "bottom_arrow2";
+            description {
+               state: "default" 0.0;
+               aspect: 1.0 1.0;
+               aspect_preference: HORIZONTAL;
+               rel1.relative: 0.5 2.0;
+               rel2.relative: 0.5 2.0;
+               image.normal: "O/gadman_top.png";
+            }
+            description {
+               state: "1" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.2 1.7;
+               rel2.relative: 0.8 1.8;
+            }
+            description {
+               state: "2" 0.0;
+               inherit: "default" 0.0;
+               rel1.relative: 0.5 0.8;
+               rel2.relative: 0.5 0.8;
+            }
+         }
+      }
+      programs {
+         program {
+            name: "start1";
+            signal: "show";
+            source: "";
+            after: "left1_1";
+            after: "right1_1";
+            after: "top1_1";
+            after: "bottom1_1";
+         }
+         program {
+            name: "start2";
+            signal: "show";
+            source: "";
+            in: 0.4 0.0;
+            after: "left2_1";
+            after: "right2_1";
+            after: "top2_1";
+            after: "bottom2_1";
+         }
+         // LEFT ARROW
+         program {
+            name: "left1_1";
+            action: STATE_SET "1" 0.0;
+            target: "left_arrow1";
+            transition: LINEAR 0.4;
+            after: "left1_2";
+         }
+         program {
+            name: "left1_2";
+            action: STATE_SET "2" 0.0;
+            target: "left_arrow1";
+            transition: LINEAR 0.4;
+            after: "left1_r";
+         }
+         program {
+            name: "left1_r";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow1";
+            after: "left1_1";
+         }
+         program {
+            name: "left2_1";
+            action: STATE_SET "1" 0.0;
+            target: "left_arrow2";
+            transition: LINEAR 0.4;
+            after: "left2_2";
+         }
+         program {
+            name: "left2_2";
+            action: STATE_SET "2" 0.0;
+            target: "left_arrow2";
+            transition: LINEAR 0.4;
+            after: "left2_r";
+         }
+         program {
+            name: "left2_r";
+            action: STATE_SET "default" 0.0;
+            target: "left_arrow2";
+            after: "left2_1";
+         }
+         // RIGHT ARROW
+         program {
+            name: "right1_1";
+            action: STATE_SET "1" 0.0;
+            target: "right_arrow1";
+            transition: LINEAR 0.4;
+            after: "right1_2";
+         }
+         program {
+            name: "right1_2";
+            action: STATE_SET "2" 0.0;
+            target: "right_arrow1";
+            transition: LINEAR 0.4;
+            after: "right1_r";
+         }
+         program {
+            name: "right1_r";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow1";
+            after: "right1_1";
+         }
+         program {
+            name: "right2_1";
+            action: STATE_SET "1" 0.0;
+            target: "right_arrow2";
+            transition: LINEAR 0.4;
+            after: "right2_2";
+         }
+         program {
+            name: "right2_2";
+            action: STATE_SET "2" 0.0;
+            target: "right_arrow2";
+            transition: LINEAR 0.4;
+            after: "right2_r";
+         }
+         program {
+            name: "right2_r";
+            action: STATE_SET "default" 0.0;
+            target: "right_arrow2";
+            after: "right2_1";
+         }
+         // TOP ARROW
+         program {
+            name: "top1_1";
+            action: STATE_SET "1" 0.0;
+            target: "top_arrow1";
+            transition: LINEAR 0.4;
+            after: "top1_2";
+         }
+         program {
+            name: "top1_2";
+            action: STATE_SET "2" 0.0;
+            target: "top_arrow1";
+            transition: LINEAR 0.4;
+            after: "top1_r";
+         }
+         program {
+            name: "top1_r";
+            action: STATE_SET "default" 0.0;
+            target: "top_arrow1";
+            after: "top1_1";
+         }
+         program {
+            name: "top2_1";
+            action: STATE_SET "1" 0.0;
+            target: "top_arrow2";
+            transition: LINEAR 0.4;
+            after: "top2_2";
+         }
+         program {
+            name: "top2_2";
+            action: STATE_SET "2" 0.0;
+            target: "top_arrow2";
+            transition: LINEAR 0.4;
+            after: "top2_r";
+         }
+         program {
+            name: "top2_r";
+            action: STATE_SET "default" 0.0;
+            target: "top_arrow2";
+            after: "top2_1";
+         }
+         // BOTTOM ARROW
+         program {
+            name: "bottom1_1";
+            action: STATE_SET "1" 0.0;
+            target: "bottom_arrow1";
+            transition: LINEAR 0.4;
+            after: "bottom1_2";
+         }
+         program {
+            name: "bottom1_2";
+            action: STATE_SET "2" 0.0;
+            target: "bottom_arrow1";
+            transition: LINEAR 0.4;
+            after: "bottom1_r";
+         }
+         program {
+            name: "bottom1_r";
+            action: STATE_SET "default" 0.0;
+            target: "bottom_arrow1";
+            after: "bottom1_1";
+         }
+         program {
+            name: "bottom2_1";
+            action: STATE_SET "1" 0.0;
+            target: "bottom_arrow2";
+            transition: LINEAR 0.4;
+            after: "bottom2_2";
+         }
+         program {
+            name: "bottom2_2";
+            action: STATE_SET "2" 0.0;
+            target: "bottom_arrow2";
+            transition: LINEAR 0.4;
+            after: "bottom2_r";
+         }
+         program {
+            name: "bottom2_r";
+            action: STATE_SET "default" 0.0;
+            target: "bottom_arrow2";
+            after: "bottom2_1";
+         }
+      }
+   }

@@ -1,0 +1,142 @@
+group { name: "e/widgets/configure/main";
+   images.image: "bevel_dark_out.png" COMP;
+   images.image: "separator_horiz.png" COMP;
+   parts {
+      part { name: "base"; type: RECT;
+         description { state: "default" 0.0;
+            color_class: "dialog_base";
+            color: 64 64 64 255;
+         }
+      }
+      part { name: "bevel";
+         description { state: "default" 0.0;
+            image.normal: "bevel_dark_out.png";
+            image.border: 1 1 1 1;
+            image.middle: 0;
+            fill.smooth: 0;
+         }
+      }
+      part { name: "separator"; mouse_events: 0;
+         description { state: "default" 0.0;
+            min: 16 2;
+            max: 99999 2;
+            rel1.relative: 0.0 1.0;
+            rel1.offset: 0 0;
+            rel1.to_y: "e.swallow.content";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -1 -1;
+            rel2.to_y: "e.swallow.button";
+            image.normal: "separator_horiz.png";
+            fill.smooth: 0;
+            fixed: 0 1;
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.offset: 4 4;
+            rel1.to_x: "base";
+            rel2.relative: 1.0 0.0;
+            rel2.offset: -5 -8;
+            rel2.to_y: "e.swallow.button";
+         }
+      }
+      part { name: "e.swallow.button"; type: SWALLOW;
+         description { state: "default" 0.0;
+            align: 0.5 1.0;
+            rel1.relative: 0.5 1.0;
+            rel1.offset: 0 -5;
+            rel2.relative: 0.5 1.0;
+            rel2.offset: -1 -5;
+            fixed: 1 1;
+         }
+      }
+   }
+}
+
+group { name: "e/modules/conf/main";
+   images.image: "button_normal.png" COMP;
+   images.image: "button_clicked.png" COMP;
+   images.image: "spanner_inset.png" COMP;
+   images.image: "spanner_hilight.png" COMP;
+   images.image: "spanner_glow.png" COMP;
+   min: 16 16;
+   max: 80 80;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "button_normal.png";
+            image.border: 4 4 3 5;
+            image.middle: SOLID;
+            rel1.offset: -1 0;
+            rel2.offset: 0 1;
+            fill.smooth: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "button_clicked.png";
+            image.border: 5 5 4 6;
+         }
+      }
+      part { name: "spanner_hilight"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 0 1;
+            rel1.to: "spanner";
+            rel2.offset: -1 0;
+            rel2.to: "spanner";
+            image.normal: "spanner_hilight.png";
+         }
+      }
+      part { name: "spanner"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.offset: 4 4;
+            rel2.offset: -5 -5;
+            image.normal: "spanner_inset.png";
+         }
+      }
+      part { name: "spanner_glow"; mouse_events: 0;
+         description { state: "default" 0.0;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            max: 80 80;
+            rel1.to: "spanner";
+            rel2.to: "spanner";
+            image.normal: "spanner_glow.png";
+            visible: 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+         target: "spanner_glow";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,conf" "";
+      }
+      program {
+         signal: "mouse,in"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "spanner_glow";
+      }
+      program {
+         signal: "mouse,out"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "spanner_glow";
+      }
+   }
+}

@@ -1,0 +1,21 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Tiling
+Name[ca]=Mosaic
+Name[eo]=Kaheligado
+Name[es]=Mosaico
+Name[fr]=Pavage
+Name[gl]=Mosaico
+Name[ru]=Мозаичный режим
+Comment=Positions/resizes your windows tilingly.
+Comment[ca]=Posiciona/redimensiona les finestres en mosaics.
+Comment[eo]=Poziciigi kaj regrandigi viajn fenestrojn kaheligante.
+Comment[es]=Posicione/redimensione sus ventanas en mosaicos.
+Comment[fr]=Place/Redimensionne les fenêtres sans les superposer.
+Comment[gl]=Posicione/redimensione as súas xanelas en mosaicos.
+Comment[it]=Posiziona/ridimensiona le finestre disponendole in griglia.
+Comment[pt]=Posiciona/ajusta as janelas em mosaicos
+Comment[ru]=Мозаичный режим расположения окон
+Icon=e-module-tiling
+X-Enlightenment-ModuleType=core

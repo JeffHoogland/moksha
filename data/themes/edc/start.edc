@@ -1,0 +1,117 @@
+group { name: "e/modules/start/main";
+   images.image: "big_arrow_down.png" COMP;
+   images.image: "big_arrow_down_shadow.png" COMP;
+   images.image: "big_arrow_up.png" COMP;
+   images.image: "big_arrow_up_shadow.png" COMP;
+   images.image: "big_arrow_left.png" COMP;
+   images.image: "big_arrow_left_shadow.png" COMP;
+   images.image: "big_arrow_right.png" COMP;
+   images.image: "big_arrow_right_shadow.png" COMP;
+   max: 128 128;
+   parts {
+      part { name: "arrow_base"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: 0 1;
+            rel2.offset: -1 0;
+            color: 255 255 255 255;
+         }
+         description { state: "active" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 -1;
+            color: 255 255 255 128;
+         }
+      }
+      part { name: "shadow";
+         clip_to: "arrow_base";
+         description { state: "default" 0.0;
+            image.normal: "big_arrow_up_shadow.png";
+            rel1.to: "arrow_base";
+            rel2.to: "arrow_base";
+            aspect: (17/14) (17/14);
+            max: 17 14;
+         }
+         description { state: "down" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_down_shadow.png";
+            aspect: (17/14) (17/14);
+            max: 17 14;
+         }
+         description { state: "left" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_left_shadow.png";
+            aspect: (14/17) (14/17);
+            max: 14 17;
+         }
+         description { state: "right" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_right_shadow.png";
+            aspect: (14/17) (14/17);
+            max: 14 17;
+         }
+      }
+      part { name: "arrow";
+         description { state: "default" 0.0;
+            image.normal: "big_arrow_up.png";
+            aspect: (17/14) (17/14);
+            max: 17 14;
+         }
+         description { state: "down" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_down.png";
+            aspect: (17/14) (17/14);
+            max: 17 14;
+         }
+         description { state: "left" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_left.png";
+            aspect: (14/17) (14/17);
+            max: 14 17;
+         }
+         description { state: "right" 0.0;
+            inherit: "default" 0.0;
+            image.normal: "big_arrow_right.png";
+            aspect: (14/17) (14/17);
+            max: 14 17;
+         }
+      }
+      part { name: "events"; type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,state,focused";
+         source: "e";
+         action: STATE_SET "active" 0.0;
+         target: "arrow_base";
+      }
+      program {
+         signal: "e,state,unfocused";
+         source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "arrow_base";
+      }
+#define ORIENT_SATE(_ORIENT, _STATE) \
+      program { \
+         signal: "e,state,orientation,"_ORIENT; source: "e"; \
+         action: STATE_SET _STATE 0.0; \
+         target: "arrow"; \
+         target: "shadow"; \
+      }
+      ORIENT_SATE("top", "down")
+      ORIENT_SATE("top_left", "down")
+      ORIENT_SATE("top_right", "down")
+      ORIENT_SATE("bottom", "default")
+      ORIENT_SATE("bottom_left", "default")
+      ORIENT_SATE("bottom_right", "default")
+      ORIENT_SATE("left", "right")
+      ORIENT_SATE("left_top", "right")
+      ORIENT_SATE("left_bottom", "right")
+      ORIENT_SATE("right", "left")
+      ORIENT_SATE("right_top", "left")
+      ORIENT_SATE("right_bottom", "left")
+#undef ORIENT_SATE
+   }
+}

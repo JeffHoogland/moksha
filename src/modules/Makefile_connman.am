@@ -1,0 +1,22 @@
+connmandir = $(MDIR)/connman
+connman_DATA = connman/e-module-connman.edj \
+	       connman/module.desktop
+
+EXTRA_DIST += $(connman_DATA)
+
+connmanpkgdir = $(MDIR)/connman/$(MODULE_ARCH)
+connmanpkg_LTLIBRARIES = connman/module.la
+
+connman_module_la_SOURCES = connman/e_mod_main.h \
+			    connman/e_mod_main.c \
+			    connman/e_mod_config.c \
+			    connman/e_connman.c \
+			    connman/agent.c \
+			    connman/E_Connman.h
+
+connman_module_la_CFLAGS = $(AM_CFLAGS) -Wno-unused-parameter
+connman_module_la_LIBADD = @ECONNMAN_LIBS@
+
+.PHONY: connman install-connman
+connman: $(connmanpkg_LTLIBRARIES) $(connman_DATA)
+install-connman: install-connmanDATA install-connmanpkgLTLIBRARIES

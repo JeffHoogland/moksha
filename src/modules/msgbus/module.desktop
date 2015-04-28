@@ -1,0 +1,18 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=DBus Extension
+Name[ca]=Extensió DBus
+Name[cs]=DBus rozšíření
+Name[de]=Erweiterung für D-Bus
+Name[eo]=DBus kromaĵo
+Name[es]=Extensión DBus
+Name[fr]=Extension DBus
+Name[gl]=Extensión DBus
+Name[hu]=DBus kiterjesztés
+Name[it]=Estensione DBus
+Name[pt]=Extensão DBus
+Name[ru]=Расширение DBus
+Name[tr]=DBus Uzantısı
+Icon=e-module-msgbus
+X-Enlightenment-ModuleType=system

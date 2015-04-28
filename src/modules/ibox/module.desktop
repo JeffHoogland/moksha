@@ -1,0 +1,24 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=IBox
+Name[ca]=IBox
+Name[de]=IBox
+Name[eo]=Breto IBox
+Name[fr]=IBox
+Name[ru]=IBox
+Comment=A home for your iconified applications.
+Comment[ca]=Un contenidor per a les aplicacions minimitzades.
+Comment[cs]=Zde se zobrazují všechny minimalizované aplikace.
+Comment[de]=Ein Platz für Ihre minimierten Anwendungen.
+Comment[eo]=Ujo por siaj piktogramigitaj aplikaĵoj.
+Comment[es]=Un contenedor para sus aplicaciones iconificadas.
+Comment[fr]=Un réceptacle pour vos applications minimisées.
+Comment[gl]=Un contedor para as súas aplicacións minimizadas.
+Comment[hu]=Ez a modul a minimalizált ablakoknak nyújt helyet :).
+Comment[it]=Un contenitore per le applicazioni iconificate.
+Comment[pt]=Um local para as aplicações minimizadas
+Comment[ru]=Место для отображения иконок свёрнутых приложений.
+Comment[tr]=Simge durumundaki uygulamalarınızın yuvası.
+Icon=e-module-ibox
+X-Enlightenment-ModuleType=utils

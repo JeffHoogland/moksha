@@ -1,0 +1,4 @@
+group "Illume-Indicator_Cfg" struct {
+    value "version" int: 0;
+    value "height" int: 32;
+}

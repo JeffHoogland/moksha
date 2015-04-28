@@ -1,0 +1,19 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+datadir=@datadir@
+includedir=@includedir@/@PACKAGE@
+modules=@libdir@/@PACKAGE@/modules
+pkgdatadir=@datadir@/enlightenment/data
+themes=${pkgdatadir}/themes
+backgrounds=${pkgdatadir}/backgrounds
+config_apps=@prefix@/share/@PACKAGE@/config-apps
+release=@release@
+
+Name: enlightenment
+Description: Enlightenmnt Window Manager
+Requires: @requirements_e@
+Version: @VERSION@
+Libs: -L${libdir}
+Libs.private:  -lm
+Cflags: -I${includedir} @e_configflags@

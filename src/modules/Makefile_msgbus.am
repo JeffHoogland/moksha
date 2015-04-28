@@ -1,0 +1,18 @@
+msgbusdir = $(MDIR)/msgbus
+msgbus_DATA = msgbus/e-module-msgbus.edj \
+	      msgbus/module.desktop
+
+EXTRA_DIST += $(msgbus_DATA)
+
+msgbuspkgdir = $(MDIR)/msgbus/$(MODULE_ARCH)
+msgbuspkg_LTLIBRARIES = msgbus/module.la
+
+msgbus_module_la_SOURCES = msgbus/e_mod_main.h \
+			   msgbus/e_mod_main.c \
+			   msgbus/msgbus_audit.c \
+			   msgbus/msgbus_desktop.c \
+			   msgbus/msgbus_lang.c
+
+.PHONY: msgbus install-msgbus
+msgbus: $(msgbuspkg_LTLIBRARIES) $(msgbus_DATA)
+install-msgbus: install-msgbusDATA install-msgbuspkgLTLIBRARIES

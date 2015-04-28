@@ -1,0 +1,7 @@
+group "Battery_Config" struct {
+  value "poll_interval" int: 512;
+  value "alert" int: 5;
+  value "alert_p" int: 5;
+  value "alert_timeout" int: 0;
+  value "force_mode" int: 0;
+}

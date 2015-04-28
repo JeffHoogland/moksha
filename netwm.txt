@@ -1,0 +1,92 @@
+/*
+ * Not all of these are hints, just copied out
+ * everything with _NET in it from the spec.
+ */
+/*
+ * P = For pagers, and extern pager wont work with E's desktop setup
+ * E can have multiple virtual roots AND multiple desktops AND several
+ * zones when using xinerama
+ */
+/*
+ * T = For taskbar
+ */
+
+/* Root Window Properties (and Related Messages) */
+_NET_SUPPORTED                      [X]
+_NET_CLIENT_LIST                    [X]
+_NET_CLIENT_LIST_STACKING           [X]
+_NET_NUMBER_OF_DESKTOPS             [P]
+_NET_DESKTOP_GEOMETRY               [P]
+_NET_DESKTOP_VIEWPORT               [P]
+_NET_CURRENT_DESKTOP                [P]
+_NET_DESKTOP_NAMES                  [ ]
+_NET_ACTIVE_WINDOW                  [?] /* Listen to active window requests */
+_NET_WORKAREA                       [ ]
+_NET_SUPPORTING_WM_CHECK            [X]
+_NET_VIRTUAL_ROOTS                  [X]
+_NET_DESKTOP_LAYOUT                 [P]
+_NET_SHOWING_DESKTOP                [ ]
+
+/* Other Root Window Messages */
+_NET_CLOSE_WINDOW                   [P]
+_NET_MOVERESIZE_WINDOW              [P]
+_NET_WM_MOVERESIZE                  [X]
+_NET_RESTACK_WINDOW                 [P]
+_NET_REQUEST_FRAME_EXTENTS          [X]
+
+/* Application Window Properties */
+_NET_WM_NAME                        [X]
+_NET_WM_VISIBLE_NAME                [X] /* E uses _NET_WM_NAME, doesn't need to set this */
+_NET_WM_ICON_NAME                   [X]
+_NET_WM_VISIBLE_ICON_NAME           [X] /* E uses _NET_WM_ICON_NAME, doesn't need to set this */
+_NET_WM_DESKTOP                     [ ]
+/* Do we have to do anything special with these, except
+ * stacking order? */
+_NET_WM_WINDOW_TYPE                 [X]
+_NET_WM_WINDOW_TYPE_DESKTOP         [X]
+_NET_WM_WINDOW_TYPE_DOCK            [X]
+_NET_WM_WINDOW_TYPE_TOOLBAR         [X]
+_NET_WM_WINDOW_TYPE_MENU            [X]
+_NET_WM_WINDOW_TYPE_UTILITY         [X]
+_NET_WM_WINDOW_TYPE_SPLASH          [X]
+_NET_WM_WINDOW_TYPE_DIALOG          [X]
+_NET_WM_WINDOW_TYPE_NORMAL          [X]
+_NET_WM_STATE                       [X]
+_NET_WM_STATE_MODAL                 [X]
+/* _NET_WM_STATE_STICKY indicates that the
+ * Window Manager SHOULD keep the window's
+ * position fixed on the screen, even when
+ * the virtual desktop scrolls. */
+_NET_WM_STATE_STICKY                [?]
+_NET_WM_STATE_MAXIMIZED_VERT        [X]
+_NET_WM_STATE_MAXIMIZED_HORZ        [X]
+_NET_WM_STATE_SHADED                [X]
+_NET_WM_STATE_SKIP_TASKBAR          [X]
+_NET_WM_STATE_SKIP_PAGER            [X]
+_NET_WM_STATE_HIDDEN                [X]
+_NET_WM_STATE_FULLSCREEN            [X]
+_NET_WM_STATE_ABOVE                 [X]
+_NET_WM_STATE_BELOW                 [X]
+_NET_WM_STATE_DEMANDS_ATTENTION     [ ]
+_NET_WM_ALLOWED_ACTIONS             [ ]
+_NET_WM_ACTION_MOVE                 [ ]
+_NET_WM_ACTION_RESIZE               [ ]
+_NET_WM_ACTION_MINIMIZE             [ ]
+_NET_WM_ACTION_SHADE                [ ]
+_NET_WM_ACTION_STICK                [ ]
+_NET_WM_ACTION_MAXIMIZE_HORZ        [ ]
+_NET_WM_ACTION_MAXIMIZE_VERT        [ ]
+_NET_WM_ACTION_FULLSCREEN           [ ]
+_NET_WM_ACTION_CHANGE_DESKTOP       [ ]
+_NET_WM_ACTION_CLOSE                [ ]
+_NET_WM_STRUT                       [X]
+_NET_WM_STRUT_PARTIAL               [X]
+_NET_WM_ICON_GEOMETRY               [T]
+_NET_WM_ICON                        [X]
+_NET_WM_PID                         [X]
+_NET_WM_HANDLED_ICONS               [T]
+_NET_WM_USER_TIME                   [X]
+_NET_FRAME_EXTENTS                  [X]
+_NET_WM_PING                        [X]
+_NET_WM_SYNC_REQUEST                [X]
+_NET_WM_SYNC_REQUEST_COUNTER        [X]
