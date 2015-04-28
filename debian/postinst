@@ -38,8 +38,4 @@ esac
 sudo chmod u+s /usr/lib/*-linux-gnu/enlightenment/utils/enlightenment_sys
 sudo chmod ug+s /usr/lib/*-linux-gnu/enlightenment/modules/cpufreq/linux-*/freqset
 sudo chmod a=rx,u+xws /usr/lib/*-linux-gnu/enlightenment/utils/enlightenment_backlight
-#sudo rm -rf /usr/share/enlightenment/data/config/standard
-sudo rm -rf /usr/share/enlightenment/data/config/illume
-sudo rm -rf /usr/share/enlightenment/data/config/mobile
-#zenity --info --title="Enlightenment Update" --text="Your Enlightenment desktop has been updated! Please do a <b>full</b> system restart after these updates complete."
 exit 0

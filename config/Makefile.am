@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = default standard mobile
+SUBDIRS = default bodhi
 
 EET_EET = @eet_eet@
 

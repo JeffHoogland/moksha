@@ -2,7 +2,6 @@ Source: moksha
 Section: unknown
 Priority: extra
 Maintainer: Jeff Hoogland
-Depends: bodhi-profiles
 Build-Depends: efl, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, edbus
 Standards-Version: 3.8.3
 
