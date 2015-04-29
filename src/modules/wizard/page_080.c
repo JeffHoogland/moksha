@@ -17,7 +17,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
-   FILE *f, *fin;
+   /*FILE *f, *fin;
    char buf[PATH_MAX];
 
    snprintf(buf, sizeof(buf), "%s/def-ibar.txt", e_wizard_dir_get());
@@ -58,7 +58,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
           }
         fclose(f);
      }
-   fclose(fin);
+   fclose(fin);*/
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 /*

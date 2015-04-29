@@ -1,0 +1,27 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Dropshadow
+Name[ca]=Ombres
+Name[cs]=Stín okna
+Name[eo]=Ĵetita ombro
+Name[fr]=Ombre portée
+Name[gl]=Sombra
+Name[hu]=Árnyékvető
+Name[pt]=Sombra
+Name[ru]=Отброс тени
+Name[tr]=Pencere gölgesi
+Comment=Module to add a dropshadow to windows.
+Comment[ca]=Mòdul per a afegir ombres a les finestres.
+Comment[cs]=Modul k přidání stínu oknům.
+Comment[eo]=Aldoni ĵetitan ombron al la fenestroj.
+Comment[es]=Módulo para añadir una sombra a las ventanas.
+Comment[fr]=Ajoute une ombre aux fenêtres.
+Comment[gl]=Módulo para engadir sombras ás xanelas.
+Comment[hu]=A modul segítségével árnyékot vethetünk az ablakainkra.
+Comment[it]=Modulo per aggiungere un'ombreggiatura alle finestre.
+Comment[pt]=Permite-lhe adicionar sombras às janelas
+Comment[ru]=Модуль включает отброс теней окнами.
+Comment[tr]=Pencerelere gölge ekleyen modül.
+Icon=e-module-dropshadow
+X-Enlightenment-ModuleType=look

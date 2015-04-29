@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Shot
+Name[ca]=Captura de pantalla
+Name[eo]=Ekrankopio
+Name[fr]=Capture d'écran
+Name[ko]=스크린샷
+Name[pt]=Capturas de ecrã
+Name[ru]=Снимок экрана
+Comment=Simple screenshot+save/upload module
+Comment[ca]=Mòdul per a desar o compartir captures de pantalla.
+Comment[eo]=Simpla modulo por registri kaj kunhavigi ekrankopiojn.
+Comment[es]=Un módulo simple para guardar y subir capturas de pantalla.
+Comment[fr]=Pour enregistrer des captures d'écran du bureau et/ou les partager.
+Comment[gl]=Un módulo simple para gardar e subir capturas de pantalla.
+Comment[it]=Semplice modulo per il salvataggio e l'upload di istantanee del desktop.
+Comment[ko]=간단한 스크린샷 저장/공유 모듈
+Comment[pt]=Módulo para capturar, gravar e enviar capturas de ecrã
+Comment[ru]=Модуль для сохранения/загрузки снимков экрана.
+Icon=e-module-shot
+X-Enlightenment-ModuleType=utils

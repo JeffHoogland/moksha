@@ -508,7 +508,7 @@ main(int argc, char *argv[])
                }
           }
      }
-   else if (strstr(argv[args], "://"))
+   else if (strstr(argv[args], ":"))
      cmds = protocol_open(argv[args]);
    else
      cmds = local_open(argv[args]);

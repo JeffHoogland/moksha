@@ -17,7 +17,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
-   Eina_List *l, *themes = efreet_icon_theme_list_get();
+   /*Eina_List *l, *themes = efreet_icon_theme_list_get();
    Efreet_Icon_Theme *th;
    int i;
    const char *selected = NULL;
@@ -51,7 +51,7 @@ done:
         if (e_config->icon_theme) eina_stringshare_del(e_config->icon_theme);
         e_config->icon_theme = eina_stringshare_add(selected);
      }
-   eina_list_free(themes);
+   eina_list_free(themes);*/
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 /*

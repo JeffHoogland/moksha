@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2013-10-14 14:37-0300\n"
+"POT-Creation-Date: 2015-04-07 15:25+0000\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -26,16 +26,16 @@ msgstr "عن E17ِ"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
-#: src/bin/e_int_border_prop.c:81 src/bin/e_theme_about.c:24
-#: src/modules/conf/e_conf.c:179
+#: src/bin/e_int_border_prop.c:81 src/bin/e_int_menus.c:669
+#: src/bin/e_theme_about.c:24 src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2529 src/modules/mixer/app_mixer.c:550
+#: src/modules/fileman/e_fwin.c:2530 src/modules/mixer/app_mixer.c:550
 msgid "Close"
 msgstr "إغلاق"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:3367 src/bin/e_actions.c:3371
-#: src/bin/e_actions.c:3375 src/bin/e_int_menus.c:223 src/bin/e_main.c:619
+#: src/bin/e_actions.c:3375 src/bin/e_int_menus.c:283 src/bin/e_main.c:681
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -79,13 +79,13 @@ msgstr "اقتل"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2128 src/bin/e_actions.c:2222
 #: src/bin/e_actions.c:2282 src/bin/e_actions.c:2342 src/bin/e_actions.c:2407
 #: src/bin/e_actions.c:2472 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10450 src/bin/e_fm.c:10816
+#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10461 src/bin/e_fm.c:10827
 #: src/bin/e_screensaver.c:191
 #: src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "لا"
 
-#: src/bin/e_actions.c:2123 src/bin/e_actions.c:3371 src/bin/e_int_menus.c:252
+#: src/bin/e_actions.c:2123 src/bin/e_actions.c:3371 src/bin/e_int_menus.c:312
 msgid "Exit"
 msgstr "اخرج"
 
@@ -96,7 +96,7 @@ msgstr "أتريد بالفعل الخروج من E17ِ ؟"
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10453 src/bin/e_screensaver.c:189
+#: src/bin/e_fm.c:10464 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "Yes"
 msgstr "نعم"
@@ -109,7 +109,7 @@ msgstr "أخرج"
 msgid "Are you sure you want to logout?"
 msgstr "أتريد بالفعل تسجيل الخروج من الجلسة؟"
 
-#: src/bin/e_actions.c:2276 src/bin/e_sys.c:749
+#: src/bin/e_actions.c:2276 src/bin/e_sys.c:750
 msgid "Power off"
 msgstr "إطفاء"
 
@@ -150,7 +150,7 @@ msgstr "أتريد بالفعل إسبات حاسبك؟"
 msgid "Window : Actions"
 msgstr "النوافذ : اﻹجراءات"
 
-#: src/bin/e_actions.c:2952 src/bin/e_fm.c:11581
+#: src/bin/e_actions.c:2952 src/bin/e_fm.c:11592
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "حرّك"
@@ -312,7 +312,7 @@ msgstr "التحول لحالة الثقب"
 #: src/bin/e_actions.c:3209 src/bin/e_actions.c:3211 src/bin/e_actions.c:3213
 #: src/bin/e_actions.c:3215 src/bin/e_actions.c:3217 src/bin/e_actions.c:3219
 #: src/bin/e_actions.c:3221 src/bin/e_actions.c:3223 src/bin/e_actions.c:3438
-#: src/bin/e_actions.c:3443 src/bin/e_int_menus.c:185
+#: src/bin/e_actions.c:3443 src/bin/e_int_menus.c:226
 #: src/bin/e_int_shelf_config.c:267 src/modules/comp/e_mod_config.c:444
 #: src/modules/comp/e_mod_config.c:749
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
@@ -660,7 +660,7 @@ msgstr "أظهر القائمة..."
 
 #: src/bin/e_actions.c:3353 src/bin/e_actions.c:3358 src/bin/e_actions.c:3363
 #: src/modules/conf/e_mod_main.c:272
-#: src/modules/everything/evry_plug_apps.c:1169
+#: src/modules/everything/evry_plug_apps.c:1170
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "تشغيل"
@@ -679,7 +679,7 @@ msgstr "التطبيق"
 msgid "New Instance of Focused App"
 msgstr "طلب جديد لتطبيق نشط"
 
-#: src/bin/e_actions.c:3367 src/bin/e_int_menus.c:247
+#: src/bin/e_actions.c:3367 src/bin/e_int_menus.c:307
 msgid "Restart"
 msgstr "إعِد التشغيل"
 
@@ -758,7 +758,7 @@ msgstr "أسبِت اﻵن"
 msgid "Lock"
 msgstr "اقفل"
 
-#: src/bin/e_actions.c:3443 src/bin/e_int_menus.c:1327
+#: src/bin/e_actions.c:3443 src/bin/e_int_menus.c:1421
 msgid "Cleanup Windows"
 msgstr "تنظيف النوافذ"
 
@@ -799,7 +799,7 @@ msgid "Select"
 msgstr "حدد"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:9997
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10008
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -862,10 +862,10 @@ msgstr ""
 #: src/bin/e_config.c:1479 src/bin/e_config.c:2104
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:613
-#: src/bin/e_fm.c:9996 src/bin/e_fm.c:10722 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10007 src/bin/e_fm.c:10733 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:431
-#: src/bin/e_module.c:798 src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_module.c:798 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:695
 #: src/modules/comp/e_mod_config.c:914
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -1166,7 +1166,7 @@ msgstr "عام"
 msgid "Startup Notify"
 msgstr "ابدأ التنبيه"
 
-#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1183
+#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1184
 msgid "Run in Terminal"
 msgstr "شغل في الطرفية"
 
@@ -1174,7 +1174,7 @@ msgstr "شغل في الطرفية"
 msgid "Show in Menus"
 msgstr "اظهر في قوائم"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8791 src/bin/e_fm.c:8951
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8802 src/bin/e_fm.c:8962
 #: src/bin/e_int_border_remember.c:763
 #: src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
@@ -1189,7 +1189,7 @@ msgstr "اختر أيقونة لـ '%s'"
 msgid "Select an Executable"
 msgstr "اختر ملف تنفيذي"
 
-#: src/bin/e_entry.c:480 src/bin/e_fm.c:9136 src/bin/e_fm.c:10815
+#: src/bin/e_entry.c:484 src/bin/e_fm.c:9147 src/bin/e_fm.c:10826
 #: src/bin/e_shelf.c:1792 src/bin/e_shelf.c:2475
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1208,19 +1208,19 @@ msgstr "اختر ملف تنفيذي"
 msgid "Delete"
 msgstr "امح"
 
-#: src/bin/e_entry.c:490 src/bin/e_fm.c:9047
+#: src/bin/e_entry.c:494 src/bin/e_fm.c:9058
 msgid "Cut"
 msgstr "قص"
 
-#: src/bin/e_entry.c:499 src/bin/e_fm.c:9061 src/bin/e_fm.c:11576
+#: src/bin/e_entry.c:503 src/bin/e_fm.c:9072 src/bin/e_fm.c:11587
 msgid "Copy"
 msgstr "انسخ"
 
-#: src/bin/e_entry.c:509 src/bin/e_fm.c:8852 src/bin/e_fm.c:9074
+#: src/bin/e_entry.c:513 src/bin/e_fm.c:8863 src/bin/e_fm.c:9085
 msgid "Paste"
 msgstr "الصق"
 
-#: src/bin/e_entry.c:520
+#: src/bin/e_entry.c:524
 msgid "Select All"
 msgstr "اختر الكل"
 
@@ -1410,72 +1410,72 @@ msgstr "خطأ في اﻹخراج"
 msgid "Can't eject device"
 msgstr "لا يمكن إخراج الجهاز"
 
-#: src/bin/e_fm.c:6608 src/bin/e_fm.c:6641 src/bin/e_fm.c:9523
-#: src/bin/e_fm.c:9538 src/bin/e_fm.c:9647 src/bin/e_fm.c:9652
-#: src/bin/e_fm.c:9668 src/bin/e_fm.c:9673 src/bin/e_fm.c:10300
-#: src/bin/e_fm.c:10303 src/bin/e_fm.c:10306 src/bin/e_fm.c:10333
-#: src/bin/e_fm.c:10337 src/bin/e_fm.c:10340 src/bin/e_fm.c:10398
-#: src/bin/e_fm.c:10623 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
+#: src/bin/e_fm.c:6626 src/bin/e_fm.c:6659 src/bin/e_fm.c:9534
+#: src/bin/e_fm.c:9549 src/bin/e_fm.c:9658 src/bin/e_fm.c:9663
+#: src/bin/e_fm.c:9679 src/bin/e_fm.c:9684 src/bin/e_fm.c:10311
+#: src/bin/e_fm.c:10314 src/bin/e_fm.c:10317 src/bin/e_fm.c:10344
+#: src/bin/e_fm.c:10348 src/bin/e_fm.c:10351 src/bin/e_fm.c:10409
+#: src/bin/e_fm.c:10634 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2343
 msgid "Error"
 msgstr "خلل"
 
-#: src/bin/e_fm.c:6608 src/bin/e_fm.c:6641
+#: src/bin/e_fm.c:6626 src/bin/e_fm.c:6659
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "فشلت عملية DND السابقة و المطلوبة لـ '%s' ."
 
-#: src/bin/e_fm.c:8709 src/modules/fileman/e_mod_config.c:361
+#: src/bin/e_fm.c:8720 src/modules/fileman/e_mod_config.c:361
 msgid "Case Sensitive"
 msgstr "حساس لحالة اﻷحرف"
 
-#: src/bin/e_fm.c:8715 src/modules/fileman/e_mod_config.c:364
+#: src/bin/e_fm.c:8726 src/modules/fileman/e_mod_config.c:364
 msgid "Sort By Extension"
 msgstr "رتب بواسطة اﻹضافة"
 
-#: src/bin/e_fm.c:8721 src/modules/fileman/e_mod_config.c:367
+#: src/bin/e_fm.c:8732 src/modules/fileman/e_mod_config.c:367
 msgid "Sort By Modification Time"
 msgstr "رتِّب بحسب تاريخ التعديل"
 
-#: src/bin/e_fm.c:8727 src/modules/fileman/e_mod_config.c:370
+#: src/bin/e_fm.c:8738 src/modules/fileman/e_mod_config.c:370
 msgid "Sort By Size"
 msgstr "رتب بواسطة الحجم"
 
-#: src/bin/e_fm.c:8736 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:378
 msgid "Directories First"
 msgstr "المجلدات أولا"
 
-#: src/bin/e_fm.c:8742 src/modules/fileman/e_mod_config.c:382
+#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:382
 msgid "Directories Last"
 msgstr "المجلدات آخرا"
 
-#: src/bin/e_fm.c:8775 src/bin/e_fm.c:8935
+#: src/bin/e_fm.c:8786 src/bin/e_fm.c:8946
 #: src/modules/fileman/e_mod_config.c:306
 msgid "View Mode"
 msgstr "وضع العرض"
 
-#: src/bin/e_fm.c:8784 src/bin/e_fm.c:8944
+#: src/bin/e_fm.c:8795 src/bin/e_fm.c:8955
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:386
 msgid "Sorting"
 msgstr "ترتيب"
 
-#: src/bin/e_fm.c:8802 src/bin/e_fm.c:8962
+#: src/bin/e_fm.c:8813 src/bin/e_fm.c:8973
 msgid "Refresh View"
 msgstr "حدِّث العرض"
 
-#: src/bin/e_fm.c:8813 src/bin/e_fm.c:8974
+#: src/bin/e_fm.c:8824 src/bin/e_fm.c:8985
 msgid "New..."
 msgstr "جديد..."
 
-#: src/bin/e_fm.c:8833 src/bin/e_fm.c:8995 src/bin/e_fm.c:9026
+#: src/bin/e_fm.c:8844 src/bin/e_fm.c:9006 src/bin/e_fm.c:9037
 msgid "Actions..."
 msgstr "اﻹجراءات....."
 
-#: src/bin/e_fm.c:8860 src/bin/e_fm.c:9082 src/bin/e_fm.c:11589
+#: src/bin/e_fm.c:8871 src/bin/e_fm.c:9093 src/bin/e_fm.c:11600
 msgid "Link"
 msgstr "ارتباط"
 
-#: src/bin/e_fm.c:9144 src/bin/e_fm.c:10452 src/bin/e_shelf.c:2470
+#: src/bin/e_fm.c:9155 src/bin/e_fm.c:10463 src/bin/e_shelf.c:2470
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1483,216 +1483,216 @@ msgstr "ارتباط"
 msgid "Rename"
 msgstr "أعد التسمية"
 
-#: src/bin/e_fm.c:9163
+#: src/bin/e_fm.c:9174
 msgid "Unmount"
 msgstr "افصل"
 
-#: src/bin/e_fm.c:9168
+#: src/bin/e_fm.c:9179
 msgid "Mount"
 msgstr "أوصل"
 
-#: src/bin/e_fm.c:9173
+#: src/bin/e_fm.c:9184
 msgid "Eject"
 msgstr "اخرج"
 
-#: src/bin/e_fm.c:9188 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9199 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:872
 msgid "Properties"
 msgstr "الخصائص"
 
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9207
 msgid "Application Properties"
 msgstr "خصائص التطبيق"
 
-#: src/bin/e_fm.c:9204 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9215 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "خصائص الملف"
 
-#: src/bin/e_fm.c:9420
+#: src/bin/e_fm.c:9431
 msgid "Use default"
 msgstr "استخدم اﻹفتراضي"
 
-#: src/bin/e_fm.c:9450 src/modules/fileman/e_mod_config.c:311
+#: src/bin/e_fm.c:9461 src/modules/fileman/e_mod_config.c:311
 msgid "Grid Icons"
 msgstr "شيكة أيقونات"
 
-#: src/bin/e_fm.c:9458 src/modules/fileman/e_mod_config.c:313
+#: src/bin/e_fm.c:9469 src/modules/fileman/e_mod_config.c:313
 msgid "Custom Icons"
 msgstr "أيقونات مخصصة"
 
-#: src/bin/e_fm.c:9466 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9477 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:321
 msgid "List"
 msgstr "قائمة"
 
-#: src/bin/e_fm.c:9474 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9485 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "عرض افتراضي"
 
-#: src/bin/e_fm.c:9496
+#: src/bin/e_fm.c:9507
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "حجم اﻷيقونة (%d)"
 
-#: src/bin/e_fm.c:9523
+#: src/bin/e_fm.c:9534
 msgid "Could not create a directory!"
 msgstr "لا يمكن انشاء مجلد!"
 
-#: src/bin/e_fm.c:9538
+#: src/bin/e_fm.c:9549
 msgid "Could not create a file!"
 msgstr "لا يمكن انشاء ملف!"
 
-#: src/bin/e_fm.c:9553 src/bin/e_fm.c:9580
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9591
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "مجلد جديد"
 
-#: src/bin/e_fm.c:9553 src/bin/e_fm.c:9580
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9591
 msgid "New File"
 msgstr "ملف جديد"
 
-#: src/bin/e_fm.c:9647 src/bin/e_fm.c:9668
+#: src/bin/e_fm.c:9658 src/bin/e_fm.c:9679
 msgid "Already creating a new file for this directory!"
 msgstr "قد سبق إنشاء ملف جديد لهذا المجلد!"
 
-#: src/bin/e_fm.c:9652 src/bin/e_fm.c:9673
+#: src/bin/e_fm.c:9663 src/bin/e_fm.c:9684
 #, c-format
 msgid "%s can't be written to!"
 msgstr "لايمكن كتابة %s إلى!"
 
-#: src/bin/e_fm.c:9692
+#: src/bin/e_fm.c:9703
 msgid "Directory"
 msgstr "مجلد"
 
-#: src/bin/e_fm.c:9697
+#: src/bin/e_fm.c:9708
 #: src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "ملف"
 
-#: src/bin/e_fm.c:9728
+#: src/bin/e_fm.c:9739
 msgid "Inherit parent settings"
 msgstr "استخدم إعدادات المجلد اﻷم"
 
-#: src/bin/e_fm.c:9737
+#: src/bin/e_fm.c:9748
 msgid "Show Hidden Files"
 msgstr "اعرض الملفات المخفية"
 
-#: src/bin/e_fm.c:9749
+#: src/bin/e_fm.c:9760
 msgid "Remember Ordering"
 msgstr "تذكر الترتيب"
 
-#: src/bin/e_fm.c:9758
+#: src/bin/e_fm.c:9769
 msgid "Sort Now"
 msgstr "رتب اﻵن"
 
-#: src/bin/e_fm.c:9766
+#: src/bin/e_fm.c:9777
 msgid "Single Click Activation"
 msgstr "تفعيل النقرة واحدة"
 
-#: src/bin/e_fm.c:9777 src/modules/fileman/e_mod_config.c:398
+#: src/bin/e_fm.c:9788 src/modules/fileman/e_mod_config.c:398
 msgid "Secure Deletion"
 msgstr "احم المحو"
 
-#: src/bin/e_fm.c:9790
+#: src/bin/e_fm.c:9801
 msgid "File Manager Settings"
 msgstr "إعدادات مدير الملفات"
 
-#: src/bin/e_fm.c:9795
+#: src/bin/e_fm.c:9806
 msgid "File Icon Settings"
 msgstr "إعدادات أيقونة الملف"
 
-#: src/bin/e_fm.c:9873 src/bin/e_fm.c:10089
+#: src/bin/e_fm.c:9884 src/bin/e_fm.c:10100
 msgid "Set background..."
 msgstr "عين خلفية..."
 
-#: src/bin/e_fm.c:9881
+#: src/bin/e_fm.c:9892
 msgid "Clear background"
 msgstr "خلفية صافية"
 
-#: src/bin/e_fm.c:9888 src/bin/e_fm.c:10117
+#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10128
 msgid "Set overlay..."
 msgstr "عين غطاء..."
 
-#: src/bin/e_fm.c:9894
+#: src/bin/e_fm.c:9905
 msgid "Clear overlay"
 msgstr "غطاء صافٍ"
 
-#: src/bin/e_fm.c:10211 src/bin/e_fm.c:10547
+#: src/bin/e_fm.c:10222 src/bin/e_fm.c:10558
 #, c-format
 msgid "Rename %s to:"
 msgstr "أعد تسمية %s إلى:"
 
-#: src/bin/e_fm.c:10213 src/bin/e_fm.c:10548
+#: src/bin/e_fm.c:10224 src/bin/e_fm.c:10559
 msgid "Rename File"
 msgstr "أعد تسمية الملف"
 
-#: src/bin/e_fm.c:10300 src/bin/e_fm.c:10333
+#: src/bin/e_fm.c:10311 src/bin/e_fm.c:10344
 #, c-format
 msgid "%s already exists!"
 msgstr "%s موجود مسبقا!"
 
-#: src/bin/e_fm.c:10303 src/bin/e_fm.c:10337
+#: src/bin/e_fm.c:10314 src/bin/e_fm.c:10348
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s لا يمكن إعادة تسميته ﻷنه محمي"
 
-#: src/bin/e_fm.c:10306 src/bin/e_fm.c:10340
+#: src/bin/e_fm.c:10317 src/bin/e_fm.c:10351
 msgid "Internal filemanager error :("
 msgstr "خطأ داخلي في مدير الملفات :("
 
-#: src/bin/e_fm.c:10394 src/bin/e_fm.c:10615
+#: src/bin/e_fm.c:10405 src/bin/e_fm.c:10626
 msgid "Retry"
 msgstr "أعد المحاولة"
 
-#: src/bin/e_fm.c:10395 src/bin/e_fm.c:10616 src/bin/e_fm.c:11597
+#: src/bin/e_fm.c:10406 src/bin/e_fm.c:10627 src/bin/e_fm.c:11608
 msgid "Abort"
 msgstr "إحباط"
 
-#: src/bin/e_fm.c:10451
+#: src/bin/e_fm.c:10462
 msgid "No to all"
 msgstr "لا للكل"
 
-#: src/bin/e_fm.c:10454
+#: src/bin/e_fm.c:10465
 msgid "Yes to all"
 msgstr "نعم للكل"
 
-#: src/bin/e_fm.c:10457
+#: src/bin/e_fm.c:10468
 msgid "Warning"
 msgstr "تحذير"
 
-#: src/bin/e_fm.c:10460
+#: src/bin/e_fm.c:10471
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "الملف موجود من قبل, اكتب عليه؟<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10618
+#: src/bin/e_fm.c:10629
 msgid "Move Source"
 msgstr "انقل مصدرا"
 
-#: src/bin/e_fm.c:10619
+#: src/bin/e_fm.c:10630
 msgid "Ignore this"
 msgstr "تجاهل هذا"
 
-#: src/bin/e_fm.c:10620
+#: src/bin/e_fm.c:10631
 msgid "Ignore all"
 msgstr "تجاهل الكل"
 
-#: src/bin/e_fm.c:10625
+#: src/bin/e_fm.c:10636
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "حدث خلل أثناء تنفيذ عملية.<br>%s"
 
-#: src/bin/e_fm.c:10818
+#: src/bin/e_fm.c:10829
 msgid "Confirm Delete"
 msgstr "أكِّد المحو"
 
-#: src/bin/e_fm.c:10828
+#: src/bin/e_fm.c:10839
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "هل تريد تأكيد محو<br><hilight>%s</hilight> ؟"
 
-#: src/bin/e_fm.c:10833
+#: src/bin/e_fm.c:10844
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1701,7 +1701,7 @@ msgstr ""
 "هل تريد تأكيد محو<br><hilight>كل</hilight> الملفات الـ %d في <br><hilight>"
 "%s</hilight>?"
 
-#: src/bin/e_fm.c:10843
+#: src/bin/e_fm.c:10854
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -2483,7 +2483,7 @@ msgid "Request Position"
 msgstr "أطلب الموضع"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:271
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:331
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:361
 #: src/modules/clock/e_mod_main.c:604 src/modules/conf/e_conf.c:136
@@ -2747,29 +2747,29 @@ msgstr ""
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 
-#: src/bin/e_int_menus.c:134 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:175 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "الرئيسية"
 
-#: src/bin/e_int_menus.c:157
+#: src/bin/e_int_menus.c:198
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "البرامج المفضلة"
 
-#: src/bin/e_int_menus.c:168
+#: src/bin/e_int_menus.c:209
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1140
-#: src/modules/everything/evry_plug_apps.c:1156
-#: src/modules/everything/evry_plug_apps.c:1409
+#: src/modules/everything/evry_plug_apps.c:1141
+#: src/modules/everything/evry_plug_apps.c:1157
+#: src/modules/everything/evry_plug_apps.c:1410
 msgid "Applications"
 msgstr "التطبيقات"
 
-#: src/bin/e_int_menus.c:192 src/bin/e_int_menus.c:1285
+#: src/bin/e_int_menus.c:233 src/bin/e_int_menus.c:1379
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2777,60 +2777,69 @@ msgstr "التطبيقات"
 msgid "Windows"
 msgstr "النوافذ"
 
-#: src/bin/e_int_menus.c:202 src/bin/e_int_menus.c:1340
+#: src/bin/e_int_menus.c:243 src/bin/e_int_menus.c:1434
 msgid "Lost Windows"
 msgstr "النوافذ المفقودة"
 
-#: src/bin/e_int_menus.c:228
+#: src/bin/e_int_menus.c:259
+msgid "Bodhi Linux"
+msgstr ""
+
+#: src/bin/e_int_menus.c:264 src/bin/e_int_menus.c:288
 msgid "About"
 msgstr "عن"
 
-#: src/bin/e_int_menus.c:233 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:269
+#, fuzzy
+msgid "Quick Start"
+msgstr "لوحة سريعة"
+
+#: src/bin/e_int_menus.c:293 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "عن السمة"
 
-#: src/bin/e_int_menus.c:324
+#: src/bin/e_int_menus.c:384
 msgid "Virtual"
 msgstr "وهمي"
 
-#: src/bin/e_int_menus.c:331 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:391 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 #: src/modules/physics/e_mod_config.c:132
 msgid "Shelves"
 msgstr "الرفوف"
 
-#: src/bin/e_int_menus.c:340
+#: src/bin/e_int_menus.c:400
 msgid "Show/Hide All Windows"
 msgstr "أظهر/أخفِ"
 
-#: src/bin/e_int_menus.c:697
+#: src/bin/e_int_menus.c:791
 msgid "No applications"
 msgstr "بلا برامج"
 
-#: src/bin/e_int_menus.c:914
+#: src/bin/e_int_menus.c:1008
 msgid "Set Virtual Desktops"
 msgstr "عين أسطح مكتب إفتراضية"
 
-#: src/bin/e_int_menus.c:1291 src/bin/e_int_menus.c:1484
+#: src/bin/e_int_menus.c:1385 src/bin/e_int_menus.c:1578
 msgid "No windows"
 msgstr "بلا نوافذ"
 
-#: src/bin/e_int_menus.c:1397 src/bin/e_int_menus.c:1497
+#: src/bin/e_int_menus.c:1491 src/bin/e_int_menus.c:1591
 msgid "Untitled window"
 msgstr "نافذة غير معنونة"
 
-#: src/bin/e_int_menus.c:1597 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1691 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "الرف %s"
 
-#: src/bin/e_int_menus.c:1665
+#: src/bin/e_int_menus.c:1759
 msgid "Add a Shelf"
 msgstr "أضف رفًّا"
 
-#: src/bin/e_int_menus.c:1672
+#: src/bin/e_int_menus.c:1766
 msgid "Delete a Shelf"
 msgstr "احذف رفًّا"
 
@@ -2913,27 +2922,27 @@ msgstr "أظهر في كل أسطح المكتب"
 msgid "Show on specified Desktops"
 msgstr "أظهر في أسطح مكتب محددة"
 
-#: src/bin/e_main.c:225
+#: src/bin/e_main.c:287
 msgid "Enlightenment cannot initialize Eina!\n"
 msgstr "لا يستطيع E17ِ بدء Eina!\n"
 
-#: src/bin/e_main.c:231
+#: src/bin/e_main.c:293
 msgid "Enlightenment could not create a logging domain!\n"
 msgstr "لا يستطيع E17ِ ضبط نظام معالجة أنتزاع المدخلات.\n"
 
-#: src/bin/e_main.c:278
+#: src/bin/e_main.c:340
 msgid "Enlightenment cannot initialize Eet!\n"
 msgstr "لا يستطيع E17ِ بدء Eet!\n"
 
-#: src/bin/e_main.c:287
+#: src/bin/e_main.c:349
 msgid "Enlightenment cannot initialize Ecore!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore!\n"
 
-#: src/bin/e_main.c:296
+#: src/bin/e_main.c:358
 msgid "Enlightenment cannot initialize EIO!\n"
 msgstr "لا يستطيع E17ِ بدء EIO!\n"
 
-#: src/bin/e_main.c:308
+#: src/bin/e_main.c:370
 msgid ""
 "Enlightenment cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2941,7 +2950,7 @@ msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة الخروج.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: src/bin/e_main.c:315
+#: src/bin/e_main.c:377
 msgid ""
 "Enlightenment cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2949,7 +2958,7 @@ msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة HUP.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: src/bin/e_main.c:322
+#: src/bin/e_main.c:384
 msgid ""
 "Enlightenment cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2957,39 +2966,39 @@ msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة المستخدم.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
-#: src/bin/e_main.c:331
+#: src/bin/e_main.c:393
 msgid "Enlightenment cannot initialize Ecore_File!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_File!\n"
 
-#: src/bin/e_main.c:340
+#: src/bin/e_main.c:402
 msgid "Enlightenment cannot initialize Ecore_Con!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Con!\n"
 
-#: src/bin/e_main.c:349
+#: src/bin/e_main.c:411
 msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Ipc!\n"
 
-#: src/bin/e_main.c:360
+#: src/bin/e_main.c:422
 msgid "Enlightenment cannot initialize Ecore_X!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_X!\n"
 
-#: src/bin/e_main.c:372
+#: src/bin/e_main.c:434
 msgid "Enlightenment cannot initialize Ecore_IMF!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_IMF!\n"
 
-#: src/bin/e_main.c:382
+#: src/bin/e_main.c:444
 msgid "Enlightenment cannot initialize Ecore_Evas!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Evas!\n"
 
-#: src/bin/e_main.c:392
+#: src/bin/e_main.c:454
 msgid "Enlightenment cannot initialize Elementary!\n"
 msgstr "لا يستطيع E17ِ بدء Elementary!\n"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:465
 msgid "Enlightenment cannot initialize Emotion!\n"
 msgstr "لا يستطيع E17ِ بدء Emotion!\n"
 
-#: src/bin/e_main.c:418
+#: src/bin/e_main.c:480
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -2999,7 +3008,7 @@ msgstr ""
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
 "و تفقد دعمهما ﻷداء محرك برمجية تصيير X11 ."
 
-#: src/bin/e_main.c:426
+#: src/bin/e_main.c:488
 msgid ""
 "Enlightenment found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3009,15 +3018,15 @@ msgstr ""
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
 "و تفقد دعمهما ﻷداء محرك برمجية تصيير الصوان ."
 
-#: src/bin/e_main.c:436
+#: src/bin/e_main.c:498
 msgid "Enlightenment cannot initialize Edje!\n"
 msgstr "لا يستطيع E17ِ بدء Edje! \n"
 
-#: src/bin/e_main.c:448
+#: src/bin/e_main.c:510
 msgid "Enlightenment cannot initialize E_Intl!\n"
 msgstr "لا يستطيع E17ِ بدء E_Intl!.\n"
 
-#: src/bin/e_main.c:458
+#: src/bin/e_main.c:520
 msgid ""
 "Enlightenment cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3025,7 +3034,7 @@ msgstr ""
 "لا يستطيع E17ِ بدء نظام تنبيه الطوارئ.\n"
 "هل قمت بضبط متغير العرض؟"
 
-#: src/bin/e_main.c:477
+#: src/bin/e_main.c:539
 msgid ""
 "Enlightenment cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3033,35 +3042,35 @@ msgstr ""
 "لا يستطيع E17ِ إنشاء مسارات في مسار المنزل \n"
 "ربما ﻷنك لا تملك مسار منزل أو أن القرص ممتلئ"
 
-#: src/bin/e_main.c:487
+#: src/bin/e_main.c:549
 msgid "Enlightenment cannot set up its file registry system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام تسجيل ملفاته.\n"
 
-#: src/bin/e_main.c:496
+#: src/bin/e_main.c:558
 msgid "Enlightenment cannot set up its config system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام اﻹعداد.\n"
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:571
 msgid "Enlightenment cannot initialize E_Randr!\n"
 msgstr "لا يستطيع E17ِ بدء E_Randr!.\n"
 
-#: src/bin/e_main.c:518
+#: src/bin/e_main.c:580
 msgid "Enlightenment cannot initialize E_Xinerama!\n"
 msgstr "لا يستطيع E17ِ بدء E_Xinerama!.\n"
 
-#: src/bin/e_main.c:527
+#: src/bin/e_main.c:589
 msgid "Enlightenment cannot set up its environment.\n"
 msgstr "لا يستطيع E17ِ ضبط بيئته.\n"
 
-#: src/bin/e_main.c:543
+#: src/bin/e_main.c:605
 msgid "Enlightenment cannot set up its scale system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام التحجيم.\n"
 
-#: src/bin/e_main.c:552
+#: src/bin/e_main.c:614
 msgid "Enlightenment cannot set up its pointer system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام المؤشر.\n"
 
-#: src/bin/e_main.c:561
+#: src/bin/e_main.c:623
 msgid ""
 "Enlightenment cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3069,27 +3078,27 @@ msgstr ""
 "لا يستطيع E17ِ ضبط مسارات للملفات التي عثر عليها.\n"
 "ربما ﻷنك لا تيملك المقدار الكافي من الذاكرة؟"
 
-#: src/bin/e_main.c:578
+#: src/bin/e_main.c:640
 msgid "Enlightenment cannot set up its font system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام الخطوط.\n"
 
-#: src/bin/e_main.c:595
+#: src/bin/e_main.c:657
 msgid "Enlightenment cannot set up its theme system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام السمات.\n"
 
-#: src/bin/e_main.c:611
+#: src/bin/e_main.c:673
 msgid "Enlightenment cannot set up its init screen.\n"
 msgstr "لا يستطيع E17ِ ضبط شاشة init.\n"
 
-#: src/bin/e_main.c:626
+#: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "جاري بدء الدعم الدولي"
 
-#: src/bin/e_main.c:630
+#: src/bin/e_main.c:692
 msgid "Enlightenment cannot set up its intl system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام intl.\n"
 
-#: src/bin/e_main.c:639
+#: src/bin/e_main.c:701
 msgid ""
 "Enlightenment cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3099,11 +3108,11 @@ msgstr ""
 "ربما ﻷنك  تفتقر للأذونات على ~/.cache/efreet أو \n"
 "لا تملك المقدار الكافي من الذاكرة أو مساحة القرص"
 
-#: src/bin/e_main.c:664
+#: src/bin/e_main.c:726
 msgid "Setup Screens"
 msgstr "ضبط الشاشات"
 
-#: src/bin/e_main.c:668
+#: src/bin/e_main.c:730
 msgid ""
 "Enlightenment set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3111,235 +3120,235 @@ msgstr ""
 "فشل E17ِ في ضبط إدارة النافذة لكل الشاشات التي على نظامك\n"
 "ربما ﻷن هنالك مدير نافذة آخر لا يزال قيد التشغيل؟\n"
 
-#: src/bin/e_main.c:676
+#: src/bin/e_main.c:738
 msgid "Setup ACPI"
 msgstr "ضبط إدارة الطاقة "
 
-#: src/bin/e_main.c:683
+#: src/bin/e_main.c:745
 msgid "Setup Backlight"
 msgstr "ضبط اﻷضواء الخلفية"
 
-#: src/bin/e_main.c:687
+#: src/bin/e_main.c:749
 msgid "Enlightenment cannot configure the backlight.\n"
 msgstr "لا يستطيع E17ِ إعداد اﻹضاءة الخلفية.\n"
 
-#: src/bin/e_main.c:694
+#: src/bin/e_main.c:756
 msgid "Setup Screensaver"
 msgstr "ضبط حافظة الشاشة"
 
-#: src/bin/e_main.c:698
+#: src/bin/e_main.c:760
 msgid "Enlightenment cannot configure the X screensaver.\n"
 msgstr "لا يستطيع E17ِ إعداد حافظة الشاشة إكس.\n"
 
-#: src/bin/e_main.c:705
+#: src/bin/e_main.c:767
 msgid "Setup DPMS"
 msgstr "ضبط DPMS"
 
-#: src/bin/e_main.c:709
+#: src/bin/e_main.c:771
 msgid "Enlightenment cannot configure the DPMS settings.\n"
 msgstr "لا يستطيع E17ِ إعداد إعدادات DPMS .\n"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:778
 msgid "Setup Powersave Modes"
 msgstr "اضبط أوضاع حفظ الطاقة"
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:782
 msgid "Enlightenment cannot set up its powersave modes.\n"
 msgstr "لا يستطيع E17ِ ضبط أوضاع حفظ الطاقة.\n"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:789
 msgid "Setup Desklock"
 msgstr "اضبط قفل سطح المكتب"
 
-#: src/bin/e_main.c:731
+#: src/bin/e_main.c:793
 msgid "Enlightenment cannot set up its desk locking system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام قفل سطح المكتب.\n"
 
-#: src/bin/e_main.c:738
+#: src/bin/e_main.c:800
 msgid "Setup Popups"
 msgstr "ضبط النوافذ المنبثقة"
 
-#: src/bin/e_main.c:742
+#: src/bin/e_main.c:804
 msgid "Enlightenment cannot set up its popup system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام المنبثقات.\n"
 
-#: src/bin/e_main.c:754
+#: src/bin/e_main.c:816
 msgid "Setup Message Bus"
 msgstr "إعداد ناقل الرسالة"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:823
 msgid "Setup Paths"
 msgstr "ضبط المسارات"
 
-#: src/bin/e_main.c:767
+#: src/bin/e_main.c:829
 msgid "Setup System Controls"
 msgstr "ضبط متحكمات النظام"
 
-#: src/bin/e_main.c:771
+#: src/bin/e_main.c:833
 msgid "Enlightenment cannot initialize the System Command system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام أوامر النظام \n"
 
-#: src/bin/e_main.c:778
+#: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "إجراءات الضبظ"
 
-#: src/bin/e_main.c:782
+#: src/bin/e_main.c:844
 msgid "Enlightenment cannot set up its actions system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام إﻹجراءات.\n"
 
-#: src/bin/e_main.c:789
+#: src/bin/e_main.c:851
 msgid "Setup Execution System"
 msgstr "ضبط نظام اﻹعدام"
 
-#: src/bin/e_main.c:793
+#: src/bin/e_main.c:855
 msgid "Enlightenment cannot set up its exec system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام exec.\n"
 
-#: src/bin/e_main.c:804
+#: src/bin/e_main.c:866
 msgid "Setup Filemanager"
 msgstr "اضبط مدير الملفات"
 
-#: src/bin/e_main.c:808
+#: src/bin/e_main.c:870
 msgid "Enlightenment cannot initialize the File manager.\n"
 msgstr "لا يستطيع E17ِ بدء مدير الملفات.\n"
 
-#: src/bin/e_main.c:815
+#: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "ضبط نظام الرسائل"
 
-#: src/bin/e_main.c:819
+#: src/bin/e_main.c:881
 msgid "Enlightenment cannot set up its msg system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام msg.\n"
 
-#: src/bin/e_main.c:826
+#: src/bin/e_main.c:888
 msgid "Setup DND"
 msgstr "اضبط DND "
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:892
 msgid "Enlightenment cannot set up its dnd system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام dnd.\n"
 
-#: src/bin/e_main.c:837
+#: src/bin/e_main.c:899
 msgid "Setup Grab Input Handling"
 msgstr "اضبط معالجة مدخلة المنزوعات"
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:903
 msgid "Enlightenment cannot set up its grab input handling system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام معالجة مدخلات المنزوعات.\n"
 
-#: src/bin/e_main.c:848
+#: src/bin/e_main.c:910
 msgid "Setup Modules"
 msgstr "ضبط الوحدات"
 
-#: src/bin/e_main.c:852 src/bin/e_main.c:1034
+#: src/bin/e_main.c:914 src/bin/e_main.c:1096
 msgid "Enlightenment cannot set up its module system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام الوحدات.\n"
 
-#: src/bin/e_main.c:859
+#: src/bin/e_main.c:921
 msgid "Setup Remembers"
 msgstr "اضبط المتذكرين"
 
-#: src/bin/e_main.c:863
+#: src/bin/e_main.c:925
 msgid "Enlightenment cannot setup remember settings.\n"
 msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
-#: src/bin/e_main.c:870
+#: src/bin/e_main.c:932
 msgid "Setup Color Classes"
 msgstr "ضبط أصناف اﻷلوان"
 
-#: src/bin/e_main.c:874
+#: src/bin/e_main.c:936
 msgid "Enlightenment cannot set up its color class system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام صنف اﻷلوان.\n"
 
-#: src/bin/e_main.c:881
+#: src/bin/e_main.c:943
 msgid "Setup Gadcon"
 msgstr "ضبط Gadcon"
 
-#: src/bin/e_main.c:885
+#: src/bin/e_main.c:947
 msgid "Enlightenment cannot set up its gadget control system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام تحكم أدواته.\n"
 
-#: src/bin/e_main.c:892
+#: src/bin/e_main.c:954
 msgid "Setup Wallpaper"
 msgstr "ضبط الخلفية"
 
-#: src/bin/e_main.c:896
+#: src/bin/e_main.c:958
 msgid "Enlightenment cannot set up its desktop background system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام خلفية سطح المكتب.\n"
 
-#: src/bin/e_main.c:903
+#: src/bin/e_main.c:965
 msgid "Setup Mouse"
 msgstr "ضبط الفأرة"
 
-#: src/bin/e_main.c:907
+#: src/bin/e_main.c:969
 msgid "Enlightenment cannot configure the mouse settings.\n"
 msgstr "لا يستطيع E17ِ إعداد خيارات ضبط الفأرة.\n"
 
-#: src/bin/e_main.c:914
+#: src/bin/e_main.c:976
 msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
 msgstr "لا يستطيع E17ِ ضبط مخططات لوحة مفاتيح XKB .\n"
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:982
 msgid "Setup Bindings"
 msgstr "ضبط اﻷغلفة"
 
-#: src/bin/e_main.c:924
+#: src/bin/e_main.c:986
 msgid "Enlightenment cannot set up its bindings system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام اﻹرتباطات.\n"
 
-#: src/bin/e_main.c:931
+#: src/bin/e_main.c:993
 msgid "Setup Thumbnailer"
 msgstr "ضبط مصغر الصور"
 
-#: src/bin/e_main.c:935
+#: src/bin/e_main.c:997
 msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام المصغرات\n"
 
-#: src/bin/e_main.c:944
+#: src/bin/e_main.c:1006
 msgid "Enlightenment cannot initialize the Icon Cache system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام الذاكرة المخبئية اﻷيقوني \n"
 
-#: src/bin/e_main.c:953
+#: src/bin/e_main.c:1015
 msgid "Enlightenment cannot initialize the XSettings system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام إعدادات X\n"
 
-#: src/bin/e_main.c:962
+#: src/bin/e_main.c:1024
 msgid "Enlightenment cannot initialize the Update system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام التحديثات \n"
 
-#: src/bin/e_main.c:969
+#: src/bin/e_main.c:1031
 msgid "Setup Desktop Environment"
 msgstr "اضبط بيئة سطح المكتب"
 
-#: src/bin/e_main.c:973
+#: src/bin/e_main.c:1035
 msgid "Enlightenment cannot initialize its desktop environment.\n"
 msgstr "لا يستطيع E17ِ بدء بيئة سطح المكتب.\n"
 
-#: src/bin/e_main.c:980
+#: src/bin/e_main.c:1042
 msgid "Setup File Ordering"
 msgstr "ضبط ترتيب الملفات"
 
-#: src/bin/e_main.c:984
+#: src/bin/e_main.c:1046
 msgid "Enlightenment cannot set up its order file system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام ترتيب الملفات.\n"
 
-#: src/bin/e_main.c:999
+#: src/bin/e_main.c:1061
 msgid "Load Modules"
 msgstr "تحميل الوحدات"
 
-#: src/bin/e_main.c:1030
+#: src/bin/e_main.c:1092
 msgid "Setup Shelves"
 msgstr "ضبط الرفوف"
 
-#: src/bin/e_main.c:1041
+#: src/bin/e_main.c:1103
 msgid "Configure Shelves"
 msgstr "التحكم في الرفوف"
 
-#: src/bin/e_main.c:1052
+#: src/bin/e_main.c:1114
 msgid "Almost Done"
 msgstr "بقي القليل لتكتمل"
 
-#: src/bin/e_main.c:1212
+#: src/bin/e_main.c:1274
 #, c-format
 msgid ""
 "Options:\n"
@@ -3368,7 +3377,7 @@ msgid ""
 "\t\tIf you need this help, you don't need this option.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1265
+#: src/bin/e_main.c:1327
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3384,11 +3393,11 @@ msgstr ""
 "و إطلاق أي خدمة أخرى يعول عليها و غيرها من الخدمات اﻷخرى.\n"
 "و كل هذا سيحدث حتى قبل بدء E17ِ تشغيل نفسه.\n"
 
-#: src/bin/e_main.c:1546
+#: src/bin/e_main.c:1608
 msgid "Testing Format Support"
 msgstr "جاري فحص دعم الصيغة"
 
-#: src/bin/e_main.c:1550
+#: src/bin/e_main.c:1612
 msgid ""
 "Enlightenment found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3396,34 +3405,34 @@ msgstr ""
 "وجد E17ِ أن Evas لا يستطيع إنشاء رقعة الصوان. رجاء تفقد\n"
 "هل لدى Evas دعم لمحرك الصوان.\n"
 
-#: src/bin/e_main.c:1562
+#: src/bin/e_main.c:1624
 msgid ""
 "Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr "وجد E17ِ أن Evas لا يستطيع  تحميل ملفاتSVG. تفقّد دعم Evas لمحمّل SVG .\n"
 
-#: src/bin/e_main.c:1572
+#: src/bin/e_main.c:1634
 msgid ""
 "Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات JPEG. تفقّد دعم Evas لمحمّل JPEG .\n"
 
-#: src/bin/e_main.c:1582
+#: src/bin/e_main.c:1644
 msgid ""
 "Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات PNG. تفقّد دعم Evas لمحمّل PNG .\n"
 
-#: src/bin/e_main.c:1592
+#: src/bin/e_main.c:1654
 msgid ""
 "Enlightenment found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات EET.تفقّد دعم Evas لمحمِّل  EET .\n"
 
-#: src/bin/e_main.c:1606
+#: src/bin/e_main.c:1668
 msgid ""
 "Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
@@ -3433,7 +3442,7 @@ msgstr ""
 "الخط\n"
 "و تعرف نظام إعدادات الخط لخط 'Sans' .\n"
 
-#: src/bin/e_main.c:1814
+#: src/bin/e_main.c:1876
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. There was an "
@@ -3443,11 +3452,11 @@ msgstr ""
 "تحطم E17ِ للتو عند التشغيل و قد <br>أُعيد تشغيله. كان هنالك تحميل "
 "خاطئ<br>لوحدة مسماة بـ : %s. هذه الوحدة قد تم تعطيلها<br>و لن يتم تحميلها."
 
-#: src/bin/e_main.c:1819 src/bin/e_main.c:1836
+#: src/bin/e_main.c:1881 src/bin/e_main.c:1898
 msgid "Enlightenment crashed early on start and has been restarted"
 msgstr "تحطم E17ِ للتو عند التشغيل و تم إعادة تشغيله "
 
-#: src/bin/e_main.c:1820
+#: src/bin/e_main.c:1882
 #, c-format
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>There was an "
@@ -3457,7 +3466,7 @@ msgstr ""
 "تحطم E17ِ للتو عند التشغيل و أُعيد تشغيله.<br>كان هناك تحميل خاطئ لوحدة مسماة "
 "بـ : %s<br><br> هذه الوحدة قد تم تعطيلها و لن يتم تحميلها."
 
-#: src/bin/e_main.c:1829
+#: src/bin/e_main.c:1891
 msgid ""
 "Enlightenment crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
@@ -3468,7 +3477,7 @@ msgstr ""
 "يتم تحميلها  ﻷجل المساعدة في إزالة أي مشكلة<br>وحدات من إعداداتك. حوارات "
 "إعداد الوحدة<br>ستدعك تختار<br>وحداتك مجددا.\n"
 
-#: src/bin/e_main.c:1837
+#: src/bin/e_main.c:1899
 msgid ""
 "Enlightenment crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
@@ -3742,32 +3751,32 @@ msgstr "أنتظر أكثر"
 msgid "Cancel Logout"
 msgstr "إلغاء تسجيل الخروج"
 
-#: src/bin/e_sys.c:547
+#: src/bin/e_sys.c:548
 msgid "Logout in progress"
 msgstr "جاري تسجيل الخروج"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:551
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "جاري تسجيل الخروج.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
-#: src/bin/e_sys.c:579 src/bin/e_sys.c:634
+#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
 msgid "Enlightenment is busy with another request"
 msgstr "E17ِ مشغول بطلب آخر"
 
-#: src/bin/e_sys.c:584
+#: src/bin/e_sys.c:585
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
 "جاري تسجيل الخروج.<br>لا يمكنك تطبيق أعمال أخرة<br>فور بدء تسجيل الخروج."
 
-#: src/bin/e_sys.c:591
+#: src/bin/e_sys.c:592
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr "جاري اﻹطفاء.<br>لا بمكنك إجراء أي عمل في النظام<br>فور بدء اﻹطفاء."
 
-#: src/bin/e_sys.c:597
+#: src/bin/e_sys.c:598
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3775,57 +3784,57 @@ msgstr ""
 "جاري إعادة التشغيل.<br>لا يمكنك إجراء أي عملية في النظام<br>فور بدء إعادة "
 "التشغيل."
 
-#: src/bin/e_sys.c:603
+#: src/bin/e_sys.c:604
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
 "جاري التعليق.<br>لا يمكنك إجراء أي عمل في النظام<br>قبل إكتمال التعليق."
 
-#: src/bin/e_sys.c:609
+#: src/bin/e_sys.c:610
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
 "جاري اﻹسبات.<br>لا يمكنك إجراء أي عملية في النظام<br>قبل اكتتمال هذه العملية."
 
-#: src/bin/e_sys.c:615 src/bin/e_sys.c:656
+#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
 msgstr "معذرة! هذا لا يجب أن يحدث"
 
-#: src/bin/e_sys.c:640
+#: src/bin/e_sys.c:641
 msgid "Power off failed."
 msgstr "فشل إطفاء الحاسوب."
 
-#: src/bin/e_sys.c:644
+#: src/bin/e_sys.c:645
 msgid "Reset failed."
 msgstr "فشلت اﻹعادة."
 
-#: src/bin/e_sys.c:648
+#: src/bin/e_sys.c:649
 msgid "Suspend failed."
 msgstr "فشل التعليق."
 
-#: src/bin/e_sys.c:652
+#: src/bin/e_sys.c:653
 msgid "Hibernate failed."
 msgstr "فشل التنويم."
 
-#: src/bin/e_sys.c:752
+#: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "جاري اﻹطفاء.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
-#: src/bin/e_sys.c:796
+#: src/bin/e_sys.c:797
 msgid "Resetting"
 msgstr "جاري اﻹعادة"
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "جاري اﻹعادة.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
-#: src/bin/e_sys.c:851
+#: src/bin/e_sys.c:852
 msgid "Suspending"
 msgstr "التعليق"
 
-#: src/bin/e_sys.c:854
+#: src/bin/e_sys.c:855
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "جاري التعليق.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
@@ -5829,7 +5838,7 @@ msgstr "إختيار اللغة"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:169
-#: src/modules/wizard/page_010.c:169
+#: src/modules/wizard/page_010.c:170
 msgid "System Default"
 msgstr "النظام اﻹفتراضي"
 
@@ -5843,7 +5852,7 @@ msgstr "اللغة المحلية المُختارة"
 msgid "Locale"
 msgstr "المحليات"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:160
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
 msgid "Language"
 msgstr "اللغة"
 
@@ -7644,7 +7653,6 @@ msgid "Ping interval:"
 msgstr "فترة الرنين :"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:19
-#: src/modules/wizard/page_060.c:27
 msgid "Window Focus"
 msgstr "التركيز على النافذة"
 
@@ -8104,59 +8112,59 @@ msgstr[5] "%d عنصر"
 msgid "No plugins loaded"
 msgstr "لم يتم تحميل ملحقات"
 
-#: src/modules/everything/evry_plug_apps.c:1148
+#: src/modules/everything/evry_plug_apps.c:1149
 msgid "Exebuf"
 msgstr "Exebuf"
 
-#: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1210
-#: src/modules/fileman/e_fwin.c:2160 src/modules/fileman/e_fwin.c:2526
+#: src/modules/everything/evry_plug_apps.c:1164
+#: src/modules/everything/evry_plug_apps.c:1211
+#: src/modules/fileman/e_fwin.c:2161 src/modules/fileman/e_fwin.c:2527
 msgid "Open with..."
 msgstr "فتح بـ..."
 
-#: src/modules/everything/evry_plug_apps.c:1176
+#: src/modules/everything/evry_plug_apps.c:1177
 msgid "Open File..."
 msgstr "فتح ملف..."
 
-#: src/modules/everything/evry_plug_apps.c:1190
+#: src/modules/everything/evry_plug_apps.c:1191
 msgid "Edit Application Entry"
 msgstr "تعديل مدخل التطبيق"
 
-#: src/modules/everything/evry_plug_apps.c:1197
+#: src/modules/everything/evry_plug_apps.c:1198
 msgid "New Application Entry"
 msgstr "مدخل تطبيق جديد"
 
-#: src/modules/everything/evry_plug_apps.c:1204
+#: src/modules/everything/evry_plug_apps.c:1205
 msgid "Run with Sudo"
 msgstr "شغل بواسطة Sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1217
+#: src/modules/everything/evry_plug_apps.c:1218
 #: src/modules/fileman/e_fwin.c:249
 msgid "Open Terminal here"
 msgstr "إفتح الطرفية هنا"
 
-#: src/modules/everything/evry_plug_apps.c:1223
+#: src/modules/everything/evry_plug_apps.c:1224
 msgid "Run Executable"
 msgstr "شغل الملف التنفيذي"
 
-#: src/modules/everything/evry_plug_apps.c:1301
-#: src/modules/everything/evry_plug_apps.c:1428
+#: src/modules/everything/evry_plug_apps.c:1302
+#: src/modules/everything/evry_plug_apps.c:1429
 msgid "Everything Applications"
 msgstr "تطبيقات كل شيء"
 
-#: src/modules/everything/evry_plug_apps.c:1332
+#: src/modules/everything/evry_plug_apps.c:1333
 msgid "Commands"
 msgstr "اﻷوامر"
 
-#: src/modules/everything/evry_plug_apps.c:1333
+#: src/modules/everything/evry_plug_apps.c:1334
 msgid "Terminal Command"
 msgstr "أمر الطرفية"
 
-#: src/modules/everything/evry_plug_apps.c:1338
+#: src/modules/everything/evry_plug_apps.c:1339
 msgid "Sudo GUI"
 msgstr "Sudo الواجهة الرسومية"
 
-#: src/modules/everything/evry_plug_apps.c:1409
+#: src/modules/everything/evry_plug_apps.c:1410
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1578
 msgid "Everything Plugin"
@@ -8297,31 +8305,31 @@ msgstr ""
 msgid "Back"
 msgstr "عودة"
 
-#: src/modules/fileman/e_fwin.c:2051
+#: src/modules/fileman/e_fwin.c:2052
 msgid "Other application..."
 msgstr "تطبيق آخر..."
 
-#: src/modules/fileman/e_fwin.c:2114
+#: src/modules/fileman/e_fwin.c:2115
 msgid "Go To Parent Directory"
 msgstr "اذهب للمجلد اﻷم"
 
-#: src/modules/fileman/e_fwin.c:2124
+#: src/modules/fileman/e_fwin.c:2125
 msgid "Clone Window"
 msgstr "استنسخ نافذة"
 
-#: src/modules/fileman/e_fwin.c:2130
+#: src/modules/fileman/e_fwin.c:2131
 msgid "Copy Path"
 msgstr "انسخ المسار"
 
-#: src/modules/fileman/e_fwin.c:2146
+#: src/modules/fileman/e_fwin.c:2147
 msgid "Run"
 msgstr "شغِّل"
 
-#: src/modules/fileman/e_fwin.c:2153 src/modules/fileman/e_fwin.c:2527
+#: src/modules/fileman/e_fwin.c:2154 src/modules/fileman/e_fwin.c:2528
 msgid "Open"
 msgstr "افتح"
 
-#: src/modules/fileman/e_fwin.c:2556 src/modules/fileman/e_fwin.c:2581
+#: src/modules/fileman/e_fwin.c:2557 src/modules/fileman/e_fwin.c:2582
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -8332,101 +8340,101 @@ msgstr[3] "%d ملفات"
 msgstr[4] "%d ملفا"
 msgstr[5] "%d ملف"
 
-#: src/modules/fileman/e_fwin.c:2599
+#: src/modules/fileman/e_fwin.c:2600
 msgid "Known Applications"
 msgstr "التطبيقات المعروفة"
 
-#: src/modules/fileman/e_fwin.c:2609
+#: src/modules/fileman/e_fwin.c:2610
 msgid "Suggested Applications"
 msgstr "التطبيقات المقترحة"
 
-#: src/modules/fileman/e_fwin.c:2644
+#: src/modules/fileman/e_fwin.c:2645
 msgid "All Applications"
 msgstr "كل التطبيقات"
 
-#: src/modules/fileman/e_fwin.c:2667
+#: src/modules/fileman/e_fwin.c:2668
 msgid "Custom Command"
 msgstr "أمر مخصص"
 
-#: src/modules/fileman/e_fwin.c:2962
+#: src/modules/fileman/e_fwin.c:2963
 #: src/modules/fileman_opinfo/e_mod_main.c:105
 #, c-format
 msgid "Copying is aborted"
 msgstr "تم رفض النسخ"
 
-#: src/modules/fileman/e_fwin.c:2966
+#: src/modules/fileman/e_fwin.c:2967
 #: src/modules/fileman_opinfo/e_mod_main.c:109
 #, c-format
 msgid "Moving is aborted"
 msgstr "تم رفض النقل"
 
-#: src/modules/fileman/e_fwin.c:2970
+#: src/modules/fileman/e_fwin.c:2971
 #: src/modules/fileman_opinfo/e_mod_main.c:113
 #, c-format
 msgid "Deleting is aborted"
 msgstr "تم رفض الحذف"
 
-#: src/modules/fileman/e_fwin.c:2974
+#: src/modules/fileman/e_fwin.c:2975
 #: src/modules/fileman_opinfo/e_mod_main.c:117
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "أُلغي الحذف اﻵمن"
 
-#: src/modules/fileman/e_fwin.c:2978
+#: src/modules/fileman/e_fwin.c:2979
 #: src/modules/fileman_opinfo/e_mod_main.c:121
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "عملية غير معروفة من الثانوي تم إلغاؤها"
 
-#: src/modules/fileman/e_fwin.c:2988
+#: src/modules/fileman/e_fwin.c:2989
 #: src/modules/fileman_opinfo/e_mod_main.c:131
 #, c-format
 msgid "Copy of %s done"
 msgstr "تم نسخ %s بنجاح"
 
-#: src/modules/fileman/e_fwin.c:2990
+#: src/modules/fileman/e_fwin.c:2991
 #: src/modules/fileman_opinfo/e_mod_main.c:133
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "نسخ %s (في: %s)"
 
-#: src/modules/fileman/e_fwin.c:2995
+#: src/modules/fileman/e_fwin.c:2996
 #: src/modules/fileman_opinfo/e_mod_main.c:139
 #, c-format
 msgid "Move of %s done"
 msgstr "تم نقل %s بنجاح"
 
-#: src/modules/fileman/e_fwin.c:2997
+#: src/modules/fileman/e_fwin.c:2998
 #: src/modules/fileman_opinfo/e_mod_main.c:141
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "نقل %s (في: %s)"
 
-#: src/modules/fileman/e_fwin.c:3002
+#: src/modules/fileman/e_fwin.c:3003
 #: src/modules/fileman_opinfo/e_mod_main.c:147
 #, c-format
 msgid "Delete done"
 msgstr "تم الحذف"
 
-#: src/modules/fileman/e_fwin.c:3004
+#: src/modules/fileman/e_fwin.c:3005
 #: src/modules/fileman_opinfo/e_mod_main.c:149
 #, c-format
 msgid "Deleting files..."
 msgstr "جاري حذف الملفات..."
 
-#: src/modules/fileman/e_fwin.c:3009
+#: src/modules/fileman/e_fwin.c:3010
 #: src/modules/fileman_opinfo/e_mod_main.c:154
 #, c-format
 msgid "Secure delete done"
 msgstr "تمت الحذف اﻵمن"
 
-#: src/modules/fileman/e_fwin.c:3011
+#: src/modules/fileman/e_fwin.c:3012
 #: src/modules/fileman_opinfo/e_mod_main.c:156
 #, c-format
 msgid "Securely deleting files..."
 msgstr "حذف الملفات بشكل آمن ..."
 
-#: src/modules/fileman/e_fwin.c:3015
+#: src/modules/fileman/e_fwin.c:3016
 #: src/modules/fileman_opinfo/e_mod_main.c:160
 #, c-format
 msgid "Unknown operation from slave %d"
@@ -9301,26 +9309,26 @@ msgstr "درجات الحرارة"
 msgid "Temperature"
 msgstr "درجة الحرارة"
 
-#: src/modules/wizard/e_wizard.c:232 src/modules/wizard/e_wizard.c:261
+#: src/modules/wizard/e_wizard.c:233 src/modules/wizard/e_wizard.c:262
 msgid "Next"
 msgstr "التالي"
 
-#: src/modules/wizard/e_wizard.c:266
+#: src/modules/wizard/e_wizard.c:267
 msgid "Please Wait..."
 msgstr "رجاء انتظر..."
 
-#: src/modules/wizard/e_wizard.c:314
+#: src/modules/wizard/e_wizard.c:315
 msgid "Welcome to Enlightenment"
 msgstr "مرحبا بك في E17ِ"
 
-#: src/modules/wizard/page_010.c:161 src/modules/wizard/page_011.c:143
+#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
 msgid "Select one"
 msgstr "إختر واحدا"
 
-#: src/modules/wizard/page_020.c:51
-msgid "Profile"
-msgstr "حساب"
+#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgstr ""
 
 #: src/modules/wizard/page_040.c:36
 msgid "Adding missing App files"
@@ -9337,26 +9345,6 @@ msgstr "التركيز بواسطة ..."
 #: src/modules/wizard/page_060.c:36
 msgid "Mouse Over"
 msgstr "مؤشر الفأرة على ......"
-
-#: src/modules/wizard/page_110.c:13
-msgid "Network Management"
-msgstr "إدارة الشبكة"
-
-#: src/modules/wizard/page_110.c:17
-msgid "Connman network service not found"
-msgstr "لا يمكن العثور على خدمة مدير اﻹتصال بالشبكة "
-
-#: src/modules/wizard/page_110.c:20
-msgid "Install Connman for network management support"
-msgstr "نصِّب مدير الإتصال لدعم إدارة الشبكة"
-
-#: src/modules/wizard/page_110.c:23
-msgid "Connman support disabled"
-msgstr "عُطِّل دعم مدير اﻹتصال"
-
-#: src/modules/wizard/page_110.c:26
-msgid "Install/Enable Connman for network management support"
-msgstr "نصِّب/مكّن مدير الإتصال لدعم إدارة الشبكة"
 
 #: src/modules/wizard/page_110.c:156
 msgid "Checking to see if Connman exists"
@@ -10276,6 +10264,24 @@ msgstr "تجاهل هوية التبديل"
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr "استخدم قياسات الشاشة المتعددة"
+
+#~ msgid "Profile"
+#~ msgstr "حساب"
+
+#~ msgid "Network Management"
+#~ msgstr "إدارة الشبكة"
+
+#~ msgid "Connman network service not found"
+#~ msgstr "لا يمكن العثور على خدمة مدير اﻹتصال بالشبكة "
+
+#~ msgid "Install Connman for network management support"
+#~ msgstr "نصِّب مدير الإتصال لدعم إدارة الشبكة"
+
+#~ msgid "Connman support disabled"
+#~ msgstr "عُطِّل دعم مدير اﻹتصال"
+
+#~ msgid "Install/Enable Connman for network management support"
+#~ msgstr "نصِّب/مكّن مدير الإتصال لدعم إدارة الشبكة"
 
 #, fuzzy
 #~ msgid "Compositor"

@@ -11,7 +11,7 @@ _profile_change(void *data __UNUSED__, Evas_Object *obj __UNUSED__)
    char *dir;
    Efreet_Desktop *desk = NULL;
 
-   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s", profile);
+   e_prefix_data_snprintf(buf, sizeof(buf), "data/config/bodhi");
    dir = strdupa(buf);
    snprintf(buf, sizeof(buf), "%s/profile.desktop", dir);
    desk = efreet_desktop_new(buf);
@@ -48,7 +48,7 @@ wizard_page_show(E_Wizard_Page *pg)
    Evas_Object *ilist;
 
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("Profile"));
+   e_wizard_title_set(_("Please Wait As We Are Loading Enlightenment Settings!"));
    of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
 
    ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &profile);
@@ -126,7 +126,8 @@ wizard_page_show(E_Wizard_Page *pg)
    e_wizard_page_show(o);
 //   pg->data = o;
    e_wizard_button_next_enable_set(0);
-   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
+   _profile_change(NULL, NULL);
+   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int
@@ -134,7 +135,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
 //   evas_object_del(pg->data);
 // actually apply profile
-   if (!profile) profile = "standard";
+   if (!profile) profile = "bodhi";
    e_config_profile_set(profile);
    e_config_profile_del(e_config_profile_get());
    e_config_load();

@@ -1,0 +1,23 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Input Control Settings
+Name[ca]=Preferències dels dispositius d'entrada
+Name[eo]=Agordoj de kontrolo de enigo
+Name[es]=Preferencias de los dispositivos de entrada
+Name[fr]=Raccourcis des entrées
+Name[gl]=Preferencias dos dispositivos de entrada
+Name[it]=Controllo dell'input
+Name[pt]=Definições de inserção
+Name[ru]=Настройки управления вводом
+Comment=Key, Mouse and Button control settings
+Comment[ca]=Configuracions del teclat, ratolí i botons.
+Comment[eo]=Agordoj de klavoj, musoj kaj butonoj
+Comment[es]=Configuraciones del ratón, teclado y botones.
+Comment[fr]=Paramètres de contrôle des touches, boutons et souris.
+Comment[hu]=Configuracións do rato, teclado e botóns.
+Comment[it]=Configurazione delle scorciatoie di tastiera e mouse.
+Comment[pt]=Definições do rato, teclas e botões
+Comment[ru]=Настройки управления мышью, клавишами и кнопками.
+Icon=preferences-desktop-keyboard-shortcuts
+X-Enlightenment-ModuleType=settings

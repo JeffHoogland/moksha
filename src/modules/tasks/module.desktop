@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Tasks
+Name[ca]=Tasques
+Name[eo]=Taskoj
+Name[es]=Tareas
+Name[fr]=Tâches
+Name[gl]=Tarefas
+Name[pt]=Tarefas
+Name[ru]=Задачи
+Comment=Gadget to allow you to switch tasks
+Comment[ca]=Mòdul que permet el canvi entre tasques.
+Comment[eo]=Akcesoraĵo kiu permesas baskuli taskojn
+Comment[es]=Módulo que le permite el cambio entre tareas.
+Comment[fr]=Ce gadget vous permet de passer d'une tâche à une autre.
+Comment[gl]=Módulo que lle permite o troco de tarefas.
+Comment[it]=Gadget che permette di commutare tra i task.
+Comment[pt]=Módulo que lhe permite trocar entre tarefas
+Comment[ru]=Гаджет для переключения задач
+Icon=e-module-tasks
+X-Enlightenment-ModuleType=utils

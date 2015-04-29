@@ -1,0 +1,86 @@
+Enlightenment DR17 uses freedesktop.org .desktop files according to the
+XDG Desktop Entry Specification version 0.9.4, icon themes according to
+the XDG Icon Theme Specification version 0.11, and menus according to
+the Desktop Menu Specification version 0.92.  Everything is searched for
+in paths specified by XDG Base Directory Specification version 0.6.
+There are some extensions and gotchas though.
+
+
+Paths.
+
+The spec wants us to run gnome-config and kde-config several times at
+startup.  This is currently #if'ed out and replaced with guesses.  Lots
+of guesses is a lot quicker than actually running those programs, and
+often is good enough.  The plan is to have an idle process run those
+programs and fix the guesses.
+
+A lot of distro specific quirks can be solved by adding more directories
+and directory snippets to the ecore_desktop_paths code.  The process of
+eliminating non existing directories is quick, and only done once at
+start up.
+
+
+.desktop.
+
+Some extension fields are defined as allowed by the specification. 
+
+X-Enlightenment-IconPath is used to specify an absolute or relative path to
+an icon file.  If it exists it overrides any other icon specifications.
+
+X-Enlightenment-IconClass is used to specify a list of icon classes. 
+This is the same information that was in .eaps as app/icon/class, and is
+used the same way if it exists.  Obviously any .desktop file that comes
+with packages outside of E is unlikely to have that field.  One further
+twist is that if the icon classes are not found in edje, then icon class
+becomes a list of icons to search in the standard FDO way.
+
+The standard Icon field is also treated differently.  If it contains a /
+it is considered to be an absolute path, or a path relative to the
+location of the .desktop file.  Otherwise, if no icon class was
+specified in the .desktop file, then the Icon, Exec, and Categories
+fields are used in that order to build an icon class.  Everything but
+the Icon field is lower cased.
+
+This means that for standard .desktop files, with out the extension
+fields, icons in the E theme are searched for first, then icons are
+searched for in the usual FDO way, unless the Icon field specifies a
+path, then it is simply used with no searching.  Converted .eaps should
+just copy the app/icon/class data to the X-Enlightenment-IconClass
+field.
+
+X-Enlightenment-WindowName, X-Enlightenment-WindowTitle, 
+X-Enlightenment-WindowRole, and X-Enlightenment-WaitExit are just the same
+as their namesakes in .eaps.
+
+
+Icon theme.
+
+.edj files are searched for before the other types of icon file.  The
+"icon" group is used to specify the graphics for the icon.  It is up to
+the code using the result to allow full edje interactions and
+animations, and people that write that code are encouraged to support it
+all.
+
+
+Menus.
+
+The most complex, and thus the most problematic of the specifications. 
+The general philosophy is to err on the side of caution, giving the user
+more apps in their menus rather than less.  Even if that means some
+duplicates and some things that aren't really apps.
+
+There is often a .hidden menu, it contains various types of things. 
+Some of those things are supposed to be moved into proper menus by the
+menu moving part of the spec.  The menu moving code has not been
+implemented yet. Following the above philosophy, it is shown to the
+user.
+
+Slackware and probably other distros use parent style menu merging. 
+Initially I did not write code to support that for two reasons.  The
+specification is confusing, and it takes some digging and cross
+referencing other specs to sort out what it actually means.  The other
+reason is that distros available to me at the time for testing did not
+use parent style menu merging, so there was no way to test it properly. 
+Now that I know of at least one distro that uses them, it's worthwhile
+writing the code, and installing slackware under QEMU for testing.
+

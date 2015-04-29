@@ -1,0 +1,22 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Desktop
+Name[eo]=Labortablo
+Name[es]=Escritorio
+Name[fr]=Bureau
+Name[gl]=Escritorio
+Name[pt]=Área de trabalho
+Name[ru]=Рабочий стол
+Comment=Files on your Desktop
+Comment[eo]=Dosieroj sur via labortablo
+Comment[es]=Los archivos en su escritorio
+Comment[fr]=Les fichiers sur votre bureau
+Comment[gl]=Os ficheiros no seu escritorio
+Comment[it]=I file sul vostro desktop
+Comment[pt]=Os ficheiros da área de trabalho
+Comment[ru]=Файлы на рабочем столе
+Icon=user-desktop
+NotShowIn=GNOME;KDE;LXDE;ROX;XFCE;
+URL=file:$HOME/Desktop
+X-Enlightenment-Type=Mount

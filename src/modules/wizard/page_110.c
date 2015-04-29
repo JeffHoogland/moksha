@@ -4,7 +4,7 @@
 #include <E_DBus.h>
 #endif
 
-static void
+/*static void
 _recommend_connman(E_Wizard_Page *pg)
 {
    Evas_Object *o, *of, *ob;
@@ -36,13 +36,13 @@ _recommend_connman(E_Wizard_Page *pg)
 //   pg->data = o;
 
    e_wizard_button_next_enable_set(1);
-}
+}*/
 
-#ifdef HAVE_ECONNMAN
+/*#ifdef HAVE_ECONNMAN
 static DBusPendingCall *pending_connman;
-static Ecore_Timer *connman_timeout = NULL;
+static Ecore_Timer *connman_timeout = NULL;*/
 
-static Eina_Bool
+/*static Eina_Bool
 _connman_fail(void *data)
 {
    E_Wizard_Page *pg = data;
@@ -71,9 +71,9 @@ _connman_fail(void *data)
    connman_timeout = NULL;
    _recommend_connman(pg);
    return EINA_FALSE;
-}
+}*/
 
-static void
+/*static void
 _check_connman_owner(void *data, DBusMessage *msg,
                      DBusError *err __UNUSED__)
 {
@@ -93,8 +93,8 @@ _check_connman_owner(void *data, DBusMessage *msg,
 
    e_wizard_button_next_enable_set(1);
    e_wizard_next();
-}
-#endif
+}*/
+/*#endif*/
 /*
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
@@ -109,9 +109,9 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 }
 */
 EAPI int
-wizard_page_show(E_Wizard_Page *pg)
+wizard_page_show(E_Wizard_Page *pg EINA_UNUSED)
 {
-   int have_connman = 0;
+   /*int have_connman = 0;
 #ifdef HAVE_ECONNMAN
    E_DBus_Connection *c;
 
@@ -152,15 +152,15 @@ wizard_page_show(E_Wizard_Page *pg)
           }
         e_config_save_queue();
         _recommend_connman(pg);
-     }
+     }*/
    e_wizard_title_set(_("Checking to see if Connman exists"));
-   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
-#ifdef HAVE_ECONNMAN
+/*#ifdef HAVE_ECONNMAN
    if (pending_connman)
      {
         dbus_pending_call_cancel(pending_connman);
@@ -171,7 +171,7 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
         ecore_timer_del(connman_timeout);
         connman_timeout = NULL;
      }
-#endif
+#endif*/
 
    return 1;
 }

@@ -1,0 +1,23 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Interaction
+Name[ca]=Interacció
+Name[eo]=Interago
+Name[es]=Interacción
+Name[fr]=Interaction
+Name[gl]=Interacción
+Name[it]=Interazione
+Name[pt]=Interação
+Name[ru]=Взаимодействие
+Comment=Configure Mouse and Touch input.
+Comment[ca]=Configura les entrades de ratolí i tàctil.
+Comment[eo]=Agodi musan kaj tuŝeblan enigon.
+Comment[es]=Configure el ratón y la pantalla táctil.
+Comment[fr]=Configure l'interface tactile et la souris.
+Comment[gl]=Configure o rato e a pantalla táctil.
+Comment[it]=Configura l'input da mouse e touchscreen.
+Comment[pt]=Configuração do rato e teclado
+Comment[ru]=Настройка мыши и сенсорного ввода.
+Icon=e-module-conf_interaction
+X-Enlightenment-ModuleType=settings

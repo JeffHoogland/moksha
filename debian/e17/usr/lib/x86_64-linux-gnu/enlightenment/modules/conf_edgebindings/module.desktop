@@ -1,0 +1,27 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Link
+Name=Edge Bindings
+Name[ca]=Ús dels marges de pantalla
+Name[cs]=Zkratky okrajù
+Name[eo]=Bindoj de Edje
+Name[es]=Asociaciones del margen de pantalla
+Name[fr]=Raccourcis des bords de l'écran
+Name[gl]=Asociacións dos marxes da pantalla
+Name[it]=Associazioni a bordi dello schermo e segnali
+Name[pt]=Associação das margens do ecrã
+Name[ru]=Привязки по краям
+Name[tr]=Kenar Bağlayıcıları
+Comment=Configure your edge bindings here.
+Comment[ca]=Accions a realitzar quan el punter arriba als marges de la pantalla.
+Comment[cs]=Zde mùžete nastavit zkratky pro okraje a rohy obrazovky.
+Comment[eo]=Agordas la fulmklavoj de ekranrandoj.
+Comment[es]=Configure las asociaciones de los bordes de la pantalla aquí.
+Comment[fr]=Configure les raccourcis des bords de l'écran.
+Comment[gl]=Configure as asociacións dos bordes da pantalla aquí.
+Comment[it]=Configurate qui le azioni da eseguire quando il puntatore raggiunge<br>i bordi dello schermo o per alcuni segnali.
+Comment[pt]=Configurar as associações aos limites do ecrã
+Comment[ru]=Здесь можно настроить привязки по краям экрана.
+Comment[tr]=Kenar bağlayıcılarınızı yapılandırın.
+Icon=e-module-conf_edgebindings
+X-Enlightenment-ModuleType=settings

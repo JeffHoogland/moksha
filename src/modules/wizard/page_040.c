@@ -107,7 +107,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
         _next_timer = NULL;
         return 0; /* we didnt copy anything so advance anyway */
      }
-   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int

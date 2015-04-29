@@ -1,0 +1,20 @@
+Source: e17
+Section: unknown
+Priority: extra
+Maintainer: Doug Yanez
+Uploaders: Jeff Hoogland, Eric W. Brown
+Depends: bodhi-profiles
+Build-Depends: efl, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, edbus
+Standards-Version: 3.8.3
+
+Package: e17
+Architecture: any
+Provides: enlightenment
+Conflicts: e18, e19
+Depends: ${shlibs:Depends}, ${misc:Depends}
+#Vcs-Browser: https://github.com/Deepspeed/bodhibuildscripts.git
+Description: The Enlightenment DR17 Window Manager
+ Enlightenment is an advanced window manager for X11. Unique
+ features include: a fully animated background, nice drop shadows
+ around windows, backed by an extremely clean and optimized
+ foundation of APIs.

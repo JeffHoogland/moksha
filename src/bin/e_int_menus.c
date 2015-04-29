@@ -63,6 +63,9 @@ static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item 
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 static Eina_Bool   _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
+static void _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 
 /* local subsystem globals */
 static Eina_Hash *_e_int_menus_augmentation = NULL;
@@ -72,6 +75,44 @@ static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
+
+#define BODHI_VERSION "     3.0.0"
+#define BODHI_ABOUT_TITLE "About Bodhi     "
+#define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
+#define BODHI_ABOUT_AUTHORS \
+   "Jeff Hoogland (Jef91)<br>" \
+   "Joris van Dijk (aeonius)<br>" \
+   "Stephen Houston (okra)<br>" \
+   "Kristi Hoogland (TheWife)<br>" \
+   "Jason Thomas (Tristam)<br>" \
+   "Kai Huuhko (kuuko)<br>" \
+   "Robert Wiley (y_lee)<br>" \
+   "Doug Yanez (Deepspeed)<br>" \
+   "Eric Brown (feneric)<br>" \
+   "Bob Eley<br>" \
+   "Kaleb Elwert (belak)<br>" \
+   "Karen Hoogland<br>" \
+   "Micah Denn (M1C4HTRON13)<br>" \
+   "Gareth Williams (hippytaff)<br>" \
+   "Víctor Parra García (esmirlin)<br>" \
+   "Anthony Cervantes (AntCer)<br>" \
+   "Timmy Larsson (Timmy)<br>" \
+   "Renato Rener (r1to)<br>" \
+   "Agustin Verdegal (Agust)<br>" \
+   "David La Monaca (cercamon)<br>" \
+   "Alexandre Eldredge (Spoonite)<br>" \
+   "Jose Manimala (Ittan)<br>" \
+   "Erik Zervas (Tolcarael)<br>" \
+   "Jason Peel (Jarope)<br>" \
+   "Andreas Pachler<br>" \
+   "Georg Eckert<br>" \
+   "Michael Rokosz (mrokosz)<br>" \
+   "Adrian Koryl (husarz)<br>" \
+   "F. Junger<br>" \
+   "Joao Teixeira<br>" \
+   "Matt Carter (Matt)<br>" \
+   "Hendra Kusuma<br>"
+
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
@@ -212,6 +253,25 @@ e_int_menus_main_new(void)
 
    l = _e_int_menus_augmentation_find("main/4");
    if (l) _e_int_menus_augmentation_add(m, l);
+
+   subm = e_menu_new();
+   mi = e_menu_item_new(m);
+   e_menu_item_label_set(mi, _("Bodhi Linux"));
+   e_util_menu_item_theme_icon_set(mi, "bodhi");
+   e_menu_item_submenu_set(mi, subm);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("About"));
+   e_util_menu_item_theme_icon_set(mi, "help-about");
+   e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("Quick Start"));
+   e_util_menu_item_theme_icon_set(mi, "help-faq");
+   e_menu_item_callback_set(mi, _e_int_menus_bodhi_quick_start, NULL);
+
+   mi = e_menu_item_new(subm);
+   e_menu_item_separator_set(mi, 1);
 
    subm = e_menu_new();
    dat->enlightenment = subm;
@@ -596,6 +656,40 @@ _e_int_menus_themes_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
 
    about = e_theme_about_new(e_container_current_get(e_manager_current_get()));
    if (about) e_theme_about_show(about);
+}
+
+static void
+_e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Obj_Dialog *dlg;
+
+   dlg = e_obj_dialog_new(m->zone->container, BODHI_ABOUT_TITLE, "E", "_about");
+   if (!dlg) return;
+   e_obj_dialog_obj_theme_set(dlg, "base/theme/about", "e/widgets/about/main");
+   e_obj_dialog_obj_part_text_set(dlg, "e.text.label", _("Close"));
+   e_obj_dialog_obj_part_text_set(dlg, "e.text.title",
+                                 BODHI_ABOUT_TITLE);
+   e_obj_dialog_obj_part_text_set(dlg, "e.text.version",
+                                  BODHI_VERSION);
+   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.about",
+                                  BODHI_ABOUT_TEXT);
+   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.authors",
+                                  BODHI_ABOUT_AUTHORS);
+
+   e_obj_dialog_show((E_Obj_Dialog *)dlg);
+   e_obj_dialog_icon_set((E_Obj_Dialog *)dlg, "help-about");
+}
+
+static void
+_e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   E_Zone *zone;
+   char buff[PATH_MAX];
+
+   snprintf(buff, sizeof(buff), "enlightenment_open "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
+   zone = e_util_zone_current_get(e_manager_current_get());
+   e_exec(zone, NULL, buff, NULL, NULL);
 }
 
 /*
