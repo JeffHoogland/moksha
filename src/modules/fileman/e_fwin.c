@@ -798,8 +798,8 @@ _e_fwin_icon_popup(void *data)
         y -= fwin->zone->y;
      }
    else
-     fx = fwin->win->x, fy = fwin->win->y;
-   fwin->popup = e_popup_new(zone, 0, 0, 1, 1);
+     fx = fwin->win->border->x, fy = fwin->win->border->y;
+   fwin->popup = e_popup_new(eina_list_data_get(zone->container->zones), 0, 0, 1, 1); 
    e_popup_ignore_events_set(fwin->popup, 1);
    ecore_x_window_shape_input_rectangle_set(fwin->popup->evas_win, 0, 0, 0, 0);
    
@@ -833,7 +833,7 @@ _e_fwin_icon_popup(void *data)
    /* if it's offscreen, try right of icon */
    if (px < 0) px = (fx + x + w) + 3;
    /* fuck this, stick it right on the icon */
-   if (px + mw + 3 > zone->w)
+   if ((px + mw + 3 > zone->x + zone->w) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_RIGHT)))   
      px = (x + w / 2) - (mw / 2);
    /* give up */
    if (px < 0) px = 0;
@@ -843,7 +843,7 @@ _e_fwin_icon_popup(void *data)
    /* if it's offscreen, try below icon */
    if (py < 0) py = (fy + y + h) + 3;
    /* fuck this, stick it right on the icon */
-   if (py + mh + 3 > zone->h)
+   if ((py + mh + 3 > zone->x + zone->h) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_BOTTOM))) 
      py = (y + h / 2) - (mh / 2);
    /* give up */
    if (py < 0) py = 0;
