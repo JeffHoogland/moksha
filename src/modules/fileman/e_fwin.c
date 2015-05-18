@@ -41,6 +41,7 @@ struct _E_Fwin
    const char          *theme_file;
 
    Ecore_Timer *popup_timer;
+   Ecore_Timer *popup_del_job;
    Eina_List *popup_handlers;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
@@ -730,6 +731,7 @@ _e_fwin_free(E_Fwin *fwin)
         e_object_del(E_OBJECT(fwin->fad->dia));
         fwin->fad = NULL;
      }
+   if (fwin->popup_del_job) ecore_job_del(fwin->popup_del_job);
    if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
    fwin->popup_timer = NULL;
@@ -854,15 +856,19 @@ _e_fwin_icon_popup(void *data)
 }
 
 static void
+_e_fwin_icon_popup_del(E_Fwin *fwin)
+{
+   E_FN_DEL(e_object_del, fwin->popup);
+   fwin->popup_del_job = NULL;
+}
+
+static void
 _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Fwin *fwin = data;
 
-   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
-   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
-   fwin->popup = NULL;
-   fwin->popup_timer = NULL;
-   fwin->popup_icon = NULL;
+   E_FN_DEL(ecore_timer_del, fwin->popup_timer);
+   if (!fwin->popup_del_job) fwin->popup_del_job = ecore_job_add((Ecore_Cb)_e_fwin_icon_popup_del, fwin);
 }
 
 static void
