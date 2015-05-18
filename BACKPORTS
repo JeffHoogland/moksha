@@ -1,0 +1,89 @@
+List of Backports from E18/E19/Master GIT at git.enlightenment.org
+
+1. edje_remove_depreciated_functions.patch
+Backport: Should improve E17 future compat.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=3f9af38da228f70bb408584e33aa08fbbc0867f9
+
+2. unset_fwin_delete_callback_during_delete.patch
+Backport: Unset callback during delete.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=526bdab7c423e73eb8284c212ddba09518e763fe
+
+3. fix_dont_save_mimeinfo_for_desktop_files.patch
+Backport: Dont save mime info for desktop files.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=b944738d83862c5d9a9261751a0db900998dd3dc
+
+4. fix_e_fwin_cb_open.patch
+Backport: Fix crash if fwin app dialog has no exec_cmd, and deref
+before NULL check. Also remove unused code from this function.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=c8dd1d95d3d02c679afe4cff8bb0408f618d43c5
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=96b3a04192f30c79b66cf8eae809d411998f9cda
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=861db30df2d5c30dc2079212ef7d6c2621d51635
+
+5. fix_fileman_crash_on_restart.patch
+Backport: fix crash when restarting with a fileman window open.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=18c1e3620d0538bc1291b74935703e71a393dadb
+
+6. improve_efm_popup_multiple_monitors.patch
+Backport: improve popup placement with multiple monitors.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=400f966b70dbc3529bcf4a2188340e0b2dfe9d40
+
+7. fix_buffer_overflow-desk_show.patch
+Backport of this commit, wrong type used for var.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?h=enlightenment-0.18&id=590eb392f1438d2cde775a93aa1178c61b75e9e7
+
+8. remove_un-needed_eina_init_calls.patch
+Backport of this commit, un-needed call to eina_init(), eina_shutdown()
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?h=enlightenment-0.18&id=f9c16ba1ceb51a6ad533d57a44513a8df82170fd
+
+9. fix_symlink_access.patch
+Backport of this commit, Absolute path not used for symbolic links.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=e2bf6f4427da22eb05f0249a334c60542b93cbcc
+
+10. fix_rename_and_copy_bugs_in_e-fm.patch
+Backport of this commit, bug in file copy and rename in e_fm
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=c5c7b4733a69e36c68d7ae9bb05998e0eed6c25f
+
+11. fix_inverted_args-lseek.patch
+Backport of this commit, Args incorrectly set.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=b96d33809781c8780a8d2299a61c334262fe04ff
+
+12. fix_crash_in-e_border_lower_below.patch
+Backport of this commit, Typo meant wrong list was used, 100% crash.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=dbc1a2c92a8cc7e90a0af14602f900ea55fdc2a2
+
+13. use_client_geom_unmax.patch
+Backport: Both commits from this bug are backported in this patch.
+Source: https://phab.enlightenment.org/T2170
+
+14. fix_infinite_loop_e_border_focus_set.patch
+Backport: fix infinite loop in e_border_focus_set.c
+Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=7c2d0c7bddec130e99f1160fcf00fa5da3cd510a
+
+15. fix-infinite-loop-changing-ibar-sources.patch
+Backport: fix infinite loop when changing ibar sources
+Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=aede4520831bfc8b250189476b790d13666dea25
+
+16. hicolor-fallback.patch
+Backport: set fallback icon theme to hicolor
+Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=829ecc3cc0117bbf217a021e1dd253fbea45d125
+
+17. fix_notification_crash.patch
+Backport: Fix notification crashes.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/notification/e_mod_main.c?id=53d8c89791b981d2d6a24111c151ae1fe3591352
+
+18. fix_efm_segv_on_single_click.patch
+Backport: fix efm segv on single click due to out callbacks being called while deleting objects etc.
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/bin/e_fm.c?id=317968efa8e4ea1efb2d1757b60046c0f67920c0
+
+19. fix_crash_when_activating_menu_by_number.patch
+Backport: fix crash when activating menu that is not in range
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=576ec9bdc46890ca2d379452573ccc151ddcd130
+
+20. fix_segv_everything_launch.patch
+Backport: double click on selector area (tabbar area on top) to launch app -> SEGV
+Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=0034b2d6ee459b22617755da034fb047edb69406
+
+21. fix_segv_in_clock_popup.patch
+Backport: segv-- for clock popup o_popclock object ref begin dangling
+Source: Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=8dad24565f8eaff95824caa062bf50b551b89ec8
+
