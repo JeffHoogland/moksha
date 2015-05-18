@@ -3422,7 +3422,6 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
                   ic->region = NULL;
                }
              _e_fm2_icon_free(ic);
-             printf("b: %i\n", eina_list_count(sd->icons));
              return;
           }
      }
@@ -4918,6 +4917,11 @@ _e_fm2_icon_unrealize(E_Fm2_Icon *ic)
    ic->realized = EINA_FALSE;
    evas_object_del(ic->obj);
    ic->obj = NULL;
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_icon_mouse_down, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_icon_mouse_up, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_icon_mouse_move, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_IN, _e_fm2_cb_icon_mouse_in, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_OUT, _e_fm2_cb_icon_mouse_out, ic);
    evas_object_del(ic->rect);
    ic->rect = NULL;
    evas_object_del(ic->obj_icon);
