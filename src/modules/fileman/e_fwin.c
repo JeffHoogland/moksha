@@ -1427,7 +1427,6 @@ _e_fwin_file_exec(E_Fwin_Page *page,
                e_exec(fwin->win->border->zone, desktop, NULL, NULL, "fwin");
              else if (fwin->zone)
                e_exec(fwin->zone, desktop, NULL, NULL, "fwin");
-             e_exehist_mime_desktop_add(ici->mime, desktop);
              efreet_desktop_free(desktop);
           }
         break;
