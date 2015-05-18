@@ -1560,7 +1560,7 @@ _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj)
 
    /* calculate min size for refresh list and set */
    e_widget_size_min_get(sd->o_refresh, &mw, &mh);
-   edje_extern_object_min_size_set(sd->o_refresh, mw, mh);
+   evas_object_size_hint_min_set(sd->o_refresh, mw, mh);
 
    /* swallow refresh list */
    edje_object_part_swallow(sd->o_frame, "e.swallow.refresh", sd->o_refresh);

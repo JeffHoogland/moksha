@@ -541,7 +541,7 @@ e_ilist_nth_icon_set(Evas_Object *obj, int n, Evas_Object *icon)
    si->o_icon = icon;
    if (si->o_icon)
      {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
+        evas_object_size_hint_min_set(si->o_icon, sd->iw, sd->ih);
         edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
         evas_object_show(si->o_icon);
      }
@@ -575,7 +575,7 @@ e_ilist_nth_end_set(Evas_Object *obj, int n, Evas_Object *end)
    si->o_end = end;
    if (si->o_end)
      {
-        edje_extern_object_min_size_set(si->o_end, sd->iw, sd->ih);
+        evas_object_size_hint_min_set(si->o_end, sd->iw, sd->ih);
         edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
         evas_object_show(si->o_end);
      }
@@ -622,7 +622,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
 
         if (!si) continue;
         if (!si->o_icon) continue;
-        edje_extern_object_min_size_set(si->o_icon, w, h);
+        evas_object_size_hint_min_set(si->o_icon, w, h);
         edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
 
         if (si->o_end)
@@ -635,7 +635,7 @@ e_ilist_icon_size_set(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
                   ew = w;
                   eh = h;
                }
-             edje_extern_object_min_size_set(si->o_end, ew, eh);
+             evas_object_size_hint_min_set(si->o_end, ew, eh);
           }
 
         edje_object_size_min_calc(si->o_base, &mw, &mh);
@@ -1361,7 +1361,7 @@ _e_ilist_item_new(E_Smart_Data *sd, Evas_Object *icon, Evas_Object *end, const c
    si->o_icon = icon;
    if (si->o_icon)
      {
-        edje_extern_object_min_size_set(si->o_icon, sd->iw, sd->ih);
+        evas_object_size_hint_min_set(si->o_icon, sd->iw, sd->ih);
         edje_object_part_swallow(si->o_base, "e.swallow.icon", si->o_icon);
         evas_object_show(si->o_icon);
      }
@@ -1376,7 +1376,7 @@ _e_ilist_item_new(E_Smart_Data *sd, Evas_Object *icon, Evas_Object *end, const c
              ew = sd->iw;
              eh = sd->ih;
           }
-        edje_extern_object_min_size_set(si->o_end, ew, eh);
+        evas_object_size_hint_min_set(si->o_end, ew, eh);
         edje_object_part_swallow(si->o_base, "e.swallow.end", si->o_end);
         evas_object_show(si->o_end);
      }

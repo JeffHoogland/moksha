@@ -509,7 +509,7 @@ _notification_popup_refresh(Popup_Data *popup)
         h = h * height / v;
         w = w * width / v;
      }
-   edje_extern_object_min_size_set(popup->app_icon, w, h);
+   evas_object_size_hint_min_set(popup->app_icon, w, h);
    edje_extern_object_max_size_set(popup->app_icon, w, h);
 
    edje_object_calc_force(popup->theme);

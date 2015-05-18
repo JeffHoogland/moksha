@@ -1570,7 +1570,7 @@ no_submenu_item:
 
              if (mi->icon_bg_object)
                {
-                  edje_extern_object_min_size_set(mi->icon_object, 0, 0);
+                  evas_object_size_hint_min_set(mi->icon_object, 0, 0);
                   edje_object_part_swallow(mi->icon_bg_object,
                                            "e.swallow.content",
                                            mi->icon_object);
@@ -1968,7 +1968,7 @@ _e_menu_items_layout_update(E_Menu *m)
                                  0, 0, /* min */
                                  0, 0 /* max */
                                  );
-        edje_extern_object_min_size_set(mi->container_object,
+        evas_object_size_hint_min_set(mi->container_object,
                                         min_w, min_h);
         edje_object_part_swallow(mi->bg_object, "e.swallow.content",
                                  mi->container_object);
@@ -1984,7 +1984,7 @@ _e_menu_items_layout_update(E_Menu *m)
         e_box_thaw(mi->container_object);
      }
    e_box_size_min_get(m->container_object, &bw, &bh);
-   edje_extern_object_min_size_set(m->container_object, bw, bh);
+   evas_object_size_hint_min_set(m->container_object, bw, bh);
    edje_extern_object_max_size_set(m->container_object, bw, bh);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
    edje_object_size_min_calc(m->bg_object, &mw, &mh);

@@ -4633,7 +4633,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
                   ic->sd->tmp.obj2 = obj2;
                }
              /* FIXME: if icons are allowed to have their own size - use it */
-             edje_extern_object_min_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
+             evas_object_size_hint_min_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
              edje_extern_object_max_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
              edje_object_part_swallow(obj, "e.swallow.icon", obj2);
              edje_object_size_min_calc(obj, &mw, &mh);
@@ -4668,7 +4668,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
              obj2 = evas_object_rectangle_add(evas_object_evas_get(ic->sd->obj));
              ic->sd->tmp.obj2 = obj2;
           }
-        edje_extern_object_min_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
+        evas_object_size_hint_min_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_object_part_swallow(obj, "e.swallow.icon", obj2);
         edje_object_size_min_calc(obj, &mw, &mh);

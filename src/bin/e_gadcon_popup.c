@@ -155,7 +155,7 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
         edje_object_size_min_get(obj, &w, &h);
         edje_object_size_min_restricted_calc(obj, &w, &h, w, h);
      }
-   edje_extern_object_min_size_set(obj, w, h);
+   evas_object_size_hint_min_set(obj, w, h);
    edje_object_size_min_calc(pop->o_bg, &pop->w, &pop->h);
    evas_object_resize(pop->o_bg, pop->w, pop->h);
 

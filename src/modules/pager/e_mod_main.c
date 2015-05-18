@@ -801,7 +801,7 @@ _pager_popup_new(E_Zone *zone, int keyaction)
      edje_object_part_text_set(pp->o_bg, "e.text.label", desk->name);
    evas_object_show(pp->o_bg);
 
-   edje_extern_object_min_size_set(pp->pager->o_table, width, height);
+   evas_object_size_hint_min_set(pp->pager->o_table, width, height);
    edje_object_part_swallow(pp->o_bg, "e.swallow.content", pp->pager->o_table);
    edje_object_size_min_calc(pp->o_bg, &w, &h);
 
