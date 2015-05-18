@@ -227,7 +227,7 @@ e_desk_show(E_Desk *desk)
    E_Event_Desk_Show *ev;
    E_Event_Desk_Before_Show *eev;
    E_Event_Desk_After_Show *eeev;
-   Edje_Message_Float_Set *msg;
+   Edje_Message_Int_Set *msg;
    Eina_List *l;
    E_Shelf *es;
    int was_zone = 0, x, y, dx = 0, dy = 0;
