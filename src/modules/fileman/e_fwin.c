@@ -743,7 +743,11 @@ _e_fwin_free(E_Fwin *fwin)
    fwin->popup_timer = NULL;
    E_FREE_LIST(fwin->popup_handlers, ecore_event_handler_del);
    if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
-   if (fwin->win) e_object_del(E_OBJECT(fwin->win));
+   if (fwin->win) 
+   {
+	   e_win_delete_callback_set(fwin->win, NULL);
+	   e_object_del(E_OBJECT(fwin->win));
+   }
    free(fwin);
 }
 
