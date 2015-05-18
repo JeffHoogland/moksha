@@ -909,10 +909,10 @@ _e_winlist_size_adjust(void)
 
    e_box_freeze(_list_object);
    e_box_size_min_get(_list_object, &mw, &mh);
-   edje_extern_object_min_size_set(_list_object, mw, mh);
+   evas_object_size_hint_min_set(_list_object, mw, mh);
    edje_object_part_swallow(_bg_object, "e.swallow.list", _list_object);
    edje_object_size_min_calc(_bg_object, &mw, &mh);
-   edje_extern_object_min_size_set(_list_object, -1, -1);
+   evas_object_size_hint_min_set(_list_object, -1, -1);
    edje_object_part_swallow(_bg_object, "e.swallow.list", _list_object);
    e_box_thaw(_list_object);
 

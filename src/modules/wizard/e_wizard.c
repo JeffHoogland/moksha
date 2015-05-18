@@ -165,7 +165,7 @@ e_wizard_page_show(Evas_Object *obj)
         Evas_Coord minw, minh;
 
         e_widget_size_min_get(obj, &minw, &minh);
-        edje_extern_object_min_size_set(obj, 0, 0);
+        evas_object_size_hint_min_set(obj, 0, 0);
         evas_object_size_hint_max_set(obj, 0, 0);
         //edje_object_part_swallow(o_bg, "e.swallow.content", obj);
         //evas_object_show(obj);

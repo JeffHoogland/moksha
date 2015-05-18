@@ -181,7 +181,7 @@ e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int ico
              o2 = edje_object_add(evas);
              e_util_edje_icon_set(o2, icon);
           }
-        edje_extern_object_min_size_set(o2, icon_w, icon_h);
+        evas_object_size_hint_min_set(o2, icon_w, icon_h);
         edje_object_part_swallow(wd->o_check, "e.swallow.icon", o2);
         evas_object_show(o2);
         e_widget_sub_object_add(obj, o2);

@@ -177,7 +177,7 @@ _e_mod_notify_refresh(Ind_Notify_Win *nwin)
    if (nwin->o_icon) 
      {
         evas_object_resize(nwin->o_icon, size, size);
-        edje_extern_object_min_size_set(nwin->o_icon, size, size);
+        evas_object_size_hint_min_set(nwin->o_icon, size, size);
         edje_extern_object_max_size_set(nwin->o_icon, size, size);
         edje_object_part_swallow(nwin->o_base, "e.swallow.icon", nwin->o_icon);
      }

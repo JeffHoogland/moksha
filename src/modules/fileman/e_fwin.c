@@ -41,6 +41,7 @@ struct _E_Fwin
    const char          *theme_file;
 
    Ecore_Timer *popup_timer;
+   Ecore_Timer *popup_del_job;
    Eina_List *popup_handlers;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
@@ -534,7 +535,7 @@ e_fwin_reload_all(void)
    E_Zone *zone;
 
    /* Reload/recreate zones cause of property changes */
-   EINA_LIST_FOREACH(fwins, l, fwin)
+   EINA_LIST_FOREACH_SAFE(fwins, l, ll, fwin)
      {
         if (!fwin) continue;  //safety
         if (fwin->zone)
@@ -613,15 +614,21 @@ e_fwin_zone_find(E_Zone *zone)
 static void
 _e_fwin_bg_mouse_down(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
-   int x, y, w, h, zx, zy, zw, zh;
+   int x, y, w, h, zx, zy, zw, zh, cx, cy, cw, ch;
+
+   if (fwin->win->border->maximized) e_border_unmaximize(fwin->win->border, fwin->win->border->maximized);
+   if (fwin->win->border->fullscreen) e_border_unfullscreen(fwin->win->border);
    e_zone_useful_geometry_get(fwin->win->border->zone, &zx, &zy, &zw, &zh);
    x = fwin->win->border->x, y = fwin->win->border->y;
-   e_fm2_optimal_size_calc(fwin->cur_page->fm_obj, zw - x, zh - y, &w, &h);
+   if (!e_fm2_optimal_size_calc(fwin->cur_page->fm_obj, zw - x, zh - y, &w, &h)) return; 
+   evas_object_geometry_get(fwin->cur_page->fm_obj, &cx, &cy, &cw, &ch);
    if (x + w > zx + zw)
      w = zx + zw - x;
    if (y + x > zy + zh)
      h = zy + zh - y;
-   e_win_resize(fwin->win, w, h);
+   w = w + cx;
+   h = h + cx;
+   e_win_resize(fwin->win, MAX(w, 360), MAX(h, 250));
 }
 
 static E_Fwin *
@@ -730,12 +737,17 @@ _e_fwin_free(E_Fwin *fwin)
         e_object_del(E_OBJECT(fwin->fad->dia));
         fwin->fad = NULL;
      }
+   if (fwin->popup_del_job) ecore_job_del(fwin->popup_del_job);
    if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
    if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
    fwin->popup_timer = NULL;
    E_FREE_LIST(fwin->popup_handlers, ecore_event_handler_del);
    if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
-   if (fwin->win) e_object_del(E_OBJECT(fwin->win));
+   if (fwin->win) 
+   {
+	   e_win_delete_callback_set(fwin->win, NULL);
+	   e_object_del(E_OBJECT(fwin->win));
+   }
    free(fwin);
 }
 
@@ -790,8 +802,8 @@ _e_fwin_icon_popup(void *data)
         y -= fwin->zone->y;
      }
    else
-     fx = fwin->win->x, fy = fwin->win->y;
-   fwin->popup = e_popup_new(zone, 0, 0, 1, 1);
+     fx = fwin->win->border->x, fy = fwin->win->border->y;
+   fwin->popup = e_popup_new(eina_list_data_get(zone->container->zones), 0, 0, 1, 1); 
    e_popup_ignore_events_set(fwin->popup, 1);
    ecore_x_window_shape_input_rectangle_set(fwin->popup->evas_win, 0, 0, 0, 0);
    
@@ -812,7 +824,7 @@ _e_fwin_icon_popup(void *data)
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_list_object_append(list, o, 1, 0, 0.5);
    e_widget_size_min_get(list, &mw, &mh);
-   edje_extern_object_min_size_set(list, mw, mh);
+   evas_object_size_hint_min_set(list, mw, mh);
    edje_object_part_swallow(bg, "e.swallow.content", list);
    
    edje_object_size_min_calc(bg, &mw, &mh);
@@ -825,7 +837,7 @@ _e_fwin_icon_popup(void *data)
    /* if it's offscreen, try right of icon */
    if (px < 0) px = (fx + x + w) + 3;
    /* fuck this, stick it right on the icon */
-   if (px + mw + 3 > zone->w)
+   if ((px + mw + 3 > zone->x + zone->w) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_RIGHT)))   
      px = (x + w / 2) - (mw / 2);
    /* give up */
    if (px < 0) px = 0;
@@ -835,7 +847,7 @@ _e_fwin_icon_popup(void *data)
    /* if it's offscreen, try below icon */
    if (py < 0) py = (fy + y + h) + 3;
    /* fuck this, stick it right on the icon */
-   if (py + mh + 3 > zone->h)
+   if ((py + mh + 3 > zone->x + zone->h) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_BOTTOM))) 
      py = (y + h / 2) - (mh / 2);
    /* give up */
    if (py < 0) py = 0;
@@ -854,15 +866,19 @@ _e_fwin_icon_popup(void *data)
 }
 
 static void
+_e_fwin_icon_popup_del(E_Fwin *fwin)
+{
+   E_FN_DEL(e_object_del, fwin->popup);
+   fwin->popup_del_job = NULL;
+}
+
+static void
 _e_fwin_icon_mouse_out(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Fwin *fwin = data;
 
-   if (fwin->popup_timer) ecore_timer_del(fwin->popup_timer);
-   if (fwin->popup) e_object_del(E_OBJECT(fwin->popup));
-   fwin->popup = NULL;
-   fwin->popup_timer = NULL;
-   fwin->popup_icon = NULL;
+   E_FN_DEL(ecore_timer_del, fwin->popup_timer);
+   if (!fwin->popup_del_job) fwin->popup_del_job = ecore_job_add((Ecore_Cb)_e_fwin_icon_popup_del, fwin);
 }
 
 static void
@@ -939,7 +955,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    e_widget_scrollframe_focus_object_set(o, page->flist);
 
    page->flist_frame = o;
-   edje_extern_object_min_size_set(o, 128, 0);
+   evas_object_size_hint_min_set(o, 128, 0);
    edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.favorites", o);
 }
 
@@ -1041,6 +1057,8 @@ static void
 _e_fwin_page_free(E_Fwin_Page *page)
 {
    if (page->fm_obj) evas_object_del(page->fm_obj);
+   evas_object_del(page->flist);
+   evas_object_del(page->flist_frame);
    if (page->tbar)
      {
         fileman_config->view.toolbar_orient = page->tbar->gadcon->orient;
@@ -1421,7 +1439,6 @@ _e_fwin_file_exec(E_Fwin_Page *page,
                e_exec(fwin->win->border->zone, desktop, NULL, NULL, "fwin");
              else if (fwin->zone)
                e_exec(fwin->zone, desktop, NULL, NULL, "fwin");
-             e_exehist_mime_desktop_add(ici->mime, desktop);
              efreet_desktop_free(desktop);
           }
         break;
@@ -1526,23 +1543,23 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
      {
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
-        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        evas_object_size_hint_min_set(page->tbar->o_base, 0, page->tbar->minh);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,top", "e");
         break;
       case E_GADCON_ORIENT_BOTTOM:
-        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        evas_object_size_hint_min_set(page->tbar->o_base, 0, page->tbar->minh);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,bottom", "e");
         break;
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
-        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        evas_object_size_hint_min_set(page->tbar->o_base, page->tbar->minw, 0);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,left", "e");
         break;
       case E_GADCON_ORIENT_RIGHT:
-        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        evas_object_size_hint_min_set(page->tbar->o_base, page->tbar->minw, 0);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,right", "e");
         break;
@@ -2764,11 +2781,7 @@ _e_fwin_cb_open(void *data,
    if (fad->app2)
      desktop = efreet_util_desktop_file_id_find(fad->app2);
 
-   if ((!desktop) && (!fad->exec_cmd))
-     {
-        if (desktop) efreet_desktop_free(desktop);
-        return;
-     }
+   if ((!desktop) && (!fad->exec_cmd)) return;
 
    // Create a fake .desktop for custom command.
    if (!desktop)
@@ -2786,7 +2799,7 @@ _e_fwin_cb_open(void *data,
           }
      }
 
-   if ((desktop) || (strcmp(fad->exec_cmd, "")))
+   if ((fad->exec_cmd) && (strcmp(fad->exec_cmd, "")))
      _e_fwin_desktop_run(desktop, fad->fwin->cur_page, EINA_FALSE);
 
    efreet_desktop_free(desktop);

@@ -21,7 +21,6 @@ _notification_notify(E_Notification *n)
 {
    const char *appname;
    unsigned int replaces_id, new_id;
-   int popuped;
 
    if (e_desklock_state_get()) return 0;
    appname = e_notification_app_name_get(n);
@@ -31,12 +30,7 @@ _notification_notify(E_Notification *n)
 
    e_notification_id_set(n, new_id);
 
-   popuped = notification_popup_notify(n, replaces_id, appname);
-   if (!popuped)
-     {
-        e_notification_hint_urgency_set(n, 4);
-        notification_popup_notify(n, replaces_id, appname);
-     }
+   notification_popup_notify(n, replaces_id, appname);
 
    return new_id;
 }

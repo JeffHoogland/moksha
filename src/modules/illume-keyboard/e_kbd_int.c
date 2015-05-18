@@ -327,7 +327,7 @@ _e_kbd_int_matches_update(void *data)
      }
    e_box_thaw(ki->box_obj);
    e_box_size_min_get(ki->box_obj, &mw, &mh);
-   edje_extern_object_min_size_set(ki->box_obj, 0, mh);
+   evas_object_size_hint_min_set(ki->box_obj, 0, mh);
    edje_object_part_swallow(ki->base_obj, "e.swallow.label", ki->box_obj);
    evas_event_thaw(ki->win->evas);
 
@@ -1060,7 +1060,7 @@ _e_kbd_int_layout_build(E_Kbd_Int *ki)
    lh = (ki->layout.h * lw) / ki->layout.w;
    if (lw > ki->win->w) lw = ki->win->w;
    if (lh > ki->win->h) lh = ki->win->h;
-   edje_extern_object_min_size_set(ki->layout_obj, lw, lh);
+   evas_object_size_hint_min_set(ki->layout_obj, lw, lh);
    edje_extern_object_max_size_set(ki->layout_obj, ki->win->w, ki->win->h);
 
    EINA_LIST_FOREACH(ki->layout.keys, l, ky)
@@ -1539,7 +1539,7 @@ _e_kbd_int_dictlist_up(E_Kbd_Int *ki)
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
    if (mh < (120 *e_scale)) mh = (120 * e_scale);
 
-   edje_extern_object_min_size_set(ki->dictlist.ilist_obj, mw, mh);
+   evas_object_size_hint_min_set(ki->dictlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->dictlist.base_obj, "e.swallow.content",
                             ki->dictlist.ilist_obj);
    edje_object_size_min_calc(ki->dictlist.base_obj, &mw, &mh);
@@ -1640,12 +1640,12 @@ _e_kbd_int_matchlist_up(E_Kbd_Int *ki)
    e_widget_ilist_preferred_size_get(o, &mw, &mh);
    if (mh < (120 *e_scale)) mh = (120 * e_scale);
 
-   edje_extern_object_min_size_set(ki->matchlist.ilist_obj, mw, mh);
+   evas_object_size_hint_min_set(ki->matchlist.ilist_obj, mw, mh);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
                                ki->matchlist.ilist_obj);
    edje_object_size_min_calc(ki->matchlist.base_obj, &mw, &mh);
 
-   edje_extern_object_min_size_set(ki->matchlist.ilist_obj, 0, 0);
+   evas_object_size_hint_min_set(ki->matchlist.ilist_obj, 0, 0);
    edje_object_part_swallow(ki->matchlist.base_obj, "e.swallow.content",
                                ki->matchlist.ilist_obj);
    e_zone_useful_geometry_get(ki->win->border->zone, NULL, NULL, NULL, &sh);

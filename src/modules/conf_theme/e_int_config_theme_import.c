@@ -112,7 +112,7 @@ e_int_config_theme_import(E_Config_Dialog *parent)
    e_widget_list_object_append(o, ofm, 1, 1, 0.5);
 
    e_widget_size_min_get(o, &w, &h);
-   edje_extern_object_min_size_set(o, w, h);
+   evas_object_size_hint_min_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.content", o);
    evas_object_show(o);
 
@@ -131,7 +131,7 @@ e_int_config_theme_import(E_Config_Dialog *parent)
 
    o = import->box_obj;
    e_widget_size_min_get(o, &w, &h);
-   edje_extern_object_min_size_set(o, w, h);
+   evas_object_size_hint_min_set(o, w, h);
    edje_object_part_swallow(import->bg_obj, "e.swallow.buttons", o);
 
    edje_object_size_min_calc(import->bg_obj, &w, &h);
