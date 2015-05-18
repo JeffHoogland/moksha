@@ -329,7 +329,7 @@ _e_xsettings_apply(Settings_Manager *sm)
    EINA_LIST_FOREACH(settings, l, s)
      len += s->length;
 
-   pos = data = malloc(len);
+   pos = data = calloc(1, len);
    if (!data) return;
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
