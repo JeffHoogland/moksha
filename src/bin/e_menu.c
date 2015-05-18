@@ -2386,6 +2386,7 @@ _e_menu_item_activate_nth(int n)
         if (!mi->separator) i++;
         if (i == n) break;
      }
+   if (!mi) return;
    e_menu_item_active_set(mi, 1);
    _e_menu_item_ensure_onscreen(mi);
 }
