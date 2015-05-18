@@ -2281,7 +2281,7 @@ e_border_focus_set(E_Border *bd,
                                       unfocus_is_parent = EINA_TRUE;
                                       break;
                                    }
-                                 bd_parent = bd->parent;
+                                 bd_parent = bd_parent->parent;
                               }
                             if (!unfocus_is_parent)
                               e_border_unfullscreen(bd2);
