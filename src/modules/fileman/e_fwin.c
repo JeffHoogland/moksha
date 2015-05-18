@@ -614,15 +614,21 @@ e_fwin_zone_find(E_Zone *zone)
 static void
 _e_fwin_bg_mouse_down(E_Fwin *fwin, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
-   int x, y, w, h, zx, zy, zw, zh;
+   int x, y, w, h, zx, zy, zw, zh, cx, cy, cw, ch;
+
+   if (fwin->win->border->maximized) e_border_unmaximize(fwin->win->border, fwin->win->border->maximized);
+   if (fwin->win->border->fullscreen) e_border_unfullscreen(fwin->win->border);
    e_zone_useful_geometry_get(fwin->win->border->zone, &zx, &zy, &zw, &zh);
    x = fwin->win->border->x, y = fwin->win->border->y;
-   e_fm2_optimal_size_calc(fwin->cur_page->fm_obj, zw - x, zh - y, &w, &h);
+   if (!e_fm2_optimal_size_calc(fwin->cur_page->fm_obj, zw - x, zh - y, &w, &h)) return; 
+   evas_object_geometry_get(fwin->cur_page->fm_obj, &cx, &cy, &cw, &ch);
    if (x + w > zx + zw)
      w = zx + zw - x;
    if (y + x > zy + zh)
      h = zy + zh - y;
-   e_win_resize(fwin->win, w, h);
+   w = w + cx;
+   h = h + cx;
+   e_win_resize(fwin->win, MAX(w, 360), MAX(h, 250));
 }
 
 static E_Fwin *

@@ -203,7 +203,7 @@ EAPI void             e_fm2_overlay_clip_to(Evas_Object *fm, Evas_Object *clip);
 EAPI void             e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e);
 EAPI void             e_fm2_client_del(Ecore_Ipc_Event_Client_Del *e);
 EAPI E_Fm2_View_Mode  e_fm2_view_mode_get(Evas_Object *obj);
-EAPI void             e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h);
+EAPI Eina_Bool             e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h);
 EAPI const char      *e_fm2_real_path_map(const char *dev, const char *path);
 EAPI void             e_fm2_favorites_init(void);
 EAPI unsigned int     e_fm2_selected_count(Evas_Object *obj);

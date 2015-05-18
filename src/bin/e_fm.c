@@ -11400,12 +11400,13 @@ e_fm2_operation_abort(int id)
    e_fm2_op_registry_entry_unref(ere);
 }
 
-EAPI void
+EAPI Eina_Bool 
 e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
 {
    int x, y, minw, minh;
-   EFM_SMART_CHECK();
-   if ((!w) || (!h)) return;
+   EFM_SMART_CHECK(EINA_FALSE);
+   if ((!w) || (!h)) return EINA_FALSE;
+   if (!sd->icons) return EINA_FALSE;
    if (maxw < 0) maxw = 0;
    if (maxh < 0) maxh = 0;
    minw = sd->min.w + 5, minh = sd->min.h + 5;
@@ -11414,7 +11415,7 @@ e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
       case E_FM2_VIEW_MODE_LIST:
         *w = MIN(minw, maxw);
         *h = MIN(minh * eina_list_count(sd->icons), (unsigned int)maxh);
-        return;
+        return EINA_TRUE;
       default:
         break;
      }
@@ -11428,6 +11429,7 @@ e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
    *w = MIN(*w, maxw);
    *h = minh * y;
    *h = MIN(*h, maxh);
+	return EINA_TRUE;
 }
 
 EAPI E_Fm2_View_Mode
