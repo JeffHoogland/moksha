@@ -2776,11 +2776,11 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
              break;
 
            case E_MAXIMIZE_VERTICAL:
-             e_border_move_resize(bd, x1, zy, w, zh);
+             e_border_move_resize(bd, bd->x, zy, bd->w, zh);
              break;
 
            case E_MAXIMIZE_HORIZONTAL:
-             e_border_move_resize(bd, zx, yy1, zw, h);
+             e_border_move_resize(bd, zx, bd->y, zw, bd->h);
              break;
 
            case E_MAXIMIZE_LEFT:
@@ -2946,10 +2946,10 @@ e_border_unmaximize(E_Border *bd,
           {
              int w, h, x, y;
 
-             w = bd->w;
-             h = bd->h;
-             x = bd->x;
-             y = bd->y;
+             w = bd->client.w;
+             h = bd->client.h;
+             x = bd->client.x;
+             y = bd->client.y;
 
              if (((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_SMART) ||
                  ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_EXPAND))
