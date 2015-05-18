@@ -535,7 +535,7 @@ e_fwin_reload_all(void)
    E_Zone *zone;
 
    /* Reload/recreate zones cause of property changes */
-   EINA_LIST_FOREACH(fwins, l, fwin)
+   EINA_LIST_FOREACH_SAFE(fwins, l, ll, fwin)
      {
         if (!fwin) continue;  //safety
         if (fwin->zone)
