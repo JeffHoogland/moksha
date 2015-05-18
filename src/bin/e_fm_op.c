@@ -1752,7 +1752,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
 
        if (task->passes == NB_PASS)
          goto finish;
-       if (lseek(fd, SEEK_SET, 0) == -1)
+       if (lseek(fd, 0, SEEK_SET) == -1)
          goto finish;
 
        task->pos = 0;
