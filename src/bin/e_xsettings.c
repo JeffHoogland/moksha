@@ -131,7 +131,7 @@ _e_xsettings_activate(Settings_Manager *sm)
                                  ecore_x_current_time_get(), atom,
                                  sm->selection, 0, 0);
 
-   _e_xsettings_apply(sm);
+   if (settings) _e_xsettings_apply(sm);
 
    return 1;
 }
