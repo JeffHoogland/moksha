@@ -3,14 +3,17 @@ List of Backports from E18/E19/Master GIT at git.enlightenment.org
 1. edje_remove_depreciated_functions.patch
 Backport: Should improve E17 future compat.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=3f9af38da228f70bb408584e33aa08fbbc0867f9
+Commit: https://github.com/JeffHoogland/moksha/commit/9f5d6f38779f26b910c67cbdb8b7337c7d5d6887
 
 2. unset_fwin_delete_callback_during_delete.patch
 Backport: Unset callback during delete.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=526bdab7c423e73eb8284c212ddba09518e763fe
+Commit: https://github.com/JeffHoogland/moksha/commit/365a7337dcf580b2ade940bef0b2e5ebfde6cb2a
 
 3. fix_dont_save_mimeinfo_for_desktop_files.patch
 Backport: Dont save mime info for desktop files.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=b944738d83862c5d9a9261751a0db900998dd3dc
+Commit: https://github.com/JeffHoogland/moksha/commit/2894e9e206060b9753fe2304322b8bcd09fa5871
 
 4. fix_e_fwin_cb_open.patch
 Backport: Fix crash if fwin app dialog has no exec_cmd, and deref
@@ -18,72 +21,108 @@ before NULL check. Also remove unused code from this function.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=c8dd1d95d3d02c679afe4cff8bb0408f618d43c5
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=96b3a04192f30c79b66cf8eae809d411998f9cda
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=861db30df2d5c30dc2079212ef7d6c2621d51635
+Commit: https://github.com/JeffHoogland/moksha/commit/c7101e6b9b25632e23ae2c1e1b409fc6c7df0485
 
 5. fix_fileman_crash_on_restart.patch
 Backport: fix crash when restarting with a fileman window open.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=18c1e3620d0538bc1291b74935703e71a393dadb
+Commit: https://github.com/JeffHoogland/moksha/commit/d557296f1cd44d8ab69b74734eb0b35f7abbe5cc
 
 6. improve_efm_popup_multiple_monitors.patch
 Backport: improve popup placement with multiple monitors.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=400f966b70dbc3529bcf4a2188340e0b2dfe9d40
+Commit: https://github.com/JeffHoogland/moksha/commit/21cd68e35841e3f8039ca3072ec7f690e2cb279a
 
 7. fix_buffer_overflow-desk_show.patch
 Backport of this commit, wrong type used for var.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?h=enlightenment-0.18&id=590eb392f1438d2cde775a93aa1178c61b75e9e7
+Commit: https://github.com/JeffHoogland/moksha/commit/720e3d6eaebf7de20611653beffb7e2591983d99
 
 8. remove_un-needed_eina_init_calls.patch
 Backport of this commit, un-needed call to eina_init(), eina_shutdown()
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?h=enlightenment-0.18&id=f9c16ba1ceb51a6ad533d57a44513a8df82170fd
+https://github.com/JeffHoogland/moksha/commit/1f22b7e5c789092234b936e9ac20c457c46cf5f8
 
 9. fix_symlink_access.patch
 Backport of this commit, Absolute path not used for symbolic links.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=e2bf6f4427da22eb05f0249a334c60542b93cbcc
+Commit: https://github.com/JeffHoogland/moksha/commit/6202d926a3a989addb13cef0e129afb490072951
 
 10. fix_rename_and_copy_bugs_in_e-fm.patch
 Backport of this commit, bug in file copy and rename in e_fm
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=c5c7b4733a69e36c68d7ae9bb05998e0eed6c25f
+Commit: https://github.com/JeffHoogland/moksha/commit/f68bd9f260651d721a06b89357dfd8844e61b121
 
 11. fix_inverted_args-lseek.patch
 Backport of this commit, Args incorrectly set.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=b96d33809781c8780a8d2299a61c334262fe04ff
+Commit: https://github.com/JeffHoogland/moksha/commit/3da2f7d59d59830a5b979f6ab9926cbb5e792c58
 
 12. fix_crash_in-e_border_lower_below.patch
 Backport of this commit, Typo meant wrong list was used, 100% crash.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=dbc1a2c92a8cc7e90a0af14602f900ea55fdc2a2
+Commit: https://github.com/JeffHoogland/moksha/commit/2029d6174b5d201a3551727c04fdb457f4552cc3
 
 13. use_client_geom_unmax.patch
 Backport: Both commits from this bug are backported in this patch.
 Source: https://phab.enlightenment.org/T2170
+Commit: https://github.com/JeffHoogland/moksha/commit/36dadbeb6a5e5aa3dc6c252c5797c0db1d44b4e6
 
 14. fix_infinite_loop_e_border_focus_set.patch
 Backport: fix infinite loop in e_border_focus_set.c
 Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=7c2d0c7bddec130e99f1160fcf00fa5da3cd510a
+Commit: https://github.com/JeffHoogland/moksha/commit/ded4f897d25de9636124f29ff4f26c15657df006
 
 15. fix-infinite-loop-changing-ibar-sources.patch
 Backport: fix infinite loop when changing ibar sources
 Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=aede4520831bfc8b250189476b790d13666dea25
+Commit: https://github.com/JeffHoogland/moksha/commit/087125b237da69feac4656ae4271960b31b48975
 
 16. hicolor-fallback.patch
 Backport: set fallback icon theme to hicolor
 Source: https://git.enlightenment.org/core/enlightenment.git/patch/?id=829ecc3cc0117bbf217a021e1dd253fbea45d125
+Commit: https://github.com/JeffHoogland/moksha/commit/3df59f8917b5edcc509bdc85b9c97fbf7882f293
 
 17. fix_notification_crash.patch
 Backport: Fix notification crashes.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/notification/e_mod_main.c?id=53d8c89791b981d2d6a24111c151ae1fe3591352
+Commit: https://github.com/JeffHoogland/moksha/commit/c35eafc126fd40c71d2fd4eeb59874321cc68893
 
 18. fix_efm_segv_on_single_click.patch
 Backport: fix efm segv on single click due to out callbacks being called while deleting objects etc.
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/src/bin/e_fm.c?id=317968efa8e4ea1efb2d1757b60046c0f67920c0
+Commit: https://github.com/JeffHoogland/moksha/commit/d6306a67bd92205001aaf678e67e80a23bc3624f
 
 19. fix_crash_when_activating_menu_by_number.patch
 Backport: fix crash when activating menu that is not in range
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=576ec9bdc46890ca2d379452573ccc151ddcd130
+Commit: https://github.com/JeffHoogland/moksha/commit/6ee55358c9daf99689689c2bdd621af36877a46c
 
 20. fix_segv_everything_launch.patch
 Backport: double click on selector area (tabbar area on top) to launch app -> SEGV
 Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=0034b2d6ee459b22617755da034fb047edb69406
+Commit: https://github.com/JeffHoogland/moksha/commit/76536f83ac75771349c03962aaf7abd6354a3bf7
 
 21. fix_segv_in_clock_popup.patch
 Backport: segv-- for clock popup o_popclock object ref begin dangling
 Source: Source: https://git.enlightenment.org/core/enlightenment.git/commit/?id=8dad24565f8eaff95824caa062bf50b551b89ec8
+Commit: https://github.com/JeffHoogland/moksha/commit/4e40e87dd1527aacd383549ae87b0d629de6b8e5
 
+22. fix_segv_applying_fileman_config.patch
+Backport: Fix crash when applying config to fwin during list walk.
+https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=738b5d417dd67ff9c3c05c6f313e05edcccd0652
+Commit: https://github.com/JeffHoogland/moksha/commit/ca9799f430132c3c29932a3f6ccb7d5bf3801089
+
+23. fix_calc_size_deleting_tooltips.patch
+Backport: Fix calculating size of tooltip deletes own tooltip.
+https://git.enlightenment.org/core/enlightenment.git/commit/rc/modules/fileman/e_fwin.c?id=38615a27d43cac5111fdcf6c30abce38868e0750
+Commit: https://github.com/JeffHoogland/moksha/commit/00477a68b0b3a43ea7e5796da01d9eee3f0d989e
+
+24. fix_double_click_fwin_zone_find.patch
+Backport: Merged patches. Fix double click bugs with e_fwin_zone_find.
+Also merge in supporting patch to return bool on
+e_fm2_optimal_size_calc.
+https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=d236e2acece07d7dc611cc7ef1f52e77ceaac922
+https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=d8c603ae873ae45f1a87aaa91a873e8bce1d9956
+https://git.enlightenment.org/core/enlightenment.git/diff/?id=529d58a41008941155692e7f187a87de49e4f4d5
+Commit: https://github.com/JeffHoogland/moksha/commit/3e143e6cf263019732d76fca72b07f79be5ff997
