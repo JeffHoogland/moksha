@@ -1205,7 +1205,7 @@ wp_browser_new(E_Container *con)
    e_widget_list_object_append(info->box, info->button, 1, 0, 0.5);
 
    e_widget_size_min_get(info->box, &mw, &mh);
-   edje_extern_object_min_size_set(info->box, mw, mh);
+   evas_object_size_hint_min_set(info->box, mw, mh);
    edje_object_part_swallow(info->bg, "e.swallow.buttons", info->box);
    evas_object_show(info->box);
 
@@ -1288,7 +1288,7 @@ wp_browser_new(E_Container *con)
    evas_object_show(o);
 
    e_widget_size_min_get(ob, &mw, &mh);
-   edje_extern_object_min_size_set(ob, mw, mh);
+   evas_object_size_hint_min_set(ob, mw, mh);
    edje_object_part_swallow(info->bg, "e.swallow.extras", ob);
    evas_object_show(ob);
 

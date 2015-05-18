@@ -527,8 +527,8 @@ _e_fm2_icon_path(const E_Fm2_Icon *ic, char *buf, int buflen)
 {
    int r;
 
-   if (ic->info.link)
-     r = snprintf(buf, buflen, "%s", ic->info.link);
+   if (ic->info.real_link)
+     r = snprintf(buf, buflen, "%s", ic->info.real_link);
    else
      r = snprintf(buf, buflen, "%s/%s", ic->sd->path, ic->info.file);
    return r < buflen;
@@ -3422,7 +3422,6 @@ _e_fm2_file_del(Evas_Object *obj, const char *file)
                   ic->region = NULL;
                }
              _e_fm2_icon_free(ic);
-             printf("b: %i\n", eina_list_count(sd->icons));
              return;
           }
      }
@@ -4634,7 +4633,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
                   ic->sd->tmp.obj2 = obj2;
                }
              /* FIXME: if icons are allowed to have their own size - use it */
-             edje_extern_object_min_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
+             evas_object_size_hint_min_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
              edje_extern_object_max_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
              edje_object_part_swallow(obj, "e.swallow.icon", obj2);
              edje_object_size_min_calc(obj, &mw, &mh);
@@ -4669,7 +4668,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
              obj2 = evas_object_rectangle_add(evas_object_evas_get(ic->sd->obj));
              ic->sd->tmp.obj2 = obj2;
           }
-        edje_extern_object_min_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
+        evas_object_size_hint_min_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_object_part_swallow(obj, "e.swallow.icon", obj2);
         edje_object_size_min_calc(obj, &mw, &mh);
@@ -4918,6 +4917,11 @@ _e_fm2_icon_unrealize(E_Fm2_Icon *ic)
    ic->realized = EINA_FALSE;
    evas_object_del(ic->obj);
    ic->obj = NULL;
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_DOWN, _e_fm2_cb_icon_mouse_down, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_UP, _e_fm2_cb_icon_mouse_up, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_MOVE, _e_fm2_cb_icon_mouse_move, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_IN, _e_fm2_cb_icon_mouse_in, ic);
+   evas_object_event_callback_del_full(ic->rect, EVAS_CALLBACK_MOUSE_OUT, _e_fm2_cb_icon_mouse_out, ic);
    evas_object_del(ic->rect);
    ic->rect = NULL;
    evas_object_del(ic->obj_icon);
@@ -5786,7 +5790,7 @@ _e_fm2_inplace_open(const E_Fm2_Icon *ic)
    if (!_e_fm2_icon_path(ic, buf, sizeof(buf)))
      return -1;
 
-   e_fm2_path_set(ic->sd->obj, ic->info.link ? "/" : ic->sd->dev, buf);
+   e_fm2_path_set(ic->sd->obj, ic->info.real_link ? "/" : ic->sd->dev, buf);
    return 1;
 }
 
@@ -10505,6 +10509,7 @@ _e_fm_overwrite_rename_del(void *data)
    sd = evas_object_smart_data_get(ere->e_fm);
    sd->rename_dialogs = eina_list_remove(sd->rename_dialogs, data);
    e_fm2_op_registry_entry_unref(ere);
+   _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO, ere->id, NULL, 0);
 }
 
 static void
@@ -10565,7 +10570,6 @@ _e_fm_overwrite_rename(void *data __UNUSED__, E_Dialog *dialog)
    E_OBJECT(ed)->data = ere;
    e_fm2_op_registry_entry_ref(ere);
    _e_fm2_op_registry_go_on(id);
-   _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO, id, NULL, 0);
 }
 
 static void
@@ -11400,12 +11404,13 @@ e_fm2_operation_abort(int id)
    e_fm2_op_registry_entry_unref(ere);
 }
 
-EAPI void
+EAPI Eina_Bool 
 e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
 {
    int x, y, minw, minh;
-   EFM_SMART_CHECK();
-   if ((!w) || (!h)) return;
+   EFM_SMART_CHECK(EINA_FALSE);
+   if ((!w) || (!h)) return EINA_FALSE;
+   if (!sd->icons) return EINA_FALSE;
    if (maxw < 0) maxw = 0;
    if (maxh < 0) maxh = 0;
    minw = sd->min.w + 5, minh = sd->min.h + 5;
@@ -11414,7 +11419,7 @@ e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
       case E_FM2_VIEW_MODE_LIST:
         *w = MIN(minw, maxw);
         *h = MIN(minh * eina_list_count(sd->icons), (unsigned int)maxh);
-        return;
+        return EINA_TRUE;
       default:
         break;
      }
@@ -11428,6 +11433,7 @@ e_fm2_optimal_size_calc(Evas_Object *obj, int maxw, int maxh, int *w, int *h)
    *w = MIN(*w, maxw);
    *h = minh * y;
    *h = MIN(*h, maxh);
+	return EINA_TRUE;
 }
 
 EAPI E_Fm2_View_Mode

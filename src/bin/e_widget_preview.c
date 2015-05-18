@@ -35,7 +35,7 @@ e_widget_preview_add(Evas *evas, int minw, int minh)
 
    wd->img = e_livethumb_add(evas);
    e_livethumb_vsize_set(wd->img, minw * 2, minh * 2);
-   edje_extern_object_min_size_set(wd->img, minw, minh);
+   evas_object_size_hint_min_set(wd->img, minw, minh);
    /* Why do we set max size? This prevents from being nicely resized. */
    /* edje_extern_object_max_size_set(o, minw, minh); */
 //   evas_object_show(wd->img);
@@ -148,7 +148,7 @@ _e_wid_preview_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_in
 
    wd = data;
    e_icon_size_get(wd->img, &w, &h);
-   edje_extern_object_min_size_set(wd->img, w, h);
+   evas_object_size_hint_min_set(wd->img, w, h);
    /* Why do we set max size? This prevents from being nicely resized. */
    /* edje_extern_object_max_size_set(wd->img, w, h); */
    edje_object_part_swallow(wd->o_frame, "e.swallow.content", wd->img);

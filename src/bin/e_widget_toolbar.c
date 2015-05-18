@@ -145,7 +145,7 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
 
    edje_object_signal_callback_add(o, "e,action,click", "e",
                                    _e_wid_signal_cb1, it);
-   edje_extern_object_min_size_set(icon, wd->icon_w, wd->icon_h);
+   evas_object_size_hint_min_set(icon, wd->icon_w, wd->icon_h);
    if (icon)
      {
         edje_object_part_swallow(o, "e.swallow.icon", icon);

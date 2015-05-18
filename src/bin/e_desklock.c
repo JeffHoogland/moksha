@@ -542,7 +542,7 @@ _e_desklock_login_box_add(E_Desklock_Popup_Data *edp)
    edje_object_size_min_calc(edp->login_box, &mw, &mh);
    if (edje_object_part_exists(edp->bg_object, "e.swallow.login_box"))
      {
-        edje_extern_object_min_size_set(edp->login_box, mw, mh);
+        evas_object_size_hint_min_set(edp->login_box, mw, mh);
         edje_object_part_swallow(edp->bg_object, "e.swallow.login_box", edp->login_box);
      }
    else

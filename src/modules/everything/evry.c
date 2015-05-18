@@ -1162,7 +1162,18 @@ static void
 _evry_selector_free(Evry_Selector *sel)
 {
    Evry_Window *win = sel->win;
+   Evas_Object *o;
 
+   if ((o = edje_object_part_swallow_get(win->o_main, sel->edje_part)))
+     {
+        evas_object_event_callback_del_full(o, EVAS_CALLBACK_MOUSE_DOWN,
+                                       _evry_selector_cb_down, sel);
+        evas_object_event_callback_del_full(o, EVAS_CALLBACK_MOUSE_UP,
+                                       _evry_selector_cb_up, sel);
+        evas_object_event_callback_del_full(o, EVAS_CALLBACK_MOUSE_WHEEL,
+                                       _evry_selector_cb_wheel, sel);
+     }
+   
    _evry_selector_item_clear(sel);
 
    if (win->visible && (sel == CUR_SEL))

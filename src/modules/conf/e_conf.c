@@ -180,7 +180,7 @@ e_configure_show(E_Container *con, const char *params)
                                     _e_configure_cb_close, eco, NULL);
    e_widget_on_focus_hook_set(eco->close, _e_configure_focus_cb, eco->win);
    e_widget_size_min_get(eco->close, &mw, &mh);
-   edje_extern_object_min_size_set(eco->close, mw, mh);
+   evas_object_size_hint_min_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
    edje_object_size_min_calc(eco->edje, &ew, &eh);
    e_win_size_min_set(eco->win, ew, eh);
@@ -521,7 +521,7 @@ _e_configure_fill_cat_list(void *data, const char *sel)
    if (num != -1) e_widget_toolbar_item_select(eco->cat_list, num);
 
    e_widget_size_min_get(eco->o_list, &mw, &mh);
-   edje_extern_object_min_size_set(eco->o_list, mw, mh);
+   evas_object_size_hint_min_set(eco->o_list, mw, mh);
 }
 
 static Eina_Bool

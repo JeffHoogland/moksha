@@ -502,7 +502,7 @@ e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h)
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    if (gc->edje.o_parent)
      {
-        edje_extern_object_min_size_set(gc->o_container, w, h);
+        evas_object_size_hint_min_set(gc->o_container, w, h);
         edje_object_part_swallow(gc->edje.o_parent, gc->edje.swallow_name,
                                  gc->o_container);
      }

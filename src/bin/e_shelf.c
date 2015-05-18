@@ -357,7 +357,7 @@ e_shelf_zone_move_resize_handle(E_Zone *zone)
              if (gc->min_size_request.func)
                {
                   /* let gadcon container decrease to any size */
-                  edje_extern_object_min_size_set(gc->o_container, 0, 0);
+                  evas_object_size_hint_min_set(gc->o_container, 0, 0);
                }
              evas_object_smart_callback_call(gc->o_container, "min_size_request", NULL);
              e_shelf_position_calc(es);
@@ -365,7 +365,7 @@ e_shelf_zone_move_resize_handle(E_Zone *zone)
                {
                   evas_object_geometry_get(gc->o_container, NULL, NULL, &w, &h);
                   /* fix gadcon container min size to current geometry */
-                  edje_extern_object_min_size_set(gc->o_container, w, h);
+                  evas_object_size_hint_min_set(gc->o_container, w, h);
                }
           }
      }

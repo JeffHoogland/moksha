@@ -86,7 +86,7 @@ e_mod_ind_win_new(E_Zone *zone)
    /* create our gadget container */
    iwin->gadcon = e_gadcon_swallowed_new("illume-indicator", zone->num, 
                                          iwin->o_base, "e.swallow.content");
-   edje_extern_object_min_size_set(iwin->gadcon->o_container, h, h);
+   evas_object_size_hint_min_set(iwin->gadcon->o_container, h, h);
    e_gadcon_min_size_request_callback_set(iwin->gadcon, 
                                           _e_mod_ind_win_cb_min_size_request, 
                                           iwin);
@@ -251,7 +251,7 @@ _e_mod_ind_win_cb_resize(E_Win *win)
    if (iwin->o_base) evas_object_resize(iwin->o_base, win->w, win->h);
    if (iwin->gadcon->o_container)
      {
-//        edje_extern_object_min_size_set(iwin->gadcon->o_container, 
+//        evas_object_size_hint_min_set(iwin->gadcon->o_container, 
 //                                        win->w, win->h);
      }
 }
@@ -433,7 +433,7 @@ _e_mod_ind_win_cb_min_size_request(void *data, E_Gadcon *gc, Evas_Coord w __UNUS
    if (!(iwin = data)) return;
    if (gc != iwin->gadcon) return;
    if (h < iwin->win->h) h = iwin->win->h;
-//   edje_extern_object_min_size_set(iwin->gadcon->o_container, w, h);
+//   evas_object_size_hint_min_set(iwin->gadcon->o_container, w, h);
 }
 
 /* static void  */

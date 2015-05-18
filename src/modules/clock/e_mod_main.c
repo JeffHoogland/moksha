@@ -291,6 +291,7 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
    e_object_del(E_OBJECT(inst->popup));
    inst->popup = NULL;
+   inst->o_popclock = NULL;
 }
 
 static Eina_Bool
@@ -307,6 +308,16 @@ _clock_popup_desk_change(Instance *inst, int type __UNUSED__, E_Event_Desk_After
    if (e_shelf_desk_visible(inst->gcc->gadcon->shelf, ev->desk)) return ECORE_CALLBACK_RENEW;
    _clock_popup_free(inst);
    return ECORE_CALLBACK_RENEW;
+}
+
+static void
+_popclock_del_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *info __UNUSED__)
+{
+   Instance *inst = data;
+   if (inst->o_popclock == obj)
+     {
+        inst->o_popclock = NULL;
+     }
 }
 
 static void
@@ -332,6 +343,8 @@ _clock_popup_new(Instance *inst)
 
    oi = edje_object_add(evas);
    inst->o_popclock = oi;
+   evas_object_event_callback_add(oi, EVAS_CALLBACK_DEL, _popclock_del_cb, inst);
+
    if (inst->cfg->digital_clock)
      e_theme_edje_object_set(oi, "base/theme/modules/clock",
                              "e/modules/clock/digital");
