@@ -1265,7 +1265,13 @@ _e_main_parse_arguments(int argc, char **argv)
           locked = EINA_TRUE;
 	else if (!strcmp(argv[i], "-nopause"))
 	  e_nopause = EINA_TRUE;
-        else if ((!strcmp(argv[i], "-h")) ||
+    else if ((!strcmp(argv[i], "-version")) ||
+          (!strcmp(argv[i], "--version")))
+    {
+          printf(_("Version: %s\n"), PACKAGE_VERSION);
+          _e_main_shutdown(-1);
+    }
+    else if ((!strcmp(argv[i], "-h")) ||
                  (!strcmp(argv[i], "-help")) ||
                  (!strcmp(argv[i], "--help")))
           {
@@ -1293,6 +1299,7 @@ _e_main_parse_arguments(int argc, char **argv)
                  "\t\tStart with desklock on, so password will be asked.\n"
                  "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
                  "\t\tIf you need this help, you don't need this option.\n"
+                 "\t-version\n"
                  )
                );
              _e_main_shutdown(-1);
