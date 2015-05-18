@@ -1053,6 +1053,8 @@ static void
 _e_fwin_page_free(E_Fwin_Page *page)
 {
    if (page->fm_obj) evas_object_del(page->fm_obj);
+   evas_object_del(page->flist);
+   evas_object_del(page->flist_frame);
    if (page->tbar)
      {
         fileman_config->view.toolbar_orient = page->tbar->gadcon->orient;
