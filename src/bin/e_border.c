@@ -2050,7 +2050,7 @@ e_border_stack_below(E_Border *bd,
         Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-        EINA_LIST_REVERSE_FOREACH_SAFE(bd->transients, l, l_prev, child)
+		EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
