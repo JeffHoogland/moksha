@@ -170,7 +170,6 @@ main(int argc, char **argv)
    E_Fm_Op_Type type;
 
    ecore_init();
-   eina_init();
 
    _e_fm_op_stdin_buffer = malloc(READBUFSIZE);
    if (!_e_fm_op_stdin_buffer) return 0;
@@ -429,7 +428,6 @@ skip_arg:
    ecore_main_loop_begin();
 
 quit:
-   eina_shutdown();
    ecore_shutdown();
 
    E_FREE(_e_fm_op_stdin_buffer);
