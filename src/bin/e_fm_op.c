@@ -113,6 +113,8 @@ static int           _e_fm_op_destroy_atom(E_Fm_Op_Task *task);
 static void          _e_fm_op_random_buf(char *buf, ssize_t len);
 static void          _e_fm_op_random_char(char *buf, size_t len);
 
+static int           _e_fm_op_make_copy_name(const char *abs, char *buf, size_t buf_size);
+
 Eina_List *_e_fm_op_work_queue = NULL, *_e_fm_op_scan_queue = NULL;
 Ecore_Idler *_e_fm_op_work_idler_p = NULL, *_e_fm_op_scan_idler_p = NULL;
 
@@ -239,17 +241,40 @@ main(int argc, char **argv)
                {
                   const char *name;
                   size_t name_len;
+                  char *dir;
+                  int r;
+                  Eina_Bool make_copy;
 
                   /* Don't move a dir into itself */
                   if (ecore_file_is_dir(argv[i]) &&
                       (strcmp(argv[i], p2) == 0))
                     goto skip_arg;
 
+                  make_copy = EINA_FALSE;
+                  /* Don't move/rename/symlink into same directory
+                   * in case of copy, make copy name automatically */
+                  dir = ecore_file_dir_get(argv[i]);
+                  if (dir)
+                    {
+                       r = (strcmp(dir, p2) == 0);
+                       E_FREE(dir);
+                       if (r)
+                         {
+                            if (type == E_FM_OP_COPY) make_copy = EINA_TRUE;
+                            else goto skip_arg;
+                         }
+                    }
+
                   name = ecore_file_file_get(argv[i]);
                   if (!name) goto skip_arg;
                   name_len = strlen(name);
                   if (p2_len + name_len >= PATH_MAX) goto skip_arg;
                   memcpy(p3, name, name_len + 1);
+                  if (make_copy)
+                    {
+                      if (_e_fm_op_make_copy_name(buf, p3, PATH_MAX - p2_len - 1))
+                         goto skip_arg;
+                    }
 
                   if ((type == E_FM_OP_SYMLINK) &&
                            (symlink(argv[i], buf) == 0))
@@ -1802,4 +1827,43 @@ _e_fm_op_random_char(char *buf, size_t len)
      {
         buf[i] = (rand() % 256) + 'a';
      }
+}
+
+
+static int
+_e_fm_op_make_copy_name(const char *abs, char *buf, size_t buf_size)
+{
+   size_t name_len;
+   size_t file_len;
+   char *name;
+   char *ext;
+   char *copy_str;
+
+   if (!ecore_file_exists(abs))
+      return 0;
+
+   file_len = strlen(buf);
+
+   /* TODO: need to make a policy regarding copy postfix:
+    * currently attach " (copy)" continuasly
+    *
+    * TODO: i18n */
+   copy_str = "(copy)";
+   if (strlen(copy_str) + file_len + 1 >= buf_size) return 1;
+
+   name = ecore_file_strip_ext(buf);
+   name_len = strlen(name);
+   E_FREE(name);
+
+   if (file_len == name_len) ext = NULL;
+   else ext = strdup(buf + name_len);
+
+   if (ext)
+     {
+        sprintf(buf + name_len, " %s%s", copy_str, ext);
+        E_FREE(ext);
+     }
+   else sprintf(buf + name_len, " %s", copy_str);
+
+   return _e_fm_op_make_copy_name(abs, buf, buf_size);
 }

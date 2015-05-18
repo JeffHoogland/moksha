@@ -10509,6 +10509,7 @@ _e_fm_overwrite_rename_del(void *data)
    sd = evas_object_smart_data_get(ere->e_fm);
    sd->rename_dialogs = eina_list_remove(sd->rename_dialogs, data);
    e_fm2_op_registry_entry_unref(ere);
+   _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO, ere->id, NULL, 0);
 }
 
 static void
@@ -10569,7 +10570,6 @@ _e_fm_overwrite_rename(void *data __UNUSED__, E_Dialog *dialog)
    E_OBJECT(ed)->data = ere;
    e_fm2_op_registry_entry_ref(ere);
    _e_fm2_op_registry_go_on(id);
-   _e_fm_client_send(E_FM_OP_OVERWRITE_RESPONSE_NO, id, NULL, 0);
 }
 
 static void
