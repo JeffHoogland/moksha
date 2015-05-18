@@ -181,7 +181,11 @@ _ibar_order_refresh(IBar *b, const char *path)
         /* else same order, refresh all users */
      }
    else
-     io = b->io = _ibar_order_new(b, path);
+   {
+      _ibar_order_del(b);
+      io = b->io = _ibar_order_new(b, path);
+   }
+
    EINA_LIST_FOREACH(io->bars, l, bar)
      {
         _ibar_empty(bar);
