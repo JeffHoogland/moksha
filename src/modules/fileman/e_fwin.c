@@ -812,7 +812,7 @@ _e_fwin_icon_popup(void *data)
    e_widget_filepreview_path_set(o, buf, fwin->popup_icon->mime);
    e_widget_list_object_append(list, o, 1, 0, 0.5);
    e_widget_size_min_get(list, &mw, &mh);
-   edje_extern_object_min_size_set(list, mw, mh);
+   evas_object_size_hint_min_set(list, mw, mh);
    edje_object_part_swallow(bg, "e.swallow.content", list);
    
    edje_object_size_min_calc(bg, &mw, &mh);
@@ -939,7 +939,7 @@ _e_fwin_page_favorites_add(E_Fwin_Page *page)
    e_widget_scrollframe_focus_object_set(o, page->flist);
 
    page->flist_frame = o;
-   edje_extern_object_min_size_set(o, 128, 0);
+   evas_object_size_hint_min_set(o, 128, 0);
    edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.favorites", o);
 }
 
@@ -1526,23 +1526,23 @@ _e_fwin_toolbar_resize(E_Fwin_Page *page)
      {
       case E_GADCON_ORIENT_HORIZ:
       case E_GADCON_ORIENT_TOP:
-        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        evas_object_size_hint_min_set(page->tbar->o_base, 0, page->tbar->minh);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,top", "e");
         break;
       case E_GADCON_ORIENT_BOTTOM:
-        edje_extern_object_min_size_set(page->tbar->o_base, 0, page->tbar->minh);
+        evas_object_size_hint_min_set(page->tbar->o_base, 0, page->tbar->minh);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,bottom", "e");
         break;
       case E_GADCON_ORIENT_VERT:
       case E_GADCON_ORIENT_LEFT:
-        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        evas_object_size_hint_min_set(page->tbar->o_base, page->tbar->minw, 0);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,left", "e");
         break;
       case E_GADCON_ORIENT_RIGHT:
-        edje_extern_object_min_size_set(page->tbar->o_base, page->tbar->minw, 0);
+        evas_object_size_hint_min_set(page->tbar->o_base, page->tbar->minw, 0);
         edje_object_part_swallow(page->fwin->bg_obj, "e.swallow.toolbar", page->tbar->o_base);
         edje_object_signal_emit(page->fwin->bg_obj, "e,toolbar,right", "e");
         break;
