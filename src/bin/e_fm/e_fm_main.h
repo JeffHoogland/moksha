@@ -16,6 +16,8 @@
 extern Ecore_Ipc_Server *_e_fm_ipc_server;
 extern int efm_log_dom;
 
+void _e_fm_main_catch(unsigned int val);
+
 #define E_FM_MOUNT_TIMEOUT 30.0
 #define E_FM_UNMOUNT_TIMEOUT 60.0
 #define E_FM_EJECT_TIMEOUT 15.0
