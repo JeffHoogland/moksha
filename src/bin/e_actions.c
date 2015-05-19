@@ -2005,21 +2005,47 @@ ACT_FN_GO(app, )
           {
              Efreet_Desktop *desktop = NULL;
              char *p, *p2;
+             size_t plen;
 
-             p2 = alloca(strlen(params) + 1);
-             strcpy(p2, params);
-             p = strchr(p2, ' ');
+             plen = strlen(params);
+             p2 = memcpy(alloca(plen + 1), params, plen + 1);
+             p = strchr(p2, ':');
              if (p)
                {
-                  *p = 0;
-                  if (!strcmp(p2, "file:"))
-                    desktop = efreet_util_desktop_file_id_find(p + 1);
-                  else if (!strcmp(p2, "name:"))
-                    desktop = efreet_util_desktop_name_find(p + 1);
-                  else if (!strcmp(p2, "generic:"))
-                    desktop = efreet_util_desktop_generic_name_find(p + 1);
-                  else if (!strcmp(p2, "exe:"))
-                    desktop = efreet_util_desktop_exec_find(p + 1);
+                  *p++ = 0;
+                  if (*p == ' ')
+                    {
+                       E_Dialog *dia;
+                       char dialog_text[1024];
+
+                       dia = e_dialog_new(NULL, "E", "_e_action_act_app_go_syntax_error");
+                       if (!dia) return;
+
+                       snprintf(dialog_text, sizeof(dialog_text),
+                                "%s<br><br>"
+                                "Check syntax. You should not put a whitespace right after colon in action params.<br>"
+                                "syntax: [file:file.desktop|name:App Name|generic:Generic Name|exe:exename]<br><br>"
+                                "exe:terminology (O)<br>"
+                                "exe: terminology (X)", params);
+
+                       e_dialog_title_set(dia, _("Action Params Syntax Error"));
+                       e_dialog_text_set(dia, _(dialog_text));
+                       e_dialog_icon_set(dia, "dialog-error", 64);
+                       e_dialog_button_add(dia, _("Close"), NULL, NULL, NULL);
+                       e_dialog_button_focus_num(dia, 0);
+                       e_win_centered_set(dia->win, 1);
+                       e_dialog_show(dia);
+
+                       return;
+                    }
+                  if (!strcmp(p2, "file"))
+                    desktop = efreet_util_desktop_file_id_find(p);
+                  else if (!strcmp(p2, "name"))
+                    desktop = efreet_util_desktop_name_find(p);
+                  else if (!strcmp(p2, "generic"))
+                    desktop = efreet_util_desktop_generic_name_find(p);
+                  else if (!strcmp(p2, "exe"))
+                    desktop = efreet_util_desktop_exec_find(p);
                   if (desktop)
                     {
                        e_exec(zone, desktop, NULL, NULL, "action/app");
