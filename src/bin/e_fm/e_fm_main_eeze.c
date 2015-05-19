@@ -618,8 +618,14 @@ _scanner_del(void *data, int type __UNUSED__, Ecore_Exe_Event_Del *ev)
    if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
    if (!svr)
      {
-        INF("scanner connection dead, exiting");
-        exit(1);
+        const char *str = "blame cedric";
+
+        if (ev->exit_code == 1)
+          str = "unable to allocate memory";
+        else if (ev->exit_code == 2)
+          str = "unable to create local socket; check \"/$TMPDIR/.ecore_service/\" for stale files";
+        INF("scanner connection dead (%s), exiting", str);
+        _e_fm_main_catch(EFM_MODE_USING_RASTER_MOUNT); 
      }
    INF("lost connection to scanner");
    scanner = NULL;
@@ -684,7 +690,7 @@ static Eina_Bool
 _scanner_disc(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
 {
    INF("Scanner disconnected");
-   if (_scanner_poll(NULL))
+   if (!_scanner_poll(NULL))
      _scanner_run();
    return ECORE_CALLBACK_RENEW;
 }
