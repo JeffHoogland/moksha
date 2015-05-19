@@ -53,7 +53,7 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    e_widget_on_focus_hook_set(o, _e_dialog_cb_wid_on_focus, dia);
    dia->box_object = o;
    edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
-   edje_object_signal_emit(dia->bg_object, "e,state,no_resizeble", "e");
+   edje_object_signal_emit(dia->bg_object, "e,state,no_resizable", "e");
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
    dia->event_object = o;
@@ -233,13 +233,13 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
           {
              e_win_size_max_set(dia->win, 99999, 99999);
              e_util_win_auto_resize_fill(dia->win);
-             edje_object_signal_emit(dia->bg_object, "e,state,resizeble", "e");
+             edje_object_signal_emit(dia->bg_object, "e,state,resizable", "e");
           }
         else
           {
              e_win_resize(dia->win, dia->min_w, dia->min_h);
              e_win_size_max_set(dia->win, dia->min_w, dia->min_h);
-             edje_object_signal_emit(dia->bg_object, "e,state,no_resizeble", "e");
+             edje_object_signal_emit(dia->bg_object, "e,state,no_resizable", "e");
           }
      }
 }
