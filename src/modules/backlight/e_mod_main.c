@@ -245,7 +245,7 @@ _backlight_popup_new(Instance *inst)
    
    inst->o_table = e_widget_table_add(evas, 0);
 
-   o = e_widget_slider_add(evas, 0, 0, NULL, 0.0, 1.0, 0.05, 0, &(inst->val), NULL, 100);
+   o = e_widget_slider_add(evas, 0, 0, NULL, 0.05, 1.0, 0.05, 0, &(inst->val), NULL, 100);
    evas_object_smart_callback_add(o, "changed", _slider_cb, inst);
    inst->o_slider = o;
    e_widget_table_object_align_append(inst->o_table, o, 
