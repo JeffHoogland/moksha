@@ -625,7 +625,7 @@ _scanner_del(void *data, int type __UNUSED__, Ecore_Exe_Event_Del *ev)
         else if (ev->exit_code == 2)
           str = "unable to create local socket; check \"/$TMPDIR/.ecore_service/\" for stale files";
         INF("scanner connection dead (%s), exiting", str);
-        _e_fm_main_catch(EFM_MODE_USING_RASTER_MOUNT); 
+        _e_fm_main_catch(EFM_MODE_USING_EEZE_MOUNT); 
      }
    INF("lost connection to scanner");
    scanner = NULL;
@@ -673,7 +673,7 @@ _scanner_run(void)
    scanner = ecore_exe_pipe_run("eeze_scanner", ECORE_EXE_NOT_LEADER, pfx);
    if (!scanner)
      if (++count == 3)
-       _e_fm_main_catch(EFM_MODE_USING_RASTER_MOUNT);
+       _e_fm_main_catch(EFM_MODE_USING_EEZE_MOUNT);
 }
 
 
