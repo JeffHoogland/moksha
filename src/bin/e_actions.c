@@ -2832,13 +2832,13 @@ ACT_FN_END_MOUSE(delayed_action, )
    _delayed_action_mouse_del(obj, params, ev);
 }
 
-ACT_FN_GO_ACPI(dim_screen, __UNUSED__)
+ACT_FN_GO(dim_screen, __UNUSED__)
 {
    E_Zone *zone = _e_actions_zone_get(obj);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_DIM);
 }
 
-ACT_FN_GO_ACPI(undim_screen, __UNUSED__)
+ACT_FN_GO(undim_screen, __UNUSED__)
 {
    E_Zone *zone = _e_actions_zone_get(obj);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
@@ -3259,10 +3259,10 @@ e_actions_init(void)
                             "screen_send_by", NULL,
                             "syntax: N-offset, example: -2", 1);
 
-   ACT_GO_ACPI(dim_screen);
+   ACT_GO(dim_screen);
    e_action_predef_name_set(N_("Screen"), N_("Dim"), "dim_screen",
                             NULL, NULL, 0);
-   ACT_GO_ACPI(undim_screen);
+   ACT_GO(undim_screen);
    e_action_predef_name_set(N_("Screen"), N_("Undim"), "undim_screen",
                             NULL, NULL, 0);
    ACT_GO(backlight_set);
