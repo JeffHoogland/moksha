@@ -831,7 +831,7 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
                {
                   const char *bdname = params;
 
-                  while (bdname && (space = strchr(bdname, ' ')))
+                  while ((space = strchr(bdname, ' ')))
                     {
                        if (strncmp(bd->bordername, bdname, space - bdname) == 0)
                          {
@@ -2858,6 +2858,8 @@ ACT_FN_GO(backlight_set, )
      }
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, ((double)v / 100.0), -1.0);
+   e_config->backlight.normal = e_backlight_level_get(zone);
+   e_config_save_queue();
 }
 
 ACT_FN_GO(backlight_adjust, )
@@ -2868,6 +2870,8 @@ ACT_FN_GO(backlight_adjust, )
    v = atoi(params);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, e_backlight_level_get(zone) + ((double)v / 100.0), -1.0);
+   e_config->backlight.normal = e_backlight_level_get(zone);
+   e_config_save_queue();
 }
 
 ACT_FN_GO(kbd_layout, )
@@ -3356,7 +3360,7 @@ e_actions_init(void)
    /* app */
    ACT_GO(app);
    e_action_predef_name_set(N_("Launch"), N_("Application"), "app", NULL,
-                            "syntax: , example:", 1);
+                            "syntax: [file:file.desktop|name:App Name|generic:Generic Name|exe:exename], example: file:terminology.desktop | file:/path/to/terminology.desktop | name:Terminology | generic:Terminal Emulator | exe:xterm", 1);
 
    /* new instance of focused app */
    ACT_GO(app_new_instance);
