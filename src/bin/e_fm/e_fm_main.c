@@ -170,6 +170,18 @@ main(int argc, char **argv)
    return 0;
 }
 
+void
+_e_fm_main_catch(unsigned int val)
+{
+   char buf[64];
+
+   snprintf(buf, sizeof(buf), "%u", val);
+   ecore_ipc_server_send(_e_fm_ipc_server,
+                         6 /*E_IPC_DOMAIN_FM*/,
+                         E_FM_OP_INIT,
+                         0, 0, 0, buf, strlen(buf) + 1);
+}
+
 #ifdef HAVE_HAL_MOUNT
 void
 _e_fm_main_hal_catch(Eina_Bool usable)
@@ -192,6 +204,7 @@ _e_fm_main_udisks_catch(Eina_Bool usable)
    if (usable)
      {
         mode = EFM_MODE_USING_UDISKS_MOUNT;
+		_e_fm_main_catch(mode);
         return;
      }
 # ifdef HAVE_EEZE_MOUNT

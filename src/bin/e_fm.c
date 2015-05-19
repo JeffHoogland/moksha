@@ -2928,6 +2928,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
      }
    switch (e->minor)
      {
+      case E_FM_OP_INIT:
+        e_config->device_detect_mode = strtoul((char*)e->data, NULL, 10);
+        break;
       case E_FM_OP_MONITOR_SYNC:  /*mon list sync*/
         ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, E_FM_OP_MONITOR_SYNC,
                               0, 0, e->response,
