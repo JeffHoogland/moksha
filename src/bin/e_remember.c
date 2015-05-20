@@ -390,10 +390,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
              rem->prop.w = bd->client.w;
              rem->prop.h = bd->client.h;
           }
-        if (bd->internal)
-          rem->prop.maximize = bd->maximized & E_MAXIMIZE_DIRECTION;
-        else
-          rem->prop.maximize = 0;
+		rem->prop.maximize = bd->maximized & E_MAXIMIZE_DIRECTION;
      }
    if (rem->apply & E_REMEMBER_APPLY_LAYER)
      {
