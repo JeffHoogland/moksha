@@ -294,19 +294,19 @@ _e_sys_cb_timer(void *data __UNUSED__)
 
    e_init_status_set(_("Checking System Permissions"));
    snprintf(buf, sizeof(buf),
-            "exec %s/enlightenment/utils/enlightenment_sys -t halt",
+            "%s/enlightenment/utils/enlightenment_sys -t halt",
             e_prefix_lib_get());
    _e_sys_halt_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf),
-            "exec %s/enlightenment/utils/enlightenment_sys -t reboot",
+            "%s/enlightenment/utils/enlightenment_sys -t reboot",
             e_prefix_lib_get());
    _e_sys_reboot_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf),
-            "exec %s/enlightenment/utils/enlightenment_sys -t suspend",
+            "%s/enlightenment/utils/enlightenment_sys -t suspend",
             e_prefix_lib_get());
    _e_sys_suspend_check_exe = ecore_exe_run(buf, NULL);
    snprintf(buf, sizeof(buf),
-            "exec %s/enlightenment/utils/enlightenment_sys -t hibernate",
+            "%s/enlightenment/utils/enlightenment_sys -t hibernate",
             e_prefix_lib_get());
    _e_sys_hibernate_check_exe = ecore_exe_run(buf, NULL);
    return ECORE_CALLBACK_CANCEL;
@@ -720,7 +720,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
         /* shutdown -h now */
         if (e_util_immortal_check()) return 0;
         snprintf(buf, sizeof(buf),
-                 "exec %s/enlightenment/utils/enlightenment_sys halt",
+                 "%s/enlightenment/utils/enlightenment_sys halt",
                  e_prefix_lib_get());
         if (_e_sys_exe)
           {
@@ -767,7 +767,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
         /* shutdown -r now */
         if (e_util_immortal_check()) return 0;
         snprintf(buf, sizeof(buf),
-                 "exec %s/enlightenment/utils/enlightenment_sys reboot",
+                 "%s/enlightenment/utils/enlightenment_sys reboot",
                  e_prefix_lib_get());
         if (_e_sys_exe)
           {
@@ -813,7 +813,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
       case E_SYS_SUSPEND:
         /* /etc/acpi/sleep.sh force */
         snprintf(buf, sizeof(buf),
-                 "exec %s/enlightenment/utils/enlightenment_sys suspend",
+                 "%s/enlightenment/utils/enlightenment_sys suspend",
                  e_prefix_lib_get());
         if (_e_sys_exe)
           {
@@ -868,7 +868,7 @@ _e_sys_action_do(E_Sys_Action a, char *param __UNUSED__, Eina_Bool raw)
       case E_SYS_HIBERNATE:
         /* /etc/acpi/hibernate.sh force */
         snprintf(buf, sizeof(buf),
-                 "exec %s/enlightenment/utils/enlightenment_sys hibernate",
+                 "%s/enlightenment/utils/enlightenment_sys hibernate",
                  e_prefix_lib_get());
         if (_e_sys_exe)
           {
