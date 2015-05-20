@@ -700,26 +700,26 @@ _e_smart_event_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    if (!sd->pan_obj) return;
    sd->pan_func.max_get(sd->pan_obj, &mx, &my);
    edje_object_part_geometry_get(sd->edje_obj, "e.swallow.content", NULL, NULL, &vw, &vh);
-   if (!strcmp(ev->keyname, "Left"))
+   if (!strcmp(ev->key, "Left"))
      x -= sd->step.x;
-   else if (!strcmp(ev->keyname, "Right"))
+   else if (!strcmp(ev->key, "Right"))
      x += sd->step.x;
-   else if (!strcmp(ev->keyname, "Up"))
+   else if (!strcmp(ev->key, "Up"))
      y -= sd->step.y;
-   else if (!strcmp(ev->keyname, "Home"))
+   else if (!strcmp(ev->key, "Home"))
      y = 0;
-   else if (!strcmp(ev->keyname, "End"))
+   else if (!strcmp(ev->key, "End"))
      y = my;
-   else if (!strcmp(ev->keyname, "Down"))
+   else if (!strcmp(ev->key, "Down"))
      y += sd->step.y;
-   else if (!strcmp(ev->keyname, "Prior"))
+   else if (!strcmp(ev->key, "Prior"))
      {
         if (sd->page.y < 0)
           y -= -(sd->page.y * vh) / 100;
         else
           y -= sd->page.y;
      }
-   else if (!strcmp(ev->keyname, "Next"))
+   else if (!strcmp(ev->key, "Next"))
      {
         if (sd->page.y < 0)
           y += -(sd->page.y * vh) / 100;

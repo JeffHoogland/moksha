@@ -466,8 +466,8 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
    ev = event_info;
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) return;
    wd = e_widget_data_get(data);
-   if ((!strcmp(ev->keyname, "Up")) || (!strcmp(ev->keyname, "KP_Up")) ||
-       (!strcmp(ev->keyname, "Left")) || (!strcmp(ev->keyname, "KP_Left")))
+   if ((!strcmp(ev->key, "Up")) || (!strcmp(ev->key, "KP_Up")) ||
+       (!strcmp(ev->key, "Left")) || (!strcmp(ev->key, "KP_Left")))
      {
 	EINA_LIST_FOREACH(wd->items, l, it)
           {
@@ -479,10 +479,10 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
                }
           }
      }
-   else if ((!strcmp(ev->keyname, "Down")) ||
-            (!strcmp(ev->keyname, "KP_Down")) ||
-            (!strcmp(ev->keyname, "Right")) ||
-            (!strcmp(ev->keyname, "KP_Right")))
+   else if ((!strcmp(ev->key, "Down")) ||
+            (!strcmp(ev->key, "KP_Down")) ||
+            (!strcmp(ev->key, "Right")) ||
+            (!strcmp(ev->key, "KP_Right")))
      {
 	EINA_LIST_FOREACH(wd->items, l, it)
           {
@@ -494,8 +494,8 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
                }
           }
      }
-   else if ((!strcmp(ev->keyname, "Home")) ||
-            (!strcmp(ev->keyname, "KP_Home")))
+   else if ((!strcmp(ev->key, "Home")) ||
+            (!strcmp(ev->key, "KP_Home")))
      {
 	EINA_LIST_FOREACH(wd->items, l, it)
 	  {
@@ -506,7 +506,7 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
 	       }
 	  }
      }
-   else if ((!strcmp(ev->keyname, "End")) || (!strcmp(ev->keyname, "KP_End")))
+   else if ((!strcmp(ev->key, "End")) || (!strcmp(ev->key, "KP_End")))
      {
         EINA_LIST_FOREACH(wd->items, l, it)
           {

@@ -320,7 +320,7 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
    ev = event;
    dia = data;
-   if (!strcmp(ev->keyname, "Tab"))
+   if (!strcmp(ev->key, "Tab"))
      {
         if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
           {
@@ -367,8 +367,8 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                }
           }
      }
-   else if (((!strcmp(ev->keyname, "Return")) ||
-             (!strcmp(ev->keyname, "KP_Enter"))))
+   else if (((!strcmp(ev->key, "Return")) ||
+             (!strcmp(ev->key, "KP_Enter"))))
      {
         Evas_Object *o = NULL;
 
@@ -378,7 +378,7 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           o = e_widget_focused_object_get(dia->box_object);
         if (o) e_widget_activate(o);
      }
-   else if (!strcmp(ev->keyname, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      e_object_del(E_OBJECT(dia));
 }
 

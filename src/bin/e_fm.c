@@ -7813,7 +7813,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         e_fm2_pan_set(obj, sd->pos.x, sd->pos.y - sd->h);
         evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
      }
-   else if (!strcmp(ev->keyname, "Next"))
+   else if (!strcmp(ev->key, "Next"))
      {
         /* down h * n pixels */
         e_fm2_pan_set(obj, sd->pos.x, sd->pos.y + sd->h);

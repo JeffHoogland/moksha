@@ -2700,7 +2700,7 @@ _pager_popup_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (binding->key && (!strcmp(binding->key, ev->key)) &&
                  ((binding->modifiers == mod)))
                {
                   E_Action *act;

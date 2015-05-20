@@ -130,10 +130,10 @@ _e_entry_cb_key_down(void *data, Evas_Object *obj __UNUSED__, void *event_info)
 
    ev = event_info;
    if (!(ed = data)) return;
-   if (!strcmp(ev->keyname, "Return"))
+   if (!strcmp(ev->key, "Return"))
      _e_entry_dialog_ok(data, ed->dia);
    else
-   if (!strcmp(ev->keyname, "Escape"))
+   if (!strcmp(ev->key, "Escape"))
      _e_entry_dialog_cancel(data, ed->dia);
 }
 

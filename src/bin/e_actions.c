@@ -2776,7 +2776,7 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_Event_Key *ev)
         e_object_ref(da->obj);
      }
    da->mouse = 0;
-   da->keyname = eina_stringshare_add(ev->keyname);
+   da->keyname = eina_stringshare_add(ev->key);
    if (params) _delayed_action_list_parse(da, params);
    _delayed_actions = eina_list_append(_delayed_actions, da);
 }
@@ -2790,7 +2790,7 @@ _delayed_action_key_del(E_Object *obj, const char *params __UNUSED__, Ecore_Even
    EINA_LIST_FOREACH(_delayed_actions, l, da)
      {
         if ((da->obj == obj) && (!da->mouse) &&
-            (!strcmp(da->keyname, ev->keyname)))
+            (!strcmp(da->keyname, ev->key)))
           {
              _delayed_action_do(da);
              _delayed_action_free(da);

@@ -352,16 +352,16 @@ _e_wizard_cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *ob
 
    ev = event;
    if (!o_content) return;
-   if (!strcmp(ev->keyname, "Tab"))
+   if (!strcmp(ev->key, "Tab"))
      {
         if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
           e_widget_focus_jump(o_content, 0);
         else
           e_widget_focus_jump(o_content, 1);
      }
-   else if (((!strcmp(ev->keyname, "Return")) ||
-             (!strcmp(ev->keyname, "KP_Enter")) ||
-             (!strcmp(ev->keyname, "space"))))
+   else if (((!strcmp(ev->key, "Return")) ||
+             (!strcmp(ev->key, "KP_Enter")) ||
+             (!strcmp(ev->key, "space"))))
      {
         Evas_Object *o;
 

@@ -533,7 +533,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (binding->key && (!strcmp(binding->key, ev->key)) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   if (!(act = e_action_find(binding->action))) continue;

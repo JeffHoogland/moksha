@@ -318,7 +318,7 @@ _theme_import_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 
    ev = event;
    import = data;
-   if ((!e_widget_fsel_typebuf_visible_get(import->fsel_obj)) && (!strcmp(ev->keyname, "Tab")))
+   if ((!e_widget_fsel_typebuf_visible_get(import->fsel_obj)) && (!strcmp(ev->key, "Tab")))
      {
         if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(import->win)), "Shift"))
           {
@@ -355,9 +355,9 @@ _theme_import_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                }
           }
      }
-   else if (((!strcmp(ev->keyname, "Return")) ||
-             (!strcmp(ev->keyname, "KP_Enter")) ||
-             (!strcmp(ev->keyname, "space"))))
+   else if (((!strcmp(ev->key, "Return")) ||
+             (!strcmp(ev->key, "KP_Enter")) ||
+             (!strcmp(ev->key, "space"))))
      {
         Evas_Object *o = NULL;
 

@@ -493,7 +493,7 @@ _grab_cb_key_down(void *data, __UNUSED__ int type, void *event)
 
    ev = event;
    if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
-   if (!strcmp(ev->keyname, "Delete"))
+   if (!strcmp(ev->key, "Delete"))
      {
         if (cfdata->grab.btn == 1)
           cfdata->btn.drag = 0;

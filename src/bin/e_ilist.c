@@ -973,7 +973,7 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
    if (ev->event_flags & EVAS_EVENT_FLAG_ON_HOLD) sd->on_hold = 1;
    else sd->on_hold = 0;
 
-   if ((!strcmp(ev->keyname, "Up")) || (!strcmp(ev->keyname, "KP_Up")))
+   if ((!strcmp(ev->key, "Up")) || (!strcmp(ev->key, "KP_Up")))
      {
         n = ns;
         do
@@ -999,7 +999,7 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
                e_ilist_selected_set(sd->o_smart, n);
           }
      }
-   else if ((!strcmp(ev->keyname, "Down")) || (!strcmp(ev->keyname, "KP_Down")))
+   else if ((!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "KP_Down")))
      {
         n = ns;
         do
@@ -1025,7 +1025,7 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
                e_ilist_selected_set(sd->o_smart, n);
           }
      }
-   else if ((!strcmp(ev->keyname, "Home")) || (!strcmp(ev->keyname, "KP_Home")))
+   else if ((!strcmp(ev->key, "Home")) || (!strcmp(ev->key, "KP_Home")))
      {
         n = -1;
         do
@@ -1051,7 +1051,7 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
                e_ilist_selected_set(sd->o_smart, n);
           }
      }
-   else if ((!strcmp(ev->keyname, "End")) || (!strcmp(ev->keyname, "KP_End")))
+   else if ((!strcmp(ev->key, "End")) || (!strcmp(ev->key, "KP_End")))
      {
         n = eina_list_count(sd->items);
         do
@@ -1077,9 +1077,9 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
                e_ilist_selected_set(sd->o_smart, n);
           }
      }
-   else if ((!strcmp(ev->keyname, "Return")) ||
-            (!strcmp(ev->keyname, "KP_Enter")) ||
-            (!strcmp(ev->keyname, "space") && !sd->typebuf.buf))
+   else if ((!strcmp(ev->key, "Return")) ||
+            (!strcmp(ev->key, "KP_Enter")) ||
+            (!strcmp(ev->key, "space") && !sd->typebuf.buf))
      {
         if (!sd->on_hold)
           {
@@ -1090,9 +1090,9 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
                }
           }
      }
-   else if (!strcmp(ev->keyname, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      _e_typebuf_clean(obj);
-   else if (strcmp(ev->keyname, "BackSpace") && strcmp(ev->keyname, "Tab") && ev->string)
+   else if (strcmp(ev->key, "BackSpace") && strcmp(ev->key, "Tab") && ev->string)
      _e_typebuf_add(obj, ev->string);
 
    sd->on_hold = 0;
