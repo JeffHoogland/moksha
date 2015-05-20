@@ -1247,9 +1247,11 @@ _item_select(E_Ilist_Item *si)
    edje_object_signal_emit(si->o_base, "e,state,selected", "e");
    if (si->o_icon)
      {
-        if (strcmp(evas_object_type_get(si->o_icon), "e_icon"))
+        const char *t = evas_object_type_get(si->o_icon);
+
+        if (!strcmp(t, "edje"))
           edje_object_signal_emit(si->o_icon, "e,state,selected", "e");
-        else
+        else if (!strcmp(t, "e_icon"))
           e_icon_selected_set(si->o_icon, EINA_TRUE);
      }
    sd->selected_items = eina_list_append(sd->selected_items, si);
