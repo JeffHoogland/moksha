@@ -55,8 +55,7 @@ e_ipc_init(void)
         
         snprintf(buf, sizeof(buf), "%s/e-%s@%x",
                  base, user, id1);
-		if (mkdir(buf, S_IRWXU) < 0)
-			goto retry;
+		mkdir(buf, S_IRWXU);
         if (stat(buf, &st) == 0)
           {
              if ((st.st_uid == getuid()) &&
@@ -70,7 +69,6 @@ e_ipc_init(void)
                   if (_e_ipc_server) break;
                }
           }
-retry:
         id1 = rand();
      }
    if (!_e_ipc_server) return 0;
