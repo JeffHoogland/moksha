@@ -119,9 +119,9 @@ _dialog_key_down_cb(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__,
    Evas_Event_Key_Down *ev = event;
    E_Connman_Agent *agent = data;
 
-   if (!strcmp(ev->keyname, "Return"))
+   if (!strcmp(ev->key, "Return"))
      _dialog_ok_cb(agent, agent->dialog);
-   else if (strcmp(ev->keyname, "Escape") == 0)
+   else if (strcmp(ev->key, "Escape") == 0)
      _dialog_cancel_cb(agent, agent->dialog);
 }
 

@@ -1034,16 +1034,16 @@ _grab_key_down_cb(void *data,
    ev = event;
    cfdata = data;
 
-   if ((ev->keyname) && (ev->key) && (ev->compose))
-     printf("'%s' '%s' '%s'\n", ev->keyname, ev->key, ev->compose);
-   else if ((ev->keyname) && (ev->key))
-     printf("'%s' '%s'\n", ev->keyname, ev->key);
+   if ((ev->key) && (ev->key) && (ev->compose))
+     printf("'%s' '%s' '%s'\n", ev->key, ev->key, ev->compose);
+   else if ((ev->key) && (ev->key))
+     printf("'%s' '%s'\n", ev->key, ev->key);
    else
      printf("unknown key!!!!\n");
-   if (!e_util_strcmp(ev->keyname, "Control_L") || !e_util_strcmp(ev->keyname, "Control_R") ||
-       !e_util_strcmp(ev->keyname, "Shift_L") || !e_util_strcmp(ev->keyname, "Shift_R") ||
-       !e_util_strcmp(ev->keyname, "Alt_L") || !e_util_strcmp(ev->keyname, "Alt_R") ||
-       !e_util_strcmp(ev->keyname, "Super_L") || !e_util_strcmp(ev->keyname, "Super_R"))
+   if (!e_util_strcmp(ev->key, "Control_L") || !e_util_strcmp(ev->key, "Control_R") ||
+       !e_util_strcmp(ev->key, "Shift_L") || !e_util_strcmp(ev->key, "Shift_R") ||
+       !e_util_strcmp(ev->key, "Alt_L") || !e_util_strcmp(ev->key, "Alt_R") ||
+       !e_util_strcmp(ev->key, "Super_L") || !e_util_strcmp(ev->key, "Super_R"))
      {
         /* Do nothing */
      }
@@ -1080,7 +1080,7 @@ _grab_key_down_cb(void *data,
 
                   bi->context = E_BINDING_CONTEXT_ANY;
                   bi->modifiers = mod;
-                  bi->key = eina_stringshare_add(ev->keyname);
+                  bi->key = eina_stringshare_add(ev->key);
                   bi->action = NULL;
                   bi->params = NULL;
                   bi->any_mod = 0;
@@ -1123,7 +1123,7 @@ _grab_key_down_cb(void *data,
 
                   bi->modifiers = mod;
                   if (bi->key) eina_stringshare_del(bi->key);
-                  bi->key = eina_stringshare_add(ev->keyname);
+                  bi->key = eina_stringshare_add(ev->key);
                   printf("blub\n");
 
                   label = _key_binding_text_get(bi);

@@ -3425,7 +3425,7 @@ _e_mod_comp_key_down(void *data __UNUSED__,
 {
    Ecore_Event_Key *ev = event;
 
-   if ((!strcmp(ev->keyname, "Home")) &&
+   if ((!strcmp(ev->key, "Home")) &&
        (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
        (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))
@@ -3440,7 +3440,7 @@ _e_mod_comp_key_down(void *data __UNUSED__,
              e_sys_action_do(E_SYS_RESTART, NULL);
           }
      }
-   else if ((!strcasecmp(ev->keyname, "f")) &&
+   else if ((!strcasecmp(ev->key, "f")) &&
             (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
             (ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
             (ev->modifiers & ECORE_EVENT_MODIFIER_ALT))

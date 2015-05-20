@@ -2928,6 +2928,9 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
      }
    switch (e->minor)
      {
+      case E_FM_OP_INIT:
+        e_config->device_detect_mode = strtoul((char*)e->data, NULL, 10);
+        break;
       case E_FM_OP_MONITOR_SYNC:  /*mon list sync*/
         ecore_ipc_client_send(cl->cl, E_IPC_DOMAIN_FM, E_FM_OP_MONITOR_SYNC,
                               0, 0, e->response,
@@ -7810,7 +7813,7 @@ _e_fm2_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event
         e_fm2_pan_set(obj, sd->pos.x, sd->pos.y - sd->h);
         evas_object_smart_callback_call(sd->obj, "pan_changed", NULL);
      }
-   else if (!strcmp(ev->keyname, "Next"))
+   else if (!strcmp(ev->key, "Next"))
      {
         /* down h * n pixels */
         e_fm2_pan_set(obj, sd->pos.x, sd->pos.y + sd->h);

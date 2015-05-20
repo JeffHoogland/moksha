@@ -1355,7 +1355,7 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (binding->key && (!strcmp(binding->key, ev->key)) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   if (!_act_winlist) continue;
@@ -1421,7 +1421,7 @@ _e_winlist_cb_key_up(void *data __UNUSED__, int type __UNUSED__, void *event)
         if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
           mod |= E_BINDING_MODIFIER_WIN;
 
-        if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+        if (binding->key && (!strcmp(binding->key, ev->key)) &&
             ((binding->modifiers == mod) || (binding->any_mod)))
           {
              if (!_act_winlist) continue;

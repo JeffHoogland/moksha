@@ -53,7 +53,7 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    e_widget_on_focus_hook_set(o, _e_dialog_cb_wid_on_focus, dia);
    dia->box_object = o;
    edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
-   edje_object_signal_emit(dia->bg_object, "e,state,no_resizeble", "e");
+   edje_object_signal_emit(dia->bg_object, "e,state,no_resizable", "e");
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
    dia->event_object = o;
@@ -163,19 +163,31 @@ e_dialog_text_set(E_Dialog *dia, const char *text)
 EAPI void
 e_dialog_icon_set(E_Dialog *dia, const char *icon, Evas_Coord size)
 {
-   if (!icon) return;
-
-   dia->icon_object = e_icon_add(e_win_evas_get(dia->win));
-   if (!e_util_icon_theme_set(dia->icon_object, icon))
-     e_icon_file_edje_set(dia->icon_object, icon, "icon");
-   evas_object_size_hint_min_set(dia->icon_object, size * e_scale, size * e_scale);
-   edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
-   edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
-   evas_object_show(dia->icon_object);
-   if (icon)
-     edje_object_signal_emit(dia->bg_object, "e,icon,enabled", "e");
+   if (!icon)
+     {
+        if (dia->icon_object)
+          {
+             edje_object_part_unswallow(dia->bg_object, dia->icon_object);
+             evas_object_del(dia->icon_object);
+             dia->icon_object = NULL;
+          }
+        edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
+        edje_object_signal_emit(dia->bg_object, "e,icon,disabled", "e");
+     }	
    else
-     edje_object_signal_emit(dia->bg_object, "e,icon,disabled", "e");
+     {
+        if (!dia->icon_object)
+          {
+             dia->icon_object = e_icon_add(e_win_evas_get(dia->win));
+             edje_object_part_swallow(dia->bg_object, "e.swallow.icon", dia->icon_object);
+            evas_object_show(dia->icon_object);
+          }
+        if (!e_util_icon_theme_set(dia->icon_object, icon))
+          e_icon_file_edje_set(dia->icon_object, icon, "icon");
+        evas_object_size_hint_min_set(dia->icon_object, size * e_scale, size * e_scale);
+        edje_object_signal_emit(dia->bg_object, "e,state,icon", "e");
+        edje_object_signal_emit(dia->bg_object, "e,icon,enabled", "e");
+     }
    edje_object_message_signal_process(dia->bg_object);
 }
 
@@ -221,13 +233,13 @@ e_dialog_resizable_set(E_Dialog *dia, int resizable)
           {
              e_win_size_max_set(dia->win, 99999, 99999);
              e_util_win_auto_resize_fill(dia->win);
-             edje_object_signal_emit(dia->bg_object, "e,state,resizeble", "e");
+             edje_object_signal_emit(dia->bg_object, "e,state,resizable", "e");
           }
         else
           {
              e_win_resize(dia->win, dia->min_w, dia->min_h);
              e_win_size_max_set(dia->win, dia->min_w, dia->min_h);
-             edje_object_signal_emit(dia->bg_object, "e,state,no_resizeble", "e");
+             edje_object_signal_emit(dia->bg_object, "e,state,no_resizable", "e");
           }
      }
 }
@@ -308,7 +320,7 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
    ev = event;
    dia = data;
-   if (!strcmp(ev->keyname, "Tab"))
+   if (!strcmp(ev->key, "Tab"))
      {
         if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(dia->win)), "Shift"))
           {
@@ -355,8 +367,8 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                }
           }
      }
-   else if (((!strcmp(ev->keyname, "Return")) ||
-             (!strcmp(ev->keyname, "KP_Enter"))))
+   else if (((!strcmp(ev->key, "Return")) ||
+             (!strcmp(ev->key, "KP_Enter"))))
      {
         Evas_Object *o = NULL;
 
@@ -366,7 +378,7 @@ _e_dialog_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           o = e_widget_focused_object_get(dia->box_object);
         if (o) e_widget_activate(o);
      }
-   else if (!strcmp(ev->keyname, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      e_object_del(E_OBJECT(dia));
 }
 

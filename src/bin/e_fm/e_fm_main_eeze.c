@@ -56,6 +56,7 @@ static Ecore_Con_Server *svr = NULL;
 static Eet_Data_Descriptor *es_edd = NULL;
 static Eet_Connection *es_con = NULL;
 static Eina_Prefix *pfx = NULL;
+static Ecore_Poller *scanner_poller = NULL;
 
 void
 e_util_env_set(const char *var, const char *val)
@@ -606,8 +607,8 @@ _scanner_add(void *data, int type __UNUSED__, Ecore_Exe_Event_Add *ev)
 {
    if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
    INF("Scanner started");
-   if (_scanner_poll(NULL))
-     ecore_poller_add(ECORE_POLLER_CORE, 8, (Ecore_Task_Cb)_scanner_poll, NULL);
+   if ((!_scanner_poll(NULL)) && (!scanner_poller))
+     scanner_poller = ecore_poller_add(ECORE_POLLER_CORE, 8, (Ecore_Task_Cb)_scanner_poll, NULL);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -617,8 +618,14 @@ _scanner_del(void *data, int type __UNUSED__, Ecore_Exe_Event_Del *ev)
    if (data != ecore_exe_data_get(ev->exe)) return ECORE_CALLBACK_PASS_ON;
    if (!svr)
      {
-        INF("scanner connection dead, exiting");
-        exit(1);
+        const char *str = "blame cedric";
+
+        if (ev->exit_code == 1)
+          str = "unable to allocate memory";
+        else if (ev->exit_code == 2)
+          str = "unable to create local socket; check \"/$TMPDIR/.ecore_service/\" for stale files";
+        INF("scanner connection dead (%s), exiting", str);
+        _e_fm_main_catch(EFM_MODE_USING_EEZE_MOUNT); 
      }
    INF("lost connection to scanner");
    scanner = NULL;
@@ -661,13 +668,19 @@ _scanner_write(const void *eet_data __UNUSED__, size_t size __UNUSED__, void *us
 static void
 _scanner_run(void)
 {
+   static int count;
+
    scanner = ecore_exe_pipe_run("eeze_scanner", ECORE_EXE_NOT_LEADER, pfx);
+   if (!scanner)
+     if (++count == 3)
+       _e_fm_main_catch(EFM_MODE_USING_EEZE_MOUNT);
 }
 
 
 static Eina_Bool
 _scanner_con(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
 {
+   E_FN_DEL(ecore_poller_del, scanner_poller);
    INF("Scanner connected");
    es_con = eet_connection_new(_scanner_read, _scanner_write, NULL);
    return ECORE_CALLBACK_RENEW;
@@ -677,7 +690,7 @@ static Eina_Bool
 _scanner_disc(void *data __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Server_Del *ev __UNUSED__)
 {
    INF("Scanner disconnected");
-   if (_scanner_poll(NULL))
+   if (!_scanner_poll(NULL))
      _scanner_run();
    return ECORE_CALLBACK_RENEW;
 }

@@ -259,7 +259,7 @@ main(int argc,
 #endif
 
    /* pass 3 - set path and ifs to minimal defaults */
-   putenv("PATH=/bin:/usr/bin");
+   putenv("PATH=/bin:/usr/bin:/sbin:/usr/sbin");
    putenv("IFS= \t\n");
 
    if ((!test)

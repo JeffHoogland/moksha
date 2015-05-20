@@ -421,6 +421,7 @@ e_border_new(E_Container *con,
    ecore_x_window_shadow_tree_flush();
    e_object_del_func_set(E_OBJECT(bd), E_OBJECT_CLEANUP_FUNC(_e_border_del));
 
+   bd->focus_policy_override = E_FOCUS_LAST;
    bd->w = 1;
    bd->h = 1;
    /* FIXME: ewww - round trip */
@@ -7457,6 +7458,21 @@ _e_border_eval0(E_Border *bd)
                   bd->client.netwm.update.state = 1;
                }
           }
+		else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+          {
+			 bd->focus_policy_override = E_FOCUS_CLICK;
+             e_focus_setup(bd);
+             if (!bd->client.netwm.state.skip_pager)
+               {
+                  bd->client.netwm.state.skip_pager = 1;
+                  bd->client.netwm.update.state = 1;
+               }
+             if (!bd->client.netwm.state.skip_taskbar)
+               {
+                  bd->client.netwm.state.skip_taskbar = 1;
+                  bd->client.netwm.update.state = 1;
+               }
+          }
         bd->client.netwm.fetch.type = 0;
      }
    if (bd->client.icccm.fetch.machine)
@@ -8249,6 +8265,8 @@ _e_border_eval0(E_Border *bd)
         else if (bd->bordername)
           bordername = bd->bordername;
         else if ((bd->client.mwm.borderless) || (bd->borderless))
+          bordername = "borderless";
+        else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
           bordername = "borderless";
         else if (((bd->client.icccm.transient_for != 0) ||
                   (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DIALOG)) &&

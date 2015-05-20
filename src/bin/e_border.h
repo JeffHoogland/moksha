@@ -46,7 +46,8 @@ typedef enum _E_Focus_Policy
 {
    E_FOCUS_CLICK,
    E_FOCUS_MOUSE,
-   E_FOCUS_SLOPPY
+   E_FOCUS_SLOPPY,
+   E_FOCUS_LAST
 } E_Focus_Policy;
 
 typedef enum _E_Urgency_Policy
@@ -669,6 +670,7 @@ struct _E_Border
    Eina_Bool                  argb;
 
    int                        tmp_input_hidden;
+   E_Focus_Policy             focus_policy_override;
 };
 
 struct _E_Border_Pending_Move_Resize
@@ -838,6 +840,17 @@ extern EAPI int E_EVENT_BORDER_FOCUS_OUT;
 extern EAPI int E_EVENT_BORDER_PROPERTY;
 extern EAPI int E_EVENT_BORDER_FULLSCREEN;
 extern EAPI int E_EVENT_BORDER_UNFULLSCREEN;
+
+/* e_config not available everywhere e_border.h is used...
+static inline Eina_Bool
+e_border_focus_policy_click(const E_Border *bd)
+{
+   return ((bd->focus_policy_override == E_FOCUS_CLICK) || (e_config->focus_policy == E_FOCUS_CLICK));
+}
+*/
+#define e_border_focus_policy_click(bd) \
+  ((bd->focus_policy_override == E_FOCUS_CLICK) || (e_config->focus_policy == E_FOCUS_CLICK))
+
 
 /* macro for finding misuse of changed flag */
 #if 0

@@ -87,7 +87,7 @@ e_backlight_init(void)
         e_backlight_update();
         if (!getenv("E_RESTART"))
           {
-             e_backlight_level_set(NULL, 0.0, 0.0);
+             e_backlight_level_set(NULL, 0.05, 0.0);
              e_backlight_level_set(NULL, e_config->backlight.normal, 0.0);
           }
      }
@@ -207,24 +207,20 @@ e_backlight_level_set(E_Zone *zone, double val, double tim)
    // transition time
    if (val < 0.0) val = 0.0;
    else if (val > 1.0) val = 1.0;
-   if ((val == bl_val) && (!bl_anim)) return;
+   if ((fabs(val - bl_val) < DBL_EPSILON) && (!bl_anim)) return;
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
+   ecore_event_add(E_EVENT_BACKLIGHT_CHANGE, NULL, NULL, NULL);
    bl_now = bl_val;
    bl_val = val;
+   if (fabs(tim) < DBL_EPSILON)
+     {
+        _e_backlight_set(zone, val);
+        return;
+     }
 //   if (e_config->backlight.mode != E_BACKLIGHT_MODE_NORMAL) return;
    if (tim < 0.0) tim = e_config->backlight.transition;
-   ecore_event_add(E_EVENT_BACKLIGHT_CHANGE, NULL, NULL, NULL);
-   if (tim == 0.0)
-     {
-        if (bl_anim)
-          {
-             ecore_animator_del(bl_anim);
-             bl_anim = NULL;
-          }
-        _e_backlight_set(zone, val);
-       return;
-     }
-   if (bl_anim) ecore_animator_del(bl_anim);
+
+   E_FN_DEL(ecore_animator_del, bl_anim);
    bl_anim = ecore_animator_timeline_add(tim, _bl_anim, zone);
    bl_animval = bl_now;
 }
@@ -239,8 +235,11 @@ e_backlight_level_get(E_Zone *zone __UNUSED__)
 EAPI void
 e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode)
 {
+   E_Backlight_Mode pmode;
+
    // zone == NULL == everything
    if (e_config->backlight.mode == mode) return;
+   pmode = e_config->backlight.mode;
    e_config->backlight.mode = mode;
    if      (e_config->backlight.mode == E_BACKLIGHT_MODE_NORMAL)
      {
@@ -252,7 +251,10 @@ e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode)
      }
    else if (e_config->backlight.mode == E_BACKLIGHT_MODE_DIM)
      {
-        e_backlight_level_set(zone, e_config->backlight.dim, -1.0);
+        if ((pmode != E_BACKLIGHT_MODE_NORMAL) ||
+            ((pmode == E_BACKLIGHT_MODE_NORMAL) &&
+             (e_config->backlight.normal > e_config->backlight.dim)))
+          e_backlight_level_set(zone, e_config->backlight.dim, -1.0);
      }
    else if (e_config->backlight.mode == E_BACKLIGHT_MODE_MAX)
       e_backlight_level_set(zone, 1.0, -1.0);
@@ -276,7 +278,8 @@ e_backlight_devices_get(void)
 static Eina_Bool
 _e_backlight_handler(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
 {
-   e_backlight_update();
+   if (!bl_anim)
+     e_backlight_update();
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -334,6 +337,7 @@ _e_backlight_update(E_Zone *zone)
 static void
 _e_backlight_set(E_Zone *zone, double val)
 {
+   if (val < 0.05) val = 0.05;
    if (sysmode == MODE_RANDR)
      {
         Ecore_X_Window root;
@@ -484,7 +488,10 @@ _bl_sys_find(void)
         EINA_LIST_FOREACH(pdevs, l, f)
           {
              if (!bl_sysval)
-               bl_sysval = eina_stringshare_add(f);
+               {
+                  if ((!strstr(f, "kbd")) && (!strstr(f, "mail")))
+                    bl_sysval = eina_stringshare_add(f);
+               }
           }
      }
    /* clear out preferred devs list */

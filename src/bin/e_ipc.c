@@ -55,7 +55,7 @@ e_ipc_init(void)
         
         snprintf(buf, sizeof(buf), "%s/e-%s@%x",
                  base, user, id1);
-        mkdir(buf, S_IRWXU);
+		mkdir(buf, S_IRWXU);
         if (stat(buf, &st) == 0)
           {
              if ((st.st_uid == getuid()) &&

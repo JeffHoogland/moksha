@@ -634,10 +634,10 @@ _grab_key_down_cb(void *data, int type __UNUSED__, void *event)
    E_Quick_Access_Entry *entry;
    unsigned int mod = E_BINDING_MODIFIER_NONE;
 
-   if (!strcmp(ev->keyname, "Control_L") || !strcmp(ev->keyname, "Control_R") ||
-       !strcmp(ev->keyname, "Shift_L") || !strcmp(ev->keyname, "Shift_R") ||
-       !strcmp(ev->keyname, "Alt_L") || !strcmp(ev->keyname, "Alt_R") ||
-       !strcmp(ev->keyname, "Super_L") || !strcmp(ev->keyname, "Super_R"))
+   if (!strcmp(ev->key, "Control_L") || !strcmp(ev->key, "Control_R") ||
+       !strcmp(ev->key, "Shift_L") || !strcmp(ev->key, "Shift_R") ||
+       !strcmp(ev->key, "Alt_L") || !strcmp(ev->key, "Alt_R") ||
+       !strcmp(ev->key, "Super_L") || !strcmp(ev->key, "Super_R"))
      return ECORE_CALLBACK_RENEW;
 
    if (ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT)
@@ -661,7 +661,7 @@ _grab_key_down_cb(void *data, int type __UNUSED__, void *event)
 
    bi->context = E_BINDING_CONTEXT_ANY;
    bi->modifiers = mod;
-   bi->key = eina_stringshare_add(ev->keyname);
+   bi->key = eina_stringshare_add(ev->key);
    bi->action = eina_stringshare_ref(_act_toggle);
    bi->params = eina_stringshare_ref(entry->id);
 

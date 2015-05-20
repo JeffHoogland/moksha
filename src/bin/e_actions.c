@@ -831,7 +831,7 @@ ACT_FN_GO(window_border_cycle, __UNUSED__)
                {
                   const char *bdname = params;
 
-                  while (bdname && (space = strchr(bdname, ' ')))
+                  while ((space = strchr(bdname, ' ')))
                     {
                        if (strncmp(bd->bordername, bdname, space - bdname) == 0)
                          {
@@ -2005,21 +2005,47 @@ ACT_FN_GO(app, )
           {
              Efreet_Desktop *desktop = NULL;
              char *p, *p2;
+             size_t plen;
 
-             p2 = alloca(strlen(params) + 1);
-             strcpy(p2, params);
-             p = strchr(p2, ' ');
+             plen = strlen(params);
+             p2 = memcpy(alloca(plen + 1), params, plen + 1);
+             p = strchr(p2, ':');
              if (p)
                {
-                  *p = 0;
-                  if (!strcmp(p2, "file:"))
-                    desktop = efreet_util_desktop_file_id_find(p + 1);
-                  else if (!strcmp(p2, "name:"))
-                    desktop = efreet_util_desktop_name_find(p + 1);
-                  else if (!strcmp(p2, "generic:"))
-                    desktop = efreet_util_desktop_generic_name_find(p + 1);
-                  else if (!strcmp(p2, "exe:"))
-                    desktop = efreet_util_desktop_exec_find(p + 1);
+                  *p++ = 0;
+                  if (*p == ' ')
+                    {
+                       E_Dialog *dia;
+                       char dialog_text[1024];
+
+                       dia = e_dialog_new(NULL, "E", "_e_action_act_app_go_syntax_error");
+                       if (!dia) return;
+
+                       snprintf(dialog_text, sizeof(dialog_text),
+                                "%s<br><br>"
+                                "Check syntax. You should not put a whitespace right after colon in action params.<br>"
+                                "syntax: [file:file.desktop|name:App Name|generic:Generic Name|exe:exename]<br><br>"
+                                "exe:terminology (O)<br>"
+                                "exe: terminology (X)", params);
+
+                       e_dialog_title_set(dia, _("Action Params Syntax Error"));
+                       e_dialog_text_set(dia, _(dialog_text));
+                       e_dialog_icon_set(dia, "dialog-error", 64);
+                       e_dialog_button_add(dia, _("Close"), NULL, NULL, NULL);
+                       e_dialog_button_focus_num(dia, 0);
+                       e_win_centered_set(dia->win, 1);
+                       e_dialog_show(dia);
+
+                       return;
+                    }
+                  if (!strcmp(p2, "file"))
+                    desktop = efreet_util_desktop_file_id_find(p);
+                  else if (!strcmp(p2, "name"))
+                    desktop = efreet_util_desktop_name_find(p);
+                  else if (!strcmp(p2, "generic"))
+                    desktop = efreet_util_desktop_generic_name_find(p);
+                  else if (!strcmp(p2, "exe"))
+                    desktop = efreet_util_desktop_exec_find(p);
                   if (desktop)
                     {
                        e_exec(zone, desktop, NULL, NULL, "action/app");
@@ -2750,7 +2776,7 @@ _delayed_action_key_add(E_Object *obj, const char *params, Ecore_Event_Key *ev)
         e_object_ref(da->obj);
      }
    da->mouse = 0;
-   da->keyname = eina_stringshare_add(ev->keyname);
+   da->keyname = eina_stringshare_add(ev->key);
    if (params) _delayed_action_list_parse(da, params);
    _delayed_actions = eina_list_append(_delayed_actions, da);
 }
@@ -2764,7 +2790,7 @@ _delayed_action_key_del(E_Object *obj, const char *params __UNUSED__, Ecore_Even
    EINA_LIST_FOREACH(_delayed_actions, l, da)
      {
         if ((da->obj == obj) && (!da->mouse) &&
-            (!strcmp(da->keyname, ev->keyname)))
+            (!strcmp(da->keyname, ev->key)))
           {
              _delayed_action_do(da);
              _delayed_action_free(da);
@@ -2832,13 +2858,13 @@ ACT_FN_END_MOUSE(delayed_action, )
    _delayed_action_mouse_del(obj, params, ev);
 }
 
-ACT_FN_GO_ACPI(dim_screen, __UNUSED__)
+ACT_FN_GO(dim_screen, __UNUSED__)
 {
    E_Zone *zone = _e_actions_zone_get(obj);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_DIM);
 }
 
-ACT_FN_GO_ACPI(undim_screen, __UNUSED__)
+ACT_FN_GO(undim_screen, __UNUSED__)
 {
    E_Zone *zone = _e_actions_zone_get(obj);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
@@ -2858,6 +2884,8 @@ ACT_FN_GO(backlight_set, )
      }
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, ((double)v / 100.0), -1.0);
+   e_config->backlight.normal = e_backlight_level_get(zone);
+   e_config_save_queue();
 }
 
 ACT_FN_GO(backlight_adjust, )
@@ -2868,6 +2896,8 @@ ACT_FN_GO(backlight_adjust, )
    v = atoi(params);
    e_backlight_mode_set(zone, E_BACKLIGHT_MODE_NORMAL);
    e_backlight_level_set(zone, e_backlight_level_get(zone) + ((double)v / 100.0), -1.0);
+   e_config->backlight.normal = e_backlight_level_get(zone);
+   e_config_save_queue();
 }
 
 ACT_FN_GO(kbd_layout, )
@@ -3255,10 +3285,10 @@ e_actions_init(void)
                             "screen_send_by", NULL,
                             "syntax: N-offset, example: -2", 1);
 
-   ACT_GO_ACPI(dim_screen);
+   ACT_GO(dim_screen);
    e_action_predef_name_set(N_("Screen"), N_("Dim"), "dim_screen",
                             NULL, NULL, 0);
-   ACT_GO_ACPI(undim_screen);
+   ACT_GO(undim_screen);
    e_action_predef_name_set(N_("Screen"), N_("Undim"), "undim_screen",
                             NULL, NULL, 0);
    ACT_GO(backlight_set);
@@ -3356,7 +3386,7 @@ e_actions_init(void)
    /* app */
    ACT_GO(app);
    e_action_predef_name_set(N_("Launch"), N_("Application"), "app", NULL,
-                            "syntax: , example:", 1);
+                            "syntax: [file:file.desktop|name:App Name|generic:Generic Name|exe:exename], example: file:terminology.desktop | file:/path/to/terminology.desktop | name:Terminology | generic:Terminal Emulator | exe:xterm", 1);
 
    /* new instance of focused app */
    ACT_GO(app_new_instance);

@@ -740,7 +740,7 @@ _e_icon_smart_reconfigure(E_Smart_Data *sd)
      }
    else
      {
-        ih = 0;
+        iw = 0;
         ih = 0;
         evas_object_image_size_get(sd->obj, &iw, &ih);
         if (iw < 1) iw = 1;

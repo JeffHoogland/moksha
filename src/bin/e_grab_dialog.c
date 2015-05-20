@@ -13,7 +13,7 @@ _e_grab_dialog_key_handler(void *data, int type __UNUSED__, Ecore_Event_Key *ev)
    E_Grab_Dialog *eg = data;
 
    if (ev->window != eg->grab_win) return ECORE_CALLBACK_RENEW;
-   if (!strcmp(ev->keyname, "Escape") &&
+   if (!strcmp(ev->key, "Escape") &&
        !(ev->modifiers & ECORE_EVENT_MODIFIER_SHIFT) &&
        !(ev->modifiers & ECORE_EVENT_MODIFIER_CTRL) &&
        !(ev->modifiers & ECORE_EVENT_MODIFIER_ALT) &&

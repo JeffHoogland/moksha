@@ -1280,9 +1280,9 @@ _e_desklock_ask_presentation_key_down(void *data, Evas *e __UNUSED__, Evas_Objec
    Evas_Event_Key_Down *ev = event;
    E_Dialog *dia = data;
 
-   if (strcmp(ev->keyname, "Return") == 0)
+   if (strcmp(ev->key, "Return") == 0)
      _e_desklock_ask_presentation_yes(NULL, dia);
-   else if (strcmp(ev->keyname, "Escape") == 0)
+   else if (strcmp(ev->key, "Escape") == 0)
      _e_desklock_ask_presentation_no(NULL, dia);
 }
 
