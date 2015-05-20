@@ -242,7 +242,6 @@ e_remember_del(E_Remember *rem)
 
         bd->remember = NULL;
         e_remember_unuse(rem);
-        break;
      }
 
    _e_remember_free(rem);
