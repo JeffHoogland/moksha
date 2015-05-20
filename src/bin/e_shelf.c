@@ -2509,12 +2509,12 @@ _e_shelf_gadcon_client_add(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Clie
 {
    E_Shelf *s;
    E_Gadcon *gc;
-   E_Config_Gadcon_Client *cf_gcc = gcc->cf;
 
    s = data;
    gc = s->gadcon;
    if (gcc)
      {
+        E_Config_Gadcon_Client *cf_gcc = gcc->cf;
         gcc->gadcon->cf->clients = eina_list_remove(gcc->gadcon->cf->clients, cf_gcc);
         if (gc->zone)
           cf_gcc->geom.res = gc->zone->w;
