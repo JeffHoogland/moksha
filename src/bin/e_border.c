@@ -9144,6 +9144,16 @@ _e_border_eval(E_Border *bd)
                   snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
                   bd->desktop = efreet_util_desktop_file_id_find(buf);
                }
+             if (!bd->desktop)
+               {
+                  char buf[4096] = {0}, *s;
+
+                  strncpy(buf, bd->client.icccm.class, sizeof(buf));
+                  s = buf;
+                  eina_str_tolower(&s);
+                  if (strcmp(s, bd->client.icccm.class))
+                    bd->desktop = efreet_util_desktop_exec_find(s);
+               }
           }
         if (!bd->desktop)
           {
