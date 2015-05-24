@@ -249,7 +249,7 @@ _pulse_sink_find(const char *name)
         const char *sink_name;
 
         sink_name = pulse_sink_name_get(sink);
-        if ((sink_name == name) || (!strcmp(sink_name, name)))
+		if ((sink_name == name) || (!e_util_strcmp(sink_name, name)))
           return sink;
      }
    EINA_LIST_FOREACH(sources, l, sink)
@@ -257,7 +257,7 @@ _pulse_sink_find(const char *name)
         const char *sink_name;
 
         sink_name = pulse_sink_name_get(sink);
-        if ((sink_name == name) || (!strcmp(sink_name, name)))
+		if ((sink_name == name) || (!e_util_strcmp(sink_name, name)))
           return sink;
      }
    return NULL;
