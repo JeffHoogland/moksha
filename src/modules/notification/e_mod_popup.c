@@ -12,6 +12,160 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
+/* this function should be external in edje for use in cases such as this module.
+ *
+ * happily, it was decided that the function would not be external so that it could
+ * be duplicated into the module in full.
+ */
+
+static int
+_text_escape(Eina_Strbuf *txt, const char *text)
+{
+   const char *escaped;
+   int advance;
+
+   escaped = evas_textblock_string_escape_get(text, &advance);
+   if (!escaped)
+     {
+        eina_strbuf_append_char(txt, text[0]);
+        advance = 1;
+     }
+   else
+     eina_strbuf_append(txt, escaped);
+   return advance;
+}
+
+/* hardcoded list of allowed tags based on
+ * https://people.gnome.org/~mccann/docs/notification-spec/notification-spec-latest.html#markup
+ */
+static const char *tags[] =
+{
+   "<b",
+   "<i",
+   "<u",
+   //"<a", FIXME: we can't actually display these right now
+   //"<img",
+};
+
+static const char *
+_get_tag(const char *c)
+{
+   unsigned int i;
+
+   if (c[1] != '>') return NULL;
+   for (i = 0; i < EINA_C_ARRAY_LENGTH(tags); i++)
+     if (tags[i][1] == c[0]) return tags[i];
+   return NULL;
+}
+
+char *
+_nedje_text_escape(const char *text)
+{
+   Eina_Strbuf *txt;
+   char *ret;
+   const char *text_end;
+   size_t text_len;
+   Eina_Array *arr;
+   const char *cur_tag = NULL;
+
+   if (!text) return NULL;
+
+   txt = eina_strbuf_new();
+   text_len = strlen(text);
+   arr = eina_array_new(3);
+
+   text_end = text + text_len;
+   while (text < text_end)
+     {
+        int advance;
+
+        if ((text[0] == '<') && text[1])
+          {
+             const char *tag, *popped;
+             Eina_Bool closing = EINA_FALSE;
+
+             if (text[1] == '/') //closing tag
+               {
+                  closing = EINA_TRUE;
+                  tag = _get_tag(text + 2);
+               }
+             else
+               tag = _get_tag(text + 1);
+             if (closing)
+               {
+                  if (cur_tag && (tag != cur_tag))
+                    {
+                       /* tag mismatch: autoclose all failure tags
+                        * not technically required by the spec,
+                        * but it makes me feel better about myself
+                        */
+                       do
+                         {
+                            popped = eina_array_pop(arr);
+                            if (eina_array_count(arr))
+                              cur_tag = eina_array_data_get(arr, eina_array_count(arr) - 1);
+                            else
+                              cur_tag = NULL;
+                            eina_strbuf_append_printf(txt, "</%c>", popped[1]);
+                         } while (cur_tag && (popped != tag));
+                       advance = 4;
+                    }
+                  else if (cur_tag)
+                    {
+                       /* tag match: just pop */
+                       popped = eina_array_pop(arr);
+                       if (eina_array_count(arr))
+                         cur_tag = eina_array_data_get(arr, eina_array_count(arr) - 1);
+                       else
+                         cur_tag = NULL;
+                       eina_strbuf_append_printf(txt, "</%c>", popped[1]);
+                       advance = 4;
+                    }
+                  else
+                    {
+                       /* no current tag: escape */
+                       advance = _text_escape(txt, text);
+                    }
+               }
+             else
+               {
+                  if (tag)
+                    {
+                       cur_tag = tag;
+                       eina_array_push(arr, tag);
+                       eina_strbuf_append_printf(txt, "<%c>", tag[1]);
+                       advance = 3;
+                    }
+                  else
+                    advance = _text_escape(txt, text);
+               }
+          }
+        else if (text[0] == '&')
+          {
+             const char *s;
+
+             s = strchr(text, ';');
+             if (s)
+               s = evas_textblock_escape_string_range_get(text, s + 1);
+             if (s)
+               {
+                  eina_strbuf_append_char(txt, text[0]);
+                  advance = 1;
+               }
+             else
+               advance = _text_escape(txt, text);
+          }
+        else
+          advance = _text_escape(txt, text);
+
+        text += advance;
+     }
+
+   eina_array_free(arr);
+   ret = eina_strbuf_string_steal(txt);
+   eina_strbuf_free(txt);
+   return ret;
+}
 
 #define POPUP_LIMIT 7
 static int popups_displayed = 0;
@@ -36,6 +190,7 @@ notification_popup_notify(E_Notification *n,
 {
    double timeout;
    Popup_Data *popup = NULL;
+   char *esc;
    char urgency;
 
    urgency = e_notification_hint_urgency_get(n);
@@ -56,6 +211,11 @@ notification_popup_notify(E_Notification *n,
      }
 
    if (notification_cfg->ignore_replacement) replaces_id = 0;
+
+   esc = _nedje_text_escape(e_notification_body_get(n));
+   e_notification_body_set(n, esc);
+   free(esc);
+
    if (replaces_id && (popup = _notification_popup_find(replaces_id)))
      {
         e_notification_ref(n);
@@ -601,7 +761,7 @@ _notification_format_message(Popup_Data *popup)
         Eina_Strbuf *buf = eina_strbuf_new();
         eina_strbuf_append(buf, b);
         eina_strbuf_replace_all(buf, "\n", "<br/>");
-        edje_object_part_text_unescaped_set(o, "notification.textblock.message",
+        edje_object_part_text_set(o, "notification.textblock.message",
               eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
