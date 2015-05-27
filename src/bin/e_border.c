@@ -2435,6 +2435,7 @@ e_border_shade(E_Border *bd,
 
    ecore_x_window_shadow_tree_flush();
 
+   bd->take_focus = 0;
    bd->shade.x = bd->x;
    bd->shade.y = bd->y;
    bd->shade.dir = dir;
