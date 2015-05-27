@@ -1039,7 +1039,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      {
         _mixer_module_configuration_setup(ctxt);
         if (!ctxt->conf)
-          return NULL;
+		  {
+			free(ctxt);
+            return NULL;
+	      }
      }
 
    conf = eina_hash_find(ctxt->conf->gadgets, id);
