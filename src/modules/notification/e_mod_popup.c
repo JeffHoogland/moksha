@@ -414,13 +414,18 @@ _notification_popup_refresh(Popup_Data *popup)
           }
         else
           {
-             endptr++;
-             if (endptr)
+             if (!endptr[0])
+               height = width;
+             else
                {
-                  height = strtol(endptr, NULL, 10);
-                  if (errno || (height < 1)) height = 80;
+                  endptr++;
+                  if (endptr[0])
+                    {
+                       height = strtol(endptr, NULL, 10);
+                       if (errno || (height < 1)) height = width;
+                    }
+                  else height = width;
                }
-             else height = 80;
           }
      }
 
