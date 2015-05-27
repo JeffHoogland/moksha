@@ -590,7 +590,7 @@ _notification_format_message(Popup_Data *popup)
    Evas_Object *o = popup->theme;
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
-   edje_object_part_text_set(o, "notification.text.title", title);
+   edje_object_part_text_unescaped_set(o, "notification.text.title", title);
 
    /* FIXME: Filter to only include allowed markup? */
      {
@@ -599,7 +599,7 @@ _notification_format_message(Popup_Data *popup)
         Eina_Strbuf *buf = eina_strbuf_new();
         eina_strbuf_append(buf, b);
         eina_strbuf_replace_all(buf, "\n", "<br/>");
-        edje_object_part_text_set(o, "notification.textblock.message",
+        edje_object_part_text_unescaped_set(o, "notification.textblock.message",
               eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
