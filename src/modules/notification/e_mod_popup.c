@@ -296,13 +296,9 @@ _notification_popup_new(E_Notification *n)
             notification_mod->dir);
    popup->theme = edje_object_add(popup->e);
 
-   if (!e_theme_edje_object_set(popup->theme,
-                                "base/theme/modules/notification",
-                                "e/modules/notification/main"))
-     if (!e_theme_edje_object_set(popup->theme,
-                                  "base/theme/modules/notification",
-                                  "modules/notification/main"))
-       edje_object_file_set(popup->theme, buf, "modules/notification/main");
+   e_theme_edje_object_set(popup->theme,
+                           "base/theme/modules/notification",
+                           "e/modules/notification/main");
 
    e_popup_edje_bg_object_set(popup->win, popup->theme);
 
