@@ -274,7 +274,7 @@ _menu_cb_post(void *data, E_Menu *m __UNUSED__)
    Instance *inst;
 
    inst = data;
-   if (!inst->main_menu) return;
+   if (stopping || (!inst->main_menu)) return;
    e_gadcon_locked_set(inst->gcc->gadcon, 0);
    edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
    e_object_del(E_OBJECT(inst->main_menu));

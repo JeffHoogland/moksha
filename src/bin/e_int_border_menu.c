@@ -962,13 +962,18 @@ _e_border_menu_cb_sendto(void *data, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    E_Desk *desk;
    E_Border *bd;
+   E_Maximize max;
 
    desk = data;
    bd = e_object_data_get(E_OBJECT(m));
+   max = bd->maximized;
+   
    if ((bd) && (desk))
      {
+        if (max) e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
         e_border_zone_set(bd, desk->zone);
         e_border_desk_set(bd, desk);
+        if (max) e_border_maximize(bd, max);
      }
 }
 
