@@ -220,6 +220,7 @@ e_int_menus_main_new(void)
    l = _e_int_menus_augmentation_find("main/2");
    if (l) _e_int_menus_augmentation_add(m, l);
 
+/* Commented out to remove clutter from the main menu
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
@@ -233,7 +234,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
-   e_object_data_set(E_OBJECT(subm), dat);
+   e_object_data_set(E_OBJECT(subm), dat); */
 
 #if 0 // lost windows already handled inside "Windows" from main menu.
    subm = e_int_menus_lost_clients_new();
@@ -280,7 +281,7 @@ e_int_menus_main_new(void)
    if (l) _e_int_menus_augmentation_add(subm, l);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Enlightenment"));
+   e_menu_item_label_set(mi, _("Moksha"));
    e_util_menu_item_theme_icon_set(mi, "enlightenment");
    e_menu_item_submenu_set(mi, subm);
 

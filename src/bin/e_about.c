@@ -14,23 +14,23 @@ e_about_new(E_Container *con)
    FILE *f;
    Eina_Strbuf *tbuf;
 
-   od = e_obj_dialog_new(con, _("About Enlightenment"), "E", "_about");
+   od = e_obj_dialog_new(con, _("About Moksha"), "E", "_about");
    if (!od) return NULL;
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
-   e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Enlightenment"));
-   e_obj_dialog_obj_part_text_set(od, "e.text.version", VERSION);
+   e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Moksha"));
+   e_obj_dialog_obj_part_text_set(od, "e.text.version", "0.1.0");
    snprintf
      (buf, sizeof(buf), "%s%s",
      _(
-       "<title>Copyright &copy; 2000-2012, by the Enlightenment "
+       "<title>Copyright &copy; 2015, by the Moksha "
        "Development Team</><br>"
        "<br>"
        "We hope you enjoy using this software as much as we enjoyed "
        "writing it.<br>"
        "<br>"
        "To contact us please visit:<br>"
-       "<hilight>http://www.enlightenment.org</><br>"
+       "<hilight>http://www.mokshadesktop.org</><br>"
        "<br>"
       ),
        "All rights reserved.<br>"
