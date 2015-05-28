@@ -269,7 +269,8 @@ e_win_show(E_Win *win)
         if (!win->placed)
           win->border->re_manage = 0;
         win->border->internal = 1;
-        win->border->internal_ecore_evas = win->ecore_evas;
+        if (win->ecore_evas)
+          win->border->internal_ecore_evas = win->ecore_evas;
         if (win->state.no_remember) win->border->internal_no_remember = 1;
         win->border->internal_no_reopen = win->state.no_reopen;
      }

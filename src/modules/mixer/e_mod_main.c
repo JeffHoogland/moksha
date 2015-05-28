@@ -262,6 +262,7 @@ _mixer_balance_left(E_Mixer_Instance *inst)
    E_Mixer_Channel_State *state;
 
    state = &inst->mixer_state;
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
    if (state->left >= 0)
@@ -290,6 +291,7 @@ _mixer_balance_right(E_Mixer_Instance *inst)
    E_Mixer_Channel_State *state;
 
    state = &inst->mixer_state;
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
    if (state->left >= 0)
@@ -317,6 +319,7 @@ _mixer_volume_increase(E_Mixer_Instance *inst, Eina_Bool non_ui)
    E_Mixer_Channel_State *state;
 
    state = &inst->mixer_state;
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
    if (state->left >= 0)
@@ -348,6 +351,7 @@ _mixer_volume_decrease(E_Mixer_Instance *inst, Eina_Bool non_ui)
    E_Mixer_Channel_State *state;
 
    state = &inst->mixer_state;
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
    if (state->left >= 0)
@@ -401,6 +405,7 @@ _mixer_popup_cb_volume_left_change(void *data, Evas_Object *obj, void *event __U
    E_Mixer_Instance *inst = data;
    E_Mixer_Channel_State *state = &inst->mixer_state;
 
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
 
@@ -422,6 +427,7 @@ _mixer_popup_cb_volume_right_change(void *data, Evas_Object *obj, void *event __
    E_Mixer_Instance *inst = data;
    E_Mixer_Channel_State *state = &inst->mixer_state;
 
+   if (!inst->channel) return;
    e_mod_mixer_volume_get(inst->sys, inst->channel,
                           &state->left, &state->right);
 
@@ -533,7 +539,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (binding->key && (!strcmp(binding->key, ev->key)) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   if (!(act = e_action_find(binding->action))) continue;
@@ -1033,7 +1039,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
      {
         _mixer_module_configuration_setup(ctxt);
         if (!ctxt->conf)
-          return NULL;
+		  {
+			free(ctxt);
+            return NULL;
+	      }
      }
 
    conf = eina_hash_find(ctxt->conf->gadgets, id);

@@ -797,7 +797,6 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    ic = data;
    if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
    ic->reset_timer = NULL;
-   if (ic->exe_inst) return;
    ic->focused = EINA_TRUE;
    _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label)

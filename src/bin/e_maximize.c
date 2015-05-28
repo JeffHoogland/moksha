@@ -128,31 +128,13 @@ e_maximize_border_shelf_fill(E_Border *bd, int *x1, int *yy1, int *x2, int *y2, 
    E_Shelf *es;
    E_Maximize_Rect *r;
 
-   EINA_LIST_FOREACH(e_shelf_list(), l, es)
+   l = e_shelf_list_all();
+   EINA_LIST_FREE(l, es)
      {
-	Eina_List *ll;
-	E_Config_Shelf_Desk *sd;
-
 	if (es->cfg->overlap) continue;
-	if (es->zone != bd->zone) continue;
-	if (es->cfg->desk_show_mode)
-	  {
-	     EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
-	       {
-		  if (!sd) continue;
-		  if ((sd->x == bd->desk->x) && (sd->y == bd->desk->y))
-		    {
-		       OBSTACLE(es->x + es->zone->x, es->y + es->zone->y,
-				es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
-		       break;
-		    }
-	       }
-	  }
-	else
-	  {
-	     OBSTACLE(es->x + es->zone->x, es->y + es->zone->y,
-		      es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
-	  }
+        if (!e_shelf_desk_visible(es, bd->desk)) continue;
+        OBSTACLE(es->x + es->zone->x, es->y + es->zone->y,
+                 es->x + es->zone->x + es->w, es->y + es->zone->y + es->h);
      }
    if (rects)
      {
@@ -195,10 +177,10 @@ _e_maximize_border_rects_fill(E_Border *bd, Eina_List *rects, int *x1, int *yy1,
      {
         int bx, by, bw, bh;
 
-        bx = bd->x;
-        by = bd->y;
+        bx = E_CLAMP(bd->x, bd->zone->x, bd->zone->x + bd->zone->w);
+        by = E_CLAMP(bd->y, bd->zone->y, bd->zone->y + bd->zone->h);
         bw = bd->w;
-        bh = bd->h;
+	    bh = bd->h;
 
 	if ((dir & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_HORIZONTAL)
 	  _e_maximize_border_rects_fill_horiz(bd, rects, x1, x2, &bx, &by, &bw, &bh);
@@ -227,18 +209,18 @@ _e_maximize_border_rects_fill_both(E_Border *bd, Eina_List *rects, int *x1, int 
    if (y2) hy2 = vy2 = *y2;
 
    /* Init working values, try maximizing horizontally first */
-   bx = bd->x;
-   by = bd->y;
-   bw = bd->w;
-   bh = bd->h;
+   bx = bd->saved.x ?: bd->x;
+   by = bd->saved.y ?: bd->y;
+   bw = bd->saved.w ?: bd->w;
+   bh = bd->saved.h ?: bd->h;
    _e_maximize_border_rects_fill_horiz(bd, rects, &hx1, &hx2, &bx, &by, &bw, &bh);
    _e_maximize_border_rects_fill_vert(bd, rects, &hy1, &hy2, &bx, &by, &bw, &bh);
 
    /* Reset working values, try maximizing vertically first */
-   bx = bd->x;
-   by = bd->y;
-   bw = bd->w;
-   bh = bd->h;
+   bx = bd->saved.x ?: bd->x;
+   by = bd->saved.y ?: bd->y;
+   bw = bd->saved.w ?: bd->w;
+   bh = bd->saved.h ?: bd->h;
    _e_maximize_border_rects_fill_vert(bd, rects, &vy1, &vy2, &bx, &by, &bw, &bh);
    _e_maximize_border_rects_fill_horiz(bd, rects, &vx1, &vx2, &bx, &by, &bw, &bh);
 
@@ -315,7 +297,7 @@ _e_maximize_border_rects_fill_vert(E_Border *bd, Eina_List *rects, int *yy1, int
    /* Expand up */
    EINA_LIST_FOREACH(rects, l, rect)
      {
-	if ((rect->y2 > cy1) && (rect->y2 <= *by) &&
+	if ((rect->y2 > cy1) && ((rect->yy1 <= *by) || (rect->y2 <= *by)) && 
 	    E_INTERSECTS(rect->x1, 0, (rect->x2 - rect->x1), bd->zone->h, *bx, 0, *bw, bd->zone->h))
 	  {
 	     cy1 = rect->y2;

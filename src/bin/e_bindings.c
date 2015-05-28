@@ -498,7 +498,7 @@ e_bindings_key_down_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Ev
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(key_bindings, l, binding)
      {
-        if ((binding->key) && (!strcmp(binding->key, ev->keyname)) &&
+        if ((binding->key) && (!strcmp(binding->key, ev->key)) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -531,7 +531,7 @@ e_bindings_key_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Even
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(key_bindings, l, binding)
      {
-        if ((binding->key) && (!strcmp(binding->key, ev->keyname)) &&
+        if ((binding->key) && (!strcmp(binding->key, ev->key)) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -564,7 +564,7 @@ e_bindings_key_down_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(key_bindings, l, binding)
      {
-        if ((binding->key) && (!strcmp(binding->key, ev->keyname)) &&
+        if ((binding->key) && (!strcmp(binding->key, ev->key)) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -589,7 +589,7 @@ e_bindings_key_up_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(key_bindings, l, binding)
      {
-        if ((binding->key) && (!strcmp(binding->key, ev->keyname)) &&
+        if ((binding->key) && (!strcmp(binding->key, ev->key)) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))

@@ -416,7 +416,7 @@ _e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    win = data;
    eco = win->data;
 
-   if (!strcmp(ev->keyname, "Tab"))
+   if (!strcmp(ev->key, "Tab"))
      {
         if (evas_key_modifier_is_set(evas_key_modifier_get(e_win_evas_get(win)), "Shift"))
           {
@@ -437,9 +437,9 @@ _e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
                e_widget_focus_set(eco->item_list, 0);
           }
      }
-   else if (((!strcmp(ev->keyname, "Return")) ||
-             (!strcmp(ev->keyname, "KP_Enter")) ||
-             (!strcmp(ev->keyname, "space"))))
+   else if (((!strcmp(ev->key, "Return")) ||
+             (!strcmp(ev->key, "KP_Enter")) ||
+             (!strcmp(ev->key, "space"))))
      {
         Evas_Object *o = NULL;
 
@@ -456,7 +456,7 @@ _e_configure_keydown_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
              e_widget_activate(o);
           }
      }
-   else if (!strcmp(ev->keyname, "Escape"))
+   else if (!strcmp(ev->key, "Escape"))
      e_widget_activate(eco->close);
 }
 

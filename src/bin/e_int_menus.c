@@ -1457,7 +1457,7 @@ _e_int_menus_clients_title_abbrv(const char *title)
    /* Advance to the end of the first half of the string. */
    len = 0;
    for (len2 = (max_len / 2) ; len2 ; len2--)
-      eina_unicode_utf8_get_next(title, &len);
+      eina_unicode_utf8_next_get(title, &len);
 
    strncat(abbvptr, title, len);
    abbvptr += len;

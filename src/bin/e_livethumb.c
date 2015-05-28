@@ -14,6 +14,7 @@ struct _E_Smart_Data
    Evas_Object *evas_obj;
    Evas_Object *thumb_obj;
    Evas        *evas;
+   Ecore_Evas  *ee;
    Evas_Coord   vw, vh;
 };
 
@@ -135,11 +136,12 @@ _e_smart_add(Evas_Object *obj)
    sd->vh = 1;
 
    sd->evas_obj = ecore_evas_object_image_new(ecore_evas_ecore_evas_get(evas_object_evas_get(obj)));
-   ecore_evas_alpha_set(evas_object_data_get(sd->evas_obj, "Ecore_Evas"), 1);
+   sd->ee = evas_object_data_get(sd->evas_obj, "Ecore_Evas");
+   ecore_evas_alpha_set(sd->ee, 1);
    evas_object_smart_member_add(sd->evas_obj, obj);
    evas_object_image_size_set(sd->evas_obj, sd->vw, sd->vh);
-   sd->evas = ecore_evas_get(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
-   e_canvas_add(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
+   sd->evas = ecore_evas_get(sd->ee);
+   e_canvas_add(sd->ee);
 }
 
 static void
@@ -147,7 +149,7 @@ _e_smart_del(Evas_Object *obj)
 {
    INTERNAL_ENTRY;
    e_canvas_del(evas_object_data_get(sd->evas_obj, "Ecore_Evas"));
-   evas_object_del(sd->evas_obj);
+   e_canvas_del(sd->ee);
    free(sd);
 }
 

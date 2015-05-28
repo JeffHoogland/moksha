@@ -556,6 +556,7 @@ _e_exec_instance_free(E_Exec_Instance *inst)
                                              inst->desktop);
    if (inst->expire_timer) ecore_timer_del(inst->expire_timer);
    if (inst->desktop) efreet_desktop_free(inst->desktop);
+   if (inst->exe) ecore_exe_data_set(inst->exe, NULL);
    free(inst);
 }
 /*

@@ -2717,9 +2717,9 @@ _e_fwin_file_open_dialog_cb_key_down(void *data,
    E_Fwin_Page *page = data;
    E_Fwin *fwin = page->fwin;
 
-   if (!strcmp(ev->keyname, "Escape"))
+   if (!strcmp(ev->key, "Escape"))
      _e_fwin_cb_close(fwin->fad, fwin->fad->dia);
-   else if (!strcmp(ev->keyname, "Return"))
+   else if (!strcmp(ev->key, "Return"))
      _e_fwin_cb_open(fwin->fad, fwin->fad->dia);
 }
 

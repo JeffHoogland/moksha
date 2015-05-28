@@ -2011,7 +2011,7 @@ _evry_cb_key_down(void *data, int type __UNUSED__, void *event)
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (!(binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (!(binding->key && (!strcmp(binding->key, ev->key)) &&
                    (((unsigned int)binding->modifiers == mod) || (binding->any_mod))))
                continue;
 

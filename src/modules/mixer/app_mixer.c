@@ -490,6 +490,9 @@ _create_ui(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
 static void
 _mixer_app_dialog_del(E_Dialog *dialog, E_Mixer_App_Dialog_Data *app)
 {
+   if (!app)
+     return;
+
    if (app->del.func)
      app->del.func(dialog, app->del.data);
 

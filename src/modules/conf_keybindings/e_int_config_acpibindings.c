@@ -597,7 +597,7 @@ _cb_grab_key_down(void *data,
    ev = event;
    if (ev->window != grab_win) return ECORE_CALLBACK_PASS_ON;
    if (!(cfdata = data)) return ECORE_CALLBACK_PASS_ON;
-   if (!strcmp(ev->keyname, "Escape"))
+   if (!strcmp(ev->key, "Escape"))
      {
         Ecore_Event_Handler *hdl;
 

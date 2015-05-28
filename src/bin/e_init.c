@@ -68,7 +68,7 @@ e_init_show(void)
    else ver = strdup("XvX");
 
    snprintf(buf, sizeof(buf),
-            "%s/enlightenment/utils/enlightenment_init \'%s\' \'%i\' \'%s\' \'%s\'",
+            "exec %s/enlightenment/utils/enlightenment_init \'%s\' \'%i\' \'%s\' \'%s\'",
             e_prefix_lib_get(), theme,
             e_config->font_hinting, tit, ver);
    printf("RUN INIT: %s\n", buf);

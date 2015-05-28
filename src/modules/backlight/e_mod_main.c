@@ -172,7 +172,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                 mod |= E_BINDING_MODIFIER_WIN;
              
-             if (binding->key && (!strcmp(binding->key, ev->keyname)) &&
+             if (binding->key && (!strcmp(binding->key, ev->key)) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   _backlight_popup_free(inst);
@@ -245,7 +245,7 @@ _backlight_popup_new(Instance *inst)
    
    inst->o_table = e_widget_table_add(evas, 0);
 
-   o = e_widget_slider_add(evas, 0, 0, NULL, 0.0, 1.0, 0.05, 0, &(inst->val), NULL, 100);
+   o = e_widget_slider_add(evas, 0, 0, NULL, 0.05, 1.0, 0.05, 0, &(inst->val), NULL, 100);
    evas_object_smart_callback_add(o, "changed", _slider_cb, inst);
    inst->o_slider = o;
    e_widget_table_object_align_append(inst->o_table, o, 

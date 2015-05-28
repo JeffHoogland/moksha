@@ -79,27 +79,17 @@ e_focus_event_mouse_out(E_Border *bd)
 EAPI void
 e_focus_event_mouse_down(E_Border *bd)
 {
-   if (e_config->focus_policy == E_FOCUS_CLICK)
+   if (!bd->focused)
      {
-        e_border_focus_set(bd, 1, 1);
-
-        if (!bd->lock_user_stacking)
-          {
-             if (e_config->border_raise_on_focus)
-               e_border_raise(bd);
-          }
+		if (e_border_focus_policy_click(bd))
+          e_border_focus_set(bd, 1, 1);
+        else if (e_config->always_click_to_focus)
+          e_border_focus_set(bd, 1, 1);
      }
-   else if (e_config->always_click_to_raise)
+   if (e_config->always_click_to_raise)
      {
         if (!bd->lock_user_stacking)
-          {
-             if (e_config->border_raise_on_focus)
-               e_border_raise(bd);
-          }
-     }
-   else if (e_config->always_click_to_focus)
-     {
-        e_border_focus_set(bd, 1, 1);
+            e_border_raise(bd);
      }
 }
 
@@ -111,7 +101,7 @@ e_focus_event_mouse_up(E_Border *bd __UNUSED__)
 EAPI void
 e_focus_event_focus_in(E_Border *bd)
 {
-   if ((e_config->focus_policy == E_FOCUS_CLICK) &&
+   if ((e_border_focus_policy_click(bd)) && 
        (!e_config->always_click_to_raise) &&
        (!e_config->always_click_to_focus))
      {
@@ -125,12 +115,17 @@ e_focus_event_focus_in(E_Border *bd)
         e_bindings_wheel_grab(E_BINDING_CONTEXT_WINDOW, bd->win);
         bd->button_grabbed = 0;
      }
+    if (!bd->lock_user_stacking)
+     {
+        if (e_config->border_raise_on_focus)
+          e_border_raise(bd);
+     }    
 }
 
 EAPI void
 e_focus_event_focus_out(E_Border *bd)
 {
-   if ((e_config->focus_policy == E_FOCUS_CLICK) &&
+   if ((e_border_focus_policy_click(bd)) &&
        (!e_config->always_click_to_raise) &&
        (!e_config->always_click_to_focus))
      {
@@ -154,7 +149,7 @@ e_focus_event_focus_out(E_Border *bd)
 EAPI void
 e_focus_setup(E_Border *bd)
 {
-   if ((e_config->focus_policy == E_FOCUS_CLICK) ||
+   if ((e_border_focus_policy_click(bd)) ||
        (e_config->always_click_to_raise) ||
        (e_config->always_click_to_focus))
      {
