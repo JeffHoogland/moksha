@@ -30,7 +30,8 @@ e_focus_event_mouse_in(E_Border *bd)
    if ((e_config->focus_policy == E_FOCUS_MOUSE) ||
        (e_config->focus_policy == E_FOCUS_SLOPPY))
      {
-        e_border_focus_set(bd, 1, 1);
+         if (bd != e_border_focused_get())
+          e_border_focus_set(bd, 1, 1);
      }
    if (bd->raise_timer) ecore_timer_del(bd->raise_timer);
    bd->raise_timer = NULL;
