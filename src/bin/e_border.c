@@ -1079,7 +1079,10 @@ e_border_hide(E_Border *bd,
                     e_border_focus_set(bd->parent, 1, 1);
                   else if (e_config->focus_revert_on_hide_or_close)
                     {
+                       Eina_Bool unlock = bd->lock_focus_out;
+                       bd->lock_focus_out = 1;
                        e_desk_last_focused_focus(desk);
+                       bd->lock_focus_out = unlock;
                     }
                   else if (e_config->focus_policy == E_FOCUS_MOUSE)
                     {
