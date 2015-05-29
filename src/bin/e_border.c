@@ -6031,6 +6031,11 @@ _e_border_cb_window_focus_in(void *data  __UNUSED__,
    e = ev;
    bd = e_border_find_by_client_window(e->win);
    if (!bd) return ECORE_CALLBACK_PASS_ON;
+
+   /* block refocus attempts on iconic windows
+    * these result from iconifying a window during a grab */
+   if (bd->iconic) return ECORE_CALLBACK_RENEW;
+
 #ifdef INOUTDEBUG_FOCUS
    {
       time_t t;
