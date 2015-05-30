@@ -4124,6 +4124,7 @@ e_border_act_menu_begin(E_Border *bd,
 {
    E_OBJECT_CHECK(bd);
    E_OBJECT_TYPE_CHECK(bd, E_BORDER_TYPE);
+   if (bd->border_menu) return;
    if (ev)
      {
         e_int_border_menu_show(bd,
