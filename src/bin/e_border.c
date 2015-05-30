@@ -8740,11 +8740,50 @@ _e_border_eval(E_Border *bd)
         /* if the explicit geometry request asks for the app to be
          * in another zone - well move it there */
         {
-           E_Zone *zone;
+           E_Zone *zone = NULL;
+           int x, y;
 
-           zone = e_container_zone_at_point_get(bd->zone->container,
-                                                bd->x + (bd->w / 2),
-                                                bd->y + (bd->h / 2));
+           x = MAX(bd->x, 0);
+           y = MAX(bd->y, 0);
+           if ((!bd->re_manage) && ((bd->x != x) || (bd->y != y)))
+             zone = e_container_zone_at_point_get(bd->zone->container, x, y);
+
+           if (!zone)
+             {
+                zone = e_container_zone_at_point_get(bd->zone->container, bd->x + (bd->w / 2), bd->y + (bd->h / 2));
+                if (zone)
+                  {
+                     E_Zone *z2 = e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y);
+
+                     if (z2 && (z2 != zone))
+                       {
+                          size_t psz = 0;
+                          E_Zone *zf = z2;
+                          Eina_List *l;
+
+                          EINA_LIST_FOREACH(bd->zone->container->zones, l, z2)
+                            {
+                                int w, h;
+
+                                x = bd->x, y = bd->y, w = bd->w, h = bd->h;
+                                E_RECTS_CLIP_TO_RECT(x, y, w, h, z2->x, z2->y, z2->w, z2->h);
+                                if (w * h == z2->w * z2->h)
+                                  {
+                                     /* client fully covering zone */
+                                     zf = z2;
+                                     break;
+                                  }
+                                if ((unsigned)(w * h) > psz)
+                                  {
+                                     psz = w * h;
+                                     zf = z2;
+                                  }
+                            }
+                          zone = zf;
+                       }
+                  }
+             }
+
            if (!zone)
              zone = e_container_zone_at_point_get(bd->zone->container,
                                                   bd->x,
