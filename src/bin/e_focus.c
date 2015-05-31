@@ -55,26 +55,13 @@ e_focus_event_mouse_out(E_Border *bd)
 {
    if (e_config->focus_policy == E_FOCUS_MOUSE)
      {
-        /* FIXME: this is such a hack. its a big hack around x's async events
-         * as we dont know always exactly what action causes what event
-         * so by waiting more than 0.2 secs before reverting focus to nothing
-         * since we entered root, we are ignoring mouse in's on the root
-         * container for a bit after the mosue may have entered it
-         */
-        if ((ecore_loop_time_get() - e_grabinput_last_focus_time_get()) > 0.2)
-          {
-             if (!bd->lock_focus_in)
-               {
-                  if (bd->focused)
-                    e_border_focus_set(bd, 0, 1);
-               }
-          }
-     }
-   if (bd->raise_timer)
-     {
-        ecore_timer_del(bd->raise_timer);
-        bd->raise_timer = NULL;
-     }
+        if (!bd->lock_focus_in)
+           {
+             if (bd->focused)
+               e_border_focus_set(bd, 0, 1);
+           }
+      }
+   E_FN_DEL(ecore_timer_del, bd->raise_timer);
 }
 
 EAPI void
