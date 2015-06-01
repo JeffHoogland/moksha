@@ -4860,10 +4860,10 @@ e_border_resize_limit(E_Border *bd,
    if (*h < 1) *h = 1;
    if (*w < 1) *w = 1;
 
-   if (*w > bd->client.icccm.max_w) *w = bd->client.icccm.max_w;
+   if ((bd->client.icccm.max_w > 0) && (*w > bd->client.icccm.max_w)) *w = bd->client.icccm.max_w;
    else if (*w < bd->client.icccm.min_w)
      *w = bd->client.icccm.min_w;
-   if (*h > bd->client.icccm.max_h) *h = bd->client.icccm.max_h;
+   if ((bd->client.icccm.max_h > 0) && (*h > bd->client.icccm.max_h)) *h = bd->client.icccm.max_h;
    else if (*h < bd->client.icccm.min_h)
      *h = bd->client.icccm.min_h;
 
