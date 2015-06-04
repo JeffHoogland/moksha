@@ -931,7 +931,7 @@ e_config_load(void)
                              _("Settings data needed upgrading. Your old settings have<br>"
                                "been wiped and a new set of defaults initialized. This<br>"
                                "will happen regularly during development, so don't report a<br>"
-                               "bug. This simply means Enlightenment needs new settings<br>"
+                               "bug. This simply means Moksha needs new settings<br>"
                                "data by default for usable functionality that your old<br>"
                                "settings simply lack. This new set of defaults will fix<br>"
                                "that by adding it in. You can re-configure things now to your<br>"
@@ -945,10 +945,10 @@ e_config_load(void)
              e_config = NULL;
              reload = 1;
              ecore_timer_add(1.0, _e_config_cb_timer,
-                             _("Your settings are NEWER than Enlightenment. This is very<br>"
+                             _("Your settings are NEWER than Moksha. This is very<br>"
                                "strange. This should not happen unless you downgraded<br>"
-                               "Enlightenment or copied the settings from a place where<br>"
-                               "a newer version of Enlightenment was running. This is bad and<br>"
+                               "Moksha or copied the settings from a place where<br>"
+                               "a newer version of Moksha was running. This is bad and<br>"
                                "as a precaution your settings have been now restored to<br>"
                                "defaults. Sorry for the inconvenience.<br>"));
           }
@@ -1467,10 +1467,10 @@ _e_config_mv_error(const char *from, const char *to)
           {
              char buf[8192];
 
-             e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
+             e_dialog_title_set(dia, _("Moksha Settings Write Problems"));
              e_dialog_icon_set(dia, "dialog-error", 64);
              snprintf(buf, sizeof(buf),
-                      _("Enlightenment has had an error while moving config files<br>"
+                      _("Moksha has had an error while moving config files<br>"
                         "from:<br>"
                         "%s<br>"
                         "<br>"
@@ -2073,7 +2073,7 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
         break;
 
       default: /* if we get here eet added errors we don't know */
-        erstr = _("The error is unknown to Enlightenment.");
+        erstr = _("The error is unknown to Moksha.");
         break;
      }
    if (erstr)
@@ -2092,10 +2092,10 @@ _e_config_eet_close_handle(Eet_File *ef, char *file)
                {
                   char buf[8192];
 
-                  e_dialog_title_set(dia, _("Enlightenment Settings Write Problems"));
+                  e_dialog_title_set(dia, _("Moksha Settings Write Problems"));
                   e_dialog_icon_set(dia, "dialog-error", 64);
                   snprintf(buf, sizeof(buf),
-                           _("Enlightenment has had an error while writing<br>"
+                           _("Moksha has had an error while writing<br>"
                              "its config file.<br>"
                              "%s<br>"
                              "<br>"

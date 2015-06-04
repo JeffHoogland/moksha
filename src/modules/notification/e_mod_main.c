@@ -64,7 +64,7 @@ _notification_show_presentation(Eina_Bool enabled)
    if (enabled)
      {
         summary = _("Enter Presentation Mode");
-        body = _("Enlightenment is in <b>presentation</b> mode."
+        body = _("Moksha is in <b>presentation</b> mode."
                  "<br>During presentation mode, screen saver, lock and "
                  "power saving will be disabled so you are not interrupted.");
      }
@@ -87,7 +87,7 @@ _notification_show_offline(Eina_Bool enabled)
    if (enabled)
      {
         summary = _("Enter Offline Mode");
-        body = _("Enlightenment is in <b>offline</b> mode.<br>"
+        body = _("Moksha is in <b>offline</b> mode.<br>"
                  "During offline mode, modules that use network will stop "
                  "polling remote services.");
      }
@@ -184,7 +184,7 @@ e_modapi_init(E_Module *m)
 
    /* set up the notification daemon */
    e_notification_daemon_init();
-   d = e_notification_daemon_add("e_notification_module", "Enlightenment");
+   d = e_notification_daemon_add("e_notification_module", "Moksha");
    if (!d)
      {
         _notification_cfg_free(notification_cfg);

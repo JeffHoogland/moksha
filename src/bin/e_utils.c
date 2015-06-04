@@ -186,7 +186,7 @@ e_util_head_exec(int head, const char *cmd)
    if (!exe)
      {
         e_util_dialog_show(_("Run Error"),
-                           _("Enlightenment was unable to fork a child process:<br>"
+                           _("Moksha was unable to fork a child process:<br>"
                              "<br>"
                              "%s<br>"),
                            cmd);
@@ -244,7 +244,7 @@ e_util_immortal_check(void)
      {
         e_util_dialog_show(_("Cannot exit - immortal windows."),
                            _("Some windows are left still around with the Lifespan lock enabled. This means<br>"
-                             "that Enlightenment will not allow itself to exit until these windows have<br>"
+                             "that Moksha will not allow itself to exit until these windows have<br>"
                              "been closed or have the lifespan lock removed.<br>"));
         /* FIXME: should really display a list of these lifespan locked */
         /* windows in a dialog and let the user disable their locks in */

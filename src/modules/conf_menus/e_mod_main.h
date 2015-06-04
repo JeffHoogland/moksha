@@ -9,7 +9,7 @@ E_Config_Dialog *e_int_config_menus(E_Container *con, const char *params __UNUSE
  *
  * @defgroup Module_Conf_Menus Menu Configuration
  *
- * Configures Enlightenment menus.
+ * Configures Moksha menus.
  *
  * @}
  */

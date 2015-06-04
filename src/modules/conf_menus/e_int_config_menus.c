@@ -171,7 +171,7 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
           }
         else if (!strcmp(buf2, file))
           {
-             label = _("Enlightenment Default");
+             label = _("Moksha Default");
              if (cfdata->default_system_menu)
                {
                   if (!strcmp(cfdata->default_system_menu, file)) sel = i;

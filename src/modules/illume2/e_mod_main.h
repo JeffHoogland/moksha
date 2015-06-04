@@ -54,7 +54,7 @@ int e_mod_policy_shutdown(void);
  *
  * @defgroup Module_Illume2 Illume2
  *
- * Second generation of Illume mobile environment for Enlightenment.
+ * Second generation of Illume mobile environment for Moksha.
  *
  * @see @ref Illume_Main_Page
  *

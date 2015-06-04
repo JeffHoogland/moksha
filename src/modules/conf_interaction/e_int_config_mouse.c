@@ -189,7 +189,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_framelist_object_append(of, ob);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);
 
-   ob = e_widget_radio_add(evas, _("Enlightenment"), 1, rg);
+   ob = e_widget_radio_add(evas, _("Moksha"), 1, rg);
    e_widget_on_change_hook_set(ob, _use_e_cursor_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
    cfdata->disable_list = eina_list_append(cfdata->disable_list, ob);

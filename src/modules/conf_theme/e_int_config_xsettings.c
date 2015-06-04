@@ -485,7 +485,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
     *                        &(cfdata->match_e17_icon_theme));
     * e_widget_list_object_append(ol, ow, 0, 0, 0.0); */
 
-   cfdata->gui.match_theme = ow = e_widget_check_add(evas, _("Match Enlightenment theme if possible"),
+   cfdata->gui.match_theme = ow = e_widget_check_add(evas, _("Match Moksha theme if possible"),
                            &(cfdata->match_e17_theme));
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
 
@@ -533,7 +533,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                            &(cfdata->match_e17_icon_theme));
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
 
-   cfdata->gui.icon_enable_enlightenment = ow = e_widget_check_add(evas, _("Enable icon theme for Enlightenment"),
+   cfdata->gui.icon_enable_enlightenment = ow = e_widget_check_add(evas, _("Enable icon theme for Moksha"),
                            &(cfdata->icon_overrides));
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
 

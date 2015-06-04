@@ -72,7 +72,7 @@ _fsel_cb_ok(void *data, E_Dialog *dia __UNUSED__)
         if (!ecore_file_cp(path, buf))
           {
              e_util_dialog_show(_("Import Error"),
-                                _("Enlightenment was unable to "
+                                _("Moksha was unable to "
                                   "import the image<br>due to a "
                                   "copy error."));
           }
@@ -82,7 +82,7 @@ _fsel_cb_ok(void *data, E_Dialog *dia __UNUSED__)
    else
      {
         e_util_dialog_show(_("Import Error"),
-                           _("Enlightenment was unable to "
+                           _("Moksha was unable to "
                              "import the image.<br><br>"
                              "Are you sure this is a valid "
                              "image?"));

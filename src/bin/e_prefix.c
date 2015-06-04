@@ -23,7 +23,7 @@ e_prefix_determine(char *argv0)
    _prefix_path_data_len= strlen(_prefix_path_data);
 #ifdef E_LOGGING
    INF("=================================");
-   INF("Enlightenment relocation handling");
+   INF("Moksha relocation handling");
    INF("=================================");
    INF("PREFIX:  %s", eina_prefix_get(pfx));
    INF("BINDIR:  %s", eina_prefix_bin_get(pfx));
@@ -33,7 +33,7 @@ e_prefix_determine(char *argv0)
    INF("=================================");
 #else
    printf("=================================\n");
-   printf("Enlightenment relocation handling\n");
+   printf("Moksha relocation handling\n");
    printf("=================================\n");
    printf("PREFIX:  %s\n", eina_prefix_get(pfx));
    printf("BINDIR:  %s\n", eina_prefix_bin_get(pfx));

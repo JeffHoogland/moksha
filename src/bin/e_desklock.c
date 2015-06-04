@@ -234,7 +234,7 @@ e_desklock_show(Eina_Bool suspend)
 
 #ifndef HAVE_PAM
    e_util_dialog_show(_("Error - no PAM support"),
-                      _("No PAM support was built into Enlightenment, so<br>"
+                      _("No PAM support was built into Moksha, so<br>"
                         "desk locking is disabled."));
    return 0;
 #endif

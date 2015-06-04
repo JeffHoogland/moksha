@@ -72,7 +72,7 @@ main(int argc, char **argv)
             (!strcmp(argv[i], "-help")) ||
             (!strcmp(argv[i], "--help")))
           {
-             printf("This is an internal tool for Enlightenment.\n"
+             printf("This is an internal tool for Moksha.\n"
                     "do not use it.\n");
              exit(0);
           }
@@ -102,7 +102,7 @@ main(int argc, char **argv)
         return EXIT_FAILURE;
      }
 
-   title = "Enlightenment Error";
+   title = "Moksha Error";
    str1 = "(F1) Recover";
    str2 = "(F12) Logout";
 
@@ -549,7 +549,7 @@ _e_alert_draw_text(void)
           {
              snprintf(msg, sizeof(msg),
                       "This is not meant to happen and is likely a sign of \n"
-                      "a bug in Enlightenment or the libraries it relies \n"
+                      "a bug in Moksha or the libraries it relies \n"
                       "on. We were not able to generate a backtrace, check \n"
                       "if your 'sysactions.conf' has an 'gdb' action line.\n"
                       "\n"
@@ -560,7 +560,7 @@ _e_alert_draw_text(void)
           {
              snprintf(msg, sizeof(msg),
                       "This is not meant to happen and is likely a sign of \n"
-                      "a bug in Enlightenment or the libraries it relies \n"
+                      "a bug in Moksha or the libraries it relies \n"
                       "on. You will find an backtrace of E17 (%d) in :\n"
                       "'%s'\n"
                       "Before reporting issue, compile latest E17 and EFL\n"
@@ -573,7 +573,7 @@ _e_alert_draw_text(void)
           {
              snprintf(msg, sizeof(msg),
                       "This is not meant to happen and is likely a sign of \n"
-                      "a bug in Enlightenment or the libraries it relies \n"
+                      "a bug in Moksha or the libraries it relies \n"
                       "on. You can gdb attach to this process (%d) now \n"
                       "to try debug it or you could logout, or just hit \n"
                       "recover to try and get your desktop back the way \n"
@@ -599,7 +599,7 @@ _e_alert_draw_text(void)
    for (i = 0; i < sizeof(signal_name) / sizeof(signal_name[0]); ++i)
      if (signal_name[i].signal == sig)
        snprintf(warn, sizeof(warn),
-                "This is very bad. Enlightenment %s'd.",
+                "This is very bad. Moksha %s'd.",
                 signal_name[i].name);
 
    /* draw text */

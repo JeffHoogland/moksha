@@ -179,9 +179,9 @@ _e_fm_ipc_init(void)
    if (!sdir)
      {
         printf("The E_IPC_SOCKET environment variable is not set. This is\n"
-               "exported by Enlightenment to all processes it launches.\n"
+               "exported by Moksha to all processes it launches.\n"
                "This environment variable must be set and must point to\n"
-               "Enlightenment's IPC socket file (minus port number).\n");
+               "Moksha's IPC socket file (minus port number).\n");
         return 0;
      }
    _e_fm_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);

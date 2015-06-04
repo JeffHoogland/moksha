@@ -224,7 +224,7 @@ e_wizard_button_next_enable_set(int enable)
 EAPI void
 e_wizard_title_set(const char *title)
 {
-   edje_object_part_text_set(o_bg, "e.text.title", "Please Wait As We Are Loading Enlightenment Settings!");
+   edje_object_part_text_set(o_bg, "e.text.title", "Please Wait As We Are Loading Moksha Settings!");
 }
 
 EAPI void
@@ -312,7 +312,7 @@ _e_wizard_main_new(E_Zone *zone)
                                   _e_wizard_cb_key_down, popup);
 
    /* set up next/prev buttons */
-   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Enlightenment"));
+   edje_object_part_text_set(o_bg, "e.text.title", _("Welcome to Moksha"));
 //   edje_object_signal_emit(o_bg, "e,state,next,disable", "e");
    e_wizard_labels_update();
 

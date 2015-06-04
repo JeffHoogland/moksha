@@ -435,7 +435,7 @@ static const Ecore_Getopt options = {
    PACKAGE_VERSION,
    "(C) 2012 Gustavo Sverzut Barbieri and others",
    "BSD 2-Clause",
-   "Opens the file using Enlightenment standards.",
+   "Opens the file using Moksha standards.",
    EINA_FALSE,
    {
       ECORE_GETOPT_CHOICE('t', "type", "Choose program type to launch.",

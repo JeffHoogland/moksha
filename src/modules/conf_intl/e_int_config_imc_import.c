@@ -281,7 +281,7 @@ _imc_import_cb_ok(void *data, void *data2 __UNUSED__)
         if (!imc)
           {
              e_util_dialog_show(_("Input Method Config Import Error"),
-                                _("Enlightenment was unable to import "
+                                _("Moksha was unable to import "
                                   "the configuration.<br><br>Are "
                                   "you sure this is really a valid "
                                   "configuration?"));
@@ -297,7 +297,7 @@ _imc_import_cb_ok(void *data, void *data2 __UNUSED__)
              if (!ecore_file_cp(import->cfdata->file, buf))
                {
                   e_util_dialog_show(_("Input Method Config Import Error"),
-                                     _("Enlightenment was unable to import "
+                                     _("Moksha was unable to import "
                                        "the configuration<br>due to a copy "
                                        "error."));
                }

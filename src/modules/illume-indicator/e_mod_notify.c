@@ -25,7 +25,7 @@ e_mod_notify_init(void)
    if (!e_notification_daemon_init()) return 0;
 
    _notify_daemon = 
-     e_notification_daemon_add("illume-indicator", "Enlightenment");
+     e_notification_daemon_add("illume-indicator", "Moksha");
 
    e_notification_daemon_callback_notify_set(_notify_daemon, 
                                              _e_mod_notify_cb_add);

@@ -109,7 +109,7 @@ wizard_page_show(E_Wizard_Page *pg)
        "with well written drivers.<br>"
        "It also will add between 10 to<br>"
        "100 MB to the memory needed<br>"
-       "for Enlightenment."
+       "for Moksha."
        )
      );
    e_widget_framelist_object_append(of, ob);

@@ -281,7 +281,7 @@ _theme_import_cb_ok(void *data, void *data2 __UNUSED__)
                                     "e/widgets/border/default/border"))
           {
              e_util_dialog_show(_("Theme Import Error"),
-                                _("Enlightenment was unable to import "
+                                _("Moksha was unable to import "
                                   "the theme.<br><br>Are you sure this "
                                   "is really a valid theme?"));
           }
@@ -290,7 +290,7 @@ _theme_import_cb_ok(void *data, void *data2 __UNUSED__)
              if (!ecore_file_cp(import->cfdata->file, buf))
                {
                   e_util_dialog_show(_("Theme Import Error"),
-                                     _("Enlightenment was unable to import "
+                                     _("Moksha was unable to import "
                                        "the theme<br>due to a copy error."));
                }
              else

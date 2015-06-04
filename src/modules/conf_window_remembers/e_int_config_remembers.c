@@ -237,7 +237,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
 
    ic = e_icon_add(evas);
    e_util_icon_theme_set(ic, "enlightenment");
-   e_widget_ilist_header_append(cfdata->list, ic, _("Enlightenment"));
+   e_widget_ilist_header_append(cfdata->list, ic, _("Moksha"));
    for (l = ll; l; l = l->next)
      {
         E_Remember *rem = NULL;

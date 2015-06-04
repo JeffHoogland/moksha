@@ -2147,7 +2147,7 @@ ACT_FN_GO(exit, )
    if (!exit_dialog) return;
    e_win_delete_callback_set(exit_dialog->win, _e_actions_cb_exit_dialog_delete);
    e_dialog_title_set(exit_dialog, _("Exit"));
-   e_dialog_text_set(exit_dialog, _("Are you sure you want to exit Enlightenment?"));
+   e_dialog_text_set(exit_dialog, _("Are you sure you want to exit Moksha?"));
    e_dialog_icon_set(exit_dialog, "application-exit", 64);
    e_dialog_button_add(exit_dialog, _("Yes"), NULL,
                        _e_actions_cb_exit_dialog_ok, NULL);
@@ -3394,37 +3394,37 @@ e_actions_init(void)
                             NULL, 0);
 
    ACT_GO(restart);
-   e_action_predef_name_set(N_("Enlightenment"), N_("Restart"), "restart",
+   e_action_predef_name_set(N_("Moksha"), N_("Restart"), "restart",
                             NULL, NULL, 0);
 
    ACT_GO(exit);
-   e_action_predef_name_set(N_("Enlightenment"), N_("Exit"), "exit",
+   e_action_predef_name_set(N_("Moksha"), N_("Exit"), "exit",
                             NULL, NULL, 0);
 
    ACT_GO(exit_now);
-   e_action_predef_name_set(N_("Enlightenment"), N_("Exit Now"),
+   e_action_predef_name_set(N_("Moksha"), N_("Exit Now"),
                             "exit_now", NULL, NULL, 0);
 
    ACT_GO(mode_presentation_toggle);
-   e_action_predef_name_set(N_("Enlightenment : Mode"),
+   e_action_predef_name_set(N_("Moksha : Mode"),
                             N_("Presentation Mode Toggle"),
                             "mode_presentation_toggle", NULL, NULL, 0);
 
    ACT_GO(mode_offline_toggle);
-   e_action_predef_name_set(N_("Enlightenment : Mode"),
+   e_action_predef_name_set(N_("Moksha : Mode"),
                             N_("Offline Mode Toggle"),
                             "mode_offline_toggle", NULL, NULL, 0);
    /* modules */
    ACT_GO(module_enable);
-   e_action_predef_name_set(N_("Enlightenment : Module"),
+   e_action_predef_name_set(N_("Moksha : Module"),
                             N_("Enable the named module"),
                             "module_enable", NULL, NULL, 1);
    ACT_GO(module_disable);
-   e_action_predef_name_set(N_("Enlightenment : Module"),
+   e_action_predef_name_set(N_("Moksha : Module"),
                             N_("Disable the named module"),
                             "module_disable", NULL, NULL, 1);
    ACT_GO(module_toggle);
-   e_action_predef_name_set(N_("Enlightenment : Module"),
+   e_action_predef_name_set(N_("Moksha : Module"),
                             N_("Toggle the named module"),
                             "module_toggle", NULL, NULL, 1);
    

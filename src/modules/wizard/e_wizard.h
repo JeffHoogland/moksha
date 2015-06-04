@@ -53,11 +53,11 @@ EAPI void e_wizard_xdg_desktops_reset(void);
  *
  * @defgroup Module_Wizard Wizard
  *
- * Configures the whole Enlightenment in a nice walk-through wizard.
+ * Configures the whole Moksha in a nice walk-through wizard.
  *
- * Usually is presented on the first run of Enlightenment. The wizard
+ * Usually is presented on the first run of Moksha. The wizard
  * pages are configurable and should be extended by distributions that
- * want to ship Enlightenment as the default window manager.
+ * want to ship Moksha as the default window manager.
  *
  * @}
  */

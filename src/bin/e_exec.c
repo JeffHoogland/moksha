@@ -398,7 +398,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
              free(inst);
              e_util_dialog_show
                (_("Run Error"),
-                   _("Enlightenment was unable to get current directory"));
+                   _("Moksha was unable to get current directory"));
              return NULL;
           }
         if (chdir(desktop->path))
@@ -406,7 +406,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
              free(inst);
              e_util_dialog_show
                (_("Run Error"),
-                   _("Enlightenment was unable to change to directory:<br>"
+                   _("Moksha was unable to change to directory:<br>"
                      "<br>"
                      "%s"),
                    desktop->path);
@@ -417,7 +417,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
           {
              e_util_dialog_show
                (_("Run Error"),
-                   _("Enlightenment was unable to restore to directory:<br>"
+                   _("Moksha was unable to restore to directory:<br>"
                      "<br>"
                      "%s"),
                    buf);
@@ -466,7 +466,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
      {
         free(inst);
         e_util_dialog_show(_("Run Error"),
-                           _("Enlightenment was unable to fork a child process:<br>"
+                           _("Moksha was unable to fork a child process:<br>"
                              "<br>"
                              "%s"),
                            exec);
@@ -604,7 +604,7 @@ _e_exec_cb_exit(void *data __UNUSED__, int type __UNUSED__, void *event)
 
                   e_dialog_title_set(dia, _("Application run error"));
                   snprintf(buf, sizeof(buf),
-                           _("Enlightenment was unable to run the application:<br>"
+                           _("Moksha was unable to run the application:<br>"
                              "<br>"
                              "%s<br>"
                              "<br>"

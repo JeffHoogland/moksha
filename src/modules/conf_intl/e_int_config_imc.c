@@ -259,7 +259,7 @@ _e_imc_setup_cb(void *data, void *data2 __UNUSED__)
              if (!exe)
                {
                   e_util_dialog_show(_("Run Error"),
-                                     _("Enlightenment was unable to fork a child process:<br>"
+                                     _("Moksha was unable to fork a child process:<br>"
                                        "<br>%s<br>"),
                                      cmd);
                }
@@ -508,7 +508,7 @@ _e_imc_adv_setup_cb(void *data, void *data2 __UNUSED__)
         if (!exe)
           {
              e_util_dialog_show(_("Run Error"),
-                                _("Enlightenment was unable to fork a child process:<br>"
+                                _("Moksha was unable to fork a child process:<br>"
                                   "<br>%s<br>"), cmd);
           }
      }

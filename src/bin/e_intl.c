@@ -223,7 +223,7 @@ e_intl_language_set(const char *lang)
                           "file in your 'messages' path which can resolve\n"
                           "this alias.\n\n"
 
-                          "Enlightenment will not be translated.\n",
+                          "Moksha will not be translated.\n",
                           _e_intl_language_alias);
                }
              else if ((locale_parts) && (locale_parts->lang) &&
@@ -236,7 +236,7 @@ e_intl_language_set(const char *lang)
                           "have chosen (%s) cannot be found in your \n"
                           "'messages' path. \n\n"
 
-                          "Enlightenment will not be translated.\n",
+                          "Moksha will not be translated.\n",
                           _e_intl_language_alias);
                }
              e_intl_locale_parts_free(locale_parts);

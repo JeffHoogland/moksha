@@ -123,7 +123,7 @@ _e_zone_black_new(E_Zone *zone)
    evas_object_show(o);
 
    ecore_evas_name_class_set(zone->black_ecore_evas, "E", "Black_Window");
-   snprintf(name, sizeof(name), "Enlightenment Black Zone (%d)", zone->num);
+   snprintf(name, sizeof(name), "Moksha Black Zone (%d)", zone->num);
    ecore_evas_title_set(zone->black_ecore_evas, name);
 }
 

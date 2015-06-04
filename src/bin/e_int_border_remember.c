@@ -301,7 +301,7 @@ _warning_dialog_show(E_Container *con)
    e_dialog_title_set(dia, _("Window properties are not a unique match"));
    e_dialog_text_set
      (dia,
-     _("You are trying to ask Enlightenment to remember to apply<br>"
+     _("You are trying to ask Moksha to remember to apply<br>"
        "properties (such as size, location, border style etc.) to<br>"
        "a window that <hilight>does not have unique properties</hilight>.<br>"
        "<br>"
@@ -498,7 +498,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         e_dialog_title_set(dia, _("No match properties set"));
         e_dialog_text_set
           (dia,
-          _("You are trying to ask Enlightenment to remember to apply<br>"
+          _("You are trying to ask Moksha to remember to apply<br>"
             "properties (such as size, location, border style etc.) to<br>"
             "a window <hilight>without specifying how to remember it</hilight>.<br>"
             "<br>"

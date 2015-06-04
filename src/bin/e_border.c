@@ -445,7 +445,7 @@ e_border_new(E_Container *con,
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
    ecore_x_window_shape_events_select(bd->bg_win, 1);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
-   ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
+   ecore_evas_title_set(bd->bg_ecore_evas, "Moksha Frame");
    if (bd->client.argb)
      bd->client.shell_win = ecore_x_window_manager_argb_new(bd->win, 0, 0, 1, 1);
    else
@@ -1266,7 +1266,7 @@ _e_border_frame_replace(E_Border *bd, Eina_Bool argb)
 
    bd->bg_evas = ecore_evas_get(bd->bg_ecore_evas);
    ecore_evas_name_class_set(bd->bg_ecore_evas, "E", "Frame_Window");
-   ecore_evas_title_set(bd->bg_ecore_evas, "Enlightenment Frame");
+   ecore_evas_title_set(bd->bg_ecore_evas, "Moksha Frame");
 
    ecore_x_window_shape_events_select(bd->bg_win, 1);
 

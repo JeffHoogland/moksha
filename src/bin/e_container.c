@@ -82,7 +82,7 @@ e_container_new(E_Manager *man)
    ecore_x_window_show(con->event_win);
    con->bg_evas = ecore_evas_get(con->bg_ecore_evas);
    ecore_evas_name_class_set(con->bg_ecore_evas, "E", "Background_Window");
-   ecore_evas_title_set(con->bg_ecore_evas, "Enlightenment Background");
+   ecore_evas_title_set(con->bg_ecore_evas, "Moksha Background");
    if (!getenv("EVAS_RENDER_MODE"))
      {
         int have_comp = 0;

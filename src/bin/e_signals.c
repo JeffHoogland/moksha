@@ -74,7 +74,7 @@ e_sigseg_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__
 EAPI void
 e_sigill_act(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
 {
-   // In case of a sigill in Enlightenment, Enlightenment start will catch the sigill and continue,
+   // In case of a sigill in Moksha, Moksha start will catch the sigill and continue,
    // because evas cpu detection use that behaviour. But if we get a SIGILL after that, we endup in
    // this sig handler. So E start remember the SIGILL, and we will commit succide with a USR1, followed
    // by a SEGV.

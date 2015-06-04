@@ -24,7 +24,7 @@ wizard_page_show(E_Wizard_Page *pg)
    if (e_config->focus_policy == E_FOCUS_CLICK) focus_mode = 0;
 
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("Please Wait As We Are Loading Enlightenment Settings!"));
+   e_wizard_title_set(_("Please Wait As We Are Loading Moksha Settings!"));
 
    of = e_widget_framelist_add(pg->evas, _("Focus by ..."), 0);
 

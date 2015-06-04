@@ -430,7 +430,7 @@ main(int argc, char **argv EINA_UNUSED)
        (!strcmp(argv[1], "-help")) ||
        (!strcmp(argv[1], "--help")))
      {
-        printf("This is an internal tool for Enlightenment.\n"
+        printf("This is an internal tool for Moksha.\n"
                "do not use it.\n");
         exit(0);
      }

@@ -101,7 +101,7 @@ main(int argc, char **argv)
              (!strcmp(argv[i], "--help"))))
           {
              printf(
-               "This is an internal tool for Enlightenment.\n"
+               "This is an internal tool for Moksha.\n"
                "do not use it.\n"
                );
              exit(0);
@@ -167,9 +167,9 @@ _e_ipc_init(void)
    if (!sdir)
      {
         printf("The E_IPC_SOCKET environment variable is not set. This is\n"
-               "exported by Enlightenment to all processes it launches.\n"
+               "exported by Moksha to all processes it launches.\n"
                "This environment variable must be set and must point to\n"
-               "Enlightenment's IPC socket file (minus port number).\n");
+               "Moksha's IPC socket file (minus port number).\n");
         return 0;
      }
    _e_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
@@ -509,7 +509,7 @@ _e_init_evas_new(Ecore_X_Window root, int w, int h, Ecore_X_Window *winret)
      evas_font_hinting_set(e, EVAS_FONT_HINTING_NONE);
 
    ecore_evas_name_class_set(ee, "E", "Init_Window");
-   ecore_evas_title_set(ee, "Enlightenment Init");
+   ecore_evas_title_set(ee, "Moksha Init");
 
    ecore_evas_raise(ee);
    ecore_evas_show(ee);

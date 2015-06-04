@@ -10,7 +10,7 @@
 
 @section intro Introduction
 
-Illume is a module for Enlightenment that modifies the user interface of 
+Illume is a module for Moksha that modifies the user interface of 
 enlightenment to work cleanly and nicely on a mobile device - such as an 
 Openmoko phone. It is resolution independent meaning that it can 
 accommodate a very wide range of devices, from cell phones and PDAs to 
@@ -26,7 +26,7 @@ support multiple screens in more than one way using either xinerama or multi-hea
 
 @section intro What is Illume?
 
-Illume is a module for that modifies the user interface of Enlightenment to work 
+Illume is a module for that modifies the user interface of Moksha to work 
 cleanly and nicely on an embedded system - from cell phones and PDAs to tablets and 
 desktops. It is resolution independent meaning that it can accommodate a very wide 
 range of devices. Illume has been designed from the ground up to support multiple 

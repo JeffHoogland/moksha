@@ -131,7 +131,7 @@ main(int argc, char **argv)
    if (argc > 1)
      {
         printf(
-        "This is an internal tool for Enlightenment.\n"
+        "This is an internal tool for Moksha.\n"
         "do not use it.\n"
         );
         exit(0);

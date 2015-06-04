@@ -29,14 +29,14 @@ wizard_page_show(E_Wizard_Page *pg)
    e_widget_size_min_set(ob, 260 * e_scale, 280 * e_scale);
    e_widget_textblock_markup_set
      (ob,
-     _("Enlightenment can check for new<br>"
+     _("Moksha can check for new<br>"
        "versions, updates, security and<br>"
        "bugfixes, as well as available add-ons.<br>"
        "<br>"
        "This is very useful, because it lets<br>"
        "you know about available bug fixes and<br>"
        "security fixes when they happen. As a<br>"
-       "result, Enlightenment will connect to<br>"
+       "result, Moksha will connect to<br>"
        "enlightenment.org and transmit some<br>"
        "information, much like any web browser<br>"
        "might do. No personal information such as<br>"

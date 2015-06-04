@@ -577,7 +577,7 @@ _e_sys_current_action(void)
                       "E", "_sys_error_action_busy");
    if (!dia) return;
 
-   e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
+   e_dialog_title_set(dia, _("Moksha is busy with another request"));
    e_dialog_icon_set(dia, "enlightenment/sys", 64);
    switch (_e_sys_action_current)
      {
@@ -632,7 +632,7 @@ _e_sys_action_failed(void)
                       "E", "_sys_error_action_failed");
    if (!dia) return;
 
-   e_dialog_title_set(dia, _("Enlightenment is busy with another request"));
+   e_dialog_title_set(dia, _("Moksha is busy with another request"));
    e_dialog_icon_set(dia, "enlightenment/sys", 64);
    switch (_e_sys_action_current)
      {

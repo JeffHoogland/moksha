@@ -293,7 +293,7 @@ _import_cb_edje_cc_exit(void *data, __UNUSED__ int type, void *event)
    if (ev->exit_code != 0)
      {
         e_util_dialog_show(_("Picture Import Error"),
-                           _("Enlightenment was unable to import the picture<br>"
+                           _("Moksha was unable to import the picture<br>"
                              "due to conversion errors."));
         r = 0;
      }
@@ -350,7 +350,7 @@ _import_cb_ok(void *data, E_Dialog *dia __UNUSED__)
         if (!ecore_file_cp(import->file, buf))
           {
              e_util_dialog_show(_("Import Error"),
-                                _("Enlightenment was unable to "
+                                _("Moksha was unable to "
                                   "import the image<br>due to a "
                                   "copy error."));
           }
@@ -360,7 +360,7 @@ _import_cb_ok(void *data, E_Dialog *dia __UNUSED__)
    else
      {
         e_util_dialog_show(_("Import Error"),
-                           _("Enlightenment was unable to "
+                           _("Moksha was unable to "
                              "import the image.<br><br>"
                              "Are you sure this is a valid "
                              "image?"));

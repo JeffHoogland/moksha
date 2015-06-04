@@ -195,10 +195,10 @@ e_module_new(const char *name)
         snprintf(body, sizeof(body),
                  _("Module API Error<br>Error initializing Module: %s<br>"
                    "It requires a minimum module API version of: %i.<br>"
-                   "The module API advertized by Enlightenment is: %i.<br>"),
+                   "The module API advertized by Moksha is: %i.<br>"),
                  _(m->api->name), m->api->version, E_MODULE_API_VERSION);
 
-        snprintf(title, sizeof(title), _("Enlightenment %s Module"),
+        snprintf(title, sizeof(title), _("Moksha %s Module"),
                  _(m->api->name));
 
         _e_module_dialog_disable_show(title, body, m);
@@ -781,7 +781,7 @@ _e_module_whitelist_check(void)
           }
         eina_strbuf_append
           (sbuf, _("The following modules are not standard ones for<br>"
-                   "Enlightenment and may cause bugs and crashes.<br>"
+                   "Moksha and may cause bugs and crashes.<br>"
                    "Please remove them before reporting any bugs.<br>"
                    "<br>"
                    "The module list is as follows:<br>"

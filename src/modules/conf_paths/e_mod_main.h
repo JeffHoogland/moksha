@@ -14,7 +14,7 @@ E_Config_Dialog *e_int_config_paths(E_Container *con, const char *params __UNUSE
  * walpapers and others.
  *
  * Can also configure environment variables used and propagated by
- * Enlightenment to child process and applications.
+ * Moksha to child process and applications.
  *
  * @}
  */

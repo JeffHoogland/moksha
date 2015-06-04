@@ -23,7 +23,7 @@ E_Config_Dialog *e_int_config_deskenv(E_Container *con, const char *params __UNU
  * @defgroup Module_Conf_Applications Applications Configuration
  *
  * Configure application icons (launchers ".desktop"), which
- * applications to use on start or restart of Enlightenment.
+ * applications to use on start or restart of Moksha.
  *
  * @}
  */

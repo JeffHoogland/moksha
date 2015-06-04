@@ -138,7 +138,7 @@ e_hints_init(void)
                          {
                             if (name)
                               {
-                                 if (strcmp(name, "Enlightenment"))
+                                 if (strcmp(name, "Moksha"))
                                    {
                                       free(name);
                                       break;
@@ -149,7 +149,7 @@ e_hints_init(void)
                        ecore_x_sync();
                        if ((ecore_time_get() - ts) > 2.0)
                          {
-                            e_error_message_show(_("A previous instance of Enlightenment is still active\n"
+                            e_error_message_show(_("A previous instance of Moksha is still active\n"
                                                    "on this screen. Aborting startup.\n"));
                             exit(1);
                          }
@@ -175,7 +175,7 @@ e_hints_init(void)
  * reparenting... i hate java!
  */
 /*	     ecore_x_netwm_wm_identify(roots[i], win, "KWin");*/
-             ecore_x_netwm_wm_identify(roots[i], win, "Enlightenment");
+             ecore_x_netwm_wm_identify(roots[i], win, "Moksha");
 /* this makes openoffice.org read gtk settings so it doesn't look like shit */
              e_hints_openoffice_gnome_fake(roots[i]);
 
@@ -204,7 +204,7 @@ e_hints_e16_comms_pretend(E_Manager *man)
    win = ecore_x_window_input_new(man->root, -100, -100, 1, 1);
 
    /* to help detect this is NOT e16 */
-   snprintf(buf, sizeof(buf), "Enlightenment %s", VERSION);
+   snprintf(buf, sizeof(buf), "Moksha %s", VERSION);
    ecore_x_window_prop_property_set(win, ATM_ENLIGHTENMENT_VERSION, ECORE_X_ATOM_STRING, 8, buf, strlen(buf));
    ecore_x_window_prop_property_set(man->root, ATM_ENLIGHTENMENT_VERSION, ECORE_X_ATOM_STRING, 8, buf, strlen(buf));
 

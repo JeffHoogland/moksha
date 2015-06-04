@@ -72,7 +72,7 @@ main(int argc,
             (!strcmp(argv[i], "--help")))
           {
              printf(
-               "This is an internal tool for Enlightenment.\n"
+               "This is an internal tool for Moksha.\n"
                "do not use it.\n"
                );
              exit(0);

@@ -175,7 +175,7 @@ _e_randr_config_load(void)
                              _("Settings data needed upgrading. Your old settings have<br>"
                                "been wiped and a new set of defaults initialized. This<br>"
                                "will happen regularly during development, so don't report a<br>"
-                               "bug. This simply means Enlightenment needs new settings<br>"
+                               "bug. This simply means Moksha needs new settings<br>"
                                "data by default for usable functionality that your old<br>"
                                "settings simply lack. This new set of defaults will fix<br>"
                                "that by adding it in. You can re-configure things now to your<br>"
@@ -187,10 +187,10 @@ _e_randr_config_load(void)
              do_restore = EINA_FALSE;
              _e_randr_config_free();
              ecore_timer_add(1.0, _e_randr_config_cb_timer,
-                             _("Your settings are NEWER than Enlightenment. This is very<br>"
+                             _("Your settings are NEWER than Moksha. This is very<br>"
                                "strange. This should not happen unless you downgraded<br>"
-                               "Enlightenment or copied the settings from a place where<br>"
-                               "a newer version of Enlightenment was running. This is bad and<br>"
+                               "Moksha or copied the settings from a place where<br>"
+                               "a newer version of Moksha was running. This is bad and<br>"
                                "as a precaution your settings have been now restored to<br>"
                                "defaults. Sorry for the inconvenience.<br>"));
           }

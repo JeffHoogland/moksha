@@ -284,13 +284,13 @@ main(int argc, char **argv)
    TS("Eina Init");
    if (!eina_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Eina!\n"));
+        e_error_message_show(_("Moksha cannot initialize Eina!\n"));
         _e_main_shutdown(-1);
      }
    _e_main_shutdown_push(eina_shutdown);
    if (!e_log_init())
      {
-        e_error_message_show(_("Enlightenment could not create a logging domain!\n"));
+        e_error_message_show(_("Moksha could not create a logging domain!\n"));
         _e_main_shutdown(-1);
      }
 #ifdef TS_DO
@@ -309,7 +309,7 @@ main(int argc, char **argv)
    if (!e_prefix_determine(argv[0]))
      {
         fprintf(stderr,
-                "ERROR: Enlightenment cannot determine it's installed\n"
+                "ERROR: Moksha cannot determine it's installed\n"
                 "       prefix from the system or argv[0].\n"
                 "       This is because it is not on Linux AND has been\n"
                 "       executed strangely. This is unusual.\n");
@@ -325,7 +325,7 @@ main(int argc, char **argv)
      e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    e_util_env_set("E_RESTART_OK", NULL);
    e_util_env_set("PANTS", "ON");
-   e_util_env_set("DESKTOP", "Enlightenment-0.17.0");
+   e_util_env_set("DESKTOP", "Moksha-0.17.0");
    TS("Environment Variables Done");
 
    TS("Parse Arguments");
@@ -337,7 +337,7 @@ main(int argc, char **argv)
    TS("Eet Init");
    if (!eet_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Eet!\n"));
+        e_error_message_show(_("Moksha cannot initialize Eet!\n"));
         _e_main_shutdown(-1);
      }
    TS("Eet Init Done");
@@ -346,7 +346,7 @@ main(int argc, char **argv)
    TS("Ecore Init");
    if (!ecore_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore Init Done");
@@ -355,7 +355,7 @@ main(int argc, char **argv)
    TS("EIO Init");
    if (!eio_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize EIO!\n"));
+        e_error_message_show(_("Moksha cannot initialize EIO!\n"));
         _e_main_shutdown(-1);
      }
    TS("EIO Init Done");
@@ -367,21 +367,21 @@ main(int argc, char **argv)
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_EXIT,
                                 _e_main_cb_signal_exit, NULL))
      {
-        e_error_message_show(_("Enlightenment cannot set up an exit signal handler.\n"
+        e_error_message_show(_("Moksha cannot set up an exit signal handler.\n"
                                "Perhaps you are out of memory?"));
         _e_main_shutdown(-1);
      }
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_HUP,
                                 _e_main_cb_signal_hup, NULL))
      {
-        e_error_message_show(_("Enlightenment cannot set up a HUP signal handler.\n"
+        e_error_message_show(_("Moksha cannot set up a HUP signal handler.\n"
                                "Perhaps you are out of memory?"));
         _e_main_shutdown(-1);
      }
    if (!ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER,
                                 _e_main_cb_signal_user, NULL))
      {
-        e_error_message_show(_("Enlightenment cannot set up a USER signal handler.\n"
+        e_error_message_show(_("Moksha cannot set up a USER signal handler.\n"
                                "Perhaps you are out of memory?"));
         _e_main_shutdown(-1);
      }
@@ -390,7 +390,7 @@ main(int argc, char **argv)
    TS("Ecore_File Init");
    if (!ecore_file_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_File!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_File!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_File Init Done");
@@ -399,7 +399,7 @@ main(int argc, char **argv)
    TS("Ecore_Con Init");
    if (!ecore_con_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_Con!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_Con!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_Con Init Done");
@@ -408,7 +408,7 @@ main(int argc, char **argv)
    TS("Ecore_Ipc Init");
    if (!ecore_ipc_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_Ipc!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_Ipc!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_Ipc Init Done");
@@ -419,7 +419,7 @@ main(int argc, char **argv)
    TS("Ecore_X Init");
    if (!ecore_x_init(NULL))
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_X!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_X!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_X Init Done");
@@ -431,7 +431,7 @@ main(int argc, char **argv)
    TS("Ecore_IMF Init");
    if (!ecore_imf_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_IMF!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_IMF!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_IMF Init Done");
@@ -441,7 +441,7 @@ main(int argc, char **argv)
    TS("Ecore_Evas Init");
    if (!ecore_evas_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Ecore_Evas!\n"));
+        e_error_message_show(_("Moksha cannot initialize Ecore_Evas!\n"));
         _e_main_shutdown(-1);
      }
    TS("Ecore_Evas Init Done");
@@ -451,7 +451,7 @@ main(int argc, char **argv)
    TS("Elementary Init");
    if (!elm_init(argc, argv))
      {
-        e_error_message_show(_("Enlightenment cannot initialize Elementary!\n"));
+        e_error_message_show(_("Moksha cannot initialize Elementary!\n"));
         _e_main_shutdown(-1);
      }
    TS("Elementary Init Done");
@@ -462,7 +462,7 @@ main(int argc, char **argv)
    TS("Emotion Init");
    if (!emotion_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Emotion!\n"));
+        e_error_message_show(_("Moksha cannot initialize Emotion!\n"));
         _e_main_shutdown(-1);
      }
    TS("Emotion Init Done");
@@ -477,7 +477,7 @@ main(int argc, char **argv)
      {
         if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_XLIB))
           {
-             e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software X11\n"
+             e_error_message_show(_("Moksha found ecore_evas doesn't support the Software X11\n"
                                     "rendering in Evas. Please check your installation of Evas and\n"
                                     "Ecore and check they support the Software X11 rendering engine."));
              _e_main_shutdown(-1);
@@ -485,7 +485,7 @@ main(int argc, char **argv)
      }
    if (!ecore_evas_engine_type_supported_get(ECORE_EVAS_ENGINE_SOFTWARE_BUFFER))
      {
-        e_error_message_show(_("Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+        e_error_message_show(_("Moksha found ecore_evas doesn't support the Software Buffer\n"
                                "rendering in Evas. Please check your installation of Evas and\n"
                                "Ecore and check they support the Software Buffer rendering engine."));
         _e_main_shutdown(-1);
@@ -495,7 +495,7 @@ main(int argc, char **argv)
    TS("Edje Init");
    if (!edje_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize Edje!\n"));
+        e_error_message_show(_("Moksha cannot initialize Edje!\n"));
         _e_main_shutdown(-1);
      }
    TS("Edje Init Done");
@@ -507,7 +507,7 @@ main(int argc, char **argv)
    TS("E Intl Init");
    if (!e_intl_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize E_Intl!\n"));
+        e_error_message_show(_("Moksha cannot initialize E_Intl!\n"));
         _e_main_shutdown(-1);
      }
    TS("E Intl Init Done");
@@ -517,7 +517,7 @@ main(int argc, char **argv)
    TS("E_Alert Init");
    if (!e_alert_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize its emergency alert system.\n"
+        e_error_message_show(_("Moksha cannot initialize its emergency alert system.\n"
                                "Have you set your DISPLAY variable?"));
         _e_main_shutdown(-1);
      }
@@ -536,7 +536,7 @@ main(int argc, char **argv)
    /* setup directories we will be using for configurations storage etc. */
    if (!_e_main_dirs_init())
      {
-        e_error_message_show(_("Enlightenment cannot create directories in your home directory.\n"
+        e_error_message_show(_("Moksha cannot create directories in your home directory.\n"
                                "Perhaps you have no home directory or the disk is full?"));
         _e_main_shutdown(-1);
      }
@@ -546,7 +546,7 @@ main(int argc, char **argv)
    TS("E_Filereg Init");
    if (!e_filereg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its file registry system.\n"));
+        e_error_message_show(_("Moksha cannot set up its file registry system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Filereg Init Done");
@@ -555,7 +555,7 @@ main(int argc, char **argv)
    TS("E_Config Init");
    if (!e_config_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its config system.\n"));
+        e_error_message_show(_("Moksha cannot set up its config system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Config Init Done");
@@ -568,7 +568,7 @@ main(int argc, char **argv)
    TS("E_Randr Init");
    if (!e_randr_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize E_Randr!\n"));
+        e_error_message_show(_("Moksha cannot initialize E_Randr!\n"));
      }
    else
      _e_main_shutdown_push(e_randr_shutdown);
@@ -577,7 +577,7 @@ main(int argc, char **argv)
    TS("E_Xinerama Init");
    if (!e_xinerama_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize E_Xinerama!\n"));
+        e_error_message_show(_("Moksha cannot initialize E_Xinerama!\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Xinerama Init Done");
@@ -586,7 +586,7 @@ main(int argc, char **argv)
    TS("E_Env Init");
    if (!e_env_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its environment.\n"));
+        e_error_message_show(_("Moksha cannot set up its environment.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Env Init Done");
@@ -602,7 +602,7 @@ main(int argc, char **argv)
    TS("E_Scale Init");
    if (!e_scale_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its scale system.\n"));
+        e_error_message_show(_("Moksha cannot set up its scale system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Scale Init Done");
@@ -611,7 +611,7 @@ main(int argc, char **argv)
    TS("E_Pointer Init");
    if (!e_pointer_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its pointer system.\n"));
+        e_error_message_show(_("Moksha cannot set up its pointer system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Pointer Init Done");
@@ -620,7 +620,7 @@ main(int argc, char **argv)
    TS("E Paths Init");
    if (!_e_main_path_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up paths for finding files.\n"
+        e_error_message_show(_("Moksha cannot set up paths for finding files.\n"
                                "Perhaps you are out of memory?"));
         _e_main_shutdown(-1);
      }
@@ -637,7 +637,7 @@ main(int argc, char **argv)
    TS("E_Font Init");
    if (!e_font_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its font system.\n"));
+        e_error_message_show(_("Moksha cannot set up its font system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Font Init Done");
@@ -654,7 +654,7 @@ main(int argc, char **argv)
    TS("E_Theme Init");
    if (!e_theme_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its theme system.\n"));
+        e_error_message_show(_("Moksha cannot set up its theme system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Theme Init Done");
@@ -670,7 +670,7 @@ main(int argc, char **argv)
         TS("E_Splash Init");
         if (!e_init_init())
           {
-             e_error_message_show(_("Enlightenment cannot set up its init screen.\n"));
+             e_error_message_show(_("Moksha cannot set up its init screen.\n"));
              _e_main_shutdown(-1);
           }
         TS("E_Splash Init Done");
@@ -678,7 +678,7 @@ main(int argc, char **argv)
      }
    if (!((!e_config->show_splash) || (after_restart)))
      {
-        e_init_title_set(_("Enlightenment"));
+        e_init_title_set(_("Moksha"));
         e_init_version_set(VERSION);
         e_init_show();
         pause();
@@ -689,7 +689,7 @@ main(int argc, char **argv)
    TS("E_Intl Post Init");
    if (!e_intl_post_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its intl system.\n"));
+        e_error_message_show(_("Moksha cannot set up its intl system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Intl Post Init Done");
@@ -698,7 +698,7 @@ main(int argc, char **argv)
    TS("Efreet Init");
    if (!efreet_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the FDO desktop system.\n"
+        e_error_message_show(_("Moksha cannot initialize the FDO desktop system.\n"
                                "Perhaps you lack permissions on ~/.cache/efreet or are\n"
                                "out of memory or disk space?"));
         _e_main_shutdown(-1);
@@ -727,7 +727,7 @@ main(int argc, char **argv)
    TS("Screens Init");
    if (!_e_main_screens_init())
      {
-        e_error_message_show(_("Enlightenment set up window management for all the screens on your system\n"
+        e_error_message_show(_("Moksha set up window management for all the screens on your system\n"
                                "failed. Perhaps another window manager is running?\n"));
         _e_main_shutdown(-1);
      }
@@ -746,7 +746,7 @@ main(int argc, char **argv)
    TS("E_Backlight Init");
    if (!e_backlight_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the backlight.\n"));
+        e_error_message_show(_("Moksha cannot configure the backlight.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Backlight Init Done");
@@ -757,7 +757,7 @@ main(int argc, char **argv)
    TS("E_Screensaver Init");
    if (!e_screensaver_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the X screensaver.\n"));
+        e_error_message_show(_("Moksha cannot configure the X screensaver.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Screensaver Init Done");
@@ -768,7 +768,7 @@ main(int argc, char **argv)
    TS("E_Dpms Init");
    if (!e_dpms_init())
      {
-        e_error_message_show(_("Enlightenment cannot configure the DPMS settings.\n"));
+        e_error_message_show(_("Moksha cannot configure the DPMS settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Dpms Init Done");
@@ -779,7 +779,7 @@ main(int argc, char **argv)
    TS("E_Powersave Init");
    if (!e_powersave_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its powersave modes.\n"));
+        e_error_message_show(_("Moksha cannot set up its powersave modes.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Powersave Init Done");
@@ -790,7 +790,7 @@ main(int argc, char **argv)
    TS("E_Desklock Init");
    if (!e_desklock_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its desk locking system.\n"));
+        e_error_message_show(_("Moksha cannot set up its desk locking system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Desklock Init Done");
@@ -801,7 +801,7 @@ main(int argc, char **argv)
    TS("E_Popups Init");
    if (!e_popup_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its popup system.\n"));
+        e_error_message_show(_("Moksha cannot set up its popup system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Popups Init Done");
@@ -830,7 +830,7 @@ main(int argc, char **argv)
    TS("E_Sys Init");
    if (!e_sys_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the System Command system.\n"));
+        e_error_message_show(_("Moksha cannot initialize the System Command system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Sys Init Done");
@@ -841,7 +841,7 @@ main(int argc, char **argv)
    TS("E_Actions Init");
    if (!e_actions_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its actions system.\n"));
+        e_error_message_show(_("Moksha cannot set up its actions system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Actions Init Done");
@@ -852,7 +852,7 @@ main(int argc, char **argv)
    TS("E_Exec Init");
    if (!e_exec_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its exec system.\n"));
+        e_error_message_show(_("Moksha cannot set up its exec system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Exec Init Done");
@@ -867,7 +867,7 @@ main(int argc, char **argv)
    TS("E_Fm2 Init");
    if (!e_fm2_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the File manager.\n"));
+        e_error_message_show(_("Moksha cannot initialize the File manager.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Fm2 Init Done");
@@ -878,7 +878,7 @@ main(int argc, char **argv)
    TS("E_Msg Init");
    if (!e_msg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its msg system.\n"));
+        e_error_message_show(_("Moksha cannot set up its msg system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Msg Init Done");
@@ -889,7 +889,7 @@ main(int argc, char **argv)
    TS("E_Dnd Init");
    if (!e_dnd_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its dnd system.\n"));
+        e_error_message_show(_("Moksha cannot set up its dnd system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Dnd Init Done");
@@ -900,7 +900,7 @@ main(int argc, char **argv)
    TS("E_Grabinput Init");
    if (!e_grabinput_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its grab input handling system.\n"));
+        e_error_message_show(_("Moksha cannot set up its grab input handling system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Grabinput Init Done");
@@ -911,7 +911,7 @@ main(int argc, char **argv)
    TS("E_Module Init");
    if (!e_module_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its module system.\n"));
+        e_error_message_show(_("Moksha cannot set up its module system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Module Init Done");
@@ -922,7 +922,7 @@ main(int argc, char **argv)
    TS("E_Remember Init");
    if (!e_remember_init(after_restart ? E_STARTUP_RESTART : E_STARTUP_START))
      {
-        e_error_message_show(_("Enlightenment cannot setup remember settings.\n"));
+        e_error_message_show(_("Moksha cannot setup remember settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Remember Init Done");
@@ -933,7 +933,7 @@ main(int argc, char **argv)
    TS("E_Color_Class Init");
    if (!e_color_class_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its color class system.\n"));
+        e_error_message_show(_("Moksha cannot set up its color class system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Color_Class Init Done");
@@ -944,7 +944,7 @@ main(int argc, char **argv)
    TS("E_Gadcon Init");
    if (!e_gadcon_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its gadget control system.\n"));
+        e_error_message_show(_("Moksha cannot set up its gadget control system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Gadcon Init Done");
@@ -955,7 +955,7 @@ main(int argc, char **argv)
    TS("E_Bg Init");
    if (!e_bg_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its desktop background system.\n"));
+        e_error_message_show(_("Moksha cannot set up its desktop background system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Bg Init Done");
@@ -966,14 +966,14 @@ main(int argc, char **argv)
    TS("E_Mouse Init");
    if (!e_mouse_update())
      {
-        e_error_message_show(_("Enlightenment cannot configure the mouse settings.\n"));
+        e_error_message_show(_("Moksha cannot configure the mouse settings.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Mouse Init Done");
    TS("E_Xkb Init");
    if (!e_xkb_init())
      {
-        e_error_message_show(_("Enlightenment cannot setup XKB Keyboard layouts.\n"));
+        e_error_message_show(_("Moksha cannot setup XKB Keyboard layouts.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Xkb Init Done");
@@ -983,7 +983,7 @@ main(int argc, char **argv)
    TS("E_Bindings Init");
    if (!e_bindings_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its bindings system.\n"));
+        e_error_message_show(_("Moksha cannot set up its bindings system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Bindings Init Done");
@@ -994,7 +994,7 @@ main(int argc, char **argv)
    TS("E_Thumb Init");
    if (!e_thumb_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the Thumbnailing system.\n"));
+        e_error_message_show(_("Moksha cannot initialize the Thumbnailing system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Thumb Init Done");
@@ -1003,7 +1003,7 @@ main(int argc, char **argv)
    TS("E_Icon Init");
    if (!e_icon_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the Icon Cache system.\n"));
+        e_error_message_show(_("Moksha cannot initialize the Icon Cache system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Icon Init Done");
@@ -1012,7 +1012,7 @@ main(int argc, char **argv)
    TS("E_XSettings Init");
    if (!e_xsettings_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the XSettings system.\n"));
+        e_error_message_show(_("Moksha cannot initialize the XSettings system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_XSettings Init Done");
@@ -1021,7 +1021,7 @@ main(int argc, char **argv)
    TS("E_Update Init");
    if (!e_update_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize the Update system.\n"));
+        e_error_message_show(_("Moksha cannot initialize the Update system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Update Init Done");
@@ -1032,7 +1032,7 @@ main(int argc, char **argv)
    TS("E_Deskenv Init");
    if (!e_deskenv_init())
      {
-        e_error_message_show(_("Enlightenment cannot initialize its desktop environment.\n"));
+        e_error_message_show(_("Moksha cannot initialize its desktop environment.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Deskenv Init Done");
@@ -1043,7 +1043,7 @@ main(int argc, char **argv)
    TS("E_Order Init");
    if (!e_order_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its order file system.\n"));
+        e_error_message_show(_("Moksha cannot set up its order file system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Order Init Done");
@@ -1093,7 +1093,7 @@ main(int argc, char **argv)
    TS("E_Shelf Init");
    if (!e_shelf_init())
      {
-        e_error_message_show(_("Enlightenment cannot set up its module system.\n"));
+        e_error_message_show(_("Moksha cannot set up its module system.\n"));
         _e_main_shutdown(-1);
      }
    TS("E_Shelf Init Done");
@@ -1616,7 +1616,7 @@ _e_main_test_formats(void)
 
    if (!(ee = ecore_evas_buffer_new(1, 1)))
      {
-        e_error_message_show(_("Enlightenment found Evas can't create a buffer canvas. Please check\n"
+        e_error_message_show(_("Moksha found Evas can't create a buffer canvas. Please check\n"
                                "Evas has Software Buffer engine support.\n"));
         _e_main_shutdown(-1);
      }
@@ -1628,7 +1628,7 @@ _e_main_test_formats(void)
    evas_object_image_file_set(im, buff, NULL);
    if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
      {
-        e_error_message_show(_("Enlightenment found Evas can't load SVG files. "
+        e_error_message_show(_("Moksha found Evas can't load SVG files. "
                                "Check Evas has SVG loader support.\n"));
      }
    else
@@ -1638,7 +1638,7 @@ _e_main_test_formats(void)
    evas_object_image_file_set(im, buff, NULL);
    if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
      {
-        e_error_message_show(_("Enlightenment found Evas can't load JPEG files. "
+        e_error_message_show(_("Moksha found Evas can't load JPEG files. "
                                "Check Evas has JPEG loader support.\n"));
         _e_main_shutdown(-1);
      }
@@ -1648,7 +1648,7 @@ _e_main_test_formats(void)
    evas_object_image_file_set(im, buff, NULL);
    if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
      {
-        e_error_message_show(_("Enlightenment found Evas can't load PNG files. "
+        e_error_message_show(_("Moksha found Evas can't load PNG files. "
                                "Check Evas has PNG loader support.\n"));
         _e_main_shutdown(-1);
      }
@@ -1658,7 +1658,7 @@ _e_main_test_formats(void)
    evas_object_image_file_set(im, buff, "images/0");
    if (evas_object_image_load_error_get(im) != EVAS_LOAD_ERROR_NONE)
      {
-        e_error_message_show(_("Enlightenment found Evas can't load EET files. "
+        e_error_message_show(_("Moksha found Evas can't load EET files. "
                                "Check Evas has EET loader support.\n"));
         _e_main_shutdown(-1);
      }
@@ -1672,7 +1672,7 @@ _e_main_test_formats(void)
    evas_object_geometry_get(txt, NULL, NULL, &tw, &th);
    if ((tw <= 0) && (th <= 0))
      {
-        e_error_message_show(_("Enlightenment found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
+        e_error_message_show(_("Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
                                "support and system fontconfig defines a 'Sans' font.\n"));
         _e_main_shutdown(-1);
      }
@@ -1880,13 +1880,13 @@ _e_main_modules_load(Eina_Bool safe_mode)
 
              e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
              e_error_message_show
-               (_("Enlightenment crashed early on start and has<br>"
+               (_("Moksha crashed early on start and has<br>"
                   "been restarted. There was an error loading the<br>"
                   "module named: %s. This module has been disabled<br>"
                   "and will not be loaded."), crashmodule);
              e_util_dialog_show
-               (_("Enlightenment crashed early on start and has been restarted"),
-               _("Enlightenment crashed early on start and has been restarted.<br>"
+               (_("Moksha crashed early on start and has been restarted"),
+               _("Moksha crashed early on start and has been restarted.<br>"
                  "There was an error loading the module named: %s<br><br>"
                  "This module has been disabled and will not be loaded."), crashmodule);
              e_module_all_load();
@@ -1895,15 +1895,15 @@ _e_main_modules_load(Eina_Bool safe_mode)
           {
              e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
              e_error_message_show
-               (_("Enlightenment crashed early on start and has<br>"
+               (_("Moksha crashed early on start and has<br>"
                   "been restarted. All modules have been disabled<br>"
                   "and will not be loaded to help remove any problem<br>"
                   "modules from your configuration. The module<br>"
                   "configuration dialog should let you select your<br>"
                   "modules again.\n"));
              e_util_dialog_show
-               (_("Enlightenment crashed early on start and has been restarted"),
-               _("Enlightenment crashed early on start and has been restarted.<br>"
+               (_("Moksha crashed early on start and has been restarted"),
+               _("Moksha crashed early on start and has been restarted.<br>"
                  "All modules have been disabled and will not be loaded to help<br>"
                  "remove any problem modules from your configuration.<br><br>"
                  "The module configuration dialog should let you select your<br>"

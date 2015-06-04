@@ -112,7 +112,7 @@ static const Ecore_Getopt options = {
    PACKAGE_VERSION,
    "(C) 2012 Gustavo Sverzut Barbieri and others",
    "BSD 2-Clause",
-   "Opens the Enlightenment File Manager at a given folders.",
+   "Opens the Moksha File Manager at a given folders.",
    EINA_FALSE,
    {
       ECORE_GETOPT_VERSION('V', "version"),
