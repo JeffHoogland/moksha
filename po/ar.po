@@ -21,7 +21,7 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
+msgid "About Moksha"
 msgstr "عن E17ِ"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
@@ -39,12 +39,12 @@ msgstr "إغلاق"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
+msgid "Moksha"
 msgstr "سطح المكتب E17ِ"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
@@ -90,7 +90,7 @@ msgid "Exit"
 msgstr "اخرج"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
 msgstr "أتريد بالفعل الخروج من E17ِ ؟"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
@@ -688,7 +688,7 @@ msgid "Exit Now"
 msgstr "اخرج اﻵن"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
+msgid "Moksha : Mode"
 msgstr "E17ِ : النمط"
 
 #: src/bin/e_actions.c:3380
@@ -700,7 +700,7 @@ msgid "Offline Mode Toggle"
 msgstr "التحول لوضع دون اتصال"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
+msgid "Moksha : Module"
 msgstr "E17ِ : الوحدات"
 
 #: src/bin/e_actions.c:3390
@@ -819,7 +819,7 @@ msgstr "ألغ"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -834,9 +834,9 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
@@ -846,13 +846,13 @@ msgstr ""
 "ﻹزعاجك.<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
+msgid "Moksha Settings Write Problems"
 msgstr "خلل في كتابة أعدادات E17ِ"
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
@@ -898,7 +898,7 @@ msgstr ""
 "الملف غير قابل للكتابة عليه. ربما لكون القرص مخصصا للقراءة فقط<br>أو فقدت "
 "الأذونات إلى ملفاتك."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "نفِدت الذاكرة أثناء اﻹعداد للكتابة.<br>رجاءا حرر مساحة من الذاكرة."
 
@@ -963,13 +963,13 @@ msgid "Decryption failed."
 msgstr "فشل فك التشفير."
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
+msgid "The error is unknown to Moksha."
 msgstr "الخطأ مجهول لدى E17ِ"
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
@@ -1024,7 +1024,7 @@ msgstr "خلل - لا يوجد دعم بام(PAM)"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr "لا يوجد دعم بام(PAM) في E17ِ, لذا<br>قفل القرص غير معطل."
 
 #: src/bin/e_desklock.c:301
@@ -1232,22 +1232,22 @@ msgid "Run Error"
 msgstr "خلل في التشغيل"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
+msgid "Moksha was unable to get current directory"
 msgstr "عجز E17ِ عن الحصول على المجلد الحالي"
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
+msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "لا يستطيع E17ِ التغيير إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "لا يستطيع E17ِ اﻹستعادة إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "لم يستطع E17ِ إنشاء تفرع من عملية الطفل :<br><br>%s<br>"
 
 #: src/bin/e_exec.c:604
@@ -1257,7 +1257,7 @@ msgstr "خلل في تشغيل البرنامج"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "لا يستطيع E17ِ تشغيل البرنامج:<br><br>%s<br><br>فشل البرنامج في البدء."
 
@@ -1931,7 +1931,7 @@ msgstr "تسلسل ارتباط مفتاح"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
 "هنالك نموذج من E17ِ لايزال قيد التفعيل\n"
@@ -1943,12 +1943,12 @@ msgid "Import Error"
 msgstr "حلل في الاستيراد"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr "لا يستطيع E17ِ استيراد الصورة<br>جراء خلل في النسخ."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr "لا يستطيع E17ِ استيراد الصورة.<br><br>هل تأكدت من صحة هذه الصورة ؟"
 
@@ -1966,7 +1966,7 @@ msgstr "خلل في استيراد الصورة"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
+"Moksha was unable to import the picture<br>due to conversion errors."
 msgstr "عجز E17ِ عن إستيراد الصورة<br>لسبب أخطاء التحويل"
 
 #: src/bin/e_import_config_dialog.c:459
@@ -2232,7 +2232,7 @@ msgid "Select Border Style"
 msgstr "اختر أسلوب الحدود"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
+msgid "Use Moksha Default Icon Preference"
 msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـE17ِ"
 
 #: src/bin/e_int_border_menu.c:1199
@@ -2535,7 +2535,7 @@ msgstr "خصائص النافذة ليست متطابقة"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2562,7 +2562,7 @@ msgstr "لا يوجد مجموعة تفضيلات متطابقة"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
@@ -2923,28 +2923,28 @@ msgid "Show on specified Desktops"
 msgstr "أظهر في أسطح مكتب محددة"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
+msgid "Moksha cannot initialize Eina!\n"
 msgstr "لا يستطيع E17ِ بدء Eina!\n"
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
+msgid "Moksha could not create a logging domain!\n"
 msgstr "لا يستطيع E17ِ ضبط نظام معالجة أنتزاع المدخلات.\n"
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
+msgid "Moksha cannot initialize Eet!\n"
 msgstr "لا يستطيع E17ِ بدء Eet!\n"
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
+msgid "Moksha cannot initialize Ecore!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore!\n"
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
+msgid "Moksha cannot initialize EIO!\n"
 msgstr "لا يستطيع E17ِ بدء EIO!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة الخروج.\n"
@@ -2952,7 +2952,7 @@ msgstr ""
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة HUP.\n"
@@ -2960,47 +2960,47 @@ msgstr ""
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "لا يستطيع E17ِ ضبط معالج إشارة المستخدم.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_File!\n"
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Con!\n"
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_X!\n"
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_IMF!\n"
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "لا يستطيع E17ِ بدء Ecore_Evas!\n"
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
+msgid "Moksha cannot initialize Elementary!\n"
 msgstr "لا يستطيع E17ِ بدء Elementary!\n"
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
+msgid "Moksha cannot initialize Emotion!\n"
 msgstr "لا يستطيع E17ِ بدء Emotion!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
@@ -3010,7 +3010,7 @@ msgstr ""
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
@@ -3019,16 +3019,16 @@ msgstr ""
 "و تفقد دعمهما ﻷداء محرك برمجية تصيير الصوان ."
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
 msgstr "لا يستطيع E17ِ بدء Edje! \n"
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "لا يستطيع E17ِ بدء E_Intl!.\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
 "لا يستطيع E17ِ بدء نظام تنبيه الطوارئ.\n"
@@ -3036,58 +3036,58 @@ msgstr ""
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "لا يستطيع E17ِ إنشاء مسارات في مسار المنزل \n"
 "ربما ﻷنك لا تملك مسار منزل أو أن القرص ممتلئ"
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
+msgid "Moksha cannot set up its file registry system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام تسجيل ملفاته.\n"
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
+msgid "Moksha cannot set up its config system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام اﻹعداد.\n"
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
 msgstr "لا يستطيع E17ِ بدء E_Randr!.\n"
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "لا يستطيع E17ِ بدء E_Xinerama!.\n"
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
+msgid "Moksha cannot set up its environment.\n"
 msgstr "لا يستطيع E17ِ ضبط بيئته.\n"
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
+msgid "Moksha cannot set up its scale system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام التحجيم.\n"
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
+msgid "Moksha cannot set up its pointer system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام المؤشر.\n"
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "لا يستطيع E17ِ ضبط مسارات للملفات التي عثر عليها.\n"
 "ربما ﻷنك لا تيملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
+msgid "Moksha cannot set up its font system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام الخطوط.\n"
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
+msgid "Moksha cannot set up its theme system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام السمات.\n"
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
+msgid "Moksha cannot set up its init screen.\n"
 msgstr "لا يستطيع E17ِ ضبط شاشة init.\n"
 
 #: src/bin/e_main.c:688
@@ -3095,12 +3095,12 @@ msgid "Starting International Support"
 msgstr "جاري بدء الدعم الدولي"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
+msgid "Moksha cannot set up its intl system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام intl.\n"
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
@@ -3114,7 +3114,7 @@ msgstr "ضبط الشاشات"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "فشل E17ِ في ضبط إدارة النافذة لكل الشاشات التي على نظامك\n"
@@ -3129,7 +3129,7 @@ msgid "Setup Backlight"
 msgstr "ضبط اﻷضواء الخلفية"
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
+msgid "Moksha cannot configure the backlight.\n"
 msgstr "لا يستطيع E17ِ إعداد اﻹضاءة الخلفية.\n"
 
 #: src/bin/e_main.c:756
@@ -3137,7 +3137,7 @@ msgid "Setup Screensaver"
 msgstr "ضبط حافظة الشاشة"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "لا يستطيع E17ِ إعداد حافظة الشاشة إكس.\n"
 
 #: src/bin/e_main.c:767
@@ -3145,7 +3145,7 @@ msgid "Setup DPMS"
 msgstr "ضبط DPMS"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "لا يستطيع E17ِ إعداد إعدادات DPMS .\n"
 
 #: src/bin/e_main.c:778
@@ -3153,7 +3153,7 @@ msgid "Setup Powersave Modes"
 msgstr "اضبط أوضاع حفظ الطاقة"
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "لا يستطيع E17ِ ضبط أوضاع حفظ الطاقة.\n"
 
 #: src/bin/e_main.c:789
@@ -3161,7 +3161,7 @@ msgid "Setup Desklock"
 msgstr "اضبط قفل سطح المكتب"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام قفل سطح المكتب.\n"
 
 #: src/bin/e_main.c:800
@@ -3169,7 +3169,7 @@ msgid "Setup Popups"
 msgstr "ضبط النوافذ المنبثقة"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
+msgid "Moksha cannot set up its popup system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام المنبثقات.\n"
 
 #: src/bin/e_main.c:816
@@ -3185,7 +3185,7 @@ msgid "Setup System Controls"
 msgstr "ضبط متحكمات النظام"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام أوامر النظام \n"
 
 #: src/bin/e_main.c:840
@@ -3193,7 +3193,7 @@ msgid "Setup Actions"
 msgstr "إجراءات الضبظ"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
+msgid "Moksha cannot set up its actions system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام إﻹجراءات.\n"
 
 #: src/bin/e_main.c:851
@@ -3201,7 +3201,7 @@ msgid "Setup Execution System"
 msgstr "ضبط نظام اﻹعدام"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
+msgid "Moksha cannot set up its exec system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام exec.\n"
 
 #: src/bin/e_main.c:866
@@ -3209,7 +3209,7 @@ msgid "Setup Filemanager"
 msgstr "اضبط مدير الملفات"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
+msgid "Moksha cannot initialize the File manager.\n"
 msgstr "لا يستطيع E17ِ بدء مدير الملفات.\n"
 
 #: src/bin/e_main.c:877
@@ -3217,7 +3217,7 @@ msgid "Setup Message System"
 msgstr "ضبط نظام الرسائل"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
+msgid "Moksha cannot set up its msg system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام msg.\n"
 
 #: src/bin/e_main.c:888
@@ -3225,7 +3225,7 @@ msgid "Setup DND"
 msgstr "اضبط DND "
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
+msgid "Moksha cannot set up its dnd system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام dnd.\n"
 
 #: src/bin/e_main.c:899
@@ -3233,7 +3233,7 @@ msgid "Setup Grab Input Handling"
 msgstr "اضبط معالجة مدخلة المنزوعات"
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام معالجة مدخلات المنزوعات.\n"
 
 #: src/bin/e_main.c:910
@@ -3241,7 +3241,7 @@ msgid "Setup Modules"
 msgstr "ضبط الوحدات"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
+msgid "Moksha cannot set up its module system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام الوحدات.\n"
 
 #: src/bin/e_main.c:921
@@ -3249,7 +3249,7 @@ msgid "Setup Remembers"
 msgstr "اضبط المتذكرين"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
+msgid "Moksha cannot setup remember settings.\n"
 msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
 #: src/bin/e_main.c:932
@@ -3257,7 +3257,7 @@ msgid "Setup Color Classes"
 msgstr "ضبط أصناف اﻷلوان"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
+msgid "Moksha cannot set up its color class system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام صنف اﻷلوان.\n"
 
 #: src/bin/e_main.c:943
@@ -3265,7 +3265,7 @@ msgid "Setup Gadcon"
 msgstr "ضبط Gadcon"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام تحكم أدواته.\n"
 
 #: src/bin/e_main.c:954
@@ -3273,7 +3273,7 @@ msgid "Setup Wallpaper"
 msgstr "ضبط الخلفية"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام خلفية سطح المكتب.\n"
 
 #: src/bin/e_main.c:965
@@ -3281,11 +3281,11 @@ msgid "Setup Mouse"
 msgstr "ضبط الفأرة"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "لا يستطيع E17ِ إعداد خيارات ضبط الفأرة.\n"
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "لا يستطيع E17ِ ضبط مخططات لوحة مفاتيح XKB .\n"
 
 #: src/bin/e_main.c:982
@@ -3293,7 +3293,7 @@ msgid "Setup Bindings"
 msgstr "ضبط اﻷغلفة"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
+msgid "Moksha cannot set up its bindings system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام اﻹرتباطات.\n"
 
 #: src/bin/e_main.c:993
@@ -3301,19 +3301,19 @@ msgid "Setup Thumbnailer"
 msgstr "ضبط مصغر الصور"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام المصغرات\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام الذاكرة المخبئية اﻷيقوني \n"
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام إعدادات X\n"
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
+msgid "Moksha cannot initialize the Update system.\n"
 msgstr "لا يستطيع E17ِ بدء نظام التحديثات \n"
 
 #: src/bin/e_main.c:1031
@@ -3321,7 +3321,7 @@ msgid "Setup Desktop Environment"
 msgstr "اضبط بيئة سطح المكتب"
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "لا يستطيع E17ِ بدء بيئة سطح المكتب.\n"
 
 #: src/bin/e_main.c:1042
@@ -3329,7 +3329,7 @@ msgid "Setup File Ordering"
 msgstr "ضبط ترتيب الملفات"
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
+msgid "Moksha cannot set up its order file system.\n"
 msgstr "لا يستطيع E17ِ ضبط نظام ترتيب الملفات.\n"
 
 #: src/bin/e_main.c:1061
@@ -3399,7 +3399,7 @@ msgstr "جاري فحص دعم الصيغة"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع إنشاء رقعة الصوان. رجاء تفقد\n"
@@ -3407,34 +3407,34 @@ msgstr ""
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr "وجد E17ِ أن Evas لا يستطيع  تحميل ملفاتSVG. تفقّد دعم Evas لمحمّل SVG .\n"
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات JPEG. تفقّد دعم Evas لمحمّل JPEG .\n"
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات PNG. تفقّد دعم Evas لمحمّل PNG .\n"
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 "وجد E17ِ أن Evas لا يستطيع  تحميل ملفات EET.تفقّد دعم Evas لمحمِّل  EET .\n"
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
@@ -3445,7 +3445,7 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
@@ -3453,13 +3453,13 @@ msgstr ""
 "خاطئ<br>لوحدة مسماة بـ : %s. هذه الوحدة قد تم تعطيلها<br>و لن يتم تحميلها."
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
+msgid "Moksha crashed early on start and has been restarted"
 msgstr "تحطم E17ِ للتو عند التشغيل و تم إعادة تشغيله "
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
@@ -3468,7 +3468,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
@@ -3479,7 +3479,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
@@ -3523,7 +3523,7 @@ msgstr "لا تحتوي الوحدة على كل الوظائف المعتمد �
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "خطأ بوحدة API <br>خطأ بتهيئة الوحدة: %s<br>حيث أنها تتطلب أقل إصدار لوحدة "
@@ -3531,7 +3531,7 @@ msgstr ""
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
+msgid "Moksha %s Module"
 msgstr "وحدة  %s ﻹنلايتنمينت"
 
 #: src/bin/e_module.c:528
@@ -3547,7 +3547,7 @@ msgstr "أبقِ"
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
@@ -3760,7 +3760,7 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "جاري تسجيل الخروج.<br><hilight>يرجى اﻹنتظار.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
+msgid "Moksha is busy with another request"
 msgstr "E17ِ مشغول بطلب آخر"
 
 #: src/bin/e_sys.c:585
@@ -3892,7 +3892,7 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "لا يستطيع E17ِ إنشاء عمليات فرعية:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
@@ -3902,7 +3902,7 @@ msgstr "لا يمكن الخروج - نوافذ خالدة."
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "بعض النوافذ تركت و لازالت ممكنة مع قفل حفظ عمر البطارية. و هذا يعني  <br>أن "
@@ -5795,13 +5795,13 @@ msgstr "خطأ إستيراد إعدادات طريقة اﻹدخال"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr "لا يستطيع E17ِ استيراد اﻹعداد.<br><br>أمتأكد أنت من أن اﻹعداد صالح ؟"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+"Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "لا يستطيع E17ِ إستيراد اﻹعداد<br>نتيجة لخطأ في النسخ."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
@@ -6109,7 +6109,7 @@ msgid "Menu Settings"
 msgstr "إعدادات القائمة"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
+msgid "Moksha Default"
 msgstr "افتراضيات E17ِ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
@@ -6248,7 +6248,7 @@ msgid "Messages"
 msgstr "الرسائل"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
+msgid "Moksha Paths"
 msgstr "مسارات E17ِ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
@@ -7119,12 +7119,12 @@ msgstr "حلل في استيراد السمة"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr "لا يستطيع E17ِ استيراد السمة.<br><br>هل تأكدت من صحة هذه السمة ؟"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr "لا يستطيع E17ِ استيراد السمة<br>جراء خلل في النسخ."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
@@ -7132,7 +7132,7 @@ msgid "Application Theme Settings"
 msgstr "ضبط سمة التطبيق"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
+msgid "Match Moksha theme if possible"
 msgstr "طابق سمة E17ِ إن أمكن"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
@@ -7148,7 +7148,7 @@ msgid "Enable icon theme for applications"
 msgstr "مكِّن سمة أيقونات التطبيقات"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
+msgid "Enable icon theme for Moksha"
 msgstr "مكِّن سمة أيقونات E17ِ"
 
 #: src/modules/conf_theme/e_mod_main.c:237
@@ -9318,7 +9318,7 @@ msgid "Please Wait..."
 msgstr "رجاء انتظر..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
+msgid "Welcome to Moksha"
 msgstr "مرحبا بك في E17ِ"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
@@ -9327,7 +9327,7 @@ msgid "Select one"
 msgstr "إختر واحدا"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9365,7 +9365,7 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 "توفر لك التأثيرات الشفافية<br>للنوافذ كذلك تأثيرات النوافذ مثل<br>التلاشِ و "
 "التقريب<br>عند ظهورها و اختفائها.<br> يُفضل استخدامها <br>لتحصل على أكبر قدر "
@@ -9395,10 +9395,10 @@ msgstr "تفقد عن تحديثات متوفرة"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -10155,7 +10155,7 @@ msgstr "ادخل نمط العرض"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
@@ -10180,7 +10180,7 @@ msgstr "أدخل نمط خارج الشبكة"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
 "E17ِ في نمط <b>خارج الشبكة</b>اﻵن.<br>أثناء وضع خارج الشبكة فإن الوحدات التي "
@@ -10296,11 +10296,11 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "تعيين محتويات شريط اﻷدوات"
 
 #, fuzzy
-#~ msgid "Enlightenment cannot set up its toolbars.\n"
+#~ msgid "Moksha cannot set up its toolbars.\n"
 #~ msgstr "لا يستطيع E17ِ ضبط نظام intl.\n"
 
 #, fuzzy
-#~ msgid "Enlightenment cannot setup compositing.\n"
+#~ msgid "Moksha cannot setup compositing.\n"
 #~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
@@ -11363,7 +11363,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "%1.0f حروف"
 
 #, fuzzy
-#~ msgid "Use Enlightenment theme cursor"
+#~ msgid "Use Moksha theme cursor"
 #~ msgstr "استخدم مؤشر أنجلتمنت"
 
 #, fuzzy
@@ -11574,15 +11574,15 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "تطبيقات فتح قفل الشاشة"
 
 #, fuzzy
-#~ msgid "Enlightenment restart applications"
+#~ msgid "Moksha restart applications"
 #~ msgstr "مكِّن سمة أيقونات التطبيقات"
 
 #, fuzzy
-#~ msgid "Enlightenment start applications"
+#~ msgid "Moksha start applications"
 #~ msgstr "مكِّن سمة أيقونات التطبيقات"
 
 #, fuzzy
-#~ msgid "Enlightenment default applications"
+#~ msgid "Moksha default applications"
 #~ msgstr "افتراضيات E17ِ"
 
 #, fuzzy
@@ -11610,7 +11610,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "إعدادات التأثيرات"
 
 #, fuzzy
-#~ msgid "Enlightenment profile settings"
+#~ msgid "Moksha profile settings"
 #~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
@@ -11646,7 +11646,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "إعدادات الرف"
 
 #, fuzzy
-#~ msgid "Enlightenment theme settings"
+#~ msgid "Moksha theme settings"
 #~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
@@ -11654,7 +11654,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "خلفية سطح المكتب"
 
 #, fuzzy
-#~ msgid "Enlightenment color settings"
+#~ msgid "Moksha color settings"
 #~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
@@ -11662,7 +11662,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "اﻷلوان"
 
 #, fuzzy
-#~ msgid "Enlightenment font settings"
+#~ msgid "Moksha font settings"
 #~ msgstr "مسارات E17ِ"
 
 #, fuzzy
@@ -12153,7 +12153,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "وحدة تحكم النظام"
 
 #~ msgid ""
-#~ "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+#~ "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr "لقد طلبت الخروج من E17ِ.<br><br>هل أنت متأكد؟"
 
 #~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
@@ -12326,16 +12326,16 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "إلى: %s"
 
 #~ msgid ""
-#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "<title>Copyright &copy; 1999-2015, by the Moksha Development Team</"
 #~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>This software is provided as-is with no explicit or "
 #~ "implied warranty. This software is governed by licensing conditions, so "
 #~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "system.<br><br>Moksha is under <hilight>HEAVY DEVELOPMENT</> and "
 #~ "it is not stable. Many features are incomplete or even non-existent yet "
 #~ "and may have many bugs. You have been <hilight>WARNED!</>"
 #~ msgstr ""
-#~ "<title>حقوق التأليف والنشر © 1999-2012 ، من قبل فريق تطوير إنلايتنمنت. </"
+#~ "<title>حقوق التأليف والنشر © 1999-2015 ، من قبل فريق تطوير إنلايتنمنت. </"
 #~ "><br><br>نأمل أن تستمتع باستخدام هذا البرنامج بقدر ما تمتعنا به عند "
 #~ "كتابته. <br><br>تم توفير هذا البرنامج بدون أي ضمان . كما أن هذا البرنامج "
 #~ "مقيد بشروط الترخيص ، لذلك يرجى اﻹطلاع على ملفات الترخيص المثبت على نظامك. "
@@ -12711,11 +12711,11 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "خلل في استيراد الخلفية"
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+#~ "Moksha was unable to import the wallpaper<br>due to a copy error."
 #~ msgstr "لا يستطيع E17ِ استيراد الخلفية<br>بسبب خلل في النسخ."
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper.<br><br>Are you sure "
+#~ "Moksha was unable to import the wallpaper.<br><br>Are you sure "
 #~ "this is a valid wallpaper?"
 #~ msgstr "لا يستطيع E17ِ استيراد الخلفية<br><br>هل تأكدت من صحة الخلفية ؟"
 
@@ -12856,7 +12856,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "ﻻ تبرز  الشاشة"
 
 #~ msgid ""
-#~ "An error occurred while saving Enlightenment's<br>settings to disk. The "
+#~ "An error occurred while saving Moksha's<br>settings to disk. The "
 #~ "error could not be<br>deterimined.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
 #~ "data.<br>"
@@ -12866,7 +12866,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ "لتفادي البيانات المدمرة و العالقة.<br>"
 
 #~ msgid ""
-#~ "Enlightenment's settings files are too big<br>for the file system they "
+#~ "Moksha's settings files are too big<br>for the file system they "
 #~ "are being saved to.<br>This error is very strange as the files "
 #~ "should<br>be extremely small. Please check the settings<br>for your home "
 #~ "directory.<br><br>The file where the error occurred was:<br>"
@@ -12879,7 +12879,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for "
-#~ "Enlightenment. Your disk is having troubles<br>and possibly needs "
+#~ "Moksha. Your disk is having troubles<br>and possibly needs "
 #~ "replacement.<br><br>The file where the error occurred was:<br>"
 #~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
@@ -12888,7 +12888,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ "<br>%s<br><br> هذا الملف قد تم مسحه لتجنب البيانات المدمرة و العالقة.<br>"
 
 #~ msgid ""
-#~ "Enlightenment cannot write its settings file<br>because it ran out of "
+#~ "Moksha cannot write its settings file<br>because it ran out of "
 #~ "space to write the file.<br>You have either run out of disk space or "
 #~ "have<br>gone over your quota limit.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
@@ -12912,35 +12912,35 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgstr "إلى المشغل"
 
 #~ msgid ""
-#~ "Enlightenment cannot Initialize Ecore!\n"
+#~ "Moksha cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لا يستطيع E17ِ بدء Ecore!\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the File system.\n"
+#~ "Moksha cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لاسيتطيع E17ِ بدء نظام الملف.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize its X connection.\n"
+#~ "Moksha cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
 #~ "لا يستطيع E17ِ بدء نظام اتصال إكس .\n"
 #~ "هل قمت بتحديد متغير العرض أي شاشة العرض ؟ "
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the connections system.\n"
+#~ "Moksha cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لا يستطيع E17ِ بدء نظام اﻹتصالات.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة ؟"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the IPC system.\n"
+#~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لا يستطيع E17ِ بدء نظام IPC  .\n"
@@ -12948,28 +12948,28 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 
 #, fuzzy
 #~ msgid ""
-#~ "Enlightenment cannot setup xinerama wrapping.\n"
+#~ "Moksha cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
 #~ "لا يستطيع E17ِ إعداد التفاف  xinerama.\n"
 #~ " يجب عدم حدوث هذا."
 
 #~ msgid ""
-#~ "Enlightenment cannot setup randr wrapping.\n"
+#~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
 #~ "لا يستطيع E17ِ إعداد تغليف الرف.\n"
 #~ "يجب أن لا يحدث هذا."
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the Evas system.\n"
+#~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لا يستطيع E17ِ بدء نظام Evas.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up init screen.\n"
+#~ "Moksha cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "لا يستطيع إنلايتنمسنت ضبط شاشة التهيئة.\n"
@@ -12981,7 +12981,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgid "Setup FM"
 #~ msgstr "اضبط FM "
 
-#~ msgid "Enlightenment cannot set up its shelf system."
+#~ msgid "Moksha cannot set up its shelf system."
 #~ msgstr "لا يستطيع E17ِ ضبط نظام الدروج"
 
 #~ msgid "New Application"
@@ -13077,7 +13077,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgid "Delete this Shelf"
 #~ msgstr "احذف هذا الدرج"
 
-#~ msgid "Lock when Enlightenment starts"
+#~ msgid "Lock when Moksha starts"
 #~ msgstr "اقفل بعد بدء إنجلتمنت"
 
 #~ msgid "Wallpaper Mode"
@@ -13111,7 +13111,7 @@ msgstr "استخدم قياسات الشاشة المتعددة"
 #~ msgid "Gradient Creation Error"
 #~ msgstr "خلل في إنشاء التدرج"
 
-#~ msgid "For some reason, Enlightenment was unable to create a gradient."
+#~ msgid "For some reason, Moksha was unable to create a gradient."
 #~ msgstr "لبعض الأسباب, إنجلتمنت لم يكن قادراً على إنشاء تدرج."
 
 #, fuzzy

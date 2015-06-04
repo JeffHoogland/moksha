@@ -1,10 +1,10 @@
-# Danish translation for Enlightenment (E17).
+# Danish translation for Moksha (E17).
 # This file is put in the public domain.
 # Martin Geisler <mgeisler@mgeisler.net>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Enlightenment\n"
+"Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-07 15:25+0000\n"
 "PO-Revision-Date: 2009-12-31 01:44+0000\n"
@@ -18,8 +18,8 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "Om Enlightenment"
+msgid "About Moksha"
+msgstr "Om Moksha"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -36,12 +36,12 @@ msgstr "Luk"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
@@ -84,7 +84,7 @@ msgstr "Afslut"
 
 #: src/bin/e_actions.c:2124
 #, fuzzy
-msgid "Are you sure you want to exit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
 msgstr "Er du sikker på at du vil afslutte?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
@@ -758,7 +758,7 @@ msgid "Exit Now"
 msgstr "Afslut nu"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
+msgid "Moksha : Mode"
 msgstr ""
 
 #: src/bin/e_actions.c:3380
@@ -773,13 +773,13 @@ msgstr "Offline tilstand Toggle"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
 #, fuzzy
-msgid "Enlightenment : Module"
-msgstr "Enlightenment %s modul"
+msgid "Moksha : Module"
+msgstr "Moksha %s modul"
 
 #: src/bin/e_actions.c:3390
 #, fuzzy
 msgid "Enable the named module"
-msgstr "Enlightenment Randr-modul"
+msgstr "Moksha Randr-modul"
 
 #: src/bin/e_actions.c:3394
 msgid "Disable the named module"
@@ -902,7 +902,7 @@ msgstr "Fortryd"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -911,21 +911,21 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
+msgid "Moksha Settings Write Problems"
 msgstr ""
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
@@ -973,7 +973,7 @@ msgstr ""
 "Filen er ikke skrivbar. Måske disken er skrivebeskyttet<br>eller du mistet "
 "tilladelser til dine filer."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
@@ -1054,13 +1054,13 @@ msgid "Decryption failed."
 msgstr "Desktop-fil"
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
+msgid "The error is unknown to Moksha."
 msgstr ""
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
@@ -1115,7 +1115,7 @@ msgstr "Fejl - ingen PAM support"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 
 #: src/bin/e_desklock.c:301
@@ -1338,22 +1338,22 @@ msgid "Run Error"
 msgstr "Udførselsfejl"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
+msgid "Moksha was unable to get current directory"
 msgstr ""
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
+msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr ""
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr ""
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr ""
 
 #: src/bin/e_exec.c:604
@@ -1364,7 +1364,7 @@ msgstr "Ansøgning run fejl"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
 
@@ -2088,7 +2088,7 @@ msgstr "Key Binding Sequence"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
 
@@ -2099,12 +2099,12 @@ msgid "Import Error"
 msgstr "Tema Import Fejl"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr ""
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
 
@@ -2125,7 +2125,7 @@ msgstr "Billede Import Fejl"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
+"Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
 
 #: src/bin/e_import_config_dialog.c:459
@@ -2421,7 +2421,7 @@ msgstr "Vælg Border Style"
 
 #: src/bin/e_int_border_menu.c:1191
 #, fuzzy
-msgid "Use Enlightenment Default Icon Preference"
+msgid "Use Moksha Default Icon Preference"
 msgstr "Brug E17 Standard Icon præference"
 
 #: src/bin/e_int_border_menu.c:1199
@@ -2761,7 +2761,7 @@ msgstr "Vindueegenskaber udgør ikke et unikt match"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2772,7 +2772,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Du forsøger at bede Enlightenment om at huske egenskaber<br>(såsom en "
+"Du forsøger at bede Moksha om at huske egenskaber<br>(såsom en "
 "størrelse, placering, rammestil osv.) for et<br>vindue som <hilight>ikke har "
 "unikke egenskaber</hilight>.<br><br>Det betyder at det deler navn/klasse, "
 "midlertidighed, rolle osv. med<br>med mere end et andet vindue på skærmen, "
@@ -2789,12 +2789,12 @@ msgstr "Ingen sammenlignings-egenskaber blev valgt"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Du forsøger at bede Enlightenment om huske<br>egenskaber (såsom størrelse, "
+"Du forsøger at bede Moksha om huske<br>egenskaber (såsom størrelse, "
 "placering, rammestil osv.) for<br> et vindue <hilight>uden at specificere "
 "hvordan de skal huskes</hilight>.<br><br>Du skal specificere mindst en måde "
 "hvorpå dette vindue kan huskes."
@@ -3208,191 +3208,191 @@ msgstr "Vis på bestemte pc'er"
 
 #: src/bin/e_main.c:287
 #, fuzzy
-msgid "Enlightenment cannot initialize Eina!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Eina!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:293
 #, fuzzy
-msgid "Enlightenment could not create a logging domain!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha could not create a logging domain!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:340
 #, fuzzy
-msgid "Enlightenment cannot initialize Eet!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Eet!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:349
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:358
 #, fuzzy
-msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize EIO!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment kan ikke oprette en exit signal handler.\n"
+"Moksha kan ikke oprette en exit signal handler.\n"
 "Måske er du løbet tør for hukommelse?"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment kan ikke oprette en HUP signal handler.\n"
+"Moksha kan ikke oprette en HUP signal handler.\n"
 "Måske er du løbet tør for hukommelse?"
 
 #: src/bin/e_main.c:384
 #, fuzzy
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment kan ikke oprette en HUP signal handler.\n"
+"Moksha kan ikke oprette en HUP signal handler.\n"
 "Måske er du løbet tør for hukommelse?"
 
 #: src/bin/e_main.c:393
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_File!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:402
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:411
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:422
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_X!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:434
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:444
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:454
 #, fuzzy
-msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Elementary!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:465
 #, fuzzy
-msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Emotion!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
 
 #: src/bin/e_main.c:498
 #, fuzzy
-msgid "Enlightenment cannot initialize Edje!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize Edje!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:510
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Intl!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize E_Intl!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment kan ikke initialisere sit nødalarm system.\n"
+"Moksha kan ikke initialisere sit nødalarm system.\n"
 "Har du sat din DISPLAY variabel?"
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment kan ikke oprette mapper i din hjemmemappe.\n"
+"Moksha kan ikke oprette mapper i din hjemmemappe.\n"
 "Måske har du ingen hjemmemappe eller disken er fuld?"
 
 #: src/bin/e_main.c:549
 #, fuzzy
-msgid "Enlightenment cannot set up its file registry system.\n"
-msgstr "Enlightenment kan ikke initialisere sit konfigurationssystem."
+msgid "Moksha cannot set up its file registry system.\n"
+msgstr "Moksha kan ikke initialisere sit konfigurationssystem."
 
 #: src/bin/e_main.c:558
 #, fuzzy
-msgid "Enlightenment cannot set up its config system.\n"
-msgstr "Enlightenment kan ikke initialisere sit konfigurationssystem."
+msgid "Moksha cannot set up its config system.\n"
+msgstr "Moksha kan ikke initialisere sit konfigurationssystem."
 
 #: src/bin/e_main.c:571
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize E_Randr!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:580
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:589
 #, fuzzy
-msgid "Enlightenment cannot set up its environment.\n"
-msgstr "Enlightenment kan ikke initialisere sit temasystem."
+msgid "Moksha cannot set up its environment.\n"
+msgstr "Moksha kan ikke initialisere sit temasystem."
 
 #: src/bin/e_main.c:605
 #, fuzzy
-msgid "Enlightenment cannot set up its scale system.\n"
-msgstr "Enlightenment kan ikke initialisere sit beskedsystem."
+msgid "Moksha cannot set up its scale system.\n"
+msgstr "Moksha kan ikke initialisere sit beskedsystem."
 
 #: src/bin/e_main.c:614
 #, fuzzy
-msgid "Enlightenment cannot set up its pointer system.\n"
-msgstr "Enlightenment kan ikke initialisere sit fontsystem."
+msgid "Moksha cannot set up its pointer system.\n"
+msgstr "Moksha kan ikke initialisere sit fontsystem."
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment kan ikke initialisere søgestier til at finde filer.\n"
+"Moksha kan ikke initialisere søgestier til at finde filer.\n"
 "Måske er du løbet tør for hukommelse?"
 
 #: src/bin/e_main.c:640
 #, fuzzy
-msgid "Enlightenment cannot set up its font system.\n"
-msgstr "Enlightenment kan ikke initialisere sit fontsystem."
+msgid "Moksha cannot set up its font system.\n"
+msgstr "Moksha kan ikke initialisere sit fontsystem."
 
 #: src/bin/e_main.c:657
 #, fuzzy
-msgid "Enlightenment cannot set up its theme system.\n"
-msgstr "Enlightenment kan ikke initialisere sit temasystem."
+msgid "Moksha cannot set up its theme system.\n"
+msgstr "Moksha kan ikke initialisere sit temasystem."
 
 #: src/bin/e_main.c:673
 #, fuzzy
-msgid "Enlightenment cannot set up its init screen.\n"
-msgstr "Enlightenment kan ikke initialisere sit internationalseringssystem."
+msgid "Moksha cannot set up its init screen.\n"
+msgstr "Moksha kan ikke initialisere sit internationalseringssystem."
 
 #: src/bin/e_main.c:688
 #, fuzzy
@@ -3401,17 +3401,17 @@ msgstr "Start International Support"
 
 #: src/bin/e_main.c:692
 #, fuzzy
-msgid "Enlightenment cannot set up its intl system.\n"
-msgstr "Enlightenment kan ikke initialisere sit internationalseringssystem."
+msgid "Moksha cannot set up its intl system.\n"
+msgstr "Moksha kan ikke initialisere sit internationalseringssystem."
 
 #: src/bin/e_main.c:701
 #, fuzzy
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Enlightenment kan ikke initialisere File-systemet.\n"
+"Moksha kan ikke initialisere File-systemet.\n"
 "Måske er du løbet tør for hukommelse?"
 
 #: src/bin/e_main.c:726
@@ -3421,10 +3421,10 @@ msgstr "opsætningsskærme"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenment kunne ikke blive indsat som vindueshåndtering på alle\n"
+"Moksha kunne ikke blive indsat som vindueshåndtering på alle\n"
 "skærme på dit system. Måske kører der en anden vindueshåndtering?\n"
 
 #: src/bin/e_main.c:738
@@ -3439,8 +3439,8 @@ msgstr "Opsætning baggrundslys"
 
 #: src/bin/e_main.c:749
 #, fuzzy
-msgid "Enlightenment cannot configure the backlight.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot configure the backlight.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:756
 #, fuzzy
@@ -3449,8 +3449,8 @@ msgstr "Opsætning Pauseskærm"
 
 #: src/bin/e_main.c:760
 #, fuzzy
-msgid "Enlightenment cannot configure the X screensaver.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:767
 #, fuzzy
@@ -3459,8 +3459,8 @@ msgstr "Opsætning DPMS"
 
 #: src/bin/e_main.c:771
 #, fuzzy
-msgid "Enlightenment cannot configure the DPMS settings.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:778
 #, fuzzy
@@ -3469,8 +3469,8 @@ msgstr "Setup til energisparestatus Modes"
 
 #: src/bin/e_main.c:782
 #, fuzzy
-msgid "Enlightenment cannot set up its powersave modes.\n"
-msgstr "Enlightenment kan ikke initialisere sit fontsystem."
+msgid "Moksha cannot set up its powersave modes.\n"
+msgstr "Moksha kan ikke initialisere sit fontsystem."
 
 #: src/bin/e_main.c:789
 #, fuzzy
@@ -3479,8 +3479,8 @@ msgstr "Opsætning Desklock"
 
 #: src/bin/e_main.c:793
 #, fuzzy
-msgid "Enlightenment cannot set up its desk locking system.\n"
-msgstr "Enlightenment kan ikke initialisere sit beskedsystem."
+msgid "Moksha cannot set up its desk locking system.\n"
+msgstr "Moksha kan ikke initialisere sit beskedsystem."
 
 #: src/bin/e_main.c:800
 #, fuzzy
@@ -3489,8 +3489,8 @@ msgstr "Opsætning Popups"
 
 #: src/bin/e_main.c:804
 #, fuzzy
-msgid "Enlightenment cannot set up its popup system.\n"
-msgstr "Enlightenment kan ikke initialisere sit pop up-system."
+msgid "Moksha cannot set up its popup system.\n"
+msgstr "Moksha kan ikke initialisere sit pop up-system."
 
 #: src/bin/e_main.c:816
 #, fuzzy
@@ -3508,7 +3508,7 @@ msgid "Setup System Controls"
 msgstr "Setup System Controls"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:840
@@ -3518,8 +3518,8 @@ msgstr "Opsætning Handlinger"
 
 #: src/bin/e_main.c:844
 #, fuzzy
-msgid "Enlightenment cannot set up its actions system.\n"
-msgstr "Enlightenment kan ikke initialisere sit handlingssystem."
+msgid "Moksha cannot set up its actions system.\n"
+msgstr "Moksha kan ikke initialisere sit handlingssystem."
 
 #: src/bin/e_main.c:851
 #, fuzzy
@@ -3528,8 +3528,8 @@ msgstr "Opsætning Execution System"
 
 #: src/bin/e_main.c:855
 #, fuzzy
-msgid "Enlightenment cannot set up its exec system.\n"
-msgstr "Enlightenment kan ikke initialisere sit temasystem."
+msgid "Moksha cannot set up its exec system.\n"
+msgstr "Moksha kan ikke initialisere sit temasystem."
 
 #: src/bin/e_main.c:866
 #, fuzzy
@@ -3537,8 +3537,8 @@ msgid "Setup Filemanager"
 msgstr "Opsætning Filemanager"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/bin/e_main.c:877
 #, fuzzy
@@ -3547,8 +3547,8 @@ msgstr "Opsætning Message System"
 
 #: src/bin/e_main.c:881
 #, fuzzy
-msgid "Enlightenment cannot set up its msg system.\n"
-msgstr "Enlightenment kan ikke initialisere sit beskedsystem."
+msgid "Moksha cannot set up its msg system.\n"
+msgstr "Moksha kan ikke initialisere sit beskedsystem."
 
 #: src/bin/e_main.c:888
 #, fuzzy
@@ -3557,8 +3557,8 @@ msgstr "Opsætning DND"
 
 #: src/bin/e_main.c:892
 #, fuzzy
-msgid "Enlightenment cannot set up its dnd system.\n"
-msgstr "Enlightenment kan ikke initialisere sit dnd-system."
+msgid "Moksha cannot set up its dnd system.\n"
+msgstr "Moksha kan ikke initialisere sit dnd-system."
 
 #: src/bin/e_main.c:899
 #, fuzzy
@@ -3567,8 +3567,8 @@ msgstr "Opsætning Grab Input Håndtering"
 
 #: src/bin/e_main.c:903
 #, fuzzy
-msgid "Enlightenment cannot set up its grab input handling system.\n"
-msgstr "Enlightenment kan ikke initialisere sit input grab system."
+msgid "Moksha cannot set up its grab input handling system.\n"
+msgstr "Moksha kan ikke initialisere sit input grab system."
 
 #: src/bin/e_main.c:910
 #, fuzzy
@@ -3577,8 +3577,8 @@ msgstr "Opsætning af moduler"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
 #, fuzzy
-msgid "Enlightenment cannot set up its module system.\n"
-msgstr "Enlightenment kan ikke initialisere sit modulsystem."
+msgid "Moksha cannot set up its module system.\n"
+msgstr "Moksha kan ikke initialisere sit modulsystem."
 
 #: src/bin/e_main.c:921
 #, fuzzy
@@ -3587,8 +3587,8 @@ msgstr "Opsætning Husker"
 
 #: src/bin/e_main.c:925
 #, fuzzy
-msgid "Enlightenment cannot setup remember settings.\n"
-msgstr "Enlightenment kan ikke initialisere huskesystemet."
+msgid "Moksha cannot setup remember settings.\n"
+msgstr "Moksha kan ikke initialisere huskesystemet."
 
 #: src/bin/e_main.c:932
 #, fuzzy
@@ -3597,8 +3597,8 @@ msgstr "Opsætning Color Klasser"
 
 #: src/bin/e_main.c:936
 #, fuzzy
-msgid "Enlightenment cannot set up its color class system.\n"
-msgstr "Enlightenment kan ikke initialisere sit handlingssystem."
+msgid "Moksha cannot set up its color class system.\n"
+msgstr "Moksha kan ikke initialisere sit handlingssystem."
 
 #: src/bin/e_main.c:943
 #, fuzzy
@@ -3607,8 +3607,8 @@ msgstr "Opsætning Gadcon"
 
 #: src/bin/e_main.c:947
 #, fuzzy
-msgid "Enlightenment cannot set up its gadget control system.\n"
-msgstr "Enlightenment kan ikke initialisere sit internationalseringssystem."
+msgid "Moksha cannot set up its gadget control system.\n"
+msgstr "Moksha kan ikke initialisere sit internationalseringssystem."
 
 #: src/bin/e_main.c:954
 #, fuzzy
@@ -3617,8 +3617,8 @@ msgstr "Opsætning tapet"
 
 #: src/bin/e_main.c:958
 #, fuzzy
-msgid "Enlightenment cannot set up its desktop background system.\n"
-msgstr "Enlightenment kan ikke initialisere sit dnd-system."
+msgid "Moksha cannot set up its desktop background system.\n"
+msgstr "Moksha kan ikke initialisere sit dnd-system."
 
 #: src/bin/e_main.c:965
 #, fuzzy
@@ -3627,13 +3627,13 @@ msgstr "Opsætning af mus"
 
 #: src/bin/e_main.c:969
 #, fuzzy
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:976
 #, fuzzy
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
-msgstr "Enlightenment kan ikke initialisere huskesystemet."
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
+msgstr "Moksha kan ikke initialisere huskesystemet."
 
 #: src/bin/e_main.c:982
 #, fuzzy
@@ -3642,8 +3642,8 @@ msgstr "Opsætning Bindinger"
 
 #: src/bin/e_main.c:986
 #, fuzzy
-msgid "Enlightenment cannot set up its bindings system.\n"
-msgstr "Enlightenment kan ikke initialisere sit bindingssystem."
+msgid "Moksha cannot set up its bindings system.\n"
+msgstr "Moksha kan ikke initialisere sit bindingssystem."
 
 #: src/bin/e_main.c:993
 #, fuzzy
@@ -3651,23 +3651,23 @@ msgid "Setup Thumbnailer"
 msgstr "Opsætning Thumbnailer"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:1006
 #, fuzzy
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:1015
 #, fuzzy
-msgid "Enlightenment cannot initialize the XSettings system.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:1024
 #, fuzzy
-msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr "Enlightenment kan ikke initialisere sit miniaturebilledsystem.\n"
+msgid "Moksha cannot initialize the Update system.\n"
+msgstr "Moksha kan ikke initialisere sit miniaturebilledsystem.\n"
 
 #: src/bin/e_main.c:1031
 #, fuzzy
@@ -3676,8 +3676,8 @@ msgstr "Opsætning Desktop Environment"
 
 #: src/bin/e_main.c:1035
 #, fuzzy
-msgid "Enlightenment cannot initialize its desktop environment.\n"
-msgstr "Enlightenment kan ikke initialisere sit temasystem."
+msgid "Moksha cannot initialize its desktop environment.\n"
+msgstr "Moksha kan ikke initialisere sit temasystem."
 
 #: src/bin/e_main.c:1042
 #, fuzzy
@@ -3686,8 +3686,8 @@ msgstr "Setup File Bestilling"
 
 #: src/bin/e_main.c:1046
 #, fuzzy
-msgid "Enlightenment cannot set up its order file system.\n"
-msgstr "Enlightenment kan ikke initialisere sit modulsystem."
+msgid "Moksha cannot set up its order file system.\n"
+msgstr "Moksha kan ikke initialisere sit modulsystem."
 
 #: src/bin/e_main.c:1061
 #, fuzzy
@@ -3755,37 +3755,37 @@ msgstr "Test Format Support"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
@@ -3793,26 +3793,26 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
+msgid "Moksha crashed early on start and has been restarted"
 msgstr ""
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
@@ -3820,7 +3820,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
@@ -3862,16 +3862,16 @@ msgstr "Modul ikke indeholder alle de nødvendige funktioner"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "Modul-API fejl<br>Fejl ved initialisering af modul: %s<br>Mindste krævet "
-"modul-API version: %i.<br>Enlightenment modul-API version: %i.<br>"
+"modul-API version: %i.<br>Moksha modul-API version: %i.<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Enlightenment %s modul"
+msgid "Moksha %s Module"
+msgstr "Moksha %s modul"
 
 #: src/bin/e_module.c:528
 #, fuzzy
@@ -3887,7 +3887,7 @@ msgstr ""
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
@@ -4119,7 +4119,7 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
+msgid "Moksha is busy with another request"
 msgstr ""
 
 #: src/bin/e_sys.c:585
@@ -4270,7 +4270,7 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 
 #: src/bin/e_utils.c:245
@@ -4280,7 +4280,7 @@ msgstr "Kan ikke afslutte - udødelige vinduer."
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
@@ -6345,13 +6345,13 @@ msgstr "Input Method Config Import Fejl"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+"Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
@@ -6689,8 +6689,8 @@ msgstr "menuindstillingerne"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
 #, fuzzy
-msgid "Enlightenment Default"
-msgstr "Enlightenment"
+msgid "Moksha Default"
+msgstr "Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 #, fuzzy
@@ -6850,8 +6850,8 @@ msgstr "Meddelelser"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 #, fuzzy
-msgid "Enlightenment Paths"
-msgstr "Enlightenment"
+msgid "Moksha Paths"
+msgstr "Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 #, fuzzy
@@ -7872,12 +7872,12 @@ msgstr "Tema Import Fejl"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
@@ -7887,8 +7887,8 @@ msgstr "Ikon Temaindstillinger"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
 #, fuzzy
-msgid "Match Enlightenment theme if possible"
-msgstr "Enlightenment batterimodul"
+msgid "Match Moksha theme if possible"
+msgstr "Moksha batterimodul"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 #, fuzzy
@@ -7907,7 +7907,7 @@ msgstr "Brug ikon tema for applikationer"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
 #, fuzzy
-msgid "Enable icon theme for Enlightenment"
+msgid "Enable icon theme for Moksha"
 msgstr "Aktiver ikon tema"
 
 #: src/modules/conf_theme/e_mod_main.c:237
@@ -8788,7 +8788,7 @@ msgstr "Vis Alt Launcher"
 #: src/modules/everything/e_mod_main.c:64
 #, fuzzy
 msgid "Everything Configuration"
-msgstr "Enlightenment opsætning"
+msgstr "Moksha opsætning"
 
 #: src/modules/everything/e_mod_main.c:408
 #, fuzzy
@@ -9807,12 +9807,12 @@ msgstr "Vandret justering"
 #: src/modules/winlist/e_int_config_winlist.c:295
 #, fuzzy
 msgid "Vertical alignment"
-msgstr "Genstart Enlightenment"
+msgstr "Genstart Moksha"
 
 #: src/modules/winlist/e_int_config_winlist.c:300
 #, fuzzy
 msgid "Alignment"
-msgstr "Enlightenment"
+msgstr "Moksha"
 
 #: src/modules/winlist/e_mod_main.c:28
 #, fuzzy
@@ -10392,7 +10392,7 @@ msgid "Please Wait..."
 msgstr ""
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
+msgid "Welcome to Moksha"
 msgstr ""
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
@@ -10402,7 +10402,7 @@ msgid "Select one"
 msgstr "Vælg en"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -10444,7 +10444,7 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 
 #: src/modules/wizard/page_150.c:117
@@ -10470,10 +10470,10 @@ msgstr ""
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -11085,7 +11085,7 @@ msgstr "Monteringsfejl"
 #: src/modules/shot/e_mod_main.c:969
 #, fuzzy
 msgid "Cannot initialize network"
-msgstr "Enlightenment kan ikke initialisere filhåndteringen.\n"
+msgstr "Moksha kan ikke initialisere filhåndteringen.\n"
 
 #: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:735
 #, fuzzy
@@ -11151,7 +11151,7 @@ msgstr ""
 #: src/modules/tiling/e_mod_config.c:353
 #, fuzzy
 msgid "Tiling Configuration"
-msgstr "Enlightenment opsætning"
+msgstr "Moksha opsætning"
 
 #: src/modules/tiling/e_mod_tiling.c:4082
 #: src/modules/tiling/e_mod_tiling.c:4146
@@ -11279,7 +11279,7 @@ msgstr "Præsentation tilstand"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
@@ -11302,7 +11302,7 @@ msgstr "Offlinetilstand"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
 
@@ -11487,9 +11487,9 @@ msgstr ""
 #~ msgstr "systemet Kontrol"
 
 #~ msgid ""
-#~ "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+#~ "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr ""
-#~ "Du bad om at afslutte Enlightenment.<br><br>Er du sikker på at du vil "
+#~ "Du bad om at afslutte Moksha.<br><br>Er du sikker på at du vil "
 #~ "afslutte?"
 
 #~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
@@ -11619,7 +11619,7 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Notification Box Configuration"
-#~ msgstr "Enlightenment opsætning"
+#~ msgstr "Moksha opsætning"
 
 #, fuzzy
 #~ msgid "Show the popup on mouse over"
@@ -12101,60 +12101,60 @@ msgstr ""
 #~ msgstr "Skift størrelse"
 
 #~ msgid ""
-#~ "Enlightenment cannot Initialize Ecore!\n"
+#~ "Moksha cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere Ecore!\n"
+#~ "Moksha kan ikke initialisere Ecore!\n"
 #~ "Måske er du løbet tør for hukommelse?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize its X connection.\n"
+#~ "Moksha cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere sin X forbindelse.\n"
+#~ "Moksha kan ikke initialisere sin X forbindelse.\n"
 #~ "Har du sat din DISPLAY variabel?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the connections system.\n"
+#~ "Moksha cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere forbindelsessystemet.\n"
+#~ "Moksha kan ikke initialisere forbindelsessystemet.\n"
 #~ "Måske er du løbet tør for hukommelse?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the IPC system.\n"
+#~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere IPC-systemet.\n"
+#~ "Moksha kan ikke initialisere IPC-systemet.\n"
 #~ "Måske er du løbet tør for hukommelse?"
 
 #~ msgid ""
-#~ "Enlightenment cannot setup xinerama wrapping.\n"
+#~ "Moksha cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere xinerama wrapping.\n"
+#~ "Moksha kan ikke initialisere xinerama wrapping.\n"
 #~ "Dette skulle ikke ske."
 
 #, fuzzy
 #~ msgid ""
-#~ "Enlightenment cannot setup randr wrapping.\n"
+#~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere xinerama wrapping.\n"
+#~ "Moksha kan ikke initialisere xinerama wrapping.\n"
 #~ "Dette skulle ikke ske."
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the Evas system.\n"
+#~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere Evas-systemet.\n"
+#~ "Moksha kan ikke initialisere Evas-systemet.\n"
 #~ "Måske er du løbet tør for hukommelse?"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up init screen.\n"
+#~ "Moksha cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere startbilledet.\n"
+#~ "Moksha kan ikke initialisere startbilledet.\n"
 #~ "Måske er du løbet tør for hukommelse?"
 
 #, fuzzy
@@ -12227,7 +12227,7 @@ msgstr ""
 #~ msgstr "Meget langsom"
 
 #~ msgid ""
-#~ "You are trying to ask Enlightenment to remember to apply<br>properties "
+#~ "You are trying to ask Moksha to remember to apply<br>properties "
 #~ "(such as size, location, border style etc.) to<br>a window that "
 #~ "<hilight>does not have unique properties</hilight>.<br><br>This means it "
 #~ "shares Name/Class, Transience, Role etc. properties<br>with more than 1 "
@@ -12241,7 +12241,7 @@ msgstr ""
 #~ "buttons<br>and your settings will be accepted. Press <hilight>Cancel</"
 #~ "hilight> if you<br>are not sure and nothing will be affected."
 #~ msgstr ""
-#~ "Du forsøger at bede Enlightenment om at huske<br>egenskaber (såsom "
+#~ "Du forsøger at bede Moksha om at huske<br>egenskaber (såsom "
 #~ "størrelse, placering, rammestil osv.) for<br>et vindue som <hilight>ikke "
 #~ "har unikke egenskaber</hilight>.<br><br>Det betyder at det deler navn/"
 #~ "klasse, midlertidighed, rolle, osv.<br>med et andet vindue på skærmen og "
@@ -12264,14 +12264,14 @@ msgstr ""
 #~ msgid "Disable this splash screen in the future?"
 #~ msgstr "Deaktivér dette startbillede for fremtiden?"
 
-#~ msgid "Enlightenment cannot set up its app system."
-#~ msgstr "Enlightenment kan ikke initialisere sit applikationssystem"
+#~ msgid "Moksha cannot set up its app system."
+#~ msgstr "Moksha kan ikke initialisere sit applikationssystem"
 
-#~ msgid "Enlightenment cannot set up its window list system."
-#~ msgstr "Enlightenment kan ikke initialisere sit vinduelistesystem."
+#~ msgid "Moksha cannot set up its window list system."
+#~ msgstr "Moksha kan ikke initialisere sit vinduelistesystem."
 
-#~ msgid "Enlightenment Starting. Please wait."
-#~ msgstr "Enlightenment starter. Vent venligst."
+#~ msgid "Moksha Starting. Please wait."
+#~ msgstr "Moksha starter. Vent venligst."
 
 #~ msgid "About..."
 #~ msgstr "Om..."
@@ -12316,14 +12316,14 @@ msgstr ""
 #~ "kun virke under Linux og<br>FreeBSD og er kun så præcis som din BIOS "
 #~ "eller kerne-<br>drivere."
 
-#~ msgid "Enlightenment Clock Module"
-#~ msgstr "Enlightenment urmodul"
+#~ msgid "Moksha Clock Module"
+#~ msgstr "Moksha urmodul"
 
 #~ msgid "A simple module to give E17 a clock."
 #~ msgstr "Et simpelt modul for at give E17 et ur."
 
-#~ msgid "Enlightenment Dropshadow Module"
-#~ msgstr "Enlightenment skyggemodul"
+#~ msgid "Moksha Dropshadow Module"
+#~ msgstr "Moksha skyggemodul"
 
 #~ msgid ""
 #~ "This is the dropshadow module that allows dropshadows to be cast<br>on "
@@ -12342,40 +12342,40 @@ msgstr ""
 #~ "tilhørende applikationsfil.<br><br>Ikonet kan ikke blive tilføjet til "
 #~ "IBar."
 
-#~ msgid "Enlightenment IBar Module"
-#~ msgstr "Enlightenment IBar-modul"
+#~ msgid "Moksha IBar Module"
+#~ msgstr "Moksha IBar-modul"
 
 #~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Enlightenment.<br>It "
+#~ "This is the IBar Application Launcher bar module for Moksha.<br>It "
 #~ "is a first example module and is being used to flesh out "
-#~ "several<br>interfaces in Enlightenment 0.17.0. It is under heavy "
+#~ "several<br>interfaces in Moksha 0.17.0. It is under heavy "
 #~ "development,<br>so expect it to <hilight>break often</hilight> and change "
 #~ "as it improves."
 #~ msgstr ""
-#~ "Dette er IBar applikationsstartermodulet til Enlightenment. Det er "
+#~ "Dette er IBar applikationsstartermodulet til Moksha. Det er "
 #~ "et<br>første eksempelmodul som bruges til at skitsere flere grænseflader "
-#~ "i<br>Enlightenment 0.17.0. Det er under kraftig udvikling, så regn med "
+#~ "i<br>Moksha 0.17.0. Det er under kraftig udvikling, så regn med "
 #~ "at<br>det <hilight>ofte går i stykker</hilight> og ændrer sig efterhånden "
 #~ "som det forbedres."
 
-#~ msgid "Enlightenment IBox Module"
-#~ msgstr "Enlightenment IBox-modul"
+#~ msgid "Moksha IBox Module"
+#~ msgstr "Moksha IBox-modul"
 
 #~ msgid ""
-#~ "This is the IBox Iconified Application module for Enlightenment.<br>It "
+#~ "This is the IBox Iconified Application module for Moksha.<br>It "
 #~ "will hold minimized applications"
 #~ msgstr ""
-#~ "Dette er IBox modulet for minimerede applikationer til Enlightenment."
+#~ "Dette er IBox modulet for minimerede applikationer til Moksha."
 #~ "<br>Det vil holde minimerede applikationer"
 
-#~ msgid "Enlightenment Pager Module"
-#~ msgstr "Enlightenment oversigtsmodul"
+#~ msgid "Moksha Pager Module"
+#~ msgstr "Moksha oversigtsmodul"
 
 #~ msgid "A pager module to navigate virtual desktops."
 #~ msgstr "Et oversigtsmodul til at navigere mellem virtuelle skriveborde."
 
-#~ msgid "Enlightenment Temperature Module"
-#~ msgstr "Enlightenment temperaturmodul"
+#~ msgid "Moksha Temperature Module"
+#~ msgstr "Moksha temperaturmodul"
 
 #~ msgid ""
 #~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
@@ -12396,8 +12396,8 @@ msgstr ""
 #~ "Et simpelt modul til at kontrollere frekvensen på systemets CPU.<br>Dette "
 #~ "er specielt brugbart til at spare strøm på bærbare."
 
-#~ msgid "Enlightenment Start Module"
-#~ msgstr "Enlightenment startmodul"
+#~ msgid "Moksha Start Module"
+#~ msgstr "Moksha startmodul"
 
 #~ msgid "Experimental Button module for E17"
 #~ msgstr "Eksperimentel knapmodul for E17"
@@ -12418,13 +12418,13 @@ msgstr ""
 #~ msgstr "Eap-editor"
 
 #~ msgid ""
-#~ "Enlightenment was unable run the program:\n"
+#~ "Moksha was unable run the program:\n"
 #~ "\n"
 #~ "%s\n"
 #~ "\n"
 #~ "The command was not found\n"
 #~ msgstr ""
-#~ "Enlightenment var ikke i stand til at udføre programmet:\n"
+#~ "Moksha var ikke i stand til at udføre programmet:\n"
 #~ "\n"
 #~ "%s\n"
 #~ "\n"
@@ -12452,19 +12452,19 @@ msgstr ""
 #~ msgstr "x"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
+#~ "Moksha cannot set up the IPC socket.\n"
+#~ "It likely is already in use by an existing copy of Moksha.\n"
+#~ "Double check to see if Moksha is not already on this display,\n"
 #~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 #~ "and try running again.\n"
 #~ "\n"
 #~ "If you use AFS then maybe you might want to make a symlink from\n"
 #~ "~/.ecore to /tmp/my_directory/ecore where sockets can be made."
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere sin IPC-socket.\n"
+#~ "Moksha kan ikke initialisere sin IPC-socket.\n"
 #~ "Det er sandsynligt at den er i brug af en anden instans af "
-#~ "Enlightenment.\n"
-#~ "Dobbelttjek om Enlightenment ikke allerede kører på denne terminal,\n"
+#~ "Moksha.\n"
+#~ "Dobbelttjek om Moksha ikke allerede kører på denne terminal,\n"
 #~ "men hvis det fejler prøv så at slette alle filer i ~/.ecore/enlightenment-"
 #~ "*\n"
 #~ "og forsøg at starte igen.\n"
@@ -12472,20 +12472,20 @@ msgstr ""
 #~ "Hvis du bruger AFS vil du måske lave et symbolsk link fra\n"
 #~ "~/.ecore til /tmp/min_folder/ecore hvor sockets kan skabes."
 
-#~ msgid "Enlightenment IPC setup error!"
-#~ msgstr "Enlightenment IPC initialiseringsfejl!"
+#~ msgid "Moksha IPC setup error!"
+#~ msgstr "Moksha IPC initialiseringsfejl!"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Enlightenment.\n"
-#~ "Double check to see if Enlightenment is not already on this display,\n"
+#~ "Moksha cannot set up the IPC socket.\n"
+#~ "It likely is already in use by an existing copy of Moksha.\n"
+#~ "Double check to see if Moksha is not already on this display,\n"
 #~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
 #~ "and try running again."
 #~ msgstr ""
-#~ "Enlightenment kan ikke initialisere sin IPC-socket.\n"
+#~ "Moksha kan ikke initialisere sin IPC-socket.\n"
 #~ "Det er sandsynligt at den er i brug af en anden instans af "
-#~ "Enlightenment.\n"
-#~ "Dobbelttjek om Enlightenment ikke allerede kører på denne terminal,\n"
+#~ "Moksha.\n"
+#~ "Dobbelttjek om Moksha ikke allerede kører på denne terminal,\n"
 #~ "men hvis det fejler prøv så at slette alle filer i ~/.ecore/enlightenment-"
 #~ "*\n"
 #~ "og forsøg at starte igen."
@@ -12535,16 +12535,16 @@ msgstr ""
 #~ msgid "Something Else"
 #~ msgstr "Noget andet"
 
-#~ msgid "Enlightenment Test Module"
-#~ msgstr "Enlightenment testmodul"
+#~ msgid "Moksha Test Module"
+#~ msgstr "Moksha testmodul"
 
 #~ msgid ""
 #~ "This module is VERY simple and is only used to test the "
-#~ "basic<br>interface of the Enlightenment 0.17.0 module system. "
+#~ "basic<br>interface of the Moksha 0.17.0 module system. "
 #~ "Please<br>ignore this module unless you are working on the module system."
 #~ msgstr ""
 #~ "Dette modul er MEGET simpelt og bliver kun brugt for at teste "
-#~ "den<br>basale grænseflade for modulsystemet i Enlightenment 0.17.0. "
+#~ "den<br>basale grænseflade for modulsystemet i Moksha 0.17.0. "
 #~ "Ignorér<br>venligst dette modul med mindre du arbejder på modulsystemet."
 
 #~ msgid "Set Poll Time"

@@ -28,8 +28,8 @@ msgstr ""
 "X-Poedit-Language: Esperanto\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "Pri Enlightenment"
+msgid "About Moksha"
+msgstr "Pri Moksha"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -46,12 +46,12 @@ msgstr "Fermi"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
@@ -95,8 +95,8 @@ msgid "Exit"
 msgstr "Eliri"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
-msgstr "Ĉu vi certe volas eliri Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
+msgstr "Ĉu vi certe volas eliri Moksha?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
@@ -692,8 +692,8 @@ msgid "Exit Now"
 msgstr "Eliri nun"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
-msgstr "Enlightenment : Reĝimo"
+msgid "Moksha : Mode"
+msgstr "Moksha : Reĝimo"
 
 #: src/bin/e_actions.c:3380
 msgid "Presentation Mode Toggle"
@@ -704,8 +704,8 @@ msgid "Offline Mode Toggle"
 msgstr "Baskulo de senkonekta reĝimo"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
-msgstr "Enlightenment : Modulo"
+msgid "Moksha : Module"
+msgstr "Moksha : Modulo"
 
 #: src/bin/e_actions.c:3390
 msgid "Enable the named module"
@@ -823,7 +823,7 @@ msgstr "Nuligi"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -831,7 +831,7 @@ msgid ""
 msgstr ""
 "Agordaj datumoj bezonas ĝisdatigon. Vian malnova agordo<br>estis viŝita kaj "
 "nova aro da aprioroj pravalorizita. Ĉi tiu<br>okazos regule dum evoluado, "
-"tiel ne raportu <br>cimon. Ĉi tiu simple signifas ke Enlightenment bezonas "
+"tiel ne raportu <br>cimon. Ĉi tiu simple signifas ke Moksha bezonas "
 "novan agordan<br>datumon defaŭlte por uzeblaj funkcioj kiujn via "
 "malnova<br>agordo simple ne enhavas. Ĉi tiu nova aro da aprioroj "
 "fiksos<br>tion aldonante ĝin en. Vi povas agordi de nove aferojn aktuale laŭ "
@@ -839,30 +839,30 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Viaj agordoj estas PLI NOVAJ ol Enlightenment. Tio estas<br> strangega. Tio "
+"Viaj agordoj estas PLI NOVAJ ol Moksha. Tio estas<br> strangega. Tio "
 "ne devus okazi krom se vi malĝisdatigis<br>Enlightenement aŭ­ se vi kopiis la "
 "agordon el ejo kie pli nova<br>versio de modulo estis funciinta. Tio estas "
 "malbone kaj<br>kiel antaŭ­zorgo via agordo estis restaŭrita per aprioroj."
 "<br>Bonvole pardonu por la ĝeno.<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
-msgstr "Problemoj de skribado de agordoj de Enlightenment"
+msgid "Moksha Settings Write Problems"
+msgstr "Problemoj de skribado de agordoj de Moksha"
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
-"Enlightenment ricevis eraron dum movado de dosieroj<br>el:<br>%s<br><br>al:"
+"Moksha ricevis eraron dum movado de dosieroj<br>el:<br>%s<br><br>al:"
 "<br>%s<br><br>La cetero de skribo estis sekure ĉesigita.<br>"
 
 #: src/bin/e_config.c:1479 src/bin/e_config.c:2104
@@ -904,7 +904,7 @@ msgstr ""
 "La dosiero ne skribeblas. Eble la disko estas nurlega<br>aŭ vi perdis "
 "permesojn por viaj dosieroj."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Memoro ne sufiĉas por skribi.<br>Bonvole liberigu memoron."
 
@@ -970,17 +970,17 @@ msgid "Decryption failed."
 msgstr "Malĉifrado fiaskis."
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
-msgstr "Ĉi tiu eraro ne estas konata de Enlightenment."
+msgid "The error is unknown to Moksha."
+msgstr "Ĉi tiu eraro ne estas konata de Moksha."
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"Enlightenment ricevis eraron dum skribado<br>de sia dosiero de agordoj.<br>"
+"Moksha ricevis eraron dum skribado<br>de sia dosiero de agordoj.<br>"
 "%s<br><br>La dosiero, kie la eraro okazis, estis:<br>%s<br><br>Ĉi tiu "
 "dosiero estis forigita por eviti korupton de datumoj.<br>"
 
@@ -1032,7 +1032,7 @@ msgstr "Eraro - neniu subteno de PAM"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 "Neniu subteno de PAM estis konstruita en Enlightement,<br>do ekranŝloson "
 "estas malŝaltita."
@@ -1244,23 +1244,23 @@ msgid "Run Error"
 msgstr "Eraro dum rulado"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
-msgstr "Aktuala dosierujo ne obteneblas de Enlightenment"
+msgid "Moksha was unable to get current directory"
+msgstr "Aktuala dosierujo ne obteneblas de Moksha"
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Dosierujo ne ŝanĝeblas de Enlightenment:<br><br>%s"
+msgid "Moksha was unable to change to directory:<br><br>%s"
+msgstr "Dosierujo ne ŝanĝeblas de Moksha:<br><br>%s"
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Dosierujo ne restaŭreblas de Enlightenment:<br><br>%s"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgstr "Dosierujo ne restaŭreblas de Moksha:<br><br>%s"
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr "Ida proceso ne forkeblas de Enlightenment:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
+msgstr "Ida proceso ne forkeblas de Moksha:<br><br>%s"
 
 #: src/bin/e_exec.c:604
 msgid "Application run error"
@@ -1269,10 +1269,10 @@ msgstr "Eraro dum rulado de aplikaĵo"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Ĉi tiu aplikaĵo ne lanĉeblas de Enlightenment:<br><br>%s<br><br>La aplikaĵo "
+"Ĉi tiu aplikaĵo ne lanĉeblas de Moksha:<br><br>%s<br><br>La aplikaĵo "
 "fiaskis dum komencado."
 
 #: src/bin/e_exec.c:713
@@ -1938,10 +1938,10 @@ msgstr "Bindado de klava sekvenco"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Antaŭa apero de Enlightenment daŭre estas aktiva\n"
+"Antaŭa apero de Moksha daŭre estas aktiva\n"
 "sur ĉi tiu ekrano. Ĉesigado de startigo.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1950,15 +1950,15 @@ msgid "Import Error"
 msgstr "Eraro dum enportado"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
-msgstr "La bildo ne enporteblas de Enlightenment<br>pro eraro de kopiado."
+msgid "Moksha was unable to import the image<br>due to a copy error."
+msgstr "La bildo ne enporteblas de Moksha<br>pro eraro de kopiado."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"La bildo ne enporteblas de Enlightenment.<br><br>Ĉu vi certas, ke ĝi estas "
+"La bildo ne enporteblas de Moksha.<br><br>Ĉu vi certas, ke ĝi estas "
 "valida bildo?"
 
 #: src/bin/e_import_dialog.c:163
@@ -1975,8 +1975,8 @@ msgstr "Eraro dum importado de bildo"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr "Bildo ne enporteblas de Enlightenment<br>pro eraroj dum konvertado."
+"Moksha was unable to import the picture<br>due to conversion errors."
+msgstr "Bildo ne enporteblas de Moksha<br>pro eraroj dum konvertado."
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2241,8 +2241,8 @@ msgid "Select Border Style"
 msgstr "Elektu stilon de randoj"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
-msgstr "Uzi apriorajn agordojn de Enlightenment por piktogramoj"
+msgid "Use Moksha Default Icon Preference"
+msgstr "Uzi apriorajn agordojn de Moksha por piktogramoj"
 
 #: src/bin/e_int_border_menu.c:1199
 msgid "Use Application Provided Icon"
@@ -2543,7 +2543,7 @@ msgstr "Ecoj de fenestro ne estas sola kongruo"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2554,7 +2554,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Vi klopodis peti al Enlightenment por memorigi la aplikadon de<br>ecoj (kiel "
+"Vi klopodis peti al Moksha por memorigi la aplikadon de<br>ecoj (kiel "
 "grando, loko, stilo de randoj, ktp) de<br>fenestro, kiu<hilight>ne havas "
 "solajn ecojn</hilight>.<br><br>Tio signifas, ke ĝi dividas la ecojn de nomo/"
 "klaso, forpasemo, rolo, ktp.<br>kun pli ol 1 alia fenestro en ekrano kaj "
@@ -2571,12 +2571,12 @@ msgstr "Neniu eco de kongruo agordita"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Vi klopodis peti al Enlightenment por memorigi la aplikadon de<br>ecoj (kiel "
+"Vi klopodis peti al Moksha por memorigi la aplikadon de<br>ecoj (kiel "
 "grando, loko, stilo de randoj, ktp) al<br>fenestro<hilight>sen specifi kiel "
 "memorigi ilin</hilight>.<br><br>Vi specifu almenaŭ 1 manieron por memorigi "
 "ĉi tiun fenestron."
@@ -2933,113 +2933,113 @@ msgid "Show on specified Desktops"
 msgstr "Montri en elektitaj labortabloj"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
-msgstr "Eina ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Eina!\n"
+msgstr "Eina ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
-msgstr "Domajno de protokolado ne kreeblas de Enlightenment!\n"
+msgid "Moksha could not create a logging domain!\n"
+msgstr "Domajno de protokolado ne kreeblas de Moksha!\n"
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
-msgstr "Eet ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Eet!\n"
+msgstr "Eet ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
-msgstr "Ecore ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore!\n"
+msgstr "Ecore ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "EIO ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize EIO!\n"
+msgstr "EIO ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Traktilo de elirsignalo ne agordeblas de Enlightenment.\n"
+"Traktilo de elirsignalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Traktilo de HUP-signalo ne agordeblas de Enlightenment.\n"
+"Traktilo de HUP-signalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Traktilo de uzantsignalo ne agordeblas de Enlightenment.\n"
+"Traktilo de uzantsignalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
-msgstr "Ecore_File ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
+msgstr "Ecore_File ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
-msgstr "Ecore_Con ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
+msgstr "Ecore_Con ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
-msgstr "Ecore_Ipc ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
+msgstr "Ecore_Ipc ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
-msgstr "Ecore_X ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
+msgstr "Ecore_X ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr ""
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
-msgstr "Ecore_Evas ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
+msgstr "Ecore_Evas ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "Elementary ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Elementary!\n"
+msgstr "Elementary ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "Emotion ne pravalorizeblas de Enlightenment!\n"
+msgid "Moksha cannot initialize Emotion!\n"
+msgstr "Emotion ne pravalorizeblas de Moksha!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Enlightenment malkovris, ke ecore_evas ne subtenas la bildigon de X11-"
+"Moksha malkovris, ke ecore_evas ne subtenas la bildigon de X11-"
 "programaroj\n"
 "en Evas. Bonvole kontrolu vian instaladon de Evas kaj Ecore\n"
 "kaj kontrolu, ke ili subtenas la modulon de bildigo de X11-programaroj."
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Laŭ Enlightenment, ecore_evas ne eltenas la bildigon de bufro en\n"
+"Laŭ Moksha, ecore_evas ne eltenas la bildigon de bufro en\n"
 "Evas. Bonvole kontrolu vian instalon de Evas kaj Ecore kaj kontrolu\n"
 "ke ili eltenas la modulon de bildigo de Software Buffer."
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
-msgstr "Enlightenment ne povis pravalorizi Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
+msgstr "Moksha ne povis pravalorizi Edje!\n"
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
-msgstr "Enlightenment ne povis pravalorizi E_intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
+msgstr "Moksha ne povis pravalorizi E_intl!\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
 "Enlienghtenment ne povas difini sian averto-sistemon.\n"
@@ -3047,75 +3047,75 @@ msgstr ""
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Dosierujoj ne kreeblas de Enlightenment en via hejma dosierujo.\n"
+"Dosierujoj ne kreeblas de Moksha en via hejma dosierujo.\n"
 "Eble vi ne havas hejman dosierujon aŭ via disko estas plena?"
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de dosiero-registrejon.\n"
+msgid "Moksha cannot set up its file registry system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de dosiero-registrejon.\n"
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de agordoj.\n"
+msgid "Moksha cannot set up its config system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de agordoj.\n"
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Enlightenment ne povis pravalorizi E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
+msgstr "Moksha ne povis pravalorizi E_Randr!\n"
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
-msgstr "Enlightenment ne povis pravalorizi E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
+msgstr "Moksha ne povis pravalorizi E_Xinerama!\n"
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
-msgstr "Enlightenment ne povas agordi sian medion.\n"
+msgid "Moksha cannot set up its environment.\n"
+msgstr "Moksha ne povas agordi sian medion.\n"
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de skalado.\n"
+msgid "Moksha cannot set up its scale system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de skalado.\n"
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de kursoroj.\n"
+msgid "Moksha cannot set up its pointer system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de kursoroj.\n"
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Vojoj ne agordeblas de Enlightenment por trovi dosierojn.\n"
+"Vojoj ne agordeblas de Moksha por trovi dosierojn.\n"
 "Eble memoro ne sufiĉas?"
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de tiparoj.\n"
+msgid "Moksha cannot set up its font system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de tiparoj.\n"
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
-msgstr "Enlightenment ne povas agordi sian etosan sistemon.\n"
+msgid "Moksha cannot set up its theme system.\n"
+msgstr "Moksha ne povas agordi sian etosan sistemon.\n"
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de pravalorizoj.\n"
+msgid "Moksha cannot set up its init screen.\n"
+msgstr "Moksha ne povas agordi sian sistemon de pravalorizoj.\n"
 
 #: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "Komencante eltenon de internaciigo"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de internaciigo.\n"
+msgid "Moksha cannot set up its intl system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de internaciigo.\n"
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Enlightenment ne povis pravalorizi la labortablan sistemon FDO!\n"
+"Moksha ne povis pravalorizi la labortablan sistemon FDO!\n"
 "Eble vi ne havas permesojn pri ~/.cache/efreet aŭ mankas memoron\n"
 "aŭ diskospacon?"
 
@@ -3125,10 +3125,10 @@ msgstr "Agordi ekranojn"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"La agordo de Enlightenment por la administrado de fenestroj por ĉiuj ekranoj "
+"La agordo de Moksha por la administrado de fenestroj por ĉiuj ekranoj "
 "de\n"
 "via sistemo malsukcesis. Eble alia fenestradministrilo funkcias?\n"
 
@@ -3141,25 +3141,25 @@ msgid "Setup Backlight"
 msgstr "Agordi fonan lumon"
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
-msgstr "Enlightenment ne povas agordi la fonan lumon.\n"
+msgid "Moksha cannot configure the backlight.\n"
+msgstr "Moksha ne povas agordi la fonan lumon.\n"
 
 #: src/bin/e_main.c:756
 msgid "Setup Screensaver"
 msgstr "Ebligi ekrankurtenon"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
-msgstr "Enlightenment ne povas agordi la ekrankurtenon X.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
+msgstr "Moksha ne povas agordi la ekrankurtenon X.\n"
 
 #: src/bin/e_main.c:767
 msgid "Setup DPMS"
 msgstr "Agordi DPMS (administrado de energi-ŝparo de ekrano)"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr ""
-"Enlightenment no povas agordi DPMS (administrado de energi-ŝparo de "
+"Moksha no povas agordi DPMS (administrado de energi-ŝparo de "
 "ekrano).\n"
 
 #: src/bin/e_main.c:778
@@ -3167,24 +3167,24 @@ msgid "Setup Powersave Modes"
 msgstr "Agordi energisparadajn reĝimojn"
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
-msgstr "Enlightenment ne povas agordi la reĝimojn de energiŝparado.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
+msgstr "Moksha ne povas agordi la reĝimojn de energiŝparado.\n"
 
 #: src/bin/e_main.c:789
 msgid "Setup Desklock"
 msgstr "Agordi Labortablan Ŝloson"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de labortabla ŝlosado.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de labortabla ŝlosado.\n"
 
 #: src/bin/e_main.c:800
 msgid "Setup Popups"
 msgstr "Agordi ŝprucfenestrojn"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
-msgstr "Enlightenment ne povas agordi sian ŝprucfenetran sistemon.\n"
+msgid "Moksha cannot set up its popup system.\n"
+msgstr "Moksha ne povas agordi sian ŝprucfenetran sistemon.\n"
 
 #: src/bin/e_main.c:816
 msgid "Setup Message Bus"
@@ -3199,154 +3199,154 @@ msgid "Setup System Controls"
 msgstr "Agordi Sistemajn Kontrolojn"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Sistema komanda sistemo ne pravalorizeblas de Enlightenment.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
+msgstr "Sistema komanda sistemo ne pravalorizeblas de Moksha.\n"
 
 #: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "Agordi agadojn"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de agadoj.\n"
+msgid "Moksha cannot set up its actions system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de agadoj.\n"
 
 #: src/bin/e_main.c:851
 msgid "Setup Execution System"
 msgstr "Agordi la sistemon de lanĉo"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de lanĉado.\n"
+msgid "Moksha cannot set up its exec system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de lanĉado.\n"
 
 #: src/bin/e_main.c:866
 msgid "Setup Filemanager"
 msgstr "Agordi dosieradministrilon"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Enlightenment ne povis pravalorizi la dosieradministrilon.\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Moksha ne povis pravalorizi la dosieradministrilon.\n"
 
 #: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "Agordi Mesaĝan Sistemon"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de mesaĝoj.\n"
+msgid "Moksha cannot set up its msg system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de mesaĝoj.\n"
 
 #: src/bin/e_main.c:888
 msgid "Setup DND"
 msgstr "Agordi ŝovon kaj demeton"
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de ŝovo-demeto.\n"
+msgid "Moksha cannot set up its dnd system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de ŝovo-demeto.\n"
 
 #: src/bin/e_main.c:899
 msgid "Setup Grab Input Handling"
 msgstr "Agordi traktadon de enigo-aparato"
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
-"Enlightenment ne povas agordi sian sistemon de traktado de uzanta enigo.\n"
+"Moksha ne povas agordi sian sistemon de traktado de uzanta enigo.\n"
 
 #: src/bin/e_main.c:910
 msgid "Setup Modules"
 msgstr "Agordi modulojn"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de modulo.\n"
+msgid "Moksha cannot set up its module system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de modulo.\n"
 
 #: src/bin/e_main.c:921
 msgid "Setup Remembers"
 msgstr "Agordi memorojn"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
-msgstr "Enlightenment ne povas agordi memoradon.\n"
+msgid "Moksha cannot setup remember settings.\n"
+msgstr "Moksha ne povas agordi memoradon.\n"
 
 #: src/bin/e_main.c:932
 msgid "Setup Color Classes"
 msgstr "Agordi Kolorajn Klasojn"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de kolorklasoj.\n"
+msgid "Moksha cannot set up its color class system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de kolorklasoj.\n"
 
 #: src/bin/e_main.c:943
 msgid "Setup Gadcon"
 msgstr "Agordi Gadcon"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
-msgstr "Enlightenment ne povas agordi sian kontrolsistemon de akcesoraĵoj.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
+msgstr "Moksha ne povas agordi sian kontrolsistemon de akcesoraĵoj.\n"
 
 #: src/bin/e_main.c:954
 msgid "Setup Wallpaper"
 msgstr "Agordi ekranfonon"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
-msgstr "Enlightenment ne povas agordi sian ekranfonan sistemon.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
+msgstr "Moksha ne povas agordi sian ekranfonan sistemon.\n"
 
 #: src/bin/e_main.c:965
 msgid "Setup Mouse"
 msgstr "Agordi muson"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Enlightenment ne povas difini sian sistemon de muso.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Moksha ne povas difini sian sistemon de muso.\n"
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
-msgstr "Enlightenment ne povas agordi aranĝojn XKB de klavaroj.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
+msgstr "Moksha ne povas agordi aranĝojn XKB de klavaroj.\n"
 
 #: src/bin/e_main.c:982
 msgid "Setup Bindings"
 msgstr "Agordi bindojn"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de bindoj.\n"
+msgid "Moksha cannot set up its bindings system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de bindoj.\n"
 
 #: src/bin/e_main.c:993
 msgid "Setup Thumbnailer"
 msgstr "Agordi bildetilon"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment ne povas pravalorizi la bildetigan sistemon.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
+msgstr "Moksha ne povas pravalorizi la bildetigan sistemon.\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr ""
-"Enlightenment ne povas pravalorizi la kaŝmemoran sistemon de piktogramoj.\n"
+"Moksha ne povas pravalorizi la kaŝmemoran sistemon de piktogramoj.\n"
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
-msgstr "Enlightenment ne povas pravalorizi la sistemon XSettings.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
+msgstr "Moksha ne povas pravalorizi la sistemon XSettings.\n"
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr "Enlightenment ne povas pravalorizi la ĝisdatigan sistemon.\n"
+msgid "Moksha cannot initialize the Update system.\n"
+msgstr "Moksha ne povas pravalorizi la ĝisdatigan sistemon.\n"
 
 #: src/bin/e_main.c:1031
 msgid "Setup Desktop Environment"
 msgstr "Agordi medion de labortabloj"
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
-msgstr "Enlightenment ne povas pravalorizi sian labortablan medion.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
+msgstr "Moksha ne povas pravalorizi sian labortablan medion.\n"
 
 #: src/bin/e_main.c:1042
 msgid "Setup File Ordering"
 msgstr "Agordi ordigon de dosieroj"
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
-msgstr "Enlightenment ne povas agordi sian sistemon de ordigo de dosieroj.\n"
+msgid "Moksha cannot set up its order file system.\n"
+msgstr "Moksha ne povas agordi sian sistemon de ordigo de dosieroj.\n"
 
 #: src/bin/e_main.c:1061
 msgid "Load Modules"
@@ -3427,7 +3427,7 @@ msgid ""
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
 msgstr ""
-"Vi estas rulumanta Enlightenment rekte. tio malbonas.\n"
+"Vi estas rulumanta Moksha rekte. tio malbonas.\n"
 "Bonvole ne lanĉi la plenumeblon \"enlightenment\".\n"
 "Uzu la lanĉilon \"enlightenment_start\". Ĝi\n"
 "traktos agordadon de ĉirkaŭaĵaj variabloj, vojoj,\n"
@@ -3440,100 +3440,100 @@ msgstr "Provado de elteno de formato"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Laŭ Enlightenment, Evas ne povas krei bufro-areaĵon. Bonvole kontrolu\n"
+"Laŭ Moksha, Evas ne povas krei bufro-areaĵon. Bonvole kontrolu\n"
 "ke Evas enhavas eltenon de programa bufrilo-modulo.\n"
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
-"Enlightenment trovis ke Evas ne povas ŝargi SVG-dosierojn. BV kontroli ĉu "
+"Moksha trovis ke Evas ne povas ŝargi SVG-dosierojn. BV kontroli ĉu "
 "Evas eltenas SVG-ŝargilon.\n"
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"Enlightenment trovis ke Evas ne povas ŝargi JPEG-dosierojn. BV kontroli ĉu "
+"Moksha trovis ke Evas ne povas ŝargi JPEG-dosierojn. BV kontroli ĉu "
 "Evas eltenas JPEG-ŝargilon.\n"
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
-"Enlightenment trovis ke Evas ne povas ŝargi PNG-dosierojn. BV kontroli ĉu "
+"Moksha trovis ke Evas ne povas ŝargi PNG-dosierojn. BV kontroli ĉu "
 "Evas eltenas PNG-ŝargilon.\n"
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
-"Enlightenment trovis ke Evas ne povas ŝargi EET-dosierojn. BV kontroli ĉu "
+"Moksha trovis ke Evas ne povas ŝargi EET-dosierojn. BV kontroli ĉu "
 "Evas eltenas EET-ŝargilon.\n"
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Laŭ Enlightenment, Evas ne povas ŝargi la tiparon 'Sans'. Bonvolu kontroli "
+"Laŭ Moksha, Evas ne povas ŝargi la tiparon 'Sans'. Bonvolu kontroli "
 "ĉu Evas eltenas \"fontconfig\"\n"
 "kaj la sistema \"fontconfig\" difinas iun tiparon 'Sans'.\n"
 
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
-"Enlightenment paneis frue dum starto kaj estis<br>restartigita. Estis eraro "
+"Moksha paneis frue dum starto kaj estis<br>restartigita. Estis eraro "
 "dum ŝargo de modulo<br>nomata: %s. Tiu modulo estis malŝaltita kaj ne "
 "estos<br>ŝargita."
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
-msgstr "Enlightenment fuŝis frue dum komenco kaj restartiĝis."
+msgid "Moksha crashed early on start and has been restarted"
+msgstr "Moksha fuŝis frue dum komenco kaj restartiĝis."
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
-"Enlightenment paneis frue dum starto kaj estis restartigita.<br>Estis eraro "
+"Moksha paneis frue dum starto kaj estis restartigita.<br>Estis eraro "
 "dum ŝargo de modulo nomata: %s.<br><br>Tiu modulo estis malŝaltita kaj ne "
 "estos ŝargita."
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"Enlightenment fuŝis frue dum komenco kaj restartiĝis.<br>Ĉiuj moduloj estas "
+"Moksha fuŝis frue dum komenco kaj restartiĝis.<br>Ĉiuj moduloj estas "
 "malŝaltitaj kaj ne ŝargiĝos por helpi forigi iun ajn<br> probleman modulon "
 "de via agordo. La modulo de<br><br>agordo permesos elekti viajn modulojn de "
 "nove.\n"
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
 msgstr ""
-"Enlightenment fuŝis frue dum komenco kaj restartiĝis.<br>Ĉiuj moduloj estas "
+"Moksha fuŝis frue dum komenco kaj restartiĝis.<br>Ĉiuj moduloj estas "
 "malŝaltitaj kaj ne ŝargiĝos por helpi forigi iun ajn<br> probleman modulon "
 "de via agordo. La modulo de<br><br>agordo permesos elekti viajn modulojn de "
 "nove."
@@ -3573,14 +3573,14 @@ msgstr "Modulo ne enhavas ĉiujn bezonatajn funkciojn"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Enlightenment-a \"%s\" Modulo"
+msgid "Moksha %s Module"
+msgstr "Moksha-a \"%s\" Modulo"
 
 #: src/bin/e_module.c:528
 msgid "What action should be taken with this module?<br>"
@@ -3595,14 +3595,14 @@ msgstr "Teni"
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
-"La sekvaj moduloj ne estas aprioraj moduloj de<br>Enlightenment kaj povas "
+"La sekvaj moduloj ne estas aprioraj moduloj de<br>Moksha kaj povas "
 "kaŭzi cimojn kaj kraŝoj.<br>Bonvole forigu ilin antaŭ raporto de iu ajn cimo."
 "<br><br>Jen la listo de moduloj:<br><br>\r\n"
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 
@@ -3814,8 +3814,8 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Elsalutado.<br><hilight>Bonvole atendu.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
-msgstr "Enlightenment estas okupata de alia peto"
+msgid "Moksha is busy with another request"
+msgstr "Moksha estas okupata de alia peto"
 
 #: src/bin/e_sys.c:585
 msgid ""
@@ -3943,15 +3943,15 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"Via versio de Enlightenment<br>ne estas la lasta publikigo.<br>Lasta versio "
+"Via versio de Moksha<br>ne estas la lasta publikigo.<br>Lasta versio "
 "estas:<br><br>%s<br><br>Bonvole vizitu www.enlightenment.org<br>aŭ ĝisdatigu "
 "vian pakaĵo-sistemon<br>por akiri novan version."
 
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Enlightenment ne povis forki idan procezo:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
+msgstr "Moksha ne povis forki idan procezo:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -3960,11 +3960,11 @@ msgstr "Ne elireblas - senmortaj fenestroj"
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Kelkaj fenestroj ĉiam ekzistas kun la ŝlosilo ebligita. Tio signifas<br>ke "
-"Enlightenment ne permesos sin ĉesigi ĝis tiuj fenestoj<br>estos fermitaj aŭ "
+"Moksha ne permesos sin ĉesigi ĝis tiuj fenestoj<br>estos fermitaj aŭ "
 "kies la ŝlosilo foriĝis.<br>"
 
 #: src/bin/e_utils.c:860
@@ -5791,16 +5791,16 @@ msgstr "Eraro de importo de Tajpo-Metoda agordo"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
-"Argordo ne importeblas de Enlightenment.<br>Ĉu vi certas ke ĝi ja estas "
+"Argordo ne importeblas de Moksha.<br>Ĉu vi certas ke ĝi ja estas "
 "valida agordo?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr "Argordo ne importeblas de Enlightenment<br>ĉar okazis eraro dum kopio."
+"Moksha was unable to import the configuration<br>due to a copy error."
+msgstr "Argordo ne importeblas de Moksha<br>ĉar okazis eraro dum kopio."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -6099,8 +6099,8 @@ msgid "Menu Settings"
 msgstr "Agordoj de menuo"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
-msgstr "Aprioroj de Enlightenment"
+msgid "Moksha Default"
+msgstr "Aprioroj de Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
@@ -6237,8 +6237,8 @@ msgid "Messages"
 msgstr "Mesaĝoj"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
-msgstr "Vojoj de Enlightenment"
+msgid "Moksha Paths"
+msgstr "Vojoj de Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7095,24 +7095,24 @@ msgstr "Eraro de importado de etoso"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
-"Etoso ne importeblas de Enlightenment.<br>Ĉu vi certas ke ŋi ja estas valida "
+"Etoso ne importeblas de Moksha.<br>Ĉu vi certas ke ŋi ja estas valida "
 "etoso?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
-"Etoso ne importeblas de Enlightenment<br>kial okazis eraroj dum kopiado."
+"Etoso ne importeblas de Moksha<br>kial okazis eraroj dum kopiado."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
 msgid "Application Theme Settings"
 msgstr "Agordoj de aplikaĵa etoso"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
-msgstr "Kongri etosan de Enlightenment se eblas"
+msgid "Match Moksha theme if possible"
+msgstr "Kongri etosan de Moksha se eblas"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 msgid "Enable X Application Settings"
@@ -7127,8 +7127,8 @@ msgid "Enable icon theme for applications"
 msgstr "Ŝalti piktograman etoson por aplikaĵoj"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
-msgstr "Ŝalti piktograman etoson por Enlightenment"
+msgid "Enable icon theme for Moksha"
+msgstr "Ŝalti piktograman etoson por Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Application Theme"
@@ -9271,8 +9271,8 @@ msgid "Please Wait..."
 msgstr "Bonvole atendu..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "Bonvenon en Enlightenment"
+msgid "Welcome to Moksha"
+msgstr "Bonvenon en Moksha"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9280,7 +9280,7 @@ msgid "Select one"
 msgstr "Elekti iun"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9318,7 +9318,7 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 
 #: src/modules/wizard/page_150.c:117
@@ -9343,10 +9343,10 @@ msgstr "Kontroli por disponeblaj ĝisdatigoj"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -10069,11 +10069,11 @@ msgstr "Startigi la prezentan reĝimon"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Enlightenment estas en <b>prezentada</b> reĝimo.<br>Dum tiu reĝimo, "
+"Moksha estas en <b>prezentada</b> reĝimo.<br>Dum tiu reĝimo, "
 "ekrankurteno, ekranŝloso kaj energiŝparo estos malŝaltita, tiel vi ne estos "
 "interrompita."
 
@@ -10095,10 +10095,10 @@ msgstr "Ekigi senretan reĝimon"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Enlightenment nun estas en <b>senreta</b> reĝimo.<br>Dum senreta reĝimo, "
+"Moksha nun estas en <b>senreta</b> reĝimo.<br>Dum senreta reĝimo, "
 "moduloj kiuj uzas reton ĉesos vokado de foraj servoj."
 
 #: src/modules/notification/e_mod_main.c:96
@@ -10281,8 +10281,8 @@ msgstr ""
 #~ msgid "Setup Toolbars"
 #~ msgstr "Agordi ilobretojn"
 
-#~ msgid "Enlightenment cannot set up its toolbars.\n"
-#~ msgstr "Enlightenment ne povas pravalorizi siajn ilobretojn.\n"
+#~ msgid "Moksha cannot set up its toolbars.\n"
+#~ msgstr "Moksha ne povas pravalorizi siajn ilobretojn.\n"
 
 #~ msgid "Compositor"
 #~ msgstr "Komponilo"

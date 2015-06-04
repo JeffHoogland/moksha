@@ -3,13 +3,13 @@
 # quaker66@gmail.com
 #
 # Vít Pelčák <vit@pelcak.org>, 2011.
-# Tomáš Čech <sleep_walker@suse.cz>, 2012.
+# Tomáš Čech <sleep_walker@suse.cz>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-07 15:25+0000\n"
-"PO-Revision-Date: 2012-12-21 20:27+0100\n"
+"PO-Revision-Date: 2015-12-21 20:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "O Enlightenmentu"
+msgid "About Moksha"
+msgstr "O Mokshau"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -38,17 +38,17 @@ msgstr "Zavřít"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2012, vyhrazen týmem vývojářů Enlightenmentu</"
+"<title>Copyright &copy; 2000-2015, vyhrazen týmem vývojářů Mokshau</"
 "><br><br>Doufáme, že si budete užívat tento software tak, jak jsme si "
 "užívali jeho vývoj.<br><br>Kontaktujte nás na:<br><highlight>http://www."
 "enlightenment.org</><br><br>"
@@ -91,8 +91,8 @@ msgid "Exit"
 msgstr "Pryč"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
-msgstr "Opravdu chcete opustit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
+msgstr "Opravdu chcete opustit Moksha?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
@@ -688,8 +688,8 @@ msgid "Exit Now"
 msgstr "Pryč teď"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
-msgstr "Enlightenment : Režim"
+msgid "Moksha : Mode"
+msgstr "Moksha : Režim"
 
 #: src/bin/e_actions.c:3380
 msgid "Presentation Mode Toggle"
@@ -700,8 +700,8 @@ msgid "Offline Mode Toggle"
 msgstr "Přepnout režim offline"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
-msgstr "Enlightenment : Modul"
+msgid "Moksha : Module"
+msgstr "Moksha : Modul"
 
 #: src/bin/e_actions.c:3390
 msgid "Enable the named module"
@@ -819,7 +819,7 @@ msgstr "Zrušit"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -828,37 +828,37 @@ msgstr ""
 "Data nastavení je třeba aktualizovat. Vaše staré nastavení<br>bylo "
 "odstraněno a nová sada standardních nastavení byla načtena.<br>Toto se bude "
 "dít pravidelně při vývoji, takže neposílejte hlášení chyb.<br>Znamená to, že "
-"Enlightenment potřebuje zavést nastavení nových<br>vlastností, které ve "
+"Moksha potřebuje zavést nastavení nových<br>vlastností, které ve "
 "vašem starém nastavení prostě nejsou. Nová sada nastavení<br>je doplní. Nyní "
-"si můžete nastavit Enlightenment zpět k obrazu svému.<br>Omlouváme se za "
+"si můžete nastavit Moksha zpět k obrazu svému.<br>Omlouváme se za "
 "způsobené potíže.<br>"
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Vaše nastavení je NOVĚJŠÍ než Enlightenment. To je velice<br>zvláštní. "
-"Nemělo by se to stát, pokud jste ovšem nedowngradovali<br>Enlightenment nebo "
+"Vaše nastavení je NOVĚJŠÍ než Moksha. To je velice<br>zvláštní. "
+"Nemělo by se to stát, pokud jste ovšem nedowngradovali<br>Moksha nebo "
 "nekopírovali soubory s nastavením z místa, kde<br>běžela novější verze "
-"Enlightenmentu. Je to zlé a jako protiopatření<br>bylo vaše nastavení "
+"Mokshau. Je to zlé a jako protiopatření<br>bylo vaše nastavení "
 "vráceno do původních hodnot.<br>Omlouváme se za způsobené potíže.<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
+msgid "Moksha Settings Write Problems"
 msgstr "Problémy při zápisu nastavení E17"
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
-"V Enlightenmentu nastal problém při přesunu<br>souborů nastavení z:<br>"
+"V Mokshau nastal problém při přesunu<br>souborů nastavení z:<br>"
 "%s<br><br>do:<br>%s<br><br>Zbytek byl přerušen kvůli bezpečnosti.<br>"
 
 #: src/bin/e_config.c:1479 src/bin/e_config.c:2104
@@ -900,7 +900,7 @@ msgstr ""
 "Soubor není zapisovatelný. Možná je disk pouze pro<br>čtení nebo chybí práva "
 "k souborům."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Došla paměť při přípravě k zápisu.<br>Prosím uvolněte ji."
 
@@ -965,17 +965,17 @@ msgid "Decryption failed."
 msgstr "Dešifrování selhalo."
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
-msgstr "Chyba je Enlightenmentu neznámá."
+msgid "The error is unknown to Moksha."
+msgstr "Chyba je Mokshau neznámá."
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"Enlightenmentu selhalo zapisování<br>jeho konfiguračního souboru.<br>"
+"Mokshau selhalo zapisování<br>jeho konfiguračního souboru.<br>"
 "%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
 "smazán, aby nedošlo k porušení dat.<br>"
 
@@ -1027,9 +1027,9 @@ msgstr "Chyba - žádná podpora PAM"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"PAM podpora nebyla do Enlightenmentu zakompilována, takže<br>zamykání plochy "
+"PAM podpora nebyla do Mokshau zakompilována, takže<br>zamykání plochy "
 "bylo zakázáno."
 
 #: src/bin/e_desklock.c:301
@@ -1240,23 +1240,23 @@ msgid "Run Error"
 msgstr "Chyba při běhu"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
-msgstr "Enlightenment nemohl získat aktuální adresář"
+msgid "Moksha was unable to get current directory"
+msgstr "Moksha nemohl získat aktuální adresář"
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Enlightenment nemohl změnit adresář:<br><br>%s<br>"
+msgid "Moksha was unable to change to directory:<br><br>%s"
+msgstr "Moksha nemohl změnit adresář:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Enlightenment nemohl obnovit do adresáře:<br><br>%s<br>"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgstr "Moksha nemohl obnovit do adresáře:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr "Enlightenment nemohl vytvořit proces potomka:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
+msgstr "Moksha nemohl vytvořit proces potomka:<br><br>%s"
 
 #: src/bin/e_exec.c:604
 msgid "Application run error"
@@ -1265,10 +1265,10 @@ msgstr "Chyba za běhu aplikace"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Enlightenment nedokázal spustit aplikaci:<br><br>%s<br><br>Aplikace selhala "
+"Moksha nedokázal spustit aplikaci:<br><br>%s<br><br>Aplikace selhala "
 "při startu."
 
 #: src/bin/e_exec.c:713
@@ -1931,10 +1931,10 @@ msgstr "Klávesová zkratka"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Přechozí instance Enlightenmentu je stále aktivní\n"
+"Přechozí instance Mokshau je stále aktivní\n"
 "na této obrazovce. Ruším start.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1943,15 +1943,15 @@ msgid "Import Error"
 msgstr "Chyba při importu"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
-msgstr "Enlightenment nemohl importovat obrázek<br>kvůli chybě kopírování."
+msgid "Moksha was unable to import the image<br>due to a copy error."
+msgstr "Moksha nemohl importovat obrázek<br>kvůli chybě kopírování."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"Enlightenment nemohl importovat obrázek.<br><br>Jste si jistí, že je to "
+"Moksha nemohl importovat obrázek.<br><br>Jste si jistí, že je to "
 "obrázek?"
 
 #: src/bin/e_import_dialog.c:163
@@ -1968,8 +1968,8 @@ msgstr "Chyba při importu obrázku"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr "Enlightenment nemohl importovat obrázek<br>kvůli chybě při konverzi."
+"Moksha was unable to import the picture<br>due to conversion errors."
+msgstr "Moksha nemohl importovat obrázek<br>kvůli chybě při konverzi."
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2234,8 +2234,8 @@ msgid "Select Border Style"
 msgstr "Vybrat styl okrajů"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
-msgstr "Použít výchozí výběr ikon Enlightenmentu"
+msgid "Use Moksha Default Icon Preference"
+msgstr "Použít výchozí výběr ikon Mokshau"
 
 #: src/bin/e_int_border_menu.c:1199
 msgid "Use Application Provided Icon"
@@ -2536,7 +2536,7 @@ msgstr "Vlastnosti okna neposkytují jednoznačnou shodu"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2547,7 +2547,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Chcete, aby si Enlightenment zapamatoval, že má aplikovat<br>nastavení (jako "
+"Chcete, aby si Moksha zapamatoval, že má aplikovat<br>nastavení (jako "
 "velikost, umístění, styl okrajů oken atd.) pro<br>okno, které <hilight>nemá "
 "unikátní vlastnosti</hilight>.<br><br>To znamená, že sdílí Název/Třídu, "
 "průhlednost, úlohu a další vlastnost s více než jedním oknem na obrazovce a "
@@ -2567,12 +2567,12 @@ msgstr "Nenastaveny žádné shodné vlastnosti"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Žádáte Enlightenment o zapamatování nastavení<br>vlastností (jako velikost, "
+"Žádáte Moksha o zapamatování nastavení<br>vlastností (jako velikost, "
 "místo, styl okrajů oken atd.)<br>okna <hilight>bez upřesnění, jak si toto "
 "okno zapamatovat</hilight>.<br><br>Musíte upřesnit alespoň jeden způsob, jak "
 "si zapamatovat toto okno."
@@ -2793,7 +2793,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:264 src/bin/e_int_menus.c:288
 msgid "About"
-msgstr "O Enlightenmentu"
+msgstr "O Mokshau"
 
 #: src/bin/e_int_menus.c:269
 #, fuzzy
@@ -2929,188 +2929,188 @@ msgid "Show on specified Desktops"
 msgstr "Zobrazit na vybraných plochách"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Eina!\n"
+msgid "Moksha cannot initialize Eina!\n"
+msgstr "Mokshau se nepodařilo inicializovat Eina!\n"
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
-msgstr "Enlightenmentu se nepodařilo začít logovat!\n"
+msgid "Moksha could not create a logging domain!\n"
+msgstr "Mokshau se nepodařilo začít logovat!\n"
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Eet!\n"
+msgid "Moksha cannot initialize Eet!\n"
+msgstr "Mokshau se nepodařilo inicializovat Eet!\n"
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore!\n"
+msgid "Moksha cannot initialize Ecore!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore!\n"
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat EIO!\n"
+msgid "Moksha cannot initialize EIO!\n"
+msgstr "Mokshau se nepodařilo inicializovat EIO!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenmentu se nepodařilo nastavit obsluhu signálu exit.\n"
+"Mokshau se nepodařilo nastavit obsluhu signálu exit.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenmentu se nepodařilo nastavit obsluhu signálu HUP.\n"
+"Mokshau se nepodařilo nastavit obsluhu signálu HUP.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenmentu se nepodařilo nastavit obsluhu signálu USER.\n"
+"Mokshau se nepodařilo nastavit obsluhu signálu USER.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_File!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_File!\n"
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_Con!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_Con!\n"
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_Ipc!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_X!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_X!\n"
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_IMF!\n"
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Ecore_Evas!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
+msgstr "Mokshau se nepodařilo inicializovat Ecore_Evas!\n"
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Elementary!\n"
+msgid "Moksha cannot initialize Elementary!\n"
+msgstr "Mokshau se nepodařilo inicializovat Elementary!\n"
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Emotion!\n"
+msgid "Moksha cannot initialize Emotion!\n"
+msgstr "Mokshau se nepodařilo inicializovat Emotion!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Enlightenment zjistil, že ecore_evas nepodporuje softwarové X11\n"
+"Moksha zjistil, že ecore_evas nepodporuje softwarové X11\n"
 "vykreslování v Evas-u. Prosím zkontrolujte, zda Evas a Ecore podporují\n"
 "softwarové X11 vykreslování."
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Enlightenment zjistil, že ecore_evas nepodporuje software buffer\n"
+"Moksha zjistil, že ecore_evas nepodporuje software buffer\n"
 "vykreslování v Evas-u. Prosím zkontrolujte, zda Evas a Ecore podporují\n"
 "softwarové X11 vykreslování."
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
+msgstr "Mokshau se nepodařilo inicializovat Edje!\n"
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat E_intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
+msgstr "Mokshau se nepodařilo inicializovat E_intl!\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenmentu se nepodařilo spustit jeho pohotovostní varovný systém.\n"
+"Mokshau se nepodařilo spustit jeho pohotovostní varovný systém.\n"
 "Máte nastavenou proměnnou DISPLAY?"
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment nemůže vytvářet adresáře ve vašem domovském adresáři.\n"
+"Moksha nemůže vytvářet adresáře ve vašem domovském adresáři.\n"
 "Možná žádný nemáte nebo je disk plný?"
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém registrů.\n"
+msgid "Moksha cannot set up its file registry system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém registrů.\n"
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
-msgstr "Enlightenmentu se nepodařilo spustit systém nastavení.\n"
+msgid "Moksha cannot set up its config system.\n"
+msgstr "Mokshau se nepodařilo spustit systém nastavení.\n"
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
+msgstr "Mokshau se nepodařilo inicializovat E_Randr!\n"
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
+msgstr "Mokshau se nepodařilo inicializovat E_Xinerama!\n"
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit prostředí.\n"
+msgid "Moksha cannot set up its environment.\n"
+msgstr "Mokshau se nepodařilo nastavit prostředí.\n"
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
-msgstr "Enlightenment nemohl nastavit systém škálování.\n"
+msgid "Moksha cannot set up its scale system.\n"
+msgstr "Moksha nemohl nastavit systém škálování.\n"
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém ukazatele.\n"
+msgid "Moksha cannot set up its pointer system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém ukazatele.\n"
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenmentu se nepodařilo nastavit cesty k vyhledávání souborů.\n"
+"Mokshau se nepodařilo nastavit cesty k vyhledávání souborů.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém fontů.\n"
+msgid "Moksha cannot set up its font system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém fontů.\n"
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém motivů.\n"
+msgid "Moksha cannot set up its theme system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém motivů.\n"
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit úvodní obrazovku.\n"
+msgid "Moksha cannot set up its init screen.\n"
+msgstr "Mokshau se nepodařilo nastavit úvodní obrazovku.\n"
 
 #: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "Nastavuji mezinárodní podporu"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém lokalizace.\n"
+msgid "Moksha cannot set up its intl system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém lokalizace.\n"
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Enlightenmentu se nepodařilo inicializovat systém plochy FDO.\n"
+"Mokshau se nepodařilo inicializovat systém plochy FDO.\n"
 "Možná nemáte oprávnění k ~/.cache/efreet nebo\n"
 "vám došla paměť či místo na disku?"
 
@@ -3120,7 +3120,7 @@ msgstr "Nastavuji obrazovky"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Nastavení okenního manažeru na všech obrazovkách v systému selhalo.\n"
@@ -3135,40 +3135,40 @@ msgid "Setup Backlight"
 msgstr "Nastavuji posvícení"
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
-msgstr "Enlightenment nemůže nastavit podsvícení.\n"
+msgid "Moksha cannot configure the backlight.\n"
+msgstr "Moksha nemůže nastavit podsvícení.\n"
 
 #: src/bin/e_main.c:756
 msgid "Setup Screensaver"
 msgstr "Nastavuji spořič"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit spořič obrazovky pro X.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
+msgstr "Mokshau se nepodařilo nastavit spořič obrazovky pro X.\n"
 
 #: src/bin/e_main.c:767
 msgid "Setup DPMS"
 msgstr "Nastavuji DPMS"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit volby DPMS.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
+msgstr "Mokshau se nepodařilo nastavit volby DPMS.\n"
 
 #: src/bin/e_main.c:778
 msgid "Setup Powersave Modes"
 msgstr "Nastavuji režimy úspory energie"
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit režimy správy napájení.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
+msgstr "Mokshau se nepodařilo nastavit režimy správy napájení.\n"
 
 #: src/bin/e_main.c:789
 msgid "Setup Desklock"
 msgstr "Nastavuji zámek obrazovky"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém zamykání plochy.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém zamykání plochy.\n"
 
 # zbavit se 'popupu'
 #: src/bin/e_main.c:800
@@ -3176,8 +3176,8 @@ msgid "Setup Popups"
 msgstr "Nastavuji pop-upy"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém pop-upů.\n"
+msgid "Moksha cannot set up its popup system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém pop-upů.\n"
 
 #: src/bin/e_main.c:816
 msgid "Setup Message Bus"
@@ -3192,153 +3192,153 @@ msgid "Setup System Controls"
 msgstr "Nastavuji systémové ovládací prvky"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat System Command systém.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
+msgstr "Mokshau se nepodařilo inicializovat System Command systém.\n"
 
 #: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "Nastavuji akce"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém akcí.\n"
+msgid "Moksha cannot set up its actions system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém akcí.\n"
 
 #: src/bin/e_main.c:851
 msgid "Setup Execution System"
 msgstr "Nastavuji spouštěcí systém"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém exec.\n"
+msgid "Moksha cannot set up its exec system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém exec.\n"
 
 #: src/bin/e_main.c:866
 msgid "Setup Filemanager"
 msgstr "Nastavuji správce souborů"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Enlightenmentu se nepodařilo inicializovat souborový manažer.\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Mokshau se nepodařilo inicializovat souborový manažer.\n"
 
 #: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "Nastavuji systém zpráv"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit msg systém.\n"
+msgid "Moksha cannot set up its msg system.\n"
+msgstr "Mokshau se nepodařilo nastavit msg systém.\n"
 
 #: src/bin/e_main.c:888
 msgid "Setup DND"
 msgstr "Nastavuji DND"
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém dnd.\n"
+msgid "Moksha cannot set up its dnd system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém dnd.\n"
 
 #: src/bin/e_main.c:899
 msgid "Setup Grab Input Handling"
 msgstr "Nastavit obsluhu zachytávání vstupu"
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit obsluhu zachytávání vstupu.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
+msgstr "Mokshau se nepodařilo nastavit obsluhu zachytávání vstupu.\n"
 
 #: src/bin/e_main.c:910
 msgid "Setup Modules"
 msgstr "Nastavuji moduly"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
-msgstr "Enlightenmentu se nepodařilo spustit svůj systém modulů.\n"
+msgid "Moksha cannot set up its module system.\n"
+msgstr "Mokshau se nepodařilo spustit svůj systém modulů.\n"
 
 #: src/bin/e_main.c:921
 msgid "Setup Remembers"
 msgstr "Nastavuji systém zapamatovaného nastavení"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
+msgid "Moksha cannot setup remember settings.\n"
 msgstr ""
-"Enlightenmentu se nepodařilo nastavit systém zapamatovaného nastavení.\n"
+"Mokshau se nepodařilo nastavit systém zapamatovaného nastavení.\n"
 
 #: src/bin/e_main.c:932
 msgid "Setup Color Classes"
 msgstr "Nastavuji třídy barev"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém tříd barev.\n"
+msgid "Moksha cannot set up its color class system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém tříd barev.\n"
 
 #: src/bin/e_main.c:943
 msgid "Setup Gadcon"
 msgstr "Nastavuji gadget container"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém ovládání gadgetů.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém ovládání gadgetů.\n"
 
 #: src/bin/e_main.c:954
 msgid "Setup Wallpaper"
 msgstr "Nastavuji pozadí plochy"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém pozadí plochy.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém pozadí plochy.\n"
 
 #: src/bin/e_main.c:965
 msgid "Setup Mouse"
 msgstr "Nastavuji myš"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Enlightenment nemohl nastavit myš.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Moksha nemohl nastavit myš.\n"
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
-msgstr "Enlightenment nemohl nastavit XKB rozložení klávesnice.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
+msgstr "Moksha nemohl nastavit XKB rozložení klávesnice.\n"
 
 #: src/bin/e_main.c:982
 msgid "Setup Bindings"
 msgstr "Nastavuji vazby na akce"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
-msgstr "Enlightenmentu nemohl spustit systém vazeb na akce.\n"
+msgid "Moksha cannot set up its bindings system.\n"
+msgstr "Mokshau nemohl spustit systém vazeb na akce.\n"
 
 #: src/bin/e_main.c:993
 msgid "Setup Thumbnailer"
 msgstr "Nastavuji náhledy"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenmentu nemohl spustit systém náhledů.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
+msgstr "Mokshau nemohl spustit systém náhledů.\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
-msgstr "Enlightenmentu nemohl spustit systém cache ikon.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
+msgstr "Mokshau nemohl spustit systém cache ikon.\n"
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit XSettings.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
+msgstr "Mokshau se nepodařilo nastavit XSettings.\n"
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr "Enlightenmentu nemohl inicializovat systém aktualizace.\n"
+msgid "Moksha cannot initialize the Update system.\n"
+msgstr "Mokshau nemohl inicializovat systém aktualizace.\n"
 
 #: src/bin/e_main.c:1031
 msgid "Setup Desktop Environment"
 msgstr "Nastavuji pracovní prostředí"
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit pracovní prostředí.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
+msgstr "Mokshau se nepodařilo nastavit pracovní prostředí.\n"
 
 #: src/bin/e_main.c:1042
 msgid "Setup File Ordering"
 msgstr "Nastavuji řazení souborů"
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
-msgstr "Enlightenmentu se nepodařilo nastavit systém řazení souborů.\n"
+msgid "Moksha cannot set up its order file system.\n"
+msgstr "Mokshau se nepodařilo nastavit systém řazení souborů.\n"
 
 #: src/bin/e_main.c:1061
 msgid "Load Modules"
@@ -3418,12 +3418,12 @@ msgid ""
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
 msgstr ""
-"Spouštíte Enlightenment přímo. To není\n"
+"Spouštíte Moksha přímo. To není\n"
 "dobře. Nespouštějte prosím program \"enlightenment\"\n"
 ".Použijte \"enlightenment_start\" spouštěč.\n"
 "Postará se o nastavení proměnných prostředí, cest\n"
 "a spuštění jakýchkoli dalších potřebných služeb atd.\n"
-"před tím, než bude sám Enlightenment spuštěn.\n"
+"před tím, než bude sám Moksha spuštěn.\n"
 
 #: src/bin/e_main.c:1608
 msgid "Testing Format Support"
@@ -3431,99 +3431,99 @@ msgstr "Zkouším podporu formátů"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže vytvořit buffer canvas. Prosím "
+"Moksha zjistil, že Evas nemůže vytvořit buffer canvas. Prosím "
 "zkontrolujte,\n"
 "jestli má Evas podporu Software Buffer Enginu.\n"
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže načíst soubory SVG. Zkontrolujte, zda "
+"Moksha zjistil, že Evas nemůže načíst soubory SVG. Zkontrolujte, zda "
 "má Evas podporu načítání SVG.\n"
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže načíst soubory JPEG. Zkontrolujte, zda "
+"Moksha zjistil, že Evas nemůže načíst soubory JPEG. Zkontrolujte, zda "
 "má Evas podporu načítání JPEG.\n"
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže načíst soubory PNG. Zkontrolujte, zda "
+"Moksha zjistil, že Evas nemůže načíst soubory PNG. Zkontrolujte, zda "
 "má Evas podporu načítání PNG.\n"
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže načíst soubory EET. Zkontrolujte, zda "
+"Moksha zjistil, že Evas nemůže načíst soubory EET. Zkontrolujte, zda "
 "má Evas podporu načítání EET.\n"
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Enlightenment zjistil, že Evas nemůže nahrát písmo 'Sans'. Zkontrolujte, "
+"Moksha zjistil, že Evas nemůže nahrát písmo 'Sans'. Zkontrolujte, "
 "jestli má Evas\n"
 "podporu fontconfig a jestli fontconfig zná písmo 'Sans'.\n"
 
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
-"Enlightenment spadl brzy po startu a byl<br>restartován. Chybu způsobilo "
+"Moksha spadl brzy po startu a byl<br>restartován. Chybu způsobilo "
 "načtení modulu: %s.<br>Tento modul byl zakázán a nebude načten."
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
-msgstr "Enlightenment spadnul brzy po startu a byl restartován"
+msgid "Moksha crashed early on start and has been restarted"
+msgstr "Moksha spadnul brzy po startu a byl restartován"
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
-"Enlightenment spadl brzy po startu a byl<br>restartován. Chybu způsobilo "
+"Moksha spadl brzy po startu a byl<br>restartován. Chybu způsobilo "
 "načtení modulu: %s.<br><br>Tento modul byl zakázán a nebude načten."
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"Enlightenment spadl velmi brzy po startu a<br>byl restartován. Všechny "
+"Moksha spadl velmi brzy po startu a<br>byl restartován. Všechny "
 "moduly byly zakázány<br>a nebudou aktivovány, abyste mohli<br>zjistit svůj "
 "problém. Dialog<br>nastavení modulů vám pomůže aktivovat<br>vaše moduly "
 "znovu.\n"
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
 msgstr ""
-"Enlightenment spadl velmi brzy a<br>byl restartován. Všechny moduly byly "
+"Moksha spadl velmi brzy a<br>byl restartován. Všechny moduly byly "
 "zakázány<br>a nebudou aktivovány, abyste mohli<br>zjistit a opravit svůj "
 "problém. Dialog<br>nastavení modulů vám pomůže aktivovat<br>vaše moduly "
 "znovu."
@@ -3563,16 +3563,16 @@ msgstr "Modul neobsahuje všechny nutné funkce"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "Chyba v API modulů.<br>Chyba nahrávání modulu: %s<br>Je zapotřebí API modul "
-"s verzí minimálně %i.<br>API modul v Enlightenmentu má verzi %i.<br>"
+"s verzí minimálně %i.<br>API modul v Mokshau má verzi %i.<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Enlightenment %s modul"
+msgid "Moksha %s Module"
+msgstr "Moksha %s modul"
 
 #: src/bin/e_module.c:528
 msgid "What action should be taken with this module?<br>"
@@ -3587,11 +3587,11 @@ msgstr "Ponechat"
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
-"Následující moduly nejsou standardní moduly<br>Enlightenmentu a mohou "
+"Následující moduly nejsou standardní moduly<br>Mokshau a mohou "
 "způsobit chyby a pády.<br>Prosím, odstraňte je před hlášením jakýchkoli chyb."
 "<br><br>Seznam nestandardních modulů:<br><br>"
 
@@ -3804,8 +3804,8 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Probíhá odhlášení.<br><hilight>Prosím čekejte.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
-msgstr "Enlightenment je zaneprázdněn jiným požadavkem"
+msgid "Moksha is busy with another request"
+msgstr "Moksha je zaneprázdněn jiným požadavkem"
 
 #: src/bin/e_sys.c:585
 msgid ""
@@ -3937,8 +3937,8 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Enlightenment nemohl vytvořit proces potomka:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
+msgstr "Moksha nemohl vytvořit proces potomka:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -3947,11 +3947,11 @@ msgstr "Nelze vypnout - některá okna neodpovídají."
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Stále jsou otevřená některá okna s Lifespan zámkem. To znamená,<br>že "
-"Enlightenment si nedovolí skončit, dokud tato okna nebudou<br> zavřena nebo "
+"Moksha si nedovolí skončit, dokud tato okna nebudou<br> zavřena nebo "
 "bude jejich Lifespan zámek odstraněn.<br>"
 
 #: src/bin/e_utils.c:860
@@ -5800,16 +5800,16 @@ msgstr "Chyba při importu konfigurace vstupní metody"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
-"Enlightenment nemohl importovat nastavení.<br><br>Jste si jisti, že je to "
+"Moksha nemohl importovat nastavení.<br><br>Jste si jisti, že je to "
 "opravdusprávná konfigurace?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr "Enlightenment nemohl importovat nastavení<br>kvůli chybě kopírování."
+"Moksha was unable to import the configuration<br>due to a copy error."
+msgstr "Moksha nemohl importovat nastavení<br>kvůli chybě kopírování."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -6115,8 +6115,8 @@ msgid "Menu Settings"
 msgstr "Nastavení nabídky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
-msgstr "Výchozí Enlightenment"
+msgid "Moksha Default"
+msgstr "Výchozí Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
@@ -6254,8 +6254,8 @@ msgid "Messages"
 msgstr "Zprávy"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
-msgstr "Cesty Enlightenmentu"
+msgid "Moksha Paths"
+msgstr "Cesty Mokshau"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7121,22 +7121,22 @@ msgstr "Chyba při importu motivu"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
-"Enlightenment nemohl importovat motiv.<br><br>Jste si jistí, že je správný?"
+"Moksha nemohl importovat motiv.<br><br>Jste si jistí, že je správný?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr "Enlightenment nemohl importovat motiv<br>kvůli chybě kopírování."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
+msgstr "Moksha nemohl importovat motiv<br>kvůli chybě kopírování."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
 msgid "Application Theme Settings"
 msgstr "Nastavení motivu aplikací"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
-msgstr "Pokud možno, volit téma odpovídající Enlightenmentu"
+msgid "Match Moksha theme if possible"
+msgstr "Pokud možno, volit téma odpovídající Mokshau"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 msgid "Enable X Application Settings"
@@ -7151,8 +7151,8 @@ msgid "Enable icon theme for applications"
 msgstr "Povolit motiv ikon pro aplikace"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
-msgstr "Povolit motiv ikon pro Enlightenment"
+msgid "Enable icon theme for Moksha"
+msgstr "Povolit motiv ikon pro Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Application Theme"
@@ -7667,7 +7667,7 @@ msgstr "Paměť oken"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:134
 msgid "Remember internal dialogs"
-msgstr "Zapamatovat si interní okna Enlightenmentu"
+msgstr "Zapamatovat si interní okna Mokshau"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
 msgid "Remember file manager windows"
@@ -9318,8 +9318,8 @@ msgid "Please Wait..."
 msgstr "Prosím, čekejte..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "Vítejte v Enlightenmentu"
+msgid "Welcome to Moksha"
+msgstr "Vítejte v Mokshau"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9327,7 +9327,7 @@ msgid "Select one"
 msgstr "Vyberte"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9365,13 +9365,13 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 "Kompozitor poskytuje oknům průsvitnost,<br>efekty jako mizení, objevováni a "
 "zoom,<br>když se okna objevují a mizí.<br>Je velmi doporučováno<br>zapnout "
 "kompozitor pro lepší<br>použitelnost, ale něco to<br>stojí. Vyžaduje více od "
 "CPU<br>nebo GPU s podporou GLSL Shader<br>s dobře psanými ovladači.<br>Také "
-"zabere mezi 10-100 MB více paměti<br>pro Enlightenment."
+"zabere mezi 10-100 MB více paměti<br>pro Moksha."
 
 #: src/modules/wizard/page_150.c:117
 msgid "Enable Compositing"
@@ -9396,10 +9396,10 @@ msgstr "Kontrolovat dostupné aktualizace"
 #: src/modules/wizard/page_170.c:32
 #, fuzzy
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -9407,10 +9407,10 @@ msgid ""
 "disable this as it<br>may leave you vulnerable or having to live<br>with "
 "bugs."
 msgstr ""
-"Enlightenment umí kontrolovat dostupnost<br>nových verzí, aktualizací,"
+"Moksha umí kontrolovat dostupnost<br>nových verzí, aktualizací,"
 "<br>bezpečnostních a jiných oprav,<br>stejně jako dostupných modulů."
 "<br><br>To je velmi užitečné, protože vás uvědomí<br>o dostupných opravách, "
-"když se vyskytnou.<br>Enlightenment se připojí k enlightenment.org<br>a "
+"když se vyskytnou.<br>Moksha se připojí k enlightenment.org<br>a "
 "dotáže se stejně, jako by to učinil<br>webový prohlížec. Žádné osobní "
 "informace<br>jako uživatelské jméno, heslo ani žádné<br>soubory nebudou "
 "přeneseny. Pokud toto nechcete,<br>vypněte to prosím níže. Je velmi "
@@ -9664,7 +9664,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:350
 msgid "Cannot set relaunch for internal E dialog!"
-msgstr "Nemohu nastavit opětovné spuštění pro vnitřní dialog Enlightenmentu!"
+msgstr "Nemohu nastavit opětovné spuštění pro vnitřní dialog Mokshau!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:368
 #, fuzzy, c-format
@@ -10162,11 +10162,11 @@ msgstr "Vstup do prezentačního režimu"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Enlightenment je nyní v <b>prezentačním</b> režimu.<br>Během tohoto režimu "
+"Moksha je nyní v <b>prezentačním</b> režimu.<br>Během tohoto režimu "
 "budou spořič obrazovky, zamčení obrazovky a správa napájení zakázány."
 
 #: src/modules/notification/e_mod_main.c:73
@@ -10187,10 +10187,10 @@ msgstr "Vstup do režimu offline"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Enlightenment je nyní v režimu <b>offline</b>.<br>Během offline módu moduly "
+"Moksha je nyní v režimu <b>offline</b>.<br>Během offline módu moduly "
 "přestanou využívat sít."
 
 #: src/modules/notification/e_mod_main.c:96
@@ -10456,26 +10456,26 @@ msgstr "Použít geometrii více monitorů"
 #~ msgstr "Ovládání systému"
 
 #~ msgid ""
-#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "<title>Copyright &copy; 1999-2015, by the Moksha Development Team</"
 #~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>This software is provided as-is with no explicit or "
 #~ "implied warranty. This software is governed by licensing conditions, so "
 #~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "system.<br><br>Moksha is under <hilight>HEAVY DEVELOPMENT</> and "
 #~ "it is not stable. Many features are incomplete or even non-existent yet "
 #~ "and may have many bugs. You have been <hilight>WARNED!</>"
 #~ msgstr ""
-#~ "<title>Copyright &copy; 1999-2012, Tým vývojářů Enlightenmentu.</"
+#~ "<title>Copyright &copy; 1999-2015, Tým vývojářů Mokshau.</"
 #~ "><br><br>Doufáme, že si náš software užijete stejně, jak jsme si užívali "
 #~ "jeho vývoj.<br><br>Tento software je poskytován jak je a BEZ ZÁRUKY. "
 #~ "Tento software je chráněn licencí, více informací najdete v souborech "
-#~ "COPYING a COPYING-PLAIN ve vašem systému.<br><br>Enlightenment je stále "
+#~ "COPYING a COPYING-PLAIN ve vašem systému.<br><br>Moksha je stále "
 #~ "<hilight>VE VÝVOJI</hilight> a není stabilní. Mnoho funkcí je nehotových, "
 #~ "neexistují nebo mohou obsahovat spoustu chyb. Byli jste <hilight>VAROVÁNI!"
 #~ "</>"
 
 #~ msgid ""
-#~ "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+#~ "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr ""
 #~ "Požádali jste o ukončení Enlightnmentu.<br><br>Opravdu chcete odejít?"
 
@@ -10997,15 +10997,15 @@ msgstr "Použít geometrii více monitorů"
 #~ msgstr "Chyba při importu pozadí"
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+#~ "Moksha was unable to import the wallpaper<br>due to a copy error."
 #~ msgstr ""
-#~ "Enlightenment nemohl importovat pozadí<br>kvůli chybě při kopírování."
+#~ "Moksha nemohl importovat pozadí<br>kvůli chybě při kopírování."
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper.<br><br>Are you sure "
+#~ "Moksha was unable to import the wallpaper.<br><br>Are you sure "
 #~ "this is a valid wallpaper?"
 #~ msgstr ""
-#~ "Enlightenment nemohl importovat pozadí.<br><br>Jste si jistí, že je to "
+#~ "Moksha nemohl importovat pozadí.<br><br>Jste si jistí, že je to "
 #~ "správný soubor?"
 
 #~ msgid "Enable icon theme"
@@ -11162,67 +11162,67 @@ msgstr "Použít geometrii více monitorů"
 #~ msgstr "Tato obrazovka"
 
 #~ msgid ""
-#~ "Enlightenment cannot Initialize Ecore!\n"
+#~ "Moksha cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spustit Ecore!\n"
+#~ "Mokshau se nepodařilo spustit Ecore!\n"
 #~ "Možná došla paměť?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the File system.\n"
+#~ "Moksha cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo inicializovat souborový systém.\n"
+#~ "Mokshau se nepodařilo inicializovat souborový systém.\n"
 #~ "Možná došla paměť?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize its X connection.\n"
+#~ "Moksha cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spojit s X serverem.\n"
+#~ "Mokshau se nepodařilo spojit s X serverem.\n"
 #~ "Máte nastavenou proměnnou DISPLAY?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the connections system.\n"
+#~ "Moksha cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spustit systém spojení.\n"
+#~ "Mokshau se nepodařilo spustit systém spojení.\n"
 #~ "Možná došla paměť?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the IPC system.\n"
+#~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spustit systém IPC.\n"
+#~ "Mokshau se nepodařilo spustit systém IPC.\n"
 #~ "Možná došla paměť?"
 
 #~ msgid ""
-#~ "Enlightenment cannot setup xinerama wrapping.\n"
+#~ "Moksha cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo nastavit xinerama wrapping.\n"
+#~ "Mokshau se nepodařilo nastavit xinerama wrapping.\n"
 #~ "Tohle by se nemělo stávat."
 
 #, fuzzy
 #~ msgid ""
-#~ "Enlightenment cannot setup randr wrapping.\n"
+#~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo nastavit xinerama wrapping.\n"
+#~ "Mokshau se nepodařilo nastavit xinerama wrapping.\n"
 #~ "Tohle by se nemělo stávat."
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the Evas system.\n"
+#~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spustit systém Evas!\n"
+#~ "Mokshau se nepodařilo spustit systém Evas!\n"
 #~ "Možná došla paměť?"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up init screen.\n"
+#~ "Moksha cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Enlightenmentu se nepodařilo spustit úvodní obrazovku.\n"
+#~ "Mokshau se nepodařilo spustit úvodní obrazovku.\n"
 #~ "Možná došla paměť?"
 
 #~ msgid "Check SVG Support"
@@ -11231,8 +11231,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Setup FM"
 #~ msgstr "Nastavuji souborový manažer"
 
-#~ msgid "Enlightenment cannot set up its shelf system."
-#~ msgstr "Enlightenmentu se nepodařilo nastavit systém panelů."
+#~ msgid "Moksha cannot set up its shelf system."
+#~ msgstr "Mokshau se nepodařilo nastavit systém panelů."
 
 #~ msgid "New Application"
 #~ msgstr "Nová aplikace"
@@ -11310,23 +11310,23 @@ msgstr "Použít geometrii více monitorů"
 #~ msgstr "Vše"
 
 #~ msgid ""
-#~ "An error occurred while saving Enlightenment's<br>settings to disk. The "
+#~ "An error occurred while saving Moksha's<br>settings to disk. The "
 #~ "error could not be<br>deterimined.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
 #~ "data.<br>"
 #~ msgstr ""
-#~ "Nastala chyba při ukládání konfigurace<br>Enlightenmentu na disk. Chyba "
+#~ "Nastala chyba při ukládání konfigurace<br>Mokshau na disk. Chyba "
 #~ "nemohla být<br>určena.<br><br>Soubor, kde chyba nastala, byl:<br>"
 #~ "%s<br><br>Soubor byl smazán, aby nedošlo ke ztrátě dat.<br>"
 
 #~ msgid ""
-#~ "Enlightenment's settings files are too big<br>for the file system they "
+#~ "Moksha's settings files are too big<br>for the file system they "
 #~ "are being saved to.<br>This error is very strange as the files "
 #~ "should<br>be extremely small. Please check the settings<br>for your home "
 #~ "directory.<br><br>The file where the error occurred was:<br>"
 #~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "Konfigurační soubory Enlightenmentu jsou příliš velké<br>pro filesystém, "
+#~ "Konfigurační soubory Mokshau jsou příliš velké<br>pro filesystém, "
 #~ "na který mají být zapsány.<br>Tato chyba je velice zvláštní, protože "
 #~ "soubory mají<br>být malé. Prosím zkontrolujte nastavení<br>ve vaší "
 #~ "domovské složce.<br><br>Soubor, kde chyba nastala byl:<br>"
@@ -11334,23 +11334,23 @@ msgstr "Použít geometrii více monitorů"
 
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for "
-#~ "Enlightenment. Your disk is having troubles<br>and possibly needs "
+#~ "Moksha. Your disk is having troubles<br>and possibly needs "
 #~ "replacement.<br><br>The file where the error occurred was:<br>"
 #~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Vyskytla se výstupní chyba při zápisu konfiguračních<br>souborů "
-#~ "Enlightenmentu. Váš disk je zřejmě poškozen<br>a potřebuje vyměnit."
+#~ "Mokshau. Váš disk je zřejmě poškozen<br>a potřebuje vyměnit."
 #~ "<br><br>Poškozený soubor byl:<br>%s<br><br>Tento soubor byl smazán, aby "
 #~ "nedošlo ke ztrátě dat.<br>"
 
 #~ msgid ""
-#~ "Enlightenment cannot write its settings file<br>because it ran out of "
+#~ "Moksha cannot write its settings file<br>because it ran out of "
 #~ "space to write the file.<br>You have either run out of disk space or "
 #~ "have<br>gone over your quota limit.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
 #~ "data.<br>"
 #~ msgstr ""
-#~ "Enlightenment nemůže zapsat svůj konfigurační soubor,<br>protože je málo "
+#~ "Moksha nemůže zapsat svůj konfigurační soubor,<br>protože je málo "
 #~ "místa k zápisu.<br>Měl(a) byste uvolnit místo na disku, nebo<br>zvýšit "
 #~ "limit vaší kvóty.<br><br>Poškozený soubor byl:<br>%s<br><br>Tento soubor "
 #~ "byl smazán, aby nedošlo ke ztrátě dat.<br>"
@@ -11386,8 +11386,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Delete this Shelf"
 #~ msgstr "Smazat tento panel"
 
-#~ msgid "Lock when Enlightenment starts"
-#~ msgstr "Zamknout při startu Enlightenmentu"
+#~ msgid "Lock when Moksha starts"
+#~ msgstr "Zamknout při startu Mokshau"
 
 #~ msgid "Wallpaper Mode"
 #~ msgstr "Mód pozadí"
@@ -11426,8 +11426,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Gradient Creation Error"
 #~ msgstr "Chyba při vytváření přechodu"
 
-#~ msgid "For some reason, Enlightenment was unable to create a gradient."
-#~ msgstr "Enlightenment nemohl z nějakého důvodu vytvořit přechod."
+#~ msgid "For some reason, Moksha was unable to create a gradient."
+#~ msgstr "Moksha nemohl z nějakého důvodu vytvořit přechod."
 
 #, fuzzy
 #~ msgid "Geometry when moving or resizing"
@@ -11622,8 +11622,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Idle Cursor"
 #~ msgstr "Kurzor v klidu"
 
-#~ msgid "Use Enlightenment Cursor"
-#~ msgstr "Použít Enlightenment kurzor"
+#~ msgid "Use Moksha Cursor"
+#~ msgstr "Použít Moksha kurzor"
 
 #~ msgid "Use X Cursor"
 #~ msgstr "Použít X kurzor"
@@ -11780,7 +11780,7 @@ msgstr "Použít geometrii více monitorů"
 #~ msgstr "Sítě"
 
 #~ msgid ""
-#~ "You are trying to ask Enlightenment to remember to apply<br>properties "
+#~ "You are trying to ask Moksha to remember to apply<br>properties "
 #~ "(such as size, location, border style etc.) to<br>a window that "
 #~ "<hilight>does not have unique properties</hilight>.<br><br>This means it "
 #~ "shares Name/Class, Transience, Role etc. properties<br>with more than 1 "
@@ -11794,7 +11794,7 @@ msgstr "Použít geometrii více monitorů"
 #~ "buttons<br>and your settings will be accepted. Press <hilight>Cancel</"
 #~ "hilight> if you<br>are not sure and nothing will be affected."
 #~ msgstr ""
-#~ "Chcete ,aby si Enlightenment zapamatoval, že má aplikovat<br>nastavení "
+#~ "Chcete ,aby si Moksha zapamatoval, že má aplikovat<br>nastavení "
 #~ "(jako velikost, umístění, styl rámů oken atd.) pro<br>okno, které "
 #~ "<hilight>nemá unikátní nastavení</hilight>.<br><br>To znamená, že sdílí "
 #~ "Jméno/Třídu, průhlednost, úlohu a další nastavení s více než jedním oknem "
@@ -11955,8 +11955,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Lock Screen"
 #~ msgstr "Uzamknout obrazovku"
 
-#~ msgid "Enlightenment Configuration"
-#~ msgstr "Konfigurace Enlightenmentu"
+#~ msgid "Moksha Configuration"
+#~ msgstr "Konfigurace Mokshau"
 
 #~ msgid "Default Configuration Dialogs Mode"
 #~ msgstr "Výchozí mód konfiguračních dialogů"
@@ -12009,8 +12009,8 @@ msgstr "Použít geometrii více monitorů"
 #~ msgid "Choose Language"
 #~ msgstr "Vyberte jazyk"
 
-#~ msgid "Enlightenment cannot configure the mouse acceleration settings."
-#~ msgstr "Enlightenment nemůže konfigurovat volby akcelerace myši."
+#~ msgid "Moksha cannot configure the mouse acceleration settings."
+#~ msgstr "Moksha nemůže konfigurovat volby akcelerace myši."
 
 #~ msgid "Mouse Acceleration Settings"
 #~ msgstr "Nastavení akcelerace myši"

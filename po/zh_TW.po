@@ -1,4 +1,4 @@
-# Enlightenment 0.17 Tranditional Chinese Translation
+# Moksha 0.17 Tranditional Chinese Translation
 # This file is put in the public domain.
 # Sam Xu <joepasscheng@gmail.com>, 2005.
 # John Lee <john_lee@openmoko.com>, 2007.
@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Enlightenment DR17\n"
+"Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-07 15:25+0000\n"
-"PO-Revision-Date: 2012-12-08 23:27+1200\n"
+"PO-Revision-Date: 2015-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_TW\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2012-12-08 04:36+0000\n"
+"X-Launchpad-Export-Date: 2015-12-08 04:36+0000\n"
 "X-Generator: Poedit 1.5.4\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "關於 Enlightenment"
+msgid "About Moksha"
+msgstr "關於 Moksha"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -39,12 +39,12 @@ msgstr "關閉"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
@@ -85,8 +85,8 @@ msgid "Exit"
 msgstr "退出"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
-msgstr "您是否確定要退出Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
+msgstr "您是否確定要退出Moksha?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
 #: src/bin/e_actions.c:2340 src/bin/e_actions.c:2405 src/bin/e_actions.c:2470
@@ -683,7 +683,7 @@ msgid "Exit Now"
 msgstr "現在立即退出"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
+msgid "Moksha : Mode"
 msgstr "Emlightenment: 模式"
 
 #: src/bin/e_actions.c:3380
@@ -695,8 +695,8 @@ msgid "Offline Mode Toggle"
 msgstr "切換離線模式"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
-msgstr "Enlightenment: 模組"
+msgid "Moksha : Module"
+msgstr "Moksha: 模組"
 
 #: src/bin/e_actions.c:3390
 msgid "Enable the named module"
@@ -814,7 +814,7 @@ msgstr "取消"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -823,21 +823,21 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
+msgid "Moksha Settings Write Problems"
 msgstr ""
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
@@ -879,7 +879,7 @@ msgid ""
 "permissions to your files."
 msgstr "無法寫入該檔案。有可能是該磁碟為唯讀<br>或者您喪失了該檔案的權限。"
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "準備進行寫入時記憶體耗盡。<br>請清出記憶體。"
 
@@ -942,13 +942,13 @@ msgid "Decryption failed."
 msgstr "解碼失敗。"
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
+msgid "The error is unknown to Moksha."
 msgstr ""
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
@@ -1001,7 +1001,7 @@ msgstr "錯誤 - 沒有 PAM 支援"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr "PAM 支援並沒有被編譯進 Enlightment，<br>所以桌面鎖定功能被停用了。"
 
 #: src/bin/e_desklock.c:301
@@ -1202,22 +1202,22 @@ msgid "Run Error"
 msgstr "執行錯誤"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
+msgid "Moksha was unable to get current directory"
 msgstr ""
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Enlightenment無法切換至資料夾:<br><br>%s "
+msgid "Moksha was unable to change to directory:<br><br>%s"
+msgstr "Moksha無法切換至資料夾:<br><br>%s "
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Enlightenment無法恢復至資料夾:<br><br>%s "
+msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgstr "Moksha無法恢復至資料夾:<br><br>%s "
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr ""
 
 #: src/bin/e_exec.c:604
@@ -1227,7 +1227,7 @@ msgstr "應用程式執行錯誤"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "Enlightment 無法執行應用程式:<br><br>%s<br><br>此程式無法啟動。"
 
@@ -1886,7 +1886,7 @@ msgstr "快速鍵序列"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr "另一份 Enlightment 正在執行，無法啟動新的。\n"
 
@@ -1896,12 +1896,12 @@ msgid "Import Error"
 msgstr "輸入錯誤"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr ""
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
 
@@ -1919,8 +1919,8 @@ msgstr "圖片匯入時發生錯誤"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
-msgstr "轉檔時發生錯誤，Enlightenment 無法匯入此圖片。"
+"Moksha was unable to import the picture<br>due to conversion errors."
+msgstr "轉檔時發生錯誤，Moksha 無法匯入此圖片。"
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2185,7 +2185,7 @@ msgid "Select Border Style"
 msgstr "選擇邊框樣式"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
+msgid "Use Moksha Default Icon Preference"
 msgstr ""
 
 #: src/bin/e_int_border_menu.c:1199
@@ -2487,7 +2487,7 @@ msgstr "視窗比對屬性並不唯一"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2511,7 +2511,7 @@ msgstr "未設定比對屬性"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
@@ -2874,167 +2874,167 @@ msgid "Show on specified Desktops"
 msgstr "顯示於指定桌面"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
+msgid "Moksha cannot initialize Eina!\n"
 msgstr ""
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
+msgid "Moksha could not create a logging domain!\n"
 msgstr ""
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
+msgid "Moksha cannot initialize Eet!\n"
 msgstr ""
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
+msgid "Moksha cannot initialize Ecore!\n"
 msgstr ""
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
+msgid "Moksha cannot initialize EIO!\n"
 msgstr ""
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 無法建立 exit signal handler。\n"
+"Moksha 無法建立 exit signal handler。\n"
 "可能是記憶體不足？"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 無法建立 HUP signal handler。\n"
+"Moksha 無法建立 HUP signal handler。\n"
 "可能是記憶體不足？"
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr ""
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr ""
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr ""
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr ""
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr ""
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr ""
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
+msgid "Moksha cannot initialize Elementary!\n"
 msgstr ""
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
+msgid "Moksha cannot initialize Emotion!\n"
 msgstr ""
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Enlightenment 發現 ecore_evas 不支援 Evas Software X11 繪圖。\n"
+"Moksha 發現 ecore_evas 不支援 Evas Software X11 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software X11 繪圖引擎。"
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Enlightenment 發現 ecore_evas 不支援 Evas Software Buffer 繪圖。\n"
+"Moksha 發現 ecore_evas 不支援 Evas Software Buffer 繪圖。\n"
 "請檢查您的 Evas 和 Ecore 是否正確安裝且支援 Software Buffer 繪圖引擎。"
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
 msgstr ""
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
 msgstr ""
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment 無法初始化緊急警報系統。\n"
+"Moksha 無法初始化緊急警報系統。\n"
 "您是否已設定 DISPLAY 環境變數？"
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment 無法在你的家目錄建立目錄。\n"
+"Moksha 無法在你的家目錄建立目錄。\n"
 "可能你沒有家目錄或是磁碟已滿？"
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
+msgid "Moksha cannot set up its file registry system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
+msgid "Moksha cannot set up its config system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
 msgstr ""
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr ""
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
+msgid "Moksha cannot set up its environment.\n"
 msgstr ""
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
+msgid "Moksha cannot set up its scale system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
+msgid "Moksha cannot set up its pointer system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment 無法為找到的文件建立路徑。\n"
+"Moksha 無法為找到的文件建立路徑。\n"
 "可能是記憶體不足？"
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
+msgid "Moksha cannot set up its font system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
+msgid "Moksha cannot set up its theme system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
+msgid "Moksha cannot set up its init screen.\n"
 msgstr ""
 
 #: src/bin/e_main.c:688
@@ -3042,12 +3042,12 @@ msgid "Starting International Support"
 msgstr "開始國際化支援"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
+msgid "Moksha cannot set up its intl system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
@@ -3058,10 +3058,10 @@ msgstr "設定螢幕"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenment 在你所有的screen上建立視窗管理都失敗。\n"
+"Moksha 在你所有的screen上建立視窗管理都失敗。\n"
 "可能有另一個視窗管理程式正在執行？\n"
 
 #: src/bin/e_main.c:738
@@ -3073,7 +3073,7 @@ msgid "Setup Backlight"
 msgstr ""
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
+msgid "Moksha cannot configure the backlight.\n"
 msgstr ""
 
 #: src/bin/e_main.c:756
@@ -3081,7 +3081,7 @@ msgid "Setup Screensaver"
 msgstr "設定螢幕保護程式"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
 msgstr ""
 
 #: src/bin/e_main.c:767
@@ -3089,7 +3089,7 @@ msgid "Setup DPMS"
 msgstr "設定 DPMS"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr ""
 
 #: src/bin/e_main.c:778
@@ -3097,7 +3097,7 @@ msgid "Setup Powersave Modes"
 msgstr ""
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
 msgstr ""
 
 #: src/bin/e_main.c:789
@@ -3105,7 +3105,7 @@ msgid "Setup Desklock"
 msgstr "設定桌面鎖定"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:800
@@ -3113,7 +3113,7 @@ msgid "Setup Popups"
 msgstr "設定彈出視窗"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
+msgid "Moksha cannot set up its popup system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:816
@@ -3129,15 +3129,15 @@ msgid "Setup System Controls"
 msgstr "設定系統控制"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
-msgstr "Enlightenment 無法初始化系統命令系統。\n"
+msgid "Moksha cannot initialize the System Command system.\n"
+msgstr "Moksha 無法初始化系統命令系統。\n"
 
 #: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "設定行動"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
+msgid "Moksha cannot set up its actions system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:851
@@ -3145,7 +3145,7 @@ msgid "Setup Execution System"
 msgstr "設定執行系統"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
+msgid "Moksha cannot set up its exec system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:866
@@ -3153,15 +3153,15 @@ msgid "Setup Filemanager"
 msgstr ""
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Enlightenment 無法初始文件管理器。\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Moksha 無法初始文件管理器。\n"
 
 #: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "設定訊息系統"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
+msgid "Moksha cannot set up its msg system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:888
@@ -3169,7 +3169,7 @@ msgid "Setup DND"
 msgstr "設定拖放"
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
+msgid "Moksha cannot set up its dnd system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:899
@@ -3177,7 +3177,7 @@ msgid "Setup Grab Input Handling"
 msgstr ""
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:910
@@ -3185,7 +3185,7 @@ msgid "Setup Modules"
 msgstr "設定模組"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
+msgid "Moksha cannot set up its module system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:921
@@ -3193,7 +3193,7 @@ msgid "Setup Remembers"
 msgstr "設定記憶值"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
+msgid "Moksha cannot setup remember settings.\n"
 msgstr ""
 
 #: src/bin/e_main.c:932
@@ -3201,7 +3201,7 @@ msgid "Setup Color Classes"
 msgstr "設定顏色類別"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
+msgid "Moksha cannot set up its color class system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:943
@@ -3209,7 +3209,7 @@ msgid "Setup Gadcon"
 msgstr "設定小工具控制"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:954
@@ -3217,7 +3217,7 @@ msgid "Setup Wallpaper"
 msgstr "設定桌布"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:965
@@ -3225,11 +3225,11 @@ msgid "Setup Mouse"
 msgstr "設定滑鼠"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
 msgstr ""
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr ""
 
 #: src/bin/e_main.c:982
@@ -3237,7 +3237,7 @@ msgid "Setup Bindings"
 msgstr "設定快速鍵"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
+msgid "Moksha cannot set up its bindings system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:993
@@ -3245,19 +3245,19 @@ msgid "Setup Thumbnailer"
 msgstr "設定縮圖"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment 無法初始化縮圖系統。\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
+msgstr "Moksha 無法初始化縮圖系統。\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
+msgid "Moksha cannot initialize the Update system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1031
@@ -3265,7 +3265,7 @@ msgid "Setup Desktop Environment"
 msgstr ""
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1042
@@ -3273,7 +3273,7 @@ msgid "Setup File Ordering"
 msgstr ""
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
+msgid "Moksha cannot set up its order file system.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1061
@@ -3337,7 +3337,7 @@ msgstr "測試格式支援"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 "Enlightment 發現 Evas 無法創造緩衝畫面。請確認\n"
@@ -3345,31 +3345,31 @@ msgstr ""
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
@@ -3377,26 +3377,26 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
+msgid "Moksha crashed early on start and has been restarted"
 msgstr "Enlightment 在啟動途中當機，已經重新啟動。"
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
@@ -3404,7 +3404,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
@@ -3444,16 +3444,16 @@ msgstr "模組並末包含所有必需之功能"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "模組 API 錯誤<br>模組初始化錯誤: %s<br>要求最小的模組 API 版本號: %i。"
-"<br>Enlightenment給的模組版本化: %i。<br>"
+"<br>Moksha給的模組版本化: %i。<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Enlightenment %s 模組"
+msgid "Moksha %s Module"
+msgstr "Moksha %s 模組"
 
 #: src/bin/e_module.c:528
 msgid "What action should be taken with this module?<br>"
@@ -3468,7 +3468,7 @@ msgstr ""
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
@@ -3673,8 +3673,8 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
-msgstr "Enlightenment 仍在處理其它請求。"
+msgid "Moksha is busy with another request"
+msgstr "Moksha 仍在處理其它請求。"
 
 #: src/bin/e_sys.c:585
 msgid ""
@@ -3798,8 +3798,8 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Enlightenment 無法建立一個子程序:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
+msgstr "Moksha 無法建立一個子程序:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -3808,10 +3808,10 @@ msgstr "無法退出 － 不朽之視窗。"
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
-"部份視窗仍處於生命周期鎖定中。這意味著 Enlightenment 不允許自己退出，<br>除非"
+"部份視窗仍處於生命周期鎖定中。這意味著 Moksha 不允許自己退出，<br>除非"
 "這些視窗被關閉，或者移除生命周期鎖定。<br>"
 
 #: src/bin/e_utils.c:860
@@ -5615,14 +5615,14 @@ msgstr "匯入輸入法時發生錯誤"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
-msgstr "Enlightenment 無法匯入組態。<br><br>您是否確定這是合法的組態？"
+msgstr "Moksha 無法匯入組態。<br><br>您是否確定這是合法的組態？"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
-msgstr "複製檔案時發生錯誤，Enlightenment 無法匯入組態。"
+"Moksha was unable to import the configuration<br>due to a copy error."
+msgstr "複製檔案時發生錯誤，Moksha 無法匯入組態。"
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -5923,8 +5923,8 @@ msgid "Menu Settings"
 msgstr "選單設定"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
-msgstr "Enlightenment 預設值"
+msgid "Moksha Default"
+msgstr "Moksha 預設值"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
@@ -6062,8 +6062,8 @@ msgid "Messages"
 msgstr "訊息"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
-msgstr "Enlightenment 路徑"
+msgid "Moksha Paths"
+msgstr "Moksha 路徑"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -6923,14 +6923,14 @@ msgstr "匯入佈景主題時發生錯誤"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
-"Enlightenment 無法匯入此佈景主題。<br><br>您是否確定這是合法的佈景主題？"
+"Moksha 無法匯入此佈景主題。<br><br>您是否確定這是合法的佈景主題？"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
-msgstr "複製檔案時發生錯誤，Enlightenment 無法匯入此佈景主題。"
+msgid "Moksha was unable to import the theme<br>due to a copy error."
+msgstr "複製檔案時發生錯誤，Moksha 無法匯入此佈景主題。"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
 #, fuzzy
@@ -6938,7 +6938,7 @@ msgid "Application Theme Settings"
 msgstr "GTK 應用程式佈景主題設定"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
+msgid "Match Moksha theme if possible"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
@@ -6956,7 +6956,7 @@ msgid "Enable icon theme for applications"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
+msgid "Enable icon theme for Moksha"
 msgstr ""
 
 #: src/modules/conf_theme/e_mod_main.c:237
@@ -9093,8 +9093,8 @@ msgid "Please Wait..."
 msgstr "請稍候..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "歡迎使用Enlightenment"
+msgid "Welcome to Moksha"
+msgstr "歡迎使用Moksha"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9102,7 +9102,7 @@ msgid "Select one"
 msgstr ""
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9140,7 +9140,7 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 
 #: src/modules/wizard/page_150.c:117
@@ -9165,10 +9165,10 @@ msgstr "檢測是否有可用的更新檔"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -9904,7 +9904,7 @@ msgstr "進入展示模式"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
@@ -9925,7 +9925,7 @@ msgstr "進入離線模式"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
 

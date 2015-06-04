@@ -1,5 +1,5 @@
 # translation of hu.po to Hungarian
-# Copyright (C) 2008-2009 Enlightenment development team
+# Copyright (C) 2008-2009 Moksha development team
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Lisovszki Sándor <lisovszki@gmail.com>, 2008-2009.
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "Az Enlightenmentrõl"
+msgid "About Moksha"
+msgstr "Az Moksharõl"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -38,12 +38,12 @@ msgstr "Bezárás"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
@@ -89,7 +89,7 @@ msgstr "Kilépés"
 
 #: src/bin/e_actions.c:2124
 #, fuzzy
-msgid "Are you sure you want to exit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
 msgstr "Tényleg ki akarsz lépni?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
@@ -718,8 +718,8 @@ msgid "Exit Now"
 msgstr "Kilépés most"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
-msgstr "Enlightenment: Mód"
+msgid "Moksha : Mode"
+msgstr "Moksha: Mód"
 
 #: src/bin/e_actions.c:3380
 msgid "Presentation Mode Toggle"
@@ -731,13 +731,13 @@ msgstr "Offline mód"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
 #, fuzzy
-msgid "Enlightenment : Module"
-msgstr "Enlightenment: Mód"
+msgid "Moksha : Module"
+msgstr "Moksha: Mód"
 
 #: src/bin/e_actions.c:3390
 #, fuzzy
 msgid "Enable the named module"
-msgstr "Enlightenment %s modul"
+msgstr "Moksha %s modul"
 
 #: src/bin/e_actions.c:3394
 msgid "Disable the named module"
@@ -857,7 +857,7 @@ msgstr "Mégsem"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -872,30 +872,30 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"A beállításokat tartalmazó fájlok verziója újabb, mint<br>Az Enlightenmenté. "
+"A beállításokat tartalmazó fájlok verziója újabb, mint<br>Az Mokshaé. "
 "Ennek nem kellene így lennie, hacsak nem<br>váltottál vissza egy elõzõ "
 "verzióra, vagy egy újabb verzión ké-<br>szült beállításokat át nem másoltad. "
 "Ez így nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
-msgstr "Enlightenment konfiguráció írási problémák"
+msgid "Moksha Settings Write Problems"
+msgstr "Moksha konfiguráció írási problémák"
 
 #: src/bin/e_config.c:1469
 #, fuzzy, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
-"Az Enlightenment konfigurációs fájl az írás közben <br>váratlanul "
+"Az Moksha konfigurációs fájl az írás közben <br>váratlanul "
 "megszakadt. Ez nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>"
 "%s<br><br> A fájl törölve lett.<br>"
 
@@ -941,7 +941,7 @@ msgstr ""
 "A fájl nem írható. Talán a lemez csak olvasható<br>vagy elveszett "
 "engedélyeket a fájlokat."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
@@ -1022,17 +1022,17 @@ msgstr "Felfüggesztés nem sikerült."
 
 #: src/bin/e_config.c:2072
 #, fuzzy
-msgid "The error is unknown to Enlightenment."
-msgstr "Üdvözlünk az Enlightenmentben"
+msgid "The error is unknown to Moksha."
+msgstr "Üdvözlünk az Mokshaben"
 
 #: src/bin/e_config.c:2094
 #, fuzzy, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"Az Enlightenment konfigurációs fájl az írás közben <br>váratlanul "
+"Az Moksha konfigurációs fájl az írás közben <br>váratlanul "
 "megszakadt. Ez nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>"
 "%s<br><br> A fájl törölve lett.<br>"
 
@@ -1085,7 +1085,7 @@ msgstr "Hiba - nincs PAM támogatás"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 "Nem lett PAM támogatás beleépítve az ENlightenmentbe, ezért az <br>asztal "
 "zárolás nem engedélyezett."
@@ -1301,27 +1301,27 @@ msgstr "Futási hiba"
 
 #: src/bin/e_exec.c:401
 #, fuzzy
-msgid "Enlightenment was unable to get current directory"
+msgid "Moksha was unable to get current directory"
 msgstr ""
-"Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
+"Az Moksha nem képes importálni a képet, <br> átalakítási hibák miatt."
 
 #: src/bin/e_exec.c:409
 #, fuzzy, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
+msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr ""
-"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+"Az Moksha képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:420
 #, fuzzy, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr ""
-"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+"Az Moksha képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:469
 #, fuzzy, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr ""
-"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+"Az Moksha képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:604
 msgid "Application run error"
@@ -1330,7 +1330,7 @@ msgstr "Hiba az alkalmazás futtatásakor"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr "Az E17 nem tudta elindítani a következõ programot:<br><br>%s<br><br>"
 
@@ -2026,10 +2026,10 @@ msgstr "Billentyûkombináció sorrend"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Egy előző Enlightenment folyamat még aktív\n"
+"Egy előző Moksha folyamat még aktív\n"
 "ezen a képernyőn. Indítás megszakítása.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -2040,14 +2040,14 @@ msgstr "Téma importálás hiba"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
 #, fuzzy
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr ""
-"Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
+"Az Moksha nem tudja importálni a témát, <br> másolási hiba miatt."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 #, fuzzy
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
 "Az Enightenment nem tudja ezt a témát importálni. <br><br>Biztos, hogy ez "
@@ -2068,9 +2068,9 @@ msgstr "Kép importálás hiba"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
+"Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
-"Az Enlightenment nem képes importálni a képet, <br> átalakítási hibák miatt."
+"Az Moksha nem képes importálni a képet, <br> átalakítási hibák miatt."
 
 #: src/bin/e_import_config_dialog.c:459
 #, fuzzy
@@ -2355,7 +2355,7 @@ msgstr "Keret stílus kiválasztása"
 
 #: src/bin/e_int_border_menu.c:1191
 #, fuzzy
-msgid "Use Enlightenment Default Icon Preference"
+msgid "Use Moksha Default Icon Preference"
 msgstr "használd az alapértelmezett E17 ikon beállítást"
 
 #: src/bin/e_int_border_menu.c:1199
@@ -2661,7 +2661,7 @@ msgstr "Az ablak tulajdonságai nem egyediek"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2672,7 +2672,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Arra kéred az Enlightenmentet, hogy alkalmazza a beállításokat<br>(mint pl. "
+"Arra kéred az Mokshaet, hogy alkalmazza a beállításokat<br>(mint pl. "
 "méret, hely, keret stílus) egy olyan ablakra,<br>amelynek <hilight>nincsenek "
 "egyedi tulajdonságai</hilight>.<br><br>Ez annyit jelent, hogy az ablak "
 "tulajdonságai átszállnak a többi<br>ablakra is, és az emlékezõ beállítások "
@@ -2688,12 +2688,12 @@ msgstr "Nincs illeszkedõ tulajdonságtábla"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Azt kéred az Enlightenmenttõl, hogy emlékezzen egy ablak<br>beállításaira "
+"Azt kéred az Mokshatõl, hogy emlékezzen egy ablak<br>beállításaira "
 "anélkül, hogy megadnád, mi alapján kéne emlékeznie arra.<br><br>Legalább egy "
 "szempontot meg kell adnod."
 
@@ -3070,32 +3070,32 @@ msgstr "Mutrasd a kiválasztott asztalon"
 
 #: src/bin/e_main.c:287
 #, fuzzy
-msgid "Enlightenment cannot initialize Eina!\n"
+msgid "Moksha cannot initialize Eina!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:293
 #, fuzzy
-msgid "Enlightenment could not create a logging domain!\n"
+msgid "Moksha could not create a logging domain!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:340
 #, fuzzy
-msgid "Enlightenment cannot initialize Eet!\n"
+msgid "Moksha cannot initialize Eet!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:349
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore!\n"
+msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:358
 #, fuzzy
-msgid "Enlightenment cannot initialize EIO!\n"
+msgid "Moksha cannot initialize EIO!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Az E17 nem tudta betölteni a kilépési signál kezelõt!\n"
@@ -3103,7 +3103,7 @@ msgstr ""
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Az E17 nem tudta betölteni a HUP szignál kezelõt!\n"
@@ -3112,7 +3112,7 @@ msgstr ""
 #: src/bin/e_main.c:384
 #, fuzzy
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Az E17 nem tudta betölteni a HUP szignál kezelõt!\n"
@@ -3120,47 +3120,47 @@ msgstr ""
 
 #: src/bin/e_main.c:393
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_File!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:402
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:411
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:422
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_X!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:434
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:444
 #, fuzzy
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:454
 #, fuzzy
-msgid "Enlightenment cannot initialize Elementary!\n"
+msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:465
 #, fuzzy
-msgid "Enlightenment cannot initialize Emotion!\n"
+msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
@@ -3170,7 +3170,7 @@ msgstr ""
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
@@ -3180,17 +3180,17 @@ msgstr ""
 
 #: src/bin/e_main.c:498
 #, fuzzy
-msgid "Enlightenment cannot initialize Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:510
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
 "Az E17 nem tudta elindítani a vészhelyzeti figyelmeztetõ rendszert!\n"
@@ -3198,7 +3198,7 @@ msgstr ""
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "Az E17 nem tudta létrehozni a könyvtárakat a könyvtáradban!\n"
@@ -3206,42 +3206,42 @@ msgstr ""
 
 #: src/bin/e_main.c:549
 #, fuzzy
-msgid "Enlightenment cannot set up its file registry system.\n"
+msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Az E17 nem tudta beállítani konfigurációs rendszert."
 
 #: src/bin/e_main.c:558
 #, fuzzy
-msgid "Enlightenment cannot set up its config system.\n"
+msgid "Moksha cannot set up its config system.\n"
 msgstr "Az E17 nem tudta beállítani konfigurációs rendszert."
 
 #: src/bin/e_main.c:571
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:580
 #, fuzzy
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:589
 #, fuzzy
-msgid "Enlightenment cannot set up its environment.\n"
+msgid "Moksha cannot set up its environment.\n"
 msgstr "Az E17 nem tudta elindítani a témázó-rendszert."
 
 #: src/bin/e_main.c:605
 #, fuzzy
-msgid "Enlightenment cannot set up its scale system.\n"
+msgid "Moksha cannot set up its scale system.\n"
 msgstr "Az E17 nem tudja elindítani a héj rendszert."
 
 #: src/bin/e_main.c:614
 #, fuzzy
-msgid "Enlightenment cannot set up its pointer system.\n"
+msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Az E17 nem tudta felállítani az intl rendszerét."
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Az E17 nem tudta felállítani a fájlok elérési útjait.\n"
@@ -3249,17 +3249,17 @@ msgstr ""
 
 #: src/bin/e_main.c:640
 #, fuzzy
-msgid "Enlightenment cannot set up its font system.\n"
+msgid "Moksha cannot set up its font system.\n"
 msgstr "Az E17 nem tudta elindítani a betütípus-rendszert."
 
 #: src/bin/e_main.c:657
 #, fuzzy
-msgid "Enlightenment cannot set up its theme system.\n"
+msgid "Moksha cannot set up its theme system.\n"
 msgstr "Az E17 nem tudta elindítani a témázó-rendszert."
 
 #: src/bin/e_main.c:673
 #, fuzzy
-msgid "Enlightenment cannot set up its init screen.\n"
+msgid "Moksha cannot set up its init screen.\n"
 msgstr "Az E17 nem tudta felállítani az intl rendszerét."
 
 #: src/bin/e_main.c:688
@@ -3268,13 +3268,13 @@ msgstr "Nemzetközi támogatás indítása"
 
 #: src/bin/e_main.c:692
 #, fuzzy
-msgid "Enlightenment cannot set up its intl system.\n"
+msgid "Moksha cannot set up its intl system.\n"
 msgstr "Az E17 nem tudta felállítani az intl rendszerét."
 
 #: src/bin/e_main.c:701
 #, fuzzy
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
@@ -3287,7 +3287,7 @@ msgstr "képernyők beállítása"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Az E17 nem tudta elindítani az ablakkezelőt. Lehet, hogy fut már egy másik\n"
@@ -3305,7 +3305,7 @@ msgstr "Billentyûkombinációk"
 
 #: src/bin/e_main.c:749
 #, fuzzy
-msgid "Enlightenment cannot configure the backlight.\n"
+msgid "Moksha cannot configure the backlight.\n"
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
 #: src/bin/e_main.c:756
@@ -3314,7 +3314,7 @@ msgstr "Képernyőkímélő beállítása"
 
 #: src/bin/e_main.c:760
 #, fuzzy
-msgid "Enlightenment cannot configure the X screensaver.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Az E17 nem tudta elindítani az X képernyővédőt!"
 
 #: src/bin/e_main.c:767
@@ -3323,7 +3323,7 @@ msgstr "DPMS Beállítás"
 
 #: src/bin/e_main.c:771
 #, fuzzy
-msgid "Enlightenment cannot configure the DPMS settings.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
 #: src/bin/e_main.c:778
@@ -3333,7 +3333,7 @@ msgstr "Energiatakarékos üzemmódok beállítása"
 
 #: src/bin/e_main.c:782
 #, fuzzy
-msgid "Enlightenment cannot set up its powersave modes.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Az e17 nem tudta felállítani az energiatakarékossági rendszert."
 
 #: src/bin/e_main.c:789
@@ -3342,7 +3342,7 @@ msgstr "Asztal zárolás beállítása"
 
 #: src/bin/e_main.c:793
 #, fuzzy
-msgid "Enlightenment cannot set up its desk locking system.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Az E17 nem tudta felállítani az asztalzár-rendszert."
 
 #: src/bin/e_main.c:800
@@ -3351,7 +3351,7 @@ msgstr "felugró ablakok beállítása"
 
 #: src/bin/e_main.c:804
 #, fuzzy
-msgid "Enlightenment cannot set up its popup system.\n"
+msgid "Moksha cannot set up its popup system.\n"
 msgstr "Az E17 nem tudta beállítani a felugró-ablak rendszert."
 
 #: src/bin/e_main.c:816
@@ -3369,7 +3369,7 @@ msgid "Setup System Controls"
 msgstr "Rendszer felügyeletek beállítása"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
 #: src/bin/e_main.c:840
@@ -3378,7 +3378,7 @@ msgstr "Folyamatok beállítása"
 
 #: src/bin/e_main.c:844
 #, fuzzy
-msgid "Enlightenment cannot set up its actions system.\n"
+msgid "Moksha cannot set up its actions system.\n"
 msgstr "Az E17 nem tudta elindítani az akció-rendszerét."
 
 #: src/bin/e_main.c:851
@@ -3387,7 +3387,7 @@ msgstr "Végrehajtó rendszer beállítása"
 
 #: src/bin/e_main.c:855
 #, fuzzy
-msgid "Enlightenment cannot set up its exec system.\n"
+msgid "Moksha cannot set up its exec system.\n"
 msgstr "Az E17 nem tudta elindítani a exec rendszert."
 
 #: src/bin/e_main.c:866
@@ -3396,7 +3396,7 @@ msgid "Setup Filemanager"
 msgstr "Fájlkezelõ"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
+msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
 #: src/bin/e_main.c:877
@@ -3405,7 +3405,7 @@ msgstr "Üzenet rendszer beállítása"
 
 #: src/bin/e_main.c:881
 #, fuzzy
-msgid "Enlightenment cannot set up its msg system.\n"
+msgid "Moksha cannot set up its msg system.\n"
 msgstr "Az E17 nem tudta felállítani az üzenet-rendszert."
 
 #: src/bin/e_main.c:888
@@ -3414,7 +3414,7 @@ msgstr "FÉV beállítása"
 
 #: src/bin/e_main.c:892
 #, fuzzy
-msgid "Enlightenment cannot set up its dnd system.\n"
+msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Az E17 nem tudta felállítani a fogd-és-vidd rendszert."
 
 #: src/bin/e_main.c:899
@@ -3423,7 +3423,7 @@ msgstr "Grab Input kezelés beállítása"
 
 #: src/bin/e_main.c:903
 #, fuzzy
-msgid "Enlightenment cannot set up its grab input handling system.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Az E17 nem tudta elindítani a beviteli mozdulat-kezelõt."
 
 #: src/bin/e_main.c:910
@@ -3432,7 +3432,7 @@ msgstr "Modulok beállítása"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
 #, fuzzy
-msgid "Enlightenment cannot set up its module system.\n"
+msgid "Moksha cannot set up its module system.\n"
 msgstr "Az E17 nem tudta elindítani a modul rendszert."
 
 #: src/bin/e_main.c:921
@@ -3441,7 +3441,7 @@ msgstr "Emlékezések beállítása"
 
 #: src/bin/e_main.c:925
 #, fuzzy
-msgid "Enlightenment cannot setup remember settings.\n"
+msgid "Moksha cannot setup remember settings.\n"
 msgstr "Az E17 nem tudta felállítani az emlékezési beállításokat."
 
 #: src/bin/e_main.c:932
@@ -3450,7 +3450,7 @@ msgstr "szín osztályok beállítása"
 
 #: src/bin/e_main.c:936
 #, fuzzy
-msgid "Enlightenment cannot set up its color class system.\n"
+msgid "Moksha cannot set up its color class system.\n"
 msgstr "Az E17 nem tudta elindítani a szín-osztály rendszert."
 
 #: src/bin/e_main.c:943
@@ -3459,7 +3459,7 @@ msgstr "Modulkezelő beállítása"
 
 #: src/bin/e_main.c:947
 #, fuzzy
-msgid "Enlightenment cannot set up its gadget control system.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Az E17 nem tudta elindítani a modul kezelõ rendszert."
 
 #: src/bin/e_main.c:954
@@ -3468,7 +3468,7 @@ msgstr "Háttérkép beállítása"
 
 #: src/bin/e_main.c:958
 #, fuzzy
-msgid "Enlightenment cannot set up its desktop background system.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Az E17 nem tudta beállítani az asztal háttér-rendszert."
 
 #: src/bin/e_main.c:965
@@ -3477,12 +3477,12 @@ msgstr "Egér beállítása"
 
 #: src/bin/e_main.c:969
 #, fuzzy
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Az Enlightenment nem tudja beállítani az egér opciókat."
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Az Moksha nem tudja beállítani az egér opciókat."
 
 #: src/bin/e_main.c:976
 #, fuzzy
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Az E17 nem tudta elindítani a fájl utasítás rendszert."
 
 #: src/bin/e_main.c:982
@@ -3491,7 +3491,7 @@ msgstr "Billentyûkombinációk"
 
 #: src/bin/e_main.c:986
 #, fuzzy
-msgid "Enlightenment cannot set up its bindings system.\n"
+msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Az e17 nem tudta felállítani a kombinációs rendszert."
 
 #: src/bin/e_main.c:993
@@ -3499,22 +3499,22 @@ msgid "Setup Thumbnailer"
 msgstr "Előkép beállítása"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
 #: src/bin/e_main.c:1006
 #, fuzzy
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
 #: src/bin/e_main.c:1015
 #, fuzzy
-msgid "Enlightenment cannot initialize the XSettings system.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
 #: src/bin/e_main.c:1024
 #, fuzzy
-msgid "Enlightenment cannot initialize the Update system.\n"
+msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Az E17 nem tudta elindítani a elõkép-generátort!\n"
 
 #: src/bin/e_main.c:1031
@@ -3524,7 +3524,7 @@ msgstr "Beállítás Desktop Environment"
 
 #: src/bin/e_main.c:1035
 #, fuzzy
-msgid "Enlightenment cannot initialize its desktop environment.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Az E17 nem tudta elindítani a témázó-rendszert."
 
 #: src/bin/e_main.c:1042
@@ -3534,7 +3534,7 @@ msgstr "Telepítőfájl megrendelése"
 
 #: src/bin/e_main.c:1046
 #, fuzzy
-msgid "Enlightenment cannot set up its order file system.\n"
+msgid "Moksha cannot set up its order file system.\n"
 msgstr "Az E17 nem tudta elindítani a fájl utasítás rendszert."
 
 #: src/bin/e_main.c:1061
@@ -3598,7 +3598,7 @@ msgstr "Formátum támogatás tesztelése"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
 "Az Evas nem tudja megcsinálni a puffer vásznat. Kérlek ellenõrizd\n"
@@ -3607,7 +3607,7 @@ msgstr ""
 #: src/bin/e_main.c:1624
 #, fuzzy
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 "Az Evas nem tudja betölteni a PNG fájlokat. Kérlek ellenõrizd,\n"
@@ -3616,7 +3616,7 @@ msgstr ""
 #: src/bin/e_main.c:1634
 #, fuzzy
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 "Az Evas nem tudja betölteni a JPEG fájlokat. Kérlek ellenõrizd,\n"
@@ -3625,7 +3625,7 @@ msgstr ""
 #: src/bin/e_main.c:1644
 #, fuzzy
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 "Az Evas nem tudja betölteni a PNG fájlokat. Kérlek ellenõrizd,\n"
@@ -3634,7 +3634,7 @@ msgstr ""
 #: src/bin/e_main.c:1654
 #, fuzzy
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 "Az Evas nem tudja betölteni a EET fájlokat. Kérlek ellenõrizd,\n"
@@ -3642,7 +3642,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
@@ -3653,19 +3653,19 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
+msgid "Moksha crashed early on start and has been restarted"
 msgstr "Az E17 sérült már az indítás elején, ezért újra lett indítva."
 
 #: src/bin/e_main.c:1882
 #, fuzzy, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
@@ -3677,7 +3677,7 @@ msgstr ""
 #: src/bin/e_main.c:1891
 #, fuzzy
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
@@ -3689,7 +3689,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
@@ -3734,16 +3734,16 @@ msgstr "A modul nem tartalmazza az összes szükséges funkciót"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "Modul API hiba<br>Hiba a modul betöltésekor: %s<br> Ennek a modulnak "
-"legalább %i verziójú api kell<br>Az Enlightenment API verziója: %i<br>"
+"legalább %i verziójú api kell<br>Az Moksha API verziója: %i<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Enlightenment %s modul"
+msgid "Moksha %s Module"
+msgstr "Moksha %s modul"
 
 #: src/bin/e_module.c:528
 #, fuzzy
@@ -3759,7 +3759,7 @@ msgstr ""
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
@@ -3984,7 +3984,7 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Kijelentkezés folyamatban.<br><hilight>Kérlek várj.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
+msgid "Moksha is busy with another request"
 msgstr "Az E17 foglalt egy másik kérés által"
 
 #: src/bin/e_sys.c:585
@@ -4121,9 +4121,9 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
-"Az Enlightenment képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
+"Az Moksha képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -4132,11 +4132,11 @@ msgstr "Nem tudok kilépni - halhatatlan ablakok"
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Néhány ablak meg van nyitva Élettartam zárral. Ez azt jelenti, hogy<br>az "
-"Enlightenment nem tud addig kilépni, amíg ezek az ablakok nyitva "
+"Moksha nem tud addig kilépni, amíg ezek az ablakok nyitva "
 "vannak<br>vagy az Élettartam zár el nem lett távolítva<br>"
 
 #: src/bin/e_utils.c:860
@@ -6090,7 +6090,7 @@ msgstr "Beviteli mód beállítás importálás hiba"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
 "Az E17 nem tudja importálni a beállítást.<br><br> Biztos vagy benne, hogy ez "
@@ -6098,7 +6098,7 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+"Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "Az E17 nem tudja importálni a beállítást<br> egy másolási hiba miatt."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
@@ -6425,8 +6425,8 @@ msgstr "Menü beállítások"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
 #, fuzzy
-msgid "Enlightenment Default"
-msgstr "Enlightenment"
+msgid "Moksha Default"
+msgstr "Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 #, fuzzy
@@ -6575,8 +6575,8 @@ msgstr "Üzenetek"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 #, fuzzy
-msgid "Enlightenment Paths"
-msgstr "Enlightenment"
+msgid "Moksha Paths"
+msgstr "Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7492,16 +7492,16 @@ msgstr "Téma importálás hiba"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
 "Az Enightenment nem tudja ezt a témát importálni. <br><br>Biztos, hogy ez "
 "egy érvényes téma?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
-"Az Enlightenment nem tudja importálni a témát, <br> másolási hiba miatt."
+"Az Moksha nem tudja importálni a témát, <br> másolási hiba miatt."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
 #, fuzzy
@@ -7510,8 +7510,8 @@ msgstr "Ikon téma beállítások"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
 #, fuzzy
-msgid "Match Enlightenment theme if possible"
-msgstr "Enlightenment %s modul"
+msgid "Match Moksha theme if possible"
+msgstr "Moksha %s modul"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 #, fuzzy
@@ -7530,8 +7530,8 @@ msgstr "Használja ikontémát alkalmazásokhoz"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
 #, fuzzy
-msgid "Enable icon theme for Enlightenment"
-msgstr "Üdvözlünk az Enlightenmentben"
+msgid "Enable icon theme for Moksha"
+msgstr "Üdvözlünk az Mokshaben"
 
 #: src/modules/conf_theme/e_mod_main.c:237
 #, fuzzy
@@ -9351,7 +9351,7 @@ msgstr "Függőleges"
 #: src/modules/winlist/e_int_config_winlist.c:300
 #, fuzzy
 msgid "Alignment"
-msgstr "Enlightenment"
+msgstr "Moksha"
 
 #: src/modules/winlist/e_mod_main.c:28
 #, fuzzy
@@ -9892,8 +9892,8 @@ msgid "Please Wait..."
 msgstr ""
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "Üdvözlünk az Enlightenmentben"
+msgid "Welcome to Moksha"
+msgstr "Üdvözlünk az Mokshaben"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9901,7 +9901,7 @@ msgid "Select one"
 msgstr "Válassz egy"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9943,7 +9943,7 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 
 #: src/modules/wizard/page_150.c:117
@@ -9970,10 +9970,10 @@ msgstr ""
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -10753,11 +10753,11 @@ msgstr "Belépés a bemutató módba"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Enlightenment <b>bemutató</b> módban van.<br>A bemutató mód alatt a "
+"Moksha <b>bemutató</b> módban van.<br>A bemutató mód alatt a "
 "képernyővédő, az asztal lezárása és a kilépés tiltva amíg meg nem szakítod."
 
 #: src/modules/notification/e_mod_main.c:73
@@ -10778,10 +10778,10 @@ msgstr "Belépés kapcsolat nélküli módba"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Az Enlightenment <b>kapcsolat nélküli<b> módban fut.<br>Ez alatt azok a "
+"Az Moksha <b>kapcsolat nélküli<b> módban fut.<br>Ez alatt azok a "
 "modulok, amelyek a netet használják, le lesznek állítva."
 
 #: src/modules/notification/e_mod_main.c:96
@@ -11065,14 +11065,14 @@ msgstr ""
 #~ msgstr "Rendszer felügyelet"
 
 #~ msgid ""
-#~ "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+#~ "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr ""
-#~ "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
+#~ "Az Mokshabõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 #~ "akarod?"
 
 #~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 #~ msgstr ""
-#~ "Az Enlightenmentbõl való kilépést választottad.<br><br>Biztos, hogy ezt "
+#~ "Az Mokshabõl való kilépést választottad.<br><br>Biztos, hogy ezt "
 #~ "akarod?"
 
 #, fuzzy
@@ -11216,21 +11216,21 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "<title>Copyright &copy; 1999-2015, by the Moksha Development Team</"
 #~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>This software is provided as-is with no explicit or "
 #~ "implied warranty. This software is governed by licensing conditions, so "
 #~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "system.<br><br>Moksha is under <hilight>HEAVY DEVELOPMENT</> and "
 #~ "it is not stable. Many features are incomplete or even non-existent yet "
 #~ "and may have many bugs. You have been <hilight>WARNED!</>"
 #~ msgstr ""
-#~ "Copyright &copy; 1999-2009, az Enlightenment fejlesztői csapat. Minden "
+#~ "Copyright &copy; 1999-2009, az Moksha fejlesztői csapat. Minden "
 #~ "jog fenntartva.<br><br>Reméljük ugyanannyira élvezed a szoftver "
 #~ "használatát, mint ahogy mi élveztük a megírását.<br><br>Ez a szoftver "
 #~ "mindenféle garancia nélkül került fel. A szoftver el lett látva liszensz "
 #~ "feltételekkel, ezért kérlek olvasd el a Másolásra és az ehhez tartozó "
-#~ "feltelepített fájlokat.<br><br>Az Enlightenment <hilight>KEMÉNY "
+#~ "feltelepített fájlokat.<br><br>Az Moksha <hilight>KEMÉNY "
 #~ "FEJLESZTÉS</hilight> áll, és nem stabil. Néhány képesség nem működik, "
 #~ "vagy még be sem került, esetleg hibás. <hilight>FIGYELMEZTETVE LETTÉL!</"
 #~ "hilight>"
@@ -11746,16 +11746,16 @@ msgstr ""
 #~ msgstr "Háttérkép importálás hiba"
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+#~ "Moksha was unable to import the wallpaper<br>due to a copy error."
 #~ msgstr ""
-#~ "Az Enlightenment nem tudja a háttérképet importálni, <br>egy másolási "
+#~ "Az Moksha nem tudja a háttérképet importálni, <br>egy másolási "
 #~ "hiba miatt."
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper.<br><br>Are you sure "
+#~ "Moksha was unable to import the wallpaper.<br><br>Are you sure "
 #~ "this is a valid wallpaper?"
 #~ msgstr ""
-#~ "Az Enlightenment nem tudja importálni a háttérképet. <br><br>Biztos vagy "
+#~ "Az Moksha nem tudja importálni a háttérképet. <br><br>Biztos vagy "
 #~ "benne, hogy ez egy érvényes háttérkép?"
 
 #, fuzzy
@@ -11906,42 +11906,42 @@ msgstr ""
 #~ msgstr "Modul áthelyezésének/átméretezésének leállítása"
 
 #~ msgid ""
-#~ "Enlightenment cannot Initialize Ecore!\n"
+#~ "Moksha cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta elindítani az Ecore-t!\n"
 #~ "Talán kevés a memória?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the File system.\n"
+#~ "Moksha cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta betölteni a fájlrendszert.\n"
 #~ "Talán kevés a memória?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize its X connection.\n"
+#~ "Moksha cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
 #~ "Az E17 nem tudott csatlakozni az X szerverhez.\n"
 #~ "Be van állítva a DISPLAY változó?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the connections system.\n"
+#~ "Moksha cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta elindítani a kapcsolódási rendszert!\n"
 #~ "Talán kevés a memória?"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the IPC system.\n"
+#~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta elindítani az IPC rendszert!\n"
 #~ "Talán kevés a memória?"
 
 #~ msgid ""
-#~ "Enlightenment cannot setup xinerama wrapping.\n"
+#~ "Moksha cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
 #~ "Az E17 nem tudta beállítani a xinerama keretrendszert!\n"
@@ -11949,21 +11949,21 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "Enlightenment cannot setup randr wrapping.\n"
+#~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
 #~ "Az E17 nem tudta beállítani a xinerama keretrendszert!\n"
 #~ "Ennek nem kéne megtörténnie"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the Evas system.\n"
+#~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta elindítani az Evas-t!\n"
 #~ "Talán kevés a memória?"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up init screen.\n"
+#~ "Moksha cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
 #~ "Az E17 nem tudta felállítani az induló képernyõt.\n"
@@ -11972,7 +11972,7 @@ msgstr ""
 #~ msgid "Setup FM"
 #~ msgstr "FM beállítása"
 
-#~ msgid "Enlightenment cannot set up its shelf system."
+#~ msgid "Moksha cannot set up its shelf system."
 #~ msgstr "Az E17 nem tudta elindítani a polc-rendszert."
 
 #~ msgid "New Application"
@@ -12045,23 +12045,23 @@ msgstr ""
 #~ "kellemetlenségekért."
 
 #~ msgid ""
-#~ "An error occurred while saving Enlightenment's<br>settings to disk. The "
+#~ "An error occurred while saving Moksha's<br>settings to disk. The "
 #~ "error could not be<br>deterimined.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
 #~ "data.<br>"
 #~ msgstr ""
-#~ "Hiba történt az Enlightenment <br>beállításainak a lemezre mentése "
+#~ "Hiba történt az Moksha <br>beállításainak a lemezre mentése "
 #~ "közben. A hiba nem hozható helyre<br>.<br><br>A fájl ahol a hiba "
 #~ "keletkezett:<br>%s<br> A fájl törlésre kerül.<br>"
 
 #~ msgid ""
-#~ "Enlightenment's settings files are too big<br>for the file system they "
+#~ "Moksha's settings files are too big<br>for the file system they "
 #~ "are being saved to.<br>This error is very strange as the files "
 #~ "should<br>be extremely small. Please check the settings<br>for your home "
 #~ "directory.<br><br>The file where the error occurred was:<br>"
 #~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "Az Enlightenment konfigurációs fájlja túl nagy ahhoz a "
+#~ "Az Moksha konfigurációs fájlja túl nagy ahhoz a "
 #~ "<br>fájlrendszerhez képest, ahová mentve lett.<br>. Ez a hiba nagyon "
 #~ "furcsa, mert a fájloknak <br> sokkal kissebnek kell lennie. Kérlek "
 #~ "ellenőrizd a <br> home könyvtárad beállításait. <br><br>A fájl, ahol a "
@@ -12069,17 +12069,17 @@ msgstr ""
 
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for "
-#~ "Enlightenment. Your disk is having troubles<br>and possibly needs "
+#~ "Moksha. Your disk is having troubles<br>and possibly needs "
 #~ "replacement.<br><br>The file where the error occurred was:<br>"
 #~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "Hiba történt az Enlightenment konfigurációs fájljainak<br> írása közben. "
+#~ "Hiba történt az Moksha konfigurációs fájljainak<br> írása közben. "
 #~ "Problémák lehetnem a lemezeddel,<br> valószínüleg áthelyezést igényel."
 #~ "<br><br> A fájl, ahol a hiba keletkezett: <br>%s<br><br> A fájl törölve "
 #~ "lett.<br>"
 
 #~ msgid ""
-#~ "Enlightenment cannot write its settings file<br>because it ran out of "
+#~ "Moksha cannot write its settings file<br>because it ran out of "
 #~ "space to write the file.<br>You have either run out of disk space or "
 #~ "have<br>gone over your quota limit.<br><br>The file where the error "
 #~ "occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt "
@@ -12143,8 +12143,8 @@ msgstr ""
 #~ msgid "Delete this Shelf"
 #~ msgstr "Polc törlése"
 
-#~ msgid "Lock when Enlightenment starts"
-#~ msgstr "Zárolás, amikor az Enlightenment indul"
+#~ msgid "Lock when Moksha starts"
+#~ msgstr "Zárolás, amikor az Moksha indul"
 
 #~ msgid "Wallpaper Mode"
 #~ msgstr "Háttérkép mód"
@@ -12183,7 +12183,7 @@ msgstr ""
 #~ msgid "Gradient Creation Error"
 #~ msgstr "Átmenet létrehozási hiba"
 
-#~ msgid "For some reason, Enlightenment was unable to create a gradient."
+#~ msgid "For some reason, Moksha was unable to create a gradient."
 #~ msgstr "Valamilyen oknál fogva, az E17 nem képes létrehozni az átmenetet."
 
 #, fuzzy
@@ -12379,8 +12379,8 @@ msgstr ""
 #~ msgid "Idle Cursor"
 #~ msgstr "X kurzor használata"
 
-#~ msgid "Use Enlightenment Cursor"
-#~ msgstr "Enlightenment kurzor használata"
+#~ msgid "Use Moksha Cursor"
+#~ msgstr "Moksha kurzor használata"
 
 #~ msgid "Use X Cursor"
 #~ msgstr "X kurzor használata"
@@ -12526,27 +12526,27 @@ msgstr ""
 #~ msgstr "Hálózatok"
 
 #~ msgid ""
-#~ "Copyright &copy; 1999-2008, by the Enlightenment Development Team."
+#~ "Copyright &copy; 1999-2008, by the Moksha Development Team."
 #~ "<br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>This software is provided as-is with no explicit or "
 #~ "implied warranty. This software is governed by licensing conditions, so "
 #~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</"
+#~ "system.<br><br>Moksha is under <hilight>HEAVY DEVELOPMENT</"
 #~ "hilight> and it is not stable. Many features are incomplete or even non-"
 #~ "existent yet and may have many bugs. You have been <hilight>WARNED!</"
 #~ "hilight>"
 #~ msgstr ""
-#~ "Copyright &copy; 1999-2005, Enlightenment Fejlesztői csapattól."
+#~ "Copyright &copy; 1999-2005, Moksha Fejlesztői csapattól."
 #~ "<br><br>Reméljük, legalább annyira élvezed a program használatát, mint "
 #~ "amennyire mi élveztük a készítését!<br><br>A szoftver használata során "
 #~ "észlelt hibákért felelõsséget nem vállalunk! A program használatának "
 #~ "feltételeit a COPYING és COPYING-PLAIN fájlok tartalmazzák.<br><br>Az "
-#~ "Enlightenment<hilight>AKTíV FEJLESZTÉS</hilight> alatt áll, és nem "
+#~ "Moksha<hilight>AKTíV FEJLESZTÉS</hilight> alatt áll, és nem "
 #~ "feltétlen stabil. Sok funkció még hiányzik, vagy nem használható. "
 #~ "<hilight>FIGYELMEZTETTüNK!</hilight>"
 
 #~ msgid ""
-#~ "You are trying to ask Enlightenment to remember to apply<br>properties "
+#~ "You are trying to ask Moksha to remember to apply<br>properties "
 #~ "(such as size, location, border style etc.) to<br>a window that "
 #~ "<hilight>does not have unique properties</hilight>.<br><br>This means it "
 #~ "shares Name/Class, Transience, Role etc. properties<br>with more than 1 "
@@ -12560,7 +12560,7 @@ msgstr ""
 #~ "buttons<br>and your settings will be accepted. Press <hilight>Cancel</"
 #~ "hilight> if you<br>are not sure and nothing will be affected."
 #~ msgstr ""
-#~ "Arra kéred az Enlightenmentet, hogy alkalmazza a beállításokat<br>(mint "
+#~ "Arra kéred az Mokshaet, hogy alkalmazza a beállításokat<br>(mint "
 #~ "pl. méret, hely, keret stílus) egy olyan ablakra,<br>amelynek "
 #~ "<hilight>nincsenek egyedi tulajdonságai</hilight>.<br><br>Ez annyit "
 #~ "jelent, hogy az ablak tulajdonságai átszállnak a többi<br>ablakra is, és "

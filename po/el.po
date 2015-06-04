@@ -1,5 +1,5 @@
 # translation of el.po to Ελληνικά
-# Greek translation for Enlightenment17.
+# Greek translation for Moksha17.
 # This file is put in the public domain.
 # 
 # Geo Kou <ragecryx@yahoo.gr>, 2008.
@@ -7,7 +7,7 @@
 # Giorgos RageCryX Koutsikos <ragecryx@yahoo.gr>, 2009.
 # George Koutsikos <ragecryx@yahoo.gr>, 2011.
 # 
-# Efstathios Iosifidis <iosifidis@opensuse.org>, 2012.
+# Efstathios Iosifidis <iosifidis@opensuse.org>, 2015.
 #
 msgid ""
 msgstr ""
@@ -25,8 +25,8 @@ msgstr ""
 "X-Generator: Gtranslator 2.91.5\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "Περί Enlightenment"
+msgid "About Moksha"
+msgstr "Περί Moksha"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -43,18 +43,18 @@ msgstr "Κλείσιμο"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
 msgstr ""
-"<title>Πνευματικά δικαιώματα &αντίγραφο; 2000-2012, από την ομάδα ανάπτυξης "
-"του Enlightenment</><br><br>Ελπίζουμε ότι απολαμβάνετε την χρήση του "
+"<title>Πνευματικά δικαιώματα &αντίγραφο; 2000-2015, από την ομάδα ανάπτυξης "
+"του Moksha</><br><br>Ελπίζουμε ότι απολαμβάνετε την χρήση του "
 "λογισμικού όσο εμείς απολαμβάναμε την δημιουργία του.<br><br>Για επικοινωνία "
 "μαζί μας, παρακαλώ επισκεφθείτε την διεύθυνση:<br><hilight>http://www."
 "enlightenment.org</><br><br>"
@@ -97,7 +97,7 @@ msgid "Exit"
 msgstr "Έξοδος"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
 msgstr "Σίγουρα επιθυμείτε την έξοδο από το Enlightenmet;"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
@@ -695,8 +695,8 @@ msgid "Exit Now"
 msgstr "Έξοδος Τώρα"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
-msgstr "Enlightenment : Λειτουργία"
+msgid "Moksha : Mode"
+msgstr "Moksha : Λειτουργία"
 
 #: src/bin/e_actions.c:3380
 msgid "Presentation Mode Toggle"
@@ -707,8 +707,8 @@ msgid "Offline Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία εκτός σύνδεσης"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
-msgstr "Enlightenment : Άρθρωμα"
+msgid "Moksha : Module"
+msgstr "Moksha : Άρθρωμα"
 
 #: src/bin/e_actions.c:3390
 msgid "Enable the named module"
@@ -826,7 +826,7 @@ msgstr "Άκυρο"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -835,7 +835,7 @@ msgstr ""
 "Τα δεδομένα ρυθμίσεων χρειάζονται αναβάθμιση. Οι παλιές ρυθμίσεις<br>έχουν "
 "σβηστεί και έχει αρχικοποιηθεί ένα νέο σύνολο προεπιλογών. Αυτό θα "
 "συμβαίνει<br>τακτικά κατά τη διάρκεια της ανάπτυξης, έτσι μην "
-"αναφέρετε<br>σφάλμα. Αυτό σημαίνει ότι το Enlightenment χρειάζεται νέα "
+"αναφέρετε<br>σφάλμα. Αυτό σημαίνει ότι το Moksha χρειάζεται νέα "
 "δεδομένα<br>ρυθμίσεων από προεπιλογή για λειτουργικότητα κάτι που έλλειπε "
 "στις<br>παλιές σας ρυθμίσεις. Αυτό το νέο σύνολο προεπιλογών θα το "
 "διορθώσει<br>με την προσθήκη του μέσα στις ρυθμίσεις. Μπορείτε να ρυθμίσετε "
@@ -844,27 +844,27 @@ msgstr ""
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Οι ρυθμίσεις σας είναι ΝΕΟΤΕΡΕΣ απ'ότι του Enlightenment. Αυτό είναι "
+"Οι ρυθμίσεις σας είναι ΝΕΟΤΕΡΕΣ απ'ότι του Moksha. Αυτό είναι "
 "πολύ<br>περίεργο. Δεν πρέπει να συμβαίνει εκτός εάν υποβαθμίσατε<br>το "
-"Enlightenment ή αντιγράψατε τις ρυθμίσεις από τοποθεσία όπου<br>εκτελείται "
-"μια νεότερη έκδοση του Enlightenment. Αυτό είναι σφάλμα<br>και ως προφύλαξη, "
+"Moksha ή αντιγράψατε τις ρυθμίσεις από τοποθεσία όπου<br>εκτελείται "
+"μια νεότερη έκδοση του Moksha. Αυτό είναι σφάλμα<br>και ως προφύλαξη, "
 "οι ρυθμίσεις σας έχουν επανέλθει<br>στις προεπιλεγμένες. Συγγνώμη για την "
 "αναστάτωση.<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
-msgstr "Προβλήματα εγγραφής ρυθμίσεων του Enlightenment"
+msgid "Moksha Settings Write Problems"
+msgstr "Προβλήματα εγγραφής ρυθμίσεων του Moksha"
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
@@ -911,7 +911,7 @@ msgstr ""
 "Το αρχείο δεν είναι εγγράψιμο. Ίσως ο δίσκος είναι μόνο για ανάγνωση<br>ή "
 "έχετε χάσει τα δικαιώματα στα αρχεία σας."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Εξαντλήθηκε η μνήμη κατά την προετοιμασία της εγγραφής.<br>Παρακαλώ "
@@ -978,17 +978,17 @@ msgid "Decryption failed."
 msgstr "Αποτυχία Αποκρυπτογράφησης."
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
-msgstr "Άγνωστο σφάλμα στο Enlightenment."
+msgid "The error is unknown to Moksha."
+msgstr "Άγνωστο σφάλμα στο Moksha."
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"Παρουσιάστηκε κατα την εγγραφή των ρυθμίσεων<br>του Enlightenment.<br>"
+"Παρουσιάστηκε κατα την εγγραφή των ρυθμίσεων<br>του Moksha.<br>"
 "%s<br><br>Το αρχείο στο οποίο παρουσιάστηκε το σφάλμα ήταν:<br>"
 "%s<br><br>Αυτό το αρχείο διαγράφηκε για να αποφευχθούν κατεστραμμένα "
 "δεδομένα.<br>"
@@ -1041,9 +1041,9 @@ msgstr "Σφάλμα - δεν υπάρχει υποστήριξη PAM"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"Δεν έχει υλοποιηθεί υποστήριξη PAM στο Enlightenment, έτσι<br>το κλείδωμα "
+"Δεν έχει υλοποιηθεί υποστήριξη PAM στο Moksha, έτσι<br>το κλείδωμα "
 "της επιφάνειας εργασίας είναι απενεργοποιημένο."
 
 #: src/bin/e_desklock.c:301
@@ -1255,24 +1255,24 @@ msgid "Run Error"
 msgstr "Σφάλμα Eκτέλεσης"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
-msgstr "Αδυναμία λήψης τρέχοντα καταλόγου από το Enlightenment"
+msgid "Moksha was unable to get current directory"
+msgstr "Αδυναμία λήψης τρέχοντα καταλόγου από το Moksha"
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Αδυναμία αλλαγής στον κατάλογο:<br><br>%s από το Enlightenment"
+msgid "Moksha was unable to change to directory:<br><br>%s"
+msgstr "Αδυναμία αλλαγής στον κατάλογο:<br><br>%s από το Moksha"
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Αδυναμία αποκατάστασης στον κατάλογο:<br><br>%s από το Enlightenment"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgstr "Αδυναμία αποκατάστασης στον κατάλογο:<br><br>%s από το Moksha"
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr ""
-"Αδυναμία διακλάδωσης θυγατρικής διεργασίας:<br><br>%s από το Enlightenment"
+"Αδυναμία διακλάδωσης θυγατρικής διεργασίας:<br><br>%s από το Moksha"
 
 #: src/bin/e_exec.c:604
 msgid "Application run error"
@@ -1281,10 +1281,10 @@ msgstr "Σφάλμα εκκίνησης εφαρμογής"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Αδυναμία εκτέλεσης εφαρμογής:<br><br>%s<br><br> από το Enlightenment. Η "
+"Αδυναμία εκτέλεσης εφαρμογής:<br><br>%s<br><br> από το Moksha. Η "
 "εφαρμογή απέτυχε να εκινήσει."
 
 #: src/bin/e_exec.c:713
@@ -1946,10 +1946,10 @@ msgstr "Ακολουθία Συνδυασμού Πλήκτρων"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Ένα προηγούμενο στιγμιότυπο του Enlightenment είναι ακόμη ενεργό\n"
+"Ένα προηγούμενο στιγμιότυπο του Moksha είναι ακόμη ενεργό\n"
 "σε αυτή την οθόνη. Αναβολή εκκίνησης.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1958,17 +1958,17 @@ msgid "Import Error"
 msgstr "Σφάλμα Εισαγωγής"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα<br>λόγω ενός σφάλματος "
+"Το Moksha δεν μπόρεσε να εισάγει την εικόνα<br>λόγω ενός σφάλματος "
 "αντιγραφής."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα.<br><br>Είστε σίγουροι "
+"Το Moksha δεν μπόρεσε να εισάγει την εικόνα.<br><br>Είστε σίγουροι "
 "πως αυτή είναι έγκυρη εικόνα;"
 
 #: src/bin/e_import_dialog.c:163
@@ -1985,9 +1985,9 @@ msgstr "Σφάλμα Εισαγωγής Εικόνας"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
+"Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
-"Το Enlightenment δεν μπόρεσε να εισάγει την εικόνα<br>λόγω σφαλμάτων "
+"Το Moksha δεν μπόρεσε να εισάγει την εικόνα<br>λόγω σφαλμάτων "
 "μετατροπής."
 
 #: src/bin/e_import_config_dialog.c:459
@@ -2254,8 +2254,8 @@ msgid "Select Border Style"
 msgstr "Επιλογή Στυλ Περιγράμματος"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
-msgstr "Χρήση Προκαθορισμένων Προτιμήσεων Εικονιδίων του Enlightenment"
+msgid "Use Moksha Default Icon Preference"
+msgstr "Χρήση Προκαθορισμένων Προτιμήσεων Εικονιδίων του Moksha"
 
 #: src/bin/e_int_border_menu.c:1199
 msgid "Use Application Provided Icon"
@@ -2558,7 +2558,7 @@ msgstr "Οι ιδιότητες του παραθύρου δεν είναι συ
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2569,7 +2569,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Προσπαθείτε να ζητήσετε από το Enlightenment να απομνημονεύσει "
+"Προσπαθείτε να ζητήσετε από το Moksha να απομνημονεύσει "
 "τις<br>ρυθμίσεις (όπως είναι το μέγεθος, η τοποθεσία, το στυλ του "
 "περιγράμματος κ.α.)<br>στο παράθυρο, <hilight>το οποίο δεν έχει μοναδικές "
 "ιδιότητες</hilight>.<br><br>Αυτό σημαίνει ότι μοιράζεται ιδιότητες όπως "
@@ -2588,12 +2588,12 @@ msgstr "Δεν έχουν οριστεί ρυθμίσεις συσχέτισης
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Προσπαθείτε να ζητήσετε από το Enlightenment να απομνημονεύσει "
+"Προσπαθείτε να ζητήσετε από το Moksha να απομνημονεύσει "
 "τις<br>ρυθμίσεις (όπως είναι το μέγεθος, η τοποθεσία, το στυλ του "
 "περιγράμματος κ.α.)<br>στο παράθυρο<hilight>χωρίς να καθορίσετε πως θα τις "
 "απομνημονεύσει</hilight>.<br><br>Πρέπει να καθορίσετε τουλάχιστο ένα τρόπο "
@@ -2953,99 +2953,99 @@ msgid "Show on specified Desktops"
 msgstr "Εμφάνιση σε επιλεγμένες Επιφάνειες Εργασίας"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
-msgstr "Αδυναμία αρχικοποίησης Eina από το Enlightenment!\n"
+msgid "Moksha cannot initialize Eina!\n"
+msgstr "Αδυναμία αρχικοποίησης Eina από το Moksha!\n"
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
-msgstr "Αδυναμία δημιουργίας τομέα καταγραφής από το Enlightenment!\n"
+msgid "Moksha could not create a logging domain!\n"
+msgstr "Αδυναμία δημιουργίας τομέα καταγραφής από το Moksha!\n"
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
-msgstr "Αδυναμία αρχικοποίησης Eet από το Enlightenment!\n"
+msgid "Moksha cannot initialize Eet!\n"
+msgstr "Αδυναμία αρχικοποίησης Eet από το Moksha!\n"
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
-msgstr "Αδυναμία αρχικοποίησης Ecore από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore!\n"
+msgstr "Αδυναμία αρχικοποίησης Ecore από το Moksha!\n"
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "Αδυναμία αρχικοποίησης EIO από το Enlightenment!\n"
+msgid "Moksha cannot initialize EIO!\n"
+msgstr "Αδυναμία αρχικοποίησης EIO από το Moksha!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Αδυναμία ρύθμισης διαχειριστή σήματος εξόδου από το Enlightenment.\n"
+"Αδυναμία ρύθμισης διαχειριστή σήματος εξόδου από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Αδυναμία ρύθμισης διαχειριστή σήματος HUP από το Enlightenment.\n"
+"Αδυναμία ρύθμισης διαχειριστή σήματος HUP από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Αδυναμία ρύθμισης διαχειριστή σήματος USER από το Enlightenment.\n"
+"Αδυναμία ρύθμισης διαχειριστή σήματος USER από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
-msgstr "Αδυναμία αρχικοποίησης Ecore_File από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
+msgstr "Αδυναμία αρχικοποίησης Ecore_File από το Moksha!\n"
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
-msgstr "Αδυναμία αρχικοποίησης Ecore_Con από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
+msgstr "Αδυναμία αρχικοποίησης Ecore_Con από το Moksha!\n"
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
-msgstr "Αδυναμία αρχικοποίησης Ecore_Ipc από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
+msgstr "Αδυναμία αρχικοποίησης Ecore_Ipc από το Moksha!\n"
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
-msgstr "Αδυναμία αρχικοποίησης Ecore_X από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
+msgstr "Αδυναμία αρχικοποίησης Ecore_X από το Moksha!\n"
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
-msgstr "Αδυναμία αρχικοποίησης του Ecore_IMF από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
+msgstr "Αδυναμία αρχικοποίησης του Ecore_IMF από το Moksha!\n"
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
-msgstr "Αδυναμία αρχικοποίησης του Ecore_Evas από το Enlightenment!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
+msgstr "Αδυναμία αρχικοποίησης του Ecore_Evas από το Moksha!\n"
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "Αδυναμία αρχικοποίησης του Elementary από το Enlightenment!\n"
+msgid "Moksha cannot initialize Elementary!\n"
+msgstr "Αδυναμία αρχικοποίησης του Elementary από το Moksha!\n"
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "Αδυναμία αρχικοποίησης του Emotion από το Enlightenment!\n"
+msgid "Moksha cannot initialize Emotion!\n"
+msgstr "Αδυναμία αρχικοποίησης του Emotion από το Moksha!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το ecore_evas δεν υποστηρίζει απεικόνιση με "
+"Το Moksha διαπίστωσε ότι το ecore_evas δεν υποστηρίζει απεικόνιση με "
 "Λογισμικό X11\n"
 "στο Evas. Παρακαλώ ελέγξτε την εγκατάσταση του Evas και του\n"
 "Ecore και βεβαιωθείτε ότι υποστηρίζουν την μηχανή απεικόνισης λογισμικού X11."
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το ecore_evas δεν υποστηρίζει απεικόνιση με "
+"Το Moksha διαπίστωσε ότι το ecore_evas δεν υποστηρίζει απεικόνιση με "
 "Λογισμικό\n"
 "με Ενδιάμεση Μνήμη στο Evas. Παρακαλώ ελέγξτε την εγκατάσταση του Evas και "
 "του\n"
@@ -3053,16 +3053,16 @@ msgstr ""
 "Ενδιάμεση Μνήμη."
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
-msgstr "Αδυναμία αρχικοποίησης του Edje από το Enlightenment!\n"
+msgid "Moksha cannot initialize Edje!\n"
+msgstr "Αδυναμία αρχικοποίησης του Edje από το Moksha!\n"
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
-msgstr "Αδυναμία αρχικοποίησης του E_Intl από το Enlightenment!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
+msgstr "Αδυναμία αρχικοποίησης του E_Intl από το Moksha!\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος εκτάκτων ειδοποιήσεων.\n"
@@ -3070,77 +3070,77 @@ msgstr ""
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "Αδυναμία δημιουργίας καταλόγων στον προσωπικό κατάλογό σας από το "
-"Enlightenment.\n"
+"Moksha.\n"
 "Πιθανόν δεν έχετε φάκελο home ή ο δίσκος είναι γεμάτος."
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
+msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος αρχείου μητρώου από το Enlightement.\n"
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος ρυθμίσεων από το Enlightenment.\n"
+msgid "Moksha cannot set up its config system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος ρυθμίσεων από το Moksha.\n"
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Αδυναμία αρχικοποίησης του E_Randr από το Enlightenment!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
+msgstr "Αδυναμία αρχικοποίησης του E_Randr από το Moksha!\n"
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
-msgstr "Αδυναμία αρχικοποίησης του E_Xinerama από το Enlightenment!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
+msgstr "Αδυναμία αρχικοποίησης του E_Xinerama από το Moksha!\n"
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
-msgstr "Αδυναμία ρύθμισης του περιβάλλοντος από το Enlightenment.\n"
+msgid "Moksha cannot set up its environment.\n"
+msgstr "Αδυναμία ρύθμισης του περιβάλλοντος από το Moksha.\n"
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος κλιμάκωσης από το Enlightenment.\n"
+msgid "Moksha cannot set up its scale system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος κλιμάκωσης από το Moksha.\n"
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος δείκτη από το Enlightenment.\n"
+msgid "Moksha cannot set up its pointer system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος δείκτη από το Moksha.\n"
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Αδυναμία ρύθμισης διαδρομών για εύρεση αρχείων από το Enlightenment.\n"
+"Αδυναμία ρύθμισης διαδρομών για εύρεση αρχείων από το Moksha.\n"
 "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος γραμματοσειρών από το Enlightenment.\n"
+msgid "Moksha cannot set up its font system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος γραμματοσειρών από το Moksha.\n"
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος θεμάτων από το Enlightenment.\n"
+msgid "Moksha cannot set up its theme system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος θεμάτων από το Moksha.\n"
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
-msgstr "Αδυναμία ρύθμισης αρχικής οθόνης από το Enlightenment.\n"
+msgid "Moksha cannot set up its init screen.\n"
+msgstr "Αδυναμία ρύθμισης αρχικής οθόνης από το Moksha.\n"
 
 #: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "Έναρξη πολυεθνικής υποστήριξης"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
-msgstr "Αδυναμία ρύθμισης εσωτερικού συστήματος από το Enlightenment.\n"
+msgid "Moksha cannot set up its intl system.\n"
+msgstr "Αδυναμία ρύθμισης εσωτερικού συστήματος από το Moksha.\n"
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
 "Αδυναμία αρχικοποίησης του συστήματος επιφάνειας εργασίας FDO από το "
-"Enlightenment.\n"
+"Moksha.\n"
 "Ίσως να μην έχετε δικαιώματα στο ~/.cache/efreet ή\n"
 "να μην έχετε αρκετή μνήμη ή χώρο στο δίσκο;"
 
@@ -3150,11 +3150,11 @@ msgstr "Ρύθμιση Οθονών"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
 "Αποτυχία ρύθμισης διαχείρισης παραθύρων για όλες τις οθόνες του συστήματος\n"
-"από το Enlightenment. Ίσως εκτελείται άλλος διαχειριστής παραθύρων;\n"
+"από το Moksha. Ίσως εκτελείται άλλος διαχειριστής παραθύρων;\n"
 
 #: src/bin/e_main.c:738
 msgid "Setup ACPI"
@@ -3165,51 +3165,51 @@ msgid "Setup Backlight"
 msgstr "Ρύθμιση Οπίσθιου Φωτισμού"
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
-msgstr "Αδυναμία ρύθμισης οπίσθιου φωτισμού από το Enlightenment.\n"
+msgid "Moksha cannot configure the backlight.\n"
+msgstr "Αδυναμία ρύθμισης οπίσθιου φωτισμού από το Moksha.\n"
 
 #: src/bin/e_main.c:756
 msgid "Setup Screensaver"
 msgstr "Ρύθμιση Προφύλαξης Οθόνης"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
 msgstr ""
-"Το Enlightenment δεν μπορεί να ρυθμίσει την προφύλαξη οθόνης για τον X.\n"
+"Το Moksha δεν μπορεί να ρυθμίσει την προφύλαξη οθόνης για τον X.\n"
 
 #: src/bin/e_main.c:767
 msgid "Setup DPMS"
 msgstr "Ρύθμιση DPMS"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
-msgstr "Αδυναμία ρύθμισης των επιλογών DPMS από το Enlightenment.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
+msgstr "Αδυναμία ρύθμισης των επιλογών DPMS από το Moksha.\n"
 
 #: src/bin/e_main.c:778
 msgid "Setup Powersave Modes"
 msgstr "Ρύθμιση Κατάστασης Εξοικονόμησης Ενέργειας"
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
 msgstr ""
-"Αδυναμία ρύθμισης κατάστασης εξοικονόμησης ενέργειας από το Enlightenment.\n"
+"Αδυναμία ρύθμισης κατάστασης εξοικονόμησης ενέργειας από το Moksha.\n"
 
 #: src/bin/e_main.c:789
 msgid "Setup Desklock"
 msgstr "Ρύθμιση Κλειδώματος Οθόνης"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
 msgstr ""
-"Αδυναμία ρύθμισης του συστήματος κλειδώματος οθόνης από το Enlightenment.\n"
+"Αδυναμία ρύθμισης του συστήματος κλειδώματος οθόνης από το Moksha.\n"
 
 #: src/bin/e_main.c:800
 msgid "Setup Popups"
 msgstr "Ρύθμιση Αναδυόμενων"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος αναδυόμενων από το Enlightenment.\n"
+msgid "Moksha cannot set up its popup system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος αναδυόμενων από το Moksha.\n"
 
 #: src/bin/e_main.c:816
 msgid "Setup Message Bus"
@@ -3224,102 +3224,102 @@ msgid "Setup System Controls"
 msgstr "Ρύθμιση Χειρισμών Συστήματος"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος εντολών του υπολογιστή από το "
-"Enlightenment.\n"
+"Moksha.\n"
 
 #: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "Ρύθμιση Ενεργειών"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος ενεργειών από το Enlightenment.\n"
+msgid "Moksha cannot set up its actions system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος ενεργειών από το Moksha.\n"
 
 #: src/bin/e_main.c:851
 msgid "Setup Execution System"
 msgstr "Ρύθμιση Συστήματος Εκτέλεσης"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
-msgstr "Ασυναμία ρύθμισης συστήματος εκτελέσιμων από το Enlightenment.\n"
+msgid "Moksha cannot set up its exec system.\n"
+msgstr "Ασυναμία ρύθμισης συστήματος εκτελέσιμων από το Moksha.\n"
 
 #: src/bin/e_main.c:866
 msgid "Setup Filemanager"
 msgstr "Ρύθμιση Διαχειριστή αρχείων"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Αδυναμία αρχικοποίησης του διαχειριστή αρχείων από το Enlightenment.\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Αδυναμία αρχικοποίησης του διαχειριστή αρχείων από το Moksha.\n"
 
 #: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "Ρύθμιση Συστήματος Μηνυμάτων"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος μηνυμάτων από το Enlightenment.\n"
+msgid "Moksha cannot set up its msg system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος μηνυμάτων από το Moksha.\n"
 
 #: src/bin/e_main.c:888
 msgid "Setup DND"
 msgstr "Ρύθμιση DND"
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
-msgstr "Αδυναμία ρύθμισης του συστήματος dnd από το Enlightenment.\n"
+msgid "Moksha cannot set up its dnd system.\n"
+msgstr "Αδυναμία ρύθμισης του συστήματος dnd από το Moksha.\n"
 
 #: src/bin/e_main.c:899
 msgid "Setup Grab Input Handling"
 msgstr "Ρύθμιση Διαχείρισης Εισαγωγής Grab"
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
 "Αδυναμία ρύθμισης συστήματος διαχείρισης εισαγωγής grub από το "
-"Enlightenment.\n"
+"Moksha.\n"
 
 #: src/bin/e_main.c:910
 msgid "Setup Modules"
 msgstr "Ρύθμιση Αρθρωμάτων"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος αρθρωμάτων από το Enlightenment.\n"
+msgid "Moksha cannot set up its module system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος αρθρωμάτων από το Moksha.\n"
 
 #: src/bin/e_main.c:921
 msgid "Setup Remembers"
 msgstr "Ρύθμιση Απομνημόνευσης"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
-msgstr "Αδυναμία ρύθμισης απομνημόνευσης ρυθμίσεων από το Enlightenment.\n"
+msgid "Moksha cannot setup remember settings.\n"
+msgstr "Αδυναμία ρύθμισης απομνημόνευσης ρυθμίσεων από το Moksha.\n"
 
 #: src/bin/e_main.c:932
 msgid "Setup Color Classes"
 msgstr "Ρύθμιση Κλάσεων Χρωμάτων"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος κλάσεων χρωμάτων από το Enlightenment.\n"
+msgid "Moksha cannot set up its color class system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος κλάσεων χρωμάτων από το Moksha.\n"
 
 #: src/bin/e_main.c:943
 msgid "Setup Gadcon"
 msgstr "Ρύθμιση Gadcon"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
 msgstr ""
-"Αδυναμία ρύθμισης συστήματος ελέγχου συστατικών από το Enlightenment.\n"
+"Αδυναμία ρύθμισης συστήματος ελέγχου συστατικών από το Moksha.\n"
 
 #: src/bin/e_main.c:954
 msgid "Setup Wallpaper"
 msgstr "Ρύθμιση Ταπετσαρίας"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
 msgstr ""
-"Το Enlightenment δεν μπορεί να εγκαταστήσει στο σύστημα παρασκηνίου "
+"Το Moksha δεν μπορεί να εγκαταστήσει στο σύστημα παρασκηνίου "
 "επιφάνειας εργασίας.\n"
 
 #: src/bin/e_main.c:965
@@ -3327,64 +3327,64 @@ msgid "Setup Mouse"
 msgstr "Ρύθμιση Ποντικιού"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Αδυναμία ρύθμισης επιλογών ποντικιού από το Enlightenment.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Αδυναμία ρύθμισης επιλογών ποντικιού από το Moksha.\n"
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
-msgstr "Αδυναμία ρύθμισης διάταξης πληκτρολογίου XKB από το Enlightenment.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
+msgstr "Αδυναμία ρύθμισης διάταξης πληκτρολογίου XKB από το Moksha.\n"
 
 #: src/bin/e_main.c:982
 msgid "Setup Bindings"
 msgstr "Ρύθμιση Συνδυασμών"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
-msgstr "Αδυναμία ρύθμισης συστήματος συνδυασμών από το Enlightenment.\n"
+msgid "Moksha cannot set up its bindings system.\n"
+msgstr "Αδυναμία ρύθμισης συστήματος συνδυασμών από το Moksha.\n"
 
 #: src/bin/e_main.c:993
 msgid "Setup Thumbnailer"
 msgstr "Ρύθμιση του Δημιουργού Μικρογραφιών Εικόνων"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος δημιουργίας μικρογραφιών εικόνων από το "
-"Enlightenment.\n"
+"Moksha.\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος δημιουργίας Λανθάνουσας Μνήμης Εικόνων από "
-"το Enlightenment.\n"
+"το Moksha.\n"
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
-msgstr "Αδυναμία αρχικοποίησης συστήματος XSettings από το Enlightenment.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
+msgstr "Αδυναμία αρχικοποίησης συστήματος XSettings από το Moksha.\n"
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
+msgid "Moksha cannot initialize the Update system.\n"
 msgstr ""
-"Αδυναμία αρχικοποίησης του συστήματος Ενημέρωσης από το Enlightenment.\n"
+"Αδυναμία αρχικοποίησης του συστήματος Ενημέρωσης από το Moksha.\n"
 
 #: src/bin/e_main.c:1031
 msgid "Setup Desktop Environment"
 msgstr "Ρύθμιση Περιβάλλοντος Εργασίας"
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης περιβάλλοντος επιφάνειας εργασίας από το "
-"Enlightenment.\n"
+"Moksha.\n"
 
 #: src/bin/e_main.c:1042
 msgid "Setup File Ordering"
 msgstr "Ρύθμιση Ταξινόμησης Αρχείων"
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
+msgid "Moksha cannot set up its order file system.\n"
 msgstr ""
-"Αδυναμία ρύθμισης συστήματος ταξινόμησης αρχείων από το Enlightenment.\n"
+"Αδυναμία ρύθμισης συστήματος ταξινόμησης αρχείων από το Moksha.\n"
 
 #: src/bin/e_main.c:1061
 msgid "Load Modules"
@@ -3478,52 +3478,52 @@ msgstr "Δοκιμή Υποστήριξης Διαμόρφωσης"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να δημιουργήσει πίνακα "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να δημιουργήσει πίνακα "
 "ενδιάμεσης μνήμης. Παρακαλώ ελέγξτε\n"
 "ότι το Evas έχει υποστήριξη μηχανής Λογισμικού Ενδιάμεσης Μνήμης.\n"
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει αρχεία SVG. "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει αρχεία SVG. "
 "Ελέγξτε αν το Evas έχει υποστήριξη για φόρτωση αρχείων SVG.\n"
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει JPEG αρχεία. "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει JPEG αρχεία. "
 "Ελέγξτε αν το Evas έχει υποστήριξη για φόρτωση JPEG.\n"
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει PNG αρχεία. "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει PNG αρχεία. "
 "Ελέγξτε αν το Evas έχει υποστήριξη για φόρτωση PNG.\n"
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει EET αρχεία. "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει EET αρχεία. "
 "Ελέγξτε αν το Evas έχει υποστήριξη για φόρτωση EET.\n"
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Το Enlightenment διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει τις "
+"Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει τις "
 "γραμματοσειρές 'Sans'.\n"
 "Ελέγξτε αν το Evas έχει υποστήριξη για το fontconfig και το fontconfig του "
 "συστήματος καθορίζει την γραμματοσειρά 'Sans'.\n"
@@ -3531,38 +3531,38 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
-"Το Enlightenment κατέρρευσε νωρίς κατά την εκκίνηση και "
+"Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και "
 "έγινε<br>επανεκκίνηση. Υπήρξε σφάλμα στην φόρτωση του<br>αρθρώματος με "
 "όνομα: %s. Αυτό το άρθρωμα έχει απενεργοποιηθεί<br>και δεν θα φορτωθεί."
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
+msgid "Moksha crashed early on start and has been restarted"
 msgstr ""
-"Το Enlightenment κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση"
+"Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση"
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
-"Το Enlightenment κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
+"Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
 "<br>Υπήρξε σφάλμα κατά την φόρτωση του αρθρώματος με όνομα %s<br><br>Αυτό το "
 "άρθρωμα απενεργοποιήθηκε και δεν θα φορτωθεί."
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"Το Enlightenment κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
+"Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
 "<br>Όλα τα αρθρώματα έχον απενεργοποιηθεί<br>και δεν θα φορτωθούν ώστε να "
 "αφαιρεθούν τα προβληματικά<br>αρθρώματα από τις ρυθμίσεις σας. Το "
 "παράθυρο<br>ρυθμίσεων αρθρωμάτων σας επιτρέπει να επιλέξετε<br>και πάλι "
@@ -3570,12 +3570,12 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
 msgstr ""
-"Το Enlightenment κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
+"Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση."
 "<br>Όλα τα αρθρώματα έχον απενεργοποιηθεί<br>και δεν θα φορτωθούν ώστε να "
 "αφαιρεθούν τα προβληματικά<br>αρθρώματα από τις ρυθμίσεις σας.<br><br>Το "
 "παράθυρο ρυθμίσεων αρθρωμάτων σας επιτρέπει να επιλέξετε<br>και πάλι "
@@ -3616,17 +3616,17 @@ msgstr "Το άρθρωμα δεν περιέχει όλες τις απαραί
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "Σφάλμα API αρθρώματος<br>Σφάλμα κατά την αρχικοποίηση του αρθρώματος: "
 "%s<br>Απαιτεί ελάχιστη έκδοση API αρθρώματος: %i.<br>Το API του αρθρώματος "
-"που υπάρχει στο Enlightenment είναι: %i.<br>"
+"που υπάρχει στο Moksha είναι: %i.<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Άρθρωμα %s του Enlightenment"
+msgid "Moksha %s Module"
+msgstr "Άρθρωμα %s του Moksha"
 
 #: src/bin/e_module.c:528
 msgid "What action should be taken with this module?<br>"
@@ -3641,11 +3641,11 @@ msgstr "Διατήρηση"
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
-"Τα παρακάτω αρθρώματα δεν είναι τα τυπικά για το<br>Enlightenment και μπορεί "
+"Τα παρακάτω αρθρώματα δεν είναι τα τυπικά για το<br>Moksha και μπορεί "
 "να προκαλέσουν σφάλματα και καταρρεύσεις.<br>Παρακαλώ αφαιρέστε τα πριν "
 "αναφερθούν σφάλματα.<br><br>Ακολουθεί η λίστα των αρθρωμάτων:<br><br>"
 
@@ -3858,8 +3858,8 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Αποσύνδεση σε εξέλιξη.<br><hilight>Παρακαλώ περιμένετε.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
-msgstr "Το Enlightenment είναι απασχολημένο με ένα άλλο αίτημα"
+msgid "Moksha is busy with another request"
+msgstr "Το Moksha είναι απασχολημένο με ένα άλλο αίτημα"
 
 #: src/bin/e_sys.c:585
 msgid ""
@@ -3993,10 +3993,10 @@ msgstr ""
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 "Αδυναμία διακλάδωσης θυγατρικής διεργασίας:<br><br>%s<br> από το "
-"Enlightenment"
+"Moksha"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -4005,11 +4005,11 @@ msgstr "Αδύνατη η εξοδος - ακατάλυτα παράθυρα."
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Έχουν μείνει μερικά παράθυρα με ενεργοποιημένο το κλείδωμα της διάρκειας "
-"ζωής τους. Αυτό σημαίνει<br>ότι το Enlightenment δεν επιτρέπει την έξοδο "
+"ζωής τους. Αυτό σημαίνει<br>ότι το Moksha δεν επιτρέπει την έξοδο "
 "μέχρι το κλείσιμο<br>ή την αφαίρεση του κλειδώματος της διάρκειας ζωής των "
 "παραθύρων.<br>"
 
@@ -5853,7 +5853,7 @@ msgstr "Σφάλμα Εισαγωγής Ρυθμίσεων της Μεθόδου
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
 "Δεν ήταν δυνατή η εισαγωγή της ρύθμισης.<br><br>Είστε σίγουροι πως είναι μια "
@@ -5861,9 +5861,9 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+"Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
-"Αδυναμία εισαγωγής ρυθμίσεων από το Enlightenment<br>λόγω σφάλματος "
+"Αδυναμία εισαγωγής ρυθμίσεων από το Moksha<br>λόγω σφάλματος "
 "αντιγραφής."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
@@ -6172,8 +6172,8 @@ msgid "Menu Settings"
 msgstr "Ρυθμίσεις Μενού"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
-msgstr "Προκαθορισμένο του Enlightenment"
+msgid "Moksha Default"
+msgstr "Προκαθορισμένο του Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
@@ -6311,8 +6311,8 @@ msgid "Messages"
 msgstr "Μηνύματα"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
-msgstr "Διαδρομές Enlightenment"
+msgid "Moksha Paths"
+msgstr "Διαδρομές Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7193,14 +7193,14 @@ msgstr "Σφάλμα Εισαγωγής Θέματος"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
 "Δεν ήταν δυνατή η εισαγωγή του θέματος.<br><br>Είστε σίγουροι πως είναι ένα "
 "έγκυρο θέμα;"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
 "Δεν ήταν δυνατή η εισαγωγή του θέματος<br>λόγω ενός σφάλματος αντιγραφής."
 
@@ -7209,8 +7209,8 @@ msgid "Application Theme Settings"
 msgstr "Ρυθμίσεις Θέματος Εφαρμογών"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
-msgstr "Συσχετισμός θέματος Enlightenment εάν είναι δυνατόν"
+msgid "Match Moksha theme if possible"
+msgstr "Συσχετισμός θέματος Moksha εάν είναι δυνατόν"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 #, fuzzy
@@ -7226,8 +7226,8 @@ msgid "Enable icon theme for applications"
 msgstr "Ενεργοποίηση θέματος εικονιδίων για εφαρμογές"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
-msgstr "Ενεργοποίηση θέματος εικονιδίων για το Enlightenment"
+msgid "Enable icon theme for Moksha"
+msgstr "Ενεργοποίηση θέματος εικονιδίων για το Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Application Theme"
@@ -9380,8 +9380,8 @@ msgid "Please Wait..."
 msgstr "Παρακαλώ Περιμένετε..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "Καλώς ορίσατε στο Enlightenment"
+msgid "Welcome to Moksha"
+msgstr "Καλώς ορίσατε στο Moksha"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9389,7 +9389,7 @@ msgid "Select one"
 msgstr "Επιλογή ενός"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9427,14 +9427,14 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 "Τα εφέ composite παρέχουν ημιδιαφάνεια<br>στα παράθυρα, εφέ παραθύρων "
 "όπως<br>ξεθώριασμα και εστίαση<br>όταν εμφανίζονται και εξαφανίζονται."
 "<br>Συνιστάται να τα ενεργοποιήσετε<br>για καλύτερη εμπειρία χρήσης, αλλά θα "
 "σας<br>κοστίσει. Απαιτεί περισσότερους πόρους CPU<br>ή ικανότητα GLSL της "
 "CPU<br>μαζί με καλογραμμένους οδηγούς.<br>Θα προσθέσει επίσης μνήμη από 10 "
-"έως<br>100MB στην απαιτούμενη μνήμη<br>για το Enlightenment."
+"έως<br>100MB στην απαιτούμενη μνήμη<br>για το Moksha."
 
 #: src/modules/wizard/page_150.c:117
 msgid "Enable Compositing"
@@ -9458,10 +9458,10 @@ msgstr "Έλεγχος διαθέσιμων ενημερώσεων"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -9469,11 +9469,11 @@ msgid ""
 "disable this as it<br>may leave you vulnerable or having to live<br>with "
 "bugs."
 msgstr ""
-"Το Enlightenment μπορεί να ελέγχει για νέες<br>εκδόσεις, ενημερώσεις, "
+"Το Moksha μπορεί να ελέγχει για νέες<br>εκδόσεις, ενημερώσεις, "
 "διορθώσεις ασφαλείας και<br>σφαλμάτων, όπως επίσης και διαθέσιμα πρόσθετα."
 "<br><br>Αυτό είναι πολύ χρήσιμο γιατί σας επιτρέπει<br>να ενημερώνεστε για "
 "τις διαθέσιμες διορθώσεις σφαλμάτων και<br>ασφαλείας που υπάρχουν. Ως "
-"αποτέλεσμα,<br>το Enlightenment θα συνδέεται με την "
+"αποτέλεσμα,<br>το Moksha θα συνδέεται με την "
 "ιστοσελίδα<br>enlightenment.org και θα μεταδίδει μερικές πληροφορίες,"
 "<br>όπως κάνει ο κάθε περιηγητής στο Internet.<br>Δεν θα αποσταλεί καμιά "
 "προσωπική πληροφορία όπως το όνομα χρήστη και συνθηματικό<br>ή προσωπικά "
@@ -10231,11 +10231,11 @@ msgstr "Είσοδος σε Κατάσταση Παρουσίασης"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Το Enlightenment είναι σε κατάσταση <b>Παρουσίασης</b>.<br>Κατά την "
+"Το Moksha είναι σε κατάσταση <b>Παρουσίασης</b>.<br>Κατά την "
 "λειτουργία παρουσίασης, η προφύλαξη οθόνης, το κλείδωμα και η εξοικονόμηση "
 "ενέργειας θα απενεργοποιηθούν ώστε να μην σας διακόψουν."
 
@@ -10257,10 +10257,10 @@ msgstr "Είσοδος σε Κατάσταση Εκτός Σύνδεσης"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Το Enlightenment είναι σε κατάσταση <b>εκτός σύνδεσης</b>.<br> Κατά τη "
+"Το Moksha είναι σε κατάσταση <b>εκτός σύνδεσης</b>.<br> Κατά τη "
 "λειτουργία εκτός σύνδεσης, τα αρθρώματα που χρησιμοποιούν το δίκτυο θα "
 "σταματήσουν τον έλεγχο απομακρυσμένων υπηρεσιών."
 
@@ -10531,9 +10531,9 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgstr "Χειρισμός συστήματος"
 
 #~ msgid ""
-#~ "You requested to exit Enlightenment.<br><br>Are you sure you want to exit?"
+#~ "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr ""
-#~ "Αιτήθηκε έξοδος από το Enlightenment.<br><br>Επιθυμείτε σίγουρα την έξοδο;"
+#~ "Αιτήθηκε έξοδος από το Moksha.<br><br>Επιθυμείτε σίγουρα την έξοδο;"
 
 #~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 #~ msgstr "Πρόκειται να αποσυνδεθείτε.<br><br>Είστε σίγουροι για αυτό?"
@@ -10698,22 +10698,22 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 
 #, fuzzy
 #~ msgid ""
-#~ "<title>Copyright &copy; 1999-2012, by the Enlightenment Development Team</"
+#~ "<title>Copyright &copy; 1999-2015, by the Moksha Development Team</"
 #~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>This software is provided as-is with no explicit or "
 #~ "implied warranty. This software is governed by licensing conditions, so "
 #~ "please see the COPYING and COPYING-PLAIN licence files installed on your "
-#~ "system.<br><br>Enlightenment is under <hilight>HEAVY DEVELOPMENT</> and "
+#~ "system.<br><br>Moksha is under <hilight>HEAVY DEVELOPMENT</> and "
 #~ "it is not stable. Many features are incomplete or even non-existent yet "
 #~ "and may have many bugs. You have been <hilight>WARNED!</>"
 #~ msgstr ""
-#~ "Πνευματική ιδιοκτησία &copy; 1999-2012, της ομάδας ανάπτυξης του "
-#~ "Enlightenment.<br><br>Ελπίζουμε να απολαμβάνετε τη χρήση του λογισμικού "
+#~ "Πνευματική ιδιοκτησία &copy; 1999-2015, της ομάδας ανάπτυξης του "
+#~ "Moksha.<br><br>Ελπίζουμε να απολαμβάνετε τη χρήση του λογισμικού "
 #~ "αυτού, όσο απολαύσαμε εμείς τη συγγραφή του.<br><br>Αυτό το λογισμικό "
 #~ "παρέχεται όπως-είναι χωρίς καμία προσωρινή ή υποκρυπτόμενη εγγύηση. Αυτό "
 #~ "το λογισμικό διέπεται από όρους χρήσης, γι'αυτό παρακαλώ δείτε τα COPYING "
 #~ "και COPYING-PLAIN αρχεία αδειών που είναι εγκατεστημένα στο σύστημα σας."
-#~ "<br><br>Το Enlightenment είναι υπό <hilight>ΣΥΝΕΧΗ ΑΝΑΠΤΥΞΗ</hilight> και "
+#~ "<br><br>Το Moksha είναι υπό <hilight>ΣΥΝΕΧΗ ΑΝΑΠΤΥΞΗ</hilight> και "
 #~ "δεν είναι σταθερό. Πολλά χαρακτηριστικά είναι ημιτελή ή δεν υπάρχουν και "
 #~ "ενδέχεται να έχουν πολλά προβλήματα. Έχετε <hilight>ΠΡΟΕΙΔΟΠΟΙΗΘΕΙ!</"
 #~ "hilight>"
@@ -11162,16 +11162,16 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgstr "Σφάλμα εισαγωγής ταπετσαρίας"
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper<br>due to a copy error."
+#~ "Moksha was unable to import the wallpaper<br>due to a copy error."
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία<br>λόγω ενός "
+#~ "Το Moksha δεν μπόρεσε να εισάγει την ταπετσαρία<br>λόγω ενός "
 #~ "σφάλματος αντιγραφής."
 
 #~ msgid ""
-#~ "Enlightenment was unable to import the wallpaper.<br><br>Are you sure "
+#~ "Moksha was unable to import the wallpaper.<br><br>Are you sure "
 #~ "this is a valid wallpaper?"
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπόρεσε να εισάγει την ταπετσαρία.<br><br>Είστε "
+#~ "Το Moksha δεν μπόρεσε να εισάγει την ταπετσαρία.<br><br>Είστε "
 #~ "σίγουρος ότι είναι μια έγκυρη ταπετσαρία?"
 
 #~ msgid "Enable icon theme"
@@ -11267,38 +11267,38 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgstr "Τέλος μετακίνησης/αλλαγής μεγέθους αυτού του Συστατικού"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the File system.\n"
+#~ "Moksha cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπορεί να εκκινήσει το σύστημα αρχείων.\n"
+#~ "Το Moksha δεν μπορεί να εκκινήσει το σύστημα αρχείων.\n"
 #~ "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the IPC system.\n"
+#~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπορεί να εκκινήσει το IPC system.\n"
+#~ "Το Moksha δεν μπορεί να εκκινήσει το IPC system.\n"
 #~ "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #~ msgid ""
-#~ "Enlightenment cannot setup randr wrapping.\n"
+#~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπορεί να ρυθμίσει το randr.\n"
+#~ "Το Moksha δεν μπορεί να ρυθμίσει το randr.\n"
 #~ "Αυτό δεν θα έπρεπε να συμβαίνει."
 
 #~ msgid ""
-#~ "Enlightenment cannot initialize the Evas system.\n"
+#~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπορεί να εκκινήσει το Evas system.\n"
+#~ "Το Moksha δεν μπορεί να εκκινήσει το Evas system.\n"
 #~ "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #~ msgid ""
-#~ "Enlightenment cannot set up init screen.\n"
+#~ "Moksha cannot set up init screen.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "Το Enlightenment δεν μπορεί να ρυθμίσει την init οθόνη.\n"
+#~ "Το Moksha δεν μπορεί να ρυθμίσει την init οθόνη.\n"
 #~ "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
 #~ msgid "Check SVG Support"
@@ -11420,8 +11420,8 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgid "Delete this Shelf"
 #~ msgstr "Διέγραψε το ράφι"
 
-#~ msgid "Lock when Enlightenment starts"
-#~ msgstr "Κλείδωμα κατα την εκκίνηση του Enlightenment"
+#~ msgid "Lock when Moksha starts"
+#~ msgstr "Κλείδωμα κατα την εκκίνηση του Moksha"
 
 #~ msgid "Wallpaper Mode"
 #~ msgstr "Λειτουργία ταπετσαρίας"
@@ -11460,9 +11460,9 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgid "Gradient Creation Error"
 #~ msgstr "Σφάλμα δημιουργίας διαβάθμισης"
 
-#~ msgid "For some reason, Enlightenment was unable to create a gradient."
+#~ msgid "For some reason, Moksha was unable to create a gradient."
 #~ msgstr ""
-#~ "Για κάποιο λόγο, το Enlightenment δεν μπόρεσε να δημιουργήσει μια "
+#~ "Για κάποιο λόγο, το Moksha δεν μπόρεσε να δημιουργήσει μια "
 #~ "διαβάθμιση."
 
 #~ msgid "Geometry when moving or resizing"
@@ -11634,8 +11634,8 @@ msgstr "Χρήση γεωμετρίας πολλαπλών οθονών"
 #~ msgid "Idle Cursor"
 #~ msgstr "Αδρανής δείκτης"
 
-#~ msgid "Use Enlightenment Cursor"
-#~ msgstr "Χρήση δείκτη Enlightenment"
+#~ msgid "Use Moksha Cursor"
+#~ msgstr "Χρήση δείκτη Moksha"
 
 #~ msgid "Use X Cursor"
 #~ msgstr "Χρήση δείκτη Χ"

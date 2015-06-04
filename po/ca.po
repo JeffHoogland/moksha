@@ -1,4 +1,4 @@
-# Catalan translation for Enlightenment.
+# Catalan translation for Moksha.
 # This file is put in the public domain.
 # Marc Furtià i Puig <marcfurtia@gmail.com>, 2007-2013.
 # Pau Bosch i Crespo <paubcrespo@hotmail.com>, 2007.
@@ -7,7 +7,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Enlightenment 0.17\n"
+"Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2015-04-07 15:25+0000\n"
 "PO-Revision-Date: 2014-06-28 10:48+0000\n"
@@ -23,8 +23,8 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,-1,1139,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: src/bin/e_about.c:17
-msgid "About Enlightenment"
-msgstr "Quant a Enlightenment"
+msgid "About Moksha"
+msgstr "Quant a Moksha"
 
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2992 src/bin/e_config_dialog.c:288
 #: src/bin/e_fm.c:1059 src/bin/e_int_border_menu.c:194
@@ -41,17 +41,17 @@ msgstr "Tanca"
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
-msgid "Enlightenment"
-msgstr "Enlightenment"
+msgid "Moksha"
+msgstr "Moksha"
 
 #: src/bin/e_about.c:26
 msgid ""
-"<title>Copyright &copy; 2000-2012, by the Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, by the Moksha Development Team</"
 "><br><br>We hope you enjoy using this software as much as we enjoyed writing "
 "it.<br><br>To contact us please visit:<br><hilight>http://www.enlightenment."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2012, per Enlightenment Development Team</"
+"<title>Copyright &copy; 2000-2015, per Moksha Development Team</"
 "><br><br>Esperem que vostè gaudeixi tant utilitzant aquest programari com "
 "nosaltres hem gaudit de fer-lo.<br><br>Per contactar amb nosaltres visiteu:"
 "<br><hilight>http://www.enlightenment.org</><br><br>"
@@ -94,7 +94,7 @@ msgid "Exit"
 msgstr "Surt"
 
 #: src/bin/e_actions.c:2124
-msgid "Are you sure you want to exit Enlightenment?"
+msgid "Are you sure you want to exit Moksha?"
 msgstr "Segur que voleu sortir?"
 
 #: src/bin/e_actions.c:2126 src/bin/e_actions.c:2220 src/bin/e_actions.c:2280
@@ -692,8 +692,8 @@ msgid "Exit Now"
 msgstr "Surt ara"
 
 #: src/bin/e_actions.c:3379 src/bin/e_actions.c:3384
-msgid "Enlightenment : Mode"
-msgstr "Enlightenment: Mode"
+msgid "Moksha : Mode"
+msgstr "Moksha: Mode"
 
 #: src/bin/e_actions.c:3380
 msgid "Presentation Mode Toggle"
@@ -704,8 +704,8 @@ msgid "Offline Mode Toggle"
 msgstr "Alterna mode desconnectat"
 
 #: src/bin/e_actions.c:3389 src/bin/e_actions.c:3393 src/bin/e_actions.c:3397
-msgid "Enlightenment : Module"
-msgstr "Enlightenment: Mòdul"
+msgid "Moksha : Module"
+msgstr "Moksha: Mòdul"
 
 #: src/bin/e_actions.c:3390
 msgid "Enable the named module"
@@ -823,7 +823,7 @@ msgstr "Cancel·la"
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Enlightenment needs "
+"development, so don't report a<br>bug. This simply means Moksha needs "
 "new settings<br>data by default for usable functionality that your "
 "old<br>settings simply lack. This new set of defaults will fix<br>that by "
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
@@ -832,38 +832,38 @@ msgstr ""
 "Calia actualitzar la configuració. La configuració anterior<br> ha estat "
 "eliminada i s'ha establert una nova configuració per defecte. Això<br> sol "
 "passar durant el desenvolupament, per tant no cal informar<br> de l'error. "
-"Simplement significa que Enlightenment necessitava noves dades de "
+"Simplement significa que Moksha necessitava noves dades de "
 "configuració<br> que la configuració anterior no tenia. Aquestes noves dades "
 "ho resoldran.<br> Ara podreu reconfigurar les coses com<br>desitgeu. "
 "Disculpeu les molèsties.<br>"
 
 #: src/bin/e_config.c:948
 msgid ""
-"Your settings are NEWER than Enlightenment. This is very<br>strange. This "
-"should not happen unless you downgraded<br>Enlightenment or copied the "
-"settings from a place where<br>a newer version of Enlightenment was running. "
+"Your settings are NEWER than Moksha. This is very<br>strange. This "
+"should not happen unless you downgraded<br>Moksha or copied the "
+"settings from a place where<br>a newer version of Moksha was running. "
 "This is bad and<br>as a precaution your settings have been now restored "
 "to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"La vostra configuració és més NOVA que Enlightenment. Això és <br> molt "
+"La vostra configuració és més NOVA que Moksha. Això és <br> molt "
 "extrany. Això no hauria d'haver passat a no ser que tinguéssiu<br> una "
-"versió desactualitzada d'Enlightenment o haguéssiu copiat la configuració "
-"d'algun lloc<br> on hi ha una versió d'Enlightenment més nova funcionant. "
+"versió desactualitzada d'Moksha o haguéssiu copiat la configuració "
+"d'algun lloc<br> on hi ha una versió d'Moksha més nova funcionant. "
 "Això pot causar problemes i <br> com a precaució la vostra configuració ha "
 "estat restaurada <br> per defecte. Disculpeu les molèsties.<br>"
 
 #: src/bin/e_config.c:1466 src/bin/e_config.c:2091
-msgid "Enlightenment Settings Write Problems"
-msgstr "Problemes en escriure les preferències d'Enlightenment"
+msgid "Moksha Settings Write Problems"
+msgstr "Problemes en escriure les preferències d'Moksha"
 
 #: src/bin/e_config.c:1469
 #, c-format
 msgid ""
-"Enlightenment has had an error while moving config files<br>from:<br>"
+"Moksha has had an error while moving config files<br>from:<br>"
 "%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety."
 "<br>"
 msgstr ""
-"Enlightenment ha tingut un error mentre movia fitxers de configuració<br> "
+"Moksha ha tingut un error mentre movia fitxers de configuració<br> "
 "de :<br>  %s <br> <br> a:<br> %s<br> <br> La resta d'escriptura ha estat "
 "cancel·lada per seguretat.<br>"
 
@@ -906,7 +906,7 @@ msgstr ""
 "El fitxer no es pot escriure. Podria ser que el disc sigui de només "
 "lectura<br> o que hagi perdut els permisos dels seus fitxers"
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2015
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "S'ha quedat sense memòria mentre es preparava l'escriptura.<br>Si us plau, "
@@ -973,17 +973,17 @@ msgid "Decryption failed."
 msgstr "Ha fallat el desxifrat."
 
 #: src/bin/e_config.c:2072
-msgid "The error is unknown to Enlightenment."
-msgstr "Aquest error és desconegut per a l'Enlightenment."
+msgid "The error is unknown to Moksha."
+msgstr "Aquest error és desconegut per a l'Moksha."
 
 #: src/bin/e_config.c:2094
 #, c-format
 msgid ""
-"Enlightenment has had an error while writing<br>its config file.<br>"
+"Moksha has had an error while writing<br>its config file.<br>"
 "%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 "been deleted to avoid corrupt data.<br>"
 msgstr ""
-"Enlightenment ha tingut un error mentre escrivia <br>el seu fitxer de "
+"Moksha ha tingut un error mentre escrivia <br>el seu fitxer de "
 "configuració.<br>%s<br><br>El fitxer on ha succeït l'error és:<br>"
 "%s<br><br>Aquest fitxer ha estat eliminat per a prevenir corrupció de dades."
 "<br>"
@@ -1036,9 +1036,9 @@ msgstr "Error - no hi ha suport PAM"
 
 #: src/bin/e_desklock.c:237
 msgid ""
-"No PAM support was built into Enlightenment, so<br>desk locking is disabled."
+"No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"No hi ha suport PAM en l'Enlightenment, <br> per tant el bloqueig de "
+"No hi ha suport PAM en l'Moksha, <br> per tant el bloqueig de "
 "pantalla està deshabilitat."
 
 #: src/bin/e_desklock.c:301
@@ -1249,23 +1249,23 @@ msgid "Run Error"
 msgstr "Error d'execució"
 
 #: src/bin/e_exec.c:401
-msgid "Enlightenment was unable to get current directory"
-msgstr "Enlightenment no ha pogut accedir al directori actual"
+msgid "Moksha was unable to get current directory"
+msgstr "Moksha no ha pogut accedir al directori actual"
 
 #: src/bin/e_exec.c:409
 #, c-format
-msgid "Enlightenment was unable to change to directory:<br><br>%s"
-msgstr "Enlightenment no ha pogut accedir al directori:<br><br>%s"
+msgid "Moksha was unable to change to directory:<br><br>%s"
+msgstr "Moksha no ha pogut accedir al directori:<br><br>%s"
 
 #: src/bin/e_exec.c:420
 #, c-format
-msgid "Enlightenment was unable to restore to directory:<br><br>%s"
-msgstr "Enlightenment no ha pogut restaurar al directori:<br><br>%s"
+msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgstr "Moksha no ha pogut restaurar al directori:<br><br>%s"
 
 #: src/bin/e_exec.c:469
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s"
-msgstr "Enlightenment no ha pogut crear un procés fill:<br><br>%s"
+msgid "Moksha was unable to fork a child process:<br><br>%s"
+msgstr "Moksha no ha pogut crear un procés fill:<br><br>%s"
 
 #: src/bin/e_exec.c:604
 msgid "Application run error"
@@ -1274,10 +1274,10 @@ msgstr "Error d'execució de l'aplicació"
 #: src/bin/e_exec.c:606
 #, c-format
 msgid ""
-"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"Moksha was unable to run the application:<br><br>%s<br><br>The "
 "application failed to start."
 msgstr ""
-"Enlightenment no ha pogut executar l'aplicació.<br><br>%s<br><br> "
+"Moksha no ha pogut executar l'aplicació.<br><br>%s<br><br> "
 "L'aplicació ha fallat en iniciar."
 
 #: src/bin/e_exec.c:713
@@ -1942,10 +1942,10 @@ msgstr "Combinació de tecles per a drecera de teclat"
 
 #: src/bin/e_hints.c:152
 msgid ""
-"A previous instance of Enlightenment is still active\n"
+"A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Una instància prèvia d'Enlightenment encara és activa\n"
+"Una instància prèvia d'Moksha encara és activa\n"
 "en aquesta pantalla. Aturant l'arrancada.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1954,17 +1954,17 @@ msgid "Import Error"
 msgstr "Error d'importació"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-msgid "Enlightenment was unable to import the image<br>due to a copy error."
+msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr ""
-"Enlightenment no ha pogut importar la imatge<br>a causa d'un error en la "
+"Moksha no ha pogut importar la imatge<br>a causa d'un error en la "
 "còpia."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
-"Enlightenment was unable to import the image.<br><br>Are you sure this is a "
+"Moksha was unable to import the image.<br><br>Are you sure this is a "
 "valid image?"
 msgstr ""
-"Enlightenment no ha pogut importar la imatge.<br><br>Esteu segur que és una "
+"Moksha no ha pogut importar la imatge.<br><br>Esteu segur que és una "
 "imatge vàlida?"
 
 #: src/bin/e_import_dialog.c:163
@@ -1981,9 +1981,9 @@ msgstr "Error d'importació d'imatge"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid ""
-"Enlightenment was unable to import the picture<br>due to conversion errors."
+"Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
-"L'Enlightenment no pot importar la imatge<br> a causa d'errors de conversió."
+"L'Moksha no pot importar la imatge<br> a causa d'errors de conversió."
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2248,8 +2248,8 @@ msgid "Select Border Style"
 msgstr "Selecciona estil de vora"
 
 #: src/bin/e_int_border_menu.c:1191
-msgid "Use Enlightenment Default Icon Preference"
-msgstr "Utilitza les icones per defecte de l'Enlightenment"
+msgid "Use Moksha Default Icon Preference"
+msgstr "Utilitza les icones per defecte de l'Moksha"
 
 #: src/bin/e_int_border_menu.c:1199
 msgid "Use Application Provided Icon"
@@ -2550,7 +2550,7 @@ msgstr "Les propietats de la finestra no són úniques"
 
 #: src/bin/e_int_border_remember.c:304
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window that <hilight>does not "
 "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
 "Transience, Role etc. properties<br>with more than 1 other window on the "
@@ -2561,7 +2561,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Li esteu demanant a Enlightenment que recordi aplicar, a una finestra "
+"Li esteu demanant a Moksha que recordi aplicar, a una finestra "
 "<br><hilight>que no té propietats úniques</hilight>, propietats<br>(com "
 "mida, lloc, estil de vora, etc.) que afectaran a la resta de "
 "finestres<br>Això significa que comparteix Nom/Classe, Rol... amb més d'una "
@@ -2576,12 +2576,12 @@ msgstr "No hi ha propietats que coincideixin"
 
 #: src/bin/e_int_border_remember.c:501
 msgid ""
-"You are trying to ask Enlightenment to remember to apply<br>properties (such "
+"You are trying to ask Moksha to remember to apply<br>properties (such "
 "as size, location, border style etc.) to<br>a window <hilight>without "
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Li esteu demanant a Enlightenment que recordi d'aplicar<br>propietats (com "
+"Li esteu demanant a Moksha que recordi d'aplicar<br>propietats (com "
 "mida, localització, estil de vora etc.) a la finestra <br><hilight>sense "
 "especificar com recordar-ho</hilight>.<br><br>Cal especificar com a mínim "
 "una forma de recordar aquesta finestra."
@@ -2938,98 +2938,98 @@ msgid "Show on specified Desktops"
 msgstr "Mostra als escriptoris especificats"
 
 #: src/bin/e_main.c:287
-msgid "Enlightenment cannot initialize Eina!\n"
-msgstr "Enlightenment no pot inicialitzar Eina!\n"
+msgid "Moksha cannot initialize Eina!\n"
+msgstr "Moksha no pot inicialitzar Eina!\n"
 
 #: src/bin/e_main.c:293
-msgid "Enlightenment could not create a logging domain!\n"
-msgstr "Enlightenment no pot crear un domini d'inici de sessió!\n"
+msgid "Moksha could not create a logging domain!\n"
+msgstr "Moksha no pot crear un domini d'inici de sessió!\n"
 
 #: src/bin/e_main.c:340
-msgid "Enlightenment cannot initialize Eet!\n"
-msgstr "Enlightenment no pot inicialitzar Eet!\n"
+msgid "Moksha cannot initialize Eet!\n"
+msgstr "Moksha no pot inicialitzar Eet!\n"
 
 #: src/bin/e_main.c:349
-msgid "Enlightenment cannot initialize Ecore!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore!\n"
+msgid "Moksha cannot initialize Ecore!\n"
+msgstr "Moksha no pot inicialitzar Ecore!\n"
 
 #: src/bin/e_main.c:358
-msgid "Enlightenment cannot initialize EIO!\n"
-msgstr "Enlightenment no pot inicialitzar EIO!\n"
+msgid "Moksha cannot initialize EIO!\n"
+msgstr "Moksha no pot inicialitzar EIO!\n"
 
 #: src/bin/e_main.c:370
 msgid ""
-"Enlightenment cannot set up an exit signal handler.\n"
+"Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment no pot gestionar el senyal de sortida.\n"
+"Moksha no pot gestionar el senyal de sortida.\n"
 "Potser no hi ha prou memòria?"
 
 #: src/bin/e_main.c:377
 msgid ""
-"Enlightenment cannot set up a HUP signal handler.\n"
+"Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment no pot gestionar el senyal de HUP.\n"
+"Moksha no pot gestionar el senyal de HUP.\n"
 "Potser no hi ha prou memòria?"
 
 #: src/bin/e_main.c:384
 msgid ""
-"Enlightenment cannot set up a USER signal handler.\n"
+"Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment no pot gestionar un senyal USER.\n"
+"Moksha no pot gestionar un senyal USER.\n"
 "Potser no hi ha prou memòria?"
 
 #: src/bin/e_main.c:393
-msgid "Enlightenment cannot initialize Ecore_File!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore_File!\n"
+msgid "Moksha cannot initialize Ecore_File!\n"
+msgstr "Moksha no pot inicialitzar Ecore_File!\n"
 
 #: src/bin/e_main.c:402
-msgid "Enlightenment cannot initialize Ecore_Con!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore_Con!\n"
+msgid "Moksha cannot initialize Ecore_Con!\n"
+msgstr "Moksha no pot inicialitzar Ecore_Con!\n"
 
 #: src/bin/e_main.c:411
-msgid "Enlightenment cannot initialize Ecore_Ipc!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore_Ipc!\n"
+msgid "Moksha cannot initialize Ecore_Ipc!\n"
+msgstr "Moksha no pot inicialitzar Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:422
-msgid "Enlightenment cannot initialize Ecore_X!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore_X!\n"
+msgid "Moksha cannot initialize Ecore_X!\n"
+msgstr "Moksha no pot inicialitzar Ecore_X!\n"
 
 #: src/bin/e_main.c:434
-msgid "Enlightenment cannot initialize Ecore_IMF!\n"
-msgstr "Enlightenment no ha pogut inicial Ecore_IMF!\n"
+msgid "Moksha cannot initialize Ecore_IMF!\n"
+msgstr "Moksha no ha pogut inicial Ecore_IMF!\n"
 
 #: src/bin/e_main.c:444
-msgid "Enlightenment cannot initialize Ecore_Evas!\n"
-msgstr "Enlightenment no pot inicialitzar Ecore_Evas!\n"
+msgid "Moksha cannot initialize Ecore_Evas!\n"
+msgstr "Moksha no pot inicialitzar Ecore_Evas!\n"
 
 #: src/bin/e_main.c:454
-msgid "Enlightenment cannot initialize Elementary!\n"
-msgstr "Enlightenment no pot inicialitzar Elementary!\n"
+msgid "Moksha cannot initialize Elementary!\n"
+msgstr "Moksha no pot inicialitzar Elementary!\n"
 
 #: src/bin/e_main.c:465
-msgid "Enlightenment cannot initialize Emotion!\n"
-msgstr "Enlightenment no pot inicialitzar Emotion!\n"
+msgid "Moksha cannot initialize Emotion!\n"
+msgstr "Moksha no pot inicialitzar Emotion!\n"
 
 #: src/bin/e_main.c:480
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software X11\n"
+"Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"Enlightenment ha detectat que ecore_evas no permet la renderització de X11\n"
+"Moksha ha detectat que ecore_evas no permet la renderització de X11\n"
 "a Evas. Si us plau, reviseu la instal·lació d' Evas i\n"
 "Ecore i comproveu si admeten el motor de renderització per X11."
 
 #: src/bin/e_main.c:488
 msgid ""
-"Enlightenment found ecore_evas doesn't support the Software Buffer\n"
+"Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"Enlightenment ha detectat que ecore_evas no admet d'ús del renderitzat de "
+"Moksha ha detectat que ecore_evas no admet d'ús del renderitzat de "
 "memòria intermèdia\n"
 "per programari a Evas. Si us plau, reviseu la instal·lació d'Evas i Ecore i "
 "comproveu que aquests\n"
@@ -3037,92 +3037,92 @@ msgstr ""
 "programari."
 
 #: src/bin/e_main.c:498
-msgid "Enlightenment cannot initialize Edje!\n"
-msgstr "Enlightenment no pot inicialitzar Edje!\n"
+msgid "Moksha cannot initialize Edje!\n"
+msgstr "Moksha no pot inicialitzar Edje!\n"
 
 #: src/bin/e_main.c:510
-msgid "Enlightenment cannot initialize E_Intl!\n"
-msgstr "Enlightenment no pot inicialitzar E_Intl!\n"
+msgid "Moksha cannot initialize E_Intl!\n"
+msgstr "Moksha no pot inicialitzar E_Intl!\n"
 
 #: src/bin/e_main.c:520
 msgid ""
-"Enlightenment cannot initialize its emergency alert system.\n"
+"Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Enlightenment no pot inicialitzar el sistema d'avisos d'emergència.\n"
+"Moksha no pot inicialitzar el sistema d'avisos d'emergència.\n"
 "Heu configurat la variable DISPLAY?"
 
 #: src/bin/e_main.c:539
 msgid ""
-"Enlightenment cannot create directories in your home directory.\n"
+"Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Enlightenment no pot crear carpetes en el vostre directori personal.\n"
+"Moksha no pot crear carpetes en el vostre directori personal.\n"
 "Potser no teniu un directori personal o bé el disc està ple."
 
 #: src/bin/e_main.c:549
-msgid "Enlightenment cannot set up its file registry system.\n"
-msgstr "Enlightenment no pot configurar el sistema de registre de fitxers.\n"
+msgid "Moksha cannot set up its file registry system.\n"
+msgstr "Moksha no pot configurar el sistema de registre de fitxers.\n"
 
 #: src/bin/e_main.c:558
-msgid "Enlightenment cannot set up its config system.\n"
-msgstr "Enlightenment no pot configurar el seu sistema d'accions.\n"
+msgid "Moksha cannot set up its config system.\n"
+msgstr "Moksha no pot configurar el seu sistema d'accions.\n"
 
 #: src/bin/e_main.c:571
-msgid "Enlightenment cannot initialize E_Randr!\n"
-msgstr "Enlightenment no pot inicialitzar E_Randr!\n"
+msgid "Moksha cannot initialize E_Randr!\n"
+msgstr "Moksha no pot inicialitzar E_Randr!\n"
 
 #: src/bin/e_main.c:580
-msgid "Enlightenment cannot initialize E_Xinerama!\n"
-msgstr "Enlightenment no pot inicialitzar E_Xinerama!\n"
+msgid "Moksha cannot initialize E_Xinerama!\n"
+msgstr "Moksha no pot inicialitzar E_Xinerama!\n"
 
 #: src/bin/e_main.c:589
-msgid "Enlightenment cannot set up its environment.\n"
-msgstr "Enlightenment no pot configurar el seu entorn.\n"
+msgid "Moksha cannot set up its environment.\n"
+msgstr "Moksha no pot configurar el seu entorn.\n"
 
 #: src/bin/e_main.c:605
-msgid "Enlightenment cannot set up its scale system.\n"
-msgstr "Enlightenment no pot configurar el sistema d'escalat.\n"
+msgid "Moksha cannot set up its scale system.\n"
+msgstr "Moksha no pot configurar el sistema d'escalat.\n"
 
 #: src/bin/e_main.c:614
-msgid "Enlightenment cannot set up its pointer system.\n"
-msgstr "Enlightenment no pot configurar el sistema de punter.\n"
+msgid "Moksha cannot set up its pointer system.\n"
+msgstr "Moksha no pot configurar el sistema de punter.\n"
 
 #: src/bin/e_main.c:623
 msgid ""
-"Enlightenment cannot set up paths for finding files.\n"
+"Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Enlightenment no pot establir les rutes de recerca de fitxers.\n"
+"Moksha no pot establir les rutes de recerca de fitxers.\n"
 "Potser no disposeu de prou memòria."
 
 #: src/bin/e_main.c:640
-msgid "Enlightenment cannot set up its font system.\n"
-msgstr "Enlightenment no pot configurar les fonts de sistema.\n"
+msgid "Moksha cannot set up its font system.\n"
+msgstr "Moksha no pot configurar les fonts de sistema.\n"
 
 #: src/bin/e_main.c:657
-msgid "Enlightenment cannot set up its theme system.\n"
-msgstr "Enlightenment no pot configurar el sistema de temes.\n"
+msgid "Moksha cannot set up its theme system.\n"
+msgstr "Moksha no pot configurar el sistema de temes.\n"
 
 #: src/bin/e_main.c:673
-msgid "Enlightenment cannot set up its init screen.\n"
-msgstr "Enlightenment no pot configurar la pantalla d'inici.\n"
+msgid "Moksha cannot set up its init screen.\n"
+msgstr "Moksha no pot configurar la pantalla d'inici.\n"
 
 #: src/bin/e_main.c:688
 msgid "Starting International Support"
 msgstr "Iniciant suport internacional"
 
 #: src/bin/e_main.c:692
-msgid "Enlightenment cannot set up its intl system.\n"
-msgstr "Enlightenment no pot configurar el sistema de suport internacional.\n"
+msgid "Moksha cannot set up its intl system.\n"
+msgstr "Moksha no pot configurar el sistema de suport internacional.\n"
 
 #: src/bin/e_main.c:701
 msgid ""
-"Enlightenment cannot initialize the FDO desktop system.\n"
+"Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Enlightenment no pot inicialitzar el sistema d'escriptori FDO.\n"
+"Moksha no pot inicialitzar el sistema d'escriptori FDO.\n"
 "Potser no teniu permisos a ~/.cache/efreet o \n"
 "no disposeu de prou memòria o espai de disc."
 
@@ -3132,10 +3132,10 @@ msgstr "Configura pantalles"
 
 #: src/bin/e_main.c:730
 msgid ""
-"Enlightenment set up window management for all the screens on your system\n"
+"Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"Enlightenment ha fallat quan intentava configurar les pantalles del sistema\n"
+"Moksha ha fallat quan intentava configurar les pantalles del sistema\n"
 "Potser hi ha un altre gestor de finestres actiu?\n"
 
 #: src/bin/e_main.c:738
@@ -3147,48 +3147,48 @@ msgid "Setup Backlight"
 msgstr "Configura llum de fons"
 
 #: src/bin/e_main.c:749
-msgid "Enlightenment cannot configure the backlight.\n"
-msgstr "Enlightenment no pot configurar la llum de fons.\n"
+msgid "Moksha cannot configure the backlight.\n"
+msgstr "Moksha no pot configurar la llum de fons.\n"
 
 #: src/bin/e_main.c:756
 msgid "Setup Screensaver"
 msgstr "Configura estalvi de pantalla"
 
 #: src/bin/e_main.c:760
-msgid "Enlightenment cannot configure the X screensaver.\n"
-msgstr "Enlightenment no pot configurar l'estalvi de pantalla.\n"
+msgid "Moksha cannot configure the X screensaver.\n"
+msgstr "Moksha no pot configurar l'estalvi de pantalla.\n"
 
 #: src/bin/e_main.c:767
 msgid "Setup DPMS"
 msgstr "Configura DPMS"
 
 #: src/bin/e_main.c:771
-msgid "Enlightenment cannot configure the DPMS settings.\n"
-msgstr "Enlightenment no pot configurar les opcions DPMS.\n"
+msgid "Moksha cannot configure the DPMS settings.\n"
+msgstr "Moksha no pot configurar les opcions DPMS.\n"
 
 #: src/bin/e_main.c:778
 msgid "Setup Powersave Modes"
 msgstr "Configura modes d'estalvi d'energia"
 
 #: src/bin/e_main.c:782
-msgid "Enlightenment cannot set up its powersave modes.\n"
-msgstr "Enlightenment no pot configurar el mòdul d'estalvi d'energia.\n"
+msgid "Moksha cannot set up its powersave modes.\n"
+msgstr "Moksha no pot configurar el mòdul d'estalvi d'energia.\n"
 
 #: src/bin/e_main.c:789
 msgid "Setup Desklock"
 msgstr "Configura bloqueig escriptori"
 
 #: src/bin/e_main.c:793
-msgid "Enlightenment cannot set up its desk locking system.\n"
-msgstr "Enlightenment no pot configurar el sistema de bloqueig d'escriptori.\n"
+msgid "Moksha cannot set up its desk locking system.\n"
+msgstr "Moksha no pot configurar el sistema de bloqueig d'escriptori.\n"
 
 #: src/bin/e_main.c:800
 msgid "Setup Popups"
 msgstr "Configura finestres emergents"
 
 #: src/bin/e_main.c:804
-msgid "Enlightenment cannot set up its popup system.\n"
-msgstr "Enlightenment no pot configurar el sistema de finestres emergents.\n"
+msgid "Moksha cannot set up its popup system.\n"
+msgstr "Moksha no pot configurar el sistema de finestres emergents.\n"
 
 #: src/bin/e_main.c:816
 msgid "Setup Message Bus"
@@ -3203,154 +3203,154 @@ msgid "Setup System Controls"
 msgstr "Configura controls del sistema"
 
 #: src/bin/e_main.c:833
-msgid "Enlightenment cannot initialize the System Command system.\n"
+msgid "Moksha cannot initialize the System Command system.\n"
 msgstr ""
-"Enlightenment no pot inicialitzar el sistema de comandes del sistema.\n"
+"Moksha no pot inicialitzar el sistema de comandes del sistema.\n"
 
 #: src/bin/e_main.c:840
 msgid "Setup Actions"
 msgstr "Configura accions"
 
 #: src/bin/e_main.c:844
-msgid "Enlightenment cannot set up its actions system.\n"
-msgstr "Enlightenment no pot configurar el seu sistema d'accions.\n"
+msgid "Moksha cannot set up its actions system.\n"
+msgstr "Moksha no pot configurar el seu sistema d'accions.\n"
 
 #: src/bin/e_main.c:851
 msgid "Setup Execution System"
 msgstr "Configura sistema d'execució"
 
 #: src/bin/e_main.c:855
-msgid "Enlightenment cannot set up its exec system.\n"
-msgstr "Enlightenment no pot configurar el sistema d'execució.\n"
+msgid "Moksha cannot set up its exec system.\n"
+msgstr "Moksha no pot configurar el sistema d'execució.\n"
 
 #: src/bin/e_main.c:866
 msgid "Setup Filemanager"
 msgstr "Configura gestor de fitxers"
 
 #: src/bin/e_main.c:870
-msgid "Enlightenment cannot initialize the File manager.\n"
-msgstr "Enlightenment no pot inicialitzar el gestor de fitxers.\n"
+msgid "Moksha cannot initialize the File manager.\n"
+msgstr "Moksha no pot inicialitzar el gestor de fitxers.\n"
 
 #: src/bin/e_main.c:877
 msgid "Setup Message System"
 msgstr "Configura sistema de missatges"
 
 #: src/bin/e_main.c:881
-msgid "Enlightenment cannot set up its msg system.\n"
-msgstr "Enlightenment no pot configurar el sistema de missatges.\n"
+msgid "Moksha cannot set up its msg system.\n"
+msgstr "Moksha no pot configurar el sistema de missatges.\n"
 
 #: src/bin/e_main.c:888
 msgid "Setup DND"
 msgstr "Configura DND"
 
 #: src/bin/e_main.c:892
-msgid "Enlightenment cannot set up its dnd system.\n"
-msgstr "Enlightenment no pot utilitzar el sistema dnd.\n"
+msgid "Moksha cannot set up its dnd system.\n"
+msgstr "Moksha no pot utilitzar el sistema dnd.\n"
 
 #: src/bin/e_main.c:899
 msgid "Setup Grab Input Handling"
 msgstr "Configura gestió de la captura d'entrades"
 
 #: src/bin/e_main.c:903
-msgid "Enlightenment cannot set up its grab input handling system.\n"
-msgstr "Enlightenment no pot configurar la gestió de la captura d'entrada.\n"
+msgid "Moksha cannot set up its grab input handling system.\n"
+msgstr "Moksha no pot configurar la gestió de la captura d'entrada.\n"
 
 #: src/bin/e_main.c:910
 msgid "Setup Modules"
 msgstr "Configura mòduls"
 
 #: src/bin/e_main.c:914 src/bin/e_main.c:1096
-msgid "Enlightenment cannot set up its module system.\n"
-msgstr "Enlightenment no pot configurar el sistema de mòduls.\n"
+msgid "Moksha cannot set up its module system.\n"
+msgstr "Moksha no pot configurar el sistema de mòduls.\n"
 
 #: src/bin/e_main.c:921
 msgid "Setup Remembers"
 msgstr "Configura memorització"
 
 #: src/bin/e_main.c:925
-msgid "Enlightenment cannot setup remember settings.\n"
-msgstr "Enlightenment no pot inicialitzar la configuració de memorització.\n"
+msgid "Moksha cannot setup remember settings.\n"
+msgstr "Moksha no pot inicialitzar la configuració de memorització.\n"
 
 #: src/bin/e_main.c:932
 msgid "Setup Color Classes"
 msgstr "Configura classes de color"
 
 #: src/bin/e_main.c:936
-msgid "Enlightenment cannot set up its color class system.\n"
-msgstr "Enlightenment no pot configurar el sistema de classes de color.\n"
+msgid "Moksha cannot set up its color class system.\n"
+msgstr "Moksha no pot configurar el sistema de classes de color.\n"
 
 #: src/bin/e_main.c:943
 msgid "Setup Gadcon"
 msgstr "Configura control de ginys"
 
 #: src/bin/e_main.c:947
-msgid "Enlightenment cannot set up its gadget control system.\n"
-msgstr "Enlightenment no pot configurar el sistema de control de ginys.\n"
+msgid "Moksha cannot set up its gadget control system.\n"
+msgstr "Moksha no pot configurar el sistema de control de ginys.\n"
 
 #: src/bin/e_main.c:954
 msgid "Setup Wallpaper"
 msgstr "Configura fons de pantalla"
 
 #: src/bin/e_main.c:958
-msgid "Enlightenment cannot set up its desktop background system.\n"
-msgstr "Enlightenment no pot configurar el fons de pantalla d'escriptori.\n"
+msgid "Moksha cannot set up its desktop background system.\n"
+msgstr "Moksha no pot configurar el fons de pantalla d'escriptori.\n"
 
 #: src/bin/e_main.c:965
 msgid "Setup Mouse"
 msgstr "Configura ratolí"
 
 #: src/bin/e_main.c:969
-msgid "Enlightenment cannot configure the mouse settings.\n"
-msgstr "Enlightenment no pot configurar les preferències del ratolí.\n"
+msgid "Moksha cannot configure the mouse settings.\n"
+msgstr "Moksha no pot configurar les preferències del ratolí.\n"
 
 #: src/bin/e_main.c:976
-msgid "Enlightenment cannot setup XKB Keyboard layouts.\n"
-msgstr "Enlightenment no pot configurar la distribució del teclat XKB.\n"
+msgid "Moksha cannot setup XKB Keyboard layouts.\n"
+msgstr "Moksha no pot configurar la distribució del teclat XKB.\n"
 
 #: src/bin/e_main.c:982
 msgid "Setup Bindings"
 msgstr "Configura dreceres"
 
 #: src/bin/e_main.c:986
-msgid "Enlightenment cannot set up its bindings system.\n"
-msgstr "Enlightenment no pot configurar el sistema de dreceres.\n"
+msgid "Moksha cannot set up its bindings system.\n"
+msgstr "Moksha no pot configurar el sistema de dreceres.\n"
 
 #: src/bin/e_main.c:993
 msgid "Setup Thumbnailer"
 msgstr "Configura miniatures"
 
 #: src/bin/e_main.c:997
-msgid "Enlightenment cannot initialize the Thumbnailing system.\n"
-msgstr "Enlightenment no pot configurar el sistema de miniatures.\n"
+msgid "Moksha cannot initialize the Thumbnailing system.\n"
+msgstr "Moksha no pot configurar el sistema de miniatures.\n"
 
 #: src/bin/e_main.c:1006
-msgid "Enlightenment cannot initialize the Icon Cache system.\n"
-msgstr "Enlightenment no pot establir el sistema d'icones memòria cau.\n"
+msgid "Moksha cannot initialize the Icon Cache system.\n"
+msgstr "Moksha no pot establir el sistema d'icones memòria cau.\n"
 
 #: src/bin/e_main.c:1015
-msgid "Enlightenment cannot initialize the XSettings system.\n"
+msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr ""
-"Enlightenment no pot inicialitzar les preferències del sistema XSettings.\n"
+"Moksha no pot inicialitzar les preferències del sistema XSettings.\n"
 
 #: src/bin/e_main.c:1024
-msgid "Enlightenment cannot initialize the Update system.\n"
-msgstr "Enlightenment no pot inicialitzar l'actualització del sistema.\n"
+msgid "Moksha cannot initialize the Update system.\n"
+msgstr "Moksha no pot inicialitzar l'actualització del sistema.\n"
 
 #: src/bin/e_main.c:1031
 msgid "Setup Desktop Environment"
 msgstr "Configura entorn escriptori"
 
 #: src/bin/e_main.c:1035
-msgid "Enlightenment cannot initialize its desktop environment.\n"
-msgstr "Enlightenment no pot inicialitzar l'entorn d'escriptori.\n"
+msgid "Moksha cannot initialize its desktop environment.\n"
+msgstr "Moksha no pot inicialitzar l'entorn d'escriptori.\n"
 
 #: src/bin/e_main.c:1042
 msgid "Setup File Ordering"
 msgstr "Configura ordre fitxers"
 
 #: src/bin/e_main.c:1046
-msgid "Enlightenment cannot set up its order file system.\n"
-msgstr "Enlightenment no pot configurar el sistema d'ordre de fitxers.\n"
+msgid "Moksha cannot set up its order file system.\n"
+msgstr "Moksha no pot configurar el sistema d'ordre de fitxers.\n"
 
 #: src/bin/e_main.c:1061
 msgid "Load Modules"
@@ -3443,23 +3443,23 @@ msgstr "Provant el suport de format"
 
 #: src/bin/e_main.c:1612
 msgid ""
-"Enlightenment found Evas can't create a buffer canvas. Please check\n"
+"Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"Enlightenment ha trobat que Evas no pot crear la memòria intermèdia canvas. "
+"Moksha ha trobat que Evas no pot crear la memòria intermèdia canvas. "
 "Si us plau\n"
 "comproveu que Evas permet el motor de memòria intermèdia per programari.\n"
 
 #: src/bin/e_main.c:1624
 msgid ""
-"Enlightenment found Evas can't load SVG files. Check Evas has SVG loader "
+"Moksha found Evas can't load SVG files. Check Evas has SVG loader "
 "support.\n"
 msgstr ""
 "Evas no pot carregar fitxers SVG. Comproveu que Evas tingui suport per SVG.\n"
 
 #: src/bin/e_main.c:1634
 msgid ""
-"Enlightenment found Evas can't load JPEG files. Check Evas has JPEG loader "
+"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
 "Evas no pot carregar fitxers JPEG. Comproveu que Evas tingui suport per "
@@ -3467,21 +3467,21 @@ msgstr ""
 
 #: src/bin/e_main.c:1644
 msgid ""
-"Enlightenment found Evas can't load PNG files. Check Evas has PNG loader "
+"Moksha found Evas can't load PNG files. Check Evas has PNG loader "
 "support.\n"
 msgstr ""
 "Evas no pot carregar fitxers PNG. Comproveu que Evas tingui suport per PNG.\n"
 
 #: src/bin/e_main.c:1654
 msgid ""
-"Enlightenment found Evas can't load EET files. Check Evas has EET loader "
+"Moksha found Evas can't load EET files. Check Evas has EET loader "
 "support.\n"
 msgstr ""
 "Evas no pot carregar fitxers EET. Comproveu que Evas tingui suport per EET.\n"
 
 #: src/bin/e_main.c:1668
 msgid ""
-"Enlightenment found Evas can't load the 'Sans' font. Check Evas has "
+"Moksha found Evas can't load the 'Sans' font. Check Evas has "
 "fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
@@ -3491,37 +3491,37 @@ msgstr ""
 #: src/bin/e_main.c:1876
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. There was an "
+"Moksha crashed early on start and has<br>been restarted. There was an "
 "error loading the<br>module named: %s. This module has been disabled<br>and "
 "will not be loaded."
 msgstr ""
-"Enlightenment ha fallat poc després d'arrencar i <br>serà reiniciat. Hi "
+"Moksha ha fallat poc després d'arrencar i <br>serà reiniciat. Hi "
 "havia un error carregant el<br> mòdul anomenat:%s. Aquest mòdul serà "
 "desactivat<br> i no tornarà a ser carregat."
 
 #: src/bin/e_main.c:1881 src/bin/e_main.c:1898
-msgid "Enlightenment crashed early on start and has been restarted"
-msgstr "Enlightenment ha fallat poc després d'arrencar i serà reiniciat."
+msgid "Moksha crashed early on start and has been restarted"
+msgstr "Moksha ha fallat poc després d'arrencar i serà reiniciat."
 
 #: src/bin/e_main.c:1882
 #, c-format
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>There was an "
+"Moksha crashed early on start and has been restarted.<br>There was an "
 "error loading the module named: %s<br><br>This module has been disabled and "
 "will not be loaded."
 msgstr ""
-"Enlightenment ha fallat poc després d'arrencar i <br>serà reiniciat. Hi "
+"Moksha ha fallat poc després d'arrencar i <br>serà reiniciat. Hi "
 "havia un error carregant el<br> mòdul anomenat:%s. Aquest mòdul serà "
 "desactivat<br> i no tornarà a ser carregat."
 
 #: src/bin/e_main.c:1891
 msgid ""
-"Enlightenment crashed early on start and has<br>been restarted. All modules "
+"Moksha crashed early on start and has<br>been restarted. All modules "
 "have been disabled<br>and will not be loaded to help remove any "
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"Enlightenment ha fallat poc després d'arrencar i serà \n"
+"Moksha ha fallat poc després d'arrencar i serà \n"
 "reiniciat. Tots els mòduls han estat desactivats\n"
 "i no seran carregats per ajudar a eliminar qualsevol problema\n"
 " de mòduls en la vostra configuració. El diàleg de configuració\n"
@@ -3530,12 +3530,12 @@ msgstr ""
 
 #: src/bin/e_main.c:1899
 msgid ""
-"Enlightenment crashed early on start and has been restarted.<br>All modules "
+"Moksha crashed early on start and has been restarted.<br>All modules "
 "have been disabled and will not be loaded to help<br>remove any problem "
 "modules from your configuration.<br><br>The module configuration dialog "
 "should let you select your<br>modules again."
 msgstr ""
-"Enlightenment ha fallat poc després d'arrencar i serà reiniciat.<br> Tots "
+"Moksha ha fallat poc després d'arrencar i serà reiniciat.<br> Tots "
 "els mòduls han estat desactivats i no es podran carregar<br> per tal de "
 "poder eliminar qualsevol problema de la vostra configuració.<br><br>El "
 "diàleg de configuració de mòduls hauria de permetre seleccionar<br> els "
@@ -3576,17 +3576,17 @@ msgstr "El mòdul no conté totes les funcions necessàries"
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Enlightenment is: "
+"module API version of: %i.<br>The module API advertized by Moksha is: "
 "%i.<br>"
 msgstr ""
 "Error del mòdul API<br>Error iniciant el mòdul: %s<br>Necessita una versió "
-"mínima %i del mòdul API.<br>El mòdul API que ha detectat Enlightenment és: "
+"mínima %i del mòdul API.<br>El mòdul API que ha detectat Moksha és: "
 "%i.<br>"
 
 #: src/bin/e_module.c:201
 #, c-format
-msgid "Enlightenment %s Module"
-msgstr "Mòdul %s d'Enlightenment"
+msgid "Moksha %s Module"
+msgstr "Mòdul %s d'Moksha"
 
 #: src/bin/e_module.c:528
 msgid "What action should be taken with this module?<br>"
@@ -3601,11 +3601,11 @@ msgstr "Manté"
 
 #: src/bin/e_module.c:783
 msgid ""
-"The following modules are not standard ones for<br>Enlightenment and may "
+"The following modules are not standard ones for<br>Moksha and may "
 "cause bugs and crashes.<br>Please remove them before reporting any bugs."
 "<br><br>The module list is as follows:<br><br>"
 msgstr ""
-"Els següents mòduls no són estàndards per a<br>Enlightenment i poden causar "
+"Els següents mòduls no són estàndards per a<br>Moksha i poden causar "
 "errors i aturades del sistema.<br>Si us plau, elimineu-los abans de "
 "notificar errors.<br><br>La llista de mòduls és la següent:<br><br>"
 
@@ -3817,8 +3817,8 @@ msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Sortida en procés.<br><hilight>Si us plau, espereu.</hilight>"
 
 #: src/bin/e_sys.c:580 src/bin/e_sys.c:635
-msgid "Enlightenment is busy with another request"
-msgstr "Enlightenment està ocupat amb una altra petició"
+msgid "Moksha is busy with another request"
+msgstr "Moksha està ocupat amb una altra petició"
 
 #: src/bin/e_sys.c:585
 msgid ""
@@ -3947,15 +3947,15 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"La vostra versió d'Enlightenment<br>no és la darrera disponible.<br>L'última "
+"La vostra versió d'Moksha<br>no és la darrera disponible.<br>L'última "
 "versió és:<br><br>%s<br><br>Si us plau visiteu www.enlightenment.org<br>o "
 "actualitzeu el sistema de paquets<br>per a obtenir la nova versió."
 
 #: src/bin/e_utils.c:189 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
-msgid "Enlightenment was unable to fork a child process:<br><br>%s<br>"
-msgstr "Enlightenment no ha pogut crear un procés fill:<br><br>%s<br>"
+msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
+msgstr "Moksha no ha pogut crear un procés fill:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:245
 msgid "Cannot exit - immortal windows."
@@ -3964,11 +3964,11 @@ msgstr "No es pot sortir - finestres immortals."
 #: src/bin/e_utils.c:246
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Enlightenment will not allow itself to exit until these "
+"means<br>that Moksha will not allow itself to exit until these "
 "windows have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Algunes finestres s'han deixat obertes amb el bloqueig activat (Lifespan "
-"lock). Això significa<br> que Enlightenment no podrà sortir mentre aquestes "
+"lock). Això significa<br> que Moksha no podrà sortir mentre aquestes "
 "finestres<br> no s'hagin tancat o s'hagi eliminat el bloqueig.<br>"
 
 #: src/bin/e_utils.c:860
@@ -5805,17 +5805,17 @@ msgstr "Error en la importació de la configuració del mètode d'entrada"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
 msgid ""
-"Enlightenment was unable to import the configuration.<br><br>Are you sure "
+"Moksha was unable to import the configuration.<br><br>Are you sure "
 "this is really a valid configuration?"
 msgstr ""
-"Enlightenment no ha pogut importar la configuració.<br><br> Esteu segur que "
+"Moksha no ha pogut importar la configuració.<br><br> Esteu segur que "
 "aquesta és una configuració vàlida?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid ""
-"Enlightenment was unable to import the configuration<br>due to a copy error."
+"Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
-"Enlightenment no ha pogut importar la configuració<br>per un error de còpia."
+"Moksha no ha pogut importar la configuració<br>per un error de còpia."
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -6123,8 +6123,8 @@ msgid "Menu Settings"
 msgstr "Preferències del menú"
 
 #: src/modules/conf_menus/e_int_config_menus.c:174
-msgid "Enlightenment Default"
-msgstr "Paràmetres per defecte Enlightenment"
+msgid "Moksha Default"
+msgstr "Paràmetres per defecte Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:182
 msgid "Personal Default"
@@ -6261,8 +6261,8 @@ msgid "Messages"
 msgstr "Missatges"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-msgid "Enlightenment Paths"
-msgstr "Rutes Enlightenment"
+msgid "Moksha Paths"
+msgstr "Rutes Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7123,24 +7123,24 @@ msgstr "Error en la importació del tema"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
 msgid ""
-"Enlightenment was unable to import the theme.<br><br>Are you sure this is "
+"Moksha was unable to import the theme.<br><br>Are you sure this is "
 "really a valid theme?"
 msgstr ""
-"Enlightenment no ha pogut importar el tema.<br><br> Esteu segur que és un "
+"Moksha no ha pogut importar el tema.<br><br> Esteu segur que és un "
 "tema vàlid ?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
-msgid "Enlightenment was unable to import the theme<br>due to a copy error."
+msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
-"Enlightenment no ha pogut importar el tema<br>a causa d'un error de còpia."
+"Moksha no ha pogut importar el tema<br>a causa d'un error de còpia."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:61
 msgid "Application Theme Settings"
 msgstr "Preferències tema aplicacions"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:488
-msgid "Match Enlightenment theme if possible"
-msgstr "Adaptar-se al tema Enlightenment si és possible"
+msgid "Match Moksha theme if possible"
+msgstr "Adaptar-se al tema Moksha si és possible"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:497
 msgid "Enable X Application Settings"
@@ -7155,8 +7155,8 @@ msgid "Enable icon theme for applications"
 msgstr "Activa tema d'icones per aplicacions"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:536
-msgid "Enable icon theme for Enlightenment"
-msgstr "Activa tema d'icones per Enlightenment"
+msgid "Enable icon theme for Moksha"
+msgstr "Activa tema d'icones per Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Application Theme"
@@ -9306,8 +9306,8 @@ msgid "Please Wait..."
 msgstr "Si us plau, espereu ..."
 
 #: src/modules/wizard/e_wizard.c:315
-msgid "Welcome to Enlightenment"
-msgstr "Benvingut a Enlightenment"
+msgid "Welcome to Moksha"
+msgstr "Benvingut a Moksha"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
 #: src/modules/wizard/page_020.c:52
@@ -9315,7 +9315,7 @@ msgid "Select one"
 msgstr "Seleccioneu-ne un"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Enlightenment Settings!"
+msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
 #: src/modules/wizard/page_040.c:36
@@ -9353,14 +9353,14 @@ msgid ""
 "<br>It is highly recommended to<br>enable this for a better<br>experience, "
 "but it comes at a<br>cost. It requires extra CPU<br>or a GLSL Shader capable "
 "GPU<br>with well written drivers.<br>It also will add between 10 to<br>100 "
-"MB to the memory needed<br>for Enlightenment."
+"MB to the memory needed<br>for Moksha."
 msgstr ""
 "Composició ofereix translucidesa<br>per les finestres, efectes de finestra "
 "com ara<br>esvaïment cap endins o cap enfora i ampliació<br>quan apareixen o "
 "desapareixen.<br>Es recomana ferventment<br>activar-ho per a tenir una "
 "<br>millor experiència, però també té un<br>cost. Necessita més CPU<br>o una "
 "GPU que permeti ombrejat GLSL<br>amb uns controladors correctes.<br>També "
-"Enlightenment afegirà de 10 a<br>100 MB de memòria.<br>"
+"Moksha afegirà de 10 a<br>100 MB de memòria.<br>"
 
 #: src/modules/wizard/page_150.c:117
 msgid "Enable Compositing"
@@ -9384,10 +9384,10 @@ msgstr "Comprova actualitzacions disponibles"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
-"Enlightenment can check for new<br>versions, updates, security "
+"Moksha can check for new<br>versions, updates, security "
 "and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, "
 "because it lets<br>you know about available bug fixes and<br>security fixes "
-"when they happen. As a<br>result, Enlightenment will connect "
+"when they happen. As a<br>result, Moksha will connect "
 "to<br>enlightenment.org and transmit some<br>information, much like any web "
 "browser<br>might do. No personal information such as<br>username, password "
 "or any personal files<br>will be transmitted. If you don't like this,"
@@ -9395,11 +9395,11 @@ msgid ""
 "disable this as it<br>may leave you vulnerable or having to live<br>with "
 "bugs."
 msgstr ""
-"Enlightenment pot comprovar la disponibilitat de<br> noves versions, "
+"Moksha pot comprovar la disponibilitat de<br> noves versions, "
 "actualitzacions, pegats de seguretat i <br> errors, així com també "
 "complements.<br><br>Això és molt útil, perquè això permet<br>saber si hi ha "
 "solucions pels errors i <br> problemes de seguretat que apareguin. Per "
-"aquest<br> motiu, Enlightenment pot connectar a<br>enlightenment.org i "
+"aquest<br> motiu, Moksha pot connectar a<br>enlightenment.org i "
 "transmetre alguna<br> informació, tal com ho fa per exemple qualsevol "
 "navegador.<br>NO es transmetrà cap dada privada com ara<br> nom, contrasenya "
 "o qualsevol altre tipus de fitxers personals<br>. Si no ho voleu,<br> si us "
@@ -10166,11 +10166,11 @@ msgstr "Entra al mode presentació"
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Enlightenment is in <b>presentation</b> mode.<br>During presentation mode, "
+"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
 "screen saver, lock and power saving will be disabled so you are not "
 "interrupted."
 msgstr ""
-"Enlightenment és en mode <b>presentació</b>.<br>Durant el mode presentació, "
+"Moksha és en mode <b>presentació</b>.<br>Durant el mode presentació, "
 "l'estalvi de pantalla, el bloqueig i l'estalvi d'energia seran desactivats "
 "perquè no hi hagi interrupcions."
 
@@ -10192,10 +10192,10 @@ msgstr "Entra mode desconnectat"
 
 #: src/modules/notification/e_mod_main.c:90
 msgid ""
-"Enlightenment is in <b>offline</b> mode.<br>During offline mode, modules "
+"Moksha is in <b>offline</b> mode.<br>During offline mode, modules "
 "that use network will stop polling remote services."
 msgstr ""
-"Enlightenment és en mode <b>desconnectat</b>.<br>Mentre estigui desconnectat "
+"Moksha és en mode <b>desconnectat</b>.<br>Mentre estigui desconnectat "
 "els mòduls que utilitzen la xarxa aturaran els serveis de sondeig remot."
 
 #: src/modules/notification/e_mod_main.c:96
@@ -10314,8 +10314,8 @@ msgstr "Utilitza geometria per a monitors múltiples"
 #~ msgid "Setup Toolbars"
 #~ msgstr "Configura barra d'eines"
 
-#~ msgid "Enlightenment cannot set up its toolbars.\n"
-#~ msgstr "Enlightenment no pot configurar la barra d'eines.\n"
+#~ msgid "Moksha cannot set up its toolbars.\n"
+#~ msgstr "Moksha no pot configurar la barra d'eines.\n"
 
 #~ msgid "Edit window matches"
 #~ msgstr "Edita coincidències de finestres"
@@ -10650,12 +10650,12 @@ msgstr "Utilitza geometria per a monitors múltiples"
 
 #~ msgid ""
 #~ "Module API Error<br>Error initializing Module: %s<br>It requires a module "
-#~ "API version of: %i.<br>The module API advertized by Enlightenment is: %i."
+#~ "API version of: %i.<br>The module API advertized by Moksha is: %i."
 #~ "<br>"
 #~ msgstr ""
 #~ "Error de l'API del mòdul<br> Error inicialitzant el mòdul:%s<br>Necessita "
 #~ "una versió del mòdul API de: %i.<br> L'API del mòdul informat per "
-#~ "l'Enlightenment és: %i.<br>"
+#~ "l'Moksha és: %i.<br>"
 
 #~ msgid "Volume"
 #~ msgstr "Volum"
@@ -10775,13 +10775,13 @@ msgstr "Utilitza geometria per a monitors múltiples"
 #~ msgstr "Quan el ratolí entri a una finestra"
 
 #~ msgid ""
-#~ "<title>Copyright &copy; 2000-2014, by the Enlightenment Development Team</"
+#~ "<title>Copyright &copy; 2000-2014, by the Moksha Development Team</"
 #~ "><br><br>We hope you enjoy using this software as much as we enjoyed "
 #~ "writing it.<br><br>To contact us please visit:<br><hilight>http://www."
 #~ "enlightenment.org</><br><br>"
 #~ msgstr ""
 #~ "<title>Copyright &copy; 2000-2014, per l'Equip de Desenvolupament "
-#~ "d'Enlightenment</><br><br>Esperem que gaudiu utilitzant aquest programari "
+#~ "d'Moksha</><br><br>Esperem que gaudiu utilitzant aquest programari "
 #~ "tant com nosaltres hem gaudit escrivint-lo.<br><br>Per contactar amb "
 #~ "nosaltres visiteu:<br><hilight>http://www.enlightenment.org</><br><br>"
 
@@ -10823,8 +10823,8 @@ msgstr "Utilitza geometria per a monitors múltiples"
 #~ msgid "Composite Match Settings"
 #~ msgstr "Opcions de composició"
 
-#~ msgid "Enlightenment cannot create a compositor.\n"
-#~ msgstr "Enlightenment no pot crear un compositor.\n"
+#~ msgid "Moksha cannot create a compositor.\n"
+#~ msgstr "Moksha no pot crear un compositor.\n"
 
 #~ msgid "Randr Settings Upgraded"
 #~ msgstr "Configuració Randr actualitzada"
