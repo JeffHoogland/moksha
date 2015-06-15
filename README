@@ -3,6 +3,11 @@ Moksha 0.1.0
 Requirements:
 -------------
 
+Dependencies for building under Bodhi:
+  doxygen pkg-config libglib2.0-dev libssl-dev libpng12-dev libharfbuzz-dev
+  libfribidi-dev libfontconfig1-dev libluajit-5.1-dev libsndfile1-dev
+  libpulse-dev libbullet-dev libxcb1-dev libxcb-shape0-dev libxcb-keysyms1-dev
+
 Must:
   libc libm libX11 libXext evas ecore ecore-evas ecore-file ecore-ipc ecore-con
   ecore-imf ecore-x edje eet embryo efreet e_dbus eio
