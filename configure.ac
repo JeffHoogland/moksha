@@ -996,7 +996,6 @@ src/modules/syscon/module.desktop
 src/modules/everything/module.desktop
 src/modules/everything/everything.pc
 src/modules/systray/module.desktop
-src/modules/comp/module.desktop
 src/modules/physics/module.desktop
 src/modules/quickaccess/module.desktop
 src/modules/shot/module.desktop

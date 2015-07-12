@@ -178,10 +178,6 @@ if USE_MODULE_SYSTRAY
 include Makefile_systray.am
 endif
 
-if USE_MODULE_COMP
-include Makefile_comp.am
-endif
-
 if USE_MODULE_PHYSICS
 include Makefile_physics.am
 endif
