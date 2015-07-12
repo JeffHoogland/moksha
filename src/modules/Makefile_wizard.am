@@ -30,7 +30,6 @@ wizardpkg_LTLIBRARIES  = wizard/module.la \
 			 wizard/page_120.la \
 			 wizard/page_130.la \
 			 wizard/page_140.la \
-			 wizard/page_150.la \
 			 wizard/page_160.la \
 			 wizard/page_170.la \
 			 wizard/page_180.la \
@@ -74,28 +73,6 @@ wizard_page_120_la_SOURCES        = wizard/page_120.c
 wizard_page_130_la_SOURCES        = wizard/page_130.c
 
 wizard_page_140_la_SOURCES        = wizard/page_140.c
-
-wizard/e_mod_comp_main.h: $(abs_top_srcdir)/src/modules/comp/e_mod_main.h
-	$(AM_V_GEN) $(LN_S) -f $< $@
-
-wizard/e_mod_comp_cfdata.h: $(abs_top_srcdir)/src/modules/comp/e_mod_comp_cfdata.h
-	$(AM_V_GEN) $(LN_S) -f $< $@
-
-wizard/e_mod_comp_cfdata.c: $(top_srcdir)/src/modules/comp/e_mod_comp_cfdata.c wizard/e_mod_comp_main.h wizard/e_mod_comp_cfdata.h
-	$(AM_V_GEN) $(SED) 's/e_mod_main\.h/e_mod_comp_main.h/g' $< > $@
-
-$(wizard_page_150_la_OBJECTS): wizard/e_mod_comp_cfdata.c
-
-CLEANFILES += wizard/e_mod_comp_cfdata.c \
-	      wizard/e_mod_comp_cfdata.h \
-	      wizard/e_mod_comp_main.h
-
-wizard_page_150_la_CPPFLAGS       = $(AM_CPPFLAGS) -I$(builddir)/wizard/
-wizard_page_150_la_SOURCES        = wizard/page_150.c
-nodist_wizard_page_150_la_SOURCES = wizard/e_mod_comp_cfdata.c \
-				    wizard/e_mod_comp_cfdata.h \
-				    wizard/e_mod_comp_main.h
-
 
 wizard_page_160_la_SOURCES        = wizard/page_160.c
 
