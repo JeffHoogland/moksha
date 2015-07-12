@@ -680,9 +680,6 @@ USE_MODULE_EVERYTHING_TRUE
 USE_MODULE_SYSCON
 USE_MODULE_SYSCON_FALSE
 USE_MODULE_SYSCON_TRUE
-USE_MODULE_ILLUME2
-USE_MODULE_ILLUME2_FALSE
-USE_MODULE_ILLUME2_TRUE
 USE_MODULE_CONNMAN
 USE_MODULE_CONNMAN_FALSE
 USE_MODULE_CONNMAN_TRUE
@@ -1127,7 +1124,6 @@ enable_conf_interaction
 enable_gadman
 enable_mixer
 enable_connman
-enable_illume2
 enable_syscon
 enable_everything
 enable_systray
@@ -1902,7 +1898,6 @@ Optional Features:
   --disable-gadman        optional module gadman @<:@default=enabled@:>@
   --disable-mixer         optional module mixer @<:@default=enabled@:>@
   --disable-connman       optional module connman @<:@default=enabled@:>@
-  --disable-illume2       optional module illume2 @<:@default=enabled@:>@
   --disable-syscon        optional module syscon @<:@default=enabled@:>@
   --disable-everything    optional module everything @<:@default=enabled@:>@
   --disable-systray       optional module systray @<:@default=enabled@:>@
@@ -22692,87 +22687,6 @@ fi
 
 
 # ----------------------------------------------------------------------
-# BEGIN: Check for optional module: illume2 (default: true)
-#
-                
-                                        
-        USING_MODULES=1
-
-        ILLUME2=true
-        @%:@ Check whether --enable-illume2 was given.
-if test "${enable_illume2+set}" = set; then :
-  enableval=$enable_illume2; ILLUME2=${enableval:-false}
-fi
-
-        if test x$ILLUME2 = xyes || test x$ILLUME2 = x1; then
-                ILLUME2=true
-        fi
-        if test x$ILLUME2 = xno || test x$ILLUME2 = x0; then
-                ILLUME2=false
-        fi
-
-        USE_MODULE_ILLUME2=$ILLUME2
-
-        
-        # Check for XTerm and define some colors
-        if test "x$TERM" = "xxterm" -o "x$TERM" = "xscreen"; then
-                COLOR_PREF="\0033\0133"
-                COLOR_H="${COLOR_PREF}1m"
-                COLOR_HGREEN="${COLOR_PREF}1;32m"
-                COLOR_HRED="${COLOR_PREF}1;31m"
-                COLOR_GREEN="${COLOR_PREF}32m"
-                COLOR_RED="${COLOR_PREF}31m"
-                COLOR_YELLOW="${COLOR_PREF}1;33m"
-                COLOR_END="${COLOR_PREF}0m"
-        else
-                COLOR_H=""
-                COLOR_HGREEN=""
-                COLOR_HRED=""
-                COLOR_GREEN=""
-                COLOR_RED=""
-                COLOR_YELLOW=""
-                COLOR_END=""
-        fi
-
-
-        # Check list for optional module illume2
-        if test x$ILLUME2 = xtrue; then
-                
-
-                if test x$ILLUME2 = xfalse; then
-                        echo -e "${COLOR_YELLOW}Warning:${COLOR_END} optional module ${COLOR_H}illume2${COLOR_END} disabled by extra checks."
-                fi
-        fi
-
-        # Check if user checks succeeded
-        if test x$ILLUME2 = xtrue; then
-                OPTIONAL_MODULES="$OPTIONAL_MODULES illume2"
-                
-cat >>confdefs.h <<_ACEOF
-@%:@define USE_MODULE_ILLUME2 1
-_ACEOF
-
-        else
-                UNUSED_OPTIONAL_MODULES="$UNUSED_OPTIONAL_MODULES illume2"
-        fi
-
-         if test x$ILLUME2 = xtrue; then
-  USE_MODULE_ILLUME2_TRUE=
-  USE_MODULE_ILLUME2_FALSE='#'
-else
-  USE_MODULE_ILLUME2_TRUE='#'
-  USE_MODULE_ILLUME2_FALSE=
-fi
-
-        
-
-                                        
-#
-# END: Check for optional module: illume2 (true)
-# ----------------------------------------------------------------------
-
-
-# ----------------------------------------------------------------------
 # BEGIN: Check for optional module: syscon (default: true)
 #
                 
@@ -24106,7 +24020,7 @@ SUID_LDFLAGS=-pie
 
 
 
-ac_config_files="$ac_config_files Makefile enlightenment.spec enlightenment.pc src/Makefile src/bin/Makefile src/bin/e_fm_shared_types.h src/bin/e_fm/Makefile src/modules/Makefile src/modules/ibar/module.desktop src/modules/dropshadow/module.desktop src/modules/clock/module.desktop src/modules/pager/module.desktop src/modules/battery/module.desktop src/modules/temperature/module.desktop src/modules/notification/module.desktop src/modules/cpufreq/module.desktop src/modules/ibox/module.desktop src/modules/start/module.desktop src/modules/winlist/module.desktop src/modules/fileman/module.desktop src/modules/fileman_opinfo/module.desktop src/modules/conf/module.desktop src/modules/conf_wallpaper2/module.desktop src/modules/conf_theme/module.desktop src/modules/conf_intl/module.desktop src/modules/conf_applications/module.desktop src/modules/conf_display/module.desktop src/modules/conf_shelves/module.desktop src/modules/conf_keybindings/module.desktop src/modules/conf_edgebindings/module.desktop src/modules/conf_window_remembers/module.desktop src/modules/conf_window_manipulation/module.desktop src/modules/conf_menus/module.desktop src/modules/conf_dialogs/module.desktop src/modules/conf_performance/module.desktop src/modules/conf_paths/module.desktop src/modules/conf_interaction/module.desktop src/modules/msgbus/module.desktop src/modules/conf_randr/module.desktop src/modules/gadman/module.desktop src/modules/mixer/module.desktop src/modules/connman/module.desktop src/modules/illume2/doc/illume.dox src/modules/illume2/module.desktop src/modules/illume-home/module.desktop src/modules/illume-home-toggle/module.desktop src/modules/illume-softkey/module.desktop src/modules/illume-keyboard/module.desktop src/modules/illume-indicator/module.desktop src/modules/illume-kbd-toggle/module.desktop src/modules/illume-mode-toggle/module.desktop src/modules/illume-bluetooth/module.desktop src/modules/syscon/module.desktop src/modules/everything/module.desktop src/modules/everything/everything.pc src/modules/systray/module.desktop src/modules/comp/module.desktop src/modules/physics/module.desktop src/modules/quickaccess/module.desktop src/modules/shot/module.desktop src/modules/backlight/module.desktop src/modules/tasks/module.desktop src/modules/xkbswitch/module.desktop src/modules/tiling/module.desktop src/modules/access/module.desktop data/Makefile data/images/Makefile data/flags/Makefile data/favorites/Makefile data/desktop/Makefile data/input_methods/Makefile data/themes/Makefile data/xsession/Makefile data/xsession/enlightenment.desktop data/tools/Makefile data/etc/Makefile data/etc/sysactions.conf data/icons/Makefile data/backgrounds/Makefile doc/Makefile doc/Doxyfile doc/e.dox config/Makefile config/default/Makefile config/standard/Makefile config/mobile/Makefile $po_makefile_in"
+ac_config_files="$ac_config_files Makefile enlightenment.spec enlightenment.pc src/Makefile src/bin/Makefile src/bin/e_fm_shared_types.h src/bin/e_fm/Makefile src/modules/Makefile src/modules/ibar/module.desktop src/modules/dropshadow/module.desktop src/modules/clock/module.desktop src/modules/pager/module.desktop src/modules/battery/module.desktop src/modules/temperature/module.desktop src/modules/notification/module.desktop src/modules/cpufreq/module.desktop src/modules/ibox/module.desktop src/modules/start/module.desktop src/modules/winlist/module.desktop src/modules/fileman/module.desktop src/modules/fileman_opinfo/module.desktop src/modules/conf/module.desktop src/modules/conf_wallpaper2/module.desktop src/modules/conf_theme/module.desktop src/modules/conf_intl/module.desktop src/modules/conf_applications/module.desktop src/modules/conf_display/module.desktop src/modules/conf_shelves/module.desktop src/modules/conf_keybindings/module.desktop src/modules/conf_edgebindings/module.desktop src/modules/conf_window_remembers/module.desktop src/modules/conf_window_manipulation/module.desktop src/modules/conf_menus/module.desktop src/modules/conf_dialogs/module.desktop src/modules/conf_performance/module.desktop src/modules/conf_paths/module.desktop src/modules/conf_interaction/module.desktop src/modules/msgbus/module.desktop src/modules/conf_randr/module.desktop src/modules/gadman/module.desktop src/modules/mixer/module.desktop src/modules/connman/module.desktop src/modules/syscon/module.desktop src/modules/everything/module.desktop src/modules/everything/everything.pc src/modules/systray/module.desktop src/modules/comp/module.desktop src/modules/physics/module.desktop src/modules/quickaccess/module.desktop src/modules/shot/module.desktop src/modules/backlight/module.desktop src/modules/tasks/module.desktop src/modules/xkbswitch/module.desktop src/modules/tiling/module.desktop src/modules/access/module.desktop data/Makefile data/images/Makefile data/flags/Makefile data/favorites/Makefile data/desktop/Makefile data/input_methods/Makefile data/themes/Makefile data/xsession/Makefile data/xsession/enlightenment.desktop data/tools/Makefile data/etc/Makefile data/etc/sysactions.conf data/icons/Makefile doc/Makefile doc/Doxyfile doc/e.dox config/Makefile config/default/Makefile $po_makefile_in"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -24488,10 +24402,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_CONNMAN_TRUE}" && test -z "${USE_MODULE_CONNMAN_FALSE}"; then
   as_fn_error $? "conditional \"USE_MODULE_CONNMAN\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MODULE_ILLUME2_TRUE}" && test -z "${USE_MODULE_ILLUME2_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MODULE_ILLUME2\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_SYSCON_TRUE}" && test -z "${USE_MODULE_SYSCON_FALSE}"; then
@@ -25468,16 +25378,6 @@ do
     "src/modules/gadman/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/gadman/module.desktop" ;;
     "src/modules/mixer/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/mixer/module.desktop" ;;
     "src/modules/connman/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/connman/module.desktop" ;;
-    "src/modules/illume2/doc/illume.dox") CONFIG_FILES="$CONFIG_FILES src/modules/illume2/doc/illume.dox" ;;
-    "src/modules/illume2/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume2/module.desktop" ;;
-    "src/modules/illume-home/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-home/module.desktop" ;;
-    "src/modules/illume-home-toggle/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-home-toggle/module.desktop" ;;
-    "src/modules/illume-softkey/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-softkey/module.desktop" ;;
-    "src/modules/illume-keyboard/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-keyboard/module.desktop" ;;
-    "src/modules/illume-indicator/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-indicator/module.desktop" ;;
-    "src/modules/illume-kbd-toggle/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-kbd-toggle/module.desktop" ;;
-    "src/modules/illume-mode-toggle/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-mode-toggle/module.desktop" ;;
-    "src/modules/illume-bluetooth/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/illume-bluetooth/module.desktop" ;;
     "src/modules/syscon/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/syscon/module.desktop" ;;
     "src/modules/everything/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/everything/module.desktop" ;;
     "src/modules/everything/everything.pc") CONFIG_FILES="$CONFIG_FILES src/modules/everything/everything.pc" ;;
@@ -25504,14 +25404,11 @@ do
     "data/etc/Makefile") CONFIG_FILES="$CONFIG_FILES data/etc/Makefile" ;;
     "data/etc/sysactions.conf") CONFIG_FILES="$CONFIG_FILES data/etc/sysactions.conf" ;;
     "data/icons/Makefile") CONFIG_FILES="$CONFIG_FILES data/icons/Makefile" ;;
-    "data/backgrounds/Makefile") CONFIG_FILES="$CONFIG_FILES data/backgrounds/Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "doc/Doxyfile") CONFIG_FILES="$CONFIG_FILES doc/Doxyfile" ;;
     "doc/e.dox") CONFIG_FILES="$CONFIG_FILES doc/e.dox" ;;
     "config/Makefile") CONFIG_FILES="$CONFIG_FILES config/Makefile" ;;
     "config/default/Makefile") CONFIG_FILES="$CONFIG_FILES config/default/Makefile" ;;
-    "config/standard/Makefile") CONFIG_FILES="$CONFIG_FILES config/standard/Makefile" ;;
-    "config/mobile/Makefile") CONFIG_FILES="$CONFIG_FILES config/mobile/Makefile" ;;
     "$po_makefile_in") CONFIG_FILES="$CONFIG_FILES $po_makefile_in" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;

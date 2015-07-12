@@ -130,16 +130,6 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/src/modules/gadman/module.desktop.in \
 	$(top_srcdir)/src/modules/mixer/module.desktop.in \
 	$(top_srcdir)/src/modules/connman/module.desktop.in \
-	$(top_srcdir)/src/modules/illume2/doc/illume.dox.in \
-	$(top_srcdir)/src/modules/illume2/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-home/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-home-toggle/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-softkey/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-keyboard/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-indicator/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-kbd-toggle/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-mode-toggle/module.desktop.in \
-	$(top_srcdir)/src/modules/illume-bluetooth/module.desktop.in \
 	$(top_srcdir)/src/modules/syscon/module.desktop.in \
 	$(top_srcdir)/src/modules/everything/module.desktop.in \
 	$(top_srcdir)/src/modules/everything/everything.pc.in \
@@ -209,16 +199,6 @@ CONFIG_CLEAN_FILES = enlightenment.spec enlightenment.pc \
 	src/modules/gadman/module.desktop \
 	src/modules/mixer/module.desktop \
 	src/modules/connman/module.desktop \
-	src/modules/illume2/doc/illume.dox \
-	src/modules/illume2/module.desktop \
-	src/modules/illume-home/module.desktop \
-	src/modules/illume-home-toggle/module.desktop \
-	src/modules/illume-softkey/module.desktop \
-	src/modules/illume-keyboard/module.desktop \
-	src/modules/illume-indicator/module.desktop \
-	src/modules/illume-kbd-toggle/module.desktop \
-	src/modules/illume-mode-toggle/module.desktop \
-	src/modules/illume-bluetooth/module.desktop \
 	src/modules/syscon/module.desktop \
 	src/modules/everything/module.desktop \
 	src/modules/everything/everything.pc \
@@ -551,7 +531,6 @@ USE_MODULE_FILEMAN_OPINFO = @USE_MODULE_FILEMAN_OPINFO@
 USE_MODULE_GADMAN = @USE_MODULE_GADMAN@
 USE_MODULE_IBAR = @USE_MODULE_IBAR@
 USE_MODULE_IBOX = @USE_MODULE_IBOX@
-USE_MODULE_ILLUME2 = @USE_MODULE_ILLUME2@
 USE_MODULE_MIXER = @USE_MODULE_MIXER@
 USE_MODULE_MSGBUS = @USE_MODULE_MSGBUS@
 USE_MODULE_NOTIFICATION = @USE_MODULE_NOTIFICATION@
@@ -791,26 +770,6 @@ src/modules/gadman/module.desktop: $(top_builddir)/config.status $(top_srcdir)/s
 src/modules/mixer/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/mixer/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/connman/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/connman/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume2/doc/illume.dox: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume2/doc/illume.dox.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume2/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume2/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-home/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-home/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-home-toggle/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-home-toggle/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-softkey/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-softkey/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-keyboard/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-keyboard/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-indicator/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-indicator/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-kbd-toggle/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-kbd-toggle/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-mode-toggle/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-mode-toggle/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/illume-bluetooth/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/illume-bluetooth/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/syscon/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/syscon/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@

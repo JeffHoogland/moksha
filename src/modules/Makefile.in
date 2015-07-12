@@ -106,18 +106,9 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 	$(srcdir)/Makefile_conf_paths.am \
 	$(srcdir)/Makefile_conf_interaction.am \
 	$(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am \
-	$(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_illume2.am \
-	$(srcdir)/Makefile_illume-home.am \
-	$(srcdir)/Makefile_illume-home-toggle.am \
-	$(srcdir)/Makefile_illume-softkey.am \
-	$(srcdir)/Makefile_illume-keyboard.am \
-	$(srcdir)/Makefile_illume-indicator.am \
-	$(srcdir)/Makefile_illume-kbd-toggle.am \
-	$(srcdir)/Makefile_illume-mode-toggle.am \
-	$(srcdir)/Makefile_illume-bluetooth.am \
-	$(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am \
-	$(srcdir)/Makefile_systray.am $(srcdir)/Makefile_comp.am \
-	$(srcdir)/Makefile_physics.am \
+	$(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am \
+	$(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am \
+	$(srcdir)/Makefile_comp.am $(srcdir)/Makefile_physics.am \
 	$(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am \
 	$(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am \
 	$(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am \
@@ -177,31 +168,12 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__append_44 = mixer/sys_dummy.c
 @HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_45 = @ENOTIFY_CFLAGS@
 @HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_46 = @ENOTIFY_LIBS@
-@USE_MODULE_ILLUME2_TRUE@am__append_47 = illume2/e-module-illume2.edj \
-@USE_MODULE_ILLUME2_TRUE@	illume2/module.desktop.in \
-@USE_MODULE_ILLUME2_TRUE@	$(illume2keyboards_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_home_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_home_toggle_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	illume-softkey/e-module-illume-softkey.edj \
-@USE_MODULE_ILLUME2_TRUE@	illume-softkey/module.desktop.in \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e-module-illume-keyboard.edj \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/module.desktop.in \
-@USE_MODULE_ILLUME2_TRUE@	$(illumekeyboards_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	$(illumedicts_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/module.desktop.in \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e-module-illume-indicator.edj \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_kbd_toggle_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_mode_toggle_DATA) \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_bluetooth_DATA)
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_ILLUME2_TRUE@am__append_48 = illume-indicator/e_mod_notify.c \
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_ILLUME2_TRUE@				      illume-indicator/e_mod_notify.h
-
-@USE_MODULE_SYSCON_TRUE@am__append_49 = $(syscon_DATA)
-@USE_MODULE_EVERYTHING_TRUE@am__append_50 = $(everything_DATA) \
+@USE_MODULE_SYSCON_TRUE@am__append_47 = $(syscon_DATA)
+@USE_MODULE_EVERYTHING_TRUE@am__append_48 = $(everything_DATA) \
 @USE_MODULE_EVERYTHING_TRUE@	everything/everything.pc.in
-@USE_MODULE_SYSTRAY_TRUE@am__append_51 = $(systray_DATA)
-@USE_MODULE_COMP_TRUE@am__append_52 = $(comp_DATA)
-@HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@am__append_53 = comp/e_mod_comp_wl.h \
+@USE_MODULE_SYSTRAY_TRUE@am__append_49 = $(systray_DATA)
+@USE_MODULE_COMP_TRUE@am__append_50 = $(comp_DATA)
+@HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@am__append_51 = comp/e_mod_comp_wl.h \
 @HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@			  comp/e_mod_comp_wl.c \
 @HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@			  comp/e_mod_comp_wl_comp.h \
 @HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@			  comp/e_mod_comp_wl_comp.c \
@@ -218,14 +190,14 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@			  comp/e_mod_comp_wl_region.h \
 @HAVE_WAYLAND_CLIENTS_TRUE@@USE_MODULE_COMP_TRUE@			  comp/e_mod_comp_wl_region.c
 
-@USE_MODULE_PHYSICS_TRUE@am__append_54 = $(physics_DATA)
-@USE_MODULE_QUICKACCESS_TRUE@am__append_55 = $(quickaccess_DATA)
-@USE_MODULE_SHOT_TRUE@am__append_56 = $(shot_DATA)
-@USE_MODULE_BACKLIGHT_TRUE@am__append_57 = $(backlight_DATA)
-@USE_MODULE_TASKS_TRUE@am__append_58 = $(tasks_DATA)
-@USE_MODULE_XKBSWITCH_TRUE@am__append_59 = $(xkbswitch_DATA)
-@USE_MODULE_TILING_TRUE@am__append_60 = tiling/e-module-tiling.edj
-@USE_MODULE_TILING_TRUE@am__append_61 = $(tiling_DATA) \
+@USE_MODULE_PHYSICS_TRUE@am__append_52 = $(physics_DATA)
+@USE_MODULE_QUICKACCESS_TRUE@am__append_53 = $(quickaccess_DATA)
+@USE_MODULE_SHOT_TRUE@am__append_54 = $(shot_DATA)
+@USE_MODULE_BACKLIGHT_TRUE@am__append_55 = $(backlight_DATA)
+@USE_MODULE_TASKS_TRUE@am__append_56 = $(tasks_DATA)
+@USE_MODULE_XKBSWITCH_TRUE@am__append_57 = $(xkbswitch_DATA)
+@USE_MODULE_TILING_TRUE@am__append_58 = tiling/e-module-tiling.edj
+@USE_MODULE_TILING_TRUE@am__append_59 = $(tiling_DATA) \
 @USE_MODULE_TILING_TRUE@	      tiling/e-module-tiling.edc \
 @USE_MODULE_TILING_TRUE@	      tiling/module.desktop.in \
 @USE_MODULE_TILING_TRUE@	      tiling/images/module_icon.png \
@@ -238,7 +210,7 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_sw.png \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_w.png
 
-@USE_MODULE_ACCESS_TRUE@am__append_62 = $(access_DATA)
+@USE_MODULE_ACCESS_TRUE@am__append_60 = $(access_DATA)
 subdir = src/modules
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac-plugins.m4 \
@@ -311,30 +283,19 @@ am__installdirs = "$(DESTDIR)$(accesspkgdir)" \
 	"$(DESTDIR)$(fileman_opinfopkgdir)" \
 	"$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" \
 	"$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" \
-	"$(DESTDIR)$(illume2pkgdir)" \
-	"$(DESTDIR)$(illume2policyillumedir)" \
-	"$(DESTDIR)$(illume2policytabletdir)" \
-	"$(DESTDIR)$(illume_bluetoothpkgdir)" \
-	"$(DESTDIR)$(illume_home_togglepkgdir)" \
-	"$(DESTDIR)$(illume_homepkgdir)" \
-	"$(DESTDIR)$(illume_indicatorpkgdir)" \
-	"$(DESTDIR)$(illume_kbd_togglepkgdir)" \
-	"$(DESTDIR)$(illume_keyboardpkgdir)" \
-	"$(DESTDIR)$(illume_mode_togglepkgdir)" \
-	"$(DESTDIR)$(illume_softkeypkgdir)" "$(DESTDIR)$(mixerpkgdir)" \
-	"$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" \
-	"$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" \
-	"$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" \
-	"$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" \
-	"$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" \
-	"$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" \
-	"$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" \
-	"$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" \
-	"$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" \
-	"$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" \
-	"$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" \
-	"$(DESTDIR)$(compdir)" "$(DESTDIR)$(confdir)" \
-	"$(DESTDIR)$(conf_applicationsdir)" \
+	"$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" \
+	"$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" \
+	"$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" \
+	"$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" \
+	"$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" \
+	"$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" \
+	"$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" \
+	"$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" \
+	"$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" \
+	"$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" \
+	"$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" \
+	"$(DESTDIR)$(clockdir)" "$(DESTDIR)$(compdir)" \
+	"$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" \
 	"$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" \
 	"$(DESTDIR)$(conf_edgebindingsdir)" \
 	"$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" \
@@ -351,17 +312,7 @@ am__installdirs = "$(DESTDIR)$(accesspkgdir)" \
 	"$(DESTDIR)$(everything_pkgconfigdir)" \
 	"$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" \
 	"$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" \
-	"$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(illume2dir)" \
-	"$(DESTDIR)$(illume2keyboardsdir)" \
-	"$(DESTDIR)$(illume_bluetoothdir)" \
-	"$(DESTDIR)$(illume_homedir)" \
-	"$(DESTDIR)$(illume_home_toggledir)" \
-	"$(DESTDIR)$(illume_indicatordir)" \
-	"$(DESTDIR)$(illume_kbd_toggledir)" \
-	"$(DESTDIR)$(illume_keyboarddir)" \
-	"$(DESTDIR)$(illume_mode_toggledir)" \
-	"$(DESTDIR)$(illume_softkeydir)" "$(DESTDIR)$(illumedictsdir)" \
-	"$(DESTDIR)$(illumekeyboardsdir)" "$(DESTDIR)$(mixerdir)" \
+	"$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(mixerdir)" \
 	"$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" \
 	"$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" \
 	"$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" \
@@ -387,17 +338,7 @@ LTLIBRARIES = $(accesspkg_LTLIBRARIES) $(backlightpkg_LTLIBRARIES) \
 	$(dropshadowpkg_LTLIBRARIES) $(everythingpkg_LTLIBRARIES) \
 	$(fileman_opinfopkg_LTLIBRARIES) $(filemanpkg_LTLIBRARIES) \
 	$(gadmanpkg_LTLIBRARIES) $(ibarpkg_LTLIBRARIES) \
-	$(iboxpkg_LTLIBRARIES) $(illume2pkg_LTLIBRARIES) \
-	$(illume2policyillume_LTLIBRARIES) \
-	$(illume2policytablet_LTLIBRARIES) \
-	$(illume_bluetoothpkg_LTLIBRARIES) \
-	$(illume_home_togglepkg_LTLIBRARIES) \
-	$(illume_homepkg_LTLIBRARIES) \
-	$(illume_indicatorpkg_LTLIBRARIES) \
-	$(illume_kbd_togglepkg_LTLIBRARIES) \
-	$(illume_keyboardpkg_LTLIBRARIES) \
-	$(illume_mode_togglepkg_LTLIBRARIES) \
-	$(illume_softkeypkg_LTLIBRARIES) $(mixerpkg_LTLIBRARIES) \
+	$(iboxpkg_LTLIBRARIES) $(mixerpkg_LTLIBRARIES) \
 	$(msgbuspkg_LTLIBRARIES) $(notificationpkg_LTLIBRARIES) \
 	$(pagerpkg_LTLIBRARIES) $(physicspkg_LTLIBRARIES) \
 	$(quickaccesspkg_LTLIBRARIES) $(shotpkg_LTLIBRARIES) \
@@ -848,160 +789,6 @@ am__ibox_module_la_SOURCES_DIST = ibox/e_mod_main.c ibox/e_mod_main.h \
 @USE_MODULE_IBOX_TRUE@	ibox/e_mod_config.lo
 ibox_module_la_OBJECTS = $(am_ibox_module_la_OBJECTS)
 @USE_MODULE_IBOX_TRUE@am_ibox_module_la_rpath = -rpath $(iboxpkgdir)
-illume_bluetooth_module_la_LIBADD =
-am__illume_bluetooth_module_la_SOURCES_DIST =  \
-	illume-bluetooth/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@am_illume_bluetooth_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-bluetooth/e_mod_main.lo
-illume_bluetooth_module_la_OBJECTS =  \
-	$(am_illume_bluetooth_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_bluetooth_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_bluetoothpkgdir)
-illume_home_toggle_module_la_LIBADD =
-am__illume_home_toggle_module_la_SOURCES_DIST =  \
-	illume-home-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@am_illume_home_toggle_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-home-toggle/e_mod_main.lo
-illume_home_toggle_module_la_OBJECTS =  \
-	$(am_illume_home_toggle_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_home_toggle_module_la_rpath =  \
-@USE_MODULE_ILLUME2_TRUE@	-rpath $(illume_home_togglepkgdir)
-illume_home_module_la_LIBADD =
-am__illume_home_module_la_SOURCES_DIST = illume-home/e_mod_main.c \
-	illume-home/e_mod_main.h illume-home/e_mod_config.c \
-	illume-home/e_mod_config.h illume-home/e_busycover.c \
-	illume-home/e_busycover.h
-@USE_MODULE_ILLUME2_TRUE@am_illume_home_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-home/e_mod_main.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-home/e_mod_config.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-home/e_busycover.lo
-illume_home_module_la_OBJECTS = $(am_illume_home_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_home_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_homepkgdir)
-illume_indicator_module_la_DEPENDENCIES =
-am__illume_indicator_module_la_SOURCES_DIST =  \
-	illume-indicator/e_mod_main.c illume-indicator/e_mod_main.h \
-	illume-indicator/e_mod_config.c \
-	illume-indicator/e_mod_config.h \
-	illume-indicator/e_mod_ind_win.c \
-	illume-indicator/e_mod_ind_win.h \
-	illume-indicator/e_mod_notify.c \
-	illume-indicator/e_mod_notify.h
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_ILLUME2_TRUE@am__objects_6 = illume-indicator/e_mod_notify.lo
-@USE_MODULE_ILLUME2_TRUE@am_illume_indicator_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_main.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_config.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_ind_win.lo \
-@USE_MODULE_ILLUME2_TRUE@	$(am__objects_6)
-illume_indicator_module_la_OBJECTS =  \
-	$(am_illume_indicator_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_indicator_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_indicatorpkgdir)
-illume_kbd_toggle_module_la_LIBADD =
-am__illume_kbd_toggle_module_la_SOURCES_DIST =  \
-	illume-kbd-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@am_illume_kbd_toggle_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-kbd-toggle/e_mod_main.lo
-illume_kbd_toggle_module_la_OBJECTS =  \
-	$(am_illume_kbd_toggle_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_kbd_toggle_module_la_rpath =  \
-@USE_MODULE_ILLUME2_TRUE@	-rpath $(illume_kbd_togglepkgdir)
-illume_keyboard_module_la_LIBADD =
-am__illume_keyboard_module_la_SOURCES_DIST =  \
-	illume-keyboard/e_mod_main.c illume-keyboard/e_mod_main.h \
-	illume-keyboard/e_kbd_int.c illume-keyboard/e_kbd_int.h \
-	illume-keyboard/e_kbd_dict.c illume-keyboard/e_kbd_dict.h \
-	illume-keyboard/e_kbd_buf.c illume-keyboard/e_kbd_buf.h \
-	illume-keyboard/e_kbd_send.c illume-keyboard/e_kbd_send.h \
-	illume-keyboard/e_mod_config.c illume-keyboard/e_mod_config.h
-@USE_MODULE_ILLUME2_TRUE@am_illume_keyboard_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_mod_main.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_kbd_int.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_kbd_dict.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_kbd_buf.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_kbd_send.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-keyboard/e_mod_config.lo
-illume_keyboard_module_la_OBJECTS =  \
-	$(am_illume_keyboard_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_keyboard_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_keyboardpkgdir)
-illume_mode_toggle_module_la_LIBADD =
-am__illume_mode_toggle_module_la_SOURCES_DIST =  \
-	illume-mode-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@am_illume_mode_toggle_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-mode-toggle/e_mod_main.lo
-illume_mode_toggle_module_la_OBJECTS =  \
-	$(am_illume_mode_toggle_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_mode_toggle_module_la_rpath =  \
-@USE_MODULE_ILLUME2_TRUE@	-rpath $(illume_mode_togglepkgdir)
-illume_softkey_module_la_LIBADD =
-am__illume_softkey_module_la_SOURCES_DIST =  \
-	illume-softkey/e_mod_main.c illume-softkey/e_mod_main.h \
-	illume-softkey/e_mod_sft_win.c illume-softkey/e_mod_sft_win.h \
-	illume-softkey/e_mod_config.c illume-softkey/e_mod_config.h
-@USE_MODULE_ILLUME2_TRUE@am_illume_softkey_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-softkey/e_mod_main.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-softkey/e_mod_sft_win.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume-softkey/e_mod_config.lo
-illume_softkey_module_la_OBJECTS =  \
-	$(am_illume_softkey_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume_softkey_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume_softkeypkgdir)
-illume2_module_la_LIBADD =
-am__illume2_module_la_SOURCES_DIST = illume2/e_mod_main.c \
-	illume2/e_mod_main.h illume2/e_illume.h illume2/e_illume.c \
-	illume2/e_illume_private.h illume2/e_mod_config_policy.c \
-	illume2/e_mod_select_window.c illume2/e_mod_config_windows.c \
-	illume2/e_mod_config_animation.c illume2/e_mod_quickpanel.c \
-	illume2/e_mod_kbd_device.c illume2/e_mod_kbd.c \
-	illume2/e_mod_policy.c illume2/e_mod_config.c
-@USE_MODULE_ILLUME2_TRUE@am_illume2_module_la_OBJECTS =  \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_main.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_illume.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_config_policy.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_select_window.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_config_windows.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_config_animation.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_quickpanel.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_kbd_device.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_kbd.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_policy.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/e_mod_config.lo
-illume2_module_la_OBJECTS = $(am_illume2_module_la_OBJECTS)
-@USE_MODULE_ILLUME2_TRUE@am_illume2_module_la_rpath = -rpath \
-@USE_MODULE_ILLUME2_TRUE@	$(illume2pkgdir)
-illume2_policies_illume_illume_la_LIBADD =
-am__illume2_policies_illume_illume_la_SOURCES_DIST =  \
-	illume2/policies/illume/policy.c \
-	illume2/policies/illume/policy.h \
-	illume2/policies/illume/illume.c \
-	illume2/policies/illume/illume.h
-@USE_MODULE_ILLUME2_TRUE@am_illume2_policies_illume_illume_la_OBJECTS = illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo
-illume2_policies_illume_illume_la_OBJECTS =  \
-	$(am_illume2_policies_illume_illume_la_OBJECTS)
-illume2_policies_illume_illume_la_LINK = $(LIBTOOL) $(AM_V_lt) \
-	--tag=CC $(illume2_policies_illume_illume_la_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-@USE_MODULE_ILLUME2_TRUE@am_illume2_policies_illume_illume_la_rpath =  \
-@USE_MODULE_ILLUME2_TRUE@	-rpath $(illume2policyillumedir)
-illume2_policies_tablet_tablet_la_LIBADD =
-am__illume2_policies_tablet_tablet_la_SOURCES_DIST =  \
-	illume2/policies/tablet/policy.c \
-	illume2/policies/tablet/policy.h \
-	illume2/policies/tablet/tablet.c \
-	illume2/policies/tablet/tablet.h
-@USE_MODULE_ILLUME2_TRUE@am_illume2_policies_tablet_tablet_la_OBJECTS = illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo \
-@USE_MODULE_ILLUME2_TRUE@	illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo
-illume2_policies_tablet_tablet_la_OBJECTS =  \
-	$(am_illume2_policies_tablet_tablet_la_OBJECTS)
-illume2_policies_tablet_tablet_la_LINK = $(LIBTOOL) $(AM_V_lt) \
-	--tag=CC $(illume2_policies_tablet_tablet_la_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-@USE_MODULE_ILLUME2_TRUE@am_illume2_policies_tablet_tablet_la_rpath =  \
-@USE_MODULE_ILLUME2_TRUE@	-rpath $(illume2policytabletdir)
 am__DEPENDENCIES_1 =
 @USE_MODULE_MIXER_TRUE@mixer_module_la_DEPENDENCIES =  \
 @USE_MODULE_MIXER_TRUE@	$(am__DEPENDENCIES_1)
@@ -1011,8 +798,8 @@ am__mixer_module_la_SOURCES_DIST = mixer/e_mod_main.c \
 	mixer/Pulse.h mixer/pa.h mixer/pa.c mixer/serial.c \
 	mixer/sink.c mixer/sys_pulse.c mixer/tag.c mixer/sys_alsa.c \
 	mixer/sys_dummy.c
-@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__objects_7 = mixer/mixer_module_la-sys_alsa.lo
-@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__objects_8 = mixer/mixer_module_la-sys_dummy.lo
+@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__objects_6 = mixer/mixer_module_la-sys_alsa.lo
+@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__objects_7 = mixer/mixer_module_la-sys_dummy.lo
 @USE_MODULE_MIXER_TRUE@am_mixer_module_la_OBJECTS =  \
 @USE_MODULE_MIXER_TRUE@	mixer/mixer_module_la-e_mod_main.lo \
 @USE_MODULE_MIXER_TRUE@	mixer/mixer_module_la-app_mixer.lo \
@@ -1024,7 +811,7 @@ am__mixer_module_la_SOURCES_DIST = mixer/e_mod_main.c \
 @USE_MODULE_MIXER_TRUE@	mixer/mixer_module_la-sink.lo \
 @USE_MODULE_MIXER_TRUE@	mixer/mixer_module_la-sys_pulse.lo \
 @USE_MODULE_MIXER_TRUE@	mixer/mixer_module_la-tag.lo \
-@USE_MODULE_MIXER_TRUE@	$(am__objects_7) $(am__objects_8)
+@USE_MODULE_MIXER_TRUE@	$(am__objects_6) $(am__objects_7)
 mixer_module_la_OBJECTS = $(am_mixer_module_la_OBJECTS)
 mixer_module_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -1136,12 +923,12 @@ temperature_module_la_LIBADD =
 am__temperature_module_la_SOURCES_DIST = temperature/e_mod_main.c \
 	temperature/e_mod_main.h temperature/e_mod_config.c \
 	temperature/e_mod_tempget.c temperature/e_mod_udev.c
-@HAVE_EEZE_TRUE@@USE_MODULE_TEMPERATURE_TRUE@am__objects_9 = temperature/e_mod_udev.lo
+@HAVE_EEZE_TRUE@@USE_MODULE_TEMPERATURE_TRUE@am__objects_8 = temperature/e_mod_udev.lo
 @USE_MODULE_TEMPERATURE_TRUE@am_temperature_module_la_OBJECTS =  \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_main.lo \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_config.lo \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_tempget.lo \
-@USE_MODULE_TEMPERATURE_TRUE@	$(am__objects_9)
+@USE_MODULE_TEMPERATURE_TRUE@	$(am__objects_8)
 temperature_module_la_OBJECTS = $(am_temperature_module_la_OBJECTS)
 @USE_MODULE_TEMPERATURE_TRUE@am_temperature_module_la_rpath = -rpath \
 @USE_MODULE_TEMPERATURE_TRUE@	$(temperaturepkgdir)
@@ -1415,34 +1202,23 @@ SOURCES = $(access_module_la_SOURCES) $(backlight_module_la_SOURCES) \
 	$(everything_module_la_SOURCES) $(fileman_module_la_SOURCES) \
 	$(fileman_opinfo_module_la_SOURCES) \
 	$(gadman_module_la_SOURCES) $(ibar_module_la_SOURCES) \
-	$(ibox_module_la_SOURCES) \
-	$(illume_bluetooth_module_la_SOURCES) \
-	$(illume_home_toggle_module_la_SOURCES) \
-	$(illume_home_module_la_SOURCES) \
-	$(illume_indicator_module_la_SOURCES) \
-	$(illume_kbd_toggle_module_la_SOURCES) \
-	$(illume_keyboard_module_la_SOURCES) \
-	$(illume_mode_toggle_module_la_SOURCES) \
-	$(illume_softkey_module_la_SOURCES) \
-	$(illume2_module_la_SOURCES) \
-	$(illume2_policies_illume_illume_la_SOURCES) \
-	$(illume2_policies_tablet_tablet_la_SOURCES) \
-	$(mixer_module_la_SOURCES) $(msgbus_module_la_SOURCES) \
-	$(notification_module_la_SOURCES) $(pager_module_la_SOURCES) \
-	$(physics_module_la_SOURCES) $(quickaccess_module_la_SOURCES) \
-	$(shot_module_la_SOURCES) $(start_module_la_SOURCES) \
-	$(syscon_module_la_SOURCES) $(systray_module_la_SOURCES) \
-	$(tasks_module_la_SOURCES) $(temperature_module_la_SOURCES) \
-	$(tiling_module_la_SOURCES) $(winlist_module_la_SOURCES) \
-	$(wizard_module_la_SOURCES) $(wizard_page_000_la_SOURCES) \
-	$(wizard_page_010_la_SOURCES) $(wizard_page_011_la_SOURCES) \
-	$(wizard_page_020_la_SOURCES) $(wizard_page_030_la_SOURCES) \
-	$(wizard_page_040_la_SOURCES) $(wizard_page_050_la_SOURCES) \
-	$(wizard_page_060_la_SOURCES) $(wizard_page_070_la_SOURCES) \
-	$(wizard_page_080_la_SOURCES) $(wizard_page_090_la_SOURCES) \
-	$(wizard_page_100_la_SOURCES) $(wizard_page_110_la_SOURCES) \
-	$(wizard_page_120_la_SOURCES) $(wizard_page_130_la_SOURCES) \
-	$(wizard_page_140_la_SOURCES) $(wizard_page_150_la_SOURCES) \
+	$(ibox_module_la_SOURCES) $(mixer_module_la_SOURCES) \
+	$(msgbus_module_la_SOURCES) $(notification_module_la_SOURCES) \
+	$(pager_module_la_SOURCES) $(physics_module_la_SOURCES) \
+	$(quickaccess_module_la_SOURCES) $(shot_module_la_SOURCES) \
+	$(start_module_la_SOURCES) $(syscon_module_la_SOURCES) \
+	$(systray_module_la_SOURCES) $(tasks_module_la_SOURCES) \
+	$(temperature_module_la_SOURCES) $(tiling_module_la_SOURCES) \
+	$(winlist_module_la_SOURCES) $(wizard_module_la_SOURCES) \
+	$(wizard_page_000_la_SOURCES) $(wizard_page_010_la_SOURCES) \
+	$(wizard_page_011_la_SOURCES) $(wizard_page_020_la_SOURCES) \
+	$(wizard_page_030_la_SOURCES) $(wizard_page_040_la_SOURCES) \
+	$(wizard_page_050_la_SOURCES) $(wizard_page_060_la_SOURCES) \
+	$(wizard_page_070_la_SOURCES) $(wizard_page_080_la_SOURCES) \
+	$(wizard_page_090_la_SOURCES) $(wizard_page_100_la_SOURCES) \
+	$(wizard_page_110_la_SOURCES) $(wizard_page_120_la_SOURCES) \
+	$(wizard_page_130_la_SOURCES) $(wizard_page_140_la_SOURCES) \
+	$(wizard_page_150_la_SOURCES) \
 	$(nodist_wizard_page_150_la_SOURCES) \
 	$(wizard_page_160_la_SOURCES) $(wizard_page_170_la_SOURCES) \
 	$(wizard_page_180_la_SOURCES) $(wizard_page_200_la_SOURCES) \
@@ -1479,17 +1255,6 @@ DIST_SOURCES = $(am__access_module_la_SOURCES_DIST) \
 	$(am__gadman_module_la_SOURCES_DIST) \
 	$(am__ibar_module_la_SOURCES_DIST) \
 	$(am__ibox_module_la_SOURCES_DIST) \
-	$(am__illume_bluetooth_module_la_SOURCES_DIST) \
-	$(am__illume_home_toggle_module_la_SOURCES_DIST) \
-	$(am__illume_home_module_la_SOURCES_DIST) \
-	$(am__illume_indicator_module_la_SOURCES_DIST) \
-	$(am__illume_kbd_toggle_module_la_SOURCES_DIST) \
-	$(am__illume_keyboard_module_la_SOURCES_DIST) \
-	$(am__illume_mode_toggle_module_la_SOURCES_DIST) \
-	$(am__illume_softkey_module_la_SOURCES_DIST) \
-	$(am__illume2_module_la_SOURCES_DIST) \
-	$(am__illume2_policies_illume_illume_la_SOURCES_DIST) \
-	$(am__illume2_policies_tablet_tablet_la_SOURCES_DIST) \
 	$(am__mixer_module_la_SOURCES_DIST) \
 	$(am__msgbus_module_la_SOURCES_DIST) \
 	$(am__notification_module_la_SOURCES_DIST) \
@@ -1557,13 +1322,7 @@ DATA = $(access_DATA) $(backlight_DATA) $(battery_DATA) $(clock_DATA) \
 	$(dist_everything_headers_DATA) $(dropshadow_DATA) \
 	$(everything_DATA) $(everything_pkgconfig_DATA) \
 	$(fileman_DATA) $(fileman_opinfo_DATA) $(gadman_DATA) \
-	$(ibar_DATA) $(ibox_DATA) $(illume2_DATA) \
-	$(illume2keyboards_DATA) $(illume_bluetooth_DATA) \
-	$(illume_home_DATA) $(illume_home_toggle_DATA) \
-	$(illume_indicator_DATA) $(illume_kbd_toggle_DATA) \
-	$(illume_keyboard_DATA) $(illume_mode_toggle_DATA) \
-	$(illume_softkey_DATA) $(illumedicts_DATA) \
-	$(illumekeyboards_DATA) $(mixer_DATA) $(msgbus_DATA) \
+	$(ibar_DATA) $(ibox_DATA) $(mixer_DATA) $(msgbus_DATA) \
 	$(notification_DATA) $(pager_DATA) $(physics_DATA) \
 	$(quickaccess_DATA) $(shot_DATA) $(start_DATA) $(syscon_DATA) \
 	$(systray_DATA) $(tasks_DATA) $(temperature_DATA) \
@@ -1813,7 +1572,6 @@ USE_MODULE_FILEMAN_OPINFO = @USE_MODULE_FILEMAN_OPINFO@
 USE_MODULE_GADMAN = @USE_MODULE_GADMAN@
 USE_MODULE_IBAR = @USE_MODULE_IBAR@
 USE_MODULE_IBOX = @USE_MODULE_IBOX@
-USE_MODULE_ILLUME2 = @USE_MODULE_ILLUME2@
 USE_MODULE_MIXER = @USE_MODULE_MIXER@
 USE_MODULE_MSGBUS = @USE_MODULE_MSGBUS@
 USE_MODULE_NOTIFICATION = @USE_MODULE_NOTIFICATION@
@@ -1910,7 +1668,7 @@ version_info = @version_info@
 MAINTAINERCLEANFILES = Makefile.in
 AUTOMAKE_OPTIONS = subdir-objects
 SUBDIRS = 
-CLEANFILES = $(am__append_22) $(am__append_60)
+CLEANFILES = $(am__append_22) $(am__append_58)
 EXTRA_DIST = $(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_4) $(am__append_5) $(am__append_6) \
 	$(am__append_11) $(am__append_13) $(am__append_14) \
@@ -1923,10 +1681,10 @@ EXTRA_DIST = $(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_35) $(am__append_36) $(am__append_37) \
 	$(am__append_38) $(am__append_39) $(am__append_40) \
 	$(am__append_41) $(am__append_42) $(am__append_47) \
-	$(am__append_49) $(am__append_50) $(am__append_51) \
-	$(am__append_52) $(am__append_54) $(am__append_55) \
-	$(am__append_56) $(am__append_57) $(am__append_58) \
-	$(am__append_59) $(am__append_61) $(am__append_62)
+	$(am__append_48) $(am__append_49) $(am__append_50) \
+	$(am__append_52) $(am__append_53) $(am__append_54) \
+	$(am__append_55) $(am__append_56) $(am__append_57) \
+	$(am__append_59) $(am__append_60)
 INSTALL_DATA_HOOKS = $(am__append_15)
 MDIR = $(libdir)/enlightenment/modules
 AM_LDFLAGS = -module -avoid-version
@@ -2417,165 +2175,6 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MIXER_TRUE@	$(am__append_43) $(am__append_44)
 @USE_MODULE_MIXER_TRUE@mixer_module_la_LIBADD = @SOUND_LIBS@ \
 @USE_MODULE_MIXER_TRUE@	$(am__append_46)
-@USE_MODULE_ILLUME2_TRUE@illume2dir = $(MDIR)/illume2
-@USE_MODULE_ILLUME2_TRUE@illume2_DATA = illume2/e-module-illume2.edj \
-@USE_MODULE_ILLUME2_TRUE@	       illume2/module.desktop
-
-
-# keyboards
-@USE_MODULE_ILLUME2_TRUE@illume2keyboardsdir = $(MDIR)/illume2/keyboards
-@USE_MODULE_ILLUME2_TRUE@illume2keyboards_DATA = illume2/keyboards/ignore_built_in_keyboards
-
-# policies
-@USE_MODULE_ILLUME2_TRUE@illume2policyillumedir = $(MDIR)/illume2/policies
-@USE_MODULE_ILLUME2_TRUE@illume2policyillume_LTLIBRARIES = illume2/policies/illume/illume.la
-@USE_MODULE_ILLUME2_TRUE@ILLUME2POLICYCPPFLAGS = $(AM_CPPFLAGS) -I$(top_srcdir)/src/modules/illume2
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_illume_illume_la_CPPFLAGS = $(ILLUME2POLICYCPPFLAGS)
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_illume_illume_la_SOURCES = illume2/policies/illume/policy.c \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/illume/policy.h \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/illume/illume.c \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/illume/illume.h
-
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_illume_illume_la_LIBTOOLFLAGS = --tag=disable-static 
-@USE_MODULE_ILLUME2_TRUE@illume2policytabletdir = $(MDIR)/illume2/policies
-@USE_MODULE_ILLUME2_TRUE@illume2policytablet_LTLIBRARIES = illume2/policies/tablet/tablet.la
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_tablet_tablet_la_CPPFLAGS = $(ILLUME2POLICYCPPFLAGS)
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_tablet_tablet_la_SOURCES = illume2/policies/tablet/policy.c \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/tablet/policy.h \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/tablet/tablet.c \
-@USE_MODULE_ILLUME2_TRUE@					    illume2/policies/tablet/tablet.h
-
-@USE_MODULE_ILLUME2_TRUE@illume2_policies_tablet_tablet_la_LIBTOOLFLAGS = --tag=disable-static 
-@USE_MODULE_ILLUME2_TRUE@illume2pkgdir = $(MDIR)/illume2/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume2pkg_LTLIBRARIES = illume2/module.la
-@USE_MODULE_ILLUME2_TRUE@illume2_module_la_SOURCES = illume2/e_mod_main.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_main.h \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_illume.h \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_illume.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_illume_private.h \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_config_policy.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_select_window.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_config_windows.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_config_animation.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_quickpanel.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_kbd_device.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_kbd.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_policy.c \
-@USE_MODULE_ILLUME2_TRUE@			    illume2/e_mod_config.c
-
-@USE_MODULE_ILLUME2_TRUE@illume_homedir = $(MDIR)/illume-home
-@USE_MODULE_ILLUME2_TRUE@illume_home_DATA = illume-home/e-module-illume-home.edj \
-@USE_MODULE_ILLUME2_TRUE@		   illume-home/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_homepkgdir = $(MDIR)/illume-home/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_homepkg_LTLIBRARIES = illume-home/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_home_module_la_SOURCES = illume-home/e_mod_main.c \
-@USE_MODULE_ILLUME2_TRUE@				illume-home/e_mod_main.h \
-@USE_MODULE_ILLUME2_TRUE@				illume-home/e_mod_config.c \
-@USE_MODULE_ILLUME2_TRUE@				illume-home/e_mod_config.h \
-@USE_MODULE_ILLUME2_TRUE@				illume-home/e_busycover.c \
-@USE_MODULE_ILLUME2_TRUE@				illume-home/e_busycover.h
-
-@USE_MODULE_ILLUME2_TRUE@illume_home_toggledir = $(MDIR)/illume-home-toggle
-@USE_MODULE_ILLUME2_TRUE@illume_home_toggle_DATA = illume-home-toggle/e-module-illume-home-toggle.edj \
-@USE_MODULE_ILLUME2_TRUE@			  illume-home-toggle/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_home_togglepkgdir = $(MDIR)/illume-home-toggle/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_home_togglepkg_LTLIBRARIES = illume-home-toggle/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_home_toggle_module_la_SOURCES = illume-home-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@illume_softkeydir = $(MDIR)/illume-softkey
-@USE_MODULE_ILLUME2_TRUE@illume_softkey_DATA = illume-softkey/e-module-illume-softkey.edj \
-@USE_MODULE_ILLUME2_TRUE@		      illume-softkey/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_softkeypkgdir = $(MDIR)/illume-softkey/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_softkeypkg_LTLIBRARIES = illume-softkey/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_softkey_module_la_SOURCES = illume-softkey/e_mod_main.c \
-@USE_MODULE_ILLUME2_TRUE@				   illume-softkey/e_mod_main.h \
-@USE_MODULE_ILLUME2_TRUE@				   illume-softkey/e_mod_sft_win.c \
-@USE_MODULE_ILLUME2_TRUE@				   illume-softkey/e_mod_sft_win.h \
-@USE_MODULE_ILLUME2_TRUE@				   illume-softkey/e_mod_config.c \
-@USE_MODULE_ILLUME2_TRUE@				   illume-softkey/e_mod_config.h
-
-@USE_MODULE_ILLUME2_TRUE@illume_keyboarddir = $(MDIR)/illume-keyboard
-@USE_MODULE_ILLUME2_TRUE@illume_keyboard_DATA = illume-keyboard/e-module-illume-keyboard.edj \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/module.desktop
-
-
-# keyboards
-@USE_MODULE_ILLUME2_TRUE@illumekeyboardsdir = $(MDIR)/illume-keyboard/keyboards
-@USE_MODULE_ILLUME2_TRUE@illumekeyboards_DATA = illume-keyboard/keyboards/ignore_built_in_keyboards \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/Default.kbd \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/alpha.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/Numbers.kbd \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/numeric.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/Terminal.kbd \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/qwerty.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/up.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/down.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/left.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/right.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/shift.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/tab.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/enter.png \
-@USE_MODULE_ILLUME2_TRUE@		       illume-keyboard/keyboards/backspace.png
-
-
-# dicts
-@USE_MODULE_ILLUME2_TRUE@illumedictsdir = $(MDIR)/illume-keyboard/dicts
-@USE_MODULE_ILLUME2_TRUE@illumedicts_DATA = illume-keyboard/dicts/English_US.dic \
-@USE_MODULE_ILLUME2_TRUE@		   illume-keyboard/dicts/English_US_Small.dic
-
-@USE_MODULE_ILLUME2_TRUE@illume_keyboardpkgdir = $(MDIR)/illume-keyboard/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_keyboardpkg_LTLIBRARIES = illume-keyboard/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_keyboard_module_la_SOURCES = illume-keyboard/e_mod_main.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_mod_main.h \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_int.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_int.h \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_dict.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_dict.h \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_buf.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_buf.h \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_send.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_kbd_send.h \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_mod_config.c \
-@USE_MODULE_ILLUME2_TRUE@				    illume-keyboard/e_mod_config.h
-
-@USE_MODULE_ILLUME2_TRUE@illume_indicatordir = $(MDIR)/illume-indicator
-@USE_MODULE_ILLUME2_TRUE@illume_indicator_DATA = illume-indicator/e-module-illume-indicator.edj \
-@USE_MODULE_ILLUME2_TRUE@			illume-indicator/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_indicatorpkgdir = $(MDIR)/illume-indicator/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_indicatorpkg_LTLIBRARIES = illume-indicator/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_indicator_module_la_SOURCES =  \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_main.c \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_main.h \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_config.c \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_config.h \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_ind_win.c \
-@USE_MODULE_ILLUME2_TRUE@	illume-indicator/e_mod_ind_win.h \
-@USE_MODULE_ILLUME2_TRUE@	$(am__append_48)
-@USE_MODULE_ILLUME2_TRUE@illume_indicator_module_la_LIBADD = @ENOTIFY_LIBS@
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_toggledir = $(MDIR)/illume-kbd-toggle
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_toggle_DATA = illume-kbd-toggle/e-module-illume-kbd-toggle.edj \
-@USE_MODULE_ILLUME2_TRUE@			 illume-kbd-toggle/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_togglepkgdir = $(MDIR)/illume-kbd-toggle/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_togglepkg_LTLIBRARIES = illume-kbd-toggle/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_toggle_module_la_SOURCES = illume-kbd-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@illume_mode_toggledir = $(MDIR)/illume-mode-toggle
-@USE_MODULE_ILLUME2_TRUE@illume_mode_toggle_DATA = illume-mode-toggle/e-module-illume-mode-toggle.edj \
-@USE_MODULE_ILLUME2_TRUE@			 illume-mode-toggle/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_mode_togglepkgdir = $(MDIR)/illume-mode-toggle/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_mode_togglepkg_LTLIBRARIES = illume-mode-toggle/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_mode_toggle_module_la_SOURCES = illume-mode-toggle/e_mod_main.c
-@USE_MODULE_ILLUME2_TRUE@illume_bluetoothdir = $(MDIR)/illume-bluetooth
-@USE_MODULE_ILLUME2_TRUE@illume_bluetooth_DATA = illume-bluetooth/e-module-illume-bluetooth.edj \
-@USE_MODULE_ILLUME2_TRUE@			illume-bluetooth/module.desktop
-
-@USE_MODULE_ILLUME2_TRUE@illume_bluetoothpkgdir = $(MDIR)/illume-bluetooth/$(MODULE_ARCH)
-@USE_MODULE_ILLUME2_TRUE@illume_bluetoothpkg_LTLIBRARIES = illume-bluetooth/module.la
-@USE_MODULE_ILLUME2_TRUE@illume_bluetooth_module_la_SOURCES = illume-bluetooth/e_mod_main.c
 @USE_MODULE_SYSCON_TRUE@syscondir = $(MDIR)/syscon
 @USE_MODULE_SYSCON_TRUE@syscon_DATA = syscon/e-module-syscon.edj \
 @USE_MODULE_SYSCON_TRUE@	      syscon/module.desktop
@@ -2649,7 +2248,7 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_COMP_TRUE@	comp/e_mod_comp_update.h \
 @USE_MODULE_COMP_TRUE@	comp/e_mod_comp_cfdata.c \
 @USE_MODULE_COMP_TRUE@	comp/e_mod_comp_cfdata.h \
-@USE_MODULE_COMP_TRUE@	$(am__append_53)
+@USE_MODULE_COMP_TRUE@	$(am__append_51)
 @USE_MODULE_COMP_TRUE@comp_module_la_LIBADD = @WAYLAND_LIBS@
 @USE_MODULE_PHYSICS_TRUE@physicsdir = $(MDIR)/physics
 @USE_MODULE_PHYSICS_TRUE@physics_DATA = physics/e-module-physics.edj \
@@ -2738,7 +2337,7 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_illume2.am $(srcdir)/Makefile_illume-home.am $(srcdir)/Makefile_illume-home-toggle.am $(srcdir)/Makefile_illume-softkey.am $(srcdir)/Makefile_illume-keyboard.am $(srcdir)/Makefile_illume-indicator.am $(srcdir)/Makefile_illume-kbd-toggle.am $(srcdir)/Makefile_illume-mode-toggle.am $(srcdir)/Makefile_illume-bluetooth.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_comp.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_comp.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -2759,7 +2358,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_illume2.am $(srcdir)/Makefile_illume-home.am $(srcdir)/Makefile_illume-home-toggle.am $(srcdir)/Makefile_illume-softkey.am $(srcdir)/Makefile_illume-keyboard.am $(srcdir)/Makefile_illume-indicator.am $(srcdir)/Makefile_illume-kbd-toggle.am $(srcdir)/Makefile_illume-mode-toggle.am $(srcdir)/Makefile_illume-bluetooth.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_comp.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am:
+$(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_comp.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -3847,391 +3446,6 @@ uninstall-iboxpkgLTLIBRARIES:
 clean-iboxpkgLTLIBRARIES:
 	-test -z "$(iboxpkg_LTLIBRARIES)" || rm -f $(iboxpkg_LTLIBRARIES)
 	@list='$(iboxpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume2pkgLTLIBRARIES: $(illume2pkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume2pkg_LTLIBRARIES)'; test -n "$(illume2pkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume2pkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume2pkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume2pkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume2pkgdir)"; \
-	}
-
-uninstall-illume2pkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume2pkg_LTLIBRARIES)'; test -n "$(illume2pkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume2pkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume2pkgdir)/$$f"; \
-	done
-
-clean-illume2pkgLTLIBRARIES:
-	-test -z "$(illume2pkg_LTLIBRARIES)" || rm -f $(illume2pkg_LTLIBRARIES)
-	@list='$(illume2pkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume2policyillumeLTLIBRARIES: $(illume2policyillume_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume2policyillume_LTLIBRARIES)'; test -n "$(illume2policyillumedir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume2policyillumedir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume2policyillumedir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume2policyillumedir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume2policyillumedir)"; \
-	}
-
-uninstall-illume2policyillumeLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume2policyillume_LTLIBRARIES)'; test -n "$(illume2policyillumedir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume2policyillumedir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume2policyillumedir)/$$f"; \
-	done
-
-clean-illume2policyillumeLTLIBRARIES:
-	-test -z "$(illume2policyillume_LTLIBRARIES)" || rm -f $(illume2policyillume_LTLIBRARIES)
-	@list='$(illume2policyillume_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume2policytabletLTLIBRARIES: $(illume2policytablet_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume2policytablet_LTLIBRARIES)'; test -n "$(illume2policytabletdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume2policytabletdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume2policytabletdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume2policytabletdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume2policytabletdir)"; \
-	}
-
-uninstall-illume2policytabletLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume2policytablet_LTLIBRARIES)'; test -n "$(illume2policytabletdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume2policytabletdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume2policytabletdir)/$$f"; \
-	done
-
-clean-illume2policytabletLTLIBRARIES:
-	-test -z "$(illume2policytablet_LTLIBRARIES)" || rm -f $(illume2policytablet_LTLIBRARIES)
-	@list='$(illume2policytablet_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_bluetoothpkgLTLIBRARIES: $(illume_bluetoothpkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_bluetoothpkg_LTLIBRARIES)'; test -n "$(illume_bluetoothpkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_bluetoothpkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_bluetoothpkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_bluetoothpkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_bluetoothpkgdir)"; \
-	}
-
-uninstall-illume_bluetoothpkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_bluetoothpkg_LTLIBRARIES)'; test -n "$(illume_bluetoothpkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_bluetoothpkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_bluetoothpkgdir)/$$f"; \
-	done
-
-clean-illume_bluetoothpkgLTLIBRARIES:
-	-test -z "$(illume_bluetoothpkg_LTLIBRARIES)" || rm -f $(illume_bluetoothpkg_LTLIBRARIES)
-	@list='$(illume_bluetoothpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_home_togglepkgLTLIBRARIES: $(illume_home_togglepkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_home_togglepkg_LTLIBRARIES)'; test -n "$(illume_home_togglepkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_home_togglepkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_home_togglepkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_home_togglepkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_home_togglepkgdir)"; \
-	}
-
-uninstall-illume_home_togglepkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_home_togglepkg_LTLIBRARIES)'; test -n "$(illume_home_togglepkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_home_togglepkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_home_togglepkgdir)/$$f"; \
-	done
-
-clean-illume_home_togglepkgLTLIBRARIES:
-	-test -z "$(illume_home_togglepkg_LTLIBRARIES)" || rm -f $(illume_home_togglepkg_LTLIBRARIES)
-	@list='$(illume_home_togglepkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_homepkgLTLIBRARIES: $(illume_homepkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_homepkg_LTLIBRARIES)'; test -n "$(illume_homepkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_homepkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_homepkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_homepkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_homepkgdir)"; \
-	}
-
-uninstall-illume_homepkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_homepkg_LTLIBRARIES)'; test -n "$(illume_homepkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_homepkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_homepkgdir)/$$f"; \
-	done
-
-clean-illume_homepkgLTLIBRARIES:
-	-test -z "$(illume_homepkg_LTLIBRARIES)" || rm -f $(illume_homepkg_LTLIBRARIES)
-	@list='$(illume_homepkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_indicatorpkgLTLIBRARIES: $(illume_indicatorpkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_indicatorpkg_LTLIBRARIES)'; test -n "$(illume_indicatorpkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_indicatorpkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_indicatorpkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_indicatorpkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_indicatorpkgdir)"; \
-	}
-
-uninstall-illume_indicatorpkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_indicatorpkg_LTLIBRARIES)'; test -n "$(illume_indicatorpkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_indicatorpkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_indicatorpkgdir)/$$f"; \
-	done
-
-clean-illume_indicatorpkgLTLIBRARIES:
-	-test -z "$(illume_indicatorpkg_LTLIBRARIES)" || rm -f $(illume_indicatorpkg_LTLIBRARIES)
-	@list='$(illume_indicatorpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_kbd_togglepkgLTLIBRARIES: $(illume_kbd_togglepkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_kbd_togglepkg_LTLIBRARIES)'; test -n "$(illume_kbd_togglepkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_kbd_togglepkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_kbd_togglepkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_kbd_togglepkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_kbd_togglepkgdir)"; \
-	}
-
-uninstall-illume_kbd_togglepkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_kbd_togglepkg_LTLIBRARIES)'; test -n "$(illume_kbd_togglepkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_kbd_togglepkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_kbd_togglepkgdir)/$$f"; \
-	done
-
-clean-illume_kbd_togglepkgLTLIBRARIES:
-	-test -z "$(illume_kbd_togglepkg_LTLIBRARIES)" || rm -f $(illume_kbd_togglepkg_LTLIBRARIES)
-	@list='$(illume_kbd_togglepkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_keyboardpkgLTLIBRARIES: $(illume_keyboardpkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_keyboardpkg_LTLIBRARIES)'; test -n "$(illume_keyboardpkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_keyboardpkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_keyboardpkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_keyboardpkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_keyboardpkgdir)"; \
-	}
-
-uninstall-illume_keyboardpkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_keyboardpkg_LTLIBRARIES)'; test -n "$(illume_keyboardpkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_keyboardpkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_keyboardpkgdir)/$$f"; \
-	done
-
-clean-illume_keyboardpkgLTLIBRARIES:
-	-test -z "$(illume_keyboardpkg_LTLIBRARIES)" || rm -f $(illume_keyboardpkg_LTLIBRARIES)
-	@list='$(illume_keyboardpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_mode_togglepkgLTLIBRARIES: $(illume_mode_togglepkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_mode_togglepkg_LTLIBRARIES)'; test -n "$(illume_mode_togglepkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_mode_togglepkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_mode_togglepkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_mode_togglepkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_mode_togglepkgdir)"; \
-	}
-
-uninstall-illume_mode_togglepkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_mode_togglepkg_LTLIBRARIES)'; test -n "$(illume_mode_togglepkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_mode_togglepkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_mode_togglepkgdir)/$$f"; \
-	done
-
-clean-illume_mode_togglepkgLTLIBRARIES:
-	-test -z "$(illume_mode_togglepkg_LTLIBRARIES)" || rm -f $(illume_mode_togglepkg_LTLIBRARIES)
-	@list='$(illume_mode_togglepkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-illume_softkeypkgLTLIBRARIES: $(illume_softkeypkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_softkeypkg_LTLIBRARIES)'; test -n "$(illume_softkeypkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_softkeypkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_softkeypkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(illume_softkeypkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(illume_softkeypkgdir)"; \
-	}
-
-uninstall-illume_softkeypkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_softkeypkg_LTLIBRARIES)'; test -n "$(illume_softkeypkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(illume_softkeypkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(illume_softkeypkgdir)/$$f"; \
-	done
-
-clean-illume_softkeypkgLTLIBRARIES:
-	-test -z "$(illume_softkeypkg_LTLIBRARIES)" || rm -f $(illume_softkeypkg_LTLIBRARIES)
-	@list='$(illume_softkeypkg_LTLIBRARIES)'; \
 	locs=`for p in $$list; do echo $$p; done | \
 	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
 	      sort -u`; \
@@ -5374,179 +4588,6 @@ ibox/e_mod_config.lo: ibox/$(am__dirstamp) \
 
 ibox/module.la: $(ibox_module_la_OBJECTS) $(ibox_module_la_DEPENDENCIES) $(EXTRA_ibox_module_la_DEPENDENCIES) ibox/$(am__dirstamp)
 	$(AM_V_CCLD)$(LINK) $(am_ibox_module_la_rpath) $(ibox_module_la_OBJECTS) $(ibox_module_la_LIBADD) $(LIBS)
-illume-bluetooth/$(am__dirstamp):
-	@$(MKDIR_P) illume-bluetooth
-	@: > illume-bluetooth/$(am__dirstamp)
-illume-bluetooth/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-bluetooth/$(DEPDIR)
-	@: > illume-bluetooth/$(DEPDIR)/$(am__dirstamp)
-illume-bluetooth/e_mod_main.lo: illume-bluetooth/$(am__dirstamp) \
-	illume-bluetooth/$(DEPDIR)/$(am__dirstamp)
-
-illume-bluetooth/module.la: $(illume_bluetooth_module_la_OBJECTS) $(illume_bluetooth_module_la_DEPENDENCIES) $(EXTRA_illume_bluetooth_module_la_DEPENDENCIES) illume-bluetooth/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_bluetooth_module_la_rpath) $(illume_bluetooth_module_la_OBJECTS) $(illume_bluetooth_module_la_LIBADD) $(LIBS)
-illume-home-toggle/$(am__dirstamp):
-	@$(MKDIR_P) illume-home-toggle
-	@: > illume-home-toggle/$(am__dirstamp)
-illume-home-toggle/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-home-toggle/$(DEPDIR)
-	@: > illume-home-toggle/$(DEPDIR)/$(am__dirstamp)
-illume-home-toggle/e_mod_main.lo: illume-home-toggle/$(am__dirstamp) \
-	illume-home-toggle/$(DEPDIR)/$(am__dirstamp)
-
-illume-home-toggle/module.la: $(illume_home_toggle_module_la_OBJECTS) $(illume_home_toggle_module_la_DEPENDENCIES) $(EXTRA_illume_home_toggle_module_la_DEPENDENCIES) illume-home-toggle/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_home_toggle_module_la_rpath) $(illume_home_toggle_module_la_OBJECTS) $(illume_home_toggle_module_la_LIBADD) $(LIBS)
-illume-home/$(am__dirstamp):
-	@$(MKDIR_P) illume-home
-	@: > illume-home/$(am__dirstamp)
-illume-home/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-home/$(DEPDIR)
-	@: > illume-home/$(DEPDIR)/$(am__dirstamp)
-illume-home/e_mod_main.lo: illume-home/$(am__dirstamp) \
-	illume-home/$(DEPDIR)/$(am__dirstamp)
-illume-home/e_mod_config.lo: illume-home/$(am__dirstamp) \
-	illume-home/$(DEPDIR)/$(am__dirstamp)
-illume-home/e_busycover.lo: illume-home/$(am__dirstamp) \
-	illume-home/$(DEPDIR)/$(am__dirstamp)
-
-illume-home/module.la: $(illume_home_module_la_OBJECTS) $(illume_home_module_la_DEPENDENCIES) $(EXTRA_illume_home_module_la_DEPENDENCIES) illume-home/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_home_module_la_rpath) $(illume_home_module_la_OBJECTS) $(illume_home_module_la_LIBADD) $(LIBS)
-illume-indicator/$(am__dirstamp):
-	@$(MKDIR_P) illume-indicator
-	@: > illume-indicator/$(am__dirstamp)
-illume-indicator/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-indicator/$(DEPDIR)
-	@: > illume-indicator/$(DEPDIR)/$(am__dirstamp)
-illume-indicator/e_mod_main.lo: illume-indicator/$(am__dirstamp) \
-	illume-indicator/$(DEPDIR)/$(am__dirstamp)
-illume-indicator/e_mod_config.lo: illume-indicator/$(am__dirstamp) \
-	illume-indicator/$(DEPDIR)/$(am__dirstamp)
-illume-indicator/e_mod_ind_win.lo: illume-indicator/$(am__dirstamp) \
-	illume-indicator/$(DEPDIR)/$(am__dirstamp)
-illume-indicator/e_mod_notify.lo: illume-indicator/$(am__dirstamp) \
-	illume-indicator/$(DEPDIR)/$(am__dirstamp)
-
-illume-indicator/module.la: $(illume_indicator_module_la_OBJECTS) $(illume_indicator_module_la_DEPENDENCIES) $(EXTRA_illume_indicator_module_la_DEPENDENCIES) illume-indicator/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_indicator_module_la_rpath) $(illume_indicator_module_la_OBJECTS) $(illume_indicator_module_la_LIBADD) $(LIBS)
-illume-kbd-toggle/$(am__dirstamp):
-	@$(MKDIR_P) illume-kbd-toggle
-	@: > illume-kbd-toggle/$(am__dirstamp)
-illume-kbd-toggle/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-kbd-toggle/$(DEPDIR)
-	@: > illume-kbd-toggle/$(DEPDIR)/$(am__dirstamp)
-illume-kbd-toggle/e_mod_main.lo: illume-kbd-toggle/$(am__dirstamp) \
-	illume-kbd-toggle/$(DEPDIR)/$(am__dirstamp)
-
-illume-kbd-toggle/module.la: $(illume_kbd_toggle_module_la_OBJECTS) $(illume_kbd_toggle_module_la_DEPENDENCIES) $(EXTRA_illume_kbd_toggle_module_la_DEPENDENCIES) illume-kbd-toggle/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_kbd_toggle_module_la_rpath) $(illume_kbd_toggle_module_la_OBJECTS) $(illume_kbd_toggle_module_la_LIBADD) $(LIBS)
-illume-keyboard/$(am__dirstamp):
-	@$(MKDIR_P) illume-keyboard
-	@: > illume-keyboard/$(am__dirstamp)
-illume-keyboard/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-keyboard/$(DEPDIR)
-	@: > illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_mod_main.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_kbd_int.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_kbd_dict.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_kbd_buf.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_kbd_send.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-illume-keyboard/e_mod_config.lo: illume-keyboard/$(am__dirstamp) \
-	illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-
-illume-keyboard/module.la: $(illume_keyboard_module_la_OBJECTS) $(illume_keyboard_module_la_DEPENDENCIES) $(EXTRA_illume_keyboard_module_la_DEPENDENCIES) illume-keyboard/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_keyboard_module_la_rpath) $(illume_keyboard_module_la_OBJECTS) $(illume_keyboard_module_la_LIBADD) $(LIBS)
-illume-mode-toggle/$(am__dirstamp):
-	@$(MKDIR_P) illume-mode-toggle
-	@: > illume-mode-toggle/$(am__dirstamp)
-illume-mode-toggle/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-mode-toggle/$(DEPDIR)
-	@: > illume-mode-toggle/$(DEPDIR)/$(am__dirstamp)
-illume-mode-toggle/e_mod_main.lo: illume-mode-toggle/$(am__dirstamp) \
-	illume-mode-toggle/$(DEPDIR)/$(am__dirstamp)
-
-illume-mode-toggle/module.la: $(illume_mode_toggle_module_la_OBJECTS) $(illume_mode_toggle_module_la_DEPENDENCIES) $(EXTRA_illume_mode_toggle_module_la_DEPENDENCIES) illume-mode-toggle/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_mode_toggle_module_la_rpath) $(illume_mode_toggle_module_la_OBJECTS) $(illume_mode_toggle_module_la_LIBADD) $(LIBS)
-illume-softkey/$(am__dirstamp):
-	@$(MKDIR_P) illume-softkey
-	@: > illume-softkey/$(am__dirstamp)
-illume-softkey/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume-softkey/$(DEPDIR)
-	@: > illume-softkey/$(DEPDIR)/$(am__dirstamp)
-illume-softkey/e_mod_main.lo: illume-softkey/$(am__dirstamp) \
-	illume-softkey/$(DEPDIR)/$(am__dirstamp)
-illume-softkey/e_mod_sft_win.lo: illume-softkey/$(am__dirstamp) \
-	illume-softkey/$(DEPDIR)/$(am__dirstamp)
-illume-softkey/e_mod_config.lo: illume-softkey/$(am__dirstamp) \
-	illume-softkey/$(DEPDIR)/$(am__dirstamp)
-
-illume-softkey/module.la: $(illume_softkey_module_la_OBJECTS) $(illume_softkey_module_la_DEPENDENCIES) $(EXTRA_illume_softkey_module_la_DEPENDENCIES) illume-softkey/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume_softkey_module_la_rpath) $(illume_softkey_module_la_OBJECTS) $(illume_softkey_module_la_LIBADD) $(LIBS)
-illume2/$(am__dirstamp):
-	@$(MKDIR_P) illume2
-	@: > illume2/$(am__dirstamp)
-illume2/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume2/$(DEPDIR)
-	@: > illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_main.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_illume.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_config_policy.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_select_window.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_config_windows.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_config_animation.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_quickpanel.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_kbd_device.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_kbd.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_policy.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-illume2/e_mod_config.lo: illume2/$(am__dirstamp) \
-	illume2/$(DEPDIR)/$(am__dirstamp)
-
-illume2/module.la: $(illume2_module_la_OBJECTS) $(illume2_module_la_DEPENDENCIES) $(EXTRA_illume2_module_la_DEPENDENCIES) illume2/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_illume2_module_la_rpath) $(illume2_module_la_OBJECTS) $(illume2_module_la_LIBADD) $(LIBS)
-illume2/policies/illume/$(am__dirstamp):
-	@$(MKDIR_P) illume2/policies/illume
-	@: > illume2/policies/illume/$(am__dirstamp)
-illume2/policies/illume/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume2/policies/illume/$(DEPDIR)
-	@: > illume2/policies/illume/$(DEPDIR)/$(am__dirstamp)
-illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo:  \
-	illume2/policies/illume/$(am__dirstamp) \
-	illume2/policies/illume/$(DEPDIR)/$(am__dirstamp)
-illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo:  \
-	illume2/policies/illume/$(am__dirstamp) \
-	illume2/policies/illume/$(DEPDIR)/$(am__dirstamp)
-
-illume2/policies/illume/illume.la: $(illume2_policies_illume_illume_la_OBJECTS) $(illume2_policies_illume_illume_la_DEPENDENCIES) $(EXTRA_illume2_policies_illume_illume_la_DEPENDENCIES) illume2/policies/illume/$(am__dirstamp)
-	$(AM_V_CCLD)$(illume2_policies_illume_illume_la_LINK) $(am_illume2_policies_illume_illume_la_rpath) $(illume2_policies_illume_illume_la_OBJECTS) $(illume2_policies_illume_illume_la_LIBADD) $(LIBS)
-illume2/policies/tablet/$(am__dirstamp):
-	@$(MKDIR_P) illume2/policies/tablet
-	@: > illume2/policies/tablet/$(am__dirstamp)
-illume2/policies/tablet/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) illume2/policies/tablet/$(DEPDIR)
-	@: > illume2/policies/tablet/$(DEPDIR)/$(am__dirstamp)
-illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo:  \
-	illume2/policies/tablet/$(am__dirstamp) \
-	illume2/policies/tablet/$(DEPDIR)/$(am__dirstamp)
-illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo:  \
-	illume2/policies/tablet/$(am__dirstamp) \
-	illume2/policies/tablet/$(DEPDIR)/$(am__dirstamp)
-
-illume2/policies/tablet/tablet.la: $(illume2_policies_tablet_tablet_la_OBJECTS) $(illume2_policies_tablet_tablet_la_DEPENDENCIES) $(EXTRA_illume2_policies_tablet_tablet_la_DEPENDENCIES) illume2/policies/tablet/$(am__dirstamp)
-	$(AM_V_CCLD)$(illume2_policies_tablet_tablet_la_LINK) $(am_illume2_policies_tablet_tablet_la_rpath) $(illume2_policies_tablet_tablet_la_OBJECTS) $(illume2_policies_tablet_tablet_la_LIBADD) $(LIBS)
 mixer/$(am__dirstamp):
 	@$(MKDIR_P) mixer
 	@: > mixer/$(am__dirstamp)
@@ -6134,28 +5175,6 @@ mostlyclean-compile:
 	-rm -f ibar/*.lo
 	-rm -f ibox/*.$(OBJEXT)
 	-rm -f ibox/*.lo
-	-rm -f illume-bluetooth/*.$(OBJEXT)
-	-rm -f illume-bluetooth/*.lo
-	-rm -f illume-home-toggle/*.$(OBJEXT)
-	-rm -f illume-home-toggle/*.lo
-	-rm -f illume-home/*.$(OBJEXT)
-	-rm -f illume-home/*.lo
-	-rm -f illume-indicator/*.$(OBJEXT)
-	-rm -f illume-indicator/*.lo
-	-rm -f illume-kbd-toggle/*.$(OBJEXT)
-	-rm -f illume-kbd-toggle/*.lo
-	-rm -f illume-keyboard/*.$(OBJEXT)
-	-rm -f illume-keyboard/*.lo
-	-rm -f illume-mode-toggle/*.$(OBJEXT)
-	-rm -f illume-mode-toggle/*.lo
-	-rm -f illume-softkey/*.$(OBJEXT)
-	-rm -f illume-softkey/*.lo
-	-rm -f illume2/*.$(OBJEXT)
-	-rm -f illume2/*.lo
-	-rm -f illume2/policies/illume/*.$(OBJEXT)
-	-rm -f illume2/policies/illume/*.lo
-	-rm -f illume2/policies/tablet/*.$(OBJEXT)
-	-rm -f illume2/policies/tablet/*.lo
 	-rm -f mixer/*.$(OBJEXT)
 	-rm -f mixer/*.lo
 	-rm -f msgbus/*.$(OBJEXT)
@@ -6330,41 +5349,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@ibar/$(DEPDIR)/e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ibox/$(DEPDIR)/e_mod_config.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@ibox/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-bluetooth/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-home-toggle/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-home/$(DEPDIR)/e_busycover.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-home/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-home/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-indicator/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-indicator/$(DEPDIR)/e_mod_ind_win.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-indicator/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-indicator/$(DEPDIR)/e_mod_notify.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-kbd-toggle/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_kbd_buf.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_kbd_dict.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_kbd_int.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_kbd_send.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-keyboard/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-mode-toggle/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-softkey/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-softkey/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume-softkey/$(DEPDIR)/e_mod_sft_win.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_illume.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_config_animation.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_config_policy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_config_windows.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_kbd.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_kbd_device.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_policy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_quickpanel.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/$(DEPDIR)/e_mod_select_window.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-illume.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-policy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-policy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-tablet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@mixer/$(DEPDIR)/mixer_module_la-app_mixer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@mixer/$(DEPDIR)/mixer_module_la-conf_gadget.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@mixer/$(DEPDIR)/mixer_module_la-conf_module.Plo@am__quote@
@@ -6529,34 +5513,6 @@ connman/connman_module_la-agent.lo: connman/agent.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(connman_module_la_CFLAGS) $(CFLAGS) -c -o connman/connman_module_la-agent.lo `test -f 'connman/agent.c' || echo '$(srcdir)/'`connman/agent.c
 
-illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo: illume2/policies/illume/policy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_illume_illume_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_illume_illume_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo -MD -MP -MF illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-policy.Tpo -c -o illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo `test -f 'illume2/policies/illume/policy.c' || echo '$(srcdir)/'`illume2/policies/illume/policy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-policy.Tpo illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-policy.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='illume2/policies/illume/policy.c' object='illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_illume_illume_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_illume_illume_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o illume2/policies/illume/illume2_policies_illume_illume_la-policy.lo `test -f 'illume2/policies/illume/policy.c' || echo '$(srcdir)/'`illume2/policies/illume/policy.c
-
-illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo: illume2/policies/illume/illume.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_illume_illume_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_illume_illume_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo -MD -MP -MF illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-illume.Tpo -c -o illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo `test -f 'illume2/policies/illume/illume.c' || echo '$(srcdir)/'`illume2/policies/illume/illume.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-illume.Tpo illume2/policies/illume/$(DEPDIR)/illume2_policies_illume_illume_la-illume.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='illume2/policies/illume/illume.c' object='illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_illume_illume_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_illume_illume_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o illume2/policies/illume/illume2_policies_illume_illume_la-illume.lo `test -f 'illume2/policies/illume/illume.c' || echo '$(srcdir)/'`illume2/policies/illume/illume.c
-
-illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo: illume2/policies/tablet/policy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_tablet_tablet_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_tablet_tablet_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo -MD -MP -MF illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-policy.Tpo -c -o illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo `test -f 'illume2/policies/tablet/policy.c' || echo '$(srcdir)/'`illume2/policies/tablet/policy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-policy.Tpo illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-policy.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='illume2/policies/tablet/policy.c' object='illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_tablet_tablet_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_tablet_tablet_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o illume2/policies/tablet/illume2_policies_tablet_tablet_la-policy.lo `test -f 'illume2/policies/tablet/policy.c' || echo '$(srcdir)/'`illume2/policies/tablet/policy.c
-
-illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo: illume2/policies/tablet/tablet.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_tablet_tablet_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_tablet_tablet_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo -MD -MP -MF illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-tablet.Tpo -c -o illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo `test -f 'illume2/policies/tablet/tablet.c' || echo '$(srcdir)/'`illume2/policies/tablet/tablet.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-tablet.Tpo illume2/policies/tablet/$(DEPDIR)/illume2_policies_tablet_tablet_la-tablet.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='illume2/policies/tablet/tablet.c' object='illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(illume2_policies_tablet_tablet_la_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(illume2_policies_tablet_tablet_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o illume2/policies/tablet/illume2_policies_tablet_tablet_la-tablet.lo `test -f 'illume2/policies/tablet/tablet.c' || echo '$(srcdir)/'`illume2/policies/tablet/tablet.c
-
 mixer/mixer_module_la-e_mod_main.lo: mixer/e_mod_main.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(mixer_module_la_CFLAGS) $(CFLAGS) -MT mixer/mixer_module_la-e_mod_main.lo -MD -MP -MF mixer/$(DEPDIR)/mixer_module_la-e_mod_main.Tpo -c -o mixer/mixer_module_la-e_mod_main.lo `test -f 'mixer/e_mod_main.c' || echo '$(srcdir)/'`mixer/e_mod_main.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) mixer/$(DEPDIR)/mixer_module_la-e_mod_main.Tpo mixer/$(DEPDIR)/mixer_module_la-e_mod_main.Plo
@@ -6705,17 +5661,6 @@ clean-libtool:
 	-rm -rf gadman/.libs gadman/_libs
 	-rm -rf ibar/.libs ibar/_libs
 	-rm -rf ibox/.libs ibox/_libs
-	-rm -rf illume-bluetooth/.libs illume-bluetooth/_libs
-	-rm -rf illume-home/.libs illume-home/_libs
-	-rm -rf illume-home-toggle/.libs illume-home-toggle/_libs
-	-rm -rf illume-indicator/.libs illume-indicator/_libs
-	-rm -rf illume-kbd-toggle/.libs illume-kbd-toggle/_libs
-	-rm -rf illume-keyboard/.libs illume-keyboard/_libs
-	-rm -rf illume-mode-toggle/.libs illume-mode-toggle/_libs
-	-rm -rf illume-softkey/.libs illume-softkey/_libs
-	-rm -rf illume2/.libs illume2/_libs
-	-rm -rf illume2/policies/illume/.libs illume2/policies/illume/_libs
-	-rm -rf illume2/policies/tablet/.libs illume2/policies/tablet/_libs
 	-rm -rf mixer/.libs mixer/_libs
 	-rm -rf msgbus/.libs msgbus/_libs
 	-rm -rf notification/.libs notification/_libs
@@ -7425,258 +6370,6 @@ uninstall-iboxDATA:
 	@list='$(ibox_DATA)'; test -n "$(iboxdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(iboxdir)'; $(am__uninstall_files_from_dir)
-install-illume2DATA: $(illume2_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume2_DATA)'; test -n "$(illume2dir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume2dir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume2dir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume2dir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume2dir)" || exit $$?; \
-	done
-
-uninstall-illume2DATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume2_DATA)'; test -n "$(illume2dir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume2dir)'; $(am__uninstall_files_from_dir)
-install-illume2keyboardsDATA: $(illume2keyboards_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume2keyboards_DATA)'; test -n "$(illume2keyboardsdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume2keyboardsdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume2keyboardsdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume2keyboardsdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume2keyboardsdir)" || exit $$?; \
-	done
-
-uninstall-illume2keyboardsDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume2keyboards_DATA)'; test -n "$(illume2keyboardsdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume2keyboardsdir)'; $(am__uninstall_files_from_dir)
-install-illume_bluetoothDATA: $(illume_bluetooth_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_bluetooth_DATA)'; test -n "$(illume_bluetoothdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_bluetoothdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_bluetoothdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_bluetoothdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_bluetoothdir)" || exit $$?; \
-	done
-
-uninstall-illume_bluetoothDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_bluetooth_DATA)'; test -n "$(illume_bluetoothdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_bluetoothdir)'; $(am__uninstall_files_from_dir)
-install-illume_homeDATA: $(illume_home_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_home_DATA)'; test -n "$(illume_homedir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_homedir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_homedir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_homedir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_homedir)" || exit $$?; \
-	done
-
-uninstall-illume_homeDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_home_DATA)'; test -n "$(illume_homedir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_homedir)'; $(am__uninstall_files_from_dir)
-install-illume_home_toggleDATA: $(illume_home_toggle_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_home_toggle_DATA)'; test -n "$(illume_home_toggledir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_home_toggledir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_home_toggledir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_home_toggledir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_home_toggledir)" || exit $$?; \
-	done
-
-uninstall-illume_home_toggleDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_home_toggle_DATA)'; test -n "$(illume_home_toggledir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_home_toggledir)'; $(am__uninstall_files_from_dir)
-install-illume_indicatorDATA: $(illume_indicator_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_indicator_DATA)'; test -n "$(illume_indicatordir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_indicatordir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_indicatordir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_indicatordir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_indicatordir)" || exit $$?; \
-	done
-
-uninstall-illume_indicatorDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_indicator_DATA)'; test -n "$(illume_indicatordir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_indicatordir)'; $(am__uninstall_files_from_dir)
-install-illume_kbd_toggleDATA: $(illume_kbd_toggle_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_kbd_toggle_DATA)'; test -n "$(illume_kbd_toggledir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_kbd_toggledir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_kbd_toggledir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_kbd_toggledir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_kbd_toggledir)" || exit $$?; \
-	done
-
-uninstall-illume_kbd_toggleDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_kbd_toggle_DATA)'; test -n "$(illume_kbd_toggledir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_kbd_toggledir)'; $(am__uninstall_files_from_dir)
-install-illume_keyboardDATA: $(illume_keyboard_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_keyboard_DATA)'; test -n "$(illume_keyboarddir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_keyboarddir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_keyboarddir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_keyboarddir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_keyboarddir)" || exit $$?; \
-	done
-
-uninstall-illume_keyboardDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_keyboard_DATA)'; test -n "$(illume_keyboarddir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_keyboarddir)'; $(am__uninstall_files_from_dir)
-install-illume_mode_toggleDATA: $(illume_mode_toggle_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_mode_toggle_DATA)'; test -n "$(illume_mode_toggledir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_mode_toggledir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_mode_toggledir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_mode_toggledir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_mode_toggledir)" || exit $$?; \
-	done
-
-uninstall-illume_mode_toggleDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_mode_toggle_DATA)'; test -n "$(illume_mode_toggledir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_mode_toggledir)'; $(am__uninstall_files_from_dir)
-install-illume_softkeyDATA: $(illume_softkey_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illume_softkey_DATA)'; test -n "$(illume_softkeydir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illume_softkeydir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illume_softkeydir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illume_softkeydir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illume_softkeydir)" || exit $$?; \
-	done
-
-uninstall-illume_softkeyDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illume_softkey_DATA)'; test -n "$(illume_softkeydir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illume_softkeydir)'; $(am__uninstall_files_from_dir)
-install-illumedictsDATA: $(illumedicts_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illumedicts_DATA)'; test -n "$(illumedictsdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illumedictsdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illumedictsdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illumedictsdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illumedictsdir)" || exit $$?; \
-	done
-
-uninstall-illumedictsDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illumedicts_DATA)'; test -n "$(illumedictsdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illumedictsdir)'; $(am__uninstall_files_from_dir)
-install-illumekeyboardsDATA: $(illumekeyboards_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(illumekeyboards_DATA)'; test -n "$(illumekeyboardsdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(illumekeyboardsdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(illumekeyboardsdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(illumekeyboardsdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(illumekeyboardsdir)" || exit $$?; \
-	done
-
-uninstall-illumekeyboardsDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(illumekeyboards_DATA)'; test -n "$(illumekeyboardsdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(illumekeyboardsdir)'; $(am__uninstall_files_from_dir)
 install-mixerDATA: $(mixer_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(mixer_DATA)'; test -n "$(mixerdir)" || list=; \
@@ -8194,7 +6887,7 @@ check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(comppkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(illume2pkgdir)" "$(DESTDIR)$(illume2policyillumedir)" "$(DESTDIR)$(illume2policytabletdir)" "$(DESTDIR)$(illume_bluetoothpkgdir)" "$(DESTDIR)$(illume_home_togglepkgdir)" "$(DESTDIR)$(illume_homepkgdir)" "$(DESTDIR)$(illume_indicatorpkgdir)" "$(DESTDIR)$(illume_kbd_togglepkgdir)" "$(DESTDIR)$(illume_keyboardpkgdir)" "$(DESTDIR)$(illume_mode_togglepkgdir)" "$(DESTDIR)$(illume_softkeypkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(compdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(illume2dir)" "$(DESTDIR)$(illume2keyboardsdir)" "$(DESTDIR)$(illume_bluetoothdir)" "$(DESTDIR)$(illume_homedir)" "$(DESTDIR)$(illume_home_toggledir)" "$(DESTDIR)$(illume_indicatordir)" "$(DESTDIR)$(illume_kbd_toggledir)" "$(DESTDIR)$(illume_keyboarddir)" "$(DESTDIR)$(illume_mode_toggledir)" "$(DESTDIR)$(illume_softkeydir)" "$(DESTDIR)$(illumedictsdir)" "$(DESTDIR)$(illumekeyboardsdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
+	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(comppkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(compdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -8286,28 +6979,6 @@ distclean-generic:
 	-rm -f ibar/$(am__dirstamp)
 	-rm -f ibox/$(DEPDIR)/$(am__dirstamp)
 	-rm -f ibox/$(am__dirstamp)
-	-rm -f illume-bluetooth/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-bluetooth/$(am__dirstamp)
-	-rm -f illume-home-toggle/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-home-toggle/$(am__dirstamp)
-	-rm -f illume-home/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-home/$(am__dirstamp)
-	-rm -f illume-indicator/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-indicator/$(am__dirstamp)
-	-rm -f illume-kbd-toggle/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-kbd-toggle/$(am__dirstamp)
-	-rm -f illume-keyboard/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-keyboard/$(am__dirstamp)
-	-rm -f illume-mode-toggle/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-mode-toggle/$(am__dirstamp)
-	-rm -f illume-softkey/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume-softkey/$(am__dirstamp)
-	-rm -f illume2/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume2/$(am__dirstamp)
-	-rm -f illume2/policies/illume/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume2/policies/illume/$(am__dirstamp)
-	-rm -f illume2/policies/tablet/$(DEPDIR)/$(am__dirstamp)
-	-rm -f illume2/policies/tablet/$(am__dirstamp)
 	-rm -f mixer/$(DEPDIR)/$(am__dirstamp)
 	-rm -f mixer/$(am__dirstamp)
 	-rm -f msgbus/$(DEPDIR)/$(am__dirstamp)
@@ -8372,29 +7043,19 @@ clean-am: clean-accesspkgLTLIBRARIES clean-backlightpkgLTLIBRARIES \
 	clean-fileman_opinfopkgLTLIBRARIES clean-filemanpkgLTLIBRARIES \
 	clean-freqsetPROGRAMS clean-gadmanpkgLTLIBRARIES clean-generic \
 	clean-ibarpkgLTLIBRARIES clean-iboxpkgLTLIBRARIES \
-	clean-illume2pkgLTLIBRARIES \
-	clean-illume2policyillumeLTLIBRARIES \
-	clean-illume2policytabletLTLIBRARIES \
-	clean-illume_bluetoothpkgLTLIBRARIES \
-	clean-illume_home_togglepkgLTLIBRARIES \
-	clean-illume_homepkgLTLIBRARIES \
-	clean-illume_indicatorpkgLTLIBRARIES \
-	clean-illume_kbd_togglepkgLTLIBRARIES \
-	clean-illume_keyboardpkgLTLIBRARIES \
-	clean-illume_mode_togglepkgLTLIBRARIES \
-	clean-illume_softkeypkgLTLIBRARIES clean-libtool \
-	clean-mixerpkgLTLIBRARIES clean-msgbuspkgLTLIBRARIES \
-	clean-notificationpkgLTLIBRARIES clean-pagerpkgLTLIBRARIES \
-	clean-physicspkgLTLIBRARIES clean-quickaccesspkgLTLIBRARIES \
-	clean-shotpkgLTLIBRARIES clean-startpkgLTLIBRARIES \
-	clean-sysconpkgLTLIBRARIES clean-systraypkgLTLIBRARIES \
-	clean-taskspkgLTLIBRARIES clean-temperaturepkgLTLIBRARIES \
-	clean-tempgetPROGRAMS clean-tilingpkgLTLIBRARIES \
-	clean-winlistpkgLTLIBRARIES clean-wizardpkgLTLIBRARIES \
-	clean-xkbswitchpkgLTLIBRARIES mostlyclean-am
+	clean-libtool clean-mixerpkgLTLIBRARIES \
+	clean-msgbuspkgLTLIBRARIES clean-notificationpkgLTLIBRARIES \
+	clean-pagerpkgLTLIBRARIES clean-physicspkgLTLIBRARIES \
+	clean-quickaccesspkgLTLIBRARIES clean-shotpkgLTLIBRARIES \
+	clean-startpkgLTLIBRARIES clean-sysconpkgLTLIBRARIES \
+	clean-systraypkgLTLIBRARIES clean-taskspkgLTLIBRARIES \
+	clean-temperaturepkgLTLIBRARIES clean-tempgetPROGRAMS \
+	clean-tilingpkgLTLIBRARIES clean-winlistpkgLTLIBRARIES \
+	clean-wizardpkgLTLIBRARIES clean-xkbswitchpkgLTLIBRARIES \
+	mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) comp/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) illume-bluetooth/$(DEPDIR) illume-home-toggle/$(DEPDIR) illume-home/$(DEPDIR) illume-indicator/$(DEPDIR) illume-kbd-toggle/$(DEPDIR) illume-keyboard/$(DEPDIR) illume-mode-toggle/$(DEPDIR) illume-softkey/$(DEPDIR) illume2/$(DEPDIR) illume2/policies/illume/$(DEPDIR) illume2/policies/tablet/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
+	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) comp/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -8450,25 +7111,7 @@ install-data-am: install-accessDATA install-accesspkgLTLIBRARIES \
 	install-filemanpkgLTLIBRARIES install-freqsetPROGRAMS \
 	install-gadmanDATA install-gadmanpkgLTLIBRARIES \
 	install-ibarDATA install-ibarpkgLTLIBRARIES install-iboxDATA \
-	install-iboxpkgLTLIBRARIES install-illume2DATA \
-	install-illume2keyboardsDATA install-illume2pkgLTLIBRARIES \
-	install-illume2policyillumeLTLIBRARIES \
-	install-illume2policytabletLTLIBRARIES \
-	install-illume_bluetoothDATA \
-	install-illume_bluetoothpkgLTLIBRARIES install-illume_homeDATA \
-	install-illume_home_toggleDATA \
-	install-illume_home_togglepkgLTLIBRARIES \
-	install-illume_homepkgLTLIBRARIES install-illume_indicatorDATA \
-	install-illume_indicatorpkgLTLIBRARIES \
-	install-illume_kbd_toggleDATA \
-	install-illume_kbd_togglepkgLTLIBRARIES \
-	install-illume_keyboardDATA \
-	install-illume_keyboardpkgLTLIBRARIES \
-	install-illume_mode_toggleDATA \
-	install-illume_mode_togglepkgLTLIBRARIES \
-	install-illume_softkeyDATA \
-	install-illume_softkeypkgLTLIBRARIES install-illumedictsDATA \
-	install-illumekeyboardsDATA install-mixerDATA \
+	install-iboxpkgLTLIBRARIES install-mixerDATA \
 	install-mixerpkgLTLIBRARIES install-msgbusDATA \
 	install-msgbuspkgLTLIBRARIES install-notificationDATA \
 	install-notificationpkgLTLIBRARIES install-pagerDATA \
@@ -8515,7 +7158,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) comp/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) illume-bluetooth/$(DEPDIR) illume-home-toggle/$(DEPDIR) illume-home/$(DEPDIR) illume-indicator/$(DEPDIR) illume-kbd-toggle/$(DEPDIR) illume-keyboard/$(DEPDIR) illume-mode-toggle/$(DEPDIR) illume-softkey/$(DEPDIR) illume2/$(DEPDIR) illume2/policies/illume/$(DEPDIR) illume2/policies/tablet/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
+	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) comp/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -8578,26 +7221,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-gadmanDATA uninstall-gadmanpkgLTLIBRARIES \
 	uninstall-ibarDATA uninstall-ibarpkgLTLIBRARIES \
 	uninstall-iboxDATA uninstall-iboxpkgLTLIBRARIES \
-	uninstall-illume2DATA uninstall-illume2keyboardsDATA \
-	uninstall-illume2pkgLTLIBRARIES \
-	uninstall-illume2policyillumeLTLIBRARIES \
-	uninstall-illume2policytabletLTLIBRARIES \
-	uninstall-illume_bluetoothDATA \
-	uninstall-illume_bluetoothpkgLTLIBRARIES \
-	uninstall-illume_homeDATA uninstall-illume_home_toggleDATA \
-	uninstall-illume_home_togglepkgLTLIBRARIES \
-	uninstall-illume_homepkgLTLIBRARIES \
-	uninstall-illume_indicatorDATA \
-	uninstall-illume_indicatorpkgLTLIBRARIES \
-	uninstall-illume_kbd_toggleDATA \
-	uninstall-illume_kbd_togglepkgLTLIBRARIES \
-	uninstall-illume_keyboardDATA \
-	uninstall-illume_keyboardpkgLTLIBRARIES \
-	uninstall-illume_mode_toggleDATA \
-	uninstall-illume_mode_togglepkgLTLIBRARIES \
-	uninstall-illume_softkeyDATA \
-	uninstall-illume_softkeypkgLTLIBRARIES \
-	uninstall-illumedictsDATA uninstall-illumekeyboardsDATA \
 	uninstall-mixerDATA uninstall-mixerpkgLTLIBRARIES \
 	uninstall-msgbusDATA uninstall-msgbuspkgLTLIBRARIES \
 	uninstall-notificationDATA \
@@ -8645,29 +7268,18 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	clean-fileman_opinfopkgLTLIBRARIES clean-filemanpkgLTLIBRARIES \
 	clean-freqsetPROGRAMS clean-gadmanpkgLTLIBRARIES clean-generic \
 	clean-ibarpkgLTLIBRARIES clean-iboxpkgLTLIBRARIES \
-	clean-illume2pkgLTLIBRARIES \
-	clean-illume2policyillumeLTLIBRARIES \
-	clean-illume2policytabletLTLIBRARIES \
-	clean-illume_bluetoothpkgLTLIBRARIES \
-	clean-illume_home_togglepkgLTLIBRARIES \
-	clean-illume_homepkgLTLIBRARIES \
-	clean-illume_indicatorpkgLTLIBRARIES \
-	clean-illume_kbd_togglepkgLTLIBRARIES \
-	clean-illume_keyboardpkgLTLIBRARIES \
-	clean-illume_mode_togglepkgLTLIBRARIES \
-	clean-illume_softkeypkgLTLIBRARIES clean-libtool \
-	clean-mixerpkgLTLIBRARIES clean-msgbuspkgLTLIBRARIES \
-	clean-notificationpkgLTLIBRARIES clean-pagerpkgLTLIBRARIES \
-	clean-physicspkgLTLIBRARIES clean-quickaccesspkgLTLIBRARIES \
-	clean-shotpkgLTLIBRARIES clean-startpkgLTLIBRARIES \
-	clean-sysconpkgLTLIBRARIES clean-systraypkgLTLIBRARIES \
-	clean-taskspkgLTLIBRARIES clean-temperaturepkgLTLIBRARIES \
-	clean-tempgetPROGRAMS clean-tilingpkgLTLIBRARIES \
-	clean-winlistpkgLTLIBRARIES clean-wizardpkgLTLIBRARIES \
-	clean-xkbswitchpkgLTLIBRARIES cscopelist-am ctags ctags-am \
-	distclean distclean-compile distclean-generic \
-	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-accessDATA \
+	clean-libtool clean-mixerpkgLTLIBRARIES \
+	clean-msgbuspkgLTLIBRARIES clean-notificationpkgLTLIBRARIES \
+	clean-pagerpkgLTLIBRARIES clean-physicspkgLTLIBRARIES \
+	clean-quickaccesspkgLTLIBRARIES clean-shotpkgLTLIBRARIES \
+	clean-startpkgLTLIBRARIES clean-sysconpkgLTLIBRARIES \
+	clean-systraypkgLTLIBRARIES clean-taskspkgLTLIBRARIES \
+	clean-temperaturepkgLTLIBRARIES clean-tempgetPROGRAMS \
+	clean-tilingpkgLTLIBRARIES clean-winlistpkgLTLIBRARIES \
+	clean-wizardpkgLTLIBRARIES clean-xkbswitchpkgLTLIBRARIES \
+	cscopelist-am ctags ctags-am distclean distclean-compile \
+	distclean-generic distclean-libtool distclean-tags distdir dvi \
+	dvi-am html html-am info info-am install install-accessDATA \
 	install-accesspkgLTLIBRARIES install-am install-backlightDATA \
 	install-backlightpkgLTLIBRARIES install-batgetPROGRAMS \
 	install-batteryDATA install-batterypkgLTLIBRARIES \
@@ -8707,34 +7319,16 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	install-filemanpkgLTLIBRARIES install-freqsetPROGRAMS \
 	install-gadmanDATA install-gadmanpkgLTLIBRARIES install-html \
 	install-html-am install-ibarDATA install-ibarpkgLTLIBRARIES \
-	install-iboxDATA install-iboxpkgLTLIBRARIES \
-	install-illume2DATA install-illume2keyboardsDATA \
-	install-illume2pkgLTLIBRARIES \
-	install-illume2policyillumeLTLIBRARIES \
-	install-illume2policytabletLTLIBRARIES \
-	install-illume_bluetoothDATA \
-	install-illume_bluetoothpkgLTLIBRARIES install-illume_homeDATA \
-	install-illume_home_toggleDATA \
-	install-illume_home_togglepkgLTLIBRARIES \
-	install-illume_homepkgLTLIBRARIES install-illume_indicatorDATA \
-	install-illume_indicatorpkgLTLIBRARIES \
-	install-illume_kbd_toggleDATA \
-	install-illume_kbd_togglepkgLTLIBRARIES \
-	install-illume_keyboardDATA \
-	install-illume_keyboardpkgLTLIBRARIES \
-	install-illume_mode_toggleDATA \
-	install-illume_mode_togglepkgLTLIBRARIES \
-	install-illume_softkeyDATA \
-	install-illume_softkeypkgLTLIBRARIES install-illumedictsDATA \
-	install-illumekeyboardsDATA install-info install-info-am \
-	install-man install-mixerDATA install-mixerpkgLTLIBRARIES \
-	install-msgbusDATA install-msgbuspkgLTLIBRARIES \
-	install-notificationDATA install-notificationpkgLTLIBRARIES \
-	install-pagerDATA install-pagerpkgLTLIBRARIES install-pdf \
-	install-pdf-am install-physicsDATA \
-	install-physicspkgLTLIBRARIES install-ps install-ps-am \
-	install-quickaccessDATA install-quickaccesspkgLTLIBRARIES \
-	install-shotDATA install-shotpkgLTLIBRARIES install-startDATA \
+	install-iboxDATA install-iboxpkgLTLIBRARIES install-info \
+	install-info-am install-man install-mixerDATA \
+	install-mixerpkgLTLIBRARIES install-msgbusDATA \
+	install-msgbuspkgLTLIBRARIES install-notificationDATA \
+	install-notificationpkgLTLIBRARIES install-pagerDATA \
+	install-pagerpkgLTLIBRARIES install-pdf install-pdf-am \
+	install-physicsDATA install-physicspkgLTLIBRARIES install-ps \
+	install-ps-am install-quickaccessDATA \
+	install-quickaccesspkgLTLIBRARIES install-shotDATA \
+	install-shotpkgLTLIBRARIES install-startDATA \
 	install-startpkgLTLIBRARIES install-strip install-sysconDATA \
 	install-sysconpkgLTLIBRARIES install-systrayDATA \
 	install-systraypkgLTLIBRARIES install-tasksDATA \
@@ -8795,26 +7389,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-gadmanDATA uninstall-gadmanpkgLTLIBRARIES \
 	uninstall-ibarDATA uninstall-ibarpkgLTLIBRARIES \
 	uninstall-iboxDATA uninstall-iboxpkgLTLIBRARIES \
-	uninstall-illume2DATA uninstall-illume2keyboardsDATA \
-	uninstall-illume2pkgLTLIBRARIES \
-	uninstall-illume2policyillumeLTLIBRARIES \
-	uninstall-illume2policytabletLTLIBRARIES \
-	uninstall-illume_bluetoothDATA \
-	uninstall-illume_bluetoothpkgLTLIBRARIES \
-	uninstall-illume_homeDATA uninstall-illume_home_toggleDATA \
-	uninstall-illume_home_togglepkgLTLIBRARIES \
-	uninstall-illume_homepkgLTLIBRARIES \
-	uninstall-illume_indicatorDATA \
-	uninstall-illume_indicatorpkgLTLIBRARIES \
-	uninstall-illume_kbd_toggleDATA \
-	uninstall-illume_kbd_togglepkgLTLIBRARIES \
-	uninstall-illume_keyboardDATA \
-	uninstall-illume_keyboardpkgLTLIBRARIES \
-	uninstall-illume_mode_toggleDATA \
-	uninstall-illume_mode_togglepkgLTLIBRARIES \
-	uninstall-illume_softkeyDATA \
-	uninstall-illume_softkeypkgLTLIBRARIES \
-	uninstall-illumedictsDATA uninstall-illumekeyboardsDATA \
 	uninstall-mixerDATA uninstall-mixerpkgLTLIBRARIES \
 	uninstall-msgbusDATA uninstall-msgbuspkgLTLIBRARIES \
 	uninstall-notificationDATA \
@@ -8989,44 +7563,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 @USE_MODULE_MIXER_TRUE@.PHONY: mixer install-mixer
 @USE_MODULE_MIXER_TRUE@mixer: $(mixerpkg_LTLIBRARIES) $(mixer_DATA)
 @USE_MODULE_MIXER_TRUE@install-mixer: install-mixerDATA install-mixerpkgLTLIBRARIES
-
-# TODO: incomplete
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume2 install-illume2
-@USE_MODULE_ILLUME2_TRUE@illume2: $(illume2pkg_LTLIBRARIES) $(illume2_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume2: install-illume2DATA install-illume2pkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_home install-illume_home
-@USE_MODULE_ILLUME2_TRUE@illume_home: $(illume_homepkg_LTLIBRARIES) $(illume_home_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_home: install-illume_homeDATA install-illume_homepkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_home_toggle install-illume_home_toggle
-@USE_MODULE_ILLUME2_TRUE@illume_home_toggle: $(illume_home_togglepkg_LTLIBRARIES) $(illume_home_toggle_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_home_toggle: install-illume_home_toggleDATA install-illume_home_togglepkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_softkey install-illume_softkey
-@USE_MODULE_ILLUME2_TRUE@illume_softkey: $(illume_softkeypkg_LTLIBRARIES) $(illume_softkey_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_softkey: install-illume_softkeyDATA install-illume_softkeypkgLTLIBRARIES
-
-# TODO: incomplete
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_keyboard install-illume_keyboard
-@USE_MODULE_ILLUME2_TRUE@illume_keyboard: $(illume_keyboardpkg_LTLIBRARIES) $(illume_keyboard_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_keyboard: install-illume_keyboardDATA install-illume_keyboardpkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_indicator install-illume_indicator
-@USE_MODULE_ILLUME2_TRUE@illume_indicator: $(illume_indicatorpkg_LTLIBRARIES) $(illume_indicator_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_indicator: install-illume_indicatorDATA install-illume_indicatorpkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_kbd_toggle install-illume_kbd_toggle
-@USE_MODULE_ILLUME2_TRUE@illume_kbd_toggle: $(illume_kbd_togglepkg_LTLIBRARIES) $(illume_kbd_toggle_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_kbd_toggle: install-illume_kbd_toggleDATA install-illume_kbd_togglepkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_mode_toggle install-illume_mode_toggle
-@USE_MODULE_ILLUME2_TRUE@illume_mode_toggle: $(illume_mode_togglepkg_LTLIBRARIES) $(illume_mode_toggle_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_mode_toggle: install-illume_mode_toggleDATA install-illume_mode_togglepkgLTLIBRARIES
-
-@USE_MODULE_ILLUME2_TRUE@.PHONY: illume_bluetooth install-illume_bluetooth
-@USE_MODULE_ILLUME2_TRUE@illume_bluetooth: $(illume_bluetoothpkg_LTLIBRARIES) $(illume_bluetooth_DATA)
-@USE_MODULE_ILLUME2_TRUE@install-illume_bluetooth: install-illume_bluetoothDATA install-illume_bluetoothpkgLTLIBRARIES
 
 @USE_MODULE_SYSCON_TRUE@.PHONY: syscon install-syscon
 @USE_MODULE_SYSCON_TRUE@syscon: $(sysconpkg_LTLIBRARIES) $(syscon_DATA)

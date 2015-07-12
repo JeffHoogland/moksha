@@ -166,18 +166,6 @@ if USE_MODULE_MIXER
 include Makefile_mixer.am
 endif
 
-if USE_MODULE_ILLUME2
-include Makefile_illume2.am
-include Makefile_illume-home.am
-include Makefile_illume-home-toggle.am
-include Makefile_illume-softkey.am
-include Makefile_illume-keyboard.am
-include Makefile_illume-indicator.am
-include Makefile_illume-kbd-toggle.am
-include Makefile_illume-mode-toggle.am
-include Makefile_illume-bluetooth.am
-endif
-
 if USE_MODULE_SYSCON
 include Makefile_syscon.am
 endif

@@ -312,9 +312,6 @@
 /* Use module ibox */
 #undef USE_MODULE_IBOX
 
-/* Use module illume2 */
-#undef USE_MODULE_ILLUME2
-
 /* Use module mixer */
 #undef USE_MODULE_MIXER
 
