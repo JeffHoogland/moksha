@@ -89,9 +89,6 @@
 /* Have environ var */
 #undef HAVE_ENVIRON
 
-/* Package EPHYSICS ( ephysics ) found. */
-#undef HAVE_EPHYSICS
-
 /* Define to 1 if you have the <execinfo.h> header file. */
 #undef HAVE_EXECINFO_H
 
@@ -231,9 +228,6 @@
 /* Use module clock */
 #undef USE_MODULE_CLOCK
 
-/* Use module comp */
-#undef USE_MODULE_COMP
-
 /* Use module conf */
 #undef USE_MODULE_CONF
 
@@ -291,9 +285,6 @@
 /* Use module cpufreq */
 #undef USE_MODULE_CPUFREQ
 
-/* Use module dropshadow */
-#undef USE_MODULE_DROPSHADOW
-
 /* Use module everything */
 #undef USE_MODULE_EVERYTHING
 
@@ -323,9 +314,6 @@
 
 /* Use module pager */
 #undef USE_MODULE_PAGER
-
-/* Use module physics */
-#undef USE_MODULE_PHYSICS
 
 /* Use module quickaccess */
 #undef USE_MODULE_QUICKACCESS

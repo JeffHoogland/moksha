@@ -665,12 +665,6 @@ USE_MODULE_SHOT_TRUE
 USE_MODULE_QUICKACCESS
 USE_MODULE_QUICKACCESS_FALSE
 USE_MODULE_QUICKACCESS_TRUE
-USE_MODULE_PHYSICS
-USE_MODULE_PHYSICS_FALSE
-USE_MODULE_PHYSICS_TRUE
-USE_MODULE_COMP
-USE_MODULE_COMP_FALSE
-USE_MODULE_COMP_TRUE
 USE_MODULE_SYSTRAY
 USE_MODULE_SYSTRAY_FALSE
 USE_MODULE_SYSTRAY_TRUE
@@ -790,9 +784,6 @@ USE_MODULE_PAGER_TRUE
 USE_MODULE_CLOCK
 USE_MODULE_CLOCK_FALSE
 USE_MODULE_CLOCK_TRUE
-USE_MODULE_DROPSHADOW
-USE_MODULE_DROPSHADOW_FALSE
-USE_MODULE_DROPSHADOW_TRUE
 USE_MODULE_IBAR
 USE_MODULE_IBAR_FALSE
 USE_MODULE_IBAR_TRUE
@@ -810,14 +801,6 @@ SOUND_LIBS
 SOUND_CFLAGS
 HAVE_ALSA_FALSE
 HAVE_ALSA_TRUE
-HAVE_PHYSICS_FALSE
-HAVE_PHYSICS_TRUE
-HAVE_EPHYSICS
-EPHYSICS_VERSION
-EPHYSICS_LIBS
-EPHYSICS_CFLAGS
-HAVE_EPHYSICS_FALSE
-HAVE_EPHYSICS_TRUE
 HAVE_NOTIFICATION_FALSE
 HAVE_NOTIFICATION_TRUE
 HAVE_ENOTIFY
@@ -1088,10 +1071,8 @@ with_profile
 with_edje_cc
 with_eet_eet
 enable_enotify
-enable_ephysics
 enable_wayland_clients
 enable_ibar
-enable_dropshadow
 enable_clock
 enable_pager
 enable_battery
@@ -1127,8 +1108,6 @@ enable_connman
 enable_syscon
 enable_everything
 enable_systray
-enable_comp
-enable_physics
 enable_quickaccess
 enable_shot
 enable_backlight
@@ -1190,8 +1169,6 @@ EET_CFLAGS
 EET_LIBS
 ENOTIFY_CFLAGS
 ENOTIFY_LIBS
-EPHYSICS_CFLAGS
-EPHYSICS_LIBS
 WAYLAND_CFLAGS
 WAYLAND_LIBS
 BATTERY_CFLAGS
@@ -1851,12 +1828,10 @@ Optional Features:
   --enable-elementary     enable Elementary support [default=detect]
   --enable-emotion        enable emotion support [default=detect]
   --disable-enotify       disable Enotify support [default=detect]
-  --disable-ephysics      disable Ephysics support [default=detect]
   --enable-wayland-clients
                           enable wayland clients in composite module
                           [default=disabled]
   --disable-ibar          optional module ibar [default=enabled]
-  --disable-dropshadow    optional module dropshadow [default=enabled]
   --disable-clock         optional module clock [default=enabled]
   --disable-pager         optional module pager [default=enabled]
   --disable-battery       optional module battery [default=enabled]
@@ -1901,8 +1876,6 @@ Optional Features:
   --disable-syscon        optional module syscon [default=enabled]
   --disable-everything    optional module everything [default=enabled]
   --disable-systray       optional module systray [default=enabled]
-  --disable-comp          optional module comp [default=enabled]
-  --enable-physics        optional module physics [default=disabled]
   --disable-quickaccess   optional module quickaccess [default=enabled]
   --disable-shot          optional module shot [default=enabled]
   --disable-backlight     optional module backlight [default=enabled]
@@ -2013,10 +1986,6 @@ Some influential environment variables:
               C compiler flags for ENOTIFY, overriding pkg-config
   ENOTIFY_LIBS
               linker flags for ENOTIFY, overriding pkg-config
-  EPHYSICS_CFLAGS
-              C compiler flags for EPHYSICS, overriding pkg-config
-  EPHYSICS_LIBS
-              linker flags for EPHYSICS, overriding pkg-config
   WAYLAND_CFLAGS
               C compiler flags for WAYLAND, overriding pkg-config
   WAYLAND_LIBS
@@ -19075,172 +19044,6 @@ fi
 
 
 
-have_ephysics=no
- if false; then
-  HAVE_EPHYSICS_TRUE=
-  HAVE_EPHYSICS_FALSE='#'
-else
-  HAVE_EPHYSICS_TRUE='#'
-  HAVE_EPHYSICS_FALSE=
-fi
-
-# Check whether --enable-ephysics was given.
-if test "${enable_ephysics+set}" = set; then :
-  enableval=$enable_ephysics; e_cv_want_ephysics=$enableval
-else
-  if ${e_cv_want_ephysics+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  e_cv_want_ephysics=yes
-fi
-
-
-fi
-
-if test "x$e_cv_want_ephysics" != "xno" ; then
-
-# ----------------------------------------------------------------------
-# BEGIN: Check library with pkg-config: EPHYSICS (pkg-config= ephysics )
-#
-
-
-pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for EPHYSICS" >&5
-$as_echo_n "checking for EPHYSICS... " >&6; }
-
-if test -n "$EPHYSICS_CFLAGS"; then
-    pkg_cv_EPHYSICS_CFLAGS="$EPHYSICS_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \" ephysics \""; } >&5
-  ($PKG_CONFIG --exists --print-errors " ephysics ") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_EPHYSICS_CFLAGS=`$PKG_CONFIG --cflags " ephysics " 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-if test -n "$EPHYSICS_LIBS"; then
-    pkg_cv_EPHYSICS_LIBS="$EPHYSICS_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \" ephysics \""; } >&5
-  ($PKG_CONFIG --exists --print-errors " ephysics ") 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_EPHYSICS_LIBS=`$PKG_CONFIG --libs " ephysics " 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        EPHYSICS_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs " ephysics " 2>&1`
-        else
-	        EPHYSICS_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs " ephysics " 2>&1`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$EPHYSICS_PKG_ERRORS" >&5
-
-
-                                HAVE_EPHYSICS=no
-                                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; };
-    { $as_echo "$as_me:${as_lineno-$LINENO}: ephysics disabled" >&5
-$as_echo "$as_me: ephysics disabled" >&6;}
-    e_cv_want_ephysics=no
-
-
-elif test $pkg_failed = untried; then
-     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-                                HAVE_EPHYSICS=no
-                                { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; };
-    { $as_echo "$as_me:${as_lineno-$LINENO}: ephysics disabled" >&5
-$as_echo "$as_me: ephysics disabled" >&6;}
-    e_cv_want_ephysics=no
-
-
-else
-	EPHYSICS_CFLAGS=$pkg_cv_EPHYSICS_CFLAGS
-	EPHYSICS_LIBS=$pkg_cv_EPHYSICS_LIBS
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-                                HAVE_EPHYSICS=yes
-                                pkg_name=$(echo " ephysics " | cut -d\   -f1)
-                                EPHYSICS_VERSION=$($PKG_CONFIG --modversion $pkg_name)
-
-
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_EPHYSICS 1
-_ACEOF
-
-
-
-fi
-         if test x$HAVE_EPHYSICS = xyes; then
-  HAVE_EPHYSICS_TRUE=
-  HAVE_EPHYSICS_FALSE='#'
-else
-  HAVE_EPHYSICS_TRUE='#'
-  HAVE_EPHYSICS_FALSE=
-fi
-
-
-        if test x$HAVE_EPHYSICS = xyes; then
-
-cat >>confdefs.h <<_ACEOF
-#define HAVE_EPHYSICS 1
-_ACEOF
-
-        fi
-
-#
-# END: Check library with pkg-config: EPHYSICS (pkg-config= ephysics )
-# ----------------------------------------------------------------------
-
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: ephysics disabled" >&5
-$as_echo "$as_me: ephysics disabled" >&6;}
-    e_cv_want_ephysics=no
-fi
-
-
-
- if false; then
-  HAVE_PHYSICS_TRUE=
-  HAVE_PHYSICS_FALSE='#'
-else
-  HAVE_PHYSICS_TRUE='#'
-  HAVE_PHYSICS_FALSE=
-fi
-
-
-
  if false; then
   HAVE_ALSA_TRUE=
   HAVE_ALSA_FALSE='#'
@@ -19460,87 +19263,6 @@ fi
 
 #
 # END: Check for optional module: ibar (true)
-# ----------------------------------------------------------------------
-
-
-# ----------------------------------------------------------------------
-# BEGIN: Check for optional module: dropshadow (default: true)
-#
-
-
-        USING_MODULES=1
-
-        DROPSHADOW=true
-        # Check whether --enable-dropshadow was given.
-if test "${enable_dropshadow+set}" = set; then :
-  enableval=$enable_dropshadow; DROPSHADOW=${enableval:-false}
-fi
-
-        if test x$DROPSHADOW = xyes || test x$DROPSHADOW = x1; then
-                DROPSHADOW=true
-        fi
-        if test x$DROPSHADOW = xno || test x$DROPSHADOW = x0; then
-                DROPSHADOW=false
-        fi
-
-        USE_MODULE_DROPSHADOW=$DROPSHADOW
-
-
-        # Check for XTerm and define some colors
-        if test "x$TERM" = "xxterm" -o "x$TERM" = "xscreen"; then
-                COLOR_PREF="\0033\0133"
-                COLOR_H="${COLOR_PREF}1m"
-                COLOR_HGREEN="${COLOR_PREF}1;32m"
-                COLOR_HRED="${COLOR_PREF}1;31m"
-                COLOR_GREEN="${COLOR_PREF}32m"
-                COLOR_RED="${COLOR_PREF}31m"
-                COLOR_YELLOW="${COLOR_PREF}1;33m"
-                COLOR_END="${COLOR_PREF}0m"
-        else
-                COLOR_H=""
-                COLOR_HGREEN=""
-                COLOR_HRED=""
-                COLOR_GREEN=""
-                COLOR_RED=""
-                COLOR_YELLOW=""
-                COLOR_END=""
-        fi
-
-
-        # Check list for optional module dropshadow
-        if test x$DROPSHADOW = xtrue; then
-
-
-                if test x$DROPSHADOW = xfalse; then
-                        echo -e "${COLOR_YELLOW}Warning:${COLOR_END} optional module ${COLOR_H}dropshadow${COLOR_END} disabled by extra checks."
-                fi
-        fi
-
-        # Check if user checks succeeded
-        if test x$DROPSHADOW = xtrue; then
-                OPTIONAL_MODULES="$OPTIONAL_MODULES dropshadow"
-
-cat >>confdefs.h <<_ACEOF
-#define USE_MODULE_DROPSHADOW 1
-_ACEOF
-
-        else
-                UNUSED_OPTIONAL_MODULES="$UNUSED_OPTIONAL_MODULES dropshadow"
-        fi
-
-         if test x$DROPSHADOW = xtrue; then
-  USE_MODULE_DROPSHADOW_TRUE=
-  USE_MODULE_DROPSHADOW_FALSE='#'
-else
-  USE_MODULE_DROPSHADOW_TRUE='#'
-  USE_MODULE_DROPSHADOW_FALSE=
-fi
-
-
-
-
-#
-# END: Check for optional module: dropshadow (true)
 # ----------------------------------------------------------------------
 
 
@@ -22930,184 +22652,6 @@ fi
 
 
 # ----------------------------------------------------------------------
-# BEGIN: Check for optional module: comp (default: true)
-#
-
-
-        USING_MODULES=1
-
-        COMP=true
-        # Check whether --enable-comp was given.
-if test "${enable_comp+set}" = set; then :
-  enableval=$enable_comp; COMP=${enableval:-false}
-fi
-
-        if test x$COMP = xyes || test x$COMP = x1; then
-                COMP=true
-        fi
-        if test x$COMP = xno || test x$COMP = x0; then
-                COMP=false
-        fi
-
-        USE_MODULE_COMP=$COMP
-
-
-        # Check for XTerm and define some colors
-        if test "x$TERM" = "xxterm" -o "x$TERM" = "xscreen"; then
-                COLOR_PREF="\0033\0133"
-                COLOR_H="${COLOR_PREF}1m"
-                COLOR_HGREEN="${COLOR_PREF}1;32m"
-                COLOR_HRED="${COLOR_PREF}1;31m"
-                COLOR_GREEN="${COLOR_PREF}32m"
-                COLOR_RED="${COLOR_PREF}31m"
-                COLOR_YELLOW="${COLOR_PREF}1;33m"
-                COLOR_END="${COLOR_PREF}0m"
-        else
-                COLOR_H=""
-                COLOR_HGREEN=""
-                COLOR_HRED=""
-                COLOR_GREEN=""
-                COLOR_RED=""
-                COLOR_YELLOW=""
-                COLOR_END=""
-        fi
-
-
-        # Check list for optional module comp
-        if test x$COMP = xtrue; then
-
-
-                if test x$COMP = xfalse; then
-                        echo -e "${COLOR_YELLOW}Warning:${COLOR_END} optional module ${COLOR_H}comp${COLOR_END} disabled by extra checks."
-                fi
-        fi
-
-        # Check if user checks succeeded
-        if test x$COMP = xtrue; then
-                OPTIONAL_MODULES="$OPTIONAL_MODULES comp"
-
-cat >>confdefs.h <<_ACEOF
-#define USE_MODULE_COMP 1
-_ACEOF
-
-        else
-                UNUSED_OPTIONAL_MODULES="$UNUSED_OPTIONAL_MODULES comp"
-        fi
-
-         if test x$COMP = xtrue; then
-  USE_MODULE_COMP_TRUE=
-  USE_MODULE_COMP_FALSE='#'
-else
-  USE_MODULE_COMP_TRUE='#'
-  USE_MODULE_COMP_FALSE=
-fi
-
-
-
-
-#
-# END: Check for optional module: comp (true)
-# ----------------------------------------------------------------------
-
-
-# ----------------------------------------------------------------------
-# BEGIN: Check for optional module: physics (default: false)
-#
-
-
-        USING_MODULES=1
-
-        PHYSICS=false
-        # Check whether --enable-physics was given.
-if test "${enable_physics+set}" = set; then :
-  enableval=$enable_physics; PHYSICS=${enableval:-true}
-fi
-
-        if test x$PHYSICS = xyes || test x$PHYSICS = x1; then
-                PHYSICS=true
-        fi
-        if test x$PHYSICS = xno || test x$PHYSICS = x0; then
-                PHYSICS=false
-        fi
-
-        USE_MODULE_PHYSICS=$PHYSICS
-
-
-        # Check for XTerm and define some colors
-        if test "x$TERM" = "xxterm" -o "x$TERM" = "xscreen"; then
-                COLOR_PREF="\0033\0133"
-                COLOR_H="${COLOR_PREF}1m"
-                COLOR_HGREEN="${COLOR_PREF}1;32m"
-                COLOR_HRED="${COLOR_PREF}1;31m"
-                COLOR_GREEN="${COLOR_PREF}32m"
-                COLOR_RED="${COLOR_PREF}31m"
-                COLOR_YELLOW="${COLOR_PREF}1;33m"
-                COLOR_END="${COLOR_PREF}0m"
-        else
-                COLOR_H=""
-                COLOR_HGREEN=""
-                COLOR_HRED=""
-                COLOR_GREEN=""
-                COLOR_RED=""
-                COLOR_YELLOW=""
-                COLOR_END=""
-        fi
-
-
-        # Check list for optional module physics
-        if test x$PHYSICS = xtrue; then
-
-echo
-echo "checking optional module physics:"
-# BEGIN: User checks
-
-  if test "x$e_cv_want_ephysics" = "xno" ; then
-    PHYSICS=false
-  fi
-
-# END: User checks
-if test x$PHYSICS = xfalse; then
-        echo -e "optional module physics ${COLOR_HRED}failed${COLOR_END} checks."
-else
-        echo -e "optional module physics passed checks."
-fi
-echo
-
-
-                if test x$PHYSICS = xfalse; then
-                        echo -e "${COLOR_YELLOW}Warning:${COLOR_END} optional module ${COLOR_H}physics${COLOR_END} disabled by extra checks."
-                fi
-        fi
-
-        # Check if user checks succeeded
-        if test x$PHYSICS = xtrue; then
-                OPTIONAL_MODULES="$OPTIONAL_MODULES physics"
-
-cat >>confdefs.h <<_ACEOF
-#define USE_MODULE_PHYSICS 1
-_ACEOF
-
-        else
-                UNUSED_OPTIONAL_MODULES="$UNUSED_OPTIONAL_MODULES physics"
-        fi
-
-         if test x$PHYSICS = xtrue; then
-  USE_MODULE_PHYSICS_TRUE=
-  USE_MODULE_PHYSICS_FALSE='#'
-else
-  USE_MODULE_PHYSICS_TRUE='#'
-  USE_MODULE_PHYSICS_FALSE=
-fi
-
-
-
-
-#
-# END: Check for optional module: physics (false)
-# ----------------------------------------------------------------------
-
-
-# ----------------------------------------------------------------------
 # BEGIN: Check for optional module: quickaccess (default: true)
 #
 
@@ -24020,7 +23564,7 @@ SUID_LDFLAGS=-pie
 
 
 
-ac_config_files="$ac_config_files Makefile enlightenment.spec enlightenment.pc src/Makefile src/bin/Makefile src/bin/e_fm_shared_types.h src/bin/e_fm/Makefile src/modules/Makefile src/modules/ibar/module.desktop src/modules/dropshadow/module.desktop src/modules/clock/module.desktop src/modules/pager/module.desktop src/modules/battery/module.desktop src/modules/temperature/module.desktop src/modules/notification/module.desktop src/modules/cpufreq/module.desktop src/modules/ibox/module.desktop src/modules/start/module.desktop src/modules/winlist/module.desktop src/modules/fileman/module.desktop src/modules/fileman_opinfo/module.desktop src/modules/conf/module.desktop src/modules/conf_wallpaper2/module.desktop src/modules/conf_theme/module.desktop src/modules/conf_intl/module.desktop src/modules/conf_applications/module.desktop src/modules/conf_display/module.desktop src/modules/conf_shelves/module.desktop src/modules/conf_keybindings/module.desktop src/modules/conf_edgebindings/module.desktop src/modules/conf_window_remembers/module.desktop src/modules/conf_window_manipulation/module.desktop src/modules/conf_menus/module.desktop src/modules/conf_dialogs/module.desktop src/modules/conf_performance/module.desktop src/modules/conf_paths/module.desktop src/modules/conf_interaction/module.desktop src/modules/msgbus/module.desktop src/modules/conf_randr/module.desktop src/modules/gadman/module.desktop src/modules/mixer/module.desktop src/modules/connman/module.desktop src/modules/syscon/module.desktop src/modules/everything/module.desktop src/modules/everything/everything.pc src/modules/systray/module.desktop src/modules/physics/module.desktop src/modules/quickaccess/module.desktop src/modules/shot/module.desktop src/modules/backlight/module.desktop src/modules/tasks/module.desktop src/modules/xkbswitch/module.desktop src/modules/tiling/module.desktop src/modules/access/module.desktop data/Makefile data/images/Makefile data/flags/Makefile data/favorites/Makefile data/desktop/Makefile data/input_methods/Makefile data/themes/Makefile data/xsession/Makefile data/xsession/enlightenment.desktop data/tools/Makefile data/etc/Makefile data/etc/sysactions.conf data/icons/Makefile doc/Makefile doc/Doxyfile doc/e.dox config/Makefile config/default/Makefile $po_makefile_in"
+ac_config_files="$ac_config_files Makefile enlightenment.spec enlightenment.pc src/Makefile src/bin/Makefile src/bin/e_fm_shared_types.h src/bin/e_fm/Makefile src/modules/Makefile src/modules/ibar/module.desktop src/modules/clock/module.desktop src/modules/pager/module.desktop src/modules/battery/module.desktop src/modules/temperature/module.desktop src/modules/notification/module.desktop src/modules/cpufreq/module.desktop src/modules/ibox/module.desktop src/modules/start/module.desktop src/modules/winlist/module.desktop src/modules/fileman/module.desktop src/modules/fileman_opinfo/module.desktop src/modules/conf/module.desktop src/modules/conf_wallpaper2/module.desktop src/modules/conf_theme/module.desktop src/modules/conf_intl/module.desktop src/modules/conf_applications/module.desktop src/modules/conf_display/module.desktop src/modules/conf_shelves/module.desktop src/modules/conf_keybindings/module.desktop src/modules/conf_edgebindings/module.desktop src/modules/conf_window_remembers/module.desktop src/modules/conf_window_manipulation/module.desktop src/modules/conf_menus/module.desktop src/modules/conf_dialogs/module.desktop src/modules/conf_performance/module.desktop src/modules/conf_paths/module.desktop src/modules/conf_interaction/module.desktop src/modules/msgbus/module.desktop src/modules/conf_randr/module.desktop src/modules/gadman/module.desktop src/modules/mixer/module.desktop src/modules/connman/module.desktop src/modules/syscon/module.desktop src/modules/everything/module.desktop src/modules/everything/everything.pc src/modules/systray/module.desktop src/modules/quickaccess/module.desktop src/modules/shot/module.desktop src/modules/backlight/module.desktop src/modules/tasks/module.desktop src/modules/xkbswitch/module.desktop src/modules/tiling/module.desktop src/modules/access/module.desktop data/Makefile data/images/Makefile data/flags/Makefile data/favorites/Makefile data/desktop/Makefile data/input_methods/Makefile data/themes/Makefile data/xsession/Makefile data/xsession/enlightenment.desktop data/tools/Makefile data/etc/Makefile data/etc/sysactions.conf data/icons/Makefile doc/Makefile doc/Doxyfile doc/e.dox config/Makefile config/default/Makefile $po_makefile_in"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -24224,18 +23768,6 @@ if test -z "${HAVE_NOTIFICATION_TRUE}" && test -z "${HAVE_NOTIFICATION_FALSE}"; 
   as_fn_error $? "conditional \"HAVE_NOTIFICATION\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${HAVE_EPHYSICS_TRUE}" && test -z "${HAVE_EPHYSICS_FALSE}"; then
-  as_fn_error $? "conditional \"HAVE_EPHYSICS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${HAVE_EPHYSICS_TRUE}" && test -z "${HAVE_EPHYSICS_FALSE}"; then
-  as_fn_error $? "conditional \"HAVE_EPHYSICS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${HAVE_PHYSICS_TRUE}" && test -z "${HAVE_PHYSICS_FALSE}"; then
-  as_fn_error $? "conditional \"HAVE_PHYSICS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
 if test -z "${HAVE_ALSA_TRUE}" && test -z "${HAVE_ALSA_FALSE}"; then
   as_fn_error $? "conditional \"HAVE_ALSA\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
@@ -24254,10 +23786,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_IBAR_TRUE}" && test -z "${USE_MODULE_IBAR_FALSE}"; then
   as_fn_error $? "conditional \"USE_MODULE_IBAR\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MODULE_DROPSHADOW_TRUE}" && test -z "${USE_MODULE_DROPSHADOW_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MODULE_DROPSHADOW\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_CLOCK_TRUE}" && test -z "${USE_MODULE_CLOCK_FALSE}"; then
@@ -24414,14 +23942,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_SYSTRAY_TRUE}" && test -z "${USE_MODULE_SYSTRAY_FALSE}"; then
   as_fn_error $? "conditional \"USE_MODULE_SYSTRAY\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MODULE_COMP_TRUE}" && test -z "${USE_MODULE_COMP_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MODULE_COMP\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${USE_MODULE_PHYSICS_TRUE}" && test -z "${USE_MODULE_PHYSICS_FALSE}"; then
-  as_fn_error $? "conditional \"USE_MODULE_PHYSICS\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${USE_MODULE_QUICKACCESS_TRUE}" && test -z "${USE_MODULE_QUICKACCESS_FALSE}"; then
@@ -25345,7 +24865,6 @@ do
     "src/bin/e_fm/Makefile") CONFIG_FILES="$CONFIG_FILES src/bin/e_fm/Makefile" ;;
     "src/modules/Makefile") CONFIG_FILES="$CONFIG_FILES src/modules/Makefile" ;;
     "src/modules/ibar/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/ibar/module.desktop" ;;
-    "src/modules/dropshadow/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/dropshadow/module.desktop" ;;
     "src/modules/clock/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/clock/module.desktop" ;;
     "src/modules/pager/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/pager/module.desktop" ;;
     "src/modules/battery/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/battery/module.desktop" ;;
@@ -25382,7 +24901,6 @@ do
     "src/modules/everything/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/everything/module.desktop" ;;
     "src/modules/everything/everything.pc") CONFIG_FILES="$CONFIG_FILES src/modules/everything/everything.pc" ;;
     "src/modules/systray/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/systray/module.desktop" ;;
-    "src/modules/physics/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/physics/module.desktop" ;;
     "src/modules/quickaccess/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/quickaccess/module.desktop" ;;
     "src/modules/shot/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/shot/module.desktop" ;;
     "src/modules/backlight/module.desktop") CONFIG_FILES="$CONFIG_FILES src/modules/backlight/module.desktop" ;;

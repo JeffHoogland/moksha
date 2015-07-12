@@ -81,8 +81,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
-	$(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am \
-	$(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am \
+	$(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am \
+	$(srcdir)/Makefile_battery.am \
 	$(srcdir)/Makefile_temperature.am \
 	$(srcdir)/Makefile_notification.am \
 	$(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am \
@@ -108,7 +108,6 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 	$(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am \
 	$(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am \
 	$(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am \
-	$(srcdir)/Makefile_physics.am \
 	$(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am \
 	$(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am \
 	$(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am \
@@ -117,69 +116,67 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 	$(am__dist_everything_headers_DATA_DIST)
 @USE_MODULE_CONNMAN_TRUE@am__append_1 = $(connman_DATA)
 @USE_MODULE_IBAR_TRUE@am__append_2 = $(ibar_DATA)
-@USE_MODULE_DROPSHADOW_TRUE@am__append_3 = $(dropshadow_DATA)
-@USE_MODULE_CLOCK_TRUE@am__append_4 = $(clock_DATA)
-@USE_MODULE_PAGER_TRUE@am__append_5 = $(pager_DATA)
-@USE_MODULE_BATTERY_TRUE@am__append_6 = $(battery_DATA)
-@HAVE_EEZE_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_7 = battery/e_mod_udev.c
-@HAVE_EEZE_FALSE@@HAVE_OPENBSD_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_8 = battery/e_mod_openbsd.c
-@HAVE_EEZE_FALSE@@HAVE_OPENBSD_FALSE@@USE_MODULE_BATTERY_TRUE@am__append_9 = battery/e_mod_dbus.c
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_10 = @ENOTIFY_CFLAGS@
+@USE_MODULE_CLOCK_TRUE@am__append_3 = $(clock_DATA)
+@USE_MODULE_PAGER_TRUE@am__append_4 = $(pager_DATA)
+@USE_MODULE_BATTERY_TRUE@am__append_5 = $(battery_DATA)
+@HAVE_EEZE_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_6 = battery/e_mod_udev.c
+@HAVE_EEZE_FALSE@@HAVE_OPENBSD_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_7 = battery/e_mod_openbsd.c
+@HAVE_EEZE_FALSE@@HAVE_OPENBSD_FALSE@@USE_MODULE_BATTERY_TRUE@am__append_8 = battery/e_mod_dbus.c
+@HAVE_ENOTIFY_TRUE@@USE_MODULE_BATTERY_TRUE@am__append_9 = @ENOTIFY_CFLAGS@
 @USE_MODULE_BATTERY_TRUE@batget_PROGRAMS = battery/batget$(EXEEXT)
-@USE_MODULE_TEMPERATURE_TRUE@am__append_11 = $(temperature_DATA)
-@HAVE_EEZE_TRUE@@USE_MODULE_TEMPERATURE_TRUE@am__append_12 = temperature/e_mod_udev.c
+@USE_MODULE_TEMPERATURE_TRUE@am__append_10 = $(temperature_DATA)
+@HAVE_EEZE_TRUE@@USE_MODULE_TEMPERATURE_TRUE@am__append_11 = temperature/e_mod_udev.c
 @USE_MODULE_TEMPERATURE_TRUE@tempget_PROGRAMS =  \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/tempget$(EXEEXT)
-@USE_MODULE_NOTIFICATION_TRUE@am__append_13 = $(notification_DATA)
-@USE_MODULE_CPUFREQ_TRUE@am__append_14 = $(cpufreq_DATA)
+@USE_MODULE_NOTIFICATION_TRUE@am__append_12 = $(notification_DATA)
+@USE_MODULE_CPUFREQ_TRUE@am__append_13 = $(cpufreq_DATA)
 @USE_MODULE_CPUFREQ_TRUE@freqset_PROGRAMS = cpufreq/freqset$(EXEEXT)
-@USE_MODULE_CPUFREQ_TRUE@am__append_15 = cpufreq-install-data-hook
-@USE_MODULE_IBOX_TRUE@am__append_16 = $(ibox_DATA)
-@USE_MODULE_START_TRUE@am__append_17 = $(start_DATA)
-@USE_MODULE_WINLIST_TRUE@am__append_18 = $(winlist_DATA)
-@USE_MODULE_FILEMAN_TRUE@am__append_19 = $(fileman_DATA)
-@USE_MODULE_FILEMAN_OPINFO_TRUE@am__append_20 = $(fileman_opinfo_DATA)
-@USE_MODULE_WIZARD_TRUE@am__append_21 = $(wizard_DATA) $(wizard_desks_DATA) $(wizard_desktop_DATA)
-@USE_MODULE_WIZARD_TRUE@am__append_22 = wizard/e_mod_comp_cfdata.c \
+@USE_MODULE_CPUFREQ_TRUE@am__append_14 = cpufreq-install-data-hook
+@USE_MODULE_IBOX_TRUE@am__append_15 = $(ibox_DATA)
+@USE_MODULE_START_TRUE@am__append_16 = $(start_DATA)
+@USE_MODULE_WINLIST_TRUE@am__append_17 = $(winlist_DATA)
+@USE_MODULE_FILEMAN_TRUE@am__append_18 = $(fileman_DATA)
+@USE_MODULE_FILEMAN_OPINFO_TRUE@am__append_19 = $(fileman_opinfo_DATA)
+@USE_MODULE_WIZARD_TRUE@am__append_20 = $(wizard_DATA) $(wizard_desks_DATA) $(wizard_desktop_DATA)
+@USE_MODULE_WIZARD_TRUE@am__append_21 = wizard/e_mod_comp_cfdata.c \
 @USE_MODULE_WIZARD_TRUE@	      wizard/e_mod_comp_cfdata.h \
 @USE_MODULE_WIZARD_TRUE@	      wizard/e_mod_comp_main.h
 
-@USE_MODULE_CONF_TRUE@am__append_23 = $(conf_DATA)
-@USE_MODULE_CONF_WALLPAPER2_TRUE@am__append_24 = $(conf_wallpaper2_DATA)
-@USE_MODULE_CONF_THEME_TRUE@am__append_25 = $(conf_theme_DATA)
-@USE_MODULE_CONF_INTL_TRUE@am__append_26 = $(conf_intl_DATA)
-@USE_MODULE_MSGBUS_TRUE@am__append_27 = $(msgbus_DATA)
-@USE_MODULE_CONF_APPLICATIONS_TRUE@am__append_28 = $(conf_applications_DATA)
-@USE_MODULE_CONF_DISPLAY_TRUE@am__append_29 = $(conf_display_DATA)
-@USE_MODULE_CONF_SHELVES_TRUE@am__append_30 = $(conf_shelves_DATA)
-@USE_MODULE_CONF_KEYBINDINGS_TRUE@am__append_31 = $(conf_keybindings_DATA)
-@USE_MODULE_CONF_EDGEBINDINGS_TRUE@am__append_32 = $(conf_edgebindings_DATA)
-@USE_MODULE_CONF_WINDOW_REMEMBERS_TRUE@am__append_33 = $(conf_window_remembers_DATA)
-@USE_MODULE_CONF_WINDOW_MANIPULATION_TRUE@am__append_34 = $(conf_window_manipulation_DATA)
-@USE_MODULE_CONF_MENUS_TRUE@am__append_35 = $(conf_menus_DATA)
-@USE_MODULE_CONF_DIALOGS_TRUE@am__append_36 = $(conf_dialogs_DATA)
-@USE_MODULE_CONF_PERFORMANCE_TRUE@am__append_37 = $(conf_performance_DATA)
-@USE_MODULE_CONF_PATHS_TRUE@am__append_38 = $(conf_paths_DATA)
-@USE_MODULE_CONF_INTERACTION_TRUE@am__append_39 = $(conf_interaction_DATA)
-@USE_MODULE_CONF_RANDR_TRUE@am__append_40 = $(conf_randr_DATA)
-@USE_MODULE_GADMAN_TRUE@am__append_41 = $(gadman_DATA)
-@USE_MODULE_MIXER_TRUE@am__append_42 = $(mixer_DATA)
-@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__append_43 = mixer/sys_alsa.c
-@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__append_44 = mixer/sys_dummy.c
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_45 = @ENOTIFY_CFLAGS@
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_46 = @ENOTIFY_LIBS@
-@USE_MODULE_SYSCON_TRUE@am__append_47 = $(syscon_DATA)
-@USE_MODULE_EVERYTHING_TRUE@am__append_48 = $(everything_DATA) \
+@USE_MODULE_CONF_TRUE@am__append_22 = $(conf_DATA)
+@USE_MODULE_CONF_WALLPAPER2_TRUE@am__append_23 = $(conf_wallpaper2_DATA)
+@USE_MODULE_CONF_THEME_TRUE@am__append_24 = $(conf_theme_DATA)
+@USE_MODULE_CONF_INTL_TRUE@am__append_25 = $(conf_intl_DATA)
+@USE_MODULE_MSGBUS_TRUE@am__append_26 = $(msgbus_DATA)
+@USE_MODULE_CONF_APPLICATIONS_TRUE@am__append_27 = $(conf_applications_DATA)
+@USE_MODULE_CONF_DISPLAY_TRUE@am__append_28 = $(conf_display_DATA)
+@USE_MODULE_CONF_SHELVES_TRUE@am__append_29 = $(conf_shelves_DATA)
+@USE_MODULE_CONF_KEYBINDINGS_TRUE@am__append_30 = $(conf_keybindings_DATA)
+@USE_MODULE_CONF_EDGEBINDINGS_TRUE@am__append_31 = $(conf_edgebindings_DATA)
+@USE_MODULE_CONF_WINDOW_REMEMBERS_TRUE@am__append_32 = $(conf_window_remembers_DATA)
+@USE_MODULE_CONF_WINDOW_MANIPULATION_TRUE@am__append_33 = $(conf_window_manipulation_DATA)
+@USE_MODULE_CONF_MENUS_TRUE@am__append_34 = $(conf_menus_DATA)
+@USE_MODULE_CONF_DIALOGS_TRUE@am__append_35 = $(conf_dialogs_DATA)
+@USE_MODULE_CONF_PERFORMANCE_TRUE@am__append_36 = $(conf_performance_DATA)
+@USE_MODULE_CONF_PATHS_TRUE@am__append_37 = $(conf_paths_DATA)
+@USE_MODULE_CONF_INTERACTION_TRUE@am__append_38 = $(conf_interaction_DATA)
+@USE_MODULE_CONF_RANDR_TRUE@am__append_39 = $(conf_randr_DATA)
+@USE_MODULE_GADMAN_TRUE@am__append_40 = $(gadman_DATA)
+@USE_MODULE_MIXER_TRUE@am__append_41 = $(mixer_DATA)
+@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__append_42 = mixer/sys_alsa.c
+@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__append_43 = mixer/sys_dummy.c
+@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_44 = @ENOTIFY_CFLAGS@
+@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_45 = @ENOTIFY_LIBS@
+@USE_MODULE_SYSCON_TRUE@am__append_46 = $(syscon_DATA)
+@USE_MODULE_EVERYTHING_TRUE@am__append_47 = $(everything_DATA) \
 @USE_MODULE_EVERYTHING_TRUE@	everything/everything.pc.in
-@USE_MODULE_SYSTRAY_TRUE@am__append_49 = $(systray_DATA)
-@USE_MODULE_PHYSICS_TRUE@am__append_50 = $(physics_DATA)
-@USE_MODULE_QUICKACCESS_TRUE@am__append_51 = $(quickaccess_DATA)
-@USE_MODULE_SHOT_TRUE@am__append_52 = $(shot_DATA)
-@USE_MODULE_BACKLIGHT_TRUE@am__append_53 = $(backlight_DATA)
-@USE_MODULE_TASKS_TRUE@am__append_54 = $(tasks_DATA)
-@USE_MODULE_XKBSWITCH_TRUE@am__append_55 = $(xkbswitch_DATA)
-@USE_MODULE_TILING_TRUE@am__append_56 = tiling/e-module-tiling.edj
-@USE_MODULE_TILING_TRUE@am__append_57 = $(tiling_DATA) \
+@USE_MODULE_SYSTRAY_TRUE@am__append_48 = $(systray_DATA)
+@USE_MODULE_QUICKACCESS_TRUE@am__append_49 = $(quickaccess_DATA)
+@USE_MODULE_SHOT_TRUE@am__append_50 = $(shot_DATA)
+@USE_MODULE_BACKLIGHT_TRUE@am__append_51 = $(backlight_DATA)
+@USE_MODULE_TASKS_TRUE@am__append_52 = $(tasks_DATA)
+@USE_MODULE_XKBSWITCH_TRUE@am__append_53 = $(xkbswitch_DATA)
+@USE_MODULE_TILING_TRUE@am__append_54 = tiling/e-module-tiling.edj
+@USE_MODULE_TILING_TRUE@am__append_55 = $(tiling_DATA) \
 @USE_MODULE_TILING_TRUE@	      tiling/e-module-tiling.edc \
 @USE_MODULE_TILING_TRUE@	      tiling/module.desktop.in \
 @USE_MODULE_TILING_TRUE@	      tiling/images/module_icon.png \
@@ -192,7 +189,7 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_sw.png \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_w.png
 
-@USE_MODULE_ACCESS_TRUE@am__append_58 = $(access_DATA)
+@USE_MODULE_ACCESS_TRUE@am__append_56 = $(access_DATA)
 subdir = src/modules
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac-plugins.m4 \
@@ -260,24 +257,22 @@ am__installdirs = "$(DESTDIR)$(accesspkgdir)" \
 	"$(DESTDIR)$(conf_window_manipulationpkgdir)" \
 	"$(DESTDIR)$(conf_window_rememberspkgdir)" \
 	"$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" \
-	"$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" \
-	"$(DESTDIR)$(everythingpkgdir)" \
+	"$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(everythingpkgdir)" \
 	"$(DESTDIR)$(fileman_opinfopkgdir)" \
 	"$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" \
 	"$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" \
 	"$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" \
 	"$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" \
-	"$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" \
-	"$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" \
-	"$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" \
-	"$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" \
-	"$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" \
-	"$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" \
-	"$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" \
-	"$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" \
-	"$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" \
-	"$(DESTDIR)$(clockdir)" "$(DESTDIR)$(confdir)" \
-	"$(DESTDIR)$(conf_applicationsdir)" \
+	"$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" \
+	"$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" \
+	"$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" \
+	"$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" \
+	"$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" \
+	"$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" \
+	"$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" \
+	"$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" \
+	"$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" \
+	"$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" \
 	"$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" \
 	"$(DESTDIR)$(conf_edgebindingsdir)" \
 	"$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" \
@@ -290,19 +285,19 @@ am__installdirs = "$(DESTDIR)$(accesspkgdir)" \
 	"$(DESTDIR)$(conf_window_remembersdir)" \
 	"$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" \
 	"$(DESTDIR)$(everything_headersdir)" \
-	"$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" \
+	"$(DESTDIR)$(everythingdir)" \
 	"$(DESTDIR)$(everything_pkgconfigdir)" \
 	"$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" \
 	"$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" \
 	"$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(mixerdir)" \
 	"$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" \
-	"$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" \
-	"$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" \
-	"$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" \
-	"$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" \
-	"$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" \
-	"$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" \
-	"$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"
+	"$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(quickaccessdir)" \
+	"$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" \
+	"$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" \
+	"$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" \
+	"$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" \
+	"$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" \
+	"$(DESTDIR)$(xkbswitchdir)"
 LTLIBRARIES = $(accesspkg_LTLIBRARIES) $(backlightpkg_LTLIBRARIES) \
 	$(batterypkg_LTLIBRARIES) $(clockpkg_LTLIBRARIES) \
 	$(conf_applicationspkg_LTLIBRARIES) \
@@ -317,12 +312,11 @@ LTLIBRARIES = $(accesspkg_LTLIBRARIES) $(backlightpkg_LTLIBRARIES) \
 	$(conf_window_manipulationpkg_LTLIBRARIES) \
 	$(conf_window_rememberspkg_LTLIBRARIES) $(confpkg_LTLIBRARIES) \
 	$(connmanpkg_LTLIBRARIES) $(cpufreqpkg_LTLIBRARIES) \
-	$(dropshadowpkg_LTLIBRARIES) $(everythingpkg_LTLIBRARIES) \
-	$(fileman_opinfopkg_LTLIBRARIES) $(filemanpkg_LTLIBRARIES) \
-	$(gadmanpkg_LTLIBRARIES) $(ibarpkg_LTLIBRARIES) \
-	$(iboxpkg_LTLIBRARIES) $(mixerpkg_LTLIBRARIES) \
-	$(msgbuspkg_LTLIBRARIES) $(notificationpkg_LTLIBRARIES) \
-	$(pagerpkg_LTLIBRARIES) $(physicspkg_LTLIBRARIES) \
+	$(everythingpkg_LTLIBRARIES) $(fileman_opinfopkg_LTLIBRARIES) \
+	$(filemanpkg_LTLIBRARIES) $(gadmanpkg_LTLIBRARIES) \
+	$(ibarpkg_LTLIBRARIES) $(iboxpkg_LTLIBRARIES) \
+	$(mixerpkg_LTLIBRARIES) $(msgbuspkg_LTLIBRARIES) \
+	$(notificationpkg_LTLIBRARIES) $(pagerpkg_LTLIBRARIES) \
 	$(quickaccesspkg_LTLIBRARIES) $(shotpkg_LTLIBRARIES) \
 	$(startpkg_LTLIBRARIES) $(sysconpkg_LTLIBRARIES) \
 	$(systraypkg_LTLIBRARIES) $(taskspkg_LTLIBRARIES) \
@@ -640,15 +634,6 @@ am__cpufreq_module_la_SOURCES_DIST = cpufreq/e_mod_main.h \
 cpufreq_module_la_OBJECTS = $(am_cpufreq_module_la_OBJECTS)
 @USE_MODULE_CPUFREQ_TRUE@am_cpufreq_module_la_rpath = -rpath \
 @USE_MODULE_CPUFREQ_TRUE@	$(cpufreqpkgdir)
-dropshadow_module_la_LIBADD =
-am__dropshadow_module_la_SOURCES_DIST = dropshadow/e_mod_main.h \
-	dropshadow/e_mod_main.c dropshadow/e_mod_config.c
-@USE_MODULE_DROPSHADOW_TRUE@am_dropshadow_module_la_OBJECTS =  \
-@USE_MODULE_DROPSHADOW_TRUE@	dropshadow/e_mod_main.lo \
-@USE_MODULE_DROPSHADOW_TRUE@	dropshadow/e_mod_config.lo
-dropshadow_module_la_OBJECTS = $(am_dropshadow_module_la_OBJECTS)
-@USE_MODULE_DROPSHADOW_TRUE@am_dropshadow_module_la_rpath = -rpath \
-@USE_MODULE_DROPSHADOW_TRUE@	$(dropshadowpkgdir)
 everything_module_la_LIBADD =
 am__everything_module_la_SOURCES_DIST = everything/evry_api.h \
 	everything/evry_types.h everything/e_mod_main.c \
@@ -804,19 +789,6 @@ am__pager_module_la_SOURCES_DIST = pager/e_mod_main.h \
 pager_module_la_OBJECTS = $(am_pager_module_la_OBJECTS)
 @USE_MODULE_PAGER_TRUE@am_pager_module_la_rpath = -rpath \
 @USE_MODULE_PAGER_TRUE@	$(pagerpkgdir)
-physics_module_la_DEPENDENCIES =
-am__physics_module_la_SOURCES_DIST = physics/e_mod_main.c \
-	physics/e_mod_main.h physics/e_mod_config.c \
-	physics/e_mod_physics_cfdata.c physics/e_mod_physics_cfdata.h \
-	physics/e_mod_physics.c physics/e_mod_physics.h
-@USE_MODULE_PHYSICS_TRUE@am_physics_module_la_OBJECTS =  \
-@USE_MODULE_PHYSICS_TRUE@	physics/e_mod_main.lo \
-@USE_MODULE_PHYSICS_TRUE@	physics/e_mod_config.lo \
-@USE_MODULE_PHYSICS_TRUE@	physics/e_mod_physics_cfdata.lo \
-@USE_MODULE_PHYSICS_TRUE@	physics/e_mod_physics.lo
-physics_module_la_OBJECTS = $(am_physics_module_la_OBJECTS)
-@USE_MODULE_PHYSICS_TRUE@am_physics_module_la_rpath = -rpath \
-@USE_MODULE_PHYSICS_TRUE@	$(physicspkgdir)
 quickaccess_module_la_LIBADD =
 am__quickaccess_module_la_SOURCES_DIST = quickaccess/e_mod_main.c \
 	quickaccess/e_mod_main.h quickaccess/e_mod_config.c \
@@ -1151,27 +1123,25 @@ SOURCES = $(access_module_la_SOURCES) $(backlight_module_la_SOURCES) \
 	$(conf_window_manipulation_module_la_SOURCES) \
 	$(conf_window_remembers_module_la_SOURCES) \
 	$(connman_module_la_SOURCES) $(cpufreq_module_la_SOURCES) \
-	$(dropshadow_module_la_SOURCES) \
 	$(everything_module_la_SOURCES) $(fileman_module_la_SOURCES) \
 	$(fileman_opinfo_module_la_SOURCES) \
 	$(gadman_module_la_SOURCES) $(ibar_module_la_SOURCES) \
 	$(ibox_module_la_SOURCES) $(mixer_module_la_SOURCES) \
 	$(msgbus_module_la_SOURCES) $(notification_module_la_SOURCES) \
-	$(pager_module_la_SOURCES) $(physics_module_la_SOURCES) \
-	$(quickaccess_module_la_SOURCES) $(shot_module_la_SOURCES) \
-	$(start_module_la_SOURCES) $(syscon_module_la_SOURCES) \
-	$(systray_module_la_SOURCES) $(tasks_module_la_SOURCES) \
-	$(temperature_module_la_SOURCES) $(tiling_module_la_SOURCES) \
-	$(winlist_module_la_SOURCES) $(wizard_module_la_SOURCES) \
-	$(wizard_page_000_la_SOURCES) $(wizard_page_010_la_SOURCES) \
-	$(wizard_page_011_la_SOURCES) $(wizard_page_020_la_SOURCES) \
-	$(wizard_page_030_la_SOURCES) $(wizard_page_040_la_SOURCES) \
-	$(wizard_page_050_la_SOURCES) $(wizard_page_060_la_SOURCES) \
-	$(wizard_page_070_la_SOURCES) $(wizard_page_080_la_SOURCES) \
-	$(wizard_page_090_la_SOURCES) $(wizard_page_100_la_SOURCES) \
-	$(wizard_page_110_la_SOURCES) $(wizard_page_120_la_SOURCES) \
-	$(wizard_page_130_la_SOURCES) $(wizard_page_140_la_SOURCES) \
-	$(wizard_page_150_la_SOURCES) \
+	$(pager_module_la_SOURCES) $(quickaccess_module_la_SOURCES) \
+	$(shot_module_la_SOURCES) $(start_module_la_SOURCES) \
+	$(syscon_module_la_SOURCES) $(systray_module_la_SOURCES) \
+	$(tasks_module_la_SOURCES) $(temperature_module_la_SOURCES) \
+	$(tiling_module_la_SOURCES) $(winlist_module_la_SOURCES) \
+	$(wizard_module_la_SOURCES) $(wizard_page_000_la_SOURCES) \
+	$(wizard_page_010_la_SOURCES) $(wizard_page_011_la_SOURCES) \
+	$(wizard_page_020_la_SOURCES) $(wizard_page_030_la_SOURCES) \
+	$(wizard_page_040_la_SOURCES) $(wizard_page_050_la_SOURCES) \
+	$(wizard_page_060_la_SOURCES) $(wizard_page_070_la_SOURCES) \
+	$(wizard_page_080_la_SOURCES) $(wizard_page_090_la_SOURCES) \
+	$(wizard_page_100_la_SOURCES) $(wizard_page_110_la_SOURCES) \
+	$(wizard_page_120_la_SOURCES) $(wizard_page_130_la_SOURCES) \
+	$(wizard_page_140_la_SOURCES) $(wizard_page_150_la_SOURCES) \
 	$(nodist_wizard_page_150_la_SOURCES) \
 	$(wizard_page_160_la_SOURCES) $(wizard_page_170_la_SOURCES) \
 	$(wizard_page_180_la_SOURCES) $(wizard_page_200_la_SOURCES) \
@@ -1200,7 +1170,6 @@ DIST_SOURCES = $(am__access_module_la_SOURCES_DIST) \
 	$(am__conf_window_remembers_module_la_SOURCES_DIST) \
 	$(am__connman_module_la_SOURCES_DIST) \
 	$(am__cpufreq_module_la_SOURCES_DIST) \
-	$(am__dropshadow_module_la_SOURCES_DIST) \
 	$(am__everything_module_la_SOURCES_DIST) \
 	$(am__fileman_module_la_SOURCES_DIST) \
 	$(am__fileman_opinfo_module_la_SOURCES_DIST) \
@@ -1211,7 +1180,6 @@ DIST_SOURCES = $(am__access_module_la_SOURCES_DIST) \
 	$(am__msgbus_module_la_SOURCES_DIST) \
 	$(am__notification_module_la_SOURCES_DIST) \
 	$(am__pager_module_la_SOURCES_DIST) \
-	$(am__physics_module_la_SOURCES_DIST) \
 	$(am__quickaccess_module_la_SOURCES_DIST) \
 	$(am__shot_module_la_SOURCES_DIST) \
 	$(am__start_module_la_SOURCES_DIST) \
@@ -1271,15 +1239,14 @@ DATA = $(access_DATA) $(backlight_DATA) $(battery_DATA) $(clock_DATA) \
 	$(conf_shelves_DATA) $(conf_theme_DATA) \
 	$(conf_wallpaper2_DATA) $(conf_window_manipulation_DATA) \
 	$(conf_window_remembers_DATA) $(connman_DATA) $(cpufreq_DATA) \
-	$(dist_everything_headers_DATA) $(dropshadow_DATA) \
-	$(everything_DATA) $(everything_pkgconfig_DATA) \
-	$(fileman_DATA) $(fileman_opinfo_DATA) $(gadman_DATA) \
-	$(ibar_DATA) $(ibox_DATA) $(mixer_DATA) $(msgbus_DATA) \
-	$(notification_DATA) $(pager_DATA) $(physics_DATA) \
-	$(quickaccess_DATA) $(shot_DATA) $(start_DATA) $(syscon_DATA) \
-	$(systray_DATA) $(tasks_DATA) $(temperature_DATA) \
-	$(tiling_DATA) $(winlist_DATA) $(wizard_DATA) \
-	$(wizard_desktop_DATA) $(xkbswitch_DATA)
+	$(dist_everything_headers_DATA) $(everything_DATA) \
+	$(everything_pkgconfig_DATA) $(fileman_DATA) \
+	$(fileman_opinfo_DATA) $(gadman_DATA) $(ibar_DATA) \
+	$(ibox_DATA) $(mixer_DATA) $(msgbus_DATA) $(notification_DATA) \
+	$(pager_DATA) $(quickaccess_DATA) $(shot_DATA) $(start_DATA) \
+	$(syscon_DATA) $(systray_DATA) $(tasks_DATA) \
+	$(temperature_DATA) $(tiling_DATA) $(winlist_DATA) \
+	$(wizard_DATA) $(wizard_desktop_DATA) $(xkbswitch_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -1386,9 +1353,6 @@ EMOTION_LIBS = @EMOTION_LIBS@
 ENOTIFY_CFLAGS = @ENOTIFY_CFLAGS@
 ENOTIFY_LIBS = @ENOTIFY_LIBS@
 ENOTIFY_VERSION = @ENOTIFY_VERSION@
-EPHYSICS_CFLAGS = @EPHYSICS_CFLAGS@
-EPHYSICS_LIBS = @EPHYSICS_LIBS@
-EPHYSICS_VERSION = @EPHYSICS_VERSION@
 EXEEXT = @EXEEXT@
 E_ALERT_CFLAGS = @E_ALERT_CFLAGS@
 E_ALERT_LIBS = @E_ALERT_LIBS@
@@ -1428,7 +1392,6 @@ HAVE_BATTERY = @HAVE_BATTERY@
 HAVE_ECONNMAN = @HAVE_ECONNMAN@
 HAVE_ECORE_IMF = @HAVE_ECORE_IMF@
 HAVE_ENOTIFY = @HAVE_ENOTIFY@
-HAVE_EPHYSICS = @HAVE_EPHYSICS@
 HAVE_TEMPERATURE = @HAVE_TEMPERATURE@
 HIBERNATE = @HIBERNATE@
 INSTALL = @INSTALL@
@@ -1497,7 +1460,6 @@ USE_MODULE_ACCESS = @USE_MODULE_ACCESS@
 USE_MODULE_BACKLIGHT = @USE_MODULE_BACKLIGHT@
 USE_MODULE_BATTERY = @USE_MODULE_BATTERY@
 USE_MODULE_CLOCK = @USE_MODULE_CLOCK@
-USE_MODULE_COMP = @USE_MODULE_COMP@
 USE_MODULE_CONF = @USE_MODULE_CONF@
 USE_MODULE_CONF_APPLICATIONS = @USE_MODULE_CONF_APPLICATIONS@
 USE_MODULE_CONF_DIALOGS = @USE_MODULE_CONF_DIALOGS@
@@ -1517,7 +1479,6 @@ USE_MODULE_CONF_WINDOW_MANIPULATION = @USE_MODULE_CONF_WINDOW_MANIPULATION@
 USE_MODULE_CONF_WINDOW_REMEMBERS = @USE_MODULE_CONF_WINDOW_REMEMBERS@
 USE_MODULE_CONNMAN = @USE_MODULE_CONNMAN@
 USE_MODULE_CPUFREQ = @USE_MODULE_CPUFREQ@
-USE_MODULE_DROPSHADOW = @USE_MODULE_DROPSHADOW@
 USE_MODULE_EVERYTHING = @USE_MODULE_EVERYTHING@
 USE_MODULE_FILEMAN = @USE_MODULE_FILEMAN@
 USE_MODULE_FILEMAN_OPINFO = @USE_MODULE_FILEMAN_OPINFO@
@@ -1528,7 +1489,6 @@ USE_MODULE_MIXER = @USE_MODULE_MIXER@
 USE_MODULE_MSGBUS = @USE_MODULE_MSGBUS@
 USE_MODULE_NOTIFICATION = @USE_MODULE_NOTIFICATION@
 USE_MODULE_PAGER = @USE_MODULE_PAGER@
-USE_MODULE_PHYSICS = @USE_MODULE_PHYSICS@
 USE_MODULE_QUICKACCESS = @USE_MODULE_QUICKACCESS@
 USE_MODULE_SHOT = @USE_MODULE_SHOT@
 USE_MODULE_START = @USE_MODULE_START@
@@ -1620,24 +1580,23 @@ version_info = @version_info@
 MAINTAINERCLEANFILES = Makefile.in
 AUTOMAKE_OPTIONS = subdir-objects
 SUBDIRS = 
-CLEANFILES = $(am__append_22) $(am__append_56)
+CLEANFILES = $(am__append_21) $(am__append_54)
 EXTRA_DIST = $(am__append_1) $(am__append_2) $(am__append_3) \
-	$(am__append_4) $(am__append_5) $(am__append_6) \
-	$(am__append_11) $(am__append_13) $(am__append_14) \
+	$(am__append_4) $(am__append_5) $(am__append_10) \
+	$(am__append_12) $(am__append_13) $(am__append_15) \
 	$(am__append_16) $(am__append_17) $(am__append_18) \
-	$(am__append_19) $(am__append_20) $(am__append_21) \
+	$(am__append_19) $(am__append_20) $(am__append_22) \
 	$(am__append_23) $(am__append_24) $(am__append_25) \
 	$(am__append_26) $(am__append_27) $(am__append_28) \
 	$(am__append_29) $(am__append_30) $(am__append_31) \
 	$(am__append_32) $(am__append_33) $(am__append_34) \
 	$(am__append_35) $(am__append_36) $(am__append_37) \
 	$(am__append_38) $(am__append_39) $(am__append_40) \
-	$(am__append_41) $(am__append_42) $(am__append_47) \
+	$(am__append_41) $(am__append_46) $(am__append_47) \
 	$(am__append_48) $(am__append_49) $(am__append_50) \
 	$(am__append_51) $(am__append_52) $(am__append_53) \
-	$(am__append_54) $(am__append_55) $(am__append_57) \
-	$(am__append_58)
-INSTALL_DATA_HOOKS = $(am__append_15)
+	$(am__append_55) $(am__append_56)
+INSTALL_DATA_HOOKS = $(am__append_14)
 MDIR = $(libdir)/enlightenment/modules
 AM_LDFLAGS = -module -avoid-version
 AM_CPPFLAGS = -I. \
@@ -1680,16 +1639,6 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_IBAR_TRUE@			 ibar/e_mod_main.h \
 @USE_MODULE_IBAR_TRUE@			 ibar/e_mod_config.c
 
-@USE_MODULE_DROPSHADOW_TRUE@dropshadowdir = $(MDIR)/dropshadow
-@USE_MODULE_DROPSHADOW_TRUE@dropshadow_DATA = dropshadow/e-module-dropshadow.edj \
-@USE_MODULE_DROPSHADOW_TRUE@	       dropshadow/module.desktop
-
-@USE_MODULE_DROPSHADOW_TRUE@dropshadowpkgdir = $(MDIR)/dropshadow/$(MODULE_ARCH)
-@USE_MODULE_DROPSHADOW_TRUE@dropshadowpkg_LTLIBRARIES = dropshadow/module.la
-@USE_MODULE_DROPSHADOW_TRUE@dropshadow_module_la_SOURCES = dropshadow/e_mod_main.h \
-@USE_MODULE_DROPSHADOW_TRUE@			       dropshadow/e_mod_main.c \
-@USE_MODULE_DROPSHADOW_TRUE@			       dropshadow/e_mod_config.c
-
 @USE_MODULE_CLOCK_TRUE@clockdir = $(MDIR)/clock
 @USE_MODULE_CLOCK_TRUE@clock_DATA = clock/e-module-clock.edj \
 @USE_MODULE_CLOCK_TRUE@	     clock/module.desktop
@@ -1717,13 +1666,13 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_BATTERY_TRUE@batterypkgdir = $(MDIR)/battery/$(MODULE_ARCH)
 @USE_MODULE_BATTERY_TRUE@batterypkg_LTLIBRARIES = battery/module.la
 @USE_MODULE_BATTERY_TRUE@battery_module_la_CFLAGS = $(AM_CFLAGS) \
-@USE_MODULE_BATTERY_TRUE@	$(am__append_10)
+@USE_MODULE_BATTERY_TRUE@	$(am__append_9)
 @USE_MODULE_BATTERY_TRUE@battery_module_la_SOURCES =  \
 @USE_MODULE_BATTERY_TRUE@	battery/e_mod_main.h \
 @USE_MODULE_BATTERY_TRUE@	battery/e_mod_main.c \
 @USE_MODULE_BATTERY_TRUE@	battery/e_mod_config.c \
-@USE_MODULE_BATTERY_TRUE@	$(am__append_7) $(am__append_8) \
-@USE_MODULE_BATTERY_TRUE@	$(am__append_9)
+@USE_MODULE_BATTERY_TRUE@	$(am__append_6) $(am__append_7) \
+@USE_MODULE_BATTERY_TRUE@	$(am__append_8)
 @HAVE_ENOTIFY_TRUE@@USE_MODULE_BATTERY_TRUE@battery_module_la_LIBADD = @ENOTIFY_LIBS@
 @USE_MODULE_BATTERY_TRUE@batgetdir = $(batterypkgdir)
 @USE_MODULE_BATTERY_TRUE@battery_batget_SOURCES = battery/batget.c
@@ -1740,7 +1689,7 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_main.h \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_config.c \
 @USE_MODULE_TEMPERATURE_TRUE@	temperature/e_mod_tempget.c \
-@USE_MODULE_TEMPERATURE_TRUE@	$(am__append_12)
+@USE_MODULE_TEMPERATURE_TRUE@	$(am__append_11)
 @USE_MODULE_TEMPERATURE_TRUE@tempgetdir = $(temperaturepkgdir)
 @USE_MODULE_TEMPERATURE_TRUE@temperature_tempget_SOURCES = temperature/tempget.c
 @USE_MODULE_TEMPERATURE_TRUE@temperature_tempget_LDADD = @TEMPERATURE_LIBS@
@@ -2116,7 +2065,7 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MIXER_TRUE@mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 @USE_MODULE_MIXER_TRUE@mixerpkg_LTLIBRARIES = mixer/module.la
 @USE_MODULE_MIXER_TRUE@mixer_module_la_CFLAGS = $(AM_CFLAGS) \
-@USE_MODULE_MIXER_TRUE@	$(am__append_45)
+@USE_MODULE_MIXER_TRUE@	$(am__append_44)
 @USE_MODULE_MIXER_TRUE@mixer_module_la_SOURCES = mixer/e_mod_main.c \
 @USE_MODULE_MIXER_TRUE@	mixer/e_mod_main.h mixer/app_mixer.c \
 @USE_MODULE_MIXER_TRUE@	mixer/conf_gadget.c mixer/conf_module.c \
@@ -2124,9 +2073,9 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MIXER_TRUE@	mixer/Pulse.h mixer/pa.h mixer/pa.c \
 @USE_MODULE_MIXER_TRUE@	mixer/serial.c mixer/sink.c \
 @USE_MODULE_MIXER_TRUE@	mixer/sys_pulse.c mixer/tag.c \
-@USE_MODULE_MIXER_TRUE@	$(am__append_43) $(am__append_44)
+@USE_MODULE_MIXER_TRUE@	$(am__append_42) $(am__append_43)
 @USE_MODULE_MIXER_TRUE@mixer_module_la_LIBADD = @SOUND_LIBS@ \
-@USE_MODULE_MIXER_TRUE@	$(am__append_46)
+@USE_MODULE_MIXER_TRUE@	$(am__append_45)
 @USE_MODULE_SYSCON_TRUE@syscondir = $(MDIR)/syscon
 @USE_MODULE_SYSCON_TRUE@syscon_DATA = syscon/e-module-syscon.edj \
 @USE_MODULE_SYSCON_TRUE@	      syscon/module.desktop
@@ -2186,21 +2135,6 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_SYSTRAY_TRUE@systraypkgdir = $(MDIR)/systray/$(MODULE_ARCH)
 @USE_MODULE_SYSTRAY_TRUE@systraypkg_LTLIBRARIES = systray/module.la
 @USE_MODULE_SYSTRAY_TRUE@systray_module_la_SOURCES = systray/e_mod_main.c
-@USE_MODULE_PHYSICS_TRUE@physicsdir = $(MDIR)/physics
-@USE_MODULE_PHYSICS_TRUE@physics_DATA = physics/e-module-physics.edj \
-@USE_MODULE_PHYSICS_TRUE@	       physics/module.desktop
-
-@USE_MODULE_PHYSICS_TRUE@physicspkgdir = $(MDIR)/physics/$(MODULE_ARCH)
-@USE_MODULE_PHYSICS_TRUE@physicspkg_LTLIBRARIES = physics/module.la
-@USE_MODULE_PHYSICS_TRUE@physics_module_la_SOURCES = physics/e_mod_main.c \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_main.h \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_config.c \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_physics_cfdata.c \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_physics_cfdata.h \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_physics.c \
-@USE_MODULE_PHYSICS_TRUE@			    physics/e_mod_physics.h
-
-@USE_MODULE_PHYSICS_TRUE@physics_module_la_LIBADD = @EPHYSICS_LIBS@
 @USE_MODULE_QUICKACCESS_TRUE@quickaccessdir = $(MDIR)/quickaccess
 @USE_MODULE_QUICKACCESS_TRUE@quickaccess_DATA = quickaccess/e-module-quickaccess.edj \
 @USE_MODULE_QUICKACCESS_TRUE@		   quickaccess/module.desktop
@@ -2273,7 +2207,7 @@ all: all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -2294,7 +2228,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
 	esac;
-$(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_dropshadow.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_physics.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am:
+$(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am $(srcdir)/Makefile_clock.am $(srcdir)/Makefile_pager.am $(srcdir)/Makefile_battery.am $(srcdir)/Makefile_temperature.am $(srcdir)/Makefile_notification.am $(srcdir)/Makefile_cpufreq.am $(srcdir)/Makefile_ibox.am $(srcdir)/Makefile_start.am $(srcdir)/Makefile_winlist.am $(srcdir)/Makefile_fileman.am $(srcdir)/Makefile_fileman_opinfo.am $(srcdir)/Makefile_wizard.am $(srcdir)/Makefile_conf.am $(srcdir)/Makefile_conf_wallpaper2.am $(srcdir)/Makefile_conf_theme.am $(srcdir)/Makefile_conf_intl.am $(srcdir)/Makefile_msgbus.am $(srcdir)/Makefile_conf_applications.am $(srcdir)/Makefile_conf_display.am $(srcdir)/Makefile_conf_shelves.am $(srcdir)/Makefile_conf_keybindings.am $(srcdir)/Makefile_conf_edgebindings.am $(srcdir)/Makefile_conf_window_remembers.am $(srcdir)/Makefile_conf_window_manipulation.am $(srcdir)/Makefile_conf_menus.am $(srcdir)/Makefile_conf_dialogs.am $(srcdir)/Makefile_conf_performance.am $(srcdir)/Makefile_conf_paths.am $(srcdir)/Makefile_conf_interaction.am $(srcdir)/Makefile_conf_randr.am $(srcdir)/Makefile_gadman.am $(srcdir)/Makefile_mixer.am $(srcdir)/Makefile_syscon.am $(srcdir)/Makefile_everything.am $(srcdir)/Makefile_systray.am $(srcdir)/Makefile_quickaccess.am $(srcdir)/Makefile_shot.am $(srcdir)/Makefile_backlight.am $(srcdir)/Makefile_tasks.am $(srcdir)/Makefile_xkbswitch.am $(srcdir)/Makefile_tiling.am $(srcdir)/Makefile_access.am:
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
@@ -3110,41 +3044,6 @@ clean-cpufreqpkgLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-install-dropshadowpkgLTLIBRARIES: $(dropshadowpkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(dropshadowpkg_LTLIBRARIES)'; test -n "$(dropshadowpkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(dropshadowpkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(dropshadowpkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(dropshadowpkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(dropshadowpkgdir)"; \
-	}
-
-uninstall-dropshadowpkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dropshadowpkg_LTLIBRARIES)'; test -n "$(dropshadowpkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(dropshadowpkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(dropshadowpkgdir)/$$f"; \
-	done
-
-clean-dropshadowpkgLTLIBRARIES:
-	-test -z "$(dropshadowpkg_LTLIBRARIES)" || rm -f $(dropshadowpkg_LTLIBRARIES)
-	@list='$(dropshadowpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
 install-everythingpkgLTLIBRARIES: $(everythingpkg_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	@list='$(everythingpkg_LTLIBRARIES)'; test -n "$(everythingpkgdir)" || list=; \
@@ -3487,41 +3386,6 @@ uninstall-pagerpkgLTLIBRARIES:
 clean-pagerpkgLTLIBRARIES:
 	-test -z "$(pagerpkg_LTLIBRARIES)" || rm -f $(pagerpkg_LTLIBRARIES)
 	@list='$(pagerpkg_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
-install-physicspkgLTLIBRARIES: $(physicspkg_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(physicspkg_LTLIBRARIES)'; test -n "$(physicspkgdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(physicspkgdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(physicspkgdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(physicspkgdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(physicspkgdir)"; \
-	}
-
-uninstall-physicspkgLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(physicspkg_LTLIBRARIES)'; test -n "$(physicspkgdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(physicspkgdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(physicspkgdir)/$$f"; \
-	done
-
-clean-physicspkgLTLIBRARIES:
-	-test -z "$(physicspkg_LTLIBRARIES)" || rm -f $(physicspkg_LTLIBRARIES)
-	@list='$(physicspkg_LTLIBRARIES)'; \
 	locs=`for p in $$list; do echo $$p; done | \
 	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
 	      sort -u`; \
@@ -4313,19 +4177,6 @@ cpufreq/e_mod_main.lo: cpufreq/$(am__dirstamp) \
 
 cpufreq/module.la: $(cpufreq_module_la_OBJECTS) $(cpufreq_module_la_DEPENDENCIES) $(EXTRA_cpufreq_module_la_DEPENDENCIES) cpufreq/$(am__dirstamp)
 	$(AM_V_CCLD)$(LINK) $(am_cpufreq_module_la_rpath) $(cpufreq_module_la_OBJECTS) $(cpufreq_module_la_LIBADD) $(LIBS)
-dropshadow/$(am__dirstamp):
-	@$(MKDIR_P) dropshadow
-	@: > dropshadow/$(am__dirstamp)
-dropshadow/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) dropshadow/$(DEPDIR)
-	@: > dropshadow/$(DEPDIR)/$(am__dirstamp)
-dropshadow/e_mod_main.lo: dropshadow/$(am__dirstamp) \
-	dropshadow/$(DEPDIR)/$(am__dirstamp)
-dropshadow/e_mod_config.lo: dropshadow/$(am__dirstamp) \
-	dropshadow/$(DEPDIR)/$(am__dirstamp)
-
-dropshadow/module.la: $(dropshadow_module_la_OBJECTS) $(dropshadow_module_la_DEPENDENCIES) $(EXTRA_dropshadow_module_la_DEPENDENCIES) dropshadow/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_dropshadow_module_la_rpath) $(dropshadow_module_la_OBJECTS) $(dropshadow_module_la_LIBADD) $(LIBS)
 everything/$(am__dirstamp):
 	@$(MKDIR_P) everything
 	@: > everything/$(am__dirstamp)
@@ -4532,23 +4383,6 @@ pager/e_mod_config.lo: pager/$(am__dirstamp) \
 
 pager/module.la: $(pager_module_la_OBJECTS) $(pager_module_la_DEPENDENCIES) $(EXTRA_pager_module_la_DEPENDENCIES) pager/$(am__dirstamp)
 	$(AM_V_CCLD)$(LINK) $(am_pager_module_la_rpath) $(pager_module_la_OBJECTS) $(pager_module_la_LIBADD) $(LIBS)
-physics/$(am__dirstamp):
-	@$(MKDIR_P) physics
-	@: > physics/$(am__dirstamp)
-physics/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) physics/$(DEPDIR)
-	@: > physics/$(DEPDIR)/$(am__dirstamp)
-physics/e_mod_main.lo: physics/$(am__dirstamp) \
-	physics/$(DEPDIR)/$(am__dirstamp)
-physics/e_mod_config.lo: physics/$(am__dirstamp) \
-	physics/$(DEPDIR)/$(am__dirstamp)
-physics/e_mod_physics_cfdata.lo: physics/$(am__dirstamp) \
-	physics/$(DEPDIR)/$(am__dirstamp)
-physics/e_mod_physics.lo: physics/$(am__dirstamp) \
-	physics/$(DEPDIR)/$(am__dirstamp)
-
-physics/module.la: $(physics_module_la_OBJECTS) $(physics_module_la_DEPENDENCIES) $(EXTRA_physics_module_la_DEPENDENCIES) physics/$(am__dirstamp)
-	$(AM_V_CCLD)$(LINK) $(am_physics_module_la_rpath) $(physics_module_la_OBJECTS) $(physics_module_la_LIBADD) $(LIBS)
 quickaccess/$(am__dirstamp):
 	@$(MKDIR_P) quickaccess
 	@: > quickaccess/$(am__dirstamp)
@@ -5025,8 +4859,6 @@ mostlyclean-compile:
 	-rm -f connman/*.lo
 	-rm -f cpufreq/*.$(OBJEXT)
 	-rm -f cpufreq/*.lo
-	-rm -f dropshadow/*.$(OBJEXT)
-	-rm -f dropshadow/*.lo
 	-rm -f everything/*.$(OBJEXT)
 	-rm -f everything/*.lo
 	-rm -f fileman/*.$(OBJEXT)
@@ -5047,8 +4879,6 @@ mostlyclean-compile:
 	-rm -f notification/*.lo
 	-rm -f pager/*.$(OBJEXT)
 	-rm -f pager/*.lo
-	-rm -f physics/*.$(OBJEXT)
-	-rm -f physics/*.lo
 	-rm -f quickaccess/*.$(OBJEXT)
 	-rm -f quickaccess/*.lo
 	-rm -f shot/*.$(OBJEXT)
@@ -5161,8 +4991,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@connman/$(DEPDIR)/connman_module_la-e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpufreq/$(DEPDIR)/cpufreq_freqset-freqset.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@cpufreq/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@dropshadow/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@dropshadow/$(DEPDIR)/e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@everything/$(DEPDIR)/e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@everything/$(DEPDIR)/evry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@everything/$(DEPDIR)/evry_config.Plo@am__quote@
@@ -5221,10 +5049,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@notification/$(DEPDIR)/e_mod_popup.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@pager/$(DEPDIR)/e_mod_config.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@pager/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@physics/$(DEPDIR)/e_mod_config.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@physics/$(DEPDIR)/e_mod_main.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@physics/$(DEPDIR)/e_mod_physics.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@physics/$(DEPDIR)/e_mod_physics_cfdata.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@quickaccess/$(DEPDIR)/e_mod_config.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@quickaccess/$(DEPDIR)/e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@quickaccess/$(DEPDIR)/e_mod_quickaccess.Plo@am__quote@
@@ -5504,7 +5328,6 @@ clean-libtool:
 	-rm -rf conf_window_remembers/.libs conf_window_remembers/_libs
 	-rm -rf connman/.libs connman/_libs
 	-rm -rf cpufreq/.libs cpufreq/_libs
-	-rm -rf dropshadow/.libs dropshadow/_libs
 	-rm -rf everything/.libs everything/_libs
 	-rm -rf fileman/.libs fileman/_libs
 	-rm -rf fileman_opinfo/.libs fileman_opinfo/_libs
@@ -5515,7 +5338,6 @@ clean-libtool:
 	-rm -rf msgbus/.libs msgbus/_libs
 	-rm -rf notification/.libs notification/_libs
 	-rm -rf pager/.libs pager/_libs
-	-rm -rf physics/.libs physics/_libs
 	-rm -rf quickaccess/.libs quickaccess/_libs
 	-rm -rf shot/.libs shot/_libs
 	-rm -rf start/.libs start/_libs
@@ -6031,27 +5853,6 @@ uninstall-dist_everything_headersDATA:
 	@list='$(dist_everything_headers_DATA)'; test -n "$(everything_headersdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(everything_headersdir)'; $(am__uninstall_files_from_dir)
-install-dropshadowDATA: $(dropshadow_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(dropshadow_DATA)'; test -n "$(dropshadowdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(dropshadowdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(dropshadowdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(dropshadowdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(dropshadowdir)" || exit $$?; \
-	done
-
-uninstall-dropshadowDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dropshadow_DATA)'; test -n "$(dropshadowdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(dropshadowdir)'; $(am__uninstall_files_from_dir)
 install-everythingDATA: $(everything_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(everything_DATA)'; test -n "$(everythingdir)" || list=; \
@@ -6283,27 +6084,6 @@ uninstall-pagerDATA:
 	@list='$(pager_DATA)'; test -n "$(pagerdir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
 	dir='$(DESTDIR)$(pagerdir)'; $(am__uninstall_files_from_dir)
-install-physicsDATA: $(physics_DATA)
-	@$(NORMAL_INSTALL)
-	@list='$(physics_DATA)'; test -n "$(physicsdir)" || list=; \
-	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(physicsdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(physicsdir)" || exit 1; \
-	fi; \
-	for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  echo "$$d$$p"; \
-	done | $(am__base_list) | \
-	while read files; do \
-	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(physicsdir)'"; \
-	  $(INSTALL_DATA) $$files "$(DESTDIR)$(physicsdir)" || exit $$?; \
-	done
-
-uninstall-physicsDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(physics_DATA)'; test -n "$(physicsdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(physicsdir)'; $(am__uninstall_files_from_dir)
 install-quickaccessDATA: $(quickaccess_DATA)
 	@$(NORMAL_INSTALL)
 	@list='$(quickaccess_DATA)'; test -n "$(quickaccessdir)" || list=; \
@@ -6716,7 +6496,7 @@ check: check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(dropshadowpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(physicspkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(dropshadowdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(physicsdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
+	for dir in "$(DESTDIR)$(accesspkgdir)" "$(DESTDIR)$(backlightpkgdir)" "$(DESTDIR)$(batterypkgdir)" "$(DESTDIR)$(clockpkgdir)" "$(DESTDIR)$(conf_applicationspkgdir)" "$(DESTDIR)$(conf_dialogspkgdir)" "$(DESTDIR)$(conf_displaypkgdir)" "$(DESTDIR)$(conf_edgebindingspkgdir)" "$(DESTDIR)$(conf_interactionpkgdir)" "$(DESTDIR)$(conf_intlpkgdir)" "$(DESTDIR)$(conf_keybindingspkgdir)" "$(DESTDIR)$(conf_menuspkgdir)" "$(DESTDIR)$(conf_pathspkgdir)" "$(DESTDIR)$(conf_performancepkgdir)" "$(DESTDIR)$(conf_randrpkgdir)" "$(DESTDIR)$(conf_shelvespkgdir)" "$(DESTDIR)$(conf_themepkgdir)" "$(DESTDIR)$(conf_wallpaper2pkgdir)" "$(DESTDIR)$(conf_window_manipulationpkgdir)" "$(DESTDIR)$(conf_window_rememberspkgdir)" "$(DESTDIR)$(confpkgdir)" "$(DESTDIR)$(connmanpkgdir)" "$(DESTDIR)$(cpufreqpkgdir)" "$(DESTDIR)$(everythingpkgdir)" "$(DESTDIR)$(fileman_opinfopkgdir)" "$(DESTDIR)$(filemanpkgdir)" "$(DESTDIR)$(gadmanpkgdir)" "$(DESTDIR)$(ibarpkgdir)" "$(DESTDIR)$(iboxpkgdir)" "$(DESTDIR)$(mixerpkgdir)" "$(DESTDIR)$(msgbuspkgdir)" "$(DESTDIR)$(notificationpkgdir)" "$(DESTDIR)$(pagerpkgdir)" "$(DESTDIR)$(quickaccesspkgdir)" "$(DESTDIR)$(shotpkgdir)" "$(DESTDIR)$(startpkgdir)" "$(DESTDIR)$(sysconpkgdir)" "$(DESTDIR)$(systraypkgdir)" "$(DESTDIR)$(taskspkgdir)" "$(DESTDIR)$(temperaturepkgdir)" "$(DESTDIR)$(tilingpkgdir)" "$(DESTDIR)$(winlistpkgdir)" "$(DESTDIR)$(wizardpkgdir)" "$(DESTDIR)$(xkbswitchpkgdir)" "$(DESTDIR)$(batgetdir)" "$(DESTDIR)$(freqsetdir)" "$(DESTDIR)$(tempgetdir)" "$(DESTDIR)$(accessdir)" "$(DESTDIR)$(backlightdir)" "$(DESTDIR)$(batterydir)" "$(DESTDIR)$(clockdir)" "$(DESTDIR)$(confdir)" "$(DESTDIR)$(conf_applicationsdir)" "$(DESTDIR)$(conf_dialogsdir)" "$(DESTDIR)$(conf_displaydir)" "$(DESTDIR)$(conf_edgebindingsdir)" "$(DESTDIR)$(conf_interactiondir)" "$(DESTDIR)$(conf_intldir)" "$(DESTDIR)$(conf_keybindingsdir)" "$(DESTDIR)$(conf_menusdir)" "$(DESTDIR)$(conf_pathsdir)" "$(DESTDIR)$(conf_performancedir)" "$(DESTDIR)$(conf_randrdir)" "$(DESTDIR)$(conf_shelvesdir)" "$(DESTDIR)$(conf_themedir)" "$(DESTDIR)$(conf_wallpaper2dir)" "$(DESTDIR)$(conf_window_manipulationdir)" "$(DESTDIR)$(conf_window_remembersdir)" "$(DESTDIR)$(connmandir)" "$(DESTDIR)$(cpufreqdir)" "$(DESTDIR)$(everything_headersdir)" "$(DESTDIR)$(everythingdir)" "$(DESTDIR)$(everything_pkgconfigdir)" "$(DESTDIR)$(filemandir)" "$(DESTDIR)$(fileman_opinfodir)" "$(DESTDIR)$(gadmandir)" "$(DESTDIR)$(ibardir)" "$(DESTDIR)$(iboxdir)" "$(DESTDIR)$(mixerdir)" "$(DESTDIR)$(msgbusdir)" "$(DESTDIR)$(notificationdir)" "$(DESTDIR)$(pagerdir)" "$(DESTDIR)$(quickaccessdir)" "$(DESTDIR)$(shotdir)" "$(DESTDIR)$(startdir)" "$(DESTDIR)$(syscondir)" "$(DESTDIR)$(systraydir)" "$(DESTDIR)$(tasksdir)" "$(DESTDIR)$(temperaturedir)" "$(DESTDIR)$(tilingdir)" "$(DESTDIR)$(winlistdir)" "$(DESTDIR)$(wizarddir)" "$(DESTDIR)$(wizard_desktopdir)" "$(DESTDIR)$(xkbswitchdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -6792,8 +6572,6 @@ distclean-generic:
 	-rm -f connman/$(am__dirstamp)
 	-rm -f cpufreq/$(DEPDIR)/$(am__dirstamp)
 	-rm -f cpufreq/$(am__dirstamp)
-	-rm -f dropshadow/$(DEPDIR)/$(am__dirstamp)
-	-rm -f dropshadow/$(am__dirstamp)
 	-rm -f everything/$(DEPDIR)/$(am__dirstamp)
 	-rm -f everything/$(am__dirstamp)
 	-rm -f fileman/$(DEPDIR)/$(am__dirstamp)
@@ -6814,8 +6592,6 @@ distclean-generic:
 	-rm -f notification/$(am__dirstamp)
 	-rm -f pager/$(DEPDIR)/$(am__dirstamp)
 	-rm -f pager/$(am__dirstamp)
-	-rm -f physics/$(DEPDIR)/$(am__dirstamp)
-	-rm -f physics/$(am__dirstamp)
 	-rm -f quickaccess/$(DEPDIR)/$(am__dirstamp)
 	-rm -f quickaccess/$(am__dirstamp)
 	-rm -f shot/$(DEPDIR)/$(am__dirstamp)
@@ -6865,24 +6641,22 @@ clean-am: clean-accesspkgLTLIBRARIES clean-backlightpkgLTLIBRARIES \
 	clean-conf_window_manipulationpkgLTLIBRARIES \
 	clean-conf_window_rememberspkgLTLIBRARIES \
 	clean-confpkgLTLIBRARIES clean-connmanpkgLTLIBRARIES \
-	clean-cpufreqpkgLTLIBRARIES clean-dropshadowpkgLTLIBRARIES \
-	clean-everythingpkgLTLIBRARIES \
+	clean-cpufreqpkgLTLIBRARIES clean-everythingpkgLTLIBRARIES \
 	clean-fileman_opinfopkgLTLIBRARIES clean-filemanpkgLTLIBRARIES \
 	clean-freqsetPROGRAMS clean-gadmanpkgLTLIBRARIES clean-generic \
 	clean-ibarpkgLTLIBRARIES clean-iboxpkgLTLIBRARIES \
 	clean-libtool clean-mixerpkgLTLIBRARIES \
 	clean-msgbuspkgLTLIBRARIES clean-notificationpkgLTLIBRARIES \
-	clean-pagerpkgLTLIBRARIES clean-physicspkgLTLIBRARIES \
-	clean-quickaccesspkgLTLIBRARIES clean-shotpkgLTLIBRARIES \
-	clean-startpkgLTLIBRARIES clean-sysconpkgLTLIBRARIES \
-	clean-systraypkgLTLIBRARIES clean-taskspkgLTLIBRARIES \
-	clean-temperaturepkgLTLIBRARIES clean-tempgetPROGRAMS \
-	clean-tilingpkgLTLIBRARIES clean-winlistpkgLTLIBRARIES \
-	clean-wizardpkgLTLIBRARIES clean-xkbswitchpkgLTLIBRARIES \
-	mostlyclean-am
+	clean-pagerpkgLTLIBRARIES clean-quickaccesspkgLTLIBRARIES \
+	clean-shotpkgLTLIBRARIES clean-startpkgLTLIBRARIES \
+	clean-sysconpkgLTLIBRARIES clean-systraypkgLTLIBRARIES \
+	clean-taskspkgLTLIBRARIES clean-temperaturepkgLTLIBRARIES \
+	clean-tempgetPROGRAMS clean-tilingpkgLTLIBRARIES \
+	clean-winlistpkgLTLIBRARIES clean-wizardpkgLTLIBRARIES \
+	clean-xkbswitchpkgLTLIBRARIES mostlyclean-am
 
 distclean: distclean-recursive
-	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
+	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -6928,8 +6702,7 @@ install-data-am: install-accessDATA install-accesspkgLTLIBRARIES \
 	install-confpkgLTLIBRARIES install-connmanDATA \
 	install-connmanpkgLTLIBRARIES install-cpufreqDATA \
 	install-cpufreqpkgLTLIBRARIES \
-	install-dist_everything_headersDATA install-dropshadowDATA \
-	install-dropshadowpkgLTLIBRARIES install-everythingDATA \
+	install-dist_everything_headersDATA install-everythingDATA \
 	install-everything_pkgconfigDATA \
 	install-everythingpkgLTLIBRARIES install-filemanDATA \
 	install-fileman_opinfoDATA \
@@ -6941,8 +6714,7 @@ install-data-am: install-accessDATA install-accesspkgLTLIBRARIES \
 	install-mixerpkgLTLIBRARIES install-msgbusDATA \
 	install-msgbuspkgLTLIBRARIES install-notificationDATA \
 	install-notificationpkgLTLIBRARIES install-pagerDATA \
-	install-pagerpkgLTLIBRARIES install-physicsDATA \
-	install-physicspkgLTLIBRARIES install-quickaccessDATA \
+	install-pagerpkgLTLIBRARIES install-quickaccessDATA \
 	install-quickaccesspkgLTLIBRARIES install-shotDATA \
 	install-shotpkgLTLIBRARIES install-startDATA \
 	install-startpkgLTLIBRARIES install-sysconDATA \
@@ -6984,7 +6756,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-recursive
-	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) dropshadow/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) physics/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
+	-rm -rf access/$(DEPDIR) backlight/$(DEPDIR) battery/$(DEPDIR) clock/$(DEPDIR) conf/$(DEPDIR) conf_applications/$(DEPDIR) conf_dialogs/$(DEPDIR) conf_display/$(DEPDIR) conf_edgebindings/$(DEPDIR) conf_interaction/$(DEPDIR) conf_intl/$(DEPDIR) conf_keybindings/$(DEPDIR) conf_menus/$(DEPDIR) conf_paths/$(DEPDIR) conf_performance/$(DEPDIR) conf_randr/$(DEPDIR) conf_shelves/$(DEPDIR) conf_theme/$(DEPDIR) conf_wallpaper2/$(DEPDIR) conf_window_manipulation/$(DEPDIR) conf_window_remembers/$(DEPDIR) connman/$(DEPDIR) cpufreq/$(DEPDIR) everything/$(DEPDIR) fileman/$(DEPDIR) fileman_opinfo/$(DEPDIR) gadman/$(DEPDIR) ibar/$(DEPDIR) ibox/$(DEPDIR) mixer/$(DEPDIR) msgbus/$(DEPDIR) notification/$(DEPDIR) pager/$(DEPDIR) quickaccess/$(DEPDIR) shot/$(DEPDIR) start/$(DEPDIR) syscon/$(DEPDIR) systray/$(DEPDIR) tasks/$(DEPDIR) temperature/$(DEPDIR) tiling/$(DEPDIR) winlist/$(DEPDIR) wizard/$(DEPDIR) xkbswitch/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
@@ -7036,8 +6808,7 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-confpkgLTLIBRARIES uninstall-connmanDATA \
 	uninstall-connmanpkgLTLIBRARIES uninstall-cpufreqDATA \
 	uninstall-cpufreqpkgLTLIBRARIES \
-	uninstall-dist_everything_headersDATA uninstall-dropshadowDATA \
-	uninstall-dropshadowpkgLTLIBRARIES uninstall-everythingDATA \
+	uninstall-dist_everything_headersDATA uninstall-everythingDATA \
 	uninstall-everything_pkgconfigDATA \
 	uninstall-everythingpkgLTLIBRARIES uninstall-filemanDATA \
 	uninstall-fileman_opinfoDATA \
@@ -7050,8 +6821,7 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-msgbusDATA uninstall-msgbuspkgLTLIBRARIES \
 	uninstall-notificationDATA \
 	uninstall-notificationpkgLTLIBRARIES uninstall-pagerDATA \
-	uninstall-pagerpkgLTLIBRARIES uninstall-physicsDATA \
-	uninstall-physicspkgLTLIBRARIES uninstall-quickaccessDATA \
+	uninstall-pagerpkgLTLIBRARIES uninstall-quickaccessDATA \
 	uninstall-quickaccesspkgLTLIBRARIES uninstall-shotDATA \
 	uninstall-shotpkgLTLIBRARIES uninstall-startDATA \
 	uninstall-startpkgLTLIBRARIES uninstall-sysconDATA \
@@ -7088,23 +6858,22 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	clean-conf_window_manipulationpkgLTLIBRARIES \
 	clean-conf_window_rememberspkgLTLIBRARIES \
 	clean-confpkgLTLIBRARIES clean-connmanpkgLTLIBRARIES \
-	clean-cpufreqpkgLTLIBRARIES clean-dropshadowpkgLTLIBRARIES \
-	clean-everythingpkgLTLIBRARIES \
+	clean-cpufreqpkgLTLIBRARIES clean-everythingpkgLTLIBRARIES \
 	clean-fileman_opinfopkgLTLIBRARIES clean-filemanpkgLTLIBRARIES \
 	clean-freqsetPROGRAMS clean-gadmanpkgLTLIBRARIES clean-generic \
 	clean-ibarpkgLTLIBRARIES clean-iboxpkgLTLIBRARIES \
 	clean-libtool clean-mixerpkgLTLIBRARIES \
 	clean-msgbuspkgLTLIBRARIES clean-notificationpkgLTLIBRARIES \
-	clean-pagerpkgLTLIBRARIES clean-physicspkgLTLIBRARIES \
-	clean-quickaccesspkgLTLIBRARIES clean-shotpkgLTLIBRARIES \
-	clean-startpkgLTLIBRARIES clean-sysconpkgLTLIBRARIES \
-	clean-systraypkgLTLIBRARIES clean-taskspkgLTLIBRARIES \
-	clean-temperaturepkgLTLIBRARIES clean-tempgetPROGRAMS \
-	clean-tilingpkgLTLIBRARIES clean-winlistpkgLTLIBRARIES \
-	clean-wizardpkgLTLIBRARIES clean-xkbswitchpkgLTLIBRARIES \
-	cscopelist-am ctags ctags-am distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-accessDATA \
+	clean-pagerpkgLTLIBRARIES clean-quickaccesspkgLTLIBRARIES \
+	clean-shotpkgLTLIBRARIES clean-startpkgLTLIBRARIES \
+	clean-sysconpkgLTLIBRARIES clean-systraypkgLTLIBRARIES \
+	clean-taskspkgLTLIBRARIES clean-temperaturepkgLTLIBRARIES \
+	clean-tempgetPROGRAMS clean-tilingpkgLTLIBRARIES \
+	clean-winlistpkgLTLIBRARIES clean-wizardpkgLTLIBRARIES \
+	clean-xkbswitchpkgLTLIBRARIES cscopelist-am ctags ctags-am \
+	distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-accessDATA \
 	install-accesspkgLTLIBRARIES install-am install-backlightDATA \
 	install-backlightpkgLTLIBRARIES install-batgetPROGRAMS \
 	install-batteryDATA install-batterypkgLTLIBRARIES \
@@ -7134,7 +6903,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	install-connmanpkgLTLIBRARIES install-cpufreqDATA \
 	install-cpufreqpkgLTLIBRARIES install-data install-data-am \
 	install-data-hook install-dist_everything_headersDATA \
-	install-dropshadowDATA install-dropshadowpkgLTLIBRARIES \
 	install-dvi install-dvi-am install-everythingDATA \
 	install-everything_pkgconfigDATA \
 	install-everythingpkgLTLIBRARIES install-exec install-exec-am \
@@ -7149,8 +6917,7 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	install-msgbuspkgLTLIBRARIES install-notificationDATA \
 	install-notificationpkgLTLIBRARIES install-pagerDATA \
 	install-pagerpkgLTLIBRARIES install-pdf install-pdf-am \
-	install-physicsDATA install-physicspkgLTLIBRARIES install-ps \
-	install-ps-am install-quickaccessDATA \
+	install-ps install-ps-am install-quickaccessDATA \
 	install-quickaccesspkgLTLIBRARIES install-shotDATA \
 	install-shotpkgLTLIBRARIES install-startDATA \
 	install-startpkgLTLIBRARIES install-strip install-sysconDATA \
@@ -7202,8 +6969,7 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-confpkgLTLIBRARIES uninstall-connmanDATA \
 	uninstall-connmanpkgLTLIBRARIES uninstall-cpufreqDATA \
 	uninstall-cpufreqpkgLTLIBRARIES \
-	uninstall-dist_everything_headersDATA uninstall-dropshadowDATA \
-	uninstall-dropshadowpkgLTLIBRARIES uninstall-everythingDATA \
+	uninstall-dist_everything_headersDATA uninstall-everythingDATA \
 	uninstall-everything_pkgconfigDATA \
 	uninstall-everythingpkgLTLIBRARIES uninstall-filemanDATA \
 	uninstall-fileman_opinfoDATA \
@@ -7216,8 +6982,7 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 	uninstall-msgbusDATA uninstall-msgbuspkgLTLIBRARIES \
 	uninstall-notificationDATA \
 	uninstall-notificationpkgLTLIBRARIES uninstall-pagerDATA \
-	uninstall-pagerpkgLTLIBRARIES uninstall-physicsDATA \
-	uninstall-physicspkgLTLIBRARIES uninstall-quickaccessDATA \
+	uninstall-pagerpkgLTLIBRARIES uninstall-quickaccessDATA \
 	uninstall-quickaccesspkgLTLIBRARIES uninstall-shotDATA \
 	uninstall-shotpkgLTLIBRARIES uninstall-startDATA \
 	uninstall-startpkgLTLIBRARIES uninstall-sysconDATA \
@@ -7239,10 +7004,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 @USE_MODULE_IBAR_TRUE@.PHONY: ibar install-ibar
 @USE_MODULE_IBAR_TRUE@ibar: $(ibarpkg_LTLIBRARIES) $(ibar_DATA)
 @USE_MODULE_IBAR_TRUE@install-ibar: install-ibarDATA install-ibarpkgLTLIBRARIES
-
-@USE_MODULE_DROPSHADOW_TRUE@.PHONY: dropshadow install-dropshadow
-@USE_MODULE_DROPSHADOW_TRUE@dropshadow: $(dropshadowpkg_LTLIBRARIES) $(dropshadow_DATA)
-@USE_MODULE_DROPSHADOW_TRUE@install-dropshadow: install-dropshadowDATA install-dropshadowpkgLTLIBRARIES
 
 @USE_MODULE_CLOCK_TRUE@.PHONY: clock install-clock
 @USE_MODULE_CLOCK_TRUE@clock: $(clockpkg_LTLIBRARIES) $(clock_DATA)
@@ -7398,10 +7159,6 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 @USE_MODULE_SYSTRAY_TRUE@.PHONY: systray install-systray
 @USE_MODULE_SYSTRAY_TRUE@systray: $(systraypkg_LTLIBRARIES) $(systray_DATA)
 @USE_MODULE_SYSTRAY_TRUE@install-systray: install-systrayDATA install-systraypkgLTLIBRARIES
-
-@USE_MODULE_PHYSICS_TRUE@.PHONY: physics install-physics
-@USE_MODULE_PHYSICS_TRUE@physics: $(physicspkg_LTLIBRARIES) $(physics_DATA)
-@USE_MODULE_PHYSICS_TRUE@install-physics: install-physicsDATA install-physicspkgLTLIBRARIES
 
 @USE_MODULE_QUICKACCESS_TRUE@.PHONY: quickaccess install-quickaccess
 @USE_MODULE_QUICKACCESS_TRUE@quickaccess: $(quickaccesspkg_LTLIBRARIES) $(quickaccess_DATA)

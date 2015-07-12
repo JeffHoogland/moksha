@@ -771,37 +771,6 @@ define([CHECK_MODULE_NOTIFICATION],
   fi
 ])
 
-have_ephysics=no
-AM_CONDITIONAL([HAVE_EPHYSICS], [false])
-AC_ARG_ENABLE([ephysics],
-  AC_HELP_STRING([--disable-ephysics], [disable Ephysics support @<:@default=detect@:>@]),
-  [e_cv_want_ephysics=$enableval],
-  AC_CACHE_VAL([e_cv_want_ephysics], [e_cv_want_ephysics=yes])
-)
-if test "x$e_cv_want_ephysics" != "xno" ; then
-  AC_E_CHECK_PKG(EPHYSICS, [ ephysics ], 
-  [
-    AC_DEFINE_UNQUOTED([HAVE_EPHYSICS], [1], [enable ephysics])
-  ], 
-  [
-    AC_MSG_NOTICE([ephysics disabled])
-    e_cv_want_ephysics=no
-  ])
-else
-  AC_MSG_NOTICE([ephysics disabled])
-    e_cv_want_ephysics=no
-fi
-AC_SUBST([EPHYSICS_CFLAGS])
-AC_SUBST([EPHYSICS_LIBS])
-
-AM_CONDITIONAL(HAVE_PHYSICS, false)
-define([CHECK_MODULE_PHYSICS],
-[
-  if test "x$e_cv_want_ephysics" = "xno" ; then
-    PHYSICS=false
-  fi
-])
-
 AM_CONDITIONAL(HAVE_ALSA, false)
 define([CHECK_MODULE_MIXER],
 [
@@ -864,7 +833,6 @@ AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"
 
 
 AC_E_OPTIONAL_MODULE([ibar], true)
-AC_E_OPTIONAL_MODULE([dropshadow], true)
 AC_E_OPTIONAL_MODULE([clock], true)
 AC_E_OPTIONAL_MODULE([pager], true)
 AC_E_OPTIONAL_MODULE([battery], true, [CHECK_MODULE_BATTERY])
@@ -900,8 +868,6 @@ AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
 AC_E_OPTIONAL_MODULE([systray], true)
-AC_E_OPTIONAL_MODULE([comp], true)
-AC_E_OPTIONAL_MODULE([physics], false, [CHECK_MODULE_PHYSICS])
 AC_E_OPTIONAL_MODULE([quickaccess], true)
 AC_E_OPTIONAL_MODULE([shot], true)
 AC_E_OPTIONAL_MODULE([backlight], true)
@@ -959,7 +925,6 @@ src/bin/e_fm_shared_types.h
 src/bin/e_fm/Makefile
 src/modules/Makefile
 src/modules/ibar/module.desktop
-src/modules/dropshadow/module.desktop
 src/modules/clock/module.desktop
 src/modules/pager/module.desktop
 src/modules/battery/module.desktop
@@ -996,7 +961,6 @@ src/modules/syscon/module.desktop
 src/modules/everything/module.desktop
 src/modules/everything/everything.pc
 src/modules/systray/module.desktop
-src/modules/physics/module.desktop
 src/modules/quickaccess/module.desktop
 src/modules/shot/module.desktop
 src/modules/backlight/module.desktop

@@ -97,7 +97,6 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(srcdir)/config.h.in $(srcdir)/enlightenment.spec.in \
 	$(srcdir)/enlightenment.pc.in \
 	$(top_srcdir)/src/modules/ibar/module.desktop.in \
-	$(top_srcdir)/src/modules/dropshadow/module.desktop.in \
 	$(top_srcdir)/src/modules/clock/module.desktop.in \
 	$(top_srcdir)/src/modules/pager/module.desktop.in \
 	$(top_srcdir)/src/modules/battery/module.desktop.in \
@@ -134,7 +133,6 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/src/modules/everything/module.desktop.in \
 	$(top_srcdir)/src/modules/everything/everything.pc.in \
 	$(top_srcdir)/src/modules/systray/module.desktop.in \
-	$(top_srcdir)/src/modules/physics/module.desktop.in \
 	$(top_srcdir)/src/modules/quickaccess/module.desktop.in \
 	$(top_srcdir)/src/modules/shot/module.desktop.in \
 	$(top_srcdir)/src/modules/backlight/module.desktop.in \
@@ -165,7 +163,6 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES = enlightenment.spec enlightenment.pc \
 	src/modules/ibar/module.desktop \
-	src/modules/dropshadow/module.desktop \
 	src/modules/clock/module.desktop \
 	src/modules/pager/module.desktop \
 	src/modules/battery/module.desktop \
@@ -202,7 +199,6 @@ CONFIG_CLEAN_FILES = enlightenment.spec enlightenment.pc \
 	src/modules/everything/module.desktop \
 	src/modules/everything/everything.pc \
 	src/modules/systray/module.desktop \
-	src/modules/physics/module.desktop \
 	src/modules/quickaccess/module.desktop \
 	src/modules/shot/module.desktop \
 	src/modules/backlight/module.desktop \
@@ -391,9 +387,6 @@ EMOTION_LIBS = @EMOTION_LIBS@
 ENOTIFY_CFLAGS = @ENOTIFY_CFLAGS@
 ENOTIFY_LIBS = @ENOTIFY_LIBS@
 ENOTIFY_VERSION = @ENOTIFY_VERSION@
-EPHYSICS_CFLAGS = @EPHYSICS_CFLAGS@
-EPHYSICS_LIBS = @EPHYSICS_LIBS@
-EPHYSICS_VERSION = @EPHYSICS_VERSION@
 EXEEXT = @EXEEXT@
 E_ALERT_CFLAGS = @E_ALERT_CFLAGS@
 E_ALERT_LIBS = @E_ALERT_LIBS@
@@ -433,7 +426,6 @@ HAVE_BATTERY = @HAVE_BATTERY@
 HAVE_ECONNMAN = @HAVE_ECONNMAN@
 HAVE_ECORE_IMF = @HAVE_ECORE_IMF@
 HAVE_ENOTIFY = @HAVE_ENOTIFY@
-HAVE_EPHYSICS = @HAVE_EPHYSICS@
 HAVE_TEMPERATURE = @HAVE_TEMPERATURE@
 HIBERNATE = @HIBERNATE@
 INSTALL = @INSTALL@
@@ -502,7 +494,6 @@ USE_MODULE_ACCESS = @USE_MODULE_ACCESS@
 USE_MODULE_BACKLIGHT = @USE_MODULE_BACKLIGHT@
 USE_MODULE_BATTERY = @USE_MODULE_BATTERY@
 USE_MODULE_CLOCK = @USE_MODULE_CLOCK@
-USE_MODULE_COMP = @USE_MODULE_COMP@
 USE_MODULE_CONF = @USE_MODULE_CONF@
 USE_MODULE_CONF_APPLICATIONS = @USE_MODULE_CONF_APPLICATIONS@
 USE_MODULE_CONF_DIALOGS = @USE_MODULE_CONF_DIALOGS@
@@ -522,7 +513,6 @@ USE_MODULE_CONF_WINDOW_MANIPULATION = @USE_MODULE_CONF_WINDOW_MANIPULATION@
 USE_MODULE_CONF_WINDOW_REMEMBERS = @USE_MODULE_CONF_WINDOW_REMEMBERS@
 USE_MODULE_CONNMAN = @USE_MODULE_CONNMAN@
 USE_MODULE_CPUFREQ = @USE_MODULE_CPUFREQ@
-USE_MODULE_DROPSHADOW = @USE_MODULE_DROPSHADOW@
 USE_MODULE_EVERYTHING = @USE_MODULE_EVERYTHING@
 USE_MODULE_FILEMAN = @USE_MODULE_FILEMAN@
 USE_MODULE_FILEMAN_OPINFO = @USE_MODULE_FILEMAN_OPINFO@
@@ -533,7 +523,6 @@ USE_MODULE_MIXER = @USE_MODULE_MIXER@
 USE_MODULE_MSGBUS = @USE_MODULE_MSGBUS@
 USE_MODULE_NOTIFICATION = @USE_MODULE_NOTIFICATION@
 USE_MODULE_PAGER = @USE_MODULE_PAGER@
-USE_MODULE_PHYSICS = @USE_MODULE_PHYSICS@
 USE_MODULE_QUICKACCESS = @USE_MODULE_QUICKACCESS@
 USE_MODULE_SHOT = @USE_MODULE_SHOT@
 USE_MODULE_START = @USE_MODULE_START@
@@ -703,8 +692,6 @@ enlightenment.pc: $(top_builddir)/config.status $(srcdir)/enlightenment.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/ibar/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/ibar/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/dropshadow/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/dropshadow/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/clock/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/clock/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/pager/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/pager/module.desktop.in
@@ -776,8 +763,6 @@ src/modules/everything/module.desktop: $(top_builddir)/config.status $(top_srcdi
 src/modules/everything/everything.pc: $(top_builddir)/config.status $(top_srcdir)/src/modules/everything/everything.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/systray/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/systray/module.desktop.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
-src/modules/physics/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/physics/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 src/modules/quickaccess/module.desktop: $(top_builddir)/config.status $(top_srcdir)/src/modules/quickaccess/module.desktop.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
