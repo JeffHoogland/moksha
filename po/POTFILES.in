@@ -137,9 +137,6 @@ src/modules/battery/e_mod_config.c
 src/modules/battery/e_mod_main.c
 src/modules/clock/e_mod_config.c
 src/modules/clock/e_mod_main.c
-src/modules/comp/e_mod_comp.c
-src/modules/comp/e_mod_config.c
-src/modules/comp/e_mod_main.c
 src/modules/conf/e_conf.c
 src/modules/conf/e_mod_config.c
 src/modules/conf/e_mod_main.c
@@ -250,8 +247,6 @@ src/modules/ibox/e_mod_config.c
 src/modules/ibox/e_mod_main.c
 src/modules/pager/e_mod_config.c
 src/modules/pager/e_mod_main.c
-src/modules/physics/e_mod_config.c
-src/modules/physics/e_mod_main.c
 src/modules/start/e_mod_main.c
 src/modules/syscon/e_int_config_syscon.c
 src/modules/syscon/e_mod_main.c
