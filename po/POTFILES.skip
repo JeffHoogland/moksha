@@ -39,7 +39,6 @@ src/modules/conf_window_focus/module.desktop.in
 src/modules/conf_window_manipulation/module.desktop.in
 src/modules/conf_winlist/module.desktop.in
 src/modules/cpufreq/module.desktop.in
-src/modules/dropshadow/module.desktop.in
 src/modules/everything/module.desktop.in
 src/modules/everything-apps/module.desktop.in
 src/modules/everything-aspell/module.desktop.in
