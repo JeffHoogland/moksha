@@ -1,5 +1,12 @@
 #include "macros.edc"
 
+ data {
+	item: "gtk-theme"		"E17gtk";
+	// theme api version. from 1.10 on we will check version to avoid
+	// compat issues
+	item: "version"			"110";
+}
+
 collections {
 // desktop in general
 #include "edc/comp.edc"
