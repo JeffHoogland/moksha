@@ -86,6 +86,15 @@ e_wizard_shutdown(void)
    if (next_timer) ecore_timer_del(next_timer);
    next_timer = NULL;
    E_FREE_LIST(handlers, ecore_event_handler_del);
+   //These applications are added to the user's startup applications as the wizard finishes
+    char *homedir = getenv("HOME");
+    char path[4096];
+    FILE *f;
+    snprintf(path, 4096, "%s/.e/e/applications/startup/.order", homedir);
+    f = fopen(path, "w");
+    fputs("nm-applet.desktop\n", f);
+    fputs("elaptopcheck.desktop\n", f);
+    fclose(f);
    return 1;
 }
 
