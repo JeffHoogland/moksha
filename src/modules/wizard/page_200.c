@@ -49,6 +49,7 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    e_sys_action_do(E_SYS_RESTART, NULL);
    
    // restart e a second time normally to work around a bug
+   e_util_env_set("E_RESTART", 1);
    e_sys_action_do(E_SYS_RESTART, NULL);
    _e_int_menus_bodhi_quick_start(NULL, NULL, NULL);
    return 1;
