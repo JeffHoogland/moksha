@@ -64,16 +64,12 @@ _notification_show_presentation(Eina_Bool enabled)
    if (enabled)
      {
         summary = _("Enter Presentation Mode");
-        body = _("Moksha is in <b>presentation</b> mode."
-                 "<br>During presentation mode, screen saver, lock and "
-                 "power saving will be disabled so you are not interrupted.");
+        body = _("Moksha is in <b>presentation</b> mode.");
      }
    else
      {
         summary = _("Exited Presentation Mode");
-        body = _("Presentation mode is over."
-                 "<br>Now screen saver, lock and "
-                 "power saving settings will be restored.");
+        body = _("Presentation mode is over.");
      }
 
    _notification_show_common(summary, body, -1);
