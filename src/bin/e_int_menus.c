@@ -76,7 +76,7 @@ static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
 
-#define BODHI_VERSION "     3.0.0"
+#define BODHI_VERSION "     3.1.0"
 #define BODHI_ABOUT_TITLE "About Bodhi     "
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \

@@ -9794,9 +9794,7 @@ msgstr ""
 
 #: src/modules/notification/e_mod_main.c:67
 msgid ""
-"Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
-"screen saver, lock and power saving will be disabled so you are not "
-"interrupted."
+"Moksha is in <b>presentation</b> mode."
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:73
@@ -9805,8 +9803,7 @@ msgstr ""
 
 #: src/modules/notification/e_mod_main.c:74
 msgid ""
-"Presentation mode is over.<br>Now screen saver, lock and power saving "
-"settings will be restored."
+"Presentation mode is over."
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:89
