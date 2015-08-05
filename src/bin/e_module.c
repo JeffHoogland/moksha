@@ -109,7 +109,7 @@ e_module_all_load(void)
      {
         ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
         _e_modules_initting = EINA_FALSE;
-        _e_module_whitelist_check();
+        //_e_module_whitelist_check();
      }
 
    unsetenv("E_MODULE_LOAD");
@@ -302,8 +302,8 @@ e_module_enable(E_Module *m)
                   break;
                }
           }
-        if (!_e_modules_initting)
-          _e_module_whitelist_check();
+        /*if (!_e_modules_initting)
+          _e_module_whitelist_check();*/
         return 1;
      }
    return 0;
@@ -582,7 +582,7 @@ _e_module_cb_idler(void *data __UNUSED__)
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
    
    _e_modules_initting = EINA_FALSE;
-   _e_module_whitelist_check();
+   //_e_module_whitelist_check();
 
    _e_module_idler = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -635,6 +635,7 @@ _ignore_cb(void *data, E_Dialog *dialog)
 static void
 _e_module_whitelist_check(void)
 {
+   /* This Code checks for non-core modules. It is not currently used in Moksha*/
    Eina_List *l, *badl = NULL;
    E_Module *m;
    unsigned int known = 0;

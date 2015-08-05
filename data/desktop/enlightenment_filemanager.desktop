@@ -19,6 +19,7 @@ Comment[pt]=Gestor de ficheiros para o Enlightenment
 Comment[ru]=Файловый менеджер встроенный в Enlightenment
 Icon=system-file-manager
 OnlyShowIn=X-Enlightenment;
+NoDisplay=true
 Exec=enlightenment_filemanager %U
 Terminal=false
 MimeType=inode/directory;
