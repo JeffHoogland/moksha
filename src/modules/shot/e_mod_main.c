@@ -375,7 +375,9 @@ static Eina_Bool
 _upload_progress_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Url_Progress *ev = event;
-   if (ev->url_con != url_up) return EINA_TRUE;
+   //if (ev->url_con != url_up) return EINA_TRUE;
+   if (ev->url_con != url_up) return ECORE_CALLBACK_RENEW;
+
    if (o_label)
      {
         char buf[1024];
@@ -390,7 +392,7 @@ _upload_progress_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
         E_FREE(buf_total);
         e_widget_label_text_set(o_label, buf);
      }
-   return EINA_FALSE;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
