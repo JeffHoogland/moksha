@@ -80,38 +80,36 @@ static Eina_List *handlers = NULL;
 #define BODHI_ABOUT_TITLE "About Bodhi     "
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \
-   "Jeff Hoogland (Jef91)<br>" \
-   "Joris van Dijk (aeonius)<br>" \
-   "Stephen Houston (okra)<br>" \
-   "Kristi Hoogland (TheWife)<br>" \
-   "Jason Thomas (Tristam)<br>" \
-   "Kai Huuhko (kuuko)<br>" \
-   "Robert Wiley (y_lee)<br>" \
-   "Doug Yanez (Deepspeed)<br>" \
-   "Eric Brown (feneric)<br>" \
-   "Bob Eley<br>" \
-   "Kaleb Elwert (belak)<br>" \
-   "Karen Hoogland<br>" \
-   "Micah Denn (M1C4HTRON13)<br>" \
-   "Gareth Williams (hippytaff)<br>" \
-   "Víctor Parra García (esmirlin)<br>" \
-   "Anthony Cervantes (AntCer)<br>" \
-   "Timmy Larsson (Timmy)<br>" \
-   "Renato Rener (r1to)<br>" \
-   "Agustin Verdegal (Agust)<br>" \
-   "David La Monaca (cercamon)<br>" \
-   "Alexandre Eldredge (Spoonite)<br>" \
-   "Jose Manimala (Ittan)<br>" \
-   "Erik Zervas (Tolcarael)<br>" \
-   "Jason Peel (Jarope)<br>" \
-   "Andreas Pachler<br>" \
-   "Georg Eckert<br>" \
-   "Michael Rokosz (mrokosz)<br>" \
-   "Adrian Koryl (husarz)<br>" \
-   "F. Junger<br>" \
-   "Joao Teixeira<br>" \
-   "Matt Carter (Matt)<br>" \
-   "Hendra Kusuma<br>"
+    "Jeff Hoogland<br>" \
+    "Joris 'aeonius' van Dijk<br>" \
+    "Stephen 'okra' Houston<br>" \
+    "Jason 'Tristam' Thomas<br>" \
+    "Kristi Hoogland<br>" \
+    "Gar Romero<br>" \
+    "Patrick Duckson<br>" \
+    "Rbt 'ylee' Wiley<br>" \
+    "Doug 'Deepspeed' Yanez<br>" \
+    "Timmy 'timmy' Larsson<br>" \
+    "Roger 'JollyRoger' Carter<br>" \
+    "Charles 'Charles@Bodhi' van de Beek<br>" \
+    "Reuben L. Lillie<br>" \
+    "Stefan 'the waiter' Uram<br><br><br>" \
+    "Past contributors:<br>" \
+    "Ken 'trace'  LaBuda<br>" \
+    "Christopher 'devilhorns' Michael<br>" \
+    "Jason 'jarope' Peel<br>" \
+    "Chris 'prolog' Seekamp<br>" \
+    "Bob Eley<br>" \
+    "Darren 'LostBumpkin' Dooley<br>" \
+    "Anthony 'AntCer' Cervantes<br>" \
+    "Kaleb 'belak' Elwert<br>" \
+    "Jose 'Jose' Manimala<br>" \
+    "Gareth 'hippytaff' Williams<br>" \
+    "Micah 'M1C4HTRON13″ Denn<br>" \
+    "Meji 'Meji_D' Dejsdóttir<br>" \
+    "Víctor 'esmirlin' Parra García<br>" \
+    "Mark 'ottermaton' Strawser<br>" \
+    "Caerolle<br>" 
 
 
 static Eina_List *
