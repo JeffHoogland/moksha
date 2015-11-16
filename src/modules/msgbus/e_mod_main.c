@@ -13,11 +13,12 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   ifaces = eina_array_new(5);
+   ifaces = eina_array_new(6);
 
    msgbus_lang_init(ifaces);
    msgbus_desktop_init(ifaces);
    msgbus_audit_init(ifaces);
+   msgbus_config_init(ifaces);
 
    return m;
 }

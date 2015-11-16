@@ -7,6 +7,7 @@
 void msgbus_lang_init(Eina_Array *ifaces);
 void msgbus_desktop_init(Eina_Array *ifaces);
 void msgbus_audit_init(Eina_Array *ifaces);
+void msgbus_config_init(Eina_Array *ifaces);
 
 /**
  * @addtogroup Optional_Control
