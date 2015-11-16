@@ -29,6 +29,24 @@ cb_config_save(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
    return dbus_message_new_method_return(msg);
 }
 
+static DBusMessage *
+cb_config_save_block(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+{
+   DBG("config save_block requested");
+   e_config_save_block_set(1);
+
+   return dbus_message_new_method_return(msg);
+}
+
+static DBusMessage *
+cb_config_save_release(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+{
+   DBG("config save_release requested");
+   e_config_save_block_set(0);
+
+   return dbus_message_new_method_return(msg);
+}
+
 
 void msgbus_config_init(Eina_Array *ifaces)
 {
@@ -48,6 +66,10 @@ void msgbus_config_init(Eina_Array *ifaces)
                                     cb_config_load);
       e_dbus_interface_method_add(iface, "Save", "", "",
                                     cb_config_save);
+      e_dbus_interface_method_add(iface, "SaveBlock", "", "",
+                                    cb_config_save_block);
+      e_dbus_interface_method_add(iface, "SaveRelease", "", "",
+                                    cb_config_save_release);
       e_msgbus_interface_attach(iface);
       eina_array_push(ifaces, iface);
    }
