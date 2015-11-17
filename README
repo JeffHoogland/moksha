@@ -1,4 +1,4 @@
-Moksha 0.1.0
+Installing Moksha
 
 Requirements:
 -------------
@@ -16,10 +16,10 @@ Must:
   [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
   engine in evas, buffer engine in evas]
 
-You can also use the configure --prefix option to put e17 in a separate tree
+You can also use the configure --prefix option to put Moksha in a separate tree
 of its own (recommended) like:
 
-  ./configure --prefix=/usr/local/e17
+  ./configure --prefix=/usr/local/moksha
 
 You will, as usual, need to add the subsequent bin dir to your $PATH etc.
 
@@ -37,3 +37,10 @@ your CFLAGS.
 /etc/enlightenment (not PREFIX/etc/enlightenment) as this is the first place
 it looks at. This file is intended to be customized by packagers and
 system integrators to match your policies and scripts/tools.
+
+TODO List:
+
+- Merge default profile into core of Moksha
+- Purge EFM
+- Purge Broken Keyboard Module
+- Expand enlightenment_remote command
