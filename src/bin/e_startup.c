@@ -102,7 +102,7 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
        FILE *f; 
        f = fopen(shfile, "w"); 
        fclose(f);
-       chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOT);
+       chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
    }
    e_exec(NULL, NULL, shfile, NULL, NULL);
    return ECORE_CALLBACK_PASS_ON;
