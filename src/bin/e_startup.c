@@ -95,6 +95,9 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
      start_app_pos = 0;
    free(buf);
    _e_startup();
+   char shfile[PATH_MAX];
+   e_user_dir_concat_static(shfile, "applications/startup/startupcommands");
+   e_exec(NULL, NULL, shfile, NULL, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
