@@ -97,6 +97,13 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
    _e_startup();
    char shfile[PATH_MAX];
    e_user_dir_concat_static(shfile, "applications/startup/startupcommands");
+   if (!ecore_file_exists(shfile)) 
+   { 
+       FILE *f; 
+       f = fopen(shfile, "w"); 
+       fclose(f);
+       chmod(shfile, S_IRWXO);
+   }
    e_exec(NULL, NULL, shfile, NULL, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
