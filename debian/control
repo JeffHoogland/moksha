@@ -13,3 +13,11 @@ Conflicts: e17, e18, e19
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: The Moksha Desktop
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
+
+Package: moksha-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: moksha (= ${binary:Version}), ${misc:Depends}
+Description: Debugging symbols for Moksha
+ This package contains the debugging symbols for Moksha
