@@ -2,8 +2,6 @@ xkbswitchdir = $(MDIR)/xkbswitch
 xkbswitch_DATA = xkbswitch/e-module-xkbswitch.edj \
 		 xkbswitch/module.desktop
 
-EXTRA_DIST += $(xkbswitch_DATA)
-
 xkbswitchpkgdir = $(MDIR)/xkbswitch/$(MODULE_ARCH)
 xkbswitchpkg_LTLIBRARIES = xkbswitch/module.la
 

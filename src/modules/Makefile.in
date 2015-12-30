@@ -135,44 +135,42 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @USE_MODULE_IBOX_TRUE@am__append_15 = $(ibox_DATA)
 @USE_MODULE_START_TRUE@am__append_16 = $(start_DATA)
 @USE_MODULE_WINLIST_TRUE@am__append_17 = $(winlist_DATA)
-@USE_MODULE_FILEMAN_TRUE@am__append_18 = $(fileman_DATA)
-@USE_MODULE_FILEMAN_OPINFO_TRUE@am__append_19 = $(fileman_opinfo_DATA)
-@USE_MODULE_WIZARD_TRUE@am__append_20 = $(wizard_DATA) $(wizard_desks_DATA) $(wizard_desktop_DATA)
-@USE_MODULE_CONF_TRUE@am__append_21 = $(conf_DATA)
-@USE_MODULE_CONF_WALLPAPER2_TRUE@am__append_22 = $(conf_wallpaper2_DATA)
-@USE_MODULE_CONF_THEME_TRUE@am__append_23 = $(conf_theme_DATA)
-@USE_MODULE_CONF_INTL_TRUE@am__append_24 = $(conf_intl_DATA)
-@USE_MODULE_MSGBUS_TRUE@am__append_25 = $(msgbus_DATA)
-@USE_MODULE_CONF_APPLICATIONS_TRUE@am__append_26 = $(conf_applications_DATA)
-@USE_MODULE_CONF_DISPLAY_TRUE@am__append_27 = $(conf_display_DATA)
-@USE_MODULE_CONF_SHELVES_TRUE@am__append_28 = $(conf_shelves_DATA)
-@USE_MODULE_CONF_KEYBINDINGS_TRUE@am__append_29 = $(conf_keybindings_DATA)
-@USE_MODULE_CONF_EDGEBINDINGS_TRUE@am__append_30 = $(conf_edgebindings_DATA)
-@USE_MODULE_CONF_WINDOW_REMEMBERS_TRUE@am__append_31 = $(conf_window_remembers_DATA)
-@USE_MODULE_CONF_WINDOW_MANIPULATION_TRUE@am__append_32 = $(conf_window_manipulation_DATA)
-@USE_MODULE_CONF_MENUS_TRUE@am__append_33 = $(conf_menus_DATA)
-@USE_MODULE_CONF_DIALOGS_TRUE@am__append_34 = $(conf_dialogs_DATA)
-@USE_MODULE_CONF_PERFORMANCE_TRUE@am__append_35 = $(conf_performance_DATA)
-@USE_MODULE_CONF_PATHS_TRUE@am__append_36 = $(conf_paths_DATA)
-@USE_MODULE_CONF_INTERACTION_TRUE@am__append_37 = $(conf_interaction_DATA)
-@USE_MODULE_CONF_RANDR_TRUE@am__append_38 = $(conf_randr_DATA)
-@USE_MODULE_GADMAN_TRUE@am__append_39 = $(gadman_DATA)
-@USE_MODULE_MIXER_TRUE@am__append_40 = $(mixer_DATA)
-@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__append_41 = mixer/sys_alsa.c
-@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__append_42 = mixer/sys_dummy.c
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_43 = @ENOTIFY_CFLAGS@
-@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_44 = @ENOTIFY_LIBS@
-@USE_MODULE_SYSCON_TRUE@am__append_45 = $(syscon_DATA)
-@USE_MODULE_EVERYTHING_TRUE@am__append_46 = $(everything_DATA) \
+@USE_MODULE_FILEMAN_OPINFO_TRUE@am__append_18 = $(fileman_opinfo_DATA)
+@USE_MODULE_WIZARD_TRUE@am__append_19 = $(wizard_DATA) $(wizard_desks_DATA) $(wizard_desktop_DATA)
+@USE_MODULE_CONF_TRUE@am__append_20 = $(conf_DATA)
+@USE_MODULE_CONF_WALLPAPER2_TRUE@am__append_21 = $(conf_wallpaper2_DATA)
+@USE_MODULE_CONF_THEME_TRUE@am__append_22 = $(conf_theme_DATA)
+@USE_MODULE_CONF_INTL_TRUE@am__append_23 = $(conf_intl_DATA)
+@USE_MODULE_MSGBUS_TRUE@am__append_24 = $(msgbus_DATA)
+@USE_MODULE_CONF_APPLICATIONS_TRUE@am__append_25 = $(conf_applications_DATA)
+@USE_MODULE_CONF_DISPLAY_TRUE@am__append_26 = $(conf_display_DATA)
+@USE_MODULE_CONF_SHELVES_TRUE@am__append_27 = $(conf_shelves_DATA)
+@USE_MODULE_CONF_KEYBINDINGS_TRUE@am__append_28 = $(conf_keybindings_DATA)
+@USE_MODULE_CONF_EDGEBINDINGS_TRUE@am__append_29 = $(conf_edgebindings_DATA)
+@USE_MODULE_CONF_WINDOW_REMEMBERS_TRUE@am__append_30 = $(conf_window_remembers_DATA)
+@USE_MODULE_CONF_WINDOW_MANIPULATION_TRUE@am__append_31 = $(conf_window_manipulation_DATA)
+@USE_MODULE_CONF_MENUS_TRUE@am__append_32 = $(conf_menus_DATA)
+@USE_MODULE_CONF_DIALOGS_TRUE@am__append_33 = $(conf_dialogs_DATA)
+@USE_MODULE_CONF_PERFORMANCE_TRUE@am__append_34 = $(conf_performance_DATA)
+@USE_MODULE_CONF_PATHS_TRUE@am__append_35 = $(conf_paths_DATA)
+@USE_MODULE_CONF_INTERACTION_TRUE@am__append_36 = $(conf_interaction_DATA)
+@USE_MODULE_CONF_RANDR_TRUE@am__append_37 = $(conf_randr_DATA)
+@USE_MODULE_GADMAN_TRUE@am__append_38 = $(gadman_DATA)
+@USE_MODULE_MIXER_TRUE@am__append_39 = $(mixer_DATA)
+@HAVE_ALSA_TRUE@@USE_MODULE_MIXER_TRUE@am__append_40 = mixer/sys_alsa.c
+@HAVE_ALSA_FALSE@@USE_MODULE_MIXER_TRUE@am__append_41 = mixer/sys_dummy.c
+@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_42 = @ENOTIFY_CFLAGS@
+@HAVE_ENOTIFY_TRUE@@USE_MODULE_MIXER_TRUE@am__append_43 = @ENOTIFY_LIBS@
+@USE_MODULE_SYSCON_TRUE@am__append_44 = $(syscon_DATA)
+@USE_MODULE_EVERYTHING_TRUE@am__append_45 = $(everything_DATA) \
 @USE_MODULE_EVERYTHING_TRUE@	everything/everything.pc.in
-@USE_MODULE_SYSTRAY_TRUE@am__append_47 = $(systray_DATA)
-@USE_MODULE_QUICKACCESS_TRUE@am__append_48 = $(quickaccess_DATA)
-@USE_MODULE_SHOT_TRUE@am__append_49 = $(shot_DATA)
-@USE_MODULE_BACKLIGHT_TRUE@am__append_50 = $(backlight_DATA)
-@USE_MODULE_TASKS_TRUE@am__append_51 = $(tasks_DATA)
-@USE_MODULE_XKBSWITCH_TRUE@am__append_52 = $(xkbswitch_DATA)
-@USE_MODULE_TILING_TRUE@am__append_53 = tiling/e-module-tiling.edj
-@USE_MODULE_TILING_TRUE@am__append_54 = $(tiling_DATA) \
+@USE_MODULE_SYSTRAY_TRUE@am__append_46 = $(systray_DATA)
+@USE_MODULE_QUICKACCESS_TRUE@am__append_47 = $(quickaccess_DATA)
+@USE_MODULE_SHOT_TRUE@am__append_48 = $(shot_DATA)
+@USE_MODULE_BACKLIGHT_TRUE@am__append_49 = $(backlight_DATA)
+@USE_MODULE_TASKS_TRUE@am__append_50 = $(tasks_DATA)
+@USE_MODULE_TILING_TRUE@am__append_51 = tiling/e-module-tiling.edj
+@USE_MODULE_TILING_TRUE@am__append_52 = $(tiling_DATA) \
 @USE_MODULE_TILING_TRUE@	      tiling/e-module-tiling.edc \
 @USE_MODULE_TILING_TRUE@	      tiling/module.desktop.in \
 @USE_MODULE_TILING_TRUE@	      tiling/images/module_icon.png \
@@ -185,7 +183,7 @@ DIST_COMMON = $(srcdir)/Makefile_connman.am $(srcdir)/Makefile_ibar.am \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_sw.png \
 @USE_MODULE_TILING_TRUE@	      tiling/images/arrow_w.png
 
-@USE_MODULE_ACCESS_TRUE@am__append_55 = $(access_DATA)
+@USE_MODULE_ACCESS_TRUE@am__append_53 = $(access_DATA)
 subdir = src/modules
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac-plugins.m4 \
@@ -756,12 +754,14 @@ mixer_module_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 msgbus_module_la_LIBADD =
 am__msgbus_module_la_SOURCES_DIST = msgbus/e_mod_main.h \
 	msgbus/e_mod_main.c msgbus/msgbus_audit.c \
-	msgbus/msgbus_desktop.c msgbus/msgbus_lang.c
+	msgbus/msgbus_desktop.c msgbus/msgbus_lang.c \
+	msgbus/msgbus_config.c
 @USE_MODULE_MSGBUS_TRUE@am_msgbus_module_la_OBJECTS =  \
 @USE_MODULE_MSGBUS_TRUE@	msgbus/e_mod_main.lo \
 @USE_MODULE_MSGBUS_TRUE@	msgbus/msgbus_audit.lo \
 @USE_MODULE_MSGBUS_TRUE@	msgbus/msgbus_desktop.lo \
-@USE_MODULE_MSGBUS_TRUE@	msgbus/msgbus_lang.lo
+@USE_MODULE_MSGBUS_TRUE@	msgbus/msgbus_lang.lo \
+@USE_MODULE_MSGBUS_TRUE@	msgbus/msgbus_config.lo
 msgbus_module_la_OBJECTS = $(am_msgbus_module_la_OBJECTS)
 @USE_MODULE_MSGBUS_TRUE@am_msgbus_module_la_rpath = -rpath \
 @USE_MODULE_MSGBUS_TRUE@	$(msgbuspkgdir)
@@ -1565,7 +1565,7 @@ version_info = @version_info@
 MAINTAINERCLEANFILES = Makefile.in
 AUTOMAKE_OPTIONS = subdir-objects
 SUBDIRS = 
-CLEANFILES = $(am__append_53)
+CLEANFILES = $(am__append_51)
 EXTRA_DIST = $(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_4) $(am__append_5) $(am__append_10) \
 	$(am__append_12) $(am__append_13) $(am__append_15) \
@@ -1577,10 +1577,9 @@ EXTRA_DIST = $(am__append_1) $(am__append_2) $(am__append_3) \
 	$(am__append_31) $(am__append_32) $(am__append_33) \
 	$(am__append_34) $(am__append_35) $(am__append_36) \
 	$(am__append_37) $(am__append_38) $(am__append_39) \
-	$(am__append_40) $(am__append_45) $(am__append_46) \
+	$(am__append_44) $(am__append_45) $(am__append_46) \
 	$(am__append_47) $(am__append_48) $(am__append_49) \
-	$(am__append_50) $(am__append_51) $(am__append_52) \
-	$(am__append_54) $(am__append_55)
+	$(am__append_50) $(am__append_52) $(am__append_53)
 INSTALL_DATA_HOOKS = $(am__append_14)
 MDIR = $(libdir)/enlightenment/modules
 AM_LDFLAGS = -module -avoid-version
@@ -1872,7 +1871,8 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MSGBUS_TRUE@			   msgbus/e_mod_main.c \
 @USE_MODULE_MSGBUS_TRUE@			   msgbus/msgbus_audit.c \
 @USE_MODULE_MSGBUS_TRUE@			   msgbus/msgbus_desktop.c \
-@USE_MODULE_MSGBUS_TRUE@			   msgbus/msgbus_lang.c
+@USE_MODULE_MSGBUS_TRUE@			   msgbus/msgbus_lang.c \
+@USE_MODULE_MSGBUS_TRUE@			   msgbus/msgbus_config.c
 
 @USE_MODULE_CONF_APPLICATIONS_TRUE@conf_applicationsdir = $(MDIR)/conf_applications
 @USE_MODULE_CONF_APPLICATIONS_TRUE@conf_applications_DATA = conf_applications/e-module-conf_applications.edj \
@@ -2043,7 +2043,7 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MIXER_TRUE@mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 @USE_MODULE_MIXER_TRUE@mixerpkg_LTLIBRARIES = mixer/module.la
 @USE_MODULE_MIXER_TRUE@mixer_module_la_CFLAGS = $(AM_CFLAGS) \
-@USE_MODULE_MIXER_TRUE@	$(am__append_43)
+@USE_MODULE_MIXER_TRUE@	$(am__append_42)
 @USE_MODULE_MIXER_TRUE@mixer_module_la_SOURCES = mixer/e_mod_main.c \
 @USE_MODULE_MIXER_TRUE@	mixer/e_mod_main.h mixer/app_mixer.c \
 @USE_MODULE_MIXER_TRUE@	mixer/conf_gadget.c mixer/conf_module.c \
@@ -2051,9 +2051,9 @@ EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 @USE_MODULE_MIXER_TRUE@	mixer/Pulse.h mixer/pa.h mixer/pa.c \
 @USE_MODULE_MIXER_TRUE@	mixer/serial.c mixer/sink.c \
 @USE_MODULE_MIXER_TRUE@	mixer/sys_pulse.c mixer/tag.c \
-@USE_MODULE_MIXER_TRUE@	$(am__append_41) $(am__append_42)
+@USE_MODULE_MIXER_TRUE@	$(am__append_40) $(am__append_41)
 @USE_MODULE_MIXER_TRUE@mixer_module_la_LIBADD = @SOUND_LIBS@ \
-@USE_MODULE_MIXER_TRUE@	$(am__append_44)
+@USE_MODULE_MIXER_TRUE@	$(am__append_43)
 @USE_MODULE_SYSCON_TRUE@syscondir = $(MDIR)/syscon
 @USE_MODULE_SYSCON_TRUE@syscon_DATA = syscon/e-module-syscon.edj \
 @USE_MODULE_SYSCON_TRUE@	      syscon/module.desktop
@@ -4330,6 +4330,8 @@ msgbus/msgbus_desktop.lo: msgbus/$(am__dirstamp) \
 	msgbus/$(DEPDIR)/$(am__dirstamp)
 msgbus/msgbus_lang.lo: msgbus/$(am__dirstamp) \
 	msgbus/$(DEPDIR)/$(am__dirstamp)
+msgbus/msgbus_config.lo: msgbus/$(am__dirstamp) \
+	msgbus/$(DEPDIR)/$(am__dirstamp)
 
 msgbus/module.la: $(msgbus_module_la_OBJECTS) $(msgbus_module_la_DEPENDENCIES) $(EXTRA_msgbus_module_la_DEPENDENCIES) msgbus/$(am__dirstamp)
 	$(AM_V_CCLD)$(LINK) $(am_msgbus_module_la_rpath) $(msgbus_module_la_OBJECTS) $(msgbus_module_la_LIBADD) $(LIBS)
@@ -5013,6 +5015,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@mixer/$(DEPDIR)/mixer_module_la-tag.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@msgbus/$(DEPDIR)/e_mod_main.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@msgbus/$(DEPDIR)/msgbus_audit.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@msgbus/$(DEPDIR)/msgbus_config.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@msgbus/$(DEPDIR)/msgbus_desktop.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@msgbus/$(DEPDIR)/msgbus_lang.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@notification/$(DEPDIR)/e_mod_config.Plo@am__quote@

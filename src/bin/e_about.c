@@ -19,7 +19,7 @@ e_about_new(E_Container *con)
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Moksha"));
-   e_obj_dialog_obj_part_text_set(od, "e.text.version", "0.1.0");
+   e_obj_dialog_obj_part_text_set(od, "e.text.version", "0.2.0");
    snprintf
      (buf, sizeof(buf), "%s%s",
      _(
