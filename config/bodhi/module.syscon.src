@@ -1,0 +1,3 @@
+group "Syscon_Config" struct {
+    value "menu" uchar: 0;
+}

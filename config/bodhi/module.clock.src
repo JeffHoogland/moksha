@@ -1,0 +1,14 @@
+group "Config" struct {
+    group "items" list {
+        group "Config_Item" struct {
+            value "id" string: "clock";
+            value "weekend.start" int: 6;
+            value "weekend.len" int: 2;
+            value "week.start" int: 1;
+            value "digital_clock" int: 1;
+            value "digital_24h" int: 0;
+            value "show_seconds" int: 0;
+            value "show_date" int: 0;
+        }
+    }
+}

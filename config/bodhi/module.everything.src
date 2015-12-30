@@ -1,0 +1,314 @@
+group "Config" struct {
+    group "collections" list {
+        group "Plugin_Config" struct {
+            group "plugins" list {
+                group "Plugin_Config" struct {
+                    value "name" string: "Windows";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Settings";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Files";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Applications";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+            }
+            value "name" string: "Start";
+            value "enabled" int: 0;
+            value "priority" int: 0;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 0;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+    }
+    group "conf_objects" list {
+        group "Plugin_Config" struct {
+            value "name" string: "All";
+            value "enabled" int: 1;
+            value "priority" int: -1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Applications";
+            value "enabled" int: 1;
+            value "priority" int: 1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Files";
+            value "enabled" int: 1;
+            value "priority" int: 2;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Recent Files";
+            value "enabled" int: 1;
+            value "priority" int: 3;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 0;
+            value "min_query" int: 3;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Text";
+            value "enabled" int: 1;
+            value "priority" int: 999;
+            value "trigger" string: " ";
+            value "trigger_only" int: 0;
+            value "view_mode" int: 0;
+            value "aggregate" int: 0;
+            value "top_level" int: 0;
+            value "min_query" int: 0;
+        }
+    }
+    group "conf_actions" list {
+        group "Plugin_Config" struct {
+            value "name" string: "All";
+            value "enabled" int: 1;
+            value "priority" int: -1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Open with...";
+            value "enabled" int: 1;
+            value "priority" int: 1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Actions";
+            value "enabled" int: 1;
+            value "priority" int: 2;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+    }
+    group "conf_subjects" list {
+        group "Plugin_Config" struct {
+            value "name" string: "All";
+            value "enabled" int: 1;
+            value "priority" int: -1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            group "plugins" list {
+                group "Plugin_Config" struct {
+                    value "name" string: "Windows";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Settings";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Files";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+                group "Plugin_Config" struct {
+                    value "name" string: "Applications";
+                    value "enabled" int: 1;
+                    value "priority" int: 0;
+                    value "trigger_only" int: 0;
+                    value "view_mode" int: -1;
+                    value "aggregate" int: 0;
+                    value "top_level" int: 0;
+                    value "min_query" int: 0;
+                }
+            }
+            value "name" string: "Start";
+            value "enabled" int: 0;
+            value "priority" int: 0;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 0;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Applications";
+            value "enabled" int: 1;
+            value "priority" int: 1;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Files";
+            value "enabled" int: 1;
+            value "priority" int: 2;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 1;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Windows";
+            value "enabled" int: 1;
+            value "priority" int: 2;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Recent Files";
+            value "enabled" int: 1;
+            value "priority" int: 3;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 0;
+            value "min_query" int: 3;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Exebuf";
+            value "enabled" int: 1;
+            value "priority" int: 3;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 3;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Settings";
+            value "enabled" int: 1;
+            value "priority" int: 10;
+            value "trigger_only" int: 0;
+            value "view_mode" int: -1;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Plugins";
+            value "enabled" int: 1;
+            value "priority" int: 100;
+            value "trigger_only" int: 0;
+            value "view_mode" int: 2;
+            value "aggregate" int: 1;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Calculator";
+            value "enabled" int: 1;
+            value "priority" int: 100;
+            value "trigger" string: "=";
+            value "trigger_only" int: 1;
+            value "view_mode" int: 0;
+            value "aggregate" int: 0;
+            value "top_level" int: 1;
+            value "min_query" int: 0;
+        }
+        group "Plugin_Config" struct {
+            value "name" string: "Text";
+            value "enabled" int: 1;
+            value "priority" int: 999;
+            value "trigger" string: " ";
+            value "trigger_only" int: 0;
+            value "view_mode" int: 0;
+            value "aggregate" int: 0;
+            value "top_level" int: 0;
+            value "min_query" int: 0;
+        }
+    }
+    value "version" int: 1000000;
+    value "width" int: 464;
+    value "height" int: 366;
+    value "edge_width" int: 340;
+    value "edge_height" int: 385;
+    value "rel_x" double: 0.5000000000000000000000000;
+    value "rel_y" double: 0.4299999999999999933386619;
+    value "scroll_animate" int: 1;
+    value "scroll_speed" double: 10.0000000000000000000000000;
+    value "hide_input" int: 0;
+    value "hide_list" int: 0;
+    value "quick_nav" int: 1;
+    value "view_mode" int: 1;
+    value "view_zoom" int: 0;
+    value "cycle_mode" int: 0;
+    value "history_sort_mode" int: 0;
+    value "first_run" uchar: 1;
+}

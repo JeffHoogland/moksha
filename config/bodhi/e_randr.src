@@ -1,0 +1,101 @@
+group "E_Randr_Config" struct {
+    group "crtcs" list {
+        group "E_Randr_Crtc_Config" struct {
+            group "outputs" list {
+                group "E_Randr_Output_Config" struct {
+                    value "xid" uint: 63;
+                    value "crtc" uint: 62;
+                    value "policy" uint: 6;
+                    value "primary" uchar: 0;
+                    value "connected" uchar: 1;
+                    value "exists" uchar: 1;
+                }
+            }
+            value "xid" uint: 62;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 943;
+            value "height" int: 793;
+            value "orient" uint: 1;
+            value "mode" uint: 396;
+            value "exists" uchar: 1;
+        }
+        group "E_Randr_Crtc_Config" struct {
+            group "outputs" list {
+                group "E_Randr_Output_Config" struct {
+                    value "xid" uint: 383;
+                    value "crtc" uint: 382;
+                    value "policy" uint: 6;
+                    value "primary" uchar: 0;
+                    value "connected" uchar: 1;
+                    value "exists" uchar: 1;
+                }
+            }
+            value "xid" uint: 382;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 640;
+            value "height" int: 480;
+            value "orient" uint: 1;
+            value "mode" uint: 384;
+            value "exists" uchar: 1;
+        }
+        group "E_Randr_Crtc_Config" struct {
+            group "outputs" list {
+                group "E_Randr_Output_Config" struct {
+                    value "xid" uint: 67;
+                    value "crtc" uint: 63;
+                    value "policy" uint: 6;
+                    value "primary" uchar: 0;
+                    value "connected" uchar: 1;
+                    value "exists" uchar: 1;
+                }
+            }
+            value "xid" uint: 63;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 1920;
+            value "height" int: 1080;
+            value "orient" uint: 1;
+            value "mode" uint: 74;
+            value "exists" uchar: 1;
+        }
+        group "E_Randr_Crtc_Config" struct {
+            value "xid" uint: 64;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 0;
+            value "height" int: 0;
+            value "orient" uint: 1;
+            value "mode" uint: 0;
+            value "exists" uchar: 1;
+        }
+        group "E_Randr_Crtc_Config" struct {
+            value "xid" uint: 65;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 0;
+            value "height" int: 0;
+            value "orient" uint: 1;
+            value "mode" uint: 0;
+            value "exists" uchar: 1;
+        }
+        group "E_Randr_Crtc_Config" struct {
+            value "xid" uint: 66;
+            value "x" int: 0;
+            value "y" int: 0;
+            value "width" int: 0;
+            value "height" int: 0;
+            value "orient" uint: 1;
+            value "mode" uint: 0;
+            value "exists" uchar: 1;
+        }
+    }
+    value "version" int: 2000003;
+    value "screen.width" int: 1920;
+    value "screen.height" int: 1080;
+    value "restore" uchar: 1;
+    value "poll_interval" int: 32;
+    value "config_timestamp" ulong_long: 15692;
+    value "primary" int: 0;
+}

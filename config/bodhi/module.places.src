@@ -1,0 +1,21 @@
+group "Config" struct {
+    group "conf_items" list {
+        group "Config_Item" struct {
+            value "id" string: "Places.0";
+            value "switch2" int: 0;
+        }
+    }
+    value "version" int: 65679;
+    value "fm" string: "pcmanfm";
+    value "auto_mount" uchar: 0;
+    value "boot_mount" uchar: 0;
+    value "auto_open" uchar: 0;
+    value "show_menu" uchar: 1;
+    value "hide_header" uchar: 0;
+    value "show_home" uchar: 1;
+    value "show_desk" uchar: 1;
+    value "show_trash" uchar: 0;
+    value "show_root" uchar: 0;
+    value "show_temp" uchar: 0;
+    value "show_bookm" uchar: 0;
+}

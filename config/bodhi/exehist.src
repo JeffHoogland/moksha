@@ -1,0 +1,423 @@
+group "E_Exehist" struct {
+    group "history" list {
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421376833.0202469825744628906250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421376833.0331509113311767578125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421443385.1232709884643554687500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421443385.1560699939727783203125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1421443401.6729640960693359375000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421445129.0633709430694580078125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421445129.4341120719909667968750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421446157.2987830638885498046875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421446157.3021121025085449218750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "exetime" double: 1421446285.7827110290527343750000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421446337.3550860881805419921875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421446337.4100799560546875000000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1421446370.9682340621948242187500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "enlightenment_filemanager %U";
+            value "normalized_exe" string: "enlightenment_filemanager";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1421446390.5544619560241699218750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421446455.6562440395355224609375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421446455.7157220840454101562500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "esudo eepDater";
+            value "normalized_exe" string: "esudo eepdater";
+            value "exetime" double: 1421446475.7616789340972900390625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "enlightenment_filemanager %U";
+            value "normalized_exe" string: "enlightenment_filemanager";
+            value "exetime" double: 1421446497.9777960777282714843750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1421446531.9170000553131103515625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421468691.5565121173858642578125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421468691.6147599220275878906250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1421468693.9911060333251953125000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1421479066.7441539764404296875000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1421479066.7694230079650878906250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1421479107.9273900985717773437500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-applet";
+            value "normalized_exe" string: "nm-applet";
+            value "exetime" double: 1424064479.7594599723815917968750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/elaptopcheck";
+            value "normalized_exe" string: "elaptopcheck";
+            value "exetime" double: 1424064479.8007640838623046875000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1424064511.1971080303192138671875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "exetime" double: 1424064659.5901710987091064453125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1436243411.2410740852355957031250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437800110.8271179199218750000000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437800808.9837820529937744140625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "thunar-settings";
+            value "normalized_exe" string: "thunar-settings";
+            value "exetime" double: 1437801110.2317049503326416015625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "thunar %F";
+            value "normalized_exe" string: "thunar";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437801130.0639081001281738281250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "thunar %F";
+            value "normalized_exe" string: "thunar";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437801525.3285150527954101562500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437801566.8760180473327636718750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "elementary_config";
+            value "normalized_exe" string: "elementary_config";
+            value "exetime" double: 1437801573.6962540149688720703125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "thunar %F";
+            value "normalized_exe" string: "thunar";
+            value "exetime" double: 1437801592.6360030174255371093750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437801842.8409810066223144531250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "exetime" double: 1437802196.7338941097259521484375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "gnome-power-statistics";
+            value "normalized_exe" string: "gnome-power-statistics";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437802221.5447380542755126953125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437802231.9878311157226562500000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "gnome-power-statistics";
+            value "normalized_exe" string: "gnome-power-statistics";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437802318.1315340995788574218750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm --desktop-pref";
+            value "normalized_exe" string: "pcmanfm --desktop-pref";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437802566.3969759941101074218750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "elementary_config";
+            value "normalized_exe" string: "elementary_config";
+            value "exetime" double: 1437802961.6198871135711669921875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "exetime" double: 1437802972.4384119510650634765625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "ephoto %f";
+            value "normalized_exe" string: "ephoto";
+            value "exetime" double: 1437802983.0558829307556152343750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "exetime" double: 1437803038.0559420585632324218750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437803070.4731619358062744140625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437803145.5969679355621337890625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437803461.9322900772094726562500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437803468.2901959419250488281250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437803533.1048319339752197265625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "esudo eepDater";
+            value "normalized_exe" string: "esudo eepdater";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437803543.9815928936004638671875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437803737.8940939903259277343750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nm-connection-editor";
+            value "normalized_exe" string: "nm-connection-editor";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437803756.6269888877868652343750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437804080.2597520351409912109375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437859484.0572690963745117187500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epulse";
+            value "normalized_exe" string: "epulse";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1437859498.4897959232330322265625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437859551.9911708831787109375000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "terminology";
+            value "normalized_exe" string: "terminology";
+            value "exetime" double: 1437859917.0651979446411132812500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "epad %U";
+            value "normalized_exe" string: "epad";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1437881042.8011269569396972656250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "pcmanfm %U";
+            value "normalized_exe" string: "pcmanfm";
+            value "exetime" double: 1437881068.5681779384613037109375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438606048.6535930633544921875000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "/usr/bin/google-chrome-stable %U";
+            value "normalized_exe" string: "google-chrome-stable";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607328.0263340473175048828125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607552.6851379871368408203125000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607553.5080280303955078125000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607554.0350461006164550781250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607554.4943349361419677734375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607554.9263789653778076171875000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607555.4783120155334472656250000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607556.1897261142730712890625000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607556.7935209274291992187500000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438607557.4062709808349609375000000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "hexchat %U";
+            value "normalized_exe" string: "hexchat";
+            value "exetime" double: 1438608106.6027219295501708984375000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "nautilus --new-window %U";
+            value "normalized_exe" string: "nautilus --new-window";
+            value "launch_method" string: "ibar";
+            value "exetime" double: 1438608113.0198969841003417968750000;
+        }
+        group "E_Exehist_Item" struct {
+            value "exe" string: "exo-open --launch FileManager %u";
+            value "normalized_exe" string: "exo-open --launch filemanager";
+            value "launch_method" string: "menu/apps";
+            value "exetime" double: 1438608122.1182439327239990234375000;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+group "Notification_Config" struct {
+    value "version" int: 1000000;
+    value "show_low" int: 0;
+    value "show_normal" int: 1;
+    value "show_critical" int: 1;
+    value "corner" int: 1;
+    value "timeout" float: 5.0000000000000000000000000;
+    value "force_timeout" int: 0;
+    value "ignore_replacement" int: 0;
+    value "dual_screen" int: 0;
+}

@@ -1,0 +1,9 @@
+group "Gadman_Config" struct {
+    value "bg_type" int: 0;
+    value "color_r" int: 255;
+    value "color_g" int: 255;
+    value "color_b" int: 255;
+    value "color_a" int: 255;
+    value "anim_bg" int: 1;
+    value "anim_gad" int: 1;
+}

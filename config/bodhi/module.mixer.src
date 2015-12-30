@@ -1,0 +1,19 @@
+group "Mixer_Module_Config" struct {
+    group "gadgets" hash {
+        key "mixer.0";
+        group "Mixer_Gadget_Config" struct {
+            value "lock_sliders" int: 1;
+            value "show_locked" int: 0;
+            value "keybindings_popup" int: 0;
+            value "card" string: "hw:0";
+            value "channel_name" string: "Master";
+            value "using_default" uchar: 0;
+            value "state.mute" int: 0;
+            value "state.left" int: 0;
+            value "state.right" int: 0;
+        }
+    }
+    value "version" int: 1000000;
+    value "default_gc_id" string: "mixer.0";
+    value "desktop_notification" int: 1;
+}

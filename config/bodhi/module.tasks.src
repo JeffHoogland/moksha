@@ -1,0 +1,20 @@
+group "Tasks_Config" struct {
+    group "items" list {
+        group "Tasks_Config_Item" struct {
+            value "id" string: "0";
+            value "show_all" int: 0;
+            value "minw" int: 100;
+            value "minh" int: 32;
+            value "icon_only" uchar: 0;
+            value "text_only" uchar: 0;
+        }
+        group "Tasks_Config_Item" struct {
+            value "id" string: "tasks.0";
+            value "show_all" int: 0;
+            value "minw" int: 141;
+            value "minh" int: 32;
+            value "icon_only" uchar: 0;
+            value "text_only" uchar: 0;
+        }
+    }
+}
