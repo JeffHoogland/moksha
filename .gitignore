@@ -1,0 +1,46 @@
+#
+# NOTE! Don't add files that are generated in specific
+# subdirectories here. Add them in the ".gitignore" file
+# in that subdirectory instead.
+#
+# NOTE! Please use 'git ls-files -i --exclude-standard'
+# command after changing this file, to see if there are
+# any tracked files which get ignored after the change.
+#
+*.o
+*.a
+*.la
+*.lo
+Makefile
+Makefile.in
+.deps
+.libs
+*.gmo
+*~
+*.cfg
+*.dirstamp
+default.edj
+/ABOUT-NLS
+/aclocal.m4
+/autom4te.cache/
+/compile
+/config.cache
+/config.cache-env
+/config.guess
+/config.h
+/config.h.in
+/config.log
+/config.rpath
+/config.status
+/config.sub
+/configure
+/depcomp
+/enlightenment.pc
+/enlightenment.spec
+/install-sh
+/libtool
+/ltmain.sh
+/missing
+/mkinstalldirs
+/stamp-h1
+/data/units/enlightenment.service
