@@ -7,8 +7,9 @@ Standards-Version: 3.8.3
 
 Package: moksha
 Architecture: any
-Provides: enlightenment, e17, bodhi-profile-e17, bodhi-profile-moksha
+Provides: enlightenment, bodhi-profile-moksha
+Replaces: enlightenment, e17, bodhi-profile-e17, bodhi-profile-moksha
 Conflicts: e17, e18, e19, bodhi-profile-e17, bodhi-profile-moksha
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, bodhi-background-edj
 Description: The Moksha Desktop
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
