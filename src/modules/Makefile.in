@@ -7004,8 +7004,8 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 @USE_MODULE_WINLIST_TRUE@install-winlist: install-winlistDATA install-winlistpkgLTLIBRARIES
 
 @USE_MODULE_FILEMAN_TRUE@.PHONY: fileman install-fileman
-@USE_MODULE_FILEMAN_TRUE@fileman: $(filemanpkg_LTLIBRARIES) $(fileman_DATA)
-@USE_MODULE_FILEMAN_TRUE@install-fileman: install-filemanDATA install-filemanpkgLTLIBRARIES
+@USE_MODULE_FILEMAN_TRUE@fileman: $(filemanpkg_LTLIBRARIES)
+@USE_MODULE_FILEMAN_TRUE@install-fileman: 
 
 @USE_MODULE_FILEMAN_OPINFO_TRUE@.PHONY: fileman_opinfo install-fileman_opinfo
 @USE_MODULE_FILEMAN_OPINFO_TRUE@fileman_opinfo: $(fileman_opinfopkg_LTLIBRARIES) $(fileman_opinfo_DATA)
@@ -7124,8 +7124,8 @@ uninstall-am: uninstall-accessDATA uninstall-accesspkgLTLIBRARIES \
 @USE_MODULE_TASKS_TRUE@install-tasks: install-tasksDATA install-taskspkgLTLIBRARIES
 
 @USE_MODULE_XKBSWITCH_TRUE@.PHONY: xkbswitch install-xkbswitch
-@USE_MODULE_XKBSWITCH_TRUE@xkbswitch: $(xkbswitchpkg_LTLIBRARIES) $(xkbswitch_DATA)
-@USE_MODULE_XKBSWITCH_TRUE@install-xkbswitch: install-xkbswitchDATA install-xkbswitchpkgLTLIBRARIES
+@USE_MODULE_XKBSWITCH_TRUE@xkbswitch: $(xkbswitchpkg_LTLIBRARIES)
+@USE_MODULE_XKBSWITCH_TRUE@install-xkbswitch: 
 
 @USE_MODULE_TILING_TRUE@tiling/%.edj: tiling/%.edc Makefile
 @USE_MODULE_TILING_TRUE@	$(EDJE_CC) $(TILING_EDJE_FLAGS) $< $@
