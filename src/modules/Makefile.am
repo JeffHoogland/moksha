@@ -26,9 +26,9 @@ EDJE_FLAGS_VERBOSE_0 =
 EDJE_FLAGS_VERBOSE_1 = -v
 EDJE_FLAGS = $(EDJE_FLAGS_VERBOSE_$(V)) @EDJE_DEF@
 
-if USE_MODULE_CONNMAN
-include Makefile_connman.am
-endif
+#if USE_MODULE_CONNMAN
+#include Makefile_connman.am
+#endif
 
 if USE_MODULE_IBAR
 include Makefile_ibar.am
@@ -70,13 +70,13 @@ if USE_MODULE_WINLIST
 include Makefile_winlist.am
 endif
 
-if USE_MODULE_FILEMAN
-include Makefile_fileman.am
-endif
+#if USE_MODULE_FILEMAN
+#include Makefile_fileman.am
+#endif
 
-if USE_MODULE_FILEMAN_OPINFO
-include Makefile_fileman_opinfo.am
-endif
+#if USE_MODULE_FILEMAN_OPINFO
+#include Makefile_fileman_opinfo.am
+#endif
 
 if USE_MODULE_WIZARD
 include Makefile_wizard.am
@@ -190,9 +190,9 @@ if USE_MODULE_TASKS
 include Makefile_tasks.am
 endif
 
-if USE_MODULE_XKBSWITCH
-include Makefile_xkbswitch.am
-endif
+#if USE_MODULE_XKBSWITCH
+#include Makefile_xkbswitch.am
+#endif
 
 if USE_MODULE_TILING
 include Makefile_tiling.am
