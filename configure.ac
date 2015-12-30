@@ -985,6 +985,7 @@ doc/Doxyfile
 doc/e.dox
 config/Makefile
 config/default/Makefile
+config/bodhi/Makefile
 $po_makefile_in
 ])
 

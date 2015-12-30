@@ -1,5 +1,5 @@
 MAINTAINERCLEANFILES = Makefile.in
-SUBDIRS = default
+SUBDIRS = default bodhi
 
 EET_EET = @eet_eet@
 
