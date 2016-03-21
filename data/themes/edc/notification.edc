@@ -16,7 +16,7 @@ group { name: "e/modules/notification/main";
    images.image: "sym_close_light_normal.png" COMP;
    images.image: "sym_close_light_selected.png" COMP;
    data.item: "app_icon_max" "48 48";
-   data.item: "shaped" "1";
+   //data.item: "shaped" "1";
    styles {   
       style { name: "notification_style_nowrap";
          base: "font=Sans font_size=10 align=left color=#ffff style=shadow,bottom shadow_color=#00000080 wrap=none text_class=notification_body";
