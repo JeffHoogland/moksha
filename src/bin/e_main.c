@@ -565,14 +565,14 @@ main(int argc, char **argv)
    
    _fix_user_default_edj();
 
-   TS("E_Randr Init");
+/*   TS("E_Randr Init");
    if (!e_randr_init())
      {
         e_error_message_show(_("Moksha cannot initialize E_Randr!\n"));
      }
    else
      _e_main_shutdown_push(e_randr_shutdown);
-   TS("E_Randr Init Done");
+   TS("E_Randr Init Done");*/
 
    TS("E_Xinerama Init");
    if (!e_xinerama_init())
