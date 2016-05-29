@@ -189,6 +189,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
                              "e/modules/xkbswitch/main");
+   if (inst->layout) 
    edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
                              e_xkb_layout_name_reduce(inst->layout->name));
    /* The gadcon client */
@@ -198,7 +199,11 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (!e_config->xkb.only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
-        e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
+        if (inst->layout)                             
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
+        else
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "gb_flag");
+          
         /* The icon is part of the gadget. */
         edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                  inst->o_xkbflag);
