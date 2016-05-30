@@ -13,6 +13,7 @@ static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas
 /* EVENTS */
 static Eina_Bool        _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void             _e_xkb_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
+static void             _e_xkb_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void             _e_xkb_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
 static void             _e_xkb_cb_lmenu_post(void *data, E_Menu *menu __UNUSED__);
 static void             _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
@@ -189,6 +190,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
                              "e/modules/xkbswitch/main");
+   if (inst->layout) 
    edje_object_part_text_set(inst->o_xkbswitch, "e.text.label",
                              e_xkb_layout_name_reduce(inst->layout->name));
    /* The gadcon client */
@@ -198,7 +200,11 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (!e_config->xkb.only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
-        e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
+        if (inst->layout)                             
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
+        else
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "gb_flag");
+          
         /* The icon is part of the gadget. */
         edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
                                  inst->o_xkbflag);
@@ -208,6 +214,8 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    /* Hook some menus */
    evas_object_event_callback_add(inst->o_xkbswitch, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_xkb_cb_mouse_down, inst);
+   evas_object_event_callback_add(inst->o_xkbswitch, EVAS_CALLBACK_MOUSE_WHEEL,
+                                  _e_xkb_cb_mouse_wheel, inst);                                       
    /* Make the list know about the instance */
    instances = eina_list_append(instances, inst);
 
@@ -233,6 +241,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
         evas_object_event_callback_del(inst->o_xkbswitch,
                                        EVAS_CALLBACK_MOUSE_DOWN,
                                        _e_xkb_cb_mouse_down);
+        evas_object_event_callback_del(inst->o_xkbswitch,
+                                       EVAS_CALLBACK_MOUSE_WHEEL,
+                                       _e_xkb_cb_mouse_wheel);                                 
         evas_object_del(inst->o_xkbswitch);
         evas_object_del(inst->o_xkbflag);
      }
@@ -300,6 +311,25 @@ _xkb_menu_items_sort(const void *data1, const void *data2)
 }
 
 #endif
+
+static void
+_e_xkb_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event)
+{
+Evas_Event_Mouse_Wheel *ev = event;
+
+Instance *inst = data;
+if (!inst) return;
+  
+if (ev->z == -1) // up
+     {
+        e_xkb_layout_next();
+     }
+   else if (ev->z == 1) // down
+     {
+		 e_xkb_layout_prev();
+     }
+}
+
 static void
 _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
