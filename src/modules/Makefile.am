@@ -190,9 +190,9 @@ if USE_MODULE_TASKS
 include Makefile_tasks.am
 endif
 
-#if USE_MODULE_XKBSWITCH
-#include Makefile_xkbswitch.am
-#endif
+if USE_MODULE_XKBSWITCH
+include Makefile_xkbswitch.am
+endif
 
 if USE_MODULE_TILING
 include Makefile_tiling.am
