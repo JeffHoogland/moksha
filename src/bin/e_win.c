@@ -642,7 +642,9 @@ _e_win_prop_update(E_Win *win)
                                     win->base_w, win->base_h,
                                     win->step_x, win->step_y,
                                     win->min_aspect, win->max_aspect);
-   if (win->state.dialog)
+   //if (win->state.dialog)
+   //use normal window decorations for all window types
+   if (0)
      {
         ecore_x_icccm_transient_for_set(win->evas_win, win->container->manager->root);
         ecore_x_netwm_window_type_set(win->evas_win, ECORE_X_WINDOW_TYPE_DIALOG);
