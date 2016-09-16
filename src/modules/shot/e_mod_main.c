@@ -235,6 +235,7 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
         return;
      }
    _save_to(file);
+   
    snprintf(buf, sizeof(buf), "ephoto %s",file);
    exe = ecore_exe_run(buf, NULL);
    if (exe) ecore_exe_free(exe);
@@ -271,7 +272,10 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    time_t tt;
    struct tm *tm;
    char buf[PATH_MAX];
-
+   char buff[4096];
+   const char *home_dir;
+   char *dir_path;
+   
    time(&tt);
    tm = localtime(&tt);
    if (quality == 100)
@@ -281,7 +285,19 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    fsel_dia = dia = e_dialog_new(scon, "E", "_e_shot_fsel");
    e_dialog_resizable_set(dia, 1);
    e_dialog_title_set(dia, _("Select screenshot save location"));
-   o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
+
+   /* Screenshot folder creation */
+   home_dir = e_user_homedir_get();
+   snprintf(buff, sizeof(buff), "/Screenshots");
+   dir_path = malloc(strlen(home_dir) + strlen(buff) +1);
+   strcpy(dir_path,home_dir);
+   strcat(dir_path,buff);
+   
+   if (!ecore_file_exists(dir_path)) ecore_file_mkdir(dir_path);
+   free(dir_path); 
+   /* --------------------------- */
+    
+   o = e_widget_fsel_add(dia->win->evas, home_dir, buff,
                          buf,
                          NULL,
                          NULL, NULL,
