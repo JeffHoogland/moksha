@@ -22,7 +22,7 @@ static Evas_Object *o_bg = NULL, *o_box = NULL, *o_content = NULL;
 static Evas_Object *o_event = NULL, *o_img = NULL, *o_hlist = NULL;
 static E_Manager *sman = NULL;
 static E_Container *scon = NULL;
-static int quality = 90;
+static int quality = 100;
 static int screen = -1;
 #define MAXZONES 64
 static Evas_Object *o_rectdim[MAXZONES] = { NULL };
@@ -219,6 +219,8 @@ static void
 _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    const char *file;
+   Ecore_Exe *exe;
+   char buf[150];
 
    dia = fsel_dia;
    file = e_widget_fsel_selection_path_get(o_fsel);
@@ -233,6 +235,11 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
         return;
      }
    _save_to(file);
+   
+   snprintf(buf, sizeof(buf), "ephoto %s",file);
+   exe = ecore_exe_run(buf, NULL);
+   if (exe) ecore_exe_free(exe);
+   
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
      {
@@ -265,7 +272,10 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    time_t tt;
    struct tm *tm;
    char buf[PATH_MAX];
-
+   char buff[4096];
+   const char *home_dir;
+   char *dir_path;
+   
    time(&tt);
    tm = localtime(&tt);
    if (quality == 100)
@@ -275,7 +285,19 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    fsel_dia = dia = e_dialog_new(scon, "E", "_e_shot_fsel");
    e_dialog_resizable_set(dia, 1);
    e_dialog_title_set(dia, _("Select screenshot save location"));
-   o = e_widget_fsel_add(dia->win->evas, "desktop", "/", 
+
+   /* Screenshot folder creation */
+   home_dir = e_user_homedir_get();
+   snprintf(buff, sizeof(buff), "/Screenshots");
+   dir_path = malloc(strlen(home_dir) + strlen(buff) +1);
+   strcpy(dir_path,home_dir);
+   strcat(dir_path,buff);
+   
+   if (!ecore_file_exists(dir_path)) ecore_file_mkdir(dir_path);
+   free(dir_path); 
+   /* --------------------------- */
+    
+   o = e_widget_fsel_add(dia->win->evas, home_dir, buff,
                          buf,
                          NULL,
                          NULL, NULL,
@@ -298,7 +320,8 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    mask = 0;
    if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
-   e_dialog_show(dia);
+   //~ e_dialog_show(dia);
+   _file_select_ok_cb(NULL,NULL);
 }
 
 static void
@@ -798,7 +821,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    o_box = o;
    e_widget_on_focus_hook_set(o, _on_focus_cb, NULL);
    edje_object_part_swallow(o_bg, "e.swallow.buttons", o);
-
+   
    o = e_widget_button_add(evas, _("Save"), NULL, _win_save_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Share"), NULL, _win_share_confirm_cb, win, NULL);
@@ -832,10 +855,11 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_resize(win, w, h);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
-   e_win_show(win);
+   //~ e_win_show(win);
    e_win_border_icon_set(win, "screenshot");
    
    if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
+   _win_save_cb(win,NULL);
 }
 
 static Eina_Bool
