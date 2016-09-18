@@ -41,7 +41,7 @@ collections {
 #include "edc/preview.edc"
 #include "edc/deskpreview.edc"
 #include "edc/entry.edc"
-#include "edc/fileman.edc"
+//#include "edc/fileman.edc"
 #include "edc/colorwell.edc"
 #include "edc/fontpreview.edc"
 #include "edc/cslider.edc"
