@@ -1212,7 +1212,11 @@ e_modapi_init(E_Module *m)
    border_hook = e_int_border_menu_hook_add(_bd_hook, NULL);
    
       
-   e_configure_registry_item_add("advanced/TakeScreenshot", 10, D_("Screenshot Settings"), 
+  e_configure_registry_category_add("extensions", 90, "Takescreenshot", 
+				     NULL, "preferences-extensions");
+				     
+         
+   e_configure_registry_item_add("extensions/takescreenshot", 20, D_("Screenshot Settings"), 
                                  NULL, "screenshot", e_int_config_shot_module);
   
    conf_item_edd = E_CONFIG_DD_NEW("Shot_Config_Item", Config_Item);
