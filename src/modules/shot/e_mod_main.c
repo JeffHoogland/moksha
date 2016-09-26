@@ -62,16 +62,15 @@ Config *shot_conf = NULL;
 static Eina_Bool
 _notify(int counter,const char *text_header, const char *text, const int wait, int view)
 {
-  int i = shot_conf->delay;
   char buf[200];
    
 #ifdef HAVE_ENOTIFY
   static E_Notification *notification;
 
-if (view)
-   snprintf(buf, sizeof(buf), "%s %d",text,i+1-counter);
+   if (view)
+     snprintf(buf, sizeof(buf), "%s %d",text,counter);
    else
-   snprintf(buf, sizeof(buf), "%s",text);
+     snprintf(buf, sizeof(buf), "%s",text);
 
    notification = e_notification_full_new
           (
@@ -94,21 +93,18 @@ return EINA_FALSE;
 
 Eina_Bool _timer_cb(void *data)
 {
-	
-	if (shot_conf->notify)
-   _notify(shot_conf->count,"Screenshot in: ","... ",1020,1);
-   
-   if ((int)shot_conf->delay!= shot_conf->count)
-   {
-   shot_conf->count++;
-   return  ECORE_CALLBACK_PASS_ON;
-   }
+   if (shot_conf->count>0)
+     {
+		if (shot_conf->notify)
+       _notify(shot_conf->count,"Screenshot in: ","... ",1020,1);
+       shot_conf->count--;
+       return  ECORE_CALLBACK_PASS_ON;
+     }
    else
-   {
-   timer = ecore_timer_add(1.2, _shot_delay, data);
-  
-   return ECORE_CALLBACK_DONE;
-   }
+     {
+       timer = ecore_timer_add(1.2, _shot_delay, data);
+       return ECORE_CALLBACK_DONE;
+     }
 }
 
 static Eina_Bool
@@ -132,12 +128,13 @@ _shot_conf_new(void)
    /* setup defaults */
    IFMODCFG(0x008d);
   
-   shot_conf->view_enable = 0;
-   shot_conf->viewer = "";
+   shot_conf->view_enable = 1;
+   snprintf(buf, sizeof(buf), "xdg-open");
+   shot_conf->viewer = eina_stringshare_add(buf);
    snprintf(buf, sizeof(buf), "%s/Pictures", e_user_homedir_get());
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
-   shot_conf->delay = 5.0;
+   shot_conf->delay = 0.0;
    shot_conf->pict_quality = 100.0;
    
    _shot_conf_item_get(NULL);
@@ -1068,12 +1065,15 @@ _shot_border(E_Border *bd)
 static void
 _shot(E_Zone *zone)
 {
-   shot_conf->count = 1;
+   shot_conf->count = shot_conf->delay;
    
    if (timer) ecore_timer_del(timer);
    if (timer_sec) ecore_timer_del(timer_sec);
   
-   timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
+   if (shot_conf->delay>0)
+     timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
+   else
+     timer = ecore_timer_add(1.2, _shot_delay, zone);
 }
 
 
@@ -1316,21 +1316,3 @@ e_modapi_save(E_Module *m __UNUSED__)
 	e_config_domain_save("module.takescreen", conf_edd, shot_conf);
    return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

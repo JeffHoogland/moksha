@@ -73,7 +73,6 @@ static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
    shot_conf->cfd = NULL;
-   
    E_FREE(cfdata->viewer);
    E_FREE(cfdata->path);
    E_FREE(cfdata);
