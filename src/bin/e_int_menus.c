@@ -256,21 +256,22 @@ e_int_menus_main_new(void)
 
    subm = e_menu_new();
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Bodhi Linux"));
+   e_menu_item_label_set(mi, _("About Operating System"));
    e_util_menu_item_theme_icon_set(mi, "bodhi");
    e_menu_item_submenu_set(mi, subm);
 
-   mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("About"));
-   e_util_menu_item_theme_icon_set(mi, "help-about");
-   e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Quick Start"));
+   e_menu_item_label_set(mi, _("Help"));
    e_util_menu_item_theme_icon_set(mi, "help-faq");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_quick_start, NULL);
 
    mi = e_menu_item_new(subm);
+   e_menu_item_label_set(mi, _("About Bodhi Linux"));
+   e_util_menu_item_theme_icon_set(mi, "help-about");
+   e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
+
+   /*mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
 
    subm = e_menu_new();
@@ -282,10 +283,10 @@ e_int_menus_main_new(void)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Moksha"));
    e_util_menu_item_theme_icon_set(mi, "enlightenment");
-   e_menu_item_submenu_set(mi, subm);
+   e_menu_item_submenu_set(mi, subm);*/
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("About"));
+   e_menu_item_label_set(mi, _("About Moksha Desktop"));
    e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
@@ -304,14 +305,14 @@ e_int_menus_main_new(void)
    if (l) _e_int_menus_augmentation_add(subm, l);
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Restart"));
+   e_menu_item_label_set(mi, _("Reset Moksha"));
    e_util_menu_item_theme_icon_set(mi, "system-restart");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
-   mi = e_menu_item_new(subm);
+   /*mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Exit"));
    e_util_menu_item_theme_icon_set(mi, "application-exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);*/
 
    l = _e_int_menus_augmentation_find("enlightenment/3");
    if (l) _e_int_menus_augmentation_add(subm, l);
@@ -319,8 +320,8 @@ e_int_menus_main_new(void)
    l = _e_int_menus_augmentation_find("main/5");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   //mi = e_menu_item_new(m);
+   //e_menu_item_separator_set(mi, 1);
 
    l = _e_int_menus_augmentation_find("main/6");
    if (l) _e_int_menus_augmentation_add(m, l);
