@@ -97,6 +97,7 @@ Eina_Bool _timer_cb(void *data)
      {
 		if (shot_conf->notify)
        _notify(shot_conf->count,"Screenshot in: ","... ",1020,1);
+       
        shot_conf->count--;
        return  ECORE_CALLBACK_PASS_ON;
      }
@@ -117,7 +118,7 @@ _notify_cb(void *data __UNUSED__)
 static void 
 _shot_conf_new(void) 
 {
-   char buf[PATH_MAX];
+   char buf[PATH_MAX], buff[4096];
 	
    shot_conf = E_NEW(Config, 1);
    shot_conf->version = (MOD_CONFIG_FILE_EPOCH << 16);
@@ -129,8 +130,8 @@ _shot_conf_new(void)
    IFMODCFG(0x008d);
   
    shot_conf->view_enable = 1;
-   snprintf(buf, sizeof(buf), "xdg-open");
-   shot_conf->viewer = eina_stringshare_add(buf);
+   snprintf(buff, sizeof(buff), "xdg-open");
+   shot_conf->viewer = eina_stringshare_add(buff);
    snprintf(buf, sizeof(buf), "%s/Pictures", e_user_homedir_get());
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
@@ -142,7 +143,7 @@ _shot_conf_new(void)
    shot_conf->version = MOD_CONFIG_FILE_VERSION;
 
    E_CONFIG_LIMIT(shot_conf->delay, 0.0, 10.0);
-   E_CONFIG_LIMIT(shot_conf->pict_quality, 50.0, 100.0);
+   E_CONFIG_LIMIT(shot_conf->pict_quality, 0.0, 100.0);
    e_config_save_queue();
 }
 
