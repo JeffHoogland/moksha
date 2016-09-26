@@ -84,8 +84,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    /* load a temp copy of the config variables */
 
    cfdata->view_enable = shot_conf->view_enable;
-   cfdata->viewer = strdup(shot_conf->viewer);
-   cfdata->path = strdup(shot_conf->path);
+   if (shot_conf->viewer) cfdata->viewer = strdup(shot_conf->viewer);
+   if (shot_conf->path) cfdata->path = strdup(shot_conf->path);
    cfdata->delay = shot_conf->delay;
    cfdata->pict_quality = shot_conf->pict_quality;
    cfdata->notify = shot_conf->notify;
@@ -146,9 +146,18 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
   
-   shot_conf->viewer = cfdata->viewer;
+   if ( shot_conf->viewer) eina_stringshare_del( shot_conf->viewer);
+   if (cfdata->viewer)
+      shot_conf->viewer = eina_stringshare_add(cfdata->viewer);
+  
+   if (shot_conf->path) eina_stringshare_del(shot_conf->path);
+   if (cfdata->path) 
+     shot_conf->path = eina_stringshare_add(cfdata->path);
+   else
+     shot_conf->path = eina_stringshare_add(e_user_homedir_get());
+  
+  
    shot_conf->notify = cfdata->notify;
-   shot_conf->path = cfdata->path;
    shot_conf->view_enable = cfdata->view_enable;
    shot_conf->delay = cfdata->delay;
    shot_conf->pict_quality = cfdata->pict_quality;
