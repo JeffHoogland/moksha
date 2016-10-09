@@ -1,4 +1,11 @@
 group "E_Config" struct {
+    group "env_vars" list {
+        group "E_Config_Env_Var" struct {
+            value "var" string: "QT_STYLE_OVERRIDE";
+            value "val" string: "gtk";
+            value "unset" uchar: 0;
+        }
+    }
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
             value "action" string: "halt";
@@ -292,7 +299,7 @@ group "E_Config" struct {
             value "fit_along" uchar: 0;
             value "fit_size" uchar: 0;
             value "style" string: "default";
-            value "size" int: 28;
+            value "size" int: 32;
             value "overlap" int: 0;
             value "autohide" int: 0;
             value "autohide_show_action" int: 0;
@@ -308,14 +315,14 @@ group "E_Config" struct {
                     value "name" string: "start";
                     value "id" string: "start";
                     value "geom.pos" int: 0;
-                    value "geom.size" int: 32;
+                    value "geom.size" int: 38;
                     value "geom.res" int: 1077;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 1;
-                    value "state_info.flags" int: 3;
+                    value "state_info.flags" int: 0;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -324,15 +331,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "pager";
                     value "id" string: "pager";
-                    value "geom.pos" int: 789;
-                    value "geom.size" int: 185;
-                    value "geom.res" int: 1020;
+                    value "geom.pos" int: 904;
+                    value "geom.size" int: 107;
+                    value "geom.res" int: 1154;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 8;
-                    value "state_info.flags" int: 1;
+                    value "state_info.seq" int: 7;
+                    value "state_info.flags" int: 3;
                     value "style" string: "inset";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -426,15 +433,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "clock";
                     value "id" string: "clock";
-                    value "geom.pos" int: 865;
-                    value "geom.size" int: 109;
-                    value "geom.res" int: 1020;
+                    value "geom.pos" int: 1011;
+                    value "geom.size" int: 101;
+                    value "geom.res" int: 1154;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 9;
-                    value "state_info.flags" int: 1;
+                    value "state_info.seq" int: 8;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -461,14 +468,14 @@ group "E_Config" struct {
                     value "name" string: "tasks";
                     value "id" string: "tasks.0";
                     value "geom.pos" int: 57;
-                    value "geom.size" int: 150;
+                    value "geom.size" int: 250;
                     value "geom.res" int: 1077;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 3;
+                    value "state_info.flags" int: 0;
                     value "style" string: "inset";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 1;
@@ -495,14 +502,14 @@ group "E_Config" struct {
                     value "name" string: "systray";
                     value "id" string: "systray";
                     value "geom.pos" int: 798;
-                    value "geom.size" int: 1;
+                    value "geom.size" int: 2;
                     value "geom.res" int: 1077;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 1;
+                    value "state_info.flags" int: 0;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -510,15 +517,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "syscon";
                     value "id" string: "syscon.1";
-                    value "geom.pos" int: 974;
-                    value "geom.size" int: 46;
-                    value "geom.res" int: 1020;
+                    value "geom.pos" int: 1116;
+                    value "geom.size" int: 38;
+                    value "geom.res" int: 1154;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 10;
-                    value "state_info.flags" int: 1;
+                    value "state_info.seq" int: 9;
+                    value "state_info.flags" int: 3;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -526,9 +533,9 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "ibar";
                     value "id" string: "ibar.2";
-                    value "geom.pos" int: 32;
-                    value "geom.size" int: 25;
-                    value "geom.res" int: 1077;
+                    value "geom.pos" int: 38;
+                    value "geom.size" int: 80;
+                    value "geom.res" int: 1154;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
@@ -543,14 +550,30 @@ group "E_Config" struct {
                     value "name" string: "pulse_mixer";
                     value "id" string: "pulse_mixer";
                     value "geom.pos" int: 799;
-                    value "geom.size" int: 32;
+                    value "geom.size" int: 38;
                     value "geom.res" int: 1077;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
-                    value "state_info.seq" int: 7;
-                    value "state_info.flags" int: 3;
+                    value "state_info.seq" int: 5;
+                    value "state_info.flags" int: 0;
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "clipboard";
+                    value "id" string: "clipboard";
+                    value "geom.pos" int: 1088;
+                    value "geom.size" int: 38;
+                    value "geom.res" int: 1168;
+                    value "geom.pos_x" double: 0.0000000000000000000000000;
+                    value "geom.pos_y" double: 0.0000000000000000000000000;
+                    value "geom.size_w" double: 0.0000000000000000000000000;
+                    value "geom.size_h" double: 0.0000000000000000000000000;
+                    value "state_info.seq" int: 6;
+                    value "state_info.flags" int: 0;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -595,6 +618,1462 @@ group "E_Config" struct {
         }
     }
     group "remembers" list {
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_error_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 318;
+            value "prop.pos_y" int: 330;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 532;
+            value "prop.pos_h" int: 123;
+            value "prop.w" int: 532;
+            value "prop.h" int: 123;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::keyboard_and_mouse/signal_bindings";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 584;
+            value "prop.pos_y" int: 373;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 584;
+            value "prop.pos_h" int: 405;
+            value "prop.w" int: 584;
+            value "prop.h" int: 405;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::windows/conf_syscon";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 223;
+            value "prop.pos_h" int: 235;
+            value "prop.w" int: 223;
+            value "prop.h" int: 235;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::advanced/performance";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 240;
+            value "prop.pos_h" int: 235;
+            value "prop.w" int: 240;
+            value "prop.h" int: 235;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::advanced/engine";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 276;
+            value "prop.pos_h" int: 102;
+            value "prop.w" int: 276;
+            value "prop.h" int: 102;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::advanced/powermanagement";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 143;
+            value "prop.pos_y" int: 458;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 377;
+            value "prop.pos_h" int: 236;
+            value "prop.w" int: 377;
+            value "prop.h" int: 236;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::advanced/search_directories";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 350;
+            value "prop.pos_h" int: 405;
+            value "prop.w" int: 350;
+            value "prop.h" int: 405;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_keybind_getkey_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 462;
+            value "prop.pos_y" int: 368;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 244;
+            value "prop.pos_h" int: 73;
+            value "prop.w" int: 244;
+            value "prop.h" int: 73;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::keyboard_and_mouse/key_bindings";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 584;
+            value "prop.pos_y" int: 171;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 584;
+            value "prop.pos_h" int: 607;
+            value "prop.w" int: 584;
+            value "prop.h" int: 607;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::advanced/environment_variables";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 292;
+            value "prop.pos_h" int: 405;
+            value "prop.w" int: 292;
+            value "prop.h" int: 405;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "Conf";
+            value "class" string: "_config::advanced/conf";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 210;
+            value "prop.pos_h" int: 74;
+            value "prop.w" int: 210;
+            value "prop.h" int: 74;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::menus/menu_settings";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 248;
+            value "prop.pos_h" int: 325;
+            value "prop.w" int: 248;
+            value "prop.h" int: 325;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::settings/dialogs";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 802;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 283;
+            value "prop.pos_h" int: 266;
+            value "prop.w" int: 283;
+            value "prop.h" int: 266;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::extensions/modules";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 438;
+            value "prop.pos_y" int: 186;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 292;
+            value "prop.pos_h" int: 405;
+            value "prop.w" int: 292;
+            value "prop.h" int: 405;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_about";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 452;
+            value "prop.pos_y" int: 233;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 264;
+            value "prop.pos_h" int: 312;
+            value "prop.w" int: 264;
+            value "prop.h" int: 312;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "Places";
+            value "class" string: "_config::fileman/places";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 210;
+            value "prop.pos_h" int: 455;
+            value "prop.w" int: 210;
+            value "prop.h" int: 455;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::_gadcon_config_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 460;
+            value "prop.pos_y" int: 253;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 248;
+            value "prop.pos_h" int: 303;
+            value "prop.w" int: 248;
+            value "prop.h" int: 303;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::extensions/gadman";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 147;
+            value "prop.pos_y" int: 248;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 293;
+            value "prop.pos_h" int: 416;
+            value "prop.w" int: 293;
+            value "prop.h" int: 416;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::screen/virtual_desktops";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 329;
+            value "prop.pos_h" int: 520;
+            value "prop.w" int: 329;
+            value "prop.h" int: 520;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::_e_mod_pager_config_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 220;
+            value "prop.pos_h" int: 245;
+            value "prop.w" int: 220;
+            value "prop.h" int: 245;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::_shelf_config_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 455;
+            value "prop.pos_y" int: 252;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 258;
+            value "prop.pos_h" int: 301;
+            value "prop.w" int: 258;
+            value "prop.h" int: 301;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::appearance/xsettings";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 292;
+            value "prop.pos_h" int: 407;
+            value "prop.w" int: 292;
+            value "prop.h" int: 407;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::appearance/theme";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 584;
+            value "prop.pos_h" int: 407;
+            value "prop.w" int: 584;
+            value "prop.h" int: 407;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_screensaver_ask_presentation";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 144;
+            value "prop.pos_y" int: 330;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 873;
+            value "prop.pos_h" int: 125;
+            value "prop.w" int: 873;
+            value "prop.h" int: 125;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_sys_reboot";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 499;
+            value "prop.pos_y" int: 351;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 170;
+            value "prop.pos_h" int: 112;
+            value "prop.w" int: 170;
+            value "prop.h" int: 112;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_sys_logout";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 478;
+            value "prop.pos_y" int: 351;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
+            value "prop.pos_w" int: 211;
+            value "prop.pos_h" int: 112;
+            value "prop.w" int: 211;
+            value "prop.h" int: 112;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
         group "E_Remember" struct {
             value "match" int: 51;
             value "no_reopen" int: 0;
@@ -3126,12 +4605,12 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 720;
-            value "prop.pos_y" int: 376;
-            value "prop.res_x" int: 1920;
-            value "prop.res_y" int: 1080;
+            value "prop.pos_x" int: 344;
+            value "prop.pos_y" int: 260;
+            value "prop.res_x" int: 1168;
+            value "prop.res_y" int: 848;
             value "prop.pos_w" int: 480;
-            value "prop.pos_h" int: 260;
+            value "prop.pos_h" int: 292;
             value "prop.w" int: 480;
             value "prop.h" int: 260;
             value "prop.layer" int: 0;
@@ -4098,6 +5577,13 @@ group "E_Config" struct {
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
             value "modifiers" int: 8;
+            value "key" string: "Up";
+            value "action" string: "window_maximized_toggle";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 8;
             value "key" string: "Left";
             value "action" string: "window_maximized_toggle";
             value "params" string: "default left";
@@ -4204,6 +5690,14 @@ group "E_Config" struct {
             value "key" string: "a";
             value "action" string: "menu_show";
             value "params" string: "favorites";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 6;
+            value "key" string: "c";
+            value "action" string: "clipboard";
+            value "params" string: "float";
             value "any_mod" uchar: 0;
         }
         group "E_Config_Binding_Key" struct {
@@ -4394,7 +5888,7 @@ group "E_Config" struct {
     group "themes" list {
         group "E_Config_Theme" struct {
             value "category" string: "theme";
-            value "file" string: "/usr/share/enlightenment/data/themes/MokshaRadiance.edj";
+            value "file" string: "/usr/share/enlightenment/data/themes/default.edj";
         }
     }
     group "bad_modules" list {
@@ -4410,217 +5904,19 @@ group "E_Config" struct {
             value "priority" int: 100;
         }
         group "E_Config_Module" struct {
-            value "name" string: "backlight";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "battery";
+            value "name" string: "clipboard";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "engage";
+            value "name" string: "connman";
             value "enabled" uchar: 0;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "epulse";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "ecomorph";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "places";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "systray";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "tasks";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "mixer";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_window_remembers";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_interaction";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "fileman";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "fileman_opinfo";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_window_manipulation";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_theme";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_shelves";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_performance";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_edgebindings";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_paths";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_menus";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_keybindings";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_intl";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_display";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_dialogs";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_applications";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_randr";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "xkbswitch";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "winlist";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "pager";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "temperature";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "clock";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "ibox";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "ibar";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "start";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "syscon";
+            value "name" string: "shot";
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
@@ -4632,15 +5928,213 @@ group "E_Config" struct {
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "shot";
+            value "name" string: "syscon";
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "connman";
+            value "name" string: "start";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ibar";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ibox";
             value "enabled" uchar: 0;
             value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "clock";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "temperature";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "pager";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "winlist";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "xkbswitch";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_randr";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_applications";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_dialogs";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_display";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_intl";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_keybindings";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_menus";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_paths";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_edgebindings";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_performance";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_shelves";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_theme";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_window_manipulation";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "fileman_opinfo";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "fileman";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_interaction";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_window_remembers";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "mixer";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "tasks";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "systray";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "places";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ecomorph";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "epulse";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "engage";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "backlight";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 0;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
@@ -4668,7 +6162,7 @@ group "E_Config" struct {
     value "font_cache" int: 512;
     value "edje_cache" int: 32;
     value "edje_collection_cache" int: 64;
-    value "zone_desks_x_count" int: 3;
+    value "zone_desks_x_count" int: 2;
     value "zone_desks_y_count" int: 1;
     value "show_desktop_icons" int: 1;
     value "edge_flip_dragging" int: 0;
@@ -4799,9 +6293,9 @@ group "E_Config" struct {
     value "desk_flip_wrap" int: 1;
     value "fullscreen_flip" int: 1;
     value "multiscreen_flip" int: 0;
-    value "icon_theme" string: "AwOken-Bodhi";
+    value "icon_theme" string: "Faenza";
     value "icon_theme_overrides" uchar: 1;
-    value "desk_flip_animate_mode" int: 2;
+    value "desk_flip_animate_mode" int: 0;
     value "desk_flip_animate_interpolation" int: 0;
     value "desk_flip_animate_time" double: 0.4500000000000000111022302;
     value "wallpaper_import_last_dev" string: "~/";
@@ -4839,13 +6333,13 @@ group "E_Config" struct {
     value "show_cursor" uchar: 1;
     value "idle_cursor" uchar: 1;
     value "default_system_menu" string: "/etc/xdg/menus/e-applications.menu";
-    value "cfgdlg_normal_wins" uchar: 0;
+    value "cfgdlg_normal_wins" uchar: 1;
     value "syscon.main.icon_size" int: 64;
     value "syscon.secondary.icon_size" int: 48;
     value "syscon.extra.icon_size" int: 48;
     value "syscon.timeout" double: 5.0000000000000000000000000;
     value "syscon.do_input" uchar: 1;
-    value "mode.presentation" uchar: 0;
+    value "mode.presentation" uchar: 1;
     value "mode.offline" uchar: 0;
     value "exec.expire_timeout" double: 30.0000000000000000000000000;
     value "exec.show_run_dialog" uchar: 1;
