@@ -103,7 +103,7 @@ Eina_Bool _timer_cb(void *data)
      }
    else
      {
-       timer = ecore_timer_add(1.2, _shot_delay, data);
+       timer = ecore_timer_add(0.2, _shot_delay, data);
        return ECORE_CALLBACK_DONE;
      }
 }
@@ -1074,7 +1074,7 @@ _shot(E_Zone *zone)
    if (shot_conf->delay>0)
      timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
    else
-     timer = ecore_timer_add(1.2, _shot_delay, zone);
+     timer = ecore_timer_add(0.2, _shot_delay, zone);
 }
 
 

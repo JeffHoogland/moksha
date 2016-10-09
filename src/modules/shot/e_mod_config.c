@@ -146,7 +146,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata) 
 {
   
-   if ( shot_conf->viewer) eina_stringshare_del( shot_conf->viewer);
+   if (shot_conf->viewer) eina_stringshare_del( shot_conf->viewer);
    if (cfdata->viewer)
       shot_conf->viewer = eina_stringshare_add(cfdata->viewer);
   
