@@ -7,9 +7,15 @@ EXTRA_DIST += $(shot_DATA)
 shotpkgdir = $(MDIR)/shot/$(MODULE_ARCH)
 shotpkg_LTLIBRARIES = shot/module.la
 
+shot_module_la_CFLAGS = $(AM_CFLAGS)
 shot_module_la_SOURCES = shot/e_mod_main.c \
                          shot/e_mod_main.h \
                          shot/e_mod_config.c
+
+if HAVE_ENOTIFY
+shot_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+shot_module_la_LIBADD = @ENOTIFY_LIBS@
+endif
 
 .PHONY: shot install-shot
 shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)
