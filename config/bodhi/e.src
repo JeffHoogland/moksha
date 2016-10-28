@@ -6339,7 +6339,7 @@ group "E_Config" struct {
     value "syscon.extra.icon_size" int: 48;
     value "syscon.timeout" double: 5.0000000000000000000000000;
     value "syscon.do_input" uchar: 1;
-    value "mode.presentation" uchar: 1;
+    value "mode.presentation" uchar: 0;
     value "mode.offline" uchar: 0;
     value "exec.expire_timeout" double: 30.0000000000000000000000000;
     value "exec.show_run_dialog" uchar: 1;
