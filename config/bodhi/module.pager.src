@@ -1,7 +1,7 @@
 group "Pager_Config" struct {
-    value "popup" uint: 1;
+    value "popup" uint: 0;
     value "popup_speed" double: 1.0000000000000000000000000;
-    value "popup_urgent" uint: 1;
+    value "popup_urgent" uint: 0;
     value "popup_urgent_stick" uint: 0;
     value "popup_urgent_speed" double: 1.5000000000000000000000000;
     value "show_desk_names" uint: 0;
