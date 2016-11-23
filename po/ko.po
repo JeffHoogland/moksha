@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-30 19:40+0000\n"
+"POT-Creation-Date: 2016-11-09 23:09+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "인라이튼먼트 정보"
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2034 src/bin/e_actions.c:3022
 #: src/bin/e_config_dialog.c:288 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
-#: src/bin/e_int_menus.c:668 src/bin/e_theme_about.c:24
+#: src/bin/e_int_menus.c:670 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
@@ -37,7 +37,7 @@ msgid "Close"
 msgstr "닫기"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:3397 src/bin/e_actions.c:3401
-#: src/bin/e_actions.c:3405 src/bin/e_int_menus.c:282 src/bin/e_main.c:681
+#: src/bin/e_actions.c:3405 src/bin/e_main.c:681
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -93,7 +93,7 @@ msgstr "아니요"
 msgid "Action Params Syntax Error"
 msgstr "동작 인자"
 
-#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401 src/bin/e_int_menus.c:311
+#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401
 msgid "Exit"
 msgstr "끝내기"
 
@@ -154,7 +154,7 @@ msgstr "정말로 컴퓨터를 최대 절전 모드로 전환하시겠습니까?
 #: src/bin/e_actions.c:3017 src/bin/e_actions.c:3022 src/bin/e_actions.c:3027
 #: src/bin/e_actions.c:3313 src/bin/e_actions.c:3317 src/bin/e_actions.c:3322
 #: src/bin/e_actions.c:3328 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
-#: src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1208
 msgid "Window : Actions"
 msgstr "창 : 동작"
 
@@ -525,7 +525,7 @@ msgstr "다른 창으로 건너뛰거나 시작..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:747 src/modules/shot/e_mod_main.c:982
+#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:1201
 msgid "Screen"
 msgstr "화면"
 
@@ -683,7 +683,7 @@ msgstr "프로그램"
 msgid "New Instance of Focused App"
 msgstr "활성화 한 프로그램의 새 인스턴스 만들기"
 
-#: src/bin/e_actions.c:3397 src/bin/e_int_menus.c:306
+#: src/bin/e_actions.c:3397
 msgid "Restart"
 msgstr "다시 시작"
 
@@ -762,7 +762,7 @@ msgstr "지금 최대 절전모드로 전환"
 msgid "Lock"
 msgstr "잠그기"
 
-#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1420
+#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1422
 msgid "Cleanup Windows"
 msgstr "창 정리"
 
@@ -813,8 +813,8 @@ msgstr "선택"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:544
-#: src/modules/shot/e_mod_main.c:570 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:489 src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:770 src/modules/shot/e_mod_main.c:1006
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "취소"
@@ -2469,7 +2469,7 @@ msgid "Request Position"
 msgstr "위치 지정 요청"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:330
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:332
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
 #: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
@@ -2484,8 +2484,8 @@ msgstr "위치 지정 요청"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:321
-#: src/modules/xkbswitch/e_mod_main.c:362
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/xkbswitch/e_mod_main.c:392
 msgid "Settings"
 msgstr "설정"
 
@@ -2568,7 +2568,7 @@ msgstr "크기, 위치, 잠금"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:751
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:951
 msgid "All"
 msgstr "모두"
 
@@ -2729,17 +2729,17 @@ msgstr ""
 "입력기 실행파일을 시작하는데 오류가 발생했습니다<br><br>입력기 설정이 올바른"
 "지 입력기 실행파일이 PATH 경로 상에<br> 있는지 확인하십시오<br>"
 
-#: src/bin/e_int_menus.c:173 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:174 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "메인"
 
-#: src/bin/e_int_menus.c:196
+#: src/bin/e_int_menus.c:197
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "자주 실행하는 프로그램"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
@@ -2751,50 +2751,61 @@ msgstr "자주 실행하는 프로그램"
 msgid "Applications"
 msgstr "프로그램"
 
-#: src/bin/e_int_menus.c:242 src/bin/e_int_menus.c:1433
+#: src/bin/e_int_menus.c:243 src/bin/e_int_menus.c:1435
 msgid "Lost Windows"
 msgstr "잃어버린 창"
 
-#: src/bin/e_int_menus.c:258
-msgid "Bodhi Linux"
+#: src/bin/e_int_menus.c:259
+#, fuzzy
+msgid "About Operating System"
+msgstr "인증 시스템 오류"
+
+#: src/bin/e_int_menus.c:265
+#, fuzzy
+msgid "Help"
+msgstr "도움말 좀 더 보기"
+
+#: src/bin/e_int_menus.c:270
+msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:263 src/bin/e_int_menus.c:287
-msgid "About"
-msgstr "정보"
-
-#: src/bin/e_int_menus.c:268
+#: src/bin/e_int_menus.c:289
 #, fuzzy
-msgid "Quick Start"
-msgstr "빠른 패널"
+msgid "About Moksha Desktop"
+msgstr "인라이튼먼트 정보"
 
-#: src/bin/e_int_menus.c:292 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:294 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "테마 정보"
 
-#: src/bin/e_int_menus.c:383
+#: src/bin/e_int_menus.c:308
+#, fuzzy
+msgid "Reset Moksha"
+msgstr "인라이튼먼트 사용을 환영합니다"
+
+#: src/bin/e_int_menus.c:385
 msgid "Virtual"
 msgstr "가상"
 
-#: src/bin/e_int_menus.c:390 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:392 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "서랍"
 
-#: src/bin/e_int_menus.c:399
+#: src/bin/e_int_menus.c:401
 msgid "Show/Hide All Windows"
 msgstr "모든 창 표시/숨기기"
 
-#: src/bin/e_int_menus.c:790
+#: src/bin/e_int_menus.c:792
 msgid "No applications"
 msgstr "프로그램 없음"
 
-#: src/bin/e_int_menus.c:1007
+#: src/bin/e_int_menus.c:1009
 msgid "Set Virtual Desktops"
 msgstr "가상 데스크톱 설정"
 
-#: src/bin/e_int_menus.c:1378
+#: src/bin/e_int_menus.c:1380
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2802,25 +2813,25 @@ msgstr "가상 데스크톱 설정"
 msgid "Windows"
 msgstr "창"
 
-#: src/bin/e_int_menus.c:1384 src/bin/e_int_menus.c:1577
+#: src/bin/e_int_menus.c:1386 src/bin/e_int_menus.c:1579
 msgid "No windows"
 msgstr "창 없음"
 
-#: src/bin/e_int_menus.c:1490 src/bin/e_int_menus.c:1590
+#: src/bin/e_int_menus.c:1492 src/bin/e_int_menus.c:1592
 msgid "Untitled window"
 msgstr "이름 없는 창"
 
-#: src/bin/e_int_menus.c:1690 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1692 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "서랍 #"
 
-#: src/bin/e_int_menus.c:1758
+#: src/bin/e_int_menus.c:1760
 msgid "Add a Shelf"
 msgstr "서랍 추가"
 
-#: src/bin/e_int_menus.c:1765
+#: src/bin/e_int_menus.c:1767
 msgid "Delete a Shelf"
 msgstr "서랍 삭제"
 
@@ -3030,10 +3041,6 @@ msgstr "인라이튼먼트가 파일 레지스트리 시스템을 설정할 수 
 #: src/bin/e_main.c:558
 msgid "Moksha cannot set up its config system.\n"
 msgstr "인라이튼먼트가 설정 시스템을 설정할 수 없습니다.\n"
-
-#: src/bin/e_main.c:571
-msgid "Moksha cannot initialize E_Randr!\n"
-msgstr "인라이튼먼트가 E_Randr을 초기화 할 수 없습니다!\n"
 
 #: src/bin/e_main.c:580
 msgid "Moksha cannot initialize E_Xinerama!\n"
@@ -4492,10 +4499,6 @@ msgstr "설정 패널"
 msgid "Presentation"
 msgstr "프리젠테이션"
 
-#: src/modules/conf/e_mod_main.c:428
-msgid "Offline"
-msgstr "오프라인"
-
 #: src/modules/conf/e_mod_main.c:457
 msgid "Modes"
 msgstr "모드"
@@ -5228,7 +5231,7 @@ msgstr "시그널 바인딩 설정"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
-#: src/modules/xkbswitch/e_mod_main.c:71
+#: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "입력"
 
@@ -5980,13 +5983,13 @@ msgid "e.g. Saving to disk"
 msgstr "예: 디스크에 저장"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:733
+#: src/modules/shot/e_mod_main.c:933
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "낮음"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:731
+#: src/modules/shot/e_mod_main.c:931
 msgid "Medium"
 msgstr "보통"
 
@@ -5998,7 +6001,7 @@ msgid "%.0f s"
 msgstr "%.0f초"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:729
+#: src/modules/shot/e_mod_main.c:929
 msgid "High"
 msgstr "높음"
 
@@ -7150,8 +7153,8 @@ msgid "Resize by"
 msgstr "크기 바꾸기"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:265
-#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:74
-#: src/modules/xkbswitch/e_mod_main.c:252
+#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/xkbswitch/e_mod_main.c:263
 msgid "Keyboard"
 msgstr "키보드"
 
@@ -7417,8 +7420,9 @@ msgid "Everything Module"
 msgstr "Everything 모듈"
 
 #: src/modules/everything/e_mod_main.c:599
-msgid "Run Everything"
-msgstr "Everything 실행"
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "실행 아이콘"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
@@ -9226,20 +9230,25 @@ msgstr ""
 msgid "Systray"
 msgstr "시스템 표시줄"
 
-#: src/modules/shot/e_mod_main.c:176 src/modules/shot/e_mod_main.c:210
+#: src/modules/shot/e_mod_main.c:77
+#, fuzzy
+msgid "Screenshot"
+msgstr "화면 찍기"
+
+#: src/modules/shot/e_mod_main.c:386
 msgid "Error saving screenshot file"
 msgstr "스크린샷 파일을 저장하는데 오류가 발생했습니다"
 
-#: src/modules/shot/e_mod_main.c:177 src/modules/shot/e_mod_main.c:211
+#: src/modules/shot/e_mod_main.c:387
 #, c-format
 msgid "Path: %s"
 msgstr "경로: %s"
 
-#: src/modules/shot/e_mod_main.c:228
+#: src/modules/shot/e_mod_main.c:412
 msgid "Error - Unknown format"
 msgstr "오류 - 알 수 없는 형식"
 
-#: src/modules/shot/e_mod_main.c:229
+#: src/modules/shot/e_mod_main.c:413
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9247,93 +9256,93 @@ msgstr ""
 "파일에 지정되지 않은 확장자가 있습니다.<br>현재 다른 형식은 지원하지 않으므"
 "로 '.jpg'나 '.png' 확장자만을 사용하십시오."
 
-#: src/modules/shot/e_mod_main.c:277
+#: src/modules/shot/e_mod_main.c:473
 msgid "Select screenshot save location"
 msgstr "스크린샷 저장 위치를 선택하십시오"
 
-#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:802
+#: src/modules/shot/e_mod_main.c:487 src/modules/shot/e_mod_main.c:1002
 msgid "Save"
 msgstr "저장"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:588
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s / %s 업로드 완료"
 
-#: src/modules/shot/e_mod_main.c:409
+#: src/modules/shot/e_mod_main.c:608
 msgid "Error - Upload Failed"
 msgstr "오류 - 업로드 실패"
 
-#: src/modules/shot/e_mod_main.c:410
+#: src/modules/shot/e_mod_main.c:609
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "%i 상태 코드로 업로드에 실패했습니다"
 
-#: src/modules/shot/e_mod_main.c:454
+#: src/modules/shot/e_mod_main.c:654
 msgid "Error - Can't create file"
 msgstr "오류 - 파일을 만들 수 없음"
 
-#: src/modules/shot/e_mod_main.c:455
+#: src/modules/shot/e_mod_main.c:655
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "'%s' 임시 파일을 만들 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:473
+#: src/modules/shot/e_mod_main.c:673
 msgid "Error - Can't open file"
 msgstr "오류 - 파일을 열 수 없음"
 
-#: src/modules/shot/e_mod_main.c:474
+#: src/modules/shot/e_mod_main.c:674
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "'%s' 임시 파일을 열 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:482
+#: src/modules/shot/e_mod_main.c:682
 msgid "Error - Bad size"
 msgstr "오류 - 잘못된 크기"
 
-#: src/modules/shot/e_mod_main.c:483
+#: src/modules/shot/e_mod_main.c:683
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "'%s' 파일의 크기를 가져올 수 없습니다"
 
-#: src/modules/shot/e_mod_main.c:493
+#: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't allocate memory"
 msgstr "오류 - 메모리를 할당할 수 없음"
 
-#: src/modules/shot/e_mod_main.c:494
+#: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "그림을 열 메모리를 할당할 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:501
+#: src/modules/shot/e_mod_main.c:701
 msgid "Error - Can't read picture"
 msgstr "오류 - 그림을 읽을 수 없음"
 
-#: src/modules/shot/e_mod_main.c:502
+#: src/modules/shot/e_mod_main.c:702
 msgid "Cannot read picture"
 msgstr "그림을 읽을 수 없습니다"
 
-#: src/modules/shot/e_mod_main.c:524
+#: src/modules/shot/e_mod_main.c:724
 msgid "Uploading screenshot"
 msgstr "스크린 샷 업로드 중"
 
-#: src/modules/shot/e_mod_main.c:529
+#: src/modules/shot/e_mod_main.c:729
 msgid "Uploading ..."
 msgstr "업로드 중 ..."
 
-#: src/modules/shot/e_mod_main.c:534
+#: src/modules/shot/e_mod_main.c:734
 msgid "Screenshot is available at this location:"
 msgstr "스크린샷은 다음 위치에서 찾을 수 있습니다:"
 
-#: src/modules/shot/e_mod_main.c:543
+#: src/modules/shot/e_mod_main.c:743
 msgid "Hide"
 msgstr "숨기기"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:767
 msgid "Confirm Share"
 msgstr "공유 확인"
 
-#: src/modules/shot/e_mod_main.c:568
+#: src/modules/shot/e_mod_main.c:768
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9341,40 +9350,40 @@ msgstr ""
 "이 그림을 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있습"
 "니다."
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:770
 msgid "Confirm"
 msgstr "확인"
 
-#: src/modules/shot/e_mod_main.c:671
+#: src/modules/shot/e_mod_main.c:871
 msgid "Where to put Screenshot..."
 msgstr "스크린샷 저장 위치..."
 
-#: src/modules/shot/e_mod_main.c:723
+#: src/modules/shot/e_mod_main.c:923
 msgid "Quality"
 msgstr "품질"
 
-#: src/modules/shot/e_mod_main.c:727
+#: src/modules/shot/e_mod_main.c:927
 msgid "Perfect"
 msgstr "완벽함"
 
-#: src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:1004
 msgid "Share"
 msgstr "공유"
 
-#: src/modules/shot/e_mod_main.c:941 src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1155 src/modules/shot/e_mod_main.c:1208
 msgid "Take Shot"
 msgstr "찍기"
 
-#: src/modules/shot/e_mod_main.c:952 src/modules/shot/e_mod_main.c:982
-#: src/modules/shot/e_mod_main.c:993
+#: src/modules/shot/e_mod_main.c:1166 src/modules/shot/e_mod_main.c:1201
+#: src/modules/shot/e_mod_main.c:1212
 msgid "Take Screenshot"
 msgstr "화면 찍기"
 
-#: src/modules/shot/e_mod_main.c:970
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Shot Error"
 msgstr "샷 오류"
 
-#: src/modules/shot/e_mod_main.c:971
+#: src/modules/shot/e_mod_main.c:1190
 msgid "Cannot initialize network"
 msgstr "네트워크를 초기화 할 수 없습니다"
 
@@ -9649,6 +9658,22 @@ msgstr "바뀐 ID 무시"
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr "다중 모니터 공간 사용"
+
+#~ msgid "About"
+#~ msgstr "정보"
+
+#, fuzzy
+#~ msgid "Quick Start"
+#~ msgstr "빠른 패널"
+
+#~ msgid "Moksha cannot initialize E_Randr!\n"
+#~ msgstr "인라이튼먼트가 E_Randr을 초기화 할 수 없습니다!\n"
+
+#~ msgid "Offline"
+#~ msgstr "오프라인"
+
+#~ msgid "Run Everything"
+#~ msgstr "Everything 실행"
 
 #~ msgid "Compositor Error"
 #~ msgstr "콤포지터 오류"

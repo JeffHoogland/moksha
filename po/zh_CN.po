@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-30 19:40+0000\n"
+"POT-Creation-Date: 2016-11-09 23:09+0100\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -29,7 +29,7 @@ msgstr "关于 Moksha"
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2034 src/bin/e_actions.c:3022
 #: src/bin/e_config_dialog.c:288 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
-#: src/bin/e_int_menus.c:668 src/bin/e_theme_about.c:24
+#: src/bin/e_int_menus.c:670 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
@@ -38,7 +38,7 @@ msgid "Close"
 msgstr "关闭"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:3397 src/bin/e_actions.c:3401
-#: src/bin/e_actions.c:3405 src/bin/e_int_menus.c:282 src/bin/e_main.c:681
+#: src/bin/e_actions.c:3405 src/bin/e_main.c:681
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -94,7 +94,7 @@ msgstr "否"
 msgid "Action Params Syntax Error"
 msgstr "动作参数"
 
-#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401 src/bin/e_int_menus.c:311
+#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401
 msgid "Exit"
 msgstr "退出"
 
@@ -155,7 +155,7 @@ msgstr "您确定要休眠您的电脑吗？"
 #: src/bin/e_actions.c:3017 src/bin/e_actions.c:3022 src/bin/e_actions.c:3027
 #: src/bin/e_actions.c:3313 src/bin/e_actions.c:3317 src/bin/e_actions.c:3322
 #: src/bin/e_actions.c:3328 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
-#: src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1208
 msgid "Window : Actions"
 msgstr "窗口：动作"
 
@@ -526,7 +526,7 @@ msgstr "跳转到桌面... 或开始..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:747 src/modules/shot/e_mod_main.c:982
+#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:1201
 msgid "Screen"
 msgstr "屏幕"
 
@@ -685,7 +685,7 @@ msgstr "应用程序"
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3397 src/bin/e_int_menus.c:306
+#: src/bin/e_actions.c:3397
 msgid "Restart"
 msgstr "重启"
 
@@ -764,7 +764,7 @@ msgstr "立即休眠"
 msgid "Lock"
 msgstr "锁定"
 
-#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1420
+#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1422
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
@@ -815,8 +815,8 @@ msgstr "选择"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:544
-#: src/modules/shot/e_mod_main.c:570 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:489 src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:770 src/modules/shot/e_mod_main.c:1006
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "取消"
@@ -2445,7 +2445,7 @@ msgid "Request Position"
 msgstr "请求位置"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:330
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:332
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
 #: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
@@ -2460,8 +2460,8 @@ msgstr "请求位置"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:321
-#: src/modules/xkbswitch/e_mod_main.c:362
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/xkbswitch/e_mod_main.c:392
 msgid "Settings"
 msgstr "设置"
 
@@ -2546,7 +2546,7 @@ msgstr "尺寸、位置和锁定"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:751
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:951
 msgid "All"
 msgstr "全部"
 
@@ -2706,17 +2706,17 @@ msgstr ""
 "启动输入法出现错误。<br><br>请确定您的输入法配置正确，<br>并且配置文件在 "
 "PATH 搜索路径里。<br>"
 
-#: src/bin/e_int_menus.c:173 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:174 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "主要"
 
-#: src/bin/e_int_menus.c:196
+#: src/bin/e_int_menus.c:197
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "最常用程序"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
@@ -2728,50 +2728,61 @@ msgstr "最常用程序"
 msgid "Applications"
 msgstr "应用程序"
 
-#: src/bin/e_int_menus.c:242 src/bin/e_int_menus.c:1433
+#: src/bin/e_int_menus.c:243 src/bin/e_int_menus.c:1435
 msgid "Lost Windows"
 msgstr "丢失的窗口"
 
-#: src/bin/e_int_menus.c:258
-msgid "Bodhi Linux"
+#: src/bin/e_int_menus.c:259
+#, fuzzy
+msgid "About Operating System"
+msgstr "认证系统错误"
+
+#: src/bin/e_int_menus.c:265
+#, fuzzy
+msgid "Help"
+msgstr "更多帮助"
+
+#: src/bin/e_int_menus.c:270
+msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:263 src/bin/e_int_menus.c:287
-msgid "About"
-msgstr "关于"
-
-#: src/bin/e_int_menus.c:268
+#: src/bin/e_int_menus.c:289
 #, fuzzy
-msgid "Quick Start"
-msgstr "快捷面板"
+msgid "About Moksha Desktop"
+msgstr "关于 Moksha"
 
-#: src/bin/e_int_menus.c:292 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:294 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "关于主题"
 
-#: src/bin/e_int_menus.c:383
+#: src/bin/e_int_menus.c:308
+#, fuzzy
+msgid "Reset Moksha"
+msgstr "欢迎光临Moksha"
+
+#: src/bin/e_int_menus.c:385
 msgid "Virtual"
 msgstr "虚拟"
 
-#: src/bin/e_int_menus.c:390 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:392 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "书架"
 
-#: src/bin/e_int_menus.c:399
+#: src/bin/e_int_menus.c:401
 msgid "Show/Hide All Windows"
 msgstr "显示/隐藏所有窗口"
 
-#: src/bin/e_int_menus.c:790
+#: src/bin/e_int_menus.c:792
 msgid "No applications"
 msgstr "无应用程序"
 
-#: src/bin/e_int_menus.c:1007
+#: src/bin/e_int_menus.c:1009
 msgid "Set Virtual Desktops"
 msgstr "设定虚拟桌面"
 
-#: src/bin/e_int_menus.c:1378
+#: src/bin/e_int_menus.c:1380
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2779,25 +2790,25 @@ msgstr "设定虚拟桌面"
 msgid "Windows"
 msgstr "窗口"
 
-#: src/bin/e_int_menus.c:1384 src/bin/e_int_menus.c:1577
+#: src/bin/e_int_menus.c:1386 src/bin/e_int_menus.c:1579
 msgid "No windows"
 msgstr "无窗口"
 
-#: src/bin/e_int_menus.c:1490 src/bin/e_int_menus.c:1590
+#: src/bin/e_int_menus.c:1492 src/bin/e_int_menus.c:1592
 msgid "Untitled window"
 msgstr "未命名的窗口"
 
-#: src/bin/e_int_menus.c:1690 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1692 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "书架 #"
 
-#: src/bin/e_int_menus.c:1758
+#: src/bin/e_int_menus.c:1760
 msgid "Add a Shelf"
 msgstr "添加书架"
 
-#: src/bin/e_int_menus.c:1765
+#: src/bin/e_int_menus.c:1767
 msgid "Delete a Shelf"
 msgstr "删除书架"
 
@@ -3007,10 +3018,6 @@ msgstr "Moksha 无法建立它的文件注册系统。\n"
 #: src/bin/e_main.c:558
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha 无法建立它的配置系统。\n"
-
-#: src/bin/e_main.c:571
-msgid "Moksha cannot initialize E_Randr!\n"
-msgstr "Moksha 无法初始化 E_Randr!\n"
 
 #: src/bin/e_main.c:580
 msgid "Moksha cannot initialize E_Xinerama!\n"
@@ -4445,10 +4452,6 @@ msgstr "设置面板"
 msgid "Presentation"
 msgstr "演示"
 
-#: src/modules/conf/e_mod_main.c:428
-msgid "Offline"
-msgstr "脱机"
-
 #: src/modules/conf/e_mod_main.c:457
 msgid "Modes"
 msgstr "模式"
@@ -5180,7 +5183,7 @@ msgstr "信号绑定设置"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
-#: src/modules/xkbswitch/e_mod_main.c:71
+#: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "输入"
 
@@ -5925,13 +5928,13 @@ msgid "e.g. Saving to disk"
 msgstr "例如：保存到磁盘"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:733
+#: src/modules/shot/e_mod_main.c:933
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "低"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:731
+#: src/modules/shot/e_mod_main.c:931
 msgid "Medium"
 msgstr "中等"
 
@@ -5943,7 +5946,7 @@ msgid "%.0f s"
 msgstr "%.0f 秒"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:729
+#: src/modules/shot/e_mod_main.c:929
 msgid "High"
 msgstr "高"
 
@@ -7097,8 +7100,8 @@ msgid "Resize by"
 msgstr "改变大小，按照"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:265
-#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:74
-#: src/modules/xkbswitch/e_mod_main.c:252
+#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/xkbswitch/e_mod_main.c:263
 msgid "Keyboard"
 msgstr "键盘"
 
@@ -7359,8 +7362,9 @@ msgid "Everything Module"
 msgstr "任务中心模块"
 
 #: src/modules/everything/e_mod_main.c:599
-msgid "Run Everything"
-msgstr "运行任务中心"
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "启动器"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
@@ -9141,151 +9145,156 @@ msgstr ""
 msgid "Systray"
 msgstr "系统托盘"
 
-#: src/modules/shot/e_mod_main.c:176 src/modules/shot/e_mod_main.c:210
+#: src/modules/shot/e_mod_main.c:77
+#, fuzzy
+msgid "Screenshot"
+msgstr "屏幕截图"
+
+#: src/modules/shot/e_mod_main.c:386
 msgid "Error saving screenshot file"
 msgstr "保存截图文件出错"
 
-#: src/modules/shot/e_mod_main.c:177 src/modules/shot/e_mod_main.c:211
+#: src/modules/shot/e_mod_main.c:387
 #, c-format
 msgid "Path: %s"
 msgstr "路径: %s"
 
-#: src/modules/shot/e_mod_main.c:228
+#: src/modules/shot/e_mod_main.c:412
 msgid "Error - Unknown format"
 msgstr "错误 - 未知格式"
 
-#: src/modules/shot/e_mod_main.c:229
+#: src/modules/shot/e_mod_main.c:413
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr "文件没有扩展名。<br>请使用 .jpg 或 .png，<br>其他格式尚不支持。"
 
-#: src/modules/shot/e_mod_main.c:277
+#: src/modules/shot/e_mod_main.c:473
 msgid "Select screenshot save location"
 msgstr "选择截图保存位置"
 
-#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:802
+#: src/modules/shot/e_mod_main.c:487 src/modules/shot/e_mod_main.c:1002
 msgid "Save"
 msgstr "保存"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:588
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "上传 %s / %s "
 
-#: src/modules/shot/e_mod_main.c:409
+#: src/modules/shot/e_mod_main.c:608
 msgid "Error - Upload Failed"
 msgstr "错误 - 上传失败"
 
-#: src/modules/shot/e_mod_main.c:410
+#: src/modules/shot/e_mod_main.c:609
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "上传失败，状态码：<br>%i"
 
-#: src/modules/shot/e_mod_main.c:454
+#: src/modules/shot/e_mod_main.c:654
 msgid "Error - Can't create file"
 msgstr "错误，不能创建文件"
 
-#: src/modules/shot/e_mod_main.c:455
+#: src/modules/shot/e_mod_main.c:655
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "不能创建临时文件 '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:473
+#: src/modules/shot/e_mod_main.c:673
 msgid "Error - Can't open file"
 msgstr "错误 - 不能打开文件"
 
-#: src/modules/shot/e_mod_main.c:474
+#: src/modules/shot/e_mod_main.c:674
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "不能打开临时文件 %s: %s"
 
-#: src/modules/shot/e_mod_main.c:482
+#: src/modules/shot/e_mod_main.c:682
 msgid "Error - Bad size"
 msgstr "错误 - 大小错误"
 
-#: src/modules/shot/e_mod_main.c:483
+#: src/modules/shot/e_mod_main.c:683
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "无法获取文件 %s 的大小"
 
-#: src/modules/shot/e_mod_main.c:493
+#: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't allocate memory"
 msgstr "错误 - 无法分配内存"
 
-#: src/modules/shot/e_mod_main.c:494
+#: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "无法为图像 %s 分配内存 "
 
-#: src/modules/shot/e_mod_main.c:501
+#: src/modules/shot/e_mod_main.c:701
 msgid "Error - Can't read picture"
 msgstr "错误 - 不能读取图像"
 
-#: src/modules/shot/e_mod_main.c:502
+#: src/modules/shot/e_mod_main.c:702
 msgid "Cannot read picture"
 msgstr "不能读取图像"
 
-#: src/modules/shot/e_mod_main.c:524
+#: src/modules/shot/e_mod_main.c:724
 msgid "Uploading screenshot"
 msgstr "上传截图"
 
-#: src/modules/shot/e_mod_main.c:529
+#: src/modules/shot/e_mod_main.c:729
 msgid "Uploading ..."
 msgstr "上传中..."
 
-#: src/modules/shot/e_mod_main.c:534
+#: src/modules/shot/e_mod_main.c:734
 msgid "Screenshot is available at this location:"
 msgstr "截图保存位置："
 
-#: src/modules/shot/e_mod_main.c:543
+#: src/modules/shot/e_mod_main.c:743
 msgid "Hide"
 msgstr "隐藏"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:767
 msgid "Confirm Share"
 msgstr "确认分享"
 
-#: src/modules/shot/e_mod_main.c:568
+#: src/modules/shot/e_mod_main.c:768
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr "这张图片将被上传至<br>enlightenment.org，对所有人可见。"
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:770
 msgid "Confirm"
 msgstr "确定"
 
-#: src/modules/shot/e_mod_main.c:671
+#: src/modules/shot/e_mod_main.c:871
 msgid "Where to put Screenshot..."
 msgstr "截图放置的地方..."
 
-#: src/modules/shot/e_mod_main.c:723
+#: src/modules/shot/e_mod_main.c:923
 msgid "Quality"
 msgstr "质量"
 
-#: src/modules/shot/e_mod_main.c:727
+#: src/modules/shot/e_mod_main.c:927
 msgid "Perfect"
 msgstr "完美"
 
-#: src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:1004
 msgid "Share"
 msgstr "共享"
 
-#: src/modules/shot/e_mod_main.c:941 src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1155 src/modules/shot/e_mod_main.c:1208
 msgid "Take Shot"
 msgstr "屏幕截图"
 
-#: src/modules/shot/e_mod_main.c:952 src/modules/shot/e_mod_main.c:982
-#: src/modules/shot/e_mod_main.c:993
+#: src/modules/shot/e_mod_main.c:1166 src/modules/shot/e_mod_main.c:1201
+#: src/modules/shot/e_mod_main.c:1212
 msgid "Take Screenshot"
 msgstr "屏幕截图"
 
-#: src/modules/shot/e_mod_main.c:970
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Shot Error"
 msgstr "截图出错"
 
-#: src/modules/shot/e_mod_main.c:971
+#: src/modules/shot/e_mod_main.c:1190
 msgid "Cannot initialize network"
 msgstr "无法初始化网络"
 
@@ -9557,6 +9566,22 @@ msgstr ""
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr ""
+
+#~ msgid "About"
+#~ msgstr "关于"
+
+#, fuzzy
+#~ msgid "Quick Start"
+#~ msgstr "快捷面板"
+
+#~ msgid "Moksha cannot initialize E_Randr!\n"
+#~ msgstr "Moksha 无法初始化 E_Randr!\n"
+
+#~ msgid "Offline"
+#~ msgstr "脱机"
+
+#~ msgid "Run Everything"
+#~ msgstr "运行任务中心"
 
 #~ msgid "Compositor Error"
 #~ msgstr "合成器错误"

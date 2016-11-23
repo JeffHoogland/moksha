@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2015-12-30 19:40+0000\n"
+"POT-Creation-Date: 2016-11-09 23:09+0100\n"
 "PO-Revision-Date: 2015-12-21 13:52+0100\n"
 "Last-Translator: Thomas Gstädtner <thomas@gstaedtner.net>\n"
 "Language-Team: E17-de\n"
@@ -43,7 +43,7 @@ msgstr "Über Moksha"
 #: src/bin/e_about.c:20 src/bin/e_actions.c:2034 src/bin/e_actions.c:3022
 #: src/bin/e_config_dialog.c:288 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
-#: src/bin/e_int_menus.c:668 src/bin/e_theme_about.c:24
+#: src/bin/e_int_menus.c:670 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
@@ -52,7 +52,7 @@ msgid "Close"
 msgstr "Schließen"
 
 #: src/bin/e_about.c:21 src/bin/e_actions.c:3397 src/bin/e_actions.c:3401
-#: src/bin/e_actions.c:3405 src/bin/e_int_menus.c:282 src/bin/e_main.c:681
+#: src/bin/e_actions.c:3405 src/bin/e_main.c:681
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -110,7 +110,7 @@ msgstr "Nein"
 msgid "Action Params Syntax Error"
 msgstr "Aktionsparameter"
 
-#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401 src/bin/e_int_menus.c:311
+#: src/bin/e_actions.c:2149 src/bin/e_actions.c:3401
 msgid "Exit"
 msgstr "Beenden"
 
@@ -172,7 +172,7 @@ msgstr "Wollen Sie Ihren Computer wirklich in den Ruhezustand herunterfahren?"
 #: src/bin/e_actions.c:3017 src/bin/e_actions.c:3022 src/bin/e_actions.c:3027
 #: src/bin/e_actions.c:3313 src/bin/e_actions.c:3317 src/bin/e_actions.c:3322
 #: src/bin/e_actions.c:3328 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
-#: src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1208
 msgid "Window : Actions"
 msgstr "Fenster: Aktionen"
 
@@ -543,7 +543,7 @@ msgstr "Springe zu Fenster... oder Starte..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:747 src/modules/shot/e_mod_main.c:982
+#: src/modules/shot/e_mod_main.c:947 src/modules/shot/e_mod_main.c:1201
 msgid "Screen"
 msgstr "Bildschirm"
 
@@ -703,7 +703,7 @@ msgstr "Anwendung"
 msgid "New Instance of Focused App"
 msgstr "Neue Instanz der fokussierten Anwendung"
 
-#: src/bin/e_actions.c:3397 src/bin/e_int_menus.c:306
+#: src/bin/e_actions.c:3397
 msgid "Restart"
 msgstr "Neustart"
 
@@ -782,7 +782,7 @@ msgstr "Ruhezustand Jetzt"
 msgid "Lock"
 msgstr "Sperren"
 
-#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1420
+#: src/bin/e_actions.c:3473 src/bin/e_int_menus.c:1422
 msgid "Cleanup Windows"
 msgstr "Fenster aufräumen"
 
@@ -833,8 +833,8 @@ msgstr "Auswählen"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:291 src/modules/shot/e_mod_main.c:544
-#: src/modules/shot/e_mod_main.c:570 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:489 src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:770 src/modules/shot/e_mod_main.c:1006
 #: src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -2508,7 +2508,7 @@ msgid "Request Position"
 msgstr "Position anfordern"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:330
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:332
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
 #: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
@@ -2523,8 +2523,8 @@ msgstr "Position anfordern"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:321
-#: src/modules/xkbswitch/e_mod_main.c:362
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/xkbswitch/e_mod_main.c:392
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2612,7 +2612,7 @@ msgstr "Größe, Position und Sperren"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:751
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:951
 msgid "All"
 msgstr "Alle"
 
@@ -2773,17 +2773,17 @@ msgstr ""
 "sicher, dass die Eingabemethoden-<br>Einstellungen korrekt sind und dass "
 "sich Ihr Konfigurationsprogramm<br>in PATH befindet.<br>"
 
-#: src/bin/e_int_menus.c:173 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:174 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Hauptmenü"
 
-#: src/bin/e_int_menus.c:196
+#: src/bin/e_int_menus.c:197
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Bevorzugte Anwendungen"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/conf_menus/e_int_config_menus.c:283
@@ -2795,51 +2795,61 @@ msgstr "Bevorzugte Anwendungen"
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: src/bin/e_int_menus.c:242 src/bin/e_int_menus.c:1433
+#: src/bin/e_int_menus.c:243 src/bin/e_int_menus.c:1435
 msgid "Lost Windows"
 msgstr "Verlorene Fenster"
 
-#: src/bin/e_int_menus.c:258
-msgid "Bodhi Linux"
+#: src/bin/e_int_menus.c:259
+#, fuzzy
+msgid "About Operating System"
+msgstr "Fehler im Authentifizierungssystem"
+
+#: src/bin/e_int_menus.c:265
+#, fuzzy
+msgid "Help"
+msgstr "Mehr Hilfe"
+
+#: src/bin/e_int_menus.c:270
+msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:263 src/bin/e_int_menus.c:287
-msgid "About"
-msgstr "Über"
-
-# ??
-#: src/bin/e_int_menus.c:268
+#: src/bin/e_int_menus.c:289
 #, fuzzy
-msgid "Quick Start"
-msgstr "Schnellstartleiste"
+msgid "About Moksha Desktop"
+msgstr "Über Moksha"
 
-#: src/bin/e_int_menus.c:292 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:294 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "Über dieses Thema"
 
-#: src/bin/e_int_menus.c:383
+#: src/bin/e_int_menus.c:308
+#, fuzzy
+msgid "Reset Moksha"
+msgstr "Herzlich Willkommen in Moksha"
+
+#: src/bin/e_int_menus.c:385
 msgid "Virtual"
 msgstr "Virtuelle Arbeitsflächen"
 
-#: src/bin/e_int_menus.c:390 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:392 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Modulablagen"
 
-#: src/bin/e_int_menus.c:399
+#: src/bin/e_int_menus.c:401
 msgid "Show/Hide All Windows"
 msgstr "Alle Fenster zeigen/verstecken"
 
-#: src/bin/e_int_menus.c:790
+#: src/bin/e_int_menus.c:792
 msgid "No applications"
 msgstr "Keine Anwendungen"
 
-#: src/bin/e_int_menus.c:1007
+#: src/bin/e_int_menus.c:1009
 msgid "Set Virtual Desktops"
 msgstr "Virtuelle Arbeitsflächen einstellen"
 
-#: src/bin/e_int_menus.c:1378
+#: src/bin/e_int_menus.c:1380
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2847,25 +2857,25 @@ msgstr "Virtuelle Arbeitsflächen einstellen"
 msgid "Windows"
 msgstr "Fenster"
 
-#: src/bin/e_int_menus.c:1384 src/bin/e_int_menus.c:1577
+#: src/bin/e_int_menus.c:1386 src/bin/e_int_menus.c:1579
 msgid "No windows"
 msgstr "Keine Fenster"
 
-#: src/bin/e_int_menus.c:1490 src/bin/e_int_menus.c:1590
+#: src/bin/e_int_menus.c:1492 src/bin/e_int_menus.c:1592
 msgid "Untitled window"
 msgstr "Titelloses Fenster"
 
-#: src/bin/e_int_menus.c:1690 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1692 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Modulablage #"
 
-#: src/bin/e_int_menus.c:1758
+#: src/bin/e_int_menus.c:1760
 msgid "Add a Shelf"
 msgstr "Modulablage hinzufügen"
 
-#: src/bin/e_int_menus.c:1765
+#: src/bin/e_int_menus.c:1767
 msgid "Delete a Shelf"
 msgstr "Modulablage entfernen"
 
@@ -3078,10 +3088,6 @@ msgstr "Moksha kann sein Dateiregistrierungs-Subsystem nicht initialisieren.\n"
 #: src/bin/e_main.c:558
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha kann sein Einstellungs-Subsystem nicht initialisieren.\n"
-
-#: src/bin/e_main.c:571
-msgid "Moksha cannot initialize E_Randr!\n"
-msgstr "Moksha kann E_Randr nicht initialisieren!\n"
 
 #: src/bin/e_main.c:580
 msgid "Moksha cannot initialize E_Xinerama!\n"
@@ -4567,10 +4573,6 @@ msgstr "Einstellungskonsole"
 msgid "Presentation"
 msgstr "Präsentation"
 
-#: src/modules/conf/e_mod_main.c:428
-msgid "Offline"
-msgstr "Offline"
-
 #: src/modules/conf/e_mod_main.c:457
 msgid "Modes"
 msgstr "Modi"
@@ -5304,7 +5306,7 @@ msgstr "Signalbelegungseinstellungen"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
 #: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
-#: src/modules/xkbswitch/e_mod_main.c:71
+#: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Eingabe"
 
@@ -6063,13 +6065,13 @@ msgid "e.g. Saving to disk"
 msgstr "z.B. Auf Festplatte speichern"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:733
+#: src/modules/shot/e_mod_main.c:933
 #: src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Niedrig"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:731
+#: src/modules/shot/e_mod_main.c:931
 msgid "Medium"
 msgstr "Mittel"
 
@@ -6081,7 +6083,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:729
+#: src/modules/shot/e_mod_main.c:929
 msgid "High"
 msgstr "Hoch"
 
@@ -7249,8 +7251,8 @@ msgid "Resize by"
 msgstr "Größe ändern um"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:265
-#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:74
-#: src/modules/xkbswitch/e_mod_main.c:252
+#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/xkbswitch/e_mod_main.c:263
 msgid "Keyboard"
 msgstr "Tastatur"
 
@@ -7521,8 +7523,9 @@ msgid "Everything Module"
 msgstr "Everything-Modul"
 
 #: src/modules/everything/e_mod_main.c:599
-msgid "Run Everything"
-msgstr "Everything ausführen"
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "Starter"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
@@ -9352,20 +9355,25 @@ msgstr ""
 msgid "Systray"
 msgstr "Systemleiste"
 
-#: src/modules/shot/e_mod_main.c:176 src/modules/shot/e_mod_main.c:210
+#: src/modules/shot/e_mod_main.c:77
+#, fuzzy
+msgid "Screenshot"
+msgstr "Bildschirmfotograph"
+
+#: src/modules/shot/e_mod_main.c:386
 msgid "Error saving screenshot file"
 msgstr "Fehler beim Speichern des Bildschirmfotos"
 
-#: src/modules/shot/e_mod_main.c:177 src/modules/shot/e_mod_main.c:211
+#: src/modules/shot/e_mod_main.c:387
 #, c-format
 msgid "Path: %s"
 msgstr "Pfad: %s"
 
-#: src/modules/shot/e_mod_main.c:228
+#: src/modules/shot/e_mod_main.c:412
 msgid "Error - Unknown format"
 msgstr "Fehler - Unbekanntes Format"
 
-#: src/modules/shot/e_mod_main.c:229
+#: src/modules/shot/e_mod_main.c:413
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9374,94 +9382,94 @@ msgstr ""
 "png' Erweiterungen nutzen,<br>da andere Formate momentan<br>nicht korrekt "
 "unterstützt werden."
 
-#: src/modules/shot/e_mod_main.c:277
+#: src/modules/shot/e_mod_main.c:473
 msgid "Select screenshot save location"
 msgstr "Wähle Ort zum Speichern des Bildschirmfotos aus"
 
-#: src/modules/shot/e_mod_main.c:289 src/modules/shot/e_mod_main.c:802
+#: src/modules/shot/e_mod_main.c:487 src/modules/shot/e_mod_main.c:1002
 msgid "Save"
 msgstr "Speichern"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:588
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s & %s hochgeladen"
 
-#: src/modules/shot/e_mod_main.c:409
+#: src/modules/shot/e_mod_main.c:608
 msgid "Error - Upload Failed"
 msgstr "Fehler - Hochladen fehlgeschlagen"
 
 # No need to translate "code" as code is a widely used term in germany without any proper translation.
-#: src/modules/shot/e_mod_main.c:410
+#: src/modules/shot/e_mod_main.c:609
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Hochladen mit Statuscode %i fehlgeschlagen."
 
-#: src/modules/shot/e_mod_main.c:454
+#: src/modules/shot/e_mod_main.c:654
 msgid "Error - Can't create file"
 msgstr "Fehler - Kann Datei nicht erstellen"
 
-#: src/modules/shot/e_mod_main.c:455
+#: src/modules/shot/e_mod_main.c:655
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Temporäre Datei '%s' kann nicht erzeugt werden: %s"
 
-#: src/modules/shot/e_mod_main.c:473
+#: src/modules/shot/e_mod_main.c:673
 msgid "Error - Can't open file"
 msgstr "Fehler - Datei kann nicht geöffnet werden"
 
-#: src/modules/shot/e_mod_main.c:474
+#: src/modules/shot/e_mod_main.c:674
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Temporäre Datei '%s' kann nicht geöffnet werden: %s"
 
-#: src/modules/shot/e_mod_main.c:482
+#: src/modules/shot/e_mod_main.c:682
 msgid "Error - Bad size"
 msgstr "Fehler - Fehlerhafte Größe"
 
-#: src/modules/shot/e_mod_main.c:483
+#: src/modules/shot/e_mod_main.c:683
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Größe der Datei '%s' kann nicht bestimmt werden"
 
-#: src/modules/shot/e_mod_main.c:493
+#: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't allocate memory"
 msgstr "Fehler - Speicher kann nicht alloziiert werden"
 
-#: src/modules/shot/e_mod_main.c:494
+#: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Speicher für Bild %s kann nicht alloziiert werden"
 
-#: src/modules/shot/e_mod_main.c:501
+#: src/modules/shot/e_mod_main.c:701
 msgid "Error - Can't read picture"
 msgstr "Fehler - Bild kann nicht gelesen werden"
 
-#: src/modules/shot/e_mod_main.c:502
+#: src/modules/shot/e_mod_main.c:702
 msgid "Cannot read picture"
 msgstr "Bild kann nicht gelesen werden"
 
-#: src/modules/shot/e_mod_main.c:524
+#: src/modules/shot/e_mod_main.c:724
 msgid "Uploading screenshot"
 msgstr "Lade Bildschirmfoto hoch"
 
-#: src/modules/shot/e_mod_main.c:529
+#: src/modules/shot/e_mod_main.c:729
 msgid "Uploading ..."
 msgstr "Lädt hoch ..."
 
-#: src/modules/shot/e_mod_main.c:534
+#: src/modules/shot/e_mod_main.c:734
 msgid "Screenshot is available at this location:"
 msgstr "Bildschirmfoto ist an dieser Stelle verfügbar:"
 
-#: src/modules/shot/e_mod_main.c:543
+#: src/modules/shot/e_mod_main.c:743
 msgid "Hide"
 msgstr "Verstecken"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:767
 msgid "Confirm Share"
 msgstr "Veröffentlichung bestätigen"
 
-#: src/modules/shot/e_mod_main.c:568
+#: src/modules/shot/e_mod_main.c:768
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9469,40 +9477,40 @@ msgstr ""
 "Dieses Bild wird auf enlightenment.org<br>hochgeladen. Es wird öffentlich "
 "einsehbar sein."
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:770
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: src/modules/shot/e_mod_main.c:671
+#: src/modules/shot/e_mod_main.c:871
 msgid "Where to put Screenshot..."
 msgstr "Wohin mit dem Bildschirmfoto ..."
 
-#: src/modules/shot/e_mod_main.c:723
+#: src/modules/shot/e_mod_main.c:923
 msgid "Quality"
 msgstr "Qualität"
 
-#: src/modules/shot/e_mod_main.c:727
+#: src/modules/shot/e_mod_main.c:927
 msgid "Perfect"
 msgstr "Perfekt"
 
-#: src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:1004
 msgid "Share"
 msgstr "Teilen"
 
-#: src/modules/shot/e_mod_main.c:941 src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:1155 src/modules/shot/e_mod_main.c:1208
 msgid "Take Shot"
 msgstr "Foto machen"
 
-#: src/modules/shot/e_mod_main.c:952 src/modules/shot/e_mod_main.c:982
-#: src/modules/shot/e_mod_main.c:993
+#: src/modules/shot/e_mod_main.c:1166 src/modules/shot/e_mod_main.c:1201
+#: src/modules/shot/e_mod_main.c:1212
 msgid "Take Screenshot"
 msgstr "Bildschirmfoto machen"
 
-#: src/modules/shot/e_mod_main.c:970
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Shot Error"
 msgstr "Foto Fehler"
 
-#: src/modules/shot/e_mod_main.c:971
+#: src/modules/shot/e_mod_main.c:1190
 msgid "Cannot initialize network"
 msgstr "Netzwerk kann nicht initialisiert werden"
 
@@ -9779,6 +9787,23 @@ msgstr "Ersatz-ID ignorieren"
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
 msgstr "Mehrfach-Bildschirm-Geometrie benutzen"
+
+#~ msgid "About"
+#~ msgstr "Über"
+
+# ??
+#, fuzzy
+#~ msgid "Quick Start"
+#~ msgstr "Schnellstartleiste"
+
+#~ msgid "Moksha cannot initialize E_Randr!\n"
+#~ msgstr "Moksha kann E_Randr nicht initialisieren!\n"
+
+#~ msgid "Offline"
+#~ msgstr "Offline"
+
+#~ msgid "Run Everything"
+#~ msgstr "Everything ausführen"
 
 #~ msgid "Compositor Error"
 #~ msgstr "Compositor Fehler"
@@ -10857,9 +10882,6 @@ msgstr "Mehrfach-Bildschirm-Geometrie benutzen"
 
 #~ msgid "Failed to switch to new vt: %m\n"
 #~ msgstr "Wechsel zu neuem vt schlug fehl: %m\n"
-
-#~ msgid "Screenshooter"
-#~ msgstr "Bildschirmfotograph"
 
 #~ msgid "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
 #~ msgstr "Sie sind im Begriff, Moksha zu beenden.<br><br>Sind Sie sicher?"
