@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-09 23:09+0100\n"
+"POT-Creation-Date: 2016-11-23 23:33+0100\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -100,6 +100,7 @@ msgstr "Är du säker på att du vill avsluta?"
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
 #: src/bin/e_fm.c:10471 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1267
+#: src/modules/shot/e_mod_main.c:341
 msgid "Yes"
 msgstr "Ja"
 
@@ -863,9 +864,9 @@ msgstr "Välj en"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:489 src/modules/shot/e_mod_main.c:744
-#: src/modules/shot/e_mod_main.c:770 src/modules/shot/e_mod_main.c:1006
-#: src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:341 src/modules/shot/e_mod_main.c:489
+#: src/modules/shot/e_mod_main.c:744 src/modules/shot/e_mod_main.c:770
+#: src/modules/shot/e_mod_main.c:1006 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -2648,7 +2649,8 @@ msgstr "Begär position"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/shot/e_mod_config.c:102 src/modules/tasks/e_mod_main.c:728
+#: src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 msgid "Settings"
 msgstr "Inställningar"
@@ -10111,6 +10113,26 @@ msgstr "System"
 msgid "Screenshot"
 msgstr "Setup Skärmar"
 
+#: src/modules/shot/e_mod_main.c:99
+#, fuzzy
+msgid "Screenshot in: "
+msgstr "Setup Skärmar"
+
+#: src/modules/shot/e_mod_main.c:114
+#, fuzzy
+msgid "Screenshot stored in"
+msgstr "Setup Skärmar"
+
+#: src/modules/shot/e_mod_main.c:334
+msgid "Error - Folder does not exist"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:336
+msgid ""
+"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
+"Take Screenshot<br><br>Would you like to set up it now?"
+msgstr ""
+
 #: src/modules/shot/e_mod_main.c:386
 #, fuzzy
 msgid "Error saving screenshot file"
@@ -10273,6 +10295,52 @@ msgstr "Körfel"
 #, fuzzy
 msgid "Cannot initialize network"
 msgstr "Moksha kan inte starta Filhanteraren.\n"
+
+#: src/modules/shot/e_mod_main.c:1220 src/modules/shot/e_mod_config.c:53
+#, fuzzy
+msgid "Screenshot Settings"
+msgstr "Skärmlåset Inställningar"
+
+#: src/modules/shot/e_mod_config.c:104
+#, fuzzy
+msgid " Show notifications"
+msgstr "Notifiering"
+
+#: src/modules/shot/e_mod_config.c:107
+msgid " Launch app after screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:110
+#, fuzzy
+msgid "Application for opening:"
+msgstr "Applikationsprioritet"
+
+#: src/modules/shot/e_mod_config.c:116
+#, fuzzy
+msgid "Folder for saving screenshots:"
+msgstr "Fel vid öppnandet av modul"
+
+#: src/modules/shot/e_mod_config.c:122
+#, fuzzy
+msgid "Delay time [s]"
+msgstr "Fördröjning tills avbryta"
+
+#: src/modules/shot/e_mod_config.c:127
+msgid "Image quality [1-99 = jpg, 100 = png]"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:134
+msgid "Info"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:135
+msgid "Bind Take Shot in Wndows:Action"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:137
+#, fuzzy
+msgid "for window screenshot!"
+msgstr "Fel vid öppnandet av modul"
 
 #: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:735
 #, fuzzy
@@ -11544,10 +11612,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Even if on power"
 #~ msgstr "Även om på strömmen"
-
-#, fuzzy
-#~ msgid "Delay until suspend"
-#~ msgstr "Fördröjning tills avbryta"
 
 #, fuzzy
 #~ msgid "Screensaver"

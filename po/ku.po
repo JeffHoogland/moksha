@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-09 23:09+0100\n"
+"POT-Creation-Date: 2016-11-23 23:33+0100\n"
 "PO-Revision-Date: 2009-06-03 16:28+0000\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@gmail.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -95,6 +95,7 @@ msgstr ""
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
 #: src/bin/e_fm.c:10471 src/bin/e_screensaver.c:189
 #: src/modules/quickaccess/e_mod_quickaccess.c:1267
+#: src/modules/shot/e_mod_main.c:341
 msgid "Yes"
 msgstr "Erê"
 
@@ -804,9 +805,9 @@ msgstr ""
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:489 src/modules/shot/e_mod_main.c:744
-#: src/modules/shot/e_mod_main.c:770 src/modules/shot/e_mod_main.c:1006
-#: src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:341 src/modules/shot/e_mod_main.c:489
+#: src/modules/shot/e_mod_main.c:744 src/modules/shot/e_mod_main.c:770
+#: src/modules/shot/e_mod_main.c:1006 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr ""
 
@@ -2432,7 +2433,8 @@ msgstr ""
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
 #: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/shot/e_mod_config.c:102 src/modules/tasks/e_mod_main.c:728
+#: src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 msgid "Settings"
 msgstr ""
@@ -8989,6 +8991,24 @@ msgstr ""
 msgid "Screenshot"
 msgstr ""
 
+#: src/modules/shot/e_mod_main.c:99
+msgid "Screenshot in: "
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:114
+msgid "Screenshot stored in"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:334
+msgid "Error - Folder does not exist"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:336
+msgid ""
+"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
+"Take Screenshot<br><br>Would you like to set up it now?"
+msgstr ""
+
 #: src/modules/shot/e_mod_main.c:386
 msgid "Error saving screenshot file"
 msgstr ""
@@ -9135,6 +9155,46 @@ msgstr ""
 
 #: src/modules/shot/e_mod_main.c:1190
 msgid "Cannot initialize network"
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:1220 src/modules/shot/e_mod_config.c:53
+msgid "Screenshot Settings"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:104
+msgid " Show notifications"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:107
+msgid " Launch app after screenshot"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:110
+msgid "Application for opening:"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:116
+msgid "Folder for saving screenshots:"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:122
+msgid "Delay time [s]"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:127
+msgid "Image quality [1-99 = jpg, 100 = png]"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:134
+msgid "Info"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:135
+msgid "Bind Take Shot in Wndows:Action"
+msgstr ""
+
+#: src/modules/shot/e_mod_config.c:137
+msgid "for window screenshot!"
 msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:735

@@ -96,7 +96,7 @@ Eina_Bool _timer_cb(void *data)
    if (shot_conf->count>0)
      {
 		if (shot_conf->notify)
-       _notify(shot_conf->count,_("Screenshot in: ","... ",1020,1);
+       _notify(shot_conf->count,_("Screenshot in: "),"... ",1020,1);
        
        shot_conf->count--;
        return  ECORE_CALLBACK_PASS_ON;
