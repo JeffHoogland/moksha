@@ -284,6 +284,7 @@ src/modules/quickaccess/e_mod_main.c
 src/modules/quickaccess/e_mod_quickaccess.c
 src/modules/systray/e_mod_main.c
 src/modules/shot/e_mod_main.c
+src/modules/shot/e_mod_config.c
 src/modules/tasks/e_mod_main.c
 src/modules/tasks/e_mod_config.c
 src/modules/tiling/e_mod_config.c
