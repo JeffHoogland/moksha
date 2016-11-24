@@ -96,7 +96,7 @@ Eina_Bool _timer_cb(void *data)
    if (shot_conf->count>0)
      {
 		if (shot_conf->notify)
-       _notify(shot_conf->count,"Screenshot in: ","... ",1020,1);
+       _notify(shot_conf->count,_("Screenshot in: "),"... ",1020,1);
        
        shot_conf->count--;
        return  ECORE_CALLBACK_PASS_ON;
@@ -111,7 +111,7 @@ Eina_Bool _timer_cb(void *data)
 static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
- _notify(1,"Screenshot stored in",shot_conf->path,3000,0);
+ _notify(1,_("Screenshot stored in"),shot_conf->path,3000,0);
  return EINA_FALSE;
 }
 
@@ -331,14 +331,14 @@ _save_to(const char *file)
         if (!evas_object_image_save(o_img, file, NULL, opts))
         {
 		  
-          e_confirm_dialog_show(D_("Error - Folder does not exist"),
+          e_confirm_dialog_show(_("Error - Folder does not exist"),
                           "application-exit",
-                          D_("Change folder in Take Screenshot settings<br>"
+                          _("Change folder in Take Screenshot settings<br>"
                           "<br>"
                           "Menu-Settings-All-Advanced-Take Screenshot<br>"
                           "<br>"
                           "Would you like to set up it now?"),
-                          D_("Yes"), D_("Cancel"),
+                          _("Yes"), _("Cancel"),
                           _cb_dialog_yes, NULL, NULL, NULL,
                           _cb_dialog_cancel, NULL);
         }
@@ -1217,7 +1217,7 @@ e_modapi_init(E_Module *m)
 				     NULL, "preferences-extensions");
 				     
          
-   e_configure_registry_item_add("extensions/takescreenshot", 20, D_("Screenshot Settings"), 
+   e_configure_registry_item_add("extensions/takescreenshot", 20, _("Screenshot Settings"), 
                                  NULL, "screenshot", e_int_config_shot_module);
   
    conf_item_edd = E_CONFIG_DD_NEW("Shot_Config_Item", Config_Item);
