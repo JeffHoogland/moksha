@@ -45,6 +45,7 @@ AC_PROG_CC_C99
 AM_PROG_CC_C_O
 AC_C_CONST
 AC_FUNC_ALLOCA
+AC_PROG_MKDIR_P
 AC_C___ATTRIBUTE__
 
 LT_INIT([disable-static])
@@ -980,6 +981,7 @@ data/tools/Makefile
 data/etc/Makefile
 data/etc/sysactions.conf
 data/icons/Makefile
+data/backgrounds/Makefile
 doc/Makefile
 doc/Doxyfile
 doc/e.dox
