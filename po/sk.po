@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2016-11-23 23:33+0100\n"
+"POT-Creation-Date: 2017-01-27 01:47+0000\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -76,8 +76,7 @@ msgstr "Násilne ukončiť"
 #: src/bin/e_actions.c:2308 src/bin/e_actions.c:2368 src/bin/e_actions.c:2433
 #: src/bin/e_actions.c:2498 src/bin/e_confirm_dialog.c:53
 #: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10468 src/bin/e_fm.c:10834
-#: src/bin/e_screensaver.c:191
-#: src/modules/quickaccess/e_mod_quickaccess.c:1267
+#: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Nie"
 
@@ -96,9 +95,8 @@ msgstr "Ste si istý, že chcete skončiť?"
 
 #: src/bin/e_actions.c:2152 src/bin/e_actions.c:2246 src/bin/e_actions.c:2306
 #: src/bin/e_actions.c:2366 src/bin/e_actions.c:2431 src/bin/e_actions.c:2496
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311
-#: src/bin/e_fm.c:10471 src/bin/e_screensaver.c:189
-#: src/modules/quickaccess/e_mod_quickaccess.c:1267
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311 src/bin/e_fm.c:10471
+#: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:341
 msgid "Yes"
 msgstr "Áno"
@@ -676,7 +674,6 @@ msgid "Application"
 msgstr "Aplikácia"
 
 #: src/bin/e_actions.c:3393
-#, fuzzy
 msgid "New Instance of Focused App"
 msgstr ""
 
@@ -859,8 +856,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:<br>%s<br><br>do:"
-"<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z bezpečnostných dôvodov.<br>"
+"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:<br>"
+"%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z bezpečnostných "
+"dôvodov.<br>"
 
 #: src/bin/e_config.c:1483 src/bin/e_config.c:2108
 #: src/bin/e_config_dialog.c:278 src/bin/e_eap_editor.c:860
@@ -1029,7 +1027,9 @@ msgstr "Chyba - chýba popdora PAM"
 
 #: src/bin/e_desklock.c:237
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
-msgstr "Do desktopu Moksha nebola pridaná podpora PAM<br>takže zamykanie plochy je vypnuté."
+msgstr ""
+"Do desktopu Moksha nebola pridaná podpora PAM<br>takže zamykanie plochy je "
+"vypnuté."
 
 #: src/bin/e_desklock.c:301
 msgid "Lock Failed"
@@ -1081,8 +1081,8 @@ msgid ""
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
-"Odomkli ste plochu príliš rýchlo.<br><br>Chcete zapnúť <b>režim prezentácie</b> a "
-"systému dočasne vypnúť šetrič obrazovky, zámok a úsporu energie?"
+"Odomkli ste plochu príliš rýchlo.<br><br>Chcete zapnúť <b>režim prezentácie</"
+"b> a systému dočasne vypnúť šetrič obrazovky, zámok a úsporu energie?"
 
 #: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
@@ -1114,8 +1114,7 @@ msgid "Desktop Entry Editor"
 msgstr "Editor záznamov plochy"
 
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
-#: src/bin/e_int_border_prop.c:499
-#: src/modules/conf_intl/e_int_config_imc.c:886
+#: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:265
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Name"
@@ -1180,8 +1179,7 @@ msgid "Show in Menus"
 msgstr "Zobraziť v ponukách"
 
 #: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/bin/e_int_border_remember.c:763
-#: src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
 msgstr "Voľby"
 
@@ -1251,7 +1249,7 @@ msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha nemôže obnoviť adresár:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:469
-#,c-format
+#, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha nemôže vytvoriť proces potomka:<br><br>%s<br>"
 
@@ -1569,8 +1567,7 @@ msgstr "%s nemôže byť zapísaný"
 msgid "Directory"
 msgstr "Priečinok"
 
-#: src/bin/e_fm.c:9715
-#: src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9715 src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "Súbor"
 
@@ -1820,8 +1817,7 @@ msgstr "Predvolené"
 msgid "Thumbnail"
 msgstr "Náhľad"
 
-#: src/bin/e_fm_prop.c:533
-#: src/modules/conf_display/e_int_config_desklock.c:364
+#: src/bin/e_fm_prop.c:533 src/modules/conf_display/e_int_config_desklock.c:364
 msgid "Custom"
 msgstr "Vlastné"
 
@@ -1944,8 +1940,8 @@ msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
 msgstr ""
-"Moksha nie je schopný importovať obrázok.<br><br>Ste si istí, že je to naozaj "
-"správna téma?"
+"Moksha nie je schopný importovať obrázok.<br><br>Ste si istí, že je to "
+"naozaj správna téma?"
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
@@ -1961,7 +1957,8 @@ msgstr "Zlyhal import obrázku"
 
 #: src/bin/e_import_config_dialog.c:296
 msgid "Moksha was unable to import the picture<br>due to conversion errors."
-msgstr "Moksha nie je schopný importovať obrázok<br><br>vzhľadom ku chybe konverzie."
+msgstr ""
+"Moksha nie je schopný importovať obrázok<br><br>vzhľadom ku chybe konverzie."
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2773,6 +2770,7 @@ msgstr "Stratené okná"
 #: src/bin/e_int_menus.c:259
 msgid "About Operating System"
 msgstr "O operačnom systéme"
+
 #: src/bin/e_int_menus.c:265
 msgid "Help"
 msgstr "Pomoc"
@@ -2896,8 +2894,7 @@ msgstr "Zobraziť pri kliknutí myšou"
 msgid "Hide timeout"
 msgstr "Skryť timeout"
 
-#: src/bin/e_int_shelf_config.c:237
-#: src/modules/notification/e_mod_config.c:107
+#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:107
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f sek."
@@ -3520,9 +3517,9 @@ msgid ""
 "loading the module named: %s<br><br>This module has been disabled and will "
 "not be loaded."
 msgstr ""
-"Moksha zlyhala pri štarte a bola reštartovaná.<br>Bola tam chyba "
-"počas spúšťania modulu s názvom: %s<br><br>Tento modul bol zakázaný a "
-"nebude spustený."
+"Moksha zlyhala pri štarte a bola reštartovaná.<br>Bola tam chyba počas "
+"spúšťania modulu s názvom: %s<br><br>Tento modul bol zakázaný a nebude "
+"spustený."
 
 #: src/bin/e_main.c:1898
 msgid ""
@@ -3711,8 +3708,9 @@ msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
-"Automatické skrývanie lišty nebude pracovať správne<br>s aktuálnou konfiguráciou; "
-"nastav lištu na<br>\"Pod všetkým\" alebo zakáž automatické skrývanie."
+"Automatické skrývanie lišty nebude pracovať správne<br>s aktuálnou "
+"konfiguráciou; nastav lištu na<br>\"Pod všetkým\" alebo zakáž automatické "
+"skrývanie."
 
 #: src/bin/e_shelf.c:1122
 msgid "Add New Shelf"
@@ -3791,9 +3789,9 @@ msgid ""
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>Auto logout in %d seconds."
 msgstr ""
-"Odhlasovanie trvá príliš dloho.<br>Niektoré aplikácie odmietajú byť zatvorené<br>Prajete si "
-"dokončiť odhlasovanie<br>bez ohľadu na tieto <br>aplikácie ?"
-"<br><br>Automatické odhlásenie za %d sekúnd."
+"Odhlasovanie trvá príliš dloho.<br>Niektoré aplikácie odmietajú byť "
+"zatvorené<br>Prajete si dokončiť odhlasovanie<br>bez ohľadu na tieto "
+"<br>aplikácie ?<br><br>Automatické odhlásenie za %d sekúnd."
 
 #: src/bin/e_sys.c:498
 msgid "Logout problems"
@@ -3828,36 +3826,40 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"Odhlásenie.<br>Nemôžete vykonať ďalšie operaácie systému<br>odhlásenie začalo."
+"Odhlásenie.<br>Nemôžete vykonať ďalšie operaácie systému<br>odhlásenie "
+"začalo."
 
 #: src/bin/e_sys.c:592
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
-"Vypínanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už začal"
+"Vypínanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už "
+"začal"
 
 #: src/bin/e_sys.c:598
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr ""
-"Resetovanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už začal"
+"Resetovanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už "
+"začal"
 
 #: src/bin/e_sys.c:604
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
-"Prechod do úsporného režimu.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už začal"
+"Prechod do úsporného režimu.<br>Nemôžete vykonávať iné operácie "
+"systému<br>nakoľko proces už začal"
 
 #: src/bin/e_sys.c:610
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
-"Prechod do režimu uspania.<br>nemožno vykonávať žiadne ďalšie operácie systému<br>"
-"nakoľko proces už začal"
+"Prechod do režimu uspania.<br>nemožno vykonávať žiadne ďalšie operácie "
+"systému<br>nakoľko proces už začal"
 
 #: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
@@ -4193,8 +4195,7 @@ msgstr[2] "%li minút"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:292
 #: src/modules/conf_paths/e_int_config_env.c:311
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:110
-#: src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:110 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Pridať"
 
@@ -5106,7 +5107,6 @@ msgid ""
 "or make it<br>respond to edge clicks:"
 msgstr ""
 
-
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
 msgstr "Nastavenie skratiek pre okraje obrazovky"
@@ -5310,7 +5310,6 @@ msgid "Thumbscroll"
 msgstr "Thumbscroll"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:97
-#, 
 msgid "Enable Thumbscroll"
 msgstr "Povoliť rolovanie"
 
@@ -5341,7 +5340,7 @@ msgstr "Trecie spomalenie"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:122
 #: src/modules/conf_performance/e_int_config_powermanagement.c:243
-#,  c-format
+#, c-format
 msgid "%1.2f s"
 msgstr "%1.2f sek"
 
@@ -5455,8 +5454,8 @@ msgid ""
 "Moksha was unable to import the configuration.<br><br>Are you sure this is "
 "really a valid configuration?"
 msgstr ""
-"Moksha nevie importovať konfiguráciu.<br><br>Ste si istí, že je "
-"toto správna konfigurácia?"
+"Moksha nevie importovať konfiguráciu.<br><br>Ste si istí, že je toto správna "
+"konfigurácia?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
@@ -5641,8 +5640,8 @@ msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
 "%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
-"Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>"
-"%s</hilight>.<br> Zvoľte iné priradenie."
+"Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>%s</hilight>."
+"<br> Zvoľte iné priradenie."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
@@ -5793,8 +5792,7 @@ msgstr "Komentáre"
 #: src/modules/conf_menus/e_int_config_menus.c:273
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:203
-#: src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:203 src/modules/xkbswitch/e_mod_config.c:298
 msgid "Gadgets"
 msgstr "Widgety"
 
@@ -6056,8 +6054,7 @@ msgid "e.g. Saving to disk"
 msgstr "napr. uloženie na disk"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:933
-#: src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:933 src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Málo energie"
 
@@ -7393,7 +7390,8 @@ msgid "Maximum Speed"
 msgstr "Maximálna rýchlosť"
 
 #: src/modules/cpufreq/e_mod_main.c:250
-msgid "Restore CPU power policy"
+#, fuzzy
+msgid "Restore CPU Power Policy"
 msgstr "Obnoviť riadenie spotreby CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:288
@@ -7762,7 +7760,8 @@ msgid "Move to Trash"
 msgstr "Presunúť do koša"
 
 #: src/modules/everything/evry_plug_files.c:1331
-msgid "Open directory"
+#, fuzzy
+msgid "Open Directory"
 msgstr "Otvoriť priečinok"
 
 #: src/modules/everything/evry_plug_files.c:1335
@@ -7822,7 +7821,8 @@ msgid "Toggle Fullscreen"
 msgstr "Celá obrazovka"
 
 #: src/modules/everything/evry_plug_windows.c:459
-msgid "Send to desktop"
+#, fuzzy
+msgid "Send to Desktop"
 msgstr "Presunúť na plochu"
 
 #: src/modules/everything/evry_plugin.c:177
@@ -8117,8 +8117,7 @@ msgstr "Funkcie"
 #: src/modules/fileman/e_mod_config.c:428
 #: src/modules/fileman/e_mod_config.c:431
 #: src/modules/fileman/e_mod_config.c:434
-#: src/modules/fileman/e_mod_config.c:437
-#: src/modules/gadman/e_mod_config.c:208
+#: src/modules/fileman/e_mod_config.c:437 src/modules/gadman/e_mod_config.c:208
 msgid "Mode"
 msgstr "Režim"
 
@@ -9093,7 +9092,9 @@ msgstr "Pomoc s rýchlym prístupom"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
 msgid "Cannot set relaunch for window without name and class!"
-msgstr "Nie je možné nastaviť opätovné spustenie pro okno, ktoré nemá ani meno ani triedu!"
+msgstr ""
+"Nie je možné nastaviť opätovné spustenie pro okno, ktoré nemá ani meno ani "
+"triedu!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:350
 msgid "Cannot set relaunch for internal E dialog!"
@@ -9283,8 +9284,8 @@ msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
-"Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Settings-All-Advanced-"
-"Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
+"Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Settings-"
+"All-Advanced-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
 
 #: src/modules/shot/e_mod_main.c:386
 msgid "Error saving screenshot file"
@@ -9659,8 +9660,8 @@ msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
-"Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené moduly "
-"ktoré využívajú vzdialené služby."
+"Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
+"moduly ktoré využívajú vzdialené služby."
 
 #: src/modules/notification/e_mod_main.c:92
 msgid "Exited Offline Mode"
