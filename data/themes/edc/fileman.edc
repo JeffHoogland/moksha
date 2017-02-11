@@ -862,7 +862,6 @@ group { name: "e/fileman/desktop/icon/fixed";
          }
       }
       part { name: "label_min"; type: SPACER;
-         insert_after: "base";
          scale: 1;
          description { state: "default" 0.0;
             align: 0.5 0.0;

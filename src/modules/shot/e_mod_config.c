@@ -50,7 +50,7 @@ e_int_config_shot_module(E_Container *con, const char *params __UNUSED__)
    
  
    
-   cfd = e_config_dialog_new(con, D_("Screenshot Settings"), "E", 
+   cfd = e_config_dialog_new(con, _("Screenshot Settings"), "E", 
                              "extensions/takescreenshot", buf, 0, v, NULL);
 
    e_dialog_resizable_set(cfd->dia, 0);
@@ -99,42 +99,42 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    o = e_widget_list_add(evas, 0, 0);
 
-   of = e_widget_framelist_add(evas, D_("Settings"), 0);
+   of = e_widget_framelist_add(evas, _("Settings"), 0);
    
-   ow = e_widget_check_add(evas, D_(" Show notifications"), &(cfdata->notify));
+   ow = e_widget_check_add(evas, _(" Show notifications"), &(cfdata->notify));
    e_widget_framelist_object_append(of, ow);
    
-   ow = e_widget_check_add(evas, D_(" Launch app after screenshot"), &(cfdata->view_enable));
+   ow = e_widget_check_add(evas, _(" Launch app after screenshot"), &(cfdata->view_enable));
    e_widget_framelist_object_append(of, ow);
       
-   ow = e_widget_label_add(evas, D_("Application for opening:"));
+   ow = e_widget_label_add(evas, _("Application for opening:"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->viewer, NULL, NULL, NULL);
    e_widget_size_min_set(ow, 60, 28);
    e_widget_framelist_object_append(of, ow);
    
-   ow = e_widget_label_add(evas, D_("Folder for saving screenshots:"));
+   ow = e_widget_label_add(evas, _("Folder for saving screenshots:"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->path, NULL, NULL, NULL);
    e_widget_size_min_set(ow, 60, 28);
    e_widget_framelist_object_append(of, ow);
    
-   ow = e_widget_label_add(evas, D_("Delay time [s]"));
+   ow = e_widget_label_add(evas, _("Delay time [s]"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 0.0, 10.0, 1.0, 0, &(cfdata->delay), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    
-   ow = e_widget_label_add(evas, D_("Image quality [1-99 = jpg, 100 = png]"));
+   ow = e_widget_label_add(evas, _("Image quality [1-99 = jpg, 100 = png]"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 1.0, 100.0, 1.0, 0, &(cfdata->pict_quality), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    
    e_widget_list_object_append(o, of, 1, 0, 0.5);
    
-   of = e_widget_framelist_add(evas, D_("Info"), 0);   
-   ow = e_widget_label_add(evas, D_("Bind Take Shot in Wndows:Action"));
+   of = e_widget_framelist_add(evas, _("Info"), 0);   
+   ow = e_widget_label_add(evas, _("Bind Take Shot in Wndows:Action"));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_label_add(evas, D_("for window screenshot!"));
+   ow = e_widget_label_add(evas, _("for window screenshot!"));
    e_widget_framelist_object_append(of, ow);
    
    e_widget_list_object_append(o, of, 1, 0, 0.5);
