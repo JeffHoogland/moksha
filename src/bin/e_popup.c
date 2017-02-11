@@ -37,6 +37,9 @@ e_popup_shutdown(void)
 EAPI E_Popup *
 e_popup_new(E_Zone *zone, int x, int y, int w, int h)
 {
+    //Disable popups for now
+   return NULL;
+    
    E_Popup *pop;
 
    pop = E_OBJECT_ALLOC(E_Popup, E_POPUP_TYPE, _e_popup_free);
