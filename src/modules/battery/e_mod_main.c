@@ -761,6 +761,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, alert_timeout, INT);
    E_CONFIG_VAL(D, T, suspend_below, INT);
    E_CONFIG_VAL(D, T, force_mode, INT);
+   E_CONFIG_VAL(D, T, suspend_method, INT);
 #if defined HAVE_EEZE || defined __OpenBSD__
    E_CONFIG_VAL(D, T, fuzzy, INT);
 #endif
@@ -778,6 +779,7 @@ e_modapi_init(E_Module *m)
         battery_config->alert_timeout = 0;
         battery_config->suspend_below = 0;
         battery_config->force_mode = 0;
+        battery_config->suspend_method = 0;
 #if defined HAVE_EEZE || defined __OpenBSD__
         battery_config->fuzzy = 0;
 #endif
@@ -791,6 +793,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_LIMIT(battery_config->alert_timeout, 0, 300);
    E_CONFIG_LIMIT(battery_config->suspend_below, 0, 50);
    E_CONFIG_LIMIT(battery_config->force_mode, 0, 2);
+   E_CONFIG_LIMIT(battery_config->suspend_method, 0, 2);
 #ifdef HAVE_ENOTIFY
    E_CONFIG_LIMIT(battery_config->desktop_notifications, 0, 1);
 #endif
