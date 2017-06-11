@@ -22,7 +22,7 @@ EINTERN int
 e_moveresize_init(void)
 {
     //Re-enable code when popups work again
-   /*E_Border_Hook *h;
+   E_Border_Hook *h;
 
    h = e_border_hook_add(E_BORDER_HOOK_RESIZE_BEGIN, _e_resize_begin, NULL);
    if (h) hooks = eina_list_append(hooks, h);
@@ -35,7 +35,7 @@ e_moveresize_init(void)
    h = e_border_hook_add(E_BORDER_HOOK_MOVE_UPDATE, _e_move_update, NULL);
    if (h) hooks = eina_list_append(hooks, h);
    h = e_border_hook_add(E_BORDER_HOOK_MOVE_END, _e_move_end, NULL);
-   if (h) hooks = eina_list_append(hooks, h);*/
+   if (h) hooks = eina_list_append(hooks, h);
 
    return 1;
 }
@@ -44,10 +44,10 @@ EINTERN int
 e_moveresize_shutdown(void)
 {
         //Re-enable code when popups work again
-   /*E_Border_Hook *h;
+   E_Border_Hook *h;
 
    EINA_LIST_FREE(hooks, h)
-     e_border_hook_del(h);*/
+     e_border_hook_del(h);
 
    return 1;
 }
