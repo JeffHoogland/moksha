@@ -427,6 +427,65 @@ ACT_FN_GO(window_sticky, )
 }
 
 /***************************************************************************/
+ACT_FN_GO(window_stack_top_toggle, __UNUSED__)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+        obj = E_OBJECT(e_border_focused_get());
+        if (!obj) return;
+     }
+
+   if (!((E_Border *)obj)->lock_user_stacking)
+     {
+        E_Border *bd;
+        bd = (E_Border *)obj;
+        if (bd->layer != E_LAYER_ABOVE)
+          e_border_layer_set(bd, E_LAYER_ABOVE);
+        else e_border_layer_set(bd, E_LAYER_NORMAL);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_stack_top, __UNUSED__)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+        obj = E_OBJECT(e_border_focused_get());
+        if (!obj) return;
+     }
+
+   if (!((E_Border *)obj)->lock_user_stacking)
+     {
+        E_Border *bd;
+        bd = (E_Border *)obj;
+        e_border_layer_set(bd, E_LAYER_ABOVE);
+     }
+}
+
+/***************************************************************************/
+ACT_FN_GO(window_stack_normal, __UNUSED__)
+{
+   if (!obj) obj = E_OBJECT(e_border_focused_get());
+   if (!obj) return;
+   if (obj->type != E_BORDER_TYPE)
+     {
+        obj = E_OBJECT(e_border_focused_get());
+        if (!obj) return;
+     }
+
+   if (!((E_Border *)obj)->lock_user_stacking)
+     {
+        E_Border *bd;
+        bd = (E_Border *)obj;
+        e_border_layer_set(bd, E_LAYER_NORMAL);
+     }
+}
+
+/***************************************************************************/
 ACT_FN_GO(window_iconic_toggle, __UNUSED__)
 {
    E_Border *bd;
@@ -3035,6 +3094,19 @@ e_actions_init(void)
    ACT_GO(window_sticky);
    e_action_predef_name_set(N_("Window : State"), N_("Sticky Mode Enable"),
                             "window_sticky", NULL, NULL, 0);
+
+   /* window_stack_top_toggle */
+   ACT_GO(window_stack_top_toggle);
+   e_action_predef_name_set(N_("Window : State"), N_("Always On Top Toggle"),
+                            "window_stack_top_toggle", NULL, NULL, 0);
+
+   ACT_GO(window_stack_top);
+   e_action_predef_name_set(N_("Window : State"), N_("Always On Top Enable"),
+                            "window_stack_top", NULL, NULL, 0);
+
+   ACT_GO(window_stack_normal);
+   e_action_predef_name_set(N_("Window : State"), N_("Always On Top Disable"),
+                            "window_stack_normal", NULL, NULL, 0);
 
    /* window_iconic_toggle */
    ACT_GO(window_iconic_toggle);
