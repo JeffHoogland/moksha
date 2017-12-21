@@ -522,6 +522,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "s",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "window_sticky_toggle", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "t",
+                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+                    "window_stack_top_toggle", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "f",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "window_fullscreen_toggle", NULL);
