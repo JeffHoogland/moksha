@@ -146,9 +146,9 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
      {
         char buf[10];
 
-        if (o == eo) continue;
+        //if (o == eo) continue;
         switch (i)
-          {
+        {
            case E_COLOR_COMPONENT_R:
              snprintf(buf, 10, "%i", wd->cv->r);
              break;
@@ -169,7 +169,7 @@ _e_wid_cb_color_changed(void *data, Evas_Object *o)
              break;
            default:
              break;
-          }
+        }
         e_widget_entry_text_set(eo, buf);
         i++;
      }
