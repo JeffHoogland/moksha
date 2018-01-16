@@ -2328,7 +2328,16 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
              if (page->fwin->win)
                fwin = _e_fwin_new(page->fwin->win->container, ici->link, "/");
              else if (page->fwin->zone)
-               fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
+             {
+			   //~ Prevent from opening E File Manager. Wa want opening the user default FM. 
+			   char buf2[4096];
+			   E_Zone *zone;
+  
+			   zone = e_util_zone_current_get (e_manager_current_get ());
+			   snprintf(buf2, sizeof(buf2), "xdg-open %s", ici->link, "/");
+			   e_exec(zone,NULL, buf2, NULL, NULL);
+               //~ fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
+			 }
           }
         else
           {
