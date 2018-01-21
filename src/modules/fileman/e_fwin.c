@@ -233,6 +233,7 @@ static void             _e_fwin_op_registry_abort_cb(void *data,
                                                      Evas_Object *obj,
                                                      const char *emission,
                                                      const char *source);
+static void             _xdg_open_default(const char *data);                                                     
 
 static E_Fwin *drag_fwin = NULL;
 
@@ -2152,8 +2153,8 @@ _e_fwin_cb_menu_extend_start(void *data,
    mi = e_menu_item_new_relative(subm, mi);
    e_menu_item_separator_set(mi, EINA_TRUE);
    
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, EINA_TRUE);
+   //~ mi = e_menu_item_new(m);
+   //~ e_menu_item_separator_set(mi, EINA_TRUE);
 #endif
    if (!selected) return;
    mi = e_menu_item_new(m);
@@ -2312,6 +2313,18 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    fwin->win->border->placed = 1;
 }
 
+static void
+_xdg_open_default(const char *data)
+{
+   E_Zone *zone;
+   char buf2[4096];
+
+   zone = e_util_zone_current_get (e_manager_current_get ());
+   snprintf(buf2, sizeof(buf2), "xdg-open \"%s\"", data);
+   e_exec(zone,NULL, buf2, NULL, NULL);
+}
+
+
 static E_Fwin *
 _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need_dia)
 {
@@ -2329,23 +2342,22 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                fwin = _e_fwin_new(page->fwin->win->container, ici->link, "/");
              else if (page->fwin->zone)
              {
-			   //~ Prevent from opening E File Manager. Wa want opening the user default FM. 
-			   char buf2[4096];
-			   E_Zone *zone;
-  
-			   zone = e_util_zone_current_get (e_manager_current_get ());
-			   snprintf(buf2, sizeof(buf2), "xdg-open %s", ici->link, "/");
-			   e_exec(zone,NULL, buf2, NULL, NULL);
+			   //~ **************************************************************************
+			   //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
+			   //~ **************************************************************************
+
+			   _xdg_open_default(ici->link);
+			   
                //~ fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
 			 }
           }
         else
-          {
+        {
              _e_fwin_border_set(page, page->fwin, ici);
              e_fm2_path_set(page->fm_obj, ici->link, "/");
              return page->fwin;
-          }
-     }
+        }
+      }  
    else if ((ici->link) && (ici->removable))
      {
         snprintf(buf, sizeof(buf), "removable:%s", ici->link);
@@ -2355,7 +2367,7 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                fwin = _e_fwin_new(page->fwin->win->container, buf, "/");
              else if (page->fwin->zone)
                fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
-          }
+          }     
         else
           {
              _e_fwin_border_set(page, page->fwin, ici);
@@ -2395,8 +2407,15 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                {
                   if (page->fwin->win)
                     fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->link ?: buf);
-                  else if (page->fwin->zone)
-                    fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
+                  else if (page->fwin->zone){
+				  //~ **************************************************************************
+			      //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
+			      //~ **************************************************************************
+					
+					  _xdg_open_default(ici->link ?: buf);
+                    
+                    //~ fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
+				}
                }
              else
                {

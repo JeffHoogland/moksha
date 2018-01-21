@@ -481,17 +481,24 @@ E_Menu *
 e_mod_menu_add(E_Menu *m, const char *path)
 {
 #ifdef ENABLE_FILES
-   E_Menu_Item *mi;
+
+   //~ ***********************************************************
+   //~ We do not want "Navigate..." item in the desktop icon menu
+   //~ ***********************************************************
+   
+   //~ E_Menu_Item *mi;
    E_Menu *sub;
 
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Navigate..."));
-   e_util_menu_item_theme_icon_set(mi, "system-file-manager");
+   //~ mi = e_menu_item_new(m);
+   //~ e_menu_item_label_set(mi, _("Navigate..."));
+   //~ e_util_menu_item_theme_icon_set(mi, "system-file-manager");
    sub = e_menu_new();
-   e_menu_item_submenu_set(mi, sub);
-   e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
-   e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_add(path));
+   //~ e_menu_item_submenu_set(mi, sub);
+   //~ e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
+   //~ e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_add(path));
    return sub;
+   (void)m;
+   return NULL;
 #else
    (void)m;
    return NULL;
