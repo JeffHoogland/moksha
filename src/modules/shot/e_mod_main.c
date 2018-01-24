@@ -132,7 +132,7 @@ _shot_conf_new(void)
    shot_conf->view_enable = 1;
    snprintf(buff, sizeof(buff), "xdg-open");
    shot_conf->viewer = eina_stringshare_add(buff);
-   snprintf(buf, sizeof(buf), "%s/Pictures", e_user_homedir_get());
+   snprintf(buf, sizeof(buf), "desktop");
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
    shot_conf->delay = 0.0;
