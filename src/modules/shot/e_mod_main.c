@@ -135,6 +135,7 @@ _shot_conf_new(void)
    snprintf(buf, sizeof(buf), "desktop");
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
+   shot_conf->full_dialog = 0;
    shot_conf->delay = 0.0;
    shot_conf->pict_quality = 100.0;
    
@@ -463,6 +464,9 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    time(&tt);
    tm = localtime(&tt);
    //~ if (quality == 100.0)
+
+   shot_conf->pict_quality=(long)quality;
+
    if (shot_conf->pict_quality == 100.0)
      strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.png", tm);
    else
@@ -496,8 +500,11 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    mask = 0;
    if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
-   //~ e_dialog_show(dia);
-   _file_select_ok_cb(NULL,NULL);
+   
+   if (shot_conf->full_dialog) 
+     e_dialog_show(dia);
+   else
+    _file_select_ok_cb(NULL,NULL);
 }
 
 static void
@@ -932,7 +939,6 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_widget_framelist_object_append(ol, o);
    o = e_widget_radio_add(evas, _("Low"), 50, rg);
    e_widget_framelist_object_append(ol, o);
-   
    e_widget_list_object_append(o_hlist, ol, 1, 0, 0.5);
 
    if (zone)
@@ -1032,11 +1038,11 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_resize(win, w, h);
    e_win_size_min_set(win, w, h);
    e_win_size_max_set(win, 99999, 99999);
-   //~ e_win_show(win);
+   if (shot_conf->full_dialog) e_win_show(win);
    e_win_border_icon_set(win, "screenshot");
    
    if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
-   _win_save_cb(win,NULL);
+   if (!shot_conf->full_dialog) _win_save_cb(win,NULL);
 }
 
 static Eina_Bool
@@ -1131,7 +1137,7 @@ _e_mod_action_cb(E_Object *obj, const char *params __UNUSED__)
       }
             _shot(zone);
 
-   //~ _shot_now(zone, NULL);
+   _shot_now(zone, NULL);
 }
 
 static void
@@ -1238,6 +1244,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, path, STR); /* our var from header */
    E_CONFIG_VAL(D, T, view_enable, INT); /* our var from header */
    E_CONFIG_VAL(D, T, notify, INT); /* our var from header */
+   E_CONFIG_VAL(D, T, full_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, delay, DOUBLE); /* our var from header */
    E_CONFIG_VAL(D, T, pict_quality, DOUBLE); /* our var from header */
    
