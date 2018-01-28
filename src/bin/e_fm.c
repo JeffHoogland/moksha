@@ -10223,8 +10223,12 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    if ((ic->entry_dialog) || (ic->entry_widget)) return;
    if (ic->sd->icon_menu.flags & E_FM2_MENU_NO_RENAME) return;
 
-   if (!_e_fm2_icon_entry_widget_add(ic))
-     {
+
+   //~ I removed this condiction because EVAS_CALLBACK_KEY_DOWN under the icon do not work
+   //~ look the function _e_fm2_icon_entry_widget_add under 
+   
+   //~ if (!_e_fm2_icon_entry_widget_add(ic))
+     //~ {
         snprintf(text, PATH_MAX + 256,
                  _("Rename %s to:"),
                  ic->info.file);
@@ -10235,7 +10239,7 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
         E_OBJECT(ic->entry_dialog)->data = ic;
         e_object_del_attach_func_set(E_OBJECT(ic->entry_dialog),
                                      _e_fm2_file_rename_delete_cb);
-     }
+     //~ }
 }
 
 static Evas_Object *
@@ -10261,8 +10265,8 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
           break;
        }
    ic->entry_widget = e_widget_entry_add(e, NULL, NULL, NULL, NULL);
-   evas_object_event_callback_add(ic->entry_widget, EVAS_CALLBACK_KEY_DOWN,
-                                  _e_fm2_icon_entry_widget_cb_key_down, ic);
+   evas_object_event_callback_add(ic->entry_widget, EVAS_CALLBACK_KEY_DOWN, 
+							     _e_fm2_icon_entry_widget_cb_key_down, ic);
    evas_event_feed_mouse_out(evas_object_evas_get(ic->obj), ecore_x_current_time_get(), NULL);
    if (ic->keygrab)
      e_grabinput_get(0, 0, ic->keygrab);

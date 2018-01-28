@@ -34,9 +34,7 @@ struct _Config
    E_Module *module;
    E_Config_Dialog *cfd;
    Eina_List *conf_items;
-   int count;
-   int notify;
-   int version;
+   int count, notify, version, full_dialog; 
    
    const char *viewer;
    const char *path;

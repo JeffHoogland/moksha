@@ -55,7 +55,13 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(N_("Launch"), N_("File Manager"),
                                  "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
-   maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
+   
+   //~ ************************************************
+   //~ We do not want "Navigate/ item in the main menu
+   //~ ************************************************
+   
+   //~ maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
+   
    e_module_delayed_set(m, 1);
 
    e_fwin_init();

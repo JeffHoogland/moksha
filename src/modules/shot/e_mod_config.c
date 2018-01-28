@@ -6,7 +6,7 @@
  * just use the E_Config_Dialog_Data for your data structures declarations */
 struct _E_Config_Dialog_Data 
 {
-   int view_enable, notify; 
+   int view_enable, notify, full_dialog; 
    double delay, pict_quality;
    char *viewer;
    char *path;
@@ -89,6 +89,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->delay = shot_conf->delay;
    cfdata->pict_quality = shot_conf->pict_quality;
    cfdata->notify = shot_conf->notify;
+   cfdata->full_dialog = shot_conf->full_dialog;
 
 }
 
@@ -100,6 +101,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Settings"), 0);
+   
+   ow = e_widget_check_add(evas, _(" Show full screenshot dialog"), &(cfdata->full_dialog));
+   e_widget_framelist_object_append(of, ow);
    
    ow = e_widget_check_add(evas, _(" Show notifications"), &(cfdata->notify));
    e_widget_framelist_object_append(of, ow);
@@ -161,6 +165,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    shot_conf->view_enable = cfdata->view_enable;
    shot_conf->delay = cfdata->delay;
    shot_conf->pict_quality = cfdata->pict_quality;
+   shot_conf->full_dialog = cfdata->full_dialog;
    e_config_save_queue();
    
    return 1;
