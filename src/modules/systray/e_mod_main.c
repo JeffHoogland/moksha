@@ -203,7 +203,7 @@ _systray_size_apply_do(Instance *inst)
    e_gadcon_client_min_size_set(inst->gcc, mw, mh);
 
    evas_object_geometry_get(o, &x, &y, &w, &h);
-   ecore_x_window_move_resize(inst->win.base, x, y + 5, w , h);
+   ecore_x_window_move_resize(inst->win.base, x, y, w, h);
 }
 
 static void
@@ -246,7 +246,7 @@ _systray_icon_geometry_apply(Icon *icon)
 
    evas_object_geometry_get(icon->o, &x, &y, &w, &h);
    evas_object_geometry_get(o, &wx, &wy, NULL, NULL);
-   ecore_x_window_move_resize(icon->win, x - wx, y - wy - 5, w, h);
+   ecore_x_window_move_resize(icon->win, x - wx, y - wy, w, h);
 }
 
 static void
