@@ -105,21 +105,25 @@ group { name: "e/modules/systray/main";
          signal: "e,action,orient,corner_lt"; source: "e";
          action: STATE_SET "vertical" 0.0;
          target: "e.box";
+         target: "e.size";
       }
       program {
          signal: "e,action,orient,corner_rt"; source: "e";
          action: STATE_SET "vertical" 0.0;
          target: "e.box";
+         target: "e.size";
       }
       program {
          signal: "e,action,orient,corner_lb"; source: "e";
          action: STATE_SET "vertical" 0.0;
          target: "e.box";
+         target: "e.size";
       }
       program {
          signal: "e,action,orient,corner_rb"; source: "e";
          action: STATE_SET "vertical" 0.0;
          target: "e.box";
+         target: "e.size";
       }
    }
 }
