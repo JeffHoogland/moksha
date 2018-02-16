@@ -76,11 +76,12 @@ static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
 
-#define BODHI_VERSION "4.4.0"
+#define BODHI_VERSION "4.5.0"
 #define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \
     "Jeff Hoogland<br>" \
+    "Stefan 'the waiter' Uram<br>" \
     "Joris 'aeonius' van Dijk<br>" \
     "Stephen 'okra' Houston<br>" \
     "Jason 'Tristam' Thomas<br>" \
@@ -88,12 +89,9 @@ static Eina_List *handlers = NULL;
     "Rbt 'ylee' Wiley<br>" \
     "Kai Huuhko<br>" \
     "Patrick Duckson<br>" \
-    "Doug 'Deepspeed' Yanez<br>" \
     "Timmy 'timmy' Larsson<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
-    "Reuben L. Lillie<br>" \
-    "Stefan 'the waiter' Uram<br>" \
     "Marcel 'SmartDuck'<br><br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
@@ -112,7 +110,8 @@ static Eina_List *handlers = NULL;
     "Mark 'ottermaton' Strawser<br>" \
     "Caerolle<br>" \
     "Gar Romero<br>" \
-
+    "Doug 'Deepspeed' Yanez<br>" \
+    "Reuben L. Lillie<br>" \
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
