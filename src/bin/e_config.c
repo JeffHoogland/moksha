@@ -674,6 +674,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, thumb_nice, INT);
 
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
+   E_CONFIG_VAL(D, T, menu_scroll_toggle, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
    E_CONFIG_VAL(D, T, menu_gadcon_client_toplevel, INT);
 
@@ -1176,6 +1177,7 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
 
      E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
+     E_CONFIG_LIMIT(e_config->menu_scroll_toggle, 0, 1);
      E_CONFIG_LIMIT(e_config->menu_apps_show, 0, 1);
      E_CONFIG_LIMIT(e_config->menu_gadcon_client_toplevel, 0, 1);
 

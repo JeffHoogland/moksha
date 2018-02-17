@@ -3,7 +3,7 @@
 /* local structures */
 struct _E_Config_Dialog_Data 
 {
-   int show_favs, show_apps;
+   int show_favs, show_apps, scroll_toggle;
    int show_name, show_generic, show_comment;
    int menu_gadcon_client_toplevel;
    double scroll_speed, fast_mouse_move_threshhold;
@@ -60,6 +60,7 @@ _fill_data(E_Config_Dialog_Data *cfdata __UNUSED__)
    else
      cfdata->default_system_menu = NULL;
    cfdata->show_favs = e_config->menu_favorites_show;
+   cfdata->scroll_toggle = e_config->menu_scroll_toggle;
    cfdata->show_apps = e_config->menu_apps_show;
    cfdata->show_name = e_config->menu_eap_name_show;
    cfdata->show_generic = e_config->menu_eap_generic_show;
@@ -298,6 +299,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
+   ow = e_widget_check_add(evas, _(" No Menu Scroll (Experimental)"), &(cfdata->scroll_toggle));
+   e_widget_framelist_object_append(ol, ow); 
+   e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Menu Scroll Speed"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%5.0f pixels/s"), 0, 20000, 100, 
@@ -324,6 +328,7 @@ static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_config->menu_favorites_show = cfdata->show_favs;
+   e_config->menu_scroll_toggle = cfdata->scroll_toggle;
    e_config->menu_apps_show = cfdata->show_apps;
    e_config->menu_eap_name_show = cfdata->show_name;
    e_config->menu_eap_generic_show = cfdata->show_generic;
@@ -377,6 +382,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 
    return ((e_config->menu_favorites_show != cfdata->show_favs) ||
 	   (e_config->menu_apps_show != cfdata->show_apps) ||
+	   (e_config->menu_scroll_toggle != cfdata->scroll_toggle) ||
 	   (e_config->menu_eap_name_show != cfdata->show_name) ||
 	   (e_config->menu_eap_generic_show != cfdata->show_generic) ||
 	   (e_config->menu_eap_comment_show != cfdata->show_comment) ||
