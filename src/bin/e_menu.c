@@ -1871,11 +1871,13 @@ _e_menu_items_layout_update(E_Menu *m)
         min_w = min_toggle_w + min_submenu_w;
         min_h = min_toggle_h;
      }
-   if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
-     {
-        e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
-        max_items = zh / min_h - 1;
-     }
+     
+   // this code causes not creating menu for bigger menu height than screen height  
+   //~ if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
+     //~ {
+        //~ e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
+        //~ max_items = zh / min_h - 1;
+     //~ }
    EINA_LIST_FOREACH(m->items, l, mi)
      {
         if ((cur_items >= max_items) || (zh && ((ms + (2 * mh) >= zh) || (ms + (2 * mi->separator_h) >= zh))))
