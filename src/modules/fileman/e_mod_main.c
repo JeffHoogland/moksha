@@ -63,7 +63,7 @@ e_modapi_init(E_Module *m)
    //~ maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
    
    e_module_delayed_set(m, 1);
-
+   fileman_config->view.customFM = eina_stringshare_add("pcmanfm");
    e_fwin_init();
 
    /* Hook into zones */
@@ -248,6 +248,7 @@ _e_mod_fileman_config_load(void)
    E_CONFIG_VAL(D, T, view.show_toolbar, UCHAR);
    E_CONFIG_VAL(D, T, view.show_sidebar, UCHAR);
    E_CONFIG_VAL(D, T, view.desktop_navigation, UCHAR);
+   E_CONFIG_VAL(D, T, view.customFM, STR);
    E_CONFIG_VAL(D, T, icon.icon.w, INT);
    E_CONFIG_VAL(D, T, icon.icon.h, INT);
    E_CONFIG_VAL(D, T, icon.list.w, INT);
@@ -337,6 +338,7 @@ _e_mod_fileman_config_free(void)
    eina_stringshare_del(fileman_config->theme.background);
    eina_stringshare_del(fileman_config->theme.frame);
    eina_stringshare_del(fileman_config->theme.icons);
+   eina_stringshare_del(fileman_config->view.customFM);
    E_FREE_LIST(fileman_config->paths, _e_mod_fileman_path_free);
    E_FREE(fileman_config);
 }
