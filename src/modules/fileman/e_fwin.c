@@ -2320,7 +2320,7 @@ _xdg_open_default(const char *data)
    char buf2[4096];
 
    zone = e_util_zone_current_get (e_manager_current_get ());
-   snprintf(buf2, sizeof(buf2), "xdg-open \"%s\"", data);
+   snprintf(buf2, sizeof(buf2), "%s \"%s\"", fileman_config->view.customFM, data);
    e_exec(zone,NULL, buf2, NULL, NULL);
 }
 

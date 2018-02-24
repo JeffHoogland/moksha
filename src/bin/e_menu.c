@@ -22,7 +22,6 @@
 
 /* local subsystem data types */
 typedef struct _E_Menu_Category E_Menu_Category;
-
 struct _E_Menu_Category
 {
    void      *data;
@@ -111,6 +110,8 @@ static Ecore_Event_Handler *_e_menu_mouse_move_handler = NULL;
 static Ecore_Event_Handler *_e_menu_mouse_wheel_handler = NULL;
 static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 static Eina_Bool _e_menu_lock = EINA_FALSE;
+static int posit = 0;
+static Eina_Bool scrl_toggle;
 
 static Eina_List *
 _e_active_menus_copy_ref(void)
@@ -375,6 +376,9 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
         m->cur.y = y + h;
         break;
      }
+     
+   posit=m->cur.x;
+
    pmi = _e_menu_item_active_get();
    if (pmi) e_menu_item_active_set(pmi, 0);
 }
@@ -1867,11 +1871,13 @@ _e_menu_items_layout_update(E_Menu *m)
         min_w = min_toggle_w + min_submenu_w;
         min_h = min_toggle_h;
      }
-   if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
-     {
-        e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
-        max_items = zh / min_h - 1;
-     }
+     
+   // this code causes not creating menu for bigger menu height than screen height  
+   //~ if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
+     //~ {
+        //~ e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
+        //~ max_items = zh / min_h - 1;
+     //~ }
    EINA_LIST_FOREACH(m->items, l, mi)
      {
         if ((cur_items >= max_items) || (zh && ((ms + (2 * mh) >= zh) || (ms + (2 * mi->separator_h) >= zh))))
@@ -2189,8 +2195,17 @@ _e_menu_reposition(E_Menu *m)
    int parent_item_bottom;
 
    if (!m->parent_item) return;
-   m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;
-
+   
+   /* Menu style on the right screen side */
+   if ((posit < m->zone->w/2) || (!e_config->menu_scroll_toggle)){
+     m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;  //E style
+     scrl_toggle = EINA_FALSE;
+   }
+   else
+   {
+     m->cur.x = m->parent_item->menu->cur.x - m->cur.w;                     //LXDE style
+     scrl_toggle = EINA_TRUE;
+   }
    parent_item_bottom = m->parent_item->menu->cur.y + m->parent_item->y;
    if (m->cur.h > m->zone->h)
      {
@@ -2608,7 +2623,7 @@ _e_menu_outside_bounds_get(int xdir, int ydir)
    int outt = 0;
    int outb = 0;
    int i = 0;
-
+   
    EINA_LIST_FOREACH(_e_active_menus, l, m)
      {
         if (m->cur.x < m->zone->x + e_config->menu_autoscroll_margin)
@@ -2732,8 +2747,7 @@ static int
 _e_menu_auto_place(E_Menu *m, int x, int y, int w, int h)
 {
    double xr, yr;
-
-   _e_menu_realize(m);
+     _e_menu_realize(m);
    /* +-----+
     * |\ T /|
     * | \ / |
@@ -2870,9 +2884,9 @@ _e_menu_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "Down")) || (!strcmp(ev->key, "KP_Down")))
      _e_menu_item_activate_next();
    else if ((!strcmp(ev->key, "Left")) || (!strcmp(ev->key, "KP_Left")))
-     _e_menu_activate_previous();
+     scrl_toggle ? _e_menu_activate_next() : _e_menu_activate_previous();
    else if ((!strcmp(ev->key, "Right")) || (!strcmp(ev->key, "KP_Right")))
-     _e_menu_activate_next();
+     scrl_toggle ? _e_menu_activate_previous() : _e_menu_activate_next();
    else if ((!strcmp(ev->key, "Home")) || (!strcmp(ev->key, "KP_Home")))
      _e_menu_item_activate_first();
    else if ((!strcmp(ev->key, "End")) || (!strcmp(ev->key, "KP_End")))
@@ -2951,7 +2965,6 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    Ecore_Event_Mouse_Button *ev;
    Ecore_X_Time t;
    int ret = 0;
-
    ev = event;
    if (ev->window != _e_menu_win) return ECORE_CALLBACK_PASS_ON;
 
@@ -3036,7 +3049,6 @@ _e_menu_cb_mouse_move(void *data __UNUSED__, int type __UNUSED__, void *event)
      }
 
    _e_menu_list_free_unref(tmp);
-
    _e_menu_x = ev->x;
    _e_menu_y = ev->y;
    _e_menu_time = ev->timestamp;

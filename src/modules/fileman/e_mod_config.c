@@ -22,6 +22,7 @@ struct _E_Config_Dialog_Data
        int desktop_navigation;
        int menu_shows_files;
        int spring_delay;
+       char *customFM;
     } view;
    struct
    {
@@ -143,6 +144,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.mode = fileman_config->view.mode;
    cfdata->view.open_dirs_in_place = fileman_config->view.open_dirs_in_place;
    cfdata->view.single_click = fileman_config->view.single_click;
+   cfdata->view.customFM = fileman_config->view.customFM;
    cfdata->copy = e_config->filemanager_copy;
    cfdata->secure_rm = e_config->filemanager_secure_rm;
    cfdata->view.show_full_path = fileman_config->view.show_full_path;
@@ -193,6 +195,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->view.desktop_navigation = cfdata->view.desktop_navigation;
    fileman_config->view.menu_shows_files = cfdata->view.menu_shows_files;
    fileman_config->view.spring_delay = cfdata->view.spring_delay;
+   fileman_config->view.customFM = cfdata->view.customFM;
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
 
    fileman_config->selection.windows_modifiers = cfdata->selection.windows_modifiers;
@@ -257,6 +260,7 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->tooltip.size != !(cfdata->tooltip.size)) ||
      (fileman_config->tooltip.enable != !(cfdata->tooltip.enable)) ||
      (fileman_config->view.spring_delay != cfdata->view.spring_delay) ||
+     (fileman_config->view.customFM != cfdata->view.customFM) ||
      (e_config->device_desktop != cfdata->dbus.desktop) ||
      (e_config->device_auto_mount != cfdata->dbus.auto_mount) ||
      (e_config->device_auto_open != cfdata->dbus.auto_open);
@@ -415,6 +419,11 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f seconds"), 1.0, 10.0, 1, 0,
                             NULL, &(cfdata->view.spring_delay), 150);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
+   ob = e_widget_label_add(evas, _("Custom FM to open dirs"));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_entry_add(evas, &(cfdata->view.customFM), NULL, NULL, NULL);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
    /////////////////////////////////////////////////////////////

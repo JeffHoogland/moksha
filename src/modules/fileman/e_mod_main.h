@@ -40,6 +40,7 @@ struct _Config
       unsigned char   desktop_navigation;
       unsigned char   menu_shows_files;
       int spring_delay;
+      const char *customFM;
       E_Gadcon_Orient toolbar_orient;
    } view;
    struct

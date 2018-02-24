@@ -171,6 +171,7 @@ struct _E_Config
    int                       menu_eap_generic_show; // GUI
    int                       menu_eap_comment_show; // GUI
    int                       menu_favorites_show; // GUI
+   int                       menu_scroll_toggle; // GUI
    int                       menu_apps_show; // GUI
    int                       menu_gadcon_client_toplevel; // GUI
    int                       fullscreen_policy; // GUI
