@@ -58,9 +58,9 @@ static void             _fill_data(E_Config_Dialog_Data *cfdata);
 static void            *_create_data(E_Config_Dialog *cfd);
 static void             _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object     *_basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object     *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static Evas_Object     *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
-static void             _dialog_save_cb(void *data, void *data2);
+//static Evas_Object     *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
+//static Evas_Object     *_dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines);
+//static void             _dialog_save_cb(void *data, void *data2);
 static void             _e_exec_instance_free(E_Exec_Instance *inst);
 
 /* local subsystem globals */
@@ -707,11 +707,11 @@ _e_exec_error_dialog(Efreet_Desktop *desktop, const char *exec, Ecore_Exe_Event_
    v->create_cfdata = _create_data;
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create_widgets;
-   v->advanced.create_widgets = _advanced_create_widgets;
+   //v->advanced.create_widgets = _advanced_create_widgets;
 
    con = e_container_current_get(e_manager_current_get());
    /* Create The Dialog */
-   e_config_dialog_new(con, _("Application Execution Error"),
+   e_config_dialog_new(con, _("Execution Error"),
                        "E", "_e_exec_error_exit_dialog",
                        NULL, 0, v, cfdata);
 }
@@ -823,6 +823,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    E_FREE(cfdata);
 }
 
+#if 0
 static Evas_Object *
 _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *lines)
 {
@@ -869,13 +870,14 @@ _dialog_scrolltext_create(Evas *evas, char *title, Ecore_Exe_Event_Data_Line *li
 
    return os;
 }
+#endif
 
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   char buf[4096];
-   int error_length = 0;
-   Evas_Object *o, *ob, *os;
+   //char buf[4096];
+   //int error_length = 0;
+   Evas_Object *o, *ob;//, *os;
 
    _fill_data(cfdata);
 
@@ -884,7 +886,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_label_add(evas, cfdata->label);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
-   if (cfdata->error) error_length = cfdata->error->size;
+   /*   if (cfdata->error) error_length = cfdata->error->size;
    if (error_length)
      {
         os = _dialog_scrolltext_create(evas, _("Error Logs"),
@@ -908,11 +910,11 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
      snprintf(buf, sizeof(buf), _("This error log will be saved as %s/%s.log"),
               e_user_homedir_get(), "Error");
    ob = e_widget_label_add(evas, buf);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);*/
 
    return o;
 }
-
+#if 0
 static Evas_Object *
 _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -1083,3 +1085,4 @@ _dialog_save_cb(void *data __UNUSED__, void *data2)
 
    fclose(f);
 }
+#endif
