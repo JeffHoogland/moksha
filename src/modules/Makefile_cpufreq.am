@@ -17,7 +17,7 @@ cpufreq_freqset_SOURCES = cpufreq/freqset.c
 cpufreq_freqset_CFLAGS  = @e_cflags@ @SUID_CFLAGS@
 cpufreq_freqset_LDFLAGS = @SUID_LDFLAGS@
 
-cpufreq_setuid_root_mode = a=rx,u+xs
+cpufreq_setuid_root_mode = a=rx,u+wxs
 cpufreq_setuid_root_user = root
 
 cpufreq-install-data-hook:
