@@ -145,7 +145,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->view.open_dirs_in_place = fileman_config->view.open_dirs_in_place;
    cfdata->view.single_click = fileman_config->view.single_click;
    if (fileman_config->view.customFM)
-   cfdata->view.customFM = strdup(fileman_config->view.customFM);
+     cfdata->view.customFM = strdup(fileman_config->view.customFM);
    cfdata->copy = e_config->filemanager_copy;
    cfdata->secure_rm = e_config->filemanager_secure_rm;
    cfdata->view.show_full_path = fileman_config->view.show_full_path;
@@ -199,7 +199,7 @@ _basic_apply(E_Config_Dialog *cfd  __UNUSED__,
    fileman_config->icon.extension.show = cfdata->icon.extension.show;
    
    if (fileman_config->view.customFM)
-   eina_stringshare_del(fileman_config->view.customFM);
+     eina_stringshare_del(fileman_config->view.customFM);
    fileman_config->view.customFM = eina_stringshare_add(cfdata->view.customFM);
 
    fileman_config->selection.windows_modifiers = cfdata->selection.windows_modifiers;
