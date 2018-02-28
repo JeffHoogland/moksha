@@ -4246,12 +4246,9 @@ e_border_icon_add(E_Border *bd,
      {
         if ((bd->desktop) && (bd->icon_preference != E_ICON_PREF_NETWM))
           {
-             o = e_icon_add(evas);
+             o = e_util_desktop_icon_add(bd->desktop, 64, evas);
              if (o)
-               {
-                  e_icon_fdo_icon_set(o, bd->desktop->icon);
-                  return o;
-               }
+               return o;
           }
         else if (bd->client.netwm.icons)
           {
