@@ -126,3 +126,8 @@ https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/
 https://git.enlightenment.org/core/enlightenment.git/commit/src/modules/fileman/e_fwin.c?id=d8c603ae873ae45f1a87aaa91a873e8bce1d9956
 https://git.enlightenment.org/core/enlightenment.git/diff/?id=529d58a41008941155692e7f187a87de49e4f4d5
 Commit: https://github.com/JeffHoogland/moksha/commit/3e143e6cf263019732d76fca72b07f79be5ff997
+
+25. window-borders-accept-edje-icons.patch
+Backport: Fix for window borders to accept edje icons
+https://git.enlightenment.org/core/enlightenment.git/commit/?h=enlightenment-0.17&id=0a5ff4bd5adea88f70347354eabd93fdad63eed6
+Commit: https://github.com/JeffHoogland/moksha/commit/ad53987ff5382427d183f191650efb6877c5d2cf
