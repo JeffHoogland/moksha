@@ -1383,7 +1383,7 @@ _conf_new(void)
      {
         _conf = E_NEW(Module_Config, 1);
         /* setup defaults */
-        _conf->cmd_terminal = eina_stringshare_add("/usr/bin/xterm -hold -e");
+        _conf->cmd_terminal = eina_stringshare_add("/usr/bin/x-terminal-emulator -e");
         _conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
      }
 
