@@ -475,9 +475,9 @@ main(int argc, char **argv)
                             int r = 0;
                             int back;
 
-#ifdef HAVE_SYS_PTRACE_H
-                            if (!really_know)
-                              r = ptrace(PT_GETSIGINFO, child, NULL, &sig);
+#if defined(HAVE_SYS_PTRACE_H) && defined(PT_GETSIGINFO)
+                             if (!really_know)
+                               r = ptrace(PT_GETSIGINFO, child, NULL, &sig);
 #endif
                             back = r == 0 &&
                               sig.si_signo != SIGTRAP ? sig.si_signo : 0;
@@ -611,4 +611,3 @@ main(int argc, char **argv)
 
    return -1;
 }
-
