@@ -2,9 +2,11 @@ wizarddir = $(MDIR)/wizard
 wizard_DATA = wizard/data/def-ibar.txt
 
 wizard_desktopdir = $(MDIR)/wizard/desktop
+if INSTALL_WIZARD_DESKTOP
 wizard_desktop_DATA = wizard/data/desktop/home.desktop \
 		      wizard/data/desktop/root.desktop \
 		      wizard/data/desktop/tmp.desktop
+endif
 
 EXTRA_DIST += $(wizard_DATA) $(wizard_desks_DATA) $(wizard_desktop_DATA)
 

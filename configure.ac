@@ -135,7 +135,7 @@ dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
 AC_SUBST(VALGRIND_CFLAGS)
 AC_SUBST(VALGRIND_LIBS)
 
-MODULE_ARCH="$host_os-$host_cpu"
+MODULE_ARCH="$host_os-$host_cpu-relname"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
 
@@ -319,6 +319,14 @@ AC_ARG_ENABLE([install-enlightenment-menu],
     AC_CACHE_VAL([e_cv_enable_install_enlightenment_menu], [e_cv_enable_install_enlightenment_menu=yes]))
 AC_MSG_RESULT([$e_cv_enable_install_enlightenment_menu])
 AM_CONDITIONAL(INSTALL_ENLIGHTENMENT_MENU, test x${e_cv_enable_install_enlightenment_menu} = xyes)
+
+AC_MSG_CHECKING([whether to install wizard desktop files])
+AC_ARG_ENABLE([install-wizard-desktop],
+  AS_HELP_STRING([--disable-wizard-desktop],[disable installing home Desktop files @<:@default=disabled@:>@]),
+    [e_cv_enable_install_wizard_desktop=$enableval],
+    AC_CACHE_VAL([e_cv_enable_install_wizard_desktop], [e_cv_enable_install_wizard_desktop=no]))
+AC_MSG_RESULT([$e_cv_enable_install_wizard_desktop])
+AM_CONDITIONAL(INSTALL_WIZARD_DESKTOP, test x${e_cv_enable_install_wizard_desktop} = xyes)
 
 AC_MSG_CHECKING([whether to enable Files menu item])
 AC_ARG_ENABLE([files],
@@ -1011,7 +1019,14 @@ Preferred Backends:
  * hal_mount...........: $e_cv_want_mount_hal
  * udisks_mount........: $e_cv_want_mount_udisks
  * eeze_mount..........: $e_cv_want_mount_eeze
+ * $e_cv_enable_install_wizard_desktop
 DEVICE_EOF
+echo
+
+cat << WIZARD_EOF
+Install Wizard Desktop Files
+ * disabled........: $e_cv_enable_install_wizard_desktop
+WIZARD_EOF
 echo
 
 UNUSED_MODS=""
