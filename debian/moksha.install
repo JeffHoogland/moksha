@@ -1,0 +1,14 @@
+debian/tmp/usr/bin/enlightenment
+debian/tmp/usr/bin/enlightenment_open
+debian/tmp/usr/bin/enlightenment_filemanager
+debian/tmp/usr/bin/enlightenment_remote
+debian/tmp/usr/bin/enlightenment_start
+debian/tmp/usr/bin/enlightenment_imc
+debian/tmp/usr/include/enlightenment/*
+debian/tmp/usr/lib/*
+debian/tmp/usr/share/applications/*
+debian/tmp/usr/share/enlightenment/*
+debian/tmp/usr/share/locale/*
+debian/tmp/usr/share/xsessions/*
+debian/tmp/etc/enlightenment/sysactions.conf
+debian/tmp/etc/xdg/menus/e-applications.menu

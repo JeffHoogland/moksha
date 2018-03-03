@@ -1,0 +1,4 @@
+moksha: setuid-binary
+moksha: description-starts-with-package-name
+moksha: binary-without-manpage
+moksha: non-empty-dependency_libs-in-la-file

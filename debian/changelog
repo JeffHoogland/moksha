@@ -1,5 +1,12 @@
+moksha (20180224bodhi10.2.1) unstable; urgency=low
+
+  * Feature change and bug fux
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Sat, 24 Feb 2018 16:57:09 +0004
+
+
 moksha (20170126bodhi10.2.1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+  * Initial release
 
- -- root <Jeff Hoogland <jeffhoogland@linux.com>>  Tue, 07 Apr 2015 15:22:08 +0000
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Tue, 07 Apr 2015 15:22:08 +0000

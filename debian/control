@@ -1,15 +1,29 @@
 Source: moksha
-Section: unknown
+Section: x11
 Priority: extra
-Maintainer: Jeff Hoogland
-Build-Depends: efl, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, edbus
+Maintainer: Jeff Hoogland <jeffhoogland@linux.com>
+Homepage: http://mokshadesktop.org/
+Build-Depends:  debhelper (>= 9), dh-autoreconf, efl, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, edbus
 Standards-Version: 3.8.3
 
 Package: moksha
 Architecture: any
 Provides: enlightenment, bodhi-profile-moksha
 Replaces: enlightenment, e17, bodhi-profile-e17, bodhi-profile-moksha
-Conflicts: e17, e18, e19, bodhi-profile-e17, bodhi-profile-moksha
+Conflicts: e17, e18, e19, e21, e22, bodhi-profile-e17, bodhi-profile-moksha
 Depends: ${shlibs:Depends}, ${misc:Depends}, bodhi-background-edj
-Description: The Moksha Desktop
+Description: Moksha Desktop
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
+
+Package: moksha-dbg
+Architecture: any
+Section: debug
+Depends: ${misc:Depends}, moksha (= ${binary:Version})
+Priority: extra
+Description: Moksha Desktop- debugging symbols
+ Moksha is an advanced window manager for X11 based on Enlightenment DR17.
+ .
+ This package contains unstripped shared libraries. It is provided primarily
+ to provide a backtrace with names in a debugger, this makes it somewhat
+ easier to interpret core dumps. The libraries are installed in
+ /usr/lib/debug and are automatically used by gdb.
