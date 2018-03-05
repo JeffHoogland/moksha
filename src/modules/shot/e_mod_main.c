@@ -1137,7 +1137,7 @@ _e_mod_action_cb(E_Object *obj, const char *params __UNUSED__)
       }
             _shot(zone);
 
-   _shot_now(zone, NULL);
+   //_shot_now(zone, NULL);
 }
 
 static void
