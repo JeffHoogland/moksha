@@ -851,7 +851,6 @@ AC_E_OPTIONAL_MODULE([ibox], true)
 AC_E_OPTIONAL_MODULE([start], true)
 AC_E_OPTIONAL_MODULE([winlist], true)
 AC_E_OPTIONAL_MODULE([fileman], true)
-AC_E_OPTIONAL_MODULE([fileman_opinfo], true)
 AC_E_OPTIONAL_MODULE([wizard], true)
 AC_E_OPTIONAL_MODULE([conf], true)
 AC_E_OPTIONAL_MODULE([conf_wallpaper2], false)
@@ -943,7 +942,6 @@ src/modules/ibox/module.desktop
 src/modules/start/module.desktop
 src/modules/winlist/module.desktop
 src/modules/fileman/module.desktop
-src/modules/fileman_opinfo/module.desktop
 src/modules/conf/module.desktop
 src/modules/conf_wallpaper2/module.desktop
 src/modules/conf_theme/module.desktop

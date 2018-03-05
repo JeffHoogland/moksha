@@ -74,10 +74,6 @@ if USE_MODULE_FILEMAN
 include Makefile_fileman.am
 endif
 
-if USE_MODULE_FILEMAN_OPINFO
-include Makefile_fileman_opinfo.am
-endif
-
 if USE_MODULE_WIZARD
 include Makefile_wizard.am
 endif
