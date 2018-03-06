@@ -14,6 +14,7 @@ static Eina_Bool _e_startup_event_cb(void *data, int ev_type, void *ev);
 static E_Order *startup_apps = NULL;
 static int start_app_pos = -1;
 static Ecore_Event_Handler *desktop_cache_update_handler = NULL;
+static E_Startup_Mode start_mode = E_STARTUP_START;
 
 /* externally accessible functions */
 EAPI void
@@ -21,6 +22,7 @@ e_startup(E_Startup_Mode mode)
 {
    char buf[PATH_MAX];
 
+   start_mode = mode;
    if (mode == E_STARTUP_START)
      {
         e_user_dir_concat_static(buf, "applications/startup/.order");
@@ -95,16 +97,19 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
      start_app_pos = 0;
    free(buf);
    _e_startup();
-   char shfile[PATH_MAX];
-   e_user_dir_concat_static(shfile, "applications/startup/startupcommands");
-   if (!ecore_file_exists(shfile)) 
-   { 
-       FILE *f; 
-       f = fopen(shfile, "w"); 
-       fclose(f);
-       chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+   if (start_mode == E_STARTUP_START)
+   {
+     char shfile[PATH_MAX];
+     e_user_dir_concat_static(shfile, "applications/startup/startupcommands");
+     if (!ecore_file_exists(shfile))
+     {
+         FILE *f;
+         f = fopen(shfile, "w");
+         fclose(f);
+         chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+     }
+     e_exec(NULL, NULL, shfile, NULL, NULL);
    }
-   e_exec(NULL, NULL, shfile, NULL, NULL);
    return ECORE_CALLBACK_PASS_ON;
 }
 
