@@ -128,9 +128,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 0.0, 10.0, 1.0, 0, &(cfdata->delay), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    
-   ow = e_widget_label_add(evas, _("Image quality [1-99 = jpg, 100 = png]"));
+   ow = e_widget_label_add(evas, _("Image quality [50-90 = jpg, 100 = png]"));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 1.0, 100.0, 1.0, 0, &(cfdata->pict_quality), NULL, 100);
+   ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 50.0, 100.0, 10.0, 0, &(cfdata->pict_quality), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    
    e_widget_list_object_append(o, of, 1, 0, 0.5);

@@ -465,7 +465,7 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    tm = localtime(&tt);
    //~ if (quality == 100.0)
 
-   shot_conf->pict_quality=(long)quality;
+   shot_conf->pict_quality=(int)quality;
 
    if (shot_conf->pict_quality == 100.0)
      strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.png", tm);
@@ -930,6 +930,11 @@ _shot_now(E_Zone *zone, E_Border *bd)
    o = e_widget_framelist_add(evas, _("Quality"), 0);
    ol = o;
 
+   if (shot_conf->pict_quality==100) quality=100;
+   if ((shot_conf->pict_quality>=80) && (shot_conf->pict_quality<100)) quality=90;
+   if ((shot_conf->pict_quality>=60) && (shot_conf->pict_quality<80)) quality=70;
+   if (shot_conf->pict_quality<60) quality=50;
+   
    rg = e_widget_radio_group_new(&quality);
    o = e_widget_radio_add(evas, _("Perfect"), 100, rg);
    e_widget_framelist_object_append(ol, o);
