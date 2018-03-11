@@ -25,7 +25,7 @@ static Evas_Object *o_bg = NULL, *o_box = NULL, *o_content = NULL;
 static Evas_Object *o_event = NULL, *o_img = NULL, *o_hlist = NULL;
 static E_Manager *sman = NULL;
 static E_Container *scon = NULL;
-static int quality = 100;
+static int quality = 80;
 static int screen = -1;
 #define MAXZONES 64
 static Evas_Object *o_rectdim[MAXZONES] = { NULL };
@@ -137,7 +137,7 @@ _shot_conf_new(void)
    shot_conf->notify = 1;
    shot_conf->full_dialog = 0;
    shot_conf->delay = 0.0;
-   shot_conf->pict_quality = 100.0;
+   shot_conf->pict_quality = 80.0;
    
    _shot_conf_item_get(NULL);
    IFMODCFGEND;
