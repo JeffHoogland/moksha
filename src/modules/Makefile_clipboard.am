@@ -1,0 +1,17 @@
+clipboarddir = $(MDIR)/clipboard
+clipboard_DATA = clipboard/e-module-clipboard.edj \
+	       clipboard/module.desktop
+
+EXTRA_DIST += $(clipboard_DATA)
+
+clipboardpkgdir = $(MDIR)/clipboard/$(MODULE_ARCH)
+clipboardpkg_LTLIBRARIES = clipboard/module.la
+
+clipboard_module_la_CFLAGS = $(AM_CFLAGS)
+clipboard_module_la_SOURCES  = clipboard/e_mod_main.h \
+			     clipboard/e_mod_main.c \
+			     clipboard/e_mod_config.c
+
+.PHONY: clipboard install-clipboard
+clipboard: $(clipboardpkg_LTLIBRARIES) $(clipboard_DATA)
+install-clipboard: install-clipboardDATA install-clipboardpkgLTLIBRARIES
