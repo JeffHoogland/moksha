@@ -137,7 +137,7 @@ AC_SUBST(VALGRIND_LIBS)
 
 dnl     defines HAVE_STRDUP if strdup is available
 AC_CHECK_FUNCS([strdup])
-dnl     defines HAVE_STRNDUP if strdup is available
+dnl     defines HAVE_STRNDUP if strndup is available
 AC_CHECK_FUNCS([strndup])
 
 MODULE_ARCH="$host_os-$host_cpu"
