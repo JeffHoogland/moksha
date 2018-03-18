@@ -198,6 +198,10 @@ if USE_MODULE_ACCESS
 include Makefile_access.am
 endif
 
+if USE_MODULE_CLIPBOARD
+include Makefile_clipboard.am
+endif
+
 #if HAVE_WAYLAND_DRM
 #include Makefile_wl_drm.am
 #endif
