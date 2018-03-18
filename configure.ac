@@ -135,6 +135,11 @@ dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
 AC_SUBST(VALGRIND_CFLAGS)
 AC_SUBST(VALGRIND_LIBS)
 
+dnl     defines HAVE_STRDUP if strdup is available
+AC_CHECK_FUNCS([strdup])
+dnl     defines HAVE_STRNDUP if strdup is available
+AC_CHECK_FUNCS([strndup])
+
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
