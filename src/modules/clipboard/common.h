@@ -4,6 +4,7 @@
 #include <string.h>
 #include <e.h>
 #include "config.h"
+#include "clip_log.h"
 
 #define MAGIC_LABEL_SIZE 50
 #define MAGIC_HIST_SIZE  20
