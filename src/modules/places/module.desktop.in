@@ -1,0 +1,27 @@
+[Desktop Entry]
+Type=Link
+Name=Places
+Name[ru]=Места
+Name[cs]=Místa
+Name[de]=Orte
+Name[es]=Sitios
+Name[gl]=Lugares
+Name[hu]=Helyek
+Name[fr]=Raccourcis
+Name[el]=Τοποθεσίες
+Name[eo]=Portiloj
+Name[pt]=Locais
+Icon=e-module-places
+Comment=This module manage the volumes device attached to the system.
+Comment[ru]=Этот модуль позволяет управлять подключенными к системе устройствами.
+Comment[cs]=Tento modul spravuje disky/USB/CD/DVD připojené k systému.
+Comment[de]=Verwalten der am System angeschlossenen Datenträger.
+Comment[es]=Este módulo administra los dispositivos conectados al sistema.
+Comment[gl]=Este módulo xestiona os dispositivos conectados ó sistema.
+Comment[it]=Questo modulo gestisce le unità connesse al sistema.
+Comment[hu]=Kezeld a különböző médiákat (merevlemez, pendrive, CD).
+Comment[fr]=Ce module gère les volumes rattachés au système.
+Comment[el]=Άρθρωμα διαχείρησης τόμων των συνδεδεμένων συσκευών.
+Comment[eo]=Tiu modulo administras la portilojn kunligitajn al la sistemo.
+Comment[pt]=Módulo que faz a gestão dos discos e dispositivos ligados ao sistema
+X-Enlightenment-ModuleType=files
