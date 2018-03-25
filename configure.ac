@@ -889,6 +889,7 @@ AC_E_OPTIONAL_MODULE([xkbswitch], true)
 AC_E_OPTIONAL_MODULE([tiling], true)
 AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
+AC_E_OPTIONAL_MODULE([places], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -981,6 +982,7 @@ src/modules/xkbswitch/module.desktop
 src/modules/tiling/module.desktop
 src/modules/access/module.desktop
 src/modules/clipboard/module.desktop
+src/modules/places/module.desktop
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
