@@ -49,6 +49,7 @@ e_atoms.h \
 e_backlight.h \
 e_bg.h \
 e_bindings.h \
+e_bodhi_about.h \
 e_border.h \
 e_box.h \
 e_canvas.h \
@@ -206,6 +207,7 @@ e_atoms.c \
 e_backlight.c \
 e_bg.c \
 e_bindings.c \
+e_bodhi_about.c \
 e_border.c \
 e_box.c \
 e_canvas.c \

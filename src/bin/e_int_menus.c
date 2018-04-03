@@ -75,42 +75,6 @@ static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
 
-#define BODHI_VERSION "4.5.0"
-#define BODHI_ABOUT_TITLE "About Bodhi"
-#define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
-#define BODHI_ABOUT_AUTHORS \
-    "Jeff Hoogland<br>" \
-    "Stefan 'the waiter' Uram<br>" \
-    "Joris 'aeonius' van Dijk<br>" \
-    "Stephen 'okra' Houston<br>" \
-    "Jason 'Tristam' Thomas<br>" \
-    "Kristi Hoogland<br>" \
-    "Rbt 'ylee' Wiley<br>" \
-    "Kai Huuhko<br>" \
-    "Patrick Duckson<br>" \
-    "Timmy 'timmy' Larsson<br>" \
-    "Roger 'JollyRoger' Carter<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br>" \
-    "Marcel 'SmartDuck'<br><br><br>" \
-    "Past contributors:<br>" \
-    "Ken 'trace'  LaBuda<br>" \
-    "Christopher 'devilhorns' Michael<br>" \
-    "Jason 'jarope' Peel<br>" \
-    "Chris 'prolog' Seekamp<br>" \
-    "Bob Eley<br>" \
-    "Darren 'LostBumpkin' Dooley<br>" \
-    "Anthony 'AntCer' Cervantes<br>" \
-    "Kaleb 'belak' Elwert<br>" \
-    "Jose 'Jose' Manimala<br>" \
-    "Gareth 'hippytaff' Williams<br>" \
-    "Micah 'M1C4HTRON13″ Denn<br>" \
-    "Meji 'Meji_D' Dejsdóttir<br>" \
-    "Víctor 'esmirlin' Parra García<br>" \
-    "Mark 'ottermaton' Strawser<br>" \
-    "Caerolle<br>" \
-    "Gar Romero<br>" \
-    "Doug 'Deepspeed' Yanez<br>" \
-    "Reuben L. Lillie<br>" \
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
@@ -661,23 +625,10 @@ _e_int_menus_themes_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
 static void
 _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Obj_Dialog *dlg;
+   E_Bodhi_About *about;
 
-   dlg = e_obj_dialog_new(m->zone->container, BODHI_ABOUT_TITLE, "E", "_about");
-   if (!dlg) return;
-   e_obj_dialog_obj_theme_set(dlg, "base/theme/about", "e/widgets/about/main");
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.label", _("Close"));
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.title",
-                                 BODHI_ABOUT_TITLE);
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.version",
-                                  BODHI_VERSION);
-   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.about",
-                                  BODHI_ABOUT_TEXT);
-   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.authors",
-                                  BODHI_ABOUT_AUTHORS);
-
-   e_obj_dialog_show((E_Obj_Dialog *)dlg);
-   e_obj_dialog_icon_set((E_Obj_Dialog *)dlg, "help-about");
+   about = e_bodhi_about_new(e_container_current_get(e_manager_current_get()));
+   if (about) e_bodhi_about_show(about);
 }
 
 static void
