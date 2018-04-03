@@ -61,11 +61,10 @@ static void         _e_int_menus_desktops_free_hook(void *obj);
 static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
-static Eina_Bool   _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
+static Eina_Bool    _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
-static void _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void         _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void         _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 
 /* local subsystem globals */
 static Eina_Hash *_e_int_menus_augmentation = NULL;
