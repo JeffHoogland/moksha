@@ -45,6 +45,12 @@ group { name: "e/widgets/about/main";
             ASPECT_FILL((1024/653))
          }
       }
+      
+       part { name: "base2"; type: RECT;
+         description { state: "default" 0.0;
+         }
+      }
+      
       part { name: "pat";
          description { state: "default" 0.0;
             image.normal: "dot_pattern.png";
@@ -53,6 +59,7 @@ group { name: "e/widgets/about/main";
       }
       part { name: "e.textblock.authors"; type: TEXTBLOCK; mouse_events: 0;
          scale: 1;
+         clip_to: "base2";
          description { state: "default" 0.0;
             fixed: 1 1;
             max: 20000 20000;
@@ -78,6 +85,7 @@ group { name: "e/widgets/about/main";
       }
       part { name: "e.textblock.about"; type: TEXTBLOCK; mouse_events: 0;
          scale: 1;
+         clip_to: "base2";
          description { state: "default" 0.0;
             fixed: 1 1;
             max: 20000 20000;
@@ -246,7 +254,7 @@ group { name: "e/widgets/about/main";
       program { name: "show1";
          signal: "show"; source: "";
          action: STATE_SET "up" 0.0;
-         transition: LINEAR 45.0;
+         transition: LINEAR 85.0;
          target: "e.textblock.about";
          after: "show2";
       }
