@@ -11,4 +11,3 @@ debian/tmp/usr/share/enlightenment/*
 debian/tmp/usr/share/locale/*
 debian/tmp/usr/share/xsessions/*
 debian/tmp/etc/enlightenment/sysactions.conf
-debian/tmp/etc/xdg/menus/e-applications.menu
