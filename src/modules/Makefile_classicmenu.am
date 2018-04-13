@@ -1,0 +1,16 @@
+classicmenudir = $(MDIR)/classicmenu
+classicmenu_DATA = classicmenu/e-module-classicmenu.edj \
+	       classicmenu/module.desktop
+
+EXTRA_DIST += $(classicmenu_DATA)
+
+classicmenupkgdir = $(MDIR)/classicmenu/$(MODULE_ARCH)
+classicmenupkg_LTLIBRARIES = classicmenu/module.la
+
+classicmenu_module_la_CFLAGS = $(AM_CFLAGS)
+classicmenu_module_la_SOURCES  = classicmenu/e_mod_main.h \
+			     classicmenu/e_mod_main.c
+
+.PHONY: classicmenu install-classicmenu
+classicmenu: $(classicmenupkg_LTLIBRARIES) $(classicmenu_DATA)
+install-classicmenu: install-classicmenuDATA install-classicmenupkgLTLIBRARIES

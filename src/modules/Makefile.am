@@ -206,6 +206,9 @@ if USE_MODULE_PLACES
 include Makefile_places.am
 endif
 
+if USE_MODULE_CLASSICMENU
+include Makefile_classicmenu.am
+endif
 #if HAVE_WAYLAND_DRM
 #include Makefile_wl_drm.am
 #endif

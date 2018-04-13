@@ -882,6 +882,7 @@ AC_E_OPTIONAL_MODULE([tiling], true)
 AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
 AC_E_OPTIONAL_MODULE([places], true)
+AC_E_OPTIONAL_MODULE([classicmenu], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -975,6 +976,7 @@ src/modules/tiling/module.desktop
 src/modules/access/module.desktop
 src/modules/clipboard/module.desktop
 src/modules/places/module.desktop
+src/modules/classicmenu/module.desktop
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
@@ -1018,7 +1020,6 @@ Preferred Backends:
  * hal_mount...........: $e_cv_want_mount_hal
  * udisks_mount........: $e_cv_want_mount_udisks
  * eeze_mount..........: $e_cv_want_mount_eeze
- * $e_cv_enable_install_wizard_desktop
 DEVICE_EOF
 echo
 

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Link
+Name=Classic Menu
+Icon=e-module-classicmenu
+X-Enlightenment-ModuleType=system
+Comment=A Moksha Module to restore e17's Desktop and Windows menus to Moksha's main menu.
