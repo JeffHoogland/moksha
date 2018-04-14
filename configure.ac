@@ -836,6 +836,11 @@ fi
 
 AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"])
 
+PKG_CHECK_MODULES([PULSE],
+	[
+		libpulse-simple
+		libpulse
+	 ])
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([clock], true)
@@ -883,6 +888,7 @@ AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
 AC_E_OPTIONAL_MODULE([places], true)
 AC_E_OPTIONAL_MODULE([classicmenu], true)
+AC_E_OPTIONAL_MODULE([pulsemixer], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -977,6 +983,7 @@ src/modules/access/module.desktop
 src/modules/clipboard/module.desktop
 src/modules/places/module.desktop
 src/modules/classicmenu/module.desktop
+src/modules/pulsemixer/module.desktop
 data/Makefile
 data/images/Makefile
 data/flags/Makefile

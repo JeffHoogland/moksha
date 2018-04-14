@@ -1,0 +1,91 @@
+pulsemixerdir = $(MDIR)/pulsemixer
+pulsemixer_DATA = pulsemixer/e-module-pulsemixer.edj \
+	       pulsemixer/module.desktop
+
+desktopfiledir = $(datadir)/applications
+desktopfile_DATA = pulsemixer/epulse.desktop
+
+
+bindatadir = $(datadir)/epulse/data/themes/
+bindata_DATA = pulsemixer/default.edj
+
+iconsdir= $(datadir)/pixmaps
+icons_DATA = pulsemixer/epulse.png
+
+EXTRA_DIST += $(pulsemixer_DATA) \
+	$(icons_DATA) \
+	$(desktop_DATA) \
+	$(bindata_DATA)
+
+lib_LTLIBRARIES = \
+	pulsemixer/lib/libepulse.la
+
+pulsemixer_lib_libepulse_la_SOURCES = \
+	pulsemixer/lib/common.c \
+	pulsemixer/lib/common.h \
+	pulsemixer/lib/epulse_ml.c \
+	pulsemixer/lib/epulse.c \
+	pulsemixer/lib/epulse.h
+pulsemixer_lib_libepulse_la_CFLAGS = $(AM_CFLAGS)
+pulsemixer_lib_libepulse_la_CFLAGS +=  \
+	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
+	@ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
+pulsemixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @PULSE_LIBS@
+pulsemixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
+pulsemixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
+
+
+
+bin_PROGRAMS = \
+	pulsemixer/bin/epulse
+
+pulsemixer_bin_epulse_LDADD = \
+	pulsemixer/lib/libepulse.la \
+	@ELM_LIBS@ \
+	@PULSE_LIBS@
+
+pulsemixer_bin_epulse_SOURCES = \
+	pulsemixer/bin/main_window.h \
+	pulsemixer/bin/main_window.c \
+	pulsemixer/bin/playbacks_view.h \
+	pulsemixer/bin/playbacks_view.c \
+	pulsemixer/bin/sinks_view.h \
+	pulsemixer/bin/sinks_view.c \
+	pulsemixer/bin/sources_view.h \
+	pulsemixer/bin/sources_view.c \
+	pulsemixer/bin/main.c
+
+pulsemixer_bin_epulse_CFLAGS = $(AM_CFLAGS)
+pulsemixer_bin_epulse_CFLAGS +=  \
+	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
+	@ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
+
+pulsemixerpkgdir = $(MDIR)/pulsemixer/$(MODULE_ARCH)
+pulsemixerpkg_LTLIBRARIES = pulsemixer/module.la
+
+pulsemixer_module_la_CFLAGS = $(AM_CFLAGS)
+pulsemixer_module_la_CFLAGS += @ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
+
+pulsemixer_module_la_SOURCES  = pulsemixer/e_mod_main.h \
+			     pulsemixer/e_mod_main.c
+
+pulsemixer_module_la_LIBADD = \
+	pulsemixer/lib/libepulse.la \
+	@ELM_LIBS@ \
+	@E_LIBS@ \
+	@PULSE_LIBS@
+
+pulsemixer_module_la_LDFLAGS = -module -avoid-version
+
+if HAVE_ENOTIFY
+pulsemixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+pulsemixer_module_la_LIBADD += @ENOTIFY_LIBS@
+endif
+
+.PHONY: pulsemixer install-pulsemixer
+pulsemixer: $(pulsemixerpkg_LTLIBRARIES) $(pulsemixer_DATA)
+install-pulsemixer: install-pulsemixerDATA install-pulsemixerpkgLTLIBRARIES
+
