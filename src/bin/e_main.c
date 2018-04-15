@@ -197,7 +197,7 @@ _xdg_data_dirs_augment(void)
    /* set menu prefix so we get our e menu */
    if (!getenv("XDG_MENU_PREFIX"))
      {
-        e_util_env_set("XDG_MENU_PREFIX", "e-");
+        e_util_env_set("XDG_MENU_PREFIX", "moksha-");
      }
 
 }
@@ -221,7 +221,7 @@ main(int argc, char **argv)
    Eina_Bool after_restart = EINA_FALSE;
    Eina_Bool waslocked = EINA_FALSE;
    double t = 0.0, tstart = 0.0;
-   char *s = NULL, buff[32];
+   char *s = NULL, buff[32], moksha[14];
    struct sigaction action;
 
 #ifdef __linux__
@@ -325,7 +325,8 @@ main(int argc, char **argv)
      e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    e_util_env_set("E_RESTART_OK", NULL);
    e_util_env_set("PANTS", "ON");
-   e_util_env_set("DESKTOP", "Moksha-0.17.0");
+   snprintf(moksha, 13, "Moksha-%s", VERSION);
+   e_util_env_set("DESKTOP", moksha);
    TS("Environment Variables Done");
 
    TS("Parse Arguments");

@@ -11,19 +11,21 @@ e_about_new(E_Container *con)
 {
    E_Obj_Dialog *od;
    char buf[16384];
+   char version[7];
    FILE *f;
    Eina_Strbuf *tbuf;
 
    od = e_obj_dialog_new(con, _("About Moksha"), "E", "_about");
    if (!od) return NULL;
+   snprintf(version, 6, "%s", VERSION);
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Moksha"));
-   e_obj_dialog_obj_part_text_set(od, "e.text.version", "0.2.1");
+   e_obj_dialog_obj_part_text_set(od, "e.text.version", version);
    snprintf
      (buf, sizeof(buf), "%s%s",
      _(
-       "<title>Copyright &copy; 2015, by the Moksha "
+       "<title>Copyright &copy; 2018, by the Moksha "
        "Development Team</><br>"
        "<br>"
        "We hope you enjoy using this software as much as we enjoyed "
