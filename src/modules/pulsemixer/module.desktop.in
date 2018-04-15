@@ -21,5 +21,5 @@ Icon=preferences-desktop-mixer
 Exec=enlightenment
 StartupNotify=true
 X-Enlightenment-IconClass=epulse-mixer,gadget
-X-Enlightenment-ModuleType=utils
+X-Enlightenment-ModuleType=system
 X-Enlightenment-WaitExit=false
