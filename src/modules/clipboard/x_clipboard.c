@@ -8,16 +8,16 @@ Eina_Bool  _clear_none(void);
 Eina_Bool  _clear_both(void);
 void       _off(void);
 void       _request      (Ecore_X_Window w, const char *target);
-void       _request_none (Ecore_X_Window w, const char *target);
+void       _request_none (Ecore_X_Window w __UNUSED__, const char *target __UNUSED__);
 void       _request_both (Ecore_X_Window w, const char *target);
 Eina_Bool  _set          (Ecore_X_Window w, const void *data, int size);
-Eina_Bool  _set_none     (Ecore_X_Window w, const void *data, int size);
+Eina_Bool  _set_none     (Ecore_X_Window w __UNUSED__, const void *data __UNUSED__, int size __UNUSED__);
 Eina_Bool  _set_both     (Ecore_X_Window w, const void *data, int size);
 void       _sync(const Eina_Bool state);
 Eina_Bool  _track(unsigned int mode);
 
 Ecore_X_Selection_Data_Text *_get_text           (Ecore_X_Event_Selection_Notify *event);
-Ecore_X_Selection_Data_Text *_get_text_none      (Ecore_X_Event_Selection_Notify *event);
+Ecore_X_Selection_Data_Text *_get_text_none      (Ecore_X_Event_Selection_Notify *event __UNUSED__);
 Ecore_X_Selection_Data_Text *_get_text_clipboard (Ecore_X_Event_Selection_Notify *event);
 Ecore_X_Selection_Data_Text *_get_text_primary   (Ecore_X_Event_Selection_Notify *event);
 Ecore_X_Selection_Data_Text *_get_text_both      (Ecore_X_Event_Selection_Notify *event);
@@ -94,7 +94,7 @@ _request(Ecore_X_Window w, const char *target)
 }
 
 void
-_request_none(Ecore_X_Window w, const char *target)
+_request_none(Ecore_X_Window w __UNUSED__, const char *target __UNUSED__)
 {
   return;
 }
@@ -113,7 +113,7 @@ _set(Ecore_X_Window w, const void *data, int size)
 }
 
 Eina_Bool
-_set_none(Ecore_X_Window w, const void *data, int size)
+_set_none(Ecore_X_Window w __UNUSED__, const void *data __UNUSED__, int size __UNUSED__)
 {
   return EINA_TRUE;
 }
@@ -155,7 +155,7 @@ _get_text(Ecore_X_Event_Selection_Notify *event) {
 }
 
 Ecore_X_Selection_Data_Text *
-_get_text_none(Ecore_X_Event_Selection_Notify *event){
+_get_text_none(Ecore_X_Event_Selection_Notify *event __UNUSED__){
   return NULL;
 }
 
@@ -181,9 +181,7 @@ Ecore_X_Selection_Data_Text *
 _get_text_primary(Ecore_X_Event_Selection_Notify *event)
 {
   Ecore_X_Selection_Data_Text *text_data;
-Ecore_Exe *exe;
-  
-  char buf[PATH_MAX];
+
   if ((event->selection == ECORE_X_SELECTION_PRIMARY) &&
        (strcmp(event->target, ECORE_X_SELECTION_TARGET_UTF8_STRING) == 0))
   {

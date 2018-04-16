@@ -32,7 +32,7 @@ logger_shutdown(char *package)
 {
   Eina_Stringshare *temp;
 
-  if (temp = eina_stringshare_add(package))
+  if ((temp = eina_stringshare_add(package)))
     eina_stringshare_del(temp);
 
   if(clipboard_log >= 0) {

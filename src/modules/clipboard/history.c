@@ -155,7 +155,8 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     Clip_Data *cd = NULL;
     Eina_List *l = NULL;
     char *ret, *str, history_path[PATH_MAX];
-    unsigned int i, size;
+    long i;
+    int size;
     long version, item_num;
 
     /* Open history file */
@@ -198,7 +199,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     /* Read each item */
     for (i = 1; i <= item_num; i++){
         cd = E_NEW(Clip_Data, 1);
-        sprintf(str, "%d", i);
+        sprintf(str, "%ld", i);
         ret = eet_read(history_file, str, &size);
         if (!ret) {
           ERR("History file corruption: %s", history_path);

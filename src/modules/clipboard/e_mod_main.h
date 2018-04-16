@@ -50,6 +50,5 @@ EAPI int   e_modapi_save     (E_Module *m __UNUSED__);
 
 /* Needed elsewhere */
 Eet_Error   clip_save(Eina_List *items);
-void        free_clip_data(Clip_Data *clip);
 
 #endif

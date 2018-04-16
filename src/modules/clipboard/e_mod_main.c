@@ -55,9 +55,10 @@ static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object
 static void      _cb_clear_history(Instance *inst);
 static void      _cb_dialog_delete(void *data __UNUSED__);
 static void      _cb_dialog_keep(void *data __UNUSED__);
-static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas, Evas_Object *obj, Mouse_Event *event);
-
-static void      _cb_config_show(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
+static void      _cb_config_show(void *data__UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static Eina_Bool _cb_xclip_apply_data(void *data __UNUSED__);
+static Eina_Bool _cb_xclip_save_data(void *data __UNUSED__);
 
 /*   And then some auxillary functions */
 static void      _clip_config_new(E_Module *m);
@@ -318,7 +319,7 @@ _set_mouse_coord(Instance *inst,
 static int
 _menu_fill(Instance *inst, Eina_Bool mouse_event)
 {
-  EINA_SAFETY_ON_NULL_RETURN(inst);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(inst, E_GADCON_ORIENT_VERT);
 
   E_Menu_Item *mi;
   /* Default Orientation of menu for float list */
@@ -481,7 +482,7 @@ _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Even
 }
 
 static Eina_Bool
-_cb_xclip_apply_data(void *data)
+_cb_xclip_apply_data(void *data __UNUSED__)
 {
   Ecore_Exe *exe;
   char buf[PATH_MAX];
@@ -494,7 +495,7 @@ _cb_xclip_apply_data(void *data)
 }
 
 static Eina_Bool
-_cb_xclip_save_data(void *data)
+_cb_xclip_save_data(void *data __UNUSED__)
 {
   Ecore_Exe *exe;
   char buf[PATH_MAX];
@@ -625,11 +626,12 @@ _cb_dialog_delete(void *data __UNUSED__)
   _clear_history();
 }
 
-static Eina_Bool
+static Eina_Bool 
 _cb_clipboard_request(void *data __UNUSED__)
 {
   ecore_x_fixes_selection_notification_request(ECORE_X_ATOM_SELECTION_CLIPBOARD);
   clipboard.request(clip_inst->win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+  return EINA_TRUE;
 }
 
 static void
@@ -651,7 +653,7 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 }
 
 static void
-_cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas, Evas_Object *obj, Mouse_Event *event)
+_cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event)
 {
   if (!strcmp(params, "float"))
     _cb_menu_show(data, NULL, NULL, event);
@@ -807,11 +809,11 @@ e_modapi_init (E_Module *m)
 }
 
 static void
-_cb_config_show(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+_cb_config_show(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-  Instance *inst = NULL;
+  //Instance *inst = NULL;
 
-  inst = data;
+  //inst = data;
   if (!clip_cfg) return;
   if (clip_cfg->config_dialog) return;
   config_clipboard_module(NULL, NULL);

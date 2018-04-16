@@ -40,7 +40,7 @@ set_clip_content(char **content, char* text, int mode)
 {
   Eina_Bool ret = EINA_TRUE;
   char *temp, *trim;
-  char buf[50];
+
   /* Sanity check */
   if (!text) {
     WRN("ERROR: Text is NULL\n");
@@ -87,7 +87,6 @@ Eina_Bool
 set_clip_name(char **name, char * text, int mode, int n)
 {
   Eina_Bool ret = EINA_TRUE;
-  char *temp, *trim;
 
   /* Sanity check */
   if (!text) {
@@ -119,7 +118,7 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
 
   char *ret = malloc(n + 1);
   char *temp = ret;
-  int chr, i = 0;
+  unsigned int chr,i = 0;
 
   if (!ret) return NULL;
 
@@ -134,7 +133,7 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
       /* is it a tab */
       if (chr == 9){
         // default tab
-        for (i; i + 4; i++){
+        for (i=0; i + 4; i++){
           if (i == n) break;
           *temp++ = ' ';
         }
@@ -207,7 +206,7 @@ isnewline(const int c)
 Eina_Bool 
 is_empty(const char *str)
 {
-  EINA_SAFETY_ON_NULL_RETURN(str);
+  EINA_SAFETY_ON_NULL_RETURN_VAL(str, EINA_TRUE);
   
   while (isspace((unsigned char) *str) && str++);
   return !*str;
