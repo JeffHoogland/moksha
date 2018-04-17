@@ -86,7 +86,7 @@ _e_mod_menu_desktop_add(void *data __UNUSED__, E_Menu *m)
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Desktop");
+   e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
    e_menu_item_submenu_set(mi, subm);
 
@@ -100,7 +100,7 @@ _e_mod_menu_win_add(void *data __UNUSED__, E_Menu *m)
    subm = e_int_menus_clients_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, "Windows");
+   e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
    /* The necessary (??) to prevent
