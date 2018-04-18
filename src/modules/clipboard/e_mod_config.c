@@ -127,14 +127,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
   o = e_widget_list_add(evas, 0, 0);
   /* Clipboard Config Section     */
-  of = e_widget_framelist_add(evas, D_("Clipboards"), 0);
-  ob = e_widget_check_add(evas, D_(" Use Copy (Ctrl-C)"), &(cfdata->clip_copy));
+  of = e_widget_framelist_add(evas, _("Clipboards"), 0);
+  ob = e_widget_check_add(evas, _(" Use Copy (Ctrl-C)"), &(cfdata->clip_copy));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_check_add(evas, D_(" Use Primary (Selection)"), &(cfdata->clip_select));
+  ob = e_widget_check_add(evas, _(" Use Primary (Selection)"), &(cfdata->clip_select));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_check_add(evas, D_(" Synchronize Clipboards"), &(cfdata->sync));
+  ob = e_widget_check_add(evas, _(" Synchronize Clipboards"), &(cfdata->sync));
   if ( !(cfdata->clip_copy && cfdata->clip_select))
     e_widget_disabled_set(ob, EINA_TRUE);
   cfdata->sync_widget = ob;
@@ -143,17 +143,17 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   e_widget_list_object_append(o, of, 1, 0, 0.5);
   
   /* History Config Section       */
-  of = e_widget_framelist_add(evas, D_("History"), 0);
-  ob = e_widget_check_add(evas, D_(" Save History"), &(cfdata->persistence));
+  of = e_widget_framelist_add(evas, _("History"), 0);
+  ob = e_widget_check_add(evas, _(" Save History"), &(cfdata->persistence));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_check_add(evas, D_(" Reverse Order"), &(cfdata->hist_reverse));
+  ob = e_widget_check_add(evas, _(" Reverse Order"), &(cfdata->hist_reverse));
   e_widget_framelist_object_append(of, ob);
   
-  ob = e_widget_check_add(evas, D_(" Confirm before Clearing"), &(cfdata->confirm_clear));
+  ob = e_widget_check_add(evas, _(" Confirm before Clearing"), &(cfdata->confirm_clear));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_label_add(evas, D_(" Items in History"));
+  ob = e_widget_label_add(evas, _(" Items in History"));
   e_widget_framelist_object_append(of, ob);
   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", HIST_MIN, HIST_MAX, 1.0, 0, &(cfdata->hist_items), NULL, 40);
   e_widget_framelist_object_append(of, ob);
@@ -161,11 +161,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   e_widget_list_object_append(o, of, 1, 0, 0.5);
   
   /* Label Config Section       */
-  of = e_widget_framelist_add(evas, D_("Labels"), 0);
-  ob = e_widget_check_add(evas, D_(" Ignore Whitespace"), &(cfdata->ignore_ws));
+  of = e_widget_framelist_add(evas, _("Labels"), 0);
+  ob = e_widget_check_add(evas, _(" Ignore Whitespace"), &(cfdata->ignore_ws));
   e_widget_framelist_object_append(of, ob);
   
-  ob = e_widget_label_add(evas, D_(" Label Length"));
+  ob = e_widget_label_add(evas, _(" Label Length"));
   e_widget_framelist_object_append(of, ob);
   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", LABEL_MIN, LABEL_MAX, 1.0, 0, &(cfdata->label_length), NULL, 40);
   e_widget_framelist_object_append(of, ob);
@@ -173,14 +173,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   e_widget_list_object_append(o, of, 1, 0, 0.5);
   
   /* Content Config Section */
-  of = e_widget_framelist_add(evas, D_("Content"), 0);
-  ob = e_widget_check_add(evas, D_(" Ignore Whitespace"), &(cfdata->ignore_ws_copy));
+  of = e_widget_framelist_add(evas, _("Content"), 0);
+  ob = e_widget_check_add(evas, _(" Ignore Whitespace"), &(cfdata->ignore_ws_copy));
   e_widget_framelist_object_append(of, ob);
   
-  ob = e_widget_check_add(evas, D_(" Trim Whitespace"), &(cfdata->trim_ws));
+  ob = e_widget_check_add(evas, _(" Trim Whitespace"), &(cfdata->trim_ws));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_check_add(evas, D_(" Trim Newlines"), &(cfdata->trim_nl));
+  ob = e_widget_check_add(evas, _(" Trim Newlines"), &(cfdata->trim_nl));
   e_widget_framelist_object_append(of, ob);
 
   e_widget_list_object_append(o, of, 1, 0, 0.5);
@@ -206,7 +206,7 @@ config_clipboard_module(E_Container *con, const char *params __UNUSED__)
   v->basic.apply_cfdata = _basic_apply_data;
   v->basic.check_changed = _basic_check_changed;
 
-  cfd = e_config_dialog_new(con, D_("Clipboard Settings"),
+  cfd = e_config_dialog_new(con, _("Clipboard Settings"),
             "Clipboard", "extensions/clipboard",
              0, 0, v, NULL);
   clip_cfg->config_dialog = cfd;

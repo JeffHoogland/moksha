@@ -6,14 +6,14 @@
 #include "history.h"
 #include "utility.h"
 
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define D_(string) dgettext(PACKAGE, string)
-#else
-# define bindtextdomain(domain,dir)
-# define bind_textdomain_codeset(domain,codeset)
-# define N_(string) (string)
-#endif
+//~ #ifdef ENABLE_NLS
+//~ # include <libintl.h>
+//~ # define D_(string) dgettext(PACKAGE, string)
+//~ #else
+//~ # define bindtextdomain(domain,dir)
+//~ # define bind_textdomain_codeset(domain,codeset)
+//~ # define N_(string) (string)
+//~ #endif
 
 /* Key Board Bindings action names */
 #define ACT_FLOAT   D_("Show History")

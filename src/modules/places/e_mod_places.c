@@ -215,15 +215,15 @@ places_fill_box(Evas_Object *box)
    places_empty_box(box);
 
    /*if (places_conf->show_home)
-      _places_custom_volume(box, D_("Home"), "e/icons/fileman/home", "/home/dave");
+      _places_custom_volume(box, _("Home"), "e/icons/fileman/home", "/home/dave");
    if (places_conf->show_desk)
-      _places_custom_volume(box, D_("Desktop"), "e/icons/fileman/desktop", "/home/dave/Desktop");
+      _places_custom_volume(box, _("Desktop"), "e/icons/fileman/desktop", "/home/dave/Desktop");
    if (places_conf->show_trash)
-      _places_custom_volume(box, D_("Trash"), "e/icons/fileman/trash", "trash:///");
+      _places_custom_volume(box, _("Trash"), "e/icons/fileman/trash", "trash:///");
    if (places_conf->show_root)
-      _places_custom_volume(box, D_("Filesystem"), "e/icons/fileman/root", "/");
+      _places_custom_volume(box, _("Filesystem"), "e/icons/fileman/root", "/");
    if (places_conf->show_temp)
-      _places_custom_volume(box, D_("Temp"), "e/icons/fileman/tmp", "/tmp");
+      _places_custom_volume(box, _("Temp"), "e/icons/fileman/tmp", "/tmp");
    */
 
 
@@ -233,7 +233,7 @@ places_fill_box(Evas_Object *box)
    else
      edje_object_file_set(o, theme_file, "modules/places/header");
 
-   edje_object_part_text_set(o, "label", D_("Places"));
+   edje_object_part_text_set(o, "label", _("Places"));
    if (!e_box_orientation_get(box))
       edje_object_signal_emit(o, "separator,set,horiz", "places");
    else
@@ -597,8 +597,8 @@ _places_run_fm(void *data, E_Menu *m, E_Menu_Item *mi)
         if (act && act->func.go && managers && managers->data)
           act->func.go(E_OBJECT(managers->data), directory);
         else
-          e_util_dialog_internal(D_("Warning"),
-                      D_("<b>Cannot run the Enlightenment FileManager.</b><br>"
+          e_util_dialog_internal(_("Warning"),
+                      _("<b>Cannot run the Enlightenment FileManager.</b><br>"
                          "Please choose a custom file manager in<br>"
                          "the gadget configuration."));
      }
@@ -616,24 +616,24 @@ _places_volume_object_update(Volume *vol, Evas_Object *obj)
 
    // the volume label
    if (vol->mount_point && !strcmp(vol->mount_point, "/"))
-     edje_object_part_text_set(obj, "volume_label", D_("Filesystem"));
+     edje_object_part_text_set(obj, "volume_label", _("Filesystem"));
    else if (vol->label && strlen(vol->label))
      edje_object_part_text_set(obj, "volume_label", vol->label);
    else
-     edje_object_part_text_set(obj, "volume_label", D_("No Name"));
+     edje_object_part_text_set(obj, "volume_label", _("No Name"));
 
    // the free label
    tot_h = _places_human_size_get(vol->size);
    if (vol->mounted)
      {
         free_h = _places_human_size_get(vol->free_space);
-        snprintf(buf, sizeof(buf), "%s %s %s", free_h, D_("free of"), tot_h);
+        snprintf(buf, sizeof(buf), "%s %s %s", free_h, _("free of"), tot_h);
         edje_object_part_text_set(obj, "size_label", buf);
         eina_stringshare_del(free_h);
      }
    else
      {
-        snprintf(buf, sizeof(buf), D_("%s Not Mounted"), tot_h);
+        snprintf(buf, sizeof(buf), _("%s Not Mounted"), tot_h);
         edje_object_part_text_set(obj, "size_label", buf);
      }
    eina_stringshare_del(tot_h);
@@ -660,12 +660,12 @@ _places_volume_object_update(Volume *vol, Evas_Object *obj)
    if (vol->mounted  && vol->mount_point && strcmp(vol->mount_point, "/"))
      {
         edje_object_signal_emit(obj, "icon,eject,show", "places");
-        edje_object_part_text_set(obj, "eject_label", D_("unmount"));
+        edje_object_part_text_set(obj, "eject_label", _("unmount"));
      }
    else if (!vol->mounted && (vol->requires_eject || vol->removable))
      {
         edje_object_signal_emit(obj, "icon,eject,show", "places");
-        edje_object_part_text_set(obj, "eject_label", D_("eject"));
+        edje_object_part_text_set(obj, "eject_label", _("eject"));
      }
    else
      edje_object_signal_emit(obj, "icon,eject,hide", "places");
@@ -772,7 +772,7 @@ places_generate_menu(void *data, E_Menu *em)
    if (places_conf->show_home)
      {
         mi = e_menu_item_new(em);
-        e_menu_item_label_set(mi, D_("Home"));
+        e_menu_item_label_set(mi, _("Home"));
         e_util_menu_item_theme_icon_set(mi, "user-home");
         e_menu_item_callback_set(mi, _places_run_fm, (char*)e_user_homedir_get());
      }
@@ -781,7 +781,7 @@ places_generate_menu(void *data, E_Menu *em)
    if (places_conf->show_desk)
      {
         mi = e_menu_item_new(em);
-        e_menu_item_label_set(mi, D_("Desktop"));
+        e_menu_item_label_set(mi, _("Desktop"));
         e_util_menu_item_theme_icon_set(mi, "user-desktop");
         snprintf(buf, sizeof(buf), "%s/Desktop", (char*)e_user_homedir_get());
         e_menu_item_callback_set(mi, _places_run_fm, strdup(buf)); //TODO free somewhere
@@ -791,7 +791,7 @@ places_generate_menu(void *data, E_Menu *em)
    if (places_conf->show_trash)
      {
         mi = e_menu_item_new(em);
-        e_menu_item_label_set(mi, D_("Trash"));
+        e_menu_item_label_set(mi, _("Trash"));
         e_util_menu_item_theme_icon_set(mi, "user-trash");
         e_menu_item_callback_set(mi, _places_run_fm, "trash:///");
      }
@@ -800,7 +800,7 @@ places_generate_menu(void *data, E_Menu *em)
    if (places_conf->show_root)
      {
         mi = e_menu_item_new(em);
-        e_menu_item_label_set(mi, D_("Filesystem"));
+        e_menu_item_label_set(mi, _("Filesystem"));
         e_util_menu_item_theme_icon_set(mi, "drive-harddisk");
         e_menu_item_callback_set(mi, _places_run_fm, "/");
      }
@@ -809,7 +809,7 @@ places_generate_menu(void *data, E_Menu *em)
    if (places_conf->show_temp)
      {
         mi = e_menu_item_new(em);
-        e_menu_item_label_set(mi, D_("Temp"));
+        e_menu_item_label_set(mi, _("Temp"));
         e_util_menu_item_theme_icon_set(mi, "user-temp");
         e_menu_item_callback_set(mi, _places_run_fm, "/tmp");
      }
@@ -866,7 +866,7 @@ places_augmentation(void *data, E_Menu *em)
    E_Menu *m;
 
    mi = e_menu_item_new(em);
-   e_menu_item_label_set(mi, D_("Places"));
+   e_menu_item_label_set(mi, _("Places"));
    e_util_menu_item_theme_icon_set(mi, "system-file-manager");
 
    m = e_menu_new();

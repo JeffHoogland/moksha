@@ -56,9 +56,9 @@ e_modapi_init(E_Module *m)
    snprintf(buf, sizeof(buf), "%s/e-module-places.edj", m->dir);
 
    /* Display this Modules config info in the main Config Panel */
-   e_configure_registry_category_add("fileman", 80, D_("Files"),
+   e_configure_registry_category_add("fileman", 80, _("Files"),
                                      NULL, "system-file-manager");
-   e_configure_registry_item_add("fileman/places", 80, D_("Places"),
+   e_configure_registry_item_add("fileman/places", 80, _("Places"),
                                  NULL, buf, e_int_config_places_module);
 
    /* Define EET Data Storage */
@@ -295,7 +295,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static const char *
 _gc_label(const E_Gadcon_Client_Class *client_class)
 {
-   return D_("Places");
+   return _("Places");
 }
 
 static const char *
@@ -391,7 +391,7 @@ _places_conf_free(void)
 static Eina_Bool
 _places_conf_timer(void *data)
 {
-   e_util_dialog_internal(D_("Places Configuration Updated"), data);
+   e_util_dialog_internal(_("Places Configuration Updated"), data);
    return EINA_FALSE;
 }
 
@@ -431,7 +431,7 @@ _places_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         m = e_menu_new();
 
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, D_("Settings"));
+        e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_menu_item_callback_set(mi, _places_cb_menu_configure, NULL);
 

@@ -272,7 +272,7 @@ _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__,
   /* create popup menu  */
   m = e_menu_new();
   mi = e_menu_item_new(m);
-  e_menu_item_label_set(mi, D_("Settings"));
+  e_menu_item_label_set(mi, _("Settings"));
   e_util_menu_item_theme_icon_set(mi, "preferences-system");
   e_menu_item_callback_set(mi, _cb_config_show, inst);
 
@@ -359,7 +359,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   }
   else {
     mi = e_menu_item_new(inst->menu);
-    e_menu_item_label_set(mi, D_("Empty"));
+    e_menu_item_label_set(mi, _("Empty"));
     e_menu_item_disabled_set(mi, EINA_TRUE);
   }
 
@@ -367,7 +367,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   e_menu_item_separator_set(mi, EINA_TRUE);
 
   mi = e_menu_item_new(inst->menu);
-  e_menu_item_label_set(mi, D_("Clear"));
+  e_menu_item_label_set(mi, _("Clear"));
   e_util_menu_item_theme_icon_set(mi, "edit-clear");
   e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_clear_history, inst);
 
@@ -380,7 +380,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   e_menu_item_separator_set(mi, EINA_TRUE);
 
   mi = e_menu_item_new(inst->menu);
-  e_menu_item_label_set(mi, D_("Settings"));
+  e_menu_item_label_set(mi, _("Settings"));
   e_util_menu_item_theme_icon_set(mi, "preferences-system");
   e_menu_item_callback_set(mi, _cb_config_show, NULL);
 
@@ -601,12 +601,12 @@ _cb_clear_history(Instance *inst __UNUSED__)
   EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
 
   if (clip_cfg->confirm_clear) {
-    e_confirm_dialog_show(D_("Confirm History Deletion"),
+    e_confirm_dialog_show(_("Confirm History Deletion"),
                           "application-exit",
-                          D_("You wish to delete the clipboards history.<br>"
+                          _("You wish to delete the clipboards history.<br>"
                           "<br>"
                           "Are you sure you want to delete it?"),
-                          D_("Delete"), D_("Keep"),
+                          _("Delete"), _("Keep"),
                           _cb_dialog_delete, NULL, NULL, NULL,
                           _cb_dialog_keep, NULL);
   }
@@ -761,9 +761,9 @@ e_modapi_init (E_Module *m)
   act = e_action_add("clipboard");
   if (act) {
     act->func.go = (void *) _cb_action_switch;
-    e_action_predef_name_set(D_("Clipboard"), ACT_FLOAT, "clipboard", "float",    NULL, 0);
-    e_action_predef_name_set(D_("Clipboard"), ACT_CONFIG,   "clipboard", "settings", NULL, 0);
-    e_action_predef_name_set(D_("Clipboard"), ACT_CLEAR,   "clipboard", "clear",    NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_FLOAT, "clipboard", "float",    NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_CONFIG,   "clipboard", "settings", NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_CLEAR,   "clipboard", "clear",    NULL, 0);
   }
 
   /* Create a global clip_inst for our module

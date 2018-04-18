@@ -51,7 +51,7 @@ e_int_config_places_module(E_Container *con, const char *params)
    snprintf(buf, sizeof(buf), "%s/e-module-places.edj", places_conf->module->dir);
 
    /* create new config dialog */
-   cfd = e_config_dialog_new(con, D_("Places Settings"), "Places",
+   cfd = e_config_dialog_new(con, _("Places Settings"), "Places",
                              "fileman/places", buf, 0, v, NULL);
    places_conf->cfd = cfd;
    return cfd;
@@ -133,33 +133,33 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    o = e_widget_list_add(evas, 0, 0);
 
    //General frame
-   of = e_widget_framelist_add(evas, D_("General"), 0);
+   of = e_widget_framelist_add(evas, _("General"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
 
-   ow = e_widget_check_add(evas, D_("Show in main menu"),
+   ow = e_widget_check_add(evas, _("Show in main menu"),
                            &(cfdata->show_menu));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Hide the gadget header"),
+   ow = e_widget_check_add(evas, _("Hide the gadget header"),
                            &(cfdata->hide_header));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Mount volumes at boot"),
+   ow = e_widget_check_add(evas, _("Mount volumes at boot"),
                            &(cfdata->boot_mount));
    e_widget_framelist_object_append(of, ow);
 
-   ow1 = e_widget_check_add(evas, D_("Mount volumes on insert"),
+   ow1 = e_widget_check_add(evas, _("Mount volumes on insert"),
                            &(cfdata->auto_mount));
    e_widget_framelist_object_append(of, ow1);
 
-   ow = e_widget_check_add(evas, D_("Open filemanager on insert"),
+   ow = e_widget_check_add(evas, _("Open filemanager on insert"),
                            &(cfdata->auto_open));
    e_widget_framelist_object_append(of, ow);
    e_widget_on_change_hook_set(ow1, _mount_on_insert_click, ow);
    if (!cfdata->auto_mount)
      e_widget_disabled_set(ow, 1);
 
-   ow = e_widget_check_add(evas, D_("Use a custom file manager"), &(cfdata->fm_chk));
+   ow = e_widget_check_add(evas, _("Use a custom file manager"), &(cfdata->fm_chk));
    e_widget_check_checked_set(ow, strlen(cfdata->fm) > 0 ? 1 : 0);
    e_widget_on_change_hook_set(ow, _custom_fm_click, cfdata);
    e_widget_framelist_object_append(of, ow);
@@ -172,25 +172,25 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    //Display frame
-   of = e_widget_framelist_add(evas, D_("Show in menu"), 0);
+   of = e_widget_framelist_add(evas, _("Show in menu"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
 
-   ow = e_widget_check_add(evas, D_("Home"), &(cfdata->show_home));
+   ow = e_widget_check_add(evas, _("Home"), &(cfdata->show_home));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Desktop"), &(cfdata->show_desk));
+   ow = e_widget_check_add(evas, _("Desktop"), &(cfdata->show_desk));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Trash"), &(cfdata->show_trash));
+   ow = e_widget_check_add(evas, _("Trash"), &(cfdata->show_trash));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Filesystem"), &(cfdata->show_root));
+   ow = e_widget_check_add(evas, _("Filesystem"), &(cfdata->show_root));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Temp"), &(cfdata->show_temp));
+   ow = e_widget_check_add(evas, _("Temp"), &(cfdata->show_temp));
    e_widget_framelist_object_append(of, ow);
 
-   ow = e_widget_check_add(evas, D_("Favorites"), &(cfdata->show_bookm));
+   ow = e_widget_check_add(evas, _("Favorites"), &(cfdata->show_bookm));
    e_widget_framelist_object_append(of, ow);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
