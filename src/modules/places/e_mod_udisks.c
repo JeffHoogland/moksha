@@ -16,18 +16,18 @@
 /* Local Function Prototypes */
 static void _places_udisks_test(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error);
 static void _places_udisks_poll(void *data __UNUSED__, DBusMessage *msg);
-static void _places_udisks_device_add_cb(void *data, DBusMessage *msg);
-static void _places_udisks_device_rem_cb(void *data, DBusMessage *msg);
-static void _places_udisks_device_chg_cb(void *data, DBusMessage *msg);
+static void _places_udisks_device_add_cb(void *data __UNUSED__, DBusMessage *msg);
+static void _places_udisks_device_rem_cb(void *data __UNUSED__, DBusMessage *msg);
+static void _places_udisks_device_chg_cb(void *data __UNUSED__, DBusMessage *msg);
 
-static void _places_udisks_all_devices_cb(void *user_data, void *reply_data, DBusError *error);
+static void _places_udisks_all_devices_cb(void *user_data __UNUSED__, void *reply_data, DBusError *error);
 static void _places_udisks_vol_prop_cb(void *data, void *reply_data, DBusError *error);
 static void _places_udisks_sto_prop_cb(void *data, void *reply_data, DBusError *error);
 
 static Volume* _places_udisks_volume_add(const char *udi, Eina_Bool first_time);
 static void _places_udisks_mount_func(Volume *vol, Eina_List *opts);
-static void _places_udisks_unmount_func(Volume *vol, Eina_List *opts);
-static void _places_udisks_eject_func(Volume *vol, Eina_List *opts);
+static void _places_udisks_unmount_func(Volume *vol, Eina_List *opts __UNUSED__);
+static void _places_udisks_eject_func(Volume *vol, Eina_List *opts __UNUSED__);
 
 /* Local Variables */
 static E_DBus_Connection *_places_udisks_conn = NULL;
@@ -155,7 +155,7 @@ _places_udisks_poll(void *data __UNUSED__, DBusMessage *msg)
 
 /* Reply of e_udisks_get_all_devices() */
 static void
-_places_udisks_all_devices_cb(void *user_data, void *reply_data, DBusError *err)
+_places_udisks_all_devices_cb(void *user_data __UNUSED__, void *reply_data, DBusError *err)
 {
    E_Ukit_String_List_Return *udisks_ret = reply_data;
    Eina_List *l;
@@ -181,7 +181,7 @@ _places_udisks_all_devices_cb(void *user_data, void *reply_data, DBusError *err)
 
 /* Dbus CB for signal "DeviceAdded" */
 static void
-_places_udisks_device_add_cb(void *data, DBusMessage *msg)
+_places_udisks_device_add_cb(void *data __UNUSED__, DBusMessage *msg)
 {
    Volume *v;
    DBusError err;
@@ -205,7 +205,7 @@ _places_udisks_device_add_cb(void *data, DBusMessage *msg)
 
 /* Dbus CB  for signal "DeviceRemoved" */
 static void
-_places_udisks_device_rem_cb(void *data, DBusMessage *msg)
+_places_udisks_device_rem_cb(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    Volume *v;
@@ -230,7 +230,7 @@ _places_udisks_device_rem_cb(void *data, DBusMessage *msg)
 
 /* Dbus CB  for signal "DeviceChanged */
 static void
-_places_udisks_device_chg_cb(void *data, DBusMessage *msg)
+_places_udisks_device_chg_cb(void *data __UNUSED__, DBusMessage *msg)
 {
    DBusError err;
    Volume *v;
@@ -464,13 +464,13 @@ _places_udisks_mount_func(Volume *vol, Eina_List *opts)
 }
 
 static void
-_places_udisks_unmount_func(Volume *vol, Eina_List *opts)
+_places_udisks_unmount_func(Volume *vol, Eina_List *opts __UNUSED__)
 {
    e_udisks_volume_unmount(_places_udisks_conn, vol->id, NULL);
 }
 
 static void
-_places_udisks_eject_func(Volume *vol, Eina_List *opts)
+_places_udisks_eject_func(Volume *vol, Eina_List *opts __UNUSED__)
 {
    e_udisks_volume_eject(_places_udisks_conn, vol->id, NULL);
 }

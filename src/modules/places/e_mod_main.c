@@ -10,18 +10,18 @@
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
 static void _gc_shutdown(E_Gadcon_Client *gcc);
 static void _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
-static const char *_gc_label(const E_Gadcon_Client_Class *client_class);
-static const char *_gc_id_new(const E_Gadcon_Client_Class *client_class);
-static void _gc_id_del(const E_Gadcon_Client_Class *client_class, const char *id);
-static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char *_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__);
+static const char *_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__);
+static void _gc_id_del(const E_Gadcon_Client_Class *client_class __UNUSED__, const char *id __UNUSED__);
+static Evas_Object *_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas);
 
 static void _places_conf_new(void);
 static void _places_conf_free(void);
 static Eina_Bool _places_conf_timer(void *data);
 static Config_Item *_places_conf_item_get(const char *id);
-static void _places_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void _places_cb_menu_post(void *data, E_Menu *menu);
-static void _places_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi);
+static void _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
+static void _places_cb_menu_post(void *data, E_Menu *menu __UNUSED__);
+static void _places_cb_menu_configure(void *data __UNUSED__, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
 
 /* Local Variables */
 static E_Config_DD *conf_edd = NULL;
@@ -56,9 +56,9 @@ e_modapi_init(E_Module *m)
    snprintf(buf, sizeof(buf), "%s/e-module-places.edj", m->dir);
 
    /* Display this Modules config info in the main Config Panel */
-   e_configure_registry_category_add("fileman", 80, _("Files"),
+   e_configure_registry_category_add("fileman", 80, D_("Files"),
                                      NULL, "system-file-manager");
-   e_configure_registry_item_add("fileman/places", 80, _("Places"),
+   e_configure_registry_item_add("fileman/places", 80, D_("Places"),
                                  NULL, buf, e_int_config_places_module);
 
    /* Define EET Data Storage */
@@ -145,7 +145,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    places_shutdown();
 
@@ -175,7 +175,7 @@ e_modapi_shutdown(E_Module *m)
 }
 
 EAPI int
-e_modapi_save(E_Module *m)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    e_config_domain_save("module.places", conf_edd, places_conf);
    return 1;
@@ -293,13 +293,13 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 }
 
 static const char *
-_gc_label(const E_Gadcon_Client_Class *client_class)
+_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _("Places");
+   return D_("Places");
 }
 
 static const char *
-_gc_id_new(const E_Gadcon_Client_Class *client_class)
+_gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
    Config_Item *ci = NULL;
 
@@ -308,7 +308,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class)
 }
 
 static void
-_gc_id_del(const E_Gadcon_Client_Class *client_class, const char *id)
+_gc_id_del(const E_Gadcon_Client_Class *client_class __UNUSED__, const char *id __UNUSED__)
 {
    // Config_Item *ci = NULL;
 
@@ -321,7 +321,7 @@ _gc_id_del(const E_Gadcon_Client_Class *client_class, const char *id)
 }
 
 static Evas_Object *
-_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas)
+_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o = NULL;
    char buf[PATH_MAX];
@@ -391,7 +391,7 @@ _places_conf_free(void)
 static Eina_Bool
 _places_conf_timer(void *data)
 {
-   e_util_dialog_internal(_("Places Configuration Updated"), data);
+   e_util_dialog_internal(D_("Places Configuration Updated"), data);
    return EINA_FALSE;
 }
 
@@ -410,7 +410,7 @@ _places_conf_item_get(const char *id)
 }
 
 static void
-_places_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
+_places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Instance *inst = NULL;
    Evas_Event_Mouse_Down *ev;
@@ -431,7 +431,7 @@ _places_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
         m = e_menu_new();
 
         mi = e_menu_item_new(m);
-        e_menu_item_label_set(mi, _("Settings"));
+        e_menu_item_label_set(mi, D_("Settings"));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_menu_item_callback_set(mi, _places_cb_menu_configure, NULL);
 
@@ -453,7 +453,7 @@ _places_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event)
 }
 
 static void
-_places_cb_menu_post(void *data, E_Menu *menu)
+_places_cb_menu_post(void *data, E_Menu *menu __UNUSED__)
 {
    Instance *inst = NULL;
 
@@ -464,7 +464,7 @@ _places_cb_menu_post(void *data, E_Menu *menu)
 }
 
 static void
-_places_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi)
+_places_cb_menu_configure(void *data __UNUSED__, E_Menu *mn, E_Menu_Item *mi __UNUSED__)
 {
    if (!places_conf) return;
    if (places_conf->cfd) return;
