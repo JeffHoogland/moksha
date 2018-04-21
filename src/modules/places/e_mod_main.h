@@ -1,15 +1,6 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
-#ifdef ENABLE_NLS
-# include <libintl.h>
-# define D_(string) dgettext(PACKAGE, string)
-#else
-# define bindtextdomain(domain,dir)
-# define bind_textdomain_codeset(domain,codeset)
-# define D_(string) (string)
-#endif
-
 /* Macros used for config file versioning */
 #define MOD_CONFIG_FILE_EPOCH 0x0001
 #define MOD_CONFIG_FILE_GENERATION 0x008f
