@@ -109,7 +109,8 @@ e_module_all_load(void)
      {
         ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
         _e_modules_initting = EINA_FALSE;
-        //_e_module_whitelist_check();
+        if (getenv("MOKSHA_MODULE_SECURITY"))
+          _e_module_whitelist_check();
      }
 
    unsetenv("E_MODULE_LOAD");
@@ -302,8 +303,9 @@ e_module_enable(E_Module *m)
                   break;
                }
           }
-        /*if (!_e_modules_initting)
-          _e_module_whitelist_check();*/
+        if (!_e_modules_initting)
+          if (getenv("MOKSHA_MODULE_SECURITY"))
+            _e_module_whitelist_check();
         return 1;
      }
    return 0;
@@ -582,7 +584,8 @@ _e_module_cb_idler(void *data __UNUSED__)
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
    
    _e_modules_initting = EINA_FALSE;
-   //_e_module_whitelist_check();
+   if (getenv("MOKSHA_MODULE_SECURITY"))
+     _e_module_whitelist_check();
 
    _e_module_idler = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -705,6 +708,9 @@ _e_module_whitelist_check(void)
         "wl_screenshot",
         "wl_shell",
         "xkbswitch",
+        "classicmenu",
+        "clipboard",
+        "places",
         
         NULL // end marker
      };
@@ -757,7 +763,7 @@ _e_module_whitelist_check(void)
       ecore_x_window_prop_card32_set(ecore_x_window_root_first_get(),
                                      _x_tainted, &_e_tainted, 1);
 
-      e_env_set("E17_TAINTED", state);
+      e_env_set("MOKSHA_TAINTED", state);
    }
 
    if (eina_list_count(badl) != known)
@@ -794,7 +800,7 @@ _e_module_whitelist_check(void)
           }
 
         e_dialog_title_set(dia, _("Unstable module tainting"));
-        e_dialog_icon_set(dia, "enlightenment", 64);
+        e_dialog_icon_set(dia, "dialog-warning", 64);
         e_dialog_text_set(dia, eina_strbuf_string_get(sbuf));
         e_dialog_button_add(dia, _("OK"), NULL, _cleanup_cb, badl);
         e_dialog_button_add(dia, _("I know"), NULL, _ignore_cb, badl);

@@ -88,7 +88,7 @@ main(int argc, char **argv)
 
    fprintf(stderr, "exit_gdb: %i\n", exit_gdb);
 
-   tmp = getenv("E17_TAINTED");
+   tmp = getenv("MOKSHA_TAINTED");
    if (tmp && !strcmp(tmp, "NO"))
      tainted = EINA_FALSE;
 
