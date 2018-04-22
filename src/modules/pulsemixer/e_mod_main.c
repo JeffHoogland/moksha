@@ -1,7 +1,7 @@
-#include "lib/common.h"
 #include <e.h>
 #include <Eina.h>
 #include <Ecore.h>
+#include "lib/common.h"
 #include "lib/epulse.h"
 #include "e_mod_main.h"
 #ifdef HAVE_ENOTIFY
