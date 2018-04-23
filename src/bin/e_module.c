@@ -6,6 +6,76 @@
  * * add list of exclusions that a module can't work withApi
  *
  */
+#define MOKSHA_CORE_MODULES \
+        "access", \
+        "backlight", \
+        "battery", \
+        "classicmenu", \
+        "clipboard", \
+        "clock", \
+        "comp", \
+        "conf", \
+        "conf_applications", \
+        "conf_dialogs", \
+        "conf_display", \
+        "conf_edgebindings", \
+        "conf_interaction", \
+        "conf_intl", \
+        "conf_keybindings", \
+        "conf_menus", \
+        "conf_paths", \
+        "conf_performance", \
+        "conf_randr", \
+        "conf_shelves", \
+        "conf_theme", \
+        "conf_wallpaper2", \
+        "conf_window_manipulation", \
+        "conf_window_remembers", \
+        "connman", \
+        "cpufreq", \
+        "dropshadow", \
+        "everything", \
+        "fileman", \
+        "gadman", \
+        "ibar", \
+        "ibox", \
+        "layout", \
+        "mixer", \
+        "msgbus", \
+        "notification", \
+        "pager", \
+        "places", \
+        "quickaccess", \
+        "shot", \
+        "start", \
+        "syscon", \
+        "systray", \
+        "tasks", \
+        "temperature", \
+        "tiling", \
+        "winlist", \
+        "wizard", \
+        "wl_drm", \
+        "wl_screenshot", \
+        "wl_shell", \
+        "xkbswitch" \
+
+#define MOKSHA_EXTRA_MODULES \
+        "alarm", \
+        "calendar", \
+        "cpu", \
+        "engage", \
+        "flame", \
+        "forecasts", \
+        "mem", \
+        "net", \
+        "penguins", \
+        "productivity", \
+        "rain", \
+        "screenshot", \
+        "slideshow", \
+        "stickynotes", \
+        "tclock"  \
 
 /* local subsystem functions */
 static void      _e_module_free(E_Module *m);
@@ -638,82 +708,29 @@ _ignore_cb(void *data, E_Dialog *dialog)
 static void
 _e_module_whitelist_check(void)
 {
-   /* This Code checks for non-core modules. It is not currently used in Moksha*/
    Eina_List *l, *badl = NULL;
    E_Module *m;
    unsigned int known = 0;
    int i;
    const char *s;
-   const char *goodmods[] = 
-     {
-        "access",
-        "backlight",
-        "battery",
-        "bluez",
-        "clock",
-        "comp",
-        "conf",
-        "conf_applications",
-        "conf_dialogs",
-        "conf_display",
-        "conf_edgebindings",
-        "conf_interaction",
-        "conf_intl",
-        "conf_keybindings",
-        "conf_menus",
-        "conf_paths",
-        "conf_performance",
-        "conf_randr",
-        "conf_shelves",
-        "conf_theme",
-        "conf_wallpaper2",
-        "conf_window_manipulation",
-        "conf_window_remembers",
-        "connman",
-        "cpufreq",
-        "dropshadow",
-        "everything",
-        "fileman",
-        "fileman_opinfo",
-        "gadman",
-        "ibar",
-        "ibox",
-        "illume2",
-        "illume-bluetooth",
-        "illume-home",
-        "illume-home-toggle",
-        "illume-indicator",
-        "illume-kbd-toggle",
-        "illume-keyboard",
-        "illume-mode-toggle",
-        "illume-softkey",
-        "layout",
-        "mixer",
-        "msgbus",
-        "notification",
-        "ofono",
-        "pager",
-        "physics",
-        "quickaccess",
-        "shot",
-        "start",
-        "syscon",
-        "systray",
-        "tasks",
-        "temperature",
-        "tiling",
-        "winlist",
-        "wizard",
-        "wl_drm",
-        "wl_screenshot",
-        "wl_shell",
-        "xkbswitch",
-        "classicmenu",
-        "clipboard",
-        "places",
-        
-        NULL // end marker
-     };
+  if (strcmp(getenv("MOKSHA_MODULE_SECURITY"),"0") == 0)
+  {
+     #define MOKSHA_ONLY_CORE
+ }
+#ifdef MOKSHA_ONLY_CORE
+        const char *goodmods[] = 
+          {
+             MOKSHA_CORE_MODULES,
+             NULL // end marker
+          };
+#else
+        const char *goodmods[] = 
+         {
+            MOKSHA_CORE_MODULES,
+            MOKSHA_EXTRA_MODULES,
+            NULL // end marker
+         };
+#endif
 
    EINA_LIST_FOREACH(_e_modules, l, m)
      {
