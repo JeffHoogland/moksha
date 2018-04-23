@@ -13,7 +13,7 @@ static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas
 /* EVENTS */
 static Eina_Bool        _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event);
 static void             _e_xkb_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
-static void             _e_xkb_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event);
+static void             _e_xkb_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
 static void             _e_xkb_cb_menu_configure(void *data, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
 static void             _e_xkb_cb_lmenu_post(void *data, E_Menu *menu __UNUSED__);
 static void             _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED__);
@@ -313,7 +313,7 @@ _xkb_menu_items_sort(const void *data1, const void *data2)
 #endif
 
 static void
-_e_xkb_cb_mouse_wheel(void *data, Evas *evas, Evas_Object *obj, void *event)
+_e_xkb_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
 Evas_Event_Mouse_Wheel *ev = event;
 
@@ -326,7 +326,7 @@ if (ev->z == -1) // up
      }
    else if (ev->z == 1) // down
      {
-		 e_xkb_layout_prev();
+        e_xkb_layout_prev();
      }
 }
 
