@@ -388,9 +388,9 @@ static void          _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *
 static void          _e_fm2_file_properties_delete_cb(void *obj);
 static int           _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
 
-static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
+//static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
-static void          _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+//static void          _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic);
 
 static E_Dialog     *_e_fm_retry_abort_dialog(int pid, const char *str);
@@ -10242,6 +10242,7 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
      //~ }
 }
 
+#if 0
 static Evas_Object *
 _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
 {
@@ -10281,6 +10282,7 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
 
    return ic->entry_widget;
 }
+#endif
 
 static void
 _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
@@ -10295,6 +10297,7 @@ _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
    ic->keygrab = 0;
 }
 
+#if 0
 static void
 _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
@@ -10309,6 +10312,7 @@ _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object
    else if (!strcmp(ev->key, "Return"))
      _e_fm2_icon_entry_widget_accept(ic);
 }
+#endif
 
 static void
 _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic)
