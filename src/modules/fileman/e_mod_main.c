@@ -3,7 +3,7 @@
 /* actual module specifics */
 static void _e_mod_action_fileman_cb(E_Object   *obj,
                                      const char *params);
-static void      _e_mod_menu_add(void   *data, E_Menu *m);
+//static void      _e_mod_menu_add(void   *data, E_Menu *m);
 static void      _e_mod_fileman_config_load(void);
 static void      _e_mod_fileman_config_free(void);
 static Eina_Bool _e_mod_zone_add(void *data,
@@ -55,13 +55,12 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(N_("Launch"), N_("File Manager"),
                                  "fileman", NULL, "syntax: /path/to/dir or ~/path/to/dir or favorites or desktop, examples: /boot/grub, ~/downloads", 1);
      }
-   
-   //~ ************************************************
-   //~ We do not want "Navigate/ item in the main menu
-   //~ ************************************************
-   
-   //~ maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
-   
+
+#if 0
+   // We do not want "Navigate/ item in the main menu
+   maug = e_int_menus_menu_augmentation_add_sorted("main/1", _("Navigate"), _e_mod_menu_add, NULL, NULL, NULL);
+#endif
+
    e_module_delayed_set(m, 1);
    fileman_config->view.customFM = eina_stringshare_add("pcmanfm");
    e_fwin_init();
@@ -209,11 +208,13 @@ _e_mod_action_fileman_cb(E_Object   *obj,
      }
 }
 
+#if 0
 void
 _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    e_mod_menu_add(m, NULL);
 }
+#endif
 
 /* Abstract fileman config load/create to one function for maintainability */
 static void

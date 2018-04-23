@@ -15,6 +15,7 @@ _e_mod_menu_top_get(E_Menu *m)
    return m;
 }
 
+#if 0
 static void
 _e_mod_menu_gtk_cb(void           *data,
                    E_Menu         *m,
@@ -44,6 +45,7 @@ _e_mod_menu_virtual_cb(void           *data,
      e_fm2_path_set(fm, data, "/");
    else if (m->zone) e_fwin_new(m->zone->container, data, "/");
 }
+#endif
 
 static void
 _e_mod_menu_volume_cb(void           *data,
@@ -273,7 +275,7 @@ _e_mod_menu_populate(void *d, E_Menu *m __UNUSED__, E_Menu_Item *mi)
    eina_stringshare_del(rp);
 }
 
-
+#if 0
 static void
 _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
                                    Eina_Bool need_separator)
@@ -334,6 +336,7 @@ _e_mod_fileman_parse_gtk_bookmarks(E_Menu   *m,
         fclose(fp);
      }
 }
+
 
 static void
 _e_mod_menu_free(void *data)
@@ -475,10 +478,11 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 }
+#endif
 
 /* returns submenu so we can add Go to Parent */
 E_Menu *
-e_mod_menu_add(E_Menu *m, const char *path)
+e_mod_menu_add(E_Menu *m, const char *path __UNUSED__)
 {
 #ifdef ENABLE_FILES
 
