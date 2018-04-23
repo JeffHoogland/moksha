@@ -42,7 +42,7 @@ EAPI E_Wizard_Page *e_wizard_page_add(void *handle,
                                      );
 EAPI void e_wizard_page_del(E_Wizard_Page *pg);
 EAPI void e_wizard_button_next_enable_set(int enable);
-EAPI void e_wizard_title_set(const char *title);
+EAPI void e_wizard_title_set(const char *title __UNUSED__);
 EAPI void e_wizard_labels_update(void);
 EAPI const char *e_wizard_dir_get(void);
 EAPI void e_wizard_xdg_desktops_reset(void);
