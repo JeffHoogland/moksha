@@ -56,7 +56,7 @@ static void         _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_It
 static void         _e_int_menus_config_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
-static void         _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void         _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_desktops_free_hook(void *obj);
 static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
@@ -182,7 +182,8 @@ e_int_menus_main_new(void)
    l = _e_int_menus_augmentation_find("main/2");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-/* Commented out to remove clutter from the main menu
+#if 0    
+   //Code moved to classicmenu module 
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
@@ -196,9 +197,9 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
-   e_object_data_set(E_OBJECT(subm), dat); */
+   e_object_data_set(E_OBJECT(subm), dat); 
 
-#if 0 // lost windows already handled inside "Windows" from main menu.
+   // lost windows already handled inside "Windows" from main menu.
    subm = e_int_menus_lost_clients_new();
    e_object_data_set(E_OBJECT(subm), dat);
    dat->lost_clients = subm;
@@ -272,11 +273,12 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "system-restart");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
-   /*mi = e_menu_item_new(subm);
+#if 0
+   mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Exit"));
    e_util_menu_item_theme_icon_set(mi, "application-exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);*/
-
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
+#endif
    l = _e_int_menus_augmentation_find("enlightenment/3");
    if (l) _e_int_menus_augmentation_add(subm, l);
 
@@ -678,6 +680,7 @@ _e_int_menus_main_restart(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
+#if 0
 static void
 _e_int_menus_main_exit(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -686,6 +689,7 @@ _e_int_menus_main_exit(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item 
    a = e_action_find("exit");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
+#endif
 
 static void
 _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
