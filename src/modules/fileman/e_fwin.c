@@ -41,7 +41,7 @@ struct _E_Fwin
    const char          *theme_file;
 
    Ecore_Timer *popup_timer;
-   Ecore_Timer *popup_del_job;
+   Ecore_Job *popup_del_job;
    Eina_List *popup_handlers;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
