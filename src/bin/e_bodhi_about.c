@@ -16,7 +16,7 @@
     "Timmy 'timmy' Larsson<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
-    "Marcel 'SmartDuck'<br><br><br>" \
+    "Jacob 'Oblio' Olson <br><br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
     "Christopher 'devilhorns' Michael<br>" \
