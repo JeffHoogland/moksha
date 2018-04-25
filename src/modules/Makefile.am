@@ -210,10 +210,6 @@ if USE_MODULE_CLASSICMENU
 include Makefile_classicmenu.am
 endif
 
-if USE_MODULE_PULSEMIXER
-include Makefile_pulsemixer.am
-endif
-
 #if HAVE_WAYLAND_DRM
 #include Makefile_wl_drm.am
 #endif

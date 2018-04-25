@@ -1,91 +1,90 @@
-pulsemixerdir = $(MDIR)/pulsemixer
-pulsemixer_DATA = pulsemixer/e-module-pulsemixer.edj \
-	       pulsemixer/module.desktop
+mixerdir = $(MDIR)/mixer
+mixer_DATA = mixer/e-module-mixer.edj \
+	       mixer/module.desktop
 
 desktopfiledir = $(datadir)/applications
-desktopfile_DATA = pulsemixer/epulse.desktop
+desktopfile_DATA = mixer/epulse.desktop
 
 
 bindatadir = $(datadir)/epulse/data/themes/
-bindata_DATA = pulsemixer/default.edj
+bindata_DATA = mixer/default.edj
 
 iconsdir= $(datadir)/pixmaps
-icons_DATA = pulsemixer/epulse.png
+icons_DATA = mixer/epulse.png
 
-EXTRA_DIST += $(pulsemixer_DATA) \
+EXTRA_DIST += $(mixer_DATA) \
 	$(icons_DATA) \
 	$(desktop_DATA) \
 	$(bindata_DATA)
 
 lib_LTLIBRARIES = \
-	pulsemixer/lib/libepulse.la
+	mixer/lib/libepulse.la
 
-pulsemixer_lib_libepulse_la_SOURCES = \
-	pulsemixer/lib/common.c \
-	pulsemixer/lib/common.h \
-	pulsemixer/lib/epulse_ml.c \
-	pulsemixer/lib/epulse.c \
-	pulsemixer/lib/epulse.h
-pulsemixer_lib_libepulse_la_CFLAGS = $(AM_CFLAGS)
-pulsemixer_lib_libepulse_la_CFLAGS +=  \
+mixer_lib_libepulse_la_SOURCES = \
+	mixer/lib/common.c \
+	mixer/lib/common.h \
+	mixer/lib/epulse_ml.c \
+	mixer/lib/epulse.c \
+	mixer/lib/epulse.h
+mixer_lib_libepulse_la_CFLAGS = $(AM_CFLAGS)
+mixer_lib_libepulse_la_CFLAGS +=  \
 	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
 	@ELM_CFLAGS@ \
 	@PULSE_CFLAGS@
-pulsemixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @PULSE_LIBS@
-pulsemixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
-pulsemixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
+mixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @PULSE_LIBS@
+mixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
+mixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
 
 
 
 bin_PROGRAMS = \
-	pulsemixer/bin/epulse
+	mixer/bin/epulse
 
-pulsemixer_bin_epulse_LDADD = \
-	pulsemixer/lib/libepulse.la \
+mixer_bin_epulse_LDADD = \
+	mixer/lib/libepulse.la \
 	@ELM_LIBS@ \
 	@PULSE_LIBS@
 
-pulsemixer_bin_epulse_SOURCES = \
-	pulsemixer/bin/main_window.h \
-	pulsemixer/bin/main_window.c \
-	pulsemixer/bin/playbacks_view.h \
-	pulsemixer/bin/playbacks_view.c \
-	pulsemixer/bin/sinks_view.h \
-	pulsemixer/bin/sinks_view.c \
-	pulsemixer/bin/sources_view.h \
-	pulsemixer/bin/sources_view.c \
-	pulsemixer/bin/main.c
+mixer_bin_epulse_SOURCES = \
+	mixer/bin/main_window.h \
+	mixer/bin/main_window.c \
+	mixer/bin/playbacks_view.h \
+	mixer/bin/playbacks_view.c \
+	mixer/bin/sinks_view.h \
+	mixer/bin/sinks_view.c \
+	mixer/bin/sources_view.h \
+	mixer/bin/sources_view.c \
+	mixer/bin/main.c
 
-pulsemixer_bin_epulse_CFLAGS = $(AM_CFLAGS)
-pulsemixer_bin_epulse_CFLAGS +=  \
+mixer_bin_epulse_CFLAGS = $(AM_CFLAGS)
+mixer_bin_epulse_CFLAGS +=  \
 	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
 	@ELM_CFLAGS@ \
 	@PULSE_CFLAGS@
 
-pulsemixerpkgdir = $(MDIR)/pulsemixer/$(MODULE_ARCH)
-pulsemixerpkg_LTLIBRARIES = pulsemixer/module.la
+mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
+mixerpkg_LTLIBRARIES = mixer/module.la
 
-pulsemixer_module_la_CFLAGS = $(AM_CFLAGS)
-pulsemixer_module_la_CFLAGS += @ELM_CFLAGS@ \
+mixer_module_la_CFLAGS = $(AM_CFLAGS)
+mixer_module_la_CFLAGS += @ELM_CFLAGS@ \
 	@PULSE_CFLAGS@
 
-pulsemixer_module_la_SOURCES  = pulsemixer/e_mod_main.h \
-			     pulsemixer/e_mod_main.c
+mixer_module_la_SOURCES  = mixer/e_mod_main.h \
+			     mixer/e_mod_main.c
 
-pulsemixer_module_la_LIBADD = \
-	pulsemixer/lib/libepulse.la \
+mixer_module_la_LIBADD = \
+	mixer/lib/libepulse.la \
 	@ELM_LIBS@ \
 	@E_LIBS@ \
 	@PULSE_LIBS@
 
-pulsemixer_module_la_LDFLAGS = -module -avoid-version
+mixer_module_la_LDFLAGS = -module -avoid-version
 
 if HAVE_ENOTIFY
-pulsemixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
-pulsemixer_module_la_LIBADD += @ENOTIFY_LIBS@
+mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+mixer_module_la_LIBADD += @ENOTIFY_LIBS@
 endif
 
-.PHONY: pulsemixer install-pulsemixer
-pulsemixer: $(pulsemixerpkg_LTLIBRARIES) $(pulsemixer_DATA)
-install-pulsemixer: install-pulsemixerDATA install-pulsemixerpkgLTLIBRARIES
-
+.PHONY: mixer install-mixer
+mixer: $(mixerpkg_LTLIBRARIES) $(mixer_DATA)
+install-mixer: install-mixerDATA install-mixerpkgLTLIBRARIES
