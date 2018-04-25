@@ -888,7 +888,6 @@ AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
 AC_E_OPTIONAL_MODULE([places], true)
 AC_E_OPTIONAL_MODULE([classicmenu], true)
-AC_E_OPTIONAL_MODULE([pulsemixer], true)
 
 SUSPEND=""
 HIBERNATE=""
