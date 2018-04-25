@@ -983,7 +983,6 @@ src/modules/access/module.desktop
 src/modules/clipboard/module.desktop
 src/modules/places/module.desktop
 src/modules/classicmenu/module.desktop
-src/modules/pulsemixer/module.desktop
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
