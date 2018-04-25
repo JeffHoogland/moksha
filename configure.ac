@@ -333,7 +333,17 @@ AC_ARG_ENABLE([files],
 if test "[${e_cv_enable_files}]" = yes; then
   AC_DEFINE_UNQUOTED([ENABLE_FILES],[1],[enable Files menu item])
 fi
-AC_MSG_RESULT([$e_cv_enable_files])
+
+AC_MSG_RESULT([$e_cv_enable_bodhi])
+AC_MSG_CHECKING([whether to enable Bodhi menu item])
+AC_ARG_ENABLE([bodhi],
+  AS_HELP_STRING([--disable-bodhi],[disable bodhi menu item @<:@default=enabled@:>@]),
+    [e_cv_enable_bodhi=$enableval],
+    AC_CACHE_VAL([e_cv_enable_bodhi], [e_cv_enable_bodhi=yes]))
+if test "[${e_cv_enable_bodhi}]" = yes; then
+  AC_DEFINE_UNQUOTED([ENABLE_BODHI],[1],[enable Bodhi menu item])
+fi
+AC_MSG_RESULT([$e_cv_enable_bodhi])
 
 AC_ARG_ENABLE([device-hal],
   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=disabled@:>@]),

@@ -63,7 +63,9 @@ static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item 
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 static Eina_Bool    _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
+#ifdef ENABLE_BODHI
 static void         _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+#endif
 static void         _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 
 /* local subsystem globals */
@@ -230,10 +232,12 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "help-faq");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_quick_start, NULL);
 
+#ifdef ENABLE_BODHI
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About Bodhi Linux"));
    e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
+#endif
 
    /*mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
@@ -624,6 +628,7 @@ _e_int_menus_themes_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
    if (about) e_theme_about_show(about);
 }
 
+#ifdef ENABLE_BODHI
 static void
 _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -632,6 +637,7 @@ _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Ite
    about = e_bodhi_about_new(e_container_current_get(e_manager_current_get()));
    if (about) e_bodhi_about_show(about);
 }
+#endif
 
 static void
 _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
