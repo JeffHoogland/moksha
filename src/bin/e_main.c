@@ -327,6 +327,7 @@ main(int argc, char **argv)
    e_util_env_set("PANTS", "ON");
    snprintf(moksha, 13, "Moksha-%s", VERSION);
    e_util_env_set("DESKTOP", moksha);
+   e_util_env_set("MOKSHA_VERSION", PACKAGE_VERSION);
    TS("Environment Variables Done");
 
    TS("Parse Arguments");

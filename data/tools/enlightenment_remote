@@ -14,10 +14,10 @@ OPTIONS:
   -help This help
   --help This help
   --h This help
-  --help-new Info about this tool
-
-  -restart Restart Enlightenment
-  -exit Exit Enlightenment
+  --help-dbus Info about this tool
+  -version Show Moksha Version
+  -restart Restart Moksha
+  -exit Exit Moksha
 
   -module-list List all loaded modules
   -module-enable OPT1 Enable the module named 'OPT1'
@@ -39,7 +39,7 @@ OPTIONS:
   -desktop-bg-list List all current desktop bg definitions
   -desktop-lock Lock the desktop
 
-  -efm-open-dir OPT1 Open dir in OPT1 in EFileManager. Opens /home/$USER if no path is given or it doesn't exist
+  -efm-open-dir OPT1 Open dir in OPT1 in FileManager. Opens /home/$USER if no path is given or it doesn't exist
 
   -window-list List all window names and ids
   -window-close OPT1 Request the close of window with xwin id OPT1
@@ -50,8 +50,7 @@ OPTIONS:
   -window-maximize OPT1 Request maximize of window with xwin id OPT1
   -window-unmaximize OPT1 Request unmaximize of window with xwin id OPT1
 
-Note: This is a new implementation of enlightenment_remote,
-      for more information about it see the '--help-new' option.
+Note: For more information see the '--help-dbus' option.
 "
 # List of available features: qdbus org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject
 }
@@ -60,23 +59,16 @@ Note: This is a new implementation of enlightenment_remote,
 #-------------------------------------------------------------------------------
 #   Show info about the new implementation of enlightenment_remote
 #-------------------------------------------------------------------------------
-show_help_new_tool(){
+show_help_dbus(){
    printf "
-This is a new implementation of enlightenment_remote, it uses dbus calls to
-enlightenment so it is using the new system, this tool is a front-end just like
-the original tool, created for the ease-to-use of the users and in order to
-maintain a bit of compatibility with possible scripts from the users too.
-
-The original tool is not (at the date of today) not removed and you can still
-have access to it, it is renamed to enlightenment_remote_old
+This implementation of enlightenment_remote uses dbus calls to
+Moksha. This tool is a front-end, created for the ease-to-use of the 
+users and in order to maintain a bit of compatibility with possible scripts.
 
 This tool depends of the command dbus-send, normally included in the main 
-dbus package
+dbus package. Some functions may require the DBus extension module to be loaded.
 
-This tool is just a front-end and may be not updated, you should
-use dbus calls instead
-
-If you want to see the list of actual dbus calls available for Enlightenment,
+If you want to see the list of actual dbus calls available for Moksha,
 run: qdbus org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject
 "
 }
@@ -220,6 +212,13 @@ er_lock(){
 }
 
 #-------------------------------------------------------------------------------
+#   E Version
+#-------------------------------------------------------------------------------
+er_version(){
+   echo $MOKSHA_VERSION
+}
+
+#-------------------------------------------------------------------------------
 #   E Restart
 #-------------------------------------------------------------------------------
 er_restart(){
@@ -353,13 +352,12 @@ er_desktop_bg_list(){
 #   E FileManager open dir
 #-------------------------------------------------------------------------------
 er_efm_open_dir(){
-	if [ $# -lt 2 ] || [ ! -e "$2" ]; then
-		EFM_DIR="/home/$USER"
-	else
-		EFM_DIR="$2"
-	fi
-	
-   dbus-send --session --type=method_call --print-reply=literal --dest=org.enlightenment.FileManager /org/enlightenment/FileManager org.enlightenment.FileManager.OpenDirectory "string:$EFM_DIR"
+   if [ $# -lt 2 ] || [ ! -e "$2" ]; then
+      EFM_DIR="/home/$USER"
+   else
+      EFM_DIR="$2"
+   fi
+   enlightenment_open $EFM_DIR
 }
 
 #-------------------------------------------------------------------------------
@@ -433,8 +431,11 @@ if ! which dbus-send > /dev/null 2>&1; then
 fi
 
 case "$1" in
-   --help-new)
-      show_help_new_tool
+   --help-dbus)
+      show_help_dbus
+   ;;
+   -version)
+      er_version
    ;;
    -restart)
       er_restart
@@ -778,9 +779,3 @@ echo "
   -desklock-custom-desklock-cmd-get Get the current custom desklock command
 "
 }
-
-
-
-
-
-
