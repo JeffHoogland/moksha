@@ -8,7 +8,7 @@
 #-------------------------------------------------------------------------------
 show_help(){
    # Actual implemented features:
-echo -e "
+printf "
 OPTIONS:
   -h This help
   -help This help
@@ -61,7 +61,7 @@ Note: This is a new implementation of enlightenment_remote,
 #   Show info about the new implementation of enlightenment_remote
 #-------------------------------------------------------------------------------
 show_help_new_tool(){
-   echo -e "
+   printf "
 This is a new implementation of enlightenment_remote, it uses dbus calls to
 enlightenment so it is using the new system, this tool is a front-end just like
 the original tool, created for the ease-to-use of the users and in order to
@@ -427,7 +427,7 @@ er_window_unmaximize(){
 #       RETURNS:  just finishes and exit
 #===============================================================================
 
-if ! type dbus-send > /dev/null 2>&1; then
+if ! which dbus-send > /dev/null 2>&1; then
    echo "E: dbus-send command not found, please install it first"
    exit 1
 fi
