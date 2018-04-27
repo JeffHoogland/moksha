@@ -1,21 +1,21 @@
 #include "e.h"
 
-#define BODHI_VERSION "4.5.0"
+#define BODHI_VERSION "5.0.0rc"
 #define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \
     "Jeff Hoogland<br>" \
-    "Stefan 'the waiter' Uram<br>" \
     "Joris 'aeonius' van Dijk<br>" \
-    "Stephen 'okra' Houston<br>" \
     "Jason 'Tristam' Thomas<br>" \
     "Kristi Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
-    "Kai Huuhko<br>" \
-    "Patrick Duckson<br>" \
-    "Timmy 'timmy' Larsson<br>" \
-    "Roger 'JollyRoger' Carter<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
+    "Stefan 'the waiter' Uram<br>" \
+    "Stace 'sef' Fauske" \
+    "Kai 'kuuko' Huuhko<br>" \
+    "Stephen 'okra' Houston<br>" \
+    "Patrick Duckson<br>" \
+    "Roger 'JollyRoger' Carter<br>" \
     "Jacob 'Oblio' Olson <br><br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
@@ -36,6 +36,8 @@
     "Gar Romero<br>" \
     "Doug 'Deepspeed' Yanez<br>" \
     "Reuben L. Lillie<br>" \
+    "Timmy 'timmy' Larsson<br>" \
+    "Dennis “DennisD'" \
 
 /* externally accessible functions */
 
