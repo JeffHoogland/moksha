@@ -1199,7 +1199,7 @@ msgstr "Zobraziť v ponukách"
 #: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 msgid "Options"
-msgstr "Voľby"
+msgstr "Nastavenia"
 
 #: src/bin/e_eap_editor.c:822
 #, c-format
@@ -1985,7 +1985,7 @@ msgstr "Nastavenie importu"
 
 #: src/bin/e_import_config_dialog.c:491
 msgid "Fill and Stretch Options"
-msgstr "Voľby vyplnenia a roztiahnutia"
+msgstr "Nastavenie vyplnenia a roztiahnutia"
 
 #: src/bin/e_import_config_dialog.c:493
 msgid "Stretch"
@@ -2663,7 +2663,7 @@ msgstr "Vždy so zameraním na začiatok"
 
 #: src/bin/e_int_border_remember.c:753
 msgid "Keep current properties"
-msgstr "Zachovať aktuálne nastevenie"
+msgstr "Zachovať aktuálne nastavenie"
 
 #: src/bin/e_int_border_remember.c:759
 msgid "Start this program on login"
@@ -3311,7 +3311,7 @@ msgstr "Moksha nemôže nastaviť systém tried farieb.\n"
 
 #: src/bin/e_main.c:944
 msgid "Setup Gadcon"
-msgstr "Nastavenie Špecialít"
+msgstr "Nastavenie Widgetu"
 
 #: src/bin/e_main.c:948
 msgid "Moksha cannot set up its gadget control system.\n"
@@ -3323,7 +3323,7 @@ msgstr "Nastaviť obrázok pozadia"
 
 #: src/bin/e_main.c:959
 msgid "Moksha cannot set up its desktop background system.\n"
-msgstr "Mokshau sa nepodarilo nastaviť systém pozadia plochy.\n"
+msgstr "Desktopu sa nepodarilo nastaviť systém pozadia plochy.\n"
 
 #: src/bin/e_main.c:966
 msgid "Setup Mouse"
@@ -4473,7 +4473,7 @@ msgstr "Batéria"
 
 #: src/modules/battery/e_mod_main.c:200
 msgid "Power Management Timing"
-msgstr "Nastevenie časov správy napájania"
+msgstr "Nastavenie časov správy napájania"
 
 #: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:493
 msgid "Your battery is low!"
@@ -5856,9 +5856,8 @@ msgid "Autoscroll"
 msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:302
-#, fuzzy
-msgid " No Menu Scroll (Experimental)"
-msgstr "Rýchlosti rolovania"
+msgid " No Menu Scroll to(Experimental)"
+msgstr " Menu bez posuvu do strany"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid "Menu Scroll Speed"
@@ -8128,9 +8127,8 @@ msgid "Spring Delay"
 msgstr "Pozastaviť čas"
 
 #: src/modules/fileman/e_mod_config.c:428
-#, fuzzy
 msgid "Custom FM to open dirs"
-msgstr "Vlastné farby"
+msgstr "Vlastný FM pre otvorenie priečinku"
 
 #: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -8236,7 +8234,7 @@ msgstr "Widgety na ploche"
 
 #: src/modules/gadman/e_mod_config.c:179
 msgid "Available Layers"
-msgstr "Dostupné Vrstvy"
+msgstr "Dostupné vrstvy"
 
 #: src/modules/gadman/e_mod_config.c:189
 msgid "Configure Layer"
@@ -8269,7 +8267,7 @@ msgstr "Nastavenie pozadia"
 
 #: src/modules/gadman/e_mod_gadman.c:990
 msgid "Begin move/resize"
-msgstr "Začiatok presunu/zmeny veľkosti tohto Widgetu"
+msgstr "Presun/zmena veľkosti widgetu"
 
 #: src/modules/gadman/e_mod_gadman.c:1020
 msgid "Free"
