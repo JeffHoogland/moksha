@@ -215,6 +215,8 @@ e_desklock_show(Eina_Bool suspend)
    E_Event_Desklock *ev;
 
    if (_e_custom_desklock_exe) return 0;
+   /* Disable desk_lock for guest account with no password
+    *   It is assumed that any user with HOME in tmp is guest session */
    if(strncmp(getenv("HOME"), "/tmp/", 5) == 0) return 0;
    if (e_config->desklock_use_custom_desklock && e_config->desklock_custom_desklock_cmd && e_config->desklock_custom_desklock_cmd[0])
      {
