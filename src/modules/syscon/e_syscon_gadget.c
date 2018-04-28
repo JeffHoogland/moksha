@@ -322,6 +322,10 @@ e_syscon_menu_fill(E_Menu *m)
                                                               sca->params)));
         if (sca->icon)
           e_util_menu_item_theme_icon_set(it, sca->icon);
+        /* Disable desk_lock for guest account with no password
+         *   It is assumed that any user with HOME in tmp is guest session */
+        if(strncmp(getenv("HOME"), "/tmp/", 5) == 0) 
+          e_menu_item_disabled_set(it, EINA_TRUE);
         e_menu_item_callback_set(it, _cb_menu_sel, sca);
      }
 
