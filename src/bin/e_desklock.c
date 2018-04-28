@@ -215,7 +215,7 @@ e_desklock_show(Eina_Bool suspend)
    E_Event_Desklock *ev;
 
    if (_e_custom_desklock_exe) return 0;
-
+   if(strncmp(getenv("HOME"), "/tmp/", 5) == 0) return 0;
    if (e_config->desklock_use_custom_desklock && e_config->desklock_custom_desklock_cmd && e_config->desklock_custom_desklock_cmd[0])
      {
         _e_custom_desklock_exe_handler =
@@ -1400,4 +1400,3 @@ _e_desklock_cb_run(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    return ECORE_CALLBACK_PASS_ON;
 }
-
