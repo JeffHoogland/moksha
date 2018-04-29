@@ -2674,11 +2674,12 @@ _e_menu_scroll_by(int dx, int dy)
    Eina_List *l;
    E_Menu *m;
 
-   EINA_LIST_FOREACH(_e_active_menus, l, m)
-     {
-        m->cur.x += dx;
-        m->cur.y += dy;
-     }
+   /*this will scroll the current active menu which exceeds the screen 
+     limits*/
+   l = eina_list_last(_e_active_menus);
+   m = eina_list_data_get(l);
+   m->cur.x += dx;
+   m->cur.y += dy;
 }
 
 static void
