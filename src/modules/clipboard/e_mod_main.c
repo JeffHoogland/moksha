@@ -695,11 +695,6 @@ EAPI void *
 e_modapi_init (E_Module *m)
 {
   Eet_Error hist_err;
-  char buf[PATH_MAX];
-
-  snprintf (buf, sizeof (buf), "%s/locale", e_module_dir_get (m));
-  bindtextdomain (PACKAGE, buf);
-  bind_textdomain_codeset (PACKAGE, "UTF-8");
 
   /* Display this Modules config info in the main Config Panel
    * Under Preferences catogory */
