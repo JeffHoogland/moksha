@@ -199,19 +199,16 @@ msgid "Sticky Mode Enable"
 msgstr "Povoliť Lepkavosť"
 
 #: src/bin/e_actions.c:3100
-#, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Vždy navrchu"
 
 #: src/bin/e_actions.c:3104
-#, fuzzy
 msgid "Always On Top Enable"
-msgstr "Vždy navrchu"
+msgstr "Vždy navrchu povoliť"
 
 #: src/bin/e_actions.c:3108
-#, fuzzy
 msgid "Always On Top Disable"
-msgstr "Vždy navrchu"
+msgstr "Vždy navrchu zakázať"
 
 #: src/bin/e_actions.c:3113
 msgid "Iconic Mode Toggle"
@@ -243,12 +240,10 @@ msgid "Maximize Horizontally"
 msgstr "Maximalizovať vodorovne"
 
 #: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:417
-#, fuzzy
 msgid "Maximize Left"
 msgstr "Maximalizovať vľavo"
 
 #: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:428
-#, fuzzy
 msgid "Maximize Right"
 msgstr "Maximalizovať vpravo"
 
@@ -3674,7 +3669,7 @@ msgstr "Vľavo:"
 
 #: src/bin/e_shelf.c:71
 msgid "Right"
-msgstr "Vpravo:"
+msgstr "Vpravo"
 
 #: src/bin/e_shelf.c:72
 msgid "Top"
@@ -5801,7 +5796,7 @@ msgstr "Zobraziť hlavnú ponuku"
 #: src/modules/conf_menus/e_int_config_menus.c:259
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:193
 msgid "Favorites"
-msgstr "Obľubené"
+msgstr "Obľúbené"
 
 #: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Applications Display"
