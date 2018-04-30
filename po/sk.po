@@ -5851,7 +5851,7 @@ msgid "Autoscroll"
 msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:302
-msgid " No Menu Scroll to(Experimental)"
+msgid " No Menu Scroll (Experimental)"
 msgstr " Menu bez posuvu do strany"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
@@ -6022,9 +6022,8 @@ msgid "%1.0f MiB"
 msgstr "%1.0f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
-#, fuzzy
 msgid "Caches"
-msgstr "Zrušiť"
+msgstr "Medzipamäte"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
 #, fuzzy
@@ -7417,7 +7416,6 @@ msgid "Maximum Speed"
 msgstr "Maximálna rýchlosť"
 
 #: src/modules/cpufreq/e_mod_main.c:250
-#, fuzzy
 msgid "Restore CPU Power Policy"
 msgstr "Obnoviť riadenie spotreby CPU"
 
@@ -7431,9 +7429,9 @@ msgid "%i MHz"
 msgstr "%i MHz"
 
 #: src/modules/cpufreq/e_mod_main.c:313
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GHz"
-msgstr "%'.1f Ghz"
+msgstr "%'.1f GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:334
 msgid "Time Between Updates"
@@ -7787,7 +7785,6 @@ msgid "Move to Trash"
 msgstr "Presunúť do koša"
 
 #: src/modules/everything/evry_plug_files.c:1331
-#, fuzzy
 msgid "Open Directory"
 msgstr "Otvoriť priečinok"
 
@@ -7848,7 +7845,6 @@ msgid "Toggle Fullscreen"
 msgstr "Celá obrazovka"
 
 #: src/modules/everything/evry_plug_windows.c:459
-#, fuzzy
 msgid "Send to Desktop"
 msgstr "Presunúť na plochu"
 
@@ -9389,7 +9385,7 @@ msgstr "Obrázok bol uložený na link:"
 
 #: src/modules/shot/e_mod_main.c:750
 msgid "Hide"
-msgstr "Skrývanie"
+msgstr "Skryť"
 
 #: src/modules/shot/e_mod_main.c:774
 msgid "Confirm Share"
@@ -9468,9 +9464,8 @@ msgid "Delay time [s]"
 msgstr "Časovač [s]"
 
 #: src/modules/shot/e_mod_config.c:131
-#, fuzzy
 msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr "Kvalita obrázku [1-99 = jpg, 100 = png]"
+msgstr "Kvalita obrázku [50-90 = jpg, 100 = png]"
 
 #: src/modules/shot/e_mod_config.c:138
 msgid "Info"
@@ -9798,7 +9793,7 @@ msgstr "Názvy položiek"
 #: src/modules/clipboard/e_mod_config.c:165
 #: src/modules/clipboard/e_mod_config.c:177
 msgid " Ignore Whitespace"
-msgstr "Ignorovať neviditeľné znaky"
+msgstr " Ignorovať neviditeľné znaky"
 
 #: src/modules/clipboard/e_mod_config.c:168
 msgid " Label Length"
