@@ -2686,11 +2686,11 @@ _e_menu_scroll_by(int dx, int dy)
    }
    else
    {
-	 EINA_LIST_FOREACH(_e_active_menus, l, m)
-	  {
-	    m->cur.x += dx;
+    EINA_LIST_FOREACH(_e_active_menus, l, m)
+      {
+        m->cur.x += dx;
         m->cur.y += dy; 
-	  }
+      }
    }
 }
 
