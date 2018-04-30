@@ -1804,7 +1804,7 @@ _e_menu_items_layout_update(E_Menu *m)
    int min_submenu_w = 0, min_submenu_h = 0;
    int min_toggle_w = 0, min_toggle_h = 0;
    int min_w = 0, min_h = 0;
-   int zh = 0, ms = 0, maxh = 0;
+   int zh = 0, ms = 0; //maxh = 0;
    unsigned int cur_items = 0, max_items = -1;
 
    e_box_freeze(m->container_object);
@@ -1873,13 +1873,16 @@ _e_menu_items_layout_update(E_Menu *m)
         min_h = min_toggle_h;
      }
      
-   if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
-     {
-        e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
-        maxh = zh * 4;
-        if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
-        max_items = (maxh / min_h) - 1;
-     }
+   /*This code solves menu disappearing in case of big menus. 
+     The code was taken from E22 but does not work for huge menus. */
+     
+   //~ if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
+     //~ {
+        //~ e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
+        //~ maxh = zh * 4;
+        //~ if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
+        //~ max_items = (maxh / min_h) - 1;
+     //~ }
      
    EINA_LIST_FOREACH(m->items, l, mi)
      {
