@@ -455,14 +455,14 @@ _desktop_list_get(void)
 {
    Eina_List *apps = NULL;
    Eina_List *cat_ss;
-   Eina_List *l, *ll;
+   Eina_List *ll;
    Efreet_Desktop *d;
 
    apps = efreet_util_desktop_name_glob_list("*");
 
    /* remove screensaver */
    cat_ss = efreet_util_desktop_category_list("Screensaver");
-   EINA_LIST_FOREACH (cat_ss, l, d)
+   EINA_LIST_FREE(cat_ss, d)
      {
         if ((ll = eina_list_data_find_list(apps, d)))
           {
