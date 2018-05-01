@@ -811,8 +811,8 @@ _complete(Evry_Plugin *plugin __UNUSED__, const Evry_Item *it, char **input)
    GET_APP(app, it);
 
    char buf[128];
-
-   if (app->desktop)
+   if (it->subtype != EVRY_TYPE_APP) return 0;
+   if ((app->desktop) && (app->desktop->exec))
      {
         char *space = strchr(app->desktop->exec, ' ');
 
