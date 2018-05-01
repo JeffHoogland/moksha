@@ -1,6 +1,8 @@
 [Desktop Entry]
 Type=Link
 Name=Classic Menu
+Name[fi]=Perinteinen valikko
 Icon=e-module-classicmenu
 X-Enlightenment-ModuleType=system
 Comment=A Moksha Module to restore e17's Desktop and Windows menus to Moksha's main menu.
+Comment[fi]=Moksha-moduuli jolla voit palauttaa e17:n työpöytä ja ikkunat-valikot Mokshan päävalikkoon.
