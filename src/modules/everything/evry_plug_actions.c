@@ -32,7 +32,7 @@ _browse(Evry_Plugin *plugin, const Evry_Item *it)
    Evry_Action *act;
    Plugin *p;
 
-   if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
+   if (!(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
      return NULL;
 
    act = EVRY_ACTN(it);

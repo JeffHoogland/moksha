@@ -559,7 +559,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
         else
           {
              /* provide object */
-             if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
+              if (!(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
                return NULL;
           }
 
@@ -1017,7 +1017,7 @@ _recentf_browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
 
-   if (!it || !CHECK_TYPE(it, EVRY_TYPE_FILE))
+   if (!it || !(CHECK_TYPE(it, EVRY_TYPE_FILE)))
      return NULL;
 
    GET_FILE(file, it);
@@ -1038,7 +1038,7 @@ _recentf_begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p;
 
-   if (it && !CHECK_TYPE(it, EVRY_TYPE_ACTION))
+   if (it && !(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
      return NULL;
 
    EVRY_PLUGIN_INSTANCE(p, plugin);

@@ -271,7 +271,7 @@ evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
    if (!it)
      return NULL;
 
-   if ((!it->plugin->history) && (!CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
+   if ((!it->plugin->history) && !(CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      return NULL;
 
    if (it->type == EVRY_TYPE_ACTION)
@@ -371,7 +371,7 @@ evry_history_item_usage_set(Evry_Item *it, const char *input, const char *ctxt)
    else
      it->usage = 0.0;
 
-   if ((!it->plugin->history) && (!CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
+   if ((!it->plugin->history) && !(CHECK_TYPE(it, EVRY_TYPE_PLUGIN)))
      return 0;
 
    if (it->hi)
