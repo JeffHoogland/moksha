@@ -651,25 +651,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    IF_RELEASE(p->input);
 
-   if (!p->parent && input && !strncmp(input, "/", 1))
+   if (!p->parent && input && (input[0] == '/'))
      {
-        char *path = NULL;
 
         if (p->command != CMD_SHOW_ROOT)
           {
              _free_files(p);
 
-             IF_RELEASE(p->directory);
-
-             if (path)
-               {
-                  p->directory = eina_stringshare_add(path);
-                  free(path);
-               }
-             else
-               {
-                  p->directory = eina_stringshare_add("/");
-               }
+             eina_stringshare_replace(&p->directory, input);
 
              _read_directory(p);
 
