@@ -559,7 +559,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
         else
           {
              /* provide object */
-              if (!(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
+             if (!(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
                return NULL;
           }
 
