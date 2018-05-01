@@ -68,6 +68,7 @@ evry_fuzzy_match(const char *str, const char *match)
    unsigned int m_cnt = 0;
    unsigned int m_min[MAX_WORDS];
    unsigned int m_len = 0;
+   unsigned int s_len = 0;
 
    if (!match || !str || !match[0] || !str[0])
      return 0;
@@ -87,6 +88,7 @@ evry_fuzzy_match(const char *str, const char *match)
      if (ip && ispunct(*m)) ip = 0;
 
    m_len = strlen(match);
+   s_len = strlen(str);
 
    /* with less than 3 chars match must be a prefix */
    if (m_len < 3) m_len = 0;
@@ -96,6 +98,8 @@ evry_fuzzy_match(const char *str, const char *match)
 
    while ((m_cnt < m_num) && (*next != 0))
      {
+        int ii;
+
         /* reset match */
         if (m_cnt == 0) m = match;
 
@@ -124,8 +128,10 @@ evry_fuzzy_match(const char *str, const char *match)
                     }
                   else
                     {
+                       ii = 0;
                        /* go to next word */
-                       for (; (*p != 0) && ((isspace(*p) || (ip && ispunct(*p)))); p++) ;
+                       for (; (*p != 0) && ((isspace(*p) || (ip && ispunct(*p)))); p += ii)
+                         if (!eina_unicode_utf8_next_get(p, &ii)) break;
                        cnt++;
                        next = p;
                        m_cnt = 0;
@@ -160,7 +166,10 @@ evry_fuzzy_match(const char *str, const char *match)
                   last = offset;
 
                   /* try next char of match */
-                  if (*(++m) != 0 && !isspace(*m))
+                  ii = 0;
+                  if (!eina_unicode_utf8_next_get(m, &ii)) continue;
+                  m += ii;
+                  if (*m != 0 && !isspace(*m))
                     continue;
 
                   /* end of match: store min weight of match */
@@ -171,22 +180,38 @@ evry_fuzzy_match(const char *str, const char *match)
                }
              else
                {
+                  ii = 0;
                   /* go to next match */
-                  for (; (*m != 0) && !isspace(*m); m++) ;
+                  for (; (m[0] && m[ii]) && !isspace(*m); m += ii)
+                    if (!eina_unicode_utf8_next_get(m, &ii)) break;
                }
 
              if (m_cnt < m_num - 1)
                {
+                  ii = 0;
                   /* test next match */
-                  for (; (*m != 0) && isspace(*m); m++) ;
+                  for (; (m[0] && m[ii]) && !isspace(*m); m += ii)
+                    if (!eina_unicode_utf8_next_get(m, &ii)) break;
                   m_cnt++;
                   break;
                }
              else if (*p != 0)
                {
+                  ii = 0;
                   /* go to next word */
-                  for (; (*p != 0) && !((isspace(*p) || (ip && ispunct(*p)))); p++) ;
-                  for (; (*p != 0) && ((isspace(*p) || (ip && ispunct(*p)))); p++) ;
+                  for (; (p[0] && (s_len - (p - str) >= (unsigned int)ii)) &&
+                       !((isspace(*p) || (ip && ispunct(*p))));
+                       p += ii)
+                    {
+                       if (!eina_unicode_utf8_next_get(p, &ii)) break;
+                    }
+                  ii = 0;
+                  for (; (p[0] && (s_len - (p - str) >= (unsigned int)ii)) &&
+                       ((isspace(*p) || (ip && ispunct(*p))));
+                       p += ii)
+                    {
+                       if (!eina_unicode_utf8_next_get(p, &ii)) break;
+                    }
                   cnt++;
                   next = p;
                   m_cnt = 0;
@@ -357,6 +382,8 @@ _evry_items_sort_func(const void *data1, const void *data2)
           return prio1 - prio2;
      }
 
+   /* user has a broken system: -╯□）╯︵-┻━┻ */
+   if ((!it1->label) || (!it2->label)) return -1;
    return strcasecmp(it1->label, it2->label);
 }
 
@@ -422,11 +449,7 @@ evry_icon_theme_get(const char *icon, Evas *e)
 
    if (icon[0] == '/')
      {
-        if (!e_icon_file_set(o, icon))
-          {
-             evas_object_del(o);
-             o = NULL;
-          }
+        e_icon_file_set(o, icon);
      }
    else if (!e_util_icon_theme_set(o, icon))
      {
@@ -918,4 +941,3 @@ evry_util_md5_sum(const char *str)
 
    return strdup(md5out);
 }
-
