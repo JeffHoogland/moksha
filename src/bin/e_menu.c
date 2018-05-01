@@ -1521,7 +1521,7 @@ no_submenu_item:
                   o = NULL;
                }
 
-             /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one si needed. */
+             /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one is needed. */
              /* FIXME: Do it this way later, when e_app_icon_add() just registers a request for an icon to be filled in when it's ready.
                 if (mi->app)
                 {
@@ -2998,7 +2998,7 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (_e_menu_activate_dragging)
      {
         /* FIXME: This is a drop, which is not allowed for now.
-         * Once dragging is working, this will be subject to some experimenattion.
+         * Once dragging is working, this will be subject to some experimentation.
          */
      }
    else
