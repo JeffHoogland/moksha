@@ -248,10 +248,6 @@ typedef struct _E_Rect         E_Rect;
        }                                                          \
   }
 
-#if (EINA_VERSION_MAJOR == 1) && (EINA_VERSION_MINOR < 8)
-# define eina_list_last_data_get(X) eina_list_data_get(eina_list_last(X))
-#endif
-
 # define E_REMOTE_OPTIONS 1
 # define E_REMOTE_OUT     2
 # define E_WM_IN          3
