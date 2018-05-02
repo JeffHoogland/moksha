@@ -2366,7 +2366,16 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
              if (page->fwin->win)
                fwin = _e_fwin_new(page->fwin->win->container, buf, "/");
              else if (page->fwin->zone)
-               fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+             {
+			   //~ ******************************************************************************
+			   //~ Prevent EFM from opening removables. We want opening by the user's default FM. 
+			   //~ ******************************************************************************
+				
+				const char *real_path;
+				real_path = e_fm2_real_path_map(buf, "/");
+				_xdg_open_default(real_path);
+				//~ fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+             }
           }     
         else
           {
