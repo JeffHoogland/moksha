@@ -746,8 +746,8 @@ _e_fwin_free(E_Fwin *fwin)
    if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
    if (fwin->win) 
    {
-	   e_win_delete_callback_set(fwin->win, NULL);
-	   e_object_del(E_OBJECT(fwin->win));
+       e_win_delete_callback_set(fwin->win, NULL);
+       e_object_del(E_OBJECT(fwin->win));
    }
    free(fwin);
 }
@@ -2342,14 +2342,13 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                fwin = _e_fwin_new(page->fwin->win->container, ici->link, "/");
              else if (page->fwin->zone)
              {
-			   //~ **************************************************************************
-			   //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
-			   //~ **************************************************************************
-
-			   _xdg_open_default(ici->link);
-			   
-               //~ fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
-			 }
+               /*********************************************
+                * Prevent EFM from opening removables.      *
+                * We want opening by the user's default FM. *
+                *********************************************/
+               _xdg_open_default(ici->link);
+               // fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
+             }
           }
         else
         {
@@ -2367,14 +2366,14 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                fwin = _e_fwin_new(page->fwin->win->container, buf, "/");
              else if (page->fwin->zone)
              {
-			   //~ ******************************************************************************
-			   //~ Prevent EFM from opening removables. We want opening by the user's default FM. 
-			   //~ ******************************************************************************
-				
-				const char *real_path;
-				real_path = e_fm2_real_path_map(buf, "/");
-				_xdg_open_default(real_path);
-				//~ fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+               /*********************************************
+                * Prevent EFM from opening removables.      *
+                * We want opening by the user's default FM. *
+                *********************************************/
+                const char *real_path;
+                real_path = e_fm2_real_path_map(buf, "/");
+                _xdg_open_default(real_path);
+                // fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
              }
           }     
         else
@@ -2417,14 +2416,14 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                   if (page->fwin->win)
                     fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->link ?: buf);
                   else if (page->fwin->zone){
-				  //~ **************************************************************************
-			      //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
-			      //~ **************************************************************************
-					
-					  _xdg_open_default(ici->link ?: buf);
+                  //~ **************************************************************************
+                  //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
+                  //~ **************************************************************************
+                    
+                      _xdg_open_default(ici->link ?: buf);
                     
                     //~ fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
-				}
+                }
                }
              else
                {
@@ -2949,9 +2948,9 @@ _e_fwin_pan_scroll_update(E_Fwin_Page *page)
    msg->val[4] = page->fm_pan.w;
    msg->val[5] = page->fm_pan.h;
 //   printf("SEND MSG %i %i | %i %i | %ix%i\n",
-//	  page->fm_pan.x, page->fm_pan.y,
-//	  page->fm_pan.max_x, page->fm_pan.max_y,
-//	  page->fm_pan.w, page->fm_pan.h);
+//    page->fm_pan.x, page->fm_pan.y,
+//    page->fm_pan.max_x, page->fm_pan.max_y,
+//    page->fm_pan.w, page->fm_pan.h);
    if (page->fwin->under_obj && page->fwin->wallpaper_is_edj)
      edje_object_message_send(page->fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
    if (page->fwin->over_obj)
