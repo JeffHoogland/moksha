@@ -71,8 +71,8 @@ static double t0, t1, t2;
    __free_hook = old_free_hook;
    //   if ((p) && (p == magicfree))
    //     {
-   //	printf("CAUGHT!!!!! %p ...\n", p);
-   //	abort();
+   //   printf("CAUGHT!!!!! %p ...\n", p);
+   //   abort();
    //     }
    free(p);
    __free_hook = my_free_hook;
@@ -231,7 +231,7 @@ main(int argc, char **argv)
 #  endif
 # endif
 #endif
-   
+
 #ifdef TS_DO
    t0 = t1 = t2 = ecore_time_unix_get();
 #endif
@@ -564,7 +564,7 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_config_shutdown);
 
    _xdg_data_dirs_augment();
-   
+
    _fix_user_default_edj();
 
 /*   TS("E_Randr Init");
@@ -723,7 +723,7 @@ main(int argc, char **argv)
      }
 
    e_screensaver_preinit();
-   
+
    if (e_config->show_splash)
      e_init_status_set(_("Setup Screens"));
    TS("Screens Init");
@@ -1119,7 +1119,7 @@ main(int argc, char **argv)
    inloop = EINA_TRUE;
 
    e_util_env_set("E_RESTART", "1");
-   
+
    TS("MAIN LOOP AT LAST");
    if (!setjmp(x_fatal_buff))
      ecore_main_loop_begin();
@@ -1265,9 +1265,9 @@ _e_main_parse_arguments(int argc, char **argv)
           really_know = EINA_TRUE;
         else if (!strcmp(argv[i], "-locked"))
           locked = EINA_TRUE;
-	else if (!strcmp(argv[i], "-nopause"))
-	  e_nopause = EINA_TRUE;
-    else if ((!strcmp(argv[i], "-version")) ||
+        else if (!strcmp(argv[i], "-nopause"))
+          e_nopause = EINA_TRUE;
+        else if ((!strcmp(argv[i], "-version")) ||
           (!strcmp(argv[i], "--version")))
     {
           printf(_("Version: %s\n"), PACKAGE_VERSION);
@@ -1756,7 +1756,7 @@ _e_main_screens_init(void)
              e_grabinput_focus(con->bg_win, E_FOCUS_METHOD_PASSIVE);
              e_hints_manager_init(man);
              _e_main_desk_restore(man, con);
-//	     e_manager_manage_windows(man);
+//       e_manager_manage_windows(man);
           }
         else
           {
