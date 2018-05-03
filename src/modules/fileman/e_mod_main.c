@@ -62,7 +62,6 @@ e_modapi_init(E_Module *m)
 #endif
 
    e_module_delayed_set(m, 1);
-   fileman_config->view.customFM = eina_stringshare_add("pcmanfm");
    e_fwin_init();
 
    /* Hook into zones */
@@ -149,8 +148,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_item_del("fileman/file_icons");
    e_configure_registry_item_del("fileman/fileman");
    e_configure_registry_category_del("fileman");
-
-   e_config_domain_save("module.fileman", conf_edd, fileman_config);
+   
+    e_config_domain_save("module.fileman", conf_edd, fileman_config);
    _e_mod_fileman_config_free();
    E_CONFIG_DD_FREE(conf_edd);
    E_CONFIG_DD_FREE(paths_edd);
@@ -303,6 +302,7 @@ _e_mod_fileman_config_load(void)
         fileman_config->view.spring_delay = 1;
         fileman_config->icon.max_thumb_size = 5;
         fileman_config->view.toolbar_orient = E_GADCON_ORIENT_TOP;
+        fileman_config->view.customFM = eina_stringshare_add("pcmanfm");
      }
 
 
