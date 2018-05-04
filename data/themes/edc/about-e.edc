@@ -237,6 +237,10 @@ group { name: "e/widgets/about/main";
             }
             fixed: 1 1;
          }
+         description { state: "clicked" 0.0;
+           inherit: "default";
+           color_class: "tasks_text_clicked";
+         }
       }
       part { name: "shine"; mouse_events: 0;
          description { state: "default" 0.0;
