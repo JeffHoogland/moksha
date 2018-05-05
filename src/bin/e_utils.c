@@ -164,22 +164,19 @@ e_util_head_exec(int head, const char *cmd)
    p2 = strrchr(penv_display, '.');
    if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
      {
-        /* yes it could overflow... but who will overflow DISPLAY eh? why? to
-         * "exploit" your own applications running as you?
-         */
-        strcpy(buf, penv_display);
+        strncpy(buf, penv_display, sizeof(buf));
         buf[p2 - penv_display + 1] = 0;
         snprintf(buf2, sizeof(buf2), "%i", head);
         strcat(buf, buf2);
      }
    else if (p1) /* "blah:x */
      {
-        strcpy(buf, penv_display);
+        strncpy(buf, penv_display, sizeof(buf));
         snprintf(buf2, sizeof(buf2), ".%i", head);
         strcat(buf, buf2);
      }
    else
-     strcpy(buf, penv_display);
+     strncpy(buf, penv_display, sizeof(buf));
 
    ok = 1;
    exe = ecore_exe_run(cmd, NULL);
