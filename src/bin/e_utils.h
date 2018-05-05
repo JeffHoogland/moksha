@@ -75,6 +75,8 @@ e_util_container_current_get(void)
 {
    return e_container_current_get(e_manager_current_get());
 }
-
+// Upstream ports
+EAPI Ecore_Exe *e_util_open(const char *exe, void *data);
+EAPI Ecore_Exe *e_util_exe_safe_run(const char *cmd, void *data);
 #endif
 #endif
