@@ -489,7 +489,7 @@ _cb_xclip_apply_data(void *data __UNUSED__)
   
   snprintf(buf, sizeof(buf), "cat ~/.xclip_clip.txt | xclip -selection clipboard");
 
-  exe = ecore_exe_run(buf, NULL);
+  exe = e_util_exe_safe_run(buf, NULL);
   if (exe) ecore_exe_free(exe);
   return ECORE_CALLBACK_DONE;
 }
@@ -502,7 +502,7 @@ _cb_xclip_save_data(void *data __UNUSED__)
   
   snprintf(buf, sizeof(buf), "xclip -selection clipboard -o > ~/.xclip_clip.txt");
 
-  exe = ecore_exe_run(buf, NULL);
+  exe = e_util_exe_safe_run(buf, NULL);
   if (exe) ecore_exe_free(exe);
   return ECORE_CALLBACK_DONE;
 }

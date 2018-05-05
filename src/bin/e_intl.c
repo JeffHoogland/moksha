@@ -345,7 +345,10 @@ e_intl_input_method_set(const char *imc_path)
 
                   if (E_EXE_IS_VALID(imc->e_im_exec))
                     {
-                       _e_intl_input_method_exec = ecore_exe_run(imc->e_im_exec, NULL);
+                       // if you see valgrind complain about memory
+                       // definitely lost here... it's wrong.
+                       _e_intl_input_method_exec = e_util_exe_safe_run
+                         (imc->e_im_exec, NULL);
                        ecore_exe_tag_set(_e_intl_input_method_exec, "E/im_exec");
 
                        if ((!_e_intl_input_method_exec) ||

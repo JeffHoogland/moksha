@@ -336,7 +336,7 @@ _epulse_exec_cb(void *data, void *data2 EINA_UNUSED)
    if (mixer_context->epulse)
       return;
 
-   mixer_context->epulse = ecore_exe_run("epulse", NULL);
+   mixer_context->epulse = e_util_exe_safe_run("epulse", NULL);
    if (mixer_context->epulse_event_handler)
       ecore_event_handler_del(mixer_context->epulse_event_handler);
    mixer_context->epulse_event_handler =

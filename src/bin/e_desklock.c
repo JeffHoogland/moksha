@@ -229,7 +229,7 @@ e_desklock_show(Eina_Bool suspend)
         if (e_config->xkb.lock_layout)
           e_xkb_layout_set(e_config->xkb.lock_layout);
         _e_custom_desklock_exe =
-          ecore_exe_run(e_config->desklock_custom_desklock_cmd, NULL);
+          e_util_exe_safe_run(e_config->desklock_custom_desklock_cmd, NULL);
         _e_desklock_state = EINA_TRUE;
         return 1;
      }
