@@ -154,7 +154,7 @@ e_util_head_exec(int head, const char *cmd)
 {
    char *penv_display;
    char *p1, *p2;
-   char buf[4096], buf2[32];
+   char buf[4096];
    int ok = 0;
    Ecore_Exe *exe;
 
@@ -166,19 +166,14 @@ e_util_head_exec(int head, const char *cmd)
    p2 = strrchr(penv_display, '.');
    if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
      {
-        strncpy(buf, penv_display, sizeof(buf));
-        buf[p2 - penv_display + 1] = 0;
-        snprintf(buf2, sizeof(buf2), "%i", head);
-        strcat(buf, buf2);
+        *p2 = 0;
+        snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);
+        *p2 = '.';;
      }
    else if (p1) /* "blah:x */
-     {
-        strncpy(buf, penv_display, sizeof(buf));
-        snprintf(buf2, sizeof(buf2), ".%i", head);
-        strcat(buf, buf2);
-     }
+      snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);
    else
-     strncpy(buf, penv_display, sizeof(buf));
+     eina_strlcpy(buf, penv_display, sizeof(buf));
 
    ok = 1;
    exe = ecore_exe_run(cmd, NULL);
@@ -193,11 +188,8 @@ e_util_head_exec(int head, const char *cmd)
      }
 
    /* reset env vars */
-   if (penv_display)
-     {
-        e_util_env_set("DISPLAY", penv_display);
-        free(penv_display);
-     }
+   e_util_env_set("DISPLAY", penv_display);
+   free(penv_display);
    return ok;
 }
 
