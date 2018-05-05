@@ -199,9 +199,11 @@ notification_popup_notify(E_Notification *n,
      {
       case E_NOTIFICATION_URGENCY_LOW:
         if (!notification_cfg->show_low) return 0;
+        if (e_config->mode.presentation) return 0;
         break;
       case E_NOTIFICATION_URGENCY_NORMAL:
         if (!notification_cfg->show_normal) return 0;
+        if (e_config->mode.presentation) return 0;
         break;
       case E_NOTIFICATION_URGENCY_CRITICAL:
         if (!notification_cfg->show_critical) return 0;
