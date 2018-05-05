@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-24 22:36+0200\n"
+"POT-Creation-Date: 2018-05-05 18:38+0200\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -34,12 +34,12 @@ msgstr "Περί Moksha"
 #: src/bin/e_theme_about.c:24 src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2575 src/modules/mixer/app_mixer.c:553
+#: src/modules/fileman/e_fwin.c:2583
 msgid "Close"
 msgstr "Κλείσιμο"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:682
+#: src/bin/e_actions.c:3477 src/bin/e_main.c:683
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -87,7 +87,7 @@ msgstr "Βίαιος Τερματισμός"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Όχι"
@@ -97,7 +97,7 @@ msgstr "Όχι"
 msgid "Action Params Syntax Error"
 msgstr "Παράμετροι Ενέργειας"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:278
+#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:282
 msgid "Exit"
 msgstr "Έξοδος"
 
@@ -107,7 +107,7 @@ msgstr "Σίγουρα επιθυμείτε την έξοδο από το Enligh
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311 src/bin/e_fm.c:10479
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10479
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:342
 msgid "Yes"
@@ -338,14 +338,14 @@ msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 #: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
 #: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
 #: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:190
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:192
 #: src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:89
 #: src/modules/places/e_mod_config.c:181 src/modules/places/e_mod_places.c:784
 msgid "Desktop"
-msgstr "Επιφάνεια εργασίας"
+msgstr "Επιφάνεια Εργασίας"
 
 #: src/bin/e_actions.c:3198
 msgid "Flip Desktop Left"
@@ -786,7 +786,7 @@ msgstr "Αδρανοποίηση Τώρα"
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1376
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1382
 msgid "Cleanup Windows"
 msgstr "Καθαρισμός παραθύρων"
 
@@ -1016,7 +1016,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/syscon/e_mod_main.c:36 src/modules/pulsemixer/e_mod_main.c:494
+#: src/modules/syscon/e_mod_main.c:36 src/modules/mixer/e_mod_main.c:494
 msgid "Advanced"
 msgstr "Για προχωρημένους"
 
@@ -1030,8 +1030,7 @@ msgid "Apply"
 msgstr "Εφαρμογή"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1289
-#: src/modules/connman/e_mod_main.c:634
+#: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:144
 msgid "Extensions"
 msgstr "Επεκτάσεις"
@@ -1053,21 +1052,21 @@ msgstr "Προτιμήσεις"
 msgid "Container %d"
 msgstr "Υποδοχέας %d"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
 msgstr "Σφάλμα - δεν υπάρχει υποστήριξη PAM"
 
-#: src/bin/e_desklock.c:237
+#: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 "Δεν έχει υλοποιηθεί υποστήριξη PAM στο Moksha, έτσι<br>το κλείδωμα της "
 "επιφάνειας εργασίας είναι απενεργοποιημένο."
 
-#: src/bin/e_desklock.c:301
+#: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "Το Κλείδωμα απέτυχε"
 
-#: src/bin/e_desklock.c:302
+#: src/bin/e_desklock.c:304
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1076,23 +1075,23 @@ msgstr ""
 "εφαρμογή<br>δέσμευσε είτε το πληκτρολόγιο είτε το ποντίκι ή και τα "
 "δύο<br>και η δέσμευση είναι αδύνατονα κυρωθεί."
 
-#: src/bin/e_desklock.c:541
+#: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
 msgstr "Παρακαλώ εισάγετε τον κωδικό ξεκλειδώματος"
 
-#: src/bin/e_desklock.c:926
+#: src/bin/e_desklock.c:928
 msgid "Authenticating..."
 msgstr "Πιστοποίηση..."
 
-#: src/bin/e_desklock.c:931
+#: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
 msgstr "Μη έγκυρο συνθηματικό που εισάγατε. Προσπαθήστε ξανά."
 
-#: src/bin/e_desklock.c:968
+#: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
 msgstr "Σφάλμα Συστήματος Ταυτοποίησης"
 
-#: src/bin/e_desklock.c:969
+#: src/bin/e_desklock.c:971
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1103,11 +1102,11 @@ msgstr ""
 "συνεδρία.Ο κωδικός σφάλματος ήταν <hilight>%i</hilight>.<br>Αυτό δεν θα "
 "έπρεπε να συμβαίνει. Παρακαλώ αναφέρετε αυτό το σφάλμα."
 
-#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:180
+#: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:180
 msgid "Activate Presentation Mode?"
 msgstr "Ενεργοποίηση λειτουργίας παρουσίασης?"
 
-#: src/bin/e_desklock.c:1305
+#: src/bin/e_desklock.c:1307
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -1117,11 +1116,11 @@ msgstr ""
 "ενεργοποιήσετε την κατάσταση <b>παρουσίασης</b> ώστε να απενεργοποιηθεί "
 "προσωρινά η προστασία οθόνη, το κλείδωμα και η εξοικονόμηση ενέργειας;"
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
 msgstr "Όχι, αλλά αύξησε το χρόνο λήξης"
 
-#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:195
+#: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:195
 msgid "No, and stop asking"
 msgstr "Όχι, και σταμάτα να ρωτάς"
 
@@ -1193,7 +1192,7 @@ msgstr "Αρχείο Επιφάνειας Εργασίας"
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
-#: src/modules/everything/evry_plug_files.c:1477
+#: src/modules/everything/evry_plug_files.c:1466
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:136
 msgid "General"
@@ -1693,7 +1692,7 @@ msgstr "Ναι σε όλα"
 
 #: src/bin/e_fm.c:10483 src/modules/places/e_mod_places.c:600
 msgid "Warning"
-msgstr "Προειδοποίηση"
+msgstr ""
 
 #: src/bin/e_fm.c:10486
 #, c-format
@@ -2372,7 +2371,7 @@ msgid "Static"
 msgstr "Στατικό"
 
 #: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:103
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:143
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2509,10 +2508,10 @@ msgid "Request Position"
 msgstr "Αίτηση Θέσης"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:297
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:301
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
-#: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:376
+#: src/modules/clock/e_mod_main.c:619 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
@@ -2523,14 +2522,13 @@ msgstr "Αίτηση Θέσης"
 #: src/modules/ibar/e_mod_main.c:384 src/modules/ibar/e_mod_main.c:868
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/shot/e_mod_config.c:103 src/modules/tasks/e_mod_main.c:728
-#: src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_config.c:103
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 #: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:434
+#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:429
 msgid "Settings"
-msgstr "Ρυθμίσεις"
+msgstr ""
 
 #: src/bin/e_int_border_prop.c:505
 msgid "Modal"
@@ -2693,12 +2691,12 @@ msgid "Utilities"
 msgstr "Βοηθήματα"
 
 #: src/bin/e_int_config_modules.c:54
-#: src/modules/everything/evry_plug_files.c:1347
-#: src/modules/everything/evry_plug_files.c:1360
-#: src/modules/everything/evry_plug_files.c:1578
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:59
+#: src/modules/everything/evry_plug_files.c:1336
+#: src/modules/everything/evry_plug_files.c:1349
+#: src/modules/everything/evry_plug_files.c:1567
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:54
 msgid "Files"
-msgstr "Αρχεία"
+msgstr "Σύστημα Αρχείων"
 
 #: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:58
 #: src/modules/quickaccess/e_mod_main.c:35
@@ -2783,17 +2781,17 @@ msgstr ""
 "<br><br>βεβαιωθείτε ότι η ρύθμιση<br>μεθόδου εισαγωγής είναι σωστή<br>και "
 "ότι οι ρυθμίσεις<br>του εκτελέσιμου είναι στην ΔΙΑΔΡΟΜΗ σας<br>"
 
-#: src/bin/e_int_menus.c:137 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:139 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Κεντρικό"
 
-#: src/bin/e_int_menus.c:160
+#: src/bin/e_int_menus.c:162
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Αγαπημένες Εφαρμογές"
 
-#: src/bin/e_int_menus.c:171
+#: src/bin/e_int_menus.c:173
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:261
 #: src/modules/conf_menus/e_int_config_menus.c:284
@@ -2805,7 +2803,7 @@ msgstr "Αγαπημένες Εφαρμογές"
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1334
+#: src/bin/e_int_menus.c:199 src/bin/e_int_menus.c:1340
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2814,79 +2812,79 @@ msgstr "Εφαρμογές"
 msgid "Windows"
 msgstr "Παράθυρα"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1389
+#: src/bin/e_int_menus.c:209 src/bin/e_int_menus.c:1395
 msgid "Lost Windows"
 msgstr "Χαμένα Παράθυρα"
 
-#: src/bin/e_int_menus.c:223
+#: src/bin/e_int_menus.c:225
 #, fuzzy
 msgid "About Operating System"
 msgstr "Σφάλμα Συστήματος Ταυτοποίησης"
 
-#: src/bin/e_int_menus.c:229
+#: src/bin/e_int_menus.c:231
 #, fuzzy
 msgid "Help"
 msgstr "Περισσότερη Βοήθεια"
 
-#: src/bin/e_int_menus.c:234
+#: src/bin/e_int_menus.c:237
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:253
+#: src/bin/e_int_menus.c:257
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "Περί Moksha"
 
-#: src/bin/e_int_menus.c:258 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:262 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "Περί Θέματος"
 
-#: src/bin/e_int_menus.c:272
+#: src/bin/e_int_menus.c:276
 #, fuzzy
 msgid "Reset Moksha"
 msgstr "Καλώς ορίσατε στο Moksha"
 
-#: src/bin/e_int_menus.c:350
+#: src/bin/e_int_menus.c:354
 msgid "Virtual"
 msgstr "Επιφάνεια Εργασίας"
 
-#: src/bin/e_int_menus.c:357 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:361 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Ράφια"
 
-#: src/bin/e_int_menus.c:366
+#: src/bin/e_int_menus.c:370
 msgid "Show/Hide All Windows"
 msgstr "Εμφάνιση/Απόκρυψη όλων των Παραθύρων"
 
-#: src/bin/e_int_menus.c:746
+#: src/bin/e_int_menus.c:752
 msgid "No applications"
 msgstr "Χωρίς εφαρμογές"
 
-#: src/bin/e_int_menus.c:963
+#: src/bin/e_int_menus.c:969
 msgid "Set Virtual Desktops"
 msgstr "Ορισμός Εικονικών Επιφανειών Εργασίας"
 
-#: src/bin/e_int_menus.c:1340 src/bin/e_int_menus.c:1533
+#: src/bin/e_int_menus.c:1346 src/bin/e_int_menus.c:1539
 msgid "No windows"
 msgstr "Χωρίς παράθυρα"
 
-#: src/bin/e_int_menus.c:1446 src/bin/e_int_menus.c:1546
+#: src/bin/e_int_menus.c:1452 src/bin/e_int_menus.c:1552
 msgid "Untitled window"
 msgstr "Παράθυρο χωρίς τίτλο"
 
-#: src/bin/e_int_menus.c:1646 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1652 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Ράφι %s"
 
-#: src/bin/e_int_menus.c:1714
+#: src/bin/e_int_menus.c:1720
 msgid "Add a Shelf"
 msgstr "Προσθήκη Ραφιού"
 
-#: src/bin/e_int_menus.c:1721
+#: src/bin/e_int_menus.c:1727
 msgid "Delete a Shelf"
 msgstr "Διαγραφή Ραφιού"
 
@@ -2976,19 +2974,19 @@ msgstr "Αδυναμία αρχικοποίησης Eina από το Moksha!\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Αδυναμία δημιουργίας τομέα καταγραφής από το Moksha!\n"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:342
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Αδυναμία αρχικοποίησης Eet από το Moksha!\n"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:351
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Αδυναμία αρχικοποίησης Ecore από το Moksha!\n"
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:360
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Αδυναμία αρχικοποίησης EIO από το Moksha!\n"
 
-#: src/bin/e_main.c:371
+#: src/bin/e_main.c:372
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2996,7 +2994,7 @@ msgstr ""
 "Αδυναμία ρύθμισης διαχειριστή σήματος εξόδου από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:379
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3004,7 +3002,7 @@ msgstr ""
 "Αδυναμία ρύθμισης διαχειριστή σήματος HUP από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3012,39 +3010,39 @@ msgstr ""
 "Αδυναμία ρύθμισης διαχειριστή σήματος USER από το Moksha.\n"
 "Ίσως δεν έχετε μνήμη;"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Αδυναμία αρχικοποίησης Ecore_File από το Moksha!\n"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Αδυναμία αρχικοποίησης Ecore_Con από το Moksha!\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Αδυναμία αρχικοποίησης Ecore_Ipc από το Moksha!\n"
 
-#: src/bin/e_main.c:423
+#: src/bin/e_main.c:424
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Αδυναμία αρχικοποίησης Ecore_X από το Moksha!\n"
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:436
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Αδυναμία αρχικοποίησης του Ecore_IMF από το Moksha!\n"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:446
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Αδυναμία αρχικοποίησης του Ecore_Evas από το Moksha!\n"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:456
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Αδυναμία αρχικοποίησης του Elementary από το Moksha!\n"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:467
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Αδυναμία αρχικοποίησης του Emotion από το Moksha!\n"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:482
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3055,7 +3053,7 @@ msgstr ""
 "στο Evas. Παρακαλώ ελέγξτε την εγκατάσταση του Evas και του\n"
 "Ecore και βεβαιωθείτε ότι υποστηρίζουν την μηχανή απεικόνισης λογισμικού X11."
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:490
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3068,15 +3066,15 @@ msgstr ""
 "Ecore και βεβαιωθείτε ότι υποστηρίζουν την μηχανή απεικόνισης Λογισμικού με "
 "Ενδιάμεση Μνήμη."
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:500
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Αδυναμία αρχικοποίησης του Edje από το Moksha!\n"
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:512
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Αδυναμία αρχικοποίησης του E_Intl από το Moksha!\n"
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:522
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3084,7 +3082,7 @@ msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος εκτάκτων ειδοποιήσεων.\n"
 "Έχετε ορίσει την μεταβλητή DISPLAY;"
 
-#: src/bin/e_main.c:540
+#: src/bin/e_main.c:541
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3092,31 +3090,31 @@ msgstr ""
 "Αδυναμία δημιουργίας καταλόγων στον προσωπικό κατάλογό σας από το Moksha.\n"
 "Πιθανόν δεν έχετε φάκελο home ή ο δίσκος είναι γεμάτος."
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:551
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος αρχείου μητρώου από το Enlightement.\n"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος ρυθμίσεων από το Moksha.\n"
 
-#: src/bin/e_main.c:581
+#: src/bin/e_main.c:582
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Αδυναμία αρχικοποίησης του E_Xinerama από το Moksha!\n"
 
-#: src/bin/e_main.c:590
+#: src/bin/e_main.c:591
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Αδυναμία ρύθμισης του περιβάλλοντος από το Moksha.\n"
 
-#: src/bin/e_main.c:606
+#: src/bin/e_main.c:607
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος κλιμάκωσης από το Moksha.\n"
 
-#: src/bin/e_main.c:615
+#: src/bin/e_main.c:616
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος δείκτη από το Moksha.\n"
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:625
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3124,27 +3122,27 @@ msgstr ""
 "Αδυναμία ρύθμισης διαδρομών για εύρεση αρχείων από το Moksha.\n"
 "Πιθανόν να μην έχετε αρκετή μνήμη;"
 
-#: src/bin/e_main.c:641
+#: src/bin/e_main.c:642
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος γραμματοσειρών από το Moksha.\n"
 
-#: src/bin/e_main.c:658
+#: src/bin/e_main.c:659
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος θεμάτων από το Moksha.\n"
 
-#: src/bin/e_main.c:674
+#: src/bin/e_main.c:675
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Αδυναμία ρύθμισης αρχικής οθόνης από το Moksha.\n"
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:690
 msgid "Starting International Support"
 msgstr "Έναρξη πολυεθνικής υποστήριξης"
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:694
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Αδυναμία ρύθμισης εσωτερικού συστήματος από το Moksha.\n"
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:703
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3155,11 +3153,11 @@ msgstr ""
 "Ίσως να μην έχετε δικαιώματα στο ~/.cache/efreet ή\n"
 "να μην έχετε αρκετή μνήμη ή χώρο στο δίσκο;"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:728
 msgid "Setup Screens"
 msgstr "Ρύθμιση Οθονών"
 
-#: src/bin/e_main.c:731
+#: src/bin/e_main.c:732
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3167,249 +3165,249 @@ msgstr ""
 "Αποτυχία ρύθμισης διαχείρισης παραθύρων για όλες τις οθόνες του συστήματος\n"
 "από το Moksha. Ίσως εκτελείται άλλος διαχειριστής παραθύρων;\n"
 
-#: src/bin/e_main.c:739
+#: src/bin/e_main.c:740
 msgid "Setup ACPI"
 msgstr "Ρύθμιση ACPI"
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:747
 msgid "Setup Backlight"
 msgstr "Ρύθμιση Οπίσθιου Φωτισμού"
 
-#: src/bin/e_main.c:750
+#: src/bin/e_main.c:751
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Αδυναμία ρύθμισης οπίσθιου φωτισμού από το Moksha.\n"
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:758
 msgid "Setup Screensaver"
 msgstr "Ρύθμιση Προφύλαξης Οθόνης"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:762
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Το Moksha δεν μπορεί να ρυθμίσει την προφύλαξη οθόνης για τον X.\n"
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:769
 msgid "Setup DPMS"
 msgstr "Ρύθμιση DPMS"
 
-#: src/bin/e_main.c:772
+#: src/bin/e_main.c:773
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Αδυναμία ρύθμισης των επιλογών DPMS από το Moksha.\n"
 
-#: src/bin/e_main.c:779
+#: src/bin/e_main.c:780
 msgid "Setup Powersave Modes"
 msgstr "Ρύθμιση Κατάστασης Εξοικονόμησης Ενέργειας"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:784
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Αδυναμία ρύθμισης κατάστασης εξοικονόμησης ενέργειας από το Moksha.\n"
 
-#: src/bin/e_main.c:790
+#: src/bin/e_main.c:791
 msgid "Setup Desklock"
 msgstr "Ρύθμιση Κλειδώματος Οθόνης"
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:795
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Αδυναμία ρύθμισης του συστήματος κλειδώματος οθόνης από το Moksha.\n"
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:802
 msgid "Setup Popups"
 msgstr "Ρύθμιση Αναδυόμενων"
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:806
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος αναδυόμενων από το Moksha.\n"
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 msgid "Setup Message Bus"
 msgstr "Ρύθμιση Διαύλου Μηνυμάτων"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:825
 msgid "Setup Paths"
 msgstr "Ρύθμιση Διαδρομών"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:831
 msgid "Setup System Controls"
 msgstr "Ρύθμιση Χειρισμών Συστήματος"
 
-#: src/bin/e_main.c:834
+#: src/bin/e_main.c:835
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος εντολών του υπολογιστή από το Moksha.\n"
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:842
 msgid "Setup Actions"
 msgstr "Ρύθμιση Ενεργειών"
 
-#: src/bin/e_main.c:845
+#: src/bin/e_main.c:846
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος ενεργειών από το Moksha.\n"
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:853
 msgid "Setup Execution System"
 msgstr "Ρύθμιση Συστήματος Εκτέλεσης"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:857
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Ασυναμία ρύθμισης συστήματος εκτελέσιμων από το Moksha.\n"
 
-#: src/bin/e_main.c:867
+#: src/bin/e_main.c:868
 msgid "Setup Filemanager"
 msgstr "Ρύθμιση Διαχειριστή αρχείων"
 
-#: src/bin/e_main.c:871
+#: src/bin/e_main.c:872
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Αδυναμία αρχικοποίησης του διαχειριστή αρχείων από το Moksha.\n"
 
-#: src/bin/e_main.c:878
+#: src/bin/e_main.c:879
 msgid "Setup Message System"
 msgstr "Ρύθμιση Συστήματος Μηνυμάτων"
 
-#: src/bin/e_main.c:882
+#: src/bin/e_main.c:883
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος μηνυμάτων από το Moksha.\n"
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:890
 msgid "Setup DND"
 msgstr "Ρύθμιση DND"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:894
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Αδυναμία ρύθμισης του συστήματος dnd από το Moksha.\n"
 
-#: src/bin/e_main.c:900
+#: src/bin/e_main.c:901
 msgid "Setup Grab Input Handling"
 msgstr "Ρύθμιση Διαχείρισης Εισαγωγής Grab"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:905
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
 "Αδυναμία ρύθμισης συστήματος διαχείρισης εισαγωγής grub από το Moksha.\n"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:912
 msgid "Setup Modules"
 msgstr "Ρύθμιση Αρθρωμάτων"
 
-#: src/bin/e_main.c:915 src/bin/e_main.c:1097
+#: src/bin/e_main.c:916 src/bin/e_main.c:1098
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος αρθρωμάτων από το Moksha.\n"
 
-#: src/bin/e_main.c:922
+#: src/bin/e_main.c:923
 msgid "Setup Remembers"
 msgstr "Ρύθμιση Απομνημόνευσης"
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:927
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Αδυναμία ρύθμισης απομνημόνευσης ρυθμίσεων από το Moksha.\n"
 
-#: src/bin/e_main.c:933
+#: src/bin/e_main.c:934
 msgid "Setup Color Classes"
 msgstr "Ρύθμιση Κλάσεων Χρωμάτων"
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:938
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος κλάσεων χρωμάτων από το Moksha.\n"
 
-#: src/bin/e_main.c:944
+#: src/bin/e_main.c:945
 msgid "Setup Gadcon"
 msgstr "Ρύθμιση Gadcon"
 
-#: src/bin/e_main.c:948
+#: src/bin/e_main.c:949
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος ελέγχου συστατικών από το Moksha.\n"
 
-#: src/bin/e_main.c:955
+#: src/bin/e_main.c:956
 msgid "Setup Wallpaper"
 msgstr "Ρύθμιση Ταπετσαρίας"
 
-#: src/bin/e_main.c:959
+#: src/bin/e_main.c:960
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr ""
 "Το Moksha δεν μπορεί να εγκαταστήσει στο σύστημα παρασκηνίου επιφάνειας "
 "εργασίας.\n"
 
-#: src/bin/e_main.c:966
+#: src/bin/e_main.c:967
 msgid "Setup Mouse"
 msgstr "Ρύθμιση Ποντικιού"
 
-#: src/bin/e_main.c:970
+#: src/bin/e_main.c:971
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Αδυναμία ρύθμισης επιλογών ποντικιού από το Moksha.\n"
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:978
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Αδυναμία ρύθμισης διάταξης πληκτρολογίου XKB από το Moksha.\n"
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Setup Bindings"
 msgstr "Ρύθμιση Συνδυασμών"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:988
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος συνδυασμών από το Moksha.\n"
 
-#: src/bin/e_main.c:994
+#: src/bin/e_main.c:995
 msgid "Setup Thumbnailer"
 msgstr "Ρύθμιση του Δημιουργού Μικρογραφιών Εικόνων"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:999
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος δημιουργίας μικρογραφιών εικόνων από το "
 "Moksha.\n"
 
-#: src/bin/e_main.c:1007
+#: src/bin/e_main.c:1008
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης συστήματος δημιουργίας Λανθάνουσας Μνήμης Εικόνων από "
 "το Moksha.\n"
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1017
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Αδυναμία αρχικοποίησης συστήματος XSettings από το Moksha.\n"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Αδυναμία αρχικοποίησης του συστήματος Ενημέρωσης από το Moksha.\n"
 
-#: src/bin/e_main.c:1032
+#: src/bin/e_main.c:1033
 msgid "Setup Desktop Environment"
 msgstr "Ρύθμιση Περιβάλλοντος Εργασίας"
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1037
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr ""
 "Αδυναμία αρχικοποίησης περιβάλλοντος επιφάνειας εργασίας από το Moksha.\n"
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 msgid "Setup File Ordering"
 msgstr "Ρύθμιση Ταξινόμησης Αρχείων"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1048
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Αδυναμία ρύθμισης συστήματος ταξινόμησης αρχείων από το Moksha.\n"
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 msgid "Load Modules"
 msgstr "Φόρτωση Αρθρωμάτων"
 
-#: src/bin/e_main.c:1093
+#: src/bin/e_main.c:1094
 msgid "Setup Shelves"
 msgstr "Ρύθμιση Ραφιών"
 
-#: src/bin/e_main.c:1104
+#: src/bin/e_main.c:1105
 msgid "Configure Shelves"
 msgstr "Ρύθμιση Ραφιών"
 
-#: src/bin/e_main.c:1115
+#: src/bin/e_main.c:1116
 msgid "Almost Done"
 msgstr "Σχεδόν Ολοκληρώθηκε"
 
-#: src/bin/e_main.c:1272
+#: src/bin/e_main.c:1273
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "Δικαιώματα"
 
-#: src/bin/e_main.c:1281
+#: src/bin/e_main.c:1283
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -3464,7 +3462,7 @@ msgstr ""
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tΕάν χρειάζεστε αυτήν την βοήθεια, δεν χρειάζεστε αυτή την επιλογή.\n"
 
-#: src/bin/e_main.c:1335
+#: src/bin/e_main.c:1337
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3480,11 +3478,11 @@ msgstr ""
 "τις διαδρομές και την εκκίνηση άλλων απαραιτούμενων\n"
 "υπηρεσιών κλπ. πριν εκκινήσει το enlightenment.\n"
 
-#: src/bin/e_main.c:1616
+#: src/bin/e_main.c:1618
 msgid "Testing Format Support"
 msgstr "Δοκιμή Υποστήριξης Διαμόρφωσης"
 
-#: src/bin/e_main.c:1620
+#: src/bin/e_main.c:1622
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3493,14 +3491,14 @@ msgstr ""
 "ενδιάμεσης μνήμης. Παρακαλώ ελέγξτε\n"
 "ότι το Evas έχει υποστήριξη μηχανής Λογισμικού Ενδιάμεσης Μνήμης.\n"
 
-#: src/bin/e_main.c:1632
+#: src/bin/e_main.c:1634
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
 "Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει αρχεία SVG. Ελέγξτε "
 "αν το Evas έχει υποστήριξη για φόρτωση αρχείων SVG.\n"
 
-#: src/bin/e_main.c:1642
+#: src/bin/e_main.c:1644
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
@@ -3508,21 +3506,21 @@ msgstr ""
 "Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει JPEG αρχεία. Ελέγξτε "
 "αν το Evas έχει υποστήριξη για φόρτωση JPEG.\n"
 
-#: src/bin/e_main.c:1652
+#: src/bin/e_main.c:1654
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
 "Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει PNG αρχεία. Ελέγξτε "
 "αν το Evas έχει υποστήριξη για φόρτωση PNG.\n"
 
-#: src/bin/e_main.c:1662
+#: src/bin/e_main.c:1664
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
 "Το Moksha διαπίστωσε ότι το Evas δεν μπορεί να φορτώσει EET αρχεία. Ελέγξτε "
 "αν το Evas έχει υποστήριξη για φόρτωση EET.\n"
 
-#: src/bin/e_main.c:1676
+#: src/bin/e_main.c:1678
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3532,7 +3530,7 @@ msgstr ""
 "Ελέγξτε αν το Evas έχει υποστήριξη για το fontconfig και το fontconfig του "
 "συστήματος καθορίζει την γραμματοσειρά 'Sans'.\n"
 
-#: src/bin/e_main.c:1884
+#: src/bin/e_main.c:1886
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3543,11 +3541,11 @@ msgstr ""
 "Υπήρξε σφάλμα στην φόρτωση του<br>αρθρώματος με όνομα: %s. Αυτό το άρθρωμα "
 "έχει απενεργοποιηθεί<br>και δεν θα φορτωθεί."
 
-#: src/bin/e_main.c:1889 src/bin/e_main.c:1906
+#: src/bin/e_main.c:1891 src/bin/e_main.c:1908
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Το Moksha κατέρρευσε νωρίς κατά την εκκίνηση και έγινε επανεκκίνηση"
 
-#: src/bin/e_main.c:1890
+#: src/bin/e_main.c:1892
 #, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3558,7 +3556,7 @@ msgstr ""
 "<br>Υπήρξε σφάλμα κατά την φόρτωση του αρθρώματος με όνομα %s<br><br>Αυτό το "
 "άρθρωμα απενεργοποιήθηκε και δεν θα φορτωθεί."
 
-#: src/bin/e_main.c:1899
+#: src/bin/e_main.c:1901
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3570,7 +3568,7 @@ msgstr ""
 "τα προβληματικά<br>αρθρώματα από τις ρυθμίσεις σας. Το παράθυρο<br>ρυθμίσεων "
 "αρθρωμάτων σας επιτρέπει να επιλέξετε<br>και πάλι αρθρώματά σας.\n"
 
-#: src/bin/e_main.c:1907
+#: src/bin/e_main.c:1909
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4300,7 +4298,7 @@ msgstr "Κατειλημμένο:"
 msgid "Mount status:"
 msgstr "Κατάσταση Προσάρτησης:"
 
-#: src/bin/e_widget_filepreview.c:335 src/modules/mixer/app_mixer.c:424
+#: src/bin/e_widget_filepreview.c:335
 msgid "Type:"
 msgstr "Τύπος:"
 
@@ -4508,8 +4506,8 @@ msgstr "Μετρητής Μπαταρίας"
 msgid "Clock Settings"
 msgstr "Ρυθμίσεις Ρολογιού"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:722
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:724
+#: src/modules/clock/e_mod_main.c:888
 msgid "Clock"
 msgstr "Ρολόι"
 
@@ -4549,24 +4547,28 @@ msgstr "Αριθμοί"
 msgid "Date Only"
 msgstr "Μόνο Ημερομηνία"
 
-#: src/modules/clock/e_mod_config.c:114
+#: src/modules/clock/e_mod_config.c:111
+msgid "ISO 8601"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:116
 msgid "Week"
 msgstr "Εβδομάδα"
 
-#: src/modules/clock/e_mod_config.c:116 src/modules/clock/e_mod_config.c:129
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:131
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Έναρξη"
 
-#: src/modules/clock/e_mod_config.c:127
+#: src/modules/clock/e_mod_config.c:129
 msgid "Weekend"
 msgstr "Σαββατοκύριακο"
 
-#: src/modules/clock/e_mod_config.c:138
+#: src/modules/clock/e_mod_config.c:140
 msgid "Days"
 msgstr "Ημέρες"
 
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_main.c:888
 msgid "Toggle calendar"
 msgstr "Εναλλαγή ημερολογίου"
 
@@ -4653,7 +4655,7 @@ msgstr "E-Mail"
 #: src/modules/conf_applications/e_int_config_defapps.c:313
 #: src/modules/places/e_mod_config.c:184 src/modules/places/e_mod_places.c:794
 msgid "Trash"
-msgstr "Απορρίματα"
+msgstr "Απορρίμματα"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:314
 msgid "Terminal"
@@ -4765,7 +4767,6 @@ msgstr "Ρυθμίσεις Παραθύρων"
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:674
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
-#: src/modules/mixer/conf_gadget.c:200 src/modules/mixer/conf_module.c:91
 msgid "General Settings"
 msgstr "Γενικές Ρυθμίσεις"
 
@@ -5327,7 +5328,6 @@ msgstr "Ρυθμίσεις Συνδυασμών Σήματος"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Είσοδος"
@@ -5812,7 +5812,7 @@ msgstr "Κεντρικό μενού"
 #: src/modules/conf_menus/e_int_config_menus.c:259
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:193
 msgid "Favorites"
-msgstr "Αγαπημένα"
+msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Applications Display"
@@ -7760,7 +7760,7 @@ msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1164
 #: src/modules/everything/evry_plug_apps.c:1211
-#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2572
+#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Άνοιγμα με..."
 
@@ -7808,7 +7808,7 @@ msgstr "Διεπαφή του Sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1410
 #: src/modules/everything/evry_plug_collection.c:146
-#: src/modules/everything/evry_plug_files.c:1578
+#: src/modules/everything/evry_plug_files.c:1567
 msgid "Everything Plugin"
 msgstr "Πρόσθετο Everything"
 
@@ -7820,57 +7820,57 @@ msgstr "Αριθμομηχανή"
 msgid "Copy to Clipboard"
 msgstr "Αντιγραφή στο Πρόχειρο"
 
-#: src/modules/everything/evry_plug_files.c:1317
+#: src/modules/everything/evry_plug_files.c:1306
 msgid "Copy To ..."
 msgstr "Αντιγραφή στο..."
 
-#: src/modules/everything/evry_plug_files.c:1322
+#: src/modules/everything/evry_plug_files.c:1311
 msgid "Move To ..."
 msgstr "Μετακίνηση στο..."
 
-#: src/modules/everything/evry_plug_files.c:1327
+#: src/modules/everything/evry_plug_files.c:1316
 msgid "Move to Trash"
 msgstr "Μετακίνηση στα απορρίματα"
 
-#: src/modules/everything/evry_plug_files.c:1331
+#: src/modules/everything/evry_plug_files.c:1320
 msgid "Open Directory"
 msgstr "Άνοιγμα Καταλόγου"
 
-#: src/modules/everything/evry_plug_files.c:1335
+#: src/modules/everything/evry_plug_files.c:1324
 msgid "Sort by Date"
 msgstr "Ταξινόμηση Ανά Ημερομηνία"
 
-#: src/modules/everything/evry_plug_files.c:1340
+#: src/modules/everything/evry_plug_files.c:1329
 msgid "Sort by Name"
 msgstr "Ταξινόμηση Ανά Όνομα"
 
-#: src/modules/everything/evry_plug_files.c:1373
-#: src/modules/everything/evry_plug_files.c:1385
+#: src/modules/everything/evry_plug_files.c:1362
+#: src/modules/everything/evry_plug_files.c:1374
 msgid "Recent Files"
 msgstr "Πρόσφατα αρχεία"
 
-#: src/modules/everything/evry_plug_files.c:1457
-#: src/modules/everything/evry_plug_files.c:1600
+#: src/modules/everything/evry_plug_files.c:1446
+#: src/modules/everything/evry_plug_files.c:1589
 msgid "Everything Files"
 msgstr "Αρχεία Everything"
 
-#: src/modules/everything/evry_plug_files.c:1484
+#: src/modules/everything/evry_plug_files.c:1473
 msgid "Show recent files"
 msgstr "Εμφάνιση πρόσφατων αρχείων"
 
-#: src/modules/everything/evry_plug_files.c:1488
+#: src/modules/everything/evry_plug_files.c:1477
 msgid "Search recent files"
 msgstr "Αναζήτηση πρόσφατων αρχείων"
 
-#: src/modules/everything/evry_plug_files.c:1492
+#: src/modules/everything/evry_plug_files.c:1481
 msgid "Search cached files"
 msgstr "Αναζήτηση αρχείων λανθάνουσας μνήμης"
 
-#: src/modules/everything/evry_plug_files.c:1496
+#: src/modules/everything/evry_plug_files.c:1485
 msgid "Cache visited directories"
 msgstr "Δημιουργία λανθάνουσας μνήμης προσπελασμένων καταλόγων "
 
-#: src/modules/everything/evry_plug_files.c:1500
+#: src/modules/everything/evry_plug_files.c:1489
 msgid "Clear cache"
 msgstr "Καθαρισμός λανθάνουσας μνήμης"
 
@@ -7951,99 +7951,99 @@ msgstr "Αντιγραφή Διαδρομής"
 msgid "Run"
 msgstr "Εκτέλεση"
 
-#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2573
+#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2581
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: src/modules/fileman/e_fwin.c:2602 src/modules/fileman/e_fwin.c:2627
+#: src/modules/fileman/e_fwin.c:2610 src/modules/fileman/e_fwin.c:2635
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%d αρχείο"
 msgstr[1] "%d αρχεία"
 
-#: src/modules/fileman/e_fwin.c:2645
+#: src/modules/fileman/e_fwin.c:2653
 msgid "Known Applications"
 msgstr "Γνωστές εφαρμογές"
 
-#: src/modules/fileman/e_fwin.c:2655
+#: src/modules/fileman/e_fwin.c:2663
 msgid "Suggested Applications"
 msgstr "Προτεινόμενες Εφαρμογές"
 
-#: src/modules/fileman/e_fwin.c:2690
+#: src/modules/fileman/e_fwin.c:2698
 msgid "All Applications"
 msgstr "Όλες οι εφαρμογές"
 
-#: src/modules/fileman/e_fwin.c:2713
+#: src/modules/fileman/e_fwin.c:2721
 msgid "Custom Command"
 msgstr "Προσαρμοσμένη εντολή"
 
-#: src/modules/fileman/e_fwin.c:3004
+#: src/modules/fileman/e_fwin.c:3012
 #, c-format
 msgid "Copying is aborted"
 msgstr "Η αντιγραφή ματαιώθηκε"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3016
 #, c-format
 msgid "Moving is aborted"
 msgstr "Η μετακίνηση ματαιώθηκε"
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3020
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Η διαγραφή ματαιώθηκε"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3024
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "Ματαιώθηκε η ασφαλής διαγραφή"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3028
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Ματαιώθηκε άγνωστη δυτερεύουσα λειτουργία"
 
-#: src/modules/fileman/e_fwin.c:3030
+#: src/modules/fileman/e_fwin.c:3038
 #, c-format
 msgid "Copy of %s done"
 msgstr "Ολοκληρώθηκε η αντιγραφή του %s"
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3040
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Αντιγραφή του %s (ΕΤΑ: %s)"
 
-#: src/modules/fileman/e_fwin.c:3037
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Move of %s done"
 msgstr "Ολοκληρώθηκε η μετακίνηση του %s"
 
-#: src/modules/fileman/e_fwin.c:3039
+#: src/modules/fileman/e_fwin.c:3047
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Μετακίνηση του %s (ΕΤΑ: %s)"
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3052
 #, c-format
 msgid "Delete done"
 msgstr "Ολοκληρώθηκε η διαγραφή"
 
-#: src/modules/fileman/e_fwin.c:3046
+#: src/modules/fileman/e_fwin.c:3054
 #, c-format
 msgid "Deleting files..."
 msgstr "Διαγραφή αρχείων..."
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3059
 #, c-format
 msgid "Secure delete done"
 msgstr "Ολοκληρώθηκε η ασφαλής διαγραφή"
 
-#: src/modules/fileman/e_fwin.c:3053
+#: src/modules/fileman/e_fwin.c:3061
 #, c-format
 msgid "Securely deleting files..."
 msgstr "Ασφαλής διαγραφή αρχείων..."
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3065
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Άγνωστη δευτερεύουσα λειτουργία %d"
@@ -8187,7 +8187,7 @@ msgstr "Εμφάνιση εικονιδίων συσκευών στην επιφ
 
 #: src/modules/fileman/e_mod_config.c:460 src/modules/places/e_mod_config.c:151
 msgid "Mount volumes on insert"
-msgstr "Προσάρτηση τόμων κατά την σύνδεση"
+msgstr "Προσάρτηση τόμων κατα την εισαγωγή"
 
 #: src/modules/fileman/e_mod_config.c:463
 msgid "Open filemanager on mount"
@@ -8232,7 +8232,7 @@ msgstr "Διαχειριστής αρχείων"
 msgid "Navigate"
 msgstr "Περιήγηση"
 
-#: src/modules/fileman/e_mod_main.c:283
+#: src/modules/fileman/e_mod_main.c:282
 msgid "Fileman"
 msgstr "Διαχειριστής Αρχείων Fileman"
 
@@ -8251,7 +8251,7 @@ msgstr "Τρέχον Κατάλογος"
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:178
 #: src/modules/places/e_mod_places.c:775
 msgid "Home"
-msgstr "Αρχικός κατάλογος"
+msgstr "Home"
 
 #: src/modules/fileman/e_mod_menu.c:451
 msgid "Root"
@@ -8924,123 +8924,6 @@ msgstr ""
 #: src/modules/wizard/page_180.c:38
 msgid "Enable Taskbar"
 msgstr "Ενεργοποίηση Γραμμής Εργασιών"
-
-#: src/modules/mixer/app_mixer.c:192
-msgid "Capture"
-msgstr "Καταγραφή"
-
-#: src/modules/mixer/app_mixer.c:194
-#: src/modules/pulsemixer/bin/main_window.c:125
-msgid "Playback"
-msgstr "Αναπαραγωγή"
-
-#: src/modules/mixer/app_mixer.c:314
-msgid "Output"
-msgstr "Έξοδος"
-
-#: src/modules/mixer/app_mixer.c:393
-msgid "Cards"
-msgstr "Κάρτες"
-
-#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:287
-msgid "Channels"
-msgstr "Κανάλια"
-
-#: src/modules/mixer/app_mixer.c:416
-msgid "Card:"
-msgstr "Κάρτα:"
-
-#: src/modules/mixer/app_mixer.c:420
-msgid "Channel:"
-msgstr "Κανάλι:"
-
-#: src/modules/mixer/app_mixer.c:428
-msgid "Left:"
-msgstr "Αριστερά"
-
-#: src/modules/mixer/app_mixer.c:433
-msgid "Right:"
-msgstr "Δεξιά:"
-
-#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:702
-#: src/modules/pulsemixer/bin/playbacks_view.c:305
-#: src/modules/pulsemixer/bin/sinks_view.c:263
-#: src/modules/pulsemixer/e_mod_main.c:449
-msgid "Mute"
-msgstr "Σίγαση"
-
-#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:203
-msgid "Lock Sliders"
-msgstr "Κλείδωμα Μπάρας Κύλισης"
-
-#: src/modules/mixer/app_mixer.c:445
-msgid "Edit"
-msgstr "Επεξεργασία"
-
-#: src/modules/mixer/conf_gadget.c:209
-msgid "Show both sliders when locked"
-msgstr "Εμφάνιση και των δυο διακοπτών κύλισης όταν είναι κλειδωμένοι"
-
-#: src/modules/mixer/conf_gadget.c:214
-msgid "Show Popup on volume change via keybindings"
-msgstr ""
-"Εμφάνιση αναδυόμενου για την αλλαγή της έντασης μέσω συντομεύσεων πλήκτρων"
-
-#: src/modules/mixer/conf_gadget.c:325
-msgid "Sound Cards"
-msgstr "Κάρτες ήχου"
-
-#: src/modules/mixer/conf_gadget.c:386
-msgid "Mixer Settings"
-msgstr "Ρυθμίσεις Μείκτη"
-
-#: src/modules/mixer/conf_module.c:93
-msgid "Mixer to use for global actions:"
-msgstr "Μείκτης προς χρήση καθολικών ενεργειών:"
-
-#: src/modules/mixer/conf_module.c:117
-msgid "Display desktop notifications on volume change"
-msgstr "Εμφάνιση ειδοποιήσεων επιφάνειας εργασίας για την αλλαγή της έντασης"
-
-#: src/modules/mixer/conf_module.c:153
-msgid "Launch mixer..."
-msgstr "Εκκίνηση μείκτη..."
-
-#: src/modules/mixer/conf_module.c:188
-msgid "Mixer Module Settings"
-msgstr "Ρυθμίσεις Αρθρώματος Μείκτη"
-
-#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:69
-msgid "Mixer"
-msgstr "Μείκτης"
-
-#: src/modules/mixer/e_mod_main.c:56 src/modules/pulsemixer/e_mod_main.c:128
-msgid "New volume"
-msgstr "Νέα ένταση"
-
-#: src/modules/mixer/e_mod_main.c:69
-msgid "Volume changed"
-msgstr "Η ένταση άλλαξε"
-
-#: src/modules/mixer/e_mod_main.c:188
-msgid "Mixer Settings Updated"
-msgstr "Οι Ρυθμίσεις Μείκτη Ενημερώθηκαν"
-
-#: src/modules/mixer/e_mod_main.c:1366
-msgid "Mixer Module"
-msgstr "Άρθρωμα Μείκτη"
-
-#: src/modules/mixer/e_mod_main.c:1394 src/modules/pulsemixer/e_mod_main.c:238
-msgid "Increase Volume"
-msgstr "Αύξηση Έντασης"
-
-#: src/modules/mixer/e_mod_main.c:1395 src/modules/pulsemixer/e_mod_main.c:246
-msgid "Decrease Volume"
-msgstr "Ελάττωση Έντασης"
-
-#: src/modules/mixer/e_mod_main.c:1396
-msgid "Mute Volume"
-msgstr "Σίγαση Έντασης"
 
 #: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
@@ -9946,9 +9829,9 @@ msgstr ""
 "Αιτήθηκε διαγραφή αυτού του ραφιού.<br><br>Είστε σίγουροι για τη διαγραφή "
 "του;"
 
-#: src/modules/clipboard/e_mod_main.c:764
-#: src/modules/clipboard/e_mod_main.c:765
-#: src/modules/clipboard/e_mod_main.c:766
+#: src/modules/clipboard/e_mod_main.c:759
+#: src/modules/clipboard/e_mod_main.c:760
+#: src/modules/clipboard/e_mod_main.c:761
 #, fuzzy
 msgid "Clipboard"
 msgstr "Αντιγραφή στο Πρόχειρο"
@@ -9969,60 +9852,51 @@ msgid "Clear History"
 msgstr "Εκκαθάριση επικάλυψης"
 
 #: src/modules/places/e_mod_config.c:54
-#, fuzzy
 msgid "Places Settings"
-msgstr "Ρυθμίσεις Διαχειριστή Επιφανειών Εργασίας"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:139
-#, fuzzy
 msgid "Show in main menu"
-msgstr "Εμφάνιση κεντρικού μενού"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:143
-#, fuzzy
 msgid "Hide the gadget header"
-msgstr "Προσθήκη άλλων συστατικών"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:147
 #, fuzzy
 msgid "Mount volumes at boot"
-msgstr "Προσάρτηση τόμων κατά την σύνδεση"
+msgstr "Προσάρτηση τόμων κατα την εισαγωγή"
 
 #: src/modules/places/e_mod_config.c:155
-#, fuzzy
 msgid "Open filemanager on insert"
-msgstr "Άνοιγμα διαχειριστή αρχείων κατά την προσάρτηση"
+msgstr "Άνοιγμα διαχειριστή αρχείων κατά την εισαγωγή"
 
 #: src/modules/places/e_mod_config.c:162
-#, fuzzy
 msgid "Use a custom file manager"
-msgstr "Ρύθμιση Διαχειριστή αρχείων"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:175
-#, fuzzy
 msgid "Show in menu"
-msgstr "Εμφάνιση στα Mενού"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:187 src/modules/places/e_mod_places.c:619
 #: src/modules/places/e_mod_places.c:803
-#, fuzzy
 msgid "Filesystem"
-msgstr "Αρχεία"
+msgstr "Σύστημα Αρχείων"
 
 #: src/modules/places/e_mod_config.c:190 src/modules/places/e_mod_places.c:812
 msgid "Temp"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:61 src/modules/places/e_mod_main.c:298
+#: src/modules/places/e_mod_main.c:56 src/modules/places/e_mod_main.c:293
 #: src/modules/places/e_mod_places.c:236 src/modules/places/e_mod_places.c:869
-#, fuzzy
 msgid "Places"
-msgstr "Τοποθέτηση"
+msgstr "Τοποθεσίες"
 
-#: src/modules/places/e_mod_main.c:394
-#, fuzzy
+#: src/modules/places/e_mod_main.c:389
 msgid "Places Configuration Updated"
-msgstr "%s ρύθμιση ανανεώθηκε"
+msgstr "Ρύθμιση Τοποθεσιών"
 
 #: src/modules/places/e_mod_places.c:601
 msgid ""
@@ -10031,72 +9905,160 @@ msgid ""
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:623
-#, fuzzy
 msgid "No Name"
-msgstr "<Χωρίς Όνομα>"
+msgstr "Χωρίς Όνομα"
 
 #: src/modules/places/e_mod_places.c:630
 msgid "free of"
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:636
-#, fuzzy, c-format
+#, c-format
 msgid "%s Not Mounted"
-msgstr "Αποσυνδεμένο"
+msgstr "%s δεν είναι Προσαρτημένο"
 
 #: src/modules/places/e_mod_places.c:663
-#, fuzzy
 msgid "unmount"
-msgstr "Αποπροσάρτηση"
+msgstr "αποπροσάρτηση"
 
 #: src/modules/places/e_mod_places.c:668
-#, fuzzy
 msgid "eject"
-msgstr "Εξαγωγή"
+msgstr "εξαγωγή"
 
-#: src/modules/pulsemixer/bin/main_window.c:85
+#: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
 
-#: src/modules/pulsemixer/bin/main_window.c:128
+#: src/modules/mixer/bin/main_window.c:125
+msgid "Playback"
+msgstr "Αναπαραγωγή"
+
+#: src/modules/mixer/bin/main_window.c:128
 #, fuzzy
 msgid "Outputs"
 msgstr "Έξοδος"
 
-#: src/modules/pulsemixer/bin/main_window.c:131
+#: src/modules/mixer/bin/main_window.c:131
 #, fuzzy
 msgid "Inputs"
 msgstr "Είσοδος"
 
-#: src/modules/pulsemixer/bin/playbacks_view.c:306
-#: src/modules/pulsemixer/bin/sinks_view.c:264
+#: src/modules/mixer/bin/playbacks_view.c:305
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:449
+msgid "Mute"
+msgstr "Σίγαση"
+
+#: src/modules/mixer/bin/playbacks_view.c:306
+#: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:128
+msgid "New volume"
+msgstr "Νέα ένταση"
+
+#: src/modules/mixer/e_mod_main.c:141
 msgid "EPulse"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:141
 #, fuzzy
 msgid "Volume Changed"
 msgstr "Η ένταση άλλαξε"
 
-#: src/modules/pulsemixer/e_mod_main.c:254
+#: src/modules/mixer/e_mod_main.c:238
+msgid "Increase Volume"
+msgstr "Αύξηση Έντασης"
+
+#: src/modules/mixer/e_mod_main.c:246
+msgid "Decrease Volume"
+msgstr "Ελάττωση Έντασης"
+
+#: src/modules/mixer/e_mod_main.c:254
 #, fuzzy
 msgid "Mute volume"
 msgstr "Σίγαση Έντασης"
 
-#: src/modules/pulsemixer/e_mod_main.c:272
+#: src/modules/mixer/e_mod_main.c:272
 #, fuzzy
 msgid "Volume Increase"
 msgstr "Η ένταση άλλαξε"
 
-#: src/modules/pulsemixer/e_mod_main.c:279
-#: src/modules/pulsemixer/e_mod_main.c:286
+#: src/modules/mixer/e_mod_main.c:279 src/modules/mixer/e_mod_main.c:286
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Η ένταση άλλαξε"
+
+#~ msgid "Capture"
+#~ msgstr "Καταγραφή"
+
+#~ msgid "Output"
+#~ msgstr "Έξοδος"
+
+#~ msgid "Cards"
+#~ msgstr "Κάρτες"
+
+#~ msgid "Channels"
+#~ msgstr "Κανάλια"
+
+#~ msgid "Card:"
+#~ msgstr "Κάρτα:"
+
+#~ msgid "Channel:"
+#~ msgstr "Κανάλι:"
+
+#~ msgid "Left:"
+#~ msgstr "Αριστερά"
+
+#~ msgid "Right:"
+#~ msgstr "Δεξιά:"
+
+#~ msgid "Lock Sliders"
+#~ msgstr "Κλείδωμα Μπάρας Κύλισης"
+
+#~ msgid "Edit"
+#~ msgstr "Επεξεργασία"
+
+#~ msgid "Show both sliders when locked"
+#~ msgstr "Εμφάνιση και των δυο διακοπτών κύλισης όταν είναι κλειδωμένοι"
+
+#~ msgid "Show Popup on volume change via keybindings"
+#~ msgstr ""
+#~ "Εμφάνιση αναδυόμενου για την αλλαγή της έντασης μέσω συντομεύσεων πλήκτρων"
+
+#~ msgid "Sound Cards"
+#~ msgstr "Κάρτες ήχου"
+
+#~ msgid "Mixer Settings"
+#~ msgstr "Ρυθμίσεις Μείκτη"
+
+#~ msgid "Mixer to use for global actions:"
+#~ msgstr "Μείκτης προς χρήση καθολικών ενεργειών:"
+
+#~ msgid "Display desktop notifications on volume change"
+#~ msgstr ""
+#~ "Εμφάνιση ειδοποιήσεων επιφάνειας εργασίας για την αλλαγή της έντασης"
+
+#~ msgid "Launch mixer..."
+#~ msgstr "Εκκίνηση μείκτη..."
+
+#~ msgid "Mixer Module Settings"
+#~ msgstr "Ρυθμίσεις Αρθρώματος Μείκτη"
+
+#~ msgid "Mixer"
+#~ msgstr "Μείκτης"
+
+#~ msgid "Volume changed"
+#~ msgstr "Η ένταση άλλαξε"
+
+#~ msgid "Mixer Settings Updated"
+#~ msgstr "Οι Ρυθμίσεις Μείκτη Ενημερώθηκαν"
+
+#~ msgid "Mixer Module"
+#~ msgstr "Άρθρωμα Μείκτη"
+
+#~ msgid "Mute Volume"
+#~ msgstr "Σίγαση Έντασης"
 
 #~ msgid "Application Execution Error"
 #~ msgstr "Σφάλμα Εκτέλεσης Εφαρμογής"

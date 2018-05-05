@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-24 22:36+0200\n"
+"POT-Creation-Date: 2018-05-05 18:38+0200\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -31,12 +31,12 @@ msgstr "Об Moksha"
 #: src/bin/e_theme_about.c:24 src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2575 src/modules/mixer/app_mixer.c:553
+#: src/modules/fileman/e_fwin.c:2583
 msgid "Close"
 msgstr "Закрыть"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:682
+#: src/bin/e_actions.c:3477 src/bin/e_main.c:683
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -82,7 +82,7 @@ msgstr "Убить"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Нет"
@@ -92,7 +92,7 @@ msgstr "Нет"
 msgid "Action Params Syntax Error"
 msgstr "Параметры действия"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:278
+#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:282
 msgid "Exit"
 msgstr "Выход"
 
@@ -102,7 +102,7 @@ msgstr "Действительно хотите выйти из Moksha?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311 src/bin/e_fm.c:10479
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10479
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:342
 msgid "Yes"
@@ -333,7 +333,7 @@ msgstr "Переключить режим прикрепления"
 #: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
 #: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
 #: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:190
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:192
 #: src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
@@ -780,7 +780,7 @@ msgstr "Перевести в спящий режим немедленно"
 msgid "Lock"
 msgstr "Заблокировать"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1376
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1382
 msgid "Cleanup Windows"
 msgstr "Расчистить окна"
 
@@ -1004,7 +1004,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/syscon/e_mod_main.c:36 src/modules/pulsemixer/e_mod_main.c:494
+#: src/modules/syscon/e_mod_main.c:36 src/modules/mixer/e_mod_main.c:494
 msgid "Advanced"
 msgstr "Дополнительно"
 
@@ -1018,8 +1018,7 @@ msgid "Apply"
 msgstr "Применить"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1289
-#: src/modules/connman/e_mod_main.c:634
+#: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:144
 msgid "Extensions"
 msgstr "Расширения"
@@ -1041,21 +1040,21 @@ msgstr "Предпочтения"
 msgid "Container %d"
 msgstr "Контейнер %d"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
 msgstr "Ошибка — нет поддержки PAM"
 
-#: src/bin/e_desklock.c:237
+#: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 "Поддержка PAM не была включена при сборке Moksha,<br>поэтому блокировка "
 "экрана не работает."
 
-#: src/bin/e_desklock.c:301
+#: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "Не удалось заблокировать"
 
-#: src/bin/e_desklock.c:302
+#: src/bin/e_desklock.c:304
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1063,23 +1062,23 @@ msgstr ""
 "Блокировка рабочего стола не удалась, т.к. мышка и/или<br>клавиатура "
 "удерживаются каким-то приложением,<br>и это удерживание не удалось прервать."
 
-#: src/bin/e_desklock.c:541
+#: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
 msgstr "Пожалуйста, введите ваш пароль"
 
-#: src/bin/e_desklock.c:926
+#: src/bin/e_desklock.c:928
 msgid "Authenticating..."
 msgstr "Идёт аутентификация..."
 
-#: src/bin/e_desklock.c:931
+#: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
 msgstr "Введён неправильный пароль. Попробуйте ещё раз."
 
-#: src/bin/e_desklock.c:968
+#: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
 msgstr "Ошибка системы аутентификации"
 
-#: src/bin/e_desklock.c:969
+#: src/bin/e_desklock.c:971
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1090,11 +1089,11 @@ msgstr ""
 "<hilight>%i</hilight>.<br>Это плохо и такого не должно случатьса."
 "<br>Пожалуйста, сообщите об этой ошибке."
 
-#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:180
+#: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:180
 msgid "Activate Presentation Mode?"
 msgstr "Активировать режим презентации?"
 
-#: src/bin/e_desklock.c:1305
+#: src/bin/e_desklock.c:1307
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -1104,11 +1103,11 @@ msgstr ""
 "<b>презентации</b> и временно отключить хранитель экрана, блокировку и "
 "энергосбережение?"
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
 msgstr "Нет, но увеличить задержку"
 
-#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:195
+#: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:195
 msgid "No, and stop asking"
 msgstr "Нет, и не спрашивать больше"
 
@@ -1179,7 +1178,7 @@ msgstr "Файл .desktop"
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
-#: src/modules/everything/evry_plug_files.c:1477
+#: src/modules/everything/evry_plug_files.c:1466
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:136
 msgid "General"
@@ -2360,7 +2359,7 @@ msgid "Static"
 msgstr "Неподвижный"
 
 #: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:103
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:143
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2495,10 +2494,10 @@ msgid "Request Position"
 msgstr "Запрос позиции"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:297
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:301
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
-#: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:376
+#: src/modules/clock/e_mod_main.c:619 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
@@ -2509,12 +2508,11 @@ msgstr "Запрос позиции"
 #: src/modules/ibar/e_mod_main.c:384 src/modules/ibar/e_mod_main.c:868
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/shot/e_mod_config.c:103 src/modules/tasks/e_mod_main.c:728
-#: src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_config.c:103
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 #: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:434
+#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:429
 msgid "Settings"
 msgstr "Настройки"
 
@@ -2676,10 +2674,10 @@ msgid "Utilities"
 msgstr "Вспомогательные"
 
 #: src/bin/e_int_config_modules.c:54
-#: src/modules/everything/evry_plug_files.c:1347
-#: src/modules/everything/evry_plug_files.c:1360
-#: src/modules/everything/evry_plug_files.c:1578
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:59
+#: src/modules/everything/evry_plug_files.c:1336
+#: src/modules/everything/evry_plug_files.c:1349
+#: src/modules/everything/evry_plug_files.c:1567
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:54
 msgid "Files"
 msgstr "Файлы"
 
@@ -2764,17 +2762,17 @@ msgstr ""
 "конфигурация<br>методов ввода верна и файл указанный<br>в конфигурации "
 "методов ввода находится в PATH<br>"
 
-#: src/bin/e_int_menus.c:137 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:139 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Главное"
 
-#: src/bin/e_int_menus.c:160
+#: src/bin/e_int_menus.c:162
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Избранные приложения"
 
-#: src/bin/e_int_menus.c:171
+#: src/bin/e_int_menus.c:173
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:261
 #: src/modules/conf_menus/e_int_config_menus.c:284
@@ -2786,7 +2784,7 @@ msgstr "Избранные приложения"
 msgid "Applications"
 msgstr "Приложения"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1334
+#: src/bin/e_int_menus.c:199 src/bin/e_int_menus.c:1340
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2795,79 +2793,79 @@ msgstr "Приложения"
 msgid "Windows"
 msgstr "Окна"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1389
+#: src/bin/e_int_menus.c:209 src/bin/e_int_menus.c:1395
 msgid "Lost Windows"
 msgstr "Потерянные окна"
 
-#: src/bin/e_int_menus.c:223
+#: src/bin/e_int_menus.c:225
 #, fuzzy
 msgid "About Operating System"
 msgstr "Ошибка системы аутентификации"
 
-#: src/bin/e_int_menus.c:229
+#: src/bin/e_int_menus.c:231
 #, fuzzy
 msgid "Help"
 msgstr "Дополнительная справка"
 
-#: src/bin/e_int_menus.c:234
+#: src/bin/e_int_menus.c:237
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:253
+#: src/bin/e_int_menus.c:257
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "Об Moksha"
 
-#: src/bin/e_int_menus.c:258 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:262 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "О теме"
 
-#: src/bin/e_int_menus.c:272
+#: src/bin/e_int_menus.c:276
 #, fuzzy
 msgid "Reset Moksha"
 msgstr "Добро пожаловать в Moksha"
 
-#: src/bin/e_int_menus.c:350
+#: src/bin/e_int_menus.c:354
 msgid "Virtual"
 msgstr "Виртуальные"
 
-#: src/bin/e_int_menus.c:357 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:361 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Полки"
 
-#: src/bin/e_int_menus.c:366
+#: src/bin/e_int_menus.c:370
 msgid "Show/Hide All Windows"
 msgstr "Показать/скрыть все окна"
 
-#: src/bin/e_int_menus.c:746
+#: src/bin/e_int_menus.c:752
 msgid "No applications"
 msgstr "Нет приложений"
 
-#: src/bin/e_int_menus.c:963
+#: src/bin/e_int_menus.c:969
 msgid "Set Virtual Desktops"
 msgstr "Настройка виртуальных рабочих столов"
 
-#: src/bin/e_int_menus.c:1340 src/bin/e_int_menus.c:1533
+#: src/bin/e_int_menus.c:1346 src/bin/e_int_menus.c:1539
 msgid "No windows"
 msgstr "Нет окон"
 
-#: src/bin/e_int_menus.c:1446 src/bin/e_int_menus.c:1546
+#: src/bin/e_int_menus.c:1452 src/bin/e_int_menus.c:1552
 msgid "Untitled window"
 msgstr "Окно без заголовка"
 
-#: src/bin/e_int_menus.c:1646 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1652 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Полка (%s)"
 
-#: src/bin/e_int_menus.c:1714
+#: src/bin/e_int_menus.c:1720
 msgid "Add a Shelf"
 msgstr "Добавить полку"
 
-#: src/bin/e_int_menus.c:1721
+#: src/bin/e_int_menus.c:1727
 msgid "Delete a Shelf"
 msgstr "Удалить полку"
 
@@ -2957,19 +2955,19 @@ msgstr "Moksha не может инициализировать Eina!\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Moksha не может создать лог домен!\n"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:342
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Moksha не может инициализировать Eet!\n"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:351
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Moksha не может инициализировать Ecore!\n"
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:360
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha не может инициализировать EIO!\n"
 
-#: src/bin/e_main.c:371
+#: src/bin/e_main.c:372
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2977,7 +2975,7 @@ msgstr ""
 "Moksha не может настроить указатель сигнала выхода.\n"
 "Возможно недостаточно памяти?"
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:379
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2985,7 +2983,7 @@ msgstr ""
 "Moksha не может настроить указатель сигнала HUP.\n"
 "Возможно недостаточно памяти?"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2993,39 +2991,39 @@ msgstr ""
 "Moksha не может настроить указатель сигнала USER.\n"
 "Возможно недостаточно памяти?"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Moksha не может инициализировать Ecore_File!\n"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Moksha не может инициализировать Ecore_Con!\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Moksha не может инициализировать Ecore_Ipc!\n"
 
-#: src/bin/e_main.c:423
+#: src/bin/e_main.c:424
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Moksha не может инициализировать Ecore_X!\n"
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:436
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Moksha не может инициализировать Ecore_IMF!\n"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:446
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Moksha не может инициализировать Ecore_Evas!\n"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:456
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Moksha не может инициализировать Elementary!\n"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:467
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha не может инициализировать Emotion!\n"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:482
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3035,7 +3033,7 @@ msgstr ""
 "Software X11 в Evas. Пожалуйста, проверьте правильно ли установлены Evas и\n"
 "Ecore и убедитесь, что они поддерживают отрисовку через Software X11."
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:490
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3045,15 +3043,15 @@ msgstr ""
 "Software Buffer в Evas. Пожалуйста, проверьте правильно ли установлены Evas\n"
 "и Ecore и убедитесь, что они поддерживают отрисовку через Software Buffer."
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:500
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha не может инициализировать Edje!\n"
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:512
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha не может инициализировать E_Intl!\n"
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:522
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3061,7 +3059,7 @@ msgstr ""
 "Moksha не может инициализировать систему аварийных сообщений.\n"
 "Вы задали переменную DISPLAY?"
 
-#: src/bin/e_main.c:540
+#: src/bin/e_main.c:541
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3069,31 +3067,31 @@ msgstr ""
 "Moksha не может создавать каталоги в вашем домашнем каталоге.\n"
 "Возможно, у вас нет домашнего каталога или диск заполнен?"
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:551
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha не может настроить свою систему реестра файлов.\n"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha не может настроить свою систему настроек.\n"
 
-#: src/bin/e_main.c:581
+#: src/bin/e_main.c:582
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha не может инициализировать E_Xinerama!\n"
 
-#: src/bin/e_main.c:590
+#: src/bin/e_main.c:591
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha не может настроить свою рабочую среду.\n"
 
-#: src/bin/e_main.c:606
+#: src/bin/e_main.c:607
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha не может настроить свою систему масштабирования.\n"
 
-#: src/bin/e_main.c:615
+#: src/bin/e_main.c:616
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha не может настроить свою систему указателей.\n"
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:625
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3101,27 +3099,27 @@ msgstr ""
 "Moksha не может настроить пути для поиска файлов.\n"
 "Возможно недостаточно памяти?"
 
-#: src/bin/e_main.c:641
+#: src/bin/e_main.c:642
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha не может настроить свою систему шрифтов.\n"
 
-#: src/bin/e_main.c:658
+#: src/bin/e_main.c:659
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha не может настроить свою систему тем.\n"
 
-#: src/bin/e_main.c:674
+#: src/bin/e_main.c:675
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha не может настроить свою систему заставки.\n"
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:690
 msgid "Starting International Support"
 msgstr "Запускается языковая поддержка"
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:694
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha не может настроить свою систему интернационализации.\n"
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:703
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3131,11 +3129,11 @@ msgstr ""
 "Возможно, у вас недостаточно прав на каталог ~/.cache/efreet,\n"
 "или недостаточно памяти, или дискового пространства?"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:728
 msgid "Setup Screens"
 msgstr "Настройка экранов"
 
-#: src/bin/e_main.c:731
+#: src/bin/e_main.c:732
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3143,240 +3141,240 @@ msgstr ""
 "Настройка управления окнами для всех экранов на вашей системе не удалась.\n"
 "Возможно запущен другой менеджер окон?\n"
 
-#: src/bin/e_main.c:739
+#: src/bin/e_main.c:740
 msgid "Setup ACPI"
 msgstr "Настройка ACPI"
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:747
 msgid "Setup Backlight"
 msgstr "Настройка подсветки"
 
-#: src/bin/e_main.c:750
+#: src/bin/e_main.c:751
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha не может настроить подсветку.\n"
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:758
 msgid "Setup Screensaver"
 msgstr "Настройка хранителя экрана"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:762
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha не может настроить хранитель экрана.\n"
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:769
 msgid "Setup DPMS"
 msgstr "Настройка DPMS"
 
-#: src/bin/e_main.c:772
+#: src/bin/e_main.c:773
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Moksha не может настроить DPMS.\n"
 
-#: src/bin/e_main.c:779
+#: src/bin/e_main.c:780
 msgid "Setup Powersave Modes"
 msgstr "Настройка режима энергосбережения"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:784
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha не может настроить режим энергосбережения.\n"
 
-#: src/bin/e_main.c:790
+#: src/bin/e_main.c:791
 msgid "Setup Desklock"
 msgstr "Настройка блокировки"
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:795
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha не может настроить систему блокировки рабочего стола.\n"
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:802
 msgid "Setup Popups"
 msgstr "Настройка всплывающих окон"
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:806
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha не может настроить свою систему всплывающих окон.\n"
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 msgid "Setup Message Bus"
 msgstr "Настройка шины сообщений"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:825
 msgid "Setup Paths"
 msgstr "Настройка путей"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:831
 msgid "Setup System Controls"
 msgstr "Настройка системы управления"
 
-#: src/bin/e_main.c:834
+#: src/bin/e_main.c:835
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Moksha не может настроить систему системных команд.\n"
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:842
 msgid "Setup Actions"
 msgstr "Настройка действий"
 
-#: src/bin/e_main.c:845
+#: src/bin/e_main.c:846
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha не может настроить свою систему действий.\n"
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:853
 msgid "Setup Execution System"
 msgstr "Настройка системы запуска"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:857
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha не может настроить свою систему запуска.\n"
 
-#: src/bin/e_main.c:867
+#: src/bin/e_main.c:868
 msgid "Setup Filemanager"
 msgstr "Настройки файлового менеджера"
 
-#: src/bin/e_main.c:871
+#: src/bin/e_main.c:872
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha не может инициализировать файловый менеджер.\n"
 
-#: src/bin/e_main.c:878
+#: src/bin/e_main.c:879
 msgid "Setup Message System"
 msgstr "Настройка системы сообщений"
 
-#: src/bin/e_main.c:882
+#: src/bin/e_main.c:883
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha не может настроить свою систему сообщений.\n"
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:890
 msgid "Setup DND"
 msgstr "Настройка DND"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:894
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha не может настроить свою DND-систему.\n"
 
-#: src/bin/e_main.c:900
+#: src/bin/e_main.c:901
 msgid "Setup Grab Input Handling"
 msgstr "Настройка обработчика захвата ввода"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:905
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha не может настроить свою систему захвата и обработки ввода.\n"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:912
 msgid "Setup Modules"
 msgstr "Настройка модулей"
 
-#: src/bin/e_main.c:915 src/bin/e_main.c:1097
+#: src/bin/e_main.c:916 src/bin/e_main.c:1098
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Moksha не может настроить свою систему модулей.\n"
 
-#: src/bin/e_main.c:922
+#: src/bin/e_main.c:923
 msgid "Setup Remembers"
 msgstr "Настройка запоминаний"
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:927
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha не может настроить запоминание настроек.\n"
 
-#: src/bin/e_main.c:933
+#: src/bin/e_main.c:934
 msgid "Setup Color Classes"
 msgstr "Настройка цветовых классов"
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:938
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha не может настроить свою систему класса цветов.\n"
 
-#: src/bin/e_main.c:944
+#: src/bin/e_main.c:945
 msgid "Setup Gadcon"
 msgstr "Настройка контейнера гаджетов"
 
-#: src/bin/e_main.c:948
+#: src/bin/e_main.c:949
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha не может настроить свою систему управления гаджетами.\n"
 
-#: src/bin/e_main.c:955
+#: src/bin/e_main.c:956
 msgid "Setup Wallpaper"
 msgstr "Настройка фона"
 
-#: src/bin/e_main.c:959
+#: src/bin/e_main.c:960
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Moksha не может настроить свою систему фона рабочего стола.\n"
 
-#: src/bin/e_main.c:966
+#: src/bin/e_main.c:967
 msgid "Setup Mouse"
 msgstr "Настройка мыши"
 
-#: src/bin/e_main.c:970
+#: src/bin/e_main.c:971
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha не может настроить параметры мыши.\n"
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:978
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha не может настроить раскладки клавиатуры XKB.\n"
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Setup Bindings"
 msgstr "Настройка привязок"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:988
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha не может настроить свою систему привязок.\n"
 
-#: src/bin/e_main.c:994
+#: src/bin/e_main.c:995
 msgid "Setup Thumbnailer"
 msgstr "Настройка генератора миниатюр"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:999
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha не может настроить систему Thumbnailing.\n"
 
-#: src/bin/e_main.c:1007
+#: src/bin/e_main.c:1008
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha не может настроить систему кэширования значков.\n"
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1017
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha не может настроить систему XSettings.\n"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha не может настроить систему обновлений.\n"
 
-#: src/bin/e_main.c:1032
+#: src/bin/e_main.c:1033
 msgid "Setup Desktop Environment"
 msgstr "Настройки графической рабочей среды"
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1037
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha не может инициализировать окружение рабочего среды.\n"
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 msgid "Setup File Ordering"
 msgstr "Настрока очередности файлов"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1048
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha не может настроить свою систему очередей.\n"
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 msgid "Load Modules"
 msgstr "Загрузка модулей"
 
-#: src/bin/e_main.c:1093
+#: src/bin/e_main.c:1094
 msgid "Setup Shelves"
 msgstr "Настройка полок"
 
-#: src/bin/e_main.c:1104
+#: src/bin/e_main.c:1105
 msgid "Configure Shelves"
 msgstr "Параметры полок"
 
-#: src/bin/e_main.c:1115
+#: src/bin/e_main.c:1116
 msgid "Almost Done"
 msgstr "Почти закончено"
 
-#: src/bin/e_main.c:1272
+#: src/bin/e_main.c:1273
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "Права доступа"
 
-#: src/bin/e_main.c:1281
+#: src/bin/e_main.c:1283
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -3430,7 +3428,7 @@ msgstr ""
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tЕсли вам нужна эта подсказка, то вам не нужна эта опция.\n"
 
-#: src/bin/e_main.c:1335
+#: src/bin/e_main.c:1337
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3446,11 +3444,11 @@ msgstr ""
 "запустить базовые службы прежде, чем стартует сам\n"
 "enlightenment.\n"
 
-#: src/bin/e_main.c:1616
+#: src/bin/e_main.c:1618
 msgid "Testing Format Support"
 msgstr "Проверка поддержки форматов"
 
-#: src/bin/e_main.c:1620
+#: src/bin/e_main.c:1622
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3459,14 +3457,14 @@ msgstr ""
 "проверьте,\n"
 "что Evas поддерживает движок Software Buffer.\n"
 
-#: src/bin/e_main.c:1632
+#: src/bin/e_main.c:1634
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
 "Moksha обнаружил, что Evas не может загружать файлы SVG. Проверьте,\n"
 "что Evas имеет поддержку загрузчика SVG.\n"
 
-#: src/bin/e_main.c:1642
+#: src/bin/e_main.c:1644
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
@@ -3474,21 +3472,21 @@ msgstr ""
 "Moksha обнаружил, что Evas не может загружать файлы JPEG. Проверьте,\n"
 "что Evas имеет поддержку загрузчика JPEG.\n"
 
-#: src/bin/e_main.c:1652
+#: src/bin/e_main.c:1654
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
 "Moksha обнаружил, что Evas не может загружать файлы PNG. Проверьте,\n"
 "что Evas имеет поддержку загрузчика PNG.\n"
 
-#: src/bin/e_main.c:1662
+#: src/bin/e_main.c:1664
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
 "Moksha обнаружил, что Evas не может загружать файлы EET. Проверьте,\n"
 "что Evas имеет поддержку загрузчика EET.\n"
 
-#: src/bin/e_main.c:1676
+#: src/bin/e_main.c:1678
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3497,7 +3495,7 @@ msgstr ""
 "имеет ли Evas поддержку fontconfig, и определяет ли fontconfig шрифт "
 "'Sans'.\n"
 
-#: src/bin/e_main.c:1884
+#: src/bin/e_main.c:1886
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3507,11 +3505,11 @@ msgstr ""
 "Moksha дал сбой при старте и был перезапущен.<br>Произошла ошибка загрузки "
 "модуля: %s.<br>Этот модуль был отключен и не будет загружен."
 
-#: src/bin/e_main.c:1889 src/bin/e_main.c:1906
+#: src/bin/e_main.c:1891 src/bin/e_main.c:1908
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha дал сбой при старте и был перезапущен"
 
-#: src/bin/e_main.c:1890
+#: src/bin/e_main.c:1892
 #, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3521,7 +3519,7 @@ msgstr ""
 "Moksha дал сбой при старте и был перезапущен.<br>Произошла ошибка загрузки "
 "модуля: %s.<br><br>Этот модуль был отключен и не будет загружен."
 
-#: src/bin/e_main.c:1899
+#: src/bin/e_main.c:1901
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3533,7 +3531,7 @@ msgstr ""
 "проблему с модулями в вашей конфигурации.<br>Диалог конфигурации модулей "
 "позволит вам выбрать нужные<br>модули заново.\n"
 
-#: src/bin/e_main.c:1907
+#: src/bin/e_main.c:1909
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4266,7 +4264,7 @@ msgstr "Зарезервировано:"
 msgid "Mount status:"
 msgstr "Статус:"
 
-#: src/bin/e_widget_filepreview.c:335 src/modules/mixer/app_mixer.c:424
+#: src/bin/e_widget_filepreview.c:335
 msgid "Type:"
 msgstr "Тип:"
 
@@ -4474,8 +4472,8 @@ msgstr "Индикатор батареи"
 msgid "Clock Settings"
 msgstr "Настройки часов"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:722
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:724
+#: src/modules/clock/e_mod_main.c:888
 msgid "Clock"
 msgstr "Часы"
 
@@ -4515,24 +4513,28 @@ msgstr "Цифрами"
 msgid "Date Only"
 msgstr "Только дата"
 
-#: src/modules/clock/e_mod_config.c:114
+#: src/modules/clock/e_mod_config.c:111
+msgid "ISO 8601"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:116
 msgid "Week"
 msgstr "Неделя"
 
-#: src/modules/clock/e_mod_config.c:116 src/modules/clock/e_mod_config.c:129
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:131
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Начало"
 
-#: src/modules/clock/e_mod_config.c:127
+#: src/modules/clock/e_mod_config.c:129
 msgid "Weekend"
 msgstr "Выходные"
 
-#: src/modules/clock/e_mod_config.c:138
+#: src/modules/clock/e_mod_config.c:140
 msgid "Days"
 msgstr "Количество дней"
 
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_main.c:888
 msgid "Toggle calendar"
 msgstr "Переключить календарь"
 
@@ -4730,7 +4732,6 @@ msgstr "Настройки диалогов"
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:674
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
-#: src/modules/mixer/conf_gadget.c:200 src/modules/mixer/conf_module.c:91
 msgid "General Settings"
 msgstr "Общие настройки"
 
@@ -5291,7 +5292,6 @@ msgstr "Настройки привязок сигналов"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Ввод"
@@ -5772,7 +5772,7 @@ msgstr "Главное меню"
 #: src/modules/conf_menus/e_int_config_menus.c:259
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:193
 msgid "Favorites"
-msgstr "Избранные"
+msgstr "Избранное"
 
 #: src/modules/conf_menus/e_int_config_menus.c:265
 msgid "Applications Display"
@@ -7687,7 +7687,7 @@ msgstr ""
 
 #: src/modules/everything/evry_plug_apps.c:1164
 #: src/modules/everything/evry_plug_apps.c:1211
-#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2572
+#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Открыть с помощью..."
 
@@ -7735,7 +7735,7 @@ msgstr "Графическая оболочка для Sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1410
 #: src/modules/everything/evry_plug_collection.c:146
-#: src/modules/everything/evry_plug_files.c:1578
+#: src/modules/everything/evry_plug_files.c:1567
 msgid "Everything Plugin"
 msgstr "Плагин для Всё"
 
@@ -7747,57 +7747,57 @@ msgstr "Калькулятор"
 msgid "Copy to Clipboard"
 msgstr "Скопировать в буфер обмена"
 
-#: src/modules/everything/evry_plug_files.c:1317
+#: src/modules/everything/evry_plug_files.c:1306
 msgid "Copy To ..."
 msgstr "Скопировать в..."
 
-#: src/modules/everything/evry_plug_files.c:1322
+#: src/modules/everything/evry_plug_files.c:1311
 msgid "Move To ..."
 msgstr "Переместить в..."
 
-#: src/modules/everything/evry_plug_files.c:1327
+#: src/modules/everything/evry_plug_files.c:1316
 msgid "Move to Trash"
 msgstr "Переместить в корзину"
 
-#: src/modules/everything/evry_plug_files.c:1331
+#: src/modules/everything/evry_plug_files.c:1320
 msgid "Open Directory"
 msgstr "Открыть каталог"
 
-#: src/modules/everything/evry_plug_files.c:1335
+#: src/modules/everything/evry_plug_files.c:1324
 msgid "Sort by Date"
 msgstr "Сортировать по дате"
 
-#: src/modules/everything/evry_plug_files.c:1340
+#: src/modules/everything/evry_plug_files.c:1329
 msgid "Sort by Name"
 msgstr "Сортировать по имени"
 
-#: src/modules/everything/evry_plug_files.c:1373
-#: src/modules/everything/evry_plug_files.c:1385
+#: src/modules/everything/evry_plug_files.c:1362
+#: src/modules/everything/evry_plug_files.c:1374
 msgid "Recent Files"
 msgstr "Недавние файлы"
 
-#: src/modules/everything/evry_plug_files.c:1457
-#: src/modules/everything/evry_plug_files.c:1600
+#: src/modules/everything/evry_plug_files.c:1446
+#: src/modules/everything/evry_plug_files.c:1589
 msgid "Everything Files"
 msgstr "Файлы Everything"
 
-#: src/modules/everything/evry_plug_files.c:1484
+#: src/modules/everything/evry_plug_files.c:1473
 msgid "Show recent files"
 msgstr "Показывать недавние файлы"
 
-#: src/modules/everything/evry_plug_files.c:1488
+#: src/modules/everything/evry_plug_files.c:1477
 msgid "Search recent files"
 msgstr "Поиск в недавних файлах"
 
-#: src/modules/everything/evry_plug_files.c:1492
+#: src/modules/everything/evry_plug_files.c:1481
 msgid "Search cached files"
 msgstr "Поиск в кэшированных файлах"
 
-#: src/modules/everything/evry_plug_files.c:1496
+#: src/modules/everything/evry_plug_files.c:1485
 msgid "Cache visited directories"
 msgstr "Кэшировать посещённые каталоги"
 
-#: src/modules/everything/evry_plug_files.c:1500
+#: src/modules/everything/evry_plug_files.c:1489
 msgid "Clear cache"
 msgstr "Очистить кэш"
 
@@ -7896,11 +7896,11 @@ msgstr "Копировать путь"
 msgid "Run"
 msgstr "Запустить"
 
-#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2573
+#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2581
 msgid "Open"
 msgstr "Открыть"
 
-#: src/modules/fileman/e_fwin.c:2602 src/modules/fileman/e_fwin.c:2627
+#: src/modules/fileman/e_fwin.c:2610 src/modules/fileman/e_fwin.c:2635
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -7908,88 +7908,88 @@ msgstr[0] "%d файл"
 msgstr[1] "%d файла"
 msgstr[2] "%d файлов"
 
-#: src/modules/fileman/e_fwin.c:2645
+#: src/modules/fileman/e_fwin.c:2653
 msgid "Known Applications"
 msgstr "Известные приложения"
 
-#: src/modules/fileman/e_fwin.c:2655
+#: src/modules/fileman/e_fwin.c:2663
 msgid "Suggested Applications"
 msgstr "Выбранные приложения"
 
-#: src/modules/fileman/e_fwin.c:2690
+#: src/modules/fileman/e_fwin.c:2698
 msgid "All Applications"
 msgstr "Все приложения"
 
-#: src/modules/fileman/e_fwin.c:2713
+#: src/modules/fileman/e_fwin.c:2721
 msgid "Custom Command"
 msgstr "Пользовательская команда"
 
-#: src/modules/fileman/e_fwin.c:3004
+#: src/modules/fileman/e_fwin.c:3012
 #, c-format
 msgid "Copying is aborted"
 msgstr "Копирование прервано"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3016
 #, c-format
 msgid "Moving is aborted"
 msgstr "Перемещение прервано"
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3020
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Удаление прервано"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3024
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "Безопасное удаление прервано"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3028
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Неизвестная операция от ведомого прервана"
 
-#: src/modules/fileman/e_fwin.c:3030
+#: src/modules/fileman/e_fwin.c:3038
 #, c-format
 msgid "Copy of %s done"
 msgstr "Копирование %s завершено"
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3040
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Копирование %s (рвп: %s)"
 
-#: src/modules/fileman/e_fwin.c:3037
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Move of %s done"
 msgstr "Перемещение %s завершено"
 
-#: src/modules/fileman/e_fwin.c:3039
+#: src/modules/fileman/e_fwin.c:3047
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Перемещение %s (рвп: %s)"
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3052
 #, c-format
 msgid "Delete done"
 msgstr "Удаление завершено"
 
-#: src/modules/fileman/e_fwin.c:3046
+#: src/modules/fileman/e_fwin.c:3054
 #, c-format
 msgid "Deleting files..."
 msgstr "Идёт удаление файлов..."
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3059
 #, c-format
 msgid "Secure delete done"
 msgstr "Безопасное удаление завершено"
 
-#: src/modules/fileman/e_fwin.c:3053
+#: src/modules/fileman/e_fwin.c:3061
 #, c-format
 msgid "Securely deleting files..."
 msgstr "Идёт безопасное удаление файлов..."
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3065
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Неизвестная операция от ведомого %d"
@@ -8131,7 +8131,7 @@ msgstr "Показывать значки устройств на рабочем
 
 #: src/modules/fileman/e_mod_config.c:460 src/modules/places/e_mod_config.c:151
 msgid "Mount volumes on insert"
-msgstr "Монтировать устройства при подключении"
+msgstr "Монтировать тома при подключении"
 
 #: src/modules/fileman/e_mod_config.c:463
 msgid "Open filemanager on mount"
@@ -8176,7 +8176,7 @@ msgstr "Файловый менеджер"
 msgid "Navigate"
 msgstr "Перейти"
 
-#: src/modules/fileman/e_mod_main.c:283
+#: src/modules/fileman/e_mod_main.c:282
 msgid "Fileman"
 msgstr "Файловый менеджер"
 
@@ -8864,122 +8864,6 @@ msgstr ""
 #: src/modules/wizard/page_180.c:38
 msgid "Enable Taskbar"
 msgstr "Включить панель задач"
-
-#: src/modules/mixer/app_mixer.c:192
-msgid "Capture"
-msgstr "Захват"
-
-#: src/modules/mixer/app_mixer.c:194
-#: src/modules/pulsemixer/bin/main_window.c:125
-msgid "Playback"
-msgstr "Воспроизведение"
-
-#: src/modules/mixer/app_mixer.c:314
-msgid "Output"
-msgstr "Выход"
-
-#: src/modules/mixer/app_mixer.c:393
-msgid "Cards"
-msgstr "Карты"
-
-#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:287
-msgid "Channels"
-msgstr "Каналы"
-
-#: src/modules/mixer/app_mixer.c:416
-msgid "Card:"
-msgstr "Карта:"
-
-#: src/modules/mixer/app_mixer.c:420
-msgid "Channel:"
-msgstr "Канал:"
-
-#: src/modules/mixer/app_mixer.c:428
-msgid "Left:"
-msgstr "Левый:"
-
-#: src/modules/mixer/app_mixer.c:433
-msgid "Right:"
-msgstr "Правый:"
-
-#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:702
-#: src/modules/pulsemixer/bin/playbacks_view.c:305
-#: src/modules/pulsemixer/bin/sinks_view.c:263
-#: src/modules/pulsemixer/e_mod_main.c:449
-msgid "Mute"
-msgstr "Без звука"
-
-#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:203
-msgid "Lock Sliders"
-msgstr "Фиксировать каналы"
-
-#: src/modules/mixer/app_mixer.c:445
-msgid "Edit"
-msgstr "Изменить"
-
-#: src/modules/mixer/conf_gadget.c:209
-msgid "Show both sliders when locked"
-msgstr "Показывать оба бегунка при фиксации"
-
-#: src/modules/mixer/conf_gadget.c:214
-msgid "Show Popup on volume change via keybindings"
-msgstr "Показывать сообщение при изменении громкости через привязки"
-
-#: src/modules/mixer/conf_gadget.c:325
-msgid "Sound Cards"
-msgstr "Звуковые карты"
-
-#: src/modules/mixer/conf_gadget.c:386
-msgid "Mixer Settings"
-msgstr "Настройки микшера"
-
-#: src/modules/mixer/conf_module.c:93
-msgid "Mixer to use for global actions:"
-msgstr "Микшер для главных действий:"
-
-#: src/modules/mixer/conf_module.c:117
-msgid "Display desktop notifications on volume change"
-msgstr "Показывать сообщения об изменениях громкости"
-
-#: src/modules/mixer/conf_module.c:153
-msgid "Launch mixer..."
-msgstr "Запустить микшер..."
-
-#: src/modules/mixer/conf_module.c:188
-msgid "Mixer Module Settings"
-msgstr "Настройки модуля микшера"
-
-#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:69
-msgid "Mixer"
-msgstr "Микшер"
-
-#: src/modules/mixer/e_mod_main.c:56 src/modules/pulsemixer/e_mod_main.c:128
-msgid "New volume"
-msgstr "Новая громкость"
-
-#: src/modules/mixer/e_mod_main.c:69
-msgid "Volume changed"
-msgstr "Громкость изменена"
-
-#: src/modules/mixer/e_mod_main.c:188
-msgid "Mixer Settings Updated"
-msgstr "Настройки микшера обновлены"
-
-#: src/modules/mixer/e_mod_main.c:1366
-msgid "Mixer Module"
-msgstr "Модуль Микшера"
-
-#: src/modules/mixer/e_mod_main.c:1394 src/modules/pulsemixer/e_mod_main.c:238
-msgid "Increase Volume"
-msgstr "Прибавить звук"
-
-#: src/modules/mixer/e_mod_main.c:1395 src/modules/pulsemixer/e_mod_main.c:246
-msgid "Decrease Volume"
-msgstr "Убавить звук"
-
-#: src/modules/mixer/e_mod_main.c:1396
-msgid "Mute Volume"
-msgstr "Без звука"
 
 #: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
@@ -9881,9 +9765,9 @@ msgid ""
 msgstr ""
 "Вы запросили удалить эту полку.<br><br>Действительно хотите удалить её?"
 
-#: src/modules/clipboard/e_mod_main.c:764
-#: src/modules/clipboard/e_mod_main.c:765
-#: src/modules/clipboard/e_mod_main.c:766
+#: src/modules/clipboard/e_mod_main.c:759
+#: src/modules/clipboard/e_mod_main.c:760
+#: src/modules/clipboard/e_mod_main.c:761
 #, fuzzy
 msgid "Clipboard"
 msgstr "Скопировать в буфер обмена"
@@ -9904,134 +9788,213 @@ msgid "Clear History"
 msgstr "Очистить перекрытие"
 
 #: src/modules/places/e_mod_config.c:54
-#, fuzzy
 msgid "Places Settings"
-msgstr "Параметры пейджера"
+msgstr "Настройка Мест"
 
 #: src/modules/places/e_mod_config.c:139
-#, fuzzy
 msgid "Show in main menu"
-msgstr "Показать главное меню"
+msgstr "Показывать в главном меню"
 
 #: src/modules/places/e_mod_config.c:143
-#, fuzzy
 msgid "Hide the gadget header"
-msgstr "Добавить другие гаджеты"
+msgstr "Скрыть заголовок гаджета"
 
 #: src/modules/places/e_mod_config.c:147
-#, fuzzy
 msgid "Mount volumes at boot"
-msgstr "Монтировать устройства при подключении"
+msgstr "Монтировать тома при старте системы"
 
 #: src/modules/places/e_mod_config.c:155
-#, fuzzy
 msgid "Open filemanager on insert"
-msgstr "Открыть файловый менеджер при монтировании"
+msgstr "Открыть файловый менеджер при подключении"
 
 #: src/modules/places/e_mod_config.c:162
-#, fuzzy
 msgid "Use a custom file manager"
-msgstr "Настройки файлового менеджера"
+msgstr "Использовать пользовательский файловый менеджер"
 
 #: src/modules/places/e_mod_config.c:175
-#, fuzzy
 msgid "Show in menu"
 msgstr "Показывать в меню"
 
 #: src/modules/places/e_mod_config.c:187 src/modules/places/e_mod_places.c:619
 #: src/modules/places/e_mod_places.c:803
-#, fuzzy
 msgid "Filesystem"
-msgstr "Файлы"
+msgstr "Файловая система"
 
 #: src/modules/places/e_mod_config.c:190 src/modules/places/e_mod_places.c:812
 msgid "Temp"
-msgstr ""
+msgstr "Временные файлы"
 
-#: src/modules/places/e_mod_main.c:61 src/modules/places/e_mod_main.c:298
+#: src/modules/places/e_mod_main.c:56 src/modules/places/e_mod_main.c:293
 #: src/modules/places/e_mod_places.c:236 src/modules/places/e_mod_places.c:869
-#, fuzzy
 msgid "Places"
-msgstr "Расположение"
+msgstr "Места"
 
-#: src/modules/places/e_mod_main.c:394
-#, fuzzy
+#: src/modules/places/e_mod_main.c:389
 msgid "Places Configuration Updated"
-msgstr "%s конфигурация обновлена"
+msgstr "Настройки Мест обновлены"
 
 #: src/modules/places/e_mod_places.c:601
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
+"<b>Не удалось запустить EFM.</b><br>Пожалуйста, выберите другой файловый "
+"менеджер<br>в настройках гаджета."
 
 #: src/modules/places/e_mod_places.c:623
-#, fuzzy
 msgid "No Name"
-msgstr "<Без имени>"
+msgstr "Без имени"
 
 #: src/modules/places/e_mod_places.c:630
 msgid "free of"
-msgstr ""
+msgstr "свободно на"
 
+# c-format
 #: src/modules/places/e_mod_places.c:636
-#, fuzzy, c-format
+#, c-format
 msgid "%s Not Mounted"
-msgstr "Не подключено"
+msgstr "%s Не подключен"
 
 #: src/modules/places/e_mod_places.c:663
-#, fuzzy
 msgid "unmount"
-msgstr "Отключить"
+msgstr "отключить"
 
 #: src/modules/places/e_mod_places.c:668
-#, fuzzy
 msgid "eject"
-msgstr "Извлечь"
+msgstr "извлечь"
 
-#: src/modules/pulsemixer/bin/main_window.c:85
+#: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
 
-#: src/modules/pulsemixer/bin/main_window.c:128
+#: src/modules/mixer/bin/main_window.c:125
+msgid "Playback"
+msgstr "Воспроизведение"
+
+#: src/modules/mixer/bin/main_window.c:128
 #, fuzzy
 msgid "Outputs"
 msgstr "Выход"
 
-#: src/modules/pulsemixer/bin/main_window.c:131
+#: src/modules/mixer/bin/main_window.c:131
 #, fuzzy
 msgid "Inputs"
 msgstr "Ввод"
 
-#: src/modules/pulsemixer/bin/playbacks_view.c:306
-#: src/modules/pulsemixer/bin/sinks_view.c:264
+#: src/modules/mixer/bin/playbacks_view.c:305
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:449
+msgid "Mute"
+msgstr "Без звука"
+
+#: src/modules/mixer/bin/playbacks_view.c:306
+#: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:128
+msgid "New volume"
+msgstr "Новая громкость"
+
+#: src/modules/mixer/e_mod_main.c:141
 msgid "EPulse"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:141
 #, fuzzy
 msgid "Volume Changed"
 msgstr "Громкость изменена"
 
-#: src/modules/pulsemixer/e_mod_main.c:254
+#: src/modules/mixer/e_mod_main.c:238
+msgid "Increase Volume"
+msgstr "Прибавить звук"
+
+#: src/modules/mixer/e_mod_main.c:246
+msgid "Decrease Volume"
+msgstr "Убавить звук"
+
+#: src/modules/mixer/e_mod_main.c:254
 #, fuzzy
 msgid "Mute volume"
 msgstr "Без звука"
 
-#: src/modules/pulsemixer/e_mod_main.c:272
+#: src/modules/mixer/e_mod_main.c:272
 #, fuzzy
 msgid "Volume Increase"
 msgstr "Громкость изменена"
 
-#: src/modules/pulsemixer/e_mod_main.c:279
-#: src/modules/pulsemixer/e_mod_main.c:286
+#: src/modules/mixer/e_mod_main.c:279 src/modules/mixer/e_mod_main.c:286
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Громкость изменена"
+
+#~ msgid "Capture"
+#~ msgstr "Захват"
+
+#~ msgid "Output"
+#~ msgstr "Выход"
+
+#~ msgid "Cards"
+#~ msgstr "Карты"
+
+#~ msgid "Channels"
+#~ msgstr "Каналы"
+
+#~ msgid "Card:"
+#~ msgstr "Карта:"
+
+#~ msgid "Channel:"
+#~ msgstr "Канал:"
+
+#~ msgid "Left:"
+#~ msgstr "Левый:"
+
+#~ msgid "Right:"
+#~ msgstr "Правый:"
+
+#~ msgid "Lock Sliders"
+#~ msgstr "Фиксировать каналы"
+
+#~ msgid "Edit"
+#~ msgstr "Изменить"
+
+#~ msgid "Show both sliders when locked"
+#~ msgstr "Показывать оба бегунка при фиксации"
+
+#~ msgid "Show Popup on volume change via keybindings"
+#~ msgstr "Показывать сообщение при изменении громкости через привязки"
+
+#~ msgid "Sound Cards"
+#~ msgstr "Звуковые карты"
+
+#~ msgid "Mixer Settings"
+#~ msgstr "Настройки микшера"
+
+#~ msgid "Mixer to use for global actions:"
+#~ msgstr "Микшер для главных действий:"
+
+#~ msgid "Display desktop notifications on volume change"
+#~ msgstr "Показывать сообщения об изменениях громкости"
+
+#~ msgid "Launch mixer..."
+#~ msgstr "Запустить микшер..."
+
+#~ msgid "Mixer Module Settings"
+#~ msgstr "Настройки модуля микшера"
+
+#~ msgid "Mixer"
+#~ msgstr "Микшер"
+
+#~ msgid "Volume changed"
+#~ msgstr "Громкость изменена"
+
+#~ msgid "Mixer Settings Updated"
+#~ msgstr "Настройки микшера обновлены"
+
+#~ msgid "Mixer Module"
+#~ msgstr "Модуль Микшера"
+
+#~ msgid "Mute Volume"
+#~ msgstr "Без звука"
 
 #~ msgid "Application Execution Error"
 #~ msgstr "Ошибка исполнения приложения"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-24 22:36+0200\n"
+"POT-Creation-Date: 2018-05-05 18:27+0200\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -27,12 +27,12 @@ msgstr "אודות Moksha"
 #: src/bin/e_theme_about.c:24 src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2575 src/modules/mixer/app_mixer.c:553
+#: src/modules/fileman/e_fwin.c:2583
 msgid "Close"
 msgstr "סגור"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:682
+#: src/bin/e_actions.c:3477 src/bin/e_main.c:683
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -74,7 +74,7 @@ msgstr "חסל"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "לא"
@@ -84,7 +84,7 @@ msgstr "לא"
 msgid "Action Params Syntax Error"
 msgstr "פעולה params"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:278
+#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:282
 msgid "Exit"
 msgstr "יציאה"
 
@@ -95,7 +95,7 @@ msgstr "האם אתה בטוח שברצונך לצאת?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311 src/bin/e_fm.c:10479
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10479
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:342
 msgid "Yes"
@@ -341,7 +341,7 @@ msgstr "החלפת מצב הנעיצה"
 #: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
 #: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
 #: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:190
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:192
 #: src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
@@ -811,7 +811,7 @@ msgstr "עבור למצב שינה"
 msgid "Lock"
 msgstr "נעל"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1376
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1382
 msgid "Cleanup Windows"
 msgstr "ניקוי החלונות"
 
@@ -1043,7 +1043,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/syscon/e_mod_main.c:36 src/modules/pulsemixer/e_mod_main.c:494
+#: src/modules/syscon/e_mod_main.c:36 src/modules/mixer/e_mod_main.c:494
 msgid "Advanced"
 msgstr "מתקדם"
 
@@ -1057,8 +1057,7 @@ msgid "Apply"
 msgstr "החל"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1289
-#: src/modules/connman/e_mod_main.c:634
+#: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:144
 msgid "Extensions"
 msgstr "הרחבות"
@@ -1081,19 +1080,19 @@ msgstr "מאפייני הסמל"
 msgid "Container %d"
 msgstr "מיכל %d"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
 msgstr "שגיאה - אין תמיכה ב־PAM"
 
-#: src/bin/e_desklock.c:237
+#: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr "לא הוטמעה תמיכת PAM ב־Moksha, לכן<br>נעילת שולחן העבודה אינה פעילה."
 
-#: src/bin/e_desklock.c:301
+#: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "הנעילה נכשלה"
 
-#: src/bin/e_desklock.c:302
+#: src/bin/e_desklock.c:304
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1101,24 +1100,24 @@ msgstr ""
 "נעילת שולחן העבודה נכשלה כיוון שאחד היישומים<br>לכד את המקלדת או העכבר או את "
 "שניהם<br>ולא ניתן לשחרר את לכידתם."
 
-#: src/bin/e_desklock.c:541
+#: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
 msgstr "נא הזינו את סיסמת השיחרור"
 
-#: src/bin/e_desklock.c:926
+#: src/bin/e_desklock.c:928
 #, fuzzy
 msgid "Authenticating..."
 msgstr "אחר יישום ..."
 
-#: src/bin/e_desklock.c:931
+#: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
 msgstr ""
 
-#: src/bin/e_desklock.c:968
+#: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
 msgstr "שגיאה במערכת האימות"
 
-#: src/bin/e_desklock.c:969
+#: src/bin/e_desklock.c:971
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1129,23 +1128,23 @@ msgstr ""
 "<hilight>%i</hilight>.<br>מצב זה הינו בעייתי ולא אמור לקרות. אנא דווחו על "
 "תקלה זו."
 
-#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:180
+#: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:180
 msgid "Activate Presentation Mode?"
 msgstr "הפעל מצב מצגת?"
 
-#: src/bin/e_desklock.c:1305
+#: src/bin/e_desklock.c:1307
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:193
 #, fuzzy
 msgid "No, but increase timeout"
 msgstr "לא, אבל להגדיל את פסק הזמן"
 
-#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:195
+#: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:195
 #, fuzzy
 msgid "No, and stop asking"
 msgstr "לא, להפסיק לשאול"
@@ -1219,7 +1218,7 @@ msgstr "קובץ שולחן העבודה"
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
-#: src/modules/everything/evry_plug_files.c:1477
+#: src/modules/everything/evry_plug_files.c:1466
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:136
 msgid "General"
@@ -2472,7 +2471,7 @@ msgid "Static"
 msgstr "מצב"
 
 #: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:103
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:143
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2609,10 +2608,10 @@ msgid "Request Position"
 msgstr "בקשת מיקום"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:297
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:301
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
-#: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:376
+#: src/modules/clock/e_mod_main.c:619 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
@@ -2623,12 +2622,11 @@ msgstr "בקשת מיקום"
 #: src/modules/ibar/e_mod_main.c:384 src/modules/ibar/e_mod_main.c:868
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/shot/e_mod_config.c:103 src/modules/tasks/e_mod_main.c:728
-#: src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_config.c:103
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 #: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:434
+#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:429
 msgid "Settings"
 msgstr "הגדרות"
 
@@ -2784,10 +2782,10 @@ msgid "Utilities"
 msgstr "כלי עזר"
 
 #: src/bin/e_int_config_modules.c:54
-#: src/modules/everything/evry_plug_files.c:1347
-#: src/modules/everything/evry_plug_files.c:1360
-#: src/modules/everything/evry_plug_files.c:1578
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:59
+#: src/modules/everything/evry_plug_files.c:1336
+#: src/modules/everything/evry_plug_files.c:1349
+#: src/modules/everything/evry_plug_files.c:1567
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:54
 #, fuzzy
 msgid "Files"
 msgstr "קבצים"
@@ -2881,17 +2879,17 @@ msgstr ""
 "שגיאה בהפעלתשיטת הזנה הפעלה<br><br>ודא<br>הקלט תצורת שיטה נכונה<br>כי "
 "הפעלה<br>התצורה של המחשב הוא<br>PATH שלך"
 
-#: src/bin/e_int_menus.c:137 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:139 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "ראשי"
 
-#: src/bin/e_int_menus.c:160
+#: src/bin/e_int_menus.c:162
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "יישומים מועדפים"
 
-#: src/bin/e_int_menus.c:171
+#: src/bin/e_int_menus.c:173
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:261
 #: src/modules/conf_menus/e_int_config_menus.c:284
@@ -2903,7 +2901,7 @@ msgstr "יישומים מועדפים"
 msgid "Applications"
 msgstr "יישומים"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1334
+#: src/bin/e_int_menus.c:199 src/bin/e_int_menus.c:1340
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2912,83 +2910,83 @@ msgstr "יישומים"
 msgid "Windows"
 msgstr "חלונות"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1389
+#: src/bin/e_int_menus.c:209 src/bin/e_int_menus.c:1395
 msgid "Lost Windows"
 msgstr "חלונות שאבדו"
 
-#: src/bin/e_int_menus.c:223
+#: src/bin/e_int_menus.c:225
 #, fuzzy
 msgid "About Operating System"
 msgstr "שגיאה במערכת האימות"
 
-#: src/bin/e_int_menus.c:229
+#: src/bin/e_int_menus.c:231
 msgid "Help"
 msgstr ""
 
-#: src/bin/e_int_menus.c:234
+#: src/bin/e_int_menus.c:237
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:253
+#: src/bin/e_int_menus.c:257
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "אודות Moksha"
 
-#: src/bin/e_int_menus.c:258 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:262 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "אודות ערכות הנושא"
 
-#: src/bin/e_int_menus.c:272
+#: src/bin/e_int_menus.c:276
 #, fuzzy
 msgid "Reset Moksha"
 msgstr "אודות Moksha"
 
-#: src/bin/e_int_menus.c:350
+#: src/bin/e_int_menus.c:354
 msgid "Virtual"
 msgstr "וירטואלי"
 
-#: src/bin/e_int_menus.c:357 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:361 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "מדפים"
 
-#: src/bin/e_int_menus.c:366
+#: src/bin/e_int_menus.c:370
 msgid "Show/Hide All Windows"
 msgstr "הצגת/הסתרת כל החלונות"
 
-#: src/bin/e_int_menus.c:746
+#: src/bin/e_int_menus.c:752
 #, fuzzy
 msgid "No applications"
 msgstr "(אין יישומים)"
 
-#: src/bin/e_int_menus.c:963
+#: src/bin/e_int_menus.c:969
 #, fuzzy
 msgid "Set Virtual Desktops"
 msgstr "להגדיר שולחנות עבודה וירטואליים"
 
-#: src/bin/e_int_menus.c:1340 src/bin/e_int_menus.c:1533
+#: src/bin/e_int_menus.c:1346 src/bin/e_int_menus.c:1539
 #, fuzzy
 msgid "No windows"
 msgstr "(אין חלונות)"
 
-#: src/bin/e_int_menus.c:1446 src/bin/e_int_menus.c:1546
+#: src/bin/e_int_menus.c:1452 src/bin/e_int_menus.c:1552
 #, fuzzy
 msgid "Untitled window"
 msgstr "לסגור את החלון"
 
-#: src/bin/e_int_menus.c:1646 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1652 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "מדף מס'"
 
-#: src/bin/e_int_menus.c:1714
+#: src/bin/e_int_menus.c:1720
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "הוסף מדף"
 
-#: src/bin/e_int_menus.c:1721
+#: src/bin/e_int_menus.c:1727
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "מחק מדף"
@@ -3083,22 +3081,22 @@ msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:342
 #, fuzzy
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:351
 #, fuzzy
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:360
 #, fuzzy
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:371
+#: src/bin/e_main.c:372
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3106,7 +3104,7 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות יציאה.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:379
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3114,7 +3112,7 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות HUP.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 #, fuzzy
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
@@ -3123,47 +3121,47 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות HUP.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:423
+#: src/bin/e_main.c:424
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:436
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:446
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:456
 #, fuzzy
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:467
 #, fuzzy
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:482
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3173,7 +3171,7 @@ msgstr ""
 "התוכנתי של X11 תחת Evas. אנא בדוק את התקנות ה־Evas\n"
 "וה־Ecore שלך ובדוק שהן תומכות במנוע העיבוד התוכנתי של X11."
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:490
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3183,17 +3181,17 @@ msgstr ""
 "חוצץ תוכנתי תחת Evas. אנא בדוק את התקנות ה־Evas\n"
 "וה־Ecore שלך ובדוק שהם תומכים במנוע עיבוד החוצץ התוכנתי."
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:500
 #, fuzzy
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:512
 #, fuzzy
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:522
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3201,7 +3199,7 @@ msgstr ""
 "Moksha לא הצליחה להתחיל את מערכת התראות החירום.\n"
 "האם הגדרת את משתנה ה־DISPLAY כראוי?"
 
-#: src/bin/e_main.c:540
+#: src/bin/e_main.c:541
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3209,37 +3207,37 @@ msgstr ""
 "Moksha לא הצליחה ליצור תיקיות בתיקיית הבית שלך.\n"
 "יתכן שאין לך תיקיית בית או שהכונן מלא?"
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:551
 #, fuzzy
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת רישום הקבצים שלה."
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 #, fuzzy
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת התצורה שלה."
 
-#: src/bin/e_main.c:581
+#: src/bin/e_main.c:582
 #, fuzzy
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:590
+#: src/bin/e_main.c:591
 #, fuzzy
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:606
+#: src/bin/e_main.c:607
 #, fuzzy
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת המידה שלה."
 
-#: src/bin/e_main.c:615
+#: src/bin/e_main.c:616
 #, fuzzy
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ההצבעה שלה."
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:625
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3247,31 +3245,31 @@ msgstr ""
 "Moksha לא הצליחה להגדיר את הנתיבים לחיפוש קבצים.\n"
 "יתכן שהזכרון אזל?"
 
-#: src/bin/e_main.c:641
+#: src/bin/e_main.c:642
 #, fuzzy
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הגופנים שלה."
 
-#: src/bin/e_main.c:658
+#: src/bin/e_main.c:659
 #, fuzzy
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:674
+#: src/bin/e_main.c:675
 #, fuzzy
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הבינאום שלה."
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:690
 msgid "Starting International Support"
 msgstr "הפעלת התמיכה בבינאום"
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:694
 #, fuzzy
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הבינאום שלה."
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:703
 #, fuzzy
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
@@ -3281,11 +3279,11 @@ msgstr ""
 "Moksha לא הצליחה להפעיל את מערכת שולחן העבודה FDO.\n"
 "יתכן שאזל לך הזכרון?"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:728
 msgid "Setup Screens"
 msgstr "הגדרת מסכים"
 
-#: src/bin/e_main.c:731
+#: src/bin/e_main.c:732
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3293,273 +3291,273 @@ msgstr ""
 "הנסיון של Moksha להגדיר את ניהול החלונות עבור כל המסכים שבמערכת שלך\n"
 "נכשל. יתכן שישנו מנהל חלונות אחר פעיל?\n"
 
-#: src/bin/e_main.c:739
+#: src/bin/e_main.c:740
 #, fuzzy
 msgid "Setup ACPI"
 msgstr "הגדרת DPMS"
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:747
 #, fuzzy
 msgid "Setup Backlight"
 msgstr "הגדרת איגודים"
 
-#: src/bin/e_main.c:750
+#: src/bin/e_main.c:751
 #, fuzzy
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת ה־DPMS."
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:758
 msgid "Setup Screensaver"
 msgstr "הגדרת שומר המסך"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:762
 #, fuzzy
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha לא הצליחה להגדיר את שומר המסך של X."
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:769
 msgid "Setup DPMS"
 msgstr "הגדרת DPMS"
 
-#: src/bin/e_main.c:772
+#: src/bin/e_main.c:773
 #, fuzzy
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת ה־DPMS."
 
-#: src/bin/e_main.c:779
+#: src/bin/e_main.c:780
 #, fuzzy
 msgid "Setup Powersave Modes"
 msgstr "הגדרת מצבי חיסכון בחשמל"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:784
 #, fuzzy
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha לא הצליחה להגדיר את מצבי החסכון בחשמל שלה."
 
-#: src/bin/e_main.c:790
+#: src/bin/e_main.c:791
 msgid "Setup Desklock"
 msgstr "הגדרת נעילת המסך"
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:795
 #, fuzzy
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת נעילת המסך שלה."
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:802
 msgid "Setup Popups"
 msgstr "הגדרת חלוניות התרעה"
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:806
 #, fuzzy
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת חלוניות ההתרעה שלה."
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 #, fuzzy
 msgid "Setup Message Bus"
 msgstr "הודעה הגדרת אוטובוס"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:825
 #, fuzzy
 msgid "Setup Paths"
 msgstr "הגדרת נתיבים"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:831
 msgid "Setup System Controls"
 msgstr "הגדרת פקדי מערכת"
 
-#: src/bin/e_main.c:834
+#: src/bin/e_main.c:835
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:842
 msgid "Setup Actions"
 msgstr "הגדרת פעולות"
 
-#: src/bin/e_main.c:845
+#: src/bin/e_main.c:846
 #, fuzzy
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הפעולות שלה."
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:853
 msgid "Setup Execution System"
 msgstr "הגדרת מערכת הרצת הקבצים"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:857
 #, fuzzy
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ה־exec שלה."
 
-#: src/bin/e_main.c:867
+#: src/bin/e_main.c:868
 #, fuzzy
 msgid "Setup Filemanager"
 msgstr "מנהל הקבצים"
 
-#: src/bin/e_main.c:871
+#: src/bin/e_main.c:872
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:878
+#: src/bin/e_main.c:879
 msgid "Setup Message System"
 msgstr "הגדרת מערכת ההודעות"
 
-#: src/bin/e_main.c:882
+#: src/bin/e_main.c:883
 #, fuzzy
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha לא הצליחה לטעון את מערכת ההודעות שלה."
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:890
 msgid "Setup DND"
 msgstr "הגדרת DND"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:894
 #, fuzzy
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ה־dnd שלה."
 
-#: src/bin/e_main.c:900
+#: src/bin/e_main.c:901
 #, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "גזל הגדרת קלט טיפול"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:905
 #, fuzzy
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת הטיפול בקלט הגרירה."
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:912
 msgid "Setup Modules"
 msgstr "הגדרת מודולים"
 
-#: src/bin/e_main.c:915 src/bin/e_main.c:1097
+#: src/bin/e_main.c:916 src/bin/e_main.c:1098
 #, fuzzy
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת המודולים שלה."
 
-#: src/bin/e_main.c:922
+#: src/bin/e_main.c:923
 msgid "Setup Remembers"
 msgstr "הגדרת זכרונות"
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:927
 #, fuzzy
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את הגדרות הזכרון."
 
-#: src/bin/e_main.c:933
+#: src/bin/e_main.c:934
 msgid "Setup Color Classes"
 msgstr "הגדרת מחלקות צבע."
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:938
 #, fuzzy
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת מחלקות הצבע שלה."
 
-#: src/bin/e_main.c:944
+#: src/bin/e_main.c:945
 msgid "Setup Gadcon"
 msgstr "הגדרת בקרת היישומונים"
 
-#: src/bin/e_main.c:948
+#: src/bin/e_main.c:949
 #, fuzzy
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת בקרת היישומונים שלה."
 
-#: src/bin/e_main.c:955
+#: src/bin/e_main.c:956
 msgid "Setup Wallpaper"
 msgstr "הגדרת רקע שולחן העבודה"
 
-#: src/bin/e_main.c:959
+#: src/bin/e_main.c:960
 #, fuzzy
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הרקע לשולחן העבודה שלה."
 
-#: src/bin/e_main.c:966
+#: src/bin/e_main.c:967
 msgid "Setup Mouse"
 msgstr "הגדרת העכבר"
 
-#: src/bin/e_main.c:970
+#: src/bin/e_main.c:971
 #, fuzzy
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת העכבר."
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:978
 #, fuzzy
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת סידור הקבצים שלה."
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Setup Bindings"
 msgstr "הגדרת איגודים"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:988
 #, fuzzy
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת האיגודים שלה."
 
-#: src/bin/e_main.c:994
+#: src/bin/e_main.c:995
 msgid "Setup Thumbnailer"
 msgstr "הגדרת ממזער התמונות"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:999
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת מיזעור התמונות.\n"
 
-#: src/bin/e_main.c:1007
+#: src/bin/e_main.c:1008
 #, fuzzy
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1017
 #, fuzzy
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת מיזעור התמונות.\n"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 #, fuzzy
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:1032
+#: src/bin/e_main.c:1033
 #, fuzzy
 msgid "Setup Desktop Environment"
 msgstr "הגדרת סביבת שולחן העבודה"
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1037
 #, fuzzy
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 #, fuzzy
 msgid "Setup File Ordering"
 msgstr "הגדרת קובץ הזמנה"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1048
 #, fuzzy
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת סידור הקבצים שלה."
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 msgid "Load Modules"
 msgstr "טעינת מודולים"
 
-#: src/bin/e_main.c:1093
+#: src/bin/e_main.c:1094
 msgid "Setup Shelves"
 msgstr "הגדרת מדפים"
 
-#: src/bin/e_main.c:1104
+#: src/bin/e_main.c:1105
 msgid "Configure Shelves"
 msgstr "הגדרת מדפים"
 
-#: src/bin/e_main.c:1115
+#: src/bin/e_main.c:1116
 msgid "Almost Done"
 msgstr "כמעט בוצע"
 
-#: src/bin/e_main.c:1272
+#: src/bin/e_main.c:1273
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "הרשאות"
 
-#: src/bin/e_main.c:1281
+#: src/bin/e_main.c:1283
 #, c-format
 msgid ""
 "Options:\n"
@@ -3589,7 +3587,7 @@ msgid ""
 "\t-version\n"
 msgstr ""
 
-#: src/bin/e_main.c:1335
+#: src/bin/e_main.c:1337
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3599,11 +3597,11 @@ msgid ""
 "before enlightenment itself begins running.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1616
+#: src/bin/e_main.c:1618
 msgid "Testing Format Support"
 msgstr "בדיקת התמיכה בעיצוב."
 
-#: src/bin/e_main.c:1620
+#: src/bin/e_main.c:1622
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3611,7 +3609,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח ליצור משטח עבודה לחוצץ. אנא בדוק\n"
 "את התמיכה של Evas במנוע חוצץ תוכנתי.\n"
 
-#: src/bin/e_main.c:1632
+#: src/bin/e_main.c:1634
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
@@ -3619,7 +3617,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי PNG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי PNG.\n"
 
-#: src/bin/e_main.c:1642
+#: src/bin/e_main.c:1644
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
@@ -3628,7 +3626,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי JPEG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי JPEG.\n"
 
-#: src/bin/e_main.c:1652
+#: src/bin/e_main.c:1654
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
@@ -3636,7 +3634,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי PNG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי PNG.\n"
 
-#: src/bin/e_main.c:1662
+#: src/bin/e_main.c:1664
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
@@ -3644,7 +3642,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי EET. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי EET.\n"
 
-#: src/bin/e_main.c:1676
+#: src/bin/e_main.c:1678
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3652,7 +3650,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון הגופן 'Sans'. בדוק כי ל־Evas\n"
 "ישנה תמיכה ב־fontconfig ושמערכת ה־fontconfig מגדירה את הגופן 'Sans'.\n"
 
-#: src/bin/e_main.c:1884
+#: src/bin/e_main.c:1886
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3660,11 +3658,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1889 src/bin/e_main.c:1906
+#: src/bin/e_main.c:1891 src/bin/e_main.c:1908
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha קרסה מוקדם עם ההפעלה והופעלה מחדש"
 
-#: src/bin/e_main.c:1890
+#: src/bin/e_main.c:1892
 #, fuzzy, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3675,7 +3673,7 @@ msgstr ""
 "כדי<br>לסייע בהסרת מודולים בעיתיים כלשהם מהתצורה שלך.<br><br>חלונית תצורת "
 "המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
-#: src/bin/e_main.c:1899
+#: src/bin/e_main.c:1901
 #, fuzzy
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
@@ -3687,7 +3685,7 @@ msgstr ""
 "יטענו כדי לסייע בהסרת מודולים בעיתיים<br>כלשהם מהתצורה שלך. חלונית<br>תצורת "
 "המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
-#: src/bin/e_main.c:1907
+#: src/bin/e_main.c:1909
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4421,7 +4419,7 @@ msgstr ""
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:335 src/modules/mixer/app_mixer.c:424
+#: src/bin/e_widget_filepreview.c:335
 #, fuzzy
 msgid "Type:"
 msgstr "סוג:"
@@ -4652,8 +4650,8 @@ msgstr "מד הסוללה"
 msgid "Clock Settings"
 msgstr "מקדו את הגדרות"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:722
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:724
+#: src/modules/clock/e_mod_main.c:888
 msgid "Clock"
 msgstr "שעון"
 
@@ -4697,25 +4695,29 @@ msgstr ""
 msgid "Date Only"
 msgstr "לקריאה בלבד"
 
-#: src/modules/clock/e_mod_config.c:114
+#: src/modules/clock/e_mod_config.c:111
+msgid "ISO 8601"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:116
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:116 src/modules/clock/e_mod_config.c:129
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:131
 #: src/modules/start/e_mod_main.c:168
 #, fuzzy
 msgid "Start"
 msgstr "להפעיל"
 
-#: src/modules/clock/e_mod_config.c:127
+#: src/modules/clock/e_mod_config.c:129
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:138
+#: src/modules/clock/e_mod_config.c:140
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_main.c:888
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "קובץ הפעלה"
@@ -4948,7 +4950,6 @@ msgstr "שיח הגדרות"
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:674
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
-#: src/modules/mixer/conf_gadget.c:200 src/modules/mixer/conf_module.c:91
 msgid "General Settings"
 msgstr "הגדרות כלליות"
 
@@ -5591,7 +5592,6 @@ msgstr "איגודי קצה הגדרות"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:72
 #, fuzzy
 msgid "Input"
@@ -8387,7 +8387,7 @@ msgstr "Typebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1164
 #: src/modules/everything/evry_plug_apps.c:1211
-#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2572
+#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2580
 #, fuzzy
 msgid "Open with..."
 msgstr "פתח באמצעות ..."
@@ -8445,7 +8445,7 @@ msgstr "sudo GUI"
 
 #: src/modules/everything/evry_plug_apps.c:1410
 #: src/modules/everything/evry_plug_collection.c:146
-#: src/modules/everything/evry_plug_files.c:1578
+#: src/modules/everything/evry_plug_files.c:1567
 #, fuzzy
 msgid "Everything Plugin"
 msgstr "הכל"
@@ -8458,69 +8458,69 @@ msgstr ""
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: src/modules/everything/evry_plug_files.c:1317
+#: src/modules/everything/evry_plug_files.c:1306
 #, fuzzy
 msgid "Copy To ..."
 msgstr "עוד...‏"
 
-#: src/modules/everything/evry_plug_files.c:1322
+#: src/modules/everything/evry_plug_files.c:1311
 #, fuzzy
 msgid "Move To ..."
 msgstr "עוד...‏"
 
-#: src/modules/everything/evry_plug_files.c:1327
+#: src/modules/everything/evry_plug_files.c:1316
 #, fuzzy
 msgid "Move to Trash"
 msgstr "העברת טקסט"
 
-#: src/modules/everything/evry_plug_files.c:1331
+#: src/modules/everything/evry_plug_files.c:1320
 #, fuzzy
 msgid "Open Directory"
 msgstr "תיקייה חדשה"
 
-#: src/modules/everything/evry_plug_files.c:1335
+#: src/modules/everything/evry_plug_files.c:1324
 #, fuzzy
 msgid "Sort by Date"
 msgstr "סדר כעת"
 
-#: src/modules/everything/evry_plug_files.c:1340
+#: src/modules/everything/evry_plug_files.c:1329
 #, fuzzy
 msgid "Sort by Name"
 msgstr "סדר כעת"
 
-#: src/modules/everything/evry_plug_files.c:1373
-#: src/modules/everything/evry_plug_files.c:1385
+#: src/modules/everything/evry_plug_files.c:1362
+#: src/modules/everything/evry_plug_files.c:1374
 #, fuzzy
 msgid "Recent Files"
 msgstr "שנה את שם הקובץ"
 
-#: src/modules/everything/evry_plug_files.c:1457
-#: src/modules/everything/evry_plug_files.c:1600
+#: src/modules/everything/evry_plug_files.c:1446
+#: src/modules/everything/evry_plug_files.c:1589
 #, fuzzy
 msgid "Everything Files"
 msgstr "הכל"
 
-#: src/modules/everything/evry_plug_files.c:1484
+#: src/modules/everything/evry_plug_files.c:1473
 #, fuzzy
 msgid "Show recent files"
 msgstr "הצג קבצים האחרונות"
 
-#: src/modules/everything/evry_plug_files.c:1488
+#: src/modules/everything/evry_plug_files.c:1477
 #, fuzzy
 msgid "Search recent files"
 msgstr "חיפוש קבצים האחרונות"
 
-#: src/modules/everything/evry_plug_files.c:1492
+#: src/modules/everything/evry_plug_files.c:1481
 #, fuzzy
 msgid "Search cached files"
 msgstr "חיפוש קבצים המאוחסנים במטמון"
 
-#: src/modules/everything/evry_plug_files.c:1496
+#: src/modules/everything/evry_plug_files.c:1485
 #, fuzzy
 msgid "Cache visited directories"
 msgstr "מטמון ביקרו בספריות"
 
-#: src/modules/everything/evry_plug_files.c:1500
+#: src/modules/everything/evry_plug_files.c:1489
 #, fuzzy
 msgid "Clear cache"
 msgstr "נקה מטמון"
@@ -8611,103 +8611,103 @@ msgstr "ה נתיבים"
 msgid "Run"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2573
+#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2581
 #, fuzzy
 msgid "Open"
 msgstr "לפתוח"
 
-#: src/modules/fileman/e_fwin.c:2602 src/modules/fileman/e_fwin.c:2627
+#: src/modules/fileman/e_fwin.c:2610 src/modules/fileman/e_fwin.c:2635
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/modules/fileman/e_fwin.c:2645
+#: src/modules/fileman/e_fwin.c:2653
 #, fuzzy
 msgid "Known Applications"
 msgstr "מוכרות יישומים"
 
-#: src/modules/fileman/e_fwin.c:2655
+#: src/modules/fileman/e_fwin.c:2663
 #, fuzzy
 msgid "Suggested Applications"
 msgstr "היישומים הנבחרים"
 
-#: src/modules/fileman/e_fwin.c:2690
+#: src/modules/fileman/e_fwin.c:2698
 msgid "All Applications"
 msgstr "כל היישומים"
 
-#: src/modules/fileman/e_fwin.c:2713
+#: src/modules/fileman/e_fwin.c:2721
 #, fuzzy
 msgid "Custom Command"
 msgstr "התאמה אישית פיקוד"
 
-#: src/modules/fileman/e_fwin.c:3004
+#: src/modules/fileman/e_fwin.c:3012
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "ההעתקה הופסק"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3016
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "נעה היא בוטלה"
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3020
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "מחיקת היא בוטלה"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3024
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "מחיקת היא בוטלה"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3028
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "המבצע לא ידוע של עבדים היא בוטלה"
 
-#: src/modules/fileman/e_fwin.c:3030
+#: src/modules/fileman/e_fwin.c:3038
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3040
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3037
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3039
+#: src/modules/fileman/e_fwin.c:3047
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3052
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "מחק לעשות"
 
-#: src/modules/fileman/e_fwin.c:3046
+#: src/modules/fileman/e_fwin.c:3054
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "מחיקת קבצים ..."
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3059
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "רזולוציית מסך"
 
-#: src/modules/fileman/e_fwin.c:3053
+#: src/modules/fileman/e_fwin.c:3061
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "מחיקת קבצים ..."
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3065
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "המבצע לא ידוע של עבדים היא בוטלה"
@@ -8924,7 +8924,7 @@ msgstr "מנהל הקבצים"
 msgid "Navigate"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:283
+#: src/modules/fileman/e_mod_main.c:282
 #, fuzzy
 msgid "Fileman"
 msgstr "מנהל הקבצים"
@@ -9723,148 +9723,6 @@ msgstr ""
 #, fuzzy
 msgid "Enable Taskbar"
 msgstr "שורת המשימות"
-
-#: src/modules/mixer/app_mixer.c:192
-#, fuzzy
-msgid "Capture"
-msgstr "ללכוד"
-
-#: src/modules/mixer/app_mixer.c:194
-#: src/modules/pulsemixer/bin/main_window.c:125
-#, fuzzy
-msgid "Playback"
-msgstr "השמעה"
-
-#: src/modules/mixer/app_mixer.c:314
-#, fuzzy
-msgid "Output"
-msgstr "פלט"
-
-#: src/modules/mixer/app_mixer.c:393
-#, fuzzy
-msgid "Cards"
-msgstr "כרטיסים"
-
-#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:287
-#, fuzzy
-msgid "Channels"
-msgstr "ערוצים"
-
-#: src/modules/mixer/app_mixer.c:416
-#, fuzzy
-msgid "Card:"
-msgstr "כרטיס:"
-
-#: src/modules/mixer/app_mixer.c:420
-#, fuzzy
-msgid "Channel:"
-msgstr "ערוץ:"
-
-#: src/modules/mixer/app_mixer.c:428
-#, fuzzy
-msgid "Left:"
-msgstr "עזבו;"
-
-#: src/modules/mixer/app_mixer.c:433
-#, fuzzy
-msgid "Right:"
-msgstr "נכון;"
-
-#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:702
-#: src/modules/pulsemixer/bin/playbacks_view.c:305
-#: src/modules/pulsemixer/bin/sinks_view.c:263
-#: src/modules/pulsemixer/e_mod_main.c:449
-#, fuzzy
-msgid "Mute"
-msgstr "השתקה"
-
-#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:203
-#, fuzzy
-msgid "Lock Sliders"
-msgstr "נעל Sliders"
-
-#: src/modules/mixer/app_mixer.c:445
-#, fuzzy
-msgid "Edit"
-msgstr "לערוך"
-
-#: src/modules/mixer/conf_gadget.c:209
-#, fuzzy
-msgid "Show both sliders when locked"
-msgstr "הצג את שני המחוונים כאשר נעול"
-
-#: src/modules/mixer/conf_gadget.c:214
-#, fuzzy
-msgid "Show Popup on volume change via keybindings"
-msgstr "הצג קופץ על הירידה בכמות דרך keybindings"
-
-#: src/modules/mixer/conf_gadget.c:325
-#, fuzzy
-msgid "Sound Cards"
-msgstr "כרטיסי קול"
-
-#: src/modules/mixer/conf_gadget.c:386
-#, fuzzy
-msgid "Mixer Settings"
-msgstr "מערבל הגדרות"
-
-#: src/modules/mixer/conf_module.c:93
-#, fuzzy
-msgid "Mixer to use for global actions:"
-msgstr "מיקסר לשימוש עבור פעולות גלובליות:"
-
-#: src/modules/mixer/conf_module.c:117
-#, fuzzy
-msgid "Display desktop notifications on volume change"
-msgstr "Diplay הודעות שולחן עבודה על הירידה בכמות"
-
-#: src/modules/mixer/conf_module.c:153
-#, fuzzy
-msgid "Launch mixer..."
-msgstr "הפעל את המיקסר ..."
-
-#: src/modules/mixer/conf_module.c:188
-#, fuzzy
-msgid "Mixer Module Settings"
-msgstr "מודול מערבל הגדרות"
-
-#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:69
-#, fuzzy
-msgid "Mixer"
-msgstr "מיקסר"
-
-#: src/modules/mixer/e_mod_main.c:56 src/modules/pulsemixer/e_mod_main.c:128
-#, fuzzy
-msgid "New volume"
-msgstr "ניו נפח"
-
-#: src/modules/mixer/e_mod_main.c:69
-#, fuzzy
-msgid "Volume changed"
-msgstr "נפח השתנה"
-
-#: src/modules/mixer/e_mod_main.c:188
-#, fuzzy
-msgid "Mixer Settings Updated"
-msgstr "הגדרות מערבל עודכן"
-
-#: src/modules/mixer/e_mod_main.c:1366
-#, fuzzy
-msgid "Mixer Module"
-msgstr "מצב תצוגה"
-
-#: src/modules/mixer/e_mod_main.c:1394 src/modules/pulsemixer/e_mod_main.c:238
-msgid "Increase Volume"
-msgstr ""
-
-#: src/modules/mixer/e_mod_main.c:1395 src/modules/pulsemixer/e_mod_main.c:246
-msgid "Decrease Volume"
-msgstr ""
-
-#: src/modules/mixer/e_mod_main.c:1396
-#, fuzzy
-msgid "Mute Volume"
-msgstr "ניו נפח"
 
 #: src/modules/connman/e_mod_main.c:10
 #, fuzzy
@@ -10789,9 +10647,9 @@ msgid ""
 "delete it?"
 msgstr "ביקשת למחוק מדף זה.<br><br>האם אתה בטוח שברצונך למחוק אותו?"
 
-#: src/modules/clipboard/e_mod_main.c:764
-#: src/modules/clipboard/e_mod_main.c:765
-#: src/modules/clipboard/e_mod_main.c:766
+#: src/modules/clipboard/e_mod_main.c:759
+#: src/modules/clipboard/e_mod_main.c:760
+#: src/modules/clipboard/e_mod_main.c:761
 msgid "Clipboard"
 msgstr ""
 
@@ -10855,13 +10713,13 @@ msgstr "קבצים"
 msgid "Temp"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:61 src/modules/places/e_mod_main.c:298
+#: src/modules/places/e_mod_main.c:56 src/modules/places/e_mod_main.c:293
 #: src/modules/places/e_mod_places.c:236 src/modules/places/e_mod_places.c:869
 #, fuzzy
 msgid "Places"
 msgstr "מיקום"
 
-#: src/modules/places/e_mod_main.c:394
+#: src/modules/places/e_mod_main.c:389
 #, fuzzy
 msgid "Places Configuration Updated"
 msgstr "מסך ההסתרה"
@@ -10896,49 +10754,164 @@ msgstr "נתק"
 msgid "eject"
 msgstr "לפלוט"
 
-#: src/modules/pulsemixer/bin/main_window.c:85
+#: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
 
-#: src/modules/pulsemixer/bin/main_window.c:128
+#: src/modules/mixer/bin/main_window.c:125
+#, fuzzy
+msgid "Playback"
+msgstr "השמעה"
+
+#: src/modules/mixer/bin/main_window.c:128
 #, fuzzy
 msgid "Outputs"
 msgstr "פלט"
 
-#: src/modules/pulsemixer/bin/main_window.c:131
+#: src/modules/mixer/bin/main_window.c:131
 #, fuzzy
 msgid "Inputs"
 msgstr "קלט"
 
-#: src/modules/pulsemixer/bin/playbacks_view.c:306
-#: src/modules/pulsemixer/bin/sinks_view.c:264
+#: src/modules/mixer/bin/playbacks_view.c:305
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:449
+#, fuzzy
+msgid "Mute"
+msgstr "השתקה"
+
+#: src/modules/mixer/bin/playbacks_view.c:306
+#: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:128
+#, fuzzy
+msgid "New volume"
+msgstr "ניו נפח"
+
+#: src/modules/mixer/e_mod_main.c:141
 msgid "EPulse"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:141
 #, fuzzy
 msgid "Volume Changed"
 msgstr "נפח השתנה"
 
-#: src/modules/pulsemixer/e_mod_main.c:254
+#: src/modules/mixer/e_mod_main.c:238
+msgid "Increase Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:246
+msgid "Decrease Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:254
 #, fuzzy
 msgid "Mute volume"
 msgstr "ניו נפח"
 
-#: src/modules/pulsemixer/e_mod_main.c:272
+#: src/modules/mixer/e_mod_main.c:272
 #, fuzzy
 msgid "Volume Increase"
 msgstr "נפח השתנה"
 
-#: src/modules/pulsemixer/e_mod_main.c:279
-#: src/modules/pulsemixer/e_mod_main.c:286
+#: src/modules/mixer/e_mod_main.c:279 src/modules/mixer/e_mod_main.c:286
 #, fuzzy
 msgid "Volume Mute"
 msgstr "נפח השתנה"
+
+#, fuzzy
+#~ msgid "Capture"
+#~ msgstr "ללכוד"
+
+#, fuzzy
+#~ msgid "Output"
+#~ msgstr "פלט"
+
+#, fuzzy
+#~ msgid "Cards"
+#~ msgstr "כרטיסים"
+
+#, fuzzy
+#~ msgid "Channels"
+#~ msgstr "ערוצים"
+
+#, fuzzy
+#~ msgid "Card:"
+#~ msgstr "כרטיס:"
+
+#, fuzzy
+#~ msgid "Channel:"
+#~ msgstr "ערוץ:"
+
+#, fuzzy
+#~ msgid "Left:"
+#~ msgstr "עזבו;"
+
+#, fuzzy
+#~ msgid "Right:"
+#~ msgstr "נכון;"
+
+#, fuzzy
+#~ msgid "Lock Sliders"
+#~ msgstr "נעל Sliders"
+
+#, fuzzy
+#~ msgid "Edit"
+#~ msgstr "לערוך"
+
+#, fuzzy
+#~ msgid "Show both sliders when locked"
+#~ msgstr "הצג את שני המחוונים כאשר נעול"
+
+#, fuzzy
+#~ msgid "Show Popup on volume change via keybindings"
+#~ msgstr "הצג קופץ על הירידה בכמות דרך keybindings"
+
+#, fuzzy
+#~ msgid "Sound Cards"
+#~ msgstr "כרטיסי קול"
+
+#, fuzzy
+#~ msgid "Mixer Settings"
+#~ msgstr "מערבל הגדרות"
+
+#, fuzzy
+#~ msgid "Mixer to use for global actions:"
+#~ msgstr "מיקסר לשימוש עבור פעולות גלובליות:"
+
+#, fuzzy
+#~ msgid "Display desktop notifications on volume change"
+#~ msgstr "Diplay הודעות שולחן עבודה על הירידה בכמות"
+
+#, fuzzy
+#~ msgid "Launch mixer..."
+#~ msgstr "הפעל את המיקסר ..."
+
+#, fuzzy
+#~ msgid "Mixer Module Settings"
+#~ msgstr "מודול מערבל הגדרות"
+
+#, fuzzy
+#~ msgid "Mixer"
+#~ msgstr "מיקסר"
+
+#, fuzzy
+#~ msgid "Volume changed"
+#~ msgstr "נפח השתנה"
+
+#, fuzzy
+#~ msgid "Mixer Settings Updated"
+#~ msgstr "הגדרות מערבל עודכן"
+
+#, fuzzy
+#~ msgid "Mixer Module"
+#~ msgstr "מצב תצוגה"
+
+#, fuzzy
+#~ msgid "Mute Volume"
+#~ msgstr "ניו נפח"
 
 #~ msgid "Application Execution Error"
 #~ msgstr "שגיאה בהפעלת היישום"

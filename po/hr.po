@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2018-04-24 22:36+0200\n"
+"POT-Creation-Date: 2018-05-05 18:38+0200\n"
 "PO-Revision-Date: 2009-11-09 18:07+0000\n"
 "Last-Translator: Miro Glavić <glavicmiro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -27,12 +27,12 @@ msgstr "O Moksha"
 #: src/bin/e_theme_about.c:24 src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2575 src/modules/mixer/app_mixer.c:553
+#: src/modules/fileman/e_fwin.c:2583
 msgid "Close"
 msgstr "Zatvori"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:682
+#: src/bin/e_actions.c:3477 src/bin/e_main.c:683
 #: src/modules/conf_interaction/e_int_config_mouse.c:192
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -75,7 +75,7 @@ msgstr "Zatvori"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1313 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10476 src/bin/e_fm.c:10842
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Ne"
@@ -85,7 +85,7 @@ msgstr "Ne"
 msgid "Action Params Syntax Error"
 msgstr "Parametri Akcije"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:278
+#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:282
 msgid "Exit"
 msgstr "Izlaz"
 
@@ -96,7 +96,7 @@ msgstr "Jeste li sigurni da želite izaći?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1311 src/bin/e_fm.c:10479
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10479
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:342
 msgid "Yes"
@@ -341,7 +341,7 @@ msgstr "Preklopnik Pribodenog Stanja"
 #: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
 #: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
 #: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:190
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:192
 #: src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
@@ -810,7 +810,7 @@ msgstr "Hibernirati"
 msgid "Lock"
 msgstr "Zaključaj"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1376
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1382
 msgid "Cleanup Windows"
 msgstr "Očisti Prozore"
 
@@ -1061,7 +1061,7 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/syscon/e_mod_main.c:36 src/modules/pulsemixer/e_mod_main.c:494
+#: src/modules/syscon/e_mod_main.c:36 src/modules/mixer/e_mod_main.c:494
 msgid "Advanced"
 msgstr "Napredno"
 
@@ -1075,8 +1075,7 @@ msgid "Apply"
 msgstr "Primijeni"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
-#: src/modules/gadman/e_mod_main.c:23 src/modules/mixer/e_mod_main.c:1289
-#: src/modules/connman/e_mod_main.c:634
+#: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:144
 msgid "Extensions"
 msgstr "Nastavci"
@@ -1099,21 +1098,21 @@ msgstr "Postavke ikone"
 msgid "Container %d"
 msgstr "Kontejner %d"
 
-#: src/bin/e_desklock.c:236
+#: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
 msgstr "Greška - bez PAM podrške"
 
-#: src/bin/e_desklock.c:237
+#: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
 "Podrška za PAM nije ugrađena u Moksha, što je onemogućilo zaključavanje "
 "radne površine."
 
-#: src/bin/e_desklock.c:301
+#: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "Neuspjelo Zaključavanje"
 
-#: src/bin/e_desklock.c:302
+#: src/bin/e_desklock.c:304
 msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
@@ -1121,24 +1120,24 @@ msgstr ""
 "Zaključavanje radne površine je neuspjelo jer je neka aplikacija<br>zgrabila "
 "ili tipkovnicu ili miša ili oboje i ovoga se nije moguće riješiti."
 
-#: src/bin/e_desklock.c:541
+#: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
 msgstr "Molimo unesite vašu lozinku za otključavanje"
 
-#: src/bin/e_desklock.c:926
+#: src/bin/e_desklock.c:928
 #, fuzzy
 msgid "Authenticating..."
 msgstr "Druga aplikacija..."
 
-#: src/bin/e_desklock.c:931
+#: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
 msgstr ""
 
-#: src/bin/e_desklock.c:968
+#: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
 msgstr "Greška Sistema Autorizacije"
 
-#: src/bin/e_desklock.c:969
+#: src/bin/e_desklock.c:971
 #, c-format
 msgid ""
 "Authentication via PAM had errors setting up the<br>authentication session. "
@@ -1149,11 +1148,11 @@ msgstr ""
 "greške je<hilight>%i</hilight>.<br>Ovo je loše i se nije smjelo dogoditi. "
 "Molimo prijavite ovaj problem."
 
-#: src/bin/e_desklock.c:1302 src/bin/e_screensaver.c:180
+#: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:180
 msgid "Activate Presentation Mode?"
 msgstr "Aktiviraj Način Prezentiranja"
 
-#: src/bin/e_desklock.c:1305
+#: src/bin/e_desklock.c:1307
 #, fuzzy
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
@@ -1164,11 +1163,11 @@ msgstr ""
 "</b>prezentiranja</b> i privremeno onesposobiti zaštitnika zaslona, bravu  i "
 "uštedu energije?"
 
-#: src/bin/e_desklock.c:1315 src/bin/e_screensaver.c:193
+#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
 msgstr "Ne, ali povećaj vrijeme neaktivnosti"
 
-#: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:195
+#: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:195
 msgid "No, and stop asking"
 msgstr "Ne, i prestani pitati"
 
@@ -1242,7 +1241,7 @@ msgstr "Datoteka Radne Površine"
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
 #: src/modules/everything/evry_config.c:378
-#: src/modules/everything/evry_plug_files.c:1477
+#: src/modules/everything/evry_plug_files.c:1466
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:136
 msgid "General"
@@ -1761,7 +1760,7 @@ msgstr "Da za sve"
 
 #: src/bin/e_fm.c:10483 src/modules/places/e_mod_places.c:600
 msgid "Warning"
-msgstr "Upozorenje"
+msgstr ""
 
 #: src/bin/e_fm.c:10486
 #, c-format
@@ -2473,7 +2472,7 @@ msgid "Static"
 msgstr "Stanje"
 
 #: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:103
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:143
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:360
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:689
@@ -2610,10 +2609,10 @@ msgid "Request Position"
 msgstr "Zahtijevaj Poziciju"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:297
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:301
 #: src/bin/e_shelf.c:2441 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:374
-#: src/modules/clock/e_mod_main.c:617 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:376
+#: src/modules/clock/e_mod_main.c:619 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:170
@@ -2624,14 +2623,13 @@ msgstr "Zahtijevaj Poziciju"
 #: src/modules/ibar/e_mod_main.c:384 src/modules/ibar/e_mod_main.c:868
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:230
-#: src/modules/mixer/e_mod_main.c:782 src/modules/connman/e_mod_main.c:459
-#: src/modules/shot/e_mod_config.c:103 src/modules/tasks/e_mod_main.c:728
-#: src/modules/xkbswitch/e_mod_main.c:351
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_config.c:103
+#: src/modules/tasks/e_mod_main.c:728 src/modules/xkbswitch/e_mod_main.c:351
 #: src/modules/xkbswitch/e_mod_main.c:392
 #: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:434
+#: src/modules/clipboard/e_mod_main.c:383 src/modules/places/e_mod_main.c:429
 msgid "Settings"
-msgstr "Postavke"
+msgstr ""
 
 #: src/bin/e_int_border_prop.c:505
 msgid "Modal"
@@ -2794,10 +2792,10 @@ msgid "Utilities"
 msgstr "komunalne usluge"
 
 #: src/bin/e_int_config_modules.c:54
-#: src/modules/everything/evry_plug_files.c:1347
-#: src/modules/everything/evry_plug_files.c:1360
-#: src/modules/everything/evry_plug_files.c:1578
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:59
+#: src/modules/everything/evry_plug_files.c:1336
+#: src/modules/everything/evry_plug_files.c:1349
+#: src/modules/everything/evry_plug_files.c:1567
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:54
 msgid "Files"
 msgstr "Datoteke"
 
@@ -2889,17 +2887,17 @@ msgstr ""
 "je konfiguracija vaše<br>metode unosa ispravna i da je<br>izvršitelj vaše "
 "konfiguracije u vašem PATH<br>"
 
-#: src/bin/e_int_menus.c:137 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:139 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Glavni"
 
-#: src/bin/e_int_menus.c:160
+#: src/bin/e_int_menus.c:162
 #: src/modules/conf_applications/e_int_config_apps.c:69
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Omiljene Aplikacije"
 
-#: src/bin/e_int_menus.c:171
+#: src/bin/e_int_menus.c:173
 #: src/modules/conf_applications/e_int_config_apps.c:295
 #: src/modules/conf_menus/e_int_config_menus.c:261
 #: src/modules/conf_menus/e_int_config_menus.c:284
@@ -2911,7 +2909,7 @@ msgstr "Omiljene Aplikacije"
 msgid "Applications"
 msgstr "Aplikacije"
 
-#: src/bin/e_int_menus.c:197 src/bin/e_int_menus.c:1334
+#: src/bin/e_int_menus.c:199 src/bin/e_int_menus.c:1340
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2920,82 +2918,82 @@ msgstr "Aplikacije"
 msgid "Windows"
 msgstr "Prozori"
 
-#: src/bin/e_int_menus.c:207 src/bin/e_int_menus.c:1389
+#: src/bin/e_int_menus.c:209 src/bin/e_int_menus.c:1395
 msgid "Lost Windows"
 msgstr "Izgubljeni Prozori"
 
-#: src/bin/e_int_menus.c:223
+#: src/bin/e_int_menus.c:225
 #, fuzzy
 msgid "About Operating System"
 msgstr "Greška Sistema Autorizacije"
 
-#: src/bin/e_int_menus.c:229
+#: src/bin/e_int_menus.c:231
 msgid "Help"
 msgstr ""
 
-#: src/bin/e_int_menus.c:234
+#: src/bin/e_int_menus.c:237
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:253
+#: src/bin/e_int_menus.c:257
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "O Moksha"
 
-#: src/bin/e_int_menus.c:258 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:262 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "O Temi"
 
-#: src/bin/e_int_menus.c:272
+#: src/bin/e_int_menus.c:276
 #, fuzzy
 msgid "Reset Moksha"
 msgstr "Dobrodošli u Moksha"
 
-#: src/bin/e_int_menus.c:350
+#: src/bin/e_int_menus.c:354
 msgid "Virtual"
 msgstr "Virtualno"
 
-#: src/bin/e_int_menus.c:357 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:361 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Police"
 
-#: src/bin/e_int_menus.c:366
+#: src/bin/e_int_menus.c:370
 msgid "Show/Hide All Windows"
 msgstr "Prikaži/Sakrij Sve Prozore"
 
-#: src/bin/e_int_menus.c:746
+#: src/bin/e_int_menus.c:752
 #, fuzzy
 msgid "No applications"
 msgstr "(Nema Aplikacija)"
 
-#: src/bin/e_int_menus.c:963
+#: src/bin/e_int_menus.c:969
 msgid "Set Virtual Desktops"
 msgstr "Postavi Virtualne Radne Površine"
 
-#: src/bin/e_int_menus.c:1340 src/bin/e_int_menus.c:1533
+#: src/bin/e_int_menus.c:1346 src/bin/e_int_menus.c:1539
 #, fuzzy
 msgid "No windows"
 msgstr "(Nema Prozora)"
 
-#: src/bin/e_int_menus.c:1446 src/bin/e_int_menus.c:1546
+#: src/bin/e_int_menus.c:1452 src/bin/e_int_menus.c:1552
 #, fuzzy
 msgid "Untitled window"
 msgstr "Interni Prozori"
 
-#: src/bin/e_int_menus.c:1646 src/bin/e_shelf.c:1636
+#: src/bin/e_int_menus.c:1652 src/bin/e_shelf.c:1636
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Polica #"
 
-#: src/bin/e_int_menus.c:1714
+#: src/bin/e_int_menus.c:1720
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "dodaj Policu"
 
-#: src/bin/e_int_menus.c:1721
+#: src/bin/e_int_menus.c:1727
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Ukloni Policu"
@@ -3089,22 +3087,22 @@ msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:341
+#: src/bin/e_main.c:342
 #, fuzzy
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:350
+#: src/bin/e_main.c:351
 #, fuzzy
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:359
+#: src/bin/e_main.c:360
 #, fuzzy
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:371
+#: src/bin/e_main.c:372
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3112,7 +3110,7 @@ msgstr ""
 "Moksha ne može postaviti manipulator izlaznog signala.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:378
+#: src/bin/e_main.c:379
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3120,7 +3118,7 @@ msgstr ""
 "Moksha ne može postaviti manipulator HUP signala.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:385
+#: src/bin/e_main.c:386
 #, fuzzy
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
@@ -3129,47 +3127,47 @@ msgstr ""
 "Moksha ne može postaviti manipulator HUP signala.\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:423
+#: src/bin/e_main.c:424
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:435
+#: src/bin/e_main.c:436
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:446
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:456
 #, fuzzy
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:466
+#: src/bin/e_main.c:467
 #, fuzzy
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:481
+#: src/bin/e_main.c:482
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3179,7 +3177,7 @@ msgstr ""
 "prikaz u Evas. Molimo provjerite instalaciju Evas i\n"
 "Ecore i provjerite da podržava Software X11 prikaznu mašinu."
 
-#: src/bin/e_main.c:489
+#: src/bin/e_main.c:490
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3189,17 +3187,17 @@ msgstr ""
 "koji prezentira u Evas. Molimo provjerite vašu instalaciju Evas i Ecore i \n"
 "provjerite da ovi podržavaju Softver Bufer prezentacionu mašinu."
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:500
 #, fuzzy
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:511
+#: src/bin/e_main.c:512
 #, fuzzy
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:522
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3207,7 +3205,7 @@ msgstr ""
 "Moksha ne može inicijalizirati svoj sistem hitnog alarma.\n"
 "Jeste li postavili svoju PRIKAZ varijablu?"
 
-#: src/bin/e_main.c:540
+#: src/bin/e_main.c:541
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3215,37 +3213,37 @@ msgstr ""
 "Moksha ne može kreirati direktorije u vašem polaznom direktoriju.\n"
 "Možda nemate polazni direktorij ili je vašdisk pun?"
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:551
 #, fuzzy
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha ne može postaviti svoj sistem datotečnih registara."
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 #, fuzzy
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha ne može postaviti svoj Config sistem."
 
-#: src/bin/e_main.c:581
+#: src/bin/e_main.c:582
 #, fuzzy
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:590
+#: src/bin/e_main.c:591
 #, fuzzy
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha ne može postaviti svoj sistem tema."
 
-#: src/bin/e_main.c:606
+#: src/bin/e_main.c:607
 #, fuzzy
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha ne može postaviti svoj sustav promjene veličine."
 
-#: src/bin/e_main.c:615
+#: src/bin/e_main.c:616
 #, fuzzy
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha ne može postaviti svoj sustav pokazivača."
 
-#: src/bin/e_main.c:624
+#: src/bin/e_main.c:625
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3253,31 +3251,31 @@ msgstr ""
 "Moksha ne može postaviti puteve za pronalaženje datoteka.\n"
 "Možda nemate dovoljno memorije?"
 
-#: src/bin/e_main.c:641
+#: src/bin/e_main.c:642
 #, fuzzy
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha ne može postaviti svoj sistem pisma."
 
-#: src/bin/e_main.c:658
+#: src/bin/e_main.c:659
 #, fuzzy
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha ne može postaviti svoj sistem tema."
 
-#: src/bin/e_main.c:674
+#: src/bin/e_main.c:675
 #, fuzzy
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha ne može postaviti svoj intl sistem."
 
-#: src/bin/e_main.c:689
+#: src/bin/e_main.c:690
 msgid "Starting International Support"
 msgstr "Pokretanje Međunarodne Podrške"
 
-#: src/bin/e_main.c:693
+#: src/bin/e_main.c:694
 #, fuzzy
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha ne može postaviti svoj intl sistem."
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:703
 #, fuzzy
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
@@ -3287,11 +3285,11 @@ msgstr ""
 "Moksha ne može inicijalizirati sistem FDO radne površine,\n"
 "Možda vam nedostaje memorije?"
 
-#: src/bin/e_main.c:727
+#: src/bin/e_main.c:728
 msgid "Setup Screens"
 msgstr "Postavi Ekrane"
 
-#: src/bin/e_main.c:731
+#: src/bin/e_main.c:732
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3299,272 +3297,272 @@ msgstr ""
 "Upravitelj postavki prozora za Moksha za sve zaslone na vašem sustavu\n"
 "nije uspio. Možda je neki drugi upravitelj prozora aktivan?\n"
 
-#: src/bin/e_main.c:739
+#: src/bin/e_main.c:740
 #, fuzzy
 msgid "Setup ACPI"
 msgstr "Postavi DPMS"
 
-#: src/bin/e_main.c:746
+#: src/bin/e_main.c:747
 #, fuzzy
 msgid "Setup Backlight"
 msgstr "Postavljanje Poveznika"
 
-#: src/bin/e_main.c:750
+#: src/bin/e_main.c:751
 #, fuzzy
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha ne može konfigurirati DPMS postavke."
 
-#: src/bin/e_main.c:757
+#: src/bin/e_main.c:758
 msgid "Setup Screensaver"
 msgstr "Postavka Čuvara Zaslona"
 
-#: src/bin/e_main.c:761
+#: src/bin/e_main.c:762
 #, fuzzy
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha ne može konfigurirati X čuvar zaslona."
 
-#: src/bin/e_main.c:768
+#: src/bin/e_main.c:769
 msgid "Setup DPMS"
 msgstr "Postavi DPMS"
 
-#: src/bin/e_main.c:772
+#: src/bin/e_main.c:773
 #, fuzzy
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Moksha ne može konfigurirati DPMS postavke."
 
-#: src/bin/e_main.c:779
+#: src/bin/e_main.c:780
 #, fuzzy
 msgid "Setup Powersave Modes"
 msgstr "Postavljanje PowerSave načina"
 
-#: src/bin/e_main.c:783
+#: src/bin/e_main.c:784
 #, fuzzy
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha ne može postaviti svoje modove štednje energije."
 
-#: src/bin/e_main.c:790
+#: src/bin/e_main.c:791
 msgid "Setup Desklock"
 msgstr "Postavi Zaključavanje Radne Površine"
 
-#: src/bin/e_main.c:794
+#: src/bin/e_main.c:795
 #, fuzzy
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha ne može postaviti svoj sistem zaključavanja radne površine."
 
-#: src/bin/e_main.c:801
+#: src/bin/e_main.c:802
 msgid "Setup Popups"
 msgstr "Postavi Pop-ups"
 
-#: src/bin/e_main.c:805
+#: src/bin/e_main.c:806
 #, fuzzy
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha ne može postaviti svoj pop-up sistem."
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 #, fuzzy
 msgid "Setup Message Bus"
 msgstr "Postavljanje Poruka Bus"
 
-#: src/bin/e_main.c:824
+#: src/bin/e_main.c:825
 #, fuzzy
 msgid "Setup Paths"
 msgstr "Postavke Puteva"
 
-#: src/bin/e_main.c:830
+#: src/bin/e_main.c:831
 msgid "Setup System Controls"
 msgstr "Postavljanje Kontrola Sustava"
 
-#: src/bin/e_main.c:834
+#: src/bin/e_main.c:835
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Moksha ne može inicijalizirati Sustavne Naredbe\n"
 
-#: src/bin/e_main.c:841
+#: src/bin/e_main.c:842
 msgid "Setup Actions"
 msgstr "Postavi Akcije"
 
-#: src/bin/e_main.c:845
+#: src/bin/e_main.c:846
 #, fuzzy
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha ne može postaviti svoj sistem akcija."
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:853
 msgid "Setup Execution System"
 msgstr "Postavljanje Izvršnog Sistema"
 
-#: src/bin/e_main.c:856
+#: src/bin/e_main.c:857
 #, fuzzy
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha ne može postaviti svoj exec sistem."
 
-#: src/bin/e_main.c:867
+#: src/bin/e_main.c:868
 #, fuzzy
 msgid "Setup Filemanager"
 msgstr "Upravitelj datotekama"
 
-#: src/bin/e_main.c:871
+#: src/bin/e_main.c:872
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha ne može inicijalizirati svoj Datotečni Upravitelj.\n"
 
-#: src/bin/e_main.c:878
+#: src/bin/e_main.c:879
 msgid "Setup Message System"
 msgstr "Postavi Sistem Poruka"
 
-#: src/bin/e_main.c:882
+#: src/bin/e_main.c:883
 #, fuzzy
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha ne može postaviti svoj msg sistem."
 
-#: src/bin/e_main.c:889
+#: src/bin/e_main.c:890
 msgid "Setup DND"
 msgstr "Postavi DND"
 
-#: src/bin/e_main.c:893
+#: src/bin/e_main.c:894
 #, fuzzy
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha ne može postaviti svoj DND sistem."
 
-#: src/bin/e_main.c:900
+#: src/bin/e_main.c:901
 msgid "Setup Grab Input Handling"
 msgstr "Postavke Rukovanja Masovnog Unosa"
 
-#: src/bin/e_main.c:904
+#: src/bin/e_main.c:905
 #, fuzzy
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha ne može postaviti svoj sustav rrkovanja grabljenja unosa"
 
-#: src/bin/e_main.c:911
+#: src/bin/e_main.c:912
 msgid "Setup Modules"
 msgstr "Postavi Module"
 
-#: src/bin/e_main.c:915 src/bin/e_main.c:1097
+#: src/bin/e_main.c:916 src/bin/e_main.c:1098
 #, fuzzy
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Enlightenmet ne može postaviti svoj sistem modula."
 
-#: src/bin/e_main.c:922
+#: src/bin/e_main.c:923
 msgid "Setup Remembers"
 msgstr "Postavi Podsjetnike"
 
-#: src/bin/e_main.c:926
+#: src/bin/e_main.c:927
 #, fuzzy
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha ne može postaviti postavke podsjetnika."
 
-#: src/bin/e_main.c:933
+#: src/bin/e_main.c:934
 msgid "Setup Color Classes"
 msgstr "Postavi Klase Boja"
 
-#: src/bin/e_main.c:937
+#: src/bin/e_main.c:938
 #, fuzzy
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha ne može postaviti svoj sistem klasiranja boja."
 
-#: src/bin/e_main.c:944
+#: src/bin/e_main.c:945
 msgid "Setup Gadcon"
 msgstr "Postavi Gadcon"
 
-#: src/bin/e_main.c:948
+#: src/bin/e_main.c:949
 #, fuzzy
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha ne može postaviti svoj sistem kontrole aparata"
 
-#: src/bin/e_main.c:955
+#: src/bin/e_main.c:956
 msgid "Setup Wallpaper"
 msgstr "Postavi Tapetu"
 
-#: src/bin/e_main.c:959
+#: src/bin/e_main.c:960
 #, fuzzy
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Moksha ne može postaviti svoj sistem pozadine radne površine"
 
-#: src/bin/e_main.c:966
+#: src/bin/e_main.c:967
 msgid "Setup Mouse"
 msgstr "Postavi Miša"
 
-#: src/bin/e_main.c:970
+#: src/bin/e_main.c:971
 #, fuzzy
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha ne može konfigurirati postavke miša."
 
-#: src/bin/e_main.c:977
+#: src/bin/e_main.c:978
 #, fuzzy
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha ne može postaviti svoj sistem rasporeda datoteka."
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:984
 msgid "Setup Bindings"
 msgstr "Postavljanje Poveznika"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:988
 #, fuzzy
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha ne može postaviti svoj sistem poveznika"
 
-#: src/bin/e_main.c:994
+#: src/bin/e_main.c:995
 msgid "Setup Thumbnailer"
 msgstr "Postavi Urednika Sličica"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:999
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha ne može inicijalizirati sustav Postavljanja Sličica.\n"
 
-#: src/bin/e_main.c:1007
+#: src/bin/e_main.c:1008
 #, fuzzy
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha ne može inicijalizirati Sustavne Naredbe\n"
 
-#: src/bin/e_main.c:1016
+#: src/bin/e_main.c:1017
 #, fuzzy
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha ne može inicijalizirati sustav Postavljanja Sličica.\n"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 #, fuzzy
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha ne može inicijalizirati Sustavne Naredbe\n"
 
-#: src/bin/e_main.c:1032
+#: src/bin/e_main.c:1033
 #, fuzzy
 msgid "Setup Desktop Environment"
 msgstr "Postavljanje Desktop Environment"
 
-#: src/bin/e_main.c:1036
+#: src/bin/e_main.c:1037
 #, fuzzy
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha ne može postaviti svoj sistem tema."
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 #, fuzzy
 msgid "Setup File Ordering"
 msgstr "Postavljanje datoteka Redoslijed"
 
-#: src/bin/e_main.c:1047
+#: src/bin/e_main.c:1048
 #, fuzzy
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha ne može postaviti svoj sistem rasporeda datoteka."
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 msgid "Load Modules"
 msgstr "Unesi Module"
 
-#: src/bin/e_main.c:1093
+#: src/bin/e_main.c:1094
 msgid "Setup Shelves"
 msgstr "Postavi Police"
 
-#: src/bin/e_main.c:1104
+#: src/bin/e_main.c:1105
 msgid "Configure Shelves"
 msgstr "Konfiguriraj Police"
 
-#: src/bin/e_main.c:1115
+#: src/bin/e_main.c:1116
 msgid "Almost Done"
 msgstr "Skoro Gotovo"
 
-#: src/bin/e_main.c:1272
+#: src/bin/e_main.c:1273
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "Dozvole"
 
-#: src/bin/e_main.c:1281
+#: src/bin/e_main.c:1283
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -3619,7 +3617,7 @@ msgstr ""
 "\t-ja-znam-što-radim-i-prihvaćam-svu-odgovornost-za-to-\n"
 "\t\tAko trebate ovu pomoć, onda ne trebate ovu opciju.\n"
 
-#: src/bin/e_main.c:1335
+#: src/bin/e_main.c:1337
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3629,11 +3627,11 @@ msgid ""
 "before enlightenment itself begins running.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1616
+#: src/bin/e_main.c:1618
 msgid "Testing Format Support"
 msgstr "Testiranje Podrške Formata"
 
-#: src/bin/e_main.c:1620
+#: src/bin/e_main.c:1622
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3641,7 +3639,7 @@ msgstr ""
 "Moksha je otkrio da Evas ne može kreirati bafer kanvas. Molimo provjerite\n"
 "da Evas ima podršku za Softver Bafer mašinu.\n"
 
-#: src/bin/e_main.c:1632
+#: src/bin/e_main.c:1634
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
@@ -3649,7 +3647,7 @@ msgstr ""
 "Moksha je otkrio da Evas ne može učitavati PNG datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za PNG.\n"
 
-#: src/bin/e_main.c:1642
+#: src/bin/e_main.c:1644
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
@@ -3658,7 +3656,7 @@ msgstr ""
 "Moksha je otkrio da Evas ne može učitavati JPEG datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za JPEG.\n"
 
-#: src/bin/e_main.c:1652
+#: src/bin/e_main.c:1654
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
@@ -3666,7 +3664,7 @@ msgstr ""
 "Moksha je otkrio da Evas ne može učitavati PNG datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za PNG.\n"
 
-#: src/bin/e_main.c:1662
+#: src/bin/e_main.c:1664
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
@@ -3674,7 +3672,7 @@ msgstr ""
 "Moksha je otkrio da Evas ne može učitavati EET datoteke. Provjeri \n"
 "da li Evas ima podršku učitavanja za EET.\n"
 
-#: src/bin/e_main.c:1676
+#: src/bin/e_main.c:1678
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3683,7 +3681,7 @@ msgstr ""
 "da li Evas ima fontconfig podršku i da sustavni fontconfig definira 'Sans' "
 "pismo.\n"
 
-#: src/bin/e_main.c:1884
+#: src/bin/e_main.c:1886
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3691,12 +3689,12 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1889 src/bin/e_main.c:1906
+#: src/bin/e_main.c:1891 src/bin/e_main.c:1908
 msgid "Moksha crashed early on start and has been restarted"
 msgstr ""
 "Moksha je pao prilikom ranijeg starta i morao je biti ponovno podignut."
 
-#: src/bin/e_main.c:1890
+#: src/bin/e_main.c:1892
 #, fuzzy, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3708,7 +3706,7 @@ msgstr ""
 "moduliu vašoj konfiguraciji.<br><br>Dijalog konfiguracije modula će vam "
 "omogućiti ponovni odabir<br>vaših modula."
 
-#: src/bin/e_main.c:1899
+#: src/bin/e_main.c:1901
 #, fuzzy
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
@@ -3721,7 +3719,7 @@ msgstr ""
 "problemni<br>moduliu vašoj konfiguraciji. Dijalog konfiguracije modula<br>će "
 "vam omogućiti ponovni odabir vaših modula."
 
-#: src/bin/e_main.c:1907
+#: src/bin/e_main.c:1909
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4461,7 +4459,7 @@ msgstr ""
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:335 src/modules/mixer/app_mixer.c:424
+#: src/bin/e_widget_filepreview.c:335
 msgid "Type:"
 msgstr "Vrsta:"
 
@@ -4682,8 +4680,8 @@ msgstr "Baterijski Mjerač"
 msgid "Clock Settings"
 msgstr "Postavke Fokusa"
 
-#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:722
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_config.c:83 src/modules/clock/e_mod_main.c:724
+#: src/modules/clock/e_mod_main.c:888
 msgid "Clock"
 msgstr "Sat"
 
@@ -4727,24 +4725,28 @@ msgstr ""
 msgid "Date Only"
 msgstr "Samo za Čitanje"
 
-#: src/modules/clock/e_mod_config.c:114
+#: src/modules/clock/e_mod_config.c:111
+msgid "ISO 8601"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:116
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:116 src/modules/clock/e_mod_config.c:129
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:131
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Start"
 
-#: src/modules/clock/e_mod_config.c:127
+#: src/modules/clock/e_mod_config.c:129
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:138
+#: src/modules/clock/e_mod_config.c:140
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:886
+#: src/modules/clock/e_mod_main.c:888
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "Prikaži Alatnu Traku"
@@ -4840,7 +4842,7 @@ msgstr ""
 #: src/modules/conf_applications/e_int_config_defapps.c:313
 #: src/modules/places/e_mod_config.c:184 src/modules/places/e_mod_places.c:794
 msgid "Trash"
-msgstr ""
+msgstr "Smeće"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:314
 #, fuzzy
@@ -4964,7 +4966,6 @@ msgstr "Postavke Dijaloga"
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:674
 #: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
-#: src/modules/mixer/conf_gadget.c:200 src/modules/mixer/conf_module.c:91
 msgid "General Settings"
 msgstr "Opće Postavke"
 
@@ -5568,7 +5569,6 @@ msgstr "Rubni vezovi Postavke"
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:17
-#: src/modules/mixer/app_mixer.c:308 src/modules/mixer/app_mixer.c:326
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Unos"
@@ -8170,7 +8170,7 @@ msgstr "Typebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1164
 #: src/modules/everything/evry_plug_apps.c:1211
-#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2572
+#: src/modules/fileman/e_fwin.c:2179 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Otvori s..."
 
@@ -8227,7 +8227,7 @@ msgstr "sudo GUI"
 
 #: src/modules/everything/evry_plug_apps.c:1410
 #: src/modules/everything/evry_plug_collection.c:146
-#: src/modules/everything/evry_plug_files.c:1578
+#: src/modules/everything/evry_plug_files.c:1567
 #, fuzzy
 msgid "Everything Plugin"
 msgstr "Sve"
@@ -8240,69 +8240,69 @@ msgstr ""
 msgid "Copy to Clipboard"
 msgstr ""
 
-#: src/modules/everything/evry_plug_files.c:1317
+#: src/modules/everything/evry_plug_files.c:1306
 #, fuzzy
 msgid "Copy To ..."
 msgstr "Više..."
 
-#: src/modules/everything/evry_plug_files.c:1322
+#: src/modules/everything/evry_plug_files.c:1311
 #, fuzzy
 msgid "Move To ..."
 msgstr "Više..."
 
-#: src/modules/everything/evry_plug_files.c:1327
+#: src/modules/everything/evry_plug_files.c:1316
 #, fuzzy
 msgid "Move to Trash"
 msgstr "Premjesti Tekst"
 
-#: src/modules/everything/evry_plug_files.c:1331
+#: src/modules/everything/evry_plug_files.c:1320
 #, fuzzy
 msgid "Open Directory"
 msgstr "Novi Direktorij"
 
-#: src/modules/everything/evry_plug_files.c:1335
+#: src/modules/everything/evry_plug_files.c:1324
 #, fuzzy
 msgid "Sort by Date"
 msgstr "Sortiraj Sada"
 
-#: src/modules/everything/evry_plug_files.c:1340
+#: src/modules/everything/evry_plug_files.c:1329
 #, fuzzy
 msgid "Sort by Name"
 msgstr "Sortiraj Sada"
 
-#: src/modules/everything/evry_plug_files.c:1373
-#: src/modules/everything/evry_plug_files.c:1385
+#: src/modules/everything/evry_plug_files.c:1362
+#: src/modules/everything/evry_plug_files.c:1374
 #, fuzzy
 msgid "Recent Files"
 msgstr "Preimenuj Datoteku"
 
-#: src/modules/everything/evry_plug_files.c:1457
-#: src/modules/everything/evry_plug_files.c:1600
+#: src/modules/everything/evry_plug_files.c:1446
+#: src/modules/everything/evry_plug_files.c:1589
 #, fuzzy
 msgid "Everything Files"
 msgstr "Sve"
 
-#: src/modules/everything/evry_plug_files.c:1484
+#: src/modules/everything/evry_plug_files.c:1473
 #, fuzzy
 msgid "Show recent files"
 msgstr "Prikaži nedavne datoteke"
 
-#: src/modules/everything/evry_plug_files.c:1488
+#: src/modules/everything/evry_plug_files.c:1477
 #, fuzzy
 msgid "Search recent files"
 msgstr "Traži nedavne datoteke"
 
-#: src/modules/everything/evry_plug_files.c:1492
+#: src/modules/everything/evry_plug_files.c:1481
 #, fuzzy
 msgid "Search cached files"
 msgstr "Traži spremljene datoteke"
 
-#: src/modules/everything/evry_plug_files.c:1496
+#: src/modules/everything/evry_plug_files.c:1485
 #, fuzzy
 msgid "Cache visited directories"
 msgstr "Cache posjetio direktorija"
 
-#: src/modules/everything/evry_plug_files.c:1500
+#: src/modules/everything/evry_plug_files.c:1489
 #, fuzzy
 msgid "Clear cache"
 msgstr "Očisti"
@@ -8392,100 +8392,100 @@ msgstr "E Putevi"
 msgid "Run"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2573
+#: src/modules/fileman/e_fwin.c:2172 src/modules/fileman/e_fwin.c:2581
 msgid "Open"
 msgstr "Otvori"
 
-#: src/modules/fileman/e_fwin.c:2602 src/modules/fileman/e_fwin.c:2627
+#: src/modules/fileman/e_fwin.c:2610 src/modules/fileman/e_fwin.c:2635
 #, fuzzy, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%1.0f datoteke"
 msgstr[1] "%1.0f datoteke"
 
-#: src/modules/fileman/e_fwin.c:2645
+#: src/modules/fileman/e_fwin.c:2653
 msgid "Known Applications"
 msgstr "Poznate Aplikacije"
 
-#: src/modules/fileman/e_fwin.c:2655
+#: src/modules/fileman/e_fwin.c:2663
 #, fuzzy
 msgid "Suggested Applications"
 msgstr "Odabrane Aplikacije"
 
-#: src/modules/fileman/e_fwin.c:2690
+#: src/modules/fileman/e_fwin.c:2698
 msgid "All Applications"
 msgstr "Sve Aplikacije"
 
-#: src/modules/fileman/e_fwin.c:2713
+#: src/modules/fileman/e_fwin.c:2721
 msgid "Custom Command"
 msgstr "Posebne Naredbe"
 
-#: src/modules/fileman/e_fwin.c:3004
+#: src/modules/fileman/e_fwin.c:3012
 #, c-format
 msgid "Copying is aborted"
 msgstr "Kopiranje je prekinuto"
 
-#: src/modules/fileman/e_fwin.c:3008
+#: src/modules/fileman/e_fwin.c:3016
 #, c-format
 msgid "Moving is aborted"
 msgstr "Pomicanje je prekinuto"
 
-#: src/modules/fileman/e_fwin.c:3012
+#: src/modules/fileman/e_fwin.c:3020
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Brisanje je prekinuto"
 
-#: src/modules/fileman/e_fwin.c:3016
+#: src/modules/fileman/e_fwin.c:3024
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "Brisanje je prekinuto"
 
-#: src/modules/fileman/e_fwin.c:3020
+#: src/modules/fileman/e_fwin.c:3028
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Nepoznata operacija pomoćnika je prekinuta"
 
-#: src/modules/fileman/e_fwin.c:3030
+#: src/modules/fileman/e_fwin.c:3038
 #, c-format
 msgid "Copy of %s done"
 msgstr "Kopiranje %s je završeno"
 
-#: src/modules/fileman/e_fwin.c:3032
+#: src/modules/fileman/e_fwin.c:3040
 #, fuzzy, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Kopiranje %s (eta: %d sec)"
 
-#: src/modules/fileman/e_fwin.c:3037
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Move of %s done"
 msgstr "Pomicanje %s je završeno"
 
-#: src/modules/fileman/e_fwin.c:3039
+#: src/modules/fileman/e_fwin.c:3047
 #, fuzzy, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Pomicanje %s (eta: %d sec)"
 
-#: src/modules/fileman/e_fwin.c:3044
+#: src/modules/fileman/e_fwin.c:3052
 #, c-format
 msgid "Delete done"
 msgstr "Brisanje završeno"
 
-#: src/modules/fileman/e_fwin.c:3046
+#: src/modules/fileman/e_fwin.c:3054
 #, c-format
 msgid "Deleting files..."
 msgstr "Brisanje datoteka..."
 
-#: src/modules/fileman/e_fwin.c:3051
+#: src/modules/fileman/e_fwin.c:3059
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "Razlučivost Ekrana"
 
-#: src/modules/fileman/e_fwin.c:3053
+#: src/modules/fileman/e_fwin.c:3061
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "Brisanje datoteka..."
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3065
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Nepoznata operacija pomoćnika %d"
@@ -8685,7 +8685,7 @@ msgstr "Upravitelj datoteka"
 msgid "Navigate"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:283
+#: src/modules/fileman/e_mod_main.c:282
 #, fuzzy
 msgid "Fileman"
 msgstr "Upravitelj datotekama"
@@ -8706,7 +8706,7 @@ msgstr "Novi Direktorij"
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:178
 #: src/modules/places/e_mod_places.c:775
 msgid "Home"
-msgstr "Početak"
+msgstr "Glavna"
 
 #: src/modules/fileman/e_mod_menu.c:451
 msgid "Root"
@@ -9433,129 +9433,6 @@ msgstr ""
 #, fuzzy
 msgid "Enable Taskbar"
 msgstr "Taskbar"
-
-#: src/modules/mixer/app_mixer.c:192
-msgid "Capture"
-msgstr "Uhićenje"
-
-#: src/modules/mixer/app_mixer.c:194
-#: src/modules/pulsemixer/bin/main_window.c:125
-msgid "Playback"
-msgstr "Reprodukcija"
-
-#: src/modules/mixer/app_mixer.c:314
-msgid "Output"
-msgstr "Izlaz"
-
-#: src/modules/mixer/app_mixer.c:393
-msgid "Cards"
-msgstr "Karte"
-
-#: src/modules/mixer/app_mixer.c:406 src/modules/mixer/conf_gadget.c:287
-msgid "Channels"
-msgstr "Kanali"
-
-#: src/modules/mixer/app_mixer.c:416
-msgid "Card:"
-msgstr "Karta:"
-
-#: src/modules/mixer/app_mixer.c:420
-msgid "Channel:"
-msgstr "Kanal:"
-
-#: src/modules/mixer/app_mixer.c:428
-msgid "Left:"
-msgstr "Lijevo:"
-
-#: src/modules/mixer/app_mixer.c:433
-msgid "Right:"
-msgstr "Desno:"
-
-#: src/modules/mixer/app_mixer.c:438 src/modules/mixer/e_mod_main.c:702
-#: src/modules/pulsemixer/bin/playbacks_view.c:305
-#: src/modules/pulsemixer/bin/sinks_view.c:263
-#: src/modules/pulsemixer/e_mod_main.c:449
-msgid "Mute"
-msgstr "Bezvučan"
-
-#: src/modules/mixer/app_mixer.c:441 src/modules/mixer/conf_gadget.c:203
-msgid "Lock Sliders"
-msgstr "Zaključaj Klizače"
-
-#: src/modules/mixer/app_mixer.c:445
-msgid "Edit"
-msgstr "Uredi"
-
-#: src/modules/mixer/conf_gadget.c:209
-msgid "Show both sliders when locked"
-msgstr "Prikaži oba klizača kad je zaključan"
-
-#: src/modules/mixer/conf_gadget.c:214
-#, fuzzy
-msgid "Show Popup on volume change via keybindings"
-msgstr "Prikaži Popup na promjenu volumena preko prečaca tipkovniceName"
-
-#: src/modules/mixer/conf_gadget.c:325
-msgid "Sound Cards"
-msgstr "Zvučne Karte"
-
-#: src/modules/mixer/conf_gadget.c:386
-msgid "Mixer Settings"
-msgstr "Postavke Miksera"
-
-#: src/modules/mixer/conf_module.c:93
-msgid "Mixer to use for global actions:"
-msgstr "Upotrijebiti mikser za globalne akcije:"
-
-#: src/modules/mixer/conf_module.c:117
-#, fuzzy
-msgid "Display desktop notifications on volume change"
-msgstr "Diplay desktop obavijesti o promjeni volumena"
-
-#: src/modules/mixer/conf_module.c:153
-msgid "Launch mixer..."
-msgstr "Pokreni mikser..."
-
-#: src/modules/mixer/conf_module.c:188
-msgid "Mixer Module Settings"
-msgstr "Postavke Mikser Modula"
-
-#: src/modules/mixer/e_mod_main.c:14 src/modules/mixer/e_mod_main.c:69
-#, fuzzy
-msgid "Mixer"
-msgstr "mikser"
-
-#: src/modules/mixer/e_mod_main.c:56 src/modules/pulsemixer/e_mod_main.c:128
-#, fuzzy
-msgid "New volume"
-msgstr "Novi svezak"
-
-#: src/modules/mixer/e_mod_main.c:69
-#, fuzzy
-msgid "Volume changed"
-msgstr "Promjena razlučivosti"
-
-#: src/modules/mixer/e_mod_main.c:188
-msgid "Mixer Settings Updated"
-msgstr "Postavke Miksera Unaprijeđene"
-
-#: src/modules/mixer/e_mod_main.c:1366
-#, fuzzy
-msgid "Mixer Module"
-msgstr "Postavke Mikser Modula"
-
-#: src/modules/mixer/e_mod_main.c:1394 src/modules/pulsemixer/e_mod_main.c:238
-msgid "Increase Volume"
-msgstr ""
-
-#: src/modules/mixer/e_mod_main.c:1395 src/modules/pulsemixer/e_mod_main.c:246
-msgid "Decrease Volume"
-msgstr ""
-
-#: src/modules/mixer/e_mod_main.c:1396
-#, fuzzy
-msgid "Mute Volume"
-msgstr "Novi svezak"
 
 #: src/modules/connman/e_mod_main.c:10
 msgid "Connection Manager"
@@ -10484,9 +10361,9 @@ msgid ""
 "delete it?"
 msgstr "Zatražili ste da uklonite ovu policu.<br>Jeste li sigurni?"
 
-#: src/modules/clipboard/e_mod_main.c:764
-#: src/modules/clipboard/e_mod_main.c:765
-#: src/modules/clipboard/e_mod_main.c:766
+#: src/modules/clipboard/e_mod_main.c:759
+#: src/modules/clipboard/e_mod_main.c:760
+#: src/modules/clipboard/e_mod_main.c:761
 msgid "Clipboard"
 msgstr ""
 
@@ -10506,19 +10383,16 @@ msgid "Clear History"
 msgstr "Postavi oblogu..."
 
 #: src/modules/places/e_mod_config.c:54
-#, fuzzy
 msgid "Places Settings"
-msgstr "Postavke Preglednika"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:139
-#, fuzzy
 msgid "Show in main menu"
-msgstr "Prikaži Glavni Izbornik"
+msgstr "Prikaži u glavnom izborniku"
 
 #: src/modules/places/e_mod_config.c:143
-#, fuzzy
 msgid "Hide the gadget header"
-msgstr "Dodaj ostale aparate"
+msgstr ""
 
 #: src/modules/places/e_mod_config.c:147
 #, fuzzy
@@ -10526,40 +10400,35 @@ msgid "Mount volumes at boot"
 msgstr "Postavi jačine pri ubacivanju"
 
 #: src/modules/places/e_mod_config.c:155
-#, fuzzy
 msgid "Open filemanager on insert"
-msgstr "Otvori upravitelja datoteka pri montiranju"
+msgstr "Otvori upravitelja datoteka pri ubacivanju"
 
 #: src/modules/places/e_mod_config.c:162
-#, fuzzy
 msgid "Use a custom file manager"
-msgstr "Upravitelj datotekama"
+msgstr "Upotrijebi podešenog upravitelja datotekama"
 
 #: src/modules/places/e_mod_config.c:175
-#, fuzzy
 msgid "Show in menu"
-msgstr "Prikaži u Izbornicima"
+msgstr "Prikaži u izborniku"
 
 #: src/modules/places/e_mod_config.c:187 src/modules/places/e_mod_places.c:619
 #: src/modules/places/e_mod_places.c:803
-#, fuzzy
 msgid "Filesystem"
-msgstr "Datoteke"
+msgstr "Datotečni sustav"
 
 #: src/modules/places/e_mod_config.c:190 src/modules/places/e_mod_places.c:812
 msgid "Temp"
-msgstr ""
+msgstr "Temp"
 
-#: src/modules/places/e_mod_main.c:61 src/modules/places/e_mod_main.c:298
+#: src/modules/places/e_mod_main.c:56 src/modules/places/e_mod_main.c:293
 #: src/modules/places/e_mod_places.c:236 src/modules/places/e_mod_places.c:869
-#, fuzzy
 msgid "Places"
-msgstr "Smještaj"
+msgstr "Mjesta"
 
-#: src/modules/places/e_mod_main.c:394
+#: src/modules/places/e_mod_main.c:389
 #, fuzzy
 msgid "Places Configuration Updated"
-msgstr "Konfiguriraj Zaglavlje"
+msgstr "Konfiguracija Mjesta"
 
 #: src/modules/places/e_mod_places.c:601
 msgid ""
@@ -10568,72 +10437,165 @@ msgid ""
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:623
-#, fuzzy
 msgid "No Name"
-msgstr "<Bez Imena>"
+msgstr "Bez Naziva"
 
 #: src/modules/places/e_mod_places.c:630
 msgid "free of"
-msgstr ""
+msgstr "bez"
 
 #: src/modules/places/e_mod_places.c:636
-#, fuzzy, c-format
+#, c-format
 msgid "%s Not Mounted"
-msgstr "Zaštićen"
+msgstr "%s Nije Montiran"
 
 #: src/modules/places/e_mod_places.c:663
-#, fuzzy
 msgid "unmount"
-msgstr "Demontiraj"
+msgstr "demontiraj"
 
 #: src/modules/places/e_mod_places.c:668
-#, fuzzy
 msgid "eject"
-msgstr "Izbaci"
+msgstr "izbaci"
 
-#: src/modules/pulsemixer/bin/main_window.c:85
+#: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
 
-#: src/modules/pulsemixer/bin/main_window.c:128
+#: src/modules/mixer/bin/main_window.c:125
+msgid "Playback"
+msgstr "Reprodukcija"
+
+#: src/modules/mixer/bin/main_window.c:128
 #, fuzzy
 msgid "Outputs"
 msgstr "Izlaz"
 
-#: src/modules/pulsemixer/bin/main_window.c:131
+#: src/modules/mixer/bin/main_window.c:131
 #, fuzzy
 msgid "Inputs"
 msgstr "Unos"
 
-#: src/modules/pulsemixer/bin/playbacks_view.c:306
-#: src/modules/pulsemixer/bin/sinks_view.c:264
+#: src/modules/mixer/bin/playbacks_view.c:305
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:449
+msgid "Mute"
+msgstr "Bezvučan"
+
+#: src/modules/mixer/bin/playbacks_view.c:306
+#: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:128
+#, fuzzy
+msgid "New volume"
+msgstr "Novi svezak"
+
+#: src/modules/mixer/e_mod_main.c:141
 msgid "EPulse"
 msgstr ""
 
-#: src/modules/pulsemixer/e_mod_main.c:141
+#: src/modules/mixer/e_mod_main.c:141
 #, fuzzy
 msgid "Volume Changed"
 msgstr "Promjena razlučivosti"
 
-#: src/modules/pulsemixer/e_mod_main.c:254
+#: src/modules/mixer/e_mod_main.c:238
+msgid "Increase Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:246
+msgid "Decrease Volume"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:254
 #, fuzzy
 msgid "Mute volume"
 msgstr "Novi svezak"
 
-#: src/modules/pulsemixer/e_mod_main.c:272
+#: src/modules/mixer/e_mod_main.c:272
 #, fuzzy
 msgid "Volume Increase"
 msgstr "Promjena razlučivosti"
 
-#: src/modules/pulsemixer/e_mod_main.c:279
-#: src/modules/pulsemixer/e_mod_main.c:286
+#: src/modules/mixer/e_mod_main.c:279 src/modules/mixer/e_mod_main.c:286
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Promjena razlučivosti"
+
+#~ msgid "Capture"
+#~ msgstr "Uhićenje"
+
+#~ msgid "Output"
+#~ msgstr "Izlaz"
+
+#~ msgid "Cards"
+#~ msgstr "Karte"
+
+#~ msgid "Channels"
+#~ msgstr "Kanali"
+
+#~ msgid "Card:"
+#~ msgstr "Karta:"
+
+#~ msgid "Channel:"
+#~ msgstr "Kanal:"
+
+#~ msgid "Left:"
+#~ msgstr "Lijevo:"
+
+#~ msgid "Right:"
+#~ msgstr "Desno:"
+
+#~ msgid "Lock Sliders"
+#~ msgstr "Zaključaj Klizače"
+
+#~ msgid "Edit"
+#~ msgstr "Uredi"
+
+#~ msgid "Show both sliders when locked"
+#~ msgstr "Prikaži oba klizača kad je zaključan"
+
+#, fuzzy
+#~ msgid "Show Popup on volume change via keybindings"
+#~ msgstr "Prikaži Popup na promjenu volumena preko prečaca tipkovniceName"
+
+#~ msgid "Sound Cards"
+#~ msgstr "Zvučne Karte"
+
+#~ msgid "Mixer Settings"
+#~ msgstr "Postavke Miksera"
+
+#~ msgid "Mixer to use for global actions:"
+#~ msgstr "Upotrijebiti mikser za globalne akcije:"
+
+#, fuzzy
+#~ msgid "Display desktop notifications on volume change"
+#~ msgstr "Diplay desktop obavijesti o promjeni volumena"
+
+#~ msgid "Launch mixer..."
+#~ msgstr "Pokreni mikser..."
+
+#~ msgid "Mixer Module Settings"
+#~ msgstr "Postavke Mikser Modula"
+
+#, fuzzy
+#~ msgid "Mixer"
+#~ msgstr "mikser"
+
+#, fuzzy
+#~ msgid "Volume changed"
+#~ msgstr "Promjena razlučivosti"
+
+#~ msgid "Mixer Settings Updated"
+#~ msgstr "Postavke Miksera Unaprijeđene"
+
+#, fuzzy
+#~ msgid "Mixer Module"
+#~ msgstr "Postavke Mikser Modula"
+
+#, fuzzy
+#~ msgid "Mute Volume"
+#~ msgstr "Novi svezak"
 
 #~ msgid "Application Execution Error"
 #~ msgstr "Greška Izvršenja Aplikacije"
