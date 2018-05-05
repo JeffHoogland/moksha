@@ -450,14 +450,14 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                          }
                     }
                   else
-                   exe = e_util_exe_safe_run(sb, inst);
+                   exe = e_util_exe_safe_run(exec, inst);
                   efreet_desktop_free(tdesktop);
                }
              else
-               exe = e_util_exe_safe_run(sb, inst);
+               exe = e_util_exe_safe_run(exec, inst);
           }
         else
-          exe = e_util_exe_safe_run(sb, inst);
+          exe = e_util_exe_safe_run(exec, inst);
      }
 
    if (penv_display)
