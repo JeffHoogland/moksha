@@ -115,6 +115,7 @@ e_int_shelf_config.h \
 e_int_toolbar_config.h \
 e_ipc_codec.h \
 e_ipc.h \
+e_macros.h \
 e_layout.h \
 e_livethumb.h \
 e_log.h \
