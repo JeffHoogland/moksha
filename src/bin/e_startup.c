@@ -43,11 +43,46 @@ e_startup(E_Startup_Mode mode)
 }
 
 /* local subsystem functions */
+static Eina_Bool
+_e_startup_delay(void *data)
+{
+   Efreet_Desktop *desktop = data;
+   e_exec(NULL, desktop, NULL, NULL, NULL);
+   efreet_desktop_unref(desktop);
+   return EINA_FALSE;
+}
+
+// custom float parser for N.nnnn, or N,nnnn or N to avoid locale issues
+static double
+_atof(const char *s)
+{
+   const char *p;
+   double v = 0, dec;
+
+   for (p = s; isdigit(*p); p++)
+     {
+        v *= 10.0;
+        v += (double)(*p - '0');
+     }
+   if ((*p == '.') || (*p == ','))
+     {
+        dec = 0.1;
+        for (p++; isdigit(*p); p++)
+          {
+             v += ((double)(*p - '0')) * dec;
+             dec /= 10.0;
+          }
+     }
+   return v;
+}
+
 static void
 _e_startup(void)
 {
    Efreet_Desktop *desktop;
-   char buf[8192];
+   char buf[1024];
+   const char *s;
+   double delay = 0.0;
 
    if (!startup_apps)
      {
@@ -64,7 +99,22 @@ _e_startup(void)
         e_init_done();
         return;
      }
-   e_exec(NULL, desktop, NULL, NULL, NULL);
+   if (desktop->x)
+     {
+        s = eina_hash_find(desktop->x, "X-GNOME-Autostart-Delay");
+        if (s)
+          {
+             const char *prev = setlocale(LC_NUMERIC, "C");
+             delay = _atof(s);
+             setlocale(LC_NUMERIC, prev);
+          }
+     }
+   if (delay > 0.0)
+     {
+        efreet_desktop_ref(desktop);
+        ecore_timer_add(delay, _e_startup_delay, desktop);
+     }
+   else e_exec(NULL, desktop, NULL, NULL, NULL);
    snprintf(buf, sizeof(buf), _("Starting %s"), desktop->name);
    e_init_status_set(buf);
    ecore_job_add(_e_startup_next_cb, NULL);
