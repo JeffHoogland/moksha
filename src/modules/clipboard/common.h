@@ -4,7 +4,6 @@
 #include <string.h>
 #include <e.h>
 #include "config.h"
-#include "clip_log.h"
 
 #define MAGIC_LABEL_SIZE 50
 #define MAGIC_HIST_SIZE  20
@@ -22,17 +21,17 @@ do {                                    \
 // #define FC_IGNORE_WHITE_SPACE EINA_TRUE /*Implemented */
 
 /* EINA_LOG support macros and global */
-
+extern int _e_clipboard_log_dom;
 #undef DBG
 #undef INF
 #undef WRN
 #undef ERR
 #undef CRI
-#define DBG(...)            EINA_LOG_DOM_DBG(clipboard_log, __VA_ARGS__)
-#define INF(...)            EINA_LOG_DOM_INFO(clipboard_log, __VA_ARGS__)
-#define WRN(...)            EINA_LOG_DOM_WARN(clipboard_log, __VA_ARGS__)
-#define ERR(...)            EINA_LOG_DOM_ERR(clipboard_log, __VA_ARGS__)
-#define CRI(...)            EINA_LOG_DOM_CRIT(clipboard_log, __VA_ARGS__)
+#define DBG(...)            EINA_LOG_DOM_DBG(_e_clipboard_log_dom, __VA_ARGS__)
+#define INF(...)            EINA_LOG_DOM_INFO(_e_clipboard_log_dom, __VA_ARGS__)
+#define WRN(...)            EINA_LOG_DOM_WARN(_e_clipboard_log_dom, __VA_ARGS__)
+#define ERR(...)            EINA_LOG_DOM_ERR(_e_clipboard_log_dom, __VA_ARGS__)
+#define CRI(...)            EINA_LOG_DOM_CRIT(_e_clipboard_log_dom, __VA_ARGS__)
 
 typedef struct _Clip_Data
 {

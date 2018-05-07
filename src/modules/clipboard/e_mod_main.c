@@ -5,8 +5,8 @@
 #include "config_defaults.h"
 #include "history.h"
 
+EINTERN int _e_clipboard_log_dom = -1;
 #define TIMEOUT_1 1.0
-#define CLIP_LOG_NAME  "MOD:CLIP"
 
 /* Stuff for convenience to compress code */
 #define CLIP_TRIM_MODE(x) (x->trim_nl + 2 * (x->trim_ws))
@@ -746,8 +746,8 @@ e_modapi_init (E_Module *m)
   init_clipboard_struct(clip_cfg);
 
   /* Initialize Einna_log for developers */
-  logger_init(CLIP_LOG_NAME);
-
+   _e_clipboard_log_dom = eina_log_domain_register("Clipboard", EINA_COLOR_ORANGE);
+  eina_log_domain_level_set("Clipboard", EINA_LOG_LEVEL_INFO);
   INF("Initialized Clipboard Module");
 
   //e_module_delayed_set(m, 1);
@@ -877,7 +877,8 @@ noconfig:
 
   INF("Shutting down Clipboard Module");
   /* Shutdown Logger */
-  logger_shutdown(CLIP_LOG_NAME);
+    eina_log_domain_unregister(_e_clipboard_log_dom);
+   _e_clipboard_log_dom = -1;
 
   /* Tell E the module is now unloaded. Gets removed from shelves, etc. */
   e_gadcon_provider_unregister(&_gadcon_class);
