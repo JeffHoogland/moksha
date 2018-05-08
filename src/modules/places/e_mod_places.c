@@ -871,6 +871,6 @@ places_augmentation(void *data __UNUSED__, E_Menu *em)
 
    m = e_menu_new();
    e_menu_item_submenu_set(mi, m);
-
+   e_object_unref(E_OBJECT(m));
    e_menu_pre_activate_callback_set(m, places_generate_menu, NULL);
 }

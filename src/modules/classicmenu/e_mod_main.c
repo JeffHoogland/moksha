@@ -89,6 +89,7 @@ _e_mod_menu_desktop_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
    e_menu_item_submenu_set(mi, subm);
+   e_object_unref(E_OBJECT(subm));
 
 }
 

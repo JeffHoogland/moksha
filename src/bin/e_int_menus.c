@@ -225,7 +225,7 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("About Operating System"));
    e_util_menu_item_theme_icon_set(mi, "bodhi");
    e_menu_item_submenu_set(mi, subm);
-
+   e_object_unref(E_OBJECT(subm));
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Help"));
