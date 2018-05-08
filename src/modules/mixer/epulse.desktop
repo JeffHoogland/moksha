@@ -18,5 +18,5 @@ Comment[sr]=Јединица за управљање јечином звука �
 Comment[tr]=Ses seviyesi ve ses akışı kontrol modülü.
 Icon=epulse
 Exec=epulse
-Categories=System;Audio;
+Categories=Audio;System;
 StartupWMClass=epulse
