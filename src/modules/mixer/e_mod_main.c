@@ -87,10 +87,9 @@ struct _Instance
    Evas_Object *list;
    Evas_Object *slider;
    Evas_Object *check;
-	Ecore_Timer *popup_timer;   
 
    int mute;
-   
+
     struct
    {
       Evas_Object *gadget;
@@ -111,9 +110,9 @@ struct _Instance
 
 };
 
-static void				_mixer_popup_input_window_create(Instance *inst);
-static void				_mixer_popup_input_window_destroy(Instance *inst);
-static Context *mixer_context = NULL;
+static void     _mixer_popup_input_window_create(Instance *inst);
+static void     _mixer_popup_input_window_destroy(Instance *inst);
+static Context  *mixer_context = NULL;
 
 static void
 _notify(const int val)
@@ -255,13 +254,8 @@ _actions_register(void)
                                  NULL, NULL, 0);
      }
 
-#ifdef E_VERSION_MAJOR
-   e_comp_canvas_keys_ungrab();
-   e_comp_canvas_keys_grab();
-#else
    e_managers_keys_ungrab();
    e_managers_keys_grab();
-#endif
 }
 
 static void
@@ -288,13 +282,8 @@ _actions_unregister(void)
         mixer_context->actions.mute = NULL;
      }
 
-#ifdef E_VERSION_MAJOR
-   e_comp_canvas_keys_ungrab();
-   e_comp_canvas_keys_grab();
-#else
    e_managers_keys_ungrab();
    e_managers_keys_grab();
-#endif
 }
 
 static void
@@ -302,11 +291,8 @@ _popup_del(Instance *inst)
 {
    inst->slider = NULL;
    inst->check = NULL;
-#ifdef E_VERSION_MAJOR
-   E_FREE_FUNC(inst->popup, e_object_del);
-#else
+
    E_FN_DEL(e_object_del, inst->popup);
-#endif
 }
 
 static void
@@ -379,11 +365,8 @@ _popup_add_slider(Instance *inst)
 {
    pa_volume_t vol = pa_cvolume_avg(&mixer_context->sink_default->volume);
    int value = PA_VOLUME_TO_INT(vol);
-#if E_VERSION_MAJOR >= 20
-   Evas_Object *slider = e_slider_add(e_comp->evas);
-#else
+
    Evas_Object *slider = e_slider_add(inst->popup->win->evas);
-#endif
 
    evas_object_show(slider);
    e_slider_orientation_set(slider, 1);
@@ -417,13 +400,8 @@ _popup_new(Instance *inst)
 
    EINA_SAFETY_ON_NULL_RETURN(mixer_context->sink_default);
 
-#if E_VERSION_MAJOR >= 20
-   inst->popup = e_gadcon_popup_new(inst->gcc, 0);
-   evas = e_comp->evas;
-#else
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
-#endif
 
    list = e_widget_list_add(evas, 0, 0);
 
@@ -482,11 +460,8 @@ _menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
    E_Menu_Item *mi;
    int x, y;
 
-#if E_VERSION_MAJOR >= 20
-   zone = e_zone_current_get();
-#else
+
    zone = e_util_zone_current_get(e_manager_current_get());
-#endif
 
    m = e_menu_new();
 
@@ -515,10 +490,6 @@ _mouse_down_cb(void *data, Evas *evas EINA_UNUSED,
         if (!inst->popup)
           {
              _popup_new(inst);
-          }
-        else
-          {
-             _popup_del(inst);
           }
      }
    else if (ev->button == 2)
@@ -885,7 +856,7 @@ _mixer_popup_input_window_destroy(Instance *inst)
 
    ecore_event_handler_del(inst->ui.input.key_down);
    inst->ui.input.key_down = NULL;
-   
+
    ecore_event_handler_del(inst->ui.input.wheel);
    inst->ui.input.wheel = NULL;
 }
@@ -931,7 +902,4 @@ _mixer_popup_del(Instance *inst)
    inst->ui.table = NULL;
    inst->ui.button = NULL;
    inst->popup = NULL;
-   if (inst->popup_timer)
-     ecore_timer_del(inst->popup_timer);
-   inst->popup_timer = NULL;
 }
