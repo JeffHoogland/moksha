@@ -1152,11 +1152,11 @@ e_menu_idler_before(void)
              if (((m->cur.x) != (m->prev.x)) ||
                  ((m->cur.y) != (m->prev.y)))
                {
-				  //*********************************************************//
-				  // this comment was aimed to let the main menu scrolled if //
-				  // exceeds the screen limits. This menu is also used       //
-				  // in Clipboard module   .                                 //
-				     
+                  //*********************************************************//
+                  // this comment was aimed to let the main menu scrolled if //
+                  // exceeds the screen limits. This menu is also used       //
+                  // in Clipboard module   .                                 //
+
                   //~ if (!m->parent_item)
                     //~ {
                        //~ int x, y, w, h;
