@@ -6,6 +6,76 @@
  * * add list of exclusions that a module can't work withApi
  *
  */
+#define MOKSHA_CORE_MODULES \
+        "access", \
+        "backlight", \
+        "battery", \
+        "classicmenu", \
+        "clipboard", \
+        "clock", \
+        "comp", \
+        "conf", \
+        "conf_applications", \
+        "conf_dialogs", \
+        "conf_display", \
+        "conf_edgebindings", \
+        "conf_interaction", \
+        "conf_intl", \
+        "conf_keybindings", \
+        "conf_menus", \
+        "conf_paths", \
+        "conf_performance", \
+        "conf_randr", \
+        "conf_shelves", \
+        "conf_theme", \
+        "conf_wallpaper2", \
+        "conf_window_manipulation", \
+        "conf_window_remembers", \
+        "connman", \
+        "cpufreq", \
+        "dropshadow", \
+        "everything", \
+        "fileman", \
+        "gadman", \
+        "ibar", \
+        "ibox", \
+        "layout", \
+        "mixer", \
+        "msgbus", \
+        "notification", \
+        "pager", \
+        "places", \
+        "quickaccess", \
+        "shot", \
+        "start", \
+        "syscon", \
+        "systray", \
+        "tasks", \
+        "temperature", \
+        "tiling", \
+        "winlist", \
+        "wizard", \
+        "wl_drm", \
+        "wl_screenshot", \
+        "wl_shell", \
+        "xkbswitch" \
+
+#define MOKSHA_EXTRA_MODULES \
+        "alarm", \
+        "calendar", \
+        "cpu", \
+        "engage", \
+        "flame", \
+        "forecasts", \
+        "mem", \
+        "net", \
+        "penguins", \
+        "productivity", \
+        "rain", \
+        "screenshot", \
+        "slideshow", \
+        "stickynotes", \
+        "tclock"  \
 
 /* local subsystem functions */
 static void      _e_module_free(E_Module *m);
@@ -109,7 +179,8 @@ e_module_all_load(void)
      {
         ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
         _e_modules_initting = EINA_FALSE;
-        //_e_module_whitelist_check();
+        if (getenv("MOKSHA_MODULE_SECURITY"))
+          _e_module_whitelist_check();
      }
 
    unsetenv("E_MODULE_LOAD");
@@ -302,8 +373,9 @@ e_module_enable(E_Module *m)
                   break;
                }
           }
-        /*if (!_e_modules_initting)
-          _e_module_whitelist_check();*/
+        if (!_e_modules_initting)
+          if (getenv("MOKSHA_MODULE_SECURITY"))
+            _e_module_whitelist_check();
         return 1;
      }
    return 0;
@@ -582,7 +654,8 @@ _e_module_cb_idler(void *data __UNUSED__)
    ecore_event_add(E_EVENT_MODULE_INIT_END, NULL, NULL, NULL);
    
    _e_modules_initting = EINA_FALSE;
-   //_e_module_whitelist_check();
+   if (getenv("MOKSHA_MODULE_SECURITY"))
+     _e_module_whitelist_check();
 
    _e_module_idler = NULL;
    return ECORE_CALLBACK_CANCEL;
@@ -635,79 +708,29 @@ _ignore_cb(void *data, E_Dialog *dialog)
 static void
 _e_module_whitelist_check(void)
 {
-   /* This Code checks for non-core modules. It is not currently used in Moksha*/
    Eina_List *l, *badl = NULL;
    E_Module *m;
    unsigned int known = 0;
    int i;
    const char *s;
-   const char *goodmods[] = 
-     {
-        "access",
-        "backlight",
-        "battery",
-        "bluez",
-        "clock",
-        "comp",
-        "conf",
-        "conf_applications",
-        "conf_dialogs",
-        "conf_display",
-        "conf_edgebindings",
-        "conf_interaction",
-        "conf_intl",
-        "conf_keybindings",
-        "conf_menus",
-        "conf_paths",
-        "conf_performance",
-        "conf_randr",
-        "conf_shelves",
-        "conf_theme",
-        "conf_wallpaper2",
-        "conf_window_manipulation",
-        "conf_window_remembers",
-        "connman",
-        "cpufreq",
-        "dropshadow",
-        "everything",
-        "fileman",
-        "fileman_opinfo",
-        "gadman",
-        "ibar",
-        "ibox",
-        "illume2",
-        "illume-bluetooth",
-        "illume-home",
-        "illume-home-toggle",
-        "illume-indicator",
-        "illume-kbd-toggle",
-        "illume-keyboard",
-        "illume-mode-toggle",
-        "illume-softkey",
-        "layout",
-        "mixer",
-        "msgbus",
-        "notification",
-        "ofono",
-        "pager",
-        "physics",
-        "quickaccess",
-        "shot",
-        "start",
-        "syscon",
-        "systray",
-        "tasks",
-        "temperature",
-        "tiling",
-        "winlist",
-        "wizard",
-        "wl_drm",
-        "wl_screenshot",
-        "wl_shell",
-        "xkbswitch",
-        
-        NULL // end marker
-     };
+  if (strcmp(getenv("MOKSHA_MODULE_SECURITY"),"0") == 0)
+  {
+     #define MOKSHA_ONLY_CORE
+ }
+#ifdef MOKSHA_ONLY_CORE
+        const char *goodmods[] = 
+          {
+             MOKSHA_CORE_MODULES,
+             NULL // end marker
+          };
+#else
+        const char *goodmods[] = 
+         {
+            MOKSHA_CORE_MODULES,
+            MOKSHA_EXTRA_MODULES,
+            NULL // end marker
+         };
+#endif
 
    EINA_LIST_FOREACH(_e_modules, l, m)
      {
@@ -757,7 +780,7 @@ _e_module_whitelist_check(void)
       ecore_x_window_prop_card32_set(ecore_x_window_root_first_get(),
                                      _x_tainted, &_e_tainted, 1);
 
-      e_env_set("E17_TAINTED", state);
+      e_env_set("MOKSHA_TAINTED", state);
    }
 
    if (eina_list_count(badl) != known)
@@ -794,7 +817,7 @@ _e_module_whitelist_check(void)
           }
 
         e_dialog_title_set(dia, _("Unstable module tainting"));
-        e_dialog_icon_set(dia, "enlightenment", 64);
+        e_dialog_icon_set(dia, "dialog-warning", 64);
         e_dialog_text_set(dia, eina_strbuf_string_get(sbuf));
         e_dialog_button_add(dia, _("OK"), NULL, _cleanup_cb, badl);
         e_dialog_button_add(dia, _("I know"), NULL, _ignore_cb, badl);

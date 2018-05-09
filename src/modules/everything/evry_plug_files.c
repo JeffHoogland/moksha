@@ -113,7 +113,7 @@ _item_fill(Evry_Item_File *file)
         const char *mime = efreet_mime_type_get(file->path);
 
         if (mime)
-          file->mime = eina_stringshare_ref(mime);
+          file->mime = eina_stringshare_add(mime);
         else
           file->mime = eina_stringshare_add("unknown");
      }
@@ -349,7 +349,7 @@ _file_add(Plugin *p, Evry_Item *item)
    char *path = (char *)file->path;
 
    file->path = eina_stringshare_add(path);
-   file->mime = eina_stringshare_ref(file->mime);
+   file->mime = eina_stringshare_add(file->mime);
 
    item->label = eina_stringshare_add(filename);
    item->id = eina_stringshare_ref(file->path);
@@ -559,7 +559,7 @@ _begin(Evry_Plugin *plugin, const Evry_Item *it)
         else
           {
              /* provide object */
-             if (!CHECK_TYPE(it, EVRY_TYPE_ACTION))
+             if (!(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
                return NULL;
           }
 
@@ -651,25 +651,14 @@ _fetch(Evry_Plugin *plugin, const char *input)
 
    IF_RELEASE(p->input);
 
-   if (!p->parent && input && !strncmp(input, "/", 1))
+   if (!p->parent && input && (input[0] == '/'))
      {
-        char *path = NULL;
 
         if (p->command != CMD_SHOW_ROOT)
           {
              _free_files(p);
 
-             IF_RELEASE(p->directory);
-
-             if (path)
-               {
-                  p->directory = eina_stringshare_add(path);
-                  free(path);
-               }
-             else
-               {
-                  p->directory = eina_stringshare_add("/");
-               }
+             eina_stringshare_replace(&p->directory, input);
 
              _read_directory(p);
 
@@ -1017,7 +1006,7 @@ _recentf_browse(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p = NULL;
 
-   if (!it || !CHECK_TYPE(it, EVRY_TYPE_FILE))
+   if (!it || !(CHECK_TYPE(it, EVRY_TYPE_FILE)))
      return NULL;
 
    GET_FILE(file, it);
@@ -1038,7 +1027,7 @@ _recentf_begin(Evry_Plugin *plugin, const Evry_Item *it)
 {
    Plugin *p;
 
-   if (it && !CHECK_TYPE(it, EVRY_TYPE_ACTION))
+   if (it && !(CHECK_TYPE(it, EVRY_TYPE_ACTION)))
      return NULL;
 
    EVRY_PLUGIN_INSTANCE(p, plugin);

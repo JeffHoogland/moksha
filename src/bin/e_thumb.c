@@ -135,7 +135,7 @@ e_thumb_icon_begin(Evas_Object *obj)
 
              snprintf(buf, sizeof(buf), "%s/enlightenment/utils/enlightenment_thumb --nice=%d", e_prefix_lib_get(),
                       e_config->thumb_nice);
-             exe = ecore_exe_run(buf, NULL);
+             exe = e_util_exe_safe_run(buf, NULL);
              _thumbnailers_exe = eina_list_append(_thumbnailers_exe, exe);
           }
         _thumb_queue = eina_list_append(_thumb_queue, eth);

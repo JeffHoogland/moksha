@@ -82,6 +82,7 @@ static Eina_Bool    _e_menu_cb_scroll_animator(void *data);
 static Eina_Bool    _e_menu_cb_window_shape(void *data, int ev_type, void *ev);
 static void         _e_menu_cb_item_submenu_post_default(void *data, E_Menu *m, E_Menu_Item *mi);
 static Eina_Bool    _e_menu_categories_free_cb(const Eina_Hash *hash, const void *key, void *data, void *fdata);
+static Eina_Bool    _is_edje(Evas_Object *obj);
 
 /* local subsystem globals */
 static Ecore_X_Window _e_menu_win = 0;
@@ -767,7 +768,7 @@ e_menu_item_submenu_set(E_Menu_Item *mi, E_Menu *sub)
      {
         if (mi->submenu_object)
           {
-             if (!e_util_strcmp(evas_object_type_get(mi->submenu_object), "edje"))
+             if (_is_edje(mi->submenu_object))
                {
                   /* already have a correct submenu object, don't re-set it */
                   _e_menu_lock = EINA_FALSE;
@@ -895,11 +896,11 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
           edje_object_signal_emit(mi->bg_object, "e,state,on", "e");
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,on", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,on", "e");
-        if (mi->submenu_object)
+        if (_is_edje(mi->submenu_object))
           edje_object_signal_emit(mi->submenu_object, "e,state,on", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,on", "e");
         if (mi->menu->bg_object)
           edje_object_signal_emit(mi->menu->bg_object, "e,state,on", "e");
@@ -911,11 +912,11 @@ e_menu_item_toggle_set(E_Menu_Item *mi, int tog)
           edje_object_signal_emit(mi->bg_object, "e,state,off", "e");
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,off", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,off", "e");
-        if (mi->submenu_object)
+        if (_is_edje(mi->submenu_object))
           edje_object_signal_emit(mi->submenu_object, "e,state,off", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,off", "e");
         if (mi->menu->bg_object)
           edje_object_signal_emit(mi->menu->bg_object, "e,state,off", "e");
@@ -1009,8 +1010,8 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
           e_menu_item_active_set(pmi, 0);
         if (_e_prev_active_menu_item && (mi != _e_prev_active_menu_item))
           {
-			  if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
-               _e_menu_submenu_deactivate(_e_prev_active_menu_item);
+             if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
+                _e_menu_submenu_deactivate(_e_prev_active_menu_item);
           }
         mi->active = 1;
         _e_active_menu_item = mi;
@@ -1018,17 +1019,17 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
           edje_object_signal_emit(mi->bg_object, "e,state,selected", "e");
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,selected", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,selected", "e");
-        if (mi->submenu_object)
+        if (_is_edje(mi->submenu_object))
           edje_object_signal_emit(mi->submenu_object, "e,state,selected", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,selected", "e");
         if (mi->icon_key)
           {
              if (mi->icon_object)
                {
-                  if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
+                  if (_is_edje(mi->icon_object))
                     edje_object_signal_emit(mi->icon_object, "e,state,selected", "e");
                   else
                     e_icon_selected_set(mi->icon_object, EINA_TRUE);
@@ -1046,17 +1047,17 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
           edje_object_signal_emit(mi->bg_object, "e,state,unselected", "e");
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,unselected", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,unselected", "e");
-        if (mi->submenu_object)
+        if (_is_edje(mi->submenu_object))
           edje_object_signal_emit(mi->submenu_object, "e,state,unselected", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,unselected", "e");
         if (mi->icon_key)
           {
              if (mi->icon_object)
                {
-                  if (strcmp(evas_object_type_get(mi->icon_object), "e_icon"))
+                  if (_is_edje(mi->icon_object))
                     edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
                   else
                     e_icon_selected_set(mi->icon_object, EINA_FALSE);
@@ -1091,9 +1092,9 @@ e_menu_item_disabled_set(E_Menu_Item *mi, int disable)
         mi->disable = 1;
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,disable", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,disable", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,disable", "e");
      }
    else
@@ -1101,9 +1102,9 @@ e_menu_item_disabled_set(E_Menu_Item *mi, int disable)
         mi->disable = 0;
         if (mi->icon_bg_object)
           edje_object_signal_emit(mi->icon_bg_object, "e,state,enable", "e");
-        if (mi->label_object)
+        if (_is_edje(mi->label_object))
           edje_object_signal_emit(mi->label_object, "e,state,enable", "e");
-        if (mi->toggle_object)
+        if (_is_edje(mi->toggle_object))
           edje_object_signal_emit(mi->toggle_object, "e,state,enable", "e");
      }
 }
@@ -1520,7 +1521,7 @@ no_submenu_item:
                   o = NULL;
                }
 
-             /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one si needed. */
+             /* FIXME: Not sure why there are two different tries to get the icon size, surely only the last one is needed. */
              /* FIXME: Do it this way later, when e_app_icon_add() just registers a request for an icon to be filled in when it's ready.
                 if (mi->app)
                 {
@@ -1803,7 +1804,7 @@ _e_menu_items_layout_update(E_Menu *m)
    int min_submenu_w = 0, min_submenu_h = 0;
    int min_toggle_w = 0, min_toggle_h = 0;
    int min_w = 0, min_h = 0;
-   int zh = 0, ms = 0;
+   int zh = 0, ms = 0; //maxh = 0;
    unsigned int cur_items = 0, max_items = -1;
 
    e_box_freeze(m->container_object);
@@ -1872,12 +1873,17 @@ _e_menu_items_layout_update(E_Menu *m)
         min_h = min_toggle_h;
      }
      
-   // this code causes not creating menu for bigger menu height than screen height  
+   /*This code solves menu disappearing in case of big menus. 
+     The code was taken from E22 but does not work for huge menus. */
+     
    //~ if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
      //~ {
         //~ e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
-        //~ max_items = zh / min_h - 1;
+        //~ maxh = zh * 4;
+        //~ if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
+        //~ max_items = (maxh / min_h) - 1;
      //~ }
+     
    EINA_LIST_FOREACH(m->items, l, mi)
      {
         if ((cur_items >= max_items) || (zh && ((ms + (2 * mh) >= zh) || (ms + (2 * mi->separator_h) >= zh))))
@@ -2672,11 +2678,24 @@ _e_menu_scroll_by(int dx, int dy)
    Eina_List *l;
    E_Menu *m;
 
-   EINA_LIST_FOREACH(_e_active_menus, l, m)
-     {
+   /*this will scroll the current active menu which exceeds the screen 
+     limits*/
+     
+   if (!_e_menu_autoscroll_x)
+   {
+       l = eina_list_last(_e_active_menus);
+       m = eina_list_data_get(l);
+       m->cur.x += dx;
+       m->cur.y += dy;
+   }
+   else
+   {
+    EINA_LIST_FOREACH(_e_active_menus, l, m)
+      {
         m->cur.x += dx;
-        m->cur.y += dy;
-     }
+        m->cur.y += dy; 
+      }
+   }
 }
 
 static void
@@ -2979,7 +2998,7 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
    if (_e_menu_activate_dragging)
      {
         /* FIXME: This is a drop, which is not allowed for now.
-         * Once dragging is working, this will be subject to some experimenattion.
+         * Once dragging is working, this will be subject to some experimentation.
          */
      }
    else
@@ -3171,3 +3190,12 @@ _e_menu_categories_free_cb(const Eina_Hash *hash __UNUSED__, const void *key __U
    return EINA_TRUE;
 }
 
+static Eina_Bool
+_is_edje(Evas_Object *obj)
+{
+   if (!obj) return EINA_FALSE;
+
+   if (strcmp(evas_object_type_get(obj), "edje") == 0) 
+      return EINA_TRUE;
+   return EINA_FALSE;
+}

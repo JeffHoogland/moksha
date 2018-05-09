@@ -115,6 +115,10 @@ group { name: "e/theme/about";
             }
             fixed: 1 1;
          }
+         description { state: "clicked" 0.0;
+           inherit: "default";
+           color_class: "button_text_clicked";
+         }
       }
       part { name: "base2";
          description { state: "default" 0.0;

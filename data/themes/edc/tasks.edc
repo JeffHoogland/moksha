@@ -133,6 +133,10 @@ group { name:"e/modules/tasks/item";
             color: 21 21 21 255;
             color3: 255 255 255 25;
          }
+         description { state: "clicked" 0.0;
+            inherit: "default";
+            color_class: "tasks_text_clicked";
+         }
       }
       part { name: "icon"; type: SPACER;
          description { state: "default" 0.0;

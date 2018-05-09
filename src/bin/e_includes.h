@@ -59,6 +59,7 @@
 #include "e_configure.h"
 #include "e_about.h"
 #include "e_theme_about.h"
+#include "e_bodhi_about.h"
 #include "e_widget.h"
 #include "e_widget_check.h"
 #include "e_widget_radio.h"

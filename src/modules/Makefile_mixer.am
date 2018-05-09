@@ -1,36 +1,84 @@
 mixerdir = $(MDIR)/mixer
 mixer_DATA = mixer/e-module-mixer.edj \
-	     mixer/module.desktop
+	       mixer/module.desktop
 
-EXTRA_DIST += $(mixer_DATA)
+desktopfiledir = $(datadir)/applications
+desktopfile_DATA = mixer/epulse.desktop
+
+
+bindatadir = $(datadir)/epulse/data/themes/
+bindata_DATA = mixer/default.edj
+
+iconsdir= $(datadir)/pixmaps
+icons_DATA = mixer/epulse.png
+
+EXTRA_DIST += $(mixer_DATA) \
+	$(icons_DATA) \
+	$(desktop_DATA) \
+	$(bindata_DATA)
+
+lib_LTLIBRARIES = \
+	mixer/lib/libepulse.la
+
+mixer_lib_libepulse_la_SOURCES = \
+	mixer/lib/common.c \
+	mixer/lib/common.h \
+	mixer/lib/epulse_ml.c \
+	mixer/lib/epulse.c \
+	mixer/lib/epulse.h
+mixer_lib_libepulse_la_CFLAGS = $(AM_CFLAGS)
+mixer_lib_libepulse_la_CFLAGS +=  \
+	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
+	@ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
+mixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @PULSE_LIBS@
+mixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
+mixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
+
+
+
+bin_PROGRAMS = \
+	mixer/bin/epulse
+
+mixer_bin_epulse_LDADD = \
+	mixer/lib/libepulse.la \
+	@ELM_LIBS@ \
+	@PULSE_LIBS@
+
+mixer_bin_epulse_SOURCES = \
+	mixer/bin/main_window.h \
+	mixer/bin/main_window.c \
+	mixer/bin/playbacks_view.h \
+	mixer/bin/playbacks_view.c \
+	mixer/bin/sinks_view.h \
+	mixer/bin/sinks_view.c \
+	mixer/bin/sources_view.h \
+	mixer/bin/sources_view.c \
+	mixer/bin/main.c
+
+mixer_bin_epulse_CFLAGS = $(AM_CFLAGS)
+mixer_bin_epulse_CFLAGS +=  \
+	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
+	@ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
 
 mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 mixerpkg_LTLIBRARIES = mixer/module.la
 
 mixer_module_la_CFLAGS = $(AM_CFLAGS)
+mixer_module_la_CFLAGS += @ELM_CFLAGS@ \
+	@PULSE_CFLAGS@
 
-mixer_module_la_SOURCES = mixer/e_mod_main.c \
-			  mixer/e_mod_main.h \
-			  mixer/app_mixer.c \
-			  mixer/conf_gadget.c \
-			  mixer/conf_module.c \
-			  mixer/e_mod_system.h \
-			  mixer/msg.c \
-			  mixer/Pulse.h \
-			  mixer/pa.h \
-			  mixer/pa.c \
-			  mixer/serial.c \
-			  mixer/sink.c \
-			  mixer/sys_pulse.c \
-			  mixer/tag.c
+mixer_module_la_SOURCES  = mixer/e_mod_main.h \
+			     mixer/e_mod_main.c
 
-if HAVE_ALSA
-mixer_module_la_SOURCES += mixer/sys_alsa.c
-else
-mixer_module_la_SOURCES += mixer/sys_dummy.c
-endif
+mixer_module_la_LIBADD = \
+	mixer/lib/libepulse.la \
+	@ELM_LIBS@ \
+	@E_LIBS@ \
+	@PULSE_LIBS@
 
-mixer_module_la_LIBADD = @SOUND_LIBS@
+mixer_module_la_LDFLAGS = -module -avoid-version
 
 if HAVE_ENOTIFY
 mixer_module_la_CFLAGS += @ENOTIFY_CFLAGS@

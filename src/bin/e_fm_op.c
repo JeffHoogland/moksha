@@ -980,7 +980,8 @@ _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
         *((int *)(buf + sizeof(int))) = type;
         *((int *)(buf + (2 * sizeof(int)))) = len + 1;
 
-        write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1);
+        if (write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1) < 0)
+          perror("write");
 
         E_FM_OP_DEBUG("%s", str);
         E_FM_OP_DEBUG(" Error sent.\n");
@@ -1059,7 +1060,8 @@ _e_fm_op_update_progress_report(int percent, int eta, double elapsed, off_t done
    P(dst);
 #undef P
 
-   write(STDOUT_FILENO, data, (3 * sizeof(int)) + size);
+   if (write(STDOUT_FILENO, data, (3 * sizeof(int)) + size) < 0)
+     perror("write");
 
    E_FM_OP_DEBUG("Time left: %d at %e\n", eta, elapsed);
    E_FM_OP_DEBUG("Progress %d. \n", percent);
@@ -1145,8 +1147,10 @@ _e_fm_op_copy_stat_info(E_Fm_Op_Task *task)
 
    if (!task->dst.name) return;
 
-   chmod(task->dst.name, task->src.st.st_mode);
-   chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid);
+   if (chmod(task->dst.name, task->src.st.st_mode) < 0)
+     perror("chmod");
+   if (chown(task->dst.name, task->src.st.st_uid, task->src.st.st_gid) < 0)
+     perror("chown");
    ut.actime = task->src.st.st_atime;
    ut.modtime = task->src.st.st_mtime;
    utime(task->dst.name, &ut);
@@ -1843,7 +1847,7 @@ _e_fm_op_make_copy_name(const char *abs, char *buf, size_t buf_size)
    file_len = strlen(buf);
 
    /* TODO: need to make a policy regarding copy postfix:
-    * currently attach " (copy)" continuasly
+    * currently attach " (copy)" continuously
     *
     * TODO: i18n */
    copy_str = "(copy)";

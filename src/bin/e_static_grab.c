@@ -190,7 +190,7 @@ _e_static_grab_cpu(E_Static_Grab *grab)
         char *end;
         size_t length = 0;
 
-        fgets(buf, sizeof (buf), f);
+        if (!fgets(buf, sizeof (buf), f)) break;
         length = strlen(buf);
         end = buf + length;
 

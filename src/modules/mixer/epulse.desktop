@@ -1,0 +1,22 @@
+[Desktop Entry]
+Type=Application
+Name=Epulse
+Name[ca]=Epulse
+Name[de]=Epulse
+Name[fi]=Epulse
+Name[ms]=Epulse
+Name[tr]=Epulse
+Comment=A module to control audio volume and streams.
+Comment[ca]=Un mòdul per controlar el volum d'àudio i fonts.
+Comment[de]=Ein Modul, um die Lautstärke und die Datenströme zu steuern.
+Comment[eo]=Modulo por kontroli sonfortecon kaj fluojn.
+Comment[fi]=Tällä moduulilla voit ohjata äänen voimakkuutta ja äänivirtoja.
+Comment[fr]=Un module pour contrôler le volume et les flux.
+Comment[it]=Un modulo per controllare il volume dell'audio e degli stream.
+Comment[ms]=Modul untuk mengawal volum dan strim audio.
+Comment[sr]=Јединица за управљање јечином звука и токова.
+Comment[tr]=Ses seviyesi ve ses akışı kontrol modülü.
+Icon=epulse
+Exec=epulse
+Categories=Audio;System;
+StartupWMClass=epulse

@@ -113,6 +113,7 @@ e_object_free(E_Object *obj)
    obj->magic = E_OBJECT_MAGIC_FREED;
 #endif
    obj->cleanup_func(obj);
+   obj = NULL;
 }
 
 EAPI int

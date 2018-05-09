@@ -82,13 +82,13 @@ main(int argc, char **argv)
           pid = atoi(argv[i]);  // E's pid
         else if (i == 3)
           backtrace_str = argv[i];
-	else if (i == 4)
-	  exit_gdb = atoi(argv[i]);
+        else if (i == 4)
+          exit_gdb = atoi(argv[i]);
      }
 
    fprintf(stderr, "exit_gdb: %i\n", exit_gdb);
 
-   tmp = getenv("E17_TAINTED");
+   tmp = getenv("MOKSHA_TAINTED");
    if (tmp && !strcmp(tmp, "NO"))
      tainted = EINA_FALSE;
 
@@ -105,18 +105,21 @@ main(int argc, char **argv)
    title = "Moksha Error";
    str1 = "(F1) Recover";
    str2 = "(F12) Logout";
-
-   //_e_alert_create();
-   //_e_alert_display();
-   //_e_alert_run();
-   //_e_alert_shutdown();
-
+   if (getenv("MOKSHA_SEGV_DIALOG"))
+     {
+        _e_alert_create();
+        _e_alert_display();
+        _e_alert_run();
+        _e_alert_shutdown();
+     }
+   else
+     ret = 1;
    ecore_shutdown();
 
    /* ret == 1 => restart e => exit code 1 */
    /* ret == 2 => exit e => any code will do that */
    //return ret;
-   return 1;
+   return ret;
 }
 
 /* local functions */

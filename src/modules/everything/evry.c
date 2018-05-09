@@ -1216,8 +1216,17 @@ _evry_selector_label_set(Evry_Selector *sel, const char *part, const char *label
 static void
 _evry_selector_activate(Evry_Selector *sel, int slide)
 {
-   Evry_Window *win = sel->win;
+   Evry_Window *win;
    Evry_State *s;
+
+   if (!sel)
+     {
+        ERR("selector == NULL");
+        return;
+     }
+
+   win = sel->win;
+
 
    if (CUR_SEL)
      {
@@ -1229,12 +1238,6 @@ _evry_selector_activate(Evry_Selector *sel, int slide)
 
         if (!slide && evry_conf->hide_list)
           _evry_list_win_hide(win);
-     }
-
-   if (!sel)
-     {
-        ERR("selector == NULL");
-        return;
      }
 
    CUR_SEL = sel;
@@ -2113,7 +2116,7 @@ _evry_cb_key_down(void *data, int type __UNUSED__, void *event)
           }
      }
 
-   if (!win || !(sel = CUR_SEL))
+   if (!(sel = CUR_SEL))
      goto end;
 
    if (!strcmp(ev->key, "Tab") &&

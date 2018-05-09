@@ -49,6 +49,7 @@ e_atoms.h \
 e_backlight.h \
 e_bg.h \
 e_bindings.h \
+e_bodhi_about.h \
 e_border.h \
 e_box.h \
 e_canvas.h \
@@ -114,6 +115,7 @@ e_int_shelf_config.h \
 e_int_toolbar_config.h \
 e_ipc_codec.h \
 e_ipc.h \
+e_macros.h \
 e_layout.h \
 e_livethumb.h \
 e_log.h \
@@ -206,6 +208,7 @@ e_atoms.c \
 e_backlight.c \
 e_bg.c \
 e_bindings.c \
+e_bodhi_about.c \
 e_border.c \
 e_box.c \
 e_canvas.c \

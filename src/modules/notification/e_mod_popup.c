@@ -199,9 +199,11 @@ notification_popup_notify(E_Notification *n,
      {
       case E_NOTIFICATION_URGENCY_LOW:
         if (!notification_cfg->show_low) return 0;
+        if (e_config->mode.presentation) return 0;
         break;
       case E_NOTIFICATION_URGENCY_NORMAL:
         if (!notification_cfg->show_normal) return 0;
+        if (e_config->mode.presentation) return 0;
         break;
       case E_NOTIFICATION_URGENCY_CRITICAL:
         if (!notification_cfg->show_critical) return 0;
@@ -448,7 +450,7 @@ _notification_popup_new(E_Notification *n)
 
    /* Create the popup window */
    popup->win = e_popup_new(zone, 0, 0, 0, 0);
-   edje_object_signal_emit(popup->win, "e,state,shadow,off", "e");
+   edje_object_signal_emit((Evas_Object *) popup->win, "e,state,shadow,off", "e");
    e_popup_name_set(popup->win, "_e_popup_notification");
    popup->e = popup->win->evas;
 

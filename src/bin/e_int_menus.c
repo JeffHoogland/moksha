@@ -56,14 +56,16 @@ static void         _e_int_menus_shelves_del_cb(void *data, E_Menu *m, E_Menu_It
 static void         _e_int_menus_config_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_main_showhide(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_main_restart(void *data, E_Menu *m, E_Menu_Item *mi);
-static void         _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void         _e_int_menus_main_exit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_desktops_free_hook(void *obj);
 static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 static Eina_Bool    _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
+#ifdef ENABLE_BODHI
 static void         _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+#endif
 static void         _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 
 /* local subsystem globals */
@@ -75,42 +77,6 @@ static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
 
-#define BODHI_VERSION "4.5.0"
-#define BODHI_ABOUT_TITLE "About Bodhi"
-#define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
-#define BODHI_ABOUT_AUTHORS \
-    "Jeff Hoogland<br>" \
-    "Stefan 'the waiter' Uram<br>" \
-    "Joris 'aeonius' van Dijk<br>" \
-    "Stephen 'okra' Houston<br>" \
-    "Jason 'Tristam' Thomas<br>" \
-    "Kristi Hoogland<br>" \
-    "Rbt 'ylee' Wiley<br>" \
-    "Kai Huuhko<br>" \
-    "Patrick Duckson<br>" \
-    "Timmy 'timmy' Larsson<br>" \
-    "Roger 'JollyRoger' Carter<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br>" \
-    "Marcel 'SmartDuck'<br><br><br>" \
-    "Past contributors:<br>" \
-    "Ken 'trace'  LaBuda<br>" \
-    "Christopher 'devilhorns' Michael<br>" \
-    "Jason 'jarope' Peel<br>" \
-    "Chris 'prolog' Seekamp<br>" \
-    "Bob Eley<br>" \
-    "Darren 'LostBumpkin' Dooley<br>" \
-    "Anthony 'AntCer' Cervantes<br>" \
-    "Kaleb 'belak' Elwert<br>" \
-    "Jose 'Jose' Manimala<br>" \
-    "Gareth 'hippytaff' Williams<br>" \
-    "Micah 'M1C4HTRON13″ Denn<br>" \
-    "Meji 'Meji_D' Dejsdóttir<br>" \
-    "Víctor 'esmirlin' Parra García<br>" \
-    "Mark 'ottermaton' Strawser<br>" \
-    "Caerolle<br>" \
-    "Gar Romero<br>" \
-    "Doug 'Deepspeed' Yanez<br>" \
-    "Reuben L. Lillie<br>" \
 
 static Eina_List *
 _e_int_menus_augmentation_find(const char *key)
@@ -218,7 +184,8 @@ e_int_menus_main_new(void)
    l = _e_int_menus_augmentation_find("main/2");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-/* Commented out to remove clutter from the main menu
+#if 0    
+   //Code moved to classicmenu module 
    subm = e_int_menus_desktops_new();
    dat->desktops = subm;
    mi = e_menu_item_new(m);
@@ -232,9 +199,9 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("Windows"));
    e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
    e_menu_item_submenu_set(mi, subm);
-   e_object_data_set(E_OBJECT(subm), dat); */
+   e_object_data_set(E_OBJECT(subm), dat); 
 
-#if 0 // lost windows already handled inside "Windows" from main menu.
+   // lost windows already handled inside "Windows" from main menu.
    subm = e_int_menus_lost_clients_new();
    e_object_data_set(E_OBJECT(subm), dat);
    dat->lost_clients = subm;
@@ -258,17 +225,19 @@ e_int_menus_main_new(void)
    e_menu_item_label_set(mi, _("About Operating System"));
    e_util_menu_item_theme_icon_set(mi, "bodhi");
    e_menu_item_submenu_set(mi, subm);
-
+   e_object_unref(E_OBJECT(subm));
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Help"));
    e_util_menu_item_theme_icon_set(mi, "help-faq");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_quick_start, NULL);
 
+#ifdef ENABLE_BODHI
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About Bodhi Linux"));
    e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
+#endif
 
    /*mi = e_menu_item_new(subm);
    e_menu_item_separator_set(mi, 1);
@@ -308,11 +277,12 @@ e_int_menus_main_new(void)
    e_util_menu_item_theme_icon_set(mi, "system-restart");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
-   /*mi = e_menu_item_new(subm);
+#if 0
+   mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("Exit"));
    e_util_menu_item_theme_icon_set(mi, "application-exit");
-   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);*/
-
+   e_menu_item_callback_set(mi, _e_int_menus_main_exit, NULL);
+#endif
    l = _e_int_menus_augmentation_find("enlightenment/3");
    if (l) _e_int_menus_augmentation_add(subm, l);
 
@@ -658,27 +628,16 @@ _e_int_menus_themes_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
    if (about) e_theme_about_show(about);
 }
 
+#ifdef ENABLE_BODHI
 static void
 _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Obj_Dialog *dlg;
+   E_Bodhi_About *about;
 
-   dlg = e_obj_dialog_new(m->zone->container, BODHI_ABOUT_TITLE, "E", "_about");
-   if (!dlg) return;
-   e_obj_dialog_obj_theme_set(dlg, "base/theme/about", "e/widgets/about/main");
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.label", _("Close"));
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.title",
-                                 BODHI_ABOUT_TITLE);
-   e_obj_dialog_obj_part_text_set(dlg, "e.text.version",
-                                  BODHI_VERSION);
-   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.about",
-                                  BODHI_ABOUT_TEXT);
-   e_obj_dialog_obj_part_text_set(dlg, "e.textblock.authors",
-                                  BODHI_ABOUT_AUTHORS);
-
-   e_obj_dialog_show((E_Obj_Dialog *)dlg);
-   e_obj_dialog_icon_set((E_Obj_Dialog *)dlg, "help-about");
+   about = e_bodhi_about_new(e_container_current_get(e_manager_current_get()));
+   if (about) e_bodhi_about_show(about);
 }
+#endif
 
 static void
 _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
@@ -727,6 +686,7 @@ _e_int_menus_main_restart(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_It
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
 
+#if 0
 static void
 _e_int_menus_main_exit(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -735,6 +695,7 @@ _e_int_menus_main_exit(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item 
    a = e_action_find("exit");
    if ((a) && (a->func.go)) a->func.go(NULL, NULL);
 }
+#endif
 
 static void
 _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)

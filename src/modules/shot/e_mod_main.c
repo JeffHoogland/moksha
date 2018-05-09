@@ -421,8 +421,8 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
    
    if ((shot_conf->view_enable) && (shot_conf->viewer)) 
    {
-	   snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
-       exe = ecore_exe_run(buf, NULL);
+       snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
+       exe = e_util_exe_safe_run(buf, NULL);
        if (exe) ecore_exe_free(exe);
    }
    

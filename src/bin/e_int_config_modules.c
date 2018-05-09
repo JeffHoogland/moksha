@@ -240,7 +240,14 @@ _fill_cat_list(E_Config_Dialog_Data *cfdata)
         cft = _cftype_find(cfdata, itr->key, itr->name, itr->icon);
         if (!cft)
           {
-             WRN("CFT MISSING!!! key(%s) name(%s) icon(%s)", itr->key, itr->name, itr->icon);
+             /* Look and mobile modules removed from Moskha core
+                 so suppress warning message */
+             if (!e_util_strcmp(itr->key,"look" ) || !e_util_strcmp(itr->key,"mobile"))
+               {
+                  // INF("CFT MISSING: key(%s) name(%s) icon(%s)", itr->key, itr->name, itr->icon);
+                }
+             else
+                WRN("CFT MISSING!!! key(%s) name(%s) icon(%s)", itr->key, itr->name, itr->icon);
              continue;
           }
         icon = e_icon_add(cfdata->evas);

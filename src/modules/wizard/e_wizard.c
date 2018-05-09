@@ -231,9 +231,9 @@ e_wizard_button_next_enable_set(int enable)
 }
 
 EAPI void
-e_wizard_title_set(const char *title)
+e_wizard_title_set(const char *title __UNUSED__)
 {
-   edje_object_part_text_set(o_bg, "e.text.title", "Please Wait As We Are Loading Moksha Settings!");
+   edje_object_part_text_set(o_bg, "e.text.title", _("Please Wait As We Are Loading Moksha Settings!"));
 }
 
 EAPI void

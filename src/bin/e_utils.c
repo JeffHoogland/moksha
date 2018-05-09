@@ -82,6 +82,7 @@ e_util_glob_match(const char *str, const char *pattern)
         if (str[0] == 0) return 1;
         return 0;
      }
+   if (str == pattern) return 1;
    if (!strcmp(pattern, "*")) return 1;
    if (!fnmatch(pattern, str, 0)) return 1;
    return 0;
@@ -93,6 +94,7 @@ e_util_glob_case_match(const char *str, const char *pattern)
    const char *p;
    char *tstr, *tglob, *tp;
 
+   if (str == pattern) return 1;
    if (pattern[0] == 0)
      {
         if (str[0] == 0) return 1;
@@ -152,7 +154,7 @@ e_util_head_exec(int head, const char *cmd)
 {
    char *penv_display;
    char *p1, *p2;
-   char buf[4096], buf2[32];
+   char buf[4096];
    int ok = 0;
    Ecore_Exe *exe;
 
@@ -164,22 +166,14 @@ e_util_head_exec(int head, const char *cmd)
    p2 = strrchr(penv_display, '.');
    if ((p1) && (p2) && (p2 > p1)) /* "blah:x.y" */
      {
-        /* yes it could overflow... but who will overflow DISPLAY eh? why? to
-         * "exploit" your own applications running as you?
-         */
-        strcpy(buf, penv_display);
-        buf[p2 - penv_display + 1] = 0;
-        snprintf(buf2, sizeof(buf2), "%i", head);
-        strcat(buf, buf2);
+        *p2 = 0;
+        snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);
+        *p2 = '.';;
      }
    else if (p1) /* "blah:x */
-     {
-        strcpy(buf, penv_display);
-        snprintf(buf2, sizeof(buf2), ".%i", head);
-        strcat(buf, buf2);
-     }
+      snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);
    else
-     strcpy(buf, penv_display);
+     eina_strlcpy(buf, penv_display, sizeof(buf));
 
    ok = 1;
    exe = ecore_exe_run(cmd, NULL);
@@ -194,11 +188,8 @@ e_util_head_exec(int head, const char *cmd)
      }
 
    /* reset env vars */
-   if (penv_display)
-     {
-        e_util_env_set("DISPLAY", penv_display);
-        free(penv_display);
-     }
+   e_util_env_set("DISPLAY", penv_display);
+   free(penv_display);
    return ok;
 }
 
@@ -426,6 +417,11 @@ _e_util_icon_fdo_set(Evas_Object *obj, const char *icon)
 EAPI int
 e_util_icon_theme_set(Evas_Object *obj, const char *icon)
 {
+   if (icon && (icon[0] == '/'))
+     {
+        e_icon_file_set(obj, icon);
+        return 1;
+     }
    if (e_config->icon_theme_overrides)
      {
         if (_e_util_icon_fdo_set(obj, icon))
@@ -1644,4 +1640,34 @@ e_util_string_append_quoted(char *str, size_t *size, size_t *len, const char *sr
    if (!str) return NULL;
 
    return str;
+}
+
+EAPI Ecore_Exe *
+e_util_open(const char *exe, void *data)
+{
+   char *sb;
+   size_t size = 65536, len;
+   Ecore_Exe *ret;
+
+   sb = malloc(size);
+   snprintf(sb, size, "%s/enlightenment_open ", e_prefix_bin_get());
+   len = strlen(sb);
+   sb = e_util_string_append_quoted(sb, &size, &len, exe);
+   ret = e_util_exe_safe_run(sb, data);
+   free(sb);
+   return ret;
+}
+
+EAPI Ecore_Exe *
+e_util_exe_safe_run(const char *cmd, void *data)
+{
+   Ecore_Exe_Flags flags = ECORE_EXE_NONE;
+
+#if (ECORE_VERSION_MAJOR >= 1) && (ECORE_VERSION_MINOR >= 21)
+   flags |= ECORE_EXE_ISOLATE_IO;
+#else
+   flags |= 1024; // isolate_io is bit 10 .... it will be ignored if
+                  // efl doesnt do it, so harmless
+#endif
+   return ecore_exe_pipe_run(cmd, flags, data);
 }

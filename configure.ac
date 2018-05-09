@@ -1,15 +1,15 @@
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 m4_define([v_maj], [0])
-m4_define([v_min], [2])
+m4_define([v_min], [3])
 m4_define([v_mic], [0])
 
 m4_define([v_rev], m4_esyscmd([(git rev-list --count HEAD 2>/dev/null || echo 0) | tr -d '\n']))dnl
 ##--   When released, remove the dnl on the below line
 dnl m4_undefine([v_rev])
-m4_define([relname], [0.2.1])
+m4_define([relname], [0.3.0])
 ##--   When doing snapshots - change soname. remove dnl on below line
-dnl m4_define([relname], [ver-0.2])
+dnl m4_define([relname], [ver-0.3])
 dnl m4_define([v_rel], [-release relname])
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 m4_ifdef([v_rev], [m4_define([v_ver], [v_maj.v_min.v_mic.v_rev])], [m4_define([v_ver], [v_maj.v_min.v_mic])])
@@ -134,6 +134,11 @@ fi
 dnl AC_E_CHECK_PKG(VALGRIND, [valgrind >= 2.4.0], [], [:])
 AC_SUBST(VALGRIND_CFLAGS)
 AC_SUBST(VALGRIND_LIBS)
+
+dnl     defines HAVE_STRDUP if strdup is available
+AC_CHECK_FUNCS([strdup])
+dnl     defines HAVE_STRNDUP if strndup is available
+AC_CHECK_FUNCS([strndup])
 
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
@@ -312,14 +317,6 @@ AC_ARG_ENABLE([install-sysactions],
 AC_MSG_RESULT([$e_cv_enable_install_sysactions])
 AM_CONDITIONAL(INSTALL_SYSACTIONS, test x${e_cv_enable_install_sysactions} = xyes)
 
-AC_MSG_CHECKING([whether to install enlightenment.menu])
-AC_ARG_ENABLE([install-enlightenment-menu],
-  AS_HELP_STRING([--disable-enlightenment-menu],[disable installing /etc/xdg/menus/enlightenment.menu @<:@default=enabled@:>@]),
-    [e_cv_enable_install_enlightenment_menu=$enableval],
-    AC_CACHE_VAL([e_cv_enable_install_enlightenment_menu], [e_cv_enable_install_enlightenment_menu=yes]))
-AC_MSG_RESULT([$e_cv_enable_install_enlightenment_menu])
-AM_CONDITIONAL(INSTALL_ENLIGHTENMENT_MENU, test x${e_cv_enable_install_enlightenment_menu} = xyes)
-
 AC_MSG_CHECKING([whether to install wizard desktop files])
 AC_ARG_ENABLE([install-wizard-desktop],
   AS_HELP_STRING([--disable-wizard-desktop],[disable installing home Desktop files @<:@default=disabled@:>@]),
@@ -336,7 +333,17 @@ AC_ARG_ENABLE([files],
 if test "[${e_cv_enable_files}]" = yes; then
   AC_DEFINE_UNQUOTED([ENABLE_FILES],[1],[enable Files menu item])
 fi
-AC_MSG_RESULT([$e_cv_enable_files])
+
+AC_MSG_RESULT([$e_cv_enable_bodhi])
+AC_MSG_CHECKING([whether to enable Bodhi menu item])
+AC_ARG_ENABLE([bodhi],
+  AS_HELP_STRING([--disable-bodhi],[disable bodhi menu item @<:@default=enabled@:>@]),
+    [e_cv_enable_bodhi=$enableval],
+    AC_CACHE_VAL([e_cv_enable_bodhi], [e_cv_enable_bodhi=yes]))
+if test "[${e_cv_enable_bodhi}]" = yes; then
+  AC_DEFINE_UNQUOTED([ENABLE_BODHI],[1],[enable Bodhi menu item])
+fi
+AC_MSG_RESULT([$e_cv_enable_bodhi])
 
 AC_ARG_ENABLE([device-hal],
   AS_HELP_STRING([--enable-device-hal],[enable hal device backend @<:@default=disabled@:>@]),
@@ -839,6 +846,11 @@ fi
 
 AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"])
 
+PKG_CHECK_MODULES([PULSE],
+	[
+		libpulse-simple
+		libpulse
+	 ])
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([clock], true)
@@ -883,6 +895,9 @@ AC_E_OPTIONAL_MODULE([conf_randr], true)
 AC_E_OPTIONAL_MODULE([xkbswitch], true)
 AC_E_OPTIONAL_MODULE([tiling], true)
 AC_E_OPTIONAL_MODULE([access], false)
+AC_E_OPTIONAL_MODULE([clipboard], true)
+AC_E_OPTIONAL_MODULE([places], true)
+AC_E_OPTIONAL_MODULE([classicmenu], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -974,6 +989,9 @@ src/modules/tasks/module.desktop
 src/modules/xkbswitch/module.desktop
 src/modules/tiling/module.desktop
 src/modules/access/module.desktop
+src/modules/clipboard/module.desktop
+src/modules/places/module.desktop
+src/modules/classicmenu/module.desktop
 data/Makefile
 data/images/Makefile
 data/flags/Makefile
@@ -1017,7 +1035,6 @@ Preferred Backends:
  * hal_mount...........: $e_cv_want_mount_hal
  * udisks_mount........: $e_cv_want_mount_udisks
  * eeze_mount..........: $e_cv_want_mount_eeze
- * $e_cv_enable_install_wizard_desktop
 DEVICE_EOF
 echo
 

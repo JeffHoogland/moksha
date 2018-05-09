@@ -41,7 +41,7 @@ struct _E_Fwin
    const char          *theme_file;
 
    Ecore_Timer *popup_timer;
-   Ecore_Timer *popup_del_job;
+   Ecore_Job *popup_del_job;
    Eina_List *popup_handlers;
    E_Fm2_Icon_Info *popup_icon;
    E_Popup *popup;
@@ -746,8 +746,8 @@ _e_fwin_free(E_Fwin *fwin)
    if (fwin->spring_parent) fwin->spring_parent->spring_child = NULL;
    if (fwin->win) 
    {
-	   e_win_delete_callback_set(fwin->win, NULL);
-	   e_object_del(E_OBJECT(fwin->win));
+       e_win_delete_callback_set(fwin->win, NULL);
+       e_object_del(E_OBJECT(fwin->win));
    }
    free(fwin);
 }
@@ -1312,7 +1312,7 @@ _e_fwin_desktop_run(Efreet_Desktop *desktop,
 
    EINA_LIST_FREE(files, file) free(file);
 
-   chdir(pcwd);
+   if (chdir(pcwd) < 0) perror("chdir");
 }
 
 static E_Fwin_Exec_Type
@@ -2004,9 +2004,9 @@ _e_fwin_cb_dir_handler(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const
 
    if (!getcwd(buf, sizeof(buf))) return;
 
-   chdir(path);
+   if (chdir(path) < 0) perror("chdir");
    e_exec(e_util_zone_current_get(e_manager_current_get()), tdesktop, NULL, NULL, "fileman");
-   chdir(buf);
+   if (chdir(buf) < 0) perror("chdir");
    /* FIXME: if info != null then check mime type and offer options based
     * on that
     */
@@ -2342,14 +2342,13 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                fwin = _e_fwin_new(page->fwin->win->container, ici->link, "/");
              else if (page->fwin->zone)
              {
-			   //~ **************************************************************************
-			   //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
-			   //~ **************************************************************************
-
-			   _xdg_open_default(ici->link);
-			   
-               //~ fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
-			 }
+               /*********************************************
+                * Prevent EFM from opening removables.      *
+                * We want opening by the user's default FM. *
+                *********************************************/
+               _xdg_open_default(ici->link);
+               // fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
+             }
           }
         else
         {
@@ -2366,7 +2365,16 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
              if (page->fwin->win)
                fwin = _e_fwin_new(page->fwin->win->container, buf, "/");
              else if (page->fwin->zone)
-               fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+             {
+               /*********************************************
+                * Prevent EFM from opening removables.      *
+                * We want opening by the user's default FM. *
+                *********************************************/
+                const char *real_path;
+                real_path = e_fm2_real_path_map(buf, "/");
+                _xdg_open_default(real_path);
+                // fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
+             }
           }     
         else
           {
@@ -2408,14 +2416,14 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                   if (page->fwin->win)
                     fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->link ?: buf);
                   else if (page->fwin->zone){
-				  //~ **************************************************************************
-			      //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
-			      //~ **************************************************************************
-					
-					  _xdg_open_default(ici->link ?: buf);
+                  //~ **************************************************************************
+                  //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
+                  //~ **************************************************************************
+                    
+                      _xdg_open_default(ici->link ?: buf);
                     
                     //~ fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
-				}
+                }
                }
              else
                {
@@ -2481,7 +2489,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
 
    apps = _e_fwin_suggested_apps_list_get(files, &mlist, &has_default);
 
-//   fprintf(stderr, "GOGOGOGOOGOGOG\n");
+   //   fprintf(stderr, "GOGOGOGOOGOGOG\n");
    if (!always)
      {
         /* FIXME: well this is simplisitic - if only 1 mime type is being
@@ -2509,8 +2517,8 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              if ((has_default) && (apps)) desk = apps->data;
              else if (mlist) desk = e_exehist_mime_desktop_get(mlist->data);
              //fprintf(stderr, "mlist = %p\n", mlist);
-             getcwd(pcwd, sizeof(pcwd));
-             chdir(e_fm2_real_path_get(page->fm_obj));
+             if (!getcwd(pcwd, sizeof(pcwd))) perror("getcwd");
+             if (chdir(e_fm2_real_path_get(page->fm_obj)) < 0) perror("chdir");
 
              files_list = NULL;
              EINA_LIST_FOREACH(files, l, ici)
@@ -2548,7 +2556,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
              EINA_LIST_FREE(files_list, file)
                free(file);
 
-             chdir(pcwd);
+             if (chdir(pcwd) < 0) perror("chdir");
              if (!need_dia)
                {
                   EINA_LIST_FREE(apps, desk) efreet_desktop_free(desk);
@@ -2940,9 +2948,9 @@ _e_fwin_pan_scroll_update(E_Fwin_Page *page)
    msg->val[4] = page->fm_pan.w;
    msg->val[5] = page->fm_pan.h;
 //   printf("SEND MSG %i %i | %i %i | %ix%i\n",
-//	  page->fm_pan.x, page->fm_pan.y,
-//	  page->fm_pan.max_x, page->fm_pan.max_y,
-//	  page->fm_pan.w, page->fm_pan.h);
+//    page->fm_pan.x, page->fm_pan.y,
+//    page->fm_pan.max_x, page->fm_pan.max_y,
+//    page->fm_pan.w, page->fm_pan.h);
    if (page->fwin->under_obj && page->fwin->wallpaper_is_edj)
      edje_object_message_send(page->fwin->under_obj, EDJE_MESSAGE_INT_SET, 1, msg);
    if (page->fwin->over_obj)

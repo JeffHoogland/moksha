@@ -1,3 +1,10 @@
+moksha (20180415bodhi10.2.1) unstable; urgency=low
+
+  *  Moksha 0.3.0 test
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Sun, 15 Mar 2018 02:22:13 +0004
+
+
 moksha (20180306bodhi10.2.1) unstable; urgency=low
 
   * Preparing for Moksha 0.3.0

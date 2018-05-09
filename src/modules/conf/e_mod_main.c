@@ -401,6 +401,7 @@ _e_mod_mode_presentation_toggle(void *data __UNUSED__, E_Menu *m __UNUSED__, E_M
    e_config_save_queue();
 }
 
+#if 0
 static void
 _e_mod_mode_offline_toggle(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
@@ -409,6 +410,7 @@ _e_mod_mode_offline_toggle(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_I
    e_config_mode_changed();
    e_config_save_queue();
 }
+#endif
 
 static void
 _e_mod_submenu_modes_fill(void *data __UNUSED__, E_Menu *m)
@@ -422,12 +424,14 @@ _e_mod_submenu_modes_fill(void *data __UNUSED__, E_Menu *m)
    e_util_menu_item_theme_icon_set(mi, "preferences-modes-presentation");
    e_menu_item_callback_set(mi, _e_mod_mode_presentation_toggle, NULL);
 
-   /*mi = e_menu_item_new(m);
+#if 0
+   mi = e_menu_item_new(m);
    e_menu_item_check_set(mi, 1);
    e_menu_item_toggle_set(mi, e_config->mode.offline);
    e_menu_item_label_set(mi, _("Offline"));
    e_util_menu_item_theme_icon_set(mi, "preferences-modes-offline");
-   e_menu_item_callback_set(mi, _e_mod_mode_offline_toggle, NULL);*/
+   e_menu_item_callback_set(mi, _e_mod_mode_offline_toggle, NULL);
+#endif
 
    e_menu_pre_activate_callback_set(m, NULL, NULL);
 }

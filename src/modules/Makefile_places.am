@@ -1,0 +1,25 @@
+placesdir = $(MDIR)/places
+places_DATA = places/e-module-places.edj \
+	       places/module.desktop
+
+EXTRA_DIST += $(places_DATA)
+
+placespkgdir = $(MDIR)/places/$(MODULE_ARCH)
+placespkg_LTLIBRARIES = places/module.la
+
+places_module_la_CFLAGS = $(AM_CFLAGS)
+places_module_la_SOURCES = places/e_mod_main.h \
+			  places/e_mod_main.c \
+			  places/e_mod_config.c \
+			  places/e_mod_places.h \
+			  places/e_mod_places.c \
+			  places/e_mod_udisks.h \
+			  places/e_mod_udisks.c \
+			  places/e_mod_eeze.h \
+			  places/e_mod_eeze.c \
+			  places/e_mod_udisks_edbus2.h \
+			  places/e_mod_udisks_edbus2.c
+
+.PHONY: places install-places
+places: $(placespkg_LTLIBRARIES) $(places_DATA)
+install-places: install-placesDATA install-placespkgLTLIBRARIES

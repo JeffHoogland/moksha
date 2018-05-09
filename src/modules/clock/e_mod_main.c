@@ -104,6 +104,8 @@ _todaystr_eval(Instance *inst, char *buf, int bufsz)
                strftime(buf, bufsz, "%a, %x", (const struct tm *)tm);
              else if (inst->cfg->show_date == 3)
                strftime(buf, bufsz, "%x", (const struct tm *)tm);
+             else if (inst->cfg->show_date == 4)
+               strftime(buf, bufsz, "%F", (const struct tm *)tm);
           }
         else
           buf[0] = 0;
@@ -829,7 +831,12 @@ _clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
 {
    char buf[64];
 
-   read(ecore_main_fd_handler_fd_get(fdh), buf, sizeof(buf));
+   if (read(ecore_main_fd_handler_fd_get(fdh), buf, sizeof(buf)) < 0)
+     {
+        close(ecore_main_fd_handler_fd_get(fdh));
+        timerfd_handler = ecore_main_fd_handler_del(timerfd_handler);
+        return EINA_FALSE;
+     }
    e_int_clock_instances_redo(EINA_TRUE);
    return EINA_TRUE;
 }

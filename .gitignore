@@ -19,7 +19,6 @@ Makefile.in
 *~
 *.cfg
 *.dirstamp
-default.edj
 /ABOUT-NLS
 /aclocal.m4
 /autom4te.cache/

@@ -88,7 +88,9 @@ main(int argc,
 
              val = argv[i] + 7;
              if (*val)
-               nice(atoi(val));
+               {
+                  if (nice(atoi(val)) < 0) perror("Error: E_thumb nice error.");
+               }
           }
      }
 

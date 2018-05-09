@@ -254,7 +254,7 @@ _e_imc_setup_cb(void *data, void *data2 __UNUSED__)
 
              cmd = imc->e_im_setup_exec;
 
-             exe = ecore_exe_run(cmd, NULL);
+             exe = e_util_exe_safe_run(cmd, NULL);
 
              if (!exe)
                {
@@ -503,7 +503,7 @@ _e_imc_adv_setup_cb(void *data, void *data2 __UNUSED__)
 
         cmd = cfdata->imc.e_im_setup_exec;
 
-        exe = ecore_exe_run(cmd, NULL);
+        exe = e_util_exe_safe_run(cmd, NULL);
 
         if (!exe)
           {

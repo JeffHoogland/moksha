@@ -1,0 +1,13 @@
+.debhelper/
+autoreconf.after
+autoreconf.before
+debhelper-build-stamp
+files
+moksha-dbg.debhelper.log
+moksha-dbg.substvars
+moksha-dbg/
+moksha.debhelper.log
+moksha.lintian-overrides
+moksha.substvars
+moksha/
+tmp/
