@@ -382,6 +382,17 @@ e_icon_edje_object_set(Evas_Object *obj, Evas_Object *edje)
    _e_icon_smart_reconfigure(sd);
 }
 
+EAPI Evas_Object *
+e_icon_edje_get(Evas_Object *obj)
+{
+   E_Smart_Data *sd;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR(NULL);
+   if (!(sd = evas_object_smart_data_get(obj)))
+     return NULL;
+   return sd->edje ? sd->obj : NULL;
+}
+
 EAPI Eina_Bool
 e_icon_file_edje_set(Evas_Object *obj, const char *file, const char *part)
 {
@@ -717,6 +728,16 @@ e_icon_selected_set(const Evas_Object *obj, Eina_Bool selected)
      edje_object_signal_emit(sd->obj, "e,state,selected", "e");
    else
      edje_object_signal_emit(sd->obj, "e,state,unselected", "e");
+}
+
+EAPI void
+e_icon_edje_emit(const Evas_Object *obj, const char *sig, const char *src)
+{
+   E_Smart_Data *sd;
+
+   if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERR();
+   if (!(sd = evas_object_smart_data_get(obj))) return;
+   edje_object_signal_emit(sd->obj, sig, src);
 }
 
 /* local subsystem globals */

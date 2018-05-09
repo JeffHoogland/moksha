@@ -1077,9 +1077,8 @@ _e_winlist_activate(void)
    if (!_win_selected) return;
    ww = _win_selected->data;
    edje_object_signal_emit(ww->bg_object, "e,state,selected", "e");
-   if (ww->icon_object)
-     edje_object_signal_emit(ww->icon_object,
-                             "e,state,selected", "e");
+   if (ww->icon_object && e_icon_edje_get(ww->icon_object))
+     e_icon_edje_emit(ww->icon_object, "e,state,selected", "e");
 
    if ((ww->border->iconic) &&
        (e_config->winlist_list_uncover_while_selecting))
