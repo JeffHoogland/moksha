@@ -353,9 +353,6 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_menu_item_label_set(mi, clip->name);
       e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, clip);
     }
-    /* revert list back if selected  */
-    if (clip_cfg->hist_reverse)
-      clip_inst->items=eina_list_reverse(clip_inst->items);
   }
   else {
     mi = e_menu_item_new(inst->menu);
