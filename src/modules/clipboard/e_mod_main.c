@@ -642,6 +642,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 {
   EINA_SAFETY_ON_NULL_RETURN(data);
   Instance *inst = data;
+  e_gadcon_locked_set(inst->gcc->gadcon, 0);
+  edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
   if (inst->menu) {
     e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
     e_object_del(E_OBJECT(inst->menu));
