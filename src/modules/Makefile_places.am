@@ -20,6 +20,11 @@ places_module_la_SOURCES = places/e_mod_main.h \
 			  places/e_mod_udisks_edbus2.h \
 			  places/e_mod_udisks_edbus2.c
 
+if HAVE_ENOTIFY
+places_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+places_module_la_LIBADD = @ENOTIFY_LIBS@
+endif
+
 .PHONY: places install-places
 places: $(placespkg_LTLIBRARIES) $(places_DATA)
 install-places: install-placesDATA install-placespkgLTLIBRARIES
