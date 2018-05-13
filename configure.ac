@@ -382,7 +382,7 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
 hal_mount="ehal >= $efl_version, edbus >= 1.7.10"
-udisks_mount="eukit >= $efl_version"
+udisks_mount="eukit >= 1.7.10"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
@@ -411,7 +411,7 @@ AC_MSG_CHECKING([whether the UDISKS mounting support is enabled])
 AC_MSG_RESULT([${e_cv_want_mount_udisks}])
 
 if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= ${efl_version}],
+  PKG_CHECK_EXISTS([eukit >= 1.7.10],
     [],[
       udisks_mount=
       AC_MSG_NOTICE([udisks mounting disabled])
@@ -763,7 +763,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.7.10 enotify >= $efl_version ], 
+  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.7.10 ], 
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
