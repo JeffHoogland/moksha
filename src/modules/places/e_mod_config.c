@@ -107,7 +107,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->alert_percent = places_conf->alert_p;
    cfdata->alert_timeout = places_conf->alert_timeout;
    
-   printf("read percent %d \n\n", cfdata->alert_percent);
    if (cfdata->alert_percent > 0)
      cfdata->show_alert = 1;
    else
@@ -118,7 +117,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    else
      cfdata->dismiss_alert = 0;
    
-
    if (places_conf->fm)
      cfdata->fm = strdup(places_conf->fm);
    else
@@ -130,8 +128,6 @@ _ensure_alert_time(E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->alert_percent > 0)
      return;
-
-   // must handle the case where user toggled the checkbox but set no threshold
 }
 
 void _custom_fm_click(void *data, Evas_Object *obj)
@@ -166,7 +162,6 @@ _cb_show_alert_changed(void *data, Evas_Object *obj __UNUSED__)
    E_Config_Dialog_Data *cfdata = data;
    Eina_Bool show_alert = cfdata->show_alert;
    Eina_Bool dismiss_alert = cfdata->show_alert && cfdata->dismiss_alert;
-    printf("Zmena %d \n\n", cfdata->show_alert);
    e_widget_disabled_set(cfdata->ui.show_alert_label, !show_alert);
    e_widget_disabled_set(cfdata->ui.show_alert_percent, !show_alert);
    e_widget_disabled_set(cfdata->ui.dismiss_alert_label, !show_alert);
@@ -290,7 +285,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  
    e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 1, 0, 1, 0,
                                  0.5, 0.0);                                 
-                                 
                                  
    e_widget_toolbook_page_show(otb, 0);
    return otb;
