@@ -94,7 +94,7 @@ extern char **environ;
 AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
     ])
 
-efl_version="1.19.0"
+efl_version="1.7.10"
 AC_SUBST(efl_version)
 
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
@@ -381,8 +381,8 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= $efl_version, edbus >= 1.7.10"
-udisks_mount="eukit >= 1.7.10"
+hal_mount="ehal >= $efl_version, edbus >= $efl_version"
+udisks_mount="eukit >= $efl_version"
 AC_ARG_ENABLE([mount-hal],
   AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
   [e_cv_want_mount_hal=$enableval],
@@ -411,7 +411,7 @@ AC_MSG_CHECKING([whether the UDISKS mounting support is enabled])
 AC_MSG_RESULT([${e_cv_want_mount_udisks}])
 
 if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= 1.7.10],
+  PKG_CHECK_EXISTS([eukit >= ${efl_version}],
     [],[
       udisks_mount=
       AC_MSG_NOTICE([udisks mounting disabled])
@@ -519,7 +519,7 @@ ecore-file >= $efl_version \
 ecore-ipc >= $efl_version \
 eet >= $efl_version \
 efreet >= $efl_version \
-edbus >= 1.7.10 \
+edbus >= $efl_version \
 eina >= $efl_version"
 efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
 
@@ -531,7 +531,7 @@ PKG_CHECK_MODULES(E_FM_CMDLINE, [
   eina >= ${efl_version}
   ecore >= ${efl_version}
   ecore-file >= ${efl_version}
-  edbus >= 1.7.10
+  edbus >= ${efl_version}
   dbus-1
 ])
 
@@ -589,7 +589,7 @@ PKG_CHECK_MODULES(E, [
   efreet-trash >= ${efl_version}
   eina >= ${efl_version}
   dbus-1
-  edbus >= 1.7.10
+  edbus >= ${efl_version}
   eio >= ${efl_version}
   $hal_mount
   $eeze_mount
@@ -611,7 +611,7 @@ efreet-mime >= ${efl_version} \
 efreet-trash >= ${efl_version} \
 eina >= ${efl_version} \
 dbus-1 \
-edbus >= 1.7.10 \
+edbus >= ${efl_version} \
 eio >= ${efl_version} \
 $hal_mount \
 $udisks_mount \
@@ -763,7 +763,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= 1.7.10 ], 
+  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= $efl_version enotify >= $efl_version ], 
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
@@ -818,7 +818,7 @@ AM_CONDITIONAL(HAVE_ECONNMAN, false)
 AM_CONDITIONAL(HAVE_DUMMY, false)
 define([CHECK_MODULE_CONNMAN],
 [
-  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= 1.7.10 ], [], [CONNMAN=false])
+  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= $efl_version ], [], [CONNMAN=false])
 dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
 ])
 AC_SUBST(ECONNMAN_CFLAGS)
