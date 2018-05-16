@@ -33,6 +33,7 @@ void _places_header_activated_cb(void *data __UNUSED__, Evas_Object *o __UNUSED_
 static Ecore_Timer *poller = NULL;
 static char theme_file[PATH_MAX];
 Eina_List *volumes = NULL;
+static int perc_backup = 0;
 
 
 /* Implementation */
@@ -540,14 +541,17 @@ _places_poller(void *data __UNUSED__)
      if (vol->valid && vol->mounted)
      {
         new = _places_free_space_get(vol->mount_point);
+        
         // redraw only if the size has changed more that 1Mb
         if (abs(new - vol->free_space) > 1024 * 1024)
           {
              vol->free_space = new;
              percent = 100 - (((long double)vol->free_space / (long double)vol->size) * 100);
-             #ifdef HAVE_ENOTIFY
              
-             if ((places_conf->alert_p > 0) && (percent > places_conf->alert_p))  {
+             #ifdef HAVE_ENOTIFY
+             if ((places_conf->alert_p > 0) && (percent > places_conf->alert_p)
+                  &&  (percent > perc_backup))
+             {
 				sprintf(diskname,_("Disk %s is full!"), vol->label);
 				sprintf(diskpercent,_("Disk usage is %d %%!"), percent);
 				
@@ -560,8 +564,9 @@ _places_poller(void *data __UNUSED__)
 				 e_notification_unref(notification);
 				 notification = NULL; 
               }
-              
+              perc_backup = percent;
               #endif
+
              places_volume_update(vol);
           }
        }
