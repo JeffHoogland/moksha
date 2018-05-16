@@ -308,6 +308,7 @@ _epulse_del_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
    mixer_context->epulse = NULL;
    if (mixer_context->epulse_event_handler)
       ecore_event_handler_del(mixer_context->epulse_event_handler);
+   mixer_context->epulse_event_handler = NULL;
 
    return EINA_TRUE;
 }
