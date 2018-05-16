@@ -754,7 +754,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
  e_modapi_init(E_Module *m)
  {
     char buf[4096];
-    printf("Load module");
+
     epulse_module = m;
 #ifdef HAVE_ENOTIFY
    e_notification_init();
@@ -792,7 +792,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
  {
     Sink *s;
     epulse_module = NULL;
-    printf("Unload module");
+
     _actions_unregister();
     e_gadcon_provider_unregister((const E_Gadcon_Client_Class *)&_gadcon_class);
 
