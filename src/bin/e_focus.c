@@ -37,7 +37,7 @@ e_focus_event_mouse_in(E_Border *bd)
    bd->raise_timer = NULL;
    if (e_config->use_auto_raise)
      {
-        if (e_config->auto_raise_delay == 0.0)
+        if (eina_dbl_exact(e_config->auto_raise_delay, 0.0))
           {
              if (!bd->lock_user_stacking)
                {

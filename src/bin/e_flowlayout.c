@@ -451,7 +451,7 @@ e_flowlayout_align_set(Evas_Object *obj, double ax, double ay)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if ((sd->align.x == ax) && (sd->align.y == ay)) return;
+   if (EINA_DBL_EQ(sd->align.x, ax) && EINA_DBL_EQ(sd->align.y, ay)) return;
    sd->align.x = ax;
    sd->align.y = ay;
    sd->changed = 1;
