@@ -281,7 +281,6 @@ _e_smart_value_update(E_Smart_Data *sd)
 static void
 _e_smart_value_update_now(E_Smart_Data *sd)
 {
-   if (sd->set_timer) ecore_timer_del(sd->set_timer);
    _e_smart_set_timer(sd);
 }
 
