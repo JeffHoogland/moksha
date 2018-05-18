@@ -258,7 +258,7 @@ evry_history_types_get(Evry_Type _type)
 History_Item *
 evry_history_item_add(Evry_Item *it, const char *ctxt, const char *input)
 {
-   History_Entry *he;
+   History_Entry *he = NULL;
    History_Types *ht;
    History_Item *hi = NULL;
    Eina_List *l;
