@@ -16,9 +16,7 @@ places_module_la_SOURCES = places/e_mod_main.h \
 			  places/e_mod_udisks.h \
 			  places/e_mod_udisks.c \
 			  places/e_mod_eeze.h \
-			  places/e_mod_eeze.c \
-			  places/e_mod_udisks_edbus2.h \
-			  places/e_mod_udisks_edbus2.c
+			  places/e_mod_eeze.c
 
 if HAVE_ENOTIFY
 places_module_la_CFLAGS += @ENOTIFY_CFLAGS@
