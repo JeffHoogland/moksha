@@ -143,8 +143,8 @@ places_volume_del(Volume *v)
    if (v->model)       eina_stringshare_del(v->model);
    if (v->vendor)      eina_stringshare_del(v->vendor);
    if (v->serial)      eina_stringshare_del(v->serial);
-   
-   free(v);
+
+   E_FREE(v);
 }
 
 Volume *
