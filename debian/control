@@ -3,7 +3,7 @@ Section: x11
 Priority: extra
 Maintainer: Jeff Hoogland <jeffhoogland@linux.com>
 Homepage: http://mokshadesktop.org/
-Build-Depends:  debhelper (>= 9), dh-autoreconf, efl, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, edbus
+Build-Depends:  debhelper (>= 9), dh-autoreconf, libefl-all-dev, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, libedbus-dev
 Standards-Version: 3.8.3
 
 Package: moksha
