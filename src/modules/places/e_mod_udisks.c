@@ -1,5 +1,3 @@
-
-
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -12,6 +10,9 @@
 #include <E_Ukit.h>
 #include <errno.h>
 
+/* Convenience macro */
+#define UDISKS_SH_DEL(_conn, _sh)  \
+   if (_sh) { e_dbus_signal_handler_del(_conn, _sh); _sh = NULL; }
 
 /* Local Function Prototypes */
 static void _places_udisks_test(void *data __UNUSED__, DBusMessage *msg __UNUSED__, DBusError *error);
@@ -89,16 +90,12 @@ places_udisks_shutdown(void)
 {
    if (_places_udisks_conn)
      {
-        if (_places_udisks_sh_added)
-          e_dbus_signal_handler_del(_places_udisks_conn, _places_udisks_sh_added);
-        if (_places_udisks_sh_removed)
-          e_dbus_signal_handler_del(_places_udisks_conn, _places_udisks_sh_removed);
-        if (_places_udisks_sh_changed)
-          e_dbus_signal_handler_del(_places_udisks_conn, _places_udisks_sh_changed);
-        if (_places_udisks_udisks_poll)
-          e_dbus_signal_handler_del(_places_udisks_conn, _places_udisks_udisks_poll);
-
+        UDISKS_SH_DEL(_places_udisks_conn, _places_udisks_sh_added);
+        UDISKS_SH_DEL(_places_udisks_conn, _places_udisks_sh_removed);
+        UDISKS_SH_DEL(_places_udisks_conn, _places_udisks_sh_changed);
+        UDISKS_SH_DEL(_places_udisks_conn, _places_udisks_udisks_poll);
         e_dbus_connection_close(_places_udisks_conn);
+        _places_udisks_conn = NULL;
      }
 
    e_ukit_shutdown();
