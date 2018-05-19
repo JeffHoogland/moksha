@@ -308,6 +308,7 @@ _epulse_del_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
    mixer_context->epulse = NULL;
    if (mixer_context->epulse_event_handler)
       ecore_event_handler_del(mixer_context->epulse_event_handler);
+   mixer_context->epulse_event_handler = NULL;
 
    return EINA_TRUE;
 }
@@ -753,7 +754,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
  e_modapi_init(E_Module *m)
  {
     char buf[4096];
-    printf("Load module");
+
     epulse_module = m;
 #ifdef HAVE_ENOTIFY
    e_notification_init();
@@ -791,7 +792,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
  {
     Sink *s;
     epulse_module = NULL;
-    printf("Unload module");
+
     _actions_unregister();
     e_gadcon_provider_unregister((const E_Gadcon_Client_Class *)&_gadcon_class);
 

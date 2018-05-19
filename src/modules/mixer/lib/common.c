@@ -12,7 +12,8 @@ epulse_common_init(const char *domain)
         return EINA_FALSE;
      }
 
-   _log_domain = eina_log_domain_register(domain, NULL);
+   _log_domain = eina_log_domain_register(domain, EINA_COLOR_RED);
+
    if (_log_domain < 0)
      {
         EINA_LOG_CRIT("Could not create log domain '%s'", domain);

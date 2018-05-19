@@ -634,7 +634,8 @@ static void
 _tasks_item_signal_emit(Tasks_Item *item, char *sig, char *src)
 {
    if (item->o_item) edje_object_signal_emit(item->o_item, sig, src);
-   if (item->o_icon) edje_object_signal_emit(item->o_icon, sig, src);
+   if (item->o_icon && e_icon_edje_get(item->o_icon))
+      edje_object_signal_emit(e_icon_edje_get(item->o_icon), sig, src);
 }
 
 static Config_Item *

@@ -31,6 +31,8 @@ struct _Config
    unsigned char show_root;
    unsigned char show_temp;
    unsigned char show_bookm;
+   int	            alert_p; 
+   int              alert_timeout;
 };
 
 typedef struct _Config_Item Config_Item;

@@ -496,9 +496,15 @@ _subscribe_cb(pa_context *c, pa_subscription_event_type_t t,
             pa_operation_unref(o);
          }
        break;
+    
+    // Ignore these events to suppress unneeded warnings
+    case  PA_SUBSCRIPTION_EVENT_SOURCE_OUTPUT:
+       break;
+    case PA_SUBSCRIPTION_EVENT_CLIENT:
+       break;
 
     default:
-       WRN("Event not handled");
+       WRN("Event not handled %d %d", t, t & PA_SUBSCRIPTION_EVENT_FACILITY_MASK);
        break;
    }
 }

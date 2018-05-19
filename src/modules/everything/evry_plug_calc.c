@@ -94,7 +94,7 @@ _finish(Evry_Plugin *plugin)
 
    if (exe)
      {
-        ecore_exe_quit(exe);
+        ecore_exe_terminate(exe);
         ecore_exe_free(exe);
         exe = NULL;
      }

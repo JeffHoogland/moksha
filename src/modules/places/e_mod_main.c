@@ -55,7 +55,7 @@ e_modapi_init(E_Module *m)
                                      NULL, "system-file-manager");
    e_configure_registry_item_add("fileman/places", 80, _("Places"),
                                  NULL, buf, e_int_config_places_module);
-
+                                 
    /* Define EET Data Storage */
    conf_item_edd = E_CONFIG_DD_NEW("Config_Item", Config_Item);
    #undef T
@@ -84,6 +84,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_root, UCHAR);
    E_CONFIG_VAL(D, T, show_temp, UCHAR);
    E_CONFIG_VAL(D, T, show_bookm, UCHAR);
+   E_CONFIG_VAL(D, T, alert_p, INT);
+   E_CONFIG_VAL(D, T, alert_timeout, INT);
 
    /* Tell E to find any existing module data. First run ? */
    places_conf = e_config_domain_load("module.places", conf_edd);
@@ -143,7 +145,7 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    places_shutdown();
-
+   
    e_configure_registry_item_del("fileman/places");
    e_configure_registry_category_del("fileman");
 
@@ -348,6 +350,9 @@ _places_conf_new(void)
    places_conf->show_root = 0;
    places_conf->show_temp = 0;
    places_conf->show_bookm = 1;
+   places_conf->alert_p = 90;
+   places_conf->alert_timeout = 0;
+   
    _places_conf_item_get(NULL);
    IFMODCFGEND;
 

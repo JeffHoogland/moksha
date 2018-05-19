@@ -113,7 +113,7 @@ evry_plugin_register(Evry_Plugin *p, int type, int priority)
 {
    Eina_List *l;
    Plugin_Config *pc;
-   Eina_List *conf;
+   Eina_List *conf = NULL;
    int new_conf = 0;
 
    if ((type < 0) || (type > 2))

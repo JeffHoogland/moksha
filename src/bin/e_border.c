@@ -2360,8 +2360,8 @@ e_border_focus_set(E_Border *bd,
         bd_unfocus->raise_timer = NULL;
 
         edje_object_signal_emit(bd_unfocus->bg_object, "e,state,unfocused", "e");
-        if (bd_unfocus->icon_object)
-          edje_object_signal_emit(bd_unfocus->icon_object, "e,state,unfocused", "e");
+        if (bd_unfocus->icon_object && e_icon_edje_get(bd_unfocus->icon_object))
+          e_icon_edje_emit(bd_unfocus->icon_object, "e,state,unfocused", "e");
 
         ev = E_NEW(E_Event_Border_Focus_Out, 1);
         ev->border = bd_unfocus;
@@ -2406,8 +2406,8 @@ e_border_focus_set(E_Border *bd,
         e_hints_active_window_set(bd->zone->container->manager, bd);
 
         edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-        if (bd->icon_object)
-          edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+        if (bd->icon_object && e_icon_edje_get(bd->icon_object))
+          e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
 
         ev = E_NEW(E_Event_Border_Focus_In, 1);
         ev->border = bd;
@@ -8434,8 +8434,8 @@ _e_border_eval0(E_Border *bd)
                   if (bd->focused)
                     {
                        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-                       if (bd->icon_object)
-                         edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+                       if (bd->icon_object && e_icon_edje_get(bd->icon_object))
+                         e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
                     }
                   if (bd->shaded)
                     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
@@ -9232,8 +9232,8 @@ _e_border_eval(E_Border *bd)
           }
 
         bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
-        if ((bd->focused) && (bd->icon_object))
-          edje_object_signal_emit(bd->icon_object, "e,state,focused", "e");
+        if ((bd->focused) && (bd->icon_object) && (e_icon_edje_get(bd->icon_object)))
+          e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
         if (bd->bg_object)
           {
              evas_object_show(bd->icon_object);

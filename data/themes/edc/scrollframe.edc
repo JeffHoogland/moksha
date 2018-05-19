@@ -94,6 +94,9 @@ group { name: "e/widgets/scrollframe";
             rel2.to: "sb_vbar_base";
             color: 0 0 0 0;
          }
+         description { state: "clicked" 0.0;
+            inherit: "default";
+         }
       }
       part { name: "sb_vbar_a1"; type: RECT;
          clip_to: "sb_vbar";
@@ -249,6 +252,9 @@ group { name: "e/widgets/scrollframe";
             rel2.relative: 0.5  0.5;
             rel2.to: "sb_hbar_base";
             color: 0 0 0 0;
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default";
          }
       }
       part { name: "sb_hbar_a1"; type: RECT;

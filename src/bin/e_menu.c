@@ -1152,16 +1152,23 @@ e_menu_idler_before(void)
              if (((m->cur.x) != (m->prev.x)) ||
                  ((m->cur.y) != (m->prev.y)))
                {
-                  if (!m->parent_item)
-                    {
-                       int x, y, w, h;
+                  //*********************************************************//
+                  // this comment was aimed to let the main menu scrolled if //
+                  // exceeds the screen limits. This menu is also used       //
+                  // in Clipboard module   .                                 //
 
-                       e_zone_useful_geometry_get(m->zone, &x, &y, &w, &h);
-                       if ((m->cur.x + m->cur.w) > (x + w))
-                         m->cur.x = x + w - m->cur.w;
-                       if ((m->cur.y + m->cur.h) > (y + h))
-                         m->cur.y = y + h - m->cur.h;
-                    }
+                  //~ if (!m->parent_item)
+                    //~ {
+                       //~ int x, y, w, h;
+
+                       //~ e_zone_useful_geometry_get(m->zone, &x, &y, &w, &h);
+                       //~ if ((m->cur.x + m->cur.w) > (x + w))
+                         //~ m->cur.x = x + w - m->cur.w;
+                       //~ if ((m->cur.y + m->cur.h) > (y + h))
+                         //~ m->cur.y = y + h - m->cur.h;
+                    //~ }
+                  //*********************************************************//  
+                  
                   m->prev.x = m->cur.x;
                   m->prev.y = m->cur.y;
                   ecore_evas_move(m->ecore_evas, m->cur.x, m->cur.y);
@@ -1872,18 +1879,20 @@ _e_menu_items_layout_update(E_Menu *m)
         min_w = min_toggle_w + min_submenu_w;
         min_h = min_toggle_h;
      }
-     
-   /*This code solves menu disappearing in case of big menus. 
+
+#if 0
+   /* Stefans Menu Hack: This code solves menu disappearing in case of big menus. 
      The code was taken from E22 but does not work for huge menus. */
      
-   //~ if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
-     //~ {
-        //~ e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
-        //~ maxh = zh * 4;
-        //~ if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
-        //~ max_items = (maxh / min_h) - 1;
-     //~ }
-     
+   if (min_h * eina_list_count(m->items) >= (unsigned int)m->zone->h)
+     {
+        e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
+        maxh = zh * 4;
+        if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
+        max_items = (maxh / min_h) - 1;
+      }
+#endif
+
    EINA_LIST_FOREACH(m->items, l, mi)
      {
         if ((cur_items >= max_items) || (zh && ((ms + (2 * mh) >= zh) || (ms + (2 * mi->separator_h) >= zh))))

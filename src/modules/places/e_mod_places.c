@@ -5,6 +5,9 @@
 #include <sys/statvfs.h>
 #include "e_mod_main.h"
 #include "e_mod_places.h"
+#ifdef HAVE_ENOTIFY
+#include "E_Notify.h"
+#endif
 #ifdef HAVE_UDISKS_MOUNT
 # include "e_mod_udisks.h"
 #endif
@@ -30,6 +33,7 @@ void _places_header_activated_cb(void *data __UNUSED__, Evas_Object *o __UNUSED_
 static Ecore_Timer *poller = NULL;
 static char theme_file[PATH_MAX];
 Eina_List *volumes = NULL;
+static int perc_backup = 0;
 
 
 /* Implementation */
@@ -45,6 +49,9 @@ places_init(void)
 #endif
 #ifdef HAVE_EEZE
    places_eeze_init();
+#endif
+#ifdef HAVE_ENOTIFY
+   e_notification_init();
 #endif
 
    snprintf(theme_file, PATH_MAX, "%s/e-module-places.edj",
@@ -62,6 +69,9 @@ places_shutdown(void)
 #endif
 #ifdef HAVE_EEZE
    places_eeze_shutdown();
+#endif
+#ifdef HAVE_ENOTIFY
+   e_notification_shutdown();
 #endif
 
    while (volumes)
@@ -133,8 +143,8 @@ places_volume_del(Volume *v)
    if (v->model)       eina_stringshare_del(v->model);
    if (v->vendor)      eina_stringshare_del(v->vendor);
    if (v->serial)      eina_stringshare_del(v->serial);
-   
-   free(v);
+
+   E_FREE(v);
 }
 
 Volume *
@@ -522,18 +532,44 @@ _places_poller(void *data __UNUSED__)
    Volume *vol;
    Eina_List *l;
    long long new;
+   int percent;
+   static E_Notification *notification;
+   char diskname[200];
+   char diskpercent[200];
 
    EINA_LIST_FOREACH(volumes, l, vol)
      if (vol->valid && vol->mounted)
      {
         new = _places_free_space_get(vol->mount_point);
+        
         // redraw only if the size has changed more that 1Mb
         if (abs(new - vol->free_space) > 1024 * 1024)
           {
              vol->free_space = new;
+             percent = 100 - (((long double)vol->free_space / (long double)vol->size) * 100);
+             
+             #ifdef HAVE_ENOTIFY
+             if ((places_conf->alert_p > 0) && (percent > places_conf->alert_p)
+                  &&  (percent > perc_backup))
+             {
+				sprintf(diskname,_("Disk %s is full!"), vol->label);
+				sprintf(diskpercent,_("Disk usage is %d %%!"), percent);
+				
+				notification = e_notification_full_new
+				(
+				_("Places"),0,"dialog_error", diskname,
+				  diskpercent, places_conf->alert_timeout * 1000
+				);
+				 e_notification_send(notification, NULL, NULL);
+				 e_notification_unref(notification);
+				 notification = NULL; 
+              }
+              perc_backup = percent;
+              #endif
+
              places_volume_update(vol);
           }
-    }
+       }
    
    return EINA_TRUE;
 }

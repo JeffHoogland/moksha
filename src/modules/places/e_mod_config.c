@@ -19,6 +19,18 @@ struct _E_Config_Dialog_Data
    int show_root;
    int show_temp;
    int show_bookm;
+   
+   int show_alert;
+   int alert_percent;
+   int dismiss_alert;
+   int alert_timeout;
+    struct
+   {
+      Evas_Object *show_alert_label;
+      Evas_Object *show_alert_percent;
+      Evas_Object *dismiss_alert_label;
+      Evas_Object *alert_timeout;
+   } ui;
 };
 
 /* Local Function Prototypes */
@@ -92,11 +104,30 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->show_root = places_conf->show_root;
    cfdata->show_temp = places_conf->show_temp;
    cfdata->show_bookm = places_conf->show_bookm;
-
+   cfdata->alert_percent = places_conf->alert_p;
+   cfdata->alert_timeout = places_conf->alert_timeout;
+   
+   if (cfdata->alert_percent > 0)
+     cfdata->show_alert = 1;
+   else
+     cfdata->show_alert = 0;
+    
+    if (cfdata->alert_timeout > 0)
+     cfdata->dismiss_alert = 1;
+   else
+     cfdata->dismiss_alert = 0;
+   
    if (places_conf->fm)
      cfdata->fm = strdup(places_conf->fm);
    else
      cfdata->fm = strdup("");
+}
+
+static void
+_ensure_alert_time(E_Config_Dialog_Data *cfdata)
+{
+   if (cfdata->alert_percent > 0)
+     return;
 }
 
 void _custom_fm_click(void *data, Evas_Object *obj)
@@ -125,10 +156,33 @@ void _mount_on_insert_click(void *data, Evas_Object *obj)
      }
 }
 
+static void
+_cb_show_alert_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool show_alert = cfdata->show_alert;
+   Eina_Bool dismiss_alert = cfdata->show_alert && cfdata->dismiss_alert;
+   e_widget_disabled_set(cfdata->ui.show_alert_label, !show_alert);
+   e_widget_disabled_set(cfdata->ui.show_alert_percent, !show_alert);
+   e_widget_disabled_set(cfdata->ui.dismiss_alert_label, !show_alert);
+
+   e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
+}
+
+static void
+_cb_dismiss_alert_changed(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_Bool dismiss_alert = cfdata->show_alert && cfdata->dismiss_alert;
+
+   e_widget_disabled_set(cfdata->ui.alert_timeout, !dismiss_alert);
+}
+
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *o = NULL, *of = NULL, *ow = NULL, *ow1 = NULL;
+   Evas_Object *o = NULL, *of = NULL, *ow = NULL, *ow1 = NULL, *otb = NULL;
+   otb = e_widget_toolbook_add(evas, (48 * e_scale), (48 * e_scale));
 
    o = e_widget_list_add(evas, 0, 0);
 
@@ -194,8 +248,46 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+  
+   e_widget_toolbook_page_append(otb, NULL, _("Places"), o, 1, 0, 1, 0,
+                                 0.5, 0.0);
+                                 
+  //second toolbook page
+   o = e_widget_list_add(evas, 0, 0);
 
-   return o;
+   
+   of = e_widget_framelist_add(evas, _("Alert"), 0);
+   e_widget_framelist_content_align_set(of, 0.0, 0.0);
+
+   ow = e_widget_check_add(evas, _("Show full disk alert"),
+                           &(cfdata->show_alert));
+   e_widget_on_change_hook_set(ow, _cb_show_alert_changed, cfdata);                           
+   e_widget_framelist_object_append(of, ow);    
+   ow = e_widget_label_add(evas, _("Capacity limit:"));
+   e_widget_framelist_object_append(of, ow);  
+   cfdata->ui.show_alert_label = ow;
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f %%"), 0, 100, 1, 0,
+                            NULL, &(cfdata->alert_percent), 100);
+   cfdata->ui.show_alert_percent = ow;
+   e_widget_framelist_object_append(of, ow);   
+   ow = e_widget_check_add(evas, _("Auto dismiss in..."),
+                           &(cfdata->dismiss_alert));
+   cfdata->ui.dismiss_alert_label = ow;
+   e_widget_on_change_hook_set(ow, _cb_dismiss_alert_changed, cfdata);
+   e_widget_framelist_object_append(of, ow);   
+   ow = e_widget_slider_add(evas, 1, 0, _("%1.0f s"), 1, 300, 1, 0, 
+                            NULL, &(cfdata->alert_timeout), 100);
+   cfdata->ui.alert_timeout = ow;
+   e_widget_framelist_object_append(of, ow);                           
+   e_widget_list_object_append(o, of, 1, 1, 0.5);    
+   
+   _cb_show_alert_changed(cfdata, NULL);                     
+                                 
+   e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 1, 0, 1, 0,
+                                 0.5, 0.0);                                 
+                                 
+   e_widget_toolbook_page_show(otb, 0);
+   return otb;
 }
 
 static int
@@ -212,7 +304,20 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    places_conf->show_root = cfdata->show_root;
    places_conf->show_temp = cfdata->show_temp;
    places_conf->show_bookm = cfdata->show_bookm;
-
+   
+    if (cfdata->show_alert)
+     {
+        _ensure_alert_time(cfdata);
+        places_conf->alert_p = cfdata->alert_percent;
+     }
+   else
+        places_conf->alert_p = 0;
+   
+    if ((cfdata->dismiss_alert) && (cfdata->alert_timeout > 0))
+     places_conf->alert_timeout = cfdata->alert_timeout;
+   else
+     places_conf->alert_timeout = 0;
+   
    const char *fm = eina_stringshare_add(cfdata->fm);
    eina_stringshare_del(places_conf->fm);
    places_conf->fm = fm;

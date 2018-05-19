@@ -353,9 +353,6 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_menu_item_label_set(mi, clip->name);
       e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, clip);
     }
-    /* revert list back if selected  */
-    if (clip_cfg->hist_reverse)
-      clip_inst->items=eina_list_reverse(clip_inst->items);
   }
   else {
     mi = e_menu_item_new(inst->menu);
@@ -645,6 +642,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 {
   EINA_SAFETY_ON_NULL_RETURN(data);
   Instance *inst = data;
+  e_gadcon_locked_set(inst->gcc->gadcon, 0);
+  edje_object_signal_emit(inst->o_button, "e,state,unfocused", "e");
   if (inst->menu) {
     e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
     e_object_del(E_OBJECT(inst->menu));

@@ -274,6 +274,7 @@ e_entry_focus(Evas_Object *entry)
    if ((sd->enabled) && (!sd->noedit))
      evas_object_focus_set(sd->entry_object, EINA_TRUE);
    edje_object_signal_emit(sd->entry_object, "e,state,focused", "e");
+   edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object), "e,state,focused", "e");
 
    edje_object_part_text_cursor_end_set(sd->entry_object, ENTRY_PART_NAME, EDJE_CURSOR_MAIN);
    if ((sd->enabled) && (!sd->noedit))
@@ -300,6 +301,7 @@ e_entry_unfocus(Evas_Object *entry)
      return;
 
    edje_object_signal_emit(sd->entry_object, "e,state,unfocused", "e");
+   edje_object_signal_emit(e_scrollframe_edje_object_get(sd->scroll_object), "e,state,unfocused", "e");
    evas_object_focus_set(sd->entry_object, EINA_FALSE);
    edje_object_signal_emit(sd->entry_object, "e,action,hide,cursor", "e");
    sd->focused = EINA_FALSE;
