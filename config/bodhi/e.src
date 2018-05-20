@@ -331,9 +331,9 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "pager";
                     value "id" string: "pager";
-                    value "geom.pos" int: 1610;
-                    value "geom.size" int: 149;
-                    value "geom.res" int: 1898;
+                    value "geom.pos" int: 2258;
+                    value "geom.size" int: 141;
+                    value "geom.res" int: 2538;
                     value "geom.pos_x" double: 0.0000000000000000000000000;
                     value "geom.pos_y" double: 0.0000000000000000000000000;
                     value "geom.size_w" double: 0.0000000000000000000000000;
@@ -441,7 +441,7 @@ group "E_Config" struct {
                     value "geom.size_w" double: 0.0000000000000000000000000;
                     value "geom.size_h" double: 0.0000000000000000000000000;
                     value "state_info.seq" int: 8;
-                    value "state_info.flags" int: 3;
+                    value "state_info.flags" int: 1;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -618,6 +618,118 @@ group "E_Config" struct {
         }
     }
     group "remembers" list {
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_config::_e_exec_error_exit_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 0;
+            value "prop.pos_y" int: 0;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
+            value "prop.pos_w" int: 270;
+            value "prop.pos_h" int: 72;
+            value "prop.w" int: 270;
+            value "prop.h" int: 72;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
+        group "E_Remember" struct {
+            value "match" int: 51;
+            value "no_reopen" int: 0;
+            value "apply_first_only" uchar: 0;
+            value "keep_settings" uchar: 0;
+            value "name" string: "E";
+            value "class" string: "_e_exec_run_error_dialog";
+            value "type" int: 8;
+            value "transient" uchar: 0;
+            value "apply" int: 19;
+            value "max_score" int: 0;
+            value "prop.pos_x" int: 1138;
+            value "prop.pos_y" int: 592;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
+            value "prop.pos_w" int: 275;
+            value "prop.pos_h" int: 127;
+            value "prop.w" int: 275;
+            value "prop.h" int: 127;
+            value "prop.layer" int: 0;
+            value "prop.lock_user_location" uchar: 0;
+            value "prop.lock_client_location" uchar: 0;
+            value "prop.lock_user_size" uchar: 0;
+            value "prop.lock_client_size" uchar: 0;
+            value "prop.lock_user_stacking" uchar: 0;
+            value "prop.lock_client_stacking" uchar: 0;
+            value "prop.lock_user_iconify" uchar: 0;
+            value "prop.lock_client_iconify" uchar: 0;
+            value "prop.lock_user_desk" uchar: 0;
+            value "prop.lock_client_desk" uchar: 0;
+            value "prop.lock_user_sticky" uchar: 0;
+            value "prop.lock_client_sticky" uchar: 0;
+            value "prop.lock_user_shade" uchar: 0;
+            value "prop.lock_client_shade" uchar: 0;
+            value "prop.lock_user_maximize" uchar: 0;
+            value "prop.lock_client_maximize" uchar: 0;
+            value "prop.lock_user_fullscreen" uchar: 0;
+            value "prop.lock_client_fullscreen" uchar: 0;
+            value "prop.lock_border" uchar: 0;
+            value "prop.lock_close" uchar: 0;
+            value "prop.lock_focus_in" uchar: 0;
+            value "prop.lock_focus_out" uchar: 0;
+            value "prop.lock_life" uchar: 0;
+            value "prop.sticky" uchar: 0;
+            value "prop.shaded" uchar: 0;
+            value "prop.skip_winlist" uchar: 0;
+            value "prop.skip_pager" uchar: 0;
+            value "prop.skip_taskbar" uchar: 0;
+            value "prop.fullscreen" uchar: 0;
+            value "prop.desk_x" int: 0;
+            value "prop.desk_y" int: 0;
+            value "prop.zone" int: 0;
+            value "prop.head" int: 0;
+            value "prop.icon_preference" uchar: 0;
+            value "prop.offer_resistance" uchar: 0;
+        }
         group "E_Remember" struct {
             value "match" int: 51;
             value "no_reopen" int: 0;
@@ -1245,14 +1357,14 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 1546;
-            value "prop.pos_y" int: 0;
-            value "prop.res_x" int: 1912;
-            value "prop.res_y" int: 970;
+            value "prop.pos_x" int: 272;
+            value "prop.pos_y" int: 48;
+            value "prop.res_x" int: 800;
+            value "prop.res_y" int: 600;
             value "prop.pos_w" int: 248;
-            value "prop.pos_h" int: 325;
+            value "prop.pos_h" int: 317;
             value "prop.w" int: 248;
-            value "prop.h" int: 325;
+            value "prop.h" int: 317;
             value "prop.layer" int: 0;
             value "prop.lock_user_location" uchar: 0;
             value "prop.lock_client_location" uchar: 0;
@@ -1357,10 +1469,10 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 438;
-            value "prop.pos_y" int: 186;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
+            value "prop.pos_x" int: 254;
+            value "prop.pos_y" int: 62;
+            value "prop.res_x" int: 800;
+            value "prop.res_y" int: 600;
             value "prop.pos_w" int: 292;
             value "prop.pos_h" int: 405;
             value "prop.w" int: 292;
@@ -1413,14 +1525,14 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 452;
-            value "prop.pos_y" int: 233;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
-            value "prop.pos_w" int: 264;
-            value "prop.pos_h" int: 312;
-            value "prop.w" int: 264;
-            value "prop.h" int: 312;
+            value "prop.pos_x" int: 1144;
+            value "prop.pos_y" int: 497;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
+            value "prop.pos_w" int: 516;
+            value "prop.pos_h" int: 390;
+            value "prop.w" int: 516;
+            value "prop.h" int: 390;
             value "prop.layer" int: 0;
             value "prop.lock_user_location" uchar: 0;
             value "prop.lock_client_location" uchar: 0;
@@ -1805,10 +1917,10 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 0;
-            value "prop.pos_y" int: 0;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
+            value "prop.pos_x" int: 295;
+            value "prop.pos_y" int: 154;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
             value "prop.pos_w" int: 292;
             value "prop.pos_h" int: 407;
             value "prop.w" int: 292;
@@ -1917,14 +2029,14 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 144;
-            value "prop.pos_y" int: 330;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
-            value "prop.pos_w" int: 873;
-            value "prop.pos_h" int: 125;
-            value "prop.w" int: 873;
-            value "prop.h" int: 125;
+            value "prop.pos_x" int: 836;
+            value "prop.pos_y" int: 594;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
+            value "prop.pos_w" int: 827;
+            value "prop.pos_h" int: 131;
+            value "prop.w" int: 827;
+            value "prop.h" int: 131;
             value "prop.layer" int: 0;
             value "prop.lock_user_location" uchar: 0;
             value "prop.lock_client_location" uchar: 0;
@@ -1973,10 +2085,10 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 499;
-            value "prop.pos_y" int: 351;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
+            value "prop.pos_x" int: 1191;
+            value "prop.pos_y" int: 615;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
             value "prop.pos_w" int: 170;
             value "prop.pos_h" int: 112;
             value "prop.w" int: 170;
@@ -2029,10 +2141,10 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 478;
-            value "prop.pos_y" int: 351;
-            value "prop.res_x" int: 1168;
-            value "prop.res_y" int: 848;
+            value "prop.pos_x" int: 1170;
+            value "prop.pos_y" int: 615;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
             value "prop.pos_w" int: 211;
             value "prop.pos_h" int: 112;
             value "prop.w" int: 211;
@@ -4605,10 +4717,10 @@ group "E_Config" struct {
             value "transient" uchar: 0;
             value "apply" int: 19;
             value "max_score" int: 0;
-            value "prop.pos_x" int: 716;
-            value "prop.pos_y" int: 321;
-            value "prop.res_x" int: 1912;
-            value "prop.res_y" int: 970;
+            value "prop.pos_x" int: 1036;
+            value "prop.pos_y" int: 524;
+            value "prop.res_x" int: 2552;
+            value "prop.res_y" int: 1376;
             value "prop.pos_w" int: 480;
             value "prop.pos_h" int: 260;
             value "prop.w" int: 480;
@@ -5911,211 +6023,19 @@ group "E_Config" struct {
             value "priority" int: 100;
         }
         group "E_Config_Module" struct {
-            value "name" string: "backlight";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "engage";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "epulse";
+            value "name" string: "clipboard";
             value "enabled" uchar: 1;
             value "delayed" uchar: 0;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "ecomorph";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "places";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "systray";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "tasks";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "mixer";
+            value "name" string: "connman";
             value "enabled" uchar: 0;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "conf_window_remembers";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_interaction";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "fileman";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "fileman_opinfo";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_window_manipulation";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_theme";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_shelves";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_performance";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_edgebindings";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_paths";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_menus";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_keybindings";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_intl";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_display";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_dialogs";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_applications";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_randr";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "xkbswitch";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "winlist";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "pager";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "temperature";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "clock";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "ibox";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "ibar";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "start";
-            value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "syscon";
+            value "name" string: "shot";
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
@@ -6127,20 +6047,206 @@ group "E_Config" struct {
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "shot";
+            value "name" string: "syscon";
             value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "connman";
+            value "name" string: "start";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ibar";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ibox";
             value "enabled" uchar: 0;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "clipboard";
+            value "name" string: "clock";
             value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "temperature";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "pager";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "winlist";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "xkbswitch";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_randr";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_applications";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_dialogs";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_display";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_intl";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_keybindings";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_menus";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_paths";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_edgebindings";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_performance";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_shelves";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_theme";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_window_manipulation";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "fileman_opinfo";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "fileman";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_interaction";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "conf_window_remembers";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "mixer";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "tasks";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "systray";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "places";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "ecomorph";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "engage";
+            value "enabled" uchar: 0;
+            value "delayed" uchar: 1;
+            value "priority" int: 0;
+        }
+        group "E_Config_Module" struct {
+            value "name" string: "backlight";
+            value "enabled" uchar: 0;
             value "delayed" uchar: 0;
             value "priority" int: 0;
         }
@@ -6312,6 +6418,7 @@ group "E_Config" struct {
     value "screen_limits" int: 0;
     value "thumb_nice" int: 0;
     value "menu_favorites_show" int: 1;
+    value "menu_scroll_toggle" int: 0;
     value "menu_apps_show" int: 1;
     value "menu_gadcon_client_toplevel" int: 0;
     value "ping_clients_interval" int: 128;
@@ -6339,7 +6446,7 @@ group "E_Config" struct {
     value "scale.use_custom" uchar: 1;
     value "show_cursor" uchar: 1;
     value "idle_cursor" uchar: 1;
-    value "default_system_menu" string: "/etc/xdg/menus/moksha-applications.menu";
+    value "default_system_menu" string: "/etc/xdg/menus/lxde-applications.menu";
     value "cfgdlg_normal_wins" uchar: 1;
     value "syscon.main.icon_size" int: 64;
     value "syscon.secondary.icon_size" int: 48;
