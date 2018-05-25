@@ -5,33 +5,6 @@
 
 char * _sanitize_ln(char *text, const unsigned int n, const int mode);
 
-#ifndef HAVE_STRNDUP
-char *
-strndup(const char *s, size_t n)
-{
-  char *ret = malloc(n + 1);
-  if (!ret) return NULL;
-
-  memcpy(ret, s, n);
-  ret[n] = 0;
-
-  return (char *) ret;
-}
-#endif
-
-#ifndef HAVE_STRDUP
-char *
-strdup (const char *s)
-{
-  size_t len = strlen(s) + 1;
-  void *ret = malloc(len);
-
-  if (!ret) return NULL;
-
-  return (char *) memcpy(ret, s, len);
-}
-#endif
-
 char *strip_whitespace(char *str, int mode);
 int isnewline(const int c);
 
@@ -40,7 +13,6 @@ set_clip_content(char **content, char* text, int mode)
 {
   Eina_Bool ret = EINA_TRUE;
   char *temp, *trim;
-
   /* Sanity check */
   if (!text) {
     WRN("ERROR: Text is NULL\n");
@@ -96,7 +68,6 @@ set_clip_name(char **name, char * text, int mode, int n)
   /* to be continued latter */
   if (name)
     *name = _sanitize_ln(text, n, mode);
-    //~ *name = text;
   else {
     ERR("Error: Clip name pointer is Null!!");
     return EINA_FALSE;
