@@ -116,9 +116,9 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(text, NULL);
 
-  char *ret = malloc(n + 1);
+  char *ret = calloc(n + 1, sizeof(char));
   char *temp = ret;
-  unsigned int chr,i = 0;
+  unsigned int chr, k, i = 0;
 
   if (!ret) return NULL;
 
@@ -129,11 +129,11 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
     chr = *text;
     if (chr == 0)
       break;
-    if ((chr < 32) && (chr >0)) {
+    if ((chr < 32)) {
       /* is it a tab */
       if (chr == 9){
         // default tab
-        for (i=0; i + 4; i++){
+        for (k=0; k<4; k++, i++){
           if (i == n) break;
           *temp++ = ' ';
         }
@@ -147,13 +147,11 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
     
     /* assume char is ok and add to temp buffer */
     *temp++ = *text++;
-    
     i++;
     }
     if (i == n) break;
   }
   *temp = 0;
-      
 
   return ret;
 }
