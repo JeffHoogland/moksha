@@ -144,7 +144,7 @@ static void
 _e_smart_child_resize_hook(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Smart_Data *sd;
-   Evas_Coord w, h;
+   Evas_Coord w = 0, h = 0;
 
    sd = data;
    if (!sd->child_obj) return;
@@ -173,10 +173,14 @@ _e_smart_add(Evas_Object *obj)
    sd = E_NEW(E_Smart_Data, 1);
    if (!sd) return;
    sd->smart_obj = obj;
+   sd->px = 0;
+   sd->py = 0;
    sd->x = 0;
    sd->y = 0;
    sd->w = 0;
    sd->h = 0;
+   sd->child_w = 0;
+   sd->child_h = 0;
    evas_object_smart_data_set(obj, sd);
 }
 
