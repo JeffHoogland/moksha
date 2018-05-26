@@ -166,7 +166,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     int size = 0;
     int str_len = 0;
     unsigned int i =0;
-    long item_num = 0;
+    unsigned int item_num = 0;
     long version = 0;
 
     /* Open history file */
