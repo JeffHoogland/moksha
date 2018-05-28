@@ -2926,12 +2926,12 @@ _e_gadcon_cb_dnd_enter(void *data, const char *type __UNUSED__, void *event)
 
                   w = gc->zone->w;
                   h = gc->zone->h;
-                  if ((!gc->new_gcc->config.pos_x) && (!gc->new_gcc->config.pos_y))
+                  if ((!EINA_DBL_NONZERO(gc->new_gcc->config.pos_x)) && (!EINA_DBL_NONZERO(gc->new_gcc->config.pos_y)))
                     {
                        gc->new_gcc->config.pos_x = (double)ev->x / (double)w;
                        gc->new_gcc->config.pos_y = (double)ev->y / (double)h;
                     }
-                  if ((!gc->new_gcc->config.size_w) && (!gc->new_gcc->config.size_h))
+                  if ((!EINA_DBL_NONZERO(gc->new_gcc->config.size_w)) && (!EINA_DBL_NONZERO(gc->new_gcc->config.size_h)))
                     {
                        evas_object_geometry_get(gcc->o_frame ?: gcc->o_base, NULL, NULL, &gw, &gh);
                        gc->new_gcc->config.size_w = (double)gw / (double)w;

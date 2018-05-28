@@ -925,7 +925,8 @@ _apply_widget_position(E_Gadcon_Client *gcc)
    /* something broke the config's geom, make it visible so it can be
     * resized/deleted
     */
-   if ((!gcc->cf->geom.pos_x) && (!gcc->cf->geom.pos_y) && (!gcc->cf->geom.size_w) && (!gcc->cf->geom.size_h))
+   if (!EINA_DBL_NONZERO(gcc->cf->geom.pos_x) && !EINA_DBL_NONZERO(gcc->cf->geom.pos_y) 
+      && !EINA_DBL_NONZERO(gcc->cf->geom.size_w) && !EINA_DBL_NONZERO(gcc->cf->geom.size_h))
      {
         gcc->cf->style = eina_stringshare_add(gcc->client_class->default_style ?: E_GADCON_CLIENT_STYLE_INSET);
         gcc->style = eina_stringshare_ref(gcc->cf->style);
