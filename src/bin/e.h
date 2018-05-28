@@ -17,8 +17,8 @@
 # define USE_IPC
 # if 0
 #  define OBJECT_PARANOIA_CHECK
-#  define OBJECT_CHECK
 # endif
+# define OBJECT_CHECK
 
 # ifndef _FILE_OFFSET_BITS
 #  define _FILE_OFFSET_BITS 64

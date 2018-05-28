@@ -539,7 +539,7 @@ e_manager_comp_set(E_Manager *man, E_Manager_Comp *comp)
 EAPI Evas *
 e_manager_comp_evas_get(E_Manager *man)
 {
-   E_OBJECT_CHECK(man);
+   E_OBJECT_CHECK_RETURN(man, NULL);
    E_OBJECT_TYPE_CHECK_RETURN(man, E_MANAGER_TYPE, NULL);
    if (!man->comp) return NULL;
    return man->comp->func.evas_get(man->comp->data, man);

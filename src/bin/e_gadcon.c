@@ -560,8 +560,8 @@ e_gadcon_populate(E_Gadcon *gc)
    Eina_List *l;
    E_Config_Gadcon_Client *cf_gcc;
 
-   E_OBJECT_CHECK(gc);
-   E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+   E_OBJECT_CHECK_RETURN(gc, EINA_FALSE);
+   E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, EINA_FALSE);
    e_gadcon_layout_freeze(gc->o_container);
    EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
      {
@@ -639,7 +639,9 @@ e_gadcon_orient(E_Gadcon *gc, E_Gadcon_Orient orient)
 
    E_OBJECT_CHECK(gc);
    E_OBJECT_IF_NOT_TYPE(gc, E_GADCON_DUMMY_TYPE)
-     E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+     {
+        E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
+     }
    if (gc->orient == orient) return;
    gc->orient = orient;
    if (gc->dummy) return;
@@ -1491,8 +1493,8 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
 {
    int gx = 0, gy = 0;
 
-   E_OBJECT_CHECK(gcc);
-   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   E_OBJECT_CHECK_RETURN(gcc, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(gcc, E_GADCON_CLIENT_TYPE, 0);
    if (!e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gx, &gy, NULL, NULL))
      return 0;
    if (gcc->o_base) evas_object_geometry_get(gcc->o_base, x, y, w, h);
@@ -1504,8 +1506,8 @@ e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *
 EAPI int
 e_gadcon_client_viewport_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h)
 {
-   E_OBJECT_CHECK(gcc);
-   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   E_OBJECT_CHECK_RETURN(gcc, 0);
+   E_OBJECT_TYPE_CHECK_RETURN(gcc, E_GADCON_CLIENT_TYPE, 0);
 
    if (gcc->o_box) evas_object_geometry_get(gcc->o_base, x, y, w, h);
    else if (gcc->o_base)
@@ -1706,8 +1708,8 @@ e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget
    E_Menu_Item *mi;
    char buf[256];
 
-   E_OBJECT_CHECK(gcc);
-   E_OBJECT_TYPE_CHECK(gcc, E_GADCON_CLIENT_TYPE);
+   E_OBJECT_CHECK_RETURN(gcc, NULL);
+   E_OBJECT_TYPE_CHECK_RETURN(gcc, E_GADCON_CLIENT_TYPE, NULL);
 
    if (e_config->menu_gadcon_client_toplevel)
      menu_main = menu_gadget;

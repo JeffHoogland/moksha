@@ -631,7 +631,9 @@ e_shelf_orient(E_Shelf *es, E_Gadcon_Orient orient)
 
    E_OBJECT_CHECK(es);
    E_OBJECT_IF_NOT_TYPE(es, E_SHELF_DUMMY_TYPE)
-     E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+     {
+        E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
+     }
 
    if (!es->dummy)
      {
