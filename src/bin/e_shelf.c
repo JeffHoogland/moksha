@@ -914,13 +914,13 @@ e_shelf_desk_visible(E_Shelf *es, E_Desk *desk)
           }
         return EINA_FALSE;
      }
-   if (!es->cfg->desk_show_mode) return EINA_TRUE;
    cf_es = es->cfg;
    if (!cf_es) return EINA_FALSE;
 
    zone = desk->zone;
    if (cf_es->zone != (int)zone->num) return EINA_FALSE;
-
+   if (!es->cfg->desk_show_mode) return EINA_TRUE;
+   
    EINA_LIST_FOREACH(es->cfg->desk_list, ll, sd)
      {
         if (!sd) continue;
