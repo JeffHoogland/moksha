@@ -327,7 +327,7 @@ e_font_fallback_remove(const char *font)
 
    EINA_LIST_FOREACH(e_config->font_fallbacks, next, eff)
      {
-        if (!strcmp(eff->name, font))
+        if (!e_util_strcmp(eff->name, font))
           {
              e_config->font_fallbacks =
                eina_list_remove_list(e_config->font_fallbacks, next);
@@ -412,7 +412,7 @@ e_font_default_remove(const char *text_class)
    /* search for the text class */
    EINA_LIST_FOREACH(e_config->font_defaults, next, efd)
      {
-        if (!strcmp(efd->text_class, text_class))
+        if (!e_util_strcmp(efd->text_class, text_class))
           {
              e_config->font_defaults =
                eina_list_remove_list(e_config->font_defaults, next);
