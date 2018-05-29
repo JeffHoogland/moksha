@@ -26,8 +26,8 @@
 #ifdef OBJECT_PARANOIA_CHECK
 # define E_OBJECT_CHECK(x)                       do {if (e_object_error(E_OBJECT(x))) return;} while (0)
 # define E_OBJECT_CHECK_RETURN(x, ret)           do {if (e_object_error(E_OBJECT(x))) return ret;} while (0)
-#  define E_OBJECT_TYPE_CHECK(x, tp)             do {if ((E_OBJECT(x)->type) != (tp)) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return;} } while (0)
-#  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret) do {if ((E_OBJECT(x)->type) != tp) { fprintf(stderr, "Object type check failed in %s\n", __FUNCTION__); return ret;} } while (0)
+#  define E_OBJECT_TYPE_CHECK(x, tp)             do {if ((E_OBJECT(x)->type) != (tp)) { CRI("Object type check failed in %s", __FUNCTION__); return;} } while (0)
+#  define E_OBJECT_TYPE_CHECK_RETURN(x, tp, ret) do {if ((E_OBJECT(x)->type) != tp) { CRI("Object type check failed in %s", __FUNCTION__); return ret;} } while (0)
 #  define E_OBJECT_IF_NOT_TYPE(x, tp)            if (E_OBJECT(x)->type != (tp))
 #else
 # ifdef OBJECT_CHECK
