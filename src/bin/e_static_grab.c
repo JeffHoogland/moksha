@@ -337,7 +337,7 @@ _e_static_grab_x(E_Static_Grab *grab)
                           break;
                        }
 
-                     buffer = alloca(strlen(MODULE_OF) + strlen(module->name));
+                     buffer = alloca(strlen(MODULE_OF) + strlen(module->name) + 1);
                      sprintf(buffer, MODULE_OF, module->name);
 
                      if (_e_static_grab_string(current, line->end, buffer, &vendor))
