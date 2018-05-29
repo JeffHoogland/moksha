@@ -27,11 +27,11 @@ EINTERN int e_log_shutdown(void);
 #undef WRN
 #undef ERR
 #undef CRI
-#define DBG(...)            printf(__VA_ARGS__); putc('\n', stdout)
-#define INF(...)            printf(__VA_ARGS__); putc('\n', stdout)
-#define WRN(...)            printf(__VA_ARGS__); putc('\n', stdout)
-#define ERR(...)            printf(__VA_ARGS__); putc('\n', stdout)
-#define CRI(...)            printf(__VA_ARGS__); putc('\n', stdout)
+#define DBG(...)            do { printf(__VA_ARGS__); putc('\n', stdout); } while(0)
+#define INF(...)            do { printf(__VA_ARGS__); putc('\n', stdout); } while(0)
+#define WRN(...)            do { printf(__VA_ARGS__); putc('\n', stdout); } while(0)
+#define ERR(...)            do { printf(__VA_ARGS__); putc('\n', stdout); } while(0)
+#define CRI(...)            do { printf(__VA_ARGS__); putc('\n', stdout); } while(0)
 #endif
 
 #endif
