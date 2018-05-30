@@ -127,10 +127,11 @@ e_modapi_init(E_Module *m)
 			     "inconvenience.<br>");
           }
      }
-
    /* if we don't have a config yet, or it got erased above,
     * then create a default one */
    if (!places_conf) _places_conf_new();
+   E_CONFIG_LIMIT(places_conf->alert_p, 0, 100);
+   E_CONFIG_LIMIT(places_conf->alert_timeout, 0, 300);
 
    places_conf->module = m;
    e_gadcon_provider_register(&_gc_class);
