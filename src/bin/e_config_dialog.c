@@ -35,7 +35,13 @@ EAPI E_Config_Dialog *
 e_config_dialog_new(E_Container *con, const char *title, const char *name, const char *class, const char *icon, int icon_size, E_Config_Dialog_View *view, void *data)
 {
    E_Config_Dialog *cfd;
-
+   // Bodhi Hack since e randr stuff is disabled
+   if (!e_util_strcmp(class, "screen/screen_setup"))
+      {   // FIXME: should test to see if it exists first.
+          //        as wellas inform user if not installed.
+          e_util_exe_safe_run("arandr", NULL);
+          return NULL;
+      }
    cfd = E_OBJECT_ALLOC(E_Config_Dialog, E_CONFIG_DIALOG_TYPE,
                         _e_config_dialog_free);
    cfd->view = view;
@@ -505,4 +511,3 @@ e_config_dialog_changed_set(E_Config_Dialog *cfd, unsigned char value)
    else
      _e_config_dialog_unchanged(cfd);
 }
-

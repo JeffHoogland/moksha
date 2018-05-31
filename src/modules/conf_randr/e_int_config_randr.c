@@ -58,6 +58,11 @@ static void *
 _create_data(E_Config_Dialog *cfd EINA_UNUSED)
 {
    E_Config_Dialog_Data *cfdata;
+   
+   /* Bodhi hack
+    * e_randr_cfg is not initialized by Moksha
+    *    while we should never reach here if we do moksha segfaults */
+   EINA_SAFETY_ON_NULL_RETURN_VAL(e_randr_cfg, NULL);
 
    /* try to allocate the config data structure */
    if (!(cfdata = E_NEW(E_Config_Dialog_Data, 1)))
