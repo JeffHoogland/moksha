@@ -163,14 +163,14 @@ _create_menus_list(Evas *evas, E_Config_Dialog_Data *cfdata)
         tdesc = NULL;
         e_user_homedir_concat(buf, sizeof(buf), 
                               ".config/menus/applications.menu");
-        snprintf(buf2, sizeof(buf2), "%s/etc/xdg/menus/e-applications.menu", 
+        snprintf(buf2, sizeof(buf2), "%s/etc/xdg/menus/moksha-applications.menu", 
                  e_prefix_get());
         if (!strcmp("/etc/xdg/menus/applications.menu", file))
           {
              label = _("System Default");
              if (!cfdata->default_system_menu) sel = i;
           }
-        else if (!strcmp(buf2, file))
+        else if (!strcmp(buf2, file) || !strcmp("/etc/xdg/menus/moksha-applications.menu", file))
           {
              label = _("Moksha Default");
              if (cfdata->default_system_menu)
@@ -300,7 +300,6 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    ol = e_widget_list_add(evas, 0, 0);
    ow = e_widget_check_add(evas, _(" No Menu Scroll (Experimental)"), &(cfdata->scroll_toggle));
-   e_widget_list_object_append(ol, ow); 
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Menu Scroll Speed"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);

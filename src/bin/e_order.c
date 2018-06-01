@@ -32,12 +32,12 @@ e_order_init(void)
              char buf[PATH_MAX];
 
              E_FREE(menu_file);
-             snprintf(buf, sizeof(buf), "/etc/xdg/menus/e-applications.menu");
+             snprintf(buf, sizeof(buf), "/etc/xdg/menus/moksha-applications.menu");
              if (ecore_file_exists(buf)) menu_file = strdup(buf);
              else
                {
                   snprintf(buf, sizeof(buf),
-                           "%s/etc/xdg/menus/e-applications.menu",
+                           "%s/etc/xdg/menus/moksha-applications.menu",
                            e_prefix_get());
                   if (ecore_file_exists(buf)) menu_file = strdup(buf);
                }
@@ -319,4 +319,3 @@ _e_order_cb_efreet_cache_update(void *data __UNUSED__, int ev_type __UNUSED__, v
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
