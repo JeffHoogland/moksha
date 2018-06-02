@@ -13,7 +13,8 @@ typedef struct _Volume Volume;
 struct _Volume
 {
    const char *id;
-
+   int perc_backup;
+   
    const char *label;
    const char *icon;
    const char *device;
@@ -22,6 +23,7 @@ struct _Volume
    unsigned long long size;
    unsigned long long free_space;
    Eina_Bool mounted;
+
 
    const char *bus;
    const char *drive_type;
