@@ -642,9 +642,13 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 {
   EINA_SAFETY_ON_NULL_RETURN(data);
   Instance *inst = data;
+#if 0
+  // FIXME
+  // this fixes autohide issue but causes seg fault on key bindings
   e_gadcon_locked_set(inst->gcc->gadcon, 0);
   if (inst->o_button && e_icon_edje_get(inst->o_button))
      e_icon_edje_emit(inst->o_button, "e,state,unfocused", "e");
+#endif
   if (inst->menu) {
     e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
     e_object_del(E_OBJECT(inst->menu));
