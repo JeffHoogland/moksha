@@ -2,6 +2,8 @@
 
 #define __USE_MISC
 #define _SVID_SOURCE
+#define _DEFAULT_SOURCE
+
 #ifdef HAVE_FEATURES_H
 # include <features.h>
 #endif

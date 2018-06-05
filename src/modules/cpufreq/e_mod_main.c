@@ -996,7 +996,7 @@ _cpufreq_event_cb_powersave(void *data __UNUSED__, int type, void *event)
                _cpufreq_set_governor("conservative");
              break;
           }
-
+        // fall through
       case E_POWERSAVE_MODE_EXTREME:
         if (has_powersave)
           _cpufreq_set_governor("powersave");

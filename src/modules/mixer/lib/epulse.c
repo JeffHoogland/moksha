@@ -584,6 +584,7 @@ _epulse_pa_state_cb(pa_context *context, void *data)
 
       case PA_CONTEXT_TERMINATED:
          ERR("PA_CONTEXT_TERMINATE:");
+         // fall through
       default:
          exit(0);
          return;

@@ -17,7 +17,7 @@ e_about_new(E_Container *con)
 
    od = e_obj_dialog_new(con, _("About Moksha"), "E", "_about");
    if (!od) return NULL;
-   snprintf(version, 6, "%s", VERSION);
+   snprintf(version, 6, "%.5s", VERSION);
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title", _("Moksha"));

@@ -1097,6 +1097,7 @@ e_border_hide(E_Border *bd,
            case 2: break;
            case 3:
              bd->hidden = 1;
+             // fall through
            case 1:
            default:
                if (!e_manager_comp_evas_get(bd->zone->container->manager))

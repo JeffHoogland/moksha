@@ -394,7 +394,7 @@ e_intl_imc_personal_path_get(void)
         e_user_dir_concat_static(buf, "input_methods");
         _e_intl_imc_personal_path = eina_stringshare_add(buf);
      }
-   return _e_intl_imc_personal_path;
+   return _e_intl_imc_personal_path; // fall through
 }
 
 const char *
@@ -716,18 +716,18 @@ e_intl_locale_parts_get(const char *locale)
       case 0:
         language[tmp_idx] = 0;
         tmp_idx = 0;
-
+        // fall through
       case 1:
         territory[tmp_idx] = 0;
         tmp_idx = 0;
-
+        // fall through
       case 2:
         codeset[tmp_idx] = 0;
         tmp_idx = 0;
-
+        // fall through
       case 3:
         modifier[tmp_idx] = 0;
-
+        // fall through
       default:
         break;
      }
