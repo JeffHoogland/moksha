@@ -5,6 +5,11 @@ group "E_Config" struct {
             value "val" string: "gtk";
             value "unset" uchar: 0;
         }
+        group "E_Config_Env_Var" struct {
+            value "var" string: "XDG_MENU_PREFIX";
+            value "val" string: "lxde-";
+            value "unset" uchar: 0;
+        }
     }
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
@@ -6259,7 +6264,7 @@ group "E_Config" struct {
     }
     value "config_version" int: 1000007;
     value "show_splash" int: 1;
-    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/default.edj";
+    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
     value "desktop_default_background" string: "/usr/share/enlightenment/data/backgrounds/Bodhi_Background.edj";
     value "desktop_default_name" string: "%i-%i";
     value "desktop_default_window_profile" string: "standard";
