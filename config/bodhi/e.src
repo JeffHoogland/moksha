@@ -5511,7 +5511,7 @@ group "E_Config" struct {
             value "modifiers" int: 0;
             value "key" string: "XF86MonBrightnessUp";
             value "action" string: "backlight_adjust";
-            value "params" string: "0.1";
+            value "params" string: "10";
             value "any_mod" uchar: 0;
         }
         group "E_Config_Binding_Key" struct {
@@ -5540,7 +5540,7 @@ group "E_Config" struct {
             value "modifiers" int: 0;
             value "key" string: "XF86MonBrightnessDown";
             value "action" string: "backlight_adjust";
-            value "params" string: "-0.1";
+            value "params" string: "-10";
             value "any_mod" uchar: 0;
         }
         group "E_Config_Binding_Key" struct {
@@ -6007,7 +6007,7 @@ group "E_Config" struct {
     group "themes" list {
         group "E_Config_Theme" struct {
             value "category" string: "theme";
-            value "file" string: "/usr/share/enlightenment/data/themes/MokshaArcDark.edj";
+            value "file" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
         }
     }
     group "bad_modules" list {
@@ -6480,7 +6480,7 @@ group "E_Config" struct {
     value "xsettings.match_e17_icon_theme" uchar: 1;
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
-    value "xsettings.net_theme_name" string: "Arc-Dark";
+    value "xsettings.net_theme_name" string: "Arc-Green-Dark";
     value "update.check" uchar: 1;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 0;
