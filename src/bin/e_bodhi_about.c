@@ -11,7 +11,7 @@
     "Rbt 'ylee' Wiley<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
     "Stefan 'the waiter' Uram<br>" \
-    "Stace 'sef' Fauske" \
+    "Stace 'sef' Fauske<br>" \
     "Kai 'kuuko' Huuhko<br>" \
     "Stephen 'okra' Houston<br>" \
     "Patrick Duckson<br>" \
