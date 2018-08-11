@@ -23,7 +23,8 @@ _write_bodhi_desktops(void)
    if (f) 
      {
         fprintf(f, "midori.desktop\n");
-        fprintf(f, "ubiquity.desktop\n");
+        fprintf(f, "pcmanfm.desktop\n");
+        fprintf(f, "eepDater.desktop\n");
         fclose(f);
      }
 }
