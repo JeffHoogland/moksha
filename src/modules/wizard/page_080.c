@@ -22,8 +22,8 @@ _write_bodhi_desktops(void)
    f = fopen(buf, "w");
    if (f) 
      {
-        fprintf(f, "ubiquity.desktop\n");
         fprintf(f, "midori.desktop\n");
+        fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "pcmanfm.desktop\n");
         fprintf(f, "eepDater.desktop\n");
         fclose(f);
