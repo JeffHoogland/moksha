@@ -74,7 +74,10 @@ group { name: "e/modules/clock/digital";
          for (i = 0; i < 14; i += 2) {
             set_state(parts[i], "custom", 0.0);
          }
-         set_min_size(tot * mul, 16);
+         if (mul == 4)
+			set_min_size(tot * mul, 16);
+         else
+			set_min_size(tot * mul * 1.5, 16);
          set_max_size(tot * 8 * mul, 128);
          emit("e,state,sizing,changed", "");
       }
