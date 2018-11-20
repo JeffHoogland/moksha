@@ -21,6 +21,8 @@ struct _Config
 struct _Config_Item
 {
   const char *id;
+  const char *custom_date_const;  
+  
   struct {
       int start, len; // 0->6 0 == sun, 6 == sat, number of days
    } weekend;

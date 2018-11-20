@@ -4,6 +4,7 @@
 struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
+   char *custom_dat;
 };
 
 /* Protos */
@@ -41,14 +42,15 @@ e_int_config_clock_module(E_Container *con, Config_Item *ci)
 static void *
 _create_data(E_Config_Dialog *cfd __UNUSED__)
 {
-   E_Config_Dialog_Data *cfdata;
+   E_Config_Dialog_Data *cfdata = NULL;
    Config_Item *ci;
-
-   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   
    ci = cfd->data;
+   cfdata = E_NEW(E_Config_Dialog_Data, 1);
+   
 
    memcpy(&(cfdata->cfg), ci, sizeof(Config_Item));
-
+    if (ci->custom_date_const) cfdata->custom_dat = strdup(ci->custom_date_const); 
    return cfdata;
 }
 
@@ -70,14 +72,14 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    char daynames[7][64];
    struct tm tm;
    int i;
-
+   
    memset(&tm, 0, sizeof(struct tm));
    for (i = 0; i < 7; i++)
      {
         tm.tm_wday = i;
         strftime(daynames[i], sizeof(daynames[i]), "%A", &tm);
      }
-
+  
    tab = e_widget_table_add(evas, 0);
 
    of = e_widget_frametable_add(evas, _("Clock"), 0);
@@ -110,6 +112,10 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
    ob = e_widget_radio_add(evas, _("ISO 8601"), 4, rg);
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_radio_add(evas, _("Strftime"), 5, rg);
+   e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_entry_add(evas, &(cfdata->custom_dat), NULL, NULL,NULL);
+   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 0, 0); 
 
    e_widget_table_object_append(tab, of, 0, 1, 1, 1, 1, 1, 1, 1);
    
@@ -167,10 +173,15 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 
    ci = cfd->data;
    memcpy(ci, &(cfdata->cfg), sizeof(Config_Item));
+   
+   if (ci->custom_date_const) eina_stringshare_del(ci->custom_date_const);
+   ci->custom_date_const = eina_stringshare_add(cfdata->custom_dat);
+   
    ci->changed = EINA_TRUE;
+   e_config_save_queue();
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
-   e_config_save_queue();
+   
    return 1;
 }
 

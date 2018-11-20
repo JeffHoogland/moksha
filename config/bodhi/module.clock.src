@@ -2,6 +2,7 @@ group "Config" struct {
     group "items" list {
         group "Config_Item" struct {
             value "id" string: "clock";
+            value "custom_date_const" string: "%a, %d. %b";
             value "weekend.start" int: 6;
             value "weekend.len" int: 2;
             value "week.start" int: 1;
