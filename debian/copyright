@@ -4,7 +4,7 @@ Source: https://github.com/JeffHoogland/moksha
 
 Files: *
 Copyright: © 2000 Carsten Haitzler and various contributors (see AUTHORS)
-License:
+License: Expat-custom
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to
  deal in the Software without restriction, including without limitation the
@@ -25,10 +25,19 @@ License:
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Files: debian/*
-Copyright: © 2017 The Bodhi Linux Team <jeffhoogland@linux.com>
-License: GPL-2+
- The Debian packaging information is licensed under the GPL, version 2 or
- later.
-
-On Debian GNU/Linux systems, the complete text of the GNU General
-Public License (version 2) can be found in `/usr/share/common-licenses/GPL-2'.
+Copyright: 2018 Bodhi Linux <moksha@bodhilinux.com>
+License: GPL-3.0+
+ This program is free software: you can redistribute it and/or modify it under
+ the terms of the GNU General Public License as published by the Free Software
+ Foundation, either version 3 of the License, or (at your option) any later
+ version.
+ .
+ This package is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along with
+ this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public License version
+ 3 can be found in "/usr/share/common-licenses/GPL-3".

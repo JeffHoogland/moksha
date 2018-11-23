@@ -12,7 +12,6 @@ export CPPFLAGS
 export CFLAGS
 export LDFLAGS
 
-DEB_HOST_ARCH=$(shell dpkg-architecture -qDEB_HOST_ARCH)
 ARCH_PATH=$(shell dpkg-architecture -qDEB_TARGET_MULTIARCH)
 
 %:

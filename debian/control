@@ -1,17 +1,18 @@
 Source: moksha
 Section: x11
-Priority: extra
+Priority: optional
 Maintainer: Jeff Hoogland <jeffhoogland@linux.com>
 Homepage: http://mokshadesktop.org/
 Build-Depends:  debhelper (>= 9), dh-autoreconf, libefl-dev, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, libedbus-dev
-Standards-Version: 3.8.3
+Standards-Version: 4.1.4
 
 Package: moksha
 Architecture: any
-Provides: enlightenment, bodhi-profile-moksha
+Provides: enlightenment, bodhi-profile-moksha, x-window-manager
 Replaces: enlightenment, e17, bodhi-profile-e17, bodhi-profile-moksha
 Conflicts: e17, e18, e19, e21, e22, bodhi-profile-e17, bodhi-profile-moksha
-Depends: ${shlibs:Depends}, ${misc:Depends}, bodhi-background-edj
+Depends: ${shlibs:Depends}, ${misc:Depends}, bodhi-background-edj, dbus-x11
+Recommends: pm-utils
 Description: Moksha Desktop
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
 
@@ -19,7 +20,7 @@ Package: moksha-dbg
 Architecture: any
 Section: debug
 Depends: ${misc:Depends}, moksha (= ${binary:Version})
-Priority: extra
+Priority: optional
 Description: Moksha Desktop- debugging symbols
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
  .

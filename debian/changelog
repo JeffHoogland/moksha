@@ -1,14 +1,20 @@
-moksha (20180701bodhi30.3.0) unstable; urgency=low
+moksha (20181122bodhi30.3.0) bionic; urgency=low
+
+  *  Štefan Clock Module changes.
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 22 Nov 2018 07:27:49 +0004
+
+moksha (20180701bodhi30.3.0) bionic; urgency=low
 
   *  Bodhi 5.0.0 RC
 
- -- Jeff Hoogland <jeffhoogland@linux.com>  Sun, 15 Mar 2018 02:22:13 +0004
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Wed, 21 Aug 2018 23:20:21 +0004
 
 moksha (20180519bodhi10.3.0) unstable; urgency=low
 
   *  Moksha 0.3.0 test
 
- -- Jeff Hoogland <jeffhoogland@linux.com>  Sun, 15 Mar 2018 02:22:13 +0004
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Thu, 15 Mar 2018 02:22:13 +0004
 
 
 moksha (20180306bodhi10.2.1) unstable; urgency=low
