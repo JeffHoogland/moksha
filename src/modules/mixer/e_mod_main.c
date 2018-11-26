@@ -427,7 +427,7 @@ _popup_new(Instance *inst)
    inst->mute = mixer_context->sink_default->mute;
    inst->check = e_widget_check_add(evas, _("Mute"),
                                     &inst->mute);
-   e_widget_list_object_append(list, inst->check, 1, 9, 0.5);
+   e_widget_list_object_append(list, inst->check, 1, 0, 0.5);
    evas_object_smart_callback_add(inst->check, "changed", _check_changed_cb,
                                   NULL);
 
