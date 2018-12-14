@@ -1187,7 +1187,7 @@ _e_main_shutdown(int errcode)
 {
    int i = 0;
 
-   printf("E17: Begin Shutdown Procedure!\n");
+   printf("Moksha: Begin Shutdown Procedure!\n");
 
    if (_idle_before) ecore_idle_enterer_del(_idle_before);
    _idle_before = NULL;
