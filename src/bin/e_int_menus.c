@@ -702,15 +702,15 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 {
    E_Menu_Item *mi;
    Eina_List *l;
-
+   
    if (menu->entries)
      {
         Efreet_Menu *entry;
 
         EINA_LIST_FOREACH(menu->entries, l, entry)
           {
-             mi = e_menu_item_new(m);
 
+             mi = e_menu_item_new(m);
              _e_int_menus_item_label_set(entry, mi);
 
              if (entry->icon)
@@ -1618,6 +1618,13 @@ _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 
    EINA_LIST_FOREACH(augmentation, l, aug)
      if (aug->del.func) aug->del.func(aug->del.data, m);
+}
+
+EAPI void
+e_int_menus_cache_clear(void)
+{
+   if (_e_int_menus_app_menus)
+     eina_hash_free_buckets(_e_int_menus_app_menus);
 }
 
 static void

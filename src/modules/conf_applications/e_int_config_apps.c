@@ -392,6 +392,7 @@ _save_menu(E_Config_Dialog_Data *cfdata)
      }
    ret = efreet_menu_save(menu, cfdata->data->filename);
    efreet_menu_free(menu);
+   e_int_menus_cache_clear();
    return ret;
 }
 
