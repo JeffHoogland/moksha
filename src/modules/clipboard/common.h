@@ -66,7 +66,6 @@ struct _Mod_Inst
     Ecore_X_Window win;
     /* Timer callback function to reguest Clipboard events */
     Ecore_Timer  *check_timer;
-    Ecore_Timer  *delay_timer;
     
     /* Callback function to handle clipboard events */
     Eina_List *handle;

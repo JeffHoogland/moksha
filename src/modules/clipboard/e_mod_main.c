@@ -56,9 +56,9 @@ static void      _cb_clear_history(Instance *inst);
 static void      _cb_dialog_delete(void *data __UNUSED__);
 static void      _cb_dialog_keep(void *data __UNUSED__);
 static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
-static void      _cb_config_show(void *data__UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_config_show(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool _cb_xclip_apply_data(void *data __UNUSED__);
-static Eina_Bool _cb_xclip_save_data(void *data __UNUSED__);
+static void 	 _cb_xclip_save_data(void);
 
 /*   And then some auxillary functions */
 static void      _clip_config_new(E_Module *m);
@@ -479,20 +479,20 @@ _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Even
 }
 
 static Eina_Bool
-_cb_xclip_apply_data(void *data __UNUSED__)
+_cb_xclip_apply_data(void *data __UNUSED__) 
 {
   Ecore_Exe *exe;
   char buf[PATH_MAX];
   
-  snprintf(buf, sizeof(buf), "cat ~/.xclip_clip.txt | xclip -selection clipboard");
+  snprintf(buf, sizeof(buf), "%s", "cat ~/.xclip_clip.txt | xclip -selection clipboard");
 
   exe = e_util_exe_safe_run(buf, NULL);
   if (exe) ecore_exe_free(exe);
   return ECORE_CALLBACK_DONE;
 }
 
-static Eina_Bool
-_cb_xclip_save_data(void *data __UNUSED__)
+static void 
+_cb_xclip_save_data(void)
 {
   Ecore_Exe *exe;
   char buf[PATH_MAX];
@@ -501,7 +501,7 @@ _cb_xclip_save_data(void *data __UNUSED__)
 
   exe = e_util_exe_safe_run(buf, NULL);
   if (exe) ecore_exe_free(exe);
-  return ECORE_CALLBACK_DONE;
+  ecore_timer_add(0.2, _cb_xclip_apply_data, NULL);
 }
 
 /* Updates clipboard content with the selected text of the modules Menu */
@@ -517,8 +517,7 @@ _x_clipboard_update(const char *text)
   /* temporary solution for pasting content to the GTK environment
   *  xclip needs to be installed as dependency 
   *                                                             */
-  clip_inst->delay_timer = ecore_timer_add(0.2, _cb_xclip_save_data, NULL);
-  clip_inst->delay_timer = ecore_timer_add(1.0, _cb_xclip_apply_data, NULL);
+  _cb_xclip_save_data();
 }
 
 static void
