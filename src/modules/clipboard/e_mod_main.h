@@ -6,15 +6,6 @@
 #include "history.h"
 #include "utility.h"
 
-//~ #ifdef ENABLE_NLS
-//~ # include <libintl.h>
-//~ # define D_(string) dgettext(PACKAGE, string)
-//~ #else
-//~ # define bindtextdomain(domain,dir)
-//~ # define bind_textdomain_codeset(domain,codeset)
-//~ # define N_(string) (string)
-//~ #endif
-
 /* Key Board Bindings action names */
 #define ACT_FLOAT   _("Show History")
 #define ACT_CONFIG  _("Show Settings")
@@ -26,7 +17,7 @@
  * You need to increment GENERATION when you add new values to the
  * configuration file but is not needed to delete the existing conf  */
 #define MOD_CONFIG_FILE_EPOCH 1
-#define MOD_CONFIG_FILE_GENERATION 4
+#define MOD_CONFIG_FILE_GENERATION 5
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 /* Setup the E Module Version, Needed to check if module can run. */
@@ -49,6 +40,7 @@ EAPI int   e_modapi_shutdown (E_Module *m __UNUSED__);
 EAPI int   e_modapi_save     (E_Module *m __UNUSED__);
 
 /* Needed elsewhere */
-Eet_Error   clip_save(Eina_List *items);
+Eina_Bool   cb_clipboard_save(void *data __UNUSED__);
+Eet_Error   clip_save(Eina_List *items, Eina_Bool force);
 
 #endif

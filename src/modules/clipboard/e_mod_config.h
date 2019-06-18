@@ -26,6 +26,8 @@ struct _Config
   int hist_reverse;     /* Order to display History                        */
   double hist_items;    /* Number of history items to store                */
   int confirm_clear;    /* Display history confirmation dialog on deletion */
+  int autosave;         /* Save History on every selection change          */
+  double save_timer;    /* Timer for save history                          */
   double label_length;  /* Number of characters of item to display         */
   int   ignore_ws;      /* Should we ignore White space in label           */
   int   ignore_ws_copy; /* Should we not copy White space only             */

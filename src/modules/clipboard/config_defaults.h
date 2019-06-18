@@ -14,5 +14,7 @@
 #define  CF_DEFAULT_WS              0
 #define  CF_DEFAULT_NL              0
 #define  CF_DEFAULT_CONFIRM         1
+#define  CF_DEFAULT_AUTOSAVE        1
+#define  CF_DEFAULT_SAVE_TIMER      10
 
 #endif
