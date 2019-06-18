@@ -4,6 +4,8 @@
 #ifndef E_UTILS_H
 #define E_UTILS_H
 
+#include "e.h"
+
 #define e_util_dialog_show(title, args...) \
 { \
    char __tmpbuf[4096]; \
@@ -25,9 +27,6 @@ EAPI int          e_util_strcasecmp(const char *s1, const char *s2);
 EAPI int          e_util_strcmp(const char *s1, const char *s2);
 EAPI int          e_util_both_str_empty(const char *s1, const char *s2);
 EAPI int          e_util_immortal_check(void);
-EAPI int          e_util_edje_icon_list_check(const char *list);
-EAPI int          e_util_edje_icon_list_set(Evas_Object *obj, const char *list);
-EAPI int          e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list);
 EAPI int          e_util_edje_icon_check(const char *name);
 EAPI int          e_util_edje_icon_set(Evas_Object *obj, const char *name);
 EAPI int          e_util_icon_theme_set(Evas_Object *obj, const char *icon);
@@ -75,8 +74,30 @@ e_util_container_current_get(void)
 {
    return e_container_current_get(e_manager_current_get());
 }
+// Bodhi additions
+EAPI void e_util_open_quick_start(void);
+EAPI void e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type);
+#ifdef HAVE_ELEMENTARY
+EAPI Eina_Bool e_util_have_elm_theme(const char *name);
+EAPI Eina_Bool e_util_elm_theme_set(const char *path);
+EAPI void e_util_copy_safely(char* dst, const char* src, uint32_t len);
+#endif
 // Upstream ports
 EAPI Ecore_Exe *e_util_open(const char *exe, void *data);
 EAPI Ecore_Exe *e_util_exe_safe_run(const char *cmd, void *data);
+EAPI void e_util_size_debug(Evas_Object *obj);
+
+static inline Eina_Bool
+isedje(const Evas_Object *obj)
+{
+   return obj && !e_util_strcmp(evas_object_type_get(obj), "edje");
+}
+
+
+static inline Eina_Bool
+dblequal(double a, double b)
+{
+   return fabs(a - b) < DBL_EPSILON;
+}
 #endif
 #endif
