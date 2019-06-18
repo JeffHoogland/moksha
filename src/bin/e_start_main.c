@@ -95,7 +95,7 @@ next:
 }
 
 /* maximum number of arguments added above */
-#define VALGRIND_MAX_ARGS 10
+#define VALGRIND_MAX_ARGS 11
 /* bitmask with all supported bits set */
 #define VALGRIND_MODE_ALL 15
 
@@ -118,6 +118,7 @@ valgrind_append(char **dst, int valgrind_gdbserver, int valgrind_mode, int valgr
    if (valgrind_gdbserver) dst[i++] = "--db-attach=yes";
    if (!valgrind_mode) return 0;
    dst[i++] = valgrind_path;
+   dst[i++] = "--num-callers=40";
    dst[i++] = "--track-origins=yes";
    dst[i++] = "--malloc-fill=13"; /* invalid pointer, make it crash */
    if (valgrind_log)
@@ -236,6 +237,56 @@ _sigusr1(int x __UNUSED__, siginfo_t *info __UNUSED__, void *data __UNUSED__)
    sigaction(SIGUSR1, &action, NULL);
 }
 
+static int
+path_contains(const char *path)
+{
+   char *realp, *realp2, *env2 = NULL, *p, *p2;
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   const char *env;
+   ssize_t p_len;
+   int ret = 0;
+
+   if (!path) return ret;
+   realp = realpath(path, buf);
+   if (!realp) realp = (char *)path;
+
+   env = getenv("PATH");
+   if (!env) goto done;
+   env2 = strdup(env);
+   if (!env2) goto done;
+
+   p = env2;
+   while (p)
+     {
+        p2 = strchr(p, ':');
+
+        if (p2) p_len = p2 - p;
+        else p_len = strlen(p);
+
+        if (p_len <= 0) goto next;
+        if (p2) *p2 = 0;
+        realp2 = realpath(p, buf2);
+        if (realp2)
+          {
+             if (!strcmp(realp, realp2)) goto ok;
+          }
+        else
+          {
+             if (!strcmp(realp, p)) goto ok;
+          }
+next:
+        if (p2) p = p2 + 1;
+        else break;
+     }
+   // failed to find
+   goto done;
+ok:
+   ret = 1;
+done:
+   free(env2);
+   return ret;
+}
+
 int
 main(int argc, char **argv)
 {
@@ -245,12 +296,15 @@ main(int argc, char **argv)
    char buf[16384], **args, *home;
    char valgrind_path[PATH_MAX] = "";
    const char *valgrind_log = NULL;
+   const char *bindir;
    Eina_Bool really_know = EINA_FALSE;
    struct sigaction action;
 #if !defined(__OpenBSD__) && !defined(__NetBSD__) && !defined(__FreeBSD__) && \
    !defined(__FreeBSD_kernel__) && !(defined (__MACH__) && defined (__APPLE__))
    Eina_Bool restart = EINA_TRUE;
 #endif
+
+   unsetenv("NOTIFY_SOCKET");
 
    /* Setup USR1 to detach from the child process and let it get gdb by advanced users */
    action.sa_sigaction = _sigusr1;
@@ -345,10 +399,12 @@ main(int argc, char **argv)
           really_know = EINA_TRUE;
      }
 
-   if (really_know)
-     _env_path_append("PATH", eina_prefix_bin_get(pfx));
-   else
-     _env_path_prepend("PATH", eina_prefix_bin_get(pfx));
+   bindir = eina_prefix_bin_get(pfx);
+   if (!path_contains(bindir))
+     {
+        if (really_know) _env_path_append("PATH", bindir);
+        else _env_path_prepend("PATH", bindir);
+     }
 
    if (valgrind_mode || valgrind_tool)
      {
@@ -367,12 +423,14 @@ main(int argc, char **argv)
      }
    putchar('\n');
 
-   /* mtrack memory tracker support */
+
    home = getenv("HOME");
    if (home)
      {
+        const char *tmps;
+#ifndef MOKSHA_RELEASE_BUILD
         FILE *f;
-
+        /* mtrack memory tracker support */
         /* if you have ~/.e-mtrack, then the tracker will be enabled
          * using the content of this file as the path to the mtrack.so
          * shared object that is the mtrack preload */
@@ -395,7 +453,14 @@ main(int argc, char **argv)
                   env_set("MTRACK_TRACE_FILE", buf);
                }
              fclose(f);
+             
           }
+#endif
+        tmps = getenv("XDG_DATA_HOME");
+        if (tmps) snprintf(buf, sizeof(buf), "%s/Applications/.bin", tmps);
+        else snprintf(buf, sizeof(buf), "%s/Applications/.bin", home);
+        if (really_know) _env_path_append("PATH", buf);
+        else _env_path_prepend("PATH", buf);
      }
 
    /* run e directly now */
@@ -447,7 +512,9 @@ main(int argc, char **argv)
              pid_t result;
              int status;
              Eina_Bool done = EINA_FALSE;
-	     Eina_Bool bad_kernel = EINA_FALSE;
+             Eina_Bool remember_sigill = EINA_FALSE;
+             Eina_Bool remember_sigusr1 = EINA_FALSE;
+             Eina_Bool bad_kernel = EINA_FALSE;
 #ifdef HAVE_SYS_PTRACE_H
              if (!really_know)
                ptrace(PT_ATTACH, child, NULL, NULL);
@@ -460,9 +527,6 @@ main(int argc, char **argv)
 #endif
              while (!done)
                {
-                  Eina_Bool remember_sigill = EINA_FALSE;
-                  Eina_Bool remember_sigusr1 = EINA_FALSE;
-
                   result = waitpid(child, &status, 0);
 
                   if (result == child)
@@ -474,6 +538,8 @@ main(int argc, char **argv)
                             siginfo_t sig;
                             int r = 0;
                             int back;
+
+                            memset(&sig, 0, sizeof(siginfo_t));
 
 #if defined(HAVE_SYS_PTRACE_H) && defined(PT_GETSIGINFO)
                              if (!really_know)
@@ -525,8 +591,8 @@ main(int argc, char **argv)
 				 {
 				    if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
 				      bad_kernel = EINA_TRUE;
+				   close(fd); 
 				 }
-			       close(fd);
 			    }
 
                             if (home && !bad_kernel)
