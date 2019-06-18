@@ -1,4 +1,7 @@
 #include "e.h"
+#ifdef HAVE_ELEMENTARY
+# include <Elementary.h>
+#endif
 
 EAPI E_Path *path_data = NULL;
 EAPI E_Path *path_images = NULL;
@@ -247,99 +250,6 @@ e_util_immortal_check(void)
 }
 
 EAPI int
-e_util_edje_icon_list_check(const char *list)
-{
-   char *buf;
-   const char *p;
-   const char *c;
-
-   if ((!list) || (!list[0])) return 0;
-   buf = alloca(strlen(list) + 1);
-   p = list;
-   while (p)
-     {
-        c = strchr(p, ',');
-        if (c)
-          {
-             strncpy(buf, p, c - p);
-             buf[c - p] = 0;
-             if (e_util_edje_icon_check(buf)) return 1;
-             p = c + 1;
-             if (!*p) return 0;
-          }
-        else
-          {
-             strcpy(buf, p);
-             if (e_util_edje_icon_check(buf)) return 1;
-             return 0;
-          }
-     }
-   return 0;
-}
-
-EAPI int
-e_util_edje_icon_list_set(Evas_Object *obj, const char *list)
-{
-   char *buf;
-   const char *p;
-   const char *c;
-
-   if ((!list) || (!list[0])) return 0;
-   buf = alloca(strlen(list) + 1);
-   p = list;
-   while (p)
-     {
-        c = strchr(p, ',');
-        if (c)
-          {
-             strncpy(buf, p, c - p);
-             buf[c - p] = 0;
-             if (e_util_edje_icon_set(obj, buf)) return 1;
-             p = c + 1;
-             if (!*p) return 0;
-          }
-        else
-          {
-             strcpy(buf, p);
-             if (e_util_edje_icon_set(obj, buf)) return 1;
-             return 0;
-          }
-     }
-   return 0;
-}
-
-EAPI int
-e_util_menu_item_edje_icon_list_set(E_Menu_Item *mi, const char *list)
-{
-   char *buf;
-   const char *p;
-   char *c;
-
-   if ((!list) || (!list[0])) return 0;
-   buf = alloca(strlen(list) + 1);
-   p = list;
-   while (p)
-     {
-        c = strchr(p, ',');
-        if (c)
-          {
-             strncpy(buf, p, c - p);
-             buf[c - p] = 0;
-             if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
-             p = c + 1;
-             if (!*p) return 0;
-          }
-        else
-          {
-             strcpy(buf, p);
-             if (e_util_menu_item_theme_icon_set(mi, buf)) return 1;
-             return 0;
-          }
-     }
-   return 0;
-}
-
-EAPI int
 e_util_edje_icon_check(const char *name)
 {
    const char *file;
@@ -490,7 +400,7 @@ _e_util_menu_item_fdo_icon_set(E_Menu_Item *mi, const char *icon)
    unsigned int size;
 
    if ((!icon) || (!icon[0])) return 0;
-   size = e_util_icon_size_normalize(24 * e_scale);
+   size = e_util_icon_size_normalize(96 * e_scale);
    path = efreet_icon_path_find(e_config->icon_theme, icon, size);
    if (!path) return 0;
    e_menu_item_icon_file_set(mi, path);
@@ -1321,12 +1231,53 @@ e_util_time_str_get(long int seconds)
 }
 
 static void
-_e_util_size_debug(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+_e_util_size_debug_free(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    int x, y, w, h;
+   const char *name;
 
    evas_object_geometry_get(obj, &x, &y, &w, &h);
-   fprintf(stderr, "OBJ[%p]: (%d,%d) - %dx%d\n", obj, x, y, w, h);
+   name = evas_object_name_get(obj);
+   fprintf(stderr, "FREE %s %d OBJ[%s%s%p]: (%d,%d) - %dx%d\n", evas_object_visible_get(obj) ? "VIS" : "HID", evas_object_layer_get(obj), name ?: "", name ? "|" : "", obj, x, y, w, h);
+}
+
+static void
+_e_util_size_debug_del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   int x, y, w, h;
+   const char *name;
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   name = evas_object_name_get(obj);
+   fprintf(stderr, "DEL %s %d OBJ[%s%s%p]: (%d,%d) - %dx%d\n", evas_object_visible_get(obj) ? "VIS" : "HID", evas_object_layer_get(obj), name ?: "", name ? "|" : "", obj, x, y, w, h);
+}
+
+static void
+_e_util_size_debug_stack(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   int x, y, w, h;
+   const char *name;
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   name = evas_object_name_get(obj);
+   fprintf(stderr, "RESTACK %s %d OBJ[%s%s%p]: (%d,%d) - %dx%d\n", evas_object_visible_get(obj) ? "VIS" : "HID", evas_object_layer_get(obj), name ?: "", name ? "|" : "", obj, x, y, w, h);
+}
+
+EAPI void
+e_util_size_debug(Evas_Object *obj)
+{
+   int x, y, w, h;
+   const char *name;
+
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+   name = evas_object_name_get(obj);
+   fprintf(stderr, "%s %d OBJ[%s%s%p]: (%d,%d) - %dx%d\n", evas_object_visible_get(obj) ? "VIS" : "HID", evas_object_layer_get(obj), name ?: evas_object_type_get(obj), "|", obj, x, y, w, h);
+}
+
+static void
+_e_util_size_debug(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   e_util_size_debug(obj);
 }
 
 EAPI void
@@ -1334,19 +1285,38 @@ e_util_size_debug_set(Evas_Object *obj, Eina_Bool enable)
 {
    if (enable)
      {
-        evas_object_event_callback_add(obj, EVAS_CALLBACK_MOVE, 
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_MOVE,
                                        _e_util_size_debug, NULL);
-        evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE, 
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_RESIZE,
                                        _e_util_size_debug, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_SHOW,
+                                       _e_util_size_debug, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_HIDE,
+                                       _e_util_size_debug, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_RESTACK,
+                                       _e_util_size_debug_stack, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_DEL,
+                                       _e_util_size_debug_del, NULL);
+        evas_object_event_callback_add(obj, EVAS_CALLBACK_FREE,
+                                       _e_util_size_debug_free, NULL);
      }
    else
      {
-        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_MOVE, 
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_MOVE,
                                             _e_util_size_debug, NULL);
-        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_RESIZE, 
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_RESIZE,
                                             _e_util_size_debug, NULL);
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_SHOW,
+                                       _e_util_size_debug, NULL);
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_HIDE,
+                                       _e_util_size_debug, NULL);
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_DEL,
+                                       _e_util_size_debug_del, NULL);
+        evas_object_event_callback_del_full(obj, EVAS_CALLBACK_FREE,
+                                       _e_util_size_debug_free, NULL);
      }
 }
+
 
 static Efreet_Desktop *
 _e_util_default_terminal_get(const char *defaults_list)
@@ -1388,7 +1358,8 @@ e_util_terminal_desktop_get(void)
    s = efreet_data_home_get();
    if (s)
      {
-        snprintf(buf, sizeof(buf), "%s/applications/defaults.list", s);
+        snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+                 efreet_config_home_get());
         tdesktop = _e_util_default_terminal_get(buf);
      }
    if (tdesktop) return tdesktop;
@@ -1671,3 +1642,122 @@ e_util_exe_safe_run(const char *cmd, void *data)
 #endif
    return ecore_exe_pipe_run(cmd, flags, data);
 }
+
+EAPI void
+e_util_open_quick_start(void)
+{
+   E_Zone *zone;
+   char buff[PATH_MAX];
+
+   snprintf(buff, sizeof(buff), "enlightenment_open "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
+   zone = e_util_zone_current_get(e_manager_current_get());
+   e_exec(zone, NULL, buff, NULL, NULL);
+}
+
+EAPI void
+e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
+{
+   EINA_SAFETY_ON_NULL_RETURN(text);
+   
+   FILE *cmd = NULL;
+   unsigned const int size = strlen(text)+1;
+   
+   if  (ecore_file_app_installed("xclip"))
+   {
+      if (type == ECORE_X_SELECTION_CLIPBOARD)
+         cmd = popen("xclip -selection c", "w");
+      else if (type == ECORE_X_SELECTION_PRIMARY)
+         cmd = popen("xclip -selection p", "w");
+   }
+   else
+   if (ecore_file_app_installed("xsel"))
+   {
+     if (type == ECORE_X_SELECTION_CLIPBOARD)
+        cmd = popen("xsel -ib", "w");
+     else if (type == ECORE_X_SELECTION_PRIMARY)
+        cmd = popen("xsel -ip", "w");
+   }
+   else
+      goto fallback;
+
+   if (!cmd)
+   {
+     fprintf(stderr, "Moksha:clipboard %s\n", strerror(errno));
+     goto fallback;
+   }
+   size_t n = fwrite((const char*) text, 1, size, cmd);
+   if ( (unsigned int) n != size)
+   {
+     fprintf(stderr, "Moksha:clipboard pipe error\n");
+     pclose(cmd);
+     goto fallback;
+   }
+
+   if (pclose(cmd))
+   { 
+     fprintf(stderr, "Moksha:clipboard command error\n" );
+     goto fallback;
+   }
+   return;
+   
+fallback:
+   if (type == ECORE_X_SELECTION_CLIPBOARD)
+      ecore_x_selection_clipboard_set(w, text, size);
+   else if (type == ECORE_X_SELECTION_PRIMARY)
+      ecore_x_selection_primary_set(w, text, size);
+   
+}
+
+#ifdef HAVE_ELEMENTARY
+
+EAPI Eina_Bool
+e_util_have_elm_theme(const char *name)
+{
+   Eina_List *list, *li;
+   char *th;
+   Eina_Bool ret = EINA_FALSE;
+   
+   list = elm_theme_name_available_list_new();
+   EINA_LIST_FOREACH(list, li, th)
+   {
+      if (!strcmp(th, name))
+      {  ret = EINA_TRUE;
+         break;
+      }
+   }
+   elm_theme_name_available_list_free(list);
+   return ret;
+}
+
+EAPI Eina_Bool
+e_util_elm_theme_set(const char *path)
+{
+   EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
+   if (getenv("MOKSHA_ELM_THEME_OVERRIDE")) return EINA_FALSE;
+     
+   Eina_Bool ret = EINA_FALSE;
+   char buf[4096];
+   char *th_name;
+
+   th_name =  ecore_file_strip_ext(ecore_file_file_get(path));
+   if (e_util_have_elm_theme(th_name))
+   {
+      snprintf(buf, sizeof(buf), "%s:%s", th_name, elm_theme_get(NULL));
+      elm_theme_set(NULL, buf);
+      elm_config_all_flush();
+      elm_config_save();
+      ret = EINA_TRUE;
+   }
+   free(th_name);
+   return ret;
+}
+
+EAPI void 
+e_util_copy_safely(char* dst, const char* src, uint32_t len)
+{
+    strncpy(dst, src, len - 1);
+    dst[len - 1] = '\0';
+}
+
+#endif
