@@ -26,7 +26,7 @@ struct _E_Config_Dialog_Data
    Eio_File        *init[2];
    Eina_List       *theme_init; /* list of eio ops to load themes */
    Eina_List       *themes; /* eet file refs to work around load locking */
-   Eina_Bool        free : 1;
+   Eina_Bool        free :1;
 
    /* Advanced */
    Evas_Object     *o_categories_ilist;
@@ -39,6 +39,7 @@ struct _E_Config_Dialog_Data
 
    /* Dialog */
    E_Win           *win_import;
+   Ecore_Job *theme_check;
 };
 
 static const char *parts_list[] =
@@ -604,12 +605,25 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_open_test_cb(void *file)
+_open_test_cb(void *data)
 {
-   if (!edje_file_group_exists(eet_file_get(file), "e/desktop/background"))
-     e_util_dialog_show(_("Theme File Error"),
-                        _("%s is probably not an Moksha theme!"),
-                        eet_file_get(file));
+   E_Config_Dialog_Data *cfdata = data;
+   Eina_List *l, *fails = NULL;
+   Eet_File *file;
+   Eina_Strbuf *buf;
+
+   cfdata->theme_check = NULL;
+   EINA_LIST_FOREACH(cfdata->themes, l, file)
+     if (!edje_file_group_exists(eet_file_get(file), "e/desktop/background"))
+       fails = eina_list_append(fails, file);
+   if (!fails) return;
+   buf = eina_strbuf_new();
+   EINA_LIST_FREE(fails, file)
+     eina_strbuf_append_printf(buf, "<b>%s</b><ps/>", eet_file_get(file));
+   e_util_dialog_show(_("Theme File Error"),
+                      _("The listed files are probably not Moksha themes:<ps/>%s"),
+                      eina_strbuf_string_get(buf));
+   eina_strbuf_free(buf);
 }
 
 static void
@@ -618,7 +632,8 @@ _open_done_cb(void *data, Eio_File *handler, Eet_File *file)
    E_Config_Dialog_Data *cfdata = data;
    cfdata->themes = eina_list_append(cfdata->themes, file);
    cfdata->theme_init = eina_list_remove(cfdata->theme_init, handler);
-   ecore_job_add(_open_test_cb, file);
+   if (!cfdata->theme_init)
+     cfdata->theme_check = ecore_job_add(_open_test_cb, cfdata);
 }
 
 static void
@@ -697,6 +712,7 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         eina_stringshare_del(t->category);
         free(t);
      }
+   E_FN_DEL(ecore_job_del, cfdata->theme_check);
    if (cfdata->eio[0]) eio_file_cancel(cfdata->eio[0]);
    if (cfdata->eio[1]) eio_file_cancel(cfdata->eio[1]);
    EINA_LIST_FOREACH(cfdata->theme_init, l, ls)
@@ -807,6 +823,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    ct = e_theme_config_get("theme");
    if ((ct) && (!strcmp(ct->file, cfdata->theme))) return 1;
 
+#ifdef HAVE_ELEMENTARY
+   e_util_elm_theme_set(cfdata->theme);
+#endif
    e_theme_config_set("theme", cfdata->theme);
    e_config_save_queue();
 

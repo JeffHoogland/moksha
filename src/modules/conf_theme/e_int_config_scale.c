@@ -52,7 +52,7 @@ _scale_preview_sel_set(Evas_Object *ob, int sel)
         v = (int)(unsigned long)evas_object_data_get(ob, "scale");
         scl = (double)v / 1000.0;
         if (sc) *sc = scl;
-        e_config_dialog_changed_set(cfdata->cfd, (scl != e_config->scale.factor));
+        e_config_dialog_changed_set(cfdata->cfd, (!EINA_DBL_EQ(scl, e_config->scale.factor)));
         if (evas_object_data_get(ob, "dpi"))
           {
              cfdata->use_dpi = EINA_TRUE;
@@ -390,9 +390,9 @@ _adv_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    return (use_dpi != e_config->scale.use_dpi) ||
           (use_custom != e_config->scale.use_custom) ||
-          (cfdata->min != e_config->scale.min) ||
-          (cfdata->max != e_config->scale.max) ||
-          (cfdata->factor != e_config->scale.factor) ||
+          (!EINA_DBL_EQ(cfdata->min, e_config->scale.min)) ||
+          (!EINA_DBL_EQ(cfdata->max, e_config->scale.max)) ||
+          (!EINA_DBL_EQ(cfdata->factor, e_config->scale.factor)) ||
           (cfdata->base_dpi != e_config->scale.base_dpi);
 }
 
