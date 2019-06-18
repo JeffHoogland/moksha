@@ -57,7 +57,7 @@ struct _IBar
    Eina_List   *icons;
    IBar_Order  *io;
    Evas_Coord   dnd_x, dnd_y;
-   Eina_Bool    focused : 1;
+   Eina_Bool    focused :1;
 };
 
 struct _IBar_Icon
@@ -71,11 +71,11 @@ struct _IBar_Icon
    int              mouse_down;
    struct
    {
-      unsigned char start : 1;
-      unsigned char dnd : 1;
+      unsigned char start :1;
+      unsigned char dnd :1;
       int           x, y;
    } drag;
-   Eina_Bool       focused : 1;
+   Eina_Bool       focused :1;
 };
 
 static IBar        *_ibar_new(Evas *evas, Instance *inst);
@@ -97,6 +97,7 @@ static void         _ibar_icon_empty(IBar_Icon *ic);
 static void         _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
 static void         _ibar_cb_app_change(void *data, E_Order *eo);
 static void         _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void         _ibar_cb_menu_icon_action_exec(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibar_cb_menu_icon_add(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _ibar_cb_menu_icon_properties(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -724,6 +725,13 @@ _ibar_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
+_ibar_cb_menu_icon_action_exec(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   Efreet_Desktop_Action *action = (Efreet_Desktop_Action*)data;
+   e_exec(NULL, NULL, action->exec, NULL, "ibar");
+}
+
+static void
 _ibar_cb_menu_icon_new(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Container *con;
@@ -835,8 +843,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
    else if (ev->button == 3)
      {
+        Eina_List *it;
         E_Menu *m, *mo;
         E_Menu_Item *mi;
+        Efreet_Desktop_Action *action;
         char buf[256];
         int cx, cy;
 
@@ -889,6 +899,20 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
                                           mi);
         e_menu_item_submenu_set(mi, mo);
         e_object_unref(E_OBJECT(mo));
+        
+        if (ic->app->actions)
+          {
+             EINA_LIST_FOREACH(ic->app->actions, it, action)
+               {
+                  mi = e_menu_item_new_relative(m, mi);
+                  e_menu_item_label_set(mi, action->name);
+                  e_util_menu_item_theme_icon_set(mi, action->icon);
+                  e_menu_item_callback_set(mi, _ibar_cb_menu_icon_action_exec, action);
+               }
+             mi = e_menu_item_new(m);
+             e_menu_item_separator_set(mi, 1);
+          }
+        
         e_gadcon_client_menu_set(ic->ibar->inst->gcc, m);
 
         e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
