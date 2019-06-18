@@ -1096,7 +1096,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
         EINA_LIST_FOREACH(cfdata->binding.edge, l, bi)
           if ((bi->modifiers == cfdata->locals.modifiers) &&
               (bi->edge == cfdata->locals.edge) &&
-              ((bi->delay * 1000) == (cfdata->locals.delay * 1000)))
+              (dblequal(bi->delay * 1000, cfdata->locals.delay * 1000)))
             {
                found = 1;
                break;
@@ -1113,7 +1113,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
                   if (bi == bi2) continue;
                   if ((bi->modifiers == cfdata->locals.modifiers) &&
                       (bi->edge == cfdata->locals.edge) &&
-                      ((bi->delay * 1000) == (cfdata->locals.delay * 1000)))
+                      (dblequal(bi->delay * 1000, cfdata->locals.delay * 1000)))
                     {
                        found = 1;
                        break;
@@ -1344,65 +1344,71 @@ _find_edge_binding_action(const char *action, const char *params, int *g, int *a
 static char *
 _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
 {
-   char b[256] = "";
+   Eina_Strbuf *b;
+   char *ret;
+
+   b = eina_strbuf_new();
 
    if (mod & E_BINDING_MODIFIER_CTRL)
-     strcat(b, _("CTRL"));
+     {
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " + ");
+        eina_strbuf_append(b, _("CTRL"));
+     }
 
    if (mod & E_BINDING_MODIFIER_ALT)
      {
-        if (b[0]) strcat(b, " + ");
-        strcat(b, _("ALT"));
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " + ");
+        eina_strbuf_append(b, _("ALT"));
      }
 
    if (mod & E_BINDING_MODIFIER_SHIFT)
      {
-        if (b[0]) strcat(b, " + ");
-        strcat(b, _("SHIFT"));
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " + ");
+        eina_strbuf_append(b, _("SHIFT"));
      }
 
    if (mod & E_BINDING_MODIFIER_WIN)
      {
-        if (b[0]) strcat(b, " + ");
-        strcat(b, _("WIN"));
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " + ");
+        eina_strbuf_append(b, _("WIN"));
      }
 
    if (edge)
      {
-        if (b[0]) strcat(b, " + ");
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " + ");
 
         switch (edge)
           {
            case E_ZONE_EDGE_LEFT:
-             strcat(b, _("Left Edge"));
+             eina_strbuf_append(b, _("Left Edge"));
              break;
 
            case E_ZONE_EDGE_TOP:
-             strcat(b, _("Top Edge"));
+             eina_strbuf_append(b, _("Top Edge"));
              break;
 
            case E_ZONE_EDGE_RIGHT:
-             strcat(b, _("Right Edge"));
+             eina_strbuf_append(b, _("Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM:
-             strcat(b, _("Bottom Edge"));
+             eina_strbuf_append(b, _("Bottom Edge"));
              break;
 
            case E_ZONE_EDGE_TOP_LEFT:
-             strcat(b, _("Top Left Edge"));
+             eina_strbuf_append(b, _("Top Left Edge"));
              break;
 
            case E_ZONE_EDGE_TOP_RIGHT:
-             strcat(b, _("Top Right Edge"));
+             eina_strbuf_append(b, _("Top Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM_RIGHT:
-             strcat(b, _("Bottom Right Edge"));
+             eina_strbuf_append(b, _("Bottom Right Edge"));
              break;
 
            case E_ZONE_EDGE_BOTTOM_LEFT:
-             strcat(b, _("Bottom Left Edge"));
+             eina_strbuf_append(b, _("Bottom Left Edge"));
              break;
 
            default:
@@ -1410,21 +1416,20 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
           }
      }
 
-   if (delay)
+   if (!eina_flt_exact(delay, 0.0))
      {
-        char buf[20];
-
-        if (b[0]) strcat(b, " ");
-        if (delay == -1.0)
-          snprintf(buf, 20, _("(left clickable)"));
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " ");
+        if (dblequal(delay, -1.0))
+          eina_strbuf_append(b, _("(left clickable)"));
         else if (delay < -1.0)
-          snprintf(buf, 20, _("(clickable)"));
+          eina_strbuf_append(b, _("(clickable)"));
         else
-          snprintf(buf, 20, "%.2fs", delay);
-        strcat(b, buf);
+          eina_strbuf_append_printf(b, "%.2fs", delay);
      }
 
-   if (!b[0]) return strdup(TEXT_NONE_ACTION_EDGE);
-   return strdup(b);
+   ret = eina_strbuf_string_steal(b);
+   eina_strbuf_free(b);
+   if (ret[0]) return ret;
+   free(ret);
+   return strdup(TEXT_NONE_ACTION_EDGE);
 }
-
