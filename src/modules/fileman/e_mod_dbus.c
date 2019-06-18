@@ -254,7 +254,7 @@ _e_fileman_dbus_daemon_open_file_cb(E_DBus_Object *obj __UNUSED__,
    if (!handlers)
      {
         errmsg = "no handlers for given file";
-        goto end;
+        goto error;
      }
    else
      {

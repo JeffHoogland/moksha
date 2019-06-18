@@ -83,7 +83,7 @@ struct _E_Fm2_Smart_Data
    {
       Ecore_Thread   *thread;
       const char *filename;
-      Eina_Bool done : 1;
+      Eina_Bool done :1;
    } new_file;
 
    E_Fm2_Icon      *last_selected;
@@ -99,12 +99,12 @@ struct _E_Fm2_Smart_Data
    Eina_List       *rename_dialogs;
    E_Entry_Dialog  *entry_dialog;
    E_Dialog        *image_dialog;
-   Eina_Bool        iconlist_changed : 1;
-   Eina_Bool        order_file : 1;
-   Eina_Bool        typebuf_visible : 1;
-   Eina_Bool        show_hidden_files : 1;
-   Eina_Bool        listing : 1;
-   Eina_Bool        inherited_dir_props : 1;
+   Eina_Bool        iconlist_changed :1;
+   Eina_Bool        order_file :1;
+   Eina_Bool        typebuf_visible :1;
+   Eina_Bool        show_hidden_files :1;
+   Eina_Bool        listing :1;
+   Eina_Bool        inherited_dir_props :1;
    signed char      view_mode;  /* -1 = unset */
    signed short     icon_size;  /* -1 = unset */
    E_Fm2_View_Flags view_flags;
@@ -127,7 +127,7 @@ struct _E_Fm2_Smart_Data
       Eina_List   *actions;
       Ecore_Idler *idler;
       Ecore_Timer *timer;
-      Eina_Bool    deletions : 1;
+      Eina_Bool    deletions :1;
    } live;
 
    struct
@@ -136,8 +136,8 @@ struct _E_Fm2_Smart_Data
       const char *start;
       Ecore_Timer *timer;
       unsigned int wildcard;
-      Eina_Bool   setting : 1;
-      Eina_Bool   disabled : 1;
+      Eina_Bool   setting :1;
+      Eina_Bool   disabled :1;
    } typebuf;
 
    int             busy_count;
@@ -150,12 +150,12 @@ struct _E_Fm2_Smart_Data
    Eina_List *mount_ops;
    E_Fm2_Mount    *mount;
    signed char     drop_after;
-   Eina_Bool       drop_show : 1;
-   Eina_Bool       drop_in_show : 1;
-   Eina_Bool       drop_all : 1;
-   Eina_Bool       drag : 1;
-   Eina_Bool       selecting : 1;
-   Eina_Bool       toomany : 1;
+   Eina_Bool       drop_show :1;
+   Eina_Bool       drop_in_show :1;
+   Eina_Bool       drop_all :1;
+   Eina_Bool       drag :1;
+   Eina_Bool       selecting :1;
+   Eina_Bool       toomany :1;
    struct
    {
       int ox, oy;
@@ -173,7 +173,7 @@ struct _E_Fm2_Region
    E_Fm2_Smart_Data *sd;
    Evas_Coord        x, y, w, h;
    Eina_List        *list;
-   Eina_Bool         realized : 1;
+   Eina_Bool         realized :1;
 };
 
 struct _E_Fm2_Icon
@@ -200,24 +200,24 @@ struct _E_Fm2_Icon
    {
       Evas_Coord x, y;
       Ecore_Timer *dnd_end_timer; //we need this for XDirectSave drops so we don't lose the icon
-      Eina_Bool  start : 1;
-      Eina_Bool  dnd : 1; // currently dragging
-      Eina_Bool  src : 1; // drag source
-      Eina_Bool  hidden : 1; // dropped into different dir
+      Eina_Bool  start :1;
+      Eina_Bool  dnd :1; // currently dragging
+      Eina_Bool  src :1; // drag source
+      Eina_Bool  hidden :1; // dropped into different dir
    } drag;
 
    int               saved_rel;
 
-   Eina_Bool         realized : 1;
-   Eina_Bool         selected : 1;
-   Eina_Bool         last_selected : 1;
-   Eina_Bool         saved_pos : 1;
-   Eina_Bool         odd : 1;
-   Eina_Bool         down_sel : 1;
-   Eina_Bool         removable_state_change : 1;
-   Eina_Bool         thumb_failed : 1;
-   Eina_Bool         queued : 1;
-   Eina_Bool         inserted : 1;
+   Eina_Bool         realized :1;
+   Eina_Bool         selected :1;
+   Eina_Bool         last_selected :1;
+   Eina_Bool         saved_pos :1;
+   Eina_Bool         odd :1;
+   Eina_Bool         down_sel :1;
+   Eina_Bool         removable_state_change :1;
+   Eina_Bool         thumb_failed :1;
+   Eina_Bool         queued :1;
+   Eina_Bool         inserted :1;
 };
 
 struct _E_Fm2_Finfo
@@ -388,9 +388,9 @@ static void          _e_fm2_file_properties(void *data, E_Menu *m, E_Menu_Item *
 static void          _e_fm2_file_properties_delete_cb(void *obj);
 static int           _e_fm2_file_do_rename(const char *text, E_Fm2_Icon *ic);
 
-//static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
+static Evas_Object  *_e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic);
 static void          _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic);
-//static void          _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_fm2_icon_entry_widget_accept(E_Fm2_Icon *ic);
 
 static E_Dialog     *_e_fm_retry_abort_dialog(int pid, const char *str);
@@ -5943,6 +5943,7 @@ _e_fm2_typebuf_complete(Evas_Object *obj)
         size_t size;
 
         s = strrchr(sd->typebuf.buf, '/');
+        if (!s) return;
         s++;
         s[0] = 0;
         size = s - sd->typebuf.buf + strlen(ic->info.file) + 1;
@@ -6180,8 +6181,7 @@ _e_fm2_dnd_drop_show(E_Fm2_Icon *ic, int after)
 
    if ((ic->sd->drop_icon == ic) &&
        (ic->sd->drop_after == after)) return;
-   if (((ic->sd->drop_icon) && (!ic)) ||
-       ((!ic->sd->drop_icon) && (ic)) ||
+   if (((!ic->sd->drop_icon)) ||
        ((after < 0) && (ic->sd->drop_after >= 0)) ||
        ((after >= 0) && (ic->sd->drop_after < 0)))
      emit = 1;
@@ -6980,7 +6980,7 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
                          }
                        eina_stringshare_del(fp);
                     }
-                  if (!memerr)
+                  if (!memerr && sd->realpath)
                     {
                        args = e_util_string_append_quoted(args, &size, &length, sd->realpath);
                        if (!args) memerr = EINA_TRUE;
@@ -9586,7 +9586,7 @@ _e_fm2_new_thread_helper(Ecore_Thread *eth, Eina_Bool dir)
         else
           {
              fd = open(buf, O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR | S_IWUSR);
-             if (fd)
+             if (fd && fd !=-1)
                {
                   close(fd);
                   ecore_thread_global_data_set("efm_pending_filename", strdup(buf), free);
@@ -10228,12 +10228,8 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    if ((ic->entry_dialog) || (ic->entry_widget)) return;
    if (ic->sd->icon_menu.flags & E_FM2_MENU_NO_RENAME) return;
 
-
-   //~ I removed this condiction because EVAS_CALLBACK_KEY_DOWN under the icon do not work
-   //~ look the function _e_fm2_icon_entry_widget_add under
-
-   //~ if (!_e_fm2_icon_entry_widget_add(ic))
-     //~ {
+   if (!_e_fm2_icon_entry_widget_add(ic))
+     {
         snprintf(text, PATH_MAX + 256,
                  _("Rename %s to:"),
                  ic->info.file);
@@ -10244,10 +10240,10 @@ _e_fm2_file_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
         E_OBJECT(ic->entry_dialog)->data = ic;
         e_object_del_attach_func_set(E_OBJECT(ic->entry_dialog),
                                      _e_fm2_file_rename_delete_cb);
-     //~ }
+      }
 }
 
-#if 0
+#if 1
 static Evas_Object *
 _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
 {
@@ -10302,7 +10298,7 @@ _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
    ic->keygrab = 0;
 }
 
-#if 0
+#if 1
 static void
 _e_fm2_icon_entry_widget_cb_key_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
@@ -11338,10 +11334,14 @@ _e_fm2_volume_eject(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__
 static void
 _update_volume_icon(E_Volume *v, E_Fm2_Icon *ic)
 {
-   if (ic->info.removable_full)
-     edje_object_signal_emit(ic->obj_icon, "e,state,removable,full", "e");
-   else
-     edje_object_signal_emit(ic->obj_icon, "e,state,removable,empty", "e");
+   Evas_Object *e = e_icon_edje_get(ic->obj_icon);
+   if (e)
+     {
+        if (ic->info.removable_full)
+          e_icon_edje_emit(ic->obj_icon, "e,state,removable,full", "e");
+        else
+          e_icon_edje_emit(ic->obj_icon, "e,state,removable,empty", "e");
+     }
 
    if (v)
      {
