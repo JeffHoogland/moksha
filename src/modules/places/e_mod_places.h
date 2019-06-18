@@ -57,8 +57,9 @@ void places_volume_mount(Volume *vol);
 void places_volume_unmount(Volume *vol);
 void places_volume_eject(Volume *vol);
 
+Evas_Object *places_main_obj_create(Evas *canvas);
 void places_update_all_gadgets(void);
-void places_fill_box(Evas_Object *box);
+void places_fill_box(Evas_Object *box, Eina_Bool horiz);
 void places_empty_box(Evas_Object *box);
 void places_print_volume(Volume *v);
 
