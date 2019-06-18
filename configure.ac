@@ -94,7 +94,7 @@ extern char **environ;
 AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
     ])
 
-efl_version="1.19.0"
+efl_version="1.20.0"
 AC_SUBST(efl_version)
 edbus_version="1.7.10"
 AC_SUBST(edbus_version)
