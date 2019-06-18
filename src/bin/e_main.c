@@ -118,6 +118,7 @@ static Eina_List *_idle_before_list = NULL;
 static Ecore_Idle_Enterer *_idle_before = NULL;
 static Ecore_Idle_Enterer *_idle_after = NULL;
 static Ecore_Idle_Enterer *_idle_flush = NULL;
+static Ecore_Event_Handler *mod_init_end = NULL;
 
 /* external variables */
 EAPI Eina_Bool e_precache_end = EINA_FALSE;
@@ -241,32 +242,35 @@ main(int argc, char **argv)
    /* trap deadly bug signals and allow some form of sane recovery */
    /* or ability to gdb attach and debug at this point - better than your */
    /* wm/desktop vanishing and not knowing what happened */
-   TS("Signal Trap");
-   action.sa_sigaction = e_sigseg_act;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
-   sigemptyset(&action.sa_mask);
-   sigaction(SIGSEGV, &action, NULL);
+   if (!getenv("NOTIFY_SOCKET"))
+     {
+        TS("Signal Trap");
+        action.sa_sigaction = e_sigseg_act;
+        action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+        sigemptyset(&action.sa_mask);
+        sigaction(SIGSEGV, &action, NULL);
 
-   action.sa_sigaction = e_sigill_act;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
-   sigemptyset(&action.sa_mask);
-   sigaction(SIGILL, &action, NULL);
+        action.sa_sigaction = e_sigill_act;
+        action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+        sigemptyset(&action.sa_mask);
+        sigaction(SIGILL, &action, NULL);
 
-   action.sa_sigaction = e_sigfpe_act;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
-   sigemptyset(&action.sa_mask);
-   sigaction(SIGFPE, &action, NULL);
+        action.sa_sigaction = e_sigfpe_act;
+        action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+        sigemptyset(&action.sa_mask);
+        sigaction(SIGFPE, &action, NULL);
 
-   action.sa_sigaction = e_sigbus_act;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
-   sigemptyset(&action.sa_mask);
-   sigaction(SIGBUS, &action, NULL);
+        action.sa_sigaction = e_sigbus_act;
+        action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+        sigemptyset(&action.sa_mask);
+        sigaction(SIGBUS, &action, NULL);
 
-   action.sa_sigaction = e_sigabrt_act;
-   action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
-   sigemptyset(&action.sa_mask);
-   sigaction(SIGABRT, &action, NULL);
-   TS("Signal Trap Done");
+        action.sa_sigaction = e_sigabrt_act;
+        action.sa_flags = SA_NODEFER | SA_RESETHAND | SA_SIGINFO;
+        sigemptyset(&action.sa_mask);
+        sigaction(SIGABRT, &action, NULL);
+        TS("Signal Trap Done");
+      }
 
    t = ecore_time_unix_get();
    s = getenv("E_START_TIME");
@@ -324,7 +328,6 @@ main(int argc, char **argv)
    if (getenv("DESKTOP_STARTUP_ID"))
      e_util_env_set("DESKTOP_STARTUP_ID", NULL);
    e_util_env_set("E_RESTART_OK", NULL);
-   e_util_env_set("PANTS", "ON");
    snprintf(moksha, 13, "Moksha-%.5s", VERSION);
    e_util_env_set("DESKTOP", moksha);
    e_util_env_set("MOKSHA_VERSION", PACKAGE_VERSION);
@@ -562,6 +565,26 @@ main(int argc, char **argv)
      }
    TS("E_Config Init Done");
    _e_main_shutdown_push(e_config_shutdown);
+
+   if (e_config->xsettings.match_e17_theme)
+     {
+
+        /* KDE5 applications don't understand anything other then gnome or kde     */
+        /* They expect everyone else to set QT_QPA_PLATFORMTHEME to tell them how  */
+        /* to theme there apps otherwise they use a fallback mode which results in */
+        /* missing icons and a inability to change the appearance of applications  */
+        /* see https://bugzilla.suse.com/show_bug.cgi?id=920792 for more info.     */
+        /* There are two sensible defaults for this variable, "kde" which will     */
+        /* make apps appear the same as they do if they are run in kde. and gtk2   */
+        /* which will make kde applications follow the gtk/gnome theme, we have    */
+        /* decided on choosing gtk2 as it means that kde/qt apps will follow the   */
+        /* app and icon theme set in the enlightenment settings dialog. Some users */
+        /* who wish to use Qt apps without any gnome or gtk usage may choose to    */
+        /* install qt5ct and overwrite this variable with qt5ct and use that to    */
+        /* configure there Qt5 applications.                                       */
+        e_util_env_set("QT_QPA_PLATFORMTHEME", "gtk2");
+        e_util_env_set("QT_STYLE_OVERRIDE", "gtk2");
+     }
 
    _xdg_data_dirs_augment();
 
@@ -1069,9 +1092,9 @@ main(int argc, char **argv)
    if (!nostartup)
      {
         if (after_restart)
-          e_startup(E_STARTUP_RESTART);
+          e_startup_mode_set(E_STARTUP_RESTART);
         else
-          e_startup(E_STARTUP_START);
+          e_startup_mode_set(E_STARTUP_START);
      }
    TS("Run Startup Apps Done");
 
@@ -1765,10 +1788,8 @@ _e_main_screens_init(void)
              free(roots);
              return 0;
           }
-#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
         ecore_x_e_window_profile_supported_set(roots[i],
                                                e_config->use_desktop_window_profile);
-#endif
      }
    free(roots);
 
@@ -1863,6 +1884,14 @@ _e_main_efreet_paths_init(void)
      }
 }
 
+static Eina_Bool
+_e_main_modules_load_after(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
+{
+   e_int_config_modules(NULL, NULL);
+   E_FN_DEL(ecore_event_handler_del, mod_init_end);
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void
 _e_main_modules_load(Eina_Bool safe_mode)
 {
@@ -1881,7 +1910,6 @@ _e_main_modules_load(Eina_Bool safe_mode)
              e_module_disable(m);
              e_object_del(E_OBJECT(m));
 
-             e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
              e_error_message_show
                (_("Moksha crashed early on start and has<br>"
                   "been restarted. There was an error loading the<br>"
@@ -1896,7 +1924,6 @@ _e_main_modules_load(Eina_Bool safe_mode)
           }
         else
           {
-             e_int_config_modules(e_container_current_get(e_manager_current_get()), NULL);
              e_error_message_show
                (_("Moksha crashed early on start and has<br>"
                   "been restarted. All modules have been disabled<br>"
@@ -1912,6 +1939,7 @@ _e_main_modules_load(Eina_Bool safe_mode)
                  "The module configuration dialog should let you select your<br>"
                  "modules again."));
           }
+       mod_init_end = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _e_main_modules_load_after, NULL);
      }
 }
 
@@ -1960,26 +1988,14 @@ _e_main_cb_idle_before(void *data __UNUSED__)
 static Eina_Bool
 _e_main_cb_idle_after(void *data __UNUSED__)
 {
-   static int first_idle;
+   static int first_idle=1;
 
    edje_freeze();
 
-#ifdef E17_RELEASE_BUILD
-   first_idle = 1;
    if (first_idle)
-     {
-        TS("SLEEP");
-        first_idle = 0;
-        e_precache_end = EINA_TRUE;
-     }
-#else
-   if (first_idle++ < 60)
-     {
-        TS("SLEEP");
-        if (!first_idle)
-          e_precache_end = EINA_TRUE;
-     }
-#endif
+     TS("SLEEP");
+   first_idle = 0;
+   e_precache_end = EINA_TRUE;
 
    return ECORE_CALLBACK_RENEW;
 }

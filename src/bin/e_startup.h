@@ -10,7 +10,8 @@ typedef enum _E_Startup_Mode
 #ifndef E_STARTUP_H
 #define E_STARTUP_H
 
-EAPI void e_startup(E_Startup_Mode mode);
+EAPI void e_startup(void);
+EAPI void e_startup_mode_set(E_Startup_Mode mode);
 
 #endif
 #endif
