@@ -9,14 +9,15 @@
     "Jason 'Tristam' Thomas<br>" \
     "Kristi Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br>" \
     "Stefan 'the waiter' Uram<br>" \
     "Stace 'sef' Fauske<br>" \
     "Kai 'kuuko' Huuhko<br>" \
     "Stephen 'okra' Houston<br>" \
     "Patrick Duckson<br>" \
     "Roger 'JollyRoger' Carter<br>" \
-    "Jacob 'Oblio' Olson <br><br><br>" \
+    "Jacob 'Oblio' Olson <br><br>" \
+    "In memory:<br>" \
+    "Charles 'Charles@Bodhi' van de Beek<br><br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
     "Christopher 'devilhorns' Michael<br>" \
