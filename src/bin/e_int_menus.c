@@ -133,6 +133,7 @@ e_int_menus_main_new(void)
    Main_Data *dat;
    Eina_List *l = NULL;
    int separator = 0;
+   Eina_Bool sflag = EINA_FALSE;
 
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
@@ -182,40 +183,20 @@ e_int_menus_main_new(void)
    e_menu_item_separator_set(mi, 1);
 
    l = _e_int_menus_augmentation_find("main/2");
-   if (l) _e_int_menus_augmentation_add(m, l);
-
-#if 0    
-   //Code moved to classicmenu module 
-   subm = e_int_menus_desktops_new();
-   dat->desktops = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Desktop"));
-   e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
-   e_menu_item_submenu_set(mi, subm);
-
-   subm = e_int_menus_clients_new();
-   dat->clients = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Windows"));
-   e_util_menu_item_theme_icon_set(mi, "preferences-system-windows");
-   e_menu_item_submenu_set(mi, subm);
-   e_object_data_set(E_OBJECT(subm), dat); 
-
-   // lost windows already handled inside "Windows" from main menu.
-   subm = e_int_menus_lost_clients_new();
-   e_object_data_set(E_OBJECT(subm), dat);
-   dat->lost_clients = subm;
-   mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Lost Windows"));
-   e_util_menu_item_theme_icon_set(mi, "preferences-windows-lost");
-   e_menu_item_submenu_set(mi, subm);
-#endif
+   if (l)
+      {
+         _e_int_menus_augmentation_add(m, l);
+         sflag = EINA_TRUE;
+      }
 
    l = _e_int_menus_augmentation_find("main/3");
    if (l) _e_int_menus_augmentation_add(m, l);
 
-   mi = e_menu_item_new(m);
-   e_menu_item_separator_set(mi, 1);
+   if (sflag)
+      {
+         mi = e_menu_item_new(m);
+         e_menu_item_separator_set(mi, 1);
+      }
 
    l = _e_int_menus_augmentation_find("main/4");
    if (l) _e_int_menus_augmentation_add(m, l);
@@ -642,13 +623,7 @@ _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Ite
 static void
 _e_int_menus_bodhi_quick_start(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   E_Zone *zone;
-   char buff[PATH_MAX];
-
-   snprintf(buff, sizeof(buff), "enlightenment_open "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
-   zone = e_util_zone_current_get(e_manager_current_get());
-   e_exec(zone, NULL, buff, NULL, NULL);
+   e_util_open_quick_start();
 }
 
 /*
@@ -702,15 +677,15 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
 {
    E_Menu_Item *mi;
    Eina_List *l;
-
+   
    if (menu->entries)
      {
         Efreet_Menu *entry;
 
         EINA_LIST_FOREACH(menu->entries, l, entry)
           {
-             mi = e_menu_item_new(m);
 
+             mi = e_menu_item_new(m);
              _e_int_menus_item_label_set(entry, mi);
 
              if (entry->icon)
@@ -1226,7 +1201,7 @@ _e_int_menus_clients_add_by_desk(E_Desk *curr_desk, Eina_List *borders, E_Menu *
    /* Deal with present desk first */
    EINA_LIST_FOREACH(borders, l, bd)
      {
-        if (bd->iconic && e_config->clientlist_separate_iconified_apps && E_CLIENTLIST_GROUPICONS_SEP)
+        if (bd->iconic && (e_config->clientlist_separate_iconified_apps == E_CLIENTLIST_GROUPICONS_SEP)) 
           {
              ico = eina_list_append(ico, bd);
              continue;
@@ -1618,6 +1593,13 @@ _e_int_menus_augmentation_del(E_Menu *m, Eina_List *augmentation)
 
    EINA_LIST_FOREACH(augmentation, l, aug)
      if (aug->del.func) aug->del.func(aug->del.data, m);
+}
+
+EAPI void
+e_int_menus_cache_clear(void)
+{
+   if (_e_int_menus_app_menus)
+     eina_hash_free_buckets(_e_int_menus_app_menus);
 }
 
 static void
