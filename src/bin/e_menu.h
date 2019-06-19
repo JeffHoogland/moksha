@@ -161,6 +161,7 @@ struct _E_Menu_Category_Callback
 EINTERN int          e_menu_init(void);
 EINTERN int          e_menu_shutdown(void);
 
+EAPI void         e_menu_hide_all(void);
 EAPI E_Menu      *e_menu_new(void);
 EAPI void         e_menu_activate_key(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir);
 EAPI void         e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir, Ecore_X_Time activate_time);
