@@ -203,6 +203,7 @@ src/modules/conf_window_manipulation/e_mod_main.c
 src/modules/conf_window_remembers/e_int_config_remembers.c
 src/modules/conf_window_remembers/e_mod_main.c
 src/modules/cpufreq/e_mod_main.c
+src/modules/cpufreq/e_mod_config.c
 src/modules/cpufreq/freqset.c
 src/modules/everything/e_mod_main.c
 src/modules/everything/evry.c
