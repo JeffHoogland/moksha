@@ -499,6 +499,7 @@ e_widget_fsel_path_get(Evas_Object *obj, const char **dev, const char **path)
    E_Widget_Data *wd;
 
    if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    wd = e_widget_data_get(obj);
    e_fm2_path_get(wd->o_files_fm, dev, path);
 }
@@ -511,6 +512,7 @@ e_widget_fsel_selection_path_get(Evas_Object *obj)
    char buf[PATH_MAX];
 
    if (!obj) return NULL;
+   if (!(wd = e_widget_data_get(obj))) return NULL;
    wd = e_widget_data_get(obj);
    if (wd->fprev) return wd->path;
    s = e_widget_entry_text_get(wd->o_entry);
@@ -537,6 +539,7 @@ e_widget_fsel_window_object_set(Evas_Object *obj, E_Object *eobj)
    E_Widget_Data *wd;
 
    if (!obj) return;
+   if (!(wd = e_widget_data_get(obj))) return;
    wd = e_widget_data_get(obj);
    e_fm2_window_object_set(wd->o_favorites_fm, eobj);
    e_fm2_window_object_set(wd->o_files_fm, eobj);
