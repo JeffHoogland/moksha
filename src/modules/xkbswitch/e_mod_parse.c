@@ -162,7 +162,7 @@ parse_rules(void)
      {
         if (fgets(buf, sizeof(buf), f))
           {
-             char *n, *p, *tmp, *tok, *txt;
+             char *n, *p, *tmp, *tok, *txt, *c;
 
              n = strchr(buf, '\n');
              if (n) *n = '\0';
@@ -176,7 +176,10 @@ parse_rules(void)
              variant->name = eina_stringshare_add(strtok(tmp, " "));
 
              tok = strtok(NULL, " ");
-             *strchr(tok, ':') = '\0';
+             
+             c = strchr(tok, ':');
+             if (c)
+               *c = '\0';
 
              layout = eina_list_search_unsorted(layouts, layout_sort_by_name_cb, tok);
              layout->variants = eina_list_append(layout->variants, variant);
@@ -230,9 +233,9 @@ parse_rules(void)
                      /* A hack to get it to parse right if
                       * the group name contains a space
                       */
-                     if (strstr(p, "  "))
+                     p = strstr(p, "  ");
+                     if (p)
                        {
-                          p = strstr(p, "  ");
                           while (p[0] == ' ')
                             ++p;
                        }

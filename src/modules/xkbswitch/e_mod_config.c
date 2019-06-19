@@ -533,6 +533,8 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
 
    e_dialog_show(dlg);
 
+   e_dialog_border_icon_set(dlg, "preferences-desktop-keyboard");
+
    return dlg;
 }
 
