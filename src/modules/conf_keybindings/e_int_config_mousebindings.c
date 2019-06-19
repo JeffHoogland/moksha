@@ -5,9 +5,9 @@
 #define E_BINDING_CONTEXT_NUMBER           10
 
 #define TEXT_PRESS_MOUSE_BINIDING_SEQUENCE _("Please hold any modifier you want<br>"             \
-                                             "and press any button on your mouse,<br> or roll a" \
+                                             "and press any button on your mouse,<br>or roll a" \
                                              " wheel, to assign mouse binding."                  \
-                                             "<br>Press <hilight>Escape</highlight> to abort.")
+                                             "<br>Press <hilight>Escape</hilight> to abort.")
 
 static void        *_create_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -242,7 +242,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FOREACH_SAFE(cfdata->binding.wheel, l, l2, bw)
      {
-        if ((!bw->modifiers) && ((bw->context == E_BINDING_CONTEXT_WINDOW) || (bw->context == E_BINDING_CONTEXT_ANY)))
+        if ((!bw->modifiers) && 
+            (bw->direction == 0) &&
+            ((bw->context == E_BINDING_CONTEXT_WINDOW) || (bw->context == E_BINDING_CONTEXT_ANY)))
           {
              const char *msg = _("Unable to set a mouse wheel binding without modifiers<br>"
                                   "on a window: conflict with existing edje signal bindings.<br>"
@@ -725,7 +727,7 @@ static void
 _update_mouse_binding_list(E_Config_Dialog_Data *cfdata)
 {
    char *icon = NULL, *button, *mods;
-   char label[1024], val[10];
+   char label[1024], val[16];
    int i = 0;
    Eina_List *l;
    E_Config_Binding_Mouse *eb;
@@ -861,6 +863,7 @@ _update_action_params(E_Config_Dialog_Data *cfdata)
      {
         e_widget_disabled_set(cfdata->gui.o_params, 1);
         e_widget_entry_clear(cfdata->gui.o_params);
+        return;
      }
    sscanf(cfdata->locals.action, "%d %d", &g, &a);
 

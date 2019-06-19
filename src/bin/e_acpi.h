@@ -26,7 +26,15 @@ typedef enum _E_Acpi_Type
    E_ACPI_TYPE_VAIO, // 19
    E_ACPI_TYPE_MUTE, // 20
    E_ACPI_TYPE_VOLUME, // 21
-   E_ACPI_TYPE_BRIGHTNESS // 22
+   E_ACPI_TYPE_BRIGHTNESS, // 22
+   E_ACPI_TYPE_VOLUME_DOWN, // 23
+   E_ACPI_TYPE_VOLUME_UP, // 24
+   E_ACPI_TYPE_TABLET_ON, // 25
+   E_ACPI_TYPE_TABLET_OFF, // 26
+   E_ACPI_TYPE_ZOOM, // 27
+   E_ACPI_TYPE_SCREENLOCK, // 28
+   E_ACPI_TYPE_BATTERY_BUTTON, // 29
+   E_ACPI_TYPE_TABLET // 30
 } E_Acpi_Type;
 
 /* enum for acpi signals */
@@ -63,6 +71,8 @@ struct _E_Event_Acpi
 EINTERN int e_acpi_init(void);
 EINTERN int e_acpi_shutdown(void);
 
+EINTERN E_Acpi_Lid_Status e_acpi_lid_status_get(void);
+EAPI Eina_Bool e_acpi_lid_is_closed(void);
 EAPI void e_acpi_events_freeze(void);
 EAPI void e_acpi_events_thaw(void);
 
