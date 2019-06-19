@@ -17,11 +17,10 @@ temperature_module_la_SOURCES += temperature/e_mod_udev.c
 endif
 
 tempgetdir = $(temperaturepkgdir)
-tempget_PROGRAMS = temperature/tempget
 
 temperature_tempget_SOURCES = temperature/tempget.c
 temperature_tempget_LDADD   = @TEMPERATURE_LIBS@
 
 .PHONY: temperature install-temperature
 temperature: $(temperaturepkg_LTLIBRARIES) $(temperature_DATA) $(tempget_PROGRAMS)
-install-temperature: install-temperatureDATA install-temperaturepkgLTLIBRARIES install-tempgetPROGRAMS
+install-temperature: install-temperatureDATA install-temperaturepkgLTLIBRARIES
