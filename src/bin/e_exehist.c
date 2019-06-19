@@ -39,6 +39,20 @@ static E_Exehist *_e_exehist = NULL;
 static E_Powersave_Deferred_Action *_e_exehist_unload_defer = NULL;
 static int _e_exehist_changes = 0;
 
+static void
+_upgrade_defaults_to_mimeapps(void)
+{
+   char buf[PATH_MAX], buf2[PATH_MAX];
+
+   snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+            efreet_config_home_get());
+   if (ecore_file_exists(buf)) return;
+   ecore_file_mkpath(efreet_config_home_get());
+   snprintf(buf2, sizeof(buf2), "%s/applications/defaults.list",
+            efreet_data_home_get());
+   ecore_file_cp(buf2, buf);
+}
+
 /* externally accessible functions */
 EINTERN int
 e_exehist_init(void)
@@ -62,6 +76,8 @@ e_exehist_init(void)
    E_CONFIG_LIST(D, T, mimes, _e_exehist_config_item_edd);
 
    E_EVENT_EXEHIST_UPDATE = ecore_event_type_new();
+
+   _upgrade_defaults_to_mimeapps();
 
    return 1;
 }
@@ -290,8 +306,8 @@ e_exehist_mime_desktop_add(const char *mime, Efreet_Desktop *desktop)
    f = efreet_util_path_to_file_id(desktop->orig_path);
    if (!f) return;
 
-   snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
-            efreet_data_home_get());
+   snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+            efreet_config_home_get());
    ini = efreet_ini_new(buf);
    //fprintf(stderr, "try open %s = %p\n", buf, ini);
    if (ini)
