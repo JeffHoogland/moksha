@@ -1,6 +1,6 @@
 #include "e.h"
 
-#define BODHI_VERSION "5.0.0"
+#define BODHI_VERSION "5.1.0"
 #define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \
