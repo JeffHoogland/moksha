@@ -9,8 +9,8 @@ struct _E_Winlist_Win
    Evas_Object  *bg_object;
    Evas_Object  *icon_object;
    E_Border     *border;
-   unsigned char was_iconified : 1;
-   unsigned char was_shaded : 1;
+   unsigned char was_iconified :1;
+   unsigned char was_shaded :1;
 };
 
 static void      _e_winlist_size_adjust(void);
@@ -305,6 +305,11 @@ e_winlist_hide(void)
           {
              if (!bd->lock_user_shade)
                e_border_unshade(bd, bd->shade.dir);
+          }
+        if (e_config->winlist_list_move_after_select)
+          {
+             e_border_zone_set(bd, e_zone_current_get(e_util_container_current_get()));
+             e_border_desk_set(bd, e_desk_current_get(bd->zone));
           }
         else if (bd->desk)
           {
@@ -1097,8 +1102,8 @@ _e_winlist_activate(void)
      }
    if (((ww->border->shaded) ||
         ((ww->border->changes.shaded) &&
-         (ww->border->shade.val != ww->border->shaded) &&
-         (ww->border->shade.val))) &&
+         (!EINA_DBL_EQ(ww->border->shade.val, ww->border->shaded)) &&
+         (EINA_DBL_NONZERO(ww->border->shade.val)))) &&
        (ww->border->desk == e_desk_current_get(_winlist->zone)) &&
        (e_config->winlist_list_uncover_while_selecting))
      {
@@ -1211,7 +1216,7 @@ _e_winlist_deactivate(void)
      }
    edje_object_part_text_set(_bg_object, "e.text.label", "");
    edje_object_signal_emit(ww->bg_object, "e,state,unselected", "e");
-   if (ww->icon_object)
+   if (ww->icon_object && e_icon_edje_get(ww->icon_object))
      edje_object_signal_emit(ww->icon_object,
                              "e,state,unselected", "e");
    if (!ww->border->lock_focus_in)
@@ -1354,7 +1359,7 @@ _e_winlist_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
              if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN)
                mod |= E_BINDING_MODIFIER_WIN;
 
-             if (binding->key && (!strcmp(binding->key, ev->key)) &&
+             if (binding->key && ((!strcmp(binding->key, ev->key)) || (!strcmp(binding->key, ev->keyname))) &&
                  ((binding->modifiers == mod) || (binding->any_mod)))
                {
                   if (!_act_winlist) continue;

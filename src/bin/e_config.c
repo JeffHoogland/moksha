@@ -37,7 +37,6 @@ static E_Config_DD *_e_config_desktop_bg_edd = NULL;
 static E_Config_DD *_e_config_desklock_bg_edd = NULL;
 static E_Config_DD *_e_config_desktop_name_edd = NULL;
 static E_Config_DD *_e_config_desktop_window_profile_edd = NULL;
-static E_Config_DD *_e_config_remember_edd = NULL;
 static E_Config_DD *_e_config_color_class_edd = NULL;
 static E_Config_DD *_e_config_gadcon_edd = NULL;
 static E_Config_DD *_e_config_gadcon_client_edd = NULL;
@@ -324,11 +323,11 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, action, STR);
    E_CONFIG_VAL(D, T, params, STR);
 
-   _e_config_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
+   e_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
 #undef T
 #undef D
 #define T E_Remember
-#define D _e_config_remember_edd
+#define D e_remember_edd
    E_CONFIG_VAL(D, T, match, INT);
    E_CONFIG_VAL(D, T, no_reopen, INT);
    E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
@@ -542,6 +541,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, winlist_list_jump_desk_while_selecting, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_focus_while_selecting, INT); /**/
    E_CONFIG_VAL(D, T, winlist_list_raise_while_selecting, INT); /**/
+   E_CONFIG_VAL(D, T, winlist_list_move_after_select, INT); /**/
    E_CONFIG_VAL(D, T, winlist_pos_align_x, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_pos_align_y, DOUBLE); /**/
    E_CONFIG_VAL(D, T, winlist_pos_size_w, DOUBLE); /**/
@@ -561,7 +561,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, transition_start, STR); /**/
    E_CONFIG_VAL(D, T, transition_desk, STR); /**/
    E_CONFIG_VAL(D, T, transition_change, STR); /**/
-   E_CONFIG_LIST(D, T, remembers, _e_config_remember_edd);
+   E_CONFIG_LIST(D, T, remembers, e_remember_edd);
    E_CONFIG_VAL(D, T, remember_internal_windows, INT);
    E_CONFIG_VAL(D, T, move_info_follows, INT); /**/
    E_CONFIG_VAL(D, T, resize_info_follows, INT); /**/
@@ -811,7 +811,7 @@ _e_config_edd_shutdown(void)
    E_CONFIG_DD_FREE(_e_config_desklock_bg_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_name_edd);
    E_CONFIG_DD_FREE(_e_config_desktop_window_profile_edd);
-   E_CONFIG_DD_FREE(_e_config_remember_edd);
+   E_CONFIG_DD_FREE(e_remember_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_edd);
    E_CONFIG_DD_FREE(_e_config_gadcon_client_edd);
    E_CONFIG_DD_FREE(_e_config_shelf_edd);
@@ -965,10 +965,7 @@ while (!e_config)
         _e_config_edd_shutdown();
         _e_config_edd_init(EINA_TRUE);
         e_config = e_config_domain_load("e", _e_config_edd);
-        /* I made a c&p error here and fucked the world, so this ugliness
-         * will be my public mark of shame until E19 :/
-         * -zmike, 2013
-         */
+
         if (e_config)
           {
              Eina_List *l;
@@ -1209,7 +1206,7 @@ while (!e_config)
 
 	 E_CONFIG_LIMIT(e_config->backlight.normal, 0.05, 1.0);
 	 E_CONFIG_LIMIT(e_config->backlight.dim, 0.05, 1.0);
-	 E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0.05, 1.0);
+	 E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0, 1);
 
      if (!e_config->icon_theme)
        e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default
@@ -1537,7 +1534,7 @@ e_config_profile_save(void)
                     {
                        e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.cfg");
                        e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
-                       ret = ecore_file_mv(bsrc, bdst);
+                       ecore_file_mv(bsrc, bdst);
 //                       if (!ret)
 //                          _e_config_mv_error(bsrc, bdst);
                     }
@@ -1679,7 +1676,7 @@ e_config_binding_edge_match(E_Config_Binding_Edge *eb_in)
             (eb->modifiers == eb_in->modifiers) &&
             (eb->any_mod == eb_in->any_mod) &&
             (eb->edge == eb_in->edge) &&
-            (eb->delay == eb_in->delay) &&
+            EINA_FLT_EQ(eb->delay, eb_in->delay) &&
             (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
              ((!eb->action) && (!eb_in->action))) &&
             (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||

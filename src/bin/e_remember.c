@@ -3,6 +3,7 @@
 #define REMEMBER_HIERARCHY 1
 #define REMEMBER_SIMPLE    0
 
+EAPI E_Config_DD *e_remember_edd = NULL;
 EAPI int E_EVENT_REMEMBER_UPDATE = -1;
 
 typedef struct _E_Remember_List E_Remember_List;
@@ -23,7 +24,6 @@ static Eina_Bool   _e_remember_restore_cb(void *data, int type, void *event);
 
 /* local subsystem globals */
 static Eina_List *hooks = NULL;
-static E_Config_DD *e_remember_edd = NULL;
 static E_Config_DD *e_remember_list_edd = NULL;
 static E_Remember_List *remembers = NULL;
 static Eina_List *handlers = NULL;
@@ -100,6 +100,7 @@ e_remember_internal_save(void)
      {
         EINA_LIST_FREE(remembers->list, rem)
           _e_remember_free(rem);
+        remember_idler_list = eina_list_free(remember_idler_list);
      }
 
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
@@ -227,7 +228,7 @@ e_remember_use(E_Remember *rem)
 EAPI void
 e_remember_unuse(E_Remember *rem)
 {
-   rem->used_count--;
+   if (rem->used_count) rem->used_count--;
 }
 
 EAPI void
@@ -307,14 +308,10 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
    const char *title, *clasz, *name, *role;
    int match;
 
-   if (rem->name) eina_stringshare_del(rem->name);
-   if (rem->class) eina_stringshare_del(rem->class);
-   if (rem->title) eina_stringshare_del(rem->title);
-   if (rem->role) eina_stringshare_del(rem->role);
-   rem->name = NULL;
-   rem->class = NULL;
-   rem->title = NULL;
-   rem->role = NULL;
+   eina_stringshare_replace(&rem->name, NULL);
+   eina_stringshare_replace(&rem->class, NULL);
+   eina_stringshare_replace(&rem->title, NULL);
+   eina_stringshare_replace(&rem->role, NULL);
 
    name = bd->client.icccm.name;
    if (!name || name[0] == 0) name = NULL;
@@ -332,18 +329,18 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
    if (name && clasz)
      {
         match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
-        rem->name = eina_stringshare_add(name);
-        rem->class = eina_stringshare_add(clasz);
+        rem->name = eina_stringshare_ref(name);
+        rem->class = eina_stringshare_ref(clasz);
      }
    else if ((title = e_border_name_get(bd)) && title[0])
      {
         match |= E_REMEMBER_MATCH_TITLE;
-        rem->title = eina_stringshare_add(title);
+        rem->title = eina_stringshare_ref(title);
      }
    if (role)
      {
         match |= E_REMEMBER_MATCH_ROLE;
-        rem->role = eina_stringshare_add(role);
+        rem->role = eina_stringshare_ref(role);
      }
    if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_UNKNOWN)
      {
@@ -651,6 +648,7 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
           {
              temporary = 1;
              remembers->list = eina_list_remove(remembers->list, rem);
+             remember_idler_list = eina_list_remove(remember_idler_list, rem);
              if (!remembers->list)
                e_config_domain_save("e_remember_restart",
                                     e_remember_list_edd, remembers);
@@ -843,9 +841,8 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
      {
         if (rem->prop.border)
           {
-             if (bd->bordername) eina_stringshare_del(bd->bordername);
-             if (rem->prop.border) bd->bordername = eina_stringshare_add(rem->prop.border);
-             else bd->bordername = NULL;
+             eina_stringshare_replace(&bd->bordername, NULL);
+             bd->bordername = eina_stringshare_ref(rem->prop.border);
              bd->client.border.changed = 1;
           }
      }
@@ -911,73 +908,6 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
 static void
 _e_remember_init_edd(void)
 {
-   e_remember_edd = E_CONFIG_DD_NEW("E_Remember", E_Remember);
-#undef T
-#undef D
-#define T E_Remember
-#define D e_remember_edd
-   E_CONFIG_VAL(D, T, match, INT);
-   E_CONFIG_VAL(D, T, no_reopen, INT);
-   E_CONFIG_VAL(D, T, apply_first_only, UCHAR);
-   E_CONFIG_VAL(D, T, keep_settings, UCHAR);
-   E_CONFIG_VAL(D, T, name, STR);
-   E_CONFIG_VAL(D, T, class, STR);
-   E_CONFIG_VAL(D, T, title, STR);
-   E_CONFIG_VAL(D, T, role, STR);
-   E_CONFIG_VAL(D, T, type, INT);
-   E_CONFIG_VAL(D, T, transient, UCHAR);
-   E_CONFIG_VAL(D, T, apply, INT);
-   E_CONFIG_VAL(D, T, max_score, INT);
-   E_CONFIG_VAL(D, T, prop.pos_x, INT);
-   E_CONFIG_VAL(D, T, prop.pos_y, INT);
-   E_CONFIG_VAL(D, T, prop.res_x, INT);
-   E_CONFIG_VAL(D, T, prop.res_y, INT);
-   E_CONFIG_VAL(D, T, prop.pos_w, INT);
-   E_CONFIG_VAL(D, T, prop.pos_h, INT);
-   E_CONFIG_VAL(D, T, prop.w, INT);
-   E_CONFIG_VAL(D, T, prop.h, INT);
-   E_CONFIG_VAL(D, T, prop.layer, INT);
-   E_CONFIG_VAL(D, T, prop.maximize, UINT);
-   E_CONFIG_VAL(D, T, prop.lock_user_location, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_location, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_size, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_size, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_stacking, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_stacking, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_iconify, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_iconify, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_desk, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_desk, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_sticky, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_sticky, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_shade, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_shade, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_maximize, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_maximize, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_user_fullscreen, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_client_fullscreen, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_border, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_close, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_focus_in, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_focus_out, UCHAR);
-   E_CONFIG_VAL(D, T, prop.lock_life, UCHAR);
-   E_CONFIG_VAL(D, T, prop.border, STR);
-   E_CONFIG_VAL(D, T, prop.sticky, UCHAR);
-   E_CONFIG_VAL(D, T, prop.shaded, UCHAR);
-   E_CONFIG_VAL(D, T, prop.skip_winlist, UCHAR);
-   E_CONFIG_VAL(D, T, prop.skip_pager, UCHAR);
-   E_CONFIG_VAL(D, T, prop.skip_taskbar, UCHAR);
-   E_CONFIG_VAL(D, T, prop.fullscreen, UCHAR);
-   E_CONFIG_VAL(D, T, prop.desk_x, INT);
-   E_CONFIG_VAL(D, T, prop.desk_y, INT);
-   E_CONFIG_VAL(D, T, prop.zone, INT);
-   E_CONFIG_VAL(D, T, prop.head, INT);
-   E_CONFIG_VAL(D, T, prop.command, STR);
-   E_CONFIG_VAL(D, T, prop.icon_preference, UCHAR);
-   E_CONFIG_VAL(D, T, prop.desktop_file, STR);
-   E_CONFIG_VAL(D, T, prop.offer_resistance, UCHAR);
-#undef T
-#undef D
    e_remember_list_edd = E_CONFIG_DD_NEW("E_Remember_List", E_Remember_List);
 #undef T
 #undef D
