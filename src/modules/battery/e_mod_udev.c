@@ -222,11 +222,11 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
         GET_STR(bat, model, POWER_SUPPLY_MODEL_NAME);
         GET_STR(bat, vendor, POWER_SUPPLY_MANUFACTURER);
         GET_NUM(bat, design_charge, POWER_SUPPLY_ENERGY_FULL_DESIGN);
-        if (!bat->design_charge)
+        if (eina_dbl_exact(bat->design_charge, 0))
           GET_NUM(bat, design_charge, POWER_SUPPLY_CHARGE_FULL_DESIGN);
      }
    GET_NUM(bat, last_full_charge, POWER_SUPPLY_ENERGY_FULL);
-   if (!bat->last_full_charge)
+   if (eina_dbl_exact(bat->last_full_charge, 0))
      GET_NUM(bat, last_full_charge, POWER_SUPPLY_CHARGE_FULL);
    test = eeze_udev_syspath_get_property(bat->udi, "POWER_SUPPLY_ENERGY_NOW");
    if (!test)
@@ -238,9 +238,9 @@ _battery_udev_battery_update(const char *syspath, Battery *bat)
         charge = strtod(test, NULL);
         eina_stringshare_del(test);
         t = ecore_time_get();
-        if ((bat->got_prop) && (charge != bat->current_charge) && bat->current_charge != 0)
+        if ((bat->got_prop) && (!eina_dbl_exact(charge, bat->current_charge)) && (!eina_dbl_exact(bat->current_charge, 0)))
           charge_rate = ((charge - bat->current_charge) / (t - bat->last_update));
-        if (charge_rate != 0 || bat->last_update == 0 || bat->current_charge == 0)
+        if ((!eina_dbl_exact(charge_rate, 0)) || eina_dbl_exact(bat->last_update, 0) || eina_dbl_exact(bat->current_charge, 0))
 	  {
 	    bat->last_update = t;
 	    bat->current_charge = charge;
