@@ -3,9 +3,6 @@
 
 #include <sys/time.h>
 #include <time.h>
-#ifdef HAVE_SYS_TIMERFD_H
-# include <sys/timerfd.h>
-#endif
 
 /* actual module specifics */
 typedef struct _Instance Instance;
@@ -41,6 +38,7 @@ static void             _clock_popup_free(Instance *inst);
 
 static Eio_Monitor *clock_tz_monitor = NULL;
 static Eio_Monitor *clock_tz2_monitor = NULL;
+static Eio_Monitor *clock_tzetc_monitor = NULL;
 static Eina_List *clock_eio_handlers = NULL;
 Config *clock_config = NULL;
 
@@ -49,9 +47,6 @@ static E_Config_DD *conf_item_edd = NULL;
 static Eina_List *clock_instances = NULL;
 static E_Action *act = NULL;
 static Ecore_Timer *update_today = NULL;
-#ifdef HAVE_SYS_TIMERFD_H
-static Ecore_Fd_Handler *timerfd_handler = NULL;
-#endif
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
@@ -308,7 +303,7 @@ _clock_popup_fullscreen_change(Instance *inst, int type __UNUSED__, void *ev __U
 static Eina_Bool
 _clock_popup_desk_change(Instance *inst, int type __UNUSED__, E_Event_Desk_After_Show *ev)
 {
-   if (!inst->gcc->gadcon || !inst->gcc->gadcon->shelf) return ECORE_CALLBACK_RENEW;
+   if ((!inst->gcc) || (!inst->gcc->gadcon) || (!inst->gcc->gadcon->shelf)) return ECORE_CALLBACK_RENEW;
    if (e_shelf_desk_visible(inst->gcc->gadcon->shelf, ev->desk)) return ECORE_CALLBACK_RENEW;
    _clock_popup_free(inst);
    return ECORE_CALLBACK_RENEW;
@@ -813,35 +808,48 @@ _e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event
 }
 
 static Eina_Bool
-_clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event)
 {
-   e_int_clock_instances_redo(EINA_TRUE);
-   return ECORE_CALLBACK_RENEW;
-}
+   Eio_Monitor_Event *ev = event;
 
-static Eina_Bool
-_clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
-   eio_monitor_del(clock_tz_monitor);
-   clock_tz_monitor = eio_monitor_add("/etc/localtime");
-   eio_monitor_del(clock_tz2_monitor);
-   clock_tz2_monitor = eio_monitor_add("/etc/timezone");
-   return ECORE_CALLBACK_RENEW;
-}
-
-static Eina_Bool
-_clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
-{
-   char buf[64];
-
-   if (read(ecore_main_fd_handler_fd_get(fdh), buf, sizeof(buf)) < 0)
+   if ((ev->monitor == clock_tz_monitor) ||
+       (ev->monitor == clock_tz2_monitor) ||
+       (ev->monitor == clock_tzetc_monitor))
      {
-        close(ecore_main_fd_handler_fd_get(fdh));
-        timerfd_handler = ecore_main_fd_handler_del(timerfd_handler);
-        return EINA_FALSE;
+        if ((ev->filename) &&
+            ((!strcmp(ev->filename, "/etc/localtime")) ||
+             (!strcmp(ev->filename, "/etc/timezone"))))
+          {
+             e_int_clock_instances_redo(EINA_TRUE);
+          }
      }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event)
+{
+   Eio_Monitor_Event *ev = event;
+
+   if ((ev->monitor == clock_tz_monitor) ||
+       (ev->monitor == clock_tz2_monitor) ||
+       (ev->monitor == clock_tzetc_monitor))
+     {
+        eio_monitor_del(clock_tz_monitor);
+        clock_tz_monitor = eio_monitor_add("/etc/localtime");
+        eio_monitor_del(clock_tz2_monitor);
+        clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+        eio_monitor_del(clock_tzetc_monitor);
+        clock_tzetc_monitor = eio_monitor_add("/etc");
+     }
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_clock_time_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
    e_int_clock_instances_redo(EINA_TRUE);
-   return EINA_TRUE;
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 /* module setup */
@@ -895,6 +903,7 @@ e_modapi_init(E_Module *m)
    clock_config->module = m;
    clock_tz_monitor = eio_monitor_add("/etc/localtime");
    clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+   clock_tzetc_monitor = eio_monitor_add("/etc");
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_ERROR, _clock_eio_error, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_CREATED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_MODIFIED, _clock_eio_update, NULL);
@@ -902,37 +911,10 @@ e_modapi_init(E_Module *m)
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_DELETED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_RENAME, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, E_EVENT_SYS_RESUME, _clock_eio_update, NULL);
+   E_LIST_HANDLER_APPEND(clock_eio_handlers, ECORE_EVENT_SYSTEM_TIMEDATE_CHANGED, _clock_time_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
 
-#ifdef HAVE_SYS_TIMERFD_H
-   
-#ifndef TFD_TIMER_CANCELON_SET
-# define TFD_TIMER_CANCELON_SET (1 << 1)
-#endif
-     {
-        int timer_fd;
-        int flags;
-        struct itimerspec its;
-   
-        // on old systems, flags must be 0, so we'll play nice and do it always
-        timer_fd = timerfd_create(CLOCK_REALTIME, 0);
-        if (timer_fd < 0) return m;
-        fcntl(timer_fd, F_SETFL, O_NONBLOCK);
-
-        flags = fcntl(timer_fd, F_GETFD);
-        flags |= FD_CLOEXEC;   
-        fcntl(timer_fd, F_SETFD, flags);
-        
-        memset(&its, 0, sizeof(its));
-        timerfd_settime(timer_fd, TFD_TIMER_ABSTIME | TFD_TIMER_CANCELON_SET, 
-                        &its, NULL);
-        
-        timerfd_handler = ecore_main_fd_handler_add(timer_fd, ECORE_FD_READ,
-                                                    _clock_fd_update, NULL, 
-                                                    NULL, NULL);
-     }
-#endif
    return m;
 }
 
@@ -978,9 +960,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    eio_monitor_del(clock_tz2_monitor);
    clock_tz_monitor = NULL;
    clock_tz2_monitor = NULL;
-#ifdef HAVE_SYS_TIMERFD_H
-   timerfd_handler = ecore_main_fd_handler_del(timerfd_handler);
-#endif
 
    return 1;
 }
