@@ -125,7 +125,7 @@ _e_xinerama_update(void)
                     {
                        E_Screen *screen;
 
-                       INF("E17 INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i",
+                       INF("MOKSHA INIT: XINERAMA SCREEN: [%i][%i], %ix%i+%i+%i",
                               i, i, w, h, x, y);
                        /* add it to our list */
                        screen = E_NEW(E_Screen, 1);
@@ -186,7 +186,7 @@ _e_xinerama_update(void)
    EINA_LIST_FOREACH(chosen_screens, l, scr)
      {
         scr->escreen = n;
-        INF("E17 INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i",
+        INF("MOKSHA INIT: XINERAMA CHOSEN: [%i][%i], %ix%i+%i+%i",
                scr->screen, scr->escreen, scr->w, scr->h, scr->x, scr->y);
         n++;
      }
