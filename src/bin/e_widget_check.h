@@ -8,6 +8,8 @@ EAPI void	  e_widget_check_checked_set(Evas_Object *check, int checked);
 EAPI int	  e_widget_check_checked_get(Evas_Object *check);
 EAPI void e_widget_check_valptr_set(Evas_Object *check, int *val);
 EAPI Evas_Object *e_widget_check_icon_add(Evas *evas, const char *label, const char *icon, int icon_w, int icon_h, int *val);
+EAPI void e_widget_check_widget_disable_on_checked_add(Evas_Object *check, Evas_Object *obj);
+EAPI void e_widget_check_widget_disable_on_unchecked_add(Evas_Object *check, Evas_Object *obj);
 
 #endif
 #endif
