@@ -6,7 +6,6 @@ static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -43,7 +42,6 @@ struct _E_Config_Dialog_Data
    int maximized_allow_manip;
    int border_fix_on_shelf_toggle;
    int    allow_above_fullscreen;
-   Eina_List *resistance_list;
 };
 
 E_Config_Dialog *
@@ -106,7 +104,6 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   eina_list_free(cfdata->resistance_list);
    E_FREE(cfdata);
 }
 
@@ -149,7 +146,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 	   (e_config->gadget_resist != cfdata->gadget_resist) ||
 	   (e_config->geometry_auto_resize_limit != cfdata->geometry_auto_resize_limit) ||
            (e_config->geometry_auto_move != cfdata->geometry_auto_move) ||
-	   (e_config->border_keyboard.timeout != cfdata->border_keyboard.timeout) ||
+       (!EINA_DBL_EQ(e_config->border_keyboard.timeout, cfdata->border_keyboard.timeout)) ||
 	   (e_config->border_keyboard.move.dx != cfdata->border_keyboard.move.dx) ||
 	   (e_config->border_keyboard.move.dy != cfdata->border_keyboard.move.dx) ||
 	   (e_config->border_keyboard.resize.dx != cfdata->border_keyboard.resize.dx) ||
@@ -180,34 +177,26 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    oc = e_widget_check_add(evas, _("Resist obstacles"), &(cfdata->use_resist));
    e_widget_list_object_append(ol, oc, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Other windows"));
-   e_widget_disabled_set(ow, !cfdata->use_resist);
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
                             NULL, &(cfdata->window_resist), 100);
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
-   e_widget_disabled_set(ow, !cfdata->use_resist);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Edge of the screen"));
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
-   e_widget_disabled_set(ow, !cfdata->use_resist);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
                             NULL, &(cfdata->desk_resist), 100);
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
-   e_widget_disabled_set(ow, !cfdata->use_resist);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Desktop gadgets"));
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
-   e_widget_disabled_set(ow, !cfdata->use_resist);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f pixels"), 0, 64.0, 1.0, 0, 
                             NULL, &(cfdata->gadget_resist), 100);
-   cfdata->resistance_list = eina_list_append (cfdata->resistance_list, ow);
-   e_widget_disabled_set(ow, !cfdata->use_resist);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   e_widget_on_change_hook_set(oc, _cb_disable_check_list, 
-                               cfdata->resistance_list);
    e_widget_toolbook_page_append(otb, NULL, _("Resistance"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
 
@@ -311,14 +300,3 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    return otb;
 }
 
-static void
-_cb_disable_check_list(void *data, Evas_Object *obj)
-{
-   const Eina_List *list = data;
-   const Eina_List *l;
-   Evas_Object *o;
-   Eina_Bool disable = !e_widget_check_checked_get(obj);
-
-   EINA_LIST_FOREACH(list, l, o)
-     e_widget_disabled_set(o, disable);
-}

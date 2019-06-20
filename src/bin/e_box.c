@@ -391,7 +391,8 @@ e_box_align_set(Evas_Object *obj, double ax, double ay)
    if (evas_object_smart_smart_get(obj) != _e_smart) SMARTERRNR();
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
-   if ((sd->align.x == ax) && (sd->align.y == ay)) return;
+   if (eina_dbl_exact(sd->align.x, ax) && eina_dbl_exact(sd->align.y, ay))
+      return;
    sd->align.x = ax;
    sd->align.y = ay;
    sd->changed = 1;

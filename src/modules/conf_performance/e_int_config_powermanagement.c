@@ -94,11 +94,11 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 {
    return ((e_config->powersave.min != cfdata->powersave_min) ||
            (e_config->powersave.max != cfdata->powersave_max) ||
-           (e_config->powersave.none != cfdata->powersave_none) ||
-           (e_config->powersave.low != cfdata->powersave_low) ||
-           (e_config->powersave.medium != cfdata->powersave_medium) ||
-           (e_config->powersave.high != cfdata->powersave_high) ||
-           (e_config->powersave.extreme != cfdata->powersave_extreme));
+           (!EINA_DBL_EQ(e_config->powersave.none, cfdata->powersave_none)) ||
+           (!EINA_DBL_EQ(e_config->powersave.low, cfdata->powersave_low)) ||
+           (!EINA_DBL_EQ(e_config->powersave.medium, cfdata->powersave_medium)) ||
+           (!EINA_DBL_EQ(e_config->powersave.high, cfdata->powersave_high)) ||
+           (!EINA_DBL_EQ(e_config->powersave.extreme, cfdata->powersave_extreme)));
 }
 
 static Evas_Object *

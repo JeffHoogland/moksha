@@ -107,10 +107,10 @@ static int
 _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    e_widget_disabled_set(cfdata->backlight_slider, !cfdata->enable_idle_dim); // set state from saved config
-   return (e_config->backlight.normal * 100.0 != cfdata->backlight_normal) ||
-          (e_config->backlight.dim * 100.0 != cfdata->backlight_dim) ||
-          (e_config->backlight.transition != cfdata->backlight_transition) ||
-          (e_config->backlight.timer != cfdata->backlight_timeout) ||
+   return (!EINA_DBL_EQ(e_config->backlight.normal * 100.0, cfdata->backlight_normal)) ||
+          (!EINA_DBL_EQ(e_config->backlight.dim * 100.0, cfdata->backlight_dim)) ||
+          (!EINA_DBL_EQ(e_config->backlight.transition, cfdata->backlight_transition)) ||
+          (!EINA_DBL_EQ(e_config->backlight.timer, cfdata->backlight_timeout)) ||
           (e_config->backlight.idle_dim != cfdata->enable_idle_dim);
 }
 

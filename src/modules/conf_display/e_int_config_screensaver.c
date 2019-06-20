@@ -137,13 +137,13 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return ((e_config->screensaver_enable != cfdata->enable_screensaver) ||
-	   (e_config->screensaver_timeout != lround(cfdata->timeout * 60.0)) ||
-	   (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
+      (e_config->screensaver_timeout != lround(cfdata->timeout * 60.0)) ||
+      (e_config->screensaver_ask_presentation != cfdata->ask_presentation) ||
            (e_config->mode.presentation != cfdata->presentation_mode) ||
-	   (e_config->screensaver_ask_presentation_timeout != cfdata->ask_presentation_timeout) ||
-	   (e_config->screensaver_suspend != cfdata->screensaver_suspend) ||
-	   (e_config->screensaver_suspend_on_ac != cfdata->screensaver_suspend_on_ac) ||
-	   (e_config->screensaver_suspend_delay != cfdata->screensaver_suspend_delay));
+      (!EINA_DBL_EQ(e_config->screensaver_ask_presentation_timeout, cfdata->ask_presentation_timeout)) ||
+      (e_config->screensaver_suspend != cfdata->screensaver_suspend) ||
+      (e_config->screensaver_suspend_on_ac != cfdata->screensaver_suspend_on_ac) ||
+      (!EINA_DBL_EQ(e_config->screensaver_suspend_delay, cfdata->screensaver_suspend_delay)));
 }
 
 static Evas_Object *
