@@ -6,6 +6,8 @@
    (((_vol+1)*100+PA_VOLUME_NORM/2)/PA_VOLUME_NORM)
 #define INT_TO_PA_VOLUME(_vol) \
    (!_vol) ? 0 : ((PA_VOLUME_NORM*(_vol+1)-PA_VOLUME_NORM/2)/100)
+#define DB_TO_PA_VOLUME(_vol) \
+   ((!eina_dbl_exact(_vol, 0))) ? 0 : ((PA_VOLUME_NORM*(_vol+1)-PA_VOLUME_NORM/2)/100)
 
 typedef struct _Port Port;
 struct _Port {

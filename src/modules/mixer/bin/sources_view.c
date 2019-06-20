@@ -170,7 +170,7 @@ _volume_changed_cb(void *data, Evas_Object *o,
 {
    struct Source *source = data;
    double val = elm_slider_value_get(o);
-   pa_volume_t v = INT_TO_PA_VOLUME(val);
+   pa_volume_t v = DB_TO_PA_VOLUME(val);
 
    pa_cvolume_set(&source->volume, source->volume.channels, v);
 
