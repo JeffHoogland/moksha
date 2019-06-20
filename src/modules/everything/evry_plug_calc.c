@@ -25,6 +25,8 @@ static int error = 0;
 static Eina_Bool active = EINA_FALSE;
 static char _module_icon[] = "accessories-calculator";
 static Evry_Item *cur_item = NULL;
+static unsigned int bc_scale = 8;
+static void _set_bc_scale(void);
 
 static Evry_Plugin *
 _begin(Evry_Plugin *plugin, const Evry_Item *item __UNUSED__)
@@ -181,7 +183,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
    if (!strncmp(input, "scale=", 6))
      snprintf(buf, 1024, "%s\n", input);
    else
-     snprintf(buf, 1024, "scale=3;%s\n", input);
+     snprintf(buf, 1024, "scale=%d;%s\n", bc_scale, input);
 
    ecore_exe_send(exe, buf, strlen(buf));
 
@@ -297,7 +299,7 @@ Eina_Bool
 evry_plug_calc_init(E_Module *m __UNUSED__)
 {
    EVRY_MODULE_NEW(evry_module, evry, _plugins_init, _plugins_shutdown);
-
+   _set_bc_scale();
    return EINA_TRUE;
 }
 
@@ -310,3 +312,13 @@ evry_plug_calc_shutdown(void)
 void
 evry_plug_calc_save(void){}
 
+static void 
+_set_bc_scale(void)
+{
+   const char* s = getenv("MOKSHA_BC_SCALE");
+   if (s)
+   {  long int lscale = strtol (s,NULL,10);
+	  if (lscale > 0  && lscale <51)
+	    bc_scale = (int) lscale;
+   }
+}

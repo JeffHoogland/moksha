@@ -238,7 +238,7 @@ _hide_animator(void *data)
    double val;
    int finished = 0;
 
-   if (!inst->hide_start)
+   if (!EINA_DBL_NONZERO(inst->hide_start))
      inst->hide_start = ecore_loop_time_get();
 
    val = (ecore_loop_time_get() - inst->hide_start) / 0.4;

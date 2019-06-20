@@ -151,11 +151,11 @@ _cb_sort(const void *data1, const void *data2)
    const Evry_Item *it1 = data1;
    const Evry_Item *it2 = data2;
 
-   if (it1->usage && it2->usage)
+   if ((!eina_dbl_exact(it1->usage, 0)) && (!eina_dbl_exact(it2->usage, 0)))
      return it1->usage > it2->usage ? -1 : 1;
-   if (it1->usage && !it2->usage)
+   if ((!eina_dbl_exact(it1->usage, 0)) && eina_dbl_exact(it2->usage, 0))
      return -1;
-   if (it2->usage && !it1->usage)
+   if ((!eina_dbl_exact(it2->usage, 0)) && eina_dbl_exact(it1->usage, 0))
      return 1;
 
    if (it1->fuzzy_match || it2->fuzzy_match)
@@ -455,7 +455,7 @@ _desktop_list_get(void)
 {
    Eina_List *apps = NULL;
    Eina_List *cat_ss;
-   Eina_List *ll;
+   Eina_List *l, *ll;
    Efreet_Desktop *d;
 
    apps = efreet_util_desktop_name_glob_list("*");
@@ -471,6 +471,12 @@ _desktop_list_get(void)
           }
         //printf("%d %s\n", d->ref, d->name);
 
+        efreet_desktop_free(d);
+     }
+   EINA_LIST_FOREACH_SAFE(apps, l, ll, d)
+     {
+        if (!d->no_display) continue;
+        apps = eina_list_remove_list(apps, l);
         efreet_desktop_free(d);
      }
 
@@ -508,7 +514,7 @@ _hist_items_get_cb(const Eina_Hash *hash __UNUSED__, const void *key, void *data
              EINA_LIST_FOREACH (p->apps_all, ll, d)
                if (d->exec && !strcmp(d->exec, exec)) break;
 
-             if (d)
+             if (d && (!d->no_display))
                {
                   efreet_desktop_ref(d);
                   apps_cache = eina_list_append(apps_cache, d);
@@ -729,7 +735,7 @@ _begin_mime(Evry_Plugin *plugin, const Evry_Item *item)
 
         EINA_LIST_FREE (l, d)
           {
-             if (!eina_list_data_find_list(p->apps_mime, d))
+             if ((!d->no_display) && (!eina_list_data_find_list(p->apps_mime, d)))
                p->apps_mime = eina_list_append(p->apps_mime, d);
              else
                efreet_desktop_free(d);
@@ -742,7 +748,7 @@ _begin_mime(Evry_Plugin *plugin, const Evry_Item *item)
 
         EINA_LIST_FREE (l, d)
           {
-             if (!eina_list_data_find_list(p->apps_mime, d))
+             if ((!d->no_display) && (!eina_list_data_find_list(p->apps_mime, d)))
                p->apps_mime = eina_list_append(p->apps_mime, d);
              else
                efreet_desktop_free(d);

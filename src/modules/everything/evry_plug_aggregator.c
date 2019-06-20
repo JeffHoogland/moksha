@@ -92,10 +92,10 @@ _fetch(Evry_Plugin *plugin, const char *input)
              /* give plugin item the highest priority of its items */
              EINA_LIST_FOREACH (pp->items, ll, it)
                {
-                  if (it->usage >= 0)
+                  if (it->usage > -1.0)
                     evry_history_item_usage_set(it, input, context);
 
-                  if (it->usage && (it->usage > max_usage))
+                  if (it->usage > max_usage)
                     max_usage = it->usage;
 
                   if (it->fuzzy_match == 0)
@@ -113,7 +113,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
              evry_history_item_usage_set(itp, NULL, NULL);
              itp->usage /= 100.0;
 
-             if ((itp->usage && max_usage) && (itp->usage < max_usage))
+             if ((!eina_dbl_exact(itp->usage, 0)) && (!eina_dbl_exact(max_usage, 0)) && (itp->usage < max_usage))
                itp->usage = max_usage;
              itp->fuzzy_match = min_fuzz;
 
@@ -195,7 +195,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
                     evry_history_item_usage_set(it, input, context);
 
                   if ((subj_sel) && (top_level) &&
-                      (!it->usage) && ((int) inp_len < plugin->config->min_query))
+                      eina_dbl_exact(it->usage, 0) && ((int) inp_len < plugin->config->min_query))
                     continue;
 
                   items = eina_list_append(items, it);

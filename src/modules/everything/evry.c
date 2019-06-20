@@ -203,51 +203,25 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
    _evry_selector_new(win, EVRY_PLUGIN_ACTION);
    _evry_selector_new(win, EVRY_PLUGIN_OBJECT);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_EVENT_KEY_DOWN,
-         _evry_cb_key_down, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_X_EVENT_SELECTION_NOTIFY,
-         _evry_cb_selection_notify, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_X_EVENT_SELECTION_NOTIFY, _evry_cb_selection_notify, win);
+         
+   E_LIST_HANDLER_APPEND(win->handlers, EVRY_EVENT_ITEM_CHANGED, _evry_cb_item_changed, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, evry_event_handler_add
-         (EVRY_EVENT_ITEM_CHANGED,
-         _evry_cb_item_changed, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _evry_cb_mouse, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_BUTTON_DOWN,
-         _evry_cb_mouse, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_MOUSE_BUTTON_UP, _evry_cb_mouse, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_BUTTON_UP,
-         _evry_cb_mouse, win));
    E_LIST_HANDLER_APPEND(win->handlers, E_EVENT_DESKLOCK, _evry_cb_desklock, win);
 #if 0
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_MOVE,
-         _evry_cb_mouse, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_MOUSE_MOVE, _evry_cb_mouse, win);
+   
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_MOUSE_WHEEL, _evry_cb_mouse, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_EVENT_MOUSE_WHEEL,
-         _evry_cb_mouse, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_X_EVENT_MOUSE_IN, _evry_cb_mouse_in, win);
 
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_X_EVENT_MOUSE_IN,
-         _evry_cb_mouse_in, win));
-
-   win->handlers = eina_list_append
-       (win->handlers, ecore_event_handler_add
-         (ECORE_X_EVENT_MOUSE_OUT,
-         _evry_cb_mouse_out, win));
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_X_EVENT_MOUSE_OUT, _evry_cb_mouse_out, win);
 #endif
    _evry_selector_plugins_get(SUBJ_SEL, NULL, params);
    _evry_selector_update(SUBJ_SEL);
@@ -300,7 +274,7 @@ _evry_hide_func(Evry_Window *win, int finished)
 void
 evry_hide(Evry_Window *win, int clear)
 {
-   Ecore_Event_Handler *ev;
+   Ecore_Event_Handler *ev; //Why is this here?
    int i;
 
    if (!win) return;
@@ -1031,7 +1005,6 @@ _evry_window_free(Evry_Window *win)
      ecore_x_window_hide(win->ewin->border->win);
    else
      ecore_x_window_hide(win->ewin->evas_win);
-
    evas_event_freeze(win->evas);
    evas_object_del(win->o_main);
    if (!e_object_is_del(E_OBJECT(win->ewin)))
@@ -2747,7 +2720,7 @@ evry_view_toggle(Evry_State *s, const char *trigger)
 {
    Evry_View *view, *v = NULL;
    Eina_List *l, *ll;
-   Eina_Bool triggered = FALSE;
+   Eina_Bool triggered = EINA_FALSE;
    Evry_Window *win = s->selector->win;
 
    if (trigger)
@@ -2893,7 +2866,7 @@ _evry_matches_update(Evry_Selector *sel, int async)
                {
                   s->inp[0] = ':';
 
-                  if (s->inp + len_trigger)
+                  if (s->inp[len_trigger])
                     strcpy(s->inp + 1, s->inp + len_trigger);
                   else
                     s->inp[1] = 0;

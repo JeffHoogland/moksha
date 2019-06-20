@@ -693,7 +693,7 @@ _fetch(Evry_Plugin *plugin, const char *input)
                {
                   dir = dirname(buf);
                   _folder_item_add(p, dir, prio++);
-                  strcpy(buf, dir);
+                  strncpy(buf, dir, sizeof(buf) - 1);
                }
 
              p->command = CMD_SHOW_PARENT;
@@ -758,7 +758,6 @@ _cb_sort_recent(const void *data1, const void *data2)
 
    if (it1->hi && it2->hi)
      return it1->hi->last_used > it2->hi->last_used ? -1 : 1;
-
    if (it1->fuzzy_match && it2->fuzzy_match)
      if (it1->fuzzy_match - it2->fuzzy_match)
        return it1->fuzzy_match - it2->fuzzy_match;
