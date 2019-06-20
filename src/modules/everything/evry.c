@@ -764,7 +764,7 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_win_borderless_set(win->ewin, 1);
    e_win_no_remember_set(win->ewin, 1);
    e_win_placed_set(win->ewin, 1);
-   e_object_delay_del_set(E_OBJECT(win->ewin), NULL); //prevent deferred delete
+   //e_object_delay_del_set(E_OBJECT(win->ewin), NULL); //prevent deferred delete
    ecore_evas_override_set(win->ewin->ecore_evas, 1);
    win->evas = e_win_evas_get(win->ewin);
    win->zone = zone;
