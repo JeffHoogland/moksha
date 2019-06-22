@@ -673,7 +673,7 @@ _notification_popup_refresh(Popup_Data *popup)
         w = w * width / v;
      }
    evas_object_size_hint_min_set(popup->app_icon, w, h);
-   edje_extern_object_max_size_set(popup->app_icon, w, h);
+   evas_object_size_hint_max_set(popup->app_icon, w, h);
 
    edje_object_calc_force(popup->theme);
    edje_object_part_swallow(popup->theme, "notification.swallow.app_icon", 

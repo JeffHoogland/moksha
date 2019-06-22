@@ -4644,7 +4644,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
                }
              /* FIXME: if icons are allowed to have their own size - use it */
              evas_object_size_hint_min_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
-             edje_extern_object_max_size_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
+             evas_object_size_hint_max_set(obj2, _e_fm2_icon_w_get(ic->sd), _e_fm2_icon_h_get(ic->sd));
              edje_object_part_swallow(obj, "e.swallow.icon", obj2);
              edje_object_size_min_calc(obj, &mw, &mh);
           }
@@ -4679,7 +4679,7 @@ _e_fm2_icon_fill(E_Fm2_Icon *ic, E_Fm2_Finfo *finf)
              ic->sd->tmp.obj2 = obj2;
           }
         evas_object_size_hint_min_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
-        edje_extern_object_max_size_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
+        evas_object_size_hint_max_set(obj2, ic->sd->config->icon.list.w, ic->sd->config->icon.list.h);
         edje_object_part_swallow(obj, "e.swallow.icon", obj2);
         edje_object_size_min_calc(obj, &mw, &mh);
         ic->w = MAX(mw, ic->sd->w);
@@ -7648,7 +7648,7 @@ _e_fm2_cb_icon_thumb_dnd_gen(void *data, Evas_Object *obj, void *event_info __UN
    have_alpha = e_icon_alpha_get(obj);
 //   if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
    {
-      edje_extern_object_aspect_set(obj, EDJE_ASPECT_CONTROL_BOTH, w, h);
+      evas_object_size_hint_aspect_set(obj, EDJE_ASPECT_CONTROL_BOTH, w, h);
    }
    edje_object_part_swallow(o, "e.swallow.icon", obj);
    if (have_alpha)
@@ -7677,7 +7677,7 @@ _e_fm2_cb_icon_thumb_gen(void *data, Evas_Object *obj, void *event_info __UNUSED
         have_alpha = e_icon_alpha_get(obj);
 //	if (_e_fm2_view_mode_get(ic->sd) == E_FM2_VIEW_MODE_LIST)
         {
-           edje_extern_object_aspect_set(obj,
+           evas_object_size_hint_aspect_set(obj,
                                          EDJE_ASPECT_CONTROL_BOTH, w, h);
         }
         edje_object_part_swallow(ic->obj, "e.swallow.icon", obj);

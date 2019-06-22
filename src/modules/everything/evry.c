@@ -1252,7 +1252,7 @@ _evry_selector_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_in
      }
 
    e_icon_size_get(sel->o_thumb, &w, &h);
-   edje_extern_object_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
+   evas_object_size_hint_aspect_set(sel->o_thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
 
    snprintf(buf, sizeof(buf), "%s:e.swallow.thumb", sel->edje_part);
    edje_object_part_swallow(win->o_main, buf, sel->o_thumb);

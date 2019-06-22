@@ -2006,7 +2006,7 @@ _e_menu_items_layout_update(E_Menu *m)
      }
    e_box_size_min_get(m->container_object, &bw, &bh);
    evas_object_size_hint_min_set(m->container_object, bw, bh);
-   edje_extern_object_max_size_set(m->container_object, bw, bh);
+   evas_object_size_hint_max_set(m->container_object, bw, bh);
    edje_object_part_swallow(m->bg_object, "e.swallow.content", m->container_object);
    edje_object_size_min_calc(m->bg_object, &mw, &mh);
    e_box_thaw(m->container_object);
