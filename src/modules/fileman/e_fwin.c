@@ -202,10 +202,12 @@ static void             _e_fwin_zone_cb_mouse_down(void *data,
                                                    Evas *evas,
                                                    Evas_Object *obj,
                                                    void *event_info);
+#if 0
 static void             _e_fwin_zone_focus_out(void *data,
                                                    Evas *evas,
                                                    Evas_Object *obj,
                                                    void *event_info);
+#endif
 static void             _e_fwin_zone_focus_in(void *data,
                                                    Evas *evas,
                                                    void *event_info);
@@ -1933,6 +1935,7 @@ _e_fwin_zone_cb_mouse_down(void *data,
    e_fm2_typebuf_clear(fwin->cur_page->fm_obj);
 }
 
+#if 0
 static void
 _e_fwin_zone_focus_out(void *data __UNUSED__,
                        Evas *evas       __UNUSED__,
@@ -1941,13 +1944,14 @@ _e_fwin_zone_focus_out(void *data __UNUSED__,
 {  return;
    //evas_object_focus_set(obj, EINA_TRUE);
 }
+#endif
 
 static void
-_e_fwin_zone_focus_in(void *data,
+_e_fwin_zone_focus_in(void *data __UNUSED__,
                        Evas *evas       __UNUSED__,
                        void *event_info __UNUSED__)
 {
-   E_Fwin *fwin;
+   //E_Fwin *fwin;
    return;
    /*
    fwin = data;

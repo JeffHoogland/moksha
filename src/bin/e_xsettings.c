@@ -59,7 +59,7 @@ static Eina_Bool reset = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
-static const char _setting_xft_dpi[]         = "Xft/DPI";
+//static const char _setting_xft_dpi[]         = "Xft/DPI";
 static const char *_setting_theme = NULL;
 static unsigned int event_ignore = 0;
 

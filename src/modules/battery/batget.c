@@ -986,14 +986,14 @@ linux_acpi_init(void)
    if (bats)
      {
         Eina_File_Direct_Info *info;
-
+        char buf[(PATH_MAX * 2) + 128];
+        
         have_power = 0;
         powers = eina_file_direct_ls("/proc/acpi/ac_adapter");
         if (powers)
           {
              EINA_ITERATOR_FOREACH(powers, info)
                {
-                  char buf[PATH_MAX];
                   FILE *f;
 
                   if (info->name_length + sizeof("/state") >= sizeof(buf)) continue;
@@ -1022,7 +1022,6 @@ linux_acpi_init(void)
         acpi_max_design = 0;
         EINA_ITERATOR_FOREACH(bats, info)
           {
-             char buf[PATH_MAX + 6];
              FILE *f;
 
              snprintf(buf, sizeof(buf), "%s/info", info->path);
