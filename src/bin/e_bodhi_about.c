@@ -11,13 +11,14 @@
     "Rbt 'ylee' Wiley<br>" \
     "Stefan 'the waiter' Uram<br>" \
     "Stace 'sef' Fauske<br>" \
+    "Rene 'duke_h3' Malmgren<br>" \
     "Kai 'kuuko' Huuhko<br>" \
     "Stephen 'okra' Houston<br>" \
     "Patrick Duckson<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Jacob 'Oblio' Olson <br><br>" \
     "In memory:<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br><br><br>" \
+    "Charles 'Charles@Bodhi' van de Beek<br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
     "Christopher 'devilhorns' Michael<br>" \
