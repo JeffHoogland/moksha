@@ -636,7 +636,7 @@ _e_module_cb_idler(void *data __UNUSED__)
         if (name) m = e_module_new(name);
         if (m)
           {
-#ifndef E17_RELEASE_BUILD
+#ifndef MOKSHA_RELEASE_BUILD
              char buf[1024];
              snprintf(buf, sizeof(buf), "DELAYED MODULE LOAD: %s", name);
              e_main_ts(buf);

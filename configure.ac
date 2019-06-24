@@ -65,6 +65,9 @@ AC_SUBST(release_info)
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 
+##--   For debugging consider removing the define below
+AC_DEFINE_UNQUOTED(MOKSHA_RELEASE_BUILD, [1], [enable for release])
+
 release=relname
 AC_SUBST(release)
 

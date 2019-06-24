@@ -39,7 +39,7 @@ e_log_init(void)
         if (level < 1)
           eina_log_print_cb_set(_e_log_cb, NULL);
      }
-#if 0
+#ifndef MOKSHA_RELEASE_BUILD
    if (!getenv("MOKSHA_DONT_ABORT"))
      eina_log_abort_on_critical_set(1);
 #endif
