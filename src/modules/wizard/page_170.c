@@ -1,7 +1,7 @@
 /* Ask about updates checking */
 #include "e_wizard.h"
 
-static int do_up = 1;
+static int do_up = 0;
 /*
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
