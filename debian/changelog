@@ -1,9 +1,8 @@
-moksha (20190622bodhi0.3.1) bionic; urgency=low
+moksha (20190715bodhi30.3.1) bionic; urgency=low
 
-  *  Yet another beta release
+  *  Kill e update functionality
 
- -- Robert Wiley <ylee@bodhilinux.com>  Sat, 22 Jun 2019 07:27:49 +0004
-
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 15 Jul 2019 07:01:16 +0004
 
 moksha (20181122bodhi30.3.0) bionic; urgency=low
 
