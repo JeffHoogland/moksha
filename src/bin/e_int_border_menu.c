@@ -1325,6 +1325,7 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UN
    efreet_menu_desktop_insert(menu, bd->desktop, -1);
    efreet_menu_save(menu, buf);
    efreet_menu_free(menu);
+   e_int_menus_cache_clear();
 }
 
 static void

@@ -1617,7 +1617,7 @@ group { name: "e/modules/everything/thumbview/item/list";
             color3: 0 0 0 128;
             color_class: "ilist_item";
             align: 1.0 0.5;
-            max: 160 99999;
+            max: 10 99999;
             text { font: "Sans"; size: 8;
                min: 0 1;
                align: 1.0 0.5;

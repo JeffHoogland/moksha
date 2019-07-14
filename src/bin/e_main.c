@@ -1052,7 +1052,8 @@ main(int argc, char **argv)
      }
    TS("E_Update Init Done");
    _e_main_shutdown_push(e_update_shutdown);
-#endif
+
+#endif 
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup Desktop Environment"));
