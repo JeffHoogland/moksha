@@ -1,3 +1,9 @@
+moksha (20190714bodhi30.3.0) bionic; urgency=low
+
+  *  Remove e update functionality.
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 14 Jul 2019 07:01:16 +0004
+
 moksha (20181122bodhi30.3.0) bionic; urgency=low
 
   *  Štefan Clock Module changes.
