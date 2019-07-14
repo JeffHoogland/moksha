@@ -3,8 +3,12 @@
    for advances in cross toolkit settings */
 
 #include <e.h>
-#include <X11/Xlib.h>
-#include <X11/Xmd.h>            /* For CARD16 */
+//#include <X11/Xlib.h>
+//#include <X11/Xmd.h>            /* For CARD16 */
+
+// define here to avoid needing x includes directly.
+#define C16                 unsigned short
+#define C32                 unsigned long
 
 #define RETRY_TIMEOUT 2.0
 
@@ -14,10 +18,10 @@
 
 #define OFFSET_ADD(n) ((n + 4 - 1) & (~(4 - 1)))
 
-typedef struct _Settings_Manger Settings_Manager;
+typedef struct _Settings_Manager Settings_Manager;
 typedef struct _Setting Setting;
 
-struct _Settings_Manger
+struct _Settings_Manager
 {
    E_Manager *man;
    Ecore_X_Window selection;
@@ -55,7 +59,7 @@ static Eina_Bool reset = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
-static const char _setting_xft_dpi[]         = "Xft/DPI";
+//static const char _setting_xft_dpi[]         = "Xft/DPI";
 static const char *_setting_theme = NULL;
 static unsigned int event_ignore = 0;
 
@@ -266,13 +270,16 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
 {
    size_t str_len;
    size_t len;
+   C16 tmp16;
+   C32 tmp32;
 
    buffer[0] = s->type;
    buffer[1] = 0;
    buffer += 2;
 
    str_len = strlen(s->name);
-   *(CARD16 *)(buffer) = str_len;
+   tmp16 = str_len;
+   memcpy(buffer, &tmp16, sizeof(C16));
    buffer += 2;
 
    memcpy(buffer, s->name, str_len);
@@ -282,20 +289,23 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
    memset(buffer, 0, len);
    buffer += len;
 
-   *(CARD32 *)(buffer) = s->last_change;
+   tmp32 = s->last_change;
+   memcpy(buffer, &tmp32, sizeof(C32));
    buffer += 4;
 
    switch (s->type)
      {
       case SETTING_TYPE_INT:
-         *(CARD32 *)(buffer) = s->i.value;
-         buffer += 4;
-         break;
+        tmp32 = s->i.value;
+        memcpy(buffer, &tmp32, sizeof(C32));
+        buffer += 4;
+        break;
 
       case SETTING_TYPE_STRING:
-         str_len = strlen (s->s.value);
-         *(CARD32 *)(buffer) = str_len;
-         buffer += 4;
+        str_len = strlen(s->s.value);
+        tmp32 = str_len;
+        memcpy(buffer, &tmp32, sizeof(C32));
+        buffer += 4;
 
          memcpy(buffer, s->s.value, str_len);
          buffer += str_len;
@@ -306,12 +316,19 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
          break;
 
       case SETTING_TYPE_COLOR:
-         *(CARD16 *)(buffer) = s->c.red;
-         *(CARD16 *)(buffer + 2) = s->c.green;
-         *(CARD16 *)(buffer + 4) = s->c.blue;
-         *(CARD16 *)(buffer + 6) = s->c.alpha;
-         buffer += 8;
-         break;
+        tmp16 = s->c.red;
+        memcpy(buffer, &tmp16, sizeof(C16));
+        buffer += 2;
+        tmp16 = s->c.green;
+        memcpy(buffer, &tmp16, sizeof(C16));
+        buffer += 2;
+        tmp16 = s->c.blue;
+        memcpy(buffer, &tmp16, sizeof(C16));
+        buffer += 2;
+        tmp16 = s->c.alpha;
+        memcpy(buffer, &tmp16, sizeof(C16));
+        buffer += 2;
+        break;
      }
 
    return buffer;
@@ -325,6 +342,7 @@ _e_xsettings_apply(Settings_Manager *sm)
    size_t len = 12;
    Setting *s;
    Eina_List *l;
+   C32 tmp32;
 
    EINA_LIST_FOREACH(settings, l, s)
      len += s->length;
@@ -332,16 +350,18 @@ _e_xsettings_apply(Settings_Manager *sm)
    pos = data = calloc(1, len);
    if (!data) return;
 
-#if __BYTE_ORDER == __LITTLE_ENDIAN
-   *pos = LSBFirst;
+#if (defined __BYTE_ORDER && __BYTE_ORDER == __LITTLE_ENDIAN) || (__BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
+   *pos = 0; //LSBFirst
 #else
-   *pos = MSBFirst;
+   *pos = 1; //MSBFirst
 #endif
 
    pos += 4;
-   *(CARD32*)pos = sm->serial++;
+   tmp32 = sm->serial++;
+   memcpy(pos, &tmp32, sizeof(C32));
    pos += 4;
-   *(CARD32*)pos = eina_list_count(settings);
+   tmp32 = eina_list_count(settings);
+   memcpy(pos, &tmp32, sizeof(C32));
    pos += 4;
 
    EINA_LIST_FOREACH(settings, l, s)
@@ -494,7 +514,7 @@ _e_xsettings_font_set(void)
              Eina_Strbuf *buf;
              Eina_List *l;
              int size = efd->size;
-             char size_buf[8];
+             char size_buf[12];
              const char *p;
 
              /* TODO better way to convert evas font sizes? */
@@ -541,7 +561,7 @@ static void
 _e_xsettings_cursor_path_set(void)
 {
    struct stat st;
-   char buf[PATH_MAX], env[4096], *path;
+   char buf[PATH_MAX], env[PATH_MAX + PATH_MAX + 100], *path;
 
    e_user_homedir_concat_static(buf, ".icons");
 
@@ -652,6 +672,7 @@ e_xsettings_shutdown(void)
 EAPI void
 e_xsettings_config_update(void)
 {
+   if (!_atom_manager) return;
    setting = EINA_FALSE;
    if (eio_op) eio_file_cancel(eio_op);
    if (!e_config->xsettings.enabled)

@@ -394,7 +394,6 @@ struct _E_Border
             Ecore_X_Window video_parent;
             E_Border      *video_parent_border;
             Eina_List     *video_child;
-#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
             struct
             {
                const char     *name;
@@ -403,7 +402,6 @@ struct _E_Border
                unsigned char   wait_for_done : 1;
                unsigned char   use : 1;
             } profile;
-#endif
             unsigned char  centered : 1;
             unsigned char  video : 1;
          } state;
@@ -413,9 +411,7 @@ struct _E_Border
             unsigned char state : 1;
             unsigned char video_parent : 1;
             unsigned char video_position : 1;
-#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
             unsigned char profile : 1;
-#endif
          } fetch;
       } e;
 

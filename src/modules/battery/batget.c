@@ -426,8 +426,8 @@ struct _Sys_Class_Power_Supply_Uevent
    int               basis_empty;
    int               basis_full;
 
-   unsigned char     have_current_avg : 1;
-   unsigned char     have_current_now : 1;
+   unsigned char     have_current_avg :1;
+   unsigned char     have_current_now :1;
 };
 
 static Eina_List *events = NULL;
@@ -986,19 +986,18 @@ linux_acpi_init(void)
    if (bats)
      {
         Eina_File_Direct_Info *info;
-
+        char buf[(PATH_MAX * 2) + 128];
+        
         have_power = 0;
         powers = eina_file_direct_ls("/proc/acpi/ac_adapter");
         if (powers)
           {
              EINA_ITERATOR_FOREACH(powers, info)
                {
-                  char buf[PATH_MAX];
                   FILE *f;
 
                   if (info->name_length + sizeof("/state") >= sizeof(buf)) continue;
-                  strcpy(buf, info->path);
-                  strcat(buf, "/state");
+                  snprintf(buf, sizeof(buf), "%s/state", info->path);
                   f = fopen(buf, "r");
                   if (f)
                     {
@@ -1023,11 +1022,9 @@ linux_acpi_init(void)
         acpi_max_design = 0;
         EINA_ITERATOR_FOREACH(bats, info)
           {
-             char buf[4096];
              FILE *f;
 
-             strcpy(buf, info->path);
-             strcat(buf, "/info");
+             snprintf(buf, sizeof(buf), "%s/info", info->path);
              f = fopen(buf, "r");
              if (f)
                {

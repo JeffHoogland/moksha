@@ -134,6 +134,12 @@ e_grabinput_key_win_get(void)
    return grab_key_win;
 }
 
+EAPI Ecore_X_Window
+e_grabinput_mouse_win_get(void)
+{
+   return grab_mouse_win;
+}
+
 static Eina_Bool
 _e_grabinput_focus_check(void *data __UNUSED__)
 {
@@ -155,14 +161,14 @@ _e_grabinput_focus_do(Ecore_X_Window win, E_Focus_Method method)
       case E_FOCUS_METHOD_NO_INPUT:
         break;
       case E_FOCUS_METHOD_LOCALLY_ACTIVE:
-        ecore_x_window_focus_at_time(win, ecore_x_current_time_get());
+        ecore_x_window_focus(win);
         ecore_x_icccm_take_focus_send(win, ecore_x_current_time_get());
         break;
       case E_FOCUS_METHOD_GLOBALLY_ACTIVE:
         ecore_x_icccm_take_focus_send(win, ecore_x_current_time_get());
         break;
       case E_FOCUS_METHOD_PASSIVE:
-        ecore_x_window_focus_at_time(win, ecore_x_current_time_get());
+        ecore_x_window_focus(win);
         break;
       default:
         break;

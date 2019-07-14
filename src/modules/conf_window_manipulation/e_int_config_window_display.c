@@ -5,8 +5,6 @@ static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdat
 static int          _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _basic_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void         _cb_disable_check(void *data, Evas_Object *obj);
-static void         _cb_disable_check_list(void *data, Evas_Object *obj);
 
 struct _E_Config_Dialog_Data
 {
@@ -22,8 +20,6 @@ struct _E_Config_Dialog_Data
    int        window_grouping;
    int        desk_auto_switch;
    int        screen_limits;
-
-   Eina_List *shading_list;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -80,7 +76,6 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   eina_list_free(cfdata->shading_list);
    E_FREE(cfdata);
 }
 
@@ -115,7 +110,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
           (e_config->resize_info_follows != cfdata->resize_info_follows) ||
           (e_config->border_shade_animate != cfdata->border_shade_animate) ||
           (e_config->border_shade_transition != cfdata->border_shade_transition) ||
-          (e_config->border_shade_speed != cfdata->border_shade_speed) ||
+          (!EINA_DBL_EQ(e_config->border_shade_speed, cfdata->border_shade_speed)) ||
           (e_config->use_app_icon != cfdata->use_app_icon) ||
           (e_config->desk_auto_switch != cfdata->desk_auto_switch) ||
           (e_config->screen_limits != cfdata->screen_limits);
@@ -146,7 +141,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_check_add(evas, _("Follows the window"),
                            &(cfdata->move_info_follows));
    e_widget_disabled_set(ow, !cfdata->move_info_visible);
-   e_widget_on_change_hook_set(oc, _cb_disable_check, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
 
@@ -157,7 +152,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_check_add(evas, _("Follows the window"),
                            &(cfdata->resize_info_follows));
    e_widget_disabled_set(ow, !cfdata->resize_info_visible);
-   e_widget_on_change_hook_set(oc, _cb_disable_check, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Display"), ol,
@@ -197,62 +192,49 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, _("%4.0f pixels/s"),
                             100, 9900, 100, 0,
                             &(cfdata->border_shade_speed), NULL, 100);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    rg = e_widget_radio_group_new(&(cfdata->border_shade_transition));
 
    ow = e_widget_radio_add(evas, _("Linear"), E_TRANSITION_LINEAR, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Accelerate, then decelerate"), E_TRANSITION_SINUSOIDAL, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Accelerate"), E_TRANSITION_ACCELERATE, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Decelerate"), E_TRANSITION_DECELERATE, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Pronounced Accelerate"), E_TRANSITION_ACCELERATE_LOTS, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Pronounced Decelerate"), E_TRANSITION_DECELERATE_LOTS, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Pronounced Accelerate, then decelerate"), E_TRANSITION_SINUSOIDAL_LOTS, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Bounce"), E_TRANSITION_BOUNCE, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    ow = e_widget_radio_add(evas, _("Bounce more"), E_TRANSITION_BOUNCE_LOTS, rg);
-   e_widget_disabled_set(ow, !cfdata->border_shade_animate);
-   cfdata->shading_list = eina_list_append(cfdata->shading_list, ow);
+   e_widget_check_widget_disable_on_unchecked_add(oc, ow);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Shading"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
-
-   e_widget_on_change_hook_set(oc, _cb_disable_check_list,
-                               cfdata->shading_list);
    /* Screen Limits */
    ol = e_widget_list_add(evas, 0, 0);
 
@@ -273,22 +255,3 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
 }
-
-static void
-_cb_disable_check(void *data, Evas_Object *obj)
-{
-   e_widget_disabled_set(data, !e_widget_check_checked_get(obj));
-}
-
-static void
-_cb_disable_check_list(void *data, Evas_Object *obj)
-{
-   Eina_List *list = data;
-   const Eina_List *l;
-   Evas_Object *o;
-   Eina_Bool disable = !e_widget_check_checked_get(obj);
-
-   EINA_LIST_FOREACH(list, l, o)
-     e_widget_disabled_set(o, disable);
-}
-

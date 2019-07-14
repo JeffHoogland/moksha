@@ -94,8 +94,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->desk_change_handler = ecore_event_handler_add
        (EFREET_EVENT_DESKTOP_CACHE_UPDATE, _desks_update, cfdata);
 
-   snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
-            efreet_data_home_get());
+   snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+            efreet_config_home_get());
    myini = efreet_ini_new(buf);
    if (myini)
      {
@@ -393,8 +393,8 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         if ((cfdata->terminal_desktop) && (cfdata->terminal_desktop[0]))
           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/terminal",
                                 cfdata->terminal_desktop);
-        snprintf(buf, sizeof(buf), "%s/applications/defaults.list",
-                 efreet_data_home_get());
+        snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+                 efreet_config_home_get());
         efreet_ini_save(cfdata->ini, buf);
      }
    if ((cfdata->browser_custom) && (cfdata->browser_custom[0]))

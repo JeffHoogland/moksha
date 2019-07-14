@@ -2,7 +2,7 @@
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 m4_define([v_maj], [0])
 m4_define([v_min], [3])
-m4_define([v_mic], [0])
+m4_define([v_mic], [1])
 
 m4_define([v_rev], m4_esyscmd([(git rev-list --count HEAD 2>/dev/null || echo 0) | tr -d '\n']))dnl
 ##--   When released, remove the dnl on the below line
@@ -65,6 +65,9 @@ AC_SUBST(release_info)
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 
+##--   For debugging consider removing the define below
+AC_DEFINE_UNQUOTED(MOKSHA_RELEASE_BUILD, [1], [enable for release])
+
 release=relname
 AC_SUBST(release)
 
@@ -94,7 +97,7 @@ extern char **environ;
 AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
     ])
 
-efl_version="1.19.0"
+efl_version="1.20.0"
 AC_SUBST(efl_version)
 edbus_version="1.7.10"
 AC_SUBST(edbus_version)

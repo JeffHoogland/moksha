@@ -292,7 +292,7 @@ _fill_files_ilist(void *data)
                {
                   char label[256];
                   const char *value;
-                  ssize_t len = sizeof(label);
+                  ssize_t len = sizeof(label)-1;
 
                   tmp += 1;
                   value = eina_stringshare_add(tmp);

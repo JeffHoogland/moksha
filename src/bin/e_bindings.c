@@ -269,6 +269,7 @@ e_bindings_mouse_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 
    EINA_LIST_FOREACH(mouse_bindings, l, binding)
      {
+        if (binding->ctxt == E_BINDING_CONTEXT_ANY) continue;
         if (_e_bindings_context_match(binding->ctxt, ctxt))
           {
              ecore_x_window_button_grab(win, binding->button,
@@ -289,6 +290,7 @@ e_bindings_mouse_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 
    EINA_LIST_FOREACH(mouse_bindings, l, binding)
      {
+        if (binding->ctxt == E_BINDING_CONTEXT_ANY) continue;
         if (_e_bindings_context_match(binding->ctxt, ctxt))
           {
              ecore_x_window_button_ungrab(win, binding->button,
@@ -371,10 +373,10 @@ EAPI E_Action *
 e_bindings_mouse_up_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Button *ev)
 {
    E_Action *act;
-   E_Binding_Mouse *binding;
+   E_Binding_Mouse *binding = NULL;
 
    act = e_bindings_mouse_up_find(ctxt, obj, ev, &binding);
-   if (act)
+   if ((act) && (binding))
      {
         if (act->func.end_mouse)
           act->func.end_mouse(obj, binding->params, ev);
@@ -564,7 +566,7 @@ e_bindings_key_down_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
    mod = _e_bindings_modifiers(ev->modifiers);
    EINA_LIST_FOREACH(key_bindings, l, binding)
      {
-        if ((binding->key) && (!strcmp(binding->key, ev->key)) &&
+        if ((binding->key) && ((!strcmp(binding->key, ev->key)) || (!strcmp(binding->key, ev->keyname))) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -668,7 +670,7 @@ e_bindings_edge_get(const char *action, E_Zone_Edge edge, int click)
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
         if ((binding->edge == edge) &&
-            ((click && (binding->delay == -1.0 * click))
+            ((click && EINA_FLT_EQ(binding->delay, -1.0 * click))
              || (!click && (binding->delay >= 0.0))) &&
             (binding->action) && (action) &&
             (!strcmp(action, binding->action)))
@@ -690,7 +692,7 @@ e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
           {
              if ((binding->ctxt == ctxt) &&
                  (binding->mod == mod) &&
-                 ((binding->delay * 1000) == (delay * 1000)) &&
+                 EINA_FLT_EQ(binding->delay, delay) &&
                  (binding->any_mod == any_mod) &&
                  (((binding->action) && (action) && (!strcmp(binding->action, action))) ||
                   ((!binding->action) && (!action))) &&
@@ -817,7 +819,7 @@ e_bindings_edge_down_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        if (((binding->edge == ev->edge)) && (binding->delay == -1.0 * ev->button) &&
+        if (((binding->edge == ev->edge)) && EINA_FLT_EQ(binding->delay, -1.0 * ev->button) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -850,7 +852,7 @@ e_bindings_edge_up_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Z
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        if (((binding->edge == ev->edge)) && (binding->delay == -1.0 * ev->button) &&
+        if (((binding->edge == ev->edge)) && EINA_FLT_EQ(binding->delay, -1.0 * ev->button) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -943,7 +945,8 @@ e_bindings_signal_handle(E_Binding_Context ctxt, E_Object *obj, const char *sig,
    E_Action *act;
    E_Binding_Signal *binding;
 
-   if (sig && (sig[0] == 0)) sig = NULL;
+   if ((!sig) || (sig && (sig[0] == 0)))
+     return NULL;
    if (src && (src[0] == 0)) src = NULL;
    act = e_bindings_signal_find(ctxt, obj, sig, src, &binding);
    if (act)
@@ -1006,6 +1009,7 @@ e_bindings_wheel_grab(E_Binding_Context ctxt, Ecore_X_Window win)
 
    EINA_LIST_FOREACH(wheel_bindings, l, binding)
      {
+        if (binding->ctxt == E_BINDING_CONTEXT_ANY) continue;
         if (_e_bindings_context_match(binding->ctxt, ctxt))
           {
              int button = 0;
@@ -1036,6 +1040,7 @@ e_bindings_wheel_ungrab(E_Binding_Context ctxt, Ecore_X_Window win)
 
    EINA_LIST_FOREACH(wheel_bindings, l, binding)
      {
+        if (binding->ctxt == E_BINDING_CONTEXT_ANY) continue;
         if (_e_bindings_context_match(binding->ctxt, ctxt))
           {
              int button = 0;
@@ -1088,10 +1093,10 @@ EAPI E_Action *
 e_bindings_wheel_event_handle(E_Binding_Context ctxt, E_Object *obj, Ecore_Event_Mouse_Wheel *ev)
 {
    E_Action *act;
-   E_Binding_Wheel *binding;
+   E_Binding_Wheel *binding = NULL;
 
    act = e_bindings_wheel_find(ctxt, obj, ev, &binding);
-   if (act)
+   if ((act) && (binding))
      {
         if (act->func.go_wheel)
           act->func.go_wheel(obj, binding->params, ev);
@@ -1171,10 +1176,10 @@ EAPI E_Action *
 e_bindings_acpi_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Acpi *ev)
 {
    E_Action *act;
-   E_Binding_Acpi *binding;
+   E_Binding_Acpi *binding = NULL;
 
    act = e_bindings_acpi_find(ctxt, obj, ev, &binding);
-   if (act)
+   if ((act) && (binding))
      {
         if (act->func.go_acpi)
           act->func.go_acpi(obj, binding->params, ev);

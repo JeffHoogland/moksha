@@ -181,7 +181,7 @@ group { name: "e/theme/about";
          signal: "mouse,down,1*"; source: "base2";
          action: STATE_SET "clicked" 0.0;
          target: "base2";
-         target: "e.text.theme";
+         //target: "e.text.theme";
       }
       program {
          signal: "mouse,up,1"; source: "base2";

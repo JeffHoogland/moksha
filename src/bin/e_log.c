@@ -1,9 +1,5 @@
 #include "e.h"
 
-#ifndef E_LOG_LEVEL
-# define E_LOG_LEVEL EINA_LOG_LEVEL_INFO
-#endif
-
 EINTERN int e_log_dom = -1;
 
 static const char *_names[] = {
@@ -31,10 +27,23 @@ _e_log_cb(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, cons
 EINTERN int
 e_log_init(void)
 {
+   const char *bt_level;
+
    e_log_dom = eina_log_domain_register("e", EINA_COLOR_WHITE);
-   eina_log_domain_level_set("e", E_LOG_LEVEL);
-   eina_log_print_cb_set(_e_log_cb, NULL);
-   return (e_log_dom != -1);
+   bt_level = getenv("EINA_LOG_BACKTRACE");
+   if (bt_level)
+     {
+        int level;
+
+        level = strtol(bt_level, NULL, 10);
+        if (level < 1)
+          eina_log_print_cb_set(_e_log_cb, NULL);
+     }
+#ifndef MOKSHA_RELEASE_BUILD
+   if (!getenv("MOKSHA_DONT_ABORT"))
+     eina_log_abort_on_critical_set(1);
+#endif
+   return e_log_dom != -1;
 }
 
 EINTERN int
@@ -44,3 +53,4 @@ e_log_shutdown(void)
    e_log_dom = -1;
    return 0;
 }
+

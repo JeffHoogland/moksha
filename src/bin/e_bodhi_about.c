@@ -1,6 +1,6 @@
 #include "e.h"
 
-#define BODHI_VERSION "5.0.0"
+#define BODHI_VERSION "5.1.0"
 #define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
 #define BODHI_ABOUT_AUTHORS \
@@ -9,14 +9,16 @@
     "Jason 'Tristam' Thomas<br>" \
     "Kristi Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br>" \
     "Stefan 'the waiter' Uram<br>" \
     "Stace 'sef' Fauske<br>" \
+    "Rene 'duke_h3' Malmgren<br>" \
     "Kai 'kuuko' Huuhko<br>" \
     "Stephen 'okra' Houston<br>" \
     "Patrick Duckson<br>" \
     "Roger 'JollyRoger' Carter<br>" \
-    "Jacob 'Oblio' Olson <br><br><br>" \
+    "Jacob 'Oblio' Olson <br><br>" \
+    "In memory:<br>" \
+    "Charles 'Charles@Bodhi' van de Beek<br><br>" \
     "Past contributors:<br>" \
     "Ken 'trace'  LaBuda<br>" \
     "Christopher 'devilhorns' Michael<br>" \

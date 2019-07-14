@@ -323,7 +323,6 @@ _notification_popup_merge(E_Notification *n)
      }
    for (i = l, i2 = l2; i && i2; i = i->next, i2 = i2->next)
      {
-        if ((!!i) + (!!i2) == 1) return NULL;
         a = i->data, a2 = i2->data;
         if ((!!a) + (!!a2) == 1) return NULL;
         if (e_notification_action_id_get(a) != 
@@ -450,7 +449,7 @@ _notification_popup_new(E_Notification *n)
 
    /* Create the popup window */
    popup->win = e_popup_new(zone, 0, 0, 0, 0);
-   edje_object_signal_emit((Evas_Object *) popup->win, "e,state,shadow,off", "e");
+   //edje_object_signal_emit((Evas_Object *) popup->win, "e,state,shadow,off", "e");
    e_popup_name_set(popup->win, "_e_popup_notification");
    popup->e = popup->win->evas;
 
@@ -674,7 +673,7 @@ _notification_popup_refresh(Popup_Data *popup)
         w = w * width / v;
      }
    evas_object_size_hint_min_set(popup->app_icon, w, h);
-   edje_extern_object_max_size_set(popup->app_icon, w, h);
+   evas_object_size_hint_max_set(popup->app_icon, w, h);
 
    edje_object_calc_force(popup->theme);
    edje_object_part_swallow(popup->theme, "notification.swallow.app_icon", 

@@ -12,7 +12,7 @@ e_color_update_hsv(E_Color *ec)
 {
 
   if (!ec) return;
-  if (ec->v == 0)
+  if (!EINA_FLT_NONZERO(ec->v))
     ec->r = ec->g = ec->b = 0;
   else
     evas_color_hsv_to_rgb(ec->h, ec->s, ec->v, &(ec->r), &(ec->g), &(ec->b));

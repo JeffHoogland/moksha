@@ -95,7 +95,7 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
 
   if (mode)
     text = strip_whitespace(text, TRIM_SPACES);
-    
+
   while (1) {
     chr = *text;
     if (chr == 0)
@@ -115,7 +115,7 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
       }
     }
     else {
-    
+
     /* assume char is ok and add to temp buffer */
     *temp++ = *text++;
     i++;
@@ -172,11 +172,11 @@ isnewline(const int c)
   return (c == '\n')||(c == '\r');
 }
 
-Eina_Bool 
+Eina_Bool
 is_empty(const char *str)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(str, EINA_TRUE);
-  
+
   while (isspace((unsigned char) *str) && str++);
   return !*str;
 }

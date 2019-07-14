@@ -139,7 +139,7 @@ group { name: "e/widgets/scrollframe";
       program {
          signal: "mouse,down,1*"; source: "sb_vbar_a1";
          action: STATE_SET "clicked" 0.0;
-         target: "sb_vbar_a1";
+         //target: "sb_vbar_a1";
          target: "arrow1_vbar";
       }
       program {
@@ -156,7 +156,7 @@ group { name: "e/widgets/scrollframe";
       program {
          signal: "mouse,down,1*"; source: "sb_vbar_a2";
          action: STATE_SET "clicked" 0.0;
-         target: "sb_vbar_a2";
+         //target: "sb_vbar_a2";
          target: "arrow2_vbar";
       }
       program {
@@ -298,7 +298,7 @@ group { name: "e/widgets/scrollframe";
       program {
          signal: "mouse,down,1*"; source: "sb_hbar_a1";
          action: STATE_SET "clicked" 0.0;
-         target: "sb_hbar_a1";
+         //target: "sb_hbar_a1";
          target: "arrow1_hbar";
       }
       program {
@@ -315,7 +315,7 @@ group { name: "e/widgets/scrollframe";
       program {
          signal: "mouse,down,1*"; source: "sb_hbar_a2";
          action: STATE_SET "clicked" 0.0;
-         target: "sb_hbar_a2";
+         //target: "sb_hbar_a2";
          target: "arrow2_hbar";
       }
       program {

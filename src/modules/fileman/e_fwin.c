@@ -35,7 +35,7 @@ struct _E_Fwin
    Evas_Object         *over_obj;
 
    const char          *wallpaper_file;
-   Eina_Bool            wallpaper_is_edj : 1;
+   Eina_Bool            wallpaper_is_edj :1;
    const char          *overlay_file;
    const char          *scrollframe_file;
    const char          *theme_file;
@@ -73,7 +73,7 @@ struct _E_Fwin_Page
    } fm_pan, fm_pan_last;
 
    int                  index;
-   Eina_Bool           setting : 1;
+   Eina_Bool           setting :1;
 };
 
 struct _E_Fwin_Apps_Dialog
@@ -202,10 +202,12 @@ static void             _e_fwin_zone_cb_mouse_down(void *data,
                                                    Evas *evas,
                                                    Evas_Object *obj,
                                                    void *event_info);
+#if 0
 static void             _e_fwin_zone_focus_out(void *data,
                                                    Evas *evas,
                                                    Evas_Object *obj,
                                                    void *event_info);
+#endif
 static void             _e_fwin_zone_focus_in(void *data,
                                                    Evas *evas,
                                                    void *event_info);
@@ -421,8 +423,8 @@ e_fwin_zone_new(E_Zone *zone, void *p)
 
    o = e_fm2_add(zone->container->bg_evas);
    page->fm_obj = o;
-   evas_event_callback_add(zone->container->bg_evas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _e_fwin_zone_focus_in, fwin);
-   evas_object_event_callback_add(o, EVAS_CALLBACK_FOCUS_OUT, _e_fwin_zone_focus_out, fwin);
+   //evas_event_callback_add(zone->container->bg_evas, EVAS_CALLBACK_CANVAS_FOCUS_IN, _e_fwin_zone_focus_in, fwin);
+   //evas_object_event_callback_add(o, EVAS_CALLBACK_FOCUS_OUT, _e_fwin_zone_focus_out, fwin);
    _e_fwin_config_set(page);
 
    e_fm2_custom_theme_content_set(o, "desktop");
@@ -1106,7 +1108,7 @@ static Eina_List *
 _e_fwin_defaults_apps_get(const char *mime, const char *path)
 {
    Efreet_Ini *ini;
-   const char *str;
+   const char *str = NULL;
    Eina_List *apps = NULL;
    char **array, **itr;
 
@@ -1116,7 +1118,7 @@ _e_fwin_defaults_apps_get(const char *mime, const char *path)
    if (!ini) return NULL;
 
    efreet_ini_section_set(ini, "Default Applications");
-   str = efreet_ini_string_get(ini, mime);
+   if (ini->section) str = efreet_ini_string_get(ini, mime);
    if (!str) goto end;
 
    array = eina_str_split(str, ";", 0);
@@ -1156,8 +1158,8 @@ _e_fwin_suggested_apps_list_sort(const char *mime, Eina_List *desktops, Eina_Boo
    Eina_List *order, *l;
    Efreet_Desktop *desktop;
 
-   snprintf(path, sizeof(path), "%s/applications/defaults.list",
-            efreet_data_home_get());
+   snprintf(path, sizeof(path), "%s/mimeapps.list",
+            efreet_config_home_get());
    order = _e_fwin_defaults_apps_get(mime, path);
 
    if (!order)
@@ -1933,25 +1935,28 @@ _e_fwin_zone_cb_mouse_down(void *data,
    e_fm2_typebuf_clear(fwin->cur_page->fm_obj);
 }
 
+#if 0
 static void
 _e_fwin_zone_focus_out(void *data __UNUSED__,
                        Evas *evas       __UNUSED__,
                        Evas_Object *obj,
                        void *event_info __UNUSED__)
-{
-   evas_object_focus_set(obj, EINA_TRUE);
+{  return;
+   //evas_object_focus_set(obj, EINA_TRUE);
 }
+#endif
 
 static void
-_e_fwin_zone_focus_in(void *data,
+_e_fwin_zone_focus_in(void *data __UNUSED__,
                        Evas *evas       __UNUSED__,
                        void *event_info __UNUSED__)
 {
-   E_Fwin *fwin;
-
+   //E_Fwin *fwin;
+   return;
+   /*
    fwin = data;
    if ((!fwin) || (!fwin->cur_page) || (!fwin->cur_page->fm_obj)) return;
-   evas_object_focus_set(fwin->cur_page->fm_obj, EINA_TRUE);
+   evas_object_focus_set(fwin->cur_page->fm_obj, EINA_TRUE);*/
 }
 
 static Eina_Bool

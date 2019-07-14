@@ -2032,7 +2032,7 @@ ACT_FN_GO(exec,)
    static double lock;
 
    /* prevent exec actions from occurring too frequently */
-   if (lock)
+   if (EINA_DBL_NONZERO(lock))
      {
         double test;
 

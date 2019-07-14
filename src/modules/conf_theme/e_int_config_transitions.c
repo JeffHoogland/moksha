@@ -198,15 +198,11 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_ilist_freeze(il);
    e_widget_ilist_append(il, NULL, _("None"), _trans_cb_changed, cfdata, NULL);
 
-   for (l = e_theme_transition_list(); l; l = l->next)
+   EINA_LIST_FOREACH(e_theme_transition_list(), l, t)
      {
-        t = l->data;
         if (!t) continue;
         e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
      }
-
-   EINA_LIST_FREE(l, t)
-     eina_stringshare_del(t);
 
    e_widget_ilist_go(il);
    e_widget_ilist_thaw(il);

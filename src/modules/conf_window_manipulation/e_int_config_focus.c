@@ -10,7 +10,6 @@ static int _advanced_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static void _cb_disable_check_list(void *data, Evas_Object *obj);
 
 /* Actual config data we will be playing with whil the dialog is active */
 struct _E_Config_Dialog_Data
@@ -31,7 +30,6 @@ struct _E_Config_Dialog_Data
    double auto_raise_delay;
    int border_raise_on_mouse_action;
    int border_raise_on_focus;
-   Eina_List *autoraise_list;
 };
 
 /* a nice easy setup function that does the dirty work */
@@ -103,7 +101,6 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
 static void
 _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   eina_list_free(cfdata->autoraise_list);
    /* Free the cfdata */
    E_FREE(cfdata);
 }
@@ -202,7 +199,7 @@ _advanced_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *c
 	   (e_config->focus_revert_on_hide_or_close != cfdata->focus_revert_on_hide_or_close) ||
 	   (e_config->pointer_slide != cfdata->pointer_slide) ||
 	   (e_config->use_auto_raise != cfdata->use_auto_raise) ||
-	   (e_config->auto_raise_delay != cfdata->auto_raise_delay) ||
+	   (!EINA_DBL_EQ(e_config->auto_raise_delay, cfdata->auto_raise_delay)) ||
 	   (e_config->border_raise_on_mouse_action != cfdata->border_raise_on_mouse_action) ||
 	   (e_config->border_raise_on_focus != cfdata->border_raise_on_focus));
 }
@@ -273,18 +270,14 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
                                         &(cfdata->use_auto_raise));
    e_widget_framelist_object_append(of, autoraise_check);
    ob = e_widget_label_add(evas, _("Delay before raising:"));
-   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
-   e_widget_disabled_set(ob, !cfdata->use_auto_raise);
+   e_widget_check_widget_disable_on_unchecked_add(autoraise_check, ob);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f s"), 0.0, 9.9, 0.1, 0, 
                             &(cfdata->auto_raise_delay), NULL, 100);
-   cfdata->autoraise_list = eina_list_append(cfdata->autoraise_list, ob);
-   e_widget_disabled_set(ob, !cfdata->use_auto_raise);
+   e_widget_check_widget_disable_on_unchecked_add(autoraise_check, ob);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
    // handler for enable/disable widget array
-   e_widget_on_change_hook_set(autoraise_check, 
-                               _cb_disable_check_list, cfdata->autoraise_list);
 
    of = e_widget_framelist_add(evas, _("Raise Window"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
@@ -343,16 +336,4 @@ _advanced_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Da
 
    e_widget_toolbook_page_show(otb, 0);
    return otb;
-}
-
-static void
-_cb_disable_check_list(void *data, Evas_Object *obj)
-{
-   const Eina_List *list = data;
-   const Eina_List *l;
-   Evas_Object *o;
-   Eina_Bool disable = !e_widget_check_checked_get(obj);
-
-   EINA_LIST_FOREACH(list, l, o)
-     e_widget_disabled_set(o, disable);
 }

@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <errno.h>
+#include <sys/wait.h>
 
 static const char *
 xdg_defaults_get(const char *path, const char *mime)
@@ -87,8 +88,8 @@ handler_find(const char *mime)
    char path[PATH_MAX];
    const char *name;
 
-   snprintf(path, sizeof(path), "%s/applications/defaults.list",
-            efreet_data_home_get());
+   snprintf(path, sizeof(path), "%s/mimeapps.list",
+            efreet_config_home_get());
    name = xdg_defaults_get(path, mime);
    if (!name)
      {
@@ -288,7 +289,7 @@ terminal_open(void)
    const char *terms[] =
      {
         "terminology.desktop",
-        "xterm.desktop",
+        "lxterminal.desktop",
         "rxvt.desktop",
         "gnome-terimnal.desktop",
         "konsole.desktop",
@@ -303,7 +304,8 @@ terminal_open(void)
    s = efreet_data_home_get();
    if (s)
      {
-        snprintf(buf, sizeof(buf), "%s/applications/defaults.list", s);
+        snprintf(buf, sizeof(buf), "%s/mimeapps.list",
+                 efreet_config_home_get());
         tdesktop = _terminal_get(buf);
      }
    if (tdesktop) goto have_desktop;
@@ -371,7 +373,7 @@ local_open(const char *path)
         char **ret = mime_open(mime, &path, 1);
         if (ret)
           return ret;
-        return single_command_open("enlightenment_filemanager", &path, 1);
+        return single_command_open("pcmanfm", &path, 1);
      }
 
    fprintf(stderr, "ERROR: Could not get mime type for: %s\n", path);

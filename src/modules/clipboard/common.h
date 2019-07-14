@@ -10,6 +10,8 @@
 #define MAGIC_IGNORE_WS   0
 #define LABEL_MIN  5
 #define LABEL_MAX  100
+#define TIMER_MIN  0
+#define TIMER_MAX  240
 
 /* Stuff for convenience to compress code */
 #define IF_TRUE_RETURN(exp)             \
@@ -64,14 +66,15 @@ struct _Mod_Inst
     /* A pointer to an Ecore window used to
      * recieve or send clipboard events to */
     Ecore_X_Window win;
-    /* Timer callback function to reguest Clipboard events */
-    Ecore_Timer  *check_timer;
-    Ecore_Timer  *delay_timer;
-    
+
     /* Callback function to handle clipboard events */
     Eina_List *handle;
     /* Stores Clipboard History */
     Eina_List *items;
+    /* History update Flag */
+    Eina_Bool update_history;
+    /* Timer callback function to save Clipboard History */
+    Ecore_Timer *save_timer;
 };
 
 void cb_mod_log(const Eina_Log_Domain *d, Eina_Log_Level level, const char *file, const char *fnc, int line, const char *fmt, void *data, va_list args);

@@ -36,6 +36,48 @@ static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cf
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _cb_display_changed(void *data, Evas_Object *obj __UNUSED__);
+static Eina_List *
+temperature_get_bus_files(const char *bus)
+{
+   Eina_List *result;
+   Eina_List *therms;
+   char path[PATH_MAX +  PATH_MAX + 3];
+   char busdir[PATH_MAX];
+   char *name;
+
+   result = NULL;
+
+   snprintf(busdir, sizeof(busdir), "/sys/bus/%s/devices", bus);
+   /* Look through all the devices for the given bus. */
+   therms = ecore_file_ls(busdir);
+
+   EINA_LIST_FREE(therms, name)
+     {
+        Eina_List *files;
+        char *file;
+
+        /* Search each device for temp*_input, these should be
+         * temperature devices. */
+        snprintf(path, sizeof(path), "%s/%s", busdir, name);
+        files = ecore_file_ls(path);
+        EINA_LIST_FREE(files, file)
+          {
+             if ((!strncmp("temp", file, 4)) &&
+                 (!strcmp("_input", &file[strlen(file) - 6])))
+               {
+                  char *f;
+
+                  snprintf(path, sizeof(path),
+                           "%s/%s/%s", busdir, name, file);
+                  f = strdup(path);
+                  if (f) result = eina_list_append(result, f);
+               }
+             free(file);
+          }
+        free(name);
+     }
+   return result;
+}
 
 void 
 config_temperature_module(Config_Face *inst) 
@@ -220,7 +262,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->unit_method));
-   ow = e_widget_radio_add(evas, _("Celsius"), CELCIUS, rg);
+   ow = e_widget_radio_add(evas, _("Celsius"), CELSIUS, rg);
    e_widget_on_change_hook_set(ow, _cb_display_changed, cfdata);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_radio_add(evas, _("Fahrenheit"), FAHRENHEIT, rg);

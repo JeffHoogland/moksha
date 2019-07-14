@@ -109,7 +109,7 @@ struct _Config
 extern Config *fileman_config;
 Fileman_Path *e_mod_fileman_path_find(E_Zone *zone);
 
-E_Menu *e_mod_menu_add(E_Menu *m, const char *path);
+E_Menu *e_mod_menu_add(E_Menu *m __UNUSED__, const char *path);
 
 E_Config_Dialog *e_int_config_fileman(E_Container *con, const char *params __UNUSED__);
 E_Config_Dialog *e_int_config_mime_edit(E_Config_Mime_Icon *data, void *data2);

@@ -280,11 +280,9 @@ e_modapi_init(E_Module *m)
    snprintf(buf, sizeof(buf), "%s/e-module-conf.edj",
             e_module_dir_get(conf_module));
 
-   e_configure_registry_category_add("advanced", 80, _("Advanced"),
-                                     NULL, "preferences-advanced");
-   e_configure_registry_item_add("advanced/conf", 110, _("Configuration Panel"),
+   e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "preferences-menus");
+   e_configure_registry_item_add("menus/conf",110, _("Configuration Panel"),
                                  NULL, buf, e_int_config_conf_module);
-
    conf_edd = E_CONFIG_DD_NEW("Config", Config);
 #undef T
 #undef D
@@ -319,8 +317,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_configure_del();
 
-   e_configure_registry_item_del("advanced/conf");
-   e_configure_registry_category_del("advanced");
+   e_configure_registry_item_del("menus/conf");
+   e_configure_registry_category_del("menus");
 
    if (conf->cfd) e_object_del(E_OBJECT(conf->cfd));
    conf->cfd = NULL;

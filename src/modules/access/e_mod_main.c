@@ -326,19 +326,11 @@ _mouse_wheel(Cover *cov __UNUSED__, Ecore_Event_Mouse_Wheel *ev __UNUSED__)
 
    if (ev->z == -1) // up
      {
-#if ECORE_VERSION_MAJOR >= 1
-# if ECORE_VERSION_MINOR >= 8
         ecore_x_e_illume_access_action_up_send(bd->client.win);
-# endif
-#endif
      }
    else if (ev->z == 1) // down
      {
-#if ECORE_VERSION_MAJOR >= 1
-# if ECORE_VERSION_MINOR >= 8
         ecore_x_e_illume_access_action_down_send(bd->client.win);
-# endif
-#endif
      }
 }
 

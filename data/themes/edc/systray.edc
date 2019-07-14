@@ -1,6 +1,7 @@
 group { name: "e/modules/systray/main";
    alias: "e/modules/systray/main/default";
    alias: "e/modules/systray/main/invisible";
+   alias: "e/modules/systray/main/alternate";
    data.item: "default" "64 64 64";
    data.item: "inset" "64 64 64";
    data.item: "plain" "64 64 64";

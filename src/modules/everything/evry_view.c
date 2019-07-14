@@ -63,13 +63,13 @@ struct _Item
    Evas_Object *obj;
    Evas_Coord   x, y, w, h;
    Evas_Object *frame, *image, *thumb;
-   Eina_Bool    selected : 1;
-   Eina_Bool    have_thumb : 1;
-   Eina_Bool    do_thumb : 1;
-   Eina_Bool    get_thumb : 1;
-   Eina_Bool    showing : 1;
-   Eina_Bool    visible : 1;
-   Eina_Bool    changed : 1;
+   Eina_Bool    selected :1;
+   Eina_Bool    have_thumb :1;
+   Eina_Bool    do_thumb :1;
+   Eina_Bool    get_thumb :1;
+   Eina_Bool    showing :1;
+   Eina_Bool    visible :1;
+   Eina_Bool    changed :1;
    int          pos;
    int          max_w, max_h;
 };
@@ -90,7 +90,7 @@ _cb_thumb_gen(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED
    if (!it->frame) return;
 
    e_icon_size_get(it->thumb, &w, &h);
-   edje_extern_object_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
+   evas_object_size_hint_aspect_set(it->thumb, EDJE_ASPECT_CONTROL_BOTH, w, h);
    evas_object_size_hint_max_set(it->thumb, w, h);
    edje_object_part_unswallow(it->frame, it->image);
    edje_object_part_swallow(it->frame, "e.swallow.thumb", it->thumb);
@@ -764,7 +764,7 @@ _animator(void *data)
 
    int wait = 0;
 
-   if (sd->scroll_align != sd->scroll_align_to)
+   if (!EINA_DBL_EQ(sd->scroll_align, sd->scroll_align_to))
      {
         sd->scroll_align = ((sd->scroll_align * (1.0 - spd)) +
                             (sd->scroll_align_to * spd));
@@ -867,7 +867,7 @@ _pan_item_select(Evas_Object *obj, Item *it, int scroll)
      {
         sd->scroll_align_to = align;
 
-        if (align != sd->cy && !sd->animator)
+        if ((!EINA_DBL_EQ(align, sd->cy)) && !sd->animator)
           sd->animator = ecore_animator_add(_animator, obj);
      }
    else

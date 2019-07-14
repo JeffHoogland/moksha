@@ -1045,13 +1045,13 @@ group { name: "e/fileman/default/window/main";
       program {
          signal: "e,toolbar,left"; source: "e";
          action: STATE_SET "tb_left" 0.0;
-         target: "e.swallow.toolbar";
+         //target: "e.swallow.toolbar";
          target: "region";
       }
       program {
          signal: "e,toolbar,right"; source: "e";
          action: STATE_SET "tb_right" 0.0;
-         target: "e.swallow.toolbar";
+         //target: "e.swallow.toolbar";
          target: "region";
       }
       program {

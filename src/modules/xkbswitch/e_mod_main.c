@@ -182,6 +182,20 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
    inst->layout = e_xkb_layout_get();
+
+   /* inst->layout is potentially null due to Bodhi changes in the wizard module
+    *   specifically page_011 is never run and keyboard stuff is never initialized */
+   if (!inst->layout)
+      {
+          inst->layout = E_NEW(E_Config_XKB_Layout, 1);
+          // Initialize to defaults
+          inst->layout->name = eina_stringshare_ref("us");
+          inst->layout->variant = eina_stringshare_add("basic");
+          inst->layout->model = eina_stringshare_add("default");
+          e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, inst->layout);
+          e_xkb_update(-1);
+      }
+
    if (e_config->xkb.only_label)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
@@ -203,7 +217,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
         if (inst->layout)                             
           e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
         else
-          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "gb_flag");
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "us_flag");
           
         /* The icon is part of the gadget. */
         edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",

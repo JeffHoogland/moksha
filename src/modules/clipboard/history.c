@@ -11,7 +11,7 @@ do {                                                 \
   long _digits_ = 1;                                 \
   long _tempn_ = n;                                  \
   while (_tempn_ /= 10) _digits_++;                  \
-  str = calloc(_digits_ + 1, sizeof(long));          \
+  str = calloc(_digits_ + 1, sizeof(char));          \
   if (!str) {                                        \
     /* This is bad, leave it to calling function */  \
     CRI("ERROR: Memory allocation Failed!!");        \
@@ -64,18 +64,15 @@ _set_data_path(char *path)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
 
-    /* FIXME: Non-portable nix only code */
-    const char *temp_str = NULL;
+    const char *temp_str = efreet_data_home_get();
+    if (!temp_str)
+       // Should never happen
+       return EINA_FALSE;
     Eina_Bool success = EINA_TRUE;
+    const int len = snprintf(NULL, 0, "%s", temp_str)
+                              + 1 + (temp_str[strlen(temp_str)-1] != '/');
+    if (temp_str[0] == '/' ) {
 
-    /* See if XDG_DATA_HOME is defined
-     *     if so use it
-     *     if not use XDG_DATA_HOME default
-     */
-    temp_str = getenv("XDG_DATA_HOME");
-    if (temp_str && temp_str[0] == '/' ) {
-      const int len = snprintf(NULL, 0, "%s", temp_str) 
-                              + 1 + (temp_str[strlen(temp_str)] != '/');
       if (len <= PATH_MAX) {
         snprintf(path, strlen(temp_str)+1, "%s", temp_str);
         // Ensure XDG_DATA_HOME terminates in '/'
@@ -85,27 +82,8 @@ _set_data_path(char *path)
       else
         PATH_MAX_ERR;
     }
-    /* XDG_DATA_HOME default */
-    else {
-      if (temp_str && temp_str[0] != '/')
-        WRN("Malformed XDG_DATA_HOME path: %s", temp_str);
-      struct passwd *pw = NULL;
-      pw = getpwuid(getuid());
-      temp_str = pw->pw_dir;
-      const int len = snprintf(NULL, 0, "%s/.local/share/", temp_str) + 1;
-      if (len <= PATH_MAX) {
-        // Hopefully unnecessary Safety check
-        if (temp_str)
-           snprintf(path, PATH_MAX-1, "%s/.local/share/", temp_str);
-        else {
-           // Should never happen
-           memset(path,0,PATH_MAX);
-           success = EINA_FALSE;
-        }
-     }
-     else
-        PATH_MAX_ERR;
-    }
+    else
+      PATH_MAX_ERR;
     return success;
 }
 

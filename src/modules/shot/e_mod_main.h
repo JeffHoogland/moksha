@@ -15,7 +15,7 @@
  * compatible anymore, it creates an entire new one.
  * You need to increment GENERATION when you add new values to the
  * configuration file but is not needed to delete the existing conf  */
-#define MOD_CONFIG_FILE_EPOCH 0x0001
+#define MOD_CONFIG_FILE_EPOCH 0x0002
 #define MOD_CONFIG_FILE_GENERATION 0x008d
 #define MOD_CONFIG_FILE_VERSION \
    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
@@ -34,17 +34,12 @@ struct _Config
    E_Module *module;
    E_Config_Dialog *cfd;
    Eina_List *conf_items;
-   int count, notify, version, full_dialog; 
+   int count, notify, version, full_dialog, mode_dialog; 
    
    const char *viewer;
    const char *path;
    unsigned char view_enable;
    double delay, pict_quality;
-};
-
-struct _Config_Item 
-{
-   const char *id; 
 };
 
 EAPI void *e_modapi_init(E_Module *m);

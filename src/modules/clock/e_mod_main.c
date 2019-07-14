@@ -308,7 +308,7 @@ _clock_popup_fullscreen_change(Instance *inst, int type __UNUSED__, void *ev __U
 static Eina_Bool
 _clock_popup_desk_change(Instance *inst, int type __UNUSED__, E_Event_Desk_After_Show *ev)
 {
-   if (!inst->gcc->gadcon || !inst->gcc->gadcon->shelf) return ECORE_CALLBACK_RENEW;
+   if ((!inst->gcc) || (!inst->gcc->gadcon) || (!inst->gcc->gadcon->shelf)) return ECORE_CALLBACK_RENEW;
    if (e_shelf_desk_visible(inst->gcc->gadcon->shelf, ev->desk)) return ECORE_CALLBACK_RENEW;
    _clock_popup_free(inst);
    return ECORE_CALLBACK_RENEW;
@@ -904,9 +904,8 @@ e_modapi_init(E_Module *m)
    E_LIST_HANDLER_APPEND(clock_eio_handlers, E_EVENT_SYS_RESUME, _clock_eio_update, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
-
 #ifdef HAVE_SYS_TIMERFD_H
-   
+
 #ifndef TFD_TIMER_CANCELON_SET
 # define TFD_TIMER_CANCELON_SET (1 << 1)
 #endif
@@ -923,11 +922,11 @@ e_modapi_init(E_Module *m)
         flags = fcntl(timer_fd, F_GETFD);
         flags |= FD_CLOEXEC;   
         fcntl(timer_fd, F_SETFD, flags);
-        
+
         memset(&its, 0, sizeof(its));
         timerfd_settime(timer_fd, TFD_TIMER_ABSTIME | TFD_TIMER_CANCELON_SET, 
                         &its, NULL);
-        
+
         timerfd_handler = ecore_main_fd_handler_add(timer_fd, ECORE_FD_READ,
                                                     _clock_fd_update, NULL, 
                                                     NULL, NULL);

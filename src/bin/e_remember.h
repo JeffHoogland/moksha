@@ -1,6 +1,7 @@
 #ifdef E_TYPEDEFS
 
 EAPI extern int E_EVENT_REMEMBER_UPDATE;
+EAPI extern E_Config_DD *e_remember_edd;
 
 typedef struct E_Event_Remember_Update
 {

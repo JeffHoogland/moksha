@@ -216,7 +216,7 @@ _del_func(void *data, void *obj __UNUSED__)
    Instance *inst = data;
 
    e_gadcon_locked_set(inst->gcc->gadcon, 0);
-   e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
+   //e_object_delfn_del(E_OBJECT(inst->win->ewin), inst->del_fn);
 
    if (inst->hide_animator) ecore_animator_del(inst->hide_animator);
    inst->del_fn = NULL;
@@ -238,7 +238,7 @@ _hide_animator(void *data)
    double val;
    int finished = 0;
 
-   if (!inst->hide_start)
+   if (!EINA_DBL_NONZERO(inst->hide_start))
      inst->hide_start = ecore_loop_time_get();
 
    val = (ecore_loop_time_get() - inst->hide_start) / 0.4;

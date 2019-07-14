@@ -7,7 +7,7 @@ group "E_Config" struct {
         }
         group "E_Config_Env_Var" struct {
             value "var" string: "XDG_MENU_PREFIX";
-            value "val" string: "lxde-";
+            value "val" string: "moksha-";
             value "unset" uchar: 0;
         }
     }
@@ -6451,7 +6451,7 @@ group "E_Config" struct {
     value "scale.use_custom" uchar: 1;
     value "show_cursor" uchar: 1;
     value "idle_cursor" uchar: 1;
-    value "default_system_menu" string: "/etc/xdg/menus/lxde-applications.menu";
+    value "default_system_menu" string: "/etc/xdg/menus/moksha-applications.menu";
     value "cfgdlg_normal_wins" uchar: 1;
     value "syscon.main.icon_size" int: 64;
     value "syscon.secondary.icon_size" int: 48;

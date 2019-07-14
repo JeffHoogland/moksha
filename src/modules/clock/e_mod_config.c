@@ -50,7 +50,10 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    
 
    memcpy(&(cfdata->cfg), ci, sizeof(Config_Item));
-    if (ci->custom_date_const) cfdata->custom_dat = strdup(ci->custom_date_const); 
+    if (ci->custom_date_const) 
+        cfdata->custom_dat = strdup(ci->custom_date_const); 
+    else
+        cfdata->custom_dat = strdup("");
    return cfdata;
 }
 
@@ -58,8 +61,9 @@ static void
 _free_data(E_Config_Dialog *cfd  __UNUSED__,
            E_Config_Dialog_Data *cfdata)
 {
+   free(cfdata->custom_dat);
    clock_config->config_dialog = NULL;
-   free(cfdata);
+   E_FREE(cfdata);
 }
 
 static Evas_Object *

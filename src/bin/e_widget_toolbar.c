@@ -7,8 +7,8 @@ struct _E_Widget_Data
    Evas_Object *o_base, *o_box;
    int icon_w, icon_h;
    Eina_List *items;
-   Eina_Bool scrollable : 1;
-   Eina_Bool focus_steal : 1;
+   Eina_Bool scrollable :1;
+   Eina_Bool focus_steal :1;
 };
 
 struct _Item
@@ -16,7 +16,7 @@ struct _Item
    Evas_Object *o_toolbar, *o_base, *o_icon;
    void (*func) (void *data1, void *data2);
    const void *data1, *data2;
-   Eina_Bool selected : 1;
+   Eina_Bool selected :1;
 };
 
 static void _e_wid_del_hook(Evas_Object *obj);
@@ -145,9 +145,9 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
 
    edje_object_signal_callback_add(o, "e,action,click", "e",
                                    _e_wid_signal_cb1, it);
-   evas_object_size_hint_min_set(icon, wd->icon_w, wd->icon_h);
    if (icon)
      {
+        evas_object_size_hint_min_set(icon, wd->icon_w, wd->icon_h);
         edje_object_part_swallow(o, "e.swallow.icon", icon);
         evas_object_show(icon);
         edje_object_signal_emit(o, "e,icon,enabled", "e");

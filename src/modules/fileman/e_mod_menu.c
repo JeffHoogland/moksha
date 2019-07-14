@@ -482,7 +482,7 @@ _e_mod_menu_generate(void *data, E_Menu *m)
 
 /* returns submenu so we can add Go to Parent */
 E_Menu *
-e_mod_menu_add(E_Menu *m, const char *path __UNUSED__)
+e_mod_menu_add(E_Menu *m __UNUSED__, const char *path __UNUSED__)
 {
 #ifdef ENABLE_FILES
 
@@ -501,8 +501,6 @@ e_mod_menu_add(E_Menu *m, const char *path __UNUSED__)
    //~ e_object_unref(E_OBJECT(sub)); //allow deletion whenever main menu deletes
    //~ e_menu_pre_activate_callback_set(sub, _e_mod_menu_generate, (void*)eina_stringshare_add(path));
    return sub;
-   (void)m;
-   return NULL;
 #else
    (void)m;
    return NULL;

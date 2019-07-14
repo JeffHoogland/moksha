@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 7
+#define E_CONFIG_FILE_GENERATION 8
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -123,11 +123,12 @@ struct _E_Config
    int         winlist_list_jump_desk_while_selecting; // GUI
    int         winlist_list_focus_while_selecting; // GUI
    int         winlist_list_raise_while_selecting; // GUI
+   int         winlist_list_move_after_select; // GUI
    double      winlist_pos_align_x; // GUI
    double      winlist_pos_align_y; // GUI
    double      winlist_pos_size_w; // GUI
    double      winlist_pos_size_h; // GUI
-   int         winlist_pos_min_w; // GUI
+   int         winlist_pos_min_w; // GUI 
    int         winlist_pos_min_h; // GUI
    int         winlist_pos_max_w; // GUI
    int         winlist_pos_max_h; // GUI

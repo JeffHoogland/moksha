@@ -260,8 +260,8 @@ _basic_check_changed(E_Config_Dialog *cfd  __UNUSED__,
      (fileman_config->list.sort.extension != cfdata->list.sort.extension) ||
      (fileman_config->list.sort.mtime != cfdata->list.sort.mtime) ||
      (fileman_config->list.sort.no_case != !(cfdata->list.sort.case_sen)) ||
-     (fileman_config->tooltip.delay != !(cfdata->tooltip.delay)) ||
-     (fileman_config->tooltip.size != !(cfdata->tooltip.size)) ||
+     (!EINA_DBL_EQ(fileman_config->tooltip.delay, cfdata->tooltip.delay)) ||
+     (!EINA_DBL_EQ(fileman_config->tooltip.size, cfdata->tooltip.size)) ||
      (fileman_config->tooltip.enable != !(cfdata->tooltip.enable)) ||
      (fileman_config->view.spring_delay != cfdata->view.spring_delay) ||
      (fileman_config->view.customFM != cfdata->view.customFM) ||

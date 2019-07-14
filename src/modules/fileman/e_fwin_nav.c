@@ -30,8 +30,6 @@ struct _Instance
    Eina_List          *history, *current;
    int                 ignore_dir;
 
-   const char         *theme;
-
    Ecore_Idle_Enterer *idler;
 };
 
@@ -57,7 +55,6 @@ static void             _box_button_append(Instance *inst, const char *label, Ed
 static void             _box_button_free(Nav_Item *ni);
 
 static Eina_List *instances = NULL;
-static const char *_nav_mod_dir = NULL;
 
 /* local gadcon functions */
 static const E_Gadcon_Client_Class _gc_class =
@@ -227,28 +224,39 @@ out:
    _box_button_cb_dnd_leave(inst, type, NULL);
 }
 
+static Eina_Strbuf *
+_path_generate(Instance *inst, Evas_Object *break_obj)
+{
+   Nav_Item *ni;
+   Eina_Strbuf *buf;
+
+   buf = eina_strbuf_new();
+   EINA_INLIST_FOREACH(inst->l_buttons, ni)
+     {
+        eina_strbuf_append(buf, edje_object_part_text_get(ni->o, "e.text.label"));
+        if (break_obj && (ni->o == break_obj)) break;
+        if (eina_strbuf_length_get(buf)) eina_strbuf_append_char(buf, '/');
+     }
+   return buf;
+}
+
 static Eina_Bool
-_box_button_cb_dnd_drop(void *data, const char *type __UNUSED__)
+_box_button_cb_dnd_drop(void *data, const char *type EINA_UNUSED)
 {
    Instance *inst = data;
-   Nav_Item *ni;
    Eina_Bool allow;
-   char path[PATH_MAX] = {0};
+   Eina_Strbuf *buf;
 
    if (!inst->dnd_obj) return EINA_FALSE;
 
-   EINA_INLIST_FOREACH(inst->l_buttons, ni)
-     {
-        strcat(path, edje_object_part_text_get(ni->o, "e.text.label"));
-        if (ni->o == inst->dnd_obj) break;
-        if (path[1]) strcat(path, "/");
-     }
-   allow = ecore_file_can_write(path);
+   buf = _path_generate(inst, inst->dnd_obj);
+   allow = ecore_file_can_write(eina_strbuf_string_get(buf));
    if (allow)
      {
-        e_drop_xds_update(allow, path);
-        inst->dnd_path = strdup(path);
+        e_drop_xds_update(allow, eina_strbuf_string_get(buf));
+        inst->dnd_path = eina_strbuf_string_steal(buf);
      }
+   eina_strbuf_free(buf);
    return allow;
 }
 
@@ -266,7 +274,6 @@ static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Instance *inst = NULL;
-   char buf[PATH_MAX];
    int x, y, w, h;
    E_Toolbar *tbar;
    Eina_List *l;
@@ -288,9 +295,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    inst->tbar = tbar;
    inst->o_fm = o_fm;
-
-   snprintf(buf, sizeof(buf), "%s/e-module-efm_nav.edj", _nav_mod_dir);
-   inst->theme = eina_stringshare_add(buf);
 
    inst->o_base = edje_object_add(gc->evas);
    e_theme_edje_object_set(inst->o_base, "base/theme/modules/efm_navigation",
@@ -414,8 +418,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (inst->o_scroll) evas_object_del(inst->o_scroll);
    e_drop_handler_del(inst->dnd_handler);
    E_FREE(inst->dnd_path);
-
-   eina_stringshare_del(inst->theme);
 
    E_FREE(inst);
 }
@@ -597,19 +599,21 @@ _cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info)
 }
 
 static void
-_cb_button_click(void *data, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+_cb_button_click(void *data, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
 {
    Instance *inst = data;
    Nav_Item *ni;
-   char path[PATH_MAX] = "";
+   Eina_Strbuf *buf;
 
+   buf = eina_strbuf_new();
    EINA_INLIST_FOREACH(inst->l_buttons, ni)
      {
-        strcat(path, edje_object_part_text_get(ni->o, "e.text.label"));
+        eina_strbuf_append(buf, edje_object_part_text_get(ni->o, "e.text.label"));
         if (ni->o == obj) break;
-        strcat(path, "/");
+        eina_strbuf_append_char(buf, '/');
      }
-   e_fm2_path_set(inst->o_fm, "/", path);
+   e_fm2_path_set(inst->o_fm, "/", eina_strbuf_string_get(buf));
+   eina_strbuf_free(buf);
 }
 
 static void
@@ -641,8 +645,8 @@ _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func)
 {
    Evas_Object *o;
    Evas_Coord mw = 0, mh = 0;
-   char path[PATH_MAX] = {0};
-   Nav_Item *ni, *nil;
+   Eina_Strbuf *buf;
+   Nav_Item *ni;
 
    if (!inst || !label || !*label || !func)
      return;
@@ -666,12 +670,8 @@ _box_button_append(Instance *inst, const char *label, Edje_Signal_Cb func)
    ni->o = o;
    ni->inst = inst;
    inst->l_buttons = eina_inlist_append(inst->l_buttons, EINA_INLIST_GET(ni));
-   EINA_INLIST_FOREACH(inst->l_buttons, nil)
-     {
-        strcat(path, edje_object_part_text_get(nil->o, "e.text.label"));
-        if (path[1]) strcat(path, "/");
-     }
-   ni->path = eina_stringshare_add(path);
+   buf = _path_generate(inst, NULL);
+   ni->path = eina_stringshare_add(eina_strbuf_string_get(buf));
    ni->monitor = eio_monitor_stringshared_add(ni->path);
    E_LIST_HANDLER_APPEND(ni->handlers, EIO_MONITOR_SELF_DELETED, _event_deleted, ni);
    E_LIST_HANDLER_APPEND(ni->handlers, EIO_MONITOR_SELF_RENAME, _event_deleted, ni);

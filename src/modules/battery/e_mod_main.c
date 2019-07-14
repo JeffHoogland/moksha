@@ -243,7 +243,6 @@ _battery_face_time_set(Evas_Object *battery, int t)
 
    hrs = (t / 3600);
    mins = ((t) / 60 - (hrs * 60));
-   if (hrs < 0) hrs = 0;
    if (mins < 0) mins = 0;
    snprintf(buf, sizeof(buf), "%i:%02i", hrs, mins);
    edje_object_part_text_set(battery, "e.text.time", buf);
@@ -310,7 +309,7 @@ _battery_device_update(void)
 
    EINA_LIST_FOREACH(device_batteries, l, bat)
      {
-        if (!bat->got_prop)
+        if ((!bat->got_prop) || (!bat->technology))
           continue;
         have_battery = 1;
         batnum++;
@@ -447,7 +446,7 @@ _battery_warning_popup(Instance *inst, int t, double percent)
    if ((!inst) || (inst->warning)) return;
 
 #ifdef HAVE_ENOTIFY
-   if (battery_config && battery_config->desktop_notifications)
+   if (battery_config->desktop_notifications)
      {
         if (notification) return;
         notification = e_notification_full_new

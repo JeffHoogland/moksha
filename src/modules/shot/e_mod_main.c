@@ -17,7 +17,7 @@ static E_Module *shot_module = NULL;
 
 static E_Action *border_act = NULL, *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
-static Ecore_Timer *timer, *border_timer=NULL, *timer_sec = NULL;
+static Ecore_Timer *timer=NULL, *border_timer=NULL, *timer_sec = NULL;
 static E_Win *win = NULL;
 E_Confirm_Dialog *cd = NULL;
 
@@ -40,8 +40,9 @@ static Ecore_Con_Url *url_up = NULL;
 static Eina_List *handlers = NULL;
 static char *url_ret = NULL;
 static E_Dialog *fsel_dia = NULL;
+static E_Dialog *_show_dialog_dia = NULL;
 static E_Border_Menu_Hook *border_hook = NULL;
-static Eina_Bool _shot_delay(void *data);
+static Eina_Bool _shot_no_delay(void *data);
 
 static void _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia);
 static void _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia);
@@ -51,7 +52,6 @@ static Eina_Bool _notify_cb(void *data __UNUSED__);
 
 
 static void _shot_conf_new(void);
-static Config_Item *_shot_conf_item_get(const char *id);
 static void _shot_conf_free(void);
 
 static E_Config_DD *conf_edd = NULL;
@@ -95,15 +95,15 @@ Eina_Bool _timer_cb(void *data)
 {
    if (shot_conf->count>0)
      {
-		if (shot_conf->notify)
-       _notify(shot_conf->count,_("Screenshot in: "),"... ",1020,1);
+       if (shot_conf->notify)
+         _notify(shot_conf->count,_("Screenshot in: "),"... ",1024,1);
        
        shot_conf->count--;
        return  ECORE_CALLBACK_PASS_ON;
      }
    else
      {
-       timer = ecore_timer_add(0.2, _shot_delay, data);
+       timer = ecore_timer_add(0.2, _shot_no_delay, data);
        return ECORE_CALLBACK_DONE;
      }
 }
@@ -111,8 +111,9 @@ Eina_Bool _timer_cb(void *data)
 static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
- _notify(1,_("Screenshot stored in"),shot_conf->path,3000,0);
- return EINA_FALSE;
+   _notify(1,_("Screenshot stored in"),shot_conf->path,3000,0);
+   timer = NULL;
+   return ECORE_CALLBACK_DONE;
 }
 
 static void 
@@ -136,10 +137,10 @@ _shot_conf_new(void)
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
    shot_conf->full_dialog = 0;
-   shot_conf->delay = 0.0;
+   shot_conf->mode_dialog = 1;
+   shot_conf->delay = 5.0;
    shot_conf->pict_quality = 80.0;
    
-   _shot_conf_item_get(NULL);
    IFMODCFGEND;
    shot_conf->version = MOD_CONFIG_FILE_VERSION;
 
@@ -148,37 +149,10 @@ _shot_conf_new(void)
    e_config_save_queue();
 }
 
-static Config_Item *
-_shot_conf_item_get(const char *id) 
-{
-   Config_Item *ci;
-
-   //~ GADCON_CLIENT_CONFIG_GET(Config_Item, shot_conf->conf_items, _gc_class, id);
-
-   ci = E_NEW(Config_Item, 1);
-   ci->id = eina_stringshare_add(id);
-   shot_conf->conf_items = eina_list_append(shot_conf->conf_items, ci);
-   return ci;
-}
-
 static void 
 _shot_conf_free(void) 
 {
    /* cleanup any stringshares here */
-   while (shot_conf->conf_items) 
-     {
-        Config_Item *ci = NULL;
-
-        ci = shot_conf->conf_items->data;
-        shot_conf->conf_items = 
-          eina_list_remove_list(shot_conf->conf_items, 
-                                shot_conf->conf_items);
-        /* EPA */
-        if (ci->id) eina_stringshare_del(ci->id);
-        
-        E_FREE(ci);
-     }
-
    if (shot_conf->viewer) eina_stringshare_del(shot_conf->viewer);
    if (shot_conf->path) eina_stringshare_del(shot_conf->path);
    E_FREE(shot_conf);
@@ -319,19 +293,17 @@ _cb_dialog_cancel(void *data __UNUSED__)
 static void
 _save_to(const char *file)
 {
-   char *extn = strrchr(file, '.');
    char opts[256];
-   
-   if (!strcasecmp(extn, ".png"))
-      snprintf(opts, sizeof(opts), "compress=%i", 9);
+
+   if (eina_str_has_extension(file, ".png"))
+     snprintf(opts, sizeof(opts), "compress=%i", 9);
    else
-      //~ snprintf(opts, sizeof(opts), "quality=%i", quality);
+     //~ snprintf(opts, sizeof(opts), "quality=%i", quality);
       snprintf(opts, sizeof(opts), "quality=%i",  (int)shot_conf->pict_quality);
    if (screen == -1)
      {
         if (!evas_object_image_save(o_img, file, NULL, opts))
         {
-		  
           e_confirm_dialog_show(_("Error - Folder does not exist"),
                           "application-exit",
                           _("Change folder in Take Screenshot settings<br>"
@@ -345,8 +317,8 @@ _save_to(const char *file)
         }
         else
         {
-        if (shot_conf->notify)
-        timer = ecore_timer_add(1.2, _notify_cb, NULL);
+           if (shot_conf->notify)
+              timer = ecore_timer_add(1.2, _notify_cb, NULL);
 	    }
   }
         
@@ -407,7 +379,7 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
    
    file = e_widget_fsel_selection_path_get(o_fsel);
    
-   if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, "jpg")) && (!eina_str_has_extension(file, "png"))))
+   if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, ".jpg")) && (!eina_str_has_extension(file, ".png"))))
      {
         e_util_dialog_show
            (_("Error - Unknown format"),
@@ -465,9 +437,9 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    tm = localtime(&tt);
    //~ if (quality == 100.0)
 
-   shot_conf->pict_quality=(int)quality;
+   shot_conf->pict_quality=(int) quality;
 
-   if (shot_conf->pict_quality == 100.0)
+   if (EINA_DBL_EQ(shot_conf->pict_quality, 100.0))
      strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.png", tm);
    else
      strftime(buf, sizeof(buf), "shot-%Y-%m-%d_%H-%M-%S.jpg", tm);
@@ -649,7 +621,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
         int v = rand();
         
         //~ if (quality == 100.0)
-        if (shot_conf->pict_quality == 100.0)
+        if (EINA_DBL_EQ(shot_conf->pict_quality, 100.0))
           snprintf(buf, sizeof(buf), "/tmp/e-shot-%x.png", v);
         else
           snprintf(buf, sizeof(buf), "/tmp/e-shot-%x.jpg", v);
@@ -855,8 +827,8 @@ _shot_now(E_Zone *zone, E_Border *bd)
         xwin = root;
         x = E_CLAMP(bd->x, bd->zone->x, bd->zone->x + bd->zone->w);
         y = E_CLAMP(bd->y, bd->zone->y, bd->zone->y + bd->zone->h);
-        sw = E_CLAMP(sw, 0, bd->zone->x + bd->zone->w - x);
-        sh = E_CLAMP(sh, 0, bd->zone->y + bd->zone->h - y);
+        sw = E_CLAMP(sw, 1, bd->zone->x + bd->zone->w - x);
+        sh = E_CLAMP(sh, 1, bd->zone->y + bd->zone->h - y);
      }
    if (!ecore_x_window_attributes_get(xwin, &watt)) return;
    visual = watt.visual;
@@ -866,7 +838,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    display = ecore_x_display_get();
    scr = ecore_x_default_screen_get();
    colormap = ecore_x_default_colormap_get(display, scr);
-   dst = malloc(sw * sh * sizeof(int));
+   dst = malloc(sw * sh * sizeof(unsigned int));
    ecore_x_image_to_argb_convert(src, bpp, bpl, colormap, visual,
                                  0, 0, sw, sh,
                                  dst, (sw * sizeof(int)), 0, 0);
@@ -930,7 +902,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    o = e_widget_framelist_add(evas, _("Quality"), 0);
    ol = o;
 
-   if (shot_conf->pict_quality==100) quality=100;
+   if (EINA_DBL_EQ(shot_conf->pict_quality, 100.0)) quality=100;
    if ((shot_conf->pict_quality>=80) && (shot_conf->pict_quality<100)) quality=90;
    if ((shot_conf->pict_quality>=60) && (shot_conf->pict_quality<80)) quality=70;
    if (shot_conf->pict_quality<60) quality=50;
@@ -1051,10 +1023,9 @@ _shot_now(E_Zone *zone, E_Border *bd)
 }
 
 static Eina_Bool
-_shot_delay(void *data)
+_shot_no_delay(void *data)
 {
-   timer_sec = NULL;
-   timer = NULL;
+   timer_sec = timer = NULL;
    _shot_now(data, NULL);
    return EINA_FALSE;
 }
@@ -1075,17 +1046,18 @@ _shot_border(E_Border *bd)
 }
 
 static void
-_shot(E_Zone *zone)
+_shot(E_Zone *zone, Eina_Bool instant)
 {
-   shot_conf->count = shot_conf->delay;
-   
+   if (!instant)
+       shot_conf->count = shot_conf->delay;
+ 
    if (timer) ecore_timer_del(timer);
    if (timer_sec) ecore_timer_del(timer_sec);
   
-   if (shot_conf->delay>0)
-     timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
+   if (shot_conf->delay > 0)
+       timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
    else
-     timer = ecore_timer_add(0.2, _shot_delay, zone);
+       timer = ecore_timer_add(0.2, _shot_no_delay, zone);
 }
 
 
@@ -1095,11 +1067,6 @@ _e_mod_menu_border_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED
    _shot_border(data);
 }
 
-static void
-_e_mod_menu_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
-{
-   if (m->zone) _shot(m->zone);
-}
 
 static void
 _e_mod_action_border_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
@@ -1116,7 +1083,7 @@ _e_mod_action_border_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 }
 
 static void
-_e_mod_action_cb(E_Object *obj, const char *params __UNUSED__)
+_e_mod_action_cb(E_Object *obj, Eina_Bool instant)
 {
    E_Zone *zone = NULL;
    
@@ -1140,9 +1107,97 @@ _e_mod_action_cb(E_Object *obj, const char *params __UNUSED__)
          ecore_timer_del(timer_sec);
          timer_sec = NULL;
       }
-            _shot(zone);
+      
+  _shot(zone, instant);
+}
 
-   //_shot_now(zone, NULL);
+static void
+_shot_dialog_del(void *data)
+{
+   if (_show_dialog_dia == data)
+     _show_dialog_dia = NULL;
+}
+
+static void
+_shot_dialog_instant_cb(void *data, E_Dialog *dia)
+{
+    e_object_del(E_OBJECT(dia));
+   _e_mod_action_cb(data, EINA_TRUE);
+}
+
+static void
+_shot_dialog_delayed_cb(void *data, E_Dialog *dia)
+{
+    e_object_del(E_OBJECT(dia));
+   _e_mod_action_cb(data, EINA_FALSE);
+}
+
+static void
+_shot_dialog_settings_cb(void *data __UNUSED__, E_Dialog *dia __UNUSED__)
+{
+   e_int_config_shot_module(NULL, NULL);
+}
+
+static void
+_shot_dialog_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__, void *event)
+{
+   Evas_Event_Key_Down *ev = event;
+   E_Dialog *dia = data;
+
+   if (strcmp(ev->key, "Return") == 0)
+     _shot_dialog_instant_cb(NULL, dia);
+   else if (strcmp(ev->key, "Escape") == 0)
+     _shot_dialog_del(dia);
+}
+
+static void
+_show_dialog(E_Object *obj, const char *params __UNUSED__)
+{
+   E_Manager *man;
+   E_Container *con;
+   E_Dialog *dia;
+   char buf[128];
+
+   if (_show_dialog_dia) return;
+   
+   if (!shot_conf->mode_dialog){
+       _e_mod_action_cb(obj, EINA_FALSE);
+       return;
+   }
+   
+   if (!(man = e_manager_current_get())) return;
+   if (!(con = e_container_current_get(man))) return;
+   if (!(dia = e_dialog_new(con, "E", "_shot_dialog"))) return;
+
+   snprintf(buf, sizeof(buf), _("Select the screenshot mode... <br>"
+        "Delay time is set in the Screenshot module settings<br>"
+        "The current delay time: <b> %d s</b>"), (int)shot_conf->delay);
+   e_dialog_title_set(dia, _("Screenshot"));
+   e_dialog_icon_set(dia, "screenshot", 64);
+   e_dialog_text_set(dia, buf);
+
+   e_object_del_attach_func_set(E_OBJECT(dia), _shot_dialog_del);
+
+   e_dialog_button_add(dia, _("Instant shot"), NULL, _shot_dialog_instant_cb, obj);
+   e_dialog_button_add(dia, _("Delayed shot"), NULL, _shot_dialog_delayed_cb, obj);
+   e_dialog_button_add(dia, _("Settings"), NULL, _shot_dialog_settings_cb, NULL);
+   e_dialog_button_add(dia, _("Close"), NULL, NULL, NULL);
+
+   e_dialog_button_focus_num(dia, 0);
+   e_widget_list_homogeneous_set(dia->box_object, 0);
+   e_win_centered_set(dia->win, 1);
+   e_dialog_show(dia);
+
+   evas_object_event_callback_add(dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
+        _shot_dialog_key_down, dia);
+
+   _show_dialog_dia = dia;
+}
+
+static void
+_e_mod_menu_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+   if (m->zone) _show_dialog(NULL, NULL);
 }
 
 static void
@@ -1152,6 +1207,7 @@ _bd_hook(void *d __UNUSED__, E_Border *bd)
    E_Menu *m;
    Eina_List *l;
    if (!bd->border_menu) return;
+   if (bd->iconic || (bd->desk != e_desk_current_get(bd->zone))) return;
    m = bd->border_menu;
 
    /* position menu item just before first separator */
@@ -1208,10 +1264,11 @@ e_modapi_init(E_Module *m)
    act = e_action_add("shot");
    if (act)
      {
-        act->func.go = _e_mod_action_cb;
+        act->func.go = _show_dialog;
         e_action_predef_name_set(N_("Screen"), N_("Take Screenshot"),
                                  "shot", NULL, NULL, 0);
      }
+     
    border_act = e_action_add("border_shot");
    if (border_act)
      {
@@ -1225,22 +1282,16 @@ e_modapi_init(E_Module *m)
    
       
   e_configure_registry_category_add("extensions", 90, "Takescreenshot", 
-				     NULL, "preferences-extensions");
-				     
+                                 NULL, "preferences-extensions");
          
    e_configure_registry_item_add("extensions/takescreenshot", 20, _("Screenshot Settings"), 
                                  NULL, "screenshot", e_int_config_shot_module);
   
-   conf_item_edd = E_CONFIG_DD_NEW("Shot_Config_Item", Config_Item);
    #undef T
    #undef D
-   #define T Config_Item
-   #define D conf_item_edd
-   E_CONFIG_VAL(D, T, id, STR);
 
    conf_edd = E_CONFIG_DD_NEW("Shot_Config", Config);
-   #undef T
-   #undef D
+
    #define T Config
    #define D conf_edd
    E_CONFIG_VAL(D, T, version, INT);
@@ -1250,6 +1301,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, view_enable, INT); /* our var from header */
    E_CONFIG_VAL(D, T, notify, INT); /* our var from header */
    E_CONFIG_VAL(D, T, full_dialog, INT); /* our var from header */
+   E_CONFIG_VAL(D, T, mode_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, delay, DOUBLE); /* our var from header */
    E_CONFIG_VAL(D, T, pict_quality, DOUBLE); /* our var from header */
    
@@ -1291,13 +1343,21 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_object_del(E_OBJECT(win));
         win = NULL;
      }
-   E_FN_DEL(e_object_del, cd);
+   if (cd) E_FN_DEL(e_object_del, cd);
    if (timer)
      {
         ecore_timer_del(timer);
         timer = NULL;
+     }
+   if (timer_sec)
+     {
         ecore_timer_del(timer_sec);
         timer_sec = NULL;
+     }
+   if (border_timer)
+     {
+        ecore_timer_del(border_timer);
+        border_timer = NULL;
      }
    if (maug)
      {
@@ -1309,6 +1369,12 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_action_predef_name_del("Screen", "Take Screenshot");
         e_action_del("shot");
         act = NULL;
+     }
+   if (border_act)
+     {
+        e_action_predef_name_del("Window : Actions", "Take Shot");
+        e_action_del("border_shot");
+        border_act = NULL;
      }
    shot_module = NULL;
    e_int_border_menu_hook_del(border_hook);
