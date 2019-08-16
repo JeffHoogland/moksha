@@ -778,6 +778,17 @@ main(int argc, char **argv)
    _e_main_shutdown_push(e_backlight_shutdown);
 
    if (e_config->show_splash)
+     e_init_status_set(_("Setup Powersave Modes"));
+   TS("E_Powersave Init");
+   if (!e_powersave_init())
+     {
+        e_error_message_show(_("Moksha cannot set up its powersave modes.\n"));
+        _e_main_shutdown(-1);
+     }
+   TS("E_Powersave Init Done");
+   _e_main_shutdown_push(e_powersave_shutdown);
+
+   if (e_config->show_splash)
      e_init_status_set(_("Setup Screensaver"));
    TS("E_Screensaver Init");
    if (!e_screensaver_init())
@@ -798,17 +809,6 @@ main(int argc, char **argv)
      }
    TS("E_Dpms Init Done");
    _e_main_shutdown_push(e_dpms_shutdown);
-
-   if (e_config->show_splash)
-     e_init_status_set(_("Setup Powersave Modes"));
-   TS("E_Powersave Init");
-   if (!e_powersave_init())
-     {
-        e_error_message_show(_("Moksha cannot set up its powersave modes.\n"));
-        _e_main_shutdown(-1);
-     }
-   TS("E_Powersave Init Done");
-   _e_main_shutdown_push(e_powersave_shutdown);
 
    if (e_config->show_splash)
      e_init_status_set(_("Setup Desklock"));
