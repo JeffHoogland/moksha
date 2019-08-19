@@ -356,6 +356,11 @@ main(int argc, char **argv)
      }
    TS("Ecore Init Done");
    _e_main_shutdown_push(ecore_shutdown);
+  
+   /* Eio's eio_init internally calls efreet_init. Set XDG_MENU_PREFIX here      */
+   /* else efreet's efreet_menu_prefix symbol is set erroneously during eio_init. */
+
+   _xdg_data_dirs_augment();
 
    TS("EIO Init");
    if (!eio_init())
@@ -585,8 +590,6 @@ main(int argc, char **argv)
         e_util_env_set("QT_QPA_PLATFORMTHEME", "gtk2");
         e_util_env_set("QT_STYLE_OVERRIDE", "gtk2");
      }
-
-   _xdg_data_dirs_augment();
 
    _fix_user_default_edj();
 
