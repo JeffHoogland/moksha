@@ -1486,7 +1486,7 @@ _evry_state_new(Evry_Selector *sel, Eina_List *plugins)
 
    if (!s) return NULL;
 
-   s->inp = malloc(INPUTLEN);
+   s->inp = calloc(1, INPUTLEN);
    s->inp[0] = 0;
    s->input = s->inp;
    s->plugins = plugins;

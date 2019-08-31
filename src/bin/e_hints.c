@@ -654,7 +654,7 @@ EAPI void
 e_hints_window_type_get(E_Border *bd)
 {
    Ecore_X_Window_Type *types = NULL;
-   int num, i, j;
+   int num, i, j, k;
 
    num = ecore_x_netwm_window_types_get(bd->client.win, &types);
    if (bd->client.netwm.extra_types)
@@ -673,8 +673,8 @@ e_hints_window_type_get(E_Border *bd)
         while ((j < num) &&
                (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_UNKNOWN))
           {
-             j++;
              bd->client.netwm.type = types[j];
+             j++;
           }
         if (num > j)
           {
@@ -682,8 +682,8 @@ e_hints_window_type_get(E_Border *bd)
                malloc((num - j) * sizeof(Ecore_X_Window_Type));
              if (bd->client.netwm.extra_types)
                {
-                  for (i = j + 1; i < num; i++)
-                    bd->client.netwm.extra_types[i - (j + 1)] = types[i];
+                  for (i = j, k = 0; i < num; i++, k++)
+                    bd->client.netwm.extra_types[k] = types[i];
                   bd->client.netwm.extra_types_num = num - j;
                }
           }
