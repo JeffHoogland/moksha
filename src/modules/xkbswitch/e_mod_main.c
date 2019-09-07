@@ -121,7 +121,7 @@ _xkb_update_icon(int cur_group)
    E_Config_XKB_Layout *cl;
 
    EINA_SAFETY_ON_NULL_RETURN(e_config->xkb.used_layouts);
-   //INF("ui: %d", cur_group);
+   //INF("update icon ui: %d", cur_group);
    cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
    EINA_SAFETY_ON_NULL_RETURN(cl);
    if (!e_config_xkb_layout_eq(cl, e_config->xkb.current_layout))
@@ -182,9 +182,11 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
    inst->layout = e_xkb_layout_get();
-
+   
+#if 0
    /* inst->layout is potentially null due to Bodhi changes in the wizard module
-    *   specifically page_011 is never run and keyboard stuff is never initialized */
+    *   specifically page_011 is never run and keyboard stuff is never initialized.
+    *   The attempt below causes issues: heap-use-after-free. */
    if (!inst->layout)
       {
           inst->layout = E_NEW(E_Config_XKB_Layout, 1);
@@ -195,7 +197,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
           e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, inst->layout);
           e_xkb_update(-1);
       }
-
+#endif
    if (e_config->xkb.only_label)
      e_theme_edje_object_set(inst->o_xkbswitch,
                              "base/theme/modules/xkbswitch",
@@ -217,7 +219,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
         if (inst->layout)                             
           e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
         else
-          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "us_flag");
+          e_xkb_e_icon_flag_setup(inst->o_xkbflag, "us");
           
         /* The icon is part of the gadget. */
         edje_object_part_swallow(inst->o_xkbswitch, "e.swallow.flag",
