@@ -50,6 +50,7 @@ static Ecore_X_Atom _atom_xembed = 0;
 static Ecore_X_Atom _atom_xembed_info = 0;
 static Ecore_X_Atom _atom_st_num = 0;
 static int _last_st_num = -1;
+static Ecore_Timer *delay; 
 
 static E_Module *systray_mod = NULL;
 EINTERN Instance *instance = NULL; /* only one systray ever possible */
@@ -985,6 +986,9 @@ _gc_shutdown(E_Gadcon_Client *gcc)
      ecore_timer_del(inst->timer.retry);
    if (inst->job.size_apply)
      ecore_job_del(inst->job.size_apply);
+   
+   if (delay)
+     ecore_timer_del(delay);
 
    if (instance == inst)
      instance = NULL;
@@ -1128,13 +1132,20 @@ static const E_Gadcon_Client_Class _gc_class =
 
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
 
+static Eina_Bool
+_delay_gadget(void __UNUSED__ *data)
+{
+    e_gadcon_provider_register(&_gc_class);
+    return 1;
+}
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
    systray_mod = m;
-
-   e_gadcon_provider_register(&_gc_class);
-
+   if (!delay)
+     delay = ecore_timer_add(0.7, _delay_gadget, NULL); 
+        
    if (!_atom_manager)
      _atom_manager = ecore_x_atom_get("MANAGER");
    if (!_atom_st_orient)
@@ -1166,4 +1177,3 @@ e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }
-
