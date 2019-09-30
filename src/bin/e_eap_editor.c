@@ -975,7 +975,7 @@ _e_desktop_edit_cb_icon_select_ok(void *data, E_Dialog *dia)
         EINA_LIST_FOREACH(xdg_dirs, l, icon_dir)
           {
              snprintf(buf, sizeof(buf), "%s/icons", icon_dir);
-             if (!e_util_dir_check(buf)) continue;
+             if (!ecore_file_is_dir(buf)) continue;
              if (!e_util_strcmp(dir, buf))
                {
                   cfdata->icon = strdup(ecore_file_file_get(file));
