@@ -1144,7 +1144,7 @@ e_modapi_init(E_Module *m)
 {
    systray_mod = m;
    if (!delay)
-     delay = ecore_timer_add(0.7, _delay_gadget, NULL); 
+     delay = ecore_timer_add(1.0, _delay_gadget, NULL); 
         
    if (!_atom_manager)
      _atom_manager = ecore_x_atom_get("MANAGER");
