@@ -1136,7 +1136,7 @@ static Eina_Bool
 _delay_gadget(void __UNUSED__ *data)
 {
     e_gadcon_provider_register(&_gc_class);
-    return 1;
+    return ECORE_CALLBACK_CANCEL;
 }
 
 EAPI void *
