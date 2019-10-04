@@ -59,6 +59,7 @@ _notification_show_common(const char *summary,
 static void
 _notification_show_presentation(Eina_Bool enabled)
 {
+  if(getenv("MOKSHA_NO_NOTIFY")) return;
    const char *summary, *body;
 
    if (enabled)
