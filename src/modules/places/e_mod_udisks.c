@@ -274,7 +274,9 @@ _places_udisks_vol_prop_cb(void *data, void *reply_data, DBusError *error)
    // skip volumes with volume.ignore set
    if (e_ukit_property_bool_get(udisks_ret, "DeviceIsMediaChangeDetectionInhibited", &err) || err)
      return;
-
+   // skip volumes with presentation.hide set
+   if (e_ukit_property_bool_get(udisks_ret, "DevicePresentationHide", &err) || err)
+     return;
    // skip volumes without a storage (slave partition)
    str = e_ukit_property_string_get(udisks_ret, "PartitionSlave", &err);
    if (err || !str) return;
