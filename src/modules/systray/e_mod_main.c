@@ -759,7 +759,7 @@ _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
        }
    if (found)
      {
-        _systray_deactivate(inst);
+        //~ _systray_deactivate(inst);
         if (!_systray_activate(inst))
           {
              if (!inst->timer.retry)
@@ -1169,6 +1169,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gc_class);
    systray_mod = NULL;
+   delay = NULL;
    return 1;
 }
 
