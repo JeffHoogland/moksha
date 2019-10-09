@@ -6487,7 +6487,7 @@ group "E_Config" struct {
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
     value "xsettings.net_theme_name" string: "Arc-Green-Dark";
-    value "update.check" uchar: 1;
+    value "update.check" uchar: 0;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 0;
     value "xkb.default_model" string: "default";
