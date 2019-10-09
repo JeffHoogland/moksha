@@ -372,6 +372,7 @@ struct _E_Config
       unsigned char enabled;  // GUI
       unsigned char match_e17_theme;  // GUI
       unsigned char match_e17_icon_theme;  // GUI
+      unsigned char match_icons_if_possible;  // GUI
       int           xft_antialias;
       int           xft_hinting;
       const char   *xft_hint_style;
