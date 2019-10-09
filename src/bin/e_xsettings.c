@@ -410,24 +410,19 @@ _e_xsettings_icon_theme_set(void)
 {
    if (e_config->xsettings.match_e17_icon_theme)
      {
-           _e_xsettings_string_set(_setting_icon_theme_name,
+       if (e_config->xsettings.match_icons_if_possible)
+         {
+            E_Config_Theme *ct;
+            if ((ct = e_theme_config_get("theme")))
+               {
+                 if ((_setting_icon_theme = edje_file_data_get(ct->file, "icon-theme")))
+                        e_config->icon_theme = _setting_icon_theme;
+               }
+         }
+      _e_xsettings_string_set(_setting_icon_theme_name,
                                 e_config->icon_theme);
-           return;
-     }
-
-   if (e_config->xsettings.match_icons_if_possible)
-     {
-        E_Config_Theme *ct;
-        if ((ct = e_theme_config_get("theme")))
-           {
-               if ((_setting_icon_theme = edje_file_data_get(ct->file, "icon-theme")))
-                     e_config->icon_theme = _setting_icon_theme;
-
-               _e_xsettings_string_set(_setting_icon_theme_name,
-                                e_config->icon_theme);
-               return;
-           }
-      }
+      return;
+   }
 
    if (e_config->xsettings.net_icon_theme_name)
      {

@@ -472,22 +472,6 @@ _icon_theme_changed(void *data, Evas_Object *o __UNUSED__)
    _populate_icon_preview(cfdata);
 }
 
-static void
-_icon_set_check1(void *data, Evas_Object *o __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata;
-   cfdata = data;
-   e_widget_check_checked_set(cfdata->gui.icon_enable_apps, 0);
-}
-
-static void
-_icon_set_check2(void *data, Evas_Object *o __UNUSED__)
-{
-   E_Config_Dialog_Data *cfdata;
-   cfdata = data;
-   e_widget_check_checked_set(cfdata->gui.icon_defined_in_theme, 0);
-}
-
 static Evas_Object *
 _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -555,12 +539,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    cfdata->gui.icon_defined_in_theme = ow = e_widget_check_add(evas, _("Match Moksha theme if possible"),
                            &(cfdata->match_icons_if_possible));
-   e_widget_on_change_hook_set(ow, _icon_set_check1, cfdata);
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
 
    cfdata->gui.icon_enable_apps = ow = e_widget_check_add(evas, _("Enable icon theme for applications"),
                            &(cfdata->match_e17_icon_theme));
-   e_widget_on_change_hook_set(ow, _icon_set_check2, cfdata);
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
    
    cfdata->gui.icon_enable_enlightenment = ow = e_widget_check_add(evas, _("Enable icon theme for Moksha"),

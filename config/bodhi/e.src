@@ -6482,7 +6482,7 @@ group "E_Config" struct {
     value "powersave.max" int: 4;
     value "xsettings.enabled" uchar: 1;
     value "xsettings.match_e17_theme" uchar: 1;
-    value "xsettings.match_e17_icon_theme" uchar: 0; 
+    value "xsettings.match_e17_icon_theme" uchar: 1; 
     value "xsettings.match_icons_if_possible" uchar: 1; 
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
