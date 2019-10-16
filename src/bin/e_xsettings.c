@@ -416,7 +416,7 @@ _e_xsettings_icon_theme_set(void)
             if ((ct = e_theme_config_get("theme")))
                {
                  if ((_setting_icon_theme = edje_file_data_get(ct->file, "icon-theme")))
-                        e_config->icon_theme = _setting_icon_theme;
+                        e_config->icon_theme = eina_stringshare_add(_setting_icon_theme);
                }
          }
       _e_xsettings_string_set(_setting_icon_theme_name,
