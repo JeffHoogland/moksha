@@ -6485,7 +6485,7 @@ group "E_Config" struct {
     value "xsettings.match_e17_icon_theme" uchar: 1;
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
-    value "xsettings.net_theme_name" string: "Arc-Green-Dark";
+    value "xsettings.net_theme_name" string: "MokshaArcDark";
     value "update.check" uchar: 0;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 0;
