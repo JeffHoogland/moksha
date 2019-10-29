@@ -149,7 +149,7 @@ _xdg_data_dirs_augment(void)
 {
    const char *s;
    const char *p = e_prefix_get();
-   char newpath[4096], buf[4096];
+   char newpath[PATH_MAX], buf[PATH_MAX + PATH_MAX + 200];
 
    if (!p) return;
 

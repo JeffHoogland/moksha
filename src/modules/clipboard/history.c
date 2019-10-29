@@ -109,7 +109,8 @@ _set_history_path(char *path)
        const int len = snprintf(NULL, 0, "%s%s/%s", path, CLIPBOARD_MOD_NAME, HISTORY_NAME) + 1;
        if (len <= PATH_MAX) {
          strncpy(temp_str, path, PATH_MAX-1);
-         snprintf(path, PATH_MAX-1, "%s%s/", temp_str, CLIPBOARD_MOD_NAME);
+         int ret = snprintf(path, PATH_MAX, "%s%s/", temp_str, CLIPBOARD_MOD_NAME);
+         if (ret < 0) PATH_MAX_ERR;
          success = _mkpath_if_not_exists(path);
          strncat(path, HISTORY_NAME, PATH_MAX-strlen(path)-1);
        }

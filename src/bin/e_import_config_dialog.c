@@ -20,7 +20,7 @@ _import_edj_gen(E_Import_Config_Dialog *import)
    int fd, num = 1;
    int w = 0, h = 0;
    const char *file, *locale;
-   char buf[PATH_MAX], cmd[PATH_MAX], tmpn[PATH_MAX], ipart[PATH_MAX], enc[128];
+   char buf[PATH_MAX], cmd[PATH_MAX + PATH_MAX + 40], tmpn[PATH_MAX], ipart[PATH_MAX], enc[128];
    char *imgdir = NULL, *fstrip;
    int cr, cg, cb, ca;
    FILE *f;
