@@ -1,7 +1,7 @@
 /* Ibar setup */
 #include "e_wizard.h"
 
-static void _write_bodhi_desktops(void);
+static void _write_bodhi_desktops(char *usr);
 
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons __UNUSED__)
@@ -11,7 +11,7 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops, Ein
 }
 
 static void 
-_write_bodhi_desktops(void) 
+_write_bodhi_desktops(char *usr) 
 {
    FILE *f;
    char buf[PATH_MAX];
@@ -25,7 +25,8 @@ _write_bodhi_desktops(void)
         fprintf(f, "midori.desktop\n");
         fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "pcmanfm.desktop\n");
-        fprintf(f, "eepDater.desktop\n");
+        if (!strcmp(usr, "bodhi"))
+           fprintf(f, "ubiquity.desktop\n");
         fclose(f);
      }
 }
@@ -47,8 +48,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    usr = pw->pw_name;
    if (usr) 
      {
-        if (!strcmp(usr, "bodhi"))
-          _write_bodhi_desktops();
+        //if (!strcmp(usr, "bodhi"))
+          _write_bodhi_desktops(usr);
      }
      
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */

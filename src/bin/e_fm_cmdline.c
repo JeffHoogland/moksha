@@ -58,7 +58,7 @@ fm_open(const char *path)
           p = strdup(buf);
         else
           {
-             char tmp[PATH_MAX];
+             char tmp[PATH_MAX + PATH_MAX + 2];
              snprintf(tmp, sizeof(tmp), "%s/%s", buf, path);
              p = strdup(tmp);
           }

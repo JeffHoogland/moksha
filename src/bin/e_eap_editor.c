@@ -71,7 +71,7 @@ e_desktop_border_create(E_Border *bd)
    Efreet_Desktop *desktop = NULL;
    const char *desktop_dir, *icon_dir;
    const char *bname, *bclass, *btitle;
-   char path[PATH_MAX];
+   char path[PATH_MAX + PATH_MAX + 2];
 
    bname = bd->client.icccm.name;
    if ((bname) && (bname[0] == 0)) bname = NULL;
@@ -265,7 +265,7 @@ _e_desktop_edit_create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
    Efreet_Desktop *desktop = NULL;
-   char path[PATH_MAX];
+   char path[PATH_MAX + PATH_MAX + 2];
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    if (!cfdata) return NULL;

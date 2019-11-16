@@ -6012,7 +6012,7 @@ group "E_Config" struct {
     group "themes" list {
         group "E_Config_Theme" struct {
             value "category" string: "theme";
-            value "file" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
+            value "file" string: "/usr/share/enlightenment/data/themes/MokshaArcDark.edj";
         }
     }
     group "bad_modules" list {
@@ -6264,7 +6264,7 @@ group "E_Config" struct {
     }
     value "config_version" int: 1000007;
     value "show_splash" int: 1;
-    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
+    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaArcDark.edj";
     value "desktop_default_background" string: "/usr/share/enlightenment/data/backgrounds/Bodhi_Background.edj";
     value "desktop_default_name" string: "%i-%i";
     value "desktop_default_window_profile" string: "standard";
@@ -6482,8 +6482,7 @@ group "E_Config" struct {
     value "powersave.max" int: 4;
     value "xsettings.enabled" uchar: 1;
     value "xsettings.match_e17_theme" uchar: 1;
-    value "xsettings.match_e17_icon_theme" uchar: 1; 
-    value "xsettings.match_icons_if_possible" uchar: 1; 
+    value "xsettings.match_e17_icon_theme" uchar: 1;
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
     value "xsettings.net_theme_name" string: "MokshaArcGreen";

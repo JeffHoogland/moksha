@@ -560,7 +560,7 @@ _places_poller(void *data __UNUSED__)
         new = _places_free_space_get(vol->mount_point);
         
         // redraw only if the size has changed more that 1Mb
-        if (abs(new - vol->free_space) > 1024 * 1024)
+        if (new - vol->free_space > 1024 * 1024)
           {
              vol->free_space = new;
              percent = 100 - (((long double)vol->free_space / (long double)vol->size) * 100);
