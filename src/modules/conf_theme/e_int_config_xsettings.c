@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    int              enable_xsettings;
    int              match_e17_theme;
    int              match_e17_icon_theme;
+   int              match_icons_if_possible;
    Eina_List       *icon_themes;
    const char      *icon_theme;
    int              icon_overrides;
@@ -28,6 +29,7 @@ struct _E_Config_Dialog_Data
       Evas_Object *icon_list;
       Evas_Object *icon_preview[4];   /* same size as _icon_previews */
       Evas_Object *icon_enable_apps;
+      Evas_Object *icon_defined_in_theme;
       Evas_Object *icon_enable_enlightenment;
    } gui;
    Ecore_Idler     *fill_icon_themes_delayed;
@@ -72,6 +74,7 @@ _settings_changed(void *data, Evas_Object *obj EINA_UNUSED)
 
    disable = !cfdata->enable_xsettings;
    e_widget_disabled_set(cfdata->gui.icon_enable_apps, disable);
+   e_widget_disabled_set(cfdata->gui.icon_defined_in_theme, disable);
    e_widget_disabled_set(cfdata->gui.icon_enable_enlightenment, disable);
    e_widget_disabled_set(cfdata->gui.match_theme, disable);
    e_widget_disabled_set(cfdata->gui.widget_list, disable);
@@ -87,6 +90,7 @@ _create_data(E_Config_Dialog *cfd)
    cfdata->cfd = cfd;
    cfdata->widget_theme = eina_stringshare_add(e_config->xsettings.net_theme_name);
    cfdata->match_e17_icon_theme = e_config->xsettings.match_e17_icon_theme;
+   cfdata->match_icons_if_possible = e_config->xsettings.match_icons_if_possible;
    cfdata->match_e17_theme = e_config->xsettings.match_e17_theme;
    cfdata->enable_xsettings = e_config->xsettings.enabled;
    cfdata->icon_theme = eina_stringshare_add(e_config->icon_theme);
@@ -111,6 +115,9 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    if (cfdata->match_e17_icon_theme != e_config->xsettings.match_e17_icon_theme)
+     return 1;
+   
+   if (cfdata->match_icons_if_possible != e_config->xsettings.match_icons_if_possible)
      return 1;
 
    if (cfdata->match_e17_theme != e_config->xsettings.match_e17_theme)
@@ -159,18 +166,19 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 
    eina_stringshare_replace(&e_config->xsettings.net_theme_name, cfdata->widget_theme);
 
-//   e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
+   //~ e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
    e_config->xsettings.match_e17_theme = cfdata->match_e17_theme;
    e_config->xsettings.enabled = cfdata->enable_xsettings;
 
    eina_stringshare_del(e_config->icon_theme);
-   if (cfdata->icon_overrides || cfdata->match_e17_icon_theme)
+   if (cfdata->icon_overrides || cfdata->match_e17_icon_theme || cfdata->match_icons_if_possible)
      e_config->icon_theme = eina_stringshare_ref(cfdata->icon_theme);
    else
      e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default
 
    e_config->icon_theme_overrides = !!cfdata->icon_overrides;
    e_config->xsettings.match_e17_icon_theme = cfdata->match_e17_icon_theme;
+   e_config->xsettings.match_icons_if_possible = cfdata->match_icons_if_possible;
    e_config_save_queue();
 
    e_util_env_set("E_ICON_THEME", e_config->icon_theme);
@@ -529,10 +537,14 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
     * e_widget_on_change_hook_set(ow, _icon_theme_changed, cfdata);
     * e_widget_list_object_append(ol, ow, 0, 0, 0.0); */
 
+   cfdata->gui.icon_defined_in_theme = ow = e_widget_check_add(evas, _("Match Moksha theme if possible"),
+                           &(cfdata->match_icons_if_possible));
+   e_widget_list_object_append(ol, ow, 0, 0, 0.0);
+
    cfdata->gui.icon_enable_apps = ow = e_widget_check_add(evas, _("Enable icon theme for applications"),
                            &(cfdata->match_e17_icon_theme));
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
-
+   
    cfdata->gui.icon_enable_enlightenment = ow = e_widget_check_add(evas, _("Enable icon theme for Moksha"),
                            &(cfdata->icon_overrides));
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
@@ -557,4 +569,3 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    return otb;
 }
-

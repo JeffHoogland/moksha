@@ -754,6 +754,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, xsettings.enabled, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_theme, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.match_e17_icon_theme, UCHAR);
+   E_CONFIG_VAL(D, T, xsettings.match_icons_if_possible, UCHAR);
    E_CONFIG_VAL(D, T, xsettings.xft_antialias, INT);
    E_CONFIG_VAL(D, T, xsettings.xft_hinting, INT);
    E_CONFIG_VAL(D, T, xsettings.xft_hint_style, STR);
