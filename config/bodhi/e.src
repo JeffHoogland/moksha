@@ -6411,7 +6411,7 @@ group "E_Config" struct {
     value "desk_flip_wrap" int: 1;
     value "fullscreen_flip" int: 1;
     value "multiscreen_flip" int: 0;
-    value "icon_theme" string: "MokshaArcDark";
+    value "icon_theme" string: "arc-green-icons-GTK";
     value "icon_theme_overrides" uchar: 1;
     value "desk_flip_animate_mode" int: 0;
     value "desk_flip_animate_interpolation" int: 0;
@@ -6485,7 +6485,7 @@ group "E_Config" struct {
     value "xsettings.match_e17_icon_theme" uchar: 1;
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
-    value "xsettings.net_theme_name" string: "MokshaArcDark";
+    value "xsettings.net_theme_name" string: "MokshaArcGreen";
     value "update.check" uchar: 0;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 0;

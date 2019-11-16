@@ -1143,8 +1143,18 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    systray_mod = m;
+   double d;
+   
    if (!delay)
-     delay = ecore_timer_add(2.0, _delay_gadget, NULL); 
+   {
+     if(getenv("SYSTRAY_SHOW_DELAY"))
+     {
+       sscanf(getenv("SYSTRAY_SHOW_DELAY"), "%lf", &d);
+       delay = ecore_timer_add(d, _delay_gadget, NULL); 
+     }
+     else
+       delay = ecore_timer_add(2.0, _delay_gadget, NULL); 
+   }
         
    if (!_atom_manager)
      _atom_manager = ecore_x_atom_get("MANAGER");
