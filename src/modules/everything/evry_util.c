@@ -147,7 +147,7 @@ evry_fuzzy_match(const char *str, const char *match)
                   else
                     offset += 3;
 
-                  /* m_len++; */
+                   m_len++; 
 
                   if (offset <= m_len * 3)
                     continue;
