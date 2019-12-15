@@ -70,9 +70,12 @@ _theme_set(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
    if (!e_util_strcmp(data, cur_theme)) return;
 
 #ifdef HAVE_ELEMENTARY
-   e_util_elm_theme_set((const char *) data);
+   e_util_elm_theme_set((const char *) data); 
 #endif
    e_theme_config_set("theme", data);
+#ifdef HAVE_ELEMENTARY
+   e_util_elm_icon_set();
+#endif
    e_config_save_queue();
    e_menu_hide_all();
    a = e_action_find("restart");

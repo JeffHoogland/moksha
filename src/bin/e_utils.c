@@ -1752,6 +1752,46 @@ e_util_elm_theme_set(const char *path)
    return ret;
 }
 
+EAPI Eina_Bool
+e_util_have_icon_theme(const char *name)
+{
+   Eina_List *list, *li;
+   const Efreet_Icon_Theme *th;
+   char *ic;
+   Eina_Bool ret = EINA_FALSE;
+   
+   list = efreet_icon_theme_list_get();
+   EINA_LIST_FOREACH(list, li, th)
+   {
+      if (!strcmp(th->name.internal, name))
+      {  ret = EINA_TRUE;
+         break;
+      }
+   }
+   return ret;
+}
+
+EAPI void
+e_util_elm_icon_set()
+{
+   E_Config_Theme *ct;
+   const char *icon_theme;
+            
+   
+   if ((ct = e_theme_config_get("theme")))
+   {
+     if ((icon_theme = edje_file_data_get(ct->file, "icon-theme")))
+     {
+        if (e_util_have_icon_theme(icon_theme))
+        {         
+          elm_config_icon_theme_set(icon_theme);
+          elm_config_all_flush();
+        }
+     }
+   }
+}
+
+
 EAPI void 
 e_util_copy_safely(char* dst, const char* src, uint32_t len)
 {

@@ -80,6 +80,7 @@ EAPI void e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection
 #ifdef HAVE_ELEMENTARY
 EAPI Eina_Bool e_util_have_elm_theme(const char *name);
 EAPI Eina_Bool e_util_elm_theme_set(const char *path);
+EAPI void e_util_elm_icon_set();
 EAPI void e_util_copy_safely(char* dst, const char* src, uint32_t len);
 #endif
 // Upstream ports

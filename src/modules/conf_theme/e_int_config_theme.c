@@ -827,6 +827,9 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_util_elm_theme_set(cfdata->theme);
 #endif
    e_theme_config_set("theme", cfdata->theme);
+#ifdef HAVE_ELEMENTARY
+   e_util_elm_icon_set();
+#endif
    e_config_save_queue();
 
    a = e_action_find("restart");
