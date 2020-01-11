@@ -43,7 +43,7 @@ cb_config_save_release(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
 {
    DBG("config save_release requested");
    e_config_save_block_set(0);
-
+   e_bg_update();
    return dbus_message_new_method_return(msg);
 }
 
