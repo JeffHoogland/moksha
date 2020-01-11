@@ -44,7 +44,7 @@ e_startup_mode_set(E_Startup_Mode mode)
                              _e_startup_event_cb,
                              strdup(buf));
    if (timer) ecore_timer_del(timer);
-   timer = ecore_timer_add(5.0, _e_startup_time_exceeded, NULL);
+   timer = ecore_timer_add(10.0, _e_startup_time_exceeded, NULL);
    e_init_undone();
 }
 
