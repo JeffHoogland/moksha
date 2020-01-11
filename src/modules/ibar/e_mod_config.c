@@ -111,7 +111,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_table_object_append(ot, ob, 0, 0, 1, 1, 1, 1, 1, 0);
    ob = e_widget_button_add(evas, _("Delete"), "list-remove", _cb_del, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 1, 1, 1, 1, 1, 1, 0);
-   ob = e_widget_button_add(evas, _("Setup"), "configure", _cb_config, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Contents"), "configure", _cb_config, cfdata, NULL);
    e_widget_table_object_append(ot, ob, 0, 2, 1, 1, 1, 1, 1, 0);
 
    if (!e_configure_registry_exists("applications/ibar_applications"))
