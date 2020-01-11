@@ -294,6 +294,8 @@ static void
 _save_to(const char *file)
 {
    char opts[256];
+   char buf[150];
+   Ecore_Exe *exe;
 
    if (eina_str_has_extension(file, ".png"))
      snprintf(opts, sizeof(opts), "compress=%i", 9);
@@ -358,7 +360,9 @@ _save_to(const char *file)
              if (!evas_object_image_save(o, file, NULL, opts))
                e_util_dialog_show(_("Error saving screenshot file"),
                                   _("Path: %s"), file);
-             
+             snprintf(buf, sizeof(buf), "gtk_recent -x shot Shot %s", file);
+             exe = e_util_exe_safe_run(buf, NULL);
+             if (exe) ecore_exe_free(exe);
              evas_object_del(o);
           }
      }
