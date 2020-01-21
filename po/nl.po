@@ -255,23 +255,23 @@ msgstr "Maximalisatiemodus 'Vullen'"
 
 #: src/bin/e_actions.c:3159
 msgid "Shade Up Mode Toggle"
-msgstr "Schakelen oprolmodus"
+msgstr "Oprolmodus omschakelen"
 
 #: src/bin/e_actions.c:3161
 msgid "Shade Down Mode Toggle"
-msgstr "Schakelen afrolmodus"
+msgstr "Afrolmodus omschakelen"
 
 #: src/bin/e_actions.c:3163
 msgid "Shade Left Mode Toggle"
-msgstr "Schakelen linksrolmodus"
+msgstr "Linksrolmodus omschakelen"
 
 #: src/bin/e_actions.c:3165
 msgid "Shade Right Mode Toggle"
-msgstr "Schakelen rechtsrolmodus"
+msgstr "Rechtsrolmodus omschakelen"
 
 #: src/bin/e_actions.c:3167
 msgid "Shade Mode Toggle"
-msgstr "Schakelen rolmodus"
+msgstr "Rolmodus omschakelen"
 
 #: src/bin/e_actions.c:3171
 msgid "Set Shaded State"
@@ -283,7 +283,7 @@ msgstr "syntax: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3176
 msgid "Toggle Borderless State"
-msgstr "Schakelen vensterrandstatus"
+msgstr "Randloze status omschakelen"
 
 #: src/bin/e_actions.c:3181
 msgid "Set Border"
@@ -295,7 +295,7 @@ msgstr "Schakel tussen vensterranden"
 
 #: src/bin/e_actions.c:3193
 msgid "Toggle Pinned State"
-msgstr "Schakelen vastgezette status"
+msgstr "Vastgezette status omschakelen"
 
 #: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202 src/bin/e_actions.c:3204
 #: src/bin/e_actions.c:3206 src/bin/e_actions.c:3212 src/bin/e_actions.c:3217 src/bin/e_actions.c:3223
@@ -655,7 +655,7 @@ msgstr "Toon menu..."
 #: src/modules/conf/e_mod_main.c:272 src/modules/everything/evry_plug_apps.c:1176
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
-msgstr "Voer uit"
+msgstr "Uitvoeren"
 
 #: src/bin/e_actions.c:3455 src/bin/e_int_border_prop.c:468
 msgid "Command"
@@ -1401,7 +1401,7 @@ msgstr "Acties..."
 
 #: src/bin/e_fm.c:8883 src/bin/e_fm.c:9105 src/bin/e_fm.c:11622
 msgid "Link"
-msgstr "Koppeling"
+msgstr "Koppelen"
 
 #: src/bin/e_fm.c:9167 src/bin/e_fm.c:10479 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142 src/modules/quickaccess/e_mod_config.c:226
@@ -2375,7 +2375,7 @@ msgstr "Modaal"
 
 #: src/bin/e_int_border_prop.c:507
 msgid "Shaded"
-msgstr "Ingeklapt"
+msgstr "Opgerold"
 
 #: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:731
 #: src/modules/quickaccess/e_mod_config.c:342
@@ -5780,7 +5780,7 @@ msgstr "Gemiddeld"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:360
 #, c-format
 msgid "%.0f s"
-msgstr "%1.0f s"
+msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313 src/modules/shot/e_mod_main.c:913
 msgid "High"
@@ -6056,7 +6056,7 @@ msgstr "Module-etiket"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:131
 msgid "Composite Focus-out Color"
-msgstr "Composite Focus-uit-kleur"
+msgstr "Composite Scherpstelling-uit kleur"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163 src/modules/conf_theme/e_mod_main.c:243
 msgid "Colors"
@@ -6117,7 +6117,7 @@ msgstr "Vensterbeheerder"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:860 src/modules/conf_theme/e_int_config_fonts.c:81
 msgid "Widgets"
-msgstr "Widgets"
+msgstr "Miniprogramma's"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:866
 msgid "Others"
@@ -6569,7 +6569,7 @@ msgstr "Aparte groep"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:151
 msgid "Warp to owning desktop"
-msgstr "Schakel naar bijbehorend werkblad"
+msgstr "Spring naar bijbehorend werkblad"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:154
 msgid "Iconified Windows"
@@ -7128,7 +7128,7 @@ msgid ""
 "or features, or your CPU<ps/>simply does not support this feature."
 msgstr ""
 "Uw systeemkern ondersteunt het instellen van de <ps/>CPU-frequentie niet. Het is mogelijk dat u <ps/"
-">systeemkernmodules of -functies mist. Het kan ook zijn dat uw CPU<ps/> dit simpelweg niet ondersteunt."
+">systeemkernmodules of -functies mist. Het kan ook zijn dat uw CPU<ps/>dit simpelweg niet ondersteunt."
 
 #: src/modules/cpufreq/e_mod_main.c:559
 msgid "There was an error trying to set the<ps/>cpu frequency setting via the module's<ps/>setfreq utility."
@@ -7964,15 +7964,15 @@ msgstr "Als pictogram van andere schermen"
 
 #: src/modules/winlist/e_int_config_winlist.c:224
 msgid "Uniconify/Unshade"
-msgstr "Ontpictogrammen/ontrollen"
+msgstr "Ontverpictogrammen/ontrollen"
 
 #: src/modules/winlist/e_int_config_winlist.c:226
 msgid "Warp mouse while selecting"
-msgstr "Verdraai muis tijdens selecteren"
+msgstr "Spring met muis tijdens selecteren"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 msgid "Warp mouse at end"
-msgstr "Verdraai muis op het einde"
+msgstr "Spring met muis op het einde"
 
 #: src/modules/winlist/e_int_config_winlist.c:234
 msgid "Jump to desk"
@@ -7988,7 +7988,7 @@ msgstr "Selecterend"
 
 #: src/modules/winlist/e_int_config_winlist.c:244
 msgid "Warp speed"
-msgstr "Verdraaisnelheid"
+msgstr "Springsnelheid"
 
 #: src/modules/winlist/e_int_config_winlist.c:252
 msgid "Scroll Animation"
@@ -8140,11 +8140,11 @@ msgstr "Vul een naam in voor deze nieuwe bron:"
 #: src/modules/ibar/e_mod_config.c:194
 #, c-format
 msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
-msgstr "U heeft gevraagd om verwijdering van '%s'.<br><br>Weet u zeker dat u deze bar-bron wilt verwijderen?"
+msgstr "U heeft gevraagd om verwijdering van '%s'.<br><br>Weet u zeker dat u deze balk-bron wilt verwijderen?"
 
 #: src/modules/ibar/e_mod_config.c:198
 msgid "Are you sure you want to delete this bar source?"
-msgstr "Weet u zeker dat u deze bar-bron wilt verwijderen?"
+msgstr "Weet u zeker dat u deze balk-bron wilt verwijderen?"
 
 #: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1829
 msgid "IBar"
@@ -8161,7 +8161,7 @@ msgstr "Pictogram %s"
 
 #: src/modules/ibar/e_mod_main.c:1829
 msgid "Focus IBar"
-msgstr "Focus IBar"
+msgstr "Scherpstelling IBar"
 
 #: src/modules/ibox/e_mod_config.c:49
 msgid "IBox Settings"
@@ -8490,6 +8490,9 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may leave you vulnerable or having to "
 "live<br>with bugs."
 msgstr ""
+"Moksha kan controleren op<br>nieuwe versies, bijgewerkte pakketten,<br>veiligheids- en foutreparaties<br>"
+"en beschikbare invoegsels.<br><br>Schakel dit dus niet uit!<br>Er wordt geen persoonlijke<br>informatie "
+"doorgegeven."
 
 #: src/modules/wizard/page_170.c:53
 msgid "Enable update checking"
@@ -9026,7 +9029,7 @@ msgstr "Breedte van element"
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, c-format
 msgid "%1.0f px"
-msgstr "%.0f px"
+msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:103
 msgid "Item height"
@@ -9309,7 +9312,7 @@ msgstr " Geschiedenis opslaan"
 
 #: src/modules/clipboard/e_mod_config.c:209
 msgid " Confirm before Clearing"
-msgstr " Bevestig alvorens leeg te maken"
+msgstr " Bevestigen alvorens leeg te maken"
 
 #: src/modules/clipboard/e_mod_config.c:211
 msgid " Save every Selection"
@@ -9434,14 +9437,14 @@ msgstr "Plaatsen-waarschuwing!"
 #: src/modules/places/e_mod_places.c:574
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr "Schijf ''%s'' gebruik is %d %%!"
+msgstr "Schijf ''%s'' gebruik is %d %%."
 
 #: src/modules/places/e_mod_places.c:659
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom file manager in<br>the gadget "
 "configuration."
 msgstr ""
-"<b>Kan bestandbeheerder van Moksha niet draaien.</b><br>Kies a.u.b. een andere bestandbeheerder<br>in de "
+"<b>Kan bestandbeheerder van Moksha niet starten.</b><br>Kies a.u.b. een andere bestandbeheerder<br>in de "
 "mini-instellingen."
 
 #: src/modules/places/e_mod_places.c:681
