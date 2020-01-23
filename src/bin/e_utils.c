@@ -1757,7 +1757,7 @@ e_util_have_icon_theme(const char *name)
 {
    Eina_List *list, *li;
    const Efreet_Icon_Theme *th;
-   char *ic;
+   
    Eina_Bool ret = EINA_FALSE;
    
    list = efreet_icon_theme_list_get();
