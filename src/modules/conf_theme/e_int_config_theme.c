@@ -824,11 +824,12 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if ((ct) && (!strcmp(ct->file, cfdata->theme))) return 1;
 
 #ifdef HAVE_ELEMENTARY
-   e_util_elm_theme_set(cfdata->theme);
+   e_util_elm_theme_set(cfdata->theme);                                //elementary theme change after E theme change
 #endif
-   e_theme_config_set("theme", cfdata->theme);
+   e_theme_config_set("theme", cfdata->theme);                         //GTK theme change after E theme change
+   e_config->init_default_theme = eina_stringshare_add(cfdata->theme); //Splash change after E theme change
 #ifdef HAVE_ELEMENTARY
-   e_util_elm_icon_set();
+   e_util_elm_icon_set();                                              //elementary icons change after E theme change
 #endif
    e_config_save_queue();
 
