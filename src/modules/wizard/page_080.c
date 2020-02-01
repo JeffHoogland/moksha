@@ -22,8 +22,9 @@ _write_bodhi_desktops(char *usr)
    f = fopen(buf, "w");
    if (f) 
      {
-        fprintf(f, "midori.desktop\n");
+        fprintf(f, "org.gnome.Epiphany.desktop\n");
         fprintf(f, "bodhi-appcenter.desktop\n");
+        fprintf(f, "terminology.desktop\n");
         fprintf(f, "pcmanfm.desktop\n");
         if (!strcmp(usr, "bodhi"))
            fprintf(f, "ubiquity.desktop\n");
