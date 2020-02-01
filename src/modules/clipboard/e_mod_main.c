@@ -479,7 +479,7 @@ _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Even
   }
   last_owner = owner;
   /* If we lost owner of clipboard */
-  if (event->reason)
+  if (event->reason && clip_inst->items)
      /* Reset clipboard and gain ownership of it */
     _cb_menu_item(eina_list_data_get(clip_inst->items));
   else
