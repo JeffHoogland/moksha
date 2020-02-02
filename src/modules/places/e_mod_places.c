@@ -266,6 +266,8 @@ places_fill_box(Evas_Object *main, Eina_Bool horiz)
      edje_object_file_set(o, theme_file, "modules/places/separator");
    else
      edje_object_file_set(o, theme_file, "modules/places/header");
+     
+    edje_object_part_text_set(o, "label", _("Places"));
 
    if (horiz)
        edje_object_signal_emit(o, "separator,set,vert", "places");
