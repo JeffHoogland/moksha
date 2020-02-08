@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-10-29 07:07-0400\n"
+"POT-Creation-Date: 2020-01-26 13:52-0500\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -28,7 +28,7 @@ msgstr "O desktope Moksha"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1184
+#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1188
 msgid "Close"
 msgstr "Zatvoriť"
 
@@ -75,7 +75,7 @@ msgstr "Násilne ukončiť"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10477 src/bin/e_fm.c:10843
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10480 src/bin/e_fm.c:10846
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Nie"
@@ -95,9 +95,9 @@ msgstr "Ste si istý, že chcete skončiť?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10480
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10483
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:314
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "Áno"
 
@@ -146,11 +146,11 @@ msgstr "Ste si istý, že chcete prepnúť počítač do režimu spánku?"
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1280
 msgid "Window : Actions"
 msgstr "Okno : Operácie"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11614
+#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11617
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Presunúť"
@@ -532,7 +532,7 @@ msgstr "Prejsť do okna... alebo na štart..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:930 src/modules/shot/e_mod_main.c:1268
+#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -737,8 +737,8 @@ msgstr "Prepnúť pomenovaný modul"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1125
-#: src/modules/conf_theme/e_int_config_theme.c:1139
+#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1143
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -810,7 +810,7 @@ msgid "Select"
 msgstr "Vybrať"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10020
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10023
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -820,13 +820,13 @@ msgstr "Vybrať"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:314 src/modules/shot/e_mod_main.c:465
-#: src/modules/shot/e_mod_main.c:723 src/modules/shot/e_mod_main.c:749
-#: src/modules/shot/e_mod_main.c:989 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: src/bin/e_config.c:932
+#: src/bin/e_config.c:933
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -845,7 +845,7 @@ msgstr ""
 "<br> Teraz môžete veci nakonfigurovať podľa svojej ľubovôle. Ospravedlňujeme "
 "sa za nepríjemnosti.<br>"
 
-#: src/bin/e_config.c:949
+#: src/bin/e_config.c:950
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -859,11 +859,11 @@ msgstr ""
 "Moksha.<br>To je zlé a preventívne bola vaša konfigurácia obnovená na "
 "predvolené hodnoty.<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
 
-#: src/bin/e_config.c:1469 src/bin/e_config.c:2094
+#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
 msgid "Moksha Settings Write Problems"
 msgstr "Problémy so zápisom nastavení Moksha"
 
-#: src/bin/e_config.c:1472
+#: src/bin/e_config.c:1473
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -873,10 +873,10 @@ msgstr ""
 "%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z bezpečnostných "
 "dôvodov.<br>"
 
-#: src/bin/e_config.c:1482 src/bin/e_config.c:2107
+#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:10019 src/bin/e_fm.c:10749 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10022 src/bin/e_fm.c:10752 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
@@ -891,19 +891,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1985
+#: src/bin/e_config.c:1986
 msgid "Settings Upgraded"
 msgstr "Nastavenia aktualizované"
 
-#: src/bin/e_config.c:2003
+#: src/bin/e_config.c:2004
 msgid "The EET file handle is bad."
 msgstr "EET popisovač súboru je poškodený."
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2008
 msgid "The file data is empty."
 msgstr "Súbor dát je prázdny."
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2012
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -911,15 +911,15 @@ msgstr ""
 "Súbor nie je zapisovateľný. Možno je disk iba na čítanie<br>alebo ste "
 "stratili oprávnenie k súborom."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2016
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Pamäť plná pri príprave zápisu.<br>Prosím uvoľniť pamäť."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2020
 msgid "This is a generic error."
 msgstr "Všeobecná chyba."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2024
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -927,61 +927,61 @@ msgstr ""
 "Súbor nastavení je príliš veľký.<br>Mal by to byť veľmi malý (niekoľko "
 "stoviek KB najviac)."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2028
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2032
 msgid "You ran out of space while writing the file."
 msgstr "Vyčerpaný priestor pri zápise do súboru"
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2036
 msgid "The file was closed while writing."
 msgstr "Súbor bol uzavretý počas zápisu."
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2040
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Pamäť - mapping (mmap) súboru zlyhalo."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "X509 Encoding failed."
 msgstr "X509 Kódovanie zlyhalo."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2048
 msgid "Signature failed."
 msgstr "Podpisovanie zlyhalo"
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2052
 msgid "The signature was invalid."
 msgstr "Podpis bol neplatný."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2056
 msgid "Not signed."
 msgstr "Nie je podpísané"
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2060
 msgid "Feature not implemented."
 msgstr "Funkcia nie je implementovaná."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG nebol nasadený."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2068
 msgid "Encryption failed."
 msgstr "Šifrovanie zlyhalo."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2072
 msgid "Decryption failed."
 msgstr "Dešifrovanie zlyhalo."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Vitajte v Moksha-e"
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1190,7 +1190,7 @@ msgstr "Spustiť v termináli"
 msgid "Show in Menus"
 msgstr "Zobraziť v ponukách"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8814 src/bin/e_fm.c:8974
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8817 src/bin/e_fm.c:8977
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:205
 msgid "Options"
@@ -1205,7 +1205,7 @@ msgstr "Vybrať ikonu pre '%s'"
 msgid "Select an Executable"
 msgstr "Vybrať spustiteľný súbor"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:9159 src/bin/e_fm.c:10842
+#: src/bin/e_entry.c:486 src/bin/e_fm.c:9162 src/bin/e_fm.c:10845
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1225,15 +1225,15 @@ msgstr "Vybrať spustiteľný súbor"
 msgid "Delete"
 msgstr "Zmazať"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:9070
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:9073
 msgid "Cut"
 msgstr "Vystrihnúť"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9084 src/bin/e_fm.c:11609
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9087 src/bin/e_fm.c:11612
 msgid "Copy"
 msgstr "Kopírovať"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:8875 src/bin/e_fm.c:9097
+#: src/bin/e_entry.c:515 src/bin/e_fm.c:8878 src/bin/e_fm.c:9100
 msgid "Paste"
 msgstr "Vložiť"
 
@@ -1426,72 +1426,72 @@ msgstr "Chyba pri vysunutí"
 msgid "Can't eject device"
 msgstr "Nedá sa vysunúť jednotka"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671 src/bin/e_fm.c:9546
-#: src/bin/e_fm.c:9561 src/bin/e_fm.c:9670 src/bin/e_fm.c:9675
-#: src/bin/e_fm.c:9691 src/bin/e_fm.c:9696 src/bin/e_fm.c:10327
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10333 src/bin/e_fm.c:10360
-#: src/bin/e_fm.c:10364 src/bin/e_fm.c:10367 src/bin/e_fm.c:10425
-#: src/bin/e_fm.c:10650 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9549
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9673 src/bin/e_fm.c:9678
+#: src/bin/e_fm.c:9694 src/bin/e_fm.c:9699 src/bin/e_fm.c:10330
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10336 src/bin/e_fm.c:10363
+#: src/bin/e_fm.c:10367 src/bin/e_fm.c:10370 src/bin/e_fm.c:10428
+#: src/bin/e_fm.c:10653 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
 msgid "Error"
 msgstr "Chyba"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr ""
 
-#: src/bin/e_fm.c:8732 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8735 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
 msgstr "Rozlišovať veľké/malé písmená"
 
-#: src/bin/e_fm.c:8738 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8741 src/modules/fileman/e_mod_config.c:372
 msgid "Sort By Extension"
 msgstr "Triediť podľa prípony"
 
-#: src/bin/e_fm.c:8744 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr "Triediť podľa času"
 
-#: src/bin/e_fm.c:8750 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:378
 msgid "Sort By Size"
 msgstr "Triediť podľa veľkosti"
 
-#: src/bin/e_fm.c:8759 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:8762 src/modules/fileman/e_mod_config.c:386
 msgid "Directories First"
 msgstr "Priečinky ako prvé"
 
-#: src/bin/e_fm.c:8765 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:8768 src/modules/fileman/e_mod_config.c:390
 msgid "Directories Last"
 msgstr "Priečinky ako posledné"
 
-#: src/bin/e_fm.c:8798 src/bin/e_fm.c:8958
+#: src/bin/e_fm.c:8801 src/bin/e_fm.c:8961
 #: src/modules/fileman/e_mod_config.c:314
 msgid "View Mode"
 msgstr "Režim zobrazenia"
 
-#: src/bin/e_fm.c:8807 src/bin/e_fm.c:8967
+#: src/bin/e_fm.c:8810 src/bin/e_fm.c:8970
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Triedenie"
 
-#: src/bin/e_fm.c:8825 src/bin/e_fm.c:8985
+#: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
 msgid "Refresh View"
 msgstr "Obnoviť zobrazenie"
 
-#: src/bin/e_fm.c:8836 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
 msgid "New..."
 msgstr "Nový..."
 
-#: src/bin/e_fm.c:8856 src/bin/e_fm.c:9018 src/bin/e_fm.c:9049
+#: src/bin/e_fm.c:8859 src/bin/e_fm.c:9021 src/bin/e_fm.c:9052
 msgid "Actions..."
 msgstr "Operácia..."
 
-#: src/bin/e_fm.c:8883 src/bin/e_fm.c:9105 src/bin/e_fm.c:11622
+#: src/bin/e_fm.c:8886 src/bin/e_fm.c:9108 src/bin/e_fm.c:11625
 msgid "Link"
 msgstr "Odkaz"
 
-#: src/bin/e_fm.c:9167 src/bin/e_fm.c:10479 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9170 src/bin/e_fm.c:10482 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1499,215 +1499,215 @@ msgstr "Odkaz"
 msgid "Rename"
 msgstr "Premenovať"
 
-#: src/bin/e_fm.c:9186
+#: src/bin/e_fm.c:9189
 msgid "Unmount"
 msgstr "Odpojiť"
 
-#: src/bin/e_fm.c:9191
+#: src/bin/e_fm.c:9194
 msgid "Mount"
 msgstr "Pripojiť"
 
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9199
 msgid "Eject"
 msgstr "Vysunúť"
 
-#: src/bin/e_fm.c:9211 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9214 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:885
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: src/bin/e_fm.c:9219
+#: src/bin/e_fm.c:9222
 msgid "Application Properties"
 msgstr "Vlastnosti aplikácie "
 
-#: src/bin/e_fm.c:9227 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9230 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Vlastnosti súboru"
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 msgid "Use default"
 msgstr "Použiť predvolené"
 
-#: src/bin/e_fm.c:9473 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9476 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
 msgstr "Mriežka ikon"
 
-#: src/bin/e_fm.c:9481 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9484 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
 msgstr "Vlastné ikony"
 
-#: src/bin/e_fm.c:9489 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9492 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Zoznam"
 
-#: src/bin/e_fm.c:9497 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9500 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Predvolené zobrazenie"
 
-#: src/bin/e_fm.c:9519
+#: src/bin/e_fm.c:9522
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Veľkosť ikony (%d)"
 
-#: src/bin/e_fm.c:9546
+#: src/bin/e_fm.c:9549
 msgid "Could not create a directory!"
 msgstr "Nie je možné vytvoriť priečinok"
 
-#: src/bin/e_fm.c:9561
+#: src/bin/e_fm.c:9564
 msgid "Could not create a file!"
 msgstr "Nie je možné vytvoriť súbor"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "Nový priečinok"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 msgid "New File"
 msgstr "Nový súbor"
 
-#: src/bin/e_fm.c:9670 src/bin/e_fm.c:9691
+#: src/bin/e_fm.c:9673 src/bin/e_fm.c:9694
 msgid "Already creating a new file for this directory!"
 msgstr "Už vytváram nový súbor pre tento priečinok!"
 
-#: src/bin/e_fm.c:9675 src/bin/e_fm.c:9696
+#: src/bin/e_fm.c:9678 src/bin/e_fm.c:9699
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s nemôže byť zapísaný"
 
-#: src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9718
 msgid "Directory"
 msgstr "Priečinok"
 
-#: src/bin/e_fm.c:9720 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9723 src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "Súbor"
 
-#: src/bin/e_fm.c:9751
+#: src/bin/e_fm.c:9754
 msgid "Inherit parent settings"
 msgstr "Zdedené rodičovské nastavenia"
 
-#: src/bin/e_fm.c:9760
+#: src/bin/e_fm.c:9763
 msgid "Show Hidden Files"
 msgstr "Zobraziť skryté súbory"
 
-#: src/bin/e_fm.c:9772
+#: src/bin/e_fm.c:9775
 msgid "Remember Ordering"
 msgstr "Zapamätať poradie"
 
-#: src/bin/e_fm.c:9781
+#: src/bin/e_fm.c:9784
 msgid "Sort Now"
 msgstr "Zoradiť teraz"
 
-#: src/bin/e_fm.c:9789
+#: src/bin/e_fm.c:9792
 msgid "Single Click Activation"
 msgstr "Použi jednoduché kliknutie"
 
-#: src/bin/e_fm.c:9800 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:9803 src/modules/fileman/e_mod_config.c:406
 msgid "Secure Deletion"
 msgstr "Zabezpečené vymazanie"
 
-#: src/bin/e_fm.c:9813
+#: src/bin/e_fm.c:9816
 msgid "File Manager Settings"
 msgstr "Nastavenia správcu súborov"
 
-#: src/bin/e_fm.c:9818
+#: src/bin/e_fm.c:9821
 msgid "File Icon Settings"
 msgstr "Nastavenie ikon súborov"
 
-#: src/bin/e_fm.c:9896 src/bin/e_fm.c:10112
+#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10115
 msgid "Set background..."
 msgstr "Nastaviť pozadie..."
 
-#: src/bin/e_fm.c:9904
+#: src/bin/e_fm.c:9907
 msgid "Clear background"
 msgstr "Zmazať pozadie"
 
-#: src/bin/e_fm.c:9911 src/bin/e_fm.c:10140
+#: src/bin/e_fm.c:9914 src/bin/e_fm.c:10143
 msgid "Set overlay..."
 msgstr "Nastaviť prekrývanie..."
 
-#: src/bin/e_fm.c:9917
+#: src/bin/e_fm.c:9920
 msgid "Clear overlay"
 msgstr "Zrušiť prekrývanie..."
 
-#: src/bin/e_fm.c:10234 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10237 src/bin/e_fm.c:10578
 #, c-format
 msgid "Rename %s to:"
 msgstr "Premenovať %s na:"
 
-#: src/bin/e_fm.c:10236 src/bin/e_fm.c:10576
+#: src/bin/e_fm.c:10239 src/bin/e_fm.c:10579
 msgid "Rename File"
 msgstr "Premenovať súbor"
 
-#: src/bin/e_fm.c:10327 src/bin/e_fm.c:10360
+#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10363
 #, c-format
 msgid "%s already exists!"
 msgstr "%s už existuje!"
 
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10364
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s nie je možné premenovať keďže je chránené"
 
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
+#: src/bin/e_fm.c:10336 src/bin/e_fm.c:10370
 msgid "Internal filemanager error :("
 msgstr "Interná chyba správcu súborov :("
 
-#: src/bin/e_fm.c:10421 src/bin/e_fm.c:10642
+#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645
 msgid "Retry"
 msgstr "Opakovať"
 
-#: src/bin/e_fm.c:10422 src/bin/e_fm.c:10643 src/bin/e_fm.c:11630
+#: src/bin/e_fm.c:10425 src/bin/e_fm.c:10646 src/bin/e_fm.c:11633
 msgid "Abort"
 msgstr "Zrušiť"
 
-#: src/bin/e_fm.c:10478
+#: src/bin/e_fm.c:10481
 msgid "No to all"
 msgstr "Nie pre všetko"
 
-#: src/bin/e_fm.c:10481
+#: src/bin/e_fm.c:10484
 msgid "Yes to all"
 msgstr "Áno na všetko"
 
-#: src/bin/e_fm.c:10484 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
 msgid "Warning"
 msgstr "Upozornenia"
 
-#: src/bin/e_fm.c:10487
+#: src/bin/e_fm.c:10490
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Súbor už existuje, prepísať?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10645
+#: src/bin/e_fm.c:10648
 msgid "Move Source"
 msgstr "Presunúť zdroj"
 
-#: src/bin/e_fm.c:10646
+#: src/bin/e_fm.c:10649
 msgid "Ignore this"
 msgstr "Ignorovať"
 
-#: src/bin/e_fm.c:10647
+#: src/bin/e_fm.c:10650
 msgid "Ignore all"
 msgstr "Ignorovať všetko"
 
-#: src/bin/e_fm.c:10652
+#: src/bin/e_fm.c:10655
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Došlo ku chybe počas vykonávania operácie.<br>%s"
 
-#: src/bin/e_fm.c:10845
+#: src/bin/e_fm.c:10848
 msgid "Confirm Delete"
 msgstr "Potvrdiť zmazanie"
 
-#: src/bin/e_fm.c:10855
+#: src/bin/e_fm.c:10858
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Ste si istí, že chcete zmazať<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10860
+#: src/bin/e_fm.c:10863
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1715,7 +1715,7 @@ msgid ""
 msgstr ""
 "Chcete skutočne odstrániť<br> %d vybrané súbory v:<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10870
+#: src/bin/e_fm.c:10873
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1818,8 +1818,8 @@ msgstr "Ďaľšie:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1433
-#: src/modules/conf_theme/e_int_config_xsettings.c:513
+#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Náhľad"
 
@@ -1877,7 +1877,7 @@ msgid "Inset"
 msgstr "Vsadený"
 
 #: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
-#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Vzhľad"
 
@@ -2188,7 +2188,7 @@ msgstr "Minimalizovať"
 msgid "Skip"
 msgstr "Preskočiť"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:229
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Okraj"
 
@@ -2501,7 +2501,7 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1183
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2598,7 +2598,7 @@ msgstr "Veľkosť, umiestnenie a zámky"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:934
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
 msgid "All"
 msgstr "Všetko"
 
@@ -3753,7 +3753,7 @@ msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
 msgid "Contents"
 msgstr "Obsah"
 
@@ -4422,7 +4422,7 @@ msgstr "Automatická detekcia"
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:225
+#: src/modules/conf_theme/e_mod_main.c:230
 #: src/modules/temperature/e_mod_config.c:311
 msgid "Internal"
 msgstr "Interné"
@@ -4920,8 +4920,8 @@ msgstr "Vyberte pozadie ..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1122
-#: src/modules/conf_theme/e_int_config_theme.c:1131
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Osobné"
@@ -5023,9 +5023,9 @@ msgstr "Aktuálna tapeta"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:227
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
 msgid "Wallpaper"
 msgstr "Tapeta"
 
@@ -5370,9 +5370,9 @@ msgid "Show Cursor"
 msgstr "Zobraziť kurzor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:168
-#: src/modules/conf_theme/e_mod_main.c:166
-#: src/modules/conf_theme/e_mod_main.c:237
-#: src/modules/conf_theme/e_mod_main.c:266
+#: src/modules/conf_theme/e_mod_main.c:171
+#: src/modules/conf_theme/e_mod_main.c:242
+#: src/modules/conf_theme/e_mod_main.c:271
 msgid "Theme"
 msgstr "Téma"
 
@@ -5963,18 +5963,18 @@ msgstr "Obrázky"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
-#: src/modules/conf_theme/e_mod_main.c:246
+#: src/modules/conf_theme/e_mod_main.c:251
 msgid "Fonts"
 msgstr "Fonty"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1413
-#: src/modules/conf_theme/e_mod_main.c:175
+#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "Témy"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:552
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6140,12 +6140,12 @@ msgid "e.g. Saving to disk"
 msgstr "napr. uloženie na disk"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:917 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Nízka"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:919
 msgid "Medium"
 msgstr "Stredná"
 
@@ -6157,7 +6157,7 @@ msgid "%.0f s"
 msgstr "%1.0f sek"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:913
+#: src/modules/shot/e_mod_main.c:917
 msgid "High"
 msgstr "Vysoká"
 
@@ -6447,7 +6447,7 @@ msgid "Composite Focus-out Color"
 msgstr "Farba kompoztnej deaktivácie"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163
-#: src/modules/conf_theme/e_mod_main.c:243
+#: src/modules/conf_theme/e_mod_main.c:248
 msgid "Colors"
 msgstr "Farby"
 
@@ -6804,7 +6804,7 @@ msgid "Events"
 msgstr "Udalosti"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:181
-#: src/modules/conf_theme/e_mod_main.c:258
+#: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "Spustenie"
 
@@ -6817,7 +6817,7 @@ msgid "Background Change"
 msgstr "Zmena pozadia"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
-#: src/modules/conf_theme/e_mod_main.c:252
+#: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "Prechody"
 
@@ -6838,20 +6838,20 @@ msgstr ""
 msgid " Import..."
 msgstr " Import..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1404
+#: src/modules/conf_theme/e_int_config_theme.c:1408
 msgid "Theme Categories"
 msgstr "Kategórie tém"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1422
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 msgid "Assign"
 msgstr "Priradiť"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1425
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Clear"
 msgstr "Vyčistiť"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1428
+#: src/modules/conf_theme/e_int_config_theme.c:1432
 msgid "Clear All"
 msgstr "Vymazať všetko"
 
@@ -6878,39 +6878,40 @@ msgstr ""
 "Moksha nie je schopná importovať mtému<br><br>vzhľadom ku chybe pri "
 "kopírovaní."
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:61
+#: src/modules/conf_theme/e_int_config_xsettings.c:63
 msgid "Application Theme Settings"
 msgstr "Nastavenie témy ikon"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:488
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Match Moksha theme if possible"
 msgstr "Prispôsobiť Mokshu téme ak je to možné"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:505
 msgid "Enable X Application Settings"
 msgstr "Povoliť nastavenie X aplikácií"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:501
+#: src/modules/conf_theme/e_int_config_xsettings.c:509
 msgid "GTK Applications"
 msgstr "GTK aplikácie"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:532
+#: src/modules/conf_theme/e_int_config_xsettings.c:544
 msgid "Enable icon theme for applications"
 msgstr "Povoliť tému ikon pre aplikácie"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:536
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Enable icon theme for Moksha"
 msgstr "Povoliť tému ikon pre Mokshu"
 
-#: src/modules/conf_theme/e_mod_main.c:240
+#: src/modules/conf_theme/e_mod_main.c:245
 msgid "Application Theme"
 msgstr "Téma aplikácií"
 
-#: src/modules/conf_theme/e_mod_main.c:249
+#: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
 msgstr "Okraje"
 
-#: src/modules/conf_theme/e_mod_main.c:255
+#: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
 msgstr "Nastavenie DPI"
 
@@ -8561,10 +8562,6 @@ msgstr "Nastavenia IBar"
 msgid "Selected source"
 msgstr "Vybraný zdroj"
 
-#: src/modules/ibar/e_mod_config.c:114
-msgid "Setup"
-msgstr "Nastavenie"
-
 #: src/modules/ibar/e_mod_config.c:123
 msgid "Icon Labels"
 msgstr "Názvy ikon"
@@ -9262,7 +9259,7 @@ msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým
 msgid "Systray"
 msgstr "Systray"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1175
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
 msgid "Screenshot"
 msgstr "Snímka obrazovky"
 
@@ -9274,11 +9271,11 @@ msgstr "Snímka za: "
 msgid "Screenshot stored in"
 msgstr "Snímka uložená v"
 
-#: src/modules/shot/e_mod_main.c:307
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr "Chyba - Priečinok neexistuje"
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
@@ -9286,139 +9283,139 @@ msgstr ""
 "Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Settings-"
 "All-Advanced-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
 
-#: src/modules/shot/e_mod_main.c:359
+#: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
 msgstr "Chyba pri ukladaní súboru snímku obrazovky"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
 msgstr "Cesta: %s"
 
-#: src/modules/shot/e_mod_main.c:385
+#: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
 msgstr "Chyba - Neznámy formát"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:449
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr "Zvoliť cestu pre uloženie snímok"
 
-#: src/modules/shot/e_mod_main.c:463 src/modules/shot/e_mod_main.c:985
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
 msgid "Save"
 msgstr "Uložiť"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:587
+#: src/modules/shot/e_mod_main.c:591
 msgid "Error - Upload Failed"
 msgstr "Chyba pri uploade"
 
-#: src/modules/shot/e_mod_main.c:588
+#: src/modules/shot/e_mod_main.c:592
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Upload zlyhal s kom:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:633
+#: src/modules/shot/e_mod_main.c:637
 msgid "Error - Can't create file"
 msgstr "Chyba - Nie je možné vytvoriť súbor"
 
-#: src/modules/shot/e_mod_main.c:634
+#: src/modules/shot/e_mod_main.c:638
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Nie je možné vytvoriť dočasný súbor '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:652
+#: src/modules/shot/e_mod_main.c:656
 msgid "Error - Can't open file"
 msgstr "Chyba - Nie je možné otvoriť súbor"
 
-#: src/modules/shot/e_mod_main.c:653
+#: src/modules/shot/e_mod_main.c:657
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Nie je možné otvoriť dočasný súbor '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:661
+#: src/modules/shot/e_mod_main.c:665
 msgid "Error - Bad size"
 msgstr "Chyba - Nesprávna veľkosť"
 
-#: src/modules/shot/e_mod_main.c:662
+#: src/modules/shot/e_mod_main.c:666
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Nie je možné získať veľkosť súboru '%s'"
 
-#: src/modules/shot/e_mod_main.c:672
+#: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
 msgstr "Chyba - nie je možné alokovať pamäť"
 
-#: src/modules/shot/e_mod_main.c:673
+#: src/modules/shot/e_mod_main.c:677
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Nemôže alokovať pamäť pre obrázok: %s"
 
-#: src/modules/shot/e_mod_main.c:680
+#: src/modules/shot/e_mod_main.c:684
 msgid "Error - Can't read picture"
 msgstr "Chyba - Nie je možné načítať obrázok"
 
-#: src/modules/shot/e_mod_main.c:681
+#: src/modules/shot/e_mod_main.c:685
 msgid "Cannot read picture"
 msgstr "Nie je možné načítať obrázok"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:707
 msgid "Uploading screenshot"
 msgstr "Upload obrázku"
 
-#: src/modules/shot/e_mod_main.c:708
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading ..."
 msgstr "Upload ..."
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:717
 msgid "Screenshot is available at this location:"
 msgstr "Obrázok bol uložený na link:"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:726
 msgid "Hide"
 msgstr "Skryť"
 
-#: src/modules/shot/e_mod_main.c:746
+#: src/modules/shot/e_mod_main.c:750
 msgid "Confirm Share"
 msgstr "Potvrdiť upload"
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:751
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 "Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti "
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:753
 msgid "Confirm"
 msgstr "Potvrdiť"
 
-#: src/modules/shot/e_mod_main.c:850
+#: src/modules/shot/e_mod_main.c:854
 msgid "Where to put Screenshot..."
 msgstr "Kam uložiť snímku"
 
-#: src/modules/shot/e_mod_main.c:902
+#: src/modules/shot/e_mod_main.c:906
 msgid "Quality"
 msgstr "Kvalita"
 
-#: src/modules/shot/e_mod_main.c:911
+#: src/modules/shot/e_mod_main.c:915
 msgid "Perfect"
 msgstr "Najvyššia"
 
-#: src/modules/shot/e_mod_main.c:987
+#: src/modules/shot/e_mod_main.c:991
 msgid "Share"
 msgstr "Zdieľať"
 
-#: src/modules/shot/e_mod_main.c:1172
+#: src/modules/shot/e_mod_main.c:1176
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9427,32 +9424,32 @@ msgstr ""
 "Vyber režim snímky obrazovky... <br>Časovač je možné nastaviť vo "
 "vlastnostiach modulu <br>Aktuálna hodnota je: <b> %d s</b>"
 
-#: src/modules/shot/e_mod_main.c:1181
+#: src/modules/shot/e_mod_main.c:1185
 msgid "Instant shot"
 msgstr "Okamžitá snímka"
 
-#: src/modules/shot/e_mod_main.c:1182
+#: src/modules/shot/e_mod_main.c:1186
 msgid "Delayed shot"
 msgstr "Snímka s časovačom"
 
-#: src/modules/shot/e_mod_main.c:1222 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
 msgid "Take Shot"
 msgstr "Snímka okna"
 
-#: src/modules/shot/e_mod_main.c:1233 src/modules/shot/e_mod_main.c:1268
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Take Screenshot"
 msgstr "Snímka obrazovky"
 
-#: src/modules/shot/e_mod_main.c:1256
+#: src/modules/shot/e_mod_main.c:1260
 msgid "Shot Error"
 msgstr "Chyba snímky"
 
-#: src/modules/shot/e_mod_main.c:1257
+#: src/modules/shot/e_mod_main.c:1261
 msgid "Cannot initialize network"
 msgstr "Nie je možné inicializovať sieť"
 
-#: src/modules/shot/e_mod_main.c:1287 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
 msgid "Screenshot Settings"
 msgstr "Nastavenie snímky obrazovky"
 
@@ -10034,6 +10031,9 @@ msgstr "Hlasitosť zmenená"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Hlasitosť zmenená"
+
+#~ msgid "Setup"
+#~ msgstr "Nastavenie"
 
 #~ msgid " No Menu Scroll (Experimental)"
 #~ msgstr " Menu bez posuvu do strany"

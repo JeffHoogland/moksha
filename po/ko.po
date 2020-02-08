@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-10-29 07:07-0400\n"
+"POT-Creation-Date: 2020-01-26 13:52-0500\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -32,7 +32,7 @@ msgstr "인라이튼먼트 정보"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1184
+#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1188
 msgid "Close"
 msgstr "닫기"
 
@@ -82,7 +82,7 @@ msgstr "강제 종료"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10477 src/bin/e_fm.c:10843
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10480 src/bin/e_fm.c:10846
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "아니요"
@@ -102,9 +102,9 @@ msgstr "정말 인라이튼먼트를 끝내시겠습니까?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10480
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10483
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:314
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "예"
 
@@ -153,11 +153,11 @@ msgstr "정말로 컴퓨터를 최대 절전 모드로 전환하시겠습니까?
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1280
 msgid "Window : Actions"
 msgstr "창 : 동작"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11614
+#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11617
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "이동"
@@ -542,7 +542,7 @@ msgstr "다른 창으로 건너뛰거나 시작..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:930 src/modules/shot/e_mod_main.c:1268
+#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
 msgid "Screen"
 msgstr "화면"
 
@@ -747,8 +747,8 @@ msgstr "지정한 모듈 전환"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1125
-#: src/modules/conf_theme/e_int_config_theme.c:1139
+#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1143
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -820,7 +820,7 @@ msgid "Select"
 msgstr "선택"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10020
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10023
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -830,13 +830,13 @@ msgstr "선택"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:314 src/modules/shot/e_mod_main.c:465
-#: src/modules/shot/e_mod_main.c:723 src/modules/shot/e_mod_main.c:749
-#: src/modules/shot/e_mod_main.c:989 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "취소"
 
-#: src/bin/e_config.c:932
+#: src/bin/e_config.c:933
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -853,7 +853,7 @@ msgstr ""
 "가하여 문제를 해결합니다.<br>이제 여러분의 취향대로 다시 설정할 수 있습니다."
 "<br>여러분의 설정에 문제를 일으켜 죄송합니다.<br>"
 
-#: src/bin/e_config.c:949
+#: src/bin/e_config.c:950
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -867,11 +867,11 @@ msgstr ""
 "<br>이는 잘못된 현상이며 설정을 기본으로 되돌려놓았습니다.<br> 불편을 드려 죄"
 "송합니다. <br>"
 
-#: src/bin/e_config.c:1469 src/bin/e_config.c:2094
+#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
 msgid "Moksha Settings Write Problems"
 msgstr "인라이튼먼트 설정 기록 문제"
 
-#: src/bin/e_config.c:1472
+#: src/bin/e_config.c:1473
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -881,10 +881,10 @@ msgstr ""
 "동하는 동안 오류가 발생했습니다.<br>안전을 위해 나머지 부분의 기록을 중지했습"
 "니다.<br>"
 
-#: src/bin/e_config.c:1482 src/bin/e_config.c:2107
+#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:10019 src/bin/e_fm.c:10749 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10022 src/bin/e_fm.c:10752 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
@@ -899,19 +899,19 @@ msgstr ""
 msgid "OK"
 msgstr "확인"
 
-#: src/bin/e_config.c:1985
+#: src/bin/e_config.c:1986
 msgid "Settings Upgraded"
 msgstr "설정이 갱신되었습니다."
 
-#: src/bin/e_config.c:2003
+#: src/bin/e_config.c:2004
 msgid "The EET file handle is bad."
 msgstr "EET 파일 핸들이 손상되었습니다."
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2008
 msgid "The file data is empty."
 msgstr "파일 데이터가 비어 있습니다."
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2012
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -919,74 +919,74 @@ msgstr ""
 "파일에 쓰기 권한이 없습니다. 아마도 디스크가 읽기 전용이거나<br>해당 파일에 "
 "대한 권한을 잃었을 지도 모릅니다."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2016
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "기록을 준비하는 동안 메모리가 바닥났습니다.<br>메모리를 비워주십시오."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2020
 msgid "This is a generic error."
 msgstr "이것은 일반적인 오류입니다."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2024
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "설정 파일이 너무 큽니다.<br>설정 파일은 매우 작아야 합니다(최대 몇 백 KB)."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2028
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "디스크에 입출력 오류가 발생했습니다.<br>바꾸어야 하지 않겠습니까?"
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2032
 msgid "You ran out of space while writing the file."
 msgstr "파일을 기록하는 동안 공간이 바닥났습니다."
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2036
 msgid "The file was closed while writing."
 msgstr "기록하는 중 파일이 닫혔습니다."
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2040
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "파일의 메모리 매핑(mmap)에 실패했습니다."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "X509 Encoding failed."
 msgstr "X509 인코딩에 실패했습니다."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2048
 msgid "Signature failed."
 msgstr "서명에 실패했습니다."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2052
 msgid "The signature was invalid."
 msgstr "서명이 잘못되었습니다."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2056
 msgid "Not signed."
 msgstr "서명이 없습니다."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2060
 msgid "Feature not implemented."
 msgstr "기능이 구현되지 않았습니다."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
 msgid "PRNG was not seeded."
 msgstr "PRNG가 동작하지 않았습니다."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2068
 msgid "Encryption failed."
 msgstr "암호화에 실패했습니다."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2072
 msgid "Decryption failed."
 msgstr "복호화에 실패했습니다."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
 msgid "The error is unknown to Moksha."
 msgstr "인라이튼먼트에서 알려지지 않은 오류입니다."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1193,7 +1193,7 @@ msgstr "터미널에서 실행"
 msgid "Show in Menus"
 msgstr "메뉴에 표시"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8814 src/bin/e_fm.c:8974
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8817 src/bin/e_fm.c:8977
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:205
 msgid "Options"
@@ -1208,7 +1208,7 @@ msgstr "'%s'에 대한 아이콘 선택"
 msgid "Select an Executable"
 msgstr "실행 파일 선택"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:9159 src/bin/e_fm.c:10842
+#: src/bin/e_entry.c:486 src/bin/e_fm.c:9162 src/bin/e_fm.c:10845
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1228,15 +1228,15 @@ msgstr "실행 파일 선택"
 msgid "Delete"
 msgstr "삭제"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:9070
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:9073
 msgid "Cut"
 msgstr "잘라내기"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9084 src/bin/e_fm.c:11609
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9087 src/bin/e_fm.c:11612
 msgid "Copy"
 msgstr "복사"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:8875 src/bin/e_fm.c:9097
+#: src/bin/e_entry.c:515 src/bin/e_fm.c:8878 src/bin/e_fm.c:9100
 msgid "Paste"
 msgstr "붙여넣기"
 
@@ -1426,72 +1426,72 @@ msgstr "꺼내기 오류"
 msgid "Can't eject device"
 msgstr "장치를 꺼낼 수 없습니다"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671 src/bin/e_fm.c:9546
-#: src/bin/e_fm.c:9561 src/bin/e_fm.c:9670 src/bin/e_fm.c:9675
-#: src/bin/e_fm.c:9691 src/bin/e_fm.c:9696 src/bin/e_fm.c:10327
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10333 src/bin/e_fm.c:10360
-#: src/bin/e_fm.c:10364 src/bin/e_fm.c:10367 src/bin/e_fm.c:10425
-#: src/bin/e_fm.c:10650 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9549
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9673 src/bin/e_fm.c:9678
+#: src/bin/e_fm.c:9694 src/bin/e_fm.c:9699 src/bin/e_fm.c:10330
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10336 src/bin/e_fm.c:10363
+#: src/bin/e_fm.c:10367 src/bin/e_fm.c:10370 src/bin/e_fm.c:10428
+#: src/bin/e_fm.c:10653 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
 msgid "Error"
 msgstr "오류"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr "최근 '%s'에 대해 요청받은 DND 처리에 실패했습니다."
 
-#: src/bin/e_fm.c:8732 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8735 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
 msgstr "대소문자 구분"
 
-#: src/bin/e_fm.c:8738 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8741 src/modules/fileman/e_mod_config.c:372
 msgid "Sort By Extension"
 msgstr "확장자 기준 정렬"
 
-#: src/bin/e_fm.c:8744 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr "수정시간 순 정렬"
 
-#: src/bin/e_fm.c:8750 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:378
 msgid "Sort By Size"
 msgstr "크기순 정렬"
 
-#: src/bin/e_fm.c:8759 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:8762 src/modules/fileman/e_mod_config.c:386
 msgid "Directories First"
 msgstr "디렉터리 먼저"
 
-#: src/bin/e_fm.c:8765 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:8768 src/modules/fileman/e_mod_config.c:390
 msgid "Directories Last"
 msgstr "디렉터리 나중"
 
-#: src/bin/e_fm.c:8798 src/bin/e_fm.c:8958
+#: src/bin/e_fm.c:8801 src/bin/e_fm.c:8961
 #: src/modules/fileman/e_mod_config.c:314
 msgid "View Mode"
 msgstr "보기 모드"
 
-#: src/bin/e_fm.c:8807 src/bin/e_fm.c:8967
+#: src/bin/e_fm.c:8810 src/bin/e_fm.c:8970
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "정렬"
 
-#: src/bin/e_fm.c:8825 src/bin/e_fm.c:8985
+#: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
 msgid "Refresh View"
 msgstr "새로 고침"
 
-#: src/bin/e_fm.c:8836 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
 msgid "New..."
 msgstr "새로 만들기..."
 
-#: src/bin/e_fm.c:8856 src/bin/e_fm.c:9018 src/bin/e_fm.c:9049
+#: src/bin/e_fm.c:8859 src/bin/e_fm.c:9021 src/bin/e_fm.c:9052
 msgid "Actions..."
 msgstr "동작..."
 
-#: src/bin/e_fm.c:8883 src/bin/e_fm.c:9105 src/bin/e_fm.c:11622
+#: src/bin/e_fm.c:8886 src/bin/e_fm.c:9108 src/bin/e_fm.c:11625
 msgid "Link"
 msgstr "링크"
 
-#: src/bin/e_fm.c:9167 src/bin/e_fm.c:10479 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9170 src/bin/e_fm.c:10482 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1499,215 +1499,215 @@ msgstr "링크"
 msgid "Rename"
 msgstr "이름 바꾸기"
 
-#: src/bin/e_fm.c:9186
+#: src/bin/e_fm.c:9189
 msgid "Unmount"
 msgstr "마운트 해제"
 
-#: src/bin/e_fm.c:9191
+#: src/bin/e_fm.c:9194
 msgid "Mount"
 msgstr "마운트"
 
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9199
 msgid "Eject"
 msgstr "꺼내기"
 
-#: src/bin/e_fm.c:9211 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9214 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:885
 msgid "Properties"
 msgstr "속성"
 
-#: src/bin/e_fm.c:9219
+#: src/bin/e_fm.c:9222
 msgid "Application Properties"
 msgstr "프로그램 속성"
 
-#: src/bin/e_fm.c:9227 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9230 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "파일 속성"
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 msgid "Use default"
 msgstr "기본값 사용"
 
-#: src/bin/e_fm.c:9473 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9476 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
 msgstr "그리드 아이콘"
 
-#: src/bin/e_fm.c:9481 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9484 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
 msgstr "사용자 정의 아이콘"
 
-#: src/bin/e_fm.c:9489 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9492 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "목록"
 
-#: src/bin/e_fm.c:9497 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9500 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "기본 보기"
 
-#: src/bin/e_fm.c:9519
+#: src/bin/e_fm.c:9522
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "아이콘 크기 (%d)"
 
-#: src/bin/e_fm.c:9546
+#: src/bin/e_fm.c:9549
 msgid "Could not create a directory!"
 msgstr "디렉터리를 만들 수 없습니다!"
 
-#: src/bin/e_fm.c:9561
+#: src/bin/e_fm.c:9564
 msgid "Could not create a file!"
 msgstr "파일을 만들 수 없습니다!"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "새 디렉터리"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 msgid "New File"
 msgstr "새 파일 만들기"
 
-#: src/bin/e_fm.c:9670 src/bin/e_fm.c:9691
+#: src/bin/e_fm.c:9673 src/bin/e_fm.c:9694
 msgid "Already creating a new file for this directory!"
 msgstr "이 디렉터리에 이미 새 파일을 만들었습니다!"
 
-#: src/bin/e_fm.c:9675 src/bin/e_fm.c:9696
+#: src/bin/e_fm.c:9678 src/bin/e_fm.c:9699
 #, c-format
 msgid "%s can't be written to!"
 msgstr "%s에 기록할 수 없습니다!"
 
-#: src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9718
 msgid "Directory"
 msgstr "디렉터리"
 
-#: src/bin/e_fm.c:9720 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9723 src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "파일"
 
-#: src/bin/e_fm.c:9751
+#: src/bin/e_fm.c:9754
 msgid "Inherit parent settings"
 msgstr "상위 설정 가져오기"
 
-#: src/bin/e_fm.c:9760
+#: src/bin/e_fm.c:9763
 msgid "Show Hidden Files"
 msgstr "숨김 파일 표시"
 
-#: src/bin/e_fm.c:9772
+#: src/bin/e_fm.c:9775
 msgid "Remember Ordering"
 msgstr "정렬 순서 기억"
 
-#: src/bin/e_fm.c:9781
+#: src/bin/e_fm.c:9784
 msgid "Sort Now"
 msgstr "지금 정렬"
 
-#: src/bin/e_fm.c:9789
+#: src/bin/e_fm.c:9792
 msgid "Single Click Activation"
 msgstr "클릭 한 번으로 활성화"
 
-#: src/bin/e_fm.c:9800 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:9803 src/modules/fileman/e_mod_config.c:406
 msgid "Secure Deletion"
 msgstr "보안 삭제"
 
-#: src/bin/e_fm.c:9813
+#: src/bin/e_fm.c:9816
 msgid "File Manager Settings"
 msgstr "파일 관리자 설정"
 
-#: src/bin/e_fm.c:9818
+#: src/bin/e_fm.c:9821
 msgid "File Icon Settings"
 msgstr "파일 아이콘 설정"
 
-#: src/bin/e_fm.c:9896 src/bin/e_fm.c:10112
+#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10115
 msgid "Set background..."
 msgstr "배경 설정..."
 
-#: src/bin/e_fm.c:9904
+#: src/bin/e_fm.c:9907
 msgid "Clear background"
 msgstr "배경 지우기"
 
-#: src/bin/e_fm.c:9911 src/bin/e_fm.c:10140
+#: src/bin/e_fm.c:9914 src/bin/e_fm.c:10143
 msgid "Set overlay..."
 msgstr "오버레이 설정..."
 
-#: src/bin/e_fm.c:9917
+#: src/bin/e_fm.c:9920
 msgid "Clear overlay"
 msgstr "오버레이 지우기"
 
-#: src/bin/e_fm.c:10234 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10237 src/bin/e_fm.c:10578
 #, c-format
 msgid "Rename %s to:"
 msgstr "%s 이름 변경:"
 
-#: src/bin/e_fm.c:10236 src/bin/e_fm.c:10576
+#: src/bin/e_fm.c:10239 src/bin/e_fm.c:10579
 msgid "Rename File"
 msgstr "파일 이름 바꾸기"
 
-#: src/bin/e_fm.c:10327 src/bin/e_fm.c:10360
+#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10363
 #, c-format
 msgid "%s already exists!"
 msgstr "%s은(는) 이미 존재합니다"
 
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10364
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "보호상태이기 때문에 %s의 이름을 바꿀 수 있습니다."
 
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
+#: src/bin/e_fm.c:10336 src/bin/e_fm.c:10370
 msgid "Internal filemanager error :("
 msgstr "내부 파일 관리자 오류 :("
 
-#: src/bin/e_fm.c:10421 src/bin/e_fm.c:10642
+#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645
 msgid "Retry"
 msgstr "재시도"
 
-#: src/bin/e_fm.c:10422 src/bin/e_fm.c:10643 src/bin/e_fm.c:11630
+#: src/bin/e_fm.c:10425 src/bin/e_fm.c:10646 src/bin/e_fm.c:11633
 msgid "Abort"
 msgstr "중지"
 
-#: src/bin/e_fm.c:10478
+#: src/bin/e_fm.c:10481
 msgid "No to all"
 msgstr "전부 아니요"
 
-#: src/bin/e_fm.c:10481
+#: src/bin/e_fm.c:10484
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:10484 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
 msgid "Warning"
 msgstr "경고"
 
-#: src/bin/e_fm.c:10487
+#: src/bin/e_fm.c:10490
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "파일이 이미 존재합니다, 덮어쓰기겠습니까?<br><hilight>%s</hilight>"
 
-#: src/bin/e_fm.c:10645
+#: src/bin/e_fm.c:10648
 msgid "Move Source"
 msgstr "원본 이동"
 
-#: src/bin/e_fm.c:10646
+#: src/bin/e_fm.c:10649
 msgid "Ignore this"
 msgstr "이번만 무시"
 
-#: src/bin/e_fm.c:10647
+#: src/bin/e_fm.c:10650
 msgid "Ignore all"
 msgstr "전부 무시"
 
-#: src/bin/e_fm.c:10652
+#: src/bin/e_fm.c:10655
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "동작을 수행하는 동안 오류가 발생했습니다.<br>%s"
 
-#: src/bin/e_fm.c:10845
+#: src/bin/e_fm.c:10848
 msgid "Confirm Delete"
 msgstr "삭제 확인"
 
-#: src/bin/e_fm.c:10855
+#: src/bin/e_fm.c:10858
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "정말로<br><hilight>%s</hilight>을(를) 삭제하시겠습니까?"
 
-#: src/bin/e_fm.c:10860
+#: src/bin/e_fm.c:10863
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1716,7 +1716,7 @@ msgstr ""
 "정말로<br><hilight>%2$s</hilight>의<br><hilight>모든</hilight> %1$d개의 파일"
 "을 삭제하시겠습니까?"
 
-#: src/bin/e_fm.c:10870
+#: src/bin/e_fm.c:10873
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1820,8 +1820,8 @@ msgstr "기타:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1433
-#: src/modules/conf_theme/e_int_config_xsettings.c:513
+#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "미리 보기"
 
@@ -1879,7 +1879,7 @@ msgid "Inset"
 msgstr "덧붙임"
 
 #: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
-#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "보기"
 
@@ -2187,7 +2187,7 @@ msgstr "아이콘 표시"
 msgid "Skip"
 msgstr "건너뛰기"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:229
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "테두리"
 
@@ -2500,7 +2500,7 @@ msgstr "위치 지정 요청"
 #: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1183
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2588,7 +2588,7 @@ msgstr "크기, 위치, 잠금"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:934
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
 msgid "All"
 msgstr "모두"
 
@@ -3741,7 +3741,7 @@ msgid "Rename Shelf"
 msgstr "서랍 이름 바꾸기"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
 msgid "Contents"
 msgstr "컨텐츠"
 
@@ -4382,7 +4382,7 @@ msgstr "자동 감지"
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:225
+#: src/modules/conf_theme/e_mod_main.c:230
 #: src/modules/temperature/e_mod_config.c:311
 msgid "Internal"
 msgstr "내부"
@@ -4869,8 +4869,8 @@ msgstr "배경 선택..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1122
-#: src/modules/conf_theme/e_int_config_theme.c:1131
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "개인용"
@@ -4970,9 +4970,9 @@ msgstr "현재 배경화면"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:227
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
 msgid "Wallpaper"
 msgstr "배경 화면"
 
@@ -5320,9 +5320,9 @@ msgid "Show Cursor"
 msgstr "커서 보이기"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:168
-#: src/modules/conf_theme/e_mod_main.c:166
-#: src/modules/conf_theme/e_mod_main.c:237
-#: src/modules/conf_theme/e_mod_main.c:266
+#: src/modules/conf_theme/e_mod_main.c:171
+#: src/modules/conf_theme/e_mod_main.c:242
+#: src/modules/conf_theme/e_mod_main.c:271
 msgid "Theme"
 msgstr "테마"
 
@@ -5916,18 +5916,18 @@ msgstr "그림"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
-#: src/modules/conf_theme/e_mod_main.c:246
+#: src/modules/conf_theme/e_mod_main.c:251
 msgid "Fonts"
 msgstr "글꼴"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1413
-#: src/modules/conf_theme/e_mod_main.c:175
+#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "테마"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:552
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6087,12 +6087,12 @@ msgid "e.g. Saving to disk"
 msgstr "예: 디스크에 저장"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:917 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "낮음"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:919
 msgid "Medium"
 msgstr "보통"
 
@@ -6104,7 +6104,7 @@ msgid "%.0f s"
 msgstr "%.0f초"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:913
+#: src/modules/shot/e_mod_main.c:917
 msgid "High"
 msgstr "높음"
 
@@ -6396,7 +6396,7 @@ msgid "Composite Focus-out Color"
 msgstr "합성 포커스 아웃 색상"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163
-#: src/modules/conf_theme/e_mod_main.c:243
+#: src/modules/conf_theme/e_mod_main.c:248
 msgid "Colors"
 msgstr "색상"
 
@@ -6751,7 +6751,7 @@ msgid "Events"
 msgstr "이벤트"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:181
-#: src/modules/conf_theme/e_mod_main.c:258
+#: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "시작"
 
@@ -6764,7 +6764,7 @@ msgid "Background Change"
 msgstr "배경 바꾸기"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
-#: src/modules/conf_theme/e_mod_main.c:252
+#: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "화면 전환"
 
@@ -6785,20 +6785,20 @@ msgstr ""
 msgid " Import..."
 msgstr " 가져오기..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1404
+#: src/modules/conf_theme/e_int_config_theme.c:1408
 msgid "Theme Categories"
 msgstr "테마 분류"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1422
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 msgid "Assign"
 msgstr "할당"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1425
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Clear"
 msgstr "지우기"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1428
+#: src/modules/conf_theme/e_int_config_theme.c:1432
 msgid "Clear All"
 msgstr "모두 지우기"
 
@@ -6822,39 +6822,40 @@ msgstr ""
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr "인라이튼먼트가 복사 오류로 인해 테마를 가져올<br>수 없습니다."
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:61
+#: src/modules/conf_theme/e_int_config_xsettings.c:63
 msgid "Application Theme Settings"
 msgstr "프로그램 테마 설정"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:488
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Match Moksha theme if possible"
 msgstr "가능한 경우 인라이튼먼트 테마 비교"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:505
 msgid "Enable X Application Settings"
 msgstr "X 프로그램 설정 활성화"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:501
+#: src/modules/conf_theme/e_int_config_xsettings.c:509
 msgid "GTK Applications"
 msgstr "GTK 프로그램"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:532
+#: src/modules/conf_theme/e_int_config_xsettings.c:544
 msgid "Enable icon theme for applications"
 msgstr "프로그램용 아이콘 테마 활성화"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:536
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Enable icon theme for Moksha"
 msgstr "인라이트먼트용 아이콘 테마 활성화"
 
-#: src/modules/conf_theme/e_mod_main.c:240
+#: src/modules/conf_theme/e_mod_main.c:245
 msgid "Application Theme"
 msgstr "프로그램 테마"
 
-#: src/modules/conf_theme/e_mod_main.c:249
+#: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
 msgstr "테두리"
 
-#: src/modules/conf_theme/e_mod_main.c:255
+#: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
 msgstr "스케일링"
 
@@ -8519,10 +8520,6 @@ msgstr "IBar 설정"
 msgid "Selected source"
 msgstr "선택한 원본"
 
-#: src/modules/ibar/e_mod_config.c:114
-msgid "Setup"
-msgstr "설정"
-
 #: src/modules/ibar/e_mod_config.c:123
 msgid "Icon Labels"
 msgstr "아이콘 레이블"
@@ -9253,7 +9250,7 @@ msgstr ""
 msgid "Systray"
 msgstr "시스템 표시줄"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1175
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
 #, fuzzy
 msgid "Screenshot"
 msgstr "화면 찍기"
@@ -9268,30 +9265,30 @@ msgstr "화면 찍기"
 msgid "Screenshot stored in"
 msgstr "화면 찍기"
 
-#: src/modules/shot/e_mod_main.c:307
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:359
+#: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
 msgstr "스크린샷 파일을 저장하는데 오류가 발생했습니다"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
 msgstr "경로: %s"
 
-#: src/modules/shot/e_mod_main.c:385
+#: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
 msgstr "오류 - 알 수 없는 형식"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9299,93 +9296,93 @@ msgstr ""
 "파일에 지정되지 않은 확장자가 있습니다.<br>현재 다른 형식은 지원하지 않으므"
 "로 '.jpg'나 '.png' 확장자만을 사용하십시오."
 
-#: src/modules/shot/e_mod_main.c:449
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr "스크린샷 저장 위치를 선택하십시오"
 
-#: src/modules/shot/e_mod_main.c:463 src/modules/shot/e_mod_main.c:985
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
 msgid "Save"
 msgstr "저장"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s / %s 업로드 완료"
 
-#: src/modules/shot/e_mod_main.c:587
+#: src/modules/shot/e_mod_main.c:591
 msgid "Error - Upload Failed"
 msgstr "오류 - 업로드 실패"
 
-#: src/modules/shot/e_mod_main.c:588
+#: src/modules/shot/e_mod_main.c:592
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "%i 상태 코드로 업로드에 실패했습니다"
 
-#: src/modules/shot/e_mod_main.c:633
+#: src/modules/shot/e_mod_main.c:637
 msgid "Error - Can't create file"
 msgstr "오류 - 파일을 만들 수 없음"
 
-#: src/modules/shot/e_mod_main.c:634
+#: src/modules/shot/e_mod_main.c:638
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "'%s' 임시 파일을 만들 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:652
+#: src/modules/shot/e_mod_main.c:656
 msgid "Error - Can't open file"
 msgstr "오류 - 파일을 열 수 없음"
 
-#: src/modules/shot/e_mod_main.c:653
+#: src/modules/shot/e_mod_main.c:657
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "'%s' 임시 파일을 열 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:661
+#: src/modules/shot/e_mod_main.c:665
 msgid "Error - Bad size"
 msgstr "오류 - 잘못된 크기"
 
-#: src/modules/shot/e_mod_main.c:662
+#: src/modules/shot/e_mod_main.c:666
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "'%s' 파일의 크기를 가져올 수 없습니다"
 
-#: src/modules/shot/e_mod_main.c:672
+#: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
 msgstr "오류 - 메모리를 할당할 수 없음"
 
-#: src/modules/shot/e_mod_main.c:673
+#: src/modules/shot/e_mod_main.c:677
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "그림을 열 메모리를 할당할 수 없습니다: %s"
 
-#: src/modules/shot/e_mod_main.c:680
+#: src/modules/shot/e_mod_main.c:684
 msgid "Error - Can't read picture"
 msgstr "오류 - 그림을 읽을 수 없음"
 
-#: src/modules/shot/e_mod_main.c:681
+#: src/modules/shot/e_mod_main.c:685
 msgid "Cannot read picture"
 msgstr "그림을 읽을 수 없습니다"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:707
 msgid "Uploading screenshot"
 msgstr "스크린 샷 업로드 중"
 
-#: src/modules/shot/e_mod_main.c:708
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading ..."
 msgstr "업로드 중 ..."
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:717
 msgid "Screenshot is available at this location:"
 msgstr "스크린샷은 다음 위치에서 찾을 수 있습니다:"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:726
 msgid "Hide"
 msgstr "숨기기"
 
-#: src/modules/shot/e_mod_main.c:746
+#: src/modules/shot/e_mod_main.c:750
 msgid "Confirm Share"
 msgstr "공유 확인"
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:751
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9393,60 +9390,60 @@ msgstr ""
 "이 그림을 enlightenment.org<br>에 업로드할 것입니다. 여러 사람들이 볼 수 있습"
 "니다."
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:753
 msgid "Confirm"
 msgstr "확인"
 
-#: src/modules/shot/e_mod_main.c:850
+#: src/modules/shot/e_mod_main.c:854
 msgid "Where to put Screenshot..."
 msgstr "스크린샷 저장 위치..."
 
-#: src/modules/shot/e_mod_main.c:902
+#: src/modules/shot/e_mod_main.c:906
 msgid "Quality"
 msgstr "품질"
 
-#: src/modules/shot/e_mod_main.c:911
+#: src/modules/shot/e_mod_main.c:915
 msgid "Perfect"
 msgstr "완벽함"
 
-#: src/modules/shot/e_mod_main.c:987
+#: src/modules/shot/e_mod_main.c:991
 msgid "Share"
 msgstr "공유"
 
-#: src/modules/shot/e_mod_main.c:1172
+#: src/modules/shot/e_mod_main.c:1176
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1181
+#: src/modules/shot/e_mod_main.c:1185
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1182
+#: src/modules/shot/e_mod_main.c:1186
 #, fuzzy
 msgid "Delayed shot"
 msgstr "지연된 동작"
 
-#: src/modules/shot/e_mod_main.c:1222 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
 msgid "Take Shot"
 msgstr "찍기"
 
-#: src/modules/shot/e_mod_main.c:1233 src/modules/shot/e_mod_main.c:1268
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Take Screenshot"
 msgstr "화면 찍기"
 
-#: src/modules/shot/e_mod_main.c:1256
+#: src/modules/shot/e_mod_main.c:1260
 msgid "Shot Error"
 msgstr "샷 오류"
 
-#: src/modules/shot/e_mod_main.c:1257
+#: src/modules/shot/e_mod_main.c:1261
 msgid "Cannot initialize network"
 msgstr "네트워크를 초기화 할 수 없습니다"
 
-#: src/modules/shot/e_mod_main.c:1287 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "화면 잠금 설정"
@@ -10064,6 +10061,9 @@ msgstr "음량을 조절했습니다"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "음량을 조절했습니다"
+
+#~ msgid "Setup"
+#~ msgstr "설정"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-10-29 07:07-0400\n"
+"POT-Creation-Date: 2020-01-26 13:52-0500\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Despre Moksha"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1184
+#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1188
 msgid "Close"
 msgstr "Închide"
 
@@ -74,7 +74,7 @@ msgstr "Termină"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10477 src/bin/e_fm.c:10843
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10480 src/bin/e_fm.c:10846
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Nu"
@@ -95,9 +95,9 @@ msgstr "Sigur doriți să ieșiți?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10480
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10483
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:314
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "Da"
 
@@ -153,11 +153,11 @@ msgstr "Sigur doriți să hibernați calculatorul?"
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1280
 msgid "Window : Actions"
 msgstr "Fereastră: Acțiuni"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11614
+#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11617
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Mută"
@@ -574,7 +574,7 @@ msgstr ""
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:930 src/modules/shot/e_mod_main.c:1268
+#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
 msgid "Screen"
 msgstr "Ecran"
 
@@ -801,8 +801,8 @@ msgstr ""
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1125
-#: src/modules/conf_theme/e_int_config_theme.c:1139
+#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1143
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -884,7 +884,7 @@ msgid "Select"
 msgstr "Selectați o imagine"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10020
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10023
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -894,13 +894,13 @@ msgstr "Selectați o imagine"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:314 src/modules/shot/e_mod_main.c:465
-#: src/modules/shot/e_mod_main.c:723 src/modules/shot/e_mod_main.c:749
-#: src/modules/shot/e_mod_main.c:989 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Renunță"
 
-#: src/bin/e_config.c:932
+#: src/bin/e_config.c:933
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -911,7 +911,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:949
+#: src/bin/e_config.c:950
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -920,21 +920,21 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1469 src/bin/e_config.c:2094
+#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1472
+#: src/bin/e_config.c:1473
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1482 src/bin/e_config.c:2107
+#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:10019 src/bin/e_fm.c:10749 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10022 src/bin/e_fm.c:10752 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
@@ -949,22 +949,22 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1985
+#: src/bin/e_config.c:1986
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "Setări modernizate"
 
-#: src/bin/e_config.c:2003
+#: src/bin/e_config.c:2004
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "De fişier EET este rău."
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2008
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Fisier de date este gol."
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2012
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -973,19 +973,19 @@ msgstr ""
 "Fişierul nu poate fi scris. Poate cădiscul este read-only<br>sau ai pierdut "
 "permisiunile la fişiere."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2016
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "De memorie a fugit în timp ce pregătireade scriere. Vă rugăm să<br>de "
 "memorie de până gratuit."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2020
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Aceasta este o eroare de generic."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2024
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -994,70 +994,70 @@ msgstr ""
 "Fişier de setări este prea mare.<br>Ar trebui să fie foarte mici (câteva "
 "sute de KB de la cea mai mare)."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2028
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2032
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Ai fugit din spaţiu în timp ce scriereafişierului"
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2036
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Dosarul a fost închis pe ea în timp ce scris."
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2040
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memorie - cartografiere (mmap) dinfişierul nu a reuşit."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Codificarea nu a reuşit."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2048
 #, fuzzy
 msgid "Signature failed."
 msgstr "Semnătura nu a reuşit."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2052
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Semnătura a fost invalid."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2056
 #, fuzzy
 msgid "Not signed."
 msgstr "Nu a semnat."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2060
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Nu dispun de pus în aplicare."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "Prng nu a fost însămânţate."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2068
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Criptarea a eşuat."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2072
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Decriptarea a eşuat."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
 msgid "The error is unknown to Moksha."
 msgstr ""
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1273,7 +1273,7 @@ msgstr "Execută în terminal"
 msgid "Show in Menus"
 msgstr "Arată în meniuri"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8814 src/bin/e_fm.c:8974
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8817 src/bin/e_fm.c:8977
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:205
 msgid "Options"
@@ -1289,7 +1289,7 @@ msgstr "Selectaţi o pictogramă"
 msgid "Select an Executable"
 msgstr "Selectaţi un executabil"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:9159 src/bin/e_fm.c:10842
+#: src/bin/e_entry.c:486 src/bin/e_fm.c:9162 src/bin/e_fm.c:10845
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1309,15 +1309,15 @@ msgstr "Selectaţi un executabil"
 msgid "Delete"
 msgstr "Șterge"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:9070
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:9073
 msgid "Cut"
 msgstr "Taie"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9084 src/bin/e_fm.c:11609
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9087 src/bin/e_fm.c:11612
 msgid "Copy"
 msgstr "Copiază"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:8875 src/bin/e_fm.c:9097
+#: src/bin/e_entry.c:515 src/bin/e_fm.c:8878 src/bin/e_fm.c:9100
 msgid "Paste"
 msgstr "Lipește"
 
@@ -1517,79 +1517,79 @@ msgstr "Eroare la ejectare"
 msgid "Can't eject device"
 msgstr "Nu se poate scoate dispozitivul"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671 src/bin/e_fm.c:9546
-#: src/bin/e_fm.c:9561 src/bin/e_fm.c:9670 src/bin/e_fm.c:9675
-#: src/bin/e_fm.c:9691 src/bin/e_fm.c:9696 src/bin/e_fm.c:10327
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10333 src/bin/e_fm.c:10360
-#: src/bin/e_fm.c:10364 src/bin/e_fm.c:10367 src/bin/e_fm.c:10425
-#: src/bin/e_fm.c:10650 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9549
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9673 src/bin/e_fm.c:9678
+#: src/bin/e_fm.c:9694 src/bin/e_fm.c:9699 src/bin/e_fm.c:10330
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10336 src/bin/e_fm.c:10363
+#: src/bin/e_fm.c:10367 src/bin/e_fm.c:10370 src/bin/e_fm.c:10428
+#: src/bin/e_fm.c:10653 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
 msgid "Error"
 msgstr "Eroare"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr ""
 
-#: src/bin/e_fm.c:8732 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8735 src/modules/fileman/e_mod_config.c:369
 #, fuzzy
 msgid "Case Sensitive"
 msgstr "Cauza sensibile"
 
-#: src/bin/e_fm.c:8738 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8741 src/modules/fileman/e_mod_config.c:372
 #, fuzzy
 msgid "Sort By Extension"
 msgstr "Arată Icon Extensie"
 
-#: src/bin/e_fm.c:8744 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr ""
 
-#: src/bin/e_fm.c:8750 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:378
 msgid "Sort By Size"
 msgstr ""
 
-#: src/bin/e_fm.c:8759 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:8762 src/modules/fileman/e_mod_config.c:386
 #, fuzzy
 msgid "Directories First"
 msgstr "Caută Directoare"
 
-#: src/bin/e_fm.c:8765 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:8768 src/modules/fileman/e_mod_config.c:390
 #, fuzzy
 msgid "Directories Last"
 msgstr "Caută Directoare"
 
-#: src/bin/e_fm.c:8798 src/bin/e_fm.c:8958
+#: src/bin/e_fm.c:8801 src/bin/e_fm.c:8961
 #: src/modules/fileman/e_mod_config.c:314
 msgid "View Mode"
 msgstr "Mod de vizualizare"
 
-#: src/bin/e_fm.c:8807 src/bin/e_fm.c:8967
+#: src/bin/e_fm.c:8810 src/bin/e_fm.c:8970
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:394
 #, fuzzy
 msgid "Sorting"
 msgstr "Stivuire"
 
-#: src/bin/e_fm.c:8825 src/bin/e_fm.c:8985
+#: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
 #, fuzzy
 msgid "Refresh View"
 msgstr "Vezi refresh"
 
-#: src/bin/e_fm.c:8836 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8856 src/bin/e_fm.c:9018 src/bin/e_fm.c:9049
+#: src/bin/e_fm.c:8859 src/bin/e_fm.c:9021 src/bin/e_fm.c:9052
 #, fuzzy
 msgid "Actions..."
 msgstr "Opțiuni"
 
-#: src/bin/e_fm.c:8883 src/bin/e_fm.c:9105 src/bin/e_fm.c:11622
+#: src/bin/e_fm.c:8886 src/bin/e_fm.c:9108 src/bin/e_fm.c:11625
 msgid "Link"
 msgstr "Legătură"
 
-#: src/bin/e_fm.c:9167 src/bin/e_fm.c:10479 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9170 src/bin/e_fm.c:10482 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1597,249 +1597,249 @@ msgstr "Legătură"
 msgid "Rename"
 msgstr "Redenumește"
 
-#: src/bin/e_fm.c:9186
+#: src/bin/e_fm.c:9189
 msgid "Unmount"
 msgstr "Demontează"
 
-#: src/bin/e_fm.c:9191
+#: src/bin/e_fm.c:9194
 msgid "Mount"
 msgstr "Montează"
 
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9199
 msgid "Eject"
 msgstr "Ejectează"
 
-#: src/bin/e_fm.c:9211 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9214 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:885
 msgid "Properties"
 msgstr "Proprietăți"
 
-#: src/bin/e_fm.c:9219
+#: src/bin/e_fm.c:9222
 #, fuzzy
 msgid "Application Properties"
 msgstr "Aplicație"
 
-#: src/bin/e_fm.c:9227 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9230 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Proprietăți fișier"
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 #, fuzzy
 msgid "Use default"
 msgstr "Folosiţi implicit"
 
-#: src/bin/e_fm.c:9473 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9476 src/modules/fileman/e_mod_config.c:319
 #, fuzzy
 msgid "Grid Icons"
 msgstr "Grid Icoane"
 
-#: src/bin/e_fm.c:9481 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9484 src/modules/fileman/e_mod_config.c:321
 #, fuzzy
 msgid "Custom Icons"
 msgstr "Icoane personalizate"
 
-#: src/bin/e_fm.c:9489 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9492 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Listă"
 
-#: src/bin/e_fm.c:9497 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9500 src/modules/everything/evry_config.c:458
 #, fuzzy
 msgid "Default View"
 msgstr "Implicit"
 
-#: src/bin/e_fm.c:9519
+#: src/bin/e_fm.c:9522
 #, c-format
 msgid "Icon Size (%d)"
 msgstr ""
 
-#: src/bin/e_fm.c:9546
+#: src/bin/e_fm.c:9549
 #, fuzzy
 msgid "Could not create a directory!"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/bin/e_fm.c:9561
+#: src/bin/e_fm.c:9564
 #, fuzzy
 msgid "Could not create a file!"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 #: src/modules/conf_paths/e_int_config_paths.c:206
 #, fuzzy
 msgid "New Directory"
 msgstr "nou director"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 #, fuzzy
 msgid "New File"
 msgstr "Fișier:"
 
-#: src/bin/e_fm.c:9670 src/bin/e_fm.c:9691
+#: src/bin/e_fm.c:9673 src/bin/e_fm.c:9694
 msgid "Already creating a new file for this directory!"
 msgstr ""
 
-#: src/bin/e_fm.c:9675 src/bin/e_fm.c:9696
+#: src/bin/e_fm.c:9678 src/bin/e_fm.c:9699
 #, c-format
 msgid "%s can't be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9718
 #, fuzzy
 msgid "Directory"
 msgstr "nou director"
 
-#: src/bin/e_fm.c:9720 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9723 src/modules/conf_applications/e_int_config_defapps.c:312
 #, fuzzy
 msgid "File"
 msgstr "Fișier:"
 
-#: src/bin/e_fm.c:9751
+#: src/bin/e_fm.c:9754
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Moşteni setările de mamă"
 
-#: src/bin/e_fm.c:9760
+#: src/bin/e_fm.c:9763
 msgid "Show Hidden Files"
 msgstr "Arată fișierele ascunse"
 
-#: src/bin/e_fm.c:9772
+#: src/bin/e_fm.c:9775
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "amintiţi-vă de comandă"
 
-#: src/bin/e_fm.c:9781
+#: src/bin/e_fm.c:9784
 #, fuzzy
 msgid "Sort Now"
 msgstr "acum, după"
 
-#: src/bin/e_fm.c:9789
+#: src/bin/e_fm.c:9792
 #, fuzzy
 msgid "Single Click Activation"
 msgstr "Utilizaţi singur clic"
 
-#: src/bin/e_fm.c:9800 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:9803 src/modules/fileman/e_mod_config.c:406
 #, fuzzy
 msgid "Secure Deletion"
 msgstr "Rezoluţia ecranului"
 
-#: src/bin/e_fm.c:9813
+#: src/bin/e_fm.c:9816
 #, fuzzy
 msgid "File Manager Settings"
 msgstr "pager Setări"
 
-#: src/bin/e_fm.c:9818
+#: src/bin/e_fm.c:9821
 #, fuzzy
 msgid "File Icon Settings"
 msgstr "font Setări"
 
-#: src/bin/e_fm.c:9896 src/bin/e_fm.c:10112
+#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10115
 #, fuzzy
 msgid "Set background..."
 msgstr "Set de fundal ..."
 
-#: src/bin/e_fm.c:9904
+#: src/bin/e_fm.c:9907
 #, fuzzy
 msgid "Clear background"
 msgstr "Set de fundal ..."
 
-#: src/bin/e_fm.c:9911 src/bin/e_fm.c:10140
+#: src/bin/e_fm.c:9914 src/bin/e_fm.c:10143
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Set de acoperire ..."
 
-#: src/bin/e_fm.c:9917
+#: src/bin/e_fm.c:9920
 #, fuzzy
 msgid "Clear overlay"
 msgstr "Set de acoperire ..."
 
-#: src/bin/e_fm.c:10234 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10237 src/bin/e_fm.c:10578
 #, c-format
 msgid "Rename %s to:"
 msgstr ""
 
-#: src/bin/e_fm.c:10236 src/bin/e_fm.c:10576
+#: src/bin/e_fm.c:10239 src/bin/e_fm.c:10579
 msgid "Rename File"
 msgstr "Redenumește fișierul"
 
-#: src/bin/e_fm.c:10327 src/bin/e_fm.c:10360
+#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10363
 #, c-format
 msgid "%s already exists!"
 msgstr ""
 
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10364
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr ""
 
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
+#: src/bin/e_fm.c:10336 src/bin/e_fm.c:10370
 #, fuzzy
 msgid "Internal filemanager error :("
 msgstr "Filemanager deschise pe Muntele"
 
-#: src/bin/e_fm.c:10421 src/bin/e_fm.c:10642
+#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645
 msgid "Retry"
 msgstr "Încearcă din nou"
 
-#: src/bin/e_fm.c:10422 src/bin/e_fm.c:10643 src/bin/e_fm.c:11630
+#: src/bin/e_fm.c:10425 src/bin/e_fm.c:10646 src/bin/e_fm.c:11633
 msgid "Abort"
 msgstr "Abandonează"
 
-#: src/bin/e_fm.c:10478
+#: src/bin/e_fm.c:10481
 #, fuzzy
 msgid "No to all"
 msgstr "Nu pentru toate"
 
-#: src/bin/e_fm.c:10481
+#: src/bin/e_fm.c:10484
 #, fuzzy
 msgid "Yes to all"
 msgstr "Da pentru toate"
 
-#: src/bin/e_fm.c:10484 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
 msgid "Warning"
 msgstr "Avertisment"
 
-#: src/bin/e_fm.c:10487
+#: src/bin/e_fm.c:10490
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:10645
+#: src/bin/e_fm.c:10648
 #, fuzzy
 msgid "Move Source"
 msgstr "Mută"
 
-#: src/bin/e_fm.c:10646
+#: src/bin/e_fm.c:10649
 #, fuzzy
 msgid "Ignore this"
 msgstr "ignoraţi acest"
 
-#: src/bin/e_fm.c:10647
+#: src/bin/e_fm.c:10650
 msgid "Ignore all"
 msgstr "Ignoră tot"
 
-#: src/bin/e_fm.c:10652
+#: src/bin/e_fm.c:10655
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10845
+#: src/bin/e_fm.c:10848
 msgid "Confirm Delete"
 msgstr "Confirmă ștergerea"
 
-#: src/bin/e_fm.c:10855
+#: src/bin/e_fm.c:10858
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această raft."
 
-#: src/bin/e_fm.c:10860
+#: src/bin/e_fm.c:10863
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10870
+#: src/bin/e_fm.c:10873
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1950,8 +1950,8 @@ msgstr "alţii"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1433
-#: src/modules/conf_theme/e_int_config_xsettings.c:513
+#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Previzualizează"
 
@@ -2015,7 +2015,7 @@ msgid "Inset"
 msgstr "medalion"
 
 #: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
-#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:237
 #, fuzzy
 msgid "Look"
 msgstr "uite"
@@ -2367,7 +2367,7 @@ msgstr "Iconify"
 msgid "Skip"
 msgstr "sări"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:229
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
 #, fuzzy
 msgid "Border"
 msgstr "frontieră"
@@ -2723,7 +2723,7 @@ msgstr "solicitare de poziţie"
 #: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1183
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2815,7 +2815,7 @@ msgstr "Mărimea , poziţia şi Blocări"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:934
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
 #, fuzzy
 msgid "All"
 msgstr "toate"
@@ -3990,7 +3990,7 @@ msgid "Rename Shelf"
 msgstr "Redenumește fișierul"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
 #, fuzzy
 msgid "Contents"
 msgstr "Comentariu"
@@ -4700,7 +4700,7 @@ msgstr "Auto Detect"
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:225
+#: src/modules/conf_theme/e_mod_main.c:230
 #: src/modules/temperature/e_mod_config.c:311
 #, fuzzy
 msgid "Internal"
@@ -5271,8 +5271,8 @@ msgstr "Selectaţi un fundal ..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1122
-#: src/modules/conf_theme/e_int_config_theme.c:1131
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/gadman/e_mod_config.c:248
 #, fuzzy
 msgid "Personal"
@@ -5392,9 +5392,9 @@ msgstr "Personalizat"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:227
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
 #, fuzzy
 msgid "Wallpaper"
 msgstr "tapet"
@@ -5787,9 +5787,9 @@ msgid "Show Cursor"
 msgstr "Arată Cursor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:168
-#: src/modules/conf_theme/e_mod_main.c:166
-#: src/modules/conf_theme/e_mod_main.c:237
-#: src/modules/conf_theme/e_mod_main.c:266
+#: src/modules/conf_theme/e_mod_main.c:171
+#: src/modules/conf_theme/e_mod_main.c:242
+#: src/modules/conf_theme/e_mod_main.c:271
 #, fuzzy
 msgid "Theme"
 msgstr "temă"
@@ -6450,20 +6450,20 @@ msgstr "imagini"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
-#: src/modules/conf_theme/e_mod_main.c:246
+#: src/modules/conf_theme/e_mod_main.c:251
 #, fuzzy
 msgid "Fonts"
 msgstr "fonturi"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1413
-#: src/modules/conf_theme/e_mod_main.c:175
+#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_mod_main.c:180
 #, fuzzy
 msgid "Themes"
 msgstr "teme"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:552
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 #, fuzzy
@@ -6649,13 +6649,13 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:917 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
 #, fuzzy
 msgid "Low"
 msgstr "Coboară"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:919
 #, fuzzy
 msgid "Medium"
 msgstr "mediu"
@@ -6668,7 +6668,7 @@ msgid "%.0f s"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:913
+#: src/modules/shot/e_mod_main.c:917
 msgid "High"
 msgstr ""
 
@@ -7024,7 +7024,7 @@ msgid "Composite Focus-out Color"
 msgstr "Compozit Focus -out Color"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163
-#: src/modules/conf_theme/e_mod_main.c:243
+#: src/modules/conf_theme/e_mod_main.c:248
 #, fuzzy
 msgid "Colors"
 msgstr "culori"
@@ -7452,7 +7452,7 @@ msgid "Events"
 msgstr "evenimente"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:181
-#: src/modules/conf_theme/e_mod_main.c:258
+#: src/modules/conf_theme/e_mod_main.c:263
 #, fuzzy
 msgid "Startup"
 msgstr "Startup"
@@ -7468,7 +7468,7 @@ msgid "Background Change"
 msgstr "Schimbarea de fond"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
-#: src/modules/conf_theme/e_mod_main.c:252
+#: src/modules/conf_theme/e_mod_main.c:257
 #, fuzzy
 msgid "Transitions"
 msgstr "Treceri"
@@ -7493,22 +7493,22 @@ msgstr ""
 msgid " Import..."
 msgstr " Import ..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1404
+#: src/modules/conf_theme/e_int_config_theme.c:1408
 #, fuzzy
 msgid "Theme Categories"
 msgstr "Tema Categorii"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1422
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #, fuzzy
 msgid "Assign"
 msgstr "atribui"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1425
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Clear"
 msgstr "Curăță"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1428
+#: src/modules/conf_theme/e_int_config_theme.c:1432
 #, fuzzy
 msgid "Clear All"
 msgstr "Goliţi toate"
@@ -7534,46 +7534,47 @@ msgstr ""
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:61
+#: src/modules/conf_theme/e_int_config_xsettings.c:63
 #, fuzzy
 msgid "Application Theme Settings"
 msgstr "Tema Icon Setări"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:488
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Match Moksha theme if possible"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:505
 #, fuzzy
 msgid "Enable X Application Settings"
 msgstr "Tema Icon Setări"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:501
+#: src/modules/conf_theme/e_int_config_xsettings.c:509
 #, fuzzy
 msgid "GTK Applications"
 msgstr "aplicaţii"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:532
+#: src/modules/conf_theme/e_int_config_xsettings.c:544
 #, fuzzy
 msgid "Enable icon theme for applications"
 msgstr "Utilizaţi tema pictograma pentru aplicaţii"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:536
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 #, fuzzy
 msgid "Enable icon theme for Moksha"
 msgstr "Activează pictograma temă"
 
-#: src/modules/conf_theme/e_mod_main.c:240
+#: src/modules/conf_theme/e_mod_main.c:245
 #, fuzzy
 msgid "Application Theme"
 msgstr "Aplicație"
 
-#: src/modules/conf_theme/e_mod_main.c:249
+#: src/modules/conf_theme/e_mod_main.c:254
 #, fuzzy
 msgid "Borders"
 msgstr "frontierele"
 
-#: src/modules/conf_theme/e_mod_main.c:255
+#: src/modules/conf_theme/e_mod_main.c:260
 #, fuzzy
 msgid "Scaling"
 msgstr "scalarea"
@@ -9520,11 +9521,6 @@ msgstr "Ibar Setări"
 msgid "Selected source"
 msgstr "Selectate Bar Sursa"
 
-#: src/modules/ibar/e_mod_config.c:114
-#, fuzzy
-msgid "Setup"
-msgstr "Setup"
-
 #: src/modules/ibar/e_mod_config.c:123
 #, fuzzy
 msgid "Icon Labels"
@@ -10303,7 +10299,7 @@ msgstr ""
 msgid "Systray"
 msgstr "systray"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1175
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
 #, fuzzy
 msgid "Screenshot"
 msgstr "Ecrane de configurare"
@@ -10318,195 +10314,195 @@ msgstr "Ecrane de configurare"
 msgid "Screenshot stored in"
 msgstr "Ecrane de configurare"
 
-#: src/modules/shot/e_mod_main.c:307
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:359
+#: src/modules/shot/e_mod_main.c:361
 #, fuzzy
 msgid "Error saving screenshot file"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:362
 #, fuzzy, c-format
 msgid "Path: %s"
 msgstr "E Căi"
 
-#: src/modules/shot/e_mod_main.c:385
+#: src/modules/shot/e_mod_main.c:389
 #, fuzzy
 msgid "Error - Unknown format"
 msgstr "informaţii despre eroare"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:449
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:463 src/modules/shot/e_mod_main.c:985
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
 #, fuzzy
 msgid "Save"
 msgstr "salva"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:587
+#: src/modules/shot/e_mod_main.c:591
 #, fuzzy
 msgid "Error - Upload Failed"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/modules/shot/e_mod_main.c:588
+#: src/modules/shot/e_mod_main.c:592
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:633
+#: src/modules/shot/e_mod_main.c:637
 #, fuzzy
 msgid "Error - Can't create file"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/modules/shot/e_mod_main.c:634
+#: src/modules/shot/e_mod_main.c:638
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:652
+#: src/modules/shot/e_mod_main.c:656
 msgid "Error - Can't open file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:653
+#: src/modules/shot/e_mod_main.c:657
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:661
+#: src/modules/shot/e_mod_main.c:665
 #, fuzzy
 msgid "Error - Bad size"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/modules/shot/e_mod_main.c:662
+#: src/modules/shot/e_mod_main.c:666
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:672
+#: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:673
+#: src/modules/shot/e_mod_main.c:677
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:680
+#: src/modules/shot/e_mod_main.c:684
 msgid "Error - Can't read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:681
+#: src/modules/shot/e_mod_main.c:685
 msgid "Cannot read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:707
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:708
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading ..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:717
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:726
 #, fuzzy
 msgid "Hide"
 msgstr "auto Hide"
 
-#: src/modules/shot/e_mod_main.c:746
+#: src/modules/shot/e_mod_main.c:750
 #, fuzzy
 msgid "Confirm Share"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:751
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:753
 #, fuzzy
 msgid "Confirm"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/shot/e_mod_main.c:850
+#: src/modules/shot/e_mod_main.c:854
 msgid "Where to put Screenshot..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:902
+#: src/modules/shot/e_mod_main.c:906
 #, fuzzy
 msgid "Quality"
 msgstr "calitate"
 
-#: src/modules/shot/e_mod_main.c:911
+#: src/modules/shot/e_mod_main.c:915
 msgid "Perfect"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:987
+#: src/modules/shot/e_mod_main.c:991
 #, fuzzy
 msgid "Share"
 msgstr "ascuţit"
 
-#: src/modules/shot/e_mod_main.c:1172
+#: src/modules/shot/e_mod_main.c:1176
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1181
+#: src/modules/shot/e_mod_main.c:1185
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1182
+#: src/modules/shot/e_mod_main.c:1186
 #, fuzzy
 msgid "Delayed shot"
 msgstr "întârziată de acţiune"
 
-#: src/modules/shot/e_mod_main.c:1222 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
 #, fuzzy
 msgid "Take Shot"
 msgstr "Ecrane de configurare"
 
-#: src/modules/shot/e_mod_main.c:1233 src/modules/shot/e_mod_main.c:1268
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:1284
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "Ecrane de configurare"
 
-#: src/modules/shot/e_mod_main.c:1256
+#: src/modules/shot/e_mod_main.c:1260
 #, fuzzy
 msgid "Shot Error"
 msgstr "Eroare la montare"
 
-#: src/modules/shot/e_mod_main.c:1257
+#: src/modules/shot/e_mod_main.c:1261
 msgid "Cannot initialize network"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1287 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "De blocare a ecranului Setări"
@@ -11160,6 +11156,10 @@ msgstr "volumul schimbat"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "volumul schimbat"
+
+#, fuzzy
+#~ msgid "Setup"
+#~ msgstr "Setup"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"

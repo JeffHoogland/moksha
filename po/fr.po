@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2019-10-29 07:07-0400\n"
+"POT-Creation-Date: 2020-01-26 13:52-0500\n"
 "PO-Revision-Date: 2013-07-17 13:41+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -42,7 +42,7 @@ msgstr "À propos d’Moksha"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1184
+#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1188
 msgid "Close"
 msgstr "Fermer"
 
@@ -89,7 +89,7 @@ msgstr "Tuer"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10477 src/bin/e_fm.c:10843
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10480 src/bin/e_fm.c:10846
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Non"
@@ -109,9 +109,9 @@ msgstr "Voulez-vous vraiment quitter Moksha ?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10480
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10483
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:314
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "Oui"
 
@@ -160,11 +160,11 @@ msgstr "Voulez-vous vraiment mettre en hibernation votre ordinateur ?"
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1280
 msgid "Window : Actions"
 msgstr "Fenêtres : actions"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11614
+#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11617
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Déplacer"
@@ -549,7 +549,7 @@ msgstr "Basculer vers la fenêtre … ou au début …"
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:930 src/modules/shot/e_mod_main.c:1268
+#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
 msgid "Screen"
 msgstr "Écran"
 
@@ -754,8 +754,8 @@ msgstr "Basculer l'état du module nommé"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1125
-#: src/modules/conf_theme/e_int_config_theme.c:1139
+#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1143
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -827,7 +827,7 @@ msgid "Select"
 msgstr "Sélectionner"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10020
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10023
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -837,13 +837,13 @@ msgstr "Sélectionner"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:314 src/modules/shot/e_mod_main.c:465
-#: src/modules/shot/e_mod_main.c:723 src/modules/shot/e_mod_main.c:749
-#: src/modules/shot/e_mod_main.c:989 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:932
+#: src/bin/e_config.c:933
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -861,7 +861,7 @@ msgstr ""
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:949
+#: src/bin/e_config.c:950
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -877,11 +877,11 @@ msgstr ""
 "de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément."
 "<br>"
 
-#: src/bin/e_config.c:1469 src/bin/e_config.c:2094
+#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration d`Moksha"
 
-#: src/bin/e_config.c:1472
+#: src/bin/e_config.c:1473
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -891,10 +891,10 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1482 src/bin/e_config.c:2107
+#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:10019 src/bin/e_fm.c:10749 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10022 src/bin/e_fm.c:10752 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
@@ -909,19 +909,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1985
+#: src/bin/e_config.c:1986
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2003
+#: src/bin/e_config.c:2004
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2008
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2012
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -929,16 +929,16 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2016
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Mémoire insuffisante pour l'écriture.<br>Veuillez libérer de la mémoire."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2020
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2024
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -946,59 +946,59 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2028
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2032
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2036
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2040
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2048
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2052
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2056
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2060
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2064
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2068
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2072
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2076
 msgid "The error is unknown to Moksha."
 msgstr "Moksha ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1204,7 +1204,7 @@ msgstr "Exécuter dans un terminal"
 msgid "Show in Menus"
 msgstr "Afficher dans les menus"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8814 src/bin/e_fm.c:8974
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8817 src/bin/e_fm.c:8977
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:205
 msgid "Options"
@@ -1219,7 +1219,7 @@ msgstr "Choisir une icône pour '%s'"
 msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:9159 src/bin/e_fm.c:10842
+#: src/bin/e_entry.c:486 src/bin/e_fm.c:9162 src/bin/e_fm.c:10845
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1239,15 +1239,15 @@ msgstr "Sélectionner un exécutable"
 msgid "Delete"
 msgstr "Supprimer"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:9070
+#: src/bin/e_entry.c:496 src/bin/e_fm.c:9073
 msgid "Cut"
 msgstr "Couper"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9084 src/bin/e_fm.c:11609
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9087 src/bin/e_fm.c:11612
 msgid "Copy"
 msgstr "Copier"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:8875 src/bin/e_fm.c:9097
+#: src/bin/e_entry.c:515 src/bin/e_fm.c:8878 src/bin/e_fm.c:9100
 msgid "Paste"
 msgstr "Coller"
 
@@ -1440,73 +1440,73 @@ msgstr "Erreur pendant l'éjection"
 msgid "Can't eject device"
 msgstr "Impossible d'éjecter le périphérique"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671 src/bin/e_fm.c:9546
-#: src/bin/e_fm.c:9561 src/bin/e_fm.c:9670 src/bin/e_fm.c:9675
-#: src/bin/e_fm.c:9691 src/bin/e_fm.c:9696 src/bin/e_fm.c:10327
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10333 src/bin/e_fm.c:10360
-#: src/bin/e_fm.c:10364 src/bin/e_fm.c:10367 src/bin/e_fm.c:10425
-#: src/bin/e_fm.c:10650 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9549
+#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9673 src/bin/e_fm.c:9678
+#: src/bin/e_fm.c:9694 src/bin/e_fm.c:9699 src/bin/e_fm.c:10330
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10336 src/bin/e_fm.c:10363
+#: src/bin/e_fm.c:10367 src/bin/e_fm.c:10370 src/bin/e_fm.c:10428
+#: src/bin/e_fm.c:10653 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
 msgid "Error"
 msgstr "Erreur"
 
-#: src/bin/e_fm.c:6638 src/bin/e_fm.c:6671
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr ""
 "La récente opération de glisser-déplacer demandée pour « %s » a échoué."
 
-#: src/bin/e_fm.c:8732 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8735 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
 msgstr "Sensible à la casse"
 
-#: src/bin/e_fm.c:8738 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8741 src/modules/fileman/e_mod_config.c:372
 msgid "Sort By Extension"
 msgstr "Trier par extension"
 
-#: src/bin/e_fm.c:8744 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr "Trier par date de modification"
 
-#: src/bin/e_fm.c:8750 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:378
 msgid "Sort By Size"
 msgstr "Trier par taille"
 
-#: src/bin/e_fm.c:8759 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:8762 src/modules/fileman/e_mod_config.c:386
 msgid "Directories First"
 msgstr "Dossiers en premier"
 
-#: src/bin/e_fm.c:8765 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:8768 src/modules/fileman/e_mod_config.c:390
 msgid "Directories Last"
 msgstr "Dossiers en dernier"
 
-#: src/bin/e_fm.c:8798 src/bin/e_fm.c:8958
+#: src/bin/e_fm.c:8801 src/bin/e_fm.c:8961
 #: src/modules/fileman/e_mod_config.c:314
 msgid "View Mode"
 msgstr "Mode d'affichage"
 
-#: src/bin/e_fm.c:8807 src/bin/e_fm.c:8967
+#: src/bin/e_fm.c:8810 src/bin/e_fm.c:8970
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Tri"
 
-#: src/bin/e_fm.c:8825 src/bin/e_fm.c:8985
+#: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
 msgid "Refresh View"
 msgstr "Rafraîchir"
 
-#: src/bin/e_fm.c:8836 src/bin/e_fm.c:8997
+#: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
 msgid "New..."
 msgstr "Nouveau…"
 
-#: src/bin/e_fm.c:8856 src/bin/e_fm.c:9018 src/bin/e_fm.c:9049
+#: src/bin/e_fm.c:8859 src/bin/e_fm.c:9021 src/bin/e_fm.c:9052
 msgid "Actions..."
 msgstr "Actions…"
 
-#: src/bin/e_fm.c:8883 src/bin/e_fm.c:9105 src/bin/e_fm.c:11622
+#: src/bin/e_fm.c:8886 src/bin/e_fm.c:9108 src/bin/e_fm.c:11625
 msgid "Link"
 msgstr "Lien"
 
-#: src/bin/e_fm.c:9167 src/bin/e_fm.c:10479 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9170 src/bin/e_fm.c:10482 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1514,215 +1514,215 @@ msgstr "Lien"
 msgid "Rename"
 msgstr "Renommer"
 
-#: src/bin/e_fm.c:9186
+#: src/bin/e_fm.c:9189
 msgid "Unmount"
 msgstr "Démonter"
 
-#: src/bin/e_fm.c:9191
+#: src/bin/e_fm.c:9194
 msgid "Mount"
 msgstr "Monter"
 
-#: src/bin/e_fm.c:9196
+#: src/bin/e_fm.c:9199
 msgid "Eject"
 msgstr "Éjecter"
 
-#: src/bin/e_fm.c:9211 src/bin/e_int_border_remember.c:742
+#: src/bin/e_fm.c:9214 src/bin/e_int_border_remember.c:742
 #: src/modules/ibar/e_mod_main.c:885
 msgid "Properties"
 msgstr "Propriétés"
 
-#: src/bin/e_fm.c:9219
+#: src/bin/e_fm.c:9222
 msgid "Application Properties"
 msgstr "Propriétés de l'application"
 
-#: src/bin/e_fm.c:9227 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9230 src/bin/e_fm_prop.c:115
 msgid "File Properties"
 msgstr "Propriétés du fichier"
 
-#: src/bin/e_fm.c:9443
+#: src/bin/e_fm.c:9446
 msgid "Use default"
 msgstr "Valeur par défaut"
 
-#: src/bin/e_fm.c:9473 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9476 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
 msgstr "Icônes en grille"
 
-#: src/bin/e_fm.c:9481 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9484 src/modules/fileman/e_mod_config.c:321
 msgid "Custom Icons"
 msgstr "Icônes personnalisées"
 
-#: src/bin/e_fm.c:9489 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9492 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Liste"
 
-#: src/bin/e_fm.c:9497 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9500 src/modules/everything/evry_config.c:458
 msgid "Default View"
 msgstr "Affichage par défaut"
 
-#: src/bin/e_fm.c:9519
+#: src/bin/e_fm.c:9522
 #, c-format
 msgid "Icon Size (%d)"
 msgstr "Taille de l'icône (%d)"
 
-#: src/bin/e_fm.c:9546
+#: src/bin/e_fm.c:9549
 msgid "Could not create a directory!"
 msgstr "Impossible de créer un dossier !"
 
-#: src/bin/e_fm.c:9561
+#: src/bin/e_fm.c:9564
 msgid "Could not create a file!"
 msgstr "Impossible de créer un fichier !"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 #: src/modules/conf_paths/e_int_config_paths.c:206
 msgid "New Directory"
 msgstr "Nouveau dossier"
 
-#: src/bin/e_fm.c:9576 src/bin/e_fm.c:9603
+#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
 msgid "New File"
 msgstr "Nouveau fichier"
 
-#: src/bin/e_fm.c:9670 src/bin/e_fm.c:9691
+#: src/bin/e_fm.c:9673 src/bin/e_fm.c:9694
 msgid "Already creating a new file for this directory!"
 msgstr "Un nouveau fichier est déjà en train d'être créé pour ce dossier !"
 
-#: src/bin/e_fm.c:9675 src/bin/e_fm.c:9696
+#: src/bin/e_fm.c:9678 src/bin/e_fm.c:9699
 #, c-format
 msgid "%s can't be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9715
+#: src/bin/e_fm.c:9718
 msgid "Directory"
 msgstr "Dossier"
 
-#: src/bin/e_fm.c:9720 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9723 src/modules/conf_applications/e_int_config_defapps.c:312
 msgid "File"
 msgstr "Fichier"
 
-#: src/bin/e_fm.c:9751
+#: src/bin/e_fm.c:9754
 msgid "Inherit parent settings"
 msgstr "Hériter des options du parent"
 
-#: src/bin/e_fm.c:9760
+#: src/bin/e_fm.c:9763
 msgid "Show Hidden Files"
 msgstr "Afficher les fichiers cachés"
 
-#: src/bin/e_fm.c:9772
+#: src/bin/e_fm.c:9775
 msgid "Remember Ordering"
 msgstr "Mémoriser l'ordre"
 
-#: src/bin/e_fm.c:9781
+#: src/bin/e_fm.c:9784
 msgid "Sort Now"
 msgstr "Classer maintenant"
 
-#: src/bin/e_fm.c:9789
+#: src/bin/e_fm.c:9792
 msgid "Single Click Activation"
 msgstr "Utiliser le simple clic"
 
-#: src/bin/e_fm.c:9800 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:9803 src/modules/fileman/e_mod_config.c:406
 msgid "Secure Deletion"
 msgstr "Suppression sécurisée"
 
-#: src/bin/e_fm.c:9813
+#: src/bin/e_fm.c:9816
 msgid "File Manager Settings"
 msgstr "Paramètres du gestionnaire de fichiers"
 
-#: src/bin/e_fm.c:9818
+#: src/bin/e_fm.c:9821
 msgid "File Icon Settings"
 msgstr "Paramètres des icônes de fichiers"
 
-#: src/bin/e_fm.c:9896 src/bin/e_fm.c:10112
+#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10115
 msgid "Set background..."
 msgstr "Définir le fond d'écran …"
 
-#: src/bin/e_fm.c:9904
+#: src/bin/e_fm.c:9907
 msgid "Clear background"
 msgstr "Enlever le fond d'écran …"
 
-#: src/bin/e_fm.c:9911 src/bin/e_fm.c:10140
+#: src/bin/e_fm.c:9914 src/bin/e_fm.c:10143
 msgid "Set overlay..."
 msgstr "Définir l'incrustation …"
 
-#: src/bin/e_fm.c:9917
+#: src/bin/e_fm.c:9920
 msgid "Clear overlay"
 msgstr "Supprimer l'incrustation …"
 
-#: src/bin/e_fm.c:10234 src/bin/e_fm.c:10575
+#: src/bin/e_fm.c:10237 src/bin/e_fm.c:10578
 #, c-format
 msgid "Rename %s to:"
 msgstr "Renommer %s en :"
 
-#: src/bin/e_fm.c:10236 src/bin/e_fm.c:10576
+#: src/bin/e_fm.c:10239 src/bin/e_fm.c:10579
 msgid "Rename File"
 msgstr "Renommer le fichier"
 
-#: src/bin/e_fm.c:10327 src/bin/e_fm.c:10360
+#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10363
 #, c-format
 msgid "%s already exists!"
 msgstr "%s existe déjà !"
 
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10364
+#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr "%s ne peut être renommé car il est protégé"
 
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
+#: src/bin/e_fm.c:10336 src/bin/e_fm.c:10370
 msgid "Internal filemanager error :("
 msgstr "Erreur interne du gestionnaire de fichiers :("
 
-#: src/bin/e_fm.c:10421 src/bin/e_fm.c:10642
+#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645
 msgid "Retry"
 msgstr "Réessayer"
 
-#: src/bin/e_fm.c:10422 src/bin/e_fm.c:10643 src/bin/e_fm.c:11630
+#: src/bin/e_fm.c:10425 src/bin/e_fm.c:10646 src/bin/e_fm.c:11633
 msgid "Abort"
 msgstr "Annuler"
 
-#: src/bin/e_fm.c:10478
+#: src/bin/e_fm.c:10481
 msgid "No to all"
 msgstr "Non pour tout"
 
-#: src/bin/e_fm.c:10481
+#: src/bin/e_fm.c:10484
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:10484 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
 msgid "Warning"
 msgstr "Avertissement"
 
-#: src/bin/e_fm.c:10487
+#: src/bin/e_fm.c:10490
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Le fichier existe déjà, écraser<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10645
+#: src/bin/e_fm.c:10648
 msgid "Move Source"
 msgstr "Déplacer la source"
 
-#: src/bin/e_fm.c:10646
+#: src/bin/e_fm.c:10649
 msgid "Ignore this"
 msgstr "Ignorer"
 
-#: src/bin/e_fm.c:10647
+#: src/bin/e_fm.c:10650
 msgid "Ignore all"
 msgstr "Tout ignorer"
 
-#: src/bin/e_fm.c:10652
+#: src/bin/e_fm.c:10655
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr "Une erreur s'est produite lors de l'opération.<br>%s"
 
-#: src/bin/e_fm.c:10845
+#: src/bin/e_fm.c:10848
 msgid "Confirm Delete"
 msgstr "Confirmer la suppression"
 
-#: src/bin/e_fm.c:10855
+#: src/bin/e_fm.c:10858
 #, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Voulez-vous vraiment supprimer<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10860
+#: src/bin/e_fm.c:10863
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
@@ -1731,7 +1731,7 @@ msgstr ""
 "Voulez-vous vraiment supprimer<br><hilight>tous</hilight> les %d fichiers "
 "dans<br><hilight>%s</hilight> ?"
 
-#: src/bin/e_fm.c:10870
+#: src/bin/e_fm.c:10873
 #, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -1838,8 +1838,8 @@ msgstr "Autres :"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1433
-#: src/modules/conf_theme/e_int_config_xsettings.c:513
+#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Aperçu"
 
@@ -1897,7 +1897,7 @@ msgid "Inset"
 msgstr "En creux"
 
 #: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
-#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Aspect"
 
@@ -2206,7 +2206,7 @@ msgstr "Minimiser"
 msgid "Skip"
 msgstr "Ignorer"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:229
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Bordure"
 
@@ -2519,7 +2519,7 @@ msgstr "Demande de position"
 #: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1183
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2614,7 +2614,7 @@ msgstr "Taille, position et verrous"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:934
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
 msgid "All"
 msgstr "Tout"
 
@@ -3765,7 +3765,7 @@ msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
 msgid "Contents"
 msgstr "Contenu"
 
@@ -4425,7 +4425,7 @@ msgstr "Auto-détection"
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:225
+#: src/modules/conf_theme/e_mod_main.c:230
 #: src/modules/temperature/e_mod_config.c:311
 msgid "Internal"
 msgstr "Interne"
@@ -4913,8 +4913,8 @@ msgstr "Choisir un fond d'écran…"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1122
-#: src/modules/conf_theme/e_int_config_theme.c:1131
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Personnel"
@@ -5014,9 +5014,9 @@ msgstr "Fond d'écran actuel"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:227
-#: src/modules/conf_theme/e_mod_main.c:234
-#: src/modules/conf_theme/e_mod_main.c:263
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
 msgid "Wallpaper"
 msgstr "Fond d'écran"
 
@@ -5363,9 +5363,9 @@ msgid "Show Cursor"
 msgstr "Afficher le curseur"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:168
-#: src/modules/conf_theme/e_mod_main.c:166
-#: src/modules/conf_theme/e_mod_main.c:237
-#: src/modules/conf_theme/e_mod_main.c:266
+#: src/modules/conf_theme/e_mod_main.c:171
+#: src/modules/conf_theme/e_mod_main.c:242
+#: src/modules/conf_theme/e_mod_main.c:271
 msgid "Theme"
 msgstr "Thème"
 
@@ -5959,18 +5959,18 @@ msgstr "Images"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
-#: src/modules/conf_theme/e_mod_main.c:246
+#: src/modules/conf_theme/e_mod_main.c:251
 msgid "Fonts"
 msgstr "Polices"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1413
-#: src/modules/conf_theme/e_mod_main.c:175
+#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr ""
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:552
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6128,12 +6128,12 @@ msgid "e.g. Saving to disk"
 msgstr "ex. Sauvegarde sur le disque"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:917 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
 msgid "Low"
 msgstr "Basse"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:919
 msgid "Medium"
 msgstr "Moyen(ne)"
 
@@ -6145,7 +6145,7 @@ msgid "%.0f s"
 msgstr "%.0f sec"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:913
+#: src/modules/shot/e_mod_main.c:917
 msgid "High"
 msgstr "Haute"
 
@@ -6435,7 +6435,7 @@ msgid "Composite Focus-out Color"
 msgstr "Couleur de la perte de focus composite"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163
-#: src/modules/conf_theme/e_mod_main.c:243
+#: src/modules/conf_theme/e_mod_main.c:248
 msgid "Colors"
 msgstr "Couleurs"
 
@@ -6791,7 +6791,7 @@ msgid "Events"
 msgstr "Événements"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:181
-#: src/modules/conf_theme/e_mod_main.c:258
+#: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "Démarrage"
 
@@ -6804,7 +6804,7 @@ msgid "Background Change"
 msgstr "Changement de fond d'écran"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
-#: src/modules/conf_theme/e_mod_main.c:252
+#: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "Transitions"
 
@@ -6825,20 +6825,20 @@ msgstr ""
 msgid " Import..."
 msgstr " Importer…"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1404
+#: src/modules/conf_theme/e_int_config_theme.c:1408
 msgid "Theme Categories"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1422
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 msgid "Assign"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1425
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Clear"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1428
+#: src/modules/conf_theme/e_int_config_theme.c:1432
 msgid "Clear All"
 msgstr ""
 
@@ -6862,39 +6862,40 @@ msgstr ""
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr "Moksha n'a pu importer ce thème<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:61
+#: src/modules/conf_theme/e_int_config_xsettings.c:63
 msgid "Application Theme Settings"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:488
+#: src/modules/conf_theme/e_int_config_xsettings.c:496
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Match Moksha theme if possible"
 msgstr "Établir des correspondances avec le thème de E"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:497
+#: src/modules/conf_theme/e_int_config_xsettings.c:505
 msgid "Enable X Application Settings"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:501
+#: src/modules/conf_theme/e_int_config_xsettings.c:509
 msgid "GTK Applications"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:532
+#: src/modules/conf_theme/e_int_config_xsettings.c:544
 msgid "Enable icon theme for applications"
 msgstr "Utiliser le thème d'icônes pour les applications"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:536
+#: src/modules/conf_theme/e_int_config_xsettings.c:548
 msgid "Enable icon theme for Moksha"
 msgstr "Utiliser le thème d'icônes pour Moksha"
 
-#: src/modules/conf_theme/e_mod_main.c:240
+#: src/modules/conf_theme/e_mod_main.c:245
 msgid "Application Theme"
 msgstr ""
 
-#: src/modules/conf_theme/e_mod_main.c:249
+#: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
 msgstr "Bordures"
 
-#: src/modules/conf_theme/e_mod_main.c:255
+#: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
 msgstr "Mise à l'échelle"
 
@@ -8556,10 +8557,6 @@ msgstr "Paramétrage de l'IBar"
 msgid "Selected source"
 msgstr "Source sélectionnée"
 
-#: src/modules/ibar/e_mod_config.c:114
-msgid "Setup"
-msgstr "Configurer"
-
 #: src/modules/ibar/e_mod_config.c:123
 msgid "Icon Labels"
 msgstr "Description de l'icône"
@@ -9264,7 +9261,7 @@ msgstr ""
 msgid "Systray"
 msgstr "Zone de notification"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1175
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
 #, fuzzy
 msgid "Screenshot"
 msgstr "Capture d'écran"
@@ -9279,30 +9276,30 @@ msgstr "Capture d'écran"
 msgid "Screenshot stored in"
 msgstr "Capture d'écran"
 
-#: src/modules/shot/e_mod_main.c:307
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:359
+#: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
 msgstr "Impossible de sauvegarder le fichier screenshot"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
 msgstr "Chemin: %s"
 
-#: src/modules/shot/e_mod_main.c:385
+#: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
 msgstr "Erreur : format inconnu"
 
-#: src/modules/shot/e_mod_main.c:386
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9310,152 +9307,152 @@ msgstr ""
 "L'extension du fichier n'est pas spécifiée.<br>Veuillez utiliser « .jpg » ou "
 "« .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
-#: src/modules/shot/e_mod_main.c:449
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr "Sélection de l'emplacement d'enregistrement"
 
-#: src/modules/shot/e_mod_main.c:463 src/modules/shot/e_mod_main.c:985
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
 msgid "Save"
 msgstr "Enregistrer"
 
-#: src/modules/shot/e_mod_main.c:567
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s / %s envoyés"
 
-#: src/modules/shot/e_mod_main.c:587
+#: src/modules/shot/e_mod_main.c:591
 msgid "Error - Upload Failed"
 msgstr "Erreur : échec du téléversement"
 
-#: src/modules/shot/e_mod_main.c:588
+#: src/modules/shot/e_mod_main.c:592
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Le téléversement a échoué avec le code d'état :<br>%i"
 
-#: src/modules/shot/e_mod_main.c:633
+#: src/modules/shot/e_mod_main.c:637
 msgid "Error - Can't create file"
 msgstr "Erreur - Impossible de créer le fichier"
 
-#: src/modules/shot/e_mod_main.c:634
+#: src/modules/shot/e_mod_main.c:638
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Impossible de créer le fichier temporaire '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:652
+#: src/modules/shot/e_mod_main.c:656
 msgid "Error - Can't open file"
 msgstr "Erreur - Impossible d'ouvrir le fichier"
 
-#: src/modules/shot/e_mod_main.c:653
+#: src/modules/shot/e_mod_main.c:657
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Impossible d'ouvrir le fichier temporaire '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:661
+#: src/modules/shot/e_mod_main.c:665
 msgid "Error - Bad size"
 msgstr "Erreur - Mauvaise taille"
 
-#: src/modules/shot/e_mod_main.c:662
+#: src/modules/shot/e_mod_main.c:666
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Impossible d'obtenir la taille du fichier '%s'"
 
-#: src/modules/shot/e_mod_main.c:672
+#: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
 msgstr "Erreur - Impossible d'allouer la mémoire"
 
-#: src/modules/shot/e_mod_main.c:673
+#: src/modules/shot/e_mod_main.c:677
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Impossible d'allouer de la mémoire pour l'image: %s"
 
-#: src/modules/shot/e_mod_main.c:680
+#: src/modules/shot/e_mod_main.c:684
 msgid "Error - Can't read picture"
 msgstr "Erreur - Impossible de lire l'image"
 
-#: src/modules/shot/e_mod_main.c:681
+#: src/modules/shot/e_mod_main.c:685
 msgid "Cannot read picture"
 msgstr "Impossible de lire l'image"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:707
 msgid "Uploading screenshot"
 msgstr "Téléversement de la capture"
 
-#: src/modules/shot/e_mod_main.c:708
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading ..."
 msgstr "Téléversement…"
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:717
 msgid "Screenshot is available at this location:"
 msgstr "La capture est disponible ici :"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:726
 msgid "Hide"
 msgstr "Masquer"
 
-#: src/modules/shot/e_mod_main.c:746
+#: src/modules/shot/e_mod_main.c:750
 msgid "Confirm Share"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:751
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:753
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: src/modules/shot/e_mod_main.c:850
+#: src/modules/shot/e_mod_main.c:854
 msgid "Where to put Screenshot..."
 msgstr "Prise en charge de la capture"
 
-#: src/modules/shot/e_mod_main.c:902
+#: src/modules/shot/e_mod_main.c:906
 msgid "Quality"
 msgstr "Qualité"
 
-#: src/modules/shot/e_mod_main.c:911
+#: src/modules/shot/e_mod_main.c:915
 msgid "Perfect"
 msgstr "Optimale"
 
-#: src/modules/shot/e_mod_main.c:987
+#: src/modules/shot/e_mod_main.c:991
 msgid "Share"
 msgstr "Partager"
 
-#: src/modules/shot/e_mod_main.c:1172
+#: src/modules/shot/e_mod_main.c:1176
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1181
+#: src/modules/shot/e_mod_main.c:1185
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1182
+#: src/modules/shot/e_mod_main.c:1186
 #, fuzzy
 msgid "Delayed shot"
 msgstr "Déclenchement selon délai imparti"
 
-#: src/modules/shot/e_mod_main.c:1222 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
 msgid "Take Shot"
 msgstr "Capturer l'écran"
 
-#: src/modules/shot/e_mod_main.c:1233 src/modules/shot/e_mod_main.c:1268
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Take Screenshot"
 msgstr "Capture d'écran"
 
-#: src/modules/shot/e_mod_main.c:1256
+#: src/modules/shot/e_mod_main.c:1260
 msgid "Shot Error"
 msgstr "Erreur de capture"
 
-#: src/modules/shot/e_mod_main.c:1257
+#: src/modules/shot/e_mod_main.c:1261
 msgid "Cannot initialize network"
 msgstr "Impossible d'initialiser le réseau"
 
-#: src/modules/shot/e_mod_main.c:1287 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Paramétrage du verrouillage de l'écran"
@@ -10061,6 +10058,9 @@ msgstr "Volume modifié"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Volume modifié"
+
+#~ msgid "Setup"
+#~ msgstr "Configurer"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"

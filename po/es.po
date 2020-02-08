@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-01-19 12:55-0500\n"
+"POT-Creation-Date: 2020-01-26 13:52-0500\n"
 "PO-Revision-Date: 2020-01-26 11:50-0600\n"
 "Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
 "Language-Team: Spanish <>\n"
@@ -747,8 +747,8 @@ msgstr "Alternar el módulo nombrado"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
 #: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1128
-#: src/modules/conf_theme/e_int_config_theme.c:1142
+#: src/modules/conf_theme/e_int_config_theme.c:1129
+#: src/modules/conf_theme/e_int_config_theme.c:1143
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -1831,7 +1831,7 @@ msgstr "Otros:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1436
+#: src/modules/conf_theme/e_int_config_theme.c:1437
 #: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Previsualizar"
@@ -1890,7 +1890,7 @@ msgid "Inset"
 msgstr "Recorte"
 
 #: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
-#: src/modules/conf_theme/e_mod_main.c:235
+#: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Apariencia"
 
@@ -2199,7 +2199,7 @@ msgstr "Convertir en icono"
 msgid "Skip"
 msgstr "Omitir"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:232
+#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Borde"
 
@@ -4405,7 +4405,7 @@ msgstr "Auto Detectar"
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
-#: src/modules/conf_theme/e_mod_main.c:228
+#: src/modules/conf_theme/e_mod_main.c:230
 #: src/modules/temperature/e_mod_config.c:311
 msgid "Internal"
 msgstr "Interna"
@@ -4891,8 +4891,8 @@ msgstr "Seleccione un fondo ..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
 #: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1125
-#: src/modules/conf_theme/e_int_config_theme.c:1134
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1135
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Personal"
@@ -4992,9 +4992,9 @@ msgstr "Fondo de pantalla actual"
 
 #: src/modules/conf_display/e_int_config_desklock.c:386
 #: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:230
-#: src/modules/conf_theme/e_mod_main.c:237
-#: src/modules/conf_theme/e_mod_main.c:266
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
 msgid "Wallpaper"
 msgstr "Fondo de pantalla"
 
@@ -5341,9 +5341,9 @@ msgid "Show Cursor"
 msgstr "Mostrar cursor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:168
-#: src/modules/conf_theme/e_mod_main.c:169
-#: src/modules/conf_theme/e_mod_main.c:240
-#: src/modules/conf_theme/e_mod_main.c:269
+#: src/modules/conf_theme/e_mod_main.c:171
+#: src/modules/conf_theme/e_mod_main.c:242
+#: src/modules/conf_theme/e_mod_main.c:271
 msgid "Theme"
 msgstr "Tema"
 
@@ -5924,13 +5924,13 @@ msgstr "Imágenes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:74
 #: src/modules/conf_theme/e_int_config_fonts.c:433
-#: src/modules/conf_theme/e_mod_main.c:249
+#: src/modules/conf_theme/e_mod_main.c:251
 msgid "Fonts"
 msgstr "Fuentes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1416
-#: src/modules/conf_theme/e_mod_main.c:178
+#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "Temas"
 
@@ -6401,7 +6401,7 @@ msgid "Composite Focus-out Color"
 msgstr "Composición de Color No Focalizada"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:163
-#: src/modules/conf_theme/e_mod_main.c:246
+#: src/modules/conf_theme/e_mod_main.c:248
 msgid "Colors"
 msgstr "Colores"
 
@@ -6757,7 +6757,7 @@ msgid "Events"
 msgstr "Eventos"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:181
-#: src/modules/conf_theme/e_mod_main.c:261
+#: src/modules/conf_theme/e_mod_main.c:263
 msgid "Startup"
 msgstr "Inicio"
 
@@ -6770,7 +6770,7 @@ msgid "Background Change"
 msgstr "Cambio de fondo de pantalla"
 
 #: src/modules/conf_theme/e_int_config_transitions.c:191
-#: src/modules/conf_theme/e_mod_main.c:255
+#: src/modules/conf_theme/e_mod_main.c:257
 msgid "Transitions"
 msgstr "Transiciones"
 
@@ -6791,20 +6791,20 @@ msgstr "Los archivos listados probablemente no son temas Moksha:<ps/>%s"
 msgid " Import..."
 msgstr " Importar..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1407
+#: src/modules/conf_theme/e_int_config_theme.c:1408
 msgid "Theme Categories"
 msgstr "Categoría de temas"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1425
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 msgid "Assign"
 msgstr "Asignar"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1428
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Clear"
 msgstr "Limpiar"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1431
+#: src/modules/conf_theme/e_int_config_theme.c:1432
 msgid "Clear All"
 msgstr "Limpiar todo"
 
@@ -6854,15 +6854,15 @@ msgstr "Habilitar tema de iconos para las aplicaciones"
 msgid "Enable icon theme for Moksha"
 msgstr "Habilitar tema de iconos para Moksha"
 
-#: src/modules/conf_theme/e_mod_main.c:243
+#: src/modules/conf_theme/e_mod_main.c:245
 msgid "Application Theme"
 msgstr "Tema de la aplicación"
 
-#: src/modules/conf_theme/e_mod_main.c:252
+#: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
 msgstr "Bordes"
 
-#: src/modules/conf_theme/e_mod_main.c:258
+#: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
 msgstr "Escalado"
 
