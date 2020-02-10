@@ -254,7 +254,7 @@ e_int_menus_main_new(void)
    if (l) _e_int_menus_augmentation_add(subm, l);
 
    mi = e_menu_item_new(subm);
-   e_menu_item_label_set(mi, _("Reset Moksha"));
+   e_menu_item_label_set(mi, _("Restart Moksha"));
    e_util_menu_item_theme_icon_set(mi, "system-restart");
    e_menu_item_callback_set(mi, _e_int_menus_main_restart, NULL);
 
