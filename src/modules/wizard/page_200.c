@@ -41,7 +41,7 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    // restart e
    e_sys_action_do(E_SYS_RESTART, NULL);
 
-   e_util_open_quick_start();
+   e_util_open_bodhi_landing();
    return 1;
 }
 

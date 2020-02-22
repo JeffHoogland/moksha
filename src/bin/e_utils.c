@@ -1643,6 +1643,18 @@ e_util_exe_safe_run(const char *cmd, void *data)
 }
 
 EAPI void
+e_util_open_bodhi_landing(void)
+{
+   E_Zone *zone;
+   char buff[PATH_MAX];
+
+   snprintf(buff, sizeof(buff), "enlightenment_open "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/landing.html");
+   zone = e_util_zone_current_get(e_manager_current_get());
+   e_exec(zone, NULL, buff, NULL, NULL);
+}
+
+EAPI void
 e_util_open_quick_start(void)
 {
    E_Zone *zone;
