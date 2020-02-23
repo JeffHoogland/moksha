@@ -31,10 +31,11 @@ EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    #ifdef HAVE_ELEMENTARY
-      e_util_elm_icon_set();
+       e_util_set_bodhi_elm_config();
    #endif
    // save the config now everyone has modified it
    e_config_save();
+
    // disable restart env so we actually start a whole new session properly
    e_util_env_set("E_RESTART", NULL);
    

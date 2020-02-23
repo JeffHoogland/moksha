@@ -83,6 +83,7 @@ EAPI Eina_Bool e_util_have_elm_theme(const char *name);
 EAPI Eina_Bool e_util_elm_theme_set(const char *path);
 EAPI void e_util_elm_icon_set();
 EAPI void e_util_copy_safely(char* dst, const char* src, uint32_t len);
+EAPI void e_util_set_bodhi_elm_config(void);
 #endif
 // Upstream ports
 EAPI Ecore_Exe *e_util_open(const char *exe, void *data);
