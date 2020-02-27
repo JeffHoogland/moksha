@@ -5391,7 +5391,7 @@ msgstr "Kurzor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:194
 msgid "Mouse Hand"
-msgstr "Ruka myši"
+msgstr "Nastevenie tlačidiel myši"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:202
 msgid "Mouse Acceleration"
@@ -5476,7 +5476,7 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
-msgstr "Mokhsa nevie importovať konfiguráciu<br>z dôvodu chyby pri kopírovaní"
+msgstr "Moksha nevie importovať konfiguráciu<br>z dôvodu chyby pri kopírovaní"
 
 #: src/modules/conf_intl/e_int_config_intl.c:598
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -5911,9 +5911,8 @@ msgid "Autoscroll"
 msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:302
-#, fuzzy
 msgid " Smart Menu Orientation"
-msgstr "Orientácia"
+msgstr " Inteligentná orientácia"
 
 #: src/modules/conf_menus/e_int_config_menus.c:304
 msgid "Menu Scroll Speed"

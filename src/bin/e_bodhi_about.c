@@ -9,7 +9,7 @@
     "Jason 'Tristam' Thomas<br>" \
     "Kristi Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
-    "Stefan 'the waiter' Uram<br>" \
+    "Štefan 'the_waiter' Uram<br>" \
     "Stace 'sef' Fauske<br>" \
     "Rene 'duke_h3' Malmgren<br>" \
     "Kai 'kuuko' Huuhko<br>" \
