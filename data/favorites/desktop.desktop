@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Link
 Name=Desktop
+Name[ca]=Escriptori
 Name[eo]=Labortablo
 Name[es]=Escritorio
 Name[fr]=Bureau
@@ -9,6 +10,7 @@ Name[gl]=Escritorio
 Name[pt]=Área de trabalho
 Name[ru]=Рабочий стол
 Comment=Files on your Desktop
+Comment[ca]=Els fitxers dins el seu Escriptori
 Comment[eo]=Dosieroj sur via labortablo
 Comment[es]=Los archivos en su escritorio
 Comment[fr]=Les fichiers sur votre bureau

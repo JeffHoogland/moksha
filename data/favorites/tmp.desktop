@@ -2,11 +2,13 @@
 Encoding=UTF-8
 Type=Link
 Name=Temp
+Name[ca]=Temporal
 Name[eo]=Dumtempaj
 Name[fr]=Temporaires
 Name[pt]=Temporários
 Name[ru]=Временный каталог
 Comment=Temporary files
+Comment[ca]=Fitxers temporals
 Comment[eo]=Dumtempaj dosieroj
 Comment[es]=Archivos temporales
 Comment[fr]=Les fichiers temporaires
