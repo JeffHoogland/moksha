@@ -2,6 +2,7 @@
 Encoding=UTF-8
 Type=Link
 Name=Home
+Name[ca]=Carpeta personal
 Name[eo]=Hejmo
 Name[es]=Carpeta personal
 Name[fr]=Accueil
@@ -9,6 +10,7 @@ Name[gl]=Cartafol persoal
 Name[pt]=Pasta pessoal
 Name[ru]=Домашний каталог
 Comment=The Directory containing all your personal files
+Comment[ca]=El directori amb els seus fitxers personals
 Comment[eo]=La dosierujo enhavante viajn proprajn dosieroj
 Comment[es]=El directorio que contiene todos sus archivos personales
 Comment[fr]=Le dossier contenant vos fichiers personnels
