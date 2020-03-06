@@ -4,27 +4,27 @@
 # Pau Bosch i Crespo <paubcrespo@hotmail.com>, 2007.
 # Oriol Pellicer i Sabrià <pellix@gmail.com>, 2013.
 # Joan Coll i Teixidor <jcoll2@gmail.com> (infosolidaria), 2013-2014.
+# Alan Ward Koeck <alanwardubuntu a github.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-01-26 13:52-0500\n"
-"PO-Revision-Date: 2014-06-28 10:48+0000\n"
-"Last-Translator: JoanColl <Unknown>\n"
-"Language-Team: Català <enlightenment-devel@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2020-03-06 21:43+0100\n"
+"Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-06-29 05:59+0000\n"
-"X-Generator: Launchpad (build 17077)\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Bookmarks: -1,-1,1139,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Quant a Moksha"
+msgstr "Quant a l'entorn Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
@@ -46,7 +46,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2018, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -56,7 +55,7 @@ msgstr ""
 "<title>Copyright &copy; 2000-2015, per Moksha Development Team</"
 "><br><br>Esperem que vostè gaudeixi tant utilitzant aquest programari com "
 "nosaltres hem gaudit de fer-lo.<br><br>Per contactar amb nosaltres visiteu:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -91,9 +90,8 @@ msgid "No"
 msgstr "No"
 
 #: src/bin/e_actions.c:2090
-#, fuzzy
 msgid "Action Params Syntax Error"
-msgstr "Paràmetres de l'acció"
+msgstr "Error de sintaxi en paràmetres de l'acció"
 
 #: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
 msgid "Exit"
@@ -210,19 +208,16 @@ msgid "Sticky Mode Enable"
 msgstr "Activa mode enganxós"
 
 #: src/bin/e_actions.c:3100
-#, fuzzy
 msgid "Always On Top Toggle"
-msgstr "Sempre al damunt"
+msgstr "Alterna sempre al damunt"
 
 #: src/bin/e_actions.c:3104
-#, fuzzy
 msgid "Always On Top Enable"
-msgstr "Sempre al damunt"
+msgstr "Activa sempre al damunt"
 
 #: src/bin/e_actions.c:3108
-#, fuzzy
 msgid "Always On Top Disable"
-msgstr "Sempre al damunt"
+msgstr "Desactiva sempre al damunt"
 
 #: src/bin/e_actions.c:3113
 msgid "Iconic Mode Toggle"
@@ -279,19 +274,19 @@ msgstr "Mode maximització \"Omplir\""
 
 #: src/bin/e_actions.c:3159
 msgid "Shade Up Mode Toggle"
-msgstr "Alterna \"Enrotlla amunt\""
+msgstr "Alterna: enrotlla amunt"
 
 #: src/bin/e_actions.c:3161
 msgid "Shade Down Mode Toggle"
-msgstr "Alterna \"Enrotlla avall\""
+msgstr "Alterna: enrotlla avall"
 
 #: src/bin/e_actions.c:3163
 msgid "Shade Left Mode Toggle"
-msgstr "Alterna \"Enrotlla esquerra\""
+msgstr "Alterna: enrotlla esquerra"
 
 #: src/bin/e_actions.c:3165
 msgid "Shade Right Mode Toggle"
-msgstr "Alterna \"Enrotlla dreta\""
+msgstr "Alterna: enrotlla dreta"
 
 #: src/bin/e_actions.c:3167
 msgid "Shade Mode Toggle"
@@ -304,7 +299,7 @@ msgstr "Estableix enrotllament"
 # NO TRADUIR up,down...
 #: src/bin/e_actions.c:3172
 msgid "syntax: \"(0|1) (up|down|left|right)\""
-msgstr "Sintaxi: \"(0|1) (up|down|left|right)\""
+msgstr "sintaxi: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3176
 msgid "Toggle Borderless State"
@@ -320,7 +315,7 @@ msgstr "Cicle entre vores"
 
 #: src/bin/e_actions.c:3193
 msgid "Toggle Pinned State"
-msgstr "Alterna \"Enganxa a l'Escriptori\""
+msgstr "Alterna: enganxa a l'Escriptori"
 
 #: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
 #: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3212
@@ -923,7 +918,7 @@ msgid ""
 "permissions to your files."
 msgstr ""
 "El fitxer no es pot escriure. Podria ser que el disc sigui de només "
-"lectura<br> o que hagi perdut els permisos dels seus fitxers"
+"lectura<br> o que hagi perdut els permisos dels seus fitxers."
 
 #: src/bin/e_config.c:2016
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
@@ -945,7 +940,7 @@ msgstr ""
 
 #: src/bin/e_config.c:2028
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
-msgstr "Teniu errors d'entrada/sortida al disc.<br>Potser l'haureu de canviar"
+msgstr "Teniu errors d'entrada/sortida al disc.<br>Potser l'haureu de canviar?"
 
 #: src/bin/e_config.c:2032
 msgid "You ran out of space while writing the file."
@@ -1295,9 +1290,8 @@ msgstr ""
 "fallat en iniciar."
 
 #: src/bin/e_exec.c:714
-#, fuzzy
 msgid "Execution Error"
-msgstr "Error en expulsar"
+msgstr "Error d'execució"
 
 #: src/bin/e_exec.c:727 src/bin/e_exec.c:729
 #, c-format
@@ -1687,12 +1681,12 @@ msgstr "Sí a tot"
 
 #: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
 msgid "Warning"
-msgstr ""
+msgstr "Alerta"
 
 #: src/bin/e_fm.c:10490
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
-msgstr "Fitxer ja existeix, voleu sobreescriure'l?<br><hilight>%s</hilight>?"
+msgstr "Fitxer ja existeix, voleu sobreescriure'l?<br><hilight>%s</hilight>"
 
 #: src/bin/e_fm.c:10648
 msgid "Move Source"
@@ -1931,7 +1925,6 @@ msgstr ""
 "sortir."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -1939,7 +1932,7 @@ msgid ""
 msgstr ""
 "Seleccioneu el modificador que vulgueu<br>i premeu qualsevol botó del "
 "ratolí<br> o feu rodar la roda per a assignar la drecera de ratolí."
-"<br>Premeu<hilight>ESC</hilight> per a interrompre."
+"<br>Premeu<highlight>ESC</hilight> per a interrompre."
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
@@ -2525,7 +2518,7 @@ msgstr "Demana posició"
 #: src/modules/clipboard/e_mod_main.c:275
 #: src/modules/clipboard/e_mod_main.c:380 src/modules/places/e_mod_main.c:520
 msgid "Settings"
-msgstr ""
+msgstr "Configuració"
 
 #: src/bin/e_int_border_prop.c:505
 msgid "Modal"
@@ -2794,9 +2787,8 @@ msgid "Applications"
 msgstr "Aplicacions"
 
 #: src/bin/e_int_menus.c:206
-#, fuzzy
 msgid "About Operating System"
-msgstr "Error del sistema d'autenticació"
+msgstr "A propòsit del sistema operatiu"
 
 #: src/bin/e_int_menus.c:212
 msgid "Help"
@@ -2804,21 +2796,19 @@ msgstr "Ajuda"
 
 #: src/bin/e_int_menus.c:218
 msgid "About Bodhi Linux"
-msgstr ""
+msgstr "A propòsit de Bodhi Linux"
 
 #: src/bin/e_int_menus.c:238
-#, fuzzy
 msgid "About Moksha Desktop"
-msgstr "Quant a Moksha"
+msgstr "Quant a l'entorn Moksha"
 
 #: src/bin/e_int_menus.c:243 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "Quant al tema"
 
 #: src/bin/e_int_menus.c:257
-#, fuzzy
 msgid "Reset Moksha"
-msgstr "Benvingut a Moksha"
+msgstr "Tornar a engegar Moksha"
 
 #: src/bin/e_int_menus.c:335
 msgid "Virtual"
@@ -3076,7 +3066,7 @@ msgid ""
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "Moksha no pot crear carpetes en el vostre directori personal.\n"
-"Potser no teniu un directori personal o bé el disc està ple."
+"Potser no teniu un directori personal o bé el disc està ple?"
 
 #: src/bin/e_main.c:559
 msgid "Moksha cannot set up its file registry system.\n"
@@ -3108,7 +3098,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Moksha no pot establir les rutes de recerca de fitxers.\n"
-"Potser no disposeu de prou memòria."
+"Potser no disposeu de prou memòria?"
 
 #: src/bin/e_main.c:668
 msgid "Moksha cannot set up its font system.\n"
@@ -3138,7 +3128,7 @@ msgid ""
 msgstr ""
 "Moksha no pot inicialitzar el sistema d'escriptori FDO.\n"
 "Potser no teniu permisos a ~/.cache/efreet o \n"
-"no disposeu de prou memòria o espai de disc."
+"no disposeu de prou memòria o espai de disc?"
 
 #: src/bin/e_main.c:754
 msgid "Setup Screens"
@@ -3381,12 +3371,12 @@ msgid "Almost Done"
 msgstr "Quasi llest"
 
 #: src/bin/e_main.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "Version: %s\n"
-msgstr "Permisos"
+msgstr "Permisos: %s\n"
 
 #: src/bin/e_main.c:1312
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3419,9 +3409,9 @@ msgstr ""
 "\t\tConnecta a la pantalla anomenada DISPLAY.\n"
 "\t\tExemple: -display :1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
-"\t\tAfegeix una pantalla xinerama de mentida (en lloc de la real)\n"
+"\t\tAfegeix una pantalla xinerama DE MENTIDA (en lloc de la real)\n"
 "\t\tamb la geometria donada. Afegiu-ne tantes com vulgueu.\n"
-"\t\tsubstituiran les pantalles xinerama reals, si n'hi ha. Això\n"
+"\t\tSubstituiran les pantalles xinerama reals, si n'hi ha. Això\n"
 "\t\tes pot utilitzar per a simular xinerama.\n"
 "\t\tExemple: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
 "800x600+800+0\n"
@@ -3435,9 +3425,12 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tSigues psicòtic.\n"
 "\t-locked\n"
-"\t\tArrenca amb el bloqueig activat, per tant demanarà la contrasenya.\n"
+"\t\tArrenca amb el bloqueig de despatx activat, per tant demanarà la "
+"contrasenya.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tSi us cal aquesta ajuda, no necessiteu aquesta opció.\n"
+"\t-version\n"
+"\t\tDóna la versió del programari.\n"
 
 #: src/bin/e_main.c:1366
 msgid ""
@@ -3515,7 +3508,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1925 src/bin/e_main.c:1941
 msgid "Moksha crashed early on start and has been restarted"
-msgstr "Moksha ha fallat poc després d'arrencar i serà reiniciat."
+msgstr "Moksha ha fallat poc després d'arrencar i serà reiniciat"
 
 #: src/bin/e_main.c:1926
 #, c-format
@@ -4521,11 +4514,11 @@ msgstr "Només data"
 
 #: src/modules/clock/e_mod_config.c:117
 msgid "ISO 8601"
-msgstr ""
+msgstr "ISO 8601"
 
 #: src/modules/clock/e_mod_config.c:119
 msgid "Strftime"
-msgstr ""
+msgstr "Strftime"
 
 #: src/modules/clock/e_mod_config.c:126
 msgid "Week"
@@ -4862,7 +4855,7 @@ msgstr "Zoom"
 
 #: src/modules/conf_display/e_int_config_desks.c:213
 msgid "Animation speed"
-msgstr "Velocitat de l'animació:"
+msgstr "Velocitat de l'animació"
 
 #: src/modules/conf_display/e_int_config_desks.c:216
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
@@ -5622,18 +5615,16 @@ msgid "Mute"
 msgstr "Silencia"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Volum amunt"
+msgstr "Volum"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
 msgid "Brightness"
 msgstr "Brillantor"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "Volum amunt"
+msgstr "Baixar volum"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
 msgid "Volume Up"
@@ -5707,7 +5698,6 @@ msgstr ""
 "seqüència de tecles."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -5727,7 +5717,7 @@ msgid ""
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
 "No es pot assignar la drecera de roda de ratolí sense modificadors<br> a la "
-"finestra: Conflicte amb el senyal de drecera de vora."
+"finestra: Conflicte amb el senyal de drecera de vora!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -5900,9 +5890,8 @@ msgid "Autoscroll"
 msgstr "Autodesplaçament"
 
 #: src/modules/conf_menus/e_int_config_menus.c:302
-#, fuzzy
 msgid " Smart Menu Orientation"
-msgstr "Orientació"
+msgstr " Orientació"
 
 #: src/modules/conf_menus/e_int_config_menus.c:304
 msgid "Menu Scroll Speed"
@@ -6121,7 +6110,7 @@ msgstr "Nivell"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:166
 msgid "e.g. Saving to disk"
-msgstr "Ex: Guardant al disc"
+msgstr "ex: Guardant al disc"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
@@ -6209,9 +6198,8 @@ msgstr "Imatge..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Colors"
+msgstr "Color..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -6817,6 +6805,7 @@ msgstr "Error fitxer del tema"
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
+"Els fitxers d'aquesta llista probablement no són temes de Moksha:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:789
 msgid " Import..."
@@ -6841,7 +6830,7 @@ msgstr "Esborra-ho tot"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:66
 msgid "Select a Theme..."
-msgstr "Escull un tema"
+msgstr "Escull un tema..."
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:283
 #: src/modules/conf_theme/e_int_config_theme_import.c:292
@@ -7506,26 +7495,23 @@ msgid "Power State Max"
 msgstr "Màxim d'energia"
 
 #: src/modules/cpufreq/e_mod_main.c:507
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
 "Hi ha hagut un error quan s'intentava<br> posar el gestor de freqüència de "
-"cpu mitjançant la utilitat<br>del mòdul setfreq."
+"cpu mitjançant la utilitat<br>del mòdul setfreq ."
 
 #: src/modules/cpufreq/e_mod_main.c:533
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"El kernel no permet<br>establir la freqüència de CPU. Potser heu oblidat "
-"els<br>mòduls o funcions del kernel, o bé la CPU<br> simplement no ho permet."
+"El nucli no permet<br>establir la freqüència de CPU. Potser heu oblidat "
+"els<br>mòduls o funcions del nucli, o bé la CPU<br> simplement no ho permet."
 
 #: src/modules/cpufreq/e_mod_main.c:559
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
@@ -7534,7 +7520,6 @@ msgstr ""
 "mitjançant la utilitat del<br> mòdul setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:587
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
@@ -7547,28 +7532,28 @@ msgid "Cpufreq Error"
 msgstr "Error CpuFreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1460
-#, fuzzy
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"No s'ha trobat el binari freqset al directori<br>del mòdul cpufreq (ha "
-"fallat stat)"
+"No s'ha trobat el programa executable freqset en el directori<br>del mòdul "
+"cpufreq (stat ha fallat)"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
 msgid "Cpufreq Permissions Error"
 msgstr "Error permisos Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1468
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"El binari freqset del mòdul cpufreq<br>no és propietat del root o no té "
-"configurat<br>el bit setuid. Si us plau, assegureu-vos que<br>això és "
-"correcte. Per exemple:<br><br>sudo chown root %s<br>sudo chmod u+s,a+x %s<br>"
+"El binari freqset del mòdul cpufreq<ps/>no és propietat del root o no té "
+"configurat<ps/>el bit setuid. Si us plau, assegureu-vos que<ps/>això és "
+"correcte. Per exemple:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x "
+"%s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1501
 msgid "CPU Frequency"
@@ -7608,7 +7593,6 @@ msgid "Everything Module"
 msgstr "Mòdul Everything"
 
 #: src/modules/everything/e_mod_main.c:599
-#, fuzzy
 msgid "Quick Launcher"
 msgstr "Executa"
 
@@ -8221,9 +8205,8 @@ msgid "Spring Delay"
 msgstr "Retard per obrir després d'arrossegar"
 
 #: src/modules/fileman/e_mod_config.c:428
-#, fuzzy
 msgid "Custom FM to open dirs"
-msgstr "Colors personalitzats"
+msgstr "Gestor de fitxers personalitzat per obrir directoris"
 
 #: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -8889,7 +8872,7 @@ msgstr "Temperatura"
 #: src/modules/wizard/e_wizard.c:239 src/modules/wizard/page_020.c:51
 #: src/modules/wizard/page_060.c:27
 msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr ""
+msgstr "Espereu, s.u.p., mentre carreguem la configuració de Moksha!"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -9074,7 +9057,7 @@ msgstr ""
 "no és terminal<br>o bé la bandera de la línia de comandes per canviar el "
 "nom<br>de la finestra dels terminals no és conegut. Pot reportar un error de "
 "programari d'això<br> si és un terminal on es pugui canviar el nom de "
-"finestra.<br>Alternativament, podeu afegir-hi contingut o elements."
+"finestra.<br>Alternativament, podeu afegir contingut o elements a"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9264,7 +9247,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
-msgstr "Nom/identificador d'accés ràpid"
+msgstr "nom/identificador d'accés ràpid"
 
 #: src/modules/systray/e_mod_main.c:489 src/modules/systray/e_mod_main.c:905
 msgid "Systray Error"
@@ -9296,29 +9279,28 @@ msgid "Systray"
 msgstr "Safata del sistema"
 
 #: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
-#, fuzzy
 msgid "Screenshot"
 msgstr "Captura pantalla"
 
 #: src/modules/shot/e_mod_main.c:99
-#, fuzzy
 msgid "Screenshot in: "
-msgstr "Captura pantalla"
+msgstr "Captura pantalla: "
 
 #: src/modules/shot/e_mod_main.c:114
-#, fuzzy
 msgid "Screenshot stored in"
-msgstr "Error captura pantalla"
+msgstr "Captura pantalla desada en"
 
 #: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
-msgstr ""
+msgstr "Error - el directori no existeix"
 
 #: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
+"Canviar el directori per la configuració de captures<br><br>Menu-"
+"Preferències-Tot-Avançades-Fer captura<br><br>Vol configurar-ho ara?"
 
 #: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
@@ -9462,15 +9444,17 @@ msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
+"Seleccioni un mode de captura de pantalla...<br>El temps d'espera es "
+"configura en les preferències del mòdul de Captura de pantalla<br>La demora "
+"actual és: <b>%d s</b>"
 
 #: src/modules/shot/e_mod_main.c:1185
 msgid "Instant shot"
-msgstr ""
+msgstr "Captura de pantalla"
 
 #: src/modules/shot/e_mod_main.c:1186
-#, fuzzy
 msgid "Delayed shot"
-msgstr "Acció postergada"
+msgstr "Captura postergada"
 
 #: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
 msgid "Take Shot"
@@ -9490,58 +9474,52 @@ msgid "Cannot initialize network"
 msgstr "No es pot inicialitzar la xarxa"
 
 #: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Configuració del bloqueig de pantalla"
+msgstr "Configuració de la captura de pantalla"
 
 #: src/modules/shot/e_mod_config.c:106
-#, fuzzy
 msgid " Show the screenshot mode dialog"
-msgstr "Mostra en totes les pantalles"
+msgstr " Mostra el diàleg de captura de pantalla"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Screenshot guide (quality/share/save)"
-msgstr ""
+msgstr " Guia de captures de pantalla (qualitat/compartir/desar)"
 
 #: src/modules/shot/e_mod_config.c:112
-#, fuzzy
 msgid " Show notifications"
-msgstr "Avís de notificacions"
+msgstr " Mostra les notificacions"
 
 #: src/modules/shot/e_mod_config.c:115
 msgid " Launch app after screenshot"
-msgstr ""
+msgstr " Executeu app després de fer una captura de pantalla"
 
 #: src/modules/shot/e_mod_config.c:118
-#, fuzzy
 msgid "Application for opening:"
-msgstr "Propietats aplicació"
+msgstr "Aplicació a fer servir:"
 
 #: src/modules/shot/e_mod_config.c:124
-#, fuzzy
 msgid "Folder for saving screenshots:"
-msgstr "Error guardant la captura de pantalla"
+msgstr "Directori on desar les captures de pantalla:"
 
 #: src/modules/shot/e_mod_config.c:130
 msgid "Delay time [s]"
-msgstr ""
+msgstr "Temps d'espera [s]"
 
 #: src/modules/shot/e_mod_config.c:135
 msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr ""
+msgstr "Qualitat d'imatge [50-90=jpg, 100=png]"
 
 #: src/modules/shot/e_mod_config.c:142
 msgid "Info"
-msgstr ""
+msgstr "Informació"
 
 #: src/modules/shot/e_mod_config.c:143
 msgid "Bind Take Shot in Wndows:Action"
-msgstr ""
+msgstr "Fer captura en finestres:Acció"
 
 #: src/modules/shot/e_mod_config.c:145
-#, fuzzy
 msgid "for window screenshot!"
-msgstr "Pujant captura de pantalla"
+msgstr "per la captura de pantalla!"
 
 #: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:736
 msgid "Tasks"
@@ -9566,7 +9544,7 @@ msgstr "Amplada element"
 #: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
 #, c-format
 msgid "%1.0f px"
-msgstr "%1.0f px"
+msgstr "%1.0f píx"
 
 #: src/modules/tasks/e_mod_config.c:103
 msgid "Item height"
@@ -9709,16 +9687,15 @@ msgstr "Entra al mode presentació"
 
 #: src/modules/notification/e_mod_main.c:68
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr ""
+msgstr "Moksha està en mode de <b>presentació</b>."
 
 #: src/modules/notification/e_mod_main.c:72
 msgid "Exited Presentation Mode"
 msgstr "S'ha sortit del mode presentació"
 
 #: src/modules/notification/e_mod_main.c:73
-#, fuzzy
 msgid "Presentation mode is over."
-msgstr "Alterna mode presentació"
+msgstr "S'acaba la mode de presentació."
 
 #: src/modules/notification/e_mod_main.c:86
 msgid "Enter Offline Mode"
@@ -9754,7 +9731,7 @@ msgstr "Mòdul notificacions"
 
 #: src/modules/notification/e_mod_main.c:189
 msgid "Error During DBus Init!"
-msgstr "Error en la inicialització de DBus"
+msgstr "Error en la inicialització de DBus!"
 
 #: src/modules/notification/e_mod_main.c:190
 msgid ""
@@ -9817,136 +9794,118 @@ msgid "Use multiple monitor geometry"
 msgstr "Utilitza geometria per a monitors múltiples"
 
 #: src/modules/clipboard/e_mod_config.c:175
-#, fuzzy
 msgid "Selection"
-msgstr "Seleccionant"
+msgstr "Selecció"
 
 #: src/modules/clipboard/e_mod_config.c:176
 msgid " Use Copy (Ctrl-C)"
-msgstr ""
+msgstr " Copieu (Ctrl-C)"
 
 #: src/modules/clipboard/e_mod_config.c:179
 msgid " Use Primary (Selection)"
-msgstr ""
+msgstr " Fer servir el principal (Selecció)"
 
 #: src/modules/clipboard/e_mod_config.c:182
-#, fuzzy
 msgid " Synchronize Clipboards"
-msgstr "Copia al porta-retalls"
+msgstr " Sincronitza el porta-retalls"
 
 #: src/modules/clipboard/e_mod_config.c:189
-#, fuzzy
 msgid "Content"
 msgstr "Continguts"
 
 #: src/modules/clipboard/e_mod_config.c:190
 #: src/modules/clipboard/e_mod_config.c:227
-#, fuzzy
 msgid " Ignore Whitespace"
-msgstr "Ignora-ho"
+msgstr " Ignora espai en blanc"
 
 #: src/modules/clipboard/e_mod_config.c:193
 msgid " Trim Whitespace"
-msgstr ""
+msgstr " Eliminar espais"
 
 #: src/modules/clipboard/e_mod_config.c:196
 msgid " Trim Newlines"
-msgstr ""
+msgstr " Eliminar línies en blanc"
 
 #: src/modules/clipboard/e_mod_config.c:200
 #: src/modules/clipboard/e_mod_main.c:749
 #: src/modules/clipboard/e_mod_main.c:750
 #: src/modules/clipboard/e_mod_main.c:751
-#, fuzzy
 msgid "Clipboard"
-msgstr "Copia al porta-retalls"
+msgstr "Porta-retalls"
 
 #: src/modules/clipboard/e_mod_config.c:206
 msgid " Save History"
-msgstr ""
+msgstr " Desar història"
 
 #: src/modules/clipboard/e_mod_config.c:209
-#, fuzzy
 msgid " Confirm before Clearing"
-msgstr "Confirmeu eliminació tauler"
+msgstr " Confirmeu eliminació"
 
 #: src/modules/clipboard/e_mod_config.c:211
-#, fuzzy
 msgid " Save every Selection"
-msgstr "Eliminació segura"
+msgstr " Desa les opcions seleccionades"
 
 #: src/modules/clipboard/e_mod_config.c:215
-#, fuzzy
 msgid " Timer"
-msgstr "Temporitzadors"
+msgstr " Temporitzador"
 
 #: src/modules/clipboard/e_mod_config.c:226
-#, fuzzy
 msgid "Labels"
-msgstr "Etiqueta"
+msgstr "Etiquetes"
 
 #: src/modules/clipboard/e_mod_config.c:230
-#, fuzzy
 msgid " Label Length"
-msgstr "Etiqueta de text"
+msgstr " Llargada d'etiqueta"
 
 #: src/modules/clipboard/e_mod_config.c:237
 msgid "Items"
-msgstr ""
+msgstr "Ítems"
 
 #: src/modules/clipboard/e_mod_config.c:238
-#, fuzzy
 msgid " Reverse Order"
-msgstr "Recorda ordre"
+msgstr " Ordre invers"
 
 #: src/modules/clipboard/e_mod_config.c:241
 msgid " Items in History"
-msgstr ""
+msgstr " Ítems en l'històric"
 
 #: src/modules/clipboard/e_mod_config.c:247
-#, fuzzy
 msgid "History"
-msgstr "Directori"
+msgstr "Històric"
 
 #: src/modules/clipboard/e_mod_config.c:272
-#, fuzzy
 msgid "Clipboard Settings"
-msgstr "Preferències teclat"
+msgstr "Preferències portaretalls"
 
 #: src/modules/clipboard/e_mod_main.c:359
 msgid "Empty"
-msgstr ""
+msgstr "Buit"
 
 #: src/modules/clipboard/e_mod_main.c:581
-#, fuzzy
 msgid "Confirm History Deletion"
-msgstr "Confirmeu eliminació tauler"
+msgstr "Confirmeu eliminació històric"
 
 #: src/modules/clipboard/e_mod_main.c:583
-#, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
-msgstr "S'ha demanat eliminar aquest tauler.<br><br>N'esteu segur?"
+msgstr "S'ha demanat eliminar aquest històric.<br><br>N'esteu segur?"
 
 #: src/modules/clipboard/e_mod_main.h:10
-#, fuzzy
 msgid "Show History"
-msgstr "Mostra cursor"
+msgstr "Mostra històric"
 
 #: src/modules/clipboard/e_mod_main.h:11
-#, fuzzy
 msgid "Show Settings"
-msgstr "Configuració del tauler"
+msgstr "Mostra configuració"
 
 #: src/modules/clipboard/e_mod_main.h:12
-#, fuzzy
 msgid "Clear History"
-msgstr "Suprimeix contorn"
+msgstr "Suprimeix històric"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
-msgstr ""
+msgstr "Configuració de llocs"
 
 #: src/modules/places/e_mod_config.c:193
 msgid "Show in main menu"
@@ -9954,7 +9913,7 @@ msgstr "Mostra en el menú principal"
 
 #: src/modules/places/e_mod_config.c:197
 msgid "Hide the gadget header"
-msgstr ""
+msgstr "Amagar el capçat del giny"
 
 #: src/modules/places/e_mod_config.c:201
 msgid "Mount volumes at boot"
@@ -9988,34 +9947,34 @@ msgid "Places"
 msgstr "LLocs"
 
 #: src/modules/places/e_mod_config.c:262
-#, fuzzy
 msgid "Show full disk alert"
-msgstr "Mostra alerta de bateria baixa"
+msgstr "Mostra alerta de disc"
 
 #: src/modules/places/e_mod_config.c:266
 msgid "Capacity limit:"
-msgstr ""
+msgstr "Límit de capacitat:"
 
 #: src/modules/places/e_mod_main.c:411
-#, fuzzy
 msgid "Places Configuration Updated"
-msgstr "Configuració Llocs"
+msgstr "S'ha posat al dia la configuració de llocs"
 
 #: src/modules/places/e_mod_places.c:573
 #, c-format
 msgid "Places warning!"
-msgstr ""
+msgstr "Alerta de llocs!"
 
 #: src/modules/places/e_mod_places.c:574
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr ""
+msgstr "L'ús del disc \"%s\" és %d %%!"
 
 #: src/modules/places/e_mod_places.c:659
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
+"<b>No es pot executar el gestor de fitxers de Maksha.</b><br>Escolliu, s.u."
+"p., un gestor de fitxers<br>en la configuració de ginys."
 
 #: src/modules/places/e_mod_places.c:681
 msgid "No Name"
@@ -10039,28 +9998,25 @@ msgid "eject"
 msgstr "extreu"
 
 #: src/modules/mixer/bin/main_window.c:85
-#, fuzzy
 msgid "Efl Volume Control"
-msgstr "Volum avall"
+msgstr "Control de volum Efl"
 
 #: src/modules/mixer/bin/main_window.c:125
 msgid "Playback"
 msgstr "Reproducció"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
-msgstr "Sortida"
+msgstr "Sortides"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
-msgstr "Entrada"
+msgstr "Entrades"
 
 #: src/modules/mixer/bin/playbacks_view.c:306
 #: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
-msgstr ""
+msgstr "Des-silencar"
 
 #: src/modules/mixer/e_mod_main.c:126
 msgid "New volume"
@@ -10068,10 +10024,9 @@ msgstr "Nou volum"
 
 #: src/modules/mixer/e_mod_main.c:139
 msgid "EPulse"
-msgstr ""
+msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:139
-#, fuzzy
 msgid "Volume Changed"
 msgstr "Volum canviat"
 
@@ -10084,19 +10039,16 @@ msgid "Decrease Volume"
 msgstr "Disminueix el volum"
 
 #: src/modules/mixer/e_mod_main.c:252
-#, fuzzy
 msgid "Mute volume"
 msgstr "Silencia"
 
 #: src/modules/mixer/e_mod_main.c:265
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Volum canviat"
+msgstr "Volum augmentat"
 
 #: src/modules/mixer/e_mod_main.c:272 src/modules/mixer/e_mod_main.c:279
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Volum"
+msgstr "Volum silenciat"
 
 #~ msgid "Setup"
 #~ msgstr "Preferències"
