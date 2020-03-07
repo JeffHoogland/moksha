@@ -1,6 +1,6 @@
 # French translation for Moksha DR17.
 # This file is put in the public domain.
-#
+# 
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-01-26 13:52-0500\n"
+"POT-Creation-Date: 2020-03-07 22:19+0100\n"
 "PO-Revision-Date: 2020-02-25 10:21+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French <kde-i18n-doc@kde.org>\n"
@@ -343,7 +343,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:847
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:849
 msgid "Desktop"
 msgstr "Bureau"
 
@@ -1689,7 +1689,7 @@ msgstr "Non pour tout"
 msgid "Yes to all"
 msgstr "Oui pour tout"
 
-#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:660
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -2819,7 +2819,8 @@ msgid "About Theme"
 msgstr "À propos du thème"
 
 #: src/bin/e_int_menus.c:257
-msgid "Reset Moksha"
+#, fuzzy
+msgid "Restart Moksha"
 msgstr "Réinitialiser Moksha"
 
 #: src/bin/e_int_menus.c:335
@@ -4658,7 +4659,7 @@ msgid "E-Mail"
 msgstr "Courriel"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:857
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:859
 msgid "Trash"
 msgstr "Corbeille"
 
@@ -8320,7 +8321,7 @@ msgid "Current Directory"
 msgstr "Dossier courant"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:838
+#: src/modules/places/e_mod_places.c:840
 msgid "Home"
 msgstr "Dossier personnel"
 
@@ -9969,18 +9970,18 @@ msgstr "Utiliser un gestionnaire de fichiers personnalisé"
 msgid "Show in menu"
 msgstr "Afficher dans le menu"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:677
-#: src/modules/places/e_mod_places.c:866
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:679
+#: src/modules/places/e_mod_places.c:868
 msgid "Filesystem"
 msgstr "Racine"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:875
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:877
 msgid "Temp"
 msgstr "/tmp"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:577
-#: src/modules/places/e_mod_places.c:932
+#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:934
 msgid "Places"
 msgstr "Raccourcis"
 
@@ -9996,17 +9997,17 @@ msgstr "Limite de capacité :"
 msgid "Places Configuration Updated"
 msgstr "Configuration de Raccourcis actualisée"
 
-#: src/modules/places/e_mod_places.c:573
+#: src/modules/places/e_mod_places.c:575
 #, c-format
 msgid "Places warning!"
 msgstr "Avertissement de Raccourcis !"
 
-#: src/modules/places/e_mod_places.c:574
+#: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr "L' occupation du disque ''%s'' est de %d %% !"
 
-#: src/modules/places/e_mod_places.c:659
+#: src/modules/places/e_mod_places.c:661
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -10014,24 +10015,24 @@ msgstr ""
 "<b>Impossible d'exécuter EFM.</b><br>Veuillez choisir un gestionnaire de "
 "fichiers<br>personnalisé dans la configuration du gadget."
 
-#: src/modules/places/e_mod_places.c:681
+#: src/modules/places/e_mod_places.c:683
 msgid "No Name"
 msgstr "Sans nom"
 
-#: src/modules/places/e_mod_places.c:688
+#: src/modules/places/e_mod_places.c:690
 msgid "free of"
 msgstr "de libre sur"
 
-#: src/modules/places/e_mod_places.c:694
+#: src/modules/places/e_mod_places.c:696
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s Pas Monté"
 
-#: src/modules/places/e_mod_places.c:721
+#: src/modules/places/e_mod_places.c:723
 msgid "unmount"
 msgstr "démonter"
 
-#: src/modules/places/e_mod_places.c:726
+#: src/modules/places/e_mod_places.c:728
 msgid "eject"
 msgstr "éjecter"
 

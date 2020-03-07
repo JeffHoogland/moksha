@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-01-26 13:52-0500\n"
+"POT-Creation-Date: 2020-03-07 22:19+0100\n"
 "PO-Revision-Date: 2020-01-12 16:21+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -334,7 +334,7 @@ msgstr "Vastgezette status omschakelen"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:847
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:849
 msgid "Desktop"
 msgstr "Werkblad"
 
@@ -1682,7 +1682,7 @@ msgstr "Nee op alles"
 msgid "Yes to all"
 msgstr "Ja op alles"
 
-#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:660
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -2815,7 +2815,8 @@ msgid "About Theme"
 msgstr "Over Thema"
 
 #: src/bin/e_int_menus.c:257
-msgid "Reset Moksha"
+#, fuzzy
+msgid "Restart Moksha"
 msgstr "Moksha terugzetten op standaardinstellingen"
 
 #: src/bin/e_int_menus.c:335
@@ -4632,7 +4633,7 @@ msgid "E-Mail"
 msgstr "E-mail"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:857
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:859
 msgid "Trash"
 msgstr "Prullenbak"
 
@@ -8289,7 +8290,7 @@ msgid "Current Directory"
 msgstr "Huidige map"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:838
+#: src/modules/places/e_mod_places.c:840
 msgid "Home"
 msgstr "Persoonlijke map"
 
@@ -9899,18 +9900,18 @@ msgstr "Gebruik een aangepaste bestandsbeheerder"
 msgid "Show in menu"
 msgstr "Toon in menu"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:677
-#: src/modules/places/e_mod_places.c:866
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:679
+#: src/modules/places/e_mod_places.c:868
 msgid "Filesystem"
 msgstr "Bestandssysteem"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:875
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:877
 msgid "Temp"
 msgstr "Temp"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:577
-#: src/modules/places/e_mod_places.c:932
+#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:934
 msgid "Places"
 msgstr "Plaatsen"
 
@@ -9926,17 +9927,17 @@ msgstr "Capaciteitslimiet:"
 msgid "Places Configuration Updated"
 msgstr "Instelling van Plaatsen bijgewerkt"
 
-#: src/modules/places/e_mod_places.c:573
+#: src/modules/places/e_mod_places.c:575
 #, c-format
 msgid "Places warning!"
 msgstr "Plaatsen-waarschuwing!"
 
-#: src/modules/places/e_mod_places.c:574
+#: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr "Schijf ''%s'' gebruik is %d %%."
 
-#: src/modules/places/e_mod_places.c:659
+#: src/modules/places/e_mod_places.c:661
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -9944,24 +9945,24 @@ msgstr ""
 "<b>Kan bestandbeheerder van Moksha niet starten.</b><br>Kies a.u.b. een "
 "andere bestandbeheerder<br>in de mini-instellingen."
 
-#: src/modules/places/e_mod_places.c:681
+#: src/modules/places/e_mod_places.c:683
 msgid "No Name"
 msgstr "Geen naam"
 
-#: src/modules/places/e_mod_places.c:688
+#: src/modules/places/e_mod_places.c:690
 msgid "free of"
 msgstr "vrij van"
 
-#: src/modules/places/e_mod_places.c:694
+#: src/modules/places/e_mod_places.c:696
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s niet aangekoppeld"
 
-#: src/modules/places/e_mod_places.c:721
+#: src/modules/places/e_mod_places.c:723
 msgid "unmount"
 msgstr "ontkoppelen"
 
-#: src/modules/places/e_mod_places.c:726
+#: src/modules/places/e_mod_places.c:728
 msgid "eject"
 msgstr "uitwerpen"
 

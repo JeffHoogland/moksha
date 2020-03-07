@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-01-26 13:52-0500\n"
+"POT-Creation-Date: 2020-03-07 22:19+0100\n"
 "PO-Revision-Date: 2013-09-19 10:28+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -339,7 +339,7 @@ msgstr "Alternar estado fixo"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:847
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:849
 msgid "Desktop"
 msgstr "Escritorio"
 
@@ -1682,7 +1682,7 @@ msgstr "Non a todo"
 msgid "Yes to all"
 msgstr "Si a todo"
 
-#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:658
+#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:660
 msgid "Warning"
 msgstr "Aviso"
 
@@ -2820,7 +2820,7 @@ msgstr "Acerca do Tema"
 
 #: src/bin/e_int_menus.c:257
 #, fuzzy
-msgid "Reset Moksha"
+msgid "Restart Moksha"
 msgstr "Benvido a Moksha"
 
 #: src/bin/e_int_menus.c:335
@@ -4642,7 +4642,7 @@ msgid "E-Mail"
 msgstr "Correo electrónico"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:857
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:859
 msgid "Trash"
 msgstr "Lixo"
 
@@ -8328,7 +8328,7 @@ msgid "Current Directory"
 msgstr "Directorio actual"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:838
+#: src/modules/places/e_mod_places.c:840
 msgid "Home"
 msgstr "Cartafol persoal"
 
@@ -9990,19 +9990,19 @@ msgstr "Empregar un xestor de ficheiros personalizado"
 msgid "Show in menu"
 msgstr "Amosar no menú"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:677
-#: src/modules/places/e_mod_places.c:866
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:679
+#: src/modules/places/e_mod_places.c:868
 #, fuzzy
 msgid "Filesystem"
 msgstr "Sistema de ficheiros"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:875
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:877
 msgid "Temp"
 msgstr "Temporal"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:577
-#: src/modules/places/e_mod_places.c:932
+#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:934
 msgid "Places"
 msgstr "Lugares"
 
@@ -10019,17 +10019,17 @@ msgstr ""
 msgid "Places Configuration Updated"
 msgstr "Configuración de Lugares actualizada"
 
-#: src/modules/places/e_mod_places.c:573
+#: src/modules/places/e_mod_places.c:575
 #, fuzzy, c-format
 msgid "Places warning!"
 msgstr "Preferencias de Lugares"
 
-#: src/modules/places/e_mod_places.c:574
+#: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:659
+#: src/modules/places/e_mod_places.c:661
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -10037,24 +10037,24 @@ msgstr ""
 "<b>Non se pode executar o Xestor de Ficheiros de Enlightenment.</b><br>Por "
 "favor escolla un xestor de ficheiros personalizado na<br> configuración do "
 
-#: src/modules/places/e_mod_places.c:681
+#: src/modules/places/e_mod_places.c:683
 msgid "No Name"
 msgstr "Sen nome"
 
-#: src/modules/places/e_mod_places.c:688
+#: src/modules/places/e_mod_places.c:690
 msgid "free of"
 msgstr "libre de"
 
-#: src/modules/places/e_mod_places.c:694
+#: src/modules/places/e_mod_places.c:696
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s non está montado"
 
-#: src/modules/places/e_mod_places.c:721
+#: src/modules/places/e_mod_places.c:723
 msgid "unmount"
 msgstr "Desmontar"
 
-#: src/modules/places/e_mod_places.c:726
+#: src/modules/places/e_mod_places.c:728
 msgid "eject"
 msgstr "expulsar"
 
