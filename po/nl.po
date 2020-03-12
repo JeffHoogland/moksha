@@ -2817,7 +2817,7 @@ msgstr "Over Thema"
 #: src/bin/e_int_menus.c:257
 #, fuzzy
 msgid "Restart Moksha"
-msgstr "Moksha terugzetten op standaardinstellingen"
+msgstr "Moksha herstarten"
 
 #: src/bin/e_int_menus.c:335
 msgid "Virtual"

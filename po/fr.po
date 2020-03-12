@@ -1,6 +1,6 @@
 # French translation for Moksha DR17.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -18,16 +18,16 @@ msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-03-07 22:19+0100\n"
-"PO-Revision-Date: 2020-02-25 10:21+0100\n"
+"PO-Revision-Date: 2020-03-08 09:42+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
-"Language-Team: French <kde-i18n-doc@kde.org>\n"
+"Language-Team: French\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-06-17 06:39+0000\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -2819,9 +2819,8 @@ msgid "About Theme"
 msgstr "À propos du thème"
 
 #: src/bin/e_int_menus.c:257
-#, fuzzy
 msgid "Restart Moksha"
-msgstr "Réinitialiser Moksha"
+msgstr "Relancer Moksha"
 
 #: src/bin/e_int_menus.c:335
 msgid "Virtual"
@@ -2883,7 +2882,7 @@ msgstr "Supprimer un rayon"
 #: src/bin/e_int_shelf_config.c:44
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
-msgstr "Paramètres du rayon (shelf)"
+msgstr "Paramètres du rayon (Shelf)"
 
 #: src/bin/e_int_shelf_config.c:143
 msgid "Above Everything"
@@ -3534,7 +3533,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1925 src/bin/e_main.c:1941
 msgid "Moksha crashed early on start and has been restarted"
-msgstr "Moksha a planté en phase d'initialisation et a été redémarré."
+msgstr "Moksha a planté en phase d'initialisation et a été relancé."
 
 #: src/bin/e_main.c:1926
 #, c-format
@@ -3566,7 +3565,7 @@ msgid ""
 "from your configuration.<br><br>The module configuration dialog should let "
 "you select your<br>modules again."
 msgstr ""
-"Moksha a planté en phase d'initialisation et a été redémarré.<br>Tous les "
+"Moksha a planté en phase d'initialisation et a été relancé.<br>Tous les "
 "modules ont été désactivés et ne seront pas chargés pour vous<br>aider à "
 "supprimer les modules problématiques de votre configuration.<br><br>Le "
 "dialogue de configuration des modules vous permettra<br>de recharger vos "
@@ -4619,7 +4618,7 @@ msgstr "Applications au démarrage"
 #: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
-msgstr "Applications à redémarrer"
+msgstr "Applications à relancer"
 
 #: src/modules/conf_applications/e_int_config_apps.c:144
 #: src/modules/conf_applications/e_mod_main.c:37
@@ -5247,7 +5246,7 @@ msgstr "Majuscule"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
 msgid "WIN"
-msgstr "Logo"
+msgstr "Win"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1383
 msgid "Left Edge"
@@ -7049,7 +7048,7 @@ msgstr "Ne pas masquer les gadgets"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:171
 msgid "Place at mouse pointer"
-msgstr "Placer au curseur de la souris"
+msgstr "Placer au pointeur de la souris"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:174
 msgid "Place manually with the mouse"
@@ -7137,11 +7136,11 @@ msgstr "Cliquer pour focaliser"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:219
 msgid "Window under the Mouse"
-msgstr "Fenêtre sous le curseur"
+msgstr "Fenêtre sous le pointeur"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:221
 msgid "Most recent Window under the Mouse"
-msgstr "Fenêtre la plus récente sous le curseur"
+msgstr "Fenêtre la plus récente sous le pointeur"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:224
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:269
@@ -7155,7 +7154,7 @@ msgstr "Au clic"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
 msgid "Pointer"
-msgstr "Curseur"
+msgstr "Pointeur"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:247
 msgid "Sloppy"
@@ -8429,11 +8428,11 @@ msgstr "Restaurer"
 
 #: src/modules/winlist/e_int_config_winlist.c:226
 msgid "Warp mouse while selecting"
-msgstr "Déplacer le curseur lors de la sélection"
+msgstr "Déplacer le pointeur lors de la sélection"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 msgid "Warp mouse at end"
-msgstr "Déplacer le curseur à la fin"
+msgstr "Déplacer le pointeur à la fin"
 
 #: src/modules/winlist/e_int_config_winlist.c:234
 msgid "Jump to desk"
@@ -9615,7 +9614,7 @@ msgstr ""
 
 #: src/modules/tiling/e_mod_config.c:353
 msgid "Tiling Configuration"
-msgstr "Configuration du pavage (tiling)"
+msgstr "Configuration du pavage (Tiling)"
 
 #: src/modules/tiling/e_mod_tiling.c:4082
 #: src/modules/tiling/e_mod_tiling.c:4146
@@ -9912,7 +9911,7 @@ msgstr "Historique"
 
 #: src/modules/clipboard/e_mod_config.c:272
 msgid "Clipboard Settings"
-msgstr "Paramètres du presse-papier"
+msgstr "Paramètres du presse-papiers"
 
 #: src/modules/clipboard/e_mod_main.c:359
 msgid "Empty"
