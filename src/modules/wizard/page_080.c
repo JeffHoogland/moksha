@@ -11,6 +11,23 @@ wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops, Ein
 }
 
 static void 
+_write_bodhi_update(void) 
+{
+   FILE *f;
+   char buf[PATH_MAX];
+
+   e_user_dir_concat_static(buf, "applications/startup");
+   ecore_file_mkpath(buf);
+   e_user_dir_concat_static(buf, "applications/startup/startupcommands");
+   f = fopen(buf, "w");
+   if (f) 
+     {  fprintf(f, "/usr/bin/mintupdate-launcher\n");
+        fclose(f);
+     }
+}
+
+
+static void 
 _write_bodhi_desktops(char *usr) 
 {
    FILE *f;
@@ -21,8 +38,10 @@ _write_bodhi_desktops(char *usr)
    e_user_dir_concat_static(buf, "applications/bar/default/.order");
    f = fopen(buf, "w");
    if (f) 
-     {
-        fprintf(f, "org.gnome.Epiphany.desktop\n");
+     {  if (ecore_file_exists("/usr/share/applications/firefox.desktop"))
+           fprintf(f, "firefox.desktop\n");
+        else
+           fprintf(f, "org.gnome.Epiphany.desktop\n");
         fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "terminology.desktop\n");
         fprintf(f, "pcmanfm.desktop\n");
@@ -45,6 +64,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    struct passwd *pw;
    char *usr;
 
+   if (ecore_file_exists("/usr/bin/mintupdate-launcher"))
+      _write_bodhi_update(); 
    pw = getpwuid(getuid());
    usr = pw->pw_name;
    if (usr) 
