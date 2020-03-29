@@ -831,7 +831,6 @@ void
 places_generate_menu(void *data __UNUSED__, E_Menu *em)
 {
    E_Menu_Item *mi;
-   char buf[PATH_MAX];
 
    // Home
    if (places_conf->show_home)
