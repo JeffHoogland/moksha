@@ -848,8 +848,7 @@ places_generate_menu(void *data __UNUSED__, E_Menu *em)
         mi = e_menu_item_new(em);
         e_menu_item_label_set(mi, _("Desktop"));
         e_util_menu_item_theme_icon_set(mi, "user-desktop");
-        snprintf(buf, sizeof(buf), "%s/Desktop", (char*)e_user_homedir_get());
-        e_menu_item_callback_set(mi, _places_run_fm, strdup(buf)); //TODO free somewhere
+        e_menu_item_callback_set(mi, _places_run_fm, efreet_desktop_dir_get());
      }
 
    // Trash
