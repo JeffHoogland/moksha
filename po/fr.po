@@ -1,6 +1,6 @@
 # French translation for Moksha DR17.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,12 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-03-22 06:50-0400\n"
-"PO-Revision-Date: 2020-03-08 09:42+0100\n"
+"PO-Revision-Date: 2020-03-31 17:53+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -152,11 +153,11 @@ msgstr "Voulez-vous vraiment mettre en veille votre ordinateur ?"
 #: src/bin/e_actions.c:2552 src/bin/e_actions.c:3528
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
-msgstr "Mettre en hibernation"
+msgstr "En hibernation"
 
 #: src/bin/e_actions.c:2553
 msgid "Are you sure you want to hibernate your computer?"
-msgstr "Voulez-vous vraiment mettre en hibernation votre ordinateur ?"
+msgstr "Voulez-vous vraiment mettre votre ordinateur en hibernation ?"
 
 #: src/bin/e_actions.c:3041 src/bin/e_actions.c:3052 src/bin/e_actions.c:3071
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
@@ -538,7 +539,7 @@ msgstr "Basculer vers la fenêtre…"
 
 #: src/bin/e_actions.c:3335
 msgid "Jump to window... or start..."
-msgstr "Basculer vers la fenêtre … ou au début …"
+msgstr "Basculer vers la fenêtre de… ou circuler parmi…"
 
 #: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
 #: src/bin/e_actions.c:3352 src/bin/e_actions.c:3354 src/bin/e_actions.c:3356
@@ -775,11 +776,11 @@ msgstr "Éteindre"
 
 #: src/bin/e_actions.c:3520
 msgid "Suspend Now"
-msgstr "Mettre en veille immédiatement"
+msgstr "Mise en veille immédiate"
 
 #: src/bin/e_actions.c:3532
 msgid "Hibernate Now"
-msgstr "Hiberner immédiatement"
+msgstr "Mise en hibernation immédiate"
 
 #: src/bin/e_actions.c:3540
 msgid "Lock"
@@ -1494,7 +1495,7 @@ msgstr "Tri"
 
 #: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
 msgid "Refresh View"
-msgstr "Rafraîchir"
+msgstr "Rafraîchir l'affichage"
 
 #: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
 msgid "New..."
@@ -3468,7 +3469,7 @@ msgstr ""
 "plutôt le lanceur « enlightenment_start ». Ce dernier se\n"
 "charge du paramétrage des variables d'environnement,\n"
 "des chemins et de la gestion de tout autre service\n"
-"nécessaire, avant même le démarrage de enlightenment.\n"
+"nécessaire, avant même le démarrage d'Enlightenment.\n"
 
 #: src/bin/e_main.c:1647
 msgid "Testing Format Support"
@@ -3708,19 +3709,19 @@ msgstr "Coin inférieur droit"
 
 #: src/bin/e_shelf.c:78
 msgid "Left-top Corner"
-msgstr "Coin gauche supérieur"
+msgstr "Coin sup. gauche vertical"
 
 #: src/bin/e_shelf.c:79
 msgid "Right-top Corner"
-msgstr "Coin droit supérieur"
+msgstr "Coin sup. droit vertical"
 
 #: src/bin/e_shelf.c:80
 msgid "Left-bottom Corner"
-msgstr "Coin gauche inférieur"
+msgstr "Coin inf. gauche vertical"
 
 #: src/bin/e_shelf.c:81
 msgid "Right-bottom Corner"
-msgstr "Coin droit inférieur"
+msgstr "Coin inf. droit vertical"
 
 #: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1123
 #, c-format
@@ -3795,7 +3796,7 @@ msgstr "Masquer automatiquement"
 
 #: src/bin/e_shelf.c:2464
 msgid "Refresh"
-msgstr "Rafraîchissement"
+msgstr "Rafraîchir"
 
 #: src/bin/e_startup.c:134
 #, c-format
@@ -3910,7 +3911,7 @@ msgstr "La mise en veille a échoué."
 
 #: src/bin/e_sys.c:653
 msgid "Hibernate failed."
-msgstr "La mise en veille sur disque a échoué."
+msgstr "La mise en hibernation a échoué."
 
 #: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -4613,7 +4614,7 @@ msgstr "Applications dans l'IBar"
 #: src/modules/conf_applications/e_int_config_apps.c:113
 #: src/modules/conf_applications/e_mod_main.c:49
 msgid "Startup Applications"
-msgstr "Applications au démarrage"
+msgstr "Applications à l'ouverture de session"
 
 #: src/modules/conf_applications/e_int_config_apps.c:129
 #: src/modules/conf_applications/e_mod_main.c:45
@@ -6141,7 +6142,7 @@ msgstr "Niveau"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:166
 msgid "e.g. Saving to disk"
-msgstr "ex. Sauvegarde sur le disque"
+msgstr "ex. Enregistrement sur le disque"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
@@ -6522,7 +6523,7 @@ msgstr "Barre de titre"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:62
 msgid "Textblock Plain"
-msgstr "Bloc de texte simple"
+msgstr "Bloc de texte ordinaire"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:63
 msgid "Textblock Light"
@@ -8688,7 +8689,7 @@ msgstr "Changer de bureau avec la molette de la souris"
 
 #: src/modules/pager/e_mod_config.c:133 src/modules/pager/e_mod_config.c:192
 msgid "Always show desktop names"
-msgstr "Toujours afficher les nom des bureaux"
+msgstr "Toujours afficher le nom des bureaux"
 
 #: src/modules/pager/e_mod_config.c:136 src/modules/pager/e_mod_config.c:195
 msgid "Live preview"
@@ -9412,7 +9413,7 @@ msgstr "Impossible d'obtenir la taille du fichier '%s'"
 
 #: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
-msgstr "Erreur : impossible d'allouer la mémoire"
+msgstr "Erreur : impossible d'allouer de la mémoire"
 
 #: src/modules/shot/e_mod_main.c:677
 #, c-format
