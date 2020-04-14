@@ -3537,8 +3537,8 @@ e_border_idler_before(void)
                        if (e_config->screen_limits != E_SCREEN_LIMITS_COMPLETELY)
                           _e_border_move_lost_window_to_center(bd);
                      }
-                  else
-                    e_border_zone_set(bd, e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y));
+                  //~ else
+                    //~ e_border_zone_set(bd, e_container_zone_at_point_get(bd->zone->container, bd->x, bd->y));
                }
              e_container_border_list_free(bl);
 
