@@ -713,6 +713,17 @@ group { name: "e/widgets/border/left_controls/border";
          }
       }
       
+      part { name: "e.event.titlebar"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.to_x: "e.event.minimize";
+            rel2.relative: 0.9 1.0;
+            rel2.to_x: "e.event.icon";
+            rel2.offset: -20 0;
+            rel2.to_y: "top";
+         }
+      }
+      
       part { name: "e.text.title"; type: TEXT;
          description { state: "default" 0.0;
             rel1.relative: 0.0 0.0;
