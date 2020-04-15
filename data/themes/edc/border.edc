@@ -677,6 +677,80 @@ group { name: "e/widgets/border/default/border";
    }
 }
 
+group { name: "e/widgets/border/left_controls/border";
+   inherit: "e/widgets/border/default/border";
+   parts {
+      part { name: "e.event.close"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 0.0 1.0;
+            rel2.to_y: "top";
+            align: 0.0 0.5;
+         }
+      }
+      
+      part { name: "e.event.maximize"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -1 0;
+            rel1.to_x: "e.event.close";
+            rel2.relative: 1.0 1.0;
+            rel2.to_y: "top";
+            rel2.to_x: "e.event.close";
+            align: 0.0 0.5;
+         }
+      }
+      
+      part { name: "e.event.minimize"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.offset: -1 0;
+            rel1.to_x: "e.event.maximize";
+            rel2.relative: 1.0 1.0;
+            rel2.to_y: "top";
+            rel2.to_x: "e.event.maximize";
+            align: 0.0 0.5;
+         }
+      }
+      
+      part { name: "e.text.title"; type: TEXT;
+         description { state: "default" 0.0;
+            rel1.relative: 0.0 0.0;
+            rel1.to_x: "e.event.maximize";
+            rel2.relative: 0.5 0.0;
+            rel2.to_x: "e.event.icon";
+            }
+         }
+      
+     part { name: "title2"; type: TEXT;
+         description { state: "default" 0.0;
+            color_class: "border_title_active";
+            rel1.relative: 0.0 0.0;
+            rel1.offset: 1 2;
+            rel1.to_x: "e.event.maximize";
+            rel2.relative: 0.5 0.0;
+            rel2.offset: -1 2;
+            rel2.to_x: "e.event.icon";
+         }
+         description { state: "focused" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      
+      part { name: "e.event.icon"; type: RECT;
+         description { state: "default" 0.0;
+            fixed: 1 0;
+            rel1.relative: 1.0 0.0;
+            rel2.relative: 1.0 1.0;
+            rel2.to_y: "top";
+            align: 1.0 0.5;
+            aspect: 1.0 1.0; aspect_preference: VERTICAL;
+         }
+      }
+   }
+}
+
 group { name: "e/widgets/border/dialog/border";
    alias: "e/widgets/border/modal/border";
    inherit: "e/widgets/border/default/border";
@@ -1054,3 +1128,5 @@ group { name: "e/widgets/border/default/resize";
       }
    }
 }
+
+
