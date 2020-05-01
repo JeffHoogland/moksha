@@ -172,14 +172,14 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
    if ((e) && (e->error))
    {
       fprintf(stderr, "Moksha: efreet didn't notify about cache update\n");
-      _e_startup_error_dialog("E: Efreetd cannot be connected to"
+      /*_e_startup_error_dialog("E: Efreetd cannot be connected to"
                                 "Please check:<br>"
                                 "$XDG_RUTIME_DIR/.ecore/efreetd/0<br>"
                                 "or<br>"
                                 "~/.ecore/efreetd/0<br>"
                                 "Is your system very slow on start so<br>"
                                 "efreetd cannot be connected to within<br>"
-                                "0.5sec after launch??");
+                                "0.5sec after launch??");*/
 
    }
 
@@ -213,10 +213,10 @@ static Eina_Bool
 _e_startup_time_exceeded(void *data EINA_UNUSED)
 {
    fprintf(stderr, "Moksha: efreet didn't notify about cache update\n");
-   _e_startup_error_dialog("E: Efreet did not update cache"
+   /*_e_startup_error_dialog("E: Efreet did not update cache"
                            "Please check your Efreet setup.<br>"
                            "Is efreetd running?<br>"
-                           "Can ~/.cache/efreet be written to?");
+                           "Can ~/.cache/efreet be written to?");*/
    timer = NULL;
    return ECORE_CALLBACK_CANCEL;
 }
