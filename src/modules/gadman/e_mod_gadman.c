@@ -72,7 +72,7 @@ gadman_reset(void)
    Man->gc_top = NULL;
    if (_gadman_gadgets)
      {
-        eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
+        eina_hash_free_cb_set(_gadman_gadgets, (void *)eina_list_free);
         eina_hash_free(_gadman_gadgets);
      }
    /* iterating through zones - and making gadmans on each */
@@ -160,7 +160,7 @@ gadman_shutdown(void)
      }
    if (_gadman_gadgets)
      {
-        eina_hash_free_cb_set(_gadman_gadgets, EINA_FREE_CB(eina_list_free));
+        eina_hash_free_cb_set(_gadman_gadgets, (void *) eina_list_free);
         eina_hash_free(_gadman_gadgets);
      }
    if (Man->gadman_reset_timer) ecore_timer_del(Man->gadman_reset_timer);
