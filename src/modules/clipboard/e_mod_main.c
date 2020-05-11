@@ -46,11 +46,11 @@ static Eina_Bool _cb_clipboard_request(void *data __UNUSED__);
 
 static Eina_Bool _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selection_Notify * event);
 static Eina_Bool _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Event_Fixes_Selection_Notify * event);
-static void      _cb_menu_item(Clip_Data *selected_clip);
+static void      _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
-static void      _cb_clear_history(Instance *inst);
+static void      _cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_dialog_delete(void *data __UNUSED__);
 static void      _cb_dialog_keep(void *data __UNUSED__);
 static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -481,7 +481,7 @@ _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Even
   /* If we lost owner of clipboard */
   if (event->reason && clip_inst->items)
      /* Reset clipboard and gain ownership of it */
-    _cb_menu_item(eina_list_data_get(clip_inst->items));
+    _cb_menu_item(eina_list_data_get(clip_inst->items), NULL, NULL);
   else
     _cb_clipboard_request(NULL);
   return ECORE_CALLBACK_DONE;
@@ -573,7 +573,7 @@ clip_save(Eina_List *items, Eina_Bool force)
 }
 
 static void
-_cb_clear_history(Instance *inst __UNUSED__)
+_cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
   EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
 
@@ -619,9 +619,10 @@ cb_clipboard_save(void *data __UNUSED__)
 }
 
 static void
-_cb_menu_item(Clip_Data *selected_clip)
+_cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-  _x_clipboard_update(selected_clip->content);
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+  _x_clipboard_update(sel->content);
 }
 
 static void
@@ -650,7 +651,7 @@ _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Ev
     _cb_config_show(data, NULL, NULL);
   else if (!strcmp(params, "clear"))
     /* Only call clear dialog if there is something to clear */
-    if (clip_inst->items) _cb_clear_history(NULL);
+    if (clip_inst->items) _cb_clear_history(NULL, NULL, NULL);
 }
 
 void
@@ -773,7 +774,7 @@ e_modapi_init (E_Module *m)
   hist_err = read_history(&(clip_inst->items), clip_cfg->ignore_ws, (unsigned int) clip_cfg->label_length);
 
   if (hist_err == EET_ERROR_NONE && eina_list_count(clip_inst->items))
-    _cb_menu_item(eina_list_data_get(clip_inst->items));
+    _cb_menu_item(eina_list_data_get(clip_inst->items), NULL, NULL);
   else
     /* Something must be wrong with history file
      *   so we create a new one */
