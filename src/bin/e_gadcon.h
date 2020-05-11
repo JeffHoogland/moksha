@@ -378,7 +378,7 @@ EAPI void                    e_gadcon_client_drag_set(E_Gadcon_Client *gcc);
             _p = strrchr(_ci->id, '.');                                                     \
             if (_p) _num = atoi(_p + 1) + 1;                                                \
          }                                                                                  \
-       _buf = alloca(sizeof (char) * ((_gc_class.name ? strlen(_gc_class.name) : 6) + 11)); \
+       _buf = alloca(((_gc_class.name ? strlen(_gc_class.name) : 0) + 40));                 \
        sprintf(_buf, "%s.%d", _gc_class.name, _num);                                        \
        _id = _buf;                                                                          \
     }                                                                                       \
@@ -386,7 +386,7 @@ EAPI void                    e_gadcon_client_drag_set(E_Gadcon_Client *gcc);
     {                                                                                       \
        Eina_List *l;                                                                        \
        _type *_ci;                                                                          \
-       EINA_LIST_FOREACH(_items, l, _ci)                                                   \
+       EINA_LIST_FOREACH(_items, l, _ci)                                                    \
          if ((_ci->id) && (!strcmp(_ci->id, _id))) return _ci;                              \
     }
 
