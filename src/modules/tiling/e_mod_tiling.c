@@ -4062,15 +4062,15 @@ e_modapi_init(E_Module *m)
     HANDLER(_G.handler_border_add, BORDER_ADD, _add_hook);
     HANDLER(_G.handler_border_remove, BORDER_REMOVE, _remove_hook);
 
-    HANDLER(_G.handler_border_iconify, BORDER_ICONIFY, _iconify_hook);
-    HANDLER(_G.handler_border_uniconify, BORDER_UNICONIFY, _uniconify_hook);
+    HANDLER(_G.handler_border_iconify, BORDER_ICONIFY, (void *) _iconify_hook);
+    HANDLER(_G.handler_border_uniconify, BORDER_UNICONIFY, (void *) _uniconify_hook);
     HANDLER(_G.handler_border_stick, BORDER_STICK, _stick_hook);
     HANDLER(_G.handler_border_unstick, BORDER_UNSTICK, _unstick_hook);
 
     HANDLER(_G.handler_desk_show, DESK_SHOW, _desk_show_hook);
     HANDLER(_G.handler_desk_before_show, DESK_BEFORE_SHOW, _desk_before_show_hook);
-    HANDLER(_G.handler_desk_set, BORDER_DESK_SET, _desk_set_hook);
-    HANDLER(_G.handler_container_resize, CONTAINER_RESIZE, _container_resize_hook);
+    HANDLER(_G.handler_desk_set, BORDER_DESK_SET, (void *) _desk_set_hook);
+    HANDLER(_G.handler_container_resize, CONTAINER_RESIZE, (void *) _container_resize_hook);
 #undef HANDLER
 
 #define ACTION_ADD(_act, _cb, _title, _value, _params, _example, _editable)  \
