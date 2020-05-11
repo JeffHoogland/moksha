@@ -832,7 +832,7 @@ _edj_gen(Import *import)
    Eina_Bool anim = EINA_FALSE;
    int fd, num = 1;
    int w = 0, h = 0;
-   const char *file, *locale;
+   const char *file = NULL, *locale;
    char buf[PATH_MAX], cmd[PATH_MAX + PATH_MAX + 40], tmpn[PATH_MAX], ipart[PATH_MAX] = "", enc[128];
    char *imgdir = NULL, *fstrip;
    int cr, cg, cb, ca;
@@ -918,7 +918,8 @@ _edj_gen(Import *import)
        }
      else
        {
-          fstrip = strdupa(e_util_filename_escape(file));
+          if (file)
+            fstrip = strdupa(e_util_filename_escape(file));
           if (import->quality == 100)
             snprintf(enc, sizeof(enc), "COMP");
           else
