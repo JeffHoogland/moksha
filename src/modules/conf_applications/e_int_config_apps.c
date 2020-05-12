@@ -510,54 +510,59 @@ _fill_apps_list(E_Config_App_List *apps)
 static void
 _fill_xdg_list(E_Config_App_List *apps)
 {
-   Eina_List *files;
+   Eina_List *files, *dirs;
    Efreet_Desktop *desk = NULL;
-   const char *path = "/etc/xdg/autostart";
+   const char *path;
    char *file, *ext;
-   char buf[4096];
+   char buf[PATH_MAX + PATH_MAX + 2], pbuf[PATH_MAX];
 
-   files = ecore_file_ls(path);
-   EINA_LIST_FREE(files, file)
+   dirs = eina_list_merge(eina_list_clone(efreet_config_dirs_get()), eina_list_clone(efreet_data_dirs_get()));
+   dirs = eina_list_append(dirs, efreet_data_home_get());
+   EINA_LIST_FREE(dirs, path)
      {
-        Eina_List *ll;
-
-        if ((file[0] == '.') || !(ext = strrchr(file, '.')) || (strcmp(ext, ".desktop")))
+        snprintf(pbuf, sizeof(pbuf), "%s/autostart", path);
+        files = ecore_file_ls(pbuf);
+        EINA_LIST_FREE(files, file)
           {
-             free(file);
-             continue;
-          }
-        snprintf(buf, sizeof(buf), "%s/%s", path, file);
-        free(file);
+             Eina_List *ll;
 
-        desk = efreet_desktop_new(buf);
-        if (!desk)
-          continue;
-
-        ll = eina_list_search_unsorted_list(apps->desks, _cb_desks_sort, desk);
-        if (ll)
-          {
-             Efreet_Desktop *old;
-
-             old = eina_list_data_get(ll);
-             /*
-              * This fixes when we have several .desktop with the same name,
-              * and the only difference is that some of them are for specific
-              * desktops.
-              */
-             if ((old->only_show_in) && (!desk->only_show_in))
+             if ((file[0] == '.') || !(ext = strrchr(file, '.')) || (strcmp(ext, ".desktop")))
                {
-                  efreet_desktop_free(old);
-                  eina_list_data_set(ll, desk);
+                  free(file);
+                  continue;
+               }
+             snprintf(buf, sizeof(buf), "%s/%s", pbuf, file);
+             free(file);
+
+             desk = efreet_desktop_new(buf);
+             if (!desk)
+               continue;
+
+             ll = eina_list_search_unsorted_list(apps->desks, _cb_desks_sort, desk);
+             if (ll)
+               {
+                  Efreet_Desktop *old;
+
+                  old = eina_list_data_get(ll);
+                  /*
+                   * This fixes when we have several .desktop with the same name,
+                   * and the only difference is that some of them are for specific
+                   * desktops.
+                   */
+                  if ((old->only_show_in) && (!desk->only_show_in))
+                    {
+                       efreet_desktop_free(old);
+                       eina_list_data_set(ll, desk);
+                    }
+                  else
+                    efreet_desktop_free(desk);
                }
              else
-               efreet_desktop_free(desk);
+               apps->desks = eina_list_append(apps->desks, desk);
           }
-        else
-          apps->desks = eina_list_append(apps->desks, desk);
      }
 
-   apps->desks = eina_list_sort(apps->desks, -1, _cb_desks_sort);
-
+    apps->desks = eina_list_sort(apps->desks, -1, _cb_desks_sort);
    _list_items_state_set(apps);
 }
 
