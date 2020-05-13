@@ -147,8 +147,26 @@ _sel_cb(void *data)
       e_widget_entry_text_set(cfdata->gui.val_en, "");
 }
 
+static const char *
+_env_text(E_Config_Env_Var *evr)
+{
+   static Eina_Slstr *text;
+   char *val;
+
+   val = strndup(evr->val, 64);
+
+   if (strlen(evr->val) > 64)
+     text = eina_slstr_printf("%s=%s...", evr->var, val);
+   else
+     text = eina_slstr_printf("%s=%s", evr->var, val);
+
+   free(val);
+
+   return text;
+}
+
 static void
-_add_cb(void *data, void *data2 __UNUSED__)
+_add_cb(void *data, void *data2 EINA_UNUSED)
 {
    E_Config_Dialog_Data *cfdata = data;
    Eina_List *l;
@@ -184,7 +202,7 @@ _add_cb(void *data, void *data2 __UNUSED__)
                }
              cfdata->env_vars = eina_list_append(cfdata->env_vars, evr);
              e_widget_ilist_append(cfdata->gui.list, NULL,
-                                   evr->var, _sel_cb, cfdata, NULL);
+                                   _env_text(evr), _sel_cb, cfdata, NULL);
              e_widget_ilist_go(cfdata->gui.list);
              sel = e_widget_ilist_count(cfdata->gui.list) - 1;
              e_widget_ilist_selected_set(cfdata->gui.list, sel);
@@ -206,6 +224,7 @@ _add_cb(void *data, void *data2 __UNUSED__)
         if (sel >= 0)
           {
              e_widget_ilist_selected_set(cfdata->gui.list, sel);
+             e_widget_ilist_nth_label_set(cfdata->gui.list, sel, _env_text(evr));
              e_widget_ilist_nth_show(cfdata->gui.list, sel, 0);
           }
      }
@@ -249,7 +268,7 @@ _del_cb(void *data, void *data2 __UNUSED__)
         e_widget_ilist_freeze(cfdata->gui.list);
         EINA_LIST_FOREACH(cfdata->env_vars, l, evr)
           {
-             e_widget_ilist_append(cfdata->gui.list, NULL, evr->var,
+             e_widget_ilist_append(cfdata->gui.list, NULL, _env_text(evr),
                                    _sel_cb, cfdata, NULL);
           }
         e_widget_ilist_go(cfdata->gui.list);
@@ -288,7 +307,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    e_widget_ilist_freeze(ol);
    EINA_LIST_FOREACH(cfdata->env_vars, l, evr)
      {
-        e_widget_ilist_append(ol, NULL, evr->var, _sel_cb, cfdata, NULL);
+        e_widget_ilist_append(ol, NULL, _env_text(evr), _sel_cb, cfdata, NULL);
      }
    e_widget_ilist_go(ol);
    e_widget_ilist_thaw(ol);
