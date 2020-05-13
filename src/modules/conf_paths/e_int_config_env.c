@@ -166,7 +166,7 @@ _env_text(E_Config_Env_Var *evr)
 }
 
 static void
-_add_cb(void *data, void *data2 EINA_UNUSED)
+_add_cb(void *data, void *data2  __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    Eina_List *l;
