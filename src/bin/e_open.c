@@ -290,6 +290,7 @@ terminal_open(void)
      {
         "terminology.desktop",
         "lxterminal.desktop",
+        "qterminal.desktop",
         "rxvt.desktop",
         "gnome-terimnal.desktop",
         "konsole.desktop",
