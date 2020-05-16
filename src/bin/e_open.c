@@ -556,6 +556,6 @@ main(int argc, char *argv[])
           }
         free(cmds);
 
-        return ret;
+        return WEXITSTATUS(ret);
      }
 }
