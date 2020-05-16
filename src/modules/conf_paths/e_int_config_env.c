@@ -150,17 +150,24 @@ _sel_cb(void *data)
 static const char *
 _env_text(E_Config_Env_Var *evr)
 {
-   static Eina_Slstr *text;
+   static Eina_Slstr *text = "";
    char *val;
 
-   val = strndup(evr->val, 64);
+   if (evr->val) val = strndup(evr->val, 64);
+   else val = strdup("");
 
-   if (strlen(evr->val) > 64)
-     text = eina_slstr_printf("%s=%s...", evr->var, val);
+   if (val)
+     {
+        if (strlen(evr->val) > 64)
+          text = eina_slstr_printf("%s=%s...", evr->var, val);
+        else
+          text = eina_slstr_printf("%s=%s", evr->var, val);
+        free(val);
+     }
    else
-     text = eina_slstr_printf("%s=%s", evr->var, val);
-
-   free(val);
+     {
+        text = eina_slstr_printf("%s", evr->var);
+     }
 
    return text;
 }
