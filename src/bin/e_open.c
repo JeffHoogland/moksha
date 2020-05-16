@@ -451,6 +451,21 @@ static const Ecore_Getopt options = {
    }
 };
 
+
+static Eina_Bool
+_is_protocol(const char *path)
+{
+    Eina_Bool nonlocal = EINA_FALSE;
+    const char *p = path;
+    while (!nonlocal && *p && *p != '/')
+    {
+       nonlocal = (*p == ':');
+       p++;
+    }
+   return nonlocal;
+}
+
+
 EAPI int
 main(int argc, char *argv[])
 {
@@ -511,7 +526,7 @@ main(int argc, char *argv[])
                }
           }
      }
-   else if (strstr(argv[args], ":"))
+   else if (_is_protocol(argv[args]))
      cmds = protocol_open(argv[args]);
    else
      cmds = local_open(argv[args]);
