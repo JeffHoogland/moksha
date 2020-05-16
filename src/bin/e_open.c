@@ -414,7 +414,7 @@ static const struct type_mime {
   /* {"browser", "x-scheme-handler/http"}, */
   {"mail", "x-scheme-handler/mailto"},
   /*  {"terminal", NULL}, */
-  {"filemanager", "x-scheme-handler/file"},
+  {"filemanager", "inode/directory"},
   {"image", "image/jpeg"},
   {"video", "video/x-mpeg"},
   {"music", "audio/mp3"},

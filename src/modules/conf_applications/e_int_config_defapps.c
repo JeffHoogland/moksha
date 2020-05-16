@@ -131,7 +131,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         if (s) cfdata->browser_desktop = eina_stringshare_add(s);
         s = efreet_ini_string_get(myini, "x-scheme-handler/mailto");
         if (s) cfdata->mailto_desktop = eina_stringshare_add(s);
-        s = efreet_ini_string_get(myini, "x-scheme-handler/file");
+        s = efreet_ini_string_get(myini, "inode/directory");
         if (s) cfdata->file_desktop = eina_stringshare_add(s);
         s = efreet_ini_string_get(myini, "x-scheme-handler/trash");
         if (s) cfdata->trash_desktop = eina_stringshare_add(s);
