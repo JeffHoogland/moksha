@@ -122,6 +122,7 @@ void e_fileman_dbus_shutdown(void);
 int  e_fwin_init          (void);
 int  e_fwin_shutdown      (void);
 void e_fwin_new           (E_Container *con, const char *dev, const char *path);
+void e_custom_fm_open     (E_Zone *zone, const char *dev, const char *path);
 void e_fwin_zone_new      (E_Zone *zone, void *path);
 void e_fwin_zone_shutdown (E_Zone *zone);
 void e_fwin_all_unsel     (void *data);

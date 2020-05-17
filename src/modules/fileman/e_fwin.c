@@ -235,7 +235,6 @@ static void             _e_fwin_op_registry_abort_cb(void *data,
                                                      Evas_Object *obj,
                                                      const char *emission,
                                                      const char *source);
-static void             _xdg_open_default(const char *data);                                                     
 
 static E_Fwin *drag_fwin = NULL;
 
@@ -277,6 +276,17 @@ e_fwin_shutdown(void)
    dir_handler = NULL;
 
    return 1;
+}
+
+void
+e_custom_fm_open(E_Zone *zone,
+           const char *dev,
+           const char *path)
+{
+   char buf[4096];
+
+   snprintf(buf, sizeof(buf), "%s \"%s\"%s", fileman_config->view.customFM, dev, path);
+   e_exec(zone,NULL, buf, NULL, NULL); 
 }
 
 /* FIXME: this opens a new window - we need a way to inherit a zone as the
@@ -2200,7 +2210,6 @@ _e_fwin_cb_menu_open(void *data,
 {
    E_Fwin_Page *page;
    Eina_List *selected;
-
    page = data;
    selected = e_fm2_selected_list_get(page->fm_obj);
    if (!selected) return;
@@ -2318,18 +2327,6 @@ _e_fwin_border_set(E_Fwin_Page *page, E_Fwin *fwin, E_Fm2_Icon_Info *ici)
    fwin->win->border->placed = 1;
 }
 
-static void
-_xdg_open_default(const char *data)
-{
-   E_Zone *zone;
-   char buf2[4096];
-
-   zone = e_util_zone_current_get (e_manager_current_get ());
-   snprintf(buf2, sizeof(buf2), "%s \"%s\"", fileman_config->view.customFM, data);
-   e_exec(zone,NULL, buf2, NULL, NULL);
-}
-
-
 static E_Fwin *
 _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need_dia)
 {
@@ -2351,7 +2348,7 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                 * Prevent EFM from opening removables.      *
                 * We want opening by the user's default FM. *
                 *********************************************/
-               _xdg_open_default(ici->link);
+               e_custom_fm_open(e_util_zone_current_get (e_manager_current_get ()), ici->link, "/");
                // fwin = _e_fwin_new(page->fwin->zone->container, ici->link, "/");
              }
           }
@@ -2377,7 +2374,7 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                 *********************************************/
                 const char *real_path;
                 real_path = e_fm2_real_path_map(buf, "/");
-                _xdg_open_default(real_path);
+                e_custom_fm_open(e_util_zone_current_get (e_manager_current_get ()), real_path, "");
                 // fwin = _e_fwin_new(page->fwin->zone->container, buf, "/");
              }
           }     
@@ -2424,9 +2421,7 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
                   //~ **************************************************************************
                   //~ Prevent EFM from opening folder. We want opening by the user's default FM. 
                   //~ **************************************************************************
-                    
-                      _xdg_open_default(ici->link ?: buf);
-                    
+                      e_custom_fm_open(e_util_zone_current_get (e_manager_current_get ()), ici->link ?: buf, "");
                     //~ fwin = _e_fwin_new(page->fwin->zone->container, NULL, ici->link ?: buf);
                 }
                }
