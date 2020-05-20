@@ -158,7 +158,7 @@ _env_text(E_Config_Env_Var *evr)
 
    if (val)
      {
-        if (strlen(evr->val) > 64)
+        if ((evr->val) && (strlen(evr->val) > 64))
           text = eina_slstr_printf("%s=%s...", evr->var, val);
         else
           text = eina_slstr_printf("%s=%s", evr->var, val);
