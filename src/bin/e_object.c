@@ -44,12 +44,16 @@ e_object_del(E_Object *obj)
    if (obj->deleted) return;
    if (obj->del_delay_func)
      {
+        if (obj->ref_debug)
+          INF("[%p] DELAY DEL (REF: %d)", obj, obj->references);
         obj->del_delay_func(obj);
         if (!obj->delay_del_job)
           obj->delay_del_job = ecore_job_add(_delay_del, obj);
         obj->deleted = 1;
         return;
      }
+   if (obj->ref_debug)
+     INF("[%p] DEL (REF: %d)", obj, obj->references);
    obj->deleted = 1;
    if (obj->del_att_func) obj->del_att_func(obj);
    if (obj->del_func) obj->del_func(obj);
@@ -121,6 +125,8 @@ e_object_ref(E_Object *obj)
 {
    E_OBJECT_CHECK_RETURN(obj, -1);
    obj->references++;
+   if (obj->ref_debug)
+     INF("[%p] REF (REF: %d)", obj, obj->references);
    return obj->references;
 }
 
@@ -133,6 +139,17 @@ e_object_unref(E_Object *obj)
    if (!obj->references) return 0;
    obj->references--;
    ref = obj->references;
+   if (obj->ref_debug)
+     {
+        if ((ref > 1) && (ref < 1000))
+          INF("[%p] UNREF (REF: %d)", obj, ref);
+        else if (ref == 1)
+          INF("[%p] UNREF (REF: %d)", obj, ref);
+        else if (!ref)
+          INF("[%p] UNREF (REF: %d)", obj, ref);
+        else
+          CRI("[%p] UNREF (REF: %d)", obj, ref);
+     }
    if (obj->references == 0) e_object_free(obj);
    return ref;
 }
@@ -310,6 +327,13 @@ e_object_del_attach_func_set(E_Object *obj, E_Object_Cleanup_Func func)
 {
    E_OBJECT_CHECK(obj);
    obj->del_att_func = func;
+}
+
+EAPI void
+e_object_ref_debug_set(E_Object *obj, Eina_Bool set)
+{
+   E_OBJECT_CHECK(obj);
+   obj->ref_debug = !!set;
 }
 
 EAPI void
