@@ -966,7 +966,11 @@ _win_auto_size_calc(int max, int min)
      {
         int value = *itr * max;
         if (value > min) /* not >=, try a bit larger */
-          return value;
+          {
+             if (min > 10)
+               value = E_CLAMP(value, min, min * 1.5);
+             return value;
+          }
      }
 
    return min;

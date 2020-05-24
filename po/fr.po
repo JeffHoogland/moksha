@@ -1,6 +1,6 @@
 # French translation for Moksha DR17.
 # This file is put in the public domain.
-#
+# 
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,12 +13,12 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-03-22 06:50-0400\n"
+"POT-Creation-Date: 2020-04-30 11:27-0400\n"
 "PO-Revision-Date: 2020-03-31 17:53+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -344,7 +344,7 @@ msgstr "Activer/Désactiver l'épinglage"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:849
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:848
 msgid "Desktop"
 msgstr "Bureau"
 
@@ -4659,7 +4659,7 @@ msgid "E-Mail"
 msgstr "Courriel"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:859
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:857
 msgid "Trash"
 msgstr "Corbeille"
 
@@ -8321,7 +8321,7 @@ msgid "Current Directory"
 msgstr "Dossier courant"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:840
+#: src/modules/places/e_mod_places.c:839
 msgid "Home"
 msgstr "Dossier personnel"
 
@@ -9971,17 +9971,17 @@ msgid "Show in menu"
 msgstr "Afficher dans le menu"
 
 #: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:679
-#: src/modules/places/e_mod_places.c:868
+#: src/modules/places/e_mod_places.c:866
 msgid "Filesystem"
 msgstr "Racine"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:877
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:875
 msgid "Temp"
 msgstr "/tmp"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
 #: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
-#: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:934
+#: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:932
 msgid "Places"
 msgstr "Raccourcis"
 
