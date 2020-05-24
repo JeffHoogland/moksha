@@ -244,12 +244,14 @@ EAPI void
 e_entry_size_min_get(Evas_Object *entry, Evas_Coord *minw, Evas_Coord *minh)
 {
    E_Entry_Smart_Data *sd;
+   int vw;
 
    if (evas_object_smart_smart_get(entry) != _e_entry_smart) SMARTERRNR();
    if ((!entry) || (!(sd = evas_object_smart_data_get(entry))))
      return;
-
-   if (minw) *minw = sd->theme_width + sd->min_width;
+     
+   e_scrollframe_child_viewport_size_get(sd->scroll_object, &vw, NULL);
+   if (minw) *minw = sd->theme_width + vw;
    if (minh) *minh = sd->theme_height + sd->height;
 }
 
