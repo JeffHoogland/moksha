@@ -1,6 +1,6 @@
 # French translation for Moksha DR17.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-04-30 11:27-0400\n"
-"PO-Revision-Date: 2020-03-31 17:53+0200\n"
+"PO-Revision-Date: 2020-06-01 07:06+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-06-17 06:39+0000\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -63,7 +63,7 @@ msgid ""
 msgstr ""
 "<title>Copyright &copy; 2018, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
-"logiciel que nous en avons eu pour l'écrire.<br><br>Pour nous contacter, "
+"logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
 "veuillez visiter :<br><hilight>http://www.enlightenment.org</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -210,7 +210,7 @@ msgstr "Fenêtre : état"
 
 #: src/bin/e_actions.c:3091
 msgid "Sticky Mode Toggle"
-msgstr "Activer/Désactiver l'ancrage"
+msgstr "(Dés)Activer l'ancrage"
 
 #: src/bin/e_actions.c:3095
 msgid "Sticky Mode Enable"
@@ -230,7 +230,7 @@ msgstr "Toujours au-dessus inactif"
 
 #: src/bin/e_actions.c:3113
 msgid "Iconic Mode Toggle"
-msgstr "Activer/Désactiver le mode iconifié"
+msgstr "(Dés)Activer le mode iconifié"
 
 #: src/bin/e_actions.c:3117
 msgid "Iconic Mode Enable"
@@ -238,7 +238,7 @@ msgstr "Activer le mode iconifié"
 
 #: src/bin/e_actions.c:3122
 msgid "Fullscreen Mode Toggle"
-msgstr "Activer/Désactiver le mode plein écran"
+msgstr "(Dés)Activer le mode plein écran"
 
 #: src/bin/e_actions.c:3126
 msgid "Fullscreen Mode Enable"
@@ -283,23 +283,23 @@ msgstr "Maximisation en mode « remplissage »"
 
 #: src/bin/e_actions.c:3159
 msgid "Shade Up Mode Toggle"
-msgstr "Activer/Désactiver l'enroulement vers le haut"
+msgstr "(Dés)Activer l'enroulement vers le haut"
 
 #: src/bin/e_actions.c:3161
 msgid "Shade Down Mode Toggle"
-msgstr "Activer/Désactiver l'enroulement vers le bas"
+msgstr "(Dés)Activer l'enroulement vers le bas"
 
 #: src/bin/e_actions.c:3163
 msgid "Shade Left Mode Toggle"
-msgstr "Activer/Désactiver l'enroulement vers la gauche"
+msgstr "(Dés)Activer l'enroulement vers la gauche"
 
 #: src/bin/e_actions.c:3165
 msgid "Shade Right Mode Toggle"
-msgstr "Activer/Désactiver l'enroulement vers la droite"
+msgstr "(Dés)Activer l'enroulement vers la droite"
 
 #: src/bin/e_actions.c:3167
 msgid "Shade Mode Toggle"
-msgstr "Activer/Désactiver l'enroulement"
+msgstr "(Dés)Activer l'enroulement"
 
 #: src/bin/e_actions.c:3171
 msgid "Set Shaded State"
@@ -311,7 +311,7 @@ msgstr "syntaxe : \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3176
 msgid "Toggle Borderless State"
-msgstr "Activer/Désactiver le mode sans bordure"
+msgstr "(Dés)Activer le mode sans bordure"
 
 #: src/bin/e_actions.c:3181
 msgid "Set Border"
@@ -323,7 +323,7 @@ msgstr "Circuler parmi les bordures"
 
 #: src/bin/e_actions.c:3193
 msgid "Toggle Pinned State"
-msgstr "Activer/Désactiver l'épinglage"
+msgstr "(Dés)Activer l'épinglage"
 
 #: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
 #: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3212
@@ -713,7 +713,7 @@ msgstr "Relancer"
 
 #: src/bin/e_actions.c:3477
 msgid "Exit Now"
-msgstr "Quitter de suite"
+msgstr "Quitter directement"
 
 #: src/bin/e_actions.c:3481 src/bin/e_actions.c:3486
 msgid "Moksha : Mode"
@@ -721,11 +721,11 @@ msgstr "Moksha : mode"
 
 #: src/bin/e_actions.c:3482
 msgid "Presentation Mode Toggle"
-msgstr "Activer/Désactiver le mode présentation"
+msgstr "(Dés)Activer le mode présentation"
 
 #: src/bin/e_actions.c:3487
 msgid "Offline Mode Toggle"
-msgstr "Activer/Désactiver le mode hors-ligne"
+msgstr "(Dés)Activer le mode hors-ligne"
 
 #: src/bin/e_actions.c:3491 src/bin/e_actions.c:3495 src/bin/e_actions.c:3499
 msgid "Moksha : Module"
@@ -768,7 +768,7 @@ msgstr "Fermer la session"
 
 #: src/bin/e_actions.c:3508
 msgid "Power Off Now"
-msgstr "Éteindre immédiatement"
+msgstr "Éteindre directement"
 
 #: src/bin/e_actions.c:3512
 msgid "Power Off"
@@ -1217,7 +1217,7 @@ msgstr "Options"
 #: src/bin/e_eap_editor.c:822
 #, c-format
 msgid "Select an Icon for '%s'"
-msgstr "Choisir une icône pour '%s'"
+msgstr "Choisir une icône pour « %s »"
 
 #: src/bin/e_eap_editor.c:888
 msgid "Select an Executable"
@@ -1743,7 +1743,7 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
+"Voulez-vous vraiment supprimer<br>le %d fichier sélectionné dans :"
 "<br><hilight>%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
@@ -1974,9 +1974,7 @@ msgstr "Moksha n'a pu importer cette image<br>à cause d'une erreur de copie."
 msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
-msgstr ""
-"Moksha n'a pu importer cette image<br><br>Êtes-vous sûr qu'il s'agit d'une "
-"image valide ?"
+msgstr "Moksha n'a pu importer cette image<br><br>Est-ce un fichier valide ?"
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
@@ -2638,7 +2636,7 @@ msgstr "Type de la fenêtre"
 
 #: src/bin/e_int_border_remember.c:683
 msgid "wildcard matches are allowed"
-msgstr "Caractères jokers autorisés"
+msgstr "les métacaractères sont autorisés"
 
 #: src/bin/e_int_border_remember.c:685
 msgid "Transience"
@@ -2835,7 +2833,7 @@ msgstr "Rayons"
 
 #: src/bin/e_int_menus.c:351
 msgid "Show/Hide All Windows"
-msgstr "Voir/Cacher les fenêtres"
+msgstr "Voir / Cacher les fenêtres"
 
 #: src/bin/e_int_menus.c:727
 msgid "No applications"
@@ -4570,7 +4568,7 @@ msgstr "Jours"
 
 #: src/modules/clock/e_mod_main.c:892
 msgid "Toggle calendar"
-msgstr "Activer/Désactiver le calendrier"
+msgstr "(Dés)Activer le calendrier"
 
 #: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:284
 #: src/modules/conf/e_mod_main.c:297
@@ -6886,7 +6884,7 @@ msgstr "Thème des applications"
 #: src/modules/conf_theme/e_int_config_xsettings.c:496
 #: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Match Moksha theme if possible"
-msgstr "Établir des correspondances avec le thème de Moksha"
+msgstr "Suivre spécifications du thème actuel de Moksha"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:505
 msgid "Enable X Application Settings"
@@ -7440,7 +7438,7 @@ msgstr "Aucune sélection"
 
 #: src/modules/cpufreq/e_mod_main.c:133
 msgid "Cpufreq"
-msgstr "FréqCPU"
+msgstr "Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:189 src/modules/cpufreq/e_mod_config.c:93
 msgid "Fast (4 ticks)"
@@ -7560,19 +7558,19 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:1459
 msgid "Cpufreq Error"
-msgstr "Erreur : FréqCPU"
+msgstr "Erreur : Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1460
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"L'utilitaire freqset de FréqCPU est introuvable<ps/>dans le dossier du "
+"L'utilitaire freqset de Cpufreq est introuvable<ps/>dans le dossier du "
 "module (échec de stat)"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
 msgid "Cpufreq Permissions Error"
-msgstr "Erreur des permissions de FréqCPU"
+msgstr "Erreur des permissions de Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1468
 #, c-format
@@ -7581,7 +7579,7 @@ msgid ""
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"L'utilitaire freqset du module FréqCPU n'appartient pas<ps/>à root ou les "
+"L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
 "commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
 "+s,a+x %s<ps/>"
@@ -7687,7 +7685,7 @@ msgstr "Défilement animé"
 
 #: src/modules/everything/evry_config.c:474
 msgid "Up/Down select next item in icon view"
-msgstr "Flèche haut/bas va à l'élément suivant dans la vue en icônes"
+msgstr "Flèche haut / bas va à l'élément suivant dans la vue en icônes"
 
 #: src/modules/everything/evry_config.c:483
 msgid "Hide input when inactive"
@@ -7945,7 +7943,7 @@ msgstr "Aller vers la fenêtre"
 
 #: src/modules/everything/evry_plug_windows.c:445
 msgid "Toggle Fullscreen"
-msgstr "Activer/Désactiver le plein écran"
+msgstr "(Dés)Activer le plein écran"
 
 #: src/modules/everything/evry_plug_windows.c:459
 msgid "Send to Desktop"
@@ -7984,23 +7982,24 @@ msgid ""
 msgstr ""
 "  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les "
 "premières lettres de ce que vous recherchez. <br>  Utilisez les touches "
-"<hilight>&lt;Flèche haut/bas&gt;</hilight> pour choisir dans la liste.<br>  "
-"Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner une "
-"action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne "
+"<hilight>&lt;Flèche haut / bas&gt;</hilight> pour choisir dans la liste."
+"<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner "
+"une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne "
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
 "<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
 "+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un selecteur à l'autre<br>    <hilight>&lt;Ctrl"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
 "+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
 "<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
-"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche/droite&gt;</hilight> circule "
-"parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut/bas&gt;</hilight> va "
-"au premier/dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute "
-"le mode d'affichage (quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</"
-"hilight> commute le mode d'affichage de la liste<br>    <hilight>&lt;Ctrl"
-"+3&gt;</hilight> commute le mode d'affichage des vignettes."
+"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
+"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
+"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
+"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
+"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
+"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
+"des vignettes."
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8285,7 +8284,7 @@ msgstr "%1.1f"
 
 #: src/modules/fileman/e_mod_config.c:481
 msgid "Tooltip size (Screen percentage)"
-msgstr "Taille de l'infobulle (pourcentage de l'écran)"
+msgstr "Taille de l'infobulle"
 
 #: src/modules/fileman/e_mod_config.c:483
 #, c-format
@@ -8314,7 +8313,7 @@ msgstr "Afficher"
 
 #: src/modules/fileman/e_mod_menu.c:320
 msgid "GTK Bookmarks"
-msgstr "Marques-pages GTK"
+msgstr "Signets GTK"
 
 #: src/modules/fileman/e_mod_menu.c:415
 msgid "Current Directory"
@@ -8377,7 +8376,7 @@ msgstr "Options du fond"
 
 #: src/modules/gadman/e_mod_gadman.c:991
 msgid "Begin move/resize"
-msgstr "Déplacer/Redimensionner"
+msgstr "Déplacer / Redimensionner"
 
 #: src/modules/gadman/e_mod_gadman.c:1021
 msgid "Free"
@@ -8393,7 +8392,7 @@ msgstr "Ajouter un autre gadget"
 
 #: src/modules/gadman/e_mod_main.c:83
 msgid "Show/hide gadgets"
-msgstr "Voir/Cacher les gadgets"
+msgstr "Voir / Cacher les gadgets"
 
 #: src/modules/gadman/e_mod_main.c:183
 msgid "Change Gadgets"
@@ -8681,7 +8680,7 @@ msgstr "IBox"
 
 #: src/modules/pager/e_mod_config.c:76
 msgid "Pager Settings"
-msgstr "Configuration de la miniature des bureaux"
+msgstr "Configuration de la miniature des bureaux (Pager)"
 
 #: src/modules/pager/e_mod_config.c:130 src/modules/pager/e_mod_config.c:189
 msgid "Flip desktop on mouse wheel"
@@ -8950,7 +8949,7 @@ msgstr "Mises à jour"
 
 #: src/modules/wizard/page_170.c:26
 msgid "Check for available updates"
-msgstr "Vérification de mise à jour"
+msgstr "Vérifier la disponibilité de mises à jour"
 
 #: src/modules/wizard/page_170.c:32
 msgid ""
@@ -9039,17 +9038,17 @@ msgstr "Masquer en cas de perte du focus"
 
 #: src/modules/quickaccess/e_mod_config.c:564
 msgid "Quickaccess Settings"
-msgstr "Paramètres des accès rapides"
+msgstr "Paramètres d'Accès rapide (Quickaccess)"
 
 #: src/modules/quickaccess/e_mod_main.c:37
 #: src/modules/quickaccess/e_mod_main.c:47
 #: src/modules/quickaccess/e_mod_quickaccess.c:7
 msgid "Quickaccess"
-msgstr "Accès rapides"
+msgstr "Accès rapide"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:8
 msgid "Toggle Visibility"
-msgstr "Activer/Désactiver la visibilité"
+msgstr "(Dés)Activer la visibilité"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:9
 msgid "Add Quickaccess For Current Window"
@@ -9089,8 +9088,8 @@ msgstr ""
 "l'application sélectionnée n'est pas un terminal, soit<br>l'option de la "
 "commande permettant de changer le nom de la fenêtre est inconnue."
 "<br>N'hésitez pas à soumettre un rapport de bogue si le terminal en "
-"question<br>offre bien la possibilité de changer le nom de sa fenêtre. "
-"<br>Ou alors, vous pouvez ajouter un data.item à"
+"question<br>offre bien la possibilité de changer le nom de sa fenêtre.<br>Ou "
+"alors, vous pouvez ajouter un data.item à"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9127,9 +9126,9 @@ msgid ""
 "<br>Please choose an action to take:"
 msgstr ""
 "La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br> ne peut être trouvée dans la base de données des<br>applications des "
-"accès rapides.<br> Cela signifie que soit l'application y est inconnue<br>ou "
-"qu'il n'est pas sensé de l'utiliser avec cette option.<br> Veuillez choisir "
+"%s<br>ne peut être trouvée dans la base de données des<br>applications des "
+"accès rapides.<br>Cela signifie que soit l'application y est inconnue<br>ou "
+"qu'il n'est pas sensé de l'utiliser avec cette option.<br>Veuillez choisir "
 "une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
@@ -9252,7 +9251,7 @@ msgstr "Démo des accès rapides"
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
 msgstr ""
-"Voici la boite de dialogue utilisée dans le tutoriel des accès rapides."
+"C'est le dialogue de démonstration utilisé pour le tuto des accès rapides"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
@@ -9285,7 +9284,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
-msgstr "nom/identifiant de l'accès rapide"
+msgstr "nom / identifiant de l'accès rapide"
 
 #: src/modules/systray/e_mod_main.c:489 src/modules/systray/e_mod_main.c:905
 msgid "Systray Error"
@@ -9418,7 +9417,7 @@ msgstr "Erreur : impossible d'allouer de la mémoire"
 #: src/modules/shot/e_mod_main.c:677
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
-msgstr "Impossible d'allouer de la mémoire pour l'image: %s"
+msgstr "Impossible d'allouer de la mémoire pour l'image : %s"
 
 #: src/modules/shot/e_mod_main.c:684
 msgid "Error - Can't read picture"
@@ -9520,7 +9519,7 @@ msgstr " Afficher le dialogue du mode de capture"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Screenshot guide (quality/share/save)"
-msgstr " Guide de capture d'écran (qualité/partage/enregistrement)"
+msgstr " Guide de capture d'écran (qualité / partage / enregistrement)"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Show notifications"
@@ -9624,7 +9623,7 @@ msgstr "Pavage"
 
 #: src/modules/tiling/e_mod_tiling.c:4089
 msgid "Toggle floating"
-msgstr "Activer/Désactiver la fluctuation"
+msgstr "(Dés)Activer le mode flottant"
 
 #: src/modules/tiling/e_mod_tiling.c:4092
 msgid "Add a stack"
@@ -9788,7 +9787,7 @@ msgstr "Urgence"
 
 #: src/modules/notification/e_mod_config.c:94
 msgid "Levels of urgency to display:"
-msgstr "Niveaux d'urgence à afficher:"
+msgstr "Niveaux d'urgence à afficher :"
 
 #: src/modules/notification/e_mod_config.c:100
 msgid "Critical"
@@ -10005,7 +10004,7 @@ msgstr "Avertissement de Raccourcis !"
 #: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr "L' occupation du disque ''%s'' est de %d %% !"
+msgstr "L'occupation du disque ''%s'' est de %d %% !"
 
 #: src/modules/places/e_mod_places.c:661
 msgid ""
@@ -10038,7 +10037,7 @@ msgstr "éjecter"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
-msgstr "Contrôle du volume EFL"
+msgstr "Contrôle du volume Efl"
 
 #: src/modules/mixer/bin/main_window.c:125
 msgid "Playback"
