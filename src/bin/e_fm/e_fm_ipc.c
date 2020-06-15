@@ -767,7 +767,7 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
          relative = p;
          p += strlen(relative) + 1;
 
-         after = *((int *)p);
+         memcpy(&after, p, sizeof(int));
 
          _e_fm_ipc_reorder(file, dst, relative, after);
       }
