@@ -3132,7 +3132,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
 
          if (!e->data) return;
 
-#define UP(value, type) (value) = *(type *)p; p += sizeof(type)
+#define UP(value, type) (value) = *(type *)(void *)p; p += sizeof(type)
          UP(percent, int);
          UP(seconds, int);
          UP(done, off_t);
