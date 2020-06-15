@@ -9,7 +9,7 @@
 typedef struct MD5Context {
 	uint32_t buf[4];
 	uint32_t bits[2];
-	unsigned char in[64];
+	uint32_t  in[64];
 } MD5_CTX;
 
 extern void   MD5Init(MD5_CTX *context);
