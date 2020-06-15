@@ -560,7 +560,7 @@ _e_fm_op_stdin_data(void *data __UNUSED__, Ecore_Fd_Handler *fd_handler)
              begin = buf;
 
              /* Check magic. */
-             if (*((int *)buf) != E_FM_OP_MAGIC)
+             if (*((int *)(void *)buf) != E_FM_OP_MAGIC)
                {
                   E_FM_OP_DEBUG("Error while reading from STDIN: magic is not correct!\n");
                   break;
@@ -976,9 +976,9 @@ _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...)
         vsnprintf(str, READBUFSIZE - 3 * sizeof(int), fmt, ap);
         len = strlen(str);
 
-        *((int *)buf) = E_FM_OP_MAGIC;
-        *((int *)(buf + sizeof(int))) = type;
-        *((int *)(buf + (2 * sizeof(int)))) = len + 1;
+        *((int *)(void *)buf) = E_FM_OP_MAGIC;
+        *((int *)(void *)(buf + sizeof(int))) = type;
+        *((int *)(void *)(buf + (2 * sizeof(int)))) = len + 1;
 
         if (write(STDOUT_FILENO, buf, (3 * sizeof(int)) + len + 1) < 0)
           perror("write");
