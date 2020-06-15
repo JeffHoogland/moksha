@@ -812,7 +812,6 @@ linux_sys_class_power_supply_check(void)
                   if (sysev->present) have_battery = 1;
                   if (charging)
                     {
-                       pwr_now = pwr_now;
                        have_power = 1;
                        if (time_to_full >= 0)
                          {
