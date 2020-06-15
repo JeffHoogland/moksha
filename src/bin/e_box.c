@@ -67,13 +67,6 @@ static void        _e_box_smart_clip_unset(Evas_Object *obj);
 static Evas_Smart *_e_smart = NULL;
 
 static inline Evas_Object *
-_e_box_item_object_get(E_Box_Item *bi)
-{
-   if (!bi) return NULL;
-   return bi->obj;
-}
-
-static inline Evas_Object *
 _e_box_item_nth_get(E_Smart_Data *sd, unsigned int n)
 {
    unsigned int x;
