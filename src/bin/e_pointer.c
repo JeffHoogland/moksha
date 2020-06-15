@@ -115,7 +115,8 @@ e_pointers_size_set(int size)
 
              p->pixels = realloc(p->pixels, p->w * p->h * sizeof(int));
 
-             einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+             einfo = (Evas_Engine_Info_Buffer *)(void *)
+               evas_engine_info_get(p->evas);
              if (einfo)
                {
                   einfo->info.dest_buffer = p->pixels;
@@ -271,7 +272,8 @@ _e_pointer_canvas_add(E_Pointer *p)
         _e_pointer_canvas_del(p);
         return;
      }
-   einfo = (Evas_Engine_Info_Buffer *)evas_engine_info_get(p->evas);
+   einfo = (Evas_Engine_Info_Buffer *)(void *)
+     evas_engine_info_get(p->evas);
    if (!einfo)
      {
         _e_pointer_canvas_del(p);
