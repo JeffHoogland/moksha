@@ -250,7 +250,7 @@ e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name)
    e_xkb_flag_file_get(buf, sizeof(buf), name);
    e_icon_file_set(eicon, buf);
    e_icon_size_get(eicon, &w, &h);
-   evas_object_size_hint_aspect_set(eicon, EDJE_ASPECT_CONTROL_BOTH, w, h);
+   evas_object_size_hint_aspect_set(eicon, EVAS_ASPECT_CONTROL_BOTH,, w, h);
 }
 
 EAPI void
