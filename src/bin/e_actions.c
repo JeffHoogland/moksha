@@ -1229,7 +1229,7 @@ window_jump_to(const char *params)
    EINA_LIST_FOREACH(l, ll, bd)
      {
         if (!bd->client.icccm.name) continue;
-        if (strcmp(bd->client.icccm.name, params)) continue;
+        if (strcasecmp(bd->client.icccm.name, params)) continue;
         /* Jump to the screen the window is on if it isn't on the current screen but
          * only if we don't have to warp the pointer anyway */
         current_zone = e_util_zone_current_get(e_manager_current_get());
