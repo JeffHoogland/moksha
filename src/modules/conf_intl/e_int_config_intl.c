@@ -658,7 +658,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
              if (locale_parts)
                {
-                  char *basic_language;
+                  char *basic_language = NULL;
 
                   if (locale_parts->mask & E_INTL_LOC_REGION)
                     basic_language = e_intl_locale_parts_combine(locale_parts, E_INTL_LOC_LANG | E_INTL_LOC_REGION);
