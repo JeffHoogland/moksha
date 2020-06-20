@@ -3185,6 +3185,7 @@ e_border_iconify(E_Border *bd)
    if (!bd->iconic)
      {
         bd->iconic = 1;
+        bd->take_focus = 0;
         e_border_hide(bd, 1);
         if (bd->fullscreen) bd->desk->fullscreen_borders--;
         edje_object_signal_emit(bd->bg_object, "e,action,iconify", "e");
