@@ -8,7 +8,7 @@
 
 // define here to avoid needing x includes directly.
 #define C16                 unsigned short
-#define C32                 unsigned long
+#define C32                 unsigned int
 
 #define RETRY_TIMEOUT 2.0
 
