@@ -93,7 +93,7 @@ return EINA_FALSE;
 
 Eina_Bool _timer_cb(void *data)
 {
-   if (shot_conf->count>0)
+   if (shot_conf->count > 0)
      {
        if (shot_conf->notify)
          _notify(shot_conf->count,_("Screenshot in: "),"... ",1024,1);
@@ -103,7 +103,7 @@ Eina_Bool _timer_cb(void *data)
      }
    else
      {
-       timer = ecore_timer_add(0.2, _shot_no_delay, data);
+       timer = ecore_timer_add(1.0, _shot_no_delay, data);
        return ECORE_CALLBACK_DONE;
      }
 }
@@ -111,7 +111,7 @@ Eina_Bool _timer_cb(void *data)
 static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
-   _notify(1,_("Screenshot stored in"),shot_conf->path,3000,0);
+   _notify(1,_("Screenshot stored in"), shot_conf->path, 3000, 0);
    timer = NULL;
    return ECORE_CALLBACK_DONE;
 }
@@ -1061,7 +1061,7 @@ _shot(E_Zone *zone, Eina_Bool instant)
    if (shot_conf->delay > 0)
        timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
    else
-       timer = ecore_timer_add(0.2, _shot_no_delay, zone);
+       timer = ecore_timer_add(1.0, _shot_no_delay, zone);
 }
 
 
@@ -1070,7 +1070,6 @@ _e_mod_menu_border_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED
 {
    _shot_border(data);
 }
-
 
 static void
 _e_mod_action_border_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
