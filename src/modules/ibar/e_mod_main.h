@@ -22,6 +22,7 @@ struct _Config_Item
    int show_label;
    int eap_label;
    int lock_move;
+   int focus_flash;
    unsigned char dont_track_launch;
 };
 

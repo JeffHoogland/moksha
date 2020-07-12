@@ -5,6 +5,7 @@ group "IBar_Config" struct {
             value "dir" string: "default";
             value "show_label" int: 1;
             value "eap_label" int: 0;
+            value "focus_flash" int: 1;
             value "lock_move" int: 0;
             value "dont_track_launch" uchar: 0;
         }
@@ -13,6 +14,7 @@ group "IBar_Config" struct {
             value "dir" string: "default";
             value "show_label" int: 1;
             value "eap_label" int: 0;
+            value "focus_flash" int: 1;
             value "lock_move" int: 0;
             value "dont_track_launch" uchar: 0;
         }
@@ -21,6 +23,7 @@ group "IBar_Config" struct {
             value "dir" string: "default";
             value "show_label" int: 1;
             value "eap_label" int: 0;
+            value "focus_flash" int: 1;
             value "lock_move" int: 0;
             value "dont_track_launch" uchar: 0;
         }
