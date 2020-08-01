@@ -196,8 +196,13 @@ _volume_increase_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
 
    Sink *s = mixer_context->sink_default;
    pa_cvolume v = s->volume;
-   pa_cvolume_inc(&v, VOLUME_STEP);
-   epulse_sink_volume_set(s->index, v);
+   
+   //volume max limit
+   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) < 153) 
+   {
+     pa_cvolume_inc(&v, VOLUME_STEP);
+     epulse_sink_volume_set(s->index, v);
+   }
 }
 
 static void
