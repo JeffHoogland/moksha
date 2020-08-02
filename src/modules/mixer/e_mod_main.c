@@ -101,7 +101,6 @@ struct _Instance
 
 static void     _mixer_popup_input_window_create(Instance *inst);
 static void     _mixer_popup_input_window_destroy(Instance *inst);
-static void     _mixer_popup_del(Instance *inst);
 static void     _popup_del(Instance *inst);
 
 static Context  *mixer_context = NULL;
@@ -284,10 +283,16 @@ _actions_unregister(void)
 static void
 _popup_del(Instance *inst)
 {
-   inst->slider = NULL;
-   inst->check = NULL;
+   if (!inst->popup) return;
+   if (inst->popup)
+     {
+       inst->slider = NULL;
+       inst->check = NULL;
 
-   E_FN_DEL(e_object_del, inst->popup);
+       _mixer_popup_input_window_destroy(inst);
+       e_object_del(E_OBJECT(inst->popup));
+       inst->popup = NULL;
+     }
 }
 
 static void
@@ -810,7 +815,7 @@ _mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *eve
    if (ev->window != inst->input.win)
      return ECORE_CALLBACK_PASS_ON;
 
-   _mixer_popup_del(inst);
+   _popup_del(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -827,7 +832,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
-      _mixer_popup_del(inst);
+      _popup_del(inst);
    else if (!strcmp(keysym, "m")) 
      {
        if (inst->mute)
@@ -842,6 +847,7 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
 static void
 _mixer_popup_input_window_destroy(Instance *inst)
 {
+   if (!inst->input.win) return;
    e_grabinput_release(0, inst->input.win);
    ecore_x_window_free(inst->input.win);
    inst->input.win = 0;
@@ -886,12 +892,4 @@ _mixer_popup_input_window_create(Instance *inst)
 
      inst->input.win = w;
    e_grabinput_get(0, 0, inst->input.win);
-}
-
-
-static void
-_mixer_popup_del(Instance *inst)
-{
-   _mixer_popup_input_window_destroy(inst);
-   e_object_del(E_OBJECT(inst->popup));
 }
