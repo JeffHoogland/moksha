@@ -112,6 +112,8 @@ struct _Instance
 static void     _mixer_popup_input_window_create(Instance *inst);
 static void     _mixer_popup_input_window_destroy(Instance *inst);
 static void     _mixer_popup_del(Instance *inst);
+static void     _popup_del(Instance *inst);
+
 static Context  *mixer_context = NULL;
 
 static void
@@ -151,8 +153,6 @@ _mixer_popup_update(Instance *inst, int mute, int vol)
    e_widget_check_checked_set(inst->check, mute);
    e_slider_value_set(inst->slider, vol);
 }
-
-static void _popup_del(Instance *inst);
 
 static void
 _mixer_gadget_update(void)
@@ -825,6 +825,30 @@ _mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *eve
    return ECORE_CALLBACK_PASS_ON;
 }
 
+static Eina_Bool
+_mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
+{
+   Ecore_Event_Key *ev = event;
+   Instance *inst = data;
+   const char *keysym;
+   
+   if (ev->window != inst->ui.input.win) 
+     return ECORE_CALLBACK_PASS_ON; 
+   
+   keysym = ev->key;
+   if (!strcmp(keysym, "Escape"))
+      _mixer_popup_del(inst);
+   else if (!strcmp(keysym, "m")) 
+     {
+       if (inst->mute)
+         _check_changed_cb(NULL, NULL, NULL);
+       else
+         _check_changed_cb(NULL, NULL, NULL);
+     }
+      
+   return ECORE_CALLBACK_PASS_ON;   
+}
+
 static void
 _mixer_popup_input_window_destroy(Instance *inst)
 {
@@ -865,6 +889,10 @@ _mixer_popup_input_window_create(Instance *inst)
    inst->ui.input.wheel =
      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
                              _mixer_popup_input_window_mouse_up_cb, inst);
+   
+   inst->ui.input.key_down =
+     ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+                             _mixer_popup_input_window_key_down_cb , inst);
 
      inst->ui.input.win = w;
    e_grabinput_get(0, 0, inst->ui.input.win);
