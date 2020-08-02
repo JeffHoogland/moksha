@@ -1,3 +1,11 @@
+moksha (20200802bodhi30.3.1) bionic; urgency=low
+
+  *  cpufeq seg fault fix
+  *  Restrict vol level to sane default 
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 02 Aug 2020 12:44:08 +0004
+
+
 moksha (20200714bodhi30.3.1) bionic; urgency=low
 
   *  Moksha 0.3.1 
