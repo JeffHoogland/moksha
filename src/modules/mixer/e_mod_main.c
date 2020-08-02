@@ -111,6 +111,7 @@ struct _Instance
 
 static void     _mixer_popup_input_window_create(Instance *inst);
 static void     _mixer_popup_input_window_destroy(Instance *inst);
+static void     _mixer_popup_del(Instance *inst);
 static Context  *mixer_context = NULL;
 
 static void
@@ -809,9 +810,6 @@ e_modapi_save(E_Module *m EINA_UNUSED)
 {
    return 1;
 }
-
-
-static void _mixer_popup_del(Instance *inst);
 
 static Eina_Bool
 _mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
