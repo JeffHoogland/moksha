@@ -432,7 +432,7 @@ _popup_new(Instance *inst)
 
    e_widget_size_min_get(list, &mw, &mh);
    if (mh < 208) mh = 208;
-   e_widget_size_min_set(list, 208, mh);
+   e_widget_size_min_set(list, 275, mh);
 
    e_gadcon_popup_content_set(inst->popup, list);
 
