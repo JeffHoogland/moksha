@@ -17,7 +17,7 @@ struct _E_Config_Dialog_Data
 #endif
    struct 
      {
-        int low, high;
+        int low, high, show_alert;
      } temp;
 
    int sensor;
@@ -118,6 +118,7 @@ _fill_data_tempget(E_Config_Dialog_Data *cfdata)
    cfdata->poll.interval = cfdata->inst->poll_interval;
    cfdata->temp.low = cfdata->inst->low;
    cfdata->temp.high = cfdata->inst->high;
+   cfdata->temp.show_alert = cfdata->inst->show_alert;
    cfdata->sensor = 0;
 #ifdef HAVE_EEZE
    cfdata->backend = cfdata->inst->backend;
@@ -279,6 +280,10 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
+   ow = e_widget_check_add(evas, _("Show high temperature notification"),
+                                 &(cfdata->temp.show_alert));
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   
    ow = e_widget_label_add(evas, _("High Temperature"));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    if (cfdata->unit_method == FAHRENHEIT)
@@ -301,10 +306,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
      cfdata->o_low = 
      e_widget_slider_add(evas, 1, 0, _("%1.0f C"), 0, 95, 5, 0, 
                          NULL, &(cfdata->temp.low), 150);
-   e_widget_list_object_append(ol, cfdata->o_low, 1, 1, 0.5);
+   e_widget_list_object_append(ol, cfdata->o_low, 1, 1, 0.5);                      
+  
 
    e_widget_toolbook_page_append(otb, NULL, _("Temperatures"), ol, 
                                  1, 0, 1, 0, 0.5, 0.0);
+          
 #ifdef HAVE_EEZE
    ol = e_widget_list_add(evas, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->backend));
@@ -326,6 +333,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    cfdata->inst->units = cfdata->unit_method;
    cfdata->inst->low = cfdata->temp.low;
    cfdata->inst->high = cfdata->temp.high;
+   cfdata->inst->show_alert = cfdata->temp.show_alert;
 #ifdef HAVE_EEZE
    cfdata->inst->backend = cfdata->backend;
 #endif

@@ -1,5 +1,8 @@
 #include "e.h"
 #include "e_mod_main.h"
+#ifdef HAVE_ENOTIFY
+#include "E_Notify.h"
+#endif
 
 #if defined(__FreeBSD__) || defined(__DragonFly__)
 #include <sys/types.h>
@@ -64,6 +67,31 @@ _temperature_thread_free(Tempthread *tth)
 }
 
 static void
+_temperature_alert_notification(Config_Face *inst)
+{
+#ifdef HAVE_ENOTIFY
+   static E_Notification *notification;
+   if (inst->show_alert)
+     {
+        if (notification) return;
+        notification = e_notification_full_new
+          (
+            _("Temperature"),
+            0,
+            "dialog-warning",
+            _("High CPU temperature!"),
+            _("Check your device or settings!"), 
+            5000
+            );
+        e_notification_send(notification, NULL, NULL);
+        e_notification_unref(notification);
+        notification = NULL;
+        return;
+     }
+#endif
+}
+
+static void
 _temperature_face_level_set(Config_Face *inst, double level)
 {
    Edje_Message_Float msg;
@@ -95,11 +123,18 @@ _temperature_apply(Config_Face *inst, int temp)
           snprintf(buf, sizeof(buf), "%i°F", temp);
         else
           snprintf(buf, sizeof(buf), "%i°C", temp);
-
+        
         _temperature_face_level_set(inst,
                                     (double)(temp - inst->low) /
                                     (double)(inst->high - inst->low));
         edje_object_part_text_set(inst->o_temp, "e.text.reading", buf);
+        if (temp > inst->high)
+        { 
+          _temperature_alert_notification(inst);
+          edje_object_signal_emit(inst->o_temp, "e,state,high", "e");
+        }
+        else
+          edje_object_signal_emit(inst->o_temp, "e,state,ok", "e");
      }
    else
      {
@@ -141,6 +176,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
         inst->poll_interval = 128;
         inst->low = 30;
         inst->high = 80;
+        inst->show_alert = 1;
         inst->sensor_type = SENSOR_TYPE_NONE;
         inst->sensor_name = NULL;
         inst->units = CELSIUS;
@@ -237,6 +273,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
    inst->poll_interval = 128;
    inst->low = 30;
    inst->high = 80;
+   inst->show_alert = 1;
    inst->sensor_type = SENSOR_TYPE_NONE;
    inst->sensor_name = NULL;
    inst->units = CELSIUS;
@@ -409,6 +446,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, poll_interval, INT);
    E_CONFIG_VAL(D, T, low, INT);
    E_CONFIG_VAL(D, T, high, INT);
+   E_CONFIG_VAL(D, T, show_alert, INT);
    E_CONFIG_VAL(D, T, sensor_type, INT);
 #ifdef HAVE_EEZE
    E_CONFIG_VAL(D, T, backend, INT);

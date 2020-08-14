@@ -2,6 +2,7 @@ group { name: "e/modules/temperature/main";
    images.image: "therm_content.png" COMP;
    images.image: "therm_shadow.png" COMP;
    images.image: "therm_shine.png" COMP;
+   images.image: "therm_content_high.png" COMP;
    min: 16 16;
    max: 128 128;
    script {
@@ -30,6 +31,20 @@ group { name: "e/modules/temperature/main";
             image.normal: "therm_content.png";
          }
       }
+      part { name: "temp_high";
+         clip_to: "temp_clip";
+          description { state: "default" 0.0;
+            rel1.to: "shadow";
+            rel2.to: "shadow";
+            image.normal: "therm_content_high.png";
+            visible: 0;
+         }
+          description { state: "high" 0.0;
+            inherit: "default";
+            visible: 1;
+         }
+      }
+
       part { name: "overlay";
          description { state: "default" 0.0;
             rel1.to: "shadow";
@@ -71,6 +86,9 @@ group { name: "e/modules/temperature/main";
          description { state: "default" 0.0;
             rel1.to_y: "temp_top";
          }
+         description { state: "high" 0.0;
+            color: 0 0 0 0;
+         }
       }
       part { name: "temp_top"; type: SPACER;
          dragable.x: 0 0 0;
@@ -85,12 +103,13 @@ group { name: "e/modules/temperature/main";
             rel2.relative: 1.0 0.9;
          }
       }
-      part { name: "over"; type: RECT;
+     part { name: "over"; type: RECT;
          description { state: "default" 0.0;
             color: 0 0 0 0;
          }
       }
-   }
+ }
+   
    programs {
       program {
          signal: "mouse,in"; source: "over";
@@ -114,6 +133,37 @@ group { name: "e/modules/temperature/main";
          action: STATE_SET "faded" 0.0;
          target: "fade_clip";
       }
+      program {
+         signal: "e,state,high"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "temp_high";
+         target: "temp_clip";
+         after: "pulse1";
+      }
+      program {
+         name: "pulse1"; 
+         action: STATE_SET "high" 0.0;
+         transition: DECELERATE 0.5;
+         target: "temp_high";
+         target: "temp_clip";
+         after: "pulse2";
+      }
+       program {
+         name: "pulse2"; 
+         action: STATE_SET "default" 0.0;
+         transition: ACCELERATE 0.5;
+         target: "temp_high";
+         target: "temp_clip";
+         after: "pulse1";
+      }
+      program {
+         signal: "e,state,ok"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "temp";
+         target: "temp_high";
+         target: "temp_clip";
+      }
+      
    }
 }
 
