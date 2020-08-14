@@ -280,7 +280,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _("Show high temperature notification"),
+   ow = e_widget_check_add(evas, _("High temperature notification"),
                                  &(cfdata->temp.show_alert));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    
