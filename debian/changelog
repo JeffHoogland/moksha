@@ -1,3 +1,9 @@
+moksha (20200816bodhi30.3.1) bionic; urgency=low
+
+  *  Temp module notification
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 16 Aug 2020 12:51:50 +0004
+
 moksha (20200802bodhi30.3.1) bionic; urgency=low
 
   *  cpufeq seg fault fix
