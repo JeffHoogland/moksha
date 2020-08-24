@@ -193,7 +193,6 @@ notification_popup_notify(E_Notification *n,
 {
    double timeout;
    Popup_Data *popup = NULL;
-   Popup_Items *popup_items = NULL;
    
    char *esc;
    char urgency;
@@ -267,7 +266,7 @@ notification_popup_notify(E_Notification *n,
    return 1;
 }
 
-/* not implemented yet
+/* not implemented yet 
 static int
 write_history(Popup_Data *popup)
 {
@@ -803,7 +802,6 @@ static void
 _notification_format_message(Popup_Data *popup)
 {
    Evas_Object *o = popup->theme;
-   const char *icon_path = e_notification_app_icon_get(popup->notif);
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
    edje_object_part_text_unescaped_set(o, "notification.text.title", title);
