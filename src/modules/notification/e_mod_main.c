@@ -16,7 +16,7 @@ static int              _notification_cb_notify(E_Notification_Daemon *daemon, E
 static void             _notification_cb_close_notification(E_Notification_Daemon *daemon,
                                                 unsigned int id);
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static const char       *read_history_eet(const char *item_key);
+//~ static const char       *read_history_eet(const char *item_key);
 static void             _clear_menu(void);
 
 /* Config function protos */
@@ -127,6 +127,7 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class)
    return buf;
 }
 
+/* not implememnted yet
 static const char *
 read_history_eet(const char *item_key)
 {
@@ -141,6 +142,7 @@ const char * string;
   eet_close(history_file);
 return string; 
 }
+*/
 
 static void
 _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)

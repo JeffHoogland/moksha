@@ -13,14 +13,13 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
-static int         write_history(Popup_Data *popup);
+//~ static int         write_history(Popup_Data *popup);
 static void        list_add_item(Popup_Data *popup, Popup_Items *items);
 /* this function should be external in edje for use in cases such as this module.
  *
  * happily, it was decided that the function would not be external so that it could
  * be duplicated into the module in full.
  */
-static int count = 0;
 
 static int
 _text_escape(Eina_Strbuf *txt, const char *text)
@@ -268,6 +267,7 @@ notification_popup_notify(E_Notification *n,
    return 1;
 }
 
+/* not implemented yet
 static int
 write_history(Popup_Data *popup)
 {
@@ -279,14 +279,15 @@ write_history(Popup_Data *popup)
    
    Eet_File *history_file = NULL;
    history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_WRITE);
-   //~ EINA_LIST_FOREACH(items, l, items) {
-        //~ snprintf(str, sizeof(str), "item%d", i++);
-        //~ eet_write(history_file, str,  popup->app_name, strlen(popup->app_name) + 1, 0);
-      //~ }
-   //~ eet_write(history_file, buf,  item_value, sizeof(item_value) + 1, 0);
+   EINA_LIST_FOREACH(items, l, items) {
+        snprintf(str, sizeof(str), "item%d", i++);
+        eet_write(history_file, str,  popup->app_name, strlen(popup->app_name) + 1, 0);
+      }
+   eet_write(history_file, buf,  item_value, sizeof(item_value) + 1, 0);
    eet_close(history_file); 
    return 1;
 }
+ */
 
 void
 notification_popup_shutdown(void)
@@ -449,7 +450,7 @@ _notification_popup_new(E_Notification *n)
    const Eina_List *l, *screens;
    E_Screen *scr;
    E_Zone *zone = NULL;
-   count ++;
+   
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
    if (!popup) return NULL;
