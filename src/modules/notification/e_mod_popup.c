@@ -872,14 +872,15 @@ list_add_item(Popup_Data *popup, Popup_Items *items)
      return;
 
   /* add item to the menu if less then menu items limit */   
-  if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
+  
+  if (notification_cfg->clicked_item == EINA_FALSE)
   {
-     notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
-  }
-  else
-  {
-    if (notification_cfg->clicked_item == EINA_FALSE)
-    { 
+    if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
+    {
+       notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+    }
+    else
+    {
      notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);

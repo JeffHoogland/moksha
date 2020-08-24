@@ -43,6 +43,7 @@ struct _Config
   int time_stamp;
   int show_app;
   int reverse;
+  Eina_Bool clicked_item;
   double item_length;
   double menu_items;
   const char *blacklist;
