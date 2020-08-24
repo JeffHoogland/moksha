@@ -13,6 +13,9 @@
 typedef enum   _Popup_Corner Popup_Corner;
 typedef struct _Config Config;
 typedef struct _Popup_Data Popup_Data;
+typedef struct _Popup_Items Popup_Items;
+
+typedef struct _Instance Instance;
 
 enum _Popup_Corner
   {
@@ -35,7 +38,15 @@ struct _Config
   int dual_screen;
   float timeout;
   Popup_Corner corner;
-
+  Eina_List  *instances;
+  
+  int time_stamp;
+  int show_app;
+  int reverse;
+  double item_length;
+  double menu_items;
+  const char *blacklist;
+  
   struct
   {
     Eina_Bool presentation;
@@ -44,6 +55,7 @@ struct _Config
   
   Ecore_Event_Handler  *handler;
   Eina_List  *popups;
+  Eina_List  *popup_items;
   int         next_id;
 
   Ecore_Timer *initial_mode_timer;
@@ -62,6 +74,15 @@ struct _Popup_Data
   E_Zone *zone;
 };
 
+struct _Popup_Items
+{
+  char *item_date_time;
+  char *item_app;
+  char *item_icon;
+  char *item_title;
+  char *item_body;
+};
+
 
 int  notification_popup_notify(E_Notification *n, unsigned int replaces_id, const char *appname);
 void notification_popup_shutdown(void);
@@ -72,12 +93,13 @@ EAPI void  *e_modapi_init(E_Module *m);
 EAPI int    e_modapi_shutdown(E_Module *m);
 EAPI int    e_modapi_save(E_Module *m);
 
-void _gc_orient    (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+//~ void _gc_orient    (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 
 E_Config_Dialog *e_int_config_notification_module(E_Container *con, const char *params);
 
 extern E_Module *notification_mod;
 extern Config   *notification_cfg;
+
 
 /**
  * @addtogroup Optional_Monitors

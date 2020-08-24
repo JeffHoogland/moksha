@@ -1,10 +1,23 @@
 #include "e_mod_main.h"
 
+/* gadcon requirements */
+static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
+static void             _gc_shutdown(E_Gadcon_Client *gcc);
+static void             _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+static const char      *_gc_label(const E_Gadcon_Client_Class *client_class);
+static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
+static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
+
 /* Callback function protos */
-static int  _notification_cb_notify(E_Notification_Daemon *daemon,
-                                    E_Notification        *n);
-static void _notification_cb_close_notification(E_Notification_Daemon *daemon,
-                                                unsigned int           id);
+static void             _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void             _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
+static void             _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__);
+static int              _notification_cb_notify(E_Notification_Daemon *daemon, E_Notification *n);
+static void             _notification_cb_close_notification(E_Notification_Daemon *daemon,
+                                                unsigned int id);
+static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static const char       *read_history_eet(const char *item_key);
+static void             _clear_menu(void);
 
 /* Config function protos */
 static Config *_notification_cfg_new(void);
@@ -12,13 +25,311 @@ static void    _notification_cfg_free(Config *cfg);
 
 /* Global variables */
 E_Module *notification_mod = NULL;
+//~ E_Module *notification_cfg->module = NULL;
+
 Config *notification_cfg = NULL;
 
 static E_Config_DD *conf_edd = NULL;
 
+/* and actually define the gadcon class that this module provides (just 1) */
+static const E_Gadcon_Client_Class _gadcon_class =
+{
+   GADCON_CLIENT_CLASS_VERSION,
+   "notification",
+   {
+      _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL, NULL
+   },
+   E_GADCON_CLIENT_STYLE_PLAIN
+};
+
+/* actual module specifics */
+struct _Instance
+{
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_notif;
+   E_Menu *menu;
+};
+
+static E_Gadcon_Client *
+_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
+{
+   Evas_Object *o;
+   E_Gadcon_Client *gcc;
+   Instance *inst;
+
+
+   inst = E_NEW(Instance, 1);
+   o = edje_object_add(gc->evas);
+   e_theme_edje_object_set(o, "base/theme/modules/notification",
+                           "e/modules/notification/logo");
+
+   gcc = e_gadcon_client_new(gc, name, id, style, o);
+   gcc->data = inst;
+
+   inst->gcc = gcc;
+   inst->o_notif = o;
+
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _button_cb_mouse_down, inst);
+   edje_object_part_text_set(o, "e.text.counter", "");
+   notification_cfg->instances =
+     eina_list_append(notification_cfg->instances, inst);
+
+   return gcc;
+}
+
+static void
+_gc_shutdown(E_Gadcon_Client *gcc)
+{
+   Instance *inst;
+
+   inst = gcc->data;
+   if (notification_cfg)
+     notification_cfg->instances =
+       eina_list_remove(notification_cfg->instances, inst);
+   evas_object_del(inst->o_notif);
+   E_FREE(inst);
+}
+
+static void
+_gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
+{
+  e_gadcon_client_aspect_set (gcc, 16, 16);
+  e_gadcon_client_min_size_set (gcc, 16, 16);
+}
+
+static const char *
+_gc_label(const E_Gadcon_Client_Class *client_class __UNUSED__)
+{
+   return _("Notification");
+}
+
+static Evas_Object *
+_gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
+{
+   Evas_Object *o;
+   char buf[4096];
+
+   o = edje_object_add(evas);
+   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj",
+            e_module_dir_get(notification_mod));
+   edje_object_file_set(o, buf, "icon");
+   return o;
+}
+
+static const char *
+_gc_id_new(const E_Gadcon_Client_Class *client_class)
+{
+   static char buf[4096];
+
+   snprintf(buf, sizeof(buf), "%s.%d", client_class->name,
+            eina_list_count(notification_cfg->instances) + 1);
+   return buf;
+}
+
+static const char *
+read_history_eet(const char *item_key)
+{
+int size = 0;
+const char * string;
+
+
+  Eet_File *history_file = NULL;
+  history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_READ);
+  string = eet_read(history_file, "body3", &size); 
+    e_util_dialog_internal("hello", string);
+  eet_close(history_file);
+return string; 
+}
+
+static void
+_button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   EINA_SAFETY_ON_NULL_RETURN(data);
+   EINA_SAFETY_ON_NULL_RETURN(event_info);
+   Popup_Items *items = NULL;
+   
+   Instance *inst;
+   Evas_Event_Mouse_Down *ev;
+
+   inst = data;
+   ev = event_info;
+   if (ev->button == 3)  //right button
+     {
+        E_Menu *m; 
+        E_Menu_Item *mi;
+        int cx, cy;
+ 
+        m = e_menu_new();
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Settings"));
+        e_util_menu_item_theme_icon_set(mi, "configure");
+        e_menu_item_callback_set(mi, _cb_config_show, NULL);
+        
+        m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
+        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
+                                          &cx, &cy, NULL, NULL);
+        e_menu_activate_mouse(m,
+                              e_util_zone_current_get(e_manager_current_get()),
+                              cx + ev->output.x, cy + ev->output.y, 1, 1,
+                              E_MENU_POP_DIRECTION_DOWN, ev->timestamp);
+        evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+     }
+     
+   if (ev->button == 1)  //left button
+      {
+        unsigned dir = E_GADCON_ORIENT_VERT; 
+        Evas_Coord x, y, w, h;
+        int cx, cy;
+  
+        evas_object_geometry_get(inst->o_notif, &x, &y, &w, &h);
+        e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
+                                          NULL, NULL);
+        x += cx;
+        y += cy;
+        
+        E_Menu_Item *mi;
+        inst->menu = e_menu_new();
+        Eina_List *l = NULL;
+        
+        if (notification_cfg->popup_items)
+        {
+          if (notification_cfg->reverse)
+            notification_cfg->popup_items = eina_list_reverse(notification_cfg->popup_items);
+        
+          EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
+             mi = e_menu_item_new(inst->menu);
+             char *buf;
+             buf = (char *)malloc(notification_cfg->item_length * sizeof(char));
+             if (notification_cfg->show_app)
+             {
+               if (notification_cfg->time_stamp)               
+                  snprintf(buf, notification_cfg->item_length, "%s %s: %s, %s", items->item_date_time, 
+                              items->item_app, items->item_title, items->item_body);
+               else
+                  snprintf(buf, notification_cfg->item_length, "%s: %s, %s", items->item_app, 
+                               items->item_title, items->item_body);
+             }
+             else
+             {
+               if (notification_cfg->time_stamp)    
+                 snprintf(buf, notification_cfg->item_length, "%s %s: %s", items->item_date_time, 
+                            items->item_title, items->item_body);
+               else
+                 snprintf(buf, notification_cfg->item_length, "%s: %s", items->item_title, 
+                            items->item_body);
+             }  
+             
+             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, buf));  
+             e_menu_item_disabled_set(mi, EINA_FALSE);
+             e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
+             free(buf);
+             if (strlen(items->item_icon) == 0) 
+               e_util_menu_item_theme_icon_set(mi, "dialog-information");
+             else
+               e_util_menu_item_theme_icon_set(mi, items->item_icon);
+           }
+          }
+          else
+          {
+            mi = e_menu_item_new(inst->menu);
+            e_menu_item_label_set(mi, _("Empty")); 
+            e_menu_item_disabled_set(mi, EINA_TRUE);
+          }
+        
+        mi = e_menu_item_new(inst->menu);
+        e_menu_item_separator_set(mi, EINA_TRUE);
+
+        mi = e_menu_item_new(inst->menu);
+        e_menu_item_label_set(mi, _("Clear"));
+        e_util_menu_item_theme_icon_set(mi, "edit-clear");
+        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu, notification_cfg->popup_items);
+        
+        if (notification_cfg->popup_items)
+           e_menu_item_disabled_set(mi, EINA_FALSE);
+        else
+           e_menu_item_disabled_set(mi, EINA_TRUE);
+        
+        mi = e_menu_item_new(inst->menu);
+        e_menu_item_separator_set(mi, EINA_TRUE);
+
+        mi = e_menu_item_new(inst->menu);
+        e_menu_item_label_set(mi, _("Settings"));
+        e_util_menu_item_theme_icon_set(mi, "preferences-system");
+        e_menu_item_callback_set(mi, _cb_config_show, NULL);
+     
+        if (ev) {
+          e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
+
+          switch (inst->gcc->gadcon->orient) {
+          case E_GADCON_ORIENT_TOP:
+          case E_GADCON_ORIENT_CORNER_TL:
+          case E_GADCON_ORIENT_CORNER_TR:
+            dir = E_MENU_POP_DIRECTION_DOWN;
+            break;
+          
+          case E_GADCON_ORIENT_BOTTOM:
+          case E_GADCON_ORIENT_CORNER_BL:
+          case E_GADCON_ORIENT_CORNER_BR:
+            dir = E_MENU_POP_DIRECTION_UP;
+            break;
+
+          case E_GADCON_ORIENT_LEFT:
+          case E_GADCON_ORIENT_CORNER_LT:
+          case E_GADCON_ORIENT_CORNER_LB:
+            dir = E_MENU_POP_DIRECTION_RIGHT;
+            break;
+
+          case E_GADCON_ORIENT_RIGHT:
+          case E_GADCON_ORIENT_CORNER_RT:
+          case E_GADCON_ORIENT_CORNER_RB:
+            dir = E_MENU_POP_DIRECTION_LEFT;
+            break;
+
+          case E_GADCON_ORIENT_FLOAT:
+          case E_GADCON_ORIENT_HORIZ:
+          case E_GADCON_ORIENT_VERT:
+            default:
+            dir = E_MENU_POP_DIRECTION_AUTO;
+           break;
+          }
+       }
+       e_menu_activate_mouse(inst->menu,
+                        e_util_zone_current_get(e_manager_current_get()),
+                        x, y, w, h, dir, ev->timestamp);
+}
+}
+
+static void
+_cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
+{
+  EINA_SAFETY_ON_NULL_RETURN(data);
+  Instance *inst = data;
+
+  if (inst->gcc)
+     e_gadcon_locked_set(inst->gcc->gadcon, EINA_FALSE);
+  //~ if (inst->o_notif && e_icon_edje_get(inst->o_notif))
+     //~ e_icon_edje_emit(inst->o_button, "e,state,unfocused", "e");
+  if (inst->menu) {
+    e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+    e_object_del(E_OBJECT(inst->menu));
+    inst->menu = NULL;
+  }
+}
+
+static void
+_cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
+{
+  if (!notification_cfg) return;
+  if (notification_cfg->cfd) return;
+  e_int_config_notification_module(m->zone->container, NULL);
+}
+
 static unsigned int
 _notification_notify(E_Notification *n)
-{
+{ 
+   Instance *inst = NULL;
    const char *appname;
    unsigned int replaces_id, new_id;
    int popuped;
@@ -28,9 +339,10 @@ _notification_notify(E_Notification *n)
    replaces_id = e_notification_replaces_id_get(n);
    if (replaces_id) new_id = replaces_id;
    else new_id = notification_cfg->next_id++;
-
+   
+   inst = eina_list_data_get(notification_cfg->instances);
+   edje_object_part_text_set(inst->o_notif, "e.text.counter", "NEW!"); 
    e_notification_id_set(n, new_id);
-
    popuped = notification_popup_notify(n, replaces_id, appname);
    if (!popuped)
      {
@@ -44,16 +356,59 @@ _notification_notify(E_Notification *n)
 static void
 _notification_show_common(const char *summary,
                           const char *body,
+                          const char *icon,
                           int         replaces_id)
 {
    E_Notification *n = e_notification_full_new
-       ("enlightenment", replaces_id, "enlightenment", summary, body, -1);
+       ("enlightenment", replaces_id, icon, summary, body, -1);
 
    if (!n)
      return;
 
    _notification_notify(n);
    e_notification_unref(n);
+}
+
+static void
+_cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   Instance *inst = NULL;
+   Popup_Items *sel_item = (Popup_Items *) selected_item;
+  _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
+   /* remove the current item from the list */
+   notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
+   /* prevent from adding item after clicking the menu item */
+   notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
+                                 eina_list_nth_list (notification_cfg->popup_items, 0));
+   if (!notification_cfg->popup_items)
+   {
+     inst = eina_list_data_get(notification_cfg->instances);
+    edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+   }
+}
+
+void
+free_menu_data(Popup_Items *items)
+{
+  EINA_SAFETY_ON_NULL_RETURN(items);
+  free(items->item_app);
+  free(items->item_body);
+  free(items->item_date_time);
+  free(items->item_icon);
+  free(items->item_title);
+}
+
+static void
+_clear_menu(void)
+{
+  Instance *inst = NULL;
+  //~ EINA_SAFETY_ON_NULL_RETURN(clip_inst); 
+  if (notification_cfg->popup_items)
+  {
+    E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
+    inst = eina_list_data_get(notification_cfg->instances);
+    edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+   }
 }
 
 static void
@@ -73,7 +428,7 @@ _notification_show_presentation(Eina_Bool enabled)
         body = _("Presentation mode is over.");
      }
 
-   _notification_show_common(summary, body, -1);
+   _notification_show_common(summary, body, "enlightenment", -1);
 }
 
 static void
@@ -96,7 +451,7 @@ _notification_show_offline(Eina_Bool enabled)
                  "resume regular tasks.");
      }
 
-   _notification_show_common(summary, body, -1);
+   _notification_show_common(summary, body, "enlightenment", -1);
 }
 
 static Eina_Bool
@@ -163,6 +518,12 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, force_timeout, INT);
    E_CONFIG_VAL(D, T, ignore_replacement, INT);
    E_CONFIG_VAL(D, T, dual_screen, INT);
+   E_CONFIG_VAL(D, T, time_stamp, INT);
+   E_CONFIG_VAL(D, T, show_app, INT);
+   E_CONFIG_VAL(D, T, reverse, INT);
+   E_CONFIG_VAL(D, T, menu_items, DOUBLE);
+   E_CONFIG_VAL(D, T, item_length, DOUBLE);
+   E_CONFIG_VAL(D, T, blacklist, STR);
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
    if (notification_cfg &&
@@ -204,6 +565,8 @@ e_modapi_init(E_Module *m)
    notification_cfg->initial_mode_timer = ecore_timer_add
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
 
+   e_gadcon_provider_register(&_gadcon_class);
+   //~ notification_cfg->module = m;
    notification_mod = m;
    return m;
 }
@@ -228,6 +591,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    _notification_cfg_free(notification_cfg);
    E_CONFIG_DD_FREE(conf_edd);
    notification_mod = NULL;
+   e_gadcon_provider_unregister(&_gadcon_class);
 
    return 1;
 }
@@ -269,6 +633,12 @@ _notification_cfg_new(void)
    cfg->ignore_replacement = 0;
    cfg->dual_screen = 0;
    cfg->corner = CORNER_TR;
+   cfg->time_stamp = 1;
+   cfg->show_app = 0;
+   cfg->reverse = 0;
+   cfg->item_length = 60;
+   cfg->menu_items = 20;
+   cfg->blacklist = eina_stringshare_add("");
 
    return cfg;
 }
@@ -276,6 +646,8 @@ _notification_cfg_new(void)
 static void
 _notification_cfg_free(Config *cfg)
 {
+   if (cfg->blacklist) eina_stringshare_del(cfg->blacklist); 
+   _clear_menu();
    free(cfg);
 }
 

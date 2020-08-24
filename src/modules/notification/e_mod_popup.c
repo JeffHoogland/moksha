@@ -1,4 +1,5 @@
 #include "e_mod_main.h"
+#include <time.h>
 
 /* Popup function protos */
 static Popup_Data *_notification_popup_new(E_Notification *n);
@@ -12,11 +13,14 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
+static int         write_history(Popup_Data *popup);
+static void        list_add_item(Popup_Data *popup, Popup_Items *items);
 /* this function should be external in edje for use in cases such as this module.
  *
  * happily, it was decided that the function would not be external so that it could
  * be duplicated into the module in full.
  */
+static int count = 0;
 
 static int
 _text_escape(Eina_Strbuf *txt, const char *text)
@@ -190,9 +194,11 @@ notification_popup_notify(E_Notification *n,
 {
    double timeout;
    Popup_Data *popup = NULL;
+   Popup_Items *popup_items = NULL;
+   
    char *esc;
    char urgency;
-
+   
    urgency = e_notification_hint_urgency_get(n);
 
    switch (urgency)
@@ -226,6 +232,7 @@ notification_popup_notify(E_Notification *n,
           e_notification_unref(popup->notif);
 
         popup->notif = n;
+        
         _notification_popup_refresh(popup);
      }
    else if (!replaces_id)
@@ -237,6 +244,7 @@ notification_popup_notify(E_Notification *n,
    if (!popup)
      {
         popup = _notification_popup_new(n);
+        
         if (!popup) return 0;
         notification_cfg->popups = eina_list_append(notification_cfg->popups, popup);
         edje_object_signal_emit(popup->theme, "notification,new", "notification");
@@ -257,6 +265,26 @@ notification_popup_notify(E_Notification *n,
    if (timeout > 0)
      popup->timer = ecore_timer_add(timeout, (Ecore_Task_Cb)_notification_timer_cb, popup);
 
+   return 1;
+}
+
+static int
+write_history(Popup_Data *popup)
+{
+   char buf[256];
+   Eina_List *l = NULL;
+   char str[256] = "";
+   Popup_Items *items;
+   int i = 1;
+   
+   Eet_File *history_file = NULL;
+   history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_WRITE);
+   //~ EINA_LIST_FOREACH(items, l, items) {
+        //~ snprintf(str, sizeof(str), "item%d", i++);
+        //~ eet_write(history_file, str,  popup->app_name, strlen(popup->app_name) + 1, 0);
+      //~ }
+   //~ eet_write(history_file, buf,  item_value, sizeof(item_value) + 1, 0);
+   eet_close(history_file); 
    return 1;
 }
 
@@ -416,17 +444,20 @@ _notification_popup_new(E_Notification *n)
 {
    E_Container *con;
    Popup_Data *popup;
+   Popup_Items *items;
    char buf[PATH_MAX];
    const Eina_List *l, *screens;
    E_Screen *scr;
    E_Zone *zone = NULL;
-
+   count ++;
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
    if (!popup) return NULL;
+   items = E_NEW(Popup_Items, 1);
+   if (!items) return NULL;
    e_notification_ref(n);
    popup->notif = n;
-
+   
    con = e_container_current_get(e_manager_current_get());
    screens = e_xinerama_screens_get();
    if (notification_cfg->dual_screen &&
@@ -475,12 +506,14 @@ _notification_popup_new(E_Notification *n)
      (popup->theme, "notification,find", "theme",
      (Edje_Signal_Cb)_notification_theme_cb_find, popup);
 
+ 
    _notification_popup_refresh(popup);
    next_pos = _notification_popup_place(popup, next_pos);
+   
    e_popup_show(popup->win);
    e_popup_layer_set(popup->win, E_LAYER_POPUP);
    popups_displayed++;
-
+   list_add_item(popup, items);
    return popup;
 error:
    free(popup);
@@ -596,8 +629,10 @@ _notification_popup_refresh(Popup_Data *popup)
    if (!img)
      {
         icon_path = e_notification_hint_image_path_get(popup->notif);
+        
         if ((!icon_path) || (!icon_path[0]))
           icon_path = e_notification_app_icon_get(popup->notif);
+
         if (icon_path)
           {
              if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
@@ -747,14 +782,32 @@ _notification_popdown(Popup_Data                  *popup,
    free(popup);
 }
 
+static Eina_Bool
+_write_history_text(char *string)
+{
+   FILE *fptr;
+   fptr = fopen("history.txt","a");
+
+   if(fptr == NULL)
+   {
+      printf("Error!");   
+      return EINA_FALSE;             
+   }
+   fprintf(fptr,"%s\n",string);
+   fclose(fptr);
+   return EINA_TRUE;
+}
+
 static void
 _notification_format_message(Popup_Data *popup)
 {
    Evas_Object *o = popup->theme;
+   const char *icon_path = e_notification_app_icon_get(popup->notif);
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
    edje_object_part_text_unescaped_set(o, "notification.text.title", title);
-
+   char hist[256];
+   
    /* FIXME: Filter to only include allowed markup? */
      {
         /* We need to replace \n with <br>. FIXME: We need to handle all the
@@ -762,8 +815,57 @@ _notification_format_message(Popup_Data *popup)
         Eina_Strbuf *buf = eina_strbuf_new();
         eina_strbuf_append(buf, b);
         eina_strbuf_replace_all(buf, "\n", "<br/>");
+        
+        snprintf(hist, sizeof(hist), "%s, %s", title, b);
+        if (!_write_history_text(hist)) e_util_dialog_internal("File info", "File corrupted!");
         edje_object_part_text_set(o, "notification.textblock.message",
               eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
 }
+
+static char *
+get_time()
+{
+   time_t rawtime;
+   struct tm * timeinfo;
+   time(&rawtime);
+   timeinfo = localtime( &rawtime );
+   char buf[20] = "";
+   snprintf(buf, sizeof(buf), "%04d/%02d/%02d% 02d:%02d:%02d ", timeinfo->tm_year + 1900, 
+            timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, 
+            timeinfo->tm_sec);
+   return strdup(buf);
+}
+
+static void
+list_add_item(Popup_Data *popup, Popup_Items *items)
+{
+  const char *icon_path = e_notification_app_icon_get(popup->notif);
+  const char *title = e_notification_summary_get(popup->notif);
+  const char *b = e_notification_body_get(popup->notif);
+  
+  items->item_date_time = get_time();
+  items->item_app = strdup(popup->app_name); 
+  items->item_icon = strdup(icon_path); 
+  items->item_title = strdup(title); 
+  items->item_body = strdup(b);  
+  
+  /* Apps blacklist check */  
+  if (strstr(notification_cfg->blacklist, items->item_app))
+     return;
+  
+  /* add item to the menu if less then menu items limit */   
+  if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
+  {
+     notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+  }
+  else
+  {
+     notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
+                        eina_list_last(notification_cfg->popup_items));
+     notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+  }
+}
+
+
