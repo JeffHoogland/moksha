@@ -292,7 +292,7 @@ write_history(Eina_List *popup_items)
         i++;
       }
    int count = eina_list_count(notification_cfg->popup_items);
-   snprintf(str, 2, "%d", count);
+   snprintf(str, 10, "%d", count);
    eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
    ret = eet_close(history_file); 
    }
@@ -870,7 +870,7 @@ list_add_item(Popup_Data *popup, Popup_Items *items)
   /* Apps blacklist check */  
   if (strstr(notification_cfg->blacklist, items->item_app))
      return;
-  
+
   /* add item to the menu if less then menu items limit */   
   if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
   {
@@ -878,9 +878,12 @@ list_add_item(Popup_Data *popup, Popup_Items *items)
   }
   else
   {
+    if (notification_cfg->clicked_item == EINA_FALSE)
+    { 
      notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+    }
   }
   write_history(notification_cfg->popup_items);
 }

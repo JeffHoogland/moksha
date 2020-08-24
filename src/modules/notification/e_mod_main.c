@@ -193,6 +193,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
+   
+   notification_cfg->clicked_item = EINA_FALSE;
 
    inst = data;
    ev = event_info;
@@ -423,14 +425,13 @@ static void
 _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Popup_Items *sel_item = (Popup_Items *) selected_item;
+   notification_cfg->clicked_item = EINA_TRUE;
   _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
-   /* prevent from adding item after clicking the menu item */
-   notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
-                                 eina_list_nth_list (notification_cfg->popup_items, 0));
+   
    if (!notification_cfg->popup_items)
-    gadget_text("");
+   gadget_text("");
 }
 
 void
