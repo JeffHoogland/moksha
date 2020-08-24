@@ -444,7 +444,7 @@ _notification_popup_new(E_Notification *n)
 {
    E_Container *con;
    Popup_Data *popup;
-   Popup_Items *items;
+  
    char buf[PATH_MAX];
    const Eina_List *l, *screens;
    E_Screen *scr;
@@ -453,8 +453,6 @@ _notification_popup_new(E_Notification *n)
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
    if (!popup) return NULL;
-   items = E_NEW(Popup_Items, 1);
-   if (!items) return NULL;
    e_notification_ref(n);
    popup->notif = n;
    
@@ -513,7 +511,7 @@ _notification_popup_new(E_Notification *n)
    e_popup_show(popup->win);
    e_popup_layer_set(popup->win, E_LAYER_POPUP);
    popups_displayed++;
-   list_add_item(popup, items);
+   
    return popup;
 error:
    free(popup);
@@ -584,9 +582,13 @@ _notification_popup_refresh(Popup_Data *popup)
    const char *app_icon_max;
    void *img;
    int w, h, width = 80, height = 80;
-
+   Popup_Items *items; 
+   
    if (!popup) return;
-
+  
+   items = E_NEW(Popup_Items, 1);
+   if (!items) return; 
+   
    popup->app_name = e_notification_app_name_get(popup->notif);
 
    if (popup->app_icon)
@@ -725,7 +727,7 @@ _notification_popup_refresh(Popup_Data *popup)
    h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h);
-
+   list_add_item(popup, items); 
    _notification_popups_place();
 }
 
