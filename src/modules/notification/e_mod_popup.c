@@ -266,27 +266,42 @@ notification_popup_notify(E_Notification *n,
    return 1;
 }
 
-/* not implemented yet 
 static int
-write_history(Popup_Data *popup)
+write_history(Eina_List *popup_items)
 {
-   char buf[256];
    Eina_List *l = NULL;
-   char str[256] = "";
-   Popup_Items *items;
-   int i = 1;
-   
+   char str[10] = "";
+   unsigned int i = 1;
+   int ret;
    Eet_File *history_file = NULL;
+   Popup_Items *items = NULL;
+   
    history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_WRITE);
-   EINA_LIST_FOREACH(items, l, items) {
-        snprintf(str, sizeof(str), "item%d", i++);
-        eet_write(history_file, str,  popup->app_name, strlen(popup->app_name) + 1, 0);
+   if (history_file){
+   EINA_LIST_FOREACH(popup_items, l, items) {
+        snprintf(str, sizeof(str), "dtime%d", i);
+        eet_write(history_file, str,  items->item_date_time, strlen(items->item_date_time) + 1, 0);
+        snprintf(str, sizeof(str), "app%d", i);
+        eet_write(history_file, str,  items->item_app, strlen(items->item_app) + 1, 0);
+        snprintf(str, sizeof(str), "icon%d", i);
+        eet_write(history_file, str,  items->item_icon, strlen(items->item_icon) + 1, 0);
+        snprintf(str, sizeof(str), "title%d", i);
+        eet_write(history_file, str,  items->item_title, strlen(items->item_title) + 1, 0);
+        snprintf(str, sizeof(str), "body%d", i);
+        eet_write(history_file, str,  items->item_body, strlen(items->item_body) + 1, 0);
+        i++;
       }
-   eet_write(history_file, buf,  item_value, sizeof(item_value) + 1, 0);
-   eet_close(history_file); 
-   return 1;
+   int count = eina_list_count(notification_cfg->popup_items);
+   snprintf(str, 2, "%d", count);
+   eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+   ret = eet_close(history_file); 
+   }
+   else {
+      ERR("Unable to open notfication file");
+      ret = 0;
+   }
+   return ret;
 }
- */
 
 void
 notification_popup_shutdown(void)
@@ -867,6 +882,7 @@ list_add_item(Popup_Data *popup, Popup_Items *items)
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
   }
+  write_history(notification_cfg->popup_items);
 }
 
 

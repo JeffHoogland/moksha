@@ -16,8 +16,10 @@ static int              _notification_cb_notify(E_Notification_Daemon *daemon, E
 static void             _notification_cb_close_notification(E_Notification_Daemon *daemon,
                                                 unsigned int id);
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-//~ static const char       *read_history_eet(const char *item_key);
 static void             _clear_menu(void);
+static int               read_items_eet(Eina_List **popup_items);
+static void              gadget_text(const char *ret);
+
 
 /* Config function protos */
 static Config *_notification_cfg_new(void);
@@ -71,10 +73,10 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _button_cb_mouse_down, inst);
-   edje_object_part_text_set(o, "e.text.counter", "");
    notification_cfg->instances =
      eina_list_append(notification_cfg->instances, inst);
 
+   read_items_eet(&(notification_cfg->popup_items));
    return gcc;
 }
 
@@ -85,8 +87,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 
    inst = gcc->data;
    if (notification_cfg)
-     notification_cfg->instances =
-       eina_list_remove(notification_cfg->instances, inst);
+     notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
    evas_object_del(inst->o_notif);
    E_FREE(inst);
 }
@@ -127,22 +128,61 @@ _gc_id_new(const E_Gadcon_Client_Class *client_class)
    return buf;
 }
 
-/* not implememnted yet
-static const char *
-read_history_eet(const char *item_key)
+static int
+read_items_eet(Eina_List **popup_items)
 {
-int size = 0;
-const char * string;
-
-
+  int size = 0;
+  char str[10];
+  char *ret;
+  Eina_List *l = NULL;
+  unsigned int items_number, i;
+  Popup_Items *items = NULL;
   Eet_File *history_file = NULL;
+  
   history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_READ);
-  string = eet_read(history_file, "body3", &size); 
-    e_util_dialog_internal("hello", string);
+  if (!history_file) {
+      printf("Failed to open notification eet file");
+      *popup_items = NULL;
+      return 0;
+    }
+  /* Read Number of items */
+  ret = eet_read(history_file, "ITEMS", &size);
+  
+  if (!ret) {
+      printf("Notification file corruption");
+      *popup_items = NULL;
+      return eet_close(history_file);
+  }
+   items_number = strtol(ret, NULL, 10);
+   if (items_number > 0) 
+     gadget_text("!");
+   else
+     gadget_text("");
+   
+   for (i = 1; i <= items_number; i++){
+        items = E_NEW(Popup_Items, 1);
+        snprintf(str, 10, "dtime%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_date_time = strdup(ret);
+        snprintf(str, 10, "app%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_app = strdup(ret);
+        snprintf(str, 10, "icon%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_icon = strdup(ret);
+        snprintf(str, 10, "title%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_title = strdup(ret);
+        snprintf(str, 10, "body%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_body = strdup(ret);
+        
+        l = eina_list_append(l, items);
+    }
+  *popup_items = l;  
   eet_close(history_file);
-return string; 
+return 1; 
 }
-*/
 
 static void
 _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
@@ -328,10 +368,19 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
   e_int_config_notification_module(m->zone->container, NULL);
 }
 
+static void
+gadget_text(const char *ret)
+{
+ Instance *inst = NULL;
+ if (!notification_cfg->instances) return;
+ 
+ inst = eina_list_data_get(notification_cfg->instances);
+ edje_object_part_text_set(inst->o_notif, "e.text.counter", ret); 
+}
+
 static unsigned int
 _notification_notify(E_Notification *n)
 { 
-   Instance *inst = NULL;
    const char *appname;
    unsigned int replaces_id, new_id;
    int popuped;
@@ -342,8 +391,7 @@ _notification_notify(E_Notification *n)
    if (replaces_id) new_id = replaces_id;
    else new_id = notification_cfg->next_id++;
    
-   inst = eina_list_data_get(notification_cfg->instances);
-   edje_object_part_text_set(inst->o_notif, "e.text.counter", "NEW!"); 
+   gadget_text("!");
    e_notification_id_set(n, new_id);
    popuped = notification_popup_notify(n, replaces_id, appname);
    if (!popuped)
@@ -374,7 +422,6 @@ _notification_show_common(const char *summary,
 static void
 _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
-   Instance *inst = NULL;
    Popup_Items *sel_item = (Popup_Items *) selected_item;
   _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
    /* remove the current item from the list */
@@ -383,10 +430,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                                  eina_list_nth_list (notification_cfg->popup_items, 0));
    if (!notification_cfg->popup_items)
-   {
-     inst = eina_list_data_get(notification_cfg->instances);
-    edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
-   }
+    gadget_text("");
 }
 
 void
@@ -403,13 +447,11 @@ free_menu_data(Popup_Items *items)
 static void
 _clear_menu(void)
 {
-  Instance *inst = NULL;
   //~ EINA_SAFETY_ON_NULL_RETURN(clip_inst); 
   if (notification_cfg->popup_items)
   {
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
-    inst = eina_list_data_get(notification_cfg->instances);
-    edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+    gadget_text("");
    }
 }
 
@@ -566,8 +608,8 @@ e_modapi_init(E_Module *m)
          notification_cfg);
    notification_cfg->initial_mode_timer = ecore_timer_add
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
-
    e_gadcon_provider_register(&_gadcon_class);
+  
    //~ notification_cfg->module = m;
    notification_mod = m;
    return m;
