@@ -30,7 +30,6 @@ E_Module *notification_mod = NULL;
 //~ E_Module *notification_cfg->module = NULL;
 
 Config *notification_cfg = NULL;
-
 static E_Config_DD *conf_edd = NULL;
 
 /* and actually define the gadcon class that this module provides (just 1) */
@@ -246,6 +245,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
              mi = e_menu_item_new(inst->menu);
              char *buf;
              buf = (char *)malloc(notification_cfg->item_length * sizeof(char));
+             
              if (notification_cfg->show_app)
              {
                if (notification_cfg->time_stamp)               
@@ -368,7 +368,7 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
   if (!notification_cfg) return;
   if (notification_cfg->cfd) return;
   e_int_config_notification_module(m->zone->container, NULL);
-}
+} 
 
 static void
 gadget_text(const char *ret)
@@ -392,8 +392,7 @@ _notification_notify(E_Notification *n)
    replaces_id = e_notification_replaces_id_get(n);
    if (replaces_id) new_id = replaces_id;
    else new_id = notification_cfg->next_id++;
-   
-   gadget_text("!");
+  
    e_notification_id_set(n, new_id);
    popuped = notification_popup_notify(n, replaces_id, appname);
    if (!popuped)
@@ -401,7 +400,13 @@ _notification_notify(E_Notification *n)
         e_notification_hint_urgency_set(n, 4);
         notification_popup_notify(n, replaces_id, appname);
      }
-
+     
+   /* Apps blacklist check */  
+   if (strstr(notification_cfg->blacklist, appname) || notification_cfg->popup_items == NULL)
+     gadget_text("");
+   else
+     gadget_text("!");
+     
    return new_id;
 }
 
@@ -425,13 +430,17 @@ static void
 _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Popup_Items *sel_item = (Popup_Items *) selected_item;
+   
    notification_cfg->clicked_item = EINA_TRUE;
   _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
-   
+
    if (!notification_cfg->popup_items)
-   gadget_text("");
+   {
+     notification_cfg->clicked_item = EINA_FALSE;
+     gadget_text("");
+   }
 }
 
 void

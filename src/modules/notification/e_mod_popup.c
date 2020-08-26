@@ -13,13 +13,16 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
-//~ static int         write_history(Popup_Data *popup);
-static void        list_add_item(Popup_Data *popup, Popup_Items *items);
+static Eina_Bool   _delay_before_write(Eina_List *list);
+static void        list_add_item(Popup_Data *popup);
+
 /* this function should be external in edje for use in cases such as this module.
  *
  * happily, it was decided that the function would not be external so that it could
  * be duplicated into the module in full.
  */
+
+static Ecore_Timer *delay;  
 
 static int
 _text_escape(Eina_Strbuf *txt, const char *text)
@@ -293,6 +296,7 @@ write_history(Eina_List *popup_items)
       }
    int count = eina_list_count(notification_cfg->popup_items);
    snprintf(str, 10, "%d", count);
+   //~ e_util_dialog_internal("write", str);
    eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
    ret = eet_close(history_file); 
    }
@@ -300,6 +304,7 @@ write_history(Eina_List *popup_items)
       ERR("Unable to open notfication file");
       ret = 0;
    }
+   ecore_timer_del(delay);
    return ret;
 }
 
@@ -597,12 +602,8 @@ _notification_popup_refresh(Popup_Data *popup)
    const char *app_icon_max;
    void *img;
    int w, h, width = 80, height = 80;
-   Popup_Items *items; 
-   
+ 
    if (!popup) return;
-  
-   items = E_NEW(Popup_Items, 1);
-   if (!items) return; 
    
    popup->app_name = e_notification_app_name_get(popup->notif);
 
@@ -742,7 +743,7 @@ _notification_popup_refresh(Popup_Data *popup)
    h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h);
-   list_add_item(popup, items); 
+   list_add_item(popup); 
    _notification_popups_place();
 }
 
@@ -799,22 +800,6 @@ _notification_popdown(Popup_Data                  *popup,
    free(popup);
 }
 
-static Eina_Bool
-_write_history_text(char *string)
-{
-   FILE *fptr;
-   fptr = fopen("history.txt","a");
-
-   if(fptr == NULL)
-   {
-      printf("Error!");   
-      return EINA_FALSE;             
-   }
-   fprintf(fptr,"%s\n",string);
-   fclose(fptr);
-   return EINA_TRUE;
-}
-
 static void
 _notification_format_message(Popup_Data *popup)
 {
@@ -822,7 +807,6 @@ _notification_format_message(Popup_Data *popup)
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
    edje_object_part_text_unescaped_set(o, "notification.text.title", title);
-   char hist[256];
    
    /* FIXME: Filter to only include allowed markup? */
      {
@@ -831,11 +815,8 @@ _notification_format_message(Popup_Data *popup)
         Eina_Strbuf *buf = eina_strbuf_new();
         eina_strbuf_append(buf, b);
         eina_strbuf_replace_all(buf, "\n", "<br/>");
-        
-        snprintf(hist, sizeof(hist), "%s, %s", title, b);
-        if (!_write_history_text(hist)) e_util_dialog_internal("File info", "File corrupted!");
         edje_object_part_text_set(o, "notification.textblock.message",
-              eina_strbuf_string_get(buf));
+                                  eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
 }
@@ -855,8 +836,12 @@ get_time()
 }
 
 static void
-list_add_item(Popup_Data *popup, Popup_Items *items)
+list_add_item(Popup_Data *popup)
 {
+  Popup_Items *items; 
+  items = E_NEW(Popup_Items, 1); 
+  if (!items) return;
+  
   const char *icon_path = e_notification_app_icon_get(popup->notif);
   const char *title = e_notification_summary_get(popup->notif);
   const char *b = e_notification_body_get(popup->notif);
@@ -871,22 +856,25 @@ list_add_item(Popup_Data *popup, Popup_Items *items)
   if (strstr(notification_cfg->blacklist, items->item_app))
      return;
 
-  /* add item to the menu if less then menu items limit */   
-  
-  if (notification_cfg->clicked_item == EINA_FALSE)
-  {
-    if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
-    {
+  /* add item to the menu if less then menu items limit */  
+ 
+  if (notification_cfg->clicked_item == EINA_FALSE){
+    if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
-    else
-    {
+    else {
      notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
   }
-  write_history(notification_cfg->popup_items);
+    delay = ecore_timer_add(0.1, (Ecore_Task_Cb)_delay_before_write, notification_cfg->popup_items); 
 }
 
+static Eina_Bool
+_delay_before_write(Eina_List *list)
+{
+    write_history(list);
+    return EINA_FALSE;
+}
 
