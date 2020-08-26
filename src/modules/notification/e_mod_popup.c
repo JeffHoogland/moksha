@@ -21,8 +21,6 @@ static void         list_add_item(Popup_Data *popup);
  * be duplicated into the module in full.
  */
 
-static Ecore_Timer *delay;  
-
 static int
 _text_escape(Eina_Strbuf *txt, const char *text)
 {
@@ -303,7 +301,6 @@ write_history(Eina_List *popup_items)
       ERR("Unable to open notfication file");
       ret = 0;
    }
-   ecore_timer_del(delay);
    return ret;
 }
 
