@@ -13,8 +13,7 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
-static Eina_Bool   _delay_before_write(Eina_List *list);
-static void        list_add_item(Popup_Data *popup);
+static void         list_add_item(Popup_Data *popup);
 
 /* this function should be external in edje for use in cases such as this module.
  *
@@ -250,7 +249,7 @@ notification_popup_notify(E_Notification *n,
         notification_cfg->popups = eina_list_append(notification_cfg->popups, popup);
         edje_object_signal_emit(popup->theme, "notification,new", "notification");
      }
-
+   
    if (popup->timer)
      {
         ecore_timer_del(popup->timer);
@@ -742,9 +741,9 @@ _notification_popup_refresh(Popup_Data *popup)
    w = MIN(w, popup->zone->w / 2);
    h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
-   evas_object_resize(popup->theme, w, h);
-   list_add_item(popup); 
+   evas_object_resize(popup->theme, w, h); 
    _notification_popups_place();
+    
 }
 
 static Popup_Data *
@@ -819,6 +818,7 @@ _notification_format_message(Popup_Data *popup)
                                   eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
+     list_add_item (popup); 
 }
 
 static char *
@@ -857,7 +857,7 @@ list_add_item(Popup_Data *popup)
      return;
 
   /* add item to the menu if less then menu items limit */  
- 
+  
   if (notification_cfg->clicked_item == EINA_FALSE){
     if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
@@ -868,13 +868,5 @@ list_add_item(Popup_Data *popup)
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
   }
-    delay = ecore_timer_add(0.1, (Ecore_Task_Cb)_delay_before_write, notification_cfg->popup_items); 
+     write_history(notification_cfg->popup_items);
 }
-
-static Eina_Bool
-_delay_before_write(Eina_List *list)
-{
-    write_history(list);
-    return EINA_FALSE;
-}
-

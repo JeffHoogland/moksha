@@ -432,9 +432,10 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    Popup_Items *sel_item = (Popup_Items *) selected_item;
    
    notification_cfg->clicked_item = EINA_TRUE;
-  _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
+   /* show the current item as notification */
+  _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
 
    if (!notification_cfg->popup_items)
    {
