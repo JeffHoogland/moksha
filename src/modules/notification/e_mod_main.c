@@ -18,7 +18,7 @@ static void             _notification_cb_close_notification(E_Notification_Daemo
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _clear_menu(void);
 static int               read_items_eet(Eina_List **popup_items);
-static void              gadget_text(const char *ret);
+static void              gadget_text(Eina_List *list);
 
 
 /* Config function protos */
@@ -44,12 +44,7 @@ static const E_Gadcon_Client_Class _gadcon_class =
 };
 
 /* actual module specifics */
-struct _Instance
-{
-   E_Gadcon_Client *gcc;
-   Evas_Object     *o_notif;
-   E_Menu *menu;
-};
+
 
 static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
@@ -153,10 +148,9 @@ read_items_eet(Eina_List **popup_items)
       return eet_close(history_file);
   }
    items_number = strtol(ret, NULL, 10);
-   if (items_number > 0) 
-     gadget_text("!");
-   else
-     gadget_text("");
+   
+   //~ else
+     //~ gadget_text("");
    
    for (i = 1; i <= items_number; i++){
         items = E_NEW(Popup_Items, 1);
@@ -179,6 +173,8 @@ read_items_eet(Eina_List **popup_items)
         l = eina_list_append(l, items);
     }
   *popup_items = l;  
+  if (items_number > 0) 
+     gadget_text(l);
   eet_close(history_file);
 return 1; 
 }
@@ -371,13 +367,21 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 } 
 
 static void
-gadget_text(const char *ret)
+gadget_text(Eina_List *list)
 {
  Instance *inst = NULL;
+ char buf[3];
+ int count;
  if (!notification_cfg->instances) return;
  
  inst = eina_list_data_get(notification_cfg->instances);
- edje_object_part_text_set(inst->o_notif, "e.text.counter", ret); 
+ list = notification_cfg->popup_items;
+ count = eina_list_count(list);
+ snprintf(buf, sizeof(buf), "%d", count); 
+ if (count > 0)
+   edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
+ else
+   edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
 }
 
 static unsigned int
@@ -403,9 +407,9 @@ _notification_notify(E_Notification *n)
      
    /* Apps blacklist check */  
    if (strstr(notification_cfg->blacklist, appname) || notification_cfg->popup_items == NULL)
-     gadget_text("");
-   else
-     gadget_text("!");
+     gadget_text(notification_cfg->popup_items);
+   //~ else
+     //~ gadget_text("!");
      
    return new_id;
 }
@@ -440,7 +444,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    if (!notification_cfg->popup_items)
    {
      notification_cfg->clicked_item = EINA_FALSE;
-     gadget_text("");
+     gadget_text(notification_cfg->popup_items);
    }
 }
 
@@ -462,7 +466,7 @@ _clear_menu(void)
   if (notification_cfg->popup_items)
   {
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
-    gadget_text("");
+    gadget_text(notification_cfg->popup_items);
    }
 }
 

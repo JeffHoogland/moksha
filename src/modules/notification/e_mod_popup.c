@@ -835,7 +835,13 @@ get_time()
 static void
 list_add_item(Popup_Data *popup)
 {
+  Instance *inst = NULL;
   Popup_Items *items; 
+  char buf[3];
+  int count;
+  
+  if (!notification_cfg->instances) return;
+  
   items = E_NEW(Popup_Items, 1); 
   if (!items) return;
   
@@ -865,5 +871,14 @@ list_add_item(Popup_Data *popup)
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
   }
-     write_history(notification_cfg->popup_items);
+ 
+ inst = eina_list_data_get(notification_cfg->instances);
+ count = eina_list_count(notification_cfg->popup_items);
+ snprintf(buf, sizeof(buf), "%d", count); 
+ if (count > 0)
+   edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
+ else
+   edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+ 
+ write_history(notification_cfg->popup_items);
 }

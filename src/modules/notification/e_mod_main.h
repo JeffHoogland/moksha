@@ -24,6 +24,13 @@ enum _Popup_Corner
     CORNER_BL,
     CORNER_BR
   };
+  
+struct _Instance
+{
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_notif;
+   E_Menu *menu;
+};
 
 struct _Config 
 {
