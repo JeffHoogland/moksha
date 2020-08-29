@@ -8,4 +8,9 @@ group "Notification_Config" struct {
     value "force_timeout" int: 0;
     value "ignore_replacement" int: 0;
     value "dual_screen" int: 0;
+    value "time_stamp" int: 1;
+    value "show_app" int: 1;
+    value "reverse" int: 0;
+    value "item_length" float: 60.00;
+    value "menu_items" float: 20;
 }
