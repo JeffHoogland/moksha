@@ -13,4 +13,5 @@ group "Notification_Config" struct {
     value "reverse" int: 0;
     value "item_length" float: 60.00;
     value "menu_items" float: 20;
+    value "blacklist" string: "";
 }
