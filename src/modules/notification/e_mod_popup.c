@@ -271,12 +271,18 @@ write_history(Eina_List *popup_items)
 {
    Eina_List *l = NULL;
    char str[10] = "";
+   char dir[PATH_MAX];
+   char file_path[PATH_MAX];
    unsigned int i = 1;
    int ret;
    Eet_File *history_file = NULL;
    Popup_Items *items = NULL;
    
-   history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_WRITE);
+   snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
+   if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+   snprintf(file_path, sizeof(file_path), "%s/notif_list", dir); 
+   
+   history_file = eet_open(file_path, EET_FILE_MODE_WRITE);
    if (history_file){
    EINA_LIST_FOREACH(popup_items, l, items) {
         snprintf(str, sizeof(str), "dtime%d", i);
@@ -285,6 +291,8 @@ write_history(Eina_List *popup_items)
         eet_write(history_file, str,  items->item_app, strlen(items->item_app) + 1, 0);
         snprintf(str, sizeof(str), "icon%d", i);
         eet_write(history_file, str,  items->item_icon, strlen(items->item_icon) + 1, 0);
+        snprintf(str, sizeof(str), "img%d", i);
+        eet_write(history_file, str,  items->item_icon_img, strlen(items->item_icon_img) + 1, 0);
         snprintf(str, sizeof(str), "title%d", i);
         eet_write(history_file, str,  items->item_title, strlen(items->item_title) + 1, 0);
         snprintf(str, sizeof(str), "body%d", i);
@@ -292,8 +300,7 @@ write_history(Eina_List *popup_items)
         i++;
       }
    int count = eina_list_count(notification_cfg->popup_items);
-   snprintf(str, 10, "%d", count);
-   //~ e_util_dialog_internal("write", str);
+   snprintf(str, sizeof(str), "%d", count);
    eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
    ret = eet_close(history_file); 
    }
@@ -646,7 +653,7 @@ _notification_popup_refresh(Popup_Data *popup)
         
         if ((!icon_path) || (!icon_path[0]))
           icon_path = e_notification_app_icon_get(popup->notif);
-
+          
         if (icon_path)
           {
              if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
@@ -689,10 +696,18 @@ _notification_popup_refresh(Popup_Data *popup)
      img = e_notification_hint_icon_data_get(popup->notif);
    if (img)
      {
+        char dir[PATH_MAX];
+        char image[60];
         popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
         evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
         evas_object_image_size_get(popup->app_icon, &w, &h);
+        
+        snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
+        if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+        snprintf(image, sizeof(image), "%s/%s.png", dir, e_notification_summary_get(popup->notif)); 
+        evas_object_image_save(popup->app_icon, image, NULL, NULL);
+        popup->app_icon_image = strdup(image);
      }
 
    if (!popup->app_icon)
@@ -854,13 +869,16 @@ list_add_item(Popup_Data *popup)
   items->item_icon = strdup(icon_path); 
   items->item_title = strdup(title); 
   items->item_body = strdup(b);  
+  if (popup->app_icon_image)
+    items->item_icon_img = strdup(popup->app_icon_image); 
+  else
+    items->item_icon_img = strdup("noimage");
   
   /* Apps blacklist check */  
   if (strstr(notification_cfg->blacklist, items->item_app))
      return;
 
   /* add item to the menu if less then menu items limit */  
-  
   if (notification_cfg->clicked_item == EINA_FALSE){
     if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);

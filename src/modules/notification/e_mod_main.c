@@ -128,12 +128,15 @@ read_items_eet(Eina_List **popup_items)
   int size = 0;
   char str[10];
   char *ret;
+  char file_path[PATH_MAX];
   Eina_List *l = NULL;
   unsigned int items_number, i;
   Popup_Items *items = NULL;
   Eet_File *history_file = NULL;
   
-  history_file = eet_open("/home/stefan/notif", EET_FILE_MODE_READ);
+  snprintf(file_path, sizeof(file_path), "%s/notification/notif_list", efreet_data_home_get()); 
+  
+  history_file = eet_open(file_path, EET_FILE_MODE_READ);
   if (!history_file) {
       printf("Failed to open notification eet file");
       *popup_items = NULL;
@@ -149,9 +152,6 @@ read_items_eet(Eina_List **popup_items)
   }
    items_number = strtol(ret, NULL, 10);
    
-   //~ else
-     //~ gadget_text("");
-   
    for (i = 1; i <= items_number; i++){
         items = E_NEW(Popup_Items, 1);
         snprintf(str, 10, "dtime%d", i);
@@ -163,6 +163,9 @@ read_items_eet(Eina_List **popup_items)
         snprintf(str, 10, "icon%d", i);
         ret = eet_read(history_file, str, &size);
         items->item_icon = strdup(ret);
+        snprintf(str, 10, "img%d", i);
+        ret = eet_read(history_file, str, &size);
+        items->item_icon_img = strdup(ret);
         snprintf(str, 10, "title%d", i);
         ret = eet_read(history_file, str, &size);
         items->item_title = strdup(ret);
@@ -265,10 +268,11 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
              free(buf);
-             if (strlen(items->item_icon) == 0) 
-               e_util_menu_item_theme_icon_set(mi, "dialog-information");
-             else
+             //~ e_util_dialog_internal(items->item_icon_img, items->item_icon);
+             if (strlen(items->item_icon) > 0) 
                e_util_menu_item_theme_icon_set(mi, items->item_icon);
+             else
+               e_menu_item_icon_file_set(mi,  items->item_icon_img);
            }
           }
           else
@@ -408,8 +412,6 @@ _notification_notify(E_Notification *n)
    /* Apps blacklist check */  
    if (strstr(notification_cfg->blacklist, appname) || notification_cfg->popup_items == NULL)
      gadget_text(notification_cfg->popup_items);
-   //~ else
-     //~ gadget_text("!");
      
    return new_id;
 }
@@ -422,7 +424,6 @@ _notification_show_common(const char *summary,
 {
    E_Notification *n = e_notification_full_new
        ("enlightenment", replaces_id, icon, summary, body, -1);
-
    if (!n)
      return;
 
@@ -439,7 +440,10 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
    /* show the current item as notification */
-  _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
+   if (strlen(sel_item->item_icon) > 0)
+     _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
+   else if (sel_item->item_icon_img)
+     _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon_img, 0);
 
    if (!notification_cfg->popup_items)
    {

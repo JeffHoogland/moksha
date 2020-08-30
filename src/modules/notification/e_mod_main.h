@@ -77,6 +77,7 @@ struct _Popup_Data
   Evas *e;
   Evas_Object *theme;
   const char  *app_name;
+  const char  *app_icon_image;
   Evas_Object *app_icon;
   Ecore_Timer *timer;
   E_Zone *zone;
@@ -87,6 +88,7 @@ struct _Popup_Items
   char *item_date_time;
   char *item_app;
   char *item_icon;
+  char *item_icon_img;
   char *item_title;
   char *item_body;
 };
