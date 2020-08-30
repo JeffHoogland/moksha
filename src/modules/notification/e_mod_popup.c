@@ -648,20 +648,29 @@ _notification_popup_refresh(Popup_Data *popup)
    /* Check if the app specify an icon either by a path or by a hint */
    img = e_notification_hint_image_data_get(popup->notif);
    if (!img)
-     {
+     {  
         icon_path = e_notification_hint_image_path_get(popup->notif);
-        
-        if ((!icon_path) || (!icon_path[0]))
+           
+        if ((!icon_path) || (!icon_path[0])){
           icon_path = e_notification_app_icon_get(popup->notif);
-          
+        }
         if (icon_path)
           {
+             char dir[PATH_MAX];
+             const char *file;
+        
+             file = ecore_file_file_get(icon_path);
+             file = file + 1;
+             snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(), file); 
+             ecore_file_cp(icon_path, dir); 
+             popup->app_icon_image = strdup(dir);
+             
              if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
              if (!ecore_file_exists(icon_path))
                {
                   const char *new_path;
                   unsigned int size;
-
+                  popup->app_icon_image = strdup(icon_path);
                   size = e_util_icon_size_normalize(width * e_scale);
                   new_path = efreet_icon_path_find(e_config->icon_theme, 
                                                    icon_path, size);
@@ -692,12 +701,14 @@ _notification_popup_refresh(Popup_Data *popup)
                }
           }
      }
-   if ((!img) && (!popup->app_icon))
+   if ((!img) && (!popup->app_icon)){
      img = e_notification_hint_icon_data_get(popup->notif);
+     }
    if (img)
      {
         char dir[PATH_MAX];
         char image[60];
+        
         popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
         evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
@@ -713,7 +724,7 @@ _notification_popup_refresh(Popup_Data *popup)
    if (!popup->app_icon)
      {
         char buf[PATH_MAX];
-
+        //~ e_util_dialog_internal("EDJE", "EDJE");
         snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", 
                  notification_mod->dir);
         popup->app_icon = edje_object_add(popup->e);
@@ -866,10 +877,15 @@ list_add_item(Popup_Data *popup)
   
   items->item_date_time = get_time();
   items->item_app = strdup(popup->app_name); 
-  items->item_icon = strdup(icon_path); 
+  if (strstr(icon_path, "tmp"))
+   items->item_icon = strdup(""); 
+  else
+    items->item_icon = strdup(icon_path); 
+  
   items->item_title = strdup(title); 
   items->item_body = strdup(b);  
-  if (popup->app_icon_image)
+  
+  if (strlen(popup->app_icon_image) > 0)                    //do we have icon image?
     items->item_icon_img = strdup(popup->app_icon_image); 
   else
     items->item_icon_img = strdup("noimage");
