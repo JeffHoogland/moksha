@@ -264,7 +264,12 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                             items->item_body);
              }  
              
-             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, buf));  
+             Eina_Strbuf *buff = eina_strbuf_new();
+             eina_strbuf_append(buff, buf);
+             eina_strbuf_replace_all(buff, "\n", " ");
+             
+             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, eina_strbuf_string_get(buff)));  
+             free(buff);
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
              free(buf);
