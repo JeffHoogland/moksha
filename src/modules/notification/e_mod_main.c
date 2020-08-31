@@ -362,6 +362,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
     e_object_del(E_OBJECT(inst->menu));
     inst->menu = NULL;
   }
+  if (notification_cfg->reverse)
+     notification_cfg->popup_items = eina_list_reverse(notification_cfg->popup_items);
 }
 
 static void
