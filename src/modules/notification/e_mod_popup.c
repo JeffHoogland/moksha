@@ -663,7 +663,6 @@ _notification_popup_refresh(Popup_Data *popup)
              const char *file;
         
              file = ecore_file_file_get(icon_path);
-             e_util_dialog_internal(file, icon_path);
              if (*file == '.') file = file + 1;
              snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(), file); 
              ecore_file_cp(icon_path, dir); 
