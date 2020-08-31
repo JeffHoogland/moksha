@@ -242,38 +242,35 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         
           EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
              mi = e_menu_item_new(inst->menu);
-             char *buf;
-             buf = (char *)malloc(notification_cfg->item_length * sizeof(char));
-             
-             if (notification_cfg->show_app)
-             {
-               if (notification_cfg->time_stamp)               
-                  snprintf(buf, notification_cfg->item_length, "%s %s: %s, %s", items->item_date_time, 
-                              items->item_app, items->item_title, items->item_body);
-               else
-                  snprintf(buf, notification_cfg->item_length, "%s: %s, %s", items->item_app, 
-                               items->item_title, items->item_body);
-             }
-             else
-             {
-               if (notification_cfg->time_stamp)    
-                 snprintf(buf, notification_cfg->item_length, "%s %s: %s", items->item_date_time, 
-                            items->item_title, items->item_body);
-               else
-                 snprintf(buf, notification_cfg->item_length, "%s: %s", items->item_title, 
-                            items->item_body);
-             }  
-             
              Eina_Strbuf *buff = eina_strbuf_new();
-             eina_strbuf_append(buff, buf);
+             int i;
+             
+             if (notification_cfg->time_stamp){
+                eina_strbuf_append(buff, items->item_date_time);
+                eina_strbuf_append(buff, " ");
+             }  
+             if (notification_cfg->show_app){ 
+                eina_strbuf_append(buff, items->item_app);
+                eina_strbuf_append(buff, ": ");
+             }
+             eina_strbuf_append(buff, items->item_title);
+             eina_strbuf_append(buff, ", ");
+             eina_strbuf_append(buff, items->item_body); 
+             eina_strbuf_append(buff, " ");
              eina_strbuf_replace_all(buff, "\n", " ");
              
-             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, eina_strbuf_string_get(buff)));  
-             free(buff);
+             if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
+               i = eina_strbuf_length_get(buff);
+             else
+               i = notification_cfg->item_length;
+               
+             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, 
+                         eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));  
+                                             
+             eina_strbuf_free(buff); 
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
-             free(buf);
-             //~ e_util_dialog_internal(items->item_icon_img, items->item_icon);
+
              if (strlen(items->item_icon) > 0) 
                e_util_menu_item_theme_icon_set(mi, items->item_icon);
              else
