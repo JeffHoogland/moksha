@@ -849,12 +849,18 @@ get_time()
 {
    time_t rawtime;
    struct tm * timeinfo;
+   char buf[20] = "";
+   char hour[3];
    time(&rawtime);
    timeinfo = localtime( &rawtime );
-   char buf[20] = "";
-   snprintf(buf, sizeof(buf), "%04d/%02d/%02d% 02d:%02d:%02d ", timeinfo->tm_year + 1900, 
-            timeinfo->tm_mon, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, 
-            timeinfo->tm_sec);
+   
+   if (timeinfo->tm_hour < 10) 
+     snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour); 
+   else
+     snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour); 
+     
+   snprintf(buf, sizeof(buf), "%04d/%02d/%02d %s:%02d:%02d ", timeinfo->tm_year + 1900, 
+            timeinfo->tm_mon, timeinfo->tm_mday, hour, timeinfo->tm_min, timeinfo->tm_sec);
    return strdup(buf);
 }
 
