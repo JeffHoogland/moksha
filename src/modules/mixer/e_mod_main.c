@@ -114,7 +114,7 @@ _notify(const int val)
    static E_Notification *n;
    char *icon, buf[56];
    int ret;
-
+   
    ret = snprintf(buf, (sizeof(buf) - 1), "%s: %d%%", _("New volume"), val);
    if ((ret < 0) || ((unsigned int)ret > sizeof(buf)))
      return;
@@ -125,8 +125,13 @@ _notify(const int val)
      icon = "audio-volume-medium";
    else if (val < 34)
      icon = "audio-volume-low";
-   else
+   else if (val < 153)
      icon = "audio-volume-high";
+   else
+   {
+     icon = "dialog-warning";
+     snprintf(buf, sizeof(buf), "%s", _("Volume limit reached!!!"));
+   }
    if (n) return;
    n = e_notification_full_new(_("EPulse"), 0, icon, _("Volume Changed"), buf, 2000);
    e_notification_replaces_id_set(n, EINA_TRUE);
@@ -193,6 +198,8 @@ _volume_increase_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
      pa_cvolume_inc(&v, VOLUME_STEP);
      epulse_sink_volume_set(s->index, v);
    }
+   else
+    _notify(153);
 }
 
 static void
@@ -205,6 +212,8 @@ _volume_decrease_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
    pa_cvolume_dec(&v, VOLUME_STEP);
 
    epulse_sink_volume_set(s->index, v);
+   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) == 0) 
+     _notify(0);
 }
 
 static void
