@@ -889,12 +889,7 @@ list_add_item(Popup_Data *popup)
     items->item_icon = strdup(icon_path); 
   
   items->item_title = strdup(title);               //add title
-  
-  Eina_Strbuf *text = eina_strbuf_new();           //add notif body
-  eina_strbuf_append(text, b);
-  eina_strbuf_replace_all(text, "\n", "<br/>");
-  items->item_body = strdup(eina_strbuf_string_get(text));  
-  free(text);
+  items->item_body = strdup(b);                    //add text body
   
   if (strlen(popup->app_icon_image) > 0)     //do we have an icon image?
     items->item_icon_img = strdup(popup->app_icon_image); 
