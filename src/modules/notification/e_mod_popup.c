@@ -881,17 +881,22 @@ list_add_item(Popup_Data *popup)
   const char *title = e_notification_summary_get(popup->notif);
   const char *b = e_notification_body_get(popup->notif);
   
-  items->item_date_time = get_time();
-  items->item_app = strdup(popup->app_name); 
-  if (strstr(icon_path, "tmp"))
+  items->item_date_time = get_time();              //add date and time
+  items->item_app = strdup(popup->app_name);       //add app name
+  if (strstr(icon_path, "tmp"))                    //add icon path
    items->item_icon = strdup(""); 
   else
     items->item_icon = strdup(icon_path); 
   
-  items->item_title = strdup(title); 
-  items->item_body = strdup(b);  
+  items->item_title = strdup(title);               //add title
   
-  if (strlen(popup->app_icon_image) > 0)                    //do we have icon image?
+  Eina_Strbuf *text = eina_strbuf_new();           //add notif body
+  eina_strbuf_append(text, b);
+  eina_strbuf_replace_all(text, "\n", "<br/>");
+  items->item_body = strdup(eina_strbuf_string_get(text));  
+  free(text);
+  
+  if (strlen(popup->app_icon_image) > 0)     //do we have an icon image?
     items->item_icon_img = strdup(popup->app_icon_image); 
   else
     items->item_icon_img = strdup("noimage");
