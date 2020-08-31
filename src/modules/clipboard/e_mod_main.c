@@ -631,6 +631,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
   EINA_SAFETY_ON_NULL_RETURN(data);
   Instance *inst = data;
 
+  if (clip_cfg->hist_reverse)
+      clip_inst->items=eina_list_reverse(clip_inst->items);
   if (inst->gcc)
      e_gadcon_locked_set(inst->gcc->gadcon, EINA_FALSE);
   if (inst->o_button && e_icon_edje_get(inst->o_button))
