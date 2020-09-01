@@ -443,11 +443,14 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    notification_cfg->clicked_item = EINA_TRUE;
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
+   
    /* show the current item as notification */
    if (strlen(sel_item->item_icon) > 0)
      _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon, 0);
-   else if (sel_item->item_icon_img)
+   else if (sel_item->item_icon_img){
      _notification_show_common(sel_item->item_title, sel_item->item_body, sel_item->item_icon_img, 0);
+     ecore_file_remove(sel_item->item_icon_img);
+   }
 
    if (!notification_cfg->popup_items)
    {
@@ -473,6 +476,7 @@ _clear_menu(void)
   //~ EINA_SAFETY_ON_NULL_RETURN(clip_inst); 
   if (notification_cfg->popup_items)
   {
+    
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
     gadget_text(notification_cfg->popup_items);
    }
@@ -631,8 +635,9 @@ e_modapi_init(E_Module *m)
          notification_cfg);
    notification_cfg->initial_mode_timer = ecore_timer_add
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
+   
    e_gadcon_provider_register(&_gadcon_class);
-  
+   notification_cfg->clicked_item = EINA_FALSE;
    //~ notification_cfg->module = m;
    notification_mod = m;
    return m;

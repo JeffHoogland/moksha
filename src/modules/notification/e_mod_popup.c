@@ -661,11 +661,12 @@ _notification_popup_refresh(Popup_Data *popup)
              /* Grab icon stored in /tmp and copy to notif dir */
              char dir[PATH_MAX];
              const char *file;
-        
              file = ecore_file_file_get(icon_path);
              if (*file == '.') file = file + 1;
              snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(), file); 
-             ecore_file_cp(icon_path, dir); 
+             if (!notification_cfg->clicked_item) 
+                ecore_file_cp(icon_path, dir); 
+                
              popup->app_icon_image = strdup(dir);
              /*                                                 */
              
@@ -769,7 +770,6 @@ _notification_popup_refresh(Popup_Data *popup)
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h); 
    _notification_popups_place();
-    
 }
 
 static Popup_Data *
@@ -872,6 +872,7 @@ list_add_item(Popup_Data *popup)
 {
   Instance *inst = NULL;
   Popup_Items *items; 
+  char *file;
   char buf[3];
   int count;
   
@@ -909,12 +910,15 @@ list_add_item(Popup_Data *popup)
        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
     else {
+     file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
+     ecore_file_remove(file);   
      notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
     }
   }
  
+ notification_cfg->clicked_item = EINA_FALSE;
  inst = eina_list_data_get(notification_cfg->instances);
  count = eina_list_count(notification_cfg->popup_items);
  snprintf(buf, sizeof(buf), "%d", count); 
