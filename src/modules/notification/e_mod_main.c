@@ -69,8 +69,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   _button_cb_mouse_down, inst);
    notification_cfg->instances =
      eina_list_append(notification_cfg->instances, inst);
-
-   read_items_eet(&(notification_cfg->popup_items));
+   gadget_text(notification_cfg->popup_items);
    return gcc;
 }
 
@@ -80,6 +79,11 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
+   if (inst->menu) {
+    e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+    e_object_del(E_OBJECT(inst->menu));
+    inst->menu = NULL;
+  }
    if (notification_cfg)
      notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
    evas_object_del(inst->o_notif);
@@ -175,9 +179,7 @@ read_items_eet(Eina_List **popup_items)
         
         l = eina_list_append(l, items);
     }
-  *popup_items = l;  
-  if (items_number > 0) 
-     gadget_text(l);
+   *popup_items = l;  
   eet_close(history_file);
 return 1; 
 }
@@ -383,7 +385,6 @@ gadget_text(Eina_List *list)
  if (!notification_cfg->instances) return;
  
  inst = eina_list_data_get(notification_cfg->instances);
- list = notification_cfg->popup_items;
  count = eina_list_count(list);
  snprintf(buf, sizeof(buf), "%d", count); 
  if (count > 0)
@@ -473,7 +474,7 @@ free_menu_data(Popup_Items *items)
 static void
 clear_menu(void)
 {
-  //~ EINA_SAFETY_ON_NULL_RETURN(clip_inst); 
+  EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
   if (notification_cfg->popup_items)
   {
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
@@ -654,6 +655,7 @@ e_modapi_init(E_Module *m)
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
    
    e_gadcon_provider_register(&_gadcon_class);
+   read_items_eet(&(notification_cfg->popup_items));
    notification_cfg->clicked_item = EINA_FALSE;
    //~ notification_cfg->module = m;
    notification_mod = m;
