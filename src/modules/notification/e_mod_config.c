@@ -30,7 +30,7 @@ static Evas_Object *_basic_create(E_Config_Dialog      *cfd,
                                   E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog      *cfd,
                         E_Config_Dialog_Data *cfdata);
-
+                        
 E_Config_Dialog *
 e_int_config_notification_module(E_Container *con,
                                  const char  *params __UNUSED__)
@@ -204,10 +204,39 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    return otb;
 }
 
+Eet_Error
+truncate_menu(const unsigned int n)
+{
+  Eet_Error err = EET_ERROR_NONE;
+  
+  EINA_SAFETY_ON_NULL_RETURN_VAL(notification_cfg, EET_ERROR_BAD_OBJECT);
+  
+  if (notification_cfg->popup_items) {
+    if (eina_list_count(notification_cfg->popup_items) > n) {
+      Eina_List *last, *discard;
+      last = eina_list_nth_list(notification_cfg->popup_items, n-1);
+      notification_cfg->popup_items = eina_list_split_list(notification_cfg->popup_items, last, &discard);
+      if (discard)
+        E_FREE_LIST(discard, free_menu_data);
+
+      gadget_text(notification_cfg->popup_items);
+      write_history(notification_cfg->popup_items);
+    }
+  }
+  else
+    err = EET_ERROR_EMPTY;
+  return err;
+}
+
+
+
 static int
 _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
              E_Config_Dialog_Data *cfdata)
 {
+   if (!EINA_DBL_EQ(notification_cfg->menu_items, cfdata->menu_items))
+      truncate_menu(cfdata->menu_items); 
+    
    notification_cfg->show_low = cfdata->show_low;
    notification_cfg->show_normal = cfdata->show_normal;
    notification_cfg->show_critical = cfdata->show_critical;
@@ -225,7 +254,6 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    if (notification_cfg->blacklist)
      eina_stringshare_del(notification_cfg->blacklist);
    
-
    char *t;
    t = strdup(cfdata->blacklist);
    *t = toupper(*t);

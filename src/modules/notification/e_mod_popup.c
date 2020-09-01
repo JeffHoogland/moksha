@@ -266,7 +266,7 @@ notification_popup_notify(E_Notification *n,
    return 1;
 }
 
-static int
+int
 write_history(Eina_List *popup_items)
 {
    Eina_List *l = NULL;
