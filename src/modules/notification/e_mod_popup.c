@@ -870,11 +870,8 @@ get_time()
 static void
 list_add_item(Popup_Data *popup)
 {
-  Instance *inst = NULL;
   Popup_Items *items; 
   char *file;
-  char buf[3];
-  int count;
   Eina_Bool ret;
   
   if (!notification_cfg->instances) return;
@@ -922,13 +919,6 @@ list_add_item(Popup_Data *popup)
   }
  
  notification_cfg->clicked_item = EINA_FALSE;
- inst = eina_list_data_get(notification_cfg->instances);
- count = eina_list_count(notification_cfg->popup_items);
- snprintf(buf, sizeof(buf), "%d", count); 
- if (count > 0)
-   edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
- else
-   edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
- 
+ gadget_text(notification_cfg->popup_items);
  write_history(notification_cfg->popup_items);
 }

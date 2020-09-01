@@ -18,7 +18,7 @@ static void             _notification_cb_close_notification(E_Notification_Daemo
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _clear_menu_cb(void);
 static int               read_items_eet(Eina_List **popup_items);
-static void              gadget_text(Eina_List *list);
+//~ static void              gadget_text(Eina_List *list);
 
 
 /* Config function protos */
@@ -376,7 +376,7 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
   e_int_config_notification_module(m->zone->container, NULL);
 } 
 
-static void
+void
 gadget_text(Eina_List *list)
 {
  Instance *inst = NULL;

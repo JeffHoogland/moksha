@@ -109,6 +109,7 @@ E_Config_Dialog *e_int_config_notification_module(E_Container *con, const char *
 
 extern E_Module *notification_mod;
 extern Config   *notification_cfg;
+void      gadget_text(Eina_List *list);
 
 
 /**
