@@ -904,8 +904,10 @@ list_add_item(Popup_Data *popup)
 
   /* add item to the menu if less then menu items limit */  
   if (notification_cfg->clicked_item == EINA_FALSE){
-    if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
-       notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+      notification_cfg->new_item = EINA_TRUE;
+      if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
+         notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+       
     }
     else {
      file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;

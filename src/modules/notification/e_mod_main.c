@@ -18,7 +18,6 @@ static void             _notification_cb_close_notification(E_Notification_Daemo
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _clear_menu_cb(void);
 static int               read_items_eet(Eina_List **popup_items);
-//~ static void              gadget_text(Eina_List *list);
 
 
 /* Config function protos */
@@ -270,6 +269,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                          eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));  
                                              
              eina_strbuf_free(buff); 
+             
+             notification_cfg->new_item = EINA_FALSE;
+             gadget_text(notification_cfg->popup_items);
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
 
@@ -379,18 +381,24 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 void
 gadget_text(Eina_List *list)
 {
- Instance *inst = NULL;
- char buf[3];
- int count;
- if (!notification_cfg->instances) return;
+  Instance *inst = NULL;
+  char buf[3];
+  int count;
+  if (!notification_cfg->instances) return;
  
- inst = eina_list_data_get(notification_cfg->instances);
- count = eina_list_count(list);
- snprintf(buf, sizeof(buf), "%d", count); 
- if (count > 0)
-   edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
- else
-   edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+  inst = eina_list_data_get(notification_cfg->instances);
+  count = eina_list_count(list);
+  snprintf(buf, sizeof(buf), "%d", count); 
+  if (count > 0)
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
+  else
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+  
+  
+  if (notification_cfg->new_item) 
+    edje_object_signal_emit(inst->o_notif, "blink", "");
+  else
+    edje_object_signal_emit(inst->o_notif, "stop", "");
 }
 
 static unsigned int
