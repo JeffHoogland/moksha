@@ -711,7 +711,7 @@ _notification_popup_refresh(Popup_Data *popup)
    if (img)
      {
         char dir[PATH_MAX];
-        char image[60];
+        char image_path[PATH_MAX];
         
         popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
@@ -720,9 +720,9 @@ _notification_popup_refresh(Popup_Data *popup)
         
         snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
         if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
-        snprintf(image, sizeof(image), "%s/%s.png", dir, e_notification_summary_get(popup->notif)); 
-        evas_object_image_save(popup->app_icon, image, NULL, NULL);
-        popup->app_icon_image = strdup(image);
+        snprintf(image_path, sizeof(image_path), "%s/%s.png", dir, e_notification_summary_get(popup->notif)); 
+        evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
+        popup->app_icon_image = strdup(image_path);
      }
 
    if (!popup->app_icon)
