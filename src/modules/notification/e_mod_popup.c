@@ -875,6 +875,7 @@ list_add_item(Popup_Data *popup)
   char *file;
   char buf[3];
   int count;
+  Eina_Bool ret;
   
   if (!notification_cfg->instances) return;
   
@@ -911,7 +912,9 @@ list_add_item(Popup_Data *popup)
     }
     else {
      file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
-     ecore_file_remove(file);   
+     ret = ecore_file_remove(file);   
+     if (!ret) 
+       printf("Notif: Error during file removing!");
      notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                         eina_list_last(notification_cfg->popup_items));
      notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);

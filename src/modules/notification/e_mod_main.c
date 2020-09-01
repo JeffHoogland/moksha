@@ -16,7 +16,7 @@ static int              _notification_cb_notify(E_Notification_Daemon *daemon, E
 static void             _notification_cb_close_notification(E_Notification_Daemon *daemon,
                                                 unsigned int id);
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void             _clear_menu(void);
+static void             _clear_menu_cb(void);
 static int               read_items_eet(Eina_List **popup_items);
 static void              gadget_text(Eina_List *list);
 
@@ -290,7 +290,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         mi = e_menu_item_new(inst->menu);
         e_menu_item_label_set(mi, _("Clear"));
         e_util_menu_item_theme_icon_set(mi, "edit-clear");
-        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu, notification_cfg->popup_items);
+        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->popup_items);
         
         if (notification_cfg->popup_items)
            e_menu_item_disabled_set(mi, EINA_FALSE);
@@ -471,16 +471,33 @@ free_menu_data(Popup_Items *items)
 }
 
 static void
-_clear_menu(void)
+clear_menu(void)
 {
   //~ EINA_SAFETY_ON_NULL_RETURN(clip_inst); 
   if (notification_cfg->popup_items)
   {
-    
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
     gadget_text(notification_cfg->popup_items);
    }
 }
+
+static void
+_clear_menu_cb(void)
+{
+  EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
+  Popup_Items *items;
+  Eina_List *l;
+  Eina_Bool ret;
+  
+  EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
+    ret = ecore_file_remove(items->item_icon_img);    
+    if (!ret) 
+       printf("Notif: Error during files removing!");
+  }    
+  clear_menu();
+}
+
+
 
 static void
 _notification_show_presentation(Eina_Bool enabled)
@@ -719,7 +736,7 @@ static void
 _notification_cfg_free(Config *cfg)
 {
    if (cfg->blacklist) eina_stringshare_del(cfg->blacklist); 
-   _clear_menu();
+   clear_menu();
    free(cfg);
 }
 
