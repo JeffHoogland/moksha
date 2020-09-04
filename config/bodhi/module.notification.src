@@ -11,6 +11,7 @@ group "Notification_Config" struct {
     value "time_stamp" int: 1;
     value "show_app" int: 1;
     value "reverse" int: 0;
+    value "anim" int: 1;
     value "item_length" float: 60.00;
     value "menu_items" float: 20;
     value "blacklist" string: "";

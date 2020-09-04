@@ -15,6 +15,7 @@ struct _E_Config_Dialog_Data
    int time_stamp;
    int show_app;
    int reverse;
+   int anim;
    double item_length;
    double menu_items;
    char *blacklist;
@@ -89,6 +90,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->time_stamp = notification_cfg->time_stamp;
    cfdata->show_app = notification_cfg->show_app;
    cfdata->reverse = notification_cfg->reverse;
+   cfdata->anim = notification_cfg->anim;
    cfdata->menu_items = notification_cfg->menu_items;
    cfdata->item_length = notification_cfg->item_length;
    if (notification_cfg->blacklist)
@@ -191,8 +193,13 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
+   of = e_widget_framelist_add(evas, _("Miscellaneous"), 0);
+   ow = e_widget_check_add(evas, _("Gadget animation when new popup"),  &(cfdata->anim));
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
    of = e_widget_framelist_add(evas, _("Applications"), 0);
-   ow = e_widget_label_add(evas, _("App Blacklist (use ; as delimiter)"));
+   ow = e_widget_label_add(evas, _("App Blacklist (use a delimiter)"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->blacklist, NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
@@ -236,7 +243,12 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
 {
    if (!EINA_DBL_EQ(notification_cfg->menu_items, cfdata->menu_items))
       truncate_menu(cfdata->menu_items); 
-    
+   
+   if (cfdata->anim == 0){
+      notification_cfg->new_item = EINA_FALSE;
+      gadget_text(notification_cfg->popup_items);
+   }
+      
    notification_cfg->show_low = cfdata->show_low;
    notification_cfg->show_normal = cfdata->show_normal;
    notification_cfg->show_critical = cfdata->show_critical;
@@ -248,6 +260,7 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    notification_cfg->time_stamp = cfdata->time_stamp;
    notification_cfg->show_app = cfdata->show_app;
    notification_cfg->reverse = cfdata->reverse;
+   notification_cfg->anim = cfdata->anim;
    notification_cfg->menu_items = cfdata->menu_items;
    notification_cfg->item_length = cfdata->item_length;
    

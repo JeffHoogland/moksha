@@ -50,6 +50,7 @@ struct _Config
   int time_stamp;
   int show_app;
   int reverse;
+  int anim;
   Eina_Bool clicked_item;
   double item_length;
   double menu_items;

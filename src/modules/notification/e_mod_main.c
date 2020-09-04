@@ -394,11 +394,18 @@ gadget_text(Eina_List *list)
   else
      edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
   
-  
-  if (notification_cfg->new_item) 
-    edje_object_signal_emit(inst->o_notif, "blink", "");
-  else
-    edje_object_signal_emit(inst->o_notif, "stop", "");
+  if (notification_cfg->new_item){
+     edje_object_color_class_set(inst->o_notif, "module_label",
+          255, 150, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255);    
+     if (notification_cfg->anim)  
+         edje_object_signal_emit(inst->o_notif, "blink", "");
+  }
+  else{
+     edje_object_color_class_set(inst->o_notif, "module_label",
+          255, 255, 255, 255, 0, 0, 0, 255, 0, 0, 0, 255);  
+    if (notification_cfg->anim)
+        edje_object_signal_emit(inst->o_notif, "stop", "");
+  }
 }
 
 static unsigned int
@@ -618,6 +625,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, time_stamp, INT);
    E_CONFIG_VAL(D, T, show_app, INT);
    E_CONFIG_VAL(D, T, reverse, INT);
+   E_CONFIG_VAL(D, T, anim, INT);
    E_CONFIG_VAL(D, T, menu_items, DOUBLE);
    E_CONFIG_VAL(D, T, item_length, DOUBLE);
    E_CONFIG_VAL(D, T, blacklist, STR);
@@ -735,6 +743,7 @@ _notification_cfg_new(void)
    cfg->time_stamp = 1;
    cfg->show_app = 0;
    cfg->reverse = 0;
+   cfg->anim = 1;
    cfg->item_length = 60;
    cfg->menu_items = 20;
    cfg->blacklist = eina_stringshare_add("");
