@@ -15,9 +15,9 @@ struct _E_Config_Dialog_Data
    int time_stamp;
    int show_app;
    int reverse;
-   int anim;
    double item_length;
    double menu_items;
+   double jump_delay;
    char *blacklist;
 };
 
@@ -90,9 +90,9 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->time_stamp = notification_cfg->time_stamp;
    cfdata->show_app = notification_cfg->show_app;
    cfdata->reverse = notification_cfg->reverse;
-   cfdata->anim = notification_cfg->anim;
    cfdata->menu_items = notification_cfg->menu_items;
    cfdata->item_length = notification_cfg->item_length;
+   cfdata->jump_delay = notification_cfg->jump_delay;
    if (notification_cfg->blacklist)
      cfdata->blacklist = strdup(notification_cfg->blacklist);
 }
@@ -167,8 +167,6 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
 
     o = e_widget_list_add(evas, 0, 0);
    of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
-   ow = e_widget_label_add(evas, _("Menu options"));
-   e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Time stamp"),  &(cfdata->time_stamp));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Show Application name"),  &(cfdata->show_app));
@@ -194,7 +192,10 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Miscellaneous"), 0);
-   ow = e_widget_check_add(evas, _("Gadget animation when new popup"),  &(cfdata->anim));
+   ow = e_widget_label_add(evas, _("Gadget animation delay [s]"));
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 0, 60, 1, 0,
+                             &(cfdata->jump_delay), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
@@ -243,9 +244,12 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    if (!EINA_DBL_EQ(notification_cfg->menu_items, cfdata->menu_items))
       truncate_menu(cfdata->menu_items); 
    
-   if (cfdata->anim == 0){
-      notification_cfg->new_item = EINA_FALSE;
-   }
+   if (cfdata->jump_delay > 0)
+      ecore_timer_interval_set(notification_cfg->jump_timer, cfdata->jump_delay);
+   else
+      ecore_timer_interval_set(notification_cfg->jump_timer, 0.1);
+    
+   ecore_timer_reset(notification_cfg->jump_timer);
       
    notification_cfg->show_low = cfdata->show_low;
    notification_cfg->show_normal = cfdata->show_normal;
@@ -258,9 +262,9 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    notification_cfg->time_stamp = cfdata->time_stamp;
    notification_cfg->show_app = cfdata->show_app;
    notification_cfg->reverse = cfdata->reverse;
-   notification_cfg->anim = cfdata->anim;
    notification_cfg->menu_items = cfdata->menu_items;
    notification_cfg->item_length = cfdata->item_length;
+   notification_cfg->jump_delay = cfdata->jump_delay;
    
    if (notification_cfg->blacklist)
      eina_stringshare_del(notification_cfg->blacklist);

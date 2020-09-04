@@ -308,6 +308,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_menu_item_callback_set(mi, _cb_config_show, NULL);
+        
+        //~ if (notification_cfg->jump_timer)
+           //~ ecore_timer_del(notification_cfg->jump_timer);
      
         if (ev) {
           e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
@@ -378,6 +381,13 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
   e_int_config_notification_module(m->zone->container, NULL);
 } 
 
+static Eina_Bool 
+_notif_delay_stop_cb(Instance *inst)
+{
+   edje_object_signal_emit(inst->o_notif, "stop", "");
+   return EINA_FALSE;
+}
+
 void
 gadget_text(int number)
 {
@@ -393,10 +403,20 @@ gadget_text(int number)
   else
      edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
   
-  if ((notification_cfg->new_item) && (notification_cfg->anim))
+  if (notification_cfg->jump_timer)
+     {
+        ecore_timer_del(notification_cfg->jump_timer);
+        notification_cfg->jump_timer = NULL;
+     }
+  
+  if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0)){
          edje_object_signal_emit(inst->o_notif, "blink", "");
+         notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay, 
+                     (Ecore_Task_Cb)_notif_delay_stop_cb, inst);
+         }
   else
-        edje_object_signal_emit(inst->o_notif, "stop", "");
+   edje_object_signal_emit(inst->o_notif, "stop", "");
+  
 }
 
 static unsigned int
@@ -608,9 +628,9 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, time_stamp, INT);
    E_CONFIG_VAL(D, T, show_app, INT);
    E_CONFIG_VAL(D, T, reverse, INT);
-   E_CONFIG_VAL(D, T, anim, INT);
    E_CONFIG_VAL(D, T, menu_items, DOUBLE);
    E_CONFIG_VAL(D, T, item_length, DOUBLE);
+   E_CONFIG_VAL(D, T, jump_delay, DOUBLE);
    E_CONFIG_VAL(D, T, blacklist, STR);
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
@@ -668,6 +688,9 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (notification_cfg->initial_mode_timer)
      ecore_timer_del(notification_cfg->initial_mode_timer);
+   
+   if (notification_cfg->jump_timer)
+     ecore_timer_del(notification_cfg->jump_timer);
 
    if (notification_cfg->handler)
      ecore_event_handler_del(notification_cfg->handler);
@@ -728,9 +751,9 @@ _notification_cfg_new(void)
    cfg->time_stamp = 1;
    cfg->show_app = 0;
    cfg->reverse = 0;
-   cfg->anim = 1;
    cfg->item_length = 60;
    cfg->menu_items = 20;
+   cfg->jump_delay = 10;
    cfg->blacklist = eina_stringshare_add("");
 
    return cfg;

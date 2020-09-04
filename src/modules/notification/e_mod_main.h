@@ -50,10 +50,10 @@ struct _Config
   int time_stamp;
   int show_app;
   int reverse;
-  int anim;
   Eina_Bool clicked_item;
   double item_length;
   double menu_items;
+  double jump_delay;
   const char *blacklist;
   
   struct
@@ -66,9 +66,10 @@ struct _Config
   Eina_List  *popups;
   Eina_List  *popup_items;
   int         next_id;
-  int   new_item;
+  int         new_item;
 
   Ecore_Timer *initial_mode_timer;
+  Ecore_Timer *jump_timer;
   E_Notification_Daemon *daemon;
 };
 
