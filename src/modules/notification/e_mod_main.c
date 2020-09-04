@@ -68,7 +68,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   _button_cb_mouse_down, inst);
    notification_cfg->instances =
      eina_list_append(notification_cfg->instances, inst);
-   gadget_text(notification_cfg->popup_items);
+   gadget_text(notification_cfg->new_item);
    return gcc;
 }
 
@@ -270,8 +270,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                                              
              eina_strbuf_free(buff); 
              
-             notification_cfg->new_item = EINA_FALSE;
-             gadget_text(notification_cfg->popup_items);
+             notification_cfg->new_item = 0;
+             gadget_text(notification_cfg->new_item);
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
 
@@ -379,33 +379,24 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 } 
 
 void
-gadget_text(Eina_List *list)
+gadget_text(int number)
 {
   Instance *inst = NULL;
-  char buf[3];
-  int count;
+  char *buf = (char *)malloc(sizeof(char) * number);   
   if (!notification_cfg->instances) return;
  
   inst = eina_list_data_get(notification_cfg->instances);
-  count = eina_list_count(list);
-  snprintf(buf, sizeof(buf), "%d", count); 
-  if (count > 0)
+  snprintf(buf, sizeof(number), "%d", number);  
+
+  if (number > 0)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
   else
      edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
   
-  if (notification_cfg->new_item){
-     edje_object_color_class_set(inst->o_notif, "module_label",
-          255, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255);    
-     if (notification_cfg->anim)  
+  if ((notification_cfg->new_item) && (notification_cfg->anim))
          edje_object_signal_emit(inst->o_notif, "blink", "");
-  }
-  else{
-     edje_object_color_class_set(inst->o_notif, "module_label",
-          255, 255, 255, 255, 0, 0, 0, 255, 0, 0, 0, 255);  
-    if (notification_cfg->anim)
+  else
         edje_object_signal_emit(inst->o_notif, "stop", "");
-  }
 }
 
 static unsigned int
@@ -428,10 +419,6 @@ _notification_notify(E_Notification *n)
         e_notification_hint_urgency_set(n, 4);
         notification_popup_notify(n, replaces_id, appname);
      }
-     
-   /* Apps blacklist check */  
-   if (strstr(notification_cfg->blacklist, appname) || notification_cfg->popup_items == NULL)
-     gadget_text(notification_cfg->popup_items);
      
    return new_id;
 }
@@ -469,10 +456,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    }
 
    if (!notification_cfg->popup_items)
-   {
-     notification_cfg->clicked_item = EINA_FALSE;
-     gadget_text(notification_cfg->popup_items);
-   }
+      notification_cfg->clicked_item = EINA_FALSE;
 }
 
 void
@@ -493,7 +477,6 @@ clear_menu(void)
   if (notification_cfg->popup_items)
   {
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
-    gadget_text(notification_cfg->popup_items);
    }
 }
 
@@ -672,7 +655,9 @@ e_modapi_init(E_Module *m)
    
    e_gadcon_provider_register(&_gadcon_class);
    read_items_eet(&(notification_cfg->popup_items));
+   
    notification_cfg->clicked_item = EINA_FALSE;
+   notification_cfg->new_item = 0;
    //~ notification_cfg->module = m;
    notification_mod = m;
    return m;

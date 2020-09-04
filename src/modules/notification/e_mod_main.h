@@ -66,7 +66,7 @@ struct _Config
   Eina_List  *popups;
   Eina_List  *popup_items;
   int         next_id;
-  Eina_Bool   new_item;
+  int   new_item;
 
   Ecore_Timer *initial_mode_timer;
   E_Notification_Daemon *daemon;
@@ -111,7 +111,7 @@ E_Config_Dialog *e_int_config_notification_module(E_Container *con, const char *
 
 extern E_Module *notification_mod;
 extern Config   *notification_cfg;
-void             gadget_text(Eina_List *list);
+void             gadget_text(int number);
 void             free_menu_data(Popup_Items *items);
 int              write_history(Eina_List *popup_items);
 

@@ -904,23 +904,22 @@ list_add_item(Popup_Data *popup)
 
   /* add item to the menu if less then menu items limit */  
   if (notification_cfg->clicked_item == EINA_FALSE){
-      notification_cfg->new_item = EINA_TRUE;
-      if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items){
+      notification_cfg->new_item++;
+      if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
          notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
-       
-    }
-    else {
-     file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
-     ret = ecore_file_remove(file);   
-     if (!ret) 
-       printf("Notif: Error during file removing!");
-     notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
-                        eina_list_last(notification_cfg->popup_items));
-     notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
-    }
+      else 
+      {
+        file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
+        ret = ecore_file_remove(file);   
+        if (!ret) 
+          printf("Notif: Error during file removing!");
+        notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
+                                        eina_list_last(notification_cfg->popup_items));
+        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+      }
   }
  
  notification_cfg->clicked_item = EINA_FALSE;
- gadget_text(notification_cfg->popup_items);
+ gadget_text(notification_cfg->new_item);
  write_history(notification_cfg->popup_items);
 }

@@ -226,7 +226,7 @@ truncate_menu(const unsigned int n)
       if (discard)
         E_FREE_LIST(discard, free_menu_data);
 
-      gadget_text(notification_cfg->popup_items);
+      //~ gadget_text(notification_cfg->popup_items);
       write_history(notification_cfg->popup_items);
     }
   }
@@ -246,7 +246,7 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    
    if (cfdata->anim == 0){
       notification_cfg->new_item = EINA_FALSE;
-      gadget_text(notification_cfg->popup_items);
+      //~ gadget_text(notification_cfg->popup_items);
    }
       
    notification_cfg->show_low = cfdata->show_low;
