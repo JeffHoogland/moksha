@@ -598,6 +598,26 @@ _notification_popups_place(void)
    next_pos = pos;
 }
 
+static char *
+get_time()
+{
+   time_t rawtime;
+   struct tm * timeinfo;
+   char buf[20] = "";
+   char hour[3];
+   time(&rawtime);
+   timeinfo = localtime( &rawtime );
+   
+   if (timeinfo->tm_hour < 10) 
+     snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour); 
+   else
+     snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour); 
+     
+   snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s:%02d:%02d ", timeinfo->tm_year + 1900, 
+            timeinfo->tm_mon, timeinfo->tm_mday, hour, timeinfo->tm_min, timeinfo->tm_sec);
+   return strdup(buf);
+}
+
 static void
 _notification_popup_refresh(Popup_Data *popup)
 {
@@ -663,7 +683,7 @@ _notification_popup_refresh(Popup_Data *popup)
              const char *file;
              file = ecore_file_file_get(icon_path);
              if (*file == '.') file = file + 1;
-             snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(), file); 
+             snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(),file); 
              if (!notification_cfg->clicked_item) 
                 ecore_file_cp(icon_path, dir); 
                 
@@ -720,7 +740,8 @@ _notification_popup_refresh(Popup_Data *popup)
         
         snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
         if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
-        snprintf(image_path, sizeof(image_path), "%s/%s.png", dir, e_notification_summary_get(popup->notif)); 
+        snprintf(image_path, sizeof(image_path), "%s/%s_%s.png", dir, 
+                 e_notification_summary_get(popup->notif), get_time()); 
         evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
         popup->app_icon_image = strdup(image_path);
      }
@@ -728,7 +749,7 @@ _notification_popup_refresh(Popup_Data *popup)
    if (!popup->app_icon)
      {
         char buf[PATH_MAX];
-        //~ e_util_dialog_internal("EDJE", "EDJE");
+        
         snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", 
                  notification_mod->dir);
         popup->app_icon = edje_object_add(popup->e);
@@ -845,26 +866,6 @@ _notification_format_message(Popup_Data *popup)
         eina_strbuf_free(buf);
      }
      list_add_item (popup); 
-}
-
-static char *
-get_time()
-{
-   time_t rawtime;
-   struct tm * timeinfo;
-   char buf[20] = "";
-   char hour[3];
-   time(&rawtime);
-   timeinfo = localtime( &rawtime );
-   
-   if (timeinfo->tm_hour < 10) 
-     snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour); 
-   else
-     snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour); 
-     
-   snprintf(buf, sizeof(buf), "%04d/%02d/%02d %s:%02d:%02d ", timeinfo->tm_year + 1900, 
-            timeinfo->tm_mon, timeinfo->tm_mday, hour, timeinfo->tm_min, timeinfo->tm_sec);
-   return strdup(buf);
 }
 
 static void
