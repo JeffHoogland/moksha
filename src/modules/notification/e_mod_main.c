@@ -396,7 +396,7 @@ gadget_text(Eina_List *list)
   
   if (notification_cfg->new_item){
      edje_object_color_class_set(inst->o_notif, "module_label",
-          255, 150, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255);    
+          255, 0, 0, 255, 0, 0, 0, 255, 0, 0, 0, 255);    
      if (notification_cfg->anim)  
          edje_object_signal_emit(inst->o_notif, "blink", "");
   }
