@@ -391,29 +391,26 @@ gadget_text(int number)
   Instance *inst = NULL;
   char *buf = (char *)malloc(sizeof(char) * number);   
   if (!notification_cfg->instances) return;
-  Eina_List *l;
- 
-  EINA_LIST_FOREACH(notification_cfg->instances, l, inst) {
-    snprintf(buf, sizeof(number), "%d", number);  
-
-    if (number > 0)
-       edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
-    else
-       edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+  inst = eina_list_data_get(notification_cfg->instances);  
   
-    if (notification_cfg->jump_timer){
-         ecore_timer_del(notification_cfg->jump_timer);
-         notification_cfg->jump_timer = NULL;
-       }
+  snprintf(buf, sizeof(number), "%d", number);
+  if (number > 0)
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
+  else
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
   
-    if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0)){
-         edje_object_signal_emit(inst->o_notif, "blink", "");
-         notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay, 
+  if (notification_cfg->jump_timer){
+      ecore_timer_del(notification_cfg->jump_timer);
+      notification_cfg->jump_timer = NULL;
+  }
+  
+  if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0)){
+       edje_object_signal_emit(inst->o_notif, "blink", "");
+       notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay, 
                      (Ecore_Task_Cb)_notif_delay_stop_cb, inst);
-         }
-    else
-      edje_object_signal_emit(inst->o_notif, "stop", "");
-}  
+  }
+  else
+    edje_object_signal_emit(inst->o_notif, "stop", "");
 }
 
 static unsigned int
