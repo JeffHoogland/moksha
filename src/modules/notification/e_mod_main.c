@@ -390,10 +390,12 @@ gadget_text(int number)
 {
   Instance *inst = NULL;
   char *buf = (char *)malloc(sizeof(char) * number);   
+  
   if (!notification_cfg->instances) return;
   inst = eina_list_data_get(notification_cfg->instances);  
   
   snprintf(buf, sizeof(number), "%d", number);
+
   if (number > 0)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
   else
@@ -411,6 +413,8 @@ gadget_text(int number)
   }
   else
     edje_object_signal_emit(inst->o_notif, "stop", "");
+    
+  free(buf);
 }
 
 static unsigned int
