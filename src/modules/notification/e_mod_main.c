@@ -645,7 +645,7 @@ e_modapi_init(E_Module *m)
      {
         notification_cfg = _notification_cfg_new();
      }
-
+     notification_cfg->version = MOD_CONFIG_FILE_VERSION;
    /* set up the notification daemon */
    e_notification_daemon_init();
    d = e_notification_daemon_add("e_notification_module", "Moksha");
