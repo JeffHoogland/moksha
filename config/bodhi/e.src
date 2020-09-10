@@ -6434,7 +6434,7 @@ group "E_Config" struct {
     value "thumbscroll_friction" double: 1.0000000000000000000000000;
     value "filemanager_single_click" uchar: 0;
     value "device_desktop" int: 1;
-    value "device_auto_mount" int: 0;
+    value "device_auto_mount" int: 1;
     value "device_auto_open" int: 0;
     value "filemanager_copy" uchar: 0;
     value "filemanager_secure_rm" uchar: 0;
