@@ -176,7 +176,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
-   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int

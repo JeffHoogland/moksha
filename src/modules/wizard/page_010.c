@@ -206,16 +206,16 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
    e_wizard_page_show(o);
 //   pg->data = o;
-   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
-//   evas_object_del(pg->data);
+   //evas_object_del(pg->data);
 /* special - language inits its stuff the moment it goes away */
-   //eina_stringshare_del(e_config->language);
-   //e_config->language = eina_stringshare_ref(lang);
+  // eina_stringshare_del(e_config->language);
+  // e_config->language = eina_stringshare_ref(lang);
    /* TODO:
     * This should be on lang select,
     * so if next page needs xdg we can't press next */
@@ -229,10 +229,10 @@ EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
    // do this again as we want it to apply to the new profile
-   //eina_stringshare_del(e_config->language);
-   //e_config->language = eina_stringshare_ref(lang);
-   //e_intl_language_set(e_config->language);
-   //e_wizard_labels_update();
+   eina_stringshare_del(e_config->language);
+   e_config->language = eina_stringshare_ref(lang);
+   e_intl_language_set(e_config->language);
+   e_wizard_labels_update();
    return 1;
 }
 
