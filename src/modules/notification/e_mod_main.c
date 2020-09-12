@@ -141,7 +141,7 @@ read_items_eet(Eina_List **popup_items)
   
   history_file = eet_open(file_path, EET_FILE_MODE_READ);
   if (!history_file) {
-      printf("Failed to open notification eet file");
+      printf("Failed to open notification eet file\n");
       *popup_items = NULL;
       return 0;
     }
@@ -149,7 +149,7 @@ read_items_eet(Eina_List **popup_items)
   ret = eet_read(history_file, "ITEMS", &size);
   
   if (!ret) {
-      printf("Notification file corruption");
+      printf("Notification file corruption\n");
       *popup_items = NULL;
       return eet_close(history_file);
   }
@@ -509,7 +509,7 @@ _clear_menu_cb(void)
   EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
     ret = ecore_file_remove(items->item_icon_img);    
     if (!ret) 
-       printf("Notif: Error during files removing!");
+       printf("Notif: Error during files removing!\n");
   }    
   clear_menu();
 }

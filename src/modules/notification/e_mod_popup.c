@@ -913,7 +913,7 @@ list_add_item(Popup_Data *popup)
         file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
         ret = ecore_file_remove(file);   
         if (!ret) 
-          printf("Notif: Error during file removing!");
+          printf("Notification: Error during hint file removing!\n");
         notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                                         eina_list_last(notification_cfg->popup_items));
         notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
