@@ -174,9 +174,9 @@ e_wizard_page_show(Evas_Object *obj)
    o_content = obj;
    if (obj)
      {
-        //~ Evas_Coord minw, minh;
+        Evas_Coord minw, minh;
 
-        //~ e_widget_size_min_get(obj, &minw, &minh);
+        e_widget_size_min_get(obj, &minw, &minh);
         evas_object_size_hint_min_set(obj, 200, 300);
         evas_object_size_hint_max_set(obj, 400, 500);
         edje_object_part_swallow(o_bg, "e.swallow.content", obj);
