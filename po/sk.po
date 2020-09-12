@@ -5870,7 +5870,7 @@ msgstr "Zobrazenie aplikácií"
 #: src/modules/conf_menus/e_int_config_menus.c:268
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Generic"
-msgstr "Vešobecný názov"
+msgstr "Všeobecný názov"
 
 #: src/modules/conf_menus/e_int_config_menus.c:270
 msgid "Comments"
