@@ -884,17 +884,16 @@ list_add_item(Popup_Data *popup)
   const char *title = e_notification_summary_get(popup->notif);
   const char *b = e_notification_body_get(popup->notif);
   
-  items->item_date_time = get_time();              //add date and time
-  items->item_app = strdup(popup->app_name);       //add app name
-  if (strstr(icon_path, "tmp"))                    //add icon path
-   items->item_icon = strdup(""); 
+  items->item_date_time = get_time();         // add date and time
+  items->item_app = strdup(popup->app_name);  // add app name
+  items->item_title = strdup(title);          // add title
+  items->item_body = strdup(b);               // add text body
+  if (strstr(icon_path, "tmp"))               // add icon path
+    items->item_icon = strdup(""); 
   else
     items->item_icon = strdup(icon_path); 
   
-  items->item_title = strdup(title);               //add title
-  items->item_body = strdup(b);                    //add text body
-  
-  if (strlen(popup->app_icon_image) > 0)     //do we have an icon image?
+  if (strlen(popup->app_icon_image) > 0)      // do we have an icon image?
     items->item_icon_img = strdup(popup->app_icon_image); 
   else
     items->item_icon_img = strdup("noimage");
@@ -903,7 +902,7 @@ list_add_item(Popup_Data *popup)
   if (strstr(notification_cfg->blacklist, items->item_app))
      return;
 
-  /* add item to the menu if less then menu items limit */  
+  /* Add item to the menu if less then menu items limit */  
   if (notification_cfg->clicked_item == EINA_FALSE){
       notification_cfg->new_item++;
       if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
