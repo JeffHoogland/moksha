@@ -204,13 +204,12 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
           free(cd);
           return eet_close(history_file);
         }
-        else {
-          snprintf(lock_str, sizeof(lock_str), "%d_lock", i);
-          lock_val = eet_read(history_file, lock_str, &size);
+        snprintf(lock_str, sizeof(lock_str), "%d_lock", i);
+        lock_val = eet_read(history_file, lock_str, &size);
           /* prevention for new eet file lock item */
-          if (!lock_val) 
-			lock_val = "U"; //all items unlocked
-        }
+        if (!lock_val) 
+			lock_val = strdup("U"); 
+        
         // FIXME: DATA VALIDATION
         cd->content = strdup(ret);
         cd->lock = strdup(lock_val);
