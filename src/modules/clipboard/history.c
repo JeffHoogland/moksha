@@ -142,6 +142,8 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     char history_path[PATH_MAX] = {0};
     char *ret = NULL;
     char *str = NULL;
+    char lock_buf[10];
+    char *lock_value = NULL;
     int size = 0;
     int str_len = 0;
     unsigned int i =0;
@@ -193,6 +195,8 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
         cd = E_NEW(Clip_Data, 1);
         snprintf(str, str_len, "%d", i);
         ret = eet_read(history_file, str, &size);
+        snprintf(lock_buf, 10, "%d_lock", i);
+        lock_value = eet_read(history_file, lock_buf, &size);
         if (!ret) {
           ERR("History file corruption: %s", history_path);
           *items = NULL;
@@ -204,6 +208,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
         }
         // FIXME: DATA VALIDATION
         cd->content = strdup(ret);
+        cd->lock = strdup(lock_value);
         set_clip_name(&cd->name, cd->content,
                       ignore_ws, label_length);
         l = eina_list_append(l, cd);
@@ -211,6 +216,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     /* and wrap it up */
     free(ret);
     free(str);
+    free(lock_value);
     *items = l;
     return eet_close(history_file);
 }
@@ -236,6 +242,7 @@ save_history(Eina_List *items)
     Clip_Data *cd = NULL;
     char history_path[PATH_MAX] = {0};
     char *str = NULL;
+    char lock_buf[10];
     int str_len = 0;
     unsigned int i = 1;
     unsigned int n = 0;
@@ -266,8 +273,11 @@ save_history(Eina_List *items)
       }
       /* Otherwise write each item */
       EINA_LIST_FOREACH(items, l, cd) {
-        snprintf(str, str_len, "%d", i++);
+        snprintf(str, str_len, "%d", i);
         eet_write(history_file, str,  cd->content, strlen(cd->content) + 1, 0);
+        snprintf(lock_buf, 10, "%d_lock", i);
+        eet_write(history_file, lock_buf,  cd->lock, strlen(cd->lock) + 1, 0);
+        i++;
       }
       /* and wrap it up */
       eet_write(history_file, "MAX_ITEMS",  str, strlen(str) + 1, 0);

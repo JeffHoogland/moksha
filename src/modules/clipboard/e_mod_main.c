@@ -47,6 +47,7 @@ static Eina_Bool _cb_clipboard_request(void *data __UNUSED__);
 static Eina_Bool _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selection_Notify * event);
 static Eina_Bool _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Event_Fixes_Selection_Notify * event);
 static void      _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -321,11 +322,14 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(inst, E_GADCON_ORIENT_VERT);
 
-  E_Menu_Item *mi;
+  E_Menu_Item *mi, *mo;
+  E_Menu *subm;
   /* Default Orientation of menu for float list */
   unsigned dir = E_GADCON_ORIENT_VERT;
 
   inst->menu = e_menu_new();
+  
+  
   if (!mouse_event){
     e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
   }
@@ -352,6 +356,21 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       }
       e_menu_item_label_set(mi, clip->name);
       e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, clip);
+      
+      subm = e_menu_new();
+      mo = e_menu_item_new(subm); 
+      e_menu_item_label_set(mo, "Lock item");
+      e_menu_item_check_set(mo, 1);
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item, clip);
+      e_menu_item_submenu_set(mi, subm); 
+      e_object_unref(E_OBJECT(subm));
+      
+      if (!strcmp(clip->lock, "L")) {
+        e_util_menu_item_theme_icon_set(mi, "locked");
+        e_menu_item_toggle_set(mo, 1);
+	  }
+      else
+        e_menu_item_toggle_set(mo, 0);  
     }
   }
   else {
@@ -443,6 +462,7 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
         return ECORE_CALLBACK_PASS_ON;
       }
       cd = E_NEW(Clip_Data, 1);
+      cd->lock = strdup("U");
       if (!set_clip_content(&cd->content, text_data->text,
                              CLIP_TRIM_MODE(clip_cfg))) {
         CRI("Something bad happened !!");
@@ -502,6 +522,8 @@ _clip_add_item(Clip_Data *cd)
 {
   Eina_List *it;
   EINA_SAFETY_ON_NULL_RETURN(cd);
+  int count = 0;
+  char buf[20];
 
   if (*cd->content == 0) {
     ERR("Warning Clip content is Empty!");
@@ -518,10 +540,16 @@ _clip_add_item(Clip_Data *cd)
       clip_inst->items = eina_list_prepend(clip_inst->items, cd);
     }
     else {
-      /* remove last item from the list */
-      clip_inst->items = eina_list_remove_list(clip_inst->items, eina_list_last(clip_inst->items));
-      /*  add clipboard data stored in cd to the list as a first item */
-      clip_inst->items = eina_list_prepend(clip_inst->items, cd);
+		 /* add clipboard data stored in cd to the list as a first item */
+		 clip_inst->items = eina_list_prepend(clip_inst->items, cd);
+		 EINA_LIST_REVERSE_FOREACH(clip_inst->items, it, cd){
+		  /* let's find the first unlocked item (reversely) */	
+		    if (!strcmp(cd->lock, "U")) {
+			  /* remove last unlocked item from the list */
+		      clip_inst->items = eina_list_remove_list(clip_inst->items, it);
+		      break;
+		    }
+	      }
     }
   }
 
@@ -626,6 +654,19 @@ _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
 }
 
 static void
+_cb_submenu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+  if (e_menu_item_toggle_get(mi))
+     sel->lock = strdup("L");
+  else
+     sel->lock = strdup("U");
+
+  clip_inst->update_history = EINA_TRUE;
+  clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
 _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 {
   EINA_SAFETY_ON_NULL_RETURN(data);
@@ -662,6 +703,7 @@ free_clip_data(Clip_Data *clip)
   EINA_SAFETY_ON_NULL_RETURN(clip);
   free(clip->name);
   free(clip->content);
+  free(clip->lock);
   free(clip);
 }
 
@@ -770,6 +812,7 @@ e_modapi_init (E_Module *m)
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_SELECTION_NOTIFY, _cb_event_selection, clip_inst);
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_FIXES_SELECTION_NOTIFY, _cb_event_owner, clip_inst);
   clipboard.request(clip_inst->win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+  
 
   /* Read History file and set clipboard */
   clip_inst->update_history = EINA_TRUE;
