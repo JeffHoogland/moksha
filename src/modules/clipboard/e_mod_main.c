@@ -366,7 +366,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_object_unref(E_OBJECT(subm));
       
       if (!strcmp(clip->lock, "L")) {
-        e_util_menu_item_theme_icon_set(mi, "locked");
+        e_util_menu_item_theme_icon_set(mi, "emblem-readonly");
         e_menu_item_toggle_set(mo, 1);
 	  }
       else
