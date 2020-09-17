@@ -522,8 +522,6 @@ _clip_add_item(Clip_Data *cd)
 {
   Eina_List *it;
   EINA_SAFETY_ON_NULL_RETURN(cd);
-  int count = 0;
-  char buf[20];
 
   if (*cd->content == 0) {
     ERR("Warning Clip content is Empty!");
