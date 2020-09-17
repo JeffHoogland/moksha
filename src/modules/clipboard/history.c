@@ -142,8 +142,8 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     char history_path[PATH_MAX] = {0};
     char *ret = NULL;
     char *str = NULL;
-    char lock_buf[10];
-    char *lock_value = NULL;
+    char  lock_str[10];
+    char *lock_val = NULL;
     int size = 0;
     int str_len = 0;
     unsigned int i =0;
@@ -195,8 +195,6 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
         cd = E_NEW(Clip_Data, 1);
         snprintf(str, str_len, "%d", i);
         ret = eet_read(history_file, str, &size);
-        snprintf(lock_buf, 10, "%d_lock", i);
-        lock_value = eet_read(history_file, lock_buf, &size);
         if (!ret) {
           ERR("History file corruption: %s", history_path);
           *items = NULL;
@@ -206,9 +204,16 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
           free(cd);
           return eet_close(history_file);
         }
+        else {
+          snprintf(lock_str, sizeof(lock_str), "%d_lock", i);
+          lock_val = eet_read(history_file, lock_str, &size);
+          /* prevention for new eet file lock item */
+          if (!lock_val) 
+			lock_val = "U"; //all items unlocked
+        }
         // FIXME: DATA VALIDATION
         cd->content = strdup(ret);
-        cd->lock = strdup(lock_value);
+        cd->lock = strdup(lock_val);
         set_clip_name(&cd->name, cd->content,
                       ignore_ws, label_length);
         l = eina_list_append(l, cd);
@@ -216,7 +221,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     /* and wrap it up */
     free(ret);
     free(str);
-    free(lock_value);
+    free(lock_val);
     *items = l;
     return eet_close(history_file);
 }
