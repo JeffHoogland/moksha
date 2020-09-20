@@ -52,6 +52,7 @@ static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_ignore_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 static void      _cb_dialog_delete(void *data __UNUSED__);
 static void      _cb_dialog_keep(void *data __UNUSED__);
 static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -93,6 +94,7 @@ _clip_config_new(E_Module *m)
     clip_cfg->label_length   = CF_DEFAULT_LABEL_LENGTH;
     clip_cfg->ignore_ws      = CF_DEFAULT_IGNORE_WS;
     clip_cfg->ignore_ws_copy = CF_DEFAULT_IGNORE_WS_COPY;
+    clip_cfg->ignore_ws_copy = CF_DEFAULT_IGNORE_HIST;
     clip_cfg->trim_ws        = CF_DEFAULT_WS;
     clip_cfg->trim_nl        = CF_DEFAULT_NL;
   }
@@ -108,6 +110,7 @@ _clip_config_new(E_Module *m)
   E_CONFIG_LIMIT(clip_cfg->autosave, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->ignore_ws, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->ignore_ws_copy, 0, 1);
+  E_CONFIG_LIMIT(clip_cfg->ignore_hist, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->trim_ws, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->trim_nl, 0, 1);
 
@@ -383,9 +386,19 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   e_menu_item_separator_set(mi, EINA_TRUE);
 
   mi = e_menu_item_new(inst->menu);
+  e_menu_item_label_set(mi, _("Ignore history"));
+  e_util_menu_item_theme_icon_set(mi, "process-stop");
+  e_menu_item_check_set(mi, 1);
+  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_ignore_history, inst);
+  if (clip_cfg->ignore_hist)
+    e_menu_item_toggle_set(mi, 1);  
+  else
+    e_menu_item_toggle_set(mi, 0);  
+  
+  mi = e_menu_item_new(inst->menu);
   e_menu_item_label_set(mi, _("Clear"));
   e_util_menu_item_theme_icon_set(mi, "edit-clear");
-  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_clear_history, inst);
+  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_clear_history, mi);
 
   if (clip_inst->items)
     e_menu_item_disabled_set(mi, EINA_FALSE);
@@ -522,7 +535,9 @@ _clip_add_item(Clip_Data *cd)
 {
   Eina_List *it;
   EINA_SAFETY_ON_NULL_RETURN(cd);
-
+  
+  if (clip_cfg->ignore_hist) return;
+  
   if (*cd->content == 0) {
     ERR("Warning Clip content is Empty!");
     clipboard.clear(); /* stop event selection cb */
@@ -615,6 +630,19 @@ _cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi _
   }
   else
     _clear_history();
+}
+
+static void
+_cb_ignore_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+  EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
+  if (e_menu_item_toggle_get(mi))
+  {
+    e_menu_item_toggle_set(mi, 1);
+    clip_cfg->ignore_hist = 1;
+  }
+  else
+    clip_cfg->ignore_hist = 0;
 }
 
 static void
@@ -759,6 +787,7 @@ e_modapi_init (E_Module *m)
   E_CONFIG_VAL(D, T, label_length, DOUBLE);
   E_CONFIG_VAL(D, T, ignore_ws, INT);
   E_CONFIG_VAL(D, T, ignore_ws_copy, INT);
+  E_CONFIG_VAL(D, T, ignore_hist, INT);
   E_CONFIG_VAL(D, T, trim_ws, INT);
   E_CONFIG_VAL(D, T, trim_nl, INT);
 
