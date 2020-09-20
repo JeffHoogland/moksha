@@ -637,10 +637,7 @@ _cb_ignore_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
   EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
   if (e_menu_item_toggle_get(mi))
-  {
-    e_menu_item_toggle_set(mi, 1);
     clip_cfg->ignore_hist = 1;
-  }
   else
     clip_cfg->ignore_hist = 0;
 }
