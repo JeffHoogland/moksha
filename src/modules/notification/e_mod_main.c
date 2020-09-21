@@ -632,7 +632,7 @@ e_modapi_init(E_Module *m)
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
    if (notification_cfg &&
-       !(e_util_module_config_check(_("Notification Module"),
+       !(e_util_module_config_check(_("Notification"),
                                     notification_cfg->version,
                                     MOD_CONFIG_FILE_VERSION)))
      {
@@ -644,7 +644,7 @@ e_modapi_init(E_Module *m)
      {
         notification_cfg = _notification_cfg_new();
      }
-     notification_cfg->version = MOD_CONFIG_FILE_VERSION;
+
    /* set up the notification daemon */
    e_notification_daemon_init();
    d = e_notification_daemon_add("e_notification_module", "Moksha");
@@ -761,6 +761,6 @@ _notification_cfg_free(Config *cfg)
 {
    if (cfg->blacklist) eina_stringshare_del(cfg->blacklist); 
    clear_menu();
-   free(cfg);
+   E_FREE(cfg);
 }
 
