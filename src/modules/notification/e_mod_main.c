@@ -495,8 +495,6 @@ clear_menu(void)
   EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
   if (notification_cfg->popup_items)
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
-   
-   write_history(notification_cfg->popup_items);
 }
 
 static void
