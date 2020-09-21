@@ -9981,19 +9981,17 @@ msgid "Playback"
 msgstr "Reprodukcia"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
-msgstr "Výstup"
+msgstr "Výstupy"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
-msgstr "Vstup"
+msgstr "Vstupy"
 
 #: src/modules/mixer/bin/playbacks_view.c:306
 #: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
-msgstr ""
+msgstr "Obnoviť"
 
 #: src/modules/mixer/e_mod_main.c:126
 msgid "New volume"
@@ -10004,7 +10002,6 @@ msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:139
-#, fuzzy
 msgid "Volume Changed"
 msgstr "Hlasitosť zmenená"
 
@@ -10017,19 +10014,16 @@ msgid "Decrease Volume"
 msgstr "Znížiť hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:252
-#, fuzzy
 msgid "Mute volume"
 msgstr "Stlmiť hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:265
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Hlasitosť zmenená"
+msgstr "Hlasitosť zvýšená"
 
 #: src/modules/mixer/e_mod_main.c:272 src/modules/mixer/e_mod_main.c:279
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Hlasitosť zmenená"
+msgstr "Stlmiť hlasitosť"
 
 #~ msgid "Setup"
 #~ msgstr "Nastavenie"
