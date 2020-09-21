@@ -9761,11 +9761,11 @@ msgstr "Vpravo dole"
 
 #: src/modules/notification/e_mod_config.c:142
 msgid "Ignore replace ID"
-msgstr ""
+msgstr "Ignorovať náhradu ID"
 
 #: src/modules/notification/e_mod_config.c:144
 msgid "Use multiple monitor geometry"
-msgstr ""
+msgstr "Použiť geometriu pre viac monitorov"
 
 #: src/modules/clipboard/e_mod_config.c:175
 msgid "Selection"
