@@ -632,7 +632,7 @@ e_modapi_init(E_Module *m)
 
    notification_cfg = e_config_domain_load("module.notification", conf_edd);
    if (notification_cfg &&
-       !(e_util_module_config_check(_("Notification"),
+       !(e_util_module_config_check(_("Notification module"),
                                     notification_cfg->version,
                                     MOD_CONFIG_FILE_VERSION)))
      {
@@ -641,9 +641,9 @@ e_modapi_init(E_Module *m)
      }
 
    if (!notification_cfg)
-     {
         notification_cfg = _notification_cfg_new();
-     }
+     
+    notification_cfg->version = MOD_CONFIG_FILE_VERSION;   
 
    /* set up the notification daemon */
    e_notification_daemon_init();
@@ -736,7 +736,6 @@ _notification_cfg_new(void)
 
    cfg = E_NEW(Config, 1);
    cfg->cfd = NULL;
-   cfg->version = MOD_CONFIG_FILE_VERSION;
    cfg->show_low = 0;
    cfg->show_normal = 1;
    cfg->show_critical = 1;

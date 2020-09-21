@@ -5,7 +5,7 @@
 #include <E_Notification_Daemon.h>
 
 /* Increment for Major Changes */
-#define MOD_CONFIG_FILE_EPOCH      1
+#define MOD_CONFIG_FILE_EPOCH      2
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
 #define MOD_CONFIG_FILE_GENERATION 1
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
