@@ -284,6 +284,13 @@ write_history(Eina_List *popup_items)
    
    history_file = eet_open(file_path, EET_FILE_MODE_WRITE);
    if (history_file){
+	  if(!notification_cfg->popup_items) 
+	  {
+		snprintf(str, sizeof(str), "%d", 0);
+        eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+	    ret = eet_close(history_file); 
+        return ret;
+      }
    EINA_LIST_FOREACH(popup_items, l, items) {
         snprintf(str, sizeof(str), "dtime%d", i);
         eet_write(history_file, str,  items->item_date_time, strlen(items->item_date_time) + 1, 0);

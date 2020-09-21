@@ -486,6 +486,7 @@ free_menu_data(Popup_Items *items)
   free(items->item_date_time);
   free(items->item_icon);
   free(items->item_title);
+  free(items);
 }
 
 static void
@@ -493,9 +494,9 @@ clear_menu(void)
 {
   EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
   if (notification_cfg->popup_items)
-  {
     E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
-   }
+   
+   write_history(notification_cfg->popup_items);
 }
 
 static void
