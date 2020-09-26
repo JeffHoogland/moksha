@@ -254,7 +254,7 @@ _clock_month_update(Instance *inst)
           edje_object_signal_emit(od, "e,state,weekday", "e");
      }
      od = edje_object_part_table_child_get(oi, "e.table.daynames", 7, 0);
-     edje_object_part_text_set(od, "e.text.label", "");
+     edje_object_part_text_set(od, "e.text.label", ""); // week number header
 
    for (y = 0; y < 6; y++)
      {
@@ -280,11 +280,12 @@ _clock_month_update(Instance *inst)
                edje_object_signal_emit(od, "e,state,someday", "e");
              edje_object_message_signal_process(od);
           }
-           
-        char buf[32]; 
+        // week number 
+          
+        char buf[3]; 
         ow = edje_object_part_table_child_get(oi, "e.table.days", 7, y);
         snprintf(buf, sizeof(buf), "%i", inst->weeks[y * 7]);
-        edje_object_part_text_set(ow, "e.text.label", buf);
+        edje_object_part_text_set(ow, "e.text.label", buf); 
         edje_object_signal_emit(ow, "e,state,week", "e");
         
      }
