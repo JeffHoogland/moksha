@@ -21,6 +21,7 @@ struct _Instance
 
    char             year[8];
    char             month[64];
+   int              weeks[53];
    const char      *daynames[7];
    unsigned char    daynums[7][6];
    Eina_Bool        dayweekends[7][6];
@@ -156,6 +157,16 @@ _time_eval(Instance *inst)
              tt += (day * 60 * 60 * 24);
              tm = localtime(&tt);
              memcpy(&tmm, tm, sizeof(struct tm));
+             
+             // retrieve a week number
+             char weeknum[3];
+             if (inst->cfg->week.start == 1)
+               strftime(weeknum, sizeof(weeknum), "%W", tm); //Start on Monday
+             else
+               strftime(weeknum, sizeof(weeknum), "%U", tm); //Start on Sunday
+               
+             inst->weeks[day] = atoi(weeknum) + 1;
+             
              if (!started)
                {
                   if (tm->tm_wday == inst->cfg->week.start)
@@ -226,7 +237,7 @@ _time_eval(Instance *inst)
 static void
 _clock_month_update(Instance *inst)
 {
-   Evas_Object *od, *oi;
+   Evas_Object *od, *oi, *ow;
    int x, y;
 
    oi = inst->o_cal;
@@ -242,6 +253,8 @@ _clock_month_update(Instance *inst)
         else
           edje_object_signal_emit(od, "e,state,weekday", "e");
      }
+     od = edje_object_part_table_child_get(oi, "e.table.daynames", 7, 0);
+     edje_object_part_text_set(od, "e.text.label", "");
 
    for (y = 0; y < 6; y++)
      {
@@ -252,6 +265,7 @@ _clock_month_update(Instance *inst)
              od = edje_object_part_table_child_get(oi, "e.table.days", x, y);
              snprintf(buf, sizeof(buf), "%i", (int)inst->daynums[x][y]);
              edje_object_part_text_set(od, "e.text.label", buf);
+             
              if (inst->dayweekends[x][y])
                edje_object_signal_emit(od, "e,state,weekend", "e");
              else
@@ -266,6 +280,13 @@ _clock_month_update(Instance *inst)
                edje_object_signal_emit(od, "e,state,someday", "e");
              edje_object_message_signal_process(od);
           }
+           
+        char buf[32]; 
+        ow = edje_object_part_table_child_get(oi, "e.table.days", 7, y);
+        snprintf(buf, sizeof(buf), "%i", inst->weeks[y * 7]);
+        edje_object_part_text_set(ow, "e.text.label", buf);
+        edje_object_signal_emit(ow, "e,state,week", "e");
+        
      }
    edje_object_message_signal_process(oi);
 }
