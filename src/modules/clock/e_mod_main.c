@@ -21,7 +21,7 @@ struct _Instance
 
    char             year[8];
    char             month[64];
-   int              weeks[53];
+   int              weeks[54];
    const char      *daynames[7];
    unsigned char    daynums[7][6];
    Eina_Bool        dayweekends[7][6];
@@ -161,11 +161,10 @@ _time_eval(Instance *inst)
              // retrieve a week number
              char weeknum[3];
              if (inst->cfg->week.start == 1)
-               strftime(weeknum, sizeof(weeknum), "%W", tm); //Start on Monday
-             else
-               strftime(weeknum, sizeof(weeknum), "%U", tm); //Start on Sunday
-               
-             inst->weeks[day] = atoi(weeknum) + 1;
+               strftime(weeknum, sizeof(weeknum), "%V", tm); // %V ISO-8601
+                                                             // %W Start on Monday
+                                                             // %U Start on Sunday
+             inst->weeks[day] = atoi(weeknum);
              
              if (!started)
                {
