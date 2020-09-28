@@ -1512,7 +1512,7 @@ no_submenu_item:
              evas_object_pass_events_set(o, 1);
              e_box_pack_end(mi->container_object, o);
           }
-        if ((mi->icon) || (mi->realize_cb.func))
+         if ((!e_config->menu_icons_hide) && ((mi->icon) || (mi->realize_cb.func)))
           {
              int icon_w = 0, icon_h = 0;
 

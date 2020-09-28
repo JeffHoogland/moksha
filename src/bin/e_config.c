@@ -675,6 +675,7 @@ _e_config_edd_init(Eina_Bool old)
 
    E_CONFIG_VAL(D, T, menu_favorites_show, INT);
    E_CONFIG_VAL(D, T, menu_scroll_toggle, INT);
+   E_CONFIG_VAL(D, T, menu_icons_hide, INT);
    E_CONFIG_VAL(D, T, menu_apps_show, INT);
    E_CONFIG_VAL(D, T, menu_gadcon_client_toplevel, INT);
 

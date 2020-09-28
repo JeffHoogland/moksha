@@ -6424,6 +6424,7 @@ group "E_Config" struct {
     value "thumb_nice" int: 0;
     value "menu_favorites_show" int: 1;
     value "menu_scroll_toggle" int: 0;
+    value "menu_icons_hide " int: 0;
     value "menu_apps_show" int: 1;
     value "menu_gadcon_client_toplevel" int: 0;
     value "ping_clients_interval" int: 128;
