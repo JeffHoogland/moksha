@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-02 09:00+0200\n"
-"PO-Revision-Date: 2020-08-21 10:26+0200\n"
+"PO-Revision-Date: 2020-09-16 06:53+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -215,7 +215,6 @@ msgstr "(Dés)Activer l'ancrage"
 #: src/bin/e_actions.c:3095
 msgid "Sticky Mode Enable"
 msgstr "Activer l'ancrage"
-
 
 #: src/bin/e_actions.c:3100
 msgid "Always On Top Toggle"
@@ -3002,7 +3001,7 @@ msgstr ""
 
 #: src/bin/e_main.c:403
 msgid "Moksha cannot initialize Ecore_File!\n"
-msgstr "Moksha ne parvient pas à initialiser Ecore_File!\n"
+msgstr "Moksha ne parvient pas à initialiser Ecore_File !\n"
 
 #: src/bin/e_main.c:412
 msgid "Moksha cannot initialize Ecore_Con!\n"
@@ -3273,8 +3272,7 @@ msgstr "Configuration des périphériques d'entrée"
 #: src/bin/e_main.c:931
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
-"Moksha ne parvient pas à initialiser son système de périphériques "
-"d'entrées.\n"
+"Moksha ne parvient pas à initialiser son système de périphériques d'entrée.\n"
 
 #: src/bin/e_main.c:938
 msgid "Setup Modules"
@@ -5866,7 +5864,6 @@ msgstr "Personnel (par défaut)"
 msgid "Main Menu"
 msgstr "Menu principal"
 
-
 #: src/modules/conf_menus/e_int_config_menus.c:259
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:247
 msgid "Favorites"
@@ -7659,7 +7656,6 @@ msgid "Show in top-level"
 msgstr "Afficher au premier niveau"
 
 #: src/modules/everything/evry_config.c:403
-
 msgid "Minimum characters for search"
 msgstr "Nombre minimal de caractères pour la recherche"
 
@@ -9339,7 +9335,6 @@ msgid ""
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 "Vous pouvez modifier le dossier dans les paramètres de la capture "
-
 "d'écran<br><br>Souhaitez-vous le faire maintenant ?"
 
 #: src/modules/shot/e_mod_main.c:361
