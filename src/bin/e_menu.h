@@ -147,6 +147,7 @@ struct _E_Menu_Item
    Eina_Bool  changed : 1;
    Eina_Bool  active : 1;
    Eina_Bool  disable : 1;
+   Eina_Bool  hilighted : 1;
 };
 
 struct _E_Menu_Category_Callback

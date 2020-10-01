@@ -450,6 +450,34 @@ e_menu_activate(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int dir)
    if (pmi) e_menu_item_active_set(pmi, 0);
 }
 
+static void
+_e_menu_item_unhilight(E_Menu_Item *mi)
+{
+   if (!mi->hilighted) return;
+   mi->hilighted = 0;
+   if (mi->bg_object)
+     edje_object_signal_emit(mi->bg_object, "e,state,unselected", "e");
+   if (mi->icon_bg_object)
+     edje_object_signal_emit(mi->icon_bg_object, "e,state,unselected", "e");
+   if (isedje(mi->label_object))
+     edje_object_signal_emit(mi->label_object, "e,state,unselected", "e");
+   if (isedje(mi->submenu_object))
+     edje_object_signal_emit(mi->submenu_object, "e,state,unselected", "e");
+   if (isedje(mi->toggle_object))
+     edje_object_signal_emit(mi->toggle_object, "e,state,unselected", "e");
+   if (mi->icon_key)
+     {
+        if (mi->icon_object)
+          {
+             if (isedje(mi->icon_object))
+               edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
+             else
+               e_icon_selected_set(mi->icon_object, EINA_FALSE);
+          }
+     }
+   edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
+}
+
 EAPI void
 e_menu_deactivate(E_Menu *m)
 {
@@ -459,6 +487,8 @@ e_menu_deactivate(E_Menu *m)
    m->active = 0;
    if (m->post_deactivate_cb.func)
      m->post_deactivate_cb.func(m->post_deactivate_cb.data, m);
+   if (m->parent_item)
+     _e_menu_item_unhilight(m->parent_item);
 }
 
 EAPI int
@@ -1007,14 +1037,15 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         if (mi->disable) return;
         pmi = _e_menu_item_active_get();
         if (mi == pmi) return;
-        if (pmi)
-          e_menu_item_active_set(pmi, 0);
+         if (pmi)
+             e_menu_item_active_set(pmi, 0);
         if (_e_prev_active_menu_item && (mi != _e_prev_active_menu_item))
           {
              if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
                 _e_menu_submenu_deactivate(_e_prev_active_menu_item);
           }
         mi->active = 1;
+        mi->hilighted = 1;
         _e_active_menu_item = mi;
         if (mi->bg_object)
           edje_object_signal_emit(mi->bg_object, "e,state,selected", "e");
@@ -1044,28 +1075,10 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         mi->active = 0;
         _e_prev_active_menu_item = mi;
         _e_active_menu_item = NULL;
-        if (mi->bg_object)
-          edje_object_signal_emit(mi->bg_object, "e,state,unselected", "e");
-        if (mi->icon_bg_object)
-          edje_object_signal_emit(mi->icon_bg_object, "e,state,unselected", "e");
-        if (isedje(mi->label_object))
-          edje_object_signal_emit(mi->label_object, "e,state,unselected", "e");
-        if (isedje(mi->submenu_object))
-          edje_object_signal_emit(mi->submenu_object, "e,state,unselected", "e");
-        if (isedje(mi->toggle_object))
-          edje_object_signal_emit(mi->toggle_object, "e,state,unselected", "e");
-        if (mi->icon_key)
-          {
-             if (mi->icon_object)
-               {
-                  if (isedje(mi->icon_object))
-                    edje_object_signal_emit(mi->icon_object, "e,state,unselected", "e");
-                  else
-                    e_icon_selected_set(mi->icon_object, EINA_FALSE);
-               }
-          }
-        edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
+        if (!((mi->submenu) && (mi->submenu->active)))
+          _e_menu_item_unhilight(mi);
      }
+   edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
 }
 
 EAPI E_Menu_Item *
