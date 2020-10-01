@@ -478,6 +478,36 @@ _e_menu_item_unhilight(E_Menu_Item *mi)
    edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
 }
 
+static void
+_e_menu_item_hilight(E_Menu_Item *mi)
+{
+   if (!mi->hilighted) return;
+   mi->active = 1;
+   mi->hilighted = 1;
+   _e_active_menu_item = mi;
+   if (mi->bg_object)
+     edje_object_signal_emit(mi->bg_object, "e,state,selected", "e");
+   if (mi->icon_bg_object)
+     edje_object_signal_emit(mi->icon_bg_object, "e,state,selected", "e");
+   if (isedje(mi->label_object))
+     edje_object_signal_emit(mi->label_object, "e,state,selected", "e");
+   if (isedje(mi->submenu_object))
+     edje_object_signal_emit(mi->submenu_object, "e,state,selected", "e");
+   if (isedje(mi->toggle_object))
+     edje_object_signal_emit(mi->toggle_object, "e,state,selected", "e");
+   if (mi->icon_key)
+     {
+        if (mi->icon_object)
+          {
+             if (isedje(mi->icon_object))
+               edje_object_signal_emit(mi->icon_object, "e,state,selected", "e");
+             else
+               e_icon_selected_set(mi->icon_object, EINA_FALSE);
+          }
+     }
+   //~ edje_object_signal_emit(mi->menu->bg_object, "e,state,selected", "e");
+}
+
 EAPI void
 e_menu_deactivate(E_Menu *m)
 {
@@ -2566,7 +2596,9 @@ _e_menu_activate_previous(void)
                     }
                }
              mi = mi->menu->parent_item;
-             e_menu_item_active_set(mi, 1);
+             //~ e_menu_item_active_set(mi, 1);
+             _e_menu_item_hilight(mi);
+             
              _e_menu_item_ensure_onscreen(mi);
           }
         return;
