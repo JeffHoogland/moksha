@@ -481,8 +481,18 @@ _e_menu_item_unhilight(E_Menu_Item *mi)
 EAPI void
 e_menu_deactivate(E_Menu *m)
 {
+   Eina_List *l;
+   E_Menu_Item *mi;
+
    E_OBJECT_CHECK(m);
    E_OBJECT_TYPE_CHECK(m, E_MENU_TYPE);
+   if (!m->active) return;
+
+   EINA_LIST_FOREACH(m->items, l, mi)
+     {
+        if (mi->submenu) e_menu_deactivate(mi->submenu);
+     }
+
    m->cur.visible = 0;
    m->active = 0;
    if (m->post_deactivate_cb.func)
@@ -1027,11 +1037,13 @@ e_menu_item_drag_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *
 EAPI void
 e_menu_item_active_set(E_Menu_Item *mi, int active)
 {
-   Eina_List *tmp = NULL;
-   
+  Eina_List *tmp = NULL;
+
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->separator) return;
+   active = !!active;
+   if (active == mi->active) return;
    if ((active) && (!mi->active))
      {
         E_Menu_Item *pmi;
@@ -1047,7 +1059,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         if (_e_prev_active_menu_item && (mi != _e_prev_active_menu_item))
           {
              if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
-                _e_menu_submenu_deactivate(_e_prev_active_menu_item);
+               _e_menu_submenu_deactivate(_e_prev_active_menu_item);
           }
         mi->active = 1;
         mi->hilighted = 1;
@@ -1077,6 +1089,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
      }
    else if ((!active) && (mi->active))
      {
+        tmp = _e_active_menus_copy_ref();
         mi->active = 0;
         _e_prev_active_menu_item = mi;
         _e_active_menu_item = NULL;
@@ -2541,6 +2554,17 @@ _e_menu_activate_previous(void)
      {
         if (mi->menu->parent_item)
           {
+             Eina_List *l;
+             E_Menu_Item *mi2;
+
+             EINA_LIST_FOREACH(mi->menu->items, l, mi2)
+               {
+                  if (!mi2->disable)
+                    {
+                       e_menu_item_active_set(mi2, 0);
+                       _e_menu_item_unhilight(mi2);
+                    }
+               }
              mi = mi->menu->parent_item;
              e_menu_item_active_set(mi, 1);
              _e_menu_item_ensure_onscreen(mi);
