@@ -1027,6 +1027,8 @@ e_menu_item_drag_callback_set(E_Menu_Item *mi, void (*func)(void *data, E_Menu *
 EAPI void
 e_menu_item_active_set(E_Menu_Item *mi, int active)
 {
+   Eina_List *tmp = NULL;
+   
    E_OBJECT_CHECK(mi);
    E_OBJECT_TYPE_CHECK(mi, E_MENU_ITEM_TYPE);
    if (mi->separator) return;
@@ -1037,8 +1039,11 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         if (mi->disable) return;
         pmi = _e_menu_item_active_get();
         if (mi == pmi) return;
-         if (pmi)
+        if (pmi)
+          {
+             tmp = _e_active_menus_copy_ref();
              e_menu_item_active_set(pmi, 0);
+          }
         if (_e_prev_active_menu_item && (mi != _e_prev_active_menu_item))
           {
              if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
@@ -1078,7 +1083,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
         if (!((mi->submenu) && (mi->submenu->active)))
           _e_menu_item_unhilight(mi);
      }
-   edje_object_signal_emit(mi->menu->bg_object, "e,state,unselected", "e");
+   _e_menu_list_free_unref(tmp);
 }
 
 EAPI E_Menu_Item *
