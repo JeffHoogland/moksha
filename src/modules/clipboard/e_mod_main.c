@@ -49,6 +49,7 @@ static Eina_Bool _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSE
 static void      _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_submenu_item_lock(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_submenu_item_remove(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -367,7 +368,10 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_menu_item_check_set(mo, 1);
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_lock, clip);
       mo = e_menu_item_new(subm); 
-      e_menu_item_label_set(mo, "Delete item");
+      e_menu_item_label_set(mo, "Edit item");
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_edit, clip);
+      mo = e_menu_item_new(subm); 
+      e_menu_item_label_set(mo, "Delete item"); 
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_remove, clip);
       e_menu_item_submenu_set(mi, subm); 
       e_object_unref(E_OBJECT(subm));
@@ -701,6 +705,29 @@ _cb_submenu_item_remove(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *
   clip_inst->items = eina_list_remove(clip_inst->items, sel);
   clip_inst->update_history = EINA_TRUE;
   clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+ _item_edit_dialog_ok(void *data, char *text)
+{
+   Clip_Data *sel = (Clip_Data *) data;
+   
+   set_clip_name(&sel->name, text, CLIP_TRIM_MODE(clip_cfg), 
+                             clip_cfg->label_length);
+   set_clip_content(&sel->content, text, CLIP_TRIM_MODE(clip_cfg));
+   clip_inst->update_history = EINA_TRUE;
+   clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+_cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+
+  e_entry_dialog_show(_("Edit Item"), "edit-rename",
+                                          _("Change the item content:"), sel->name, NULL, NULL,
+                                          _item_edit_dialog_ok,
+                                          NULL, sel);
 }
 
 static void
