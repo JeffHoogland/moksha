@@ -725,7 +725,7 @@ _cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi
   Clip_Data *sel = (Clip_Data *) selected_clip;
 
   e_entry_dialog_show(_("Clipboard: Edit Item"), "edit-rename",
-                                          _("Edit the item content:"), sel->name, NULL, NULL,
+                                          _("Edit the item content:"), sel->content, NULL, NULL,
                                           _item_edit_dialog_ok,
                                           NULL, sel);
 }
