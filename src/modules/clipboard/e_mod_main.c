@@ -561,16 +561,16 @@ _clip_add_item(Clip_Data *cd)
       clip_inst->items = eina_list_prepend(clip_inst->items, cd);
     }
     else {
-		 /* add clipboard data stored in cd to the list as a first item */
-		 clip_inst->items = eina_list_prepend(clip_inst->items, cd);
-		 EINA_LIST_REVERSE_FOREACH(clip_inst->items, it, cd){
-		  /* let's find the first unlocked item (reversely) */	
-		    if (!strcmp(cd->lock, "U")) {
-			  /* remove last unlocked item from the list */
-		      clip_inst->items = eina_list_remove_list(clip_inst->items, it);
-		      break;
-		    }
-	      }
+         /* add clipboard data stored in cd to the list as a first item */
+         clip_inst->items = eina_list_prepend(clip_inst->items, cd);
+         EINA_LIST_REVERSE_FOREACH(clip_inst->items, it, cd) {
+         /* let's find the first unlocked item (reversely) */
+            if (!strcmp(cd->lock, "U")) {
+               /* remove last unlocked item from the list */
+               clip_inst->items = eina_list_remove_list(clip_inst->items, it);
+               break;
+            }
+         }
     }
   }
 
