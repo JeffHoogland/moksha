@@ -505,7 +505,7 @@ _e_menu_item_hilight(E_Menu_Item *mi)
                e_icon_selected_set(mi->icon_object, EINA_FALSE);
           }
      }
-   //~ edje_object_signal_emit(mi->menu->bg_object, "e,state,selected", "e");
+   edje_object_signal_emit(mi->menu->bg_object, "e,state,selected", "e");
 }
 
 EAPI void
