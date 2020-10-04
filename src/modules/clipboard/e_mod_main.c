@@ -48,7 +48,7 @@ static Eina_Bool _cb_event_selection(Instance *instance, int type __UNUSED__, Ec
 static Eina_Bool _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Event_Fixes_Selection_Notify * event);
 static void      _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_submenu_item_lock(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void      _cb_submenu_item_remove(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_edit_dialog(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -377,7 +377,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       
       mo = e_menu_item_new(subm); 
       e_menu_item_label_set(mo, "Delete item"); 
-      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_remove, clip);
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_edit_dialog, clip);
       e_menu_item_submenu_set(mi, subm); 
       
       e_object_unref(E_OBJECT(subm));
@@ -704,13 +704,33 @@ _cb_submenu_item_lock(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi
 }
 
 static void
-_cb_submenu_item_remove(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+_cb_submenu_item_remove(void *selected_clip)
 {
   Clip_Data *sel = (Clip_Data *) selected_clip;
 
   clip_inst->items = eina_list_remove(clip_inst->items, sel);
   clip_inst->update_history = EINA_TRUE;
   clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+_cb_submenu_edit_dialog(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+
+  if (clip_cfg->confirm_clear) {
+    e_confirm_dialog_show(_("Confirm Item Deletion"),
+                          "application-exit",
+                          _("You wish to delete the current item.<br>"
+                          "<br>"
+                          "Are you sure you want to delete it?"),
+                          _("Delete"), _("Keep"),
+                          _cb_submenu_item_remove, NULL, sel, NULL,
+                          _cb_dialog_keep, NULL);
+  }
+  else
+    _cb_submenu_item_remove(sel);
 }
 
 static void
