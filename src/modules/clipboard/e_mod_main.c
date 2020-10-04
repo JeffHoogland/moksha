@@ -367,6 +367,12 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_menu_item_label_set(mo, "Lock item");
       e_menu_item_check_set(mo, 1);
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_lock, clip);
+      if (!strcmp(clip->lock, "L")) {
+        e_util_menu_item_theme_icon_set(mi, "emblem-readonly");
+        e_menu_item_toggle_set(mo, 1);
+      }
+      else
+        e_menu_item_toggle_set(mo, 0);  
       
       mo = e_menu_item_new(subm); 
       e_menu_item_label_set(mo, "Edit item");
@@ -382,12 +388,6 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       
       e_object_unref(E_OBJECT(subm));
       
-      if (!strcmp(clip->lock, "L")) {
-        e_util_menu_item_theme_icon_set(mi, "emblem-readonly");
-        e_menu_item_toggle_set(mo, 1);
-	  }
-      else
-        e_menu_item_toggle_set(mo, 0);  
     }
   }
   else {
