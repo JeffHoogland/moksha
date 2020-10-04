@@ -1091,6 +1091,7 @@ e_menu_item_active_set(E_Menu_Item *mi, int active)
              if (mi->menu->parent_item && (_e_prev_active_menu_item != mi->menu->parent_item))
                _e_menu_submenu_deactivate(_e_prev_active_menu_item);
           }
+        if (mi->hilighted) return;
         mi->active = 1;
         mi->hilighted = 1;
         _e_active_menu_item = mi;
