@@ -915,7 +915,7 @@ list_add_item(Popup_Data *popup)
 
   /* Add item to the menu if less then menu items limit */  
   if (notification_cfg->clicked_item == EINA_FALSE){
-      notification_cfg->new_item++;
+      if (notification_cfg->new_item < notification_cfg->menu_items) notification_cfg->new_item++;
       if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
          notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
       else 
@@ -933,5 +933,4 @@ list_add_item(Popup_Data *popup)
  notification_cfg->clicked_item = EINA_FALSE;
  gadget_text(notification_cfg->new_item);
  write_history(notification_cfg->popup_items);
-
 }
