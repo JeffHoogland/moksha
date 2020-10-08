@@ -166,10 +166,10 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
                                  0.5, 0.0);
 
     o = e_widget_list_add(evas, 0, 0);
-   of = e_widget_framelist_add(evas, _("Menu Settings"), 0);
+   of = e_widget_framelist_add(evas, _("History Settings"), 0);
    ow = e_widget_check_add(evas, _("Time stamp"),  &(cfdata->time_stamp));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Show Application name"),  &(cfdata->show_app));
+   ow = e_widget_check_add(evas, _("Show application name"),  &(cfdata->show_app));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Reverse order"),  &(cfdata->reverse));
    e_widget_framelist_object_append(of, ow);
@@ -184,7 +184,7 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Items"), 0);
-   ow = e_widget_label_add(evas, _("Items in menu"));
+   ow = e_widget_label_add(evas, _("Items in history"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10, 50, 1, 0,
                              &(cfdata->menu_items), NULL, 100);
@@ -194,19 +194,19 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    of = e_widget_framelist_add(evas, _("Miscellaneous"), 0);
    ow = e_widget_label_add(evas, _("Gadget animation delay [s]"));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 0, 60, 1, 0,
+   ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 0, 300, 1, 0,
                              &(cfdata->jump_delay), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Applications"), 0);
-   ow = e_widget_label_add(evas, _("App Blacklist (use a delimiter)"));
+   ow = e_widget_label_add(evas, _("App blacklist (use a delimiter)"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->blacklist, NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
-   e_widget_toolbook_page_append(otb, NULL, _("Menu"), o, 1, 0, 1, 0,
+   e_widget_toolbook_page_append(otb, NULL, _("History"), o, 1, 0, 1, 0,
                                  0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
    return otb;
@@ -216,17 +216,24 @@ Eet_Error
 truncate_menu(const unsigned int n)
 {
   Eet_Error err = EET_ERROR_NONE;
+  Eina_Bool ret;
+  Popup_Items *items;
   
   EINA_SAFETY_ON_NULL_RETURN_VAL(notification_cfg, EET_ERROR_BAD_OBJECT);
   
   if (notification_cfg->popup_items) {
     if (eina_list_count(notification_cfg->popup_items) > n) {
-      Eina_List *last, *discard;
+      Eina_List *last, *discard, *l;
       last = eina_list_nth_list(notification_cfg->popup_items, n-1);
       notification_cfg->popup_items = eina_list_split_list(notification_cfg->popup_items, last, &discard);
-      if (discard)
+      if (discard){
+         EINA_LIST_FOREACH(discard, l, items) {
+           ret = ecore_file_remove(items->item_icon_img);    
+           if (!ret) 
+              printf("Notif: Error during files removing!\n");
+         }      
         E_FREE_LIST(discard, free_menu_data);
-
+      }
       write_history(notification_cfg->popup_items);
     }
   }
