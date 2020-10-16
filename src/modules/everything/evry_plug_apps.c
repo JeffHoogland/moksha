@@ -1384,13 +1384,14 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
 static void
 _conf_new(void)
-{
+{  char pkexec_cmd[PATH_MAX];
    if (!_conf)
      {
         _conf = E_NEW(Module_Config, 1);
         /* setup defaults */
         _conf->cmd_terminal = eina_stringshare_add("/usr/bin/x-terminal-emulator -e");
-        _conf->cmd_sudo = eina_stringshare_add("/usr/bin/gksudo --preserve-env");
+        snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
+        _conf->cmd_sudo = eina_stringshare_add(pkexec_cmd);
      }
 
     _conf->version = MOD_CONFIG_FILE_VERSION;
