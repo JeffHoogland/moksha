@@ -52,6 +52,7 @@ struct _E_Menu
    E_Menu_Item         *parent_item;
 
    /* only useful if realized != 0 (ie menu is ACTUALLY realized) */
+   Ecore_Job           *dangling_job;
    Ecore_Evas          *ecore_evas;
    Evas                *evas;
    Ecore_X_Window       evas_win;
