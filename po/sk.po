@@ -2234,7 +2234,7 @@ msgstr "Odopnúť z plochy"
 
 #: src/bin/e_int_border_menu.c:1184
 msgid "Select Border Style"
-msgstr "Vybrať ohraničený štýl"
+msgstr "Vybrať štýl okraja"
 
 #: src/bin/e_int_border_menu.c:1196
 msgid "Use Moksha Default Icon Preference"
@@ -5244,7 +5244,7 @@ msgstr "Horný okraj"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1391
 msgid "Right Edge"
-msgstr "Vpravý okraj"
+msgstr "Pravý okraj"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1395
 msgid "Bottom Edge"
