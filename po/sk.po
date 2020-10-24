@@ -9930,15 +9930,15 @@ msgstr "Nastavenie Správcu schránky"
 
 #: src/modules/clipboard/e_mod_main.c:367
 msgid "Lock item"
-msgstr "Zamknúť položku"
+msgstr "Zamknúť"
 
 #: src/modules/clipboard/e_mod_main.c:378
 msgid "Edit item"
-msgstr "Editovať položku"
+msgstr "Editovať"
 
 #: src/modules/clipboard/e_mod_main.c:385
 msgid "Delete item"
-msgstr "Vymazať položku"
+msgstr "Vymazať"
 
 #: src/modules/clipboard/e_mod_main.c:403
 msgid "Ignore history"
@@ -9970,7 +9970,7 @@ msgstr "Manažér schránky: Editácia položky"
 
 #: src/modules/clipboard/e_mod_main.c:754
 msgid "Edit the item content:"
-msgstr "Zväčšiť šírku podľa obsahu"
+msgstr "Editovať aktuálnu položku"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
