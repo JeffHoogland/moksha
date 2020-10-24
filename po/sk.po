@@ -8592,7 +8592,7 @@ msgstr "Rôzne"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Animácia ikony"
 
 #: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"

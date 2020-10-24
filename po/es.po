@@ -7,14 +7,14 @@
 # Aníbal Garrido <khany@member.trisquel.info>, 2015.
 # Adrián Arévalo Tirado <adri58@gmail.com>, 2015.
 # Robert Wiley <ylee@bodhilinux.com>, 2020
-# Alejandro Díaz <adiaz@formacioncontinuazac.gob.mx>. 2020
+# Alejandro Díaz <escuelaslinux@gmail.com>. 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-10-24 15:51+0200\n"
-"PO-Revision-Date: 2020-01-26 11:50-0600\n"
+"PO-Revision-Date: 2020-10-24 12:37-0500\n"
 "Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -5881,7 +5881,7 @@ msgstr "Autodesplazamiento"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr " Deshabilitar iconos en menús"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -8547,7 +8547,7 @@ msgstr "Varios"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Animación de icono al focalizarlo"
 
 #: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
@@ -8839,9 +8839,8 @@ msgid "Check Interval"
 msgstr "Intervalo de comprobación"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Temperatura alta"
+msgstr "Notificación de temperatura alta"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8877,13 +8876,12 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Temperatura alta"
+msgstr "¡Alta temperatura del CPU!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "¡Verifique su dispositivo o configuración!"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -9727,9 +9725,8 @@ msgstr ""
 "continuarán con sus tareas normales."
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
-msgstr "Módulo de notificaciones"
+msgstr "Módulo de notificación"
 
 #: src/modules/notification/e_mod_main.c:654
 msgid "Error During DBus Init!"
@@ -9796,24 +9793,20 @@ msgid "Use multiple monitor geometry"
 msgstr "Usar múltiples monitores"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Otras configuraciones"
+msgstr "Configuración del Historial"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Temporizadores"
+msgstr "Marca de tiempo"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Mostrar menú con todas las aplicaciones"
+msgstr "Mostrar el nombre de la aplicación"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
-msgstr " Orden inverso"
+msgstr "Orden inverso"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:228
@@ -9821,9 +9814,8 @@ msgid "Labels"
 msgstr "Etiquetas"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr " Largo de Etiqueta de texto"
+msgstr "Longitud de Etiqueta"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:239
@@ -9831,17 +9823,16 @@ msgid "Items"
 msgstr "Elementos"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Items in history"
-msgstr " Elementos en Historial"
+msgstr "Elementos en el historial"
 
 #: src/modules/notification/e_mod_config.c:195
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Retraso en la animación del Gadget"
 
 #: src/modules/notification/e_mod_config.c:203
 msgid "App blacklist (use a delimiter)"
-msgstr ""
+msgstr "Lista negra de apps (use un delimitador)"
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:249
@@ -9921,24 +9912,20 @@ msgid "Clipboard Settings"
 msgstr "Configuración del Portapapeles"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Falló el bloqueo"
+msgstr "Bloquear elemento"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d elemento"
+msgstr "Editar elemento"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Eliminación completada"
+msgstr "Borrar elemento"
 
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Ignorar sugerencia"
+msgstr "Ignorar historia"
 
 #: src/modules/clipboard/e_mod_main.c:636
 msgid "Confirm History Deletion"
@@ -9953,27 +9940,23 @@ msgstr ""
 "hacerlo?"
 
 #: src/modules/clipboard/e_mod_main.c:723
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Confirmar borrado de panel"
+msgstr "Confirmar borrado de elemento"
 
 #: src/modules/clipboard/e_mod_main.c:725
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Eligió borrar el historial del portapapeles.<br><br>¿Está seguro de querer "
-"hacerlo?"
+"Eligió borrar el elemento actual..<br><br>¿Está seguro de querer borrarlo?"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Configuración del Portapapeles"
+msgstr "Portapapeles: Editar Elemento"
 
 #: src/modules/clipboard/e_mod_main.c:754
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Editar el contenido del elemento:"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10109,7 +10092,7 @@ msgstr "Nuevo volumen"
 
 #: src/modules/mixer/e_mod_main.c:133
 msgid "Volume limit reached!!!"
-msgstr ""
+msgstr "¡Límite del volumen alcanzado!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
