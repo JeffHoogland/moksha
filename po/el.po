@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -10065,6 +10065,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ρυθμίσεις Πληκτρολογίου"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Το Κλείδωμα απέτυχε"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "%d αντικείμενο"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Διαγραφή πλήκτρου"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11999,9 +12014,6 @@ msgstr "Η ένταση άλλαξε"
 
 #~ msgid "Add Key"
 #~ msgstr "Προσθήκη πλήκτρου"
-
-#~ msgid "Delete Key"
-#~ msgstr "Διαγραφή πλήκτρου"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Ρυθμίσεις κεντρικού μενού"

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -10778,6 +10778,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Paramètres d'apparition"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Échec du verrouillage"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Editer l'icône"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Supprimer"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11149,10 +11164,6 @@ msgstr "Changement de résolution"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Styles"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Editer l'icône"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12655,9 +12666,6 @@ msgstr "Changement de résolution"
 
 #~ msgid "Add Key"
 #~ msgstr "Ajouter"
-
-#~ msgid "Delete Key"
-#~ msgstr "Supprimer"
 
 #~ msgid "Modify Key"
 #~ msgstr "Modifier"

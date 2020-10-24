@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -10566,6 +10566,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "IBar beállítások"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Zárolás nem sikerült!"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Ikon szerkesztése"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Billentyű törlése"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -10941,10 +10956,6 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Stílus"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Ikon szerkesztése"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12615,9 +12626,6 @@ msgstr "Felbontás módosítása"
 
 #~ msgid "Add Key"
 #~ msgstr "Billentyű hozzáadása"
-
-#~ msgid "Delete Key"
-#~ msgstr "Billentyű törlése"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Főmenü beállítások"

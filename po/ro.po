@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -11038,6 +11038,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ibar Setări"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Blocare eșuată"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Editare Icon"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "ştergeţi făcut"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11441,10 +11456,6 @@ msgstr "volumul schimbat"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "stil"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Editare Icon"
 
 #, fuzzy
 #~ msgid "Names"

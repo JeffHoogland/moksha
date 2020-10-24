@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-11-06 10:39+0000\n"
 "Last-Translator: Viktor Kojouharov <Unknown>\n"
 "Language-Team: English <en@li.org>\n"
@@ -10735,6 +10735,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "'Ибър' Настройки"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Заключването е неуспешно"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Редактиране на икона"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Изтриване на клавиш"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11139,10 +11154,6 @@ msgstr "Смяна на разделителна способност"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "стил"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Редактиране на икона"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12411,9 +12422,6 @@ msgstr "Смяна на разделителна способност"
 
 #~ msgid "Add Key"
 #~ msgstr "Добавяне на клавиш"
-
-#~ msgid "Delete Key"
-#~ msgstr "Изтриване на клавиш"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Настройки на главното меню"

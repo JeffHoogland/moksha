@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-09-03 09:15+0000\n"
 "Last-Translator: Chanrithy Thim <Unknown>\n"
 "Language-Team: Khmer <km@li.org>\n"
@@ -9795,6 +9795,20 @@ msgstr ""
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "ម៉ឺនុយ បង្អួច"
+
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "ចាក់សោ"
+
+#: src/modules/clipboard/e_mod_main.c:378
+msgid "Edit item"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "លុប"
 
 #: src/modules/clipboard/e_mod_main.c:403
 msgid "Ignore history"

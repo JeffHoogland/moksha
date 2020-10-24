@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -11159,6 +11159,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "ibar Tetapan"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "kunci Gagal"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "sunting Icon"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "memadam dilakukan"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11563,10 +11578,6 @@ msgstr "isipadu berubah"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "gaya"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "sunting Icon"
 
 #, fuzzy
 #~ msgid "Names"

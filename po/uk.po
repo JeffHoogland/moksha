@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -10593,6 +10593,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Параметри IBar"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Заблокувати не вдалось"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Редагувати піктограму"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Вилучити клавішу"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -10966,10 +10981,6 @@ msgstr "Зміна роздільної здатності"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Стиль"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Редагувати піктограму"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12570,9 +12581,6 @@ msgstr "Зміна роздільної здатності"
 
 #~ msgid "Add Key"
 #~ msgstr "Додати клавішу"
-
-#~ msgid "Delete Key"
-#~ msgstr "Вилучити клавішу"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Налаштування головного меню"

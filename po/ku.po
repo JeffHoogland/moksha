@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-06-03 16:28+0000\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@gmail.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -9634,6 +9634,18 @@ msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:274
 msgid "Clipboard Settings"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_main.c:367
+msgid "Lock item"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_main.c:378
+msgid "Edit item"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_main.c:385
+msgid "Delete item"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_main.c:403

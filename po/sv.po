@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -10867,6 +10867,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ibar Settings"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Kan inte låsa"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Ändra ikon"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Välj en"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11273,10 +11288,6 @@ msgstr "Ändra upplösning"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Tema"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Ändra ikon"
 
 #, fuzzy
 #~ msgid "Names"

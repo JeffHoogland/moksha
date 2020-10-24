@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -11154,6 +11154,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "IBAR Settings"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Lock ebaõnnestus"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Edit Icon"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Kustuta teha"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11555,10 +11570,6 @@ msgstr "mahu muutus"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "stiil"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Edit Icon"
 
 #, fuzzy
 #~ msgid "Names"

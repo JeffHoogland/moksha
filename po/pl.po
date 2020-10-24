@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -10662,6 +10662,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ustawienia IBar"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Blokada nie powiodła się"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Edytuj ikonę"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Usuń zrobić"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -11060,10 +11075,6 @@ msgstr "Zmiana rozdzielczości"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Styl"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Edytuj ikonę"
 
 #, fuzzy
 #~ msgid "Names"

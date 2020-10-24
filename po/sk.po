@@ -1,11 +1,11 @@
-# Slovak translations for e17
+# Slovak translations for Moksha desktop
 # This file is put in public domain.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
-msgstr "<title>Tím</title>"
+msgstr "<title>Bodhi Tím</title>"
 
 #: src/bin/e_actions.c:360
 #, c-format
@@ -9810,22 +9810,18 @@ msgid "Use multiple monitor geometry"
 msgstr "Použiť geometriu pre viac monitorov"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Nastavenia Kurzoru"
+msgstr "Nastavenia Histórie"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Časovače"
+msgstr "Časová značka"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Vybrať menu aplikácie"
+msgstr "Zobraziť názov aplikácie"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
 msgstr " Opačné poradie"
 
@@ -9835,9 +9831,8 @@ msgid "Labels"
 msgstr "Názvy položiek"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr " Śirka textu položky"
+msgstr "Śirka textu položky"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:239
@@ -9845,17 +9840,16 @@ msgid "Items"
 msgstr "Položky"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Items in history"
-msgstr " Položiek v histórii"
+msgstr "Počet položiek v histórii"
 
 #: src/modules/notification/e_mod_config.c:195
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Trvanie animácie [s]"
 
 #: src/modules/notification/e_mod_config.c:203
 msgid "App blacklist (use a delimiter)"
-msgstr ""
+msgstr "Ignorované aplikácie (použi oddeľovač)"
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:249
@@ -9934,10 +9928,21 @@ msgstr " Položiek v histórii"
 msgid "Clipboard Settings"
 msgstr "Nastavenie Správcu schránky"
 
+#: src/modules/clipboard/e_mod_main.c:367
+msgid "Lock item"
+msgstr "Zamknúť položku"
+
+#: src/modules/clipboard/e_mod_main.c:378
+msgid "Edit item"
+msgstr "Editovať položku"
+
+#: src/modules/clipboard/e_mod_main.c:385
+msgid "Delete item"
+msgstr "Vymazať položku"
+
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Ignorovať pri upozornení"
+msgstr "Ignorovať históriu"
 
 #: src/modules/clipboard/e_mod_main.c:636
 msgid "Confirm History Deletion"
@@ -9950,24 +9955,20 @@ msgid ""
 msgstr "Požadujete zmazanie histórie.<br><br>Ste si istý, že ju chcete zmazať?"
 
 #: src/modules/clipboard/e_mod_main.c:723
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Potvrdiť zmazanie lišty"
+msgstr "Potvrdiť zmazanie položky"
 
 #: src/modules/clipboard/e_mod_main.c:725
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "Požadujete zmazanie histórie.<br><br>Ste si istý, že ju chcete zmazať?"
+msgstr "Požadujete zmazanie aktuálnej položky.<br><br>Ste si istý, že ju chcete zmazať?"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Nastavenie Správcu schránky"
+msgstr "Manažér schránky: Editácia položky"
 
 #: src/modules/clipboard/e_mod_main.c:754
-#, fuzzy
 msgid "Edit the item content:"
 msgstr "Zväčšiť šírku podľa obsahu"
 
@@ -10027,13 +10028,12 @@ msgid "Places"
 msgstr "Miesta"
 
 #: src/modules/places/e_mod_config.c:262
-#, fuzzy
 msgid "Show full disk alert"
-msgstr "Zobraziť celú cestu"
+msgstr "Zobraziť výstrahu plného disku"
 
 #: src/modules/places/e_mod_config.c:266
 msgid "Capacity limit:"
-msgstr ""
+msgstr "Limit kapacity disku"
 
 #: src/modules/places/e_mod_main.c:411
 msgid "Places Configuration Updated"
@@ -10047,7 +10047,7 @@ msgstr "Nastavenie modulu Miesta"
 #: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr ""
+msgstr "Disk ''%s'' je zaplnený na %d %%!"
 
 #: src/modules/places/e_mod_places.c:661
 msgid ""
@@ -10105,7 +10105,7 @@ msgstr "Nová hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:133
 msgid "Volume limit reached!!!"
-msgstr ""
+msgstr "Maximálna hlasitosť!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -11763,9 +11763,6 @@ msgstr "Stlmiť hlasitosť"
 
 #~ msgid "Add Key"
 #~ msgstr "Pridať klávesu"
-
-#~ msgid "Delete Key"
-#~ msgstr "Odstrániť klavesu"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Hlavné nastavenia menu"

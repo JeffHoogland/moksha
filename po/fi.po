@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -10613,6 +10613,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "IBar - asetukset"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "Lukitseminen epäonnistui"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "Muokkaa kuvaketta"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "Poista näppäin"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -10999,10 +11014,6 @@ msgstr "Tarkkuuden vaihto"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "Tyyli"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Muokkaa kuvaketta"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12650,9 +12661,6 @@ msgstr "Tarkkuuden vaihto"
 
 #~ msgid "Add Key"
 #~ msgstr "Lisää näppäin"
-
-#~ msgid "Delete Key"
-#~ msgstr "Poista näppäin"
 
 #~ msgid "Main Menu Settings"
 #~ msgstr "Päävalikon asetukset"

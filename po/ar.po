@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -10008,6 +10008,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "ضبط لوحة المفاتيح"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "فشل القفل"
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "لا يوجد"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "مذف مفتاح"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -13545,9 +13560,6 @@ msgstr "حرّك ﻷعلى"
 
 #~ msgid "Add Key"
 #~ msgstr "أضِف مفتَاح"
-
-#~ msgid "Delete Key"
-#~ msgstr "مذف مفتاح"
 
 #~ msgid "Show Name In Menu"
 #~ msgstr "أعرض الاسم في القائمة"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:38+0200\n"
+"POT-Creation-Date: 2020-10-24 15:51+0200\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -10483,6 +10483,21 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "IBarの設定"
 
+#: src/modules/clipboard/e_mod_main.c:367
+#, fuzzy
+msgid "Lock item"
+msgstr "ロックに失敗しました."
+
+#: src/modules/clipboard/e_mod_main.c:378
+#, fuzzy
+msgid "Edit item"
+msgstr "アイコン編集"
+
+#: src/modules/clipboard/e_mod_main.c:385
+#, fuzzy
+msgid "Delete item"
+msgstr "キー削除"
+
 #: src/modules/clipboard/e_mod_main.c:403
 #, fuzzy
 msgid "Ignore history"
@@ -10878,10 +10893,6 @@ msgstr "解像度の変更"
 #, fuzzy
 #~ msgid "Style:"
 #~ msgstr "スタイル"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "アイコン編集"
 
 #, fuzzy
 #~ msgid "Names"
@@ -12446,9 +12457,6 @@ msgstr "解像度の変更"
 
 #~ msgid "Add Key"
 #~ msgstr "キー追加"
-
-#~ msgid "Delete Key"
-#~ msgstr "キー削除"
 
 #~ msgid "Modify Key"
 #~ msgstr "キー修正"
