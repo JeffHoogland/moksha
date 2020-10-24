@@ -13,7 +13,6 @@ EXTRA_DIST = \
 		module.clock.src \
 		module.comp.src \
 		module.conf.src \
-		module.everything-apps.src \
 		module.everything-files.src \
 		module.everything.src \
 		module.fileman.src \
@@ -38,7 +37,6 @@ files_DATA = \
 		module.clock.cfg \
 		module.comp.cfg \
 		module.conf.cfg \
-		module.everything-apps.cfg \
 		module.everything-files.cfg \
 		module.everything.cfg \
 		module.fileman.cfg \

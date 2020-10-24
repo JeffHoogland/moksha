@@ -1,4 +1,5 @@
 #include "e_mod_main.h"
+#include <time.h>
 
 /* Popup function protos */
 static Popup_Data *_notification_popup_new(E_Notification *n);
@@ -12,6 +13,8 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
+static void         list_add_item(Popup_Data *popup);
+
 /* this function should be external in edje for use in cases such as this module.
  *
  * happily, it was decided that the function would not be external so that it could
@@ -190,9 +193,10 @@ notification_popup_notify(E_Notification *n,
 {
    double timeout;
    Popup_Data *popup = NULL;
+   
    char *esc;
    char urgency;
-
+   
    urgency = e_notification_hint_urgency_get(n);
 
    switch (urgency)
@@ -226,6 +230,7 @@ notification_popup_notify(E_Notification *n,
           e_notification_unref(popup->notif);
 
         popup->notif = n;
+        
         _notification_popup_refresh(popup);
      }
    else if (!replaces_id)
@@ -237,11 +242,12 @@ notification_popup_notify(E_Notification *n,
    if (!popup)
      {
         popup = _notification_popup_new(n);
+        
         if (!popup) return 0;
         notification_cfg->popups = eina_list_append(notification_cfg->popups, popup);
         edje_object_signal_emit(popup->theme, "notification,new", "notification");
      }
-
+   
    if (popup->timer)
      {
         ecore_timer_del(popup->timer);
@@ -258,6 +264,58 @@ notification_popup_notify(E_Notification *n,
      popup->timer = ecore_timer_add(timeout, (Ecore_Task_Cb)_notification_timer_cb, popup);
 
    return 1;
+}
+
+int
+write_history(Eina_List *popup_items)
+{
+   Eina_List *l = NULL;
+   char str[10] = "";
+   char dir[PATH_MAX];
+   char file_path[PATH_MAX];
+   unsigned int i = 1;
+   int ret;
+   Eet_File *history_file = NULL;
+   Popup_Items *items = NULL;
+   
+   snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
+   if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+   snprintf(file_path, sizeof(file_path), "%s/notif_list", dir); 
+   
+   history_file = eet_open(file_path, EET_FILE_MODE_WRITE);
+   if (history_file){
+     if(!notification_cfg->popup_items) 
+     {
+        snprintf(str, sizeof(str), "%d", 0);
+        eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+        ret = eet_close(history_file); 
+        return ret;
+      }
+   EINA_LIST_FOREACH(popup_items, l, items) {
+        snprintf(str, sizeof(str), "dtime%d", i);
+        eet_write(history_file, str,  items->item_date_time, strlen(items->item_date_time) + 1, 0);
+        snprintf(str, sizeof(str), "app%d", i);
+        eet_write(history_file, str,  items->item_app, strlen(items->item_app) + 1, 0);
+        snprintf(str, sizeof(str), "icon%d", i);
+        eet_write(history_file, str,  items->item_icon, strlen(items->item_icon) + 1, 0);
+        snprintf(str, sizeof(str), "img%d", i);
+        eet_write(history_file, str,  items->item_icon_img, strlen(items->item_icon_img) + 1, 0);
+        snprintf(str, sizeof(str), "title%d", i);
+        eet_write(history_file, str,  items->item_title, strlen(items->item_title) + 1, 0);
+        snprintf(str, sizeof(str), "body%d", i);
+        eet_write(history_file, str,  items->item_body, strlen(items->item_body) + 1, 0);
+        i++;
+      }
+   int count = eina_list_count(notification_cfg->popup_items);
+   snprintf(str, sizeof(str), "%d", count);
+   eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+   ret = eet_close(history_file); 
+   }
+   else {
+      ERR("Unable to open notfication file");
+      ret = 0;
+   }
+   return ret;
 }
 
 void
@@ -416,17 +474,18 @@ _notification_popup_new(E_Notification *n)
 {
    E_Container *con;
    Popup_Data *popup;
+  
    char buf[PATH_MAX];
    const Eina_List *l, *screens;
    E_Screen *scr;
    E_Zone *zone = NULL;
-
+   
    if (popups_displayed > POPUP_LIMIT) return 0;
    popup = E_NEW(Popup_Data, 1);
    if (!popup) return NULL;
    e_notification_ref(n);
    popup->notif = n;
-
+   
    con = e_container_current_get(e_manager_current_get());
    screens = e_xinerama_screens_get();
    if (notification_cfg->dual_screen &&
@@ -475,12 +534,14 @@ _notification_popup_new(E_Notification *n)
      (popup->theme, "notification,find", "theme",
      (Edje_Signal_Cb)_notification_theme_cb_find, popup);
 
+ 
    _notification_popup_refresh(popup);
    next_pos = _notification_popup_place(popup, next_pos);
+   
    e_popup_show(popup->win);
    e_popup_layer_set(popup->win, E_LAYER_POPUP);
    popups_displayed++;
-
+   
    return popup;
 error:
    free(popup);
@@ -544,6 +605,26 @@ _notification_popups_place(void)
    next_pos = pos;
 }
 
+static char *
+get_time()
+{
+   time_t rawtime;
+   struct tm * timeinfo;
+   char buf[20] = "";
+   char hour[3];
+   time(&rawtime);
+   timeinfo = localtime( &rawtime );
+   
+   if (timeinfo->tm_hour < 10) 
+     snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour); 
+   else
+     snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour); 
+     
+   snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s:%02d:%02d ", timeinfo->tm_year + 1900, 
+            timeinfo->tm_mon, timeinfo->tm_mday, hour, timeinfo->tm_min, timeinfo->tm_sec);
+   return strdup(buf);
+}
+
 static void
 _notification_popup_refresh(Popup_Data *popup)
 {
@@ -551,9 +632,9 @@ _notification_popup_refresh(Popup_Data *popup)
    const char *app_icon_max;
    void *img;
    int w, h, width = 80, height = 80;
-
+ 
    if (!popup) return;
-
+   
    popup->app_name = e_notification_app_name_get(popup->notif);
 
    if (popup->app_icon)
@@ -594,18 +675,35 @@ _notification_popup_refresh(Popup_Data *popup)
    /* Check if the app specify an icon either by a path or by a hint */
    img = e_notification_hint_image_data_get(popup->notif);
    if (!img)
-     {
+     {  
         icon_path = e_notification_hint_image_path_get(popup->notif);
-        if ((!icon_path) || (!icon_path[0]))
+           
+        if ((!icon_path) || (!icon_path[0])){
           icon_path = e_notification_app_icon_get(popup->notif);
+        }
         if (icon_path)
           {
              if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
+             
+             /* Grab icon stored in /tmp and copy to notif dir */
+            if (notification_cfg->instances){
+               char dir[PATH_MAX];
+               const char *file;
+               file = ecore_file_file_get(icon_path);
+               if (*file == '.') file = file + 1;
+               snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(),file); 
+               if (!notification_cfg->clicked_item) 
+                  ecore_file_cp(icon_path, dir); 
+                
+               popup->app_icon_image = strdup(dir);
+             }
+             /*                                                 */
+             
              if (!ecore_file_exists(icon_path))
                {
                   const char *new_path;
                   unsigned int size;
-
+                  popup->app_icon_image = strdup(icon_path);
                   size = e_util_icon_size_normalize(width * e_scale);
                   new_path = efreet_icon_path_find(e_config->icon_theme, 
                                                    icon_path, size);
@@ -636,20 +734,33 @@ _notification_popup_refresh(Popup_Data *popup)
                }
           }
      }
-   if ((!img) && (!popup->app_icon))
+   if ((!img) && (!popup->app_icon)){
      img = e_notification_hint_icon_data_get(popup->notif);
+     }
    if (img)
      {
+        char dir[PATH_MAX];
+        char image_path[PATH_MAX];
+        
         popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
         evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
         evas_object_image_size_get(popup->app_icon, &w, &h);
+        
+        if (notification_cfg->instances){
+          snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
+          if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+          snprintf(image_path, sizeof(image_path), "%s/%s_%s.png", dir, 
+                   e_notification_summary_get(popup->notif), get_time()); 
+          evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
+          popup->app_icon_image = strdup(image_path);
+        }
      }
 
    if (!popup->app_icon)
      {
         char buf[PATH_MAX];
-
+        
         snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", 
                  notification_mod->dir);
         popup->app_icon = edje_object_add(popup->e);
@@ -689,8 +800,7 @@ _notification_popup_refresh(Popup_Data *popup)
    w = MIN(w, popup->zone->w / 2);
    h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
-   evas_object_resize(popup->theme, w, h);
-
+   evas_object_resize(popup->theme, w, h); 
    _notification_popups_place();
 }
 
@@ -754,7 +864,7 @@ _notification_format_message(Popup_Data *popup)
    const char *title = e_notification_summary_get(popup->notif);
    const char *b = e_notification_body_get(popup->notif);
    edje_object_part_text_unescaped_set(o, "notification.text.title", title);
-
+   
    /* FIXME: Filter to only include allowed markup? */
      {
         /* We need to replace \n with <br>. FIXME: We need to handle all the
@@ -763,7 +873,64 @@ _notification_format_message(Popup_Data *popup)
         eina_strbuf_append(buf, b);
         eina_strbuf_replace_all(buf, "\n", "<br/>");
         edje_object_part_text_set(o, "notification.textblock.message",
-              eina_strbuf_string_get(buf));
+                                  eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
+     list_add_item (popup); 
+}
+
+static void
+list_add_item(Popup_Data *popup)
+{
+  Popup_Items *items; 
+  char *file;
+  Eina_Bool ret;
+  
+  if (!notification_cfg->instances) return;
+  
+  items = E_NEW(Popup_Items, 1); 
+  if (!items) return;
+  
+  const char *icon_path = e_notification_app_icon_get(popup->notif);
+  const char *title = e_notification_summary_get(popup->notif);
+  const char *b = e_notification_body_get(popup->notif);
+  
+  items->item_date_time = get_time();         // add date and time
+  items->item_app = strdup(popup->app_name);  // add app name
+  items->item_title = strdup(title);          // add title
+  items->item_body = strdup(b);               // add text body
+  if (strstr(icon_path, "tmp"))               // add icon path
+    items->item_icon = strdup(""); 
+  else
+    items->item_icon = strdup(icon_path); 
+  
+  if (strlen(popup->app_icon_image) > 0)      // do we have an icon image?
+    items->item_icon_img = strdup(popup->app_icon_image); 
+  else
+    items->item_icon_img = strdup("noimage");
+  
+  /* Apps blacklist check */  
+  if (strstr(notification_cfg->blacklist, items->item_app))
+     return;
+
+  /* Add item to the menu if less then menu items limit */  
+  if (notification_cfg->clicked_item == EINA_FALSE){
+      if (notification_cfg->new_item < notification_cfg->menu_items) notification_cfg->new_item++;
+      if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
+         notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+      else 
+      {
+        file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
+        ret = ecore_file_remove(file);   
+        if (!ret) 
+          printf("Notification: Error during hint file removing!\n");
+        notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
+                                        eina_list_last(notification_cfg->popup_items));
+        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+      }
+  }
+ 
+ notification_cfg->clicked_item = EINA_FALSE;
+ gadget_text(notification_cfg->new_item);
+ write_history(notification_cfg->popup_items);
 }

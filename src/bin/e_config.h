@@ -182,6 +182,8 @@ struct _E_Config
    int                       cnfmdlg_disabled; // GUI
    int                       cfgdlg_auto_apply; // GUI
    int                       cfgdlg_default_mode; // GUI
+   int                       menu_icons_hide; // GUI
+
    Eina_List                *gadcons; // GUI
    Eina_List                *shelves; // GUI
    int                       font_hinting; // GUI

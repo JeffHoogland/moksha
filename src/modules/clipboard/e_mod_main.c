@@ -47,10 +47,14 @@ static Eina_Bool _cb_clipboard_request(void *data __UNUSED__);
 static Eina_Bool _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selection_Notify * event);
 static Eina_Bool _cb_event_owner(Instance *instance __UNUSED__, int type __UNUSED__, Ecore_X_Event_Fixes_Selection_Notify * event);
 static void      _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_item_lock(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_edit_dialog(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void      _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__);
 static void      _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_context_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
 static void      _cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void      _cb_ignore_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi);
 static void      _cb_dialog_delete(void *data __UNUSED__);
 static void      _cb_dialog_keep(void *data __UNUSED__);
 static void      _cb_action_switch(E_Object *o __UNUSED__, const char *params, Instance *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event);
@@ -92,6 +96,7 @@ _clip_config_new(E_Module *m)
     clip_cfg->label_length   = CF_DEFAULT_LABEL_LENGTH;
     clip_cfg->ignore_ws      = CF_DEFAULT_IGNORE_WS;
     clip_cfg->ignore_ws_copy = CF_DEFAULT_IGNORE_WS_COPY;
+    clip_cfg->ignore_ws_copy = CF_DEFAULT_IGNORE_HIST;
     clip_cfg->trim_ws        = CF_DEFAULT_WS;
     clip_cfg->trim_nl        = CF_DEFAULT_NL;
   }
@@ -107,6 +112,7 @@ _clip_config_new(E_Module *m)
   E_CONFIG_LIMIT(clip_cfg->autosave, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->ignore_ws, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->ignore_ws_copy, 0, 1);
+  E_CONFIG_LIMIT(clip_cfg->ignore_hist, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->trim_ws, 0, 1);
   E_CONFIG_LIMIT(clip_cfg->trim_nl, 0, 1);
 
@@ -321,11 +327,14 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
 {
   EINA_SAFETY_ON_NULL_RETURN_VAL(inst, E_GADCON_ORIENT_VERT);
 
-  E_Menu_Item *mi;
+  E_Menu_Item *mi, *mo;
+  E_Menu *subm;
   /* Default Orientation of menu for float list */
   unsigned dir = E_GADCON_ORIENT_VERT;
 
   inst->menu = e_menu_new();
+  
+  
   if (!mouse_event){
     e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
   }
@@ -352,6 +361,33 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       }
       e_menu_item_label_set(mi, clip->name);
       e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, clip);
+      
+      subm = e_menu_new();
+      mo = e_menu_item_new(subm); 
+      e_menu_item_label_set(mo, "Lock item");
+      e_menu_item_check_set(mo, 1);
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_lock, clip);
+      if (!strcmp(clip->lock, "L")) {
+        e_util_menu_item_theme_icon_set(mi, "emblem-readonly");
+        e_menu_item_toggle_set(mo, 1);
+      }
+      else
+        e_menu_item_toggle_set(mo, 0);  
+      
+      mo = e_menu_item_new(subm); 
+      e_menu_item_label_set(mo, "Edit item");
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_edit, clip);
+      
+      mo = e_menu_item_new(subm);
+      e_menu_item_separator_set(mo, EINA_TRUE);
+      
+      mo = e_menu_item_new(subm); 
+      e_menu_item_label_set(mo, "Delete item"); 
+      e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_edit_dialog, clip);
+      e_menu_item_submenu_set(mi, subm); 
+      
+      e_object_unref(E_OBJECT(subm));
+      
     }
   }
   else {
@@ -364,9 +400,19 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   e_menu_item_separator_set(mi, EINA_TRUE);
 
   mi = e_menu_item_new(inst->menu);
+  e_menu_item_label_set(mi, _("Ignore history"));
+  e_util_menu_item_theme_icon_set(mi, "process-stop");
+  e_menu_item_check_set(mi, 1);
+  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_ignore_history, inst);
+  if (clip_cfg->ignore_hist)
+    e_menu_item_toggle_set(mi, 1);  
+  else
+    e_menu_item_toggle_set(mi, 0);  
+  
+  mi = e_menu_item_new(inst->menu);
   e_menu_item_label_set(mi, _("Clear"));
   e_util_menu_item_theme_icon_set(mi, "edit-clear");
-  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_clear_history, inst);
+  e_menu_item_callback_set(mi, (E_Menu_Cb) _cb_clear_history, mi);
 
   if (clip_inst->items)
     e_menu_item_disabled_set(mi, EINA_FALSE);
@@ -443,6 +489,7 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
         return ECORE_CALLBACK_PASS_ON;
       }
       cd = E_NEW(Clip_Data, 1);
+      cd->lock = strdup("U");
       if (!set_clip_content(&cd->content, text_data->text,
                              CLIP_TRIM_MODE(clip_cfg))) {
         CRI("Something bad happened !!");
@@ -502,7 +549,9 @@ _clip_add_item(Clip_Data *cd)
 {
   Eina_List *it;
   EINA_SAFETY_ON_NULL_RETURN(cd);
-
+  
+  if (clip_cfg->ignore_hist) return;
+  
   if (*cd->content == 0) {
     ERR("Warning Clip content is Empty!");
     clipboard.clear(); /* stop event selection cb */
@@ -518,10 +567,16 @@ _clip_add_item(Clip_Data *cd)
       clip_inst->items = eina_list_prepend(clip_inst->items, cd);
     }
     else {
-      /* remove last item from the list */
-      clip_inst->items = eina_list_remove_list(clip_inst->items, eina_list_last(clip_inst->items));
-      /*  add clipboard data stored in cd to the list as a first item */
-      clip_inst->items = eina_list_prepend(clip_inst->items, cd);
+         /* add clipboard data stored in cd to the list as a first item */
+         clip_inst->items = eina_list_prepend(clip_inst->items, cd);
+         EINA_LIST_REVERSE_FOREACH(clip_inst->items, it, cd) {
+         /* let's find the first unlocked item (reversely) */
+            if (!strcmp(cd->lock, "U")) {
+               /* remove last unlocked item from the list */
+               clip_inst->items = eina_list_remove_list(clip_inst->items, it);
+               break;
+            }
+         }
     }
   }
 
@@ -592,6 +647,16 @@ _cb_clear_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi _
 }
 
 static void
+_cb_ignore_history(void *inst __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi)
+{
+  EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
+  if (e_menu_item_toggle_get(mi))
+    clip_cfg->ignore_hist = 1;
+  else
+    clip_cfg->ignore_hist = 0;
+}
+
+static void
 _cb_dialog_keep(void *data __UNUSED__)
 {
   return;
@@ -623,6 +688,72 @@ _cb_menu_item(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
 {
   Clip_Data *sel = (Clip_Data *) selected_clip;
   _x_clipboard_update(sel->content);
+}
+
+static void
+_cb_submenu_item_lock(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+  if (e_menu_item_toggle_get(mi))
+     sel->lock = strdup("L");
+  else
+     sel->lock = strdup("U");
+
+  clip_inst->update_history = EINA_TRUE;
+  clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+_cb_submenu_item_remove(void *selected_clip)
+{
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+
+  clip_inst->items = eina_list_remove(clip_inst->items, sel);
+  clip_inst->update_history = EINA_TRUE;
+  clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+_cb_submenu_edit_dialog(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  EINA_SAFETY_ON_NULL_RETURN(clip_cfg);
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+
+  if (clip_cfg->confirm_clear) {
+    e_confirm_dialog_show(_("Confirm Item Deletion"),
+                          "application-exit",
+                          _("You wish to delete the current item.<br>"
+                          "<br>"
+                          "Are you sure you want to delete it?"),
+                          _("Delete"), _("Keep"),
+                          _cb_submenu_item_remove, NULL, sel, NULL,
+                          _cb_dialog_keep, NULL);
+  }
+  else
+    _cb_submenu_item_remove(sel);
+}
+
+static void
+ _item_edit_dialog_ok(void *data, char *text)
+{
+   Clip_Data *sel = (Clip_Data *) data;
+   
+   set_clip_name(&sel->name, text, CLIP_TRIM_MODE(clip_cfg), 
+                             clip_cfg->label_length);
+   set_clip_content(&sel->content, text, CLIP_TRIM_MODE(clip_cfg));
+   clip_inst->update_history = EINA_TRUE;
+   clip_save(clip_inst->items, EINA_FALSE);
+}
+
+static void
+_cb_submenu_item_edit(void *selected_clip, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+  Clip_Data *sel = (Clip_Data *) selected_clip;
+
+  e_entry_dialog_show(_("Clipboard: Edit Item"), "edit-rename",
+                                          _("Edit the item content:"), sel->content, NULL, NULL,
+                                          _item_edit_dialog_ok,
+                                          NULL, sel);
 }
 
 static void
@@ -662,6 +793,7 @@ free_clip_data(Clip_Data *clip)
   EINA_SAFETY_ON_NULL_RETURN(clip);
   free(clip->name);
   free(clip->content);
+  free(clip->lock);
   free(clip);
 }
 
@@ -719,6 +851,7 @@ e_modapi_init (E_Module *m)
   E_CONFIG_VAL(D, T, label_length, DOUBLE);
   E_CONFIG_VAL(D, T, ignore_ws, INT);
   E_CONFIG_VAL(D, T, ignore_ws_copy, INT);
+  E_CONFIG_VAL(D, T, ignore_hist, INT);
   E_CONFIG_VAL(D, T, trim_ws, INT);
   E_CONFIG_VAL(D, T, trim_nl, INT);
 
@@ -770,6 +903,7 @@ e_modapi_init (E_Module *m)
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_SELECTION_NOTIFY, _cb_event_selection, clip_inst);
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_FIXES_SELECTION_NOTIFY, _cb_event_owner, clip_inst);
   clipboard.request(clip_inst->win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+  
 
   /* Read History file and set clipboard */
   clip_inst->update_history = EINA_TRUE;

@@ -33,6 +33,7 @@ struct _Config
   int   ignore_ws_copy; /* Should we not copy White space only             */
   int trim_ws;          /* Should we trim White space from selection       */
   int trim_nl;          /* Should we trim new lines from selection         */
+  int ignore_hist;      /* Should we trim new lines from selection         */
 };
 
 struct _Config_Item

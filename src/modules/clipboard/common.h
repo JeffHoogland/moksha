@@ -40,6 +40,7 @@ typedef struct _Clip_Data
     /* A structure used for storing clipboard data in */
     char *name;
     char *content;
+    char *lock;
 } Clip_Data;
 
 typedef struct _Instance Instance;

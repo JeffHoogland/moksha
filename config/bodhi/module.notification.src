@@ -1,5 +1,5 @@
 group "Notification_Config" struct {
-    value "version" int: 1000000;
+    value "version" int: 2000000;
     value "show_low" int: 0;
     value "show_normal" int: 1;
     value "show_critical" int: 1;
@@ -8,4 +8,11 @@ group "Notification_Config" struct {
     value "force_timeout" int: 0;
     value "ignore_replacement" int: 0;
     value "dual_screen" int: 0;
+    value "time_stamp" int: 1;
+    value "show_app" int: 1;
+    value "reverse" int: 0;
+    value "item_length" float: 60.00;
+    value "menu_items" float: 20;
+    value "jump_delay" float: 10;
+    value "blacklist" string: "";
 }

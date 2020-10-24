@@ -177,11 +177,11 @@ e_wizard_page_show(Evas_Object *obj)
         Evas_Coord minw, minh;
 
         e_widget_size_min_get(obj, &minw, &minh);
-        evas_object_size_hint_min_set(obj, 0, 0);
-        evas_object_size_hint_max_set(obj, 0, 0);
-        //edje_object_part_swallow(o_bg, "e.swallow.content", obj);
-        //evas_object_show(obj);
-        //e_widget_focus_set(obj, 1);
+        evas_object_size_hint_min_set(obj, 200, 300);
+        evas_object_size_hint_max_set(obj, 400, 500);
+        edje_object_part_swallow(o_bg, "e.swallow.content", obj);
+        evas_object_show(obj);
+        e_widget_focus_set(obj, 1);
         edje_object_signal_emit(o_bg, "e,action,page,new", "e");
      }
 }
@@ -234,9 +234,9 @@ e_wizard_button_next_enable_set(int enable)
 }
 
 EAPI void
-e_wizard_title_set(const char *title __UNUSED__)
+e_wizard_title_set(const char *title)
 {
-   edje_object_part_text_set(o_bg, "e.text.title", _("Please Wait As We Are Loading Moksha Settings!"));
+   edje_object_part_text_set(o_bg, "e.text.title", title);
 }
 
 EAPI void

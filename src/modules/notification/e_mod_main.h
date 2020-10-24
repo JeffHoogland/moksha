@@ -5,14 +5,17 @@
 #include <E_Notification_Daemon.h>
 
 /* Increment for Major Changes */
-#define MOD_CONFIG_FILE_EPOCH      1
+#define MOD_CONFIG_FILE_EPOCH      2
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_GENERATION 1
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 typedef enum   _Popup_Corner Popup_Corner;
 typedef struct _Config Config;
 typedef struct _Popup_Data Popup_Data;
+typedef struct _Popup_Items Popup_Items;
+
+typedef struct _Instance Instance;
 
 enum _Popup_Corner
   {
@@ -21,6 +24,13 @@ enum _Popup_Corner
     CORNER_BL,
     CORNER_BR
   };
+  
+struct _Instance
+{
+   E_Gadcon_Client *gcc;
+   Evas_Object     *o_notif;
+   E_Menu *menu;
+};
 
 struct _Config 
 {
@@ -35,7 +45,17 @@ struct _Config
   int dual_screen;
   float timeout;
   Popup_Corner corner;
-
+  Eina_List  *instances;
+  
+  int time_stamp;
+  int show_app;
+  int reverse;
+  Eina_Bool clicked_item;
+  double item_length;
+  double menu_items;
+  double jump_delay;
+  const char *blacklist;
+  
   struct
   {
     Eina_Bool presentation;
@@ -44,9 +64,12 @@ struct _Config
   
   Ecore_Event_Handler  *handler;
   Eina_List  *popups;
+  Eina_List  *popup_items;
   int         next_id;
+  int         new_item;
 
   Ecore_Timer *initial_mode_timer;
+  Ecore_Timer *jump_timer;
   E_Notification_Daemon *daemon;
 };
 
@@ -57,9 +80,20 @@ struct _Popup_Data
   Evas *e;
   Evas_Object *theme;
   const char  *app_name;
+  const char  *app_icon_image;
   Evas_Object *app_icon;
   Ecore_Timer *timer;
   E_Zone *zone;
+};
+
+struct _Popup_Items
+{
+  char *item_date_time;
+  char *item_app;
+  char *item_icon;
+  char *item_icon_img;
+  char *item_title;
+  char *item_body;
 };
 
 
@@ -72,12 +106,16 @@ EAPI void  *e_modapi_init(E_Module *m);
 EAPI int    e_modapi_shutdown(E_Module *m);
 EAPI int    e_modapi_save(E_Module *m);
 
-void _gc_orient    (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
+//~ void _gc_orient    (E_Gadcon_Client *gcc, E_Gadcon_Orient orient);
 
 E_Config_Dialog *e_int_config_notification_module(E_Container *con, const char *params);
 
 extern E_Module *notification_mod;
 extern Config   *notification_cfg;
+void             gadget_text(int number);
+void             free_menu_data(Popup_Items *items);
+int              write_history(Eina_List *popup_items);
+
 
 /**
  * @addtogroup Optional_Monitors

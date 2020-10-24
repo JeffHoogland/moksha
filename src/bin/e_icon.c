@@ -261,6 +261,9 @@ e_icon_file_set(Evas_Object *obj, const char *file)
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
+   
+   if (sd->preload)
+     evas_object_image_load_head_skip_set(sd->obj, EINA_TRUE);
 
 #ifdef USE_ICON_CACHE
    if (_e_icon_cache_find(obj, file))
@@ -334,6 +337,8 @@ e_icon_file_key_set(Evas_Object *obj, const char *file, const char *key)
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
+    if (sd->preload)
+     evas_object_image_load_head_skip_set(sd->obj, EINA_TRUE);
    evas_object_image_file_set(sd->obj, file, key);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;
@@ -472,6 +477,8 @@ e_icon_fdo_icon_set(Evas_Object *obj, const char *icon)
    if (sd->size != 0)
      evas_object_image_load_size_set(sd->obj, sd->size, sd->size);
    if (sd->preload) evas_object_hide(sd->obj);
+    if (sd->preload)
+     evas_object_image_load_head_skip_set(sd->obj, EINA_TRUE);
    evas_object_image_file_set(sd->obj, path, NULL);
    if (evas_object_image_load_error_get(sd->obj) != EVAS_LOAD_ERROR_NONE)
      return EINA_FALSE;

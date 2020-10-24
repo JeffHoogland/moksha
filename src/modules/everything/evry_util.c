@@ -647,7 +647,7 @@ evry_util_exec_app(const Evry_Item *it_app, const Evry_Item *it_file)
         else
           {
              exe = (char *)app->file;
-             e_exec(zone, NULL, exe, NULL, NULL);
+             e_exec(zone, NULL,  strtok(exe, "%"), NULL, NULL);
           }
      }
 

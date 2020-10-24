@@ -137,6 +137,9 @@ wizard_page_show(E_Wizard_Page *pg)
    Evas_Object *o, *of, *ob, *ic;
    Eina_List *l;
    int i, sel = -1;
+   FILE *output;
+   char line[32];
+   char *key_current;
 
    o = e_widget_list_add(pg->evas, 1, 0);
    e_wizard_title_set(_("Keyboard"));
@@ -145,12 +148,21 @@ wizard_page_show(E_Wizard_Page *pg)
    e_widget_size_min_set(ob, 140 * e_scale, 140 * e_scale);
 
    e_widget_ilist_freeze(ob);
+   
+   output = popen("setxkbmap -query | grep layout", "r");
+   while (fscanf(output, "%[^,\n]\n", line) == 1);
+   pclose(output);
+   
+   key_current = line + strlen(line) - 1;
+   while (*(--key_current) != ' ');
+   key_current++;
+   
    for (i = 0, l = layouts; l; l = l->next, i++)
      {
         Layout *lay;
         const char *label;
         char buf[PATH_MAX];
-
+        
         lay = l->data;
         e_xkb_flag_file_get(buf, sizeof(buf), lay->name);
         ic = e_util_icon_add(buf, pg->evas);
@@ -159,7 +171,7 @@ wizard_page_show(E_Wizard_Page *pg)
         e_widget_ilist_append(ob, ic, _(label), NULL, NULL, lay->name);
         if (lay->name)
           {
-             if (!strcmp(lay->name, "us")) sel = i;
+             if (!strcmp(lay->name, key_current)) sel = i;
           }
      }
 
@@ -176,7 +188,7 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
-   return 0; /* 1 == show ui, and wait for user, 0 == just continue */
+   return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
 EAPI int

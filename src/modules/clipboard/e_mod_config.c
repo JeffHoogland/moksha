@@ -38,6 +38,7 @@ struct _E_Config_Dialog_Data
   int   ignore_ws_copy; /* Should we not copy White space only             */
   int   trim_ws;        /* Should we trim White space from selection       */
   int   trim_nl;        /* Should we trim new lines from selection         */
+  int   ignore_hist;        /* Should we trim new lines from selection         */
 };
 
 static int           _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
@@ -90,6 +91,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
   cfdata->ignore_ws_copy  = clip_cfg->ignore_ws_copy;
   cfdata->trim_ws         = clip_cfg->trim_ws;
   cfdata->trim_nl         = clip_cfg->trim_nl;
+  cfdata->ignore_hist     = clip_cfg->ignore_hist;
 }
 
 static int

@@ -11,6 +11,7 @@
 #define  CF_DEFAULT_LABEL_LENGTH    MAGIC_LABEL_SIZE
 #define  CF_DEFAULT_IGNORE_WS       MAGIC_IGNORE_WS
 #define  CF_DEFAULT_IGNORE_WS_COPY  0
+#define  CF_DEFAULT_IGNORE_HIST     0
 #define  CF_DEFAULT_WS              0
 #define  CF_DEFAULT_NL              0
 #define  CF_DEFAULT_CONFIRM         1
