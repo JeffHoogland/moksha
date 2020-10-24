@@ -364,7 +364,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       
       subm = e_menu_new();
       mo = e_menu_item_new(subm); 
-      e_menu_item_label_set(mo, "Lock item");
+      e_menu_item_label_set(mo, _("Lock item"));
       e_menu_item_check_set(mo, 1);
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_lock, clip);
       if (!strcmp(clip->lock, "L")) {
@@ -375,14 +375,14 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
         e_menu_item_toggle_set(mo, 0);  
       
       mo = e_menu_item_new(subm); 
-      e_menu_item_label_set(mo, "Edit item");
+      e_menu_item_label_set(mo, _("Edit item"));
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_item_edit, clip);
       
       mo = e_menu_item_new(subm);
       e_menu_item_separator_set(mo, EINA_TRUE);
       
       mo = e_menu_item_new(subm); 
-      e_menu_item_label_set(mo, "Delete item"); 
+      e_menu_item_label_set(mo, _("Delete item"));
       e_menu_item_callback_set(mo, (E_Menu_Cb)_cb_submenu_edit_dialog, clip);
       e_menu_item_submenu_set(mi, subm); 
       
