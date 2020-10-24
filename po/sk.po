@@ -10019,7 +10019,7 @@ msgstr "Stlmiť hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:265
 msgid "Volume Increase"
-msgstr "Hlasitosť zvýšená"
+msgstr "Zvýšiť hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:272 src/modules/mixer/e_mod_main.c:279
 msgid "Volume Mute"

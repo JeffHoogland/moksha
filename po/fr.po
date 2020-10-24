@@ -1,4 +1,4 @@
-# French translation for Moksha DR17.
+# French translation for Moksha.
 # This file is put in the public domain.
 #
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
@@ -16,10 +16,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Moksha DR17\n"
+"Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-07-02 09:00+0200\n"
-"PO-Revision-Date: 2020-08-15 16:05+0200\n"
+"PO-Revision-Date: 2020-09-16 06:53+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Launchpad-Export-Date: 2014-06-17 06:39+0000\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -64,7 +64,7 @@ msgstr ""
 "<title>Copyright &copy; 2018, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
-"visitez :<br><hilight>http://www.enlightenment.org</><br><br>"
+"visitez :<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -857,7 +857,7 @@ msgstr ""
 "ancienne<br>configuration a été supprimée et de nouveaux paramètres "
 "par<br>défaut sont en place. Cela risque d'arriver en phase "
 "de<br>développement, ainsi il est inutile de faire un rapport de bogue."
-"<br>Cela signifie simplement qu`Moksha a besoin<br>de fonctionnalité que "
+"<br>Cela signifie simplement que Moksha a besoin<br>de fonctionnalités que "
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
@@ -3001,7 +3001,7 @@ msgstr ""
 
 #: src/bin/e_main.c:403
 msgid "Moksha cannot initialize Ecore_File!\n"
-msgstr "Moksha ne parvient pas à initialiser Ecore_File!\n"
+msgstr "Moksha ne parvient pas à initialiser Ecore_File !\n"
 
 #: src/bin/e_main.c:412
 msgid "Moksha cannot initialize Ecore_Con!\n"
@@ -3272,8 +3272,7 @@ msgstr "Configuration des périphériques d'entrée"
 #: src/bin/e_main.c:931
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
-"Moksha ne parvient pas à initialiser son système de périphériques "
-"d'entrées.\n"
+"Moksha ne parvient pas à initialiser son système de périphériques d'entrée.\n"
 
 #: src/bin/e_main.c:938
 msgid "Setup Modules"
@@ -3461,7 +3460,7 @@ msgid ""
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
 msgstr ""
-"Vous tentez, à tort, d'exécuter Moksha directement.\n"
+"Vous tentez, à tort, d'exécuter Enlightenment directement.\n"
 "Veuillez ne pas utiliser l'exécutable « enlightenment » mais\n"
 "plutôt le lanceur « enlightenment_start ». Ce dernier se\n"
 "charge du paramétrage des variables d'environnement,\n"
@@ -3977,9 +3976,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"Votre version de Moksha<br>n'est pas la toute dernière publiée.<br>La "
+"Votre version d'Enlightenment<br>n'est pas la toute dernière publiée.<br>La "
 "dernière version est :<br><br>%s<br><br>Veuillez visiter www.enlightenment."
-"org<br>ou mettre à jour vos paquets systèmes<br>pour obtenir une nouvelle "
+"org<br>ou mettre à jour vos paquets système<br>pour obtenir une nouvelle "
 "version."
 
 #: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
@@ -5598,7 +5597,7 @@ msgstr "Bouton de veille"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:373
 msgid "Thermal"
-msgstr "Température"
+msgstr "Zone thermique"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:375
 msgid "Video"
@@ -9388,7 +9387,7 @@ msgstr "Erreur : impossible de créer le fichier"
 #: src/modules/shot/e_mod_main.c:638
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
-msgstr "Impossible de créer le fichier temporaire '%s': %s"
+msgstr "Impossible de créer le fichier temporaire « %s »: %s"
 
 #: src/modules/shot/e_mod_main.c:656
 msgid "Error - Can't open file"
@@ -9397,7 +9396,7 @@ msgstr "Erreur : impossible d'ouvrir le fichier"
 #: src/modules/shot/e_mod_main.c:657
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
-msgstr "Impossible d'ouvrir le fichier temporaire '%s': %s"
+msgstr "Impossible d'ouvrir le fichier temporaire « %s »: %s"
 
 #: src/modules/shot/e_mod_main.c:665
 msgid "Error - Bad size"
@@ -9406,7 +9405,7 @@ msgstr "Erreur : mauvaise taille"
 #: src/modules/shot/e_mod_main.c:666
 #, c-format
 msgid "Cannot get size of file '%s'"
-msgstr "Impossible d'obtenir la taille du fichier '%s'"
+msgstr "Impossible d'obtenir la taille du fichier « %s »"
 
 #: src/modules/shot/e_mod_main.c:676
 msgid "Error - Can't allocate memory"
@@ -10002,7 +10001,7 @@ msgstr "Avertissement de Raccourcis !"
 #: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr "L'occupation du disque ''%s'' est de %d %% !"
+msgstr "L'occupation du disque « %s » est de %d %% !"
 
 #: src/modules/places/e_mod_places.c:661
 msgid ""

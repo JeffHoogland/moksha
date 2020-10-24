@@ -130,7 +130,7 @@ _notify(const int val)
    else
    {
      icon = "dialog-warning";
-     snprintf(buf, sizeof(buf), "%s", _("Limit reached!!!"));
+     snprintf(buf, sizeof(buf), "%s", _("Volume limit reached!!!"));
    }
    if (n) return;
    n = e_notification_full_new(_("EPulse"), 0, icon, _("Volume Changed"), buf, 2000);
