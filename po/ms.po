@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-04-30 11:27-0400\n"
+"POT-Creation-Date: 2020-10-24 15:38+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Mengenai Enlightment"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2588 src/modules/shot/e_mod_main.c:1188
+#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
 msgid "Close"
 msgstr "Tutup"
 
@@ -75,7 +75,7 @@ msgstr "membunuh"
 #: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
 #: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
 #: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
-#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10480 src/bin/e_fm.c:10846
+#: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10479 src/bin/e_fm.c:10845
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Tidak"
@@ -97,9 +97,9 @@ msgstr "Adakah anda pasti mahu keluar?"
 
 #: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
-#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10483
+#: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:316
+#: src/modules/shot/e_mod_main.c:315
 msgid "Yes"
 msgstr "Ya"
 
@@ -158,12 +158,12 @@ msgstr "Adakah anda pasti anda mahu hibernate."
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1278
 #, fuzzy
 msgid "Window : Actions"
 msgstr "Tetingkap ; Tindakan"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11617
+#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
 #: src/bin/e_int_border_menu.c:669
 msgid "Move"
 msgstr "Alihkan"
@@ -617,7 +617,7 @@ msgstr ""
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:933 src/modules/shot/e_mod_main.c:1270
 #, fuzzy
 msgid "Screen"
 msgstr "skrin"
@@ -899,7 +899,7 @@ msgstr "hibernate Sekarang"
 msgid "Lock"
 msgstr "mengunci"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1357
+#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1356
 #, fuzzy
 msgid "Cleanup Windows"
 msgstr "pembersihan Windows"
@@ -949,7 +949,7 @@ msgid "Select"
 msgstr "memilih"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10023
+#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10022
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -959,14 +959,14 @@ msgstr "memilih"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
-#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
-#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:315 src/modules/shot/e_mod_main.c:468
+#: src/modules/shot/e_mod_main.c:726 src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:992 src/modules/xkbswitch/e_mod_config.c:529
 #, fuzzy
 msgid "Cancel"
 msgstr "membatalkan"
 
-#: src/bin/e_config.c:933
+#: src/bin/e_config.c:934
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -977,7 +977,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:950
+#: src/bin/e_config.c:951
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -986,21 +986,21 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
+#: src/bin/e_config.c:1471 src/bin/e_config.c:2096
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1473
+#: src/bin/e_config.c:1474
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
+#: src/bin/e_config.c:1484 src/bin/e_config.c:2109
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
-#: src/bin/e_fm.c:10022 src/bin/e_fm.c:10752 src/bin/e_fm_prop.c:624
+#: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
@@ -1008,30 +1008,30 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
-#: src/modules/cpufreq/e_mod_main.c:510 src/modules/cpufreq/e_mod_main.c:537
-#: src/modules/cpufreq/e_mod_main.c:562 src/modules/cpufreq/e_mod_main.c:590
+#: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
+#: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
 #: src/modules/xkbswitch/e_mod_config.c:528
 #, fuzzy
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1986
+#: src/bin/e_config.c:1987
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "tetapan Dinaiktaraf"
 
-#: src/bin/e_config.c:2004
+#: src/bin/e_config.c:2005
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "Pemegang fail EET buruk."
 
-#: src/bin/e_config.c:2008
+#: src/bin/e_config.c:2009
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Data fail kosong."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2013
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -1040,19 +1040,19 @@ msgstr ""
 "Fail terebut tidak boleh ditulis. Mungkin cakera adalah<br>baca sahaja atau "
 "anda kehilangan keizinan kepada fail anda."
 
-#: src/bin/e_config.c:2016
+#: src/bin/e_config.c:2017
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Memori berlari keluar sambil menyediakan tulis.<br>Sila memori sehingga "
 "percuma."
 
-#: src/bin/e_config.c:2020
+#: src/bin/e_config.c:2021
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Ini adalah satu kesilapan yang generik."
 
-#: src/bin/e_config.c:2024
+#: src/bin/e_config.c:2025
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -1061,70 +1061,70 @@ msgstr ""
 "Fail tetapan adalah terlalu besar.<br>Ia sepatutnya menjadi sangat kecil "
 "(beberapa ratus KB paling banyak)."
 
-#: src/bin/e_config.c:2028
+#: src/bin/e_config.c:2029
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2032
+#: src/bin/e_config.c:2033
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Anda kehabisan ruang semasa menulis fail"
 
-#: src/bin/e_config.c:2036
+#: src/bin/e_config.c:2037
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Fail yang telah ditutup pada semasa menulis."
 
-#: src/bin/e_config.c:2040
+#: src/bin/e_config.c:2041
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memori - pemetaan (mmap) fail gagal."
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2045
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Pengekodan gagal."
 
-#: src/bin/e_config.c:2048
+#: src/bin/e_config.c:2049
 #, fuzzy
 msgid "Signature failed."
 msgstr "Tandatangan gagal."
 
-#: src/bin/e_config.c:2052
+#: src/bin/e_config.c:2053
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Tandatangan adalah tidak sah."
 
-#: src/bin/e_config.c:2056
+#: src/bin/e_config.c:2057
 #, fuzzy
 msgid "Not signed."
 msgstr "Tidak ditandatangani."
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Mempunyai tidak dilaksanakan."
 
-#: src/bin/e_config.c:2064
+#: src/bin/e_config.c:2065
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG tidak membenihkan."
 
-#: src/bin/e_config.c:2068
+#: src/bin/e_config.c:2069
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Penyulitan gagal."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Dekripsi gagal."
 
-#: src/bin/e_config.c:2076
+#: src/bin/e_config.c:2077
 msgid "The error is unknown to Moksha."
 msgstr ""
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2099
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1136,8 +1136,8 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/cpufreq/e_mod_main.c:1499 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
+#: src/modules/mixer/e_mod_main.c:479
 #, fuzzy
 msgid "Advanced"
 msgstr "maju"
@@ -1155,7 +1155,7 @@ msgstr "memohon"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:145
+#: src/modules/notification/e_mod_main.c:603
 #, fuzzy
 msgid "Extensions"
 msgstr "sambungan"
@@ -1279,13 +1279,13 @@ msgstr "Desktop Entry Editor"
 
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
-#: src/modules/conf_menus/e_int_config_menus.c:266
-#: src/modules/ibar/e_mod_config.c:130
+#: src/modules/conf_menus/e_int_config_menus.c:267
+#: src/modules/ibar/e_mod_config.c:132
 #, fuzzy
 msgid "Name"
 msgstr "nama"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:134
+#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:136
 #, fuzzy
 msgid "Comment"
 msgstr "Komen"
@@ -1335,7 +1335,9 @@ msgstr "fail desktop"
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
-#: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:190
+#: src/modules/tiling/e_mod_config.c:180
+#: src/modules/notification/e_mod_config.c:165
+#: src/modules/places/e_mod_config.c:190
 #, fuzzy
 msgid "General"
 msgstr "Ketua"
@@ -1355,9 +1357,9 @@ msgstr "Diuruskan di Terminal"
 msgid "Show in Menus"
 msgstr "Tunjuk di Menu"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8817 src/bin/e_fm.c:8977
+#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
-#: src/modules/clipboard/e_mod_config.c:205
+#: src/modules/clipboard/e_mod_config.c:207
 #, fuzzy
 msgid "Options"
 msgstr "pilihan"
@@ -1372,7 +1374,7 @@ msgstr "Pilih Icon"
 msgid "Select an Executable"
 msgstr "Pilih laksana"
 
-#: src/bin/e_entry.c:486 src/bin/e_fm.c:9162 src/bin/e_fm.c:10845
+#: src/bin/e_entry.c:488 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1381,34 +1383,35 @@ msgstr "Pilih laksana"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:247
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:296
-#: src/modules/conf_paths/e_int_config_env.c:317
+#: src/modules/conf_paths/e_int_config_env.c:343
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:112 src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:586
+#: src/modules/clipboard/e_mod_main.c:641
+#: src/modules/clipboard/e_mod_main.c:728
 #, fuzzy
 msgid "Delete"
 msgstr "memadam"
 
-#: src/bin/e_entry.c:496 src/bin/e_fm.c:9073
+#: src/bin/e_entry.c:498 src/bin/e_fm.c:9072
 #, fuzzy
 msgid "Cut"
 msgstr "potong"
 
-#: src/bin/e_entry.c:505 src/bin/e_fm.c:9087 src/bin/e_fm.c:11612
+#: src/bin/e_entry.c:507 src/bin/e_fm.c:9086 src/bin/e_fm.c:11611
 #, fuzzy
 msgid "Copy"
 msgstr "menyalin"
 
-#: src/bin/e_entry.c:515 src/bin/e_fm.c:8878 src/bin/e_fm.c:9100
+#: src/bin/e_entry.c:517 src/bin/e_fm.c:8877 src/bin/e_fm.c:9099
 #, fuzzy
 msgid "Paste"
 msgstr "tampal"
 
-#: src/bin/e_entry.c:526
+#: src/bin/e_entry.c:528
 #, fuzzy
 msgid "Select All"
 msgstr "pilih Semua"
@@ -1609,12 +1612,12 @@ msgstr "Ralat lenting"
 msgid "Can't eject device"
 msgstr "Tidak boleh mengusir peranti"
 
-#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9549
-#: src/bin/e_fm.c:9564 src/bin/e_fm.c:9673 src/bin/e_fm.c:9678
-#: src/bin/e_fm.c:9694 src/bin/e_fm.c:9699 src/bin/e_fm.c:10330
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10336 src/bin/e_fm.c:10363
-#: src/bin/e_fm.c:10367 src/bin/e_fm.c:10370 src/bin/e_fm.c:10428
-#: src/bin/e_fm.c:10653 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:6641 src/bin/e_fm.c:6674 src/bin/e_fm.c:9548
+#: src/bin/e_fm.c:9563 src/bin/e_fm.c:9672 src/bin/e_fm.c:9677
+#: src/bin/e_fm.c:9693 src/bin/e_fm.c:9698 src/bin/e_fm.c:10329
+#: src/bin/e_fm.c:10332 src/bin/e_fm.c:10335 src/bin/e_fm.c:10362
+#: src/bin/e_fm.c:10366 src/bin/e_fm.c:10369 src/bin/e_fm.c:10427
+#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
 #, fuzzy
 msgid "Error"
 msgstr "kesilapan"
@@ -1624,67 +1627,67 @@ msgstr "kesilapan"
 msgid "The recent DND operation requested for '%s' has failed."
 msgstr ""
 
-#: src/bin/e_fm.c:8735 src/modules/fileman/e_mod_config.c:369
+#: src/bin/e_fm.c:8734 src/modules/fileman/e_mod_config.c:369
 #, fuzzy
 msgid "Case Sensitive"
 msgstr "Huruf Besar-Kecil"
 
-#: src/bin/e_fm.c:8741 src/modules/fileman/e_mod_config.c:372
+#: src/bin/e_fm.c:8740 src/modules/fileman/e_mod_config.c:372
 #, fuzzy
 msgid "Sort By Extension"
 msgstr "Tunjukkan Tambahan Icon"
 
-#: src/bin/e_fm.c:8747 src/modules/fileman/e_mod_config.c:375
+#: src/bin/e_fm.c:8746 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr ""
 
-#: src/bin/e_fm.c:8753 src/modules/fileman/e_mod_config.c:378
+#: src/bin/e_fm.c:8752 src/modules/fileman/e_mod_config.c:378
 msgid "Sort By Size"
 msgstr ""
 
-#: src/bin/e_fm.c:8762 src/modules/fileman/e_mod_config.c:386
+#: src/bin/e_fm.c:8761 src/modules/fileman/e_mod_config.c:386
 #, fuzzy
 msgid "Directories First"
 msgstr "Cari Direktori"
 
-#: src/bin/e_fm.c:8768 src/modules/fileman/e_mod_config.c:390
+#: src/bin/e_fm.c:8767 src/modules/fileman/e_mod_config.c:390
 #, fuzzy
 msgid "Directories Last"
 msgstr "Cari Direktori"
 
-#: src/bin/e_fm.c:8801 src/bin/e_fm.c:8961
+#: src/bin/e_fm.c:8800 src/bin/e_fm.c:8960
 #: src/modules/fileman/e_mod_config.c:314
 #, fuzzy
 msgid "View Mode"
 msgstr "Lihat Mod"
 
-#: src/bin/e_fm.c:8810 src/bin/e_fm.c:8970
+#: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
 #: src/modules/everything/evry_config.c:503
 #: src/modules/fileman/e_mod_config.c:394
 #, fuzzy
 msgid "Sorting"
 msgstr "pengisihan"
 
-#: src/bin/e_fm.c:8828 src/bin/e_fm.c:8988
+#: src/bin/e_fm.c:8827 src/bin/e_fm.c:8987
 #, fuzzy
 msgid "Refresh View"
 msgstr "Refresh View"
 
-#: src/bin/e_fm.c:8839 src/bin/e_fm.c:9000
+#: src/bin/e_fm.c:8838 src/bin/e_fm.c:8999
 msgid "New..."
 msgstr ""
 
-#: src/bin/e_fm.c:8859 src/bin/e_fm.c:9021 src/bin/e_fm.c:9052
+#: src/bin/e_fm.c:8858 src/bin/e_fm.c:9020 src/bin/e_fm.c:9051
 #, fuzzy
 msgid "Actions..."
 msgstr "tindakan"
 
-#: src/bin/e_fm.c:8886 src/bin/e_fm.c:9108 src/bin/e_fm.c:11625
+#: src/bin/e_fm.c:8885 src/bin/e_fm.c:9107 src/bin/e_fm.c:11624
 #, fuzzy
 msgid "Link"
 msgstr "link"
 
-#: src/bin/e_fm.c:9170 src/bin/e_fm.c:10482 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2472
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1693,262 +1696,262 @@ msgstr "link"
 msgid "Rename"
 msgstr "menamakan semula"
 
-#: src/bin/e_fm.c:9189
+#: src/bin/e_fm.c:9188
 #, fuzzy
 msgid "Unmount"
 msgstr "nyahlekap"
 
-#: src/bin/e_fm.c:9194
+#: src/bin/e_fm.c:9193
 #, fuzzy
 msgid "Mount"
 msgstr "Gunung"
 
-#: src/bin/e_fm.c:9199
+#: src/bin/e_fm.c:9198
 #, fuzzy
 msgid "Eject"
 msgstr "lentingkan"
 
-#: src/bin/e_fm.c:9214 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:885
+#: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
+#: src/modules/ibar/e_mod_main.c:887
 #, fuzzy
 msgid "Properties"
 msgstr "Hartanah"
 
-#: src/bin/e_fm.c:9222
+#: src/bin/e_fm.c:9221
 #, fuzzy
 msgid "Application Properties"
 msgstr "permohonan Hartanah"
 
-#: src/bin/e_fm.c:9230 src/bin/e_fm_prop.c:115
+#: src/bin/e_fm.c:9229 src/bin/e_fm_prop.c:115
 #, fuzzy
 msgid "File Properties"
 msgstr "file Hartanah"
 
-#: src/bin/e_fm.c:9446
+#: src/bin/e_fm.c:9445
 #, fuzzy
 msgid "Use default"
 msgstr "Gunakan lalai"
 
-#: src/bin/e_fm.c:9476 src/modules/fileman/e_mod_config.c:319
+#: src/bin/e_fm.c:9475 src/modules/fileman/e_mod_config.c:319
 #, fuzzy
 msgid "Grid Icons"
 msgstr "grid Ikon"
 
-#: src/bin/e_fm.c:9484 src/modules/fileman/e_mod_config.c:321
+#: src/bin/e_fm.c:9483 src/modules/fileman/e_mod_config.c:321
 #, fuzzy
 msgid "Custom Icons"
 msgstr "Ikon adat"
 
-#: src/bin/e_fm.c:9492 src/modules/everything/evry_config.c:430
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:430
 #: src/modules/everything/evry_config.c:460
 #: src/modules/fileman/e_mod_config.c:329
 #, fuzzy
 msgid "List"
 msgstr "senarai"
 
-#: src/bin/e_fm.c:9500 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:458
 #, fuzzy
 msgid "Default View"
 msgstr "Paparan Default"
 
-#: src/bin/e_fm.c:9522
+#: src/bin/e_fm.c:9521
 #, c-format
 msgid "Icon Size (%d)"
 msgstr ""
 
-#: src/bin/e_fm.c:9549
+#: src/bin/e_fm.c:9548
 #, fuzzy
 msgid "Could not create a directory!"
 msgstr "Modul Ralat memuatkan"
 
-#: src/bin/e_fm.c:9564
+#: src/bin/e_fm.c:9563
 #, fuzzy
 msgid "Could not create a file!"
 msgstr "Modul Ralat memuatkan"
 
-#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
+#: src/bin/e_fm.c:9578 src/bin/e_fm.c:9605
 #: src/modules/conf_paths/e_int_config_paths.c:206
 #, fuzzy
 msgid "New Directory"
 msgstr "Direktori baru"
 
-#: src/bin/e_fm.c:9579 src/bin/e_fm.c:9606
+#: src/bin/e_fm.c:9578 src/bin/e_fm.c:9605
 #, fuzzy
 msgid "New File"
 msgstr "fail;"
 
-#: src/bin/e_fm.c:9673 src/bin/e_fm.c:9694
+#: src/bin/e_fm.c:9672 src/bin/e_fm.c:9693
 msgid "Already creating a new file for this directory!"
 msgstr ""
 
-#: src/bin/e_fm.c:9678 src/bin/e_fm.c:9699
+#: src/bin/e_fm.c:9677 src/bin/e_fm.c:9698
 #, c-format
 msgid "%s can't be written to!"
 msgstr ""
 
-#: src/bin/e_fm.c:9718
+#: src/bin/e_fm.c:9717
 #, fuzzy
 msgid "Directory"
 msgstr "Direktori baru"
 
-#: src/bin/e_fm.c:9723 src/modules/conf_applications/e_int_config_defapps.c:312
+#: src/bin/e_fm.c:9722 src/modules/conf_applications/e_int_config_defapps.c:312
 #, fuzzy
 msgid "File"
 msgstr "fail;"
 
-#: src/bin/e_fm.c:9754
+#: src/bin/e_fm.c:9753
 #, fuzzy
 msgid "Inherit parent settings"
 msgstr "Mewarisi tetapan ibu bapa"
 
-#: src/bin/e_fm.c:9763
+#: src/bin/e_fm.c:9762
 #, fuzzy
 msgid "Show Hidden Files"
 msgstr "Papar Fail Tersembunyi"
 
-#: src/bin/e_fm.c:9775
+#: src/bin/e_fm.c:9774
 #, fuzzy
 msgid "Remember Ordering"
 msgstr "Ingat Pesanan"
 
-#: src/bin/e_fm.c:9784
+#: src/bin/e_fm.c:9783
 #, fuzzy
 msgid "Sort Now"
 msgstr "Susun Sekarang"
 
-#: src/bin/e_fm.c:9792
+#: src/bin/e_fm.c:9791
 #, fuzzy
 msgid "Single Click Activation"
 msgstr "Gunakan Klik Single"
 
-#: src/bin/e_fm.c:9803 src/modules/fileman/e_mod_config.c:406
+#: src/bin/e_fm.c:9802 src/modules/fileman/e_mod_config.c:406
 #, fuzzy
 msgid "Secure Deletion"
 msgstr "Resolusi Skrin"
 
-#: src/bin/e_fm.c:9816
+#: src/bin/e_fm.c:9815
 #, fuzzy
 msgid "File Manager Settings"
 msgstr "alat kelui Tetapan"
 
-#: src/bin/e_fm.c:9821
+#: src/bin/e_fm.c:9820
 #, fuzzy
 msgid "File Icon Settings"
 msgstr "font Tetapan"
 
-#: src/bin/e_fm.c:9899 src/bin/e_fm.c:10115
+#: src/bin/e_fm.c:9898 src/bin/e_fm.c:10114
 #, fuzzy
 msgid "Set background..."
 msgstr "Menetapkan latar belakang ..."
 
-#: src/bin/e_fm.c:9907
+#: src/bin/e_fm.c:9906
 #, fuzzy
 msgid "Clear background"
 msgstr "Menetapkan latar belakang ..."
 
-#: src/bin/e_fm.c:9914 src/bin/e_fm.c:10143
+#: src/bin/e_fm.c:9913 src/bin/e_fm.c:10142
 #, fuzzy
 msgid "Set overlay..."
 msgstr "Tetapkan overlay ..."
 
-#: src/bin/e_fm.c:9920
+#: src/bin/e_fm.c:9919
 #, fuzzy
 msgid "Clear overlay"
 msgstr "Tetapkan overlay ..."
 
-#: src/bin/e_fm.c:10237 src/bin/e_fm.c:10578
+#: src/bin/e_fm.c:10236 src/bin/e_fm.c:10577
 #, c-format
 msgid "Rename %s to:"
 msgstr ""
 
-#: src/bin/e_fm.c:10239 src/bin/e_fm.c:10579
+#: src/bin/e_fm.c:10238 src/bin/e_fm.c:10578
 #, fuzzy
 msgid "Rename File"
 msgstr "menamakan semula fail"
 
-#: src/bin/e_fm.c:10330 src/bin/e_fm.c:10363
+#: src/bin/e_fm.c:10329 src/bin/e_fm.c:10362
 #, c-format
 msgid "%s already exists!"
 msgstr ""
 
-#: src/bin/e_fm.c:10333 src/bin/e_fm.c:10367
+#: src/bin/e_fm.c:10332 src/bin/e_fm.c:10366
 #, c-format
 msgid "%s could not be renamed because it is protected"
 msgstr ""
 
-#: src/bin/e_fm.c:10336 src/bin/e_fm.c:10370
+#: src/bin/e_fm.c:10335 src/bin/e_fm.c:10369
 #, fuzzy
 msgid "Internal filemanager error :("
 msgstr "Pengurusfail terbuka pada gunung"
 
-#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645
+#: src/bin/e_fm.c:10423 src/bin/e_fm.c:10644
 #, fuzzy
 msgid "Retry"
 msgstr "Cuba lagi"
 
-#: src/bin/e_fm.c:10425 src/bin/e_fm.c:10646 src/bin/e_fm.c:11633
+#: src/bin/e_fm.c:10424 src/bin/e_fm.c:10645 src/bin/e_fm.c:11632
 #, fuzzy
 msgid "Abort"
 msgstr "menggugurkan"
 
-#: src/bin/e_fm.c:10481
+#: src/bin/e_fm.c:10480
 #, fuzzy
 msgid "No to all"
 msgstr "Tidak untuk semua"
 
-#: src/bin/e_fm.c:10484
+#: src/bin/e_fm.c:10483
 #, fuzzy
 msgid "Yes to all"
 msgstr "Ya untuk semua"
 
-#: src/bin/e_fm.c:10487 src/modules/places/e_mod_places.c:660
+#: src/bin/e_fm.c:10486 src/modules/places/e_mod_places.c:660
 #, fuzzy
 msgid "Warning"
 msgstr "amaran"
 
-#: src/bin/e_fm.c:10490
+#: src/bin/e_fm.c:10489
 #, c-format
 msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr ""
 
-#: src/bin/e_fm.c:10648
+#: src/bin/e_fm.c:10647
 #, fuzzy
 msgid "Move Source"
 msgstr "Alihkan"
 
-#: src/bin/e_fm.c:10649
+#: src/bin/e_fm.c:10648
 #, fuzzy
 msgid "Ignore this"
 msgstr "abaikan ini"
 
-#: src/bin/e_fm.c:10650
+#: src/bin/e_fm.c:10649
 #, fuzzy
 msgid "Ignore all"
 msgstr "mengabaikan semua"
 
-#: src/bin/e_fm.c:10655
+#: src/bin/e_fm.c:10654
 #, c-format
 msgid "An error occurred while performing an operation.<br>%s"
 msgstr ""
 
-#: src/bin/e_fm.c:10848
+#: src/bin/e_fm.c:10847
 #, fuzzy
 msgid "Confirm Delete"
 msgstr "mengesahkan Potong"
 
-#: src/bin/e_fm.c:10858
+#: src/bin/e_fm.c:10857
 #, fuzzy, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Adakah anda pasti anda mahu memadam rak ini."
 
-#: src/bin/e_fm.c:10863
+#: src/bin/e_fm.c:10862
 #, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
 
-#: src/bin/e_fm.c:10873
+#: src/bin/e_fm.c:10872
 #, fuzzy, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
@@ -2144,7 +2147,7 @@ msgstr "melihat"
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:890
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:892
 #: src/modules/xkbswitch/e_mod_config.c:267
 #, fuzzy
 msgid "Remove"
@@ -2220,13 +2223,13 @@ msgid "Use"
 msgstr "Inset"
 
 #: src/bin/e_import_config_dialog.c:295
-#: src/modules/conf_theme/e_int_config_wallpaper.c:1143
+#: src/modules/conf_theme/e_int_config_wallpaper.c:1144
 #, fuzzy
 msgid "Picture Import Error"
 msgstr "Kesalahan gambar Import"
 
 #: src/bin/e_import_config_dialog.c:296
-#: src/modules/conf_theme/e_int_config_wallpaper.c:1144
+#: src/modules/conf_theme/e_int_config_wallpaper.c:1145
 msgid "Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
 
@@ -2517,7 +2520,7 @@ msgstr ""
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
-#: src/modules/notification/e_mod_config.c:98
+#: src/modules/notification/e_mod_config.c:116
 #, fuzzy, c-format
 msgid "Normal"
 msgstr "biasa"
@@ -2830,25 +2833,27 @@ msgstr "Jawatan permintaan"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:378
-#: src/modules/clock/e_mod_main.c:621 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
-#: src/modules/cpufreq/e_mod_main.c:440
+#: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
+#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:880
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
+#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
-#: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:380 src/modules/places/e_mod_main.c:520
+#: src/modules/notification/e_mod_main.c:208
+#: src/modules/notification/e_mod_main.c:308
+#: src/modules/clipboard/e_mod_main.c:281
+#: src/modules/clipboard/e_mod_main.c:426 src/modules/places/e_mod_main.c:520
 #, fuzzy
 msgid "Settings"
 msgstr "tetapan"
@@ -2935,7 +2940,7 @@ msgstr "Saiz, Jawatan dan Kunci"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:937
 #, fuzzy
 msgid "All"
 msgstr "Semua"
@@ -3147,13 +3152,14 @@ msgstr "Aplikasi kegemaran"
 
 #: src/bin/e_int_menus.c:174
 #: src/modules/conf_applications/e_int_config_apps.c:295
-#: src/modules/conf_menus/e_int_config_menus.c:261
-#: src/modules/conf_menus/e_int_config_menus.c:284
+#: src/modules/conf_menus/e_int_config_menus.c:262
+#: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1416
+#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/notification/e_mod_config.c:202
 #, fuzzy
 msgid "Applications"
 msgstr "permohonan"
@@ -3212,7 +3218,7 @@ msgstr "(Tiada Aplikasi."
 msgid "Set Virtual Desktops"
 msgstr "Tetapkan desktop maya"
 
-#: src/bin/e_int_menus.c:1315
+#: src/bin/e_int_menus.c:1314
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3222,33 +3228,33 @@ msgstr "Tetapkan desktop maya"
 msgid "Windows"
 msgstr "Windows"
 
-#: src/bin/e_int_menus.c:1321 src/bin/e_int_menus.c:1514
+#: src/bin/e_int_menus.c:1320 src/bin/e_int_menus.c:1513
 #, fuzzy
 msgid "No windows"
 msgstr "tingkap"
 
-#: src/bin/e_int_menus.c:1370
+#: src/bin/e_int_menus.c:1369
 #, fuzzy
 msgid "Lost Windows"
 msgstr "Hilang Windows"
 
-#: src/bin/e_int_menus.c:1427 src/bin/e_int_menus.c:1527
+#: src/bin/e_int_menus.c:1426 src/bin/e_int_menus.c:1526
 #, fuzzy
 msgid "Untitled window"
 msgstr "tingkap yang lain"
 
-#: src/bin/e_int_menus.c:1634 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1633 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "rak"
 
-#: src/bin/e_int_menus.c:1702
+#: src/bin/e_int_menus.c:1701
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "Tambah Politeknik"
 
-#: src/bin/e_int_menus.c:1709
+#: src/bin/e_int_menus.c:1708
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Memadam Politeknik"
@@ -3315,7 +3321,7 @@ msgstr "Menunjukkan pada klik tetikus"
 msgid "Hide timeout"
 msgstr "menyembunyikan timeout"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:107
+#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:125
 #, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -3945,7 +3951,8 @@ msgstr "Adakah anda ingin untuk memunggah modul ini.<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:199 src/modules/clipboard/e_mod_main.c:586
+#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:641
+#: src/modules/clipboard/e_mod_main.c:728
 msgid "Keep"
 msgstr ""
 
@@ -4110,7 +4117,7 @@ msgid "Rename Shelf"
 msgstr "menamakan semula fail"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_main.c:874
 #, fuzzy
 msgid "Contents"
 msgstr "kandungan"
@@ -4457,7 +4464,7 @@ msgstr ""
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
-#: src/bin/e_utils.c:1077
+#: src/bin/e_utils.c:1081
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
@@ -4476,12 +4483,12 @@ msgstr ""
 "set baru ingkar akan menetapkan<br>bahawa dengan menambah . Anda boleh -"
 "configure benda sekarang citarasa<br>anda. Maaf atas kesusahan ini.<br>"
 
-#: src/bin/e_utils.c:1086 src/bin/e_utils.c:1110
+#: src/bin/e_utils.c:1090 src/bin/e_utils.c:1114
 #, c-format
 msgid "%s Configuration Updated"
 msgstr ""
 
-#: src/bin/e_utils.c:1099
+#: src/bin/e_utils.c:1103
 #, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
@@ -4497,54 +4504,54 @@ msgstr ""
 "konfigurasi anda telah dikembalikan kepada mungkir<br>. Maaf atas kesusahan "
 "ini.<br>"
 
-#: src/bin/e_utils.c:1193
+#: src/bin/e_utils.c:1197
 #, c-format
 msgid "Never"
 msgstr ""
 
-#: src/bin/e_utils.c:1197
+#: src/bin/e_utils.c:1201
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1201
+#: src/bin/e_utils.c:1205
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1206
+#: src/bin/e_utils.c:1210
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1211
+#: src/bin/e_utils.c:1215
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1216
+#: src/bin/e_utils.c:1220
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1221
+#: src/bin/e_utils.c:1225
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1226
+#: src/bin/e_utils.c:1230
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4561,9 +4568,9 @@ msgstr[1] ""
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:244
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
-#: src/modules/conf_paths/e_int_config_env.c:311
+#: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:110 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:112 src/modules/xkbswitch/e_mod_config.c:262
 #, fuzzy
 msgid "Add"
 msgstr "Tambah"
@@ -4747,7 +4754,7 @@ msgstr "Memeriksa setiap:"
 #: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:128
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:109
-#: src/modules/temperature/e_mod_config.c:275
+#: src/modules/temperature/e_mod_config.c:276
 #, c-format
 msgid "%1.0f ticks"
 msgstr ""
@@ -4820,13 +4827,13 @@ msgstr "auto Mengesan"
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:230
-#: src/modules/temperature/e_mod_config.c:311
+#: src/modules/temperature/e_mod_config.c:318
 #, fuzzy
 msgid "Internal"
 msgstr "dalaman"
 
 #: src/modules/battery/e_mod_config.c:299
-#: src/modules/temperature/e_mod_config.c:313
+#: src/modules/temperature/e_mod_config.c:320
 #, fuzzy
 msgid "udev"
 msgstr "udev"
@@ -4842,7 +4849,7 @@ msgid "HAL"
 msgstr "HAL"
 
 #: src/modules/battery/e_mod_config.c:311
-#: src/modules/temperature/e_mod_config.c:315
+#: src/modules/temperature/e_mod_config.c:322
 #, fuzzy
 msgid "Hardware"
 msgstr "Perkakasan"
@@ -4888,8 +4895,8 @@ msgstr "Meter bateri"
 msgid "Clock Settings"
 msgstr "fokus Tetapan"
 
-#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:726
-#: src/modules/clock/e_mod_main.c:892
+#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
+#: src/modules/clock/e_mod_main.c:912
 #, fuzzy
 msgid "Clock"
 msgstr "jam"
@@ -4960,7 +4967,7 @@ msgstr ""
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:892
+#: src/modules/clock/e_mod_main.c:912
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "menunjukkan kalendar"
@@ -4983,7 +4990,7 @@ msgid "Settings Panel"
 msgstr "tetapan Panel"
 
 #: src/modules/conf/e_mod_main.c:283
-#: src/modules/conf_menus/e_int_config_menus.c:278
+#: src/modules/conf_menus/e_int_config_menus.c:279
 #: src/modules/conf_menus/e_mod_main.c:17
 #, fuzzy
 msgid "Menus"
@@ -5650,7 +5657,7 @@ msgstr "The Edge pengikatan"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:300
-#: src/modules/conf_paths/e_int_config_env.c:314
+#: src/modules/conf_paths/e_int_config_env.c:340
 #, fuzzy
 msgid "Modify"
 msgstr "diubahsuai;"
@@ -6066,7 +6073,7 @@ msgstr "bahasa Pemilih"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
-#: src/modules/conf_menus/e_int_config_menus.c:170
+#: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:170
 #, fuzzy
 msgid "System Default"
@@ -6198,7 +6205,7 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:427
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
 #, fuzzy
 msgid "Mute"
 msgstr "membisukan"
@@ -6432,44 +6439,44 @@ msgstr ""
 msgid "Menu Settings"
 msgstr "menu Tetapan"
 
-#: src/modules/conf_menus/e_int_config_menus.c:175
+#: src/modules/conf_menus/e_int_config_menus.c:176
 #, fuzzy
 msgid "Moksha Default"
 msgstr "Moksha"
 
-#: src/modules/conf_menus/e_int_config_menus.c:183
+#: src/modules/conf_menus/e_int_config_menus.c:184
 #, fuzzy
 msgid "Personal Default"
 msgstr "Default peribadi"
 
-#: src/modules/conf_menus/e_int_config_menus.c:258
+#: src/modules/conf_menus/e_int_config_menus.c:259
 #, fuzzy
 msgid "Main Menu"
 msgstr "Menu Tetingkap"
 
-#: src/modules/conf_menus/e_int_config_menus.c:259
+#: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:247
 #, fuzzy
 msgid "Favorites"
 msgstr "kegemaran"
 
-#: src/modules/conf_menus/e_int_config_menus.c:265
+#: src/modules/conf_menus/e_int_config_menus.c:266
 #, fuzzy
 msgid "Applications Display"
 msgstr "aplikasi Paparan"
 
-#: src/modules/conf_menus/e_int_config_menus.c:268
-#: src/modules/ibar/e_mod_config.c:138
+#: src/modules/conf_menus/e_int_config_menus.c:269
+#: src/modules/ibar/e_mod_config.c:140
 #, fuzzy
 msgid "Generic"
 msgstr "generik"
 
-#: src/modules/conf_menus/e_int_config_menus.c:270
+#: src/modules/conf_menus/e_int_config_menus.c:271
 #, fuzzy
 msgid "Comments"
 msgstr "komen"
 
-#: src/modules/conf_menus/e_int_config_menus.c:274
+#: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
 #: src/modules/gadman/e_mod_main.c:203 src/modules/xkbswitch/e_mod_config.c:298
@@ -6477,18 +6484,18 @@ msgstr "komen"
 msgid "Gadgets"
 msgstr "Alat"
 
-#: src/modules/conf_menus/e_int_config_menus.c:275
+#: src/modules/conf_menus/e_int_config_menus.c:276
 #, fuzzy
 msgid "Show gadget settings in top-level"
 msgstr "Papar tetapan alat di tingkat atas"
 
-#: src/modules/conf_menus/e_int_config_menus.c:288
+#: src/modules/conf_menus/e_int_config_menus.c:289
 #, fuzzy
 msgid "Margin"
 msgstr "margin"
 
-#: src/modules/conf_menus/e_int_config_menus.c:290
-#: src/modules/conf_menus/e_int_config_menus.c:295
+#: src/modules/conf_menus/e_int_config_menus.c:291
+#: src/modules/conf_menus/e_int_config_menus.c:296
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:189
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:196
@@ -6498,55 +6505,60 @@ msgstr "margin"
 msgid "%2.0f pixels"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:293
+#: src/modules/conf_menus/e_int_config_menus.c:294
 #, fuzzy
 msgid "Cursor Margin"
 msgstr "Margin kursor"
 
-#: src/modules/conf_menus/e_int_config_menus.c:298
+#: src/modules/conf_menus/e_int_config_menus.c:299
 #, fuzzy
 msgid "Autoscroll"
 msgstr "autoscroll"
 
-#: src/modules/conf_menus/e_int_config_menus.c:302
+#: src/modules/conf_menus/e_int_config_menus.c:303
+msgid " Disable Icons in Menus"
+msgstr ""
+
+#: src/modules/conf_menus/e_int_config_menus.c:305
 #, fuzzy
 msgid " Smart Menu Orientation"
 msgstr "persembahan"
 
-#: src/modules/conf_menus/e_int_config_menus.c:304
+#: src/modules/conf_menus/e_int_config_menus.c:307
 #, fuzzy
 msgid "Menu Scroll Speed"
 msgstr "Menu Speed ​​Tatal"
 
-#: src/modules/conf_menus/e_int_config_menus.c:306
+#: src/modules/conf_menus/e_int_config_menus.c:309
 #, c-format
 msgid "%5.0f pixels/s"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:309
+#: src/modules/conf_menus/e_int_config_menus.c:312
 #, fuzzy
 msgid "Fast Mouse Move Threshold"
 msgstr "Threshhold Pindah Tetikus pantas"
 
-#: src/modules/conf_menus/e_int_config_menus.c:311
+#: src/modules/conf_menus/e_int_config_menus.c:314
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:192
 #, c-format
 msgid "%4.0f pixels/s"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:314
+#: src/modules/conf_menus/e_int_config_menus.c:317
 #, fuzzy
 msgid "Click Drag Timeout"
 msgstr "Klik Drag Hadmasa"
 
-#: src/modules/conf_menus/e_int_config_menus.c:316
+#: src/modules/conf_menus/e_int_config_menus.c:319
 #, c-format
 msgid "%2.2f s"
 msgstr ""
 
-#: src/modules/conf_menus/e_int_config_menus.c:319
+#: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:141
+#: src/modules/notification/e_mod_config.c:159
+#: src/modules/notification/e_mod_config.c:194
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "Pelbagai"
@@ -6619,7 +6631,7 @@ msgstr "Tetap Pengguna Direktori"
 msgid "Environment Variables"
 msgstr "Variabel"
 
-#: src/modules/conf_paths/e_int_config_env.c:306
+#: src/modules/conf_paths/e_int_config_env.c:332
 #, fuzzy
 msgid "Unset"
 msgstr "Inset"
@@ -6768,13 +6780,14 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:920
+#: src/modules/notification/e_mod_config.c:114
 #, fuzzy
 msgid "Low"
 msgstr "Turunkan"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:919
+#: src/modules/shot/e_mod_main.c:918
 #, fuzzy
 msgid "Medium"
 msgstr "sederhana"
@@ -6787,7 +6800,7 @@ msgid "%.0f s"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:917
+#: src/modules/shot/e_mod_main.c:916
 msgid "High"
 msgstr ""
 
@@ -7453,7 +7466,7 @@ msgstr "bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:686
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:269
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:271
+#: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:278
 #, fuzzy
 msgid "Automatic"
 msgstr "automatik"
@@ -7621,7 +7634,8 @@ msgid "Assign"
 msgstr "Berikan"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1429
-#: src/modules/clipboard/e_mod_main.c:367
+#: src/modules/notification/e_mod_main.c:295
+#: src/modules/clipboard/e_mod_main.c:413
 #, fuzzy
 msgid "Clear"
 msgstr "membersihkan"
@@ -8195,7 +8209,7 @@ msgid "Resize by"
 msgstr "Saiz semula oleh"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 #, fuzzy
 msgid "Keyboard"
@@ -8339,111 +8353,111 @@ msgstr "peranan:"
 msgid "No selection"
 msgstr "Tiada sambungan"
 
-#: src/modules/cpufreq/e_mod_main.c:133
+#: src/modules/cpufreq/e_mod_main.c:140
 #, fuzzy
 msgid "Cpufreq"
 msgstr "cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:189 src/modules/cpufreq/e_mod_config.c:93
+#: src/modules/cpufreq/e_mod_main.c:196 src/modules/cpufreq/e_mod_config.c:93
 #, fuzzy
 msgid "Fast (4 ticks)"
 msgstr "Cepat (4 kutu."
 
-#: src/modules/cpufreq/e_mod_main.c:196 src/modules/cpufreq/e_mod_config.c:95
+#: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:95
 #, fuzzy
 msgid "Medium (8 ticks)"
 msgstr "Sederhana (8 kutu."
 
-#: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:97
+#: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:97
 #, fuzzy
 msgid "Normal (32 ticks)"
 msgstr "Normal (32 kutu."
 
-#: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:99
+#: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:99
 #, fuzzy
 msgid "Slow (64 ticks)"
 msgstr "Memperlahankan (64 kutu."
 
-#: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:101
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_config.c:101
 #, fuzzy
 msgid "Very Slow (256 ticks)"
 msgstr "Sangat perlahan (256 kutu."
 
-#: src/modules/cpufreq/e_mod_main.c:233
+#: src/modules/cpufreq/e_mod_main.c:240
 #, fuzzy
 msgid "Manual"
 msgstr "manual"
 
-#: src/modules/cpufreq/e_mod_main.c:237 src/modules/cpufreq/e_mod_main.c:273
+#: src/modules/cpufreq/e_mod_main.c:244 src/modules/cpufreq/e_mod_main.c:280
 #, fuzzy
 msgid "Lower Power Automatic"
 msgstr "Lebih rendah Kuasa Automatik"
 
-#: src/modules/cpufreq/e_mod_main.c:239 src/modules/cpufreq/e_mod_main.c:275
+#: src/modules/cpufreq/e_mod_main.c:246 src/modules/cpufreq/e_mod_main.c:282
 #, fuzzy
 msgid "Automatic Interactive"
 msgstr "powersaving automatik"
 
-#: src/modules/cpufreq/e_mod_main.c:241 src/modules/cpufreq/e_mod_main.c:277
+#: src/modules/cpufreq/e_mod_main.c:248 src/modules/cpufreq/e_mod_main.c:284
 #, fuzzy
 msgid "Minimum Speed"
 msgstr "Kelajuan minimum"
 
-#: src/modules/cpufreq/e_mod_main.c:243 src/modules/cpufreq/e_mod_main.c:279
+#: src/modules/cpufreq/e_mod_main.c:250 src/modules/cpufreq/e_mod_main.c:286
 #, fuzzy
 msgid "Maximum Speed"
 msgstr "Kelajuan Maximal"
 
-#: src/modules/cpufreq/e_mod_main.c:256 src/modules/cpufreq/e_mod_config.c:85
+#: src/modules/cpufreq/e_mod_main.c:263 src/modules/cpufreq/e_mod_config.c:85
 #, fuzzy
 msgid "Restore CPU Power Policy"
 msgstr "Memulihkan Dasar Kuasa CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:294 src/modules/cpufreq/e_mod_config.c:88
+#: src/modules/cpufreq/e_mod_main.c:301 src/modules/cpufreq/e_mod_config.c:88
 #, fuzzy
 msgid "Automatic powersaving"
 msgstr "powersaving automatik"
 
-#: src/modules/cpufreq/e_mod_main.c:318
+#: src/modules/cpufreq/e_mod_main.c:325
 #, c-format
 msgid "%i MHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:320
+#: src/modules/cpufreq/e_mod_main.c:327
 #, c-format
 msgid "%'.1f GHz"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:382
+#: src/modules/cpufreq/e_mod_main.c:389
 #, fuzzy
 msgid "Time Between Updates"
 msgstr "Masa Antara Pembaharuan"
 
-#: src/modules/cpufreq/e_mod_main.c:388
+#: src/modules/cpufreq/e_mod_main.c:395
 #, fuzzy
 msgid "Set CPU Power Policy"
 msgstr "Menetapkan Dasar Kuasa CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:395
+#: src/modules/cpufreq/e_mod_main.c:402
 #, fuzzy
 msgid "Set CPU Speed"
 msgstr "Tetapkan Kelajuan CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:401
+#: src/modules/cpufreq/e_mod_main.c:408
 #, fuzzy
 msgid "Powersaving behavior"
 msgstr "powersaving tingkah laku"
 
-#: src/modules/cpufreq/e_mod_main.c:407
+#: src/modules/cpufreq/e_mod_main.c:414
 #, fuzzy
 msgid "Power State Min"
 msgstr "Alihkan"
 
-#: src/modules/cpufreq/e_mod_main.c:413
+#: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:507
+#: src/modules/cpufreq/e_mod_main.c:514
 #, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
@@ -8452,7 +8466,7 @@ msgstr ""
 "Terdapat ralat cuba untuk menetapkan gabenor kekerapan CPU<br>melalui "
 "utiliti setfreq modul yang<br>."
 
-#: src/modules/cpufreq/e_mod_main.c:533
+#: src/modules/cpufreq/e_mod_main.c:540
 #, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
@@ -8463,7 +8477,7 @@ msgstr ""
 "anda akan hilang modul kernel<br>atau ciri-ciri , atau<br>CPU anda hanya "
 "tidak menyokong ciri ini."
 
-#: src/modules/cpufreq/e_mod_main.c:559
+#: src/modules/cpufreq/e_mod_main.c:566
 #, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
@@ -8472,7 +8486,7 @@ msgstr ""
 "Terdapat ralat cuba untuk menetapkan frekuensi CPU tetapan<br>melalui "
 "utiliti setfreq<br>modul yang."
 
-#: src/modules/cpufreq/e_mod_main.c:587
+#: src/modules/cpufreq/e_mod_main.c:594
 #, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
@@ -8481,23 +8495,23 @@ msgstr ""
 "Terdapat ralat cuba untuk menetapkan frekuensi CPU tetapan<br>melalui "
 "utiliti setfreq<br>modul yang."
 
-#: src/modules/cpufreq/e_mod_main.c:1459
+#: src/modules/cpufreq/e_mod_main.c:1466
 #, fuzzy
 msgid "Cpufreq Error"
 msgstr "cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:1460
+#: src/modules/cpufreq/e_mod_main.c:1467
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:1467
+#: src/modules/cpufreq/e_mod_main.c:1474
 #, fuzzy
 msgid "Cpufreq Permissions Error"
 msgstr "keizinan"
 
-#: src/modules/cpufreq/e_mod_main.c:1468
+#: src/modules/cpufreq/e_mod_main.c:1475
 #, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
@@ -8505,7 +8519,7 @@ msgid ""
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
 
-#: src/modules/cpufreq/e_mod_main.c:1501
+#: src/modules/cpufreq/e_mod_main.c:1508
 #, fuzzy
 msgid "CPU Frequency"
 msgstr "segera"
@@ -8784,7 +8798,7 @@ msgstr "typebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1170
 #: src/modules/everything/evry_plug_apps.c:1217
-#: src/modules/fileman/e_fwin.c:2184 src/modules/fileman/e_fwin.c:2585
+#: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 #, fuzzy
 msgid "Open with..."
 msgstr "Buka dengan ..."
@@ -8809,7 +8823,7 @@ msgid "Run with Sudo"
 msgstr ""
 
 #: src/modules/everything/evry_plug_apps.c:1224
-#: src/modules/fileman/e_fwin.c:253
+#: src/modules/fileman/e_fwin.c:252
 #, fuzzy
 msgid "Open Terminal here"
 msgstr "Diuruskan di Terminal"
@@ -8820,7 +8834,7 @@ msgid "Run Executable"
 msgstr "Pilih laksana"
 
 #: src/modules/everything/evry_plug_apps.c:1308
-#: src/modules/everything/evry_plug_apps.c:1435
+#: src/modules/everything/evry_plug_apps.c:1436
 #, fuzzy
 msgid "Everything Applications"
 msgstr "semua Aplikasi"
@@ -8840,7 +8854,7 @@ msgstr "Perintah terminal"
 msgid "Sudo GUI"
 msgstr "sudo GUI"
 
-#: src/modules/everything/evry_plug_apps.c:1416
+#: src/modules/everything/evry_plug_apps.c:1417
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 #, fuzzy
@@ -8984,128 +8998,128 @@ msgstr ""
 msgid "Back"
 msgstr "latar"
 
-#: src/modules/fileman/e_fwin.c:2075
+#: src/modules/fileman/e_fwin.c:2085
 #, fuzzy
 msgid "Other application..."
 msgstr "Aplikasi lain ..."
 
-#: src/modules/fileman/e_fwin.c:2138
+#: src/modules/fileman/e_fwin.c:2148
 #, fuzzy
 msgid "Go To Parent Directory"
 msgstr "Pergi ke Parent Directory"
 
-#: src/modules/fileman/e_fwin.c:2148
+#: src/modules/fileman/e_fwin.c:2158
 #, fuzzy
 msgid "Clone Window"
 msgstr "pembersihan Windows"
 
-#: src/modules/fileman/e_fwin.c:2154
+#: src/modules/fileman/e_fwin.c:2164
 #, fuzzy
 msgid "Copy Path"
 msgstr "E Laluan"
 
-#: src/modules/fileman/e_fwin.c:2170
+#: src/modules/fileman/e_fwin.c:2180
 msgid "Run"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:2177 src/modules/fileman/e_fwin.c:2586
+#: src/modules/fileman/e_fwin.c:2187 src/modules/fileman/e_fwin.c:2581
 #, fuzzy
 msgid "Open"
 msgstr "membuka"
 
-#: src/modules/fileman/e_fwin.c:2615 src/modules/fileman/e_fwin.c:2640
+#: src/modules/fileman/e_fwin.c:2610 src/modules/fileman/e_fwin.c:2635
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/modules/fileman/e_fwin.c:2658
+#: src/modules/fileman/e_fwin.c:2653
 #, fuzzy
 msgid "Known Applications"
 msgstr "Permohonan yang diketahui"
 
-#: src/modules/fileman/e_fwin.c:2668
+#: src/modules/fileman/e_fwin.c:2663
 #, fuzzy
 msgid "Suggested Applications"
 msgstr "lalai Aplikasi"
 
-#: src/modules/fileman/e_fwin.c:2703
+#: src/modules/fileman/e_fwin.c:2698
 #, fuzzy
 msgid "All Applications"
 msgstr "Semua permohonan"
 
-#: src/modules/fileman/e_fwin.c:2726
+#: src/modules/fileman/e_fwin.c:2721
 #, fuzzy
 msgid "Custom Command"
 msgstr "Perintah adat"
 
-#: src/modules/fileman/e_fwin.c:3017
+#: src/modules/fileman/e_fwin.c:3012
 #, fuzzy, c-format
 msgid "Copying is aborted"
 msgstr "Proses penyalinan yang digugurkan"
 
-#: src/modules/fileman/e_fwin.c:3021
+#: src/modules/fileman/e_fwin.c:3016
 #, fuzzy, c-format
 msgid "Moving is aborted"
 msgstr "Bergerak ini digugurkan"
 
-#: src/modules/fileman/e_fwin.c:3025
+#: src/modules/fileman/e_fwin.c:3020
 #, fuzzy, c-format
 msgid "Deleting is aborted"
 msgstr "Memotong yang digugurkan"
 
-#: src/modules/fileman/e_fwin.c:3029
+#: src/modules/fileman/e_fwin.c:3024
 #, fuzzy, c-format
 msgid "Secure deletion is aborted"
 msgstr "Memotong yang digugurkan"
 
-#: src/modules/fileman/e_fwin.c:3033
+#: src/modules/fileman/e_fwin.c:3028
 #, fuzzy, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Operasi tidak diketahui dari hamba adalah dibatalkan"
 
-#: src/modules/fileman/e_fwin.c:3043
+#: src/modules/fileman/e_fwin.c:3038
 #, c-format
 msgid "Copy of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3045
+#: src/modules/fileman/e_fwin.c:3040
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3050
+#: src/modules/fileman/e_fwin.c:3045
 #, c-format
 msgid "Move of %s done"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3052
+#: src/modules/fileman/e_fwin.c:3047
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr ""
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3052
 #, fuzzy, c-format
 msgid "Delete done"
 msgstr "memadam dilakukan"
 
-#: src/modules/fileman/e_fwin.c:3059
+#: src/modules/fileman/e_fwin.c:3054
 #, fuzzy, c-format
 msgid "Deleting files..."
 msgstr "Menghapuskan fail ..."
 
-#: src/modules/fileman/e_fwin.c:3064
+#: src/modules/fileman/e_fwin.c:3059
 #, fuzzy, c-format
 msgid "Secure delete done"
 msgstr "Resolusi Skrin"
 
-#: src/modules/fileman/e_fwin.c:3066
+#: src/modules/fileman/e_fwin.c:3061
 #, fuzzy, c-format
 msgid "Securely deleting files..."
 msgstr "Menghapuskan fail ..."
 
-#: src/modules/fileman/e_fwin.c:3070
+#: src/modules/fileman/e_fwin.c:3065
 #, fuzzy, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Operasi tidak diketahui dari hamba adalah dibatalkan"
@@ -9307,6 +9321,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:483
+#: src/modules/notification/e_mod_config.c:181
+#: src/modules/notification/e_mod_config.c:189
+#: src/modules/notification/e_mod_config.c:197
 #, c-format
 msgid "%2.0f"
 msgstr ""
@@ -9324,7 +9341,7 @@ msgstr "File Manager"
 msgid "Navigate"
 msgstr ""
 
-#: src/modules/fileman/e_mod_main.c:282
+#: src/modules/fileman/e_mod_main.c:284
 #, fuzzy
 msgid "Fileman"
 msgstr "pengurusfail"
@@ -9630,77 +9647,81 @@ msgstr ""
 msgid "Select a window"
 msgstr "Pilih tetingkap"
 
-#: src/modules/ibar/e_mod_config.c:54
+#: src/modules/ibar/e_mod_config.c:55
 #, fuzzy
 msgid "IBar Settings"
 msgstr "ibar Tetapan"
 
-#: src/modules/ibar/e_mod_config.c:102
+#: src/modules/ibar/e_mod_config.c:104
 #, fuzzy
 msgid "Selected source"
 msgstr "Bar dipilih Source"
 
-#: src/modules/ibar/e_mod_config.c:123
+#: src/modules/ibar/e_mod_config.c:125
 #, fuzzy
 msgid "Icon Labels"
 msgstr "icon Labels"
 
-#: src/modules/ibar/e_mod_config.c:124
+#: src/modules/ibar/e_mod_config.c:126
 #, fuzzy
 msgid "Show icon label"
 msgstr "Tunjukkan Label Icon"
 
-#: src/modules/ibar/e_mod_config.c:144
+#: src/modules/ibar/e_mod_config.c:146
 msgid "Misc"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:145
+#: src/modules/ibar/e_mod_config.c:147
+msgid "Icon focus flash"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:149
 #, fuzzy
 msgid "Lock icon move"
 msgstr "Mengunci Gantung"
 
-#: src/modules/ibar/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:151
 msgid "Track launch"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:179
+#: src/modules/ibar/e_mod_config.c:184
 #, fuzzy
 msgid "Create new IBar source"
 msgstr "Membina sumber Tbar baru"
 
-#: src/modules/ibar/e_mod_config.c:180
+#: src/modules/ibar/e_mod_config.c:185
 #, fuzzy
 msgid "Enter a name for this new source:"
 msgstr "Masukkan nama untuk sumber baru ini:"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:199
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:198
+#: src/modules/ibar/e_mod_config.c:203
 #, fuzzy
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Adakah anda pasti anda mahu memadam sumber bar ini."
 
-#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1829
+#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1835
 #, fuzzy
 msgid "IBar"
 msgstr "ibar"
 
-#: src/modules/ibar/e_mod_main.c:861
+#: src/modules/ibar/e_mod_main.c:863
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Buat Icon baru"
 
-#: src/modules/ibar/e_mod_main.c:895
+#: src/modules/ibar/e_mod_main.c:897
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "ikon"
 
-#: src/modules/ibar/e_mod_main.c:1829
+#: src/modules/ibar/e_mod_main.c:1835
 #, fuzzy
 msgid "Focus IBar"
 msgstr "memberi tumpuan"
@@ -9976,70 +9997,80 @@ msgstr "Menunjukkan Menu ..."
 msgid "Temperature Settings"
 msgstr "suhu Tetapan"
 
-#: src/modules/temperature/e_mod_config.c:259
+#: src/modules/temperature/e_mod_config.c:260
 #, fuzzy
 msgid "Sensors"
 msgstr "sensor"
 
-#: src/modules/temperature/e_mod_config.c:265
+#: src/modules/temperature/e_mod_config.c:266
 #, fuzzy
 msgid "Celsius"
 msgstr "celsius"
 
-#: src/modules/temperature/e_mod_config.c:268
+#: src/modules/temperature/e_mod_config.c:269
 #, fuzzy
 msgid "Fahrenheit"
 msgstr "fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:271
+#: src/modules/temperature/e_mod_config.c:272
 #, fuzzy
 msgid "Display Units"
 msgstr "memaparkan Unit"
 
-#: src/modules/temperature/e_mod_config.c:278
+#: src/modules/temperature/e_mod_config.c:279
 #, fuzzy
 msgid "Check Interval"
 msgstr "menyemak Interval"
 
-#: src/modules/temperature/e_mod_config.c:282
+#: src/modules/temperature/e_mod_config.c:283
+#, fuzzy
+msgid "High temperature notification"
+msgstr "suhu yang tinggi"
+
+#: src/modules/temperature/e_mod_config.c:287
 #, fuzzy
 msgid "High Temperature"
 msgstr "suhu yang tinggi"
 
-#: src/modules/temperature/e_mod_config.c:286
-#: src/modules/temperature/e_mod_config.c:298
-#: src/modules/temperature/e_mod_config.c:356
-#: src/modules/temperature/e_mod_config.c:357
+#: src/modules/temperature/e_mod_config.c:291
+#: src/modules/temperature/e_mod_config.c:303
+#: src/modules/temperature/e_mod_config.c:364
+#: src/modules/temperature/e_mod_config.c:365
 #, c-format
 msgid "%1.0f F"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:290
-#: src/modules/temperature/e_mod_config.c:302
-#: src/modules/temperature/e_mod_config.c:367
-#: src/modules/temperature/e_mod_config.c:368
+#: src/modules/temperature/e_mod_config.c:295
+#: src/modules/temperature/e_mod_config.c:307
+#: src/modules/temperature/e_mod_config.c:375
+#: src/modules/temperature/e_mod_config.c:376
 #, c-format
 msgid "%1.0f C"
 msgstr ""
 
-#: src/modules/temperature/e_mod_config.c:294
+#: src/modules/temperature/e_mod_config.c:299
 #, fuzzy
 msgid "Low Temperature"
 msgstr "suhu rendah"
 
-#: src/modules/temperature/e_mod_config.c:306
+#: src/modules/temperature/e_mod_config.c:312
 #, fuzzy
 msgid "Temperatures"
 msgstr "suhu"
 
-#: src/modules/temperature/e_mod_main.c:211
+#: src/modules/temperature/e_mod_main.c:79
+#: src/modules/temperature/e_mod_main.c:247
 #, fuzzy
 msgid "Temperature"
 msgstr "suhu"
 
-#: src/modules/wizard/e_wizard.c:239 src/modules/wizard/page_020.c:51
-#: src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Moksha Settings!"
+#: src/modules/temperature/e_mod_main.c:82
+#, fuzzy
+msgid "High CPU temperature!"
+msgstr "suhu yang tinggi"
+
+#: src/modules/temperature/e_mod_main.c:83
+msgid "Check your device or settings!"
 msgstr ""
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
@@ -10055,11 +10086,15 @@ msgstr ""
 msgid "Welcome to Moksha"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
+#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:52
 #, fuzzy
 msgid "Select one"
 msgstr "pilih salah satu"
+
+#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+msgid "Please Wait As We Are Loading Moksha Settings!"
+msgstr ""
 
 #: src/modules/wizard/page_040.c:36
 msgid "Adding missing App files"
@@ -10420,210 +10455,210 @@ msgstr ""
 msgid "Systray"
 msgstr "systray"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
 #, fuzzy
 msgid "Screenshot"
 msgstr "persediaan Skrin"
 
-#: src/modules/shot/e_mod_main.c:99
+#: src/modules/shot/e_mod_main.c:98
 #, fuzzy
 msgid "Screenshot in: "
 msgstr "persediaan Skrin"
 
-#: src/modules/shot/e_mod_main.c:114
+#: src/modules/shot/e_mod_main.c:113
 #, fuzzy
 msgid "Screenshot stored in"
 msgstr "persediaan Skrin"
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:308
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:311
+#: src/modules/shot/e_mod_main.c:310
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:360
 #, fuzzy
 msgid "Error saving screenshot file"
 msgstr "Modul Ralat memuatkan"
 
-#: src/modules/shot/e_mod_main.c:362
+#: src/modules/shot/e_mod_main.c:361
 #, fuzzy, c-format
 msgid "Path: %s"
 msgstr "E Laluan"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:388
 #, fuzzy
 msgid "Error - Unknown format"
 msgstr "Maklumat kesilapan"
 
-#: src/modules/shot/e_mod_main.c:390
+#: src/modules/shot/e_mod_main.c:389
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:453
+#: src/modules/shot/e_mod_main.c:452
 msgid "Select screenshot save location"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:466 src/modules/shot/e_mod_main.c:988
 #, fuzzy
 msgid "Save"
 msgstr "Simpan"
 
-#: src/modules/shot/e_mod_main.c:571
+#: src/modules/shot/e_mod_main.c:570
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:591
+#: src/modules/shot/e_mod_main.c:590
 #, fuzzy
 msgid "Error - Upload Failed"
 msgstr "Modul Ralat memuatkan"
 
-#: src/modules/shot/e_mod_main.c:592
+#: src/modules/shot/e_mod_main.c:591
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:637
+#: src/modules/shot/e_mod_main.c:636
 #, fuzzy
 msgid "Error - Can't create file"
 msgstr "Modul Ralat memuatkan"
 
-#: src/modules/shot/e_mod_main.c:638
+#: src/modules/shot/e_mod_main.c:637
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:656
+#: src/modules/shot/e_mod_main.c:655
 msgid "Error - Can't open file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:657
+#: src/modules/shot/e_mod_main.c:656
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:665
+#: src/modules/shot/e_mod_main.c:664
 #, fuzzy
 msgid "Error - Bad size"
 msgstr "Modul Ralat memuatkan"
 
-#: src/modules/shot/e_mod_main.c:666
+#: src/modules/shot/e_mod_main.c:665
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:676
+#: src/modules/shot/e_mod_main.c:675
 msgid "Error - Can't allocate memory"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:677
+#: src/modules/shot/e_mod_main.c:676
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:684
+#: src/modules/shot/e_mod_main.c:683
 msgid "Error - Can't read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:685
+#: src/modules/shot/e_mod_main.c:684
 msgid "Cannot read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:707
+#: src/modules/shot/e_mod_main.c:706
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:712
+#: src/modules/shot/e_mod_main.c:711
 msgid "Uploading ..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:717
+#: src/modules/shot/e_mod_main.c:716
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:726
+#: src/modules/shot/e_mod_main.c:725
 #, fuzzy
 msgid "Hide"
 msgstr "Auto Hide"
 
-#: src/modules/shot/e_mod_main.c:750
+#: src/modules/shot/e_mod_main.c:749
 #, fuzzy
 msgid "Confirm Share"
 msgstr "mengesahkan Potong"
 
-#: src/modules/shot/e_mod_main.c:751
+#: src/modules/shot/e_mod_main.c:750
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:752
 #, fuzzy
 msgid "Confirm"
 msgstr "Konfigurasi"
 
-#: src/modules/shot/e_mod_main.c:854
+#: src/modules/shot/e_mod_main.c:853
 msgid "Where to put Screenshot..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:906
+#: src/modules/shot/e_mod_main.c:905
 #, fuzzy
 msgid "Quality"
 msgstr "kualiti"
 
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:914
 msgid "Perfect"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:991
+#: src/modules/shot/e_mod_main.c:990
 #, fuzzy
 msgid "Share"
 msgstr "tajam"
 
-#: src/modules/shot/e_mod_main.c:1176
+#: src/modules/shot/e_mod_main.c:1174
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1185
+#: src/modules/shot/e_mod_main.c:1183
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1186
+#: src/modules/shot/e_mod_main.c:1184
 #, fuzzy
 msgid "Delayed shot"
 msgstr "Tindakan lambat"
 
-#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
 #, fuzzy
 msgid "Take Shot"
 msgstr "persediaan Skrin"
 
-#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
-#: src/modules/shot/e_mod_main.c:1284
+#: src/modules/shot/e_mod_main.c:1235 src/modules/shot/e_mod_main.c:1270
+#: src/modules/shot/e_mod_main.c:1282
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "persediaan Skrin"
 
-#: src/modules/shot/e_mod_main.c:1260
+#: src/modules/shot/e_mod_main.c:1258
 #, fuzzy
 msgid "Shot Error"
 msgstr "Ralat Gunung"
 
-#: src/modules/shot/e_mod_main.c:1261
+#: src/modules/shot/e_mod_main.c:1259
 msgid "Cannot initialize network"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Skrin Tetapan Lock"
@@ -10863,231 +10898,278 @@ msgstr "Alihkan"
 msgid "Variant"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:67
+#: src/modules/notification/e_mod_main.c:102
+#: src/modules/notification/e_mod_main.c:606
+#, fuzzy
+msgid "Notification"
+msgstr "putaran"
+
+#: src/modules/notification/e_mod_main.c:287
+#: src/modules/clipboard/e_mod_main.c:395
+msgid "Empty"
+msgstr ""
+
+#: src/modules/notification/e_mod_main.c:525
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:68
+#: src/modules/notification/e_mod_main.c:526
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:72
+#: src/modules/notification/e_mod_main.c:530
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:73
+#: src/modules/notification/e_mod_main.c:531
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Taklimat Mod Togol"
 
-#: src/modules/notification/e_mod_main.c:86
+#: src/modules/notification/e_mod_main.c:544
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "mod luar talian"
 
-#: src/modules/notification/e_mod_main.c:87
+#: src/modules/notification/e_mod_main.c:545
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:93
+#: src/modules/notification/e_mod_main.c:551
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "mod luar talian"
 
-#: src/modules/notification/e_mod_main.c:94
+#: src/modules/notification/e_mod_main.c:552
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:148
+#: src/modules/notification/e_mod_main.c:634
 #, fuzzy
-msgid "Notification"
-msgstr "putaran"
-
-#: src/modules/notification/e_mod_main.c:169
-#, fuzzy
-msgid "Notification Module"
+msgid "Notification module"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:189
+#: src/modules/notification/e_mod_main.c:654
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:190
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:45
+#: src/modules/notification/e_mod_config.c:54
 #, fuzzy
 msgid "Notification Settings"
 msgstr "interaksi Tetapan"
 
-#: src/modules/notification/e_mod_config.c:93
+#: src/modules/notification/e_mod_config.c:111
 #, fuzzy
 msgid "Urgency"
 msgstr "segera"
 
-#: src/modules/notification/e_mod_config.c:94
+#: src/modules/notification/e_mod_config.c:112
 msgid "Levels of urgency to display:"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:100
+#: src/modules/notification/e_mod_config.c:118
 #, fuzzy
 msgid "Critical"
 msgstr "menegak"
 
-#: src/modules/notification/e_mod_config.c:104
+#: src/modules/notification/e_mod_config.c:122
 #, fuzzy
 msgid "Default Timeout"
 msgstr "Paparan Default"
 
-#: src/modules/notification/e_mod_config.c:105
+#: src/modules/notification/e_mod_config.c:123
 msgid "Force timeout for all notifications"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:122
+#: src/modules/notification/e_mod_config.c:140
 #, fuzzy
 msgid "Popup Corner"
 msgstr "Saiz pop"
 
-#: src/modules/notification/e_mod_config.c:124
+#: src/modules/notification/e_mod_config.c:142
 msgid "Top left"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:126
+#: src/modules/notification/e_mod_config.c:144
 #, fuzzy
 msgid "Top right"
 msgstr "Ketinggian popup"
 
-#: src/modules/notification/e_mod_config.c:128
+#: src/modules/notification/e_mod_config.c:146
 msgid "Bottom left"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:130
+#: src/modules/notification/e_mod_config.c:148
 msgid "Bottom right"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:142
+#: src/modules/notification/e_mod_config.c:160
 msgid "Ignore replace ID"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:144
+#: src/modules/notification/e_mod_config.c:162
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:175
+#: src/modules/notification/e_mod_config.c:169
 #, fuzzy
-msgid "Selection"
-msgstr "memilih"
+msgid "History Settings"
+msgstr "Tetapan lain"
 
-#: src/modules/clipboard/e_mod_config.c:176
-msgid " Use Copy (Ctrl-C)"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:179
-msgid " Use Primary (Selection)"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:182
-msgid " Synchronize Clipboards"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:189
+#: src/modules/notification/e_mod_config.c:170
 #, fuzzy
-msgid "Content"
-msgstr "kandungan"
-
-#: src/modules/clipboard/e_mod_config.c:190
-#: src/modules/clipboard/e_mod_config.c:227
-#, fuzzy
-msgid " Ignore Whitespace"
-msgstr "abaikan ini"
-
-#: src/modules/clipboard/e_mod_config.c:193
-msgid " Trim Whitespace"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:196
-msgid " Trim Newlines"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:200
-#: src/modules/clipboard/e_mod_main.c:749
-#: src/modules/clipboard/e_mod_main.c:750
-#: src/modules/clipboard/e_mod_main.c:751
-msgid "Clipboard"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:206
-msgid " Save History"
-msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:209
-#, fuzzy
-msgid " Confirm before Clearing"
-msgstr "mengesahkan Potong"
-
-#: src/modules/clipboard/e_mod_config.c:211
-#, fuzzy
-msgid " Save every Selection"
-msgstr "Resolusi Skrin"
-
-#: src/modules/clipboard/e_mod_config.c:215
-#, fuzzy
-msgid " Timer"
+msgid "Time stamp"
 msgstr "pemasa"
 
-#: src/modules/clipboard/e_mod_config.c:226
+#: src/modules/notification/e_mod_config.c:172
+#, fuzzy
+msgid "Show application name"
+msgstr "Show All Menu Aplikasi"
+
+#: src/modules/notification/e_mod_config.c:174
+#, fuzzy
+msgid "Reverse order"
+msgstr "Ingat Pesanan"
+
+#: src/modules/notification/e_mod_config.c:178
+#: src/modules/clipboard/e_mod_config.c:228
 #, fuzzy
 msgid "Labels"
 msgstr "label"
 
-#: src/modules/clipboard/e_mod_config.c:230
+#: src/modules/notification/e_mod_config.c:179
 #, fuzzy
-msgid " Label Length"
+msgid "Labels length"
 msgstr "Teks label"
 
-#: src/modules/clipboard/e_mod_config.c:237
+#: src/modules/notification/e_mod_config.c:186
+#: src/modules/clipboard/e_mod_config.c:239
 #, fuzzy
 msgid "Items"
 msgstr "item"
 
-#: src/modules/clipboard/e_mod_config.c:238
-#, fuzzy
-msgid " Reverse Order"
-msgstr "Ingat Pesanan"
-
-#: src/modules/clipboard/e_mod_config.c:241
-msgid " Items in History"
+#: src/modules/notification/e_mod_config.c:187
+msgid "Items in history"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:247
+#: src/modules/notification/e_mod_config.c:195
+msgid "Gadget animation delay [s]"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:203
+msgid "App blacklist (use a delimiter)"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:209
+#: src/modules/clipboard/e_mod_config.c:249
 #, fuzzy
 msgid "History"
 msgstr "Direktori baru"
 
-#: src/modules/clipboard/e_mod_config.c:272
+#: src/modules/clipboard/e_mod_config.c:177
+#, fuzzy
+msgid "Selection"
+msgstr "memilih"
+
+#: src/modules/clipboard/e_mod_config.c:178
+msgid " Use Copy (Ctrl-C)"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:181
+msgid " Use Primary (Selection)"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:184
+msgid " Synchronize Clipboards"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:191
+#, fuzzy
+msgid "Content"
+msgstr "kandungan"
+
+#: src/modules/clipboard/e_mod_config.c:192
+#: src/modules/clipboard/e_mod_config.c:229
+#, fuzzy
+msgid " Ignore Whitespace"
+msgstr "abaikan ini"
+
+#: src/modules/clipboard/e_mod_config.c:195
+msgid " Trim Whitespace"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:198
+msgid " Trim Newlines"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:202
+#: src/modules/clipboard/e_mod_main.c:885
+#: src/modules/clipboard/e_mod_main.c:886
+#: src/modules/clipboard/e_mod_main.c:887
+msgid "Clipboard"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:208
+msgid " Save History"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:211
+#, fuzzy
+msgid " Confirm before Clearing"
+msgstr "mengesahkan Potong"
+
+#: src/modules/clipboard/e_mod_config.c:213
+#, fuzzy
+msgid " Save every Selection"
+msgstr "Resolusi Skrin"
+
+#: src/modules/clipboard/e_mod_config.c:217
+#, fuzzy
+msgid " Timer"
+msgstr "pemasa"
+
+#: src/modules/clipboard/e_mod_config.c:232
+#, fuzzy
+msgid " Label Length"
+msgstr "Teks label"
+
+#: src/modules/clipboard/e_mod_config.c:240
+#, fuzzy
+msgid " Reverse Order"
+msgstr "Ingat Pesanan"
+
+#: src/modules/clipboard/e_mod_config.c:243
+msgid " Items in History"
+msgstr ""
+
+#: src/modules/clipboard/e_mod_config.c:274
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "ibar Tetapan"
 
-#: src/modules/clipboard/e_mod_main.c:359
-msgid "Empty"
-msgstr ""
+#: src/modules/clipboard/e_mod_main.c:403
+#, fuzzy
+msgid "Ignore history"
+msgstr "abaikan ini"
 
-#: src/modules/clipboard/e_mod_main.c:581
+#: src/modules/clipboard/e_mod_main.c:636
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "mengesahkan Potong"
 
-#: src/modules/clipboard/e_mod_main.c:583
+#: src/modules/clipboard/e_mod_main.c:638
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
@@ -11095,6 +11177,29 @@ msgid ""
 msgstr ""
 "Anda diminta untuk memadam rak ini.<br><br>Adakah anda pasti anda mahu "
 "memadam."
+
+#: src/modules/clipboard/e_mod_main.c:723
+#, fuzzy
+msgid "Confirm Item Deletion"
+msgstr "mengesahkan Potong"
+
+#: src/modules/clipboard/e_mod_main.c:725
+#, fuzzy
+msgid ""
+"You wish to delete the current item.<br><br>Are you sure you want to delete "
+"it?"
+msgstr ""
+"Anda diminta untuk memadam rak ini.<br><br>Adakah anda pasti anda mahu "
+"memadam."
+
+#: src/modules/clipboard/e_mod_main.c:753
+#, fuzzy
+msgid "Clipboard: Edit Item"
+msgstr "ibar Tetapan"
+
+#: src/modules/clipboard/e_mod_main.c:754
+msgid "Edit the item content:"
+msgstr ""
 
 #: src/modules/clipboard/e_mod_main.h:10
 #, fuzzy
@@ -11241,39 +11346,43 @@ msgstr "input"
 msgid "Unmute"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:126
+#: src/modules/mixer/e_mod_main.c:118
 #, fuzzy
 msgid "New volume"
 msgstr "kelantangan baru"
 
-#: src/modules/mixer/e_mod_main.c:139
+#: src/modules/mixer/e_mod_main.c:133
+msgid "Volume limit reached!!!"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:139
+#: src/modules/mixer/e_mod_main.c:136
 #, fuzzy
 msgid "Volume Changed"
 msgstr "isipadu berubah"
 
-#: src/modules/mixer/e_mod_main.c:236
+#: src/modules/mixer/e_mod_main.c:240
 msgid "Increase Volume"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:244
+#: src/modules/mixer/e_mod_main.c:248
 msgid "Decrease Volume"
 msgstr ""
 
-#: src/modules/mixer/e_mod_main.c:252
+#: src/modules/mixer/e_mod_main.c:256
 #, fuzzy
 msgid "Mute volume"
 msgstr "kelantangan baru"
 
-#: src/modules/mixer/e_mod_main.c:265
+#: src/modules/mixer/e_mod_main.c:269
 #, fuzzy
 msgid "Volume Increase"
 msgstr "isipadu berubah"
 
-#: src/modules/mixer/e_mod_main.c:272 src/modules/mixer/e_mod_main.c:279
+#: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 #, fuzzy
 msgid "Volume Mute"
 msgstr "isipadu berubah"

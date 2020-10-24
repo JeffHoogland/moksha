@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-#
+# 
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,12 +13,12 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-07-02 09:00+0200\n"
+"POT-Creation-Date: 2020-10-24 15:38+0200\n"
 "PO-Revision-Date: 2020-09-16 06:53+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -42,7 +42,7 @@ msgstr "À propos de Moksha"
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1188
+#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
 msgid "Close"
 msgstr "Fermer"
 
@@ -114,7 +114,7 @@ msgstr "Voulez-vous vraiment quitter Moksha ?"
 #: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:316
+#: src/modules/shot/e_mod_main.c:315
 msgid "Yes"
 msgstr "Oui"
 
@@ -163,7 +163,7 @@ msgstr "Voulez-vous vraiment mettre votre ordinateur en hibernation ?"
 #: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
 #: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
 #: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
-#: src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1278
 msgid "Window : Actions"
 msgstr "Fenêtres : actions"
 
@@ -549,7 +549,7 @@ msgstr "Basculer vers la fenêtre de… ou circuler parmi…"
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:934 src/modules/shot/e_mod_main.c:1272
+#: src/modules/shot/e_mod_main.c:933 src/modules/shot/e_mod_main.c:1270
 msgid "Screen"
 msgstr "Écran"
 
@@ -837,13 +837,13 @@ msgstr "Sélectionner"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
-#: src/modules/shot/e_mod_main.c:727 src/modules/shot/e_mod_main.c:753
-#: src/modules/shot/e_mod_main.c:993 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:315 src/modules/shot/e_mod_main.c:468
+#: src/modules/shot/e_mod_main.c:726 src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:992 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:933
+#: src/bin/e_config.c:934
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -861,7 +861,7 @@ msgstr ""
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:950
+#: src/bin/e_config.c:951
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -877,11 +877,11 @@ msgstr ""
 "défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
-#: src/bin/e_config.c:1470 src/bin/e_config.c:2095
+#: src/bin/e_config.c:1471 src/bin/e_config.c:2096
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Moksha"
 
-#: src/bin/e_config.c:1473
+#: src/bin/e_config.c:1474
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -891,7 +891,7 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1483 src/bin/e_config.c:2108
+#: src/bin/e_config.c:1484 src/bin/e_config.c:2109
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
@@ -902,26 +902,26 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
-#: src/modules/cpufreq/e_mod_main.c:510 src/modules/cpufreq/e_mod_main.c:537
-#: src/modules/cpufreq/e_mod_main.c:562 src/modules/cpufreq/e_mod_main.c:590
+#: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
+#: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
 #: src/modules/xkbswitch/e_mod_config.c:528
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1986
+#: src/bin/e_config.c:1987
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2004
+#: src/bin/e_config.c:2005
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2008
+#: src/bin/e_config.c:2009
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2012
+#: src/bin/e_config.c:2013
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -929,15 +929,15 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2016
+#: src/bin/e_config.c:2017
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Libérez de la mémoire."
 
-#: src/bin/e_config.c:2020
+#: src/bin/e_config.c:2021
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2024
+#: src/bin/e_config.c:2025
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -945,59 +945,59 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2028
+#: src/bin/e_config.c:2029
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2032
+#: src/bin/e_config.c:2033
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2036
+#: src/bin/e_config.c:2037
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2040
+#: src/bin/e_config.c:2041
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2045
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2048
+#: src/bin/e_config.c:2049
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2052
+#: src/bin/e_config.c:2053
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2056
+#: src/bin/e_config.c:2057
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2060
+#: src/bin/e_config.c:2061
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2064
+#: src/bin/e_config.c:2065
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2068
+#: src/bin/e_config.c:2069
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2072
+#: src/bin/e_config.c:2073
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2076
+#: src/bin/e_config.c:2077
 msgid "The error is unknown to Moksha."
 msgstr "Moksha ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2099
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1013,8 +1013,8 @@ msgstr ""
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
-#: src/modules/cpufreq/e_mod_main.c:1499 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:469
+#: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
+#: src/modules/mixer/e_mod_main.c:479
 msgid "Advanced"
 msgstr "Avancé"
 
@@ -1029,7 +1029,7 @@ msgstr "Appliquer"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:145
+#: src/modules/notification/e_mod_main.c:603
 msgid "Extensions"
 msgstr "Extensions"
 
@@ -1144,12 +1144,12 @@ msgstr "Éditeur de fichier desktop"
 
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
-#: src/modules/conf_menus/e_int_config_menus.c:266
-#: src/modules/ibar/e_mod_config.c:130
+#: src/modules/conf_menus/e_int_config_menus.c:267
+#: src/modules/ibar/e_mod_config.c:132
 msgid "Name"
 msgstr "Nom"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:134
+#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:136
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -1191,7 +1191,9 @@ msgstr "Fichier desktop"
 #: src/modules/everything/evry_config.c:378
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
-#: src/modules/tiling/e_mod_config.c:180 src/modules/places/e_mod_config.c:190
+#: src/modules/tiling/e_mod_config.c:180
+#: src/modules/notification/e_mod_config.c:165
+#: src/modules/places/e_mod_config.c:190
 msgid "General"
 msgstr "Paramètres généraux"
 
@@ -1209,7 +1211,7 @@ msgstr "Afficher dans les menus"
 
 #: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
-#: src/modules/clipboard/e_mod_config.c:205
+#: src/modules/clipboard/e_mod_config.c:207
 msgid "Options"
 msgstr "Options"
 
@@ -1235,10 +1237,11 @@ msgstr "Sélectionner un exécutable"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:112 src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:586
+#: src/modules/clipboard/e_mod_main.c:641
+#: src/modules/clipboard/e_mod_main.c:728
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1529,7 +1532,7 @@ msgid "Eject"
 msgstr "Éjecter"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:885
+#: src/modules/ibar/e_mod_main.c:887
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -1908,7 +1911,7 @@ msgstr "Aspect"
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:890
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:892
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Supprimer"
@@ -2232,7 +2235,7 @@ msgstr "Écran %d"
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
-#: src/modules/notification/e_mod_config.c:98
+#: src/modules/notification/e_mod_config.c:116
 #, c-format
 msgid "Normal"
 msgstr "Normal(e)"
@@ -2505,25 +2508,27 @@ msgstr "Demande de position"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:378
-#: src/modules/clock/e_mod_main.c:621 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
-#: src/modules/cpufreq/e_mod_main.c:440
+#: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:878
+#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:880
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:268
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1187
+#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
-#: src/modules/clipboard/e_mod_main.c:275
-#: src/modules/clipboard/e_mod_main.c:380 src/modules/places/e_mod_main.c:520
+#: src/modules/notification/e_mod_main.c:208
+#: src/modules/notification/e_mod_main.c:308
+#: src/modules/clipboard/e_mod_main.c:281
+#: src/modules/clipboard/e_mod_main.c:426 src/modules/places/e_mod_main.c:520
 msgid "Settings"
 msgstr "Configuration"
 
@@ -2613,7 +2618,7 @@ msgstr "Taille, position et verrous"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:938
+#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:937
 msgid "All"
 msgstr "Tout"
 
@@ -2786,13 +2791,14 @@ msgstr "Applications favorites"
 
 #: src/bin/e_int_menus.c:174
 #: src/modules/conf_applications/e_int_config_apps.c:295
-#: src/modules/conf_menus/e_int_config_menus.c:261
-#: src/modules/conf_menus/e_int_config_menus.c:284
+#: src/modules/conf_menus/e_int_config_menus.c:262
+#: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1416
+#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/notification/e_mod_config.c:202
 msgid "Applications"
 msgstr "Applications"
 
@@ -2928,7 +2934,7 @@ msgstr "Afficher avec un clic de souris"
 msgid "Hide timeout"
 msgstr "Délai avant masquage"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:107
+#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:125
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f secondes"
@@ -3621,7 +3627,8 @@ msgstr "Que voulez-vous faire de ce module ?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:199 src/modules/clipboard/e_mod_main.c:586
+#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:641
+#: src/modules/clipboard/e_mod_main.c:728
 msgid "Keep"
 msgstr "Conserver"
 
@@ -3778,7 +3785,7 @@ msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_main.c:872
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_main.c:874
 msgid "Contents"
 msgstr "Contenu"
 
@@ -4214,7 +4221,7 @@ msgstr[1] "%li minutes"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:110 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:112 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Ajouter"
 
@@ -4377,7 +4384,7 @@ msgstr "Contrôler tous les :"
 #: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:128
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:109
-#: src/modules/temperature/e_mod_config.c:275
+#: src/modules/temperature/e_mod_config.c:276
 #, c-format
 msgid "%1.0f ticks"
 msgstr "%1.0f tics"
@@ -4441,12 +4448,12 @@ msgstr "Auto-détection"
 #: src/modules/conf_applications/e_mod_main.c:60
 #: src/modules/conf_display/e_mod_main.c:40
 #: src/modules/conf_theme/e_mod_main.c:230
-#: src/modules/temperature/e_mod_config.c:311
+#: src/modules/temperature/e_mod_config.c:318
 msgid "Internal"
 msgstr "Interne"
 
 #: src/modules/battery/e_mod_config.c:299
-#: src/modules/temperature/e_mod_config.c:313
+#: src/modules/temperature/e_mod_config.c:320
 msgid "udev"
 msgstr "udev"
 
@@ -4459,7 +4466,7 @@ msgid "HAL"
 msgstr "HAL"
 
 #: src/modules/battery/e_mod_config.c:311
-#: src/modules/temperature/e_mod_config.c:315
+#: src/modules/temperature/e_mod_config.c:322
 msgid "Hardware"
 msgstr "Interface"
 
@@ -4497,8 +4504,8 @@ msgstr "Surveillance de la batterie"
 msgid "Clock Settings"
 msgstr "Paramétrage de l'horloge"
 
-#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:726
-#: src/modules/clock/e_mod_main.c:892
+#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
+#: src/modules/clock/e_mod_main.c:912
 msgid "Clock"
 msgstr "Horloge"
 
@@ -4563,7 +4570,7 @@ msgstr "Week-end"
 msgid "Days"
 msgstr "Jours"
 
-#: src/modules/clock/e_mod_main.c:892
+#: src/modules/clock/e_mod_main.c:912
 msgid "Toggle calendar"
 msgstr "(Dés)Activer le calendrier"
 
@@ -4582,7 +4589,7 @@ msgid "Settings Panel"
 msgstr "Panneau de contrôle"
 
 #: src/modules/conf/e_mod_main.c:283
-#: src/modules/conf_menus/e_int_config_menus.c:278
+#: src/modules/conf_menus/e_int_config_menus.c:279
 #: src/modules/conf_menus/e_mod_main.c:17
 msgid "Menus"
 msgstr "Menus"
@@ -5522,7 +5529,7 @@ msgstr "Sélecteur de langue"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
-#: src/modules/conf_menus/e_int_config_menus.c:170
+#: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:170
 msgid "System Default"
 msgstr "Système (par défaut)"
@@ -5637,7 +5644,7 @@ msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:427
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
 msgid "Mute"
 msgstr "Sourdine"
 
@@ -5852,53 +5859,53 @@ msgstr "Molette supplémentaire (%d) vers le bas"
 msgid "Menu Settings"
 msgstr "Paramétrage du menu"
 
-#: src/modules/conf_menus/e_int_config_menus.c:175
+#: src/modules/conf_menus/e_int_config_menus.c:176
 msgid "Moksha Default"
 msgstr "Moksha (par défaut)"
 
-#: src/modules/conf_menus/e_int_config_menus.c:183
+#: src/modules/conf_menus/e_int_config_menus.c:184
 msgid "Personal Default"
 msgstr "Personnel (par défaut)"
 
-#: src/modules/conf_menus/e_int_config_menus.c:258
+#: src/modules/conf_menus/e_int_config_menus.c:259
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: src/modules/conf_menus/e_int_config_menus.c:259
+#: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:247
 msgid "Favorites"
 msgstr "Favoris"
 
-#: src/modules/conf_menus/e_int_config_menus.c:265
+#: src/modules/conf_menus/e_int_config_menus.c:266
 msgid "Applications Display"
 msgstr "Affichage des applications"
 
-#: src/modules/conf_menus/e_int_config_menus.c:268
-#: src/modules/ibar/e_mod_config.c:138
+#: src/modules/conf_menus/e_int_config_menus.c:269
+#: src/modules/ibar/e_mod_config.c:140
 msgid "Generic"
 msgstr "Générique"
 
-#: src/modules/conf_menus/e_int_config_menus.c:270
+#: src/modules/conf_menus/e_int_config_menus.c:271
 msgid "Comments"
 msgstr "Commentaires"
 
-#: src/modules/conf_menus/e_int_config_menus.c:274
+#: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
 #: src/modules/gadman/e_mod_main.c:203 src/modules/xkbswitch/e_mod_config.c:298
 msgid "Gadgets"
 msgstr "Gadgets"
 
-#: src/modules/conf_menus/e_int_config_menus.c:275
+#: src/modules/conf_menus/e_int_config_menus.c:276
 msgid "Show gadget settings in top-level"
 msgstr "Afficher les paramètres du gadget au premier niveau"
 
-#: src/modules/conf_menus/e_int_config_menus.c:288
+#: src/modules/conf_menus/e_int_config_menus.c:289
 msgid "Margin"
 msgstr "Marge"
 
-#: src/modules/conf_menus/e_int_config_menus.c:290
-#: src/modules/conf_menus/e_int_config_menus.c:295
+#: src/modules/conf_menus/e_int_config_menus.c:291
+#: src/modules/conf_menus/e_int_config_menus.c:296
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:189
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:196
@@ -5908,49 +5915,54 @@ msgstr "Marge"
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
 
-#: src/modules/conf_menus/e_int_config_menus.c:293
+#: src/modules/conf_menus/e_int_config_menus.c:294
 msgid "Cursor Margin"
 msgstr "Marge du pointeur"
 
-#: src/modules/conf_menus/e_int_config_menus.c:298
+#: src/modules/conf_menus/e_int_config_menus.c:299
 msgid "Autoscroll"
 msgstr "Défilement"
 
-#: src/modules/conf_menus/e_int_config_menus.c:302
+#: src/modules/conf_menus/e_int_config_menus.c:303
+msgid " Disable Icons in Menus"
+msgstr ""
+
+#: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
 msgstr " Orientation intelligente du menu"
 
-#: src/modules/conf_menus/e_int_config_menus.c:304
+#: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
 msgstr "Vitesse de défilement du menu"
 
-#: src/modules/conf_menus/e_int_config_menus.c:306
+#: src/modules/conf_menus/e_int_config_menus.c:309
 #, c-format
 msgid "%5.0f pixels/s"
 msgstr "%5.0f pixels/s"
 
-#: src/modules/conf_menus/e_int_config_menus.c:309
+#: src/modules/conf_menus/e_int_config_menus.c:312
 msgid "Fast Mouse Move Threshold"
 msgstr "Seuil de déplacement rapide de la souris"
 
-#: src/modules/conf_menus/e_int_config_menus.c:311
+#: src/modules/conf_menus/e_int_config_menus.c:314
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:192
 #, c-format
 msgid "%4.0f pixels/s"
 msgstr "%4.0f pixels/s"
 
-#: src/modules/conf_menus/e_int_config_menus.c:314
+#: src/modules/conf_menus/e_int_config_menus.c:317
 msgid "Click Drag Timeout"
 msgstr "Délai d'expiration du glisser"
 
-#: src/modules/conf_menus/e_int_config_menus.c:316
+#: src/modules/conf_menus/e_int_config_menus.c:319
 #, c-format
 msgid "%2.2f s"
 msgstr "%2.2f s"
 
-#: src/modules/conf_menus/e_int_config_menus.c:319
+#: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:141
+#: src/modules/notification/e_mod_config.c:159
+#: src/modules/notification/e_mod_config.c:194
 msgid "Miscellaneous"
 msgstr "Divers"
 
@@ -6140,12 +6152,13 @@ msgid "e.g. Saving to disk"
 msgstr "ex. Enregistrement sur le disque"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:921 src/modules/notification/e_mod_config.c:96
+#: src/modules/shot/e_mod_main.c:920
+#: src/modules/notification/e_mod_config.c:114
 msgid "Low"
 msgstr "Bas(se)"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:919
+#: src/modules/shot/e_mod_main.c:918
 msgid "Medium"
 msgstr "Moyen(ne)"
 
@@ -6157,7 +6170,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:917
+#: src/modules/shot/e_mod_main.c:916
 msgid "High"
 msgstr "Haut(e)"
 
@@ -6703,7 +6716,7 @@ msgstr "Bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:686
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:269
-#: src/modules/cpufreq/e_mod_main.c:235 src/modules/cpufreq/e_mod_main.c:271
+#: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:278
 msgid "Automatic"
 msgstr "Automatique"
 
@@ -6846,7 +6859,8 @@ msgid "Assign"
 msgstr "Assigner"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1429
-#: src/modules/clipboard/e_mod_main.c:367
+#: src/modules/notification/e_mod_main.c:295
+#: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr "Supprimer"
 
@@ -7314,7 +7328,7 @@ msgid "Resize by"
 msgstr "Redimensionner de :"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:142 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 msgid "Keyboard"
 msgstr "Clavier"
@@ -7433,93 +7447,93 @@ msgstr "Rôle :"
 msgid "No selection"
 msgstr "Aucune sélection"
 
-#: src/modules/cpufreq/e_mod_main.c:133
+#: src/modules/cpufreq/e_mod_main.c:140
 msgid "Cpufreq"
 msgstr "Cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:189 src/modules/cpufreq/e_mod_config.c:93
+#: src/modules/cpufreq/e_mod_main.c:196 src/modules/cpufreq/e_mod_config.c:93
 msgid "Fast (4 ticks)"
 msgstr "Rapide (4 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:196 src/modules/cpufreq/e_mod_config.c:95
+#: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:95
 msgid "Medium (8 ticks)"
 msgstr "Moyenne (8 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:97
+#: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:97
 msgid "Normal (32 ticks)"
 msgstr "Normale (32 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:99
+#: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:99
 msgid "Slow (64 ticks)"
 msgstr "Lente (64 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:101
+#: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_config.c:101
 msgid "Very Slow (256 ticks)"
 msgstr "Très lente (256 tics)"
 
-#: src/modules/cpufreq/e_mod_main.c:233
+#: src/modules/cpufreq/e_mod_main.c:240
 msgid "Manual"
 msgstr "Manuel"
 
-#: src/modules/cpufreq/e_mod_main.c:237 src/modules/cpufreq/e_mod_main.c:273
+#: src/modules/cpufreq/e_mod_main.c:244 src/modules/cpufreq/e_mod_main.c:280
 msgid "Lower Power Automatic"
 msgstr "Mode de plus faible puissance"
 
-#: src/modules/cpufreq/e_mod_main.c:239 src/modules/cpufreq/e_mod_main.c:275
+#: src/modules/cpufreq/e_mod_main.c:246 src/modules/cpufreq/e_mod_main.c:282
 msgid "Automatic Interactive"
 msgstr "Mode automatique interactif"
 
-#: src/modules/cpufreq/e_mod_main.c:241 src/modules/cpufreq/e_mod_main.c:277
+#: src/modules/cpufreq/e_mod_main.c:248 src/modules/cpufreq/e_mod_main.c:284
 msgid "Minimum Speed"
 msgstr "Fréquence minimale"
 
-#: src/modules/cpufreq/e_mod_main.c:243 src/modules/cpufreq/e_mod_main.c:279
+#: src/modules/cpufreq/e_mod_main.c:250 src/modules/cpufreq/e_mod_main.c:286
 msgid "Maximum Speed"
 msgstr "Fréquence maximale"
 
-#: src/modules/cpufreq/e_mod_main.c:256 src/modules/cpufreq/e_mod_config.c:85
+#: src/modules/cpufreq/e_mod_main.c:263 src/modules/cpufreq/e_mod_config.c:85
 msgid "Restore CPU Power Policy"
 msgstr "Restaurer le profil énergétique"
 
-#: src/modules/cpufreq/e_mod_main.c:294 src/modules/cpufreq/e_mod_config.c:88
+#: src/modules/cpufreq/e_mod_main.c:301 src/modules/cpufreq/e_mod_config.c:88
 msgid "Automatic powersaving"
 msgstr "Mode économie d'énergie"
 
-#: src/modules/cpufreq/e_mod_main.c:318
+#: src/modules/cpufreq/e_mod_main.c:325
 #, c-format
 msgid "%i MHz"
 msgstr "%i MHz"
 
-#: src/modules/cpufreq/e_mod_main.c:320
+#: src/modules/cpufreq/e_mod_main.c:327
 #, c-format
 msgid "%'.1f GHz"
 msgstr "%'.1f GHz"
 
-#: src/modules/cpufreq/e_mod_main.c:382
+#: src/modules/cpufreq/e_mod_main.c:389
 msgid "Time Between Updates"
 msgstr "Périodicité des mises à jour"
 
-#: src/modules/cpufreq/e_mod_main.c:388
+#: src/modules/cpufreq/e_mod_main.c:395
 msgid "Set CPU Power Policy"
 msgstr "Profil énergétique du CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:395
+#: src/modules/cpufreq/e_mod_main.c:402
 msgid "Set CPU Speed"
 msgstr "Déterminer la fréquence du CPU"
 
-#: src/modules/cpufreq/e_mod_main.c:401
+#: src/modules/cpufreq/e_mod_main.c:408
 msgid "Powersaving behavior"
 msgstr "Comportement de l'économie d'énergie"
 
-#: src/modules/cpufreq/e_mod_main.c:407
+#: src/modules/cpufreq/e_mod_main.c:414
 msgid "Power State Min"
 msgstr "Puissance min."
 
-#: src/modules/cpufreq/e_mod_main.c:413
+#: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
 msgstr "Puissance max."
 
-#: src/modules/cpufreq/e_mod_main.c:507
+#: src/modules/cpufreq/e_mod_main.c:514
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
@@ -7527,7 +7541,7 @@ msgstr ""
 "Une erreur s'est produite lors de la tentative<ps/>de modification du "
 "régulateur de fréquence du CPU<ps/>via l'utilitaire setfreq du module."
 
-#: src/modules/cpufreq/e_mod_main.c:533
+#: src/modules/cpufreq/e_mod_main.c:540
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
@@ -7537,7 +7551,7 @@ msgstr ""
 "être été compilé sans les modules adéquats,<ps/>ou votre CPU ne supporte pas "
 "cette fonctionnalité."
 
-#: src/modules/cpufreq/e_mod_main.c:559
+#: src/modules/cpufreq/e_mod_main.c:566
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
@@ -7545,7 +7559,7 @@ msgstr ""
 "Une erreur s'est produite lors de la tentative<ps/>de changement de "
 "fréquence du CPU<ps/>via l'utilitaire setfreq du module."
 
-#: src/modules/cpufreq/e_mod_main.c:587
+#: src/modules/cpufreq/e_mod_main.c:594
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
@@ -7553,11 +7567,11 @@ msgstr ""
 "Une erreur s'est produite lors de la tentative<br>de changement de puissance "
 "du CPU<br>via l'utilitaire setfreq du module."
 
-#: src/modules/cpufreq/e_mod_main.c:1459
+#: src/modules/cpufreq/e_mod_main.c:1466
 msgid "Cpufreq Error"
 msgstr "Erreur : Cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:1460
+#: src/modules/cpufreq/e_mod_main.c:1467
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
@@ -7565,11 +7579,11 @@ msgstr ""
 "L'utilitaire freqset de Cpufreq est introuvable<ps/>dans le dossier du "
 "module (échec de stat)"
 
-#: src/modules/cpufreq/e_mod_main.c:1467
+#: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
 msgstr "Erreur des permissions de Cpufreq"
 
-#: src/modules/cpufreq/e_mod_main.c:1468
+#: src/modules/cpufreq/e_mod_main.c:1475
 #, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
@@ -7581,7 +7595,7 @@ msgstr ""
 "commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
 "+s,a+x %s<ps/>"
 
-#: src/modules/cpufreq/e_mod_main.c:1501
+#: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
 msgstr "Fréquence du CPU"
 
@@ -7841,7 +7855,7 @@ msgid "Run Executable"
 msgstr "Lancer l'exécutable"
 
 #: src/modules/everything/evry_plug_apps.c:1308
-#: src/modules/everything/evry_plug_apps.c:1435
+#: src/modules/everything/evry_plug_apps.c:1436
 msgid "Everything Applications"
 msgstr "Applications Omni"
 
@@ -7857,7 +7871,7 @@ msgstr "Commande du terminal"
 msgid "Sudo GUI"
 msgstr "Interface graphique sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1416
+#: src/modules/everything/evry_plug_apps.c:1417
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
@@ -8284,6 +8298,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr "Taille de l'infobulle"
 
 #: src/modules/fileman/e_mod_config.c:483
+#: src/modules/notification/e_mod_config.c:181
+#: src/modules/notification/e_mod_config.c:189
+#: src/modules/notification/e_mod_config.c:197
 #, c-format
 msgid "%2.0f"
 msgstr "%2.0f"
@@ -8557,43 +8574,47 @@ msgstr "La liste des fenêtres ne peut être activée depuis un raccourci ACPI"
 msgid "Select a window"
 msgstr "Sélectionner une fenêtre"
 
-#: src/modules/ibar/e_mod_config.c:54
+#: src/modules/ibar/e_mod_config.c:55
 msgid "IBar Settings"
 msgstr "Paramétrage de l'IBar"
 
-#: src/modules/ibar/e_mod_config.c:102
+#: src/modules/ibar/e_mod_config.c:104
 msgid "Selected source"
 msgstr "Source sélectionnée"
 
-#: src/modules/ibar/e_mod_config.c:123
+#: src/modules/ibar/e_mod_config.c:125
 msgid "Icon Labels"
 msgstr "Description de l'icône"
 
-#: src/modules/ibar/e_mod_config.c:124
+#: src/modules/ibar/e_mod_config.c:126
 msgid "Show icon label"
 msgstr "Afficher les étiquettes des icônes"
 
-#: src/modules/ibar/e_mod_config.c:144
+#: src/modules/ibar/e_mod_config.c:146
 msgid "Misc"
 msgstr "Divers"
 
-#: src/modules/ibar/e_mod_config.c:145
+#: src/modules/ibar/e_mod_config.c:147
+msgid "Icon focus flash"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
 msgstr "Fixer les icônes"
 
-#: src/modules/ibar/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:151
 msgid "Track launch"
 msgstr "Suivre le lancement"
 
-#: src/modules/ibar/e_mod_config.c:179
+#: src/modules/ibar/e_mod_config.c:184
 msgid "Create new IBar source"
 msgstr "Créer une nouvelle source"
 
-#: src/modules/ibar/e_mod_config.c:180
+#: src/modules/ibar/e_mod_config.c:185
 msgid "Enter a name for this new source:"
 msgstr "Saisir un nom pour cette nouvelle source :"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:199
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -8602,24 +8623,24 @@ msgstr ""
 "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer "
 "cette source ?"
 
-#: src/modules/ibar/e_mod_config.c:198
+#: src/modules/ibar/e_mod_config.c:203
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Voulez-vous vraiment supprimer cette source ?"
 
-#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1829
+#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1835
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:861
+#: src/modules/ibar/e_mod_main.c:863
 msgid "Create new Icon"
 msgstr "Créer une nouvelle icône"
 
-#: src/modules/ibar/e_mod_main.c:895
+#: src/modules/ibar/e_mod_main.c:897
 #, c-format
 msgid "Icon %s"
 msgstr "Icône %s"
 
-#: src/modules/ibar/e_mod_main.c:1829
+#: src/modules/ibar/e_mod_main.c:1835
 msgid "Focus IBar"
 msgstr "Focaliser l'IBar"
 
@@ -8846,62 +8867,72 @@ msgstr "Afficher le menu"
 msgid "Temperature Settings"
 msgstr "Paramétrage de Température"
 
-#: src/modules/temperature/e_mod_config.c:259
+#: src/modules/temperature/e_mod_config.c:260
 msgid "Sensors"
 msgstr "Capteurs"
 
-#: src/modules/temperature/e_mod_config.c:265
+#: src/modules/temperature/e_mod_config.c:266
 msgid "Celsius"
 msgstr "Celsius"
 
-#: src/modules/temperature/e_mod_config.c:268
+#: src/modules/temperature/e_mod_config.c:269
 msgid "Fahrenheit"
 msgstr "Fahrenheit"
 
-#: src/modules/temperature/e_mod_config.c:271
+#: src/modules/temperature/e_mod_config.c:272
 msgid "Display Units"
 msgstr "Affichage des unités"
 
-#: src/modules/temperature/e_mod_config.c:278
+#: src/modules/temperature/e_mod_config.c:279
 msgid "Check Interval"
 msgstr "Intervalle des vérifications"
 
-#: src/modules/temperature/e_mod_config.c:282
+#: src/modules/temperature/e_mod_config.c:283
+#, fuzzy
+msgid "High temperature notification"
+msgstr "Température élevée"
+
+#: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
 msgstr "Température élevée"
 
-#: src/modules/temperature/e_mod_config.c:286
-#: src/modules/temperature/e_mod_config.c:298
-#: src/modules/temperature/e_mod_config.c:356
-#: src/modules/temperature/e_mod_config.c:357
+#: src/modules/temperature/e_mod_config.c:291
+#: src/modules/temperature/e_mod_config.c:303
+#: src/modules/temperature/e_mod_config.c:364
+#: src/modules/temperature/e_mod_config.c:365
 #, c-format
 msgid "%1.0f F"
 msgstr "%1.0f °F"
 
-#: src/modules/temperature/e_mod_config.c:290
-#: src/modules/temperature/e_mod_config.c:302
-#: src/modules/temperature/e_mod_config.c:367
-#: src/modules/temperature/e_mod_config.c:368
+#: src/modules/temperature/e_mod_config.c:295
+#: src/modules/temperature/e_mod_config.c:307
+#: src/modules/temperature/e_mod_config.c:375
+#: src/modules/temperature/e_mod_config.c:376
 #, c-format
 msgid "%1.0f C"
 msgstr "%1.0f °C"
 
-#: src/modules/temperature/e_mod_config.c:294
+#: src/modules/temperature/e_mod_config.c:299
 msgid "Low Temperature"
 msgstr "Température basse"
 
-#: src/modules/temperature/e_mod_config.c:306
+#: src/modules/temperature/e_mod_config.c:312
 msgid "Temperatures"
 msgstr "Températures"
 
-#: src/modules/temperature/e_mod_main.c:211
+#: src/modules/temperature/e_mod_main.c:79
+#: src/modules/temperature/e_mod_main.c:247
 msgid "Temperature"
 msgstr "Température"
 
-#: src/modules/wizard/e_wizard.c:239 src/modules/wizard/page_020.c:51
-#: src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr "Veuillez patienter pendant le chargement des paramètres de Moksha !"
+#: src/modules/temperature/e_mod_main.c:82
+#, fuzzy
+msgid "High CPU temperature!"
+msgstr "Température élevée"
+
+#: src/modules/temperature/e_mod_main.c:83
+msgid "Check your device or settings!"
+msgstr ""
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -8915,10 +8946,14 @@ msgstr "Veuillez patienter"
 msgid "Welcome to Moksha"
 msgstr "Bienvenue dans Moksha"
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:143
+#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:52
 msgid "Select one"
 msgstr "Choisissez"
+
+#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+msgid "Please Wait As We Are Loading Moksha Settings!"
+msgstr "Veuillez patienter pendant le chargement des paramètres de Moksha !"
 
 #: src/modules/wizard/page_040.c:36
 msgid "Adding missing App files"
@@ -9313,23 +9348,23 @@ msgstr ""
 msgid "Systray"
 msgstr "Zone de notification"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1179
+#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
 msgid "Screenshot"
 msgstr "Capture d'écran"
 
-#: src/modules/shot/e_mod_main.c:99
+#: src/modules/shot/e_mod_main.c:98
 msgid "Screenshot in: "
 msgstr "Capture d'écran dans : "
 
-#: src/modules/shot/e_mod_main.c:114
+#: src/modules/shot/e_mod_main.c:113
 msgid "Screenshot stored in"
 msgstr "Capture stockée dans"
 
-#: src/modules/shot/e_mod_main.c:309
+#: src/modules/shot/e_mod_main.c:308
 msgid "Error - Folder does not exist"
 msgstr "Erreur : le dossier n'existe pas"
 
-#: src/modules/shot/e_mod_main.c:311
+#: src/modules/shot/e_mod_main.c:310
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
@@ -9337,20 +9372,20 @@ msgstr ""
 "Vous pouvez modifier le dossier dans les paramètres de la capture "
 "d'écran<br><br>Souhaitez-vous le faire maintenant ?"
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:360
 msgid "Error saving screenshot file"
 msgstr "Impossible d'enregistrer la capture"
 
-#: src/modules/shot/e_mod_main.c:362
+#: src/modules/shot/e_mod_main.c:361
 #, c-format
 msgid "Path: %s"
 msgstr "Chemin : %s"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:388
 msgid "Error - Unknown format"
 msgstr "Erreur : format inconnu"
 
-#: src/modules/shot/e_mod_main.c:390
+#: src/modules/shot/e_mod_main.c:389
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9358,93 +9393,93 @@ msgstr ""
 "L'extension du fichier n'est pas spécifiée.<br>Veuillez utiliser « .jpg » ou "
 "« .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
-#: src/modules/shot/e_mod_main.c:453
+#: src/modules/shot/e_mod_main.c:452
 msgid "Select screenshot save location"
 msgstr "Sélection de l'emplacement d'enregistrement"
 
-#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:989
+#: src/modules/shot/e_mod_main.c:466 src/modules/shot/e_mod_main.c:988
 msgid "Save"
 msgstr "Enregistrer"
 
-#: src/modules/shot/e_mod_main.c:571
+#: src/modules/shot/e_mod_main.c:570
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s / %s envoyés"
 
-#: src/modules/shot/e_mod_main.c:591
+#: src/modules/shot/e_mod_main.c:590
 msgid "Error - Upload Failed"
 msgstr "Erreur : échec du téléversement"
 
-#: src/modules/shot/e_mod_main.c:592
+#: src/modules/shot/e_mod_main.c:591
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Le téléversement a échoué avec le code d'état :<br>%i"
 
-#: src/modules/shot/e_mod_main.c:637
+#: src/modules/shot/e_mod_main.c:636
 msgid "Error - Can't create file"
 msgstr "Erreur : impossible de créer le fichier"
 
-#: src/modules/shot/e_mod_main.c:638
+#: src/modules/shot/e_mod_main.c:637
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Impossible de créer le fichier temporaire « %s »: %s"
 
-#: src/modules/shot/e_mod_main.c:656
+#: src/modules/shot/e_mod_main.c:655
 msgid "Error - Can't open file"
 msgstr "Erreur : impossible d'ouvrir le fichier"
 
-#: src/modules/shot/e_mod_main.c:657
+#: src/modules/shot/e_mod_main.c:656
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Impossible d'ouvrir le fichier temporaire « %s »: %s"
 
-#: src/modules/shot/e_mod_main.c:665
+#: src/modules/shot/e_mod_main.c:664
 msgid "Error - Bad size"
 msgstr "Erreur : mauvaise taille"
 
-#: src/modules/shot/e_mod_main.c:666
+#: src/modules/shot/e_mod_main.c:665
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Impossible d'obtenir la taille du fichier « %s »"
 
-#: src/modules/shot/e_mod_main.c:676
+#: src/modules/shot/e_mod_main.c:675
 msgid "Error - Can't allocate memory"
 msgstr "Erreur : impossible d'allouer de la mémoire"
 
-#: src/modules/shot/e_mod_main.c:677
+#: src/modules/shot/e_mod_main.c:676
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Impossible d'allouer de la mémoire pour l'image : %s"
 
-#: src/modules/shot/e_mod_main.c:684
+#: src/modules/shot/e_mod_main.c:683
 msgid "Error - Can't read picture"
 msgstr "Erreur : impossible de lire l'image"
 
-#: src/modules/shot/e_mod_main.c:685
+#: src/modules/shot/e_mod_main.c:684
 msgid "Cannot read picture"
 msgstr "Impossible de lire l'image"
 
-#: src/modules/shot/e_mod_main.c:707
+#: src/modules/shot/e_mod_main.c:706
 msgid "Uploading screenshot"
 msgstr "Téléversement de la capture"
 
-#: src/modules/shot/e_mod_main.c:712
+#: src/modules/shot/e_mod_main.c:711
 msgid "Uploading ..."
 msgstr "Téléversement…"
 
-#: src/modules/shot/e_mod_main.c:717
+#: src/modules/shot/e_mod_main.c:716
 msgid "Screenshot is available at this location:"
 msgstr "La capture est disponible ici :"
 
-#: src/modules/shot/e_mod_main.c:726
+#: src/modules/shot/e_mod_main.c:725
 msgid "Hide"
 msgstr "Masquer"
 
-#: src/modules/shot/e_mod_main.c:750
+#: src/modules/shot/e_mod_main.c:749
 msgid "Confirm Share"
 msgstr "Confirmer le partage"
 
-#: src/modules/shot/e_mod_main.c:751
+#: src/modules/shot/e_mod_main.c:750
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9452,27 +9487,27 @@ msgstr ""
 "Cette image va être téléversée sur enlightenment.org. Elle sera visible par "
 "tous."
 
-#: src/modules/shot/e_mod_main.c:753
+#: src/modules/shot/e_mod_main.c:752
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: src/modules/shot/e_mod_main.c:854
+#: src/modules/shot/e_mod_main.c:853
 msgid "Where to put Screenshot..."
 msgstr "Prise en charge de la capture"
 
-#: src/modules/shot/e_mod_main.c:906
+#: src/modules/shot/e_mod_main.c:905
 msgid "Quality"
 msgstr "Qualité"
 
-#: src/modules/shot/e_mod_main.c:915
+#: src/modules/shot/e_mod_main.c:914
 msgid "Perfect"
 msgstr "Optimal(e)"
 
-#: src/modules/shot/e_mod_main.c:991
+#: src/modules/shot/e_mod_main.c:990
 msgid "Share"
 msgstr "Partager"
 
-#: src/modules/shot/e_mod_main.c:1176
+#: src/modules/shot/e_mod_main.c:1174
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9481,32 +9516,32 @@ msgstr ""
 "Choisissez le mode de capture... <br>Le délai est défini dans les paramètres "
 "du module Capture d'écran.<br>Délai actuel : <b> %d s</b>"
 
-#: src/modules/shot/e_mod_main.c:1185
+#: src/modules/shot/e_mod_main.c:1183
 msgid "Instant shot"
 msgstr "Capture instantanée"
 
-#: src/modules/shot/e_mod_main.c:1186
+#: src/modules/shot/e_mod_main.c:1184
 msgid "Delayed shot"
 msgstr "Capture différée"
 
-#: src/modules/shot/e_mod_main.c:1226 src/modules/shot/e_mod_main.c:1280
+#: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
 msgid "Take Shot"
 msgstr "Capturer l'écran"
 
-#: src/modules/shot/e_mod_main.c:1237 src/modules/shot/e_mod_main.c:1272
-#: src/modules/shot/e_mod_main.c:1284
+#: src/modules/shot/e_mod_main.c:1235 src/modules/shot/e_mod_main.c:1270
+#: src/modules/shot/e_mod_main.c:1282
 msgid "Take Screenshot"
 msgstr "Capture d'écran"
 
-#: src/modules/shot/e_mod_main.c:1260
+#: src/modules/shot/e_mod_main.c:1258
 msgid "Shot Error"
 msgstr "Erreur de capture"
 
-#: src/modules/shot/e_mod_main.c:1261
+#: src/modules/shot/e_mod_main.c:1259
 msgid "Cannot initialize network"
 msgstr "Impossible d'initialiser le réseau"
 
-#: src/modules/shot/e_mod_main.c:1291 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
 msgid "Screenshot Settings"
 msgstr "Paramètres de la capture d'écran"
 
@@ -9714,27 +9749,37 @@ msgstr "Modèle"
 msgid "Variant"
 msgstr "Variante"
 
-#: src/modules/notification/e_mod_main.c:67
+#: src/modules/notification/e_mod_main.c:102
+#: src/modules/notification/e_mod_main.c:606
+msgid "Notification"
+msgstr "Notification"
+
+#: src/modules/notification/e_mod_main.c:287
+#: src/modules/clipboard/e_mod_main.c:395
+msgid "Empty"
+msgstr "Vide"
+
+#: src/modules/notification/e_mod_main.c:525
 msgid "Enter Presentation Mode"
 msgstr "Entrée en mode présentation"
 
-#: src/modules/notification/e_mod_main.c:68
+#: src/modules/notification/e_mod_main.c:526
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha est en mode <b>présentation</b>"
 
-#: src/modules/notification/e_mod_main.c:72
+#: src/modules/notification/e_mod_main.c:530
 msgid "Exited Presentation Mode"
 msgstr "Sortie du mode présentation"
 
-#: src/modules/notification/e_mod_main.c:73
+#: src/modules/notification/e_mod_main.c:531
 msgid "Presentation mode is over."
 msgstr "Le mode présentation est terminé."
 
-#: src/modules/notification/e_mod_main.c:86
+#: src/modules/notification/e_mod_main.c:544
 msgid "Enter Offline Mode"
 msgstr "Entrée en mode hors-ligne"
 
-#: src/modules/notification/e_mod_main.c:87
+#: src/modules/notification/e_mod_main.c:545
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9742,11 +9787,11 @@ msgstr ""
 "Moksha est en mode <b>hors-ligne</b>.<br>Dans ce mode, les modules qui "
 "utilisent le réseau n'interrogent plus les services distants."
 
-#: src/modules/notification/e_mod_main.c:93
+#: src/modules/notification/e_mod_main.c:551
 msgid "Exited Offline Mode"
 msgstr "Sortie du mode hors-ligne"
 
-#: src/modules/notification/e_mod_main.c:94
+#: src/modules/notification/e_mod_main.c:552
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9754,19 +9799,16 @@ msgstr ""
 "De nouveau <b>en ligne</b>.<br>Les modules qui utilisent le réseau "
 "retrouvent leurs fonctions habituelles."
 
-#: src/modules/notification/e_mod_main.c:148
-msgid "Notification"
-msgstr "Notification"
-
-#: src/modules/notification/e_mod_main.c:169
-msgid "Notification Module"
+#: src/modules/notification/e_mod_main.c:634
+#, fuzzy
+msgid "Notification module"
 msgstr "Module de notification"
 
-#: src/modules/notification/e_mod_main.c:189
+#: src/modules/notification/e_mod_main.c:654
 msgid "Error During DBus Init!"
 msgstr "Erreur durant l'initialisation de DBus !"
 
-#: src/modules/notification/e_mod_main.c:190
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -9774,157 +9816,222 @@ msgstr ""
 "Erreur durant l'initialisation de DBus ! Veuillez vérifier que dbus est "
 "correctement installé et fonctionne."
 
-#: src/modules/notification/e_mod_config.c:45
+#: src/modules/notification/e_mod_config.c:54
 msgid "Notification Settings"
 msgstr "Paramètres des notifications"
 
-#: src/modules/notification/e_mod_config.c:93
+#: src/modules/notification/e_mod_config.c:111
 msgid "Urgency"
 msgstr "Urgence"
 
-#: src/modules/notification/e_mod_config.c:94
+#: src/modules/notification/e_mod_config.c:112
 msgid "Levels of urgency to display:"
 msgstr "Niveaux d'urgence à afficher :"
 
-#: src/modules/notification/e_mod_config.c:100
+#: src/modules/notification/e_mod_config.c:118
 msgid "Critical"
 msgstr "Critique"
 
-#: src/modules/notification/e_mod_config.c:104
+#: src/modules/notification/e_mod_config.c:122
 msgid "Default Timeout"
 msgstr "Délai par défaut"
 
-#: src/modules/notification/e_mod_config.c:105
+#: src/modules/notification/e_mod_config.c:123
 msgid "Force timeout for all notifications"
 msgstr "Forcer le délai pour toutes les notifications"
 
-#: src/modules/notification/e_mod_config.c:122
+#: src/modules/notification/e_mod_config.c:140
 msgid "Popup Corner"
 msgstr "Coin du pop-up"
 
-#: src/modules/notification/e_mod_config.c:124
+#: src/modules/notification/e_mod_config.c:142
 msgid "Top left"
 msgstr "Coin gauche en haut"
 
-#: src/modules/notification/e_mod_config.c:126
+#: src/modules/notification/e_mod_config.c:144
 msgid "Top right"
 msgstr "Coin droit en haut"
 
-#: src/modules/notification/e_mod_config.c:128
+#: src/modules/notification/e_mod_config.c:146
 msgid "Bottom left"
 msgstr "Coin gauche en bas"
 
-#: src/modules/notification/e_mod_config.c:130
+#: src/modules/notification/e_mod_config.c:148
 msgid "Bottom right"
 msgstr "Coin droit en bas"
 
-#: src/modules/notification/e_mod_config.c:142
+#: src/modules/notification/e_mod_config.c:160
 msgid "Ignore replace ID"
 msgstr "Ignorer l'ID de remplacement"
 
-#: src/modules/notification/e_mod_config.c:144
+#: src/modules/notification/e_mod_config.c:162
 msgid "Use multiple monitor geometry"
 msgstr "Utiliser la géométrie à plusieurs écrans"
 
-#: src/modules/clipboard/e_mod_config.c:175
-msgid "Selection"
-msgstr "Sélection"
+#: src/modules/notification/e_mod_config.c:169
+#, fuzzy
+msgid "History Settings"
+msgstr "Autres paramètres"
 
-#: src/modules/clipboard/e_mod_config.c:176
-msgid " Use Copy (Ctrl-C)"
-msgstr " Utiliser copier (Ctrl+C)"
+#: src/modules/notification/e_mod_config.c:170
+#, fuzzy
+msgid "Time stamp"
+msgstr "Minuteurs"
 
-#: src/modules/clipboard/e_mod_config.c:179
-msgid " Use Primary (Selection)"
-msgstr " Utiliser primaire (sélection)"
+#: src/modules/notification/e_mod_config.c:172
+#, fuzzy
+msgid "Show application name"
+msgstr "Afficher le menu des applications"
 
-#: src/modules/clipboard/e_mod_config.c:182
-msgid " Synchronize Clipboards"
-msgstr " Synchroniser les presse-papiers"
+#: src/modules/notification/e_mod_config.c:174
+#, fuzzy
+msgid "Reverse order"
+msgstr " Ordre inversé"
 
-#: src/modules/clipboard/e_mod_config.c:189
-msgid "Content"
-msgstr "Contenu"
-
-#: src/modules/clipboard/e_mod_config.c:190
-#: src/modules/clipboard/e_mod_config.c:227
-msgid " Ignore Whitespace"
-msgstr " Ignorer les espaces blancs"
-
-#: src/modules/clipboard/e_mod_config.c:193
-msgid " Trim Whitespace"
-msgstr " Supprimer les espaces blancs"
-
-#: src/modules/clipboard/e_mod_config.c:196
-msgid " Trim Newlines"
-msgstr "  Supprimer les nouvelles lignes"
-
-#: src/modules/clipboard/e_mod_config.c:200
-#: src/modules/clipboard/e_mod_main.c:750
-#: src/modules/clipboard/e_mod_main.c:751
-#: src/modules/clipboard/e_mod_main.c:752
-msgid "Clipboard"
-msgstr "Presse-papiers"
-
-#: src/modules/clipboard/e_mod_config.c:206
-msgid " Save History"
-msgstr " Enregistrer l'historique"
-
-#: src/modules/clipboard/e_mod_config.c:209
-msgid " Confirm before Clearing"
-msgstr " Confirmer avant d'effacer"
-
-#: src/modules/clipboard/e_mod_config.c:211
-msgid " Save every Selection"
-msgstr " Enregistrer chaque sélection"
-
-#: src/modules/clipboard/e_mod_config.c:215
-msgid " Timer"
-msgstr " Minuteur"
-
-#: src/modules/clipboard/e_mod_config.c:226
+#: src/modules/notification/e_mod_config.c:178
+#: src/modules/clipboard/e_mod_config.c:228
 msgid "Labels"
 msgstr "Étiquettes"
 
-#: src/modules/clipboard/e_mod_config.c:230
-msgid " Label Length"
+#: src/modules/notification/e_mod_config.c:179
+#, fuzzy
+msgid "Labels length"
 msgstr " Longueur de l'étiquette"
 
-#: src/modules/clipboard/e_mod_config.c:237
+#: src/modules/notification/e_mod_config.c:186
+#: src/modules/clipboard/e_mod_config.c:239
 msgid "Items"
 msgstr "Éléments"
 
-#: src/modules/clipboard/e_mod_config.c:238
-msgid " Reverse Order"
-msgstr " Ordre inversé"
-
-#: src/modules/clipboard/e_mod_config.c:241
-msgid " Items in History"
+#: src/modules/notification/e_mod_config.c:187
+#, fuzzy
+msgid "Items in history"
 msgstr " Éléments dans l'historique"
 
-#: src/modules/clipboard/e_mod_config.c:247
+#: src/modules/notification/e_mod_config.c:195
+msgid "Gadget animation delay [s]"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:203
+msgid "App blacklist (use a delimiter)"
+msgstr ""
+
+#: src/modules/notification/e_mod_config.c:209
+#: src/modules/clipboard/e_mod_config.c:249
 msgid "History"
 msgstr "Historique"
 
-#: src/modules/clipboard/e_mod_config.c:272
+#: src/modules/clipboard/e_mod_config.c:177
+msgid "Selection"
+msgstr "Sélection"
+
+#: src/modules/clipboard/e_mod_config.c:178
+msgid " Use Copy (Ctrl-C)"
+msgstr " Utiliser copier (Ctrl+C)"
+
+#: src/modules/clipboard/e_mod_config.c:181
+msgid " Use Primary (Selection)"
+msgstr " Utiliser primaire (sélection)"
+
+#: src/modules/clipboard/e_mod_config.c:184
+msgid " Synchronize Clipboards"
+msgstr " Synchroniser les presse-papiers"
+
+#: src/modules/clipboard/e_mod_config.c:191
+msgid "Content"
+msgstr "Contenu"
+
+#: src/modules/clipboard/e_mod_config.c:192
+#: src/modules/clipboard/e_mod_config.c:229
+msgid " Ignore Whitespace"
+msgstr " Ignorer les espaces blancs"
+
+#: src/modules/clipboard/e_mod_config.c:195
+msgid " Trim Whitespace"
+msgstr " Supprimer les espaces blancs"
+
+#: src/modules/clipboard/e_mod_config.c:198
+msgid " Trim Newlines"
+msgstr "  Supprimer les nouvelles lignes"
+
+#: src/modules/clipboard/e_mod_config.c:202
+#: src/modules/clipboard/e_mod_main.c:885
+#: src/modules/clipboard/e_mod_main.c:886
+#: src/modules/clipboard/e_mod_main.c:887
+msgid "Clipboard"
+msgstr "Presse-papiers"
+
+#: src/modules/clipboard/e_mod_config.c:208
+msgid " Save History"
+msgstr " Enregistrer l'historique"
+
+#: src/modules/clipboard/e_mod_config.c:211
+msgid " Confirm before Clearing"
+msgstr " Confirmer avant d'effacer"
+
+#: src/modules/clipboard/e_mod_config.c:213
+msgid " Save every Selection"
+msgstr " Enregistrer chaque sélection"
+
+#: src/modules/clipboard/e_mod_config.c:217
+msgid " Timer"
+msgstr " Minuteur"
+
+#: src/modules/clipboard/e_mod_config.c:232
+msgid " Label Length"
+msgstr " Longueur de l'étiquette"
+
+#: src/modules/clipboard/e_mod_config.c:240
+msgid " Reverse Order"
+msgstr " Ordre inversé"
+
+#: src/modules/clipboard/e_mod_config.c:243
+msgid " Items in History"
+msgstr " Éléments dans l'historique"
+
+#: src/modules/clipboard/e_mod_config.c:274
 msgid "Clipboard Settings"
 msgstr "Paramètres du presse-papiers"
 
-#: src/modules/clipboard/e_mod_main.c:359
-msgid "Empty"
-msgstr "Vide"
+#: src/modules/clipboard/e_mod_main.c:403
+#, fuzzy
+msgid "Ignore history"
+msgstr "Ignorer l'indication"
 
-#: src/modules/clipboard/e_mod_main.c:581
+#: src/modules/clipboard/e_mod_main.c:636
 msgid "Confirm History Deletion"
 msgstr "Confirmer la suppression de l'historique"
 
-#: src/modules/clipboard/e_mod_main.c:583
+#: src/modules/clipboard/e_mod_main.c:638
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr ""
 "Vous avez demandé à supprimer l'historique des presse-papiers.<br><br>Voulez-"
 "vous vraiment le faire ?"
+
+#: src/modules/clipboard/e_mod_main.c:723
+#, fuzzy
+msgid "Confirm Item Deletion"
+msgstr "Confirmer la suppression du rayon"
+
+#: src/modules/clipboard/e_mod_main.c:725
+#, fuzzy
+msgid ""
+"You wish to delete the current item.<br><br>Are you sure you want to delete "
+"it?"
+msgstr ""
+"Vous avez demandé à supprimer l'historique des presse-papiers.<br><br>Voulez-"
+"vous vraiment le faire ?"
+
+#: src/modules/clipboard/e_mod_main.c:753
+#, fuzzy
+msgid "Clipboard: Edit Item"
+msgstr "Paramètres du presse-papiers"
+
+#: src/modules/clipboard/e_mod_main.c:754
+msgid "Edit the item content:"
+msgstr ""
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10053,35 +10160,39 @@ msgstr "Entrées"
 msgid "Unmute"
 msgstr "Réactiver le son"
 
-#: src/modules/mixer/e_mod_main.c:126
+#: src/modules/mixer/e_mod_main.c:118
 msgid "New volume"
 msgstr "Nouveau volume"
 
-#: src/modules/mixer/e_mod_main.c:139
+#: src/modules/mixer/e_mod_main.c:133
+msgid "Volume limit reached!!!"
+msgstr ""
+
+#: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
 msgstr "EPulse"
 
-#: src/modules/mixer/e_mod_main.c:139
+#: src/modules/mixer/e_mod_main.c:136
 msgid "Volume Changed"
 msgstr "Volume modifié"
 
-#: src/modules/mixer/e_mod_main.c:236
+#: src/modules/mixer/e_mod_main.c:240
 msgid "Increase Volume"
 msgstr "Augmenter le volume"
 
-#: src/modules/mixer/e_mod_main.c:244
+#: src/modules/mixer/e_mod_main.c:248
 msgid "Decrease Volume"
 msgstr "Baisser le volume"
 
-#: src/modules/mixer/e_mod_main.c:252
+#: src/modules/mixer/e_mod_main.c:256
 msgid "Mute volume"
 msgstr "Couper le son"
 
-#: src/modules/mixer/e_mod_main.c:265
+#: src/modules/mixer/e_mod_main.c:269
 msgid "Volume Increase"
 msgstr "Augmentation du volume"
 
-#: src/modules/mixer/e_mod_main.c:272 src/modules/mixer/e_mod_main.c:279
+#: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
 msgstr "Son coupé"
 
