@@ -25,6 +25,7 @@ e_order_init(void)
      menu_file = strdup(e_config->default_system_menu);
    if (!menu_file)
      menu_file = strdup("/etc/xdg/menus/applications.menu");
+   printf("E ORDER: %s\n", menu_file);
    if (menu_file)
      {
         if (!ecore_file_exists(menu_file))
