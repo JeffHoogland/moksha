@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-10-24 15:51+0200\n"
-"PO-Revision-Date: 2020-01-12 16:21+0100\n"
+"PO-Revision-Date: 2020-10-29 12:55+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-08-27 10:00+0000\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: src/bin/e_about.c:18
@@ -2821,7 +2821,6 @@ msgid "About Theme"
 msgstr "Over Thema"
 
 #: src/bin/e_int_menus.c:257
-#, fuzzy
 msgid "Restart Moksha"
 msgstr "Moksha herstarten"
 
@@ -3967,6 +3966,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
+"Uw versie van Enlightenment<br>is niet de nieuwste.<br>De nieuwste versie is:"
+"<br><br>%s<br><br>Bezoek a.u.b. www.enlightenment.org<br>of werk uw "
+"systeempakketten bij<br>om een nieuwe versie te krijgen."
 
 #: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -5904,7 +5906,7 @@ msgstr "Automatisch schuiven"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr "Pictogrammen uitschakelen in menu's"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -6673,7 +6675,7 @@ msgstr "Schakel aangepaste lettertypeklassen in"
 #: src/modules/conf_theme/e_int_config_fonts.c:449
 #: src/modules/conf_theme/e_int_config_fonts.c:670
 msgid "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
-msgstr ""
+msgstr "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:629
 msgid "Font Classes"
@@ -8568,7 +8570,7 @@ msgstr "Div"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Pictogram flitst op bij scherpstellen"
 
 #: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
@@ -8860,9 +8862,8 @@ msgid "Check Interval"
 msgstr "Ververs-interval"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Hoge temperatuur"
+msgstr "Melding voor hoge temperatuur"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8898,13 +8899,12 @@ msgid "Temperature"
 msgstr "Temperatuur"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Hoge temperatuur"
+msgstr "Hoge CPU-temperatuur!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Kijk uw apparaat of instellingen na."
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -9050,7 +9050,7 @@ msgstr "Zichtbaarheid omschakelen"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:9
 msgid "Add Quickaccess For Current Window"
-msgstr "Snelle toegang toevoegen voor huidig venster"
+msgstr "Snelle toegang toevoegen aan huidig venster"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:10
 msgid "Remove Quickaccess From Current Window"
@@ -9080,6 +9080,13 @@ msgid ""
 "this<br>is a terminal which can change its window name.<br>Alternatively, "
 "you can add a data.item to"
 msgstr ""
+"De herstartoptie is bedoeld om te worden<br>gebruikt door "
+"terminaltoepassingen om een<br>blijvend terminalvenster te maken dat zich "
+"heropent bij<br>sluiten, zoals te zien in quake-achtige<br>uitklapterminals. "
+"Of de gekozen toepassing is geen<br>terminal of de opdrachtregelvlag voor "
+"het wijzigen<br>van de terminalvensternaam wordt niet getoond. Dien a.u.b."
+"<br>een foutrapport in, indien dit een terminal is die<br>zijn vensternaam "
+"kan veranderen.<br>Of voeg een gegevenselement toe aan"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9134,7 +9141,7 @@ msgstr "Meer hulp"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "The requested Quickaccess entry does not exist!"
-msgstr "Het verzochte Quickaccess-element bestaat niet."
+msgstr "Het verzochte element voor snelle toegang bestaat niet."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "Keybind Error"
@@ -9183,7 +9190,7 @@ msgid ""
 "exits<br><hilight>Transient</hilight> - Remember only this instance of the "
 "window (not permanent)"
 msgstr ""
-"De opties in het Snelle-toegang-menu zijn de volgende:"
+"De opties in het menu voor snelle toegang zijn de volgende:"
 "<br><hilight>Automatisch verbergen</hilight> - verberg venster bij verlies "
 "scherpstelling<br><hilight>Verbergen i.p.v. verheffen</hilight> - verberg "
 "venster wanneer actief zonder scherpstelling<br><hilight>Springmodus</"
@@ -9194,7 +9201,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
-msgstr ""
+msgstr "U hebt het zelf verwijderd!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
 #: src/modules/quickaccess/e_mod_quickaccess.c:1018
@@ -9205,40 +9212,49 @@ msgstr "Stop"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:994
 msgid "Great! Activate the Quickaccess entry again to show it!"
-msgstr ""
+msgstr "Prima! Activeer de regel voor snelle toegang wederom om het te tonen."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:996
 msgid "Great! Activate the Quickaccess entry again to hide it!"
 msgstr ""
+"Prima! Activeer de regel voor snelle toegang wederom om het te verbergen."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1016
 msgid "Well done.<br>Now to delete the entry we just made..."
 msgstr ""
+"Goed gedaan.<br>En nu, om de regel te verwijderen die we zojuist hebben "
+"gemaakt..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1032
 msgid ""
 "The demo dialog has been bound to the keys you pressed.<br>Try pressing the "
 "same keys!"
 msgstr ""
+"De demonstratiedialoog is gekoppeld aan de toetsen die u<br>zojuist hebt "
+"ingedrukt. Probeer om dezelfde toetsen nogmaals in te drukken."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1197
 msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
 msgstr ""
+"Het nieuwgetoonde venster zal de<br>bindingsvolgorde voor snelle toegang "
+"activeren.\t"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
-msgstr ""
+msgstr "Demonstratie van snelle toegang"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr ""
+msgstr "Dit is een demonstratiedialoog in de handleiding voor snelle toegang"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
 "Quickaccess entries can be created from<br>the border menu of any window."
 "<br>Click Continue to see a demonstration."
 msgstr ""
+"Regels voor snelle toegang kunnen<br>worden gemaakt vanuit het "
+"randmenu<br>van elk venster. Klik op Doorgaan voor een demonstratie."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
 msgid ""
@@ -9247,12 +9263,18 @@ msgid ""
 "associated window can be returned to immediately<br>on demand by pushing the "
 "keyboard shortcut."
 msgstr ""
+"Snelle toegang is een manier om door gebruikers<br>gekozen vensters en "
+"toepassingen te binden<br>aan sneltoetsen. Zodra er een regel is<br>gemaakt, "
+"kan het gekoppelde venster direct worden opgeroepen door<br>de sneltoets in "
+"te drukken."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
 "This appears to be your first time using the Quickaccess module.<br>Would "
 "you like some usage tips?"
 msgstr ""
+"Het lijkt erop dat dit de eerste keer is dat u de module voor "
+"snelle<br>toegang gebruikt. Wilt u wat tips voor het gebruik?"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
@@ -9736,7 +9758,6 @@ msgstr ""
 "gebruiken weer hun normale taken oppakken."
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
 msgstr "Meldingsmodule"
 
@@ -9805,24 +9826,20 @@ msgid "Use multiple monitor geometry"
 msgstr "Geometrie voor meervoudige beeldschermen gebruiken"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Andere instellingen"
+msgstr "Geschiedenisinstellingen"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Aftelklokken"
+msgstr "Tijdstempel"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Alle toepassingenmenu weergeven"
+msgstr "Toepassingsnaam weergeven"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
-msgstr " Rangschikking omkeren"
+msgstr "Rangschikking omkeren"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:228
@@ -9830,9 +9847,8 @@ msgid "Labels"
 msgstr "Etiketten"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr " Etiketlengte"
+msgstr "Lengte van etiketten"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:239
@@ -9840,17 +9856,16 @@ msgid "Items"
 msgstr "Elementen"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Items in history"
-msgstr " Elementen in geschiedenis"
+msgstr "Elementen in geschiedenis"
 
 #: src/modules/notification/e_mod_config.c:195
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Animatievertraging [s] voor mini"
 
 #: src/modules/notification/e_mod_config.c:203
 msgid "App blacklist (use a delimiter)"
-msgstr ""
+msgstr "Zwarte lijst voor toepassingen (gebruik een begrenzer)"
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:249
@@ -9930,24 +9945,20 @@ msgid "Clipboard Settings"
 msgstr "Klembordinstellingen"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Vergrendeling mislukt"
+msgstr "Element vergrendelen"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d element"
+msgstr "Element bewerken"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Verwijderen is klaar"
+msgstr "Element verwijderen"
 
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Negeer wenk"
+msgstr "Geschiedenis negeren"
 
 #: src/modules/clipboard/e_mod_main.c:636
 msgid "Confirm History Deletion"
@@ -9960,25 +9971,22 @@ msgid ""
 msgstr "U wilt de klembordgeschiedenis wissen.<br><br>Weet u het zeker?"
 
 #: src/modules/clipboard/e_mod_main.c:723
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Bevestig verwijderen van plank"
+msgstr "Bevestig verwijderen van element"
 
 #: src/modules/clipboard/e_mod_main.c:725
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "U wilt de klembordgeschiedenis wissen.<br><br>Weet u het zeker?"
+msgstr "U wilt het huidige element wissen.<br><br>Weet u het zeker?"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Klembordinstellingen"
+msgstr "Klembord: Element bewerken"
 
 #: src/modules/clipboard/e_mod_main.c:754
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Bewerk de inhoud van het element:"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10055,7 +10063,7 @@ msgstr "Plaatsen-waarschuwing!"
 #: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr "Schijf ''%s'' gebruik is %d %%."
+msgstr "Schijf '%s' gebruik is %d %%."
 
 #: src/modules/places/e_mod_places.c:661
 msgid ""
@@ -10113,7 +10121,7 @@ msgstr "Nieuw volume"
 
 #: src/modules/mixer/e_mod_main.c:133
 msgid "Volume limit reached!!!"
-msgstr ""
+msgstr "Limiet van volume is bereikt!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
