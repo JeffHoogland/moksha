@@ -1346,6 +1346,8 @@ e_util_terminal_desktop_get(void)
    const char *terms[] =
      {
         "terminology.desktop",
+        "lxterminal.desktop",
+        "qterminal.desktop",
         "xterm.desktop",
         "rxvt.desktop",
         "gnome-terminal.desktop",
@@ -1387,7 +1389,7 @@ e_util_terminal_desktop_get(void)
              tdesktop = l->data;
              EINA_LIST_FREE(l, td)
                {
-                  // free/unref the desktosp we are not going to use
+                  // free/unref the desktops we are not going to use
                   if (td != tdesktop) efreet_desktop_free(td);
                }
           }

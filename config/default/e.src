@@ -417,7 +417,7 @@ group "E_Config" struct {
   value "menu_eap_comment_show" int: 0;
   value "menu_gadcon_client_toplevel" int: 0;
   value "fullscreen_policy" int: 0;
-  value "exebuf_term_cmd" string: "xterm -hold -e";
+  value "exebuf_term_cmd" string: "terminology --hold -e";
   value "use_app_icon" int: 0;
   value "cnfmdlg_disabled" int: 0;
   value "cfgdlg_auto_apply" int: 0;
