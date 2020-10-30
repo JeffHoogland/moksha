@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-10-24 15:51+0200\n"
-"PO-Revision-Date: 2020-09-16 06:53+0200\n"
+"PO-Revision-Date: 2020-10-30 08:03+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2014-06-17 06:39+0000\n"
 "X-Generator: Poedit 2.4.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -1057,8 +1056,8 @@ msgstr "Erreur : aucun support de PAM"
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"Moksha a été compilé sans le support de PAM,<br>le verrouillage d'écran a "
-"été désactivé."
+"Moksha a été compilé sans le support de PAM,<br>le verrouillage d'écran est "
+"désactivé."
 
 #: src/bin/e_desklock.c:303
 msgid "Lock Failed"
@@ -2967,7 +2966,7 @@ msgstr "Moksha ne parvient pas à initialiser Eina !\n"
 
 #: src/bin/e_main.c:297
 msgid "Moksha could not create a logging domain!\n"
-msgstr "Moksha n'a pu créer le moindre domaine pour les journaux système !\n"
+msgstr "Moksha est incapable de créer un domaine de journalisation !\n"
 
 #: src/bin/e_main.c:345
 msgid "Moksha cannot initialize Eet!\n"
@@ -3648,7 +3647,7 @@ msgstr "Module instable détecté"
 
 #: src/bin/e_module.c:823
 msgid "I know"
-msgstr "Je suis au courrant"
+msgstr "Je suis au courant"
 
 #: src/bin/e_screensaver.c:183
 msgid ""
@@ -5925,7 +5924,7 @@ msgstr "Défilement"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr "Pas d'icônes dans les menus"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -6734,7 +6733,7 @@ msgstr "Activer les polices de repli"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:713
 msgid "Hinting / Fallbacks"
-msgstr "Optimisation/Polices de repli"
+msgstr "Optimisation / Polices de repli"
 
 #: src/modules/conf_theme/e_int_config_scale.c:132
 msgid "Factor"
@@ -8596,7 +8595,7 @@ msgstr "Divers"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Pulsation des icônes"
 
 #: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
@@ -8888,9 +8887,8 @@ msgid "Check Interval"
 msgstr "Intervalle des vérifications"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Température élevée"
+msgstr "Notification de haute température"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8926,13 +8924,12 @@ msgid "Temperature"
 msgstr "Température"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Température élevée"
+msgstr "Température du CPU élevée !"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Vérifiez votre appareil ou les paramètres !"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -9535,7 +9532,7 @@ msgstr "Capture d'écran"
 
 #: src/modules/shot/e_mod_main.c:1258
 msgid "Shot Error"
-msgstr "Erreur de capture"
+msgstr "Capture : erreur"
 
 #: src/modules/shot/e_mod_main.c:1259
 msgid "Cannot initialize network"
@@ -9765,7 +9762,7 @@ msgstr "Entrée en mode présentation"
 
 #: src/modules/notification/e_mod_main.c:526
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr "Moksha est en mode <b>présentation</b>"
+msgstr "Moksha est en mode <b>présentation</b>."
 
 #: src/modules/notification/e_mod_main.c:530
 msgid "Exited Presentation Mode"
@@ -9800,7 +9797,6 @@ msgstr ""
 "retrouvent leurs fonctions habituelles."
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
 msgstr "Module de notification"
 
@@ -9869,24 +9865,20 @@ msgid "Use multiple monitor geometry"
 msgstr "Utiliser la géométrie à plusieurs écrans"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Autres paramètres"
+msgstr "Paramètres de l'historique"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Minuteurs"
+msgstr "Horodatage"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Afficher le menu des applications"
+msgstr "Afficher le nom de l'application"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
-msgstr " Ordre inversé"
+msgstr "Ordre inversé"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:228
@@ -9894,9 +9886,8 @@ msgid "Labels"
 msgstr "Étiquettes"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr " Longueur de l'étiquette"
+msgstr "Longueur de l'étiquette"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:239
@@ -9904,17 +9895,16 @@ msgid "Items"
 msgstr "Éléments"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Items in history"
-msgstr " Éléments dans l'historique"
+msgstr "Éléments dans l'historique"
 
 #: src/modules/notification/e_mod_config.c:195
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Délai animation du gadget [s]"
 
 #: src/modules/notification/e_mod_config.c:203
 msgid "App blacklist (use a delimiter)"
-msgstr ""
+msgstr "Liste noire des applis (utiliser un délimiteur)"
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:249
@@ -9994,24 +9984,20 @@ msgid "Clipboard Settings"
 msgstr "Paramètres du presse-papiers"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Échec du verrouillage"
+msgstr "Verrouiller l'élément"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d élément"
+msgstr "Éditer l'élément"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Suppression accomplie"
+msgstr "Supprimer l'élément"
 
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Ignorer l'indication"
+msgstr "Ignorer l'historique"
 
 #: src/modules/clipboard/e_mod_main.c:636
 msgid "Confirm History Deletion"
@@ -10026,27 +10012,24 @@ msgstr ""
 "vous vraiment le faire ?"
 
 #: src/modules/clipboard/e_mod_main.c:723
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Confirmer la suppression du rayon"
+msgstr "Confirmer la suppression de l'élément"
 
 #: src/modules/clipboard/e_mod_main.c:725
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Vous avez demandé à supprimer l'historique des presse-papiers.<br><br>Voulez-"
-"vous vraiment le faire ?"
+"Vous avez demandé à supprimer l'élément actuel.<br><br>Voulez-vous vraiment "
+"le faire ?"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Paramètres du presse-papiers"
+msgstr "Presse-papiers : édition "
 
 #: src/modules/clipboard/e_mod_main.c:754
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Éditer le contenu de l'élément :"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10181,7 +10164,7 @@ msgstr "Nouveau volume"
 
 #: src/modules/mixer/e_mod_main.c:133
 msgid "Volume limit reached!!!"
-msgstr ""
+msgstr "La limite du volume est atteinte !"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
