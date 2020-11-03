@@ -1,25 +1,29 @@
 #include "e.h"
 
-#define BODHI_VERSION "5.1.0"
+#define BODHI_VERSION "6.0.0"
 #define BODHI_ABOUT_TITLE "About Bodhi"
-#define BODHI_ABOUT_TEXT "Bodhi Linux - Enlightened Linux Desktop"
+#define BODHI_ABOUT_TEXT "Bodhi Linux - The Enlightened Desktop"
 #define BODHI_ABOUT_AUTHORS \
     "Jeff Hoogland<br>" \
-    "Joris 'aeonius' van Dijk<br>" \
-    "Jason 'Tristam' Thomas<br>" \
-    "Kristi Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
     "Štefan 'the_waiter' Uram<br>" \
+    "Jason 'Tristam' Thomas<br>" \
+    "Gareth 'hippytaff' Williams<br>" \
+    "Craig 'enigma9o7' Langman<br>" \
+    "Gavin 'fidoedidoe' Fowler<br>" \
+    "Roger 'JollyRoger' Carter<br>" \
+    "Bob Raskin<br>" \
+    "Kristi Hoogland<br><br>" \
+    "In memory:<br>" \
+    "Charles 'Charles@Bodhi' van de Beek<br>" \
+    "Mark 'ottermaton' Strawser<br><br>" \
+    "Past contributors:<br>" \
+    "Joris 'aeonius' van Dijk<br>" \
     "Stace 'sef' Fauske<br>" \
-    "Rene 'duke_h3' Malmgren<br>" \
     "Kai 'kuuko' Huuhko<br>" \
     "Stephen 'okra' Houston<br>" \
     "Patrick Duckson<br>" \
-    "Roger 'JollyRoger' Carter<br>" \
-    "Jacob 'Oblio' Olson <br><br>" \
-    "In memory:<br>" \
-    "Charles 'Charles@Bodhi' van de Beek<br><br>" \
-    "Past contributors:<br>" \
+    "Jacob 'Oblio' Olson <br>" \
     "Ken 'trace'  LaBuda<br>" \
     "Christopher 'devilhorns' Michael<br>" \
     "Jason 'jarope' Peel<br>" \
@@ -29,11 +33,9 @@
     "Anthony 'AntCer' Cervantes<br>" \
     "Kaleb 'belak' Elwert<br>" \
     "Jose 'Jose' Manimala<br>" \
-    "Gareth 'hippytaff' Williams<br>" \
     "Micah 'M1C4HTRON13″ Denn<br>" \
     "Meji 'Meji_D' Dejsdóttir<br>" \
     "Víctor 'esmirlin' Parra García<br>" \
-    "Mark 'ottermaton' Strawser<br>" \
     "Caerolle<br>" \
     "Gar Romero<br>" \
     "Doug 'Deepspeed' Yanez<br>" \
