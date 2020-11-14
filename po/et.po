@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -3225,7 +3225,7 @@ msgstr "Määra virtuaalsed töölauad"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 #, fuzzy
 msgid "Windows"
@@ -10774,83 +10774,88 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "kõik Configuration"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "sortimine"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 #, fuzzy
 msgid "Tiling"
 msgstr "Valijate"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 #, fuzzy
 msgid "Toggle floating"
 msgstr "Näita kalender"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 #, fuzzy
 msgid "Remove a stack"
 msgstr "Eemalda vidin"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 #, fuzzy
 msgid "Move window"
 msgstr "ei aknas"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 #, fuzzy
 msgid "Move window to the left"
 msgstr "Akna vasakul"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 #, fuzzy
 msgid "Move window to the right"
 msgstr "Parempoolsesse aknasse"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 #, fuzzy
 msgid "Move window up"
 msgstr "ei aknas"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 #, fuzzy
 msgid "Move window down"
 msgstr "Window Down"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 #, fuzzy
 msgid "Adjust transitions"
 msgstr "üleminekud"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 #, fuzzy
 msgid "Send to upper right corner"
 msgstr "popup Size"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 #, fuzzy
 msgid "Send to upper left corner"
 msgstr "popup Size"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr ""
 
@@ -11360,8 +11365,9 @@ msgid "New volume"
 msgstr "New maht"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "mahu muutus"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -11482,10 +11488,6 @@ msgstr "mahu muutus"
 #, fuzzy
 #~ msgid "Mixer"
 #~ msgstr "mikser"
-
-#, fuzzy
-#~ msgid "Volume changed"
-#~ msgstr "mahu muutus"
 
 #, fuzzy
 #~ msgid "Mixer Settings Updated"

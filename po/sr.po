@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -2853,7 +2853,7 @@ msgstr "Постави нестварне радне површи"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Прозори"
@@ -9662,72 +9662,77 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Поставке поплочавања"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "Покретно"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 msgid "Tiling"
 msgstr "Поплочавање"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 msgid "Toggle floating"
 msgstr "Прекидач плутања"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr "Додај стог"
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 msgid "Remove a stack"
 msgstr "Уклони стог"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr "Мењај између редова и колона"
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr "Замени прозор са другим"
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 msgid "Move window"
 msgstr "Премешта прозор"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Move window to the left"
 msgstr "Помери прозор улево"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 msgid "Move window to the right"
 msgstr "Помери прозор удесно"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 msgid "Move window up"
 msgstr "Помери прозор горе"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 msgid "Move window down"
 msgstr "Помери прозор доле"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Adjust transitions"
 msgstr "Подеси прелазе"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr "Стави одређени прозор у жижу"
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 msgid "Send to upper right corner"
 msgstr "Пошаљи у горњи десни угао"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Send to upper left corner"
 msgstr "Пошаљи у горњи леви угао"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr "Пошаљи у доњи десни угао"
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr "Пошаљи у доњи леви угао"
 
@@ -10227,8 +10232,9 @@ msgid "New volume"
 msgstr "Нова гласноћа"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "Гласноћа је промењена"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10332,9 +10338,6 @@ msgstr "Гласноћа је промењена"
 
 #~ msgid "Mixer"
 #~ msgstr "Мешач звука"
-
-#~ msgid "Volume changed"
-#~ msgstr "Гласноћа је промењена"
 
 #~ msgid "Mixer Settings Updated"
 #~ msgstr "Унапређене поставке мешача"

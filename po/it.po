@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2013-07-02 19:26+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -2853,7 +2853,7 @@ msgstr "Imposta desktop virtuali"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Finestre"
@@ -9735,72 +9735,77 @@ msgstr "Numero di colonne da usare per desktop (0 → griglia disabilitata)"
 msgid "Tiling Configuration"
 msgstr "Configurazione di Tiling"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "Fluttuante"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 msgid "Tiling"
 msgstr "Tiling"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 msgid "Toggle floating"
 msgstr "Commuta fluttuazione"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr "Aggiungi pila"
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 msgid "Remove a stack"
 msgstr "Elimina pila"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr "Commuta tra righe e colonne"
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr "Scambia una finestra con un'altra"
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 msgid "Move window"
 msgstr "Sposta finestra"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Move window to the left"
 msgstr "Sposta finestra a sinistra"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 msgid "Move window to the right"
 msgstr "Sposta finestra a destra"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 msgid "Move window up"
 msgstr "Sposta finestra in su"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 msgid "Move window down"
 msgstr "Sposta finestra in giù"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Adjust transitions"
 msgstr "Regola transizioni"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr "Fuoco ad una particolare finestra"
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 msgid "Send to upper right corner"
 msgstr "Invia all'angolo superiore destro"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Send to upper left corner"
 msgstr "Invia all'angolo superiore sinistro"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr "Invia all'angolo inferiore destro"
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr "Invia all'angolo inferiore sinistro"
 
@@ -10288,8 +10293,9 @@ msgid "New volume"
 msgstr "Nuovo livello audio"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "Il volume dell'audio è cambiato"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10393,9 +10399,6 @@ msgstr "Il volume dell'audio è cambiato"
 
 #~ msgid "Mixer"
 #~ msgstr "Mixer"
-
-#~ msgid "Volume changed"
-#~ msgstr "Il volume dell'audio è cambiato"
 
 #~ msgid "Mixer Settings Updated"
 #~ msgstr "Impostazioni di Mixer aggiornate"

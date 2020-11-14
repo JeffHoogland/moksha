@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -2970,7 +2970,7 @@ msgstr "Virtuális asztalok beállítása"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Ablakok"
@@ -10185,83 +10185,88 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Címsor beállítása"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "Indulás folyamatban"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 #, fuzzy
 msgid "Tiling"
 msgstr "Szavazás"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 #, fuzzy
 msgid "Toggle floating"
 msgstr "Az eszköztár megjelenítése"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 #, fuzzy
 msgid "Remove a stack"
 msgstr "Modul eltávolítása"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 #, fuzzy
 msgid "Move window"
 msgstr "(Nincsenek ablakok)"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 #, fuzzy
 msgid "Move window to the left"
 msgstr "Ablak bal oldalán"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 #, fuzzy
 msgid "Move window to the right"
 msgstr "Ablak jobb oldalán"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 #, fuzzy
 msgid "Move window up"
 msgstr "(Nincsenek ablakok)"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 #, fuzzy
 msgid "Move window down"
 msgstr "Ablak azonosító"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 #, fuzzy
 msgid "Adjust transitions"
 msgstr "Átmenetek"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 #, fuzzy
 msgid "Send to upper right corner"
 msgstr "Felbukkanó"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 #, fuzzy
 msgid "Send to upper left corner"
 msgstr "Felbukkanó"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr ""
 
@@ -10758,8 +10763,9 @@ msgid "New volume"
 msgstr "új kötet"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "Felbontás módosítása"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10863,10 +10869,6 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 #~ msgid "Mixer"
 #~ msgstr "keverő"
-
-#, fuzzy
-#~ msgid "Volume changed"
-#~ msgstr "Felbontás módosítása"
 
 #~ msgid "Mixer Settings Updated"
 #~ msgstr "Keverő beállításai frissítve"

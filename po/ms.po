@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -3222,7 +3222,7 @@ msgstr "Tetapkan desktop maya"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 #, fuzzy
 msgid "Windows"
@@ -10779,83 +10779,88 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Konfigurasi segala-galanya"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "pengisihan"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 #, fuzzy
 msgid "Tiling"
 msgstr "mengundi"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 #, fuzzy
 msgid "Toggle floating"
 msgstr "menunjukkan kalendar"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 #, fuzzy
 msgid "Remove a stack"
 msgstr "Padam Gadget"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 #, fuzzy
 msgid "Move window"
 msgstr "tingkap"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 #, fuzzy
 msgid "Move window to the left"
 msgstr "Tetingkap pada yang Kiri"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 #, fuzzy
 msgid "Move window to the right"
 msgstr "Tetingkap pada yang Hak"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 #, fuzzy
 msgid "Move window up"
 msgstr "tingkap"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 #, fuzzy
 msgid "Move window down"
 msgstr "Menu Tetingkap"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 #, fuzzy
 msgid "Adjust transitions"
 msgstr "peralihan"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 #, fuzzy
 msgid "Send to upper right corner"
 msgstr "Saiz pop"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 #, fuzzy
 msgid "Send to upper left corner"
 msgstr "Saiz pop"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr ""
 
@@ -11367,8 +11372,9 @@ msgid "New volume"
 msgstr "kelantangan baru"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "isipadu berubah"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -11490,10 +11496,6 @@ msgstr "isipadu berubah"
 #, fuzzy
 #~ msgid "Mixer"
 #~ msgstr "pengadun"
-
-#, fuzzy
-#~ msgid "Volume changed"
-#~ msgstr "isipadu berubah"
 
 #, fuzzy
 #~ msgid "Mixer Settings Updated"

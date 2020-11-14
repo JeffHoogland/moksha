@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -2841,7 +2841,7 @@ msgstr "عين أسطح مكتب إفتراضية"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "النوافذ"
@@ -9649,73 +9649,78 @@ msgstr "عدد الصفوف المستخدمة للرصف لكل مكتب (صف�
 msgid "Tiling Configuration"
 msgstr "إعدادات الترتيب القرميدي"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+#, fuzzy
+msgid "Floating"
+msgstr "يطفو"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 msgid "Tiling"
 msgstr "ترتيب قرميدي"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 #, fuzzy
 msgid "Toggle floating"
 msgstr "اعرض التقويم"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr "أضف تكدسا"
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 msgid "Remove a stack"
 msgstr "أزل التكدس"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr "تنقل بين الصفوف و اﻷعمدة"
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr "بدل نافذة مع أخرى"
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 msgid "Move window"
 msgstr "حرك نافذة"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Move window to the left"
 msgstr "حرك نافذة إلى اليسار"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 msgid "Move window to the right"
 msgstr "حرك نافذة إلى اليمين"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 msgid "Move window up"
 msgstr "حرك النافذة ﻷعلى"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 msgid "Move window down"
 msgstr "حرك النافذة ﻷسفل"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Adjust transitions"
 msgstr "اضبط اﻹنتقالات"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr "ركز على النافذة المعينة"
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 msgid "Send to upper right corner"
 msgstr "ارسله للركن الايمن العلوي"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Send to upper left corner"
 msgstr "ارسله للركن اﻷيسر العلوي"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr "ارسل إلى الركن اﻷيمن السفلي"
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr "ارسل إلى الركن اﻷيسر السفلي"
 
@@ -10200,8 +10205,9 @@ msgid "New volume"
 msgstr "حجم جديد"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "تغيّر الحجم"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10305,9 +10311,6 @@ msgstr "حرّك ﻷعلى"
 
 #~ msgid "Mixer"
 #~ msgstr "الخالط"
-
-#~ msgid "Volume changed"
-#~ msgstr "تغيّر الحجم"
 
 #~ msgid "Mixer Settings Updated"
 #~ msgstr "تم تحديث إعدادات وحدة الخالط"

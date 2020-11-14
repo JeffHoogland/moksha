@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
@@ -2843,7 +2843,7 @@ msgstr "Configura escriptoris virtuals"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Finestres"
@@ -9617,72 +9617,76 @@ msgstr ""
 msgid "Tiling Configuration"
 msgstr "Configuració mosaic"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+msgid "Floating"
+msgstr "Flota"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 msgid "Tiling"
 msgstr "Mosaic"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
+#: src/modules/tiling/e_mod_tiling.c:4193
 msgid "Toggle floating"
 msgstr "Commuta flotant"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr "Afegeix una barra"
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 msgid "Remove a stack"
 msgstr "Elimina barra"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr "Alterna entre files i columnes"
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr "Intercanvia una finestra amb una altra"
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 msgid "Move window"
 msgstr "Mou finestra"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Move window to the left"
 msgstr "Mou finestra a l'esquerra"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 msgid "Move window to the right"
 msgstr "Mou finestra a la dreta"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 msgid "Move window up"
 msgstr "Mou finestra amunt"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 msgid "Move window down"
 msgstr "Mou finestra avall"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Adjust transitions"
 msgstr "Ajusta transicions"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr "Focus a finestra particular"
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 msgid "Send to upper right corner"
 msgstr "Envia a la cantonada superior dreta"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Send to upper left corner"
 msgstr "Envia a la cantonada superior esquerra"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr "Envia a la cantonada inferior dreta"
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr "Envia a la cantonada inferior esquerra"
 
@@ -10145,8 +10149,9 @@ msgid "New volume"
 msgstr "Nou volum"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
-msgstr ""
+#, fuzzy
+msgid "Volume limit reached!"
+msgstr "Volum canviat"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10248,9 +10253,6 @@ msgstr "Volum silenciat"
 
 #~ msgid "Mixer"
 #~ msgstr "Mesclador"
-
-#~ msgid "Volume changed"
-#~ msgstr "Volum canviat"
 
 #~ msgid "Mixer Settings Updated"
 #~ msgstr "Preferències mesclador actualitzades"
@@ -11326,9 +11328,6 @@ msgstr "Volum silenciat"
 
 #~ msgid "Padding between windows"
 #~ msgstr "Separació entre finestres"
-
-#~ msgid "Floating"
-#~ msgstr "Flota"
 
 #~ msgid "Move the focused window up"
 #~ msgstr "Mou finestra amunt"

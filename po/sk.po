@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-10-24 15:51+0200\n"
+"POT-Creation-Date: 2020-11-14 20:44+0100\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -2837,7 +2837,7 @@ msgstr "Nastaviť virtuálne plochy"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4144
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Okná"
@@ -9570,7 +9570,7 @@ msgstr "riadky"
 
 #: src/modules/tiling/e_mod_config.c:182
 msgid "Tile dialog windows as well"
-msgstr ""
+msgstr "Dialógy v dlaždiciach"
 
 #: src/modules/tiling/e_mod_config.c:185
 msgid "Show window titles"
@@ -9582,79 +9582,82 @@ msgstr "Klávesové Skratky"
 
 #: src/modules/tiling/e_mod_config.c:200
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
-msgstr ""
+msgstr "Počet stĺpcov pre dlaždice (0 - dlaždice vypnuté):"
 
 #: src/modules/tiling/e_mod_config.c:353
 msgid "Tiling Configuration"
 msgstr "Nastavenie dlaždíc"
 
-#: src/modules/tiling/e_mod_tiling.c:4082
-#: src/modules/tiling/e_mod_tiling.c:4146
+#: src/modules/tiling/e_mod_tiling.c:4097
+msgid "Floating"
+msgstr "Uvoľnené"
+
+#: src/modules/tiling/e_mod_tiling.c:4186
+#: src/modules/tiling/e_mod_tiling.c:4250
 msgid "Tiling"
 msgstr "Dlaždice"
 
-#: src/modules/tiling/e_mod_tiling.c:4089
-#, fuzzy
+#: src/modules/tiling/e_mod_tiling.c:4193
 msgid "Toggle floating"
-msgstr "Zobraziť lištu s nástrojmi"
+msgstr "Prepnúť uvoľnenie okna"
 
-#: src/modules/tiling/e_mod_tiling.c:4092
+#: src/modules/tiling/e_mod_tiling.c:4196
 msgid "Add a stack"
 msgstr "Pridať zásobník"
 
-#: src/modules/tiling/e_mod_tiling.c:4095
+#: src/modules/tiling/e_mod_tiling.c:4199
 msgid "Remove a stack"
 msgstr "Odstrániť zásobník"
 
-#: src/modules/tiling/e_mod_tiling.c:4098
+#: src/modules/tiling/e_mod_tiling.c:4202
 msgid "Toggle between rows and columns"
 msgstr "Prepnúť medzi riadkami a stĺpcami"
 
-#: src/modules/tiling/e_mod_tiling.c:4101
+#: src/modules/tiling/e_mod_tiling.c:4205
 msgid "Swap a window with an other"
 msgstr "Vymeniť okno s ďalším oknom"
 
-#: src/modules/tiling/e_mod_tiling.c:4105
+#: src/modules/tiling/e_mod_tiling.c:4209
 msgid "Move window"
 msgstr "Presunúť okno"
 
-#: src/modules/tiling/e_mod_tiling.c:4108
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Move window to the left"
 msgstr "Presunúť okno vľavo"
 
-#: src/modules/tiling/e_mod_tiling.c:4111
+#: src/modules/tiling/e_mod_tiling.c:4215
 msgid "Move window to the right"
 msgstr "Presunúť okno vpravo"
 
-#: src/modules/tiling/e_mod_tiling.c:4114
+#: src/modules/tiling/e_mod_tiling.c:4218
 msgid "Move window up"
 msgstr "Presunúť okno hore"
 
-#: src/modules/tiling/e_mod_tiling.c:4117
+#: src/modules/tiling/e_mod_tiling.c:4221
 msgid "Move window down"
 msgstr "Presunúť okno dole"
 
-#: src/modules/tiling/e_mod_tiling.c:4121
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Adjust transitions"
 msgstr "Prispôsobiť prechody"
 
-#: src/modules/tiling/e_mod_tiling.c:4124
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Focus a particular window"
 msgstr "Aktivovať konkrétne okno"
 
-#: src/modules/tiling/e_mod_tiling.c:4128
+#: src/modules/tiling/e_mod_tiling.c:4232
 msgid "Send to upper right corner"
 msgstr "Poslať do pravého horného rohu"
 
-#: src/modules/tiling/e_mod_tiling.c:4131
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Send to upper left corner"
 msgstr "Poslať do ľavého horného rohu"
 
-#: src/modules/tiling/e_mod_tiling.c:4134
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Send to lower right corner"
 msgstr "Poslať do pravého dolného rohu"
 
-#: src/modules/tiling/e_mod_tiling.c:4137
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Send to lower left corner"
 msgstr "Poslať do ľavého dolného rohu"
 
@@ -9962,7 +9965,9 @@ msgstr "Potvrdiť zmazanie položky"
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "Požadujete zmazanie aktuálnej položky.<br><br>Ste si istý, že ju chcete zmazať?"
+msgstr ""
+"Požadujete zmazanie aktuálnej položky.<br><br>Ste si istý, že ju chcete "
+"zmazať?"
 
 #: src/modules/clipboard/e_mod_main.c:753
 msgid "Clipboard: Edit Item"
@@ -10040,9 +10045,9 @@ msgid "Places Configuration Updated"
 msgstr "Konfigurácia modulu aktualizovaná"
 
 #: src/modules/places/e_mod_places.c:575
-#, fuzzy, c-format
+#, c-format
 msgid "Places warning!"
-msgstr "Nastavenie modulu Miesta"
+msgstr "Miesta: upozornenie!"
 
 #: src/modules/places/e_mod_places.c:576
 #, c-format
@@ -10104,7 +10109,8 @@ msgid "New volume"
 msgstr "Nová hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:133
-msgid "Volume limit reached!!!"
+#, fuzzy
+msgid "Volume limit reached!"
 msgstr "Maximálna hlasitosť!"
 
 #: src/modules/mixer/e_mod_main.c:136
