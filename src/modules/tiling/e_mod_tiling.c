@@ -4354,7 +4354,7 @@ _disable_all_tiling(void)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-    _disable_all_tiling(); 
+    _disable_all_tiling();
 
     if (tiling_g.log_domain >= 0) {
         eina_log_domain_unregister(tiling_g.log_domain);
