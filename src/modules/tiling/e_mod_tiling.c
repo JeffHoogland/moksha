@@ -47,6 +47,7 @@ typedef struct transition_overlay_t {
 typedef struct Border_Extra {
     E_Border *border;
     geom_t expected;
+    Eina_Bool floating;
     struct {
          geom_t geom;
          unsigned int layer;
@@ -57,6 +58,11 @@ typedef struct Border_Extra {
     overlay_t overlay;
     char key[4];
 } Border_Extra;
+
+typedef struct {
+   E_Desk *desk;
+   Tiling_Split_Type type;
+} Desk_Split_Type;
 
 struct tiling_g tiling_g = {
     .module = NULL,
@@ -92,11 +98,14 @@ static struct tiling_mod_main_g
                          *handler_desk_set,
                          *handler_container_resize;
     E_Border_Hook        *pre_border_assign_hook;
+    E_Border_Menu_Hook   *border_menu_hook;
+    Desk_Split_Type      *current_split_type;
 
     Tiling_Info          *tinfo;
     Eina_Hash            *info_hash;
     Eina_Hash            *border_extras;
     Eina_Hash            *overlays;
+    Eina_Hash            *desk_type;
 
     E_Action             *act_togglefloat,
                          *act_addstack,
@@ -1649,6 +1658,20 @@ _move_resize_border_in_stack(E_Border *bd, Border_Extra *extra,
     }
 }
 
+static Border_Extra *
+tiling_entry_no_desk_func(E_Border *bd)
+{
+   if (!bd)
+     return NULL;
+
+   Border_Extra *extra = eina_hash_find(_G.border_extras, &bd);
+
+   if (!extra)
+     ERR("No extra for %p", bd);
+
+   return extra;
+}
+
 /* }}} */
 /* Toggle Floating {{{ */
 
@@ -1658,6 +1681,15 @@ toggle_floating(E_Border *bd)
     if (!bd)
         return;
     check_tinfo(bd->desk);
+    
+    Border_Extra *extra = tiling_entry_no_desk_func(bd);
+
+   if (!extra)
+     {
+        return;
+     }
+    
+    extra->floating = !extra->floating;
     if (!_G.tinfo->conf || !_G.tinfo->conf->nb_stacks)
         return;
 
@@ -3932,6 +3964,13 @@ _desk_set_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Desk_S
         ev->border->desk->x, ev->border->desk->y);
 
     end_special_input();
+    
+   Border_Extra *extra = eina_hash_find(_G.border_extras, &ev->border);
+
+   if (!extra)
+     {
+        return true;
+     }
 
     check_tinfo(ev->desk);
     if (!_G.tinfo->conf) {
@@ -3944,6 +3983,7 @@ _desk_set_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Border_Desk_S
         if (get_stack(ev->border) >= 0) {
             _remove_border(ev->border);
             _restore_border(ev->border);
+             extra->floating = EINA_TRUE;
         }
     }
 
@@ -3997,6 +4037,69 @@ _container_resize_hook(void *data __UNUSED__, int type __UNUSED__, E_Event_Conta
     return true;
 }
 
+static void
+_update_current_desk(E_Desk *new)
+{
+   Desk_Split_Type *type;
+
+   type = eina_hash_find(_G.desk_type, &new);
+
+   if (!type)
+     {
+        type = calloc(1, sizeof(Desk_Split_Type));
+        type->desk = new;
+        type->type = TILING_SPLIT_HORIZONTAL;
+        eina_hash_add(_G.desk_type, &new, type);
+     }
+
+   _G.current_split_type = type;
+}
+
+static void
+_e_mod_menu_border_cb(void *data, E_Menu *m EINA_UNUSED,
+                      E_Menu_Item *mi EINA_UNUSED)
+{
+   E_Border *bd = data;
+
+   toggle_floating(bd);
+}
+
+static void
+_bd_hook(void *d EINA_UNUSED, E_Border *bd)
+{
+   E_Menu_Item *mi;
+   E_Menu *m;
+   Eina_List *l;
+
+   if (!bd->border_menu)
+     return;
+   m = bd->border_menu;
+  
+   Border_Extra *extra = eina_hash_find(_G.border_extras, &bd);
+
+   if (!extra)
+     {
+        return;
+     }
+
+   /* position menu item just before the last separator */
+   EINA_LIST_REVERSE_FOREACH(m->items, l, mi)
+     if (mi->separator)
+       break;
+   if ((!mi) || (!mi->separator))
+     return;
+   l = eina_list_prev(l);
+   mi = eina_list_data_get(l);
+   if (!mi)
+     return;
+
+   mi = e_menu_item_new_relative(m, mi);
+   e_menu_item_label_set(mi, _("Floating"));
+   e_menu_item_check_set(mi, true);
+   e_menu_item_toggle_set(mi, (extra->floating) ? true : false);
+   e_menu_item_callback_set(mi, _e_mod_menu_border_cb, bd);
+}
+
 /* }}} */
 /* Module setup {{{*/
 
@@ -4023,6 +4126,7 @@ _clear_border_extras(void *data)
 
     E_FREE(extra);
 }
+
 
 EAPI E_Module_Api e_modapi =
 {
@@ -4184,10 +4288,12 @@ e_modapi_init(E_Module *m)
         E_CONFIG_LIMIT(vd->nb_stacks, 0, TILING_MAX_STACKS);
         E_CONFIG_LIMIT(vd->use_rows, 0, 1);
     }
-
-    desk = get_current_desk();
+    
+    _G.border_menu_hook = e_int_border_menu_hook_add(_bd_hook, NULL);
+     desk = get_current_desk();
     _G.tinfo = _initialize_tinfo(desk);
-
+    
+    _update_current_desk(get_current_desk());
     _G.input_mode = INPUT_MODE_NONE;
     _G.currently_switching_desktop = 0;
     _G.action_cb = NULL;
@@ -4243,10 +4349,12 @@ _disable_all_tiling(void)
     }
 }
 
+
+
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
-    _disable_all_tiling();
+    _disable_all_tiling(); 
 
     if (tiling_g.log_domain >= 0) {
         eina_log_domain_unregister(tiling_g.log_domain);
@@ -4257,6 +4365,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         e_border_hook_del(_G.pre_border_assign_hook);
         _G.pre_border_assign_hook = NULL;
     }
+    
+    e_int_border_menu_hook_del(_G.border_menu_hook);
 
 #define FREE_HANDLER(x)              \
     if (x) {                         \

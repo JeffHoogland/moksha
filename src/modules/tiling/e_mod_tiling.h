@@ -11,6 +11,12 @@
 
 #include "config.h"
 
+typedef enum
+{
+   TILING_SPLIT_HORIZONTAL = 0,
+   TILING_SPLIT_VERTICAL = 1,
+} Tiling_Split_Type;
+
 typedef struct _Config      Config;
 typedef struct _Tiling_Info Tiling_Info;
 
