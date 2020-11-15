@@ -8,7 +8,7 @@ cpufreqpkgdir = $(MDIR)/cpufreq/$(MODULE_ARCH)
 cpufreqpkg_LTLIBRARIES = cpufreq/module.la
 
 cpufreq_module_la_SOURCES  = cpufreq/e_mod_main.h \
-                             cpufreq/e_mod_config.c \ 
+                             cpufreq/e_mod_config.c \
                              cpufreq/e_mod_main.c
 
 freqsetdir = $(cpufreqpkgdir)
