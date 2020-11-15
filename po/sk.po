@@ -2147,11 +2147,11 @@ msgstr "Vždy navrchu"
 
 #: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
-msgstr "Pripichnuté"
+msgstr "Pripnúť"
 
 #: src/bin/e_int_border_menu.c:178
 msgid "Shade"
-msgstr "Zrolované"
+msgstr "Zrolovať"
 
 #: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
@@ -9590,7 +9590,7 @@ msgstr "Nastavenie dlaždíc"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
 msgid "Floating"
-msgstr "Uvoľnené"
+msgstr "Uvoľniť"
 
 #: src/modules/tiling/e_mod_tiling.c:4186
 #: src/modules/tiling/e_mod_tiling.c:4250
