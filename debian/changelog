@@ -1,3 +1,9 @@
+moksha (20201115bodhi30.3.2) bionic; urgency=low
+
+  *  Stefan changes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 15 Nov 2020 09:53:34 +0004
+
 moksha (20200816bodhi30.3.1) bionic; urgency=low
 
   *  Temp module notification
