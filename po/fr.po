@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2020-11-14 20:44+0100\n"
-"PO-Revision-Date: 2020-10-30 08:03+0100\n"
+"PO-Revision-Date: 2020-11-16 11:17+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -8322,7 +8322,7 @@ msgstr "EFM"
 
 #: src/modules/fileman/e_mod_menu.c:241
 msgid "No listable items"
-msgstr "Afficher"
+msgstr "Voir"
 
 #: src/modules/fileman/e_mod_menu.c:320
 msgid "GTK Bookmarks"
@@ -9227,7 +9227,7 @@ msgstr ""
 "masquage</hilight> — masque la fenêtre lorsqu'elle perd le "
 "focus<br><hilight>Masquer au lieu d'élever</hilight> — masque la fenêtre si "
 "elle est activée sans prendre le focus<br><hilight>Mode saut</hilight> — "
-"bascule vers le bureau de la fenêtre au lieu d'afficher/"
+"bascule vers le bureau de la fenêtre au lieu d'afficher / "
 "masquer<br><hilight>Relancer en cas de fermeture</hilight> — exécute à "
 "nouveau la commande de l'entrée quand la fenêtre se "
 "ferme<br><hilight>Transitoire</hilight> — prend uniquement en compte cette "
@@ -9646,7 +9646,6 @@ msgid "Tiling Configuration"
 msgstr "Configuration du pavage (Tiling)"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
-#, fuzzy
 msgid "Floating"
 msgstr "Flottant"
 
@@ -10168,7 +10167,6 @@ msgid "New volume"
 msgstr "Nouveau volume"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
 msgstr "La limite du volume est atteinte !"
 
