@@ -264,9 +264,6 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    edje_object_part_swallow(po, "e.swallow.client", o);
    objs = eina_list_append(objs, o);
 
-   
-   
-   
    o = edje_object_add(e);
    _e_int_theme_edje_file_set(o, file, "e/comp/default");
    evas_object_move(o, w / 10, h / 5);
@@ -299,7 +296,7 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    o = edje_object_add(e);
    _e_int_theme_edje_file_set(o, file, "e/widgets/dialog/text");
    edje_object_part_text_set(o, "e.textblock.message", 
-                             "<hilight>Welcome to enlightenment.</hilight><br>"
+                             "<hilight>Welcome to Moksha.</hilight><br>"
                              "<br>"
                              "This is a sample set of content for a<br>"
                              "theme to test to see what it looks like.");
@@ -307,12 +304,12 @@ _e_int_theme_preview_set(Evas_Object *preview, const char *file)
    edje_object_part_swallow(po, "e.swallow.content", o);
    objs = eina_list_append(objs, o);
    
-   o = e_icon_add(e);
-   e_util_icon_theme_set(o, "dialog-warning");
-   evas_object_show(o);
-   evas_object_size_hint_min_set(o, 64 * e_scale, 64 * e_scale);
-   edje_object_part_swallow(po, "e.swallow.icon", o);
-   objs = eina_list_append(objs, o);
+   //~ o = e_icon_add(e);
+   //~ e_util_icon_theme_set(o, "dialog-warning");
+   //~ evas_object_show(o);
+   //~ evas_object_size_hint_min_set(o, 64 * e_scale, 64 * e_scale);
+   //~ edje_object_part_swallow(po, "e.swallow.icon", o);
+   //~ objs = eina_list_append(objs, o);
 
    o = e_box_add(e);
    e_box_orientation_set(o, 1);
