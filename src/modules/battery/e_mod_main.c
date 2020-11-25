@@ -15,6 +15,7 @@ static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
 Eina_List *device_batteries;
 Eina_List *device_ac_adapters;
 double init_time;
+Eina_Bool mouse_down = EINA_FALSE;
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
@@ -50,7 +51,7 @@ static void      _battery_face_cb_menu_configure(void *data, E_Menu *m, E_Menu_I
 static Eina_Bool _battery_cb_warning_popup_timeout(void *data);
 static void      _battery_cb_warning_popup_hide(void *data, Evas *e, Evas_Object *obj, void *event);
 static void      _battery_warning_popup_destroy(Instance *inst);
-static void      _battery_warning_popup(Instance *inst, int time, double percent);
+static void      _battery_warning_popup(Instance *inst, int time, double percent, int warn);
 
 static Eina_Bool _powersave_cb_config_update(void *data, int type, void *event);
 
@@ -183,6 +184,11 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
 
    inst = data;
    ev = event_info;
+   if ((ev->button == 1) && (!mouse_down))
+     _battery_warning_popup(inst, 0, 0, 0);
+   else
+     _battery_cb_warning_popup_hide(data, e, obj, event_info);
+
    if (ev->button == 3)
      {
         E_Menu *m;
@@ -213,8 +219,6 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
         evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
-   if (ev->button == 1)
-     _battery_cb_warning_popup_hide(data, e, obj, event_info);
 }
 
 static void
@@ -406,6 +410,7 @@ _battery_cb_warning_popup_timeout(void *data)
    inst = data;
    e_gadcon_popup_hide(inst->warning);
    battery_config->alert_timer = NULL;
+   mouse_down = EINA_FALSE;
    return ECORE_CALLBACK_CANCEL;
 }
 
@@ -415,6 +420,7 @@ _battery_cb_warning_popup_hide(void *data, Evas *e __UNUSED__, Evas_Object *obj 
    Instance *inst = NULL;
 
    inst = (Instance *)data;
+   mouse_down = EINA_FALSE;
    if ((!inst) || (!inst->warning)) return;
    e_gadcon_popup_hide(inst->warning);
 }
@@ -434,18 +440,26 @@ _battery_warning_popup_destroy(Instance *inst)
 }
 
 static void
-_battery_warning_popup(Instance *inst, int t, double percent)
+_battery_warning_popup(Instance *inst, int t, double percent, int warn)
 {
    Evas *e = NULL;
    Evas_Object *rect = NULL, *popup_bg = NULL;
    int x, y, w, h;
+
+  if (warn){               //warn 1 = warning, warn 0 = actual state
+     if ((!inst) || (inst->warning))
+       return;
+  }
+  else{
+     if ((!inst))
+       return;
+  }
+
+ mouse_down = EINA_TRUE;
+if (warn){                  
 #ifdef HAVE_ENOTIFY
    static E_Notification *notification;
-#endif
 
-   if ((!inst) || (inst->warning)) return;
-
-#ifdef HAVE_ENOTIFY
    if (battery_config->desktop_notifications)
      {
         if (notification) return;
@@ -464,6 +478,7 @@ _battery_warning_popup(Instance *inst, int t, double percent)
         return;
      }
 #endif
+}
    inst->warning = e_gadcon_popup_new(inst->gcc);
    if (!inst->warning) return;
 
@@ -483,15 +498,31 @@ _battery_warning_popup(Instance *inst, int t, double percent)
                            "e/modules/battery/popup");
    e_theme_edje_object_set(inst->popup_battery, "base/theme/modules/battery",
                            "e/modules/battery/main");
-   if (edje_object_part_exists(popup_bg, "e.swallow.battery"))
+    if (edje_object_part_exists(popup_bg, "e.swallow.battery"))
      edje_object_part_swallow(popup_bg, "e.swallow.battery", inst->popup_battery);
    else
      edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
 
+if (warn){
    edje_object_part_text_set(popup_bg, "e.text.title",
                              _("Your battery is low!"));
    edje_object_part_text_set(popup_bg, "e.text.label",
                              _("AC power is recommended."));
+}
+else{
+   char buf[64] = "";
+   snprintf(buf, sizeof(buf), "%s%s", _("Power now: "),
+            edje_object_part_text_get(inst->o_battery, "e.text.reading"));
+   edje_object_part_text_set(popup_bg, "e.text.title", buf);
+
+   if (edje_object_part_text_get(inst->o_battery, "e.text.time")){
+   snprintf(buf, sizeof(buf), "%s%s%s", _("Remaining time: "),
+            edje_object_part_text_get(inst->o_battery, "e.text.time"), _(" hr"));
+   edje_object_part_text_set(popup_bg, "e.text.label", buf);
+   }
+   else
+     edje_object_part_text_set(popup_bg, "e.text.label", _("Time calculating..."));
+}
 
    e_gadcon_popup_content_set(inst->warning, popup_bg);
    e_gadcon_popup_show(inst->warning);
@@ -510,8 +541,10 @@ _battery_warning_popup(Instance *inst, int t, double percent)
         evas_object_show(rect);
      }
 
+if (warn){
    _battery_face_time_set(inst->popup_battery, t);
    _battery_face_level_set(inst->popup_battery, percent);
+
    edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
 
    if ((battery_config->alert_timeout > 0) &&
@@ -521,6 +554,9 @@ _battery_warning_popup(Instance *inst, int t, double percent)
           ecore_timer_add(battery_config->alert_timeout,
                           _battery_cb_warning_popup_timeout, inst);
      }
+}
+else
+    ecore_timer_add(5,_battery_cb_warning_popup_timeout, inst);
 }
 
 static Eina_Bool
@@ -633,7 +669,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
                   printf("t-debounce = %3.3f\n", (t - debounce_time));
                   debounce_time = t;
                   if ((t - init_time) > 5.0)
-                    _battery_warning_popup(inst, time_left, (double)full / 100.0);
+                    _battery_warning_popup(inst, time_left, (double)full / 100.0, 1);
                }
           }
         else if (have_power || ((time_left / 60) > battery_config->alert))
