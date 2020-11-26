@@ -516,8 +516,8 @@ else{
    edje_object_part_text_set(popup_bg, "e.text.title", buf);
 
    if (edje_object_part_text_get(inst->o_battery, "e.text.time")){
-   snprintf(buf, sizeof(buf), "%s%s%s", _("Remaining time: "),
-            edje_object_part_text_get(inst->o_battery, "e.text.time"), _(" hr"));
+   snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
+            edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
    edje_object_part_text_set(popup_bg, "e.text.label", buf);
    }
    else
