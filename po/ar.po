@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-14 20:44+0100\n"
+"POT-Creation-Date: 2020-11-26 20:17+0100\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -26,7 +26,7 @@ msgstr "عن E17ِ"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
-#: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -46,7 +46,7 @@ msgstr "سطح المكتب E17ِ"
 #: src/bin/e_about.c:28
 #, fuzzy
 msgid ""
-"<title>Copyright &copy; 2018, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -74,7 +74,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "أمتأكد من أنك تريد قتل هذه النافذة؟"
 
 #: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
-#: src/bin/e_int_border_menu.c:749
+#: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "اقتل"
 
@@ -157,11 +157,11 @@ msgid "Window : Actions"
 msgstr "النوافذ : اﻹجراءات"
 
 #: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:669
+#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "حرّك"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:683
+#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "تحجيم"
 
@@ -175,12 +175,12 @@ msgstr "القائمة"
 msgid "Window Menu"
 msgstr "قائمة النافذة"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1057
+#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "كبر"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1065
+#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "صغر"
 
@@ -236,24 +236,24 @@ msgstr "تحويل إلى نمط كامل الشاشة"
 msgid "Fullscreen Mode Enable"
 msgstr "تمكين وضع كامل الشاشة"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:384
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "تكبير"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:395
+#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "تكبير رأسي"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:406
+#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "تكبير أفقي"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:417
+#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
 msgid "Maximize Left"
 msgstr "كبِّر لليسار"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:428
+#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
 msgid "Maximize Right"
 msgstr "كبِّر لليمين"
 
@@ -691,7 +691,7 @@ msgid "Command"
 msgstr "اﻷمر"
 
 #: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
-#: src/bin/e_int_border_menu.c:118
+#: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "التطبيق"
@@ -746,9 +746,9 @@ msgstr "بدل الوحدة المسماة"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1129
-#: src/modules/conf_theme/e_int_config_theme.c:1143
+#: src/modules/conf_theme/e_int_config_theme.c:745
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1140
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -995,7 +995,7 @@ msgstr ""
 "حصل E17ِ على خطأ أثناء كتابة <br>ملف إعداداته<br>%s<br>الملف الذي حدث فيه "
 "الخلل :<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:819
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1832,7 +1832,7 @@ msgstr "أخرى :"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "معاينة"
@@ -1874,7 +1874,7 @@ msgstr "خطأ في اﻷداء"
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s  لا تدعم تعطيل اللف التلقائي"
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
 msgid "Move to"
 msgstr "انقل إلى"
 
@@ -2079,7 +2079,7 @@ msgid "Size"
 msgstr "الحجم"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:697 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2140,85 +2140,89 @@ msgstr "أقفال السلوك"
 msgid "Remember these Locks"
 msgstr "تذكر هذه اﻷقفال"
 
-#: src/bin/e_int_border_menu.c:127
+#: src/bin/e_int_border_menu.c:147
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:334
 msgid "Window"
 msgstr "نافذة"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1017
+#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
 msgid "Always on Top"
 msgstr "دائما في اﻷعلى"
 
-#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "ملتصق"
 
-#: src/bin/e_int_border_menu.c:178
+#: src/bin/e_int_border_menu.c:198
 msgid "Shade"
 msgstr "ظل"
 
-#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:212
+msgid "Borderless"
+msgstr "بدون حدود"
+
+#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
 msgid "Fullscreen"
 msgstr "ملء الشاشة"
 
-#: src/bin/e_int_border_menu.c:439
+#: src/bin/e_int_border_menu.c:473
 msgid "Unmaximize"
 msgstr "ألغ التكبير"
 
-#: src/bin/e_int_border_menu.c:581
+#: src/bin/e_int_border_menu.c:615
 msgid "Edit Icon"
 msgstr "عدل اﻷيقونة"
 
-#: src/bin/e_int_border_menu.c:589
+#: src/bin/e_int_border_menu.c:623
 msgid "Create Icon"
 msgstr "انشئ أيقونة"
 
-#: src/bin/e_int_border_menu.c:597
+#: src/bin/e_int_border_menu.c:631
 msgid "Add to Favorites Menu"
 msgstr "أضف إلى قائمة المفضلات"
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:636
 msgid "Add to IBar"
 msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
-#: src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_menu.c:644
 msgid "Create Keyboard Shortcut"
 msgstr "انشئ إختصار لوحة المفاتيح"
 
-#: src/bin/e_int_border_menu.c:656
+#: src/bin/e_int_border_menu.c:690
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "صغِّر"
 
-#: src/bin/e_int_border_menu.c:706
+#: src/bin/e_int_border_menu.c:740
 msgid "Skip"
 msgstr "تخطَّ"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "الحدود"
 
-#: src/bin/e_int_border_menu.c:728 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "اﻷقفال"
 
-#: src/bin/e_int_border_menu.c:736
+#: src/bin/e_int_border_menu.c:770
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "تذكر"
 
-#: src/bin/e_int_border_menu.c:758
+#: src/bin/e_int_border_menu.c:792
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:932
+#: src/bin/e_int_border_menu.c:966
 #, c-format
 msgid "Screen %d"
 msgstr "الشاشة %d"
 
-#: src/bin/e_int_border_menu.c:1028 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2227,44 +2231,44 @@ msgstr "الشاشة %d"
 msgid "Normal"
 msgstr "عادي"
 
-#: src/bin/e_int_border_menu.c:1039
+#: src/bin/e_int_border_menu.c:1073
 msgid "Always Below"
 msgstr "دائماً في اﻷسفل"
 
-#: src/bin/e_int_border_menu.c:1083
+#: src/bin/e_int_border_menu.c:1117
 msgid "Pin to Desktop"
 msgstr "علّق في سطح المكتب"
 
-#: src/bin/e_int_border_menu.c:1094
+#: src/bin/e_int_border_menu.c:1128
 msgid "Unpin from Desktop"
 msgstr "أزل التعليق من سطح المكتب"
 
-#: src/bin/e_int_border_menu.c:1184
+#: src/bin/e_int_border_menu.c:1218
 msgid "Select Border Style"
 msgstr "اختر أسلوب الحدود"
 
-#: src/bin/e_int_border_menu.c:1196
+#: src/bin/e_int_border_menu.c:1230
 msgid "Use Moksha Default Icon Preference"
 msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـE17ِ"
 
-#: src/bin/e_int_border_menu.c:1204
+#: src/bin/e_int_border_menu.c:1238
 msgid "Use Application Provided Icon"
 msgstr "استخدم أيقونة التطبيق نفسه"
 
-#: src/bin/e_int_border_menu.c:1212
+#: src/bin/e_int_border_menu.c:1246
 msgid "Use User Defined Icon"
 msgstr "استخدم أيقونة المستخدم"
 
-#: src/bin/e_int_border_menu.c:1221 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "اقترح مقاومة "
 
-#: src/bin/e_int_border_menu.c:1282
+#: src/bin/e_int_border_menu.c:1316
 msgid "Window List"
 msgstr "قائمة النافذة"
 
-#: src/bin/e_int_border_menu.c:1292 src/modules/pager/e_mod_main.c:265
+#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
 #: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
 #: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
 #: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
@@ -2272,7 +2276,7 @@ msgstr "قائمة النافذة"
 msgid "Pager"
 msgstr "عارض أسطح المكاتب"
 
-#: src/bin/e_int_border_menu.c:1302 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr "شريط المهام"
 
@@ -2496,7 +2500,7 @@ msgstr "أطلب الموضع"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -4321,7 +4325,7 @@ msgstr "أضف إلى المفضلات"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:755
+#: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "أذهب أعلى مجلد"
@@ -4444,33 +4448,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "العتاد"
 
-#: src/modules/battery/e_mod_main.c:152 src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "البطارية"
 
-#: src/modules/battery/e_mod_main.c:200
+#: src/modules/battery/e_mod_main.c:206
 msgid "Power Management Timing"
 msgstr "توقيت إدارة الطاقة"
 
-#: src/modules/battery/e_mod_main.c:457 src/modules/battery/e_mod_main.c:492
+#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
 msgid "Your battery is low!"
 msgstr "بطارية الحاسب ضعيفة!"
 
-#: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:494
+#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
 msgid "AC power is recommended."
 msgstr "يستحسن استخدام الطاقة الكهربائية."
 
-#: src/modules/battery/e_mod_main.c:588
+#: src/modules/battery/e_mod_main.c:514
+#, fuzzy
+msgid "Power now: "
+msgstr "إطفاء"
+
+#: src/modules/battery/e_mod_main.c:519
+msgid "Remaining time: "
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:520
+msgid "hr"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:524
+msgid "Time calculating..."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
 msgstr "غير موجود"
 
-#: src/modules/battery/e_mod_main.c:692 src/modules/battery/e_mod_main.c:694
-#: src/modules/battery/e_mod_main.c:701 src/modules/battery/e_mod_main.c:703
+#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
+#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
 msgid "ERROR"
 msgstr "خطأ"
 
-#: src/modules/battery/e_mod_main.c:821
+#: src/modules/battery/e_mod_main.c:857
 msgid "Battery Meter"
 msgstr "مقياس البطارية"
 
@@ -4908,9 +4929,9 @@ msgstr "تعيين الخلفية..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1135
+#: src/modules/conf_theme/e_int_config_theme.c:741
+#: src/modules/conf_theme/e_int_config_theme.c:1123
+#: src/modules/conf_theme/e_int_config_theme.c:1132
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "شخصي"
@@ -5974,7 +5995,7 @@ msgid "Fonts"
 msgstr "الخطوط"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "السمات"
@@ -6832,38 +6853,38 @@ msgstr "تغيير الخلفية"
 msgid "Transitions"
 msgstr "اﻹنتقالات"
 
-#: src/modules/conf_theme/e_int_config_theme.c:370
+#: src/modules/conf_theme/e_int_config_theme.c:367
 msgid "Theme Selector"
 msgstr "محدد السمات"
 
-#: src/modules/conf_theme/e_int_config_theme.c:623
+#: src/modules/conf_theme/e_int_config_theme.c:620
 msgid "Theme File Error"
 msgstr "خطأ في ملف السمة"
 
-#: src/modules/conf_theme/e_int_config_theme.c:624
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
 msgstr " استيراد..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1408
+#: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
 msgstr "أقسام السمات"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1423
 msgid "Assign"
 msgstr "تعيينن"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr "امح"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1432
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 msgid "Clear All"
 msgstr "تفريغ الكل"
 
@@ -10453,9 +10474,6 @@ msgstr "حرّك ﻷعلى"
 
 #~ msgid "On"
 #~ msgstr "يعمل"
-
-#~ msgid "Borderless"
-#~ msgstr "بدون حدود"
 
 #~ msgid "Virtual Keyboard"
 #~ msgstr "لوحة مفاتيح وهمية"

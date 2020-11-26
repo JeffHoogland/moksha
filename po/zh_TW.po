@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-14 20:44+0100\n"
+"POT-Creation-Date: 2020-11-26 20:17+0100\n"
 "PO-Revision-Date: 2015-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr "關於 Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
-#: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -45,7 +45,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2018, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -68,7 +68,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "您是否確定強制結束此視窗？"
 
 #: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
-#: src/bin/e_int_border_menu.c:749
+#: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "強制結束"
 
@@ -151,11 +151,11 @@ msgid "Window : Actions"
 msgstr "視窗: 動作"
 
 #: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:669
+#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "移動"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:683
+#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "改變大小"
 
@@ -169,12 +169,12 @@ msgstr "選單"
 msgid "Window Menu"
 msgstr "視窗選單"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1057
+#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "上移"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1065
+#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "下移"
 
@@ -227,24 +227,24 @@ msgstr "切換全螢幕模式"
 msgid "Fullscreen Mode Enable"
 msgstr "開啟全螢幕模式"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:384
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:395
+#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "垂直最大化"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:406
+#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "水平最大化"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:417
+#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
 msgid "Maximize Left"
 msgstr "左側最大化"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:428
+#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
 msgid "Maximize Right"
 msgstr "右側最大化"
 
@@ -682,7 +682,7 @@ msgid "Command"
 msgstr "命令"
 
 #: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
-#: src/bin/e_int_border_menu.c:118
+#: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "應用程式"
@@ -737,9 +737,9 @@ msgstr ""
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1129
-#: src/modules/conf_theme/e_int_config_theme.c:1143
+#: src/modules/conf_theme/e_int_config_theme.c:745
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1140
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -968,7 +968,7 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:819
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1781,7 +1781,7 @@ msgstr "其他:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "預覽"
@@ -1825,7 +1825,7 @@ msgstr "退出錯誤"
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
 msgid "Move to"
 msgstr "移至"
 
@@ -2028,7 +2028,7 @@ msgid "Size"
 msgstr "大小"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:697 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2089,85 +2089,90 @@ msgstr ""
 msgid "Remember these Locks"
 msgstr "記住這些鎖定值"
 
-#: src/bin/e_int_border_menu.c:127
+#: src/bin/e_int_border_menu.c:147
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:334
 msgid "Window"
 msgstr "視窗"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1017
+#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
 msgid "Always on Top"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "相黏"
 
-#: src/bin/e_int_border_menu.c:178
+#: src/bin/e_int_border_menu.c:198
 msgid "Shade"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:212
+#, fuzzy
+msgid "Borderless"
+msgstr "邊框"
+
+#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
 msgid "Fullscreen"
 msgstr "全螢幕"
 
-#: src/bin/e_int_border_menu.c:439
+#: src/bin/e_int_border_menu.c:473
 msgid "Unmaximize"
 msgstr "解除最大化"
 
-#: src/bin/e_int_border_menu.c:581
+#: src/bin/e_int_border_menu.c:615
 msgid "Edit Icon"
 msgstr "編輯圖示"
 
-#: src/bin/e_int_border_menu.c:589
+#: src/bin/e_int_border_menu.c:623
 msgid "Create Icon"
 msgstr "建立圖示"
 
-#: src/bin/e_int_border_menu.c:597
+#: src/bin/e_int_border_menu.c:631
 msgid "Add to Favorites Menu"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:636
 msgid "Add to IBar"
 msgstr "新增至IBar"
 
-#: src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_menu.c:644
 msgid "Create Keyboard Shortcut"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:656
+#: src/bin/e_int_border_menu.c:690
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "圖示化"
 
-#: src/bin/e_int_border_menu.c:706
+#: src/bin/e_int_border_menu.c:740
 msgid "Skip"
 msgstr "略過"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "邊框"
 
-#: src/bin/e_int_border_menu.c:728 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "鎖定值"
 
-#: src/bin/e_int_border_menu.c:736
+#: src/bin/e_int_border_menu.c:770
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "記住"
 
-#: src/bin/e_int_border_menu.c:758
+#: src/bin/e_int_border_menu.c:792
 msgid "ICCCM/NetWM"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:932
+#: src/bin/e_int_border_menu.c:966
 #, c-format
 msgid "Screen %d"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1028 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2176,43 +2181,43 @@ msgstr ""
 msgid "Normal"
 msgstr "正常"
 
-#: src/bin/e_int_border_menu.c:1039
+#: src/bin/e_int_border_menu.c:1073
 msgid "Always Below"
 msgstr "最下層顯示"
 
-#: src/bin/e_int_border_menu.c:1083
+#: src/bin/e_int_border_menu.c:1117
 msgid "Pin to Desktop"
 msgstr "固定於桌面"
 
-#: src/bin/e_int_border_menu.c:1094
+#: src/bin/e_int_border_menu.c:1128
 msgid "Unpin from Desktop"
 msgstr "解除固定於桌面"
 
-#: src/bin/e_int_border_menu.c:1184
+#: src/bin/e_int_border_menu.c:1218
 msgid "Select Border Style"
 msgstr "選擇邊框樣式"
 
-#: src/bin/e_int_border_menu.c:1196
+#: src/bin/e_int_border_menu.c:1230
 msgid "Use Moksha Default Icon Preference"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1204
+#: src/bin/e_int_border_menu.c:1238
 msgid "Use Application Provided Icon"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1212
+#: src/bin/e_int_border_menu.c:1246
 msgid "Use User Defined Icon"
 msgstr "使用使用者自訂圖示"
 
-#: src/bin/e_int_border_menu.c:1221 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:1282
+#: src/bin/e_int_border_menu.c:1316
 msgid "Window List"
 msgstr "視窗列表"
 
-#: src/bin/e_int_border_menu.c:1292 src/modules/pager/e_mod_main.c:265
+#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
 #: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
 #: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
 #: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
@@ -2220,7 +2225,7 @@ msgstr "視窗列表"
 msgid "Pager"
 msgstr "桌面切換器"
 
-#: src/bin/e_int_border_menu.c:1302 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr ""
 
@@ -2444,7 +2449,7 @@ msgstr "要求位置"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -4145,7 +4150,7 @@ msgstr "加入「我的最愛」選單"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:755
+#: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "到上一層目錄"
@@ -4272,33 +4277,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "硬體"
 
-#: src/modules/battery/e_mod_main.c:152 src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "電池"
 
-#: src/modules/battery/e_mod_main.c:200
+#: src/modules/battery/e_mod_main.c:206
 msgid "Power Management Timing"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:457 src/modules/battery/e_mod_main.c:492
+#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
 msgid "Your battery is low!"
 msgstr "您的電池電量很低!"
 
-#: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:494
+#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
 msgid "AC power is recommended."
 msgstr "建議插入電源插頭。"
 
-#: src/modules/battery/e_mod_main.c:588
+#: src/modules/battery/e_mod_main.c:514
+#, fuzzy
+msgid "Power now: "
+msgstr "關機"
+
+#: src/modules/battery/e_mod_main.c:519
+msgid "Remaining time: "
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:520
+msgid "hr"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:524
+msgid "Time calculating..."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:692 src/modules/battery/e_mod_main.c:694
-#: src/modules/battery/e_mod_main.c:701 src/modules/battery/e_mod_main.c:703
+#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
+#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
 msgid "ERROR"
 msgstr "錯誤"
 
-#: src/modules/battery/e_mod_main.c:821
+#: src/modules/battery/e_mod_main.c:857
 msgid "Battery Meter"
 msgstr ""
 
@@ -4739,9 +4761,9 @@ msgstr "選取一個背景..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1135
+#: src/modules/conf_theme/e_int_config_theme.c:741
+#: src/modules/conf_theme/e_int_config_theme.c:1123
+#: src/modules/conf_theme/e_int_config_theme.c:1132
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "個人"
@@ -5786,7 +5808,7 @@ msgid "Fonts"
 msgstr "字型"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "佈景主題"
@@ -6634,38 +6656,38 @@ msgstr "背景改變"
 msgid "Transitions"
 msgstr "轉換"
 
-#: src/modules/conf_theme/e_int_config_theme.c:370
+#: src/modules/conf_theme/e_int_config_theme.c:367
 msgid "Theme Selector"
 msgstr "佈景主題選擇器"
 
-#: src/modules/conf_theme/e_int_config_theme.c:623
+#: src/modules/conf_theme/e_int_config_theme.c:620
 msgid "Theme File Error"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:624
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
 msgstr "輸入..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1408
+#: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
 msgstr "佈景主題分類"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1423
 msgid "Assign"
 msgstr "指定"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr "清除"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1432
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 msgid "Clear All"
 msgstr "全部清除"
 

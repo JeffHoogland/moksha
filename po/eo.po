@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-14 20:44+0100\n"
+"POT-Creation-Date: 2020-11-26 20:17+0100\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -33,7 +33,7 @@ msgstr "Pri Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
-#: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -52,7 +52,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2018, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -78,7 +78,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "Ĉu vi ceste volas mortigi ĉi tiun fenestron?"
 
 #: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
-#: src/bin/e_int_border_menu.c:749
+#: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "Mortigi"
 
@@ -161,11 +161,11 @@ msgid "Window : Actions"
 msgstr "Fenestro : Agoj"
 
 #: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:669
+#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Movi"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:683
+#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "Regrandigi"
 
@@ -179,12 +179,12 @@ msgstr "Menuo"
 msgid "Window Menu"
 msgstr "Menuo de fenestro"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1057
+#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Levi"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1065
+#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "Mallevi"
 
@@ -240,24 +240,24 @@ msgstr "Baskulo de plenekrana reĝimo"
 msgid "Fullscreen Mode Enable"
 msgstr "Plenekrana reĝimo enŝaltita"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:384
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "Maksimumigi"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:395
+#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "Maksimumigi vertikale"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:406
+#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "Maksimumigi horizontale"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:417
+#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
 msgid "Maximize Left"
 msgstr "Maksimumigi maldekstren"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:428
+#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
 msgid "Maximize Right"
 msgstr "Maksimumigi dekstren"
 
@@ -694,7 +694,7 @@ msgid "Command"
 msgstr "Komando"
 
 #: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
-#: src/bin/e_int_border_menu.c:118
+#: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Aplikaĵo"
@@ -749,9 +749,9 @@ msgstr "Baskuligi la nomatan modulon"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1129
-#: src/modules/conf_theme/e_int_config_theme.c:1143
+#: src/modules/conf_theme/e_int_config_theme.c:745
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1140
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -1002,7 +1002,7 @@ msgstr ""
 "%s<br><br>La dosiero, kie la eraro okazis, estis:<br>%s<br><br>Ĉi tiu "
 "dosiero estis forigita por eviti korupton de datumoj.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:819
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1835,7 +1835,7 @@ msgstr "Aliaj:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Antaŭrigardo"
@@ -1877,7 +1877,7 @@ msgstr "Eraro de akcesoraĵo"
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s ne eltenas aŭtomatan rulumadon"
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
 msgid "Move to"
 msgstr "Movi al"
 
@@ -2087,7 +2087,7 @@ msgid "Size"
 msgstr "Grando"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:697 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2148,85 +2148,89 @@ msgstr "Kondutaj ŝlosoj"
 msgid "Remember these Locks"
 msgstr "Memorigi ĉi tiujn ŝlosojn"
 
-#: src/bin/e_int_border_menu.c:127
+#: src/bin/e_int_border_menu.c:147
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:334
 msgid "Window"
 msgstr "Fenestro"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1017
+#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
 msgid "Always on Top"
 msgstr "Ĉiam supre"
 
-#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "Fiksa"
 
-#: src/bin/e_int_border_menu.c:178
+#: src/bin/e_int_border_menu.c:198
 msgid "Shade"
 msgstr "Ombrigo"
 
-#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:212
+msgid "Borderless"
+msgstr "Senranda"
+
+#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
 msgid "Fullscreen"
 msgstr "Plenekrane"
 
-#: src/bin/e_int_border_menu.c:439
+#: src/bin/e_int_border_menu.c:473
 msgid "Unmaximize"
 msgstr "Malmaksimumigi"
 
-#: src/bin/e_int_border_menu.c:581
+#: src/bin/e_int_border_menu.c:615
 msgid "Edit Icon"
 msgstr "Redakti piktogramon"
 
-#: src/bin/e_int_border_menu.c:589
+#: src/bin/e_int_border_menu.c:623
 msgid "Create Icon"
 msgstr "Krei piktogramon"
 
-#: src/bin/e_int_border_menu.c:597
+#: src/bin/e_int_border_menu.c:631
 msgid "Add to Favorites Menu"
 msgstr "Aldoni al menuo de preferatoj"
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:636
 msgid "Add to IBar"
 msgstr "Aldoni al IBar"
 
-#: src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_menu.c:644
 msgid "Create Keyboard Shortcut"
 msgstr "Krei fulmoklavon"
 
-#: src/bin/e_int_border_menu.c:656
+#: src/bin/e_int_border_menu.c:690
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Piktogramigi"
 
-#: src/bin/e_int_border_menu.c:706
+#: src/bin/e_int_border_menu.c:740
 msgid "Skip"
 msgstr "Preterpasi"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Rando"
 
-#: src/bin/e_int_border_menu.c:728 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "Ŝlosoj"
 
-#: src/bin/e_int_border_menu.c:736
+#: src/bin/e_int_border_menu.c:770
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Memorigi"
 
-#: src/bin/e_int_border_menu.c:758
+#: src/bin/e_int_border_menu.c:792
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:932
+#: src/bin/e_int_border_menu.c:966
 #, c-format
 msgid "Screen %d"
 msgstr "Ekrano %d"
 
-#: src/bin/e_int_border_menu.c:1028 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2235,43 +2239,43 @@ msgstr "Ekrano %d"
 msgid "Normal"
 msgstr "Normala"
 
-#: src/bin/e_int_border_menu.c:1039
+#: src/bin/e_int_border_menu.c:1073
 msgid "Always Below"
 msgstr "Ĉiam malsupre"
 
-#: src/bin/e_int_border_menu.c:1083
+#: src/bin/e_int_border_menu.c:1117
 msgid "Pin to Desktop"
 msgstr "Pingli sur labortablo"
 
-#: src/bin/e_int_border_menu.c:1094
+#: src/bin/e_int_border_menu.c:1128
 msgid "Unpin from Desktop"
 msgstr "Malpingli el labortablo"
 
-#: src/bin/e_int_border_menu.c:1184
+#: src/bin/e_int_border_menu.c:1218
 msgid "Select Border Style"
 msgstr "Elektu stilon de randoj"
 
-#: src/bin/e_int_border_menu.c:1196
+#: src/bin/e_int_border_menu.c:1230
 msgid "Use Moksha Default Icon Preference"
 msgstr "Uzi apriorajn agordojn de Moksha por piktogramoj"
 
-#: src/bin/e_int_border_menu.c:1204
+#: src/bin/e_int_border_menu.c:1238
 msgid "Use Application Provided Icon"
 msgstr "Uzi piktogramon provizatan de aplikaĵo"
 
-#: src/bin/e_int_border_menu.c:1212
+#: src/bin/e_int_border_menu.c:1246
 msgid "Use User Defined Icon"
 msgstr "Uzi piktogramon difinitan de uzanto"
 
-#: src/bin/e_int_border_menu.c:1221 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr "Krei rezistadon"
 
-#: src/bin/e_int_border_menu.c:1282
+#: src/bin/e_int_border_menu.c:1316
 msgid "Window List"
 msgstr "Listo de fenestroj"
 
-#: src/bin/e_int_border_menu.c:1292 src/modules/pager/e_mod_main.c:265
+#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
 #: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
 #: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
 #: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
@@ -2279,7 +2283,7 @@ msgstr "Listo de fenestroj"
 msgid "Pager"
 msgstr "Paĝilo"
 
-#: src/bin/e_int_border_menu.c:1302 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr "Taskopleto"
 
@@ -2503,7 +2507,7 @@ msgstr "Peti pozicion"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -4323,7 +4327,7 @@ msgstr "Aldoni al Preferata Menuo"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:755
+#: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "Iri al Patra Dosierujo"
@@ -4446,33 +4450,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Aparataro"
 
-#: src/modules/battery/e_mod_main.c:152 src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Baterio"
 
-#: src/modules/battery/e_mod_main.c:200
+#: src/modules/battery/e_mod_main.c:206
 msgid "Power Management Timing"
 msgstr "Tempolimo de enerĝiadministrado"
 
-#: src/modules/battery/e_mod_main.c:457 src/modules/battery/e_mod_main.c:492
+#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
 msgid "Your battery is low!"
 msgstr "Via baterio estas baznivela!"
 
-#: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:494
+#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
 msgid "AC power is recommended."
 msgstr "Alterna kurento estas rekomendita."
 
-#: src/modules/battery/e_mod_main.c:588
+#: src/modules/battery/e_mod_main.c:514
+#, fuzzy
+msgid "Power now: "
+msgstr "Elŝalti"
+
+#: src/modules/battery/e_mod_main.c:519
+msgid "Remaining time: "
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:520
+msgid "hr"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:524
+msgid "Time calculating..."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
 msgstr "Neaplikebla"
 
-#: src/modules/battery/e_mod_main.c:692 src/modules/battery/e_mod_main.c:694
-#: src/modules/battery/e_mod_main.c:701 src/modules/battery/e_mod_main.c:703
+#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
+#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
 msgid "ERROR"
 msgstr "ERARO"
 
-#: src/modules/battery/e_mod_main.c:821
+#: src/modules/battery/e_mod_main.c:857
 msgid "Battery Meter"
 msgstr "Baterio-mesurilo"
 
@@ -4910,9 +4931,9 @@ msgstr "Elekti ekranfonon..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1135
+#: src/modules/conf_theme/e_int_config_theme.c:741
+#: src/modules/conf_theme/e_int_config_theme.c:1123
+#: src/modules/conf_theme/e_int_config_theme.c:1132
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Persona"
@@ -5954,7 +5975,7 @@ msgid "Fonts"
 msgstr "Tiparoj"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr ""
@@ -6799,38 +6820,38 @@ msgstr "Tapeta Ŝanĝo"
 msgid "Transitions"
 msgstr "Transpasoj"
 
-#: src/modules/conf_theme/e_int_config_theme.c:370
+#: src/modules/conf_theme/e_int_config_theme.c:367
 msgid "Theme Selector"
 msgstr "Etosa elektilo"
 
-#: src/modules/conf_theme/e_int_config_theme.c:623
+#: src/modules/conf_theme/e_int_config_theme.c:620
 msgid "Theme File Error"
 msgstr "Eraro de etosa dosiero"
 
-#: src/modules/conf_theme/e_int_config_theme.c:624
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
 msgstr " Enporti..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1408
+#: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1423
 msgid "Assign"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1432
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 msgid "Clear All"
 msgstr ""
 
@@ -10336,9 +10357,6 @@ msgstr "Portilo"
 
 #~ msgid "On"
 #~ msgstr "Enŝaltita"
-
-#~ msgid "Borderless"
-#~ msgstr "Senranda"
 
 #~ msgid "Virtual Keyboard"
 #~ msgstr "Virtuala klavaro"

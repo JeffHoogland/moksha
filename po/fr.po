@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-#
+# 
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,12 +13,12 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-14 20:44+0100\n"
+"POT-Creation-Date: 2020-11-26 20:17+0100\n"
 "PO-Revision-Date: 2020-11-16 11:17+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -36,7 +36,7 @@ msgstr "À propos de Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
-#: src/bin/e_int_border_menu.c:194 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:179
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -54,8 +54,9 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2018, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -85,7 +86,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "Voulez-vous vraiment tuer cette fenêtre ?"
 
 #: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
-#: src/bin/e_int_border_menu.c:749
+#: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "Tuer"
 
@@ -167,11 +168,11 @@ msgid "Window : Actions"
 msgstr "Fenêtres : actions"
 
 #: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:669
+#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Déplacer"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:683
+#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "Redimensionner"
 
@@ -185,12 +186,12 @@ msgstr "Menu"
 msgid "Window Menu"
 msgstr "Menu de la fenêtre"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1057
+#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Placer dessus"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1065
+#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "Placer dessous"
 
@@ -243,24 +244,24 @@ msgstr "(Dés)Activer le mode plein écran"
 msgid "Fullscreen Mode Enable"
 msgstr "Activer le mode plein écran"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:384
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "Maximiser"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:395
+#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "Maximiser verticalement"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:406
+#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "Maximiser horizontalement"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:417
+#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
 msgid "Maximize Left"
 msgstr "Maximiser à gauche"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:428
+#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
 msgid "Maximize Right"
 msgstr "Maximiser à droite"
 
@@ -697,7 +698,7 @@ msgid "Command"
 msgstr "Commande"
 
 #: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
-#: src/bin/e_int_border_menu.c:118
+#: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Application"
@@ -752,9 +753,9 @@ msgstr "Basculer l'état du module nommé"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:748
-#: src/modules/conf_theme/e_int_config_theme.c:1129
-#: src/modules/conf_theme/e_int_config_theme.c:1143
+#: src/modules/conf_theme/e_int_config_theme.c:745
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1140
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -1008,7 +1009,7 @@ msgstr ""
 "était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des "
 "données.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:819
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1842,7 +1843,7 @@ msgstr "Autres :"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1437
+#: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:521
 msgid "Preview"
 msgstr "Aperçu"
@@ -1884,7 +1885,7 @@ msgstr "Erreur de Gadget"
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s ne gère pas la désactivation du défilement automatique"
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:140
+#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
 msgid "Move to"
 msgstr "Déplacer vers"
 
@@ -2091,7 +2092,7 @@ msgid "Size"
 msgstr "Taille"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:697 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2152,85 +2153,89 @@ msgstr "Verrous de comportement"
 msgid "Remember these Locks"
 msgstr "Mémoriser ces verrous"
 
-#: src/bin/e_int_border_menu.c:127
+#: src/bin/e_int_border_menu.c:147
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:334
 msgid "Window"
 msgstr "Fenêtre"
 
-#: src/bin/e_int_border_menu.c:149 src/bin/e_int_border_menu.c:1017
+#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
 msgid "Always on Top"
 msgstr "Toujours au-dessus"
 
-#: src/bin/e_int_border_menu.c:164 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "Ancrée"
 
-#: src/bin/e_int_border_menu.c:178
+#: src/bin/e_int_border_menu.c:198
 msgid "Shade"
 msgstr "Enroulée"
 
-#: src/bin/e_int_border_menu.c:371 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:212
+msgid "Borderless"
+msgstr "Sans bordure"
+
+#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: src/bin/e_int_border_menu.c:439
+#: src/bin/e_int_border_menu.c:473
 msgid "Unmaximize"
 msgstr "Restaurer"
 
-#: src/bin/e_int_border_menu.c:581
+#: src/bin/e_int_border_menu.c:615
 msgid "Edit Icon"
 msgstr "Éditer l'icône"
 
-#: src/bin/e_int_border_menu.c:589
+#: src/bin/e_int_border_menu.c:623
 msgid "Create Icon"
 msgstr "Créer une icône"
 
-#: src/bin/e_int_border_menu.c:597
+#: src/bin/e_int_border_menu.c:631
 msgid "Add to Favorites Menu"
 msgstr "Ajouter au menu des favoris"
 
-#: src/bin/e_int_border_menu.c:602
+#: src/bin/e_int_border_menu.c:636
 msgid "Add to IBar"
 msgstr "Ajouter à l'IBar"
 
-#: src/bin/e_int_border_menu.c:610
+#: src/bin/e_int_border_menu.c:644
 msgid "Create Keyboard Shortcut"
 msgstr "Créer un raccourci clavier"
 
-#: src/bin/e_int_border_menu.c:656
+#: src/bin/e_int_border_menu.c:690
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Minimiser"
 
-#: src/bin/e_int_border_menu.c:706
+#: src/bin/e_int_border_menu.c:740
 msgid "Skip"
 msgstr "Ignorer"
 
-#: src/bin/e_int_border_menu.c:716 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Bordure"
 
-#: src/bin/e_int_border_menu.c:728 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "Verrous"
 
-#: src/bin/e_int_border_menu.c:736
+#: src/bin/e_int_border_menu.c:770
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Mémoriser"
 
-#: src/bin/e_int_border_menu.c:758
+#: src/bin/e_int_border_menu.c:792
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:932
+#: src/bin/e_int_border_menu.c:966
 #, c-format
 msgid "Screen %d"
 msgstr "Écran %d"
 
-#: src/bin/e_int_border_menu.c:1028 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2239,43 +2244,43 @@ msgstr "Écran %d"
 msgid "Normal"
 msgstr "Normal(e)"
 
-#: src/bin/e_int_border_menu.c:1039
+#: src/bin/e_int_border_menu.c:1073
 msgid "Always Below"
 msgstr "Toujours en dessous"
 
-#: src/bin/e_int_border_menu.c:1083
+#: src/bin/e_int_border_menu.c:1117
 msgid "Pin to Desktop"
 msgstr "Épingler au bureau"
 
-#: src/bin/e_int_border_menu.c:1094
+#: src/bin/e_int_border_menu.c:1128
 msgid "Unpin from Desktop"
 msgstr "Désépingler du bureau"
 
-#: src/bin/e_int_border_menu.c:1184
+#: src/bin/e_int_border_menu.c:1218
 msgid "Select Border Style"
 msgstr "Sélectionner un style de bordure"
 
-#: src/bin/e_int_border_menu.c:1196
+#: src/bin/e_int_border_menu.c:1230
 msgid "Use Moksha Default Icon Preference"
 msgstr "Utiliser l'icône proposée par Moksha"
 
-#: src/bin/e_int_border_menu.c:1204
+#: src/bin/e_int_border_menu.c:1238
 msgid "Use Application Provided Icon"
 msgstr "Utiliser l'icône fournie par l'application"
 
-#: src/bin/e_int_border_menu.c:1212
+#: src/bin/e_int_border_menu.c:1246
 msgid "Use User Defined Icon"
 msgstr "Utiliser l'icône définie par l'utilisateur"
 
-#: src/bin/e_int_border_menu.c:1221 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr "Offrir une résistance"
 
-#: src/bin/e_int_border_menu.c:1282
+#: src/bin/e_int_border_menu.c:1316
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
-#: src/bin/e_int_border_menu.c:1292 src/modules/pager/e_mod_main.c:265
+#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
 #: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
 #: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
 #: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
@@ -2283,7 +2288,7 @@ msgstr "Liste des fenêtres"
 msgid "Pager"
 msgstr "Miniature des bureaux"
 
-#: src/bin/e_int_border_menu.c:1302 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
 msgid "Taskbar"
 msgstr "Barre des tâches"
 
@@ -2507,7 +2512,7 @@ msgstr "Demande de position"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:194 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -4346,7 +4351,7 @@ msgstr "Ajouter aux favoris"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:755
+#: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "Remonter d'un niveau"
@@ -4469,33 +4474,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Interface"
 
-#: src/modules/battery/e_mod_main.c:152 src/modules/battery/e_mod_main.c:454
+#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Batterie"
 
-#: src/modules/battery/e_mod_main.c:200
+#: src/modules/battery/e_mod_main.c:206
 msgid "Power Management Timing"
 msgstr "Économie d'énergie"
 
-#: src/modules/battery/e_mod_main.c:457 src/modules/battery/e_mod_main.c:492
+#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:458 src/modules/battery/e_mod_main.c:494
+#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:588
+#: src/modules/battery/e_mod_main.c:514
+#, fuzzy
+msgid "Power now: "
+msgstr "Éteindre"
+
+#: src/modules/battery/e_mod_main.c:519
+msgid "Remaining time: "
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:520
+msgid "hr"
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:524
+msgid "Time calculating..."
+msgstr ""
+
+#: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:692 src/modules/battery/e_mod_main.c:694
-#: src/modules/battery/e_mod_main.c:701 src/modules/battery/e_mod_main.c:703
+#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
+#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:821
+#: src/modules/battery/e_mod_main.c:857
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -4933,9 +4955,9 @@ msgstr "Choisir un fond d'écran…"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:744
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1135
+#: src/modules/conf_theme/e_int_config_theme.c:741
+#: src/modules/conf_theme/e_int_config_theme.c:1123
+#: src/modules/conf_theme/e_int_config_theme.c:1132
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Personnel"
@@ -5984,7 +6006,7 @@ msgid "Fonts"
 msgstr "Polices"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1417
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "Thèmes"
@@ -6831,39 +6853,39 @@ msgstr "Changement de fond d'écran"
 msgid "Transitions"
 msgstr "Transitions"
 
-#: src/modules/conf_theme/e_int_config_theme.c:370
+#: src/modules/conf_theme/e_int_config_theme.c:367
 msgid "Theme Selector"
 msgstr "Sélecteur de thème"
 
-#: src/modules/conf_theme/e_int_config_theme.c:623
+#: src/modules/conf_theme/e_int_config_theme.c:620
 msgid "Theme File Error"
 msgstr "Erreur du fichier de thème"
 
-#: src/modules/conf_theme/e_int_config_theme.c:624
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 "Les fichiers listés ne semblent pas être des thèmes pour Moksha :<ps/>%s"
 
-#: src/modules/conf_theme/e_int_config_theme.c:789
+#: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
 msgstr " Importer…"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1408
+#: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
 msgstr "Catégories"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1423
 msgid "Assign"
 msgstr "Assigner"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr "Supprimer"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1432
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 msgid "Clear All"
 msgstr "Tout supprimer"
 
@@ -10337,9 +10359,6 @@ msgstr "Son coupé"
 
 #~ msgid "Dialog"
 #~ msgstr "Boîte de dialogue"
-
-#~ msgid "Borderless"
-#~ msgstr "Sans bordure"
 
 #~ msgid "Smooth scaling"
 #~ msgstr "Mise à l'échelle en douceur"
