@@ -4458,13 +4458,12 @@ msgid "AC power is recommended."
 msgstr "Se recomienda enchufar a la corriente."
 
 #: src/modules/battery/e_mod_main.c:514
-#, fuzzy
 msgid "Power now: "
-msgstr "Apagar"
+msgstr "Carga de Batería"
 
 #: src/modules/battery/e_mod_main.c:519
 msgid "Remaining time: "
-msgstr ""
+msgstr "Tiempo restante"
 
 #: src/modules/battery/e_mod_main.c:520
 msgid "hr"
@@ -4472,7 +4471,7 @@ msgstr ""
 
 #: src/modules/battery/e_mod_main.c:524
 msgid "Time calculating..."
-msgstr ""
+msgstr "Calculando tiempo..."
 
 #: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
@@ -9596,9 +9595,8 @@ msgid "Tiling Configuration"
 msgstr "Configuración del mosaico"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
-#, fuzzy
 msgid "Floating"
-msgstr "Flotar"
+msgstr "Flotante"
 
 #: src/modules/tiling/e_mod_tiling.c:4186
 #: src/modules/tiling/e_mod_tiling.c:4250
