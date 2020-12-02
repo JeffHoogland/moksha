@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-26 20:17+0100\n"
-"PO-Revision-Date: 2020-11-16 11:17+0100\n"
+"POT-Creation-Date: 2020-12-02 07:01-0500\n"
+"PO-Revision-Date: 2020-11-27 08:55+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -54,17 +54,16 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2018, par l'équipe de développement de Moksha</"
+"<title>Copyright &copy; 2020, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
-"visitez :<br><hilight>http://www.mokshadesktop.org</><br><br>"
+"veuillez visiter :<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -3988,9 +3987,8 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 "Votre version d'Enlightenment<br>n'est pas la toute dernière publiée.<br>La "
-"dernière version est :<br><br>%s<br><br>Veuillez visiter www.enlightenment."
-"org<br>ou mettre à jour vos paquets système<br>pour obtenir une nouvelle "
-"version."
+"dernière version est :<br><br>%s<br><br>Visitez www.enlightenment.org<br>ou "
+"mettez à jour vos paquets système<br>pour obtenir une nouvelle version."
 
 #: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -4481,7 +4479,7 @@ msgstr "Batterie"
 
 #: src/modules/battery/e_mod_main.c:206
 msgid "Power Management Timing"
-msgstr "Économie d'énergie"
+msgstr "Minutage de la gestion d'énergie"
 
 #: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
 msgid "Your battery is low!"
@@ -4492,21 +4490,20 @@ msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
 #: src/modules/battery/e_mod_main.c:514
-#, fuzzy
 msgid "Power now: "
-msgstr "Éteindre"
+msgstr "Charge de la batterie : "
 
 #: src/modules/battery/e_mod_main.c:519
 msgid "Remaining time: "
-msgstr ""
+msgstr "Temps restant : "
 
 #: src/modules/battery/e_mod_main.c:520
 msgid "hr"
-msgstr ""
+msgstr "h"
 
 #: src/modules/battery/e_mod_main.c:524
 msgid "Time calculating..."
-msgstr ""
+msgstr "Calcul du temps..."
 
 #: src/modules/battery/e_mod_main.c:624
 msgid "N/A"
