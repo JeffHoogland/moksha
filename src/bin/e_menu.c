@@ -110,6 +110,7 @@ static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 static Eina_Bool _e_menu_lock = EINA_FALSE;
 static int posit = 0;
 static Eina_Bool scrl_toggle;
+static int has_submenu = 0;
 
 static Eina_List *
 _e_active_menus_copy_ref(void)
@@ -2212,6 +2213,8 @@ _e_menu_deactivate_above(E_Menu *ma)
         if (ma == m) above = 1;
         e_object_unref(E_OBJECT(m));
      }
+
+   has_submenu = 0;
 }
 
 static void
@@ -2239,6 +2242,7 @@ _e_menu_submenu_activate(E_Menu_Item *mi)
         _e_menu_reposition(m);
         e_object_unref(E_OBJECT(m));
         mi->menu->have_submenu = 1;
+        has_submenu = 1;
      }
 }
 
@@ -2246,7 +2250,8 @@ static void
 _e_menu_submenu_deactivate(E_Menu_Item *mi)
 {
    if (!mi->menu->active) return;
-    mi->menu->have_submenu = 0;
+   mi->menu->have_submenu = 0;
+   has_submenu = 0;
    //~ if (mi->submenu_post_cb.func)
      //~ mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }
@@ -3065,15 +3070,16 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
      ret = _e_menu_active_call();
    _e_menu_activate_maybe_drag = 0;
    _e_menu_activate_dragging = 0;
-   if (ret == 1)
-     {
+   
+   if ((ret == 1) && (!has_submenu))
+   {
 /* allow mouse to pop down menu if clicked elsewhere */
 /*	if (_e_menu_activate_time != 0) */
         _e_menu_deactivate_all();
-     }
+   }
    else if (ret == -1)
      _e_menu_deactivate_all();
-   else if (!_e_menu_activate_floating)
+   else if ((!_e_menu_activate_floating)  &&  (!has_submenu))
      _e_menu_deactivate_all();
    return ECORE_CALLBACK_PASS_ON;
 }
