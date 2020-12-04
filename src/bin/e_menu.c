@@ -110,6 +110,7 @@ static Ecore_Event_Handler *_e_menu_window_shape_handler = NULL;
 static Eina_Bool _e_menu_lock = EINA_FALSE;
 static int posit = 0;
 static Eina_Bool scrl_toggle;
+static int item_has_cb = 0;
 
 static Eina_List *
 _e_active_menus_copy_ref(void)
@@ -2246,7 +2247,7 @@ static void
 _e_menu_submenu_deactivate(E_Menu_Item *mi)
 {
    if (!mi->menu->active) return;
-    mi->menu->have_submenu = 0;
+   mi->menu->have_submenu = 0;
    //~ if (mi->submenu_post_cb.func)
      //~ mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }
@@ -2313,8 +2314,12 @@ _e_menu_active_call(void)
           e_menu_item_toggle_set(mi, !mi->toggle);
         if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
           e_menu_item_toggle_set(mi, 1);
-        if (mi->cb.func)
+        if (mi->cb.func){
           mi->cb.func(mi->cb.data, mi->menu, mi);
+          item_has_cb = 1;
+        }
+        else
+          item_has_cb = 0;
         return 1;
      }
    return -1;
@@ -2985,7 +2990,8 @@ _e_menu_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "Return")) || (!strcmp(ev->key, "KP_Enter")))
      {
         _e_menu_active_call();
-        _e_menu_deactivate_all();
+        if (item_has_cb)
+         _e_menu_deactivate_all();
      }
    else if (!strcmp(ev->key, "Escape"))
      _e_menu_deactivate_all();
@@ -3065,15 +3071,16 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
      ret = _e_menu_active_call();
    _e_menu_activate_maybe_drag = 0;
    _e_menu_activate_dragging = 0;
-   if (ret == 1)
-     {
+   
+   if ((ret == 1) && (item_has_cb))
+   {
 /* allow mouse to pop down menu if clicked elsewhere */
 /*	if (_e_menu_activate_time != 0) */
         _e_menu_deactivate_all();
-     }
+   }
    else if (ret == -1)
      _e_menu_deactivate_all();
-   else if (!_e_menu_activate_floating)
+   else if ((!_e_menu_activate_floating)  &&  (item_has_cb))
      _e_menu_deactivate_all();
    return ECORE_CALLBACK_PASS_ON;
 }
