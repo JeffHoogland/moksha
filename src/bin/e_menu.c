@@ -2990,7 +2990,8 @@ _e_menu_cb_key_down(void *data __UNUSED__, int type __UNUSED__, void *event)
    else if ((!strcmp(ev->key, "Return")) || (!strcmp(ev->key, "KP_Enter")))
      {
         _e_menu_active_call();
-        _e_menu_deactivate_all();
+        if (item_has_cb)
+         _e_menu_deactivate_all();
      }
    else if (!strcmp(ev->key, "Escape"))
      _e_menu_deactivate_all();
