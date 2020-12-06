@@ -411,12 +411,12 @@ _bl_sys_find(void)
    int v;
 
    devs = eeze_udev_find_by_filter("backlight", NULL, NULL);
-   if (!devs)
-     {
+   //~ if (!devs)
+     //~ {
         /* FIXME: need to make this more precise so we don't set keyboard LEDs or something */
-        devs = eeze_udev_find_by_filter("leds", NULL, NULL);
+        //~ devs = eeze_udev_find_by_filter("leds", NULL, NULL);
         if (!devs) return;
-     }
+     //~ }
    if (eina_list_count(devs) > 1)
      {
         /* prefer backlights of type "firmware" where available */
