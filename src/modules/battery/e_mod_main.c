@@ -16,6 +16,7 @@ Eina_List *device_batteries;
 Eina_List *device_ac_adapters;
 double init_time;
 double current_power;
+int current_time_left;
 Eina_Bool mouse_down = EINA_FALSE;
 
 /* and actually define the gadcon class that this module provides (just 1) */
@@ -186,7 +187,7 @@ _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info)
    inst = data;
    ev = event_info;
    if ((ev->button == 1) && (!mouse_down))
-     _battery_warning_popup(inst, 0, current_power, 0);
+     _battery_warning_popup(inst, current_time_left, current_power, 0);
    else
      _battery_cb_warning_popup_hide(data, e, obj, event_info);
 
@@ -629,6 +630,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
         if ((time_full < 0) && (time_left != battery_config->time_left))
           {
              _battery_face_time_set(inst->o_battery, time_left);
+             current_time_left = time_left;
              if (inst->popup_battery)
                _battery_face_time_set(inst->popup_battery,
                                       time_left);
