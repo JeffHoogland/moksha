@@ -489,7 +489,7 @@ _bl_sys_find(void)
           {
              if (!bl_sysval)
                {
-                  if ((!strstr(f, "kbd")) && (!strstr(f, "mail")))
+                  if ((!strstr(f, "kbd")) && (!strstr(f, "mail")) && (!strstr(f, "input")))
                     bl_sysval = eina_stringshare_add(f);
                }
           }
