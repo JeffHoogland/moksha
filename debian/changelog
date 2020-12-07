@@ -1,3 +1,10 @@
+moksha (20201207bodhi30.3.2) bionic; urgency=low
+
+  *  Backlight: caps fix for VM
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 07 Dec 2020 09:26:29 +0004
+
+
 moksha (20201202bodhi30.3.2) bionic; urgency=low
 
   *  French lang update
