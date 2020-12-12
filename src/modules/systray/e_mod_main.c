@@ -165,7 +165,9 @@ _systray_size_apply_do(Instance *inst)
 {
    const Evas_Object *o;
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
-
+   int icon_num;
+   double space;
+   
    edje_object_message_signal_process(inst->ui.gadget);
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
    if (!o) return;
@@ -174,13 +176,20 @@ _systray_size_apply_do(Instance *inst)
    if (w < 1) w = 1;
    if (h < 1) h = 1;
 
-   if (eina_list_count(inst->icons) == 0)
+   icon_num = eina_list_count(inst->icons);
+
+   if (icon_num == 0)
      ecore_x_window_hide(inst->win.base);
    else
      ecore_x_window_show(inst->win.base);
 
+    if(getenv("SYSTRAY_SPACING"))
+       sscanf(getenv("SYSTRAY_SPACING"), "%lf", &space);
+    else
+       space = e_config->scale.factor;
+
    edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
-   e_gadcon_client_min_size_set(inst->gcc, mw, mh);
+   e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space , mh + icon_num * space);
 
    evas_object_geometry_get(o, &x, &y, &w, &h);
    ecore_x_window_move_resize(inst->win.base, x, y, w, h);
