@@ -1156,9 +1156,9 @@ e_modapi_init(E_Module *m)
    
    if (!delay)
    {
-     if(getenv("SYSTRAY_SHOW_DELAY"))
+     if(getenv("MOKSHA_SYSTRAY_SHOW_DELAY"))
      {
-       sscanf(getenv("SYSTRAY_SHOW_DELAY"), "%lf", &d);
+       sscanf(getenv("MOKSHA_SYSTRAY_SHOW_DELAY"), "%lf", &d);
        delay = ecore_timer_add(d, _delay_gadget, NULL); 
      }
      else
