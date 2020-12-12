@@ -1,9 +1,14 @@
+moksha (20201212bodhi30.3.2) bionic; urgency=low
+
+  *  Systray spacing hack
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 12 Dec 2020 16:21:11 +0004
+
 moksha (20201211bodhi30.3.2) bionic; urgency=low
 
   *  Backlight: caps fix for VM
 
  -- Robert Wiley <ylee@bodhilinux.com>  Fri, 11 Dec 2020 09:26:29 +0004
-
 
 moksha (20201202bodhi30.3.2) bionic; urgency=low
 
