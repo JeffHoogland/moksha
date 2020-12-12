@@ -183,8 +183,8 @@ _systray_size_apply_do(Instance *inst)
    else
      ecore_x_window_show(inst->win.base);
 
-    if(getenv("SYSTRAY_SPACING"))
-       sscanf(getenv("SYSTRAY_SPACING"), "%lf", &space);
+    if(getenv("MOKSHA_SYSTRAY_SPACING"))
+       sscanf(getenv("MOKSHA_SYSTRAY_SPACING"), "%lf", &space);
     else
        space = e_config->scale.factor;
 
