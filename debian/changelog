@@ -1,9 +1,10 @@
-moksha (20201216bodhi30.3.2) bionic; urgency=low
+moksha (20201217bodhi30.3.2) bionic; urgency=low
 
   *  Systray spacing hack
+  *  Color dialog entry number sizing fix
   *  French lang update
 
- -- Robert Wiley <ylee@bodhilinux.com>  Wed, 16 Dec 2020 16:21:11 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 17 Dec 2020 06:53:11 +0004
 
 moksha (20201211bodhi30.3.2) bionic; urgency=low
 
