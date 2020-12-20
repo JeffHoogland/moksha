@@ -272,7 +272,7 @@ write_history(Eina_List *popup_items)
    Eina_List *l = NULL;
    char str[10] = "";
    char dir[PATH_MAX];
-   char file_path[PATH_MAX];
+   char file_path[PATH_MAX + 12];
    unsigned int i = 1;
    int ret;
    Eet_File *history_file = NULL;
@@ -610,8 +610,8 @@ get_time()
 {
    time_t rawtime;
    struct tm * timeinfo;
-   char buf[20] = "";
-   char hour[3];
+   char buf[64] = "";
+   char hour[32];
    time(&rawtime);
    timeinfo = localtime( &rawtime );
    
@@ -740,7 +740,6 @@ _notification_popup_refresh(Popup_Data *popup)
    if (img)
      {
         char dir[PATH_MAX];
-        char image_path[PATH_MAX];
         
         popup->app_icon = e_notification_image_evas_object_add(popup->e, img);
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
@@ -750,8 +749,24 @@ _notification_popup_refresh(Popup_Data *popup)
         if (notification_cfg->instances){
           snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
           if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
-          snprintf(image_path, sizeof(image_path), "%s/%s_%s.png", dir, 
+
+          int n = snprintf(0, 0, "%s/%s_%s.png", dir,
+                   e_notification_summary_get(popup->notif), get_time());
+          if (n < 0)
+            {
+              perror ("snprintf failed");
+              abort ();
+            }
+
+          char *image_path = (char *) malloc(n + 1);
+          snprintf(image_path, n + 1, "%s/%s_%s.png", dir,
                    e_notification_summary_get(popup->notif), get_time()); 
+          if (n < 0)
+            {
+              perror ("snprintf failed");
+              abort ();
+            }
+
           evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
           popup->app_icon_image = strdup(image_path);
         }
