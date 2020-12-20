@@ -769,6 +769,7 @@ _notification_popup_refresh(Popup_Data *popup)
 
           evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
           popup->app_icon_image = strdup(image_path);
+          free (image_path);
         }
      }
 
