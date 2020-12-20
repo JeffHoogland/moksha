@@ -21,6 +21,20 @@
 
 #include <Eina.h>
 
+#  ifdef __GNUC__
+#   if __GNUC__ >= 4
+/* BROKEN in gcc 4 on amd64 */
+#    if 0
+#     pragma GCC visibility push(hidden)
+#    endif
+#    define EAPI __attribute__ ((visibility("default")))
+#   else
+#    define EAPI
+#   endif
+#  else
+#   define EAPI
+#  endif
+
 static Eina_Bool stop_ptrace = EINA_FALSE;
 
 static void env_set(const char *var, const char *val);
