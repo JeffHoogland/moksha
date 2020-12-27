@@ -1,0 +1,24 @@
+moksha (0.3.2-3) focal; urgency=low
+
+  *  e_icon changes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 24 Dec 2020 06:40:16 +0004
+
+
+moksha (0.3.2-2) focal; urgency=low
+
+  *  Localization updates
+  *  Menu Changes
+  *  Battery popup
+  *  Tiling changes
+  *  Backlight VM cap fix
+  *  Systray spacing hack
+  *  Color dialog entry number sizing fix
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 17 Dec 2020 07:39:07 +0004
+
+moksha (0.3.2-1) focal; urgency=low
+
+  *  Initial commit for BL6.0
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 03 Oct 2020 08:06:50 +0004

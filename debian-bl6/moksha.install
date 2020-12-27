@@ -1,0 +1,14 @@
+etc/enlightenment/sysactions.conf
+usr/bin/*
+usr/lib/*/enlightenment/modules/*
+usr/lib/*/enlightenment/utils/enlightenment_*
+usr/share/applications/*
+usr/share/pixmaps/*
+usr/share/enlightenment/data
+usr/share/epulse/data/themes/*
+usr/share/locale
+usr/share/xsessions
+usr/share/enlightenment/AUTHORS
+usr/share/enlightenment/doc/*
+usr/lib/x86_64-linux-gnu/libepulse.so
+usr/lib/x86_64-linux-gnu/libepulse.la

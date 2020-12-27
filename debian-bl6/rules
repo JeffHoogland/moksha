@@ -1,0 +1,46 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS:=$(shell dpkg-buildflags --get CFLAGS)
+LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
+
+export CPPFLAGS
+export CFLAGS
+export LDFLAGS
+
+ARCH_PATH=$(shell dpkg-architecture -qDEB_TARGET_MULTIARCH)
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	--disable-rpath \
+	--disable-connman
+
+override_dh_lintian:
+	sed "s/ARCH_PATH/$(ARCH_PATH)/" debian/moksha.lintian-overrides.in > debian/moksha.lintian-overrides
+	dh_lintian
+
+execute_before_dh_install:
+	rm debian/tmp/usr/share/enlightenment/COPYING
+	# ln -s debian/tmp/usr/lib/x86_64-linux-gnu/libepulse.so debian/tmp/usr/lib/x86_64-linux-gnu/libepulse.so
+
+override_dh_fixperms:
+	dh_fixperms
+	chmod 4755 debian/moksha/usr/lib/$(ARCH_PATH)/enlightenment/utils/enlightenment_sys
+	chmod 4755 debian/moksha/usr/lib/$(ARCH_PATH)/enlightenment/utils/enlightenment_backlight
+	chmod 4755 debian/moksha/usr/lib/$(ARCH_PATH)/enlightenment/modules/cpufreq/linux-gnu*/freqset
+
+override_dh_clean:
+	dh_clean
+	rm -f debian/moksha.lintian-overrides
+
+.PHONY: override_dh_strip
+
+override_dh_strip:
+	dh_strip --dbg-package=moksha-dbg

@@ -1,0 +1,2 @@
+for some reason always end up with libedbus-dev in depends
+should add policy kit to depends
