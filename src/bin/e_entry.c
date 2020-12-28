@@ -629,7 +629,7 @@ _entry_paste_request_signal_cb(void *data,
    else
      xwin = win->evas_win;
 
-   if (emission[sizeof("ntry,paste,request,")] == '1')
+   if (emission[sizeof("entry,paste,request,")] == '1')
      {
         ecore_x_selection_primary_request(xwin,
               ECORE_X_SELECTION_TARGET_UTF8_STRING);
