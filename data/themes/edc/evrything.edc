@@ -1,3 +1,4 @@
+
 group { name: "e/modules/everything/main";
    images.image: "vgrad_med_lighter.png" COMP;
    images.image: "bevel_out.png" COMP;
@@ -1617,10 +1618,11 @@ group { name: "e/modules/everything/thumbview/item/list";
             color3: 0 0 0 128;
             color_class: "ilist_item";
             align: 1.0 0.5;
-            max: 10 99999;
+            max: 120 99999;
             text { font: "Sans"; size: 8;
                min: 0 1;
                align: 1.0 0.5;
+               //~ ellipsis: -1; 
                text_class: "ilist_item";
             }
          }
@@ -1643,12 +1645,13 @@ group { name: "e/modules/everything/thumbview/item/list";
             color3: 51 153 255 18;
             color_class: "ilist_item_selected";
             align: 1.0 0.5;
-            max: 160 99999;
+            max: 120 99999;
             text { font: "Sans"; size: 8;
               text_source: "e.text.detail";
               min: 0 1;
               align: 1.0 0.5;
               text_class: "ilist_item";
+              //~ ellipsis: -1;
             }
             visible: 0;
          }
@@ -1694,10 +1697,10 @@ group { name: "e/modules/everything/thumbview/item/list";
             color3: 51 153 255 18;
             color_class: "ilist_item_selected";
             text { font: "Sans"; size: 10;
-               min: 0 1; 
-              text_source: "e.text.label";
-              align: 0.0 0.5;
-              text_class: "ilist_item";
+                   min: 0 1; 
+                   text_source: "e.text.label";
+                   align: 0.0 0.5;
+                   text_class: "ilist_item";
             }
             visible: 0;
          }
