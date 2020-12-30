@@ -22,6 +22,9 @@
 #include <Eina.h>
 
 #  ifdef __GNUC__
+#   ifdef EAPI
+#     undef EAPI
+#   endif
 #   if __GNUC__ >= 4
 /* BROKEN in gcc 4 on amd64 */
 #    if 0
