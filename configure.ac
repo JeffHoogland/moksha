@@ -106,8 +106,11 @@ PKG_CHECK_MODULES([EFL], [efl],
 [
 			EFL_VERSION=$($PKG_CONFIG --modversion efl)
 			AC_SUBST(EFL_VERSION)
+			EFL_MINOR=$(echo "[$EFL_VERSION]" | cut -d. -f2)
+			AC_SUBST(EFL_MINOR)
 	  ])
-AC_DEFINE_UNQUOTED(EFL_VERSION, [$EFL_VERSION],[Determine EFL version])
+AC_DEFINE_UNQUOTED(EFL_VERSION, ["$EFL_VERSION"], [Determine EFL version])
+AC_DEFINE_UNQUOTED(EFL_MINOR, [$EFL_MINOR], [Determine EFL minor version])
 
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
 
