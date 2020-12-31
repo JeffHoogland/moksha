@@ -450,6 +450,13 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
    E_Entry_Smart_Data *sd;
    Evas_Event_Mouse_Down *event;
 
+   /* Efl version 1.24.x and greater destroy the abilty to copy and paste in e_entry
+    *  we disable this functionality to avoid questions from users.
+    *
+    * FIXME */
+
+   Eina_Bool efl_hack = (EFL_MINOR < 24);
+
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
    if (!(event = event_info))
@@ -492,7 +499,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
                        mi = e_menu_item_new(sd->popup);
                        e_menu_item_separator_set(mi, 1);
                        
-                       if (!s_passwd)
+                       if (!s_passwd && efl_hack)
                          {
                             mi = e_menu_item_new(sd->popup);
                             e_menu_item_label_set(mi, _("Cut"));
@@ -501,7 +508,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
                          }
                     }
                }
-             if (!s_passwd)
+             if (!s_passwd && efl_hack)
                {
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Copy"));
@@ -511,7 +518,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
           }
         if (sd->enabled)
           {
-             if (!sd->noedit)
+             if (!sd->noedit && efl_hack)
                {
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Paste"));

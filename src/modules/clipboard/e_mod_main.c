@@ -477,6 +477,14 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
 
   EINA_SAFETY_ON_NULL_RETURN_VAL(instance, EINA_TRUE);
 
+  /* Efl version 1.24.x and greater destroy the abilty to copy and paste in e_entry
+   *  Even worse these EFLs cause Buggy behavior with our clipboard in e_entries.
+   *  if ECORE_CALLBACK_DONE is not return in these EFLs pastes happens multiple times in an e_entry
+   *
+   * FIXME */
+
+  Eina_Bool cb_ret = (EFL_MINOR < 24) ? ECORE_CALLBACK_PASS_ON : ECORE_CALLBACK_DONE;
+
   if (clip_inst->items)
     last =  ((Clip_Data *) eina_list_data_get (clip_inst->items))->content;
 
@@ -486,7 +494,7 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
         return ECORE_CALLBACK_DONE;
       if (clip_cfg->ignore_ws_copy && is_empty(text_data->text)) {
         clipboard.clear();
-        return ECORE_CALLBACK_PASS_ON;
+        return cb_ret;
       }
       cd = E_NEW(Clip_Data, 1);
       cd->lock = strdup("U");
@@ -509,7 +517,7 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
     }
   }
   error:
-  return ECORE_CALLBACK_PASS_ON;
+  return cb_ret;
 }
 
 static Eina_Bool
@@ -895,7 +903,7 @@ e_modapi_init (E_Module *m)
 
   /* Create an invisible window for clipboard input purposes
    *   It is my understanding this should not displayed.*/
-  //clip_inst->win = ecore_x_window_input_new(0, 10, 10, 100, 100);
+   //clip_inst->win = ecore_x_window_input_new(0, 10, 10, 100, 100);
    clip_inst->win = ecore_x_window_new(0, 0, 0, 1, 1);
 
   /* Now add some callbacks to handle clipboard events */
