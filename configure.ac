@@ -102,6 +102,13 @@ AC_SUBST(efl_version)
 edbus_version="1.7.10"
 AC_SUBST(edbus_version)
 
+PKG_CHECK_MODULES([EFL], [efl],
+[
+			EFL_VERSION=$($PKG_CONFIG --modversion efl)
+			AC_SUBST(EFL_VERSION)
+	  ])
+AC_DEFINE_UNQUOTED(EFL_VERSION, [$EFL_VERSION],[Determine EFL version])
+
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
 
 dnl AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
@@ -1032,6 +1039,7 @@ Summary:
  * prefix..........: $(txt_strip $prefix)
  * CFLAGS..........: $(txt_strip $CFLAGS)
  * LDFLAGS.........: $(txt_strip $LDFLAGS)
+ * EFL.............: $EFL_VERSION
 SUMMARY_EOF
 echo
 cat << DEVICE_EOF
