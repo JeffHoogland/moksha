@@ -97,9 +97,15 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
+  /* Efl version 1.24.x and greater destroy clipboard sync
+   *  we disable this functionality to avoid questions from users.
+   *
+   * FIXME */
+  Eina_Bool efl_hack = (EFL_MINOR < 24);
+
   clip_cfg->clip_copy      = cfdata->clip_copy;
   clip_cfg->clip_select    = cfdata->clip_select;
-  clip_cfg->sync           = cfdata->sync;
+  clip_cfg->sync           = efl_hack ? cfdata->sync : 0;// CF_DEFAULT_SYNC;
   clip_cfg->persistence    = cfdata->persistence;
   clip_cfg->hist_reverse   = cfdata->hist_reverse;
 
@@ -170,6 +176,14 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 {
   Evas_Object *otb, *o, *ob, *of;
 
+  /* Efl version 1.24.x and greater destroy clipboard sync
+   *  we disable this functionality to avoid questions from users.
+   *
+   * FIXME */
+
+  Eina_Bool efl_hack = (EFL_MINOR < 24);
+
+
   otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
 
   o = e_widget_list_add(evas, 0, 0);
@@ -181,10 +195,13 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   ob = e_widget_check_add(evas, _(" Use Primary (Selection)"), &(cfdata->clip_select));
   e_widget_framelist_object_append(of, ob);
 
-  ob = e_widget_check_add(evas, _(" Synchronize Clipboards"), &(cfdata->sync));
-  WIDGET_DISABLED_SET(!(cfdata->clip_copy && cfdata->clip_select), ob, EINA_TRUE);
-  cfdata->sync_widget = ob;
-  e_widget_framelist_object_append(of, ob);
+  if (efl_hack)
+  {
+      ob = e_widget_check_add(evas, _(" Synchronize Clipboards"), &(cfdata->sync));
+      WIDGET_DISABLED_SET(!(cfdata->clip_copy && cfdata->clip_select), ob, EINA_TRUE);
+      cfdata->sync_widget = ob;
+      e_widget_framelist_object_append(of, ob);
+  }
   e_widget_list_object_append(o, of, 1, 0, 1.0);
 
   /* Content Config Section */
@@ -306,6 +323,12 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 static Eina_Bool
 _sync_state_changed(E_Config_Dialog_Data *cfdata)
 {
+  /* Efl version 1.24.x and greater destroy clipboard sync
+   *  we disable this functionality to avoid questions from users.
+   *
+   * FIXME */
+  Eina_Bool efl_hack = (EFL_MINOR < 24);
+  if (!efl_hack) return EINA_FALSE;
   if ((cfdata->sync_state.copy   != cfdata->clip_copy) ||
       (cfdata->sync_state.select != cfdata->clip_select) ||
       (cfdata->sync_state.sync   != cfdata->sync)) {
