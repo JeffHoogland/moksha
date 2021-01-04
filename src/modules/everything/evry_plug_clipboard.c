@@ -1,14 +1,22 @@
 #include "e_mod_main.h"
+#include <Elementary.h>
 
 static Evry_Action *act;
-static Ecore_X_Window clipboard_win = 0;
+static Evas_Object * clipboard_win = NULL;
 
 static int
 _action(Evry_Action *action)
 {
    const Evry_Item *it = action->it1.item;
-   e_util_clipboard(clipboard_win, it->label, ECORE_X_SELECTION_CLIPBOARD);
-   e_util_clipboard(clipboard_win, it->label, ECORE_X_SELECTION_PRIMARY);
+
+   elm_cnp_selection_set(clipboard_win,
+                        ELM_SEL_TYPE_PRIMARY,
+                        ELM_SEL_FORMAT_TEXT,
+                        it->label, strlen(it->label));
+   elm_cnp_selection_set(clipboard_win,
+                        ELM_SEL_TYPE_CLIPBOARD,
+                        ELM_SEL_FORMAT_TEXT,
+                        it->label, strlen(it->label));
 
    return 1;
 }
@@ -25,8 +33,8 @@ evry_plug_clipboard_init(void)
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
 
-   Ecore_X_Window win = ecore_x_window_input_new(0, 0, 0, 1, 1);
-   ecore_x_icccm_name_class_set(win, "evry", "clipboard");
+   Evas_Object *win = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
+   //ecore_x_icccm_name_class_set(win, "evry", "clipboard");
    if (!win) return EINA_FALSE;
 
 //FIXME: Icon name doesn't follow FDO Spec
@@ -45,7 +53,8 @@ evry_plug_clipboard_init(void)
 void
 evry_plug_clipboard_shutdown(void)
 {
-   ecore_x_window_free(clipboard_win);
+   if (clipboard_win) evas_object_del(clipboard_win);
+   clipboard_win = NULL;
    evry_action_free(act);
 }
 

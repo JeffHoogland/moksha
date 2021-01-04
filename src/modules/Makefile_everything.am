@@ -36,6 +36,10 @@ everything_module_la_SOURCES = $(EVRYHEADERS) \
 			       everything/evry_plug_settings.c \
 			       everything/evry_plug_calc.c
 
+everything_module_la_CFLAGS = $(AM_CFLAGS)
+everything_module_la_CFLAGS += @ELM_CFLAGS@
+everything_module_la_LIBADD = @ELM_LIBS@
+
 everything_headersdir = $(pkgincludedir)
 dist_everything_headers_DATA = $(EVRYHEADERS)
 
