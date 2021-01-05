@@ -1,8 +1,10 @@
 #include "e_mod_main.h"
-#include <Elementary.h>
+#ifdef HAVE_ELEMENTARY
+# include <Elementary.h>
+static Evas_Object * clipboard_win = NULL;
+#endif
 
 static Evry_Action *act;
-static Evas_Object * clipboard_win = NULL;
 
 static int
 _action(Evry_Action *action)
@@ -32,7 +34,7 @@ evry_plug_clipboard_init(void)
 {
    if (!evry_api_version_check(EVRY_API_VERSION))
      return EINA_FALSE;
-
+#ifdef HAVE_ELEMENTARY
    Evas_Object *win = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
    //ecore_x_icccm_name_class_set(win, "evry", "clipboard");
    if (!win) return EINA_FALSE;
@@ -48,13 +50,17 @@ evry_plug_clipboard_init(void)
    clipboard_win = win;
 
    return EINA_TRUE;
+#endif
+   return EINA_FALSE;
 }
 
 void
 evry_plug_clipboard_shutdown(void)
 {
+#ifdef HAVE_ELEMENTARY
    if (clipboard_win) evas_object_del(clipboard_win);
    clipboard_win = NULL;
    evry_action_free(act);
+#endif
 }
 
