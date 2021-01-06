@@ -835,7 +835,7 @@ _e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event
 static Eina_Bool
 _clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   _update_today_timer(NULL);
+   e_int_clock_instances_redo(EINA_TRUE);
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -847,6 +847,13 @@ _clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__
    eio_monitor_del(clock_tz2_monitor);
    clock_tz2_monitor = eio_monitor_add("/etc/timezone");
    return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_clock_time_update(void *d EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+{
+   e_int_clock_instances_redo(EINA_TRUE);
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
@@ -863,6 +870,7 @@ _clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
    e_int_clock_instances_redo(EINA_TRUE);
    return EINA_TRUE;
 }
+
 
 /* module setup */
 EAPI E_Module_Api e_modapi =
@@ -913,16 +921,19 @@ e_modapi_init(E_Module *m)
      }
 
    clock_config->module = m;
-   clock_tz_monitor = eio_monitor_add("/etc/localtime");
-   clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+    if (ecore_file_exists("/etc/localtime"))
+     clock_tz_monitor = eio_monitor_add("/etc/localtime");
+   if (ecore_file_exists("/etc/timezone"))
+     clock_tz2_monitor = eio_monitor_add("/etc/timezone");
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_ERROR, _clock_eio_error, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_CREATED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_MODIFIED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_FILE_DELETED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_DELETED, _clock_eio_update, NULL);
    E_LIST_HANDLER_APPEND(clock_eio_handlers, EIO_MONITOR_SELF_RENAME, _clock_eio_update, NULL);
-   E_LIST_HANDLER_APPEND(clock_eio_handlers, E_EVENT_SYS_RESUME, _clock_eio_update, NULL);
-
+   E_LIST_HANDLER_APPEND(clock_eio_handlers, E_EVENT_SYS_RESUME, _clock_time_update, NULL);
+   E_LIST_HANDLER_APPEND(clock_eio_handlers, ECORE_EVENT_SYSTEM_TIMEDATE_CHANGED, _clock_time_update, NULL);
+   
    e_gadcon_provider_register(&_gadcon_class);
 #ifdef HAVE_SYS_TIMERFD_H
 
