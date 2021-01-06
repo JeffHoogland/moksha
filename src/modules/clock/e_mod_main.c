@@ -566,7 +566,7 @@ e_int_clock_instances_redo(Eina_Bool all)
 static Eina_Bool
 _update_today_timer(void *data __UNUSED__)
 {
-   time_t t; //, t_tomorrow;
+   time_t t, t_tomorrow;
    const struct tm *now;
    struct tm today;
 
@@ -584,13 +584,9 @@ _update_today_timer(void *data __UNUSED__)
    today.tm_min = 0;
    today.tm_hour = 0;
 
-   //~ t_tomorrow = mktime(&today) + 24 * 60 * 60;
-   //~ if (update_today) ecore_timer_interval_set(update_today, t_tomorrow - t);
-   //~ else update_today = ecore_timer_add(t_tomorrow - t, _update_today_timer, NULL);
-   
-   if (update_today) ecore_timer_interval_set(update_today, 5.0);
-   else update_today = ecore_timer_add(5.0, _update_today_timer, NULL);
-   
+   t_tomorrow = mktime(&today) + 24 * 60 * 60;
+   if (update_today) ecore_timer_interval_set(update_today, t_tomorrow - t);
+   else update_today = ecore_timer_add(t_tomorrow - t, _update_today_timer, NULL);
    return EINA_TRUE;
 }
 
@@ -839,7 +835,7 @@ _e_mod_action_cb_mouse(E_Object *obj __UNUSED__, const char *params, Ecore_Event
 static Eina_Bool
 _clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   e_int_clock_instances_redo(EINA_TRUE);
+   _update_today_timer(NULL);
    return ECORE_CALLBACK_RENEW;
 }
 
