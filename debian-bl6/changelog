@@ -1,3 +1,13 @@
+moksha (0.3.2-4) focal; urgency=low
+
+  *  Theme notification text scaled
+  *  Clock screensaver events added
+  *  Refresh clock module date when resume from sleep
+  *  Use Elm copy for evry copy
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 10 Jan 2021 16:56:33 +0004
+
+
 moksha (0.3.2-3) focal; urgency=low
 
   *  e_icon changes
