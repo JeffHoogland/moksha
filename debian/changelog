@@ -1,3 +1,12 @@
+moksha (20210110bodhi30.3.3) bionic; urgency=low
+
+  *  Theme notification text scaled
+  *  Clock screensaver events added
+  *  Refresh clock module date when resume from sleep
+  *  Use Elm copy for evry copy
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 10 Jan 2021 16:56:33 +0004
+
 moksha (20201223bodhi30.3.3) bionic; urgency=low
 
   *  e_icon changes
