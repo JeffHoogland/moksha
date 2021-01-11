@@ -725,7 +725,7 @@ _advanced_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    ////////////////////////////////////////////////////////////
    e_widget_toolbook_page_show(otb, 0);
    if (cfdata->load_timer) ecore_timer_del(cfdata->load_timer);
-   cfdata->load_timer = ecore_timer_add(0.01, _cb_load_timer, cfdata);
+   cfdata->load_timer = ecore_timer_loop_add(0.01, _cb_load_timer, cfdata);
 
    e_win_centered_set(cfd->dia->win, EINA_TRUE);
 
@@ -749,12 +749,12 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_table_object_append(ot, cfdata->basic.o_list, 0, 0, 2, 1, 1, 1, 1, 1);
 
    cfdata->o_add =
-     e_widget_button_add(evas, _("Add Gadget"), NULL, _cb_add, cfdata, NULL);
+     e_widget_button_add(evas, _("Add Gadget"), "list-add", _cb_add, cfdata, NULL);
    e_widget_disabled_set(cfdata->o_add, EINA_TRUE);
    e_widget_table_object_append(ot, cfdata->o_add, 0, 1, 1, 1, 1, 1, 1, 0);
 
    cfdata->o_del =
-     e_widget_button_add(evas, _("Remove Gadget"), NULL, _cb_del, cfdata, NULL);
+     e_widget_button_add(evas, _("Remove Gadget"), "list-remove", _cb_del, cfdata, NULL);
    e_widget_disabled_set(cfdata->o_del, EINA_TRUE);
    e_widget_table_object_append(ot, cfdata->o_del, 1, 1, 1, 1, 1, 1, 1, 0);
 
