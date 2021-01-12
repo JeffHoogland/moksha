@@ -176,9 +176,7 @@ e_modapi_init(E_Module *m)
    tasks_config->handlers = eina_list_append
        (tasks_config->handlers, ecore_event_handler_add
          (E_EVENT_BORDER_URGENT_CHANGE, _tasks_cb_event_border_urgent_change, NULL));
-
    tasks_config->borders = eina_list_clone(e_border_client_list());
-
    e_gadcon_provider_register(&_gadcon_class);
    return m;
 }
@@ -464,7 +462,8 @@ _tasks_refill_border(E_Border *border)
                }
           }
      }
-   if (!found) _tasks_refill_all();
+   //~ if (!found) _tasks_refill_all();
+   _tasks_refill_all();
 }
 
 static void
