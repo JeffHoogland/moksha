@@ -409,20 +409,21 @@ _tasks_refill(Tasks *tasks)
         if (!tasks->gcc->resizable)
           {
              if (tasks->horizontal)
+             {
                e_gadcon_client_min_size_set(tasks->gcc,
                                             w * eina_list_count(tasks->items),
                                             h);
+               if (tasks->config->autoresize)
+               {
+                 evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
+                 if (th > gw)  w = gw / eina_list_count(tasks->items);
+                 e_gadcon_client_min_size_set(tasks->gcc, gw - 10, h);
+               }
+             }
              else
                e_gadcon_client_min_size_set(tasks->gcc,
                                             w,
                                             h * eina_list_count(tasks->items));
-            
-             if (tasks->config->autoresize && tasks->horizontal)
-             {
-               evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
-               if (th > gw)  w = gw / eina_list_count(tasks->items);
-               e_gadcon_client_min_size_set(tasks->gcc, gw - 10, h);
-             }
           }
      }
    else
