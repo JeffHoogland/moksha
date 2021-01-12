@@ -1,3 +1,10 @@
+moksha (0.3.2-5) focal; urgency=low
+
+  *  Gadcon and shelf fix
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 12 Jan 2021 10:21:37 +0004
+
+
 moksha (0.3.2-4) focal; urgency=low
 
   *  Theme notification text scaled

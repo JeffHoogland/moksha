@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-26 20:17+0100\n"
+"POT-Creation-Date: 2021-01-10 17:51-0500\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -988,7 +988,7 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1182,7 +1182,7 @@ msgstr "显示在菜单中"
 
 #: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
-#: src/modules/clipboard/e_mod_config.c:207
+#: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "选项"
 
@@ -1195,7 +1195,7 @@ msgstr "为 %s 选择一个图标"
 msgid "Select an Executable"
 msgstr "选择一个可执行文件"
 
-#: src/bin/e_entry.c:488 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
+#: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1211,24 +1211,24 @@ msgstr "选择一个可执行文件"
 #: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:641
-#: src/modules/clipboard/e_mod_main.c:728
+#: src/modules/clipboard/e_mod_main.c:649
+#: src/modules/clipboard/e_mod_main.c:736
 msgid "Delete"
 msgstr "删除"
 
-#: src/bin/e_entry.c:498 src/bin/e_fm.c:9072
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9072
 msgid "Cut"
 msgstr "剪切"
 
-#: src/bin/e_entry.c:507 src/bin/e_fm.c:9086 src/bin/e_fm.c:11611
+#: src/bin/e_entry.c:514 src/bin/e_fm.c:9086 src/bin/e_fm.c:11611
 msgid "Copy"
 msgstr "复制"
 
-#: src/bin/e_entry.c:517 src/bin/e_fm.c:8877 src/bin/e_fm.c:9099
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:8877 src/bin/e_fm.c:9099
 msgid "Paste"
 msgstr "粘贴"
 
-#: src/bin/e_entry.c:528
+#: src/bin/e_entry.c:535
 msgid "Select All"
 msgstr "全选"
 
@@ -2470,7 +2470,7 @@ msgstr "请求位置"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -3555,8 +3555,8 @@ msgstr ""
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:641
-#: src/modules/clipboard/e_mod_main.c:728
+#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:649
+#: src/modules/clipboard/e_mod_main.c:736
 msgid "Keep"
 msgstr "保持"
 
@@ -4369,50 +4369,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "硬件"
 
-#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:470
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "电池"
 
-#: src/modules/battery/e_mod_main.c:206
+#: src/modules/battery/e_mod_main.c:208
 msgid "Power Management Timing"
 msgstr "电源管理时间"
 
-#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
+#: src/modules/battery/e_mod_main.c:473 src/modules/battery/e_mod_main.c:510
 msgid "Your battery is low!"
 msgstr "电池电量低！"
 
-#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
+#: src/modules/battery/e_mod_main.c:474 src/modules/battery/e_mod_main.c:512
 msgid "AC power is recommended."
 msgstr "建议使用外接交流电源。"
 
-#: src/modules/battery/e_mod_main.c:514
+#: src/modules/battery/e_mod_main.c:516
 #, fuzzy
 msgid "Power now: "
 msgstr "关机"
 
-#: src/modules/battery/e_mod_main.c:519
+#: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:520
+#: src/modules/battery/e_mod_main.c:522
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:524
+#: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:624
+#: src/modules/battery/e_mod_main.c:627
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
-#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
+#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
+#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
 msgid "ERROR"
 msgstr "错误"
 
-#: src/modules/battery/e_mod_main.c:857
+#: src/modules/battery/e_mod_main.c:861
 msgid "Battery Meter"
 msgstr "电池标尺"
 
@@ -4421,7 +4421,7 @@ msgid "Clock Settings"
 msgstr "时钟设置"
 
 #: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
-#: src/modules/clock/e_mod_main.c:912
+#: src/modules/clock/e_mod_main.c:933
 msgid "Clock"
 msgstr "时钟"
 
@@ -4486,7 +4486,7 @@ msgstr "周末"
 msgid "Days"
 msgstr "平日"
 
-#: src/modules/clock/e_mod_main.c:912
+#: src/modules/clock/e_mod_main.c:933
 msgid "Toggle calendar"
 msgstr "切换日历"
 
@@ -7802,7 +7802,7 @@ msgstr "任务中心插件"
 msgid "Calculator"
 msgstr "计算器"
 
-#: src/modules/everything/evry_plug_clipboard.c:33
+#: src/modules/everything/evry_plug_clipboard.c:43
 msgid "Copy to Clipboard"
 msgstr "复制到剪贴板"
 
@@ -9194,27 +9194,27 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:489 src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
 msgid "Systray Error"
 msgstr "系统托盘出错"
 
-#: src/modules/systray/e_mod_main.c:490
+#: src/modules/systray/e_mod_main.c:499
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:896
+#: src/modules/systray/e_mod_main.c:905
 msgid "Another systray exists"
 msgstr "有另一个系统托盘存在"
 
-#: src/modules/systray/e_mod_main.c:897
+#: src/modules/systray/e_mod_main.c:906
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "只允许一个系统托盘的组件，目前已经有了一个。"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:915
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1104
+#: src/modules/systray/e_mod_main.c:1113
 msgid "Systray"
 msgstr "系统托盘"
 
@@ -9763,7 +9763,7 @@ msgid "Reverse order"
 msgstr "记住顺序"
 
 #: src/modules/notification/e_mod_config.c:178
-#: src/modules/clipboard/e_mod_config.c:228
+#: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "标签"
@@ -9774,7 +9774,7 @@ msgid "Labels length"
 msgstr "标签文本"
 
 #: src/modules/notification/e_mod_config.c:186
-#: src/modules/clipboard/e_mod_config.c:239
+#: src/modules/clipboard/e_mod_config.c:256
 msgid "Items"
 msgstr ""
 
@@ -9791,90 +9791,90 @@ msgid "App blacklist (use a delimiter)"
 msgstr ""
 
 #: src/modules/notification/e_mod_config.c:209
-#: src/modules/clipboard/e_mod_config.c:249
+#: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
 msgstr "目录"
 
-#: src/modules/clipboard/e_mod_config.c:177
+#: src/modules/clipboard/e_mod_config.c:191
 #, fuzzy
 msgid "Selection"
 msgstr "选择"
 
-#: src/modules/clipboard/e_mod_config.c:178
+#: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:181
+#: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:184
+#: src/modules/clipboard/e_mod_config.c:200
 #, fuzzy
 msgid " Synchronize Clipboards"
 msgstr "复制到剪贴板"
 
-#: src/modules/clipboard/e_mod_config.c:191
+#: src/modules/clipboard/e_mod_config.c:208
 #, fuzzy
 msgid "Content"
 msgstr "内容"
 
-#: src/modules/clipboard/e_mod_config.c:192
-#: src/modules/clipboard/e_mod_config.c:229
+#: src/modules/clipboard/e_mod_config.c:209
+#: src/modules/clipboard/e_mod_config.c:246
 #, fuzzy
 msgid " Ignore Whitespace"
 msgstr "忽略"
 
-#: src/modules/clipboard/e_mod_config.c:195
+#: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:198
+#: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:202
-#: src/modules/clipboard/e_mod_main.c:885
-#: src/modules/clipboard/e_mod_main.c:886
-#: src/modules/clipboard/e_mod_main.c:887
+#: src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:893
+#: src/modules/clipboard/e_mod_main.c:894
+#: src/modules/clipboard/e_mod_main.c:895
 #, fuzzy
 msgid "Clipboard"
 msgstr "复制到剪贴板"
 
-#: src/modules/clipboard/e_mod_config.c:208
+#: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:211
+#: src/modules/clipboard/e_mod_config.c:228
 #, fuzzy
 msgid " Confirm before Clearing"
 msgstr "确认删除书架"
 
-#: src/modules/clipboard/e_mod_config.c:213
+#: src/modules/clipboard/e_mod_config.c:230
 #, fuzzy
 msgid " Save every Selection"
 msgstr "安全删除"
 
-#: src/modules/clipboard/e_mod_config.c:217
+#: src/modules/clipboard/e_mod_config.c:234
 #, fuzzy
 msgid " Timer"
 msgstr "计时器"
 
-#: src/modules/clipboard/e_mod_config.c:232
+#: src/modules/clipboard/e_mod_config.c:249
 #, fuzzy
 msgid " Label Length"
 msgstr "标签文本"
 
-#: src/modules/clipboard/e_mod_config.c:240
+#: src/modules/clipboard/e_mod_config.c:257
 #, fuzzy
 msgid " Reverse Order"
 msgstr "记住顺序"
 
-#: src/modules/clipboard/e_mod_config.c:243
+#: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:274
+#: src/modules/clipboard/e_mod_config.c:291
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "键盘设置"
@@ -9899,36 +9899,36 @@ msgstr "删除完成"
 msgid "Ignore history"
 msgstr "忽略提示"
 
-#: src/modules/clipboard/e_mod_main.c:636
+#: src/modules/clipboard/e_mod_main.c:644
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "确认删除书架"
 
-#: src/modules/clipboard/e_mod_main.c:638
+#: src/modules/clipboard/e_mod_main.c:646
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "您要求删除此书架。<br><br>您确定要删除吗？"
 
-#: src/modules/clipboard/e_mod_main.c:723
+#: src/modules/clipboard/e_mod_main.c:731
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "确认删除书架"
 
-#: src/modules/clipboard/e_mod_main.c:725
+#: src/modules/clipboard/e_mod_main.c:733
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "您要求删除此书架。<br><br>您确定要删除吗？"
 
-#: src/modules/clipboard/e_mod_main.c:753
+#: src/modules/clipboard/e_mod_main.c:761
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "键盘设置"
 
-#: src/modules/clipboard/e_mod_main.c:754
+#: src/modules/clipboard/e_mod_main.c:762
 msgid "Edit the item content:"
 msgstr ""
 

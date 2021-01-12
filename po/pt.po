@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2020-11-26 20:17+0100\n"
+"POT-Creation-Date: 2021-01-10 17:51-0500\n"
 "PO-Revision-Date: 2013-01-23 14:06-0000\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
@@ -997,7 +997,7 @@ msgstr ""
 "%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado "
 "para evitar a danificação dos dados.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:855
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1197,7 +1197,7 @@ msgstr "Mostrar no menu"
 
 #: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
-#: src/modules/clipboard/e_mod_config.c:207
+#: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Opções"
 
@@ -1210,7 +1210,7 @@ msgstr "Escolha o ícone para %s"
 msgid "Select an Executable"
 msgstr "Escolha o executável"
 
-#: src/bin/e_entry.c:488 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
+#: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
 #: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
@@ -1226,24 +1226,24 @@ msgstr "Escolha o executável"
 #: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:641
-#: src/modules/clipboard/e_mod_main.c:728
+#: src/modules/clipboard/e_mod_main.c:649
+#: src/modules/clipboard/e_mod_main.c:736
 msgid "Delete"
 msgstr "Eliminar"
 
-#: src/bin/e_entry.c:498 src/bin/e_fm.c:9072
+#: src/bin/e_entry.c:505 src/bin/e_fm.c:9072
 msgid "Cut"
 msgstr "Cortar"
 
-#: src/bin/e_entry.c:507 src/bin/e_fm.c:9086 src/bin/e_fm.c:11611
+#: src/bin/e_entry.c:514 src/bin/e_fm.c:9086 src/bin/e_fm.c:11611
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/bin/e_entry.c:517 src/bin/e_fm.c:8877 src/bin/e_fm.c:9099
+#: src/bin/e_entry.c:524 src/bin/e_fm.c:8877 src/bin/e_fm.c:9099
 msgid "Paste"
 msgstr "Colar"
 
-#: src/bin/e_entry.c:528
+#: src/bin/e_entry.c:535
 msgid "Select All"
 msgstr "Selecionar tudo"
 
@@ -2501,7 +2501,7 @@ msgstr "Solicita posição"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:200 src/modules/clock/e_mod_main.c:398
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:398
 #: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
@@ -3606,8 +3606,8 @@ msgstr "Qual a ação que deve ser efetuada com este módulo?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:641
-#: src/modules/clipboard/e_mod_main.c:728
+#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:649
+#: src/modules/clipboard/e_mod_main.c:736
 msgid "Keep"
 msgstr "Manter"
 
@@ -4442,50 +4442,50 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Equipamento"
 
-#: src/modules/battery/e_mod_main.c:153 src/modules/battery/e_mod_main.c:468
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:470
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Bateria"
 
-#: src/modules/battery/e_mod_main.c:206
+#: src/modules/battery/e_mod_main.c:208
 msgid "Power Management Timing"
 msgstr "Temporização da gestão de energia"
 
-#: src/modules/battery/e_mod_main.c:471 src/modules/battery/e_mod_main.c:508
+#: src/modules/battery/e_mod_main.c:473 src/modules/battery/e_mod_main.c:510
 msgid "Your battery is low!"
 msgstr "A bateria está fraca!"
 
-#: src/modules/battery/e_mod_main.c:472 src/modules/battery/e_mod_main.c:510
+#: src/modules/battery/e_mod_main.c:474 src/modules/battery/e_mod_main.c:512
 msgid "AC power is recommended."
 msgstr "Deve ligar à corrente."
 
-#: src/modules/battery/e_mod_main.c:514
+#: src/modules/battery/e_mod_main.c:516
 #, fuzzy
 msgid "Power now: "
 msgstr "Desligar"
 
-#: src/modules/battery/e_mod_main.c:519
+#: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:520
+#: src/modules/battery/e_mod_main.c:522
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:524
+#: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:624
+#: src/modules/battery/e_mod_main.c:627
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:728 src/modules/battery/e_mod_main.c:730
-#: src/modules/battery/e_mod_main.c:737 src/modules/battery/e_mod_main.c:739
+#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
+#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
 msgid "ERROR"
 msgstr "Erro"
 
-#: src/modules/battery/e_mod_main.c:857
+#: src/modules/battery/e_mod_main.c:861
 msgid "Battery Meter"
 msgstr "Monitor de bateria"
 
@@ -4494,7 +4494,7 @@ msgid "Clock Settings"
 msgstr "Definições do relógio"
 
 #: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
-#: src/modules/clock/e_mod_main.c:912
+#: src/modules/clock/e_mod_main.c:933
 msgid "Clock"
 msgstr "Relógio"
 
@@ -4560,7 +4560,7 @@ msgstr "Fim de semana"
 msgid "Days"
 msgstr "Dias"
 
-#: src/modules/clock/e_mod_main.c:912
+#: src/modules/clock/e_mod_main.c:933
 msgid "Toggle calendar"
 msgstr "Alternar calendário"
 
@@ -7894,7 +7894,7 @@ msgstr "Plugin Everything"
 msgid "Calculator"
 msgstr "Calculadora"
 
-#: src/modules/everything/evry_plug_clipboard.c:33
+#: src/modules/everything/evry_plug_clipboard.c:43
 msgid "Copy to Clipboard"
 msgstr "Copiar para a área de transferência"
 
@@ -9319,27 +9319,27 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "identificador/nome do acesso rápido"
 
-#: src/modules/systray/e_mod_main.c:489 src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
 msgid "Systray Error"
 msgstr "Erro na bandeja do sistema"
 
-#: src/modules/systray/e_mod_main.c:490
+#: src/modules/systray/e_mod_main.c:499
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Não é possível tornar a bandeja invisível para coincidir com o painel."
 
-#: src/modules/systray/e_mod_main.c:896
+#: src/modules/systray/e_mod_main.c:905
 msgid "Another systray exists"
 msgstr "Já existe uma bandeja de sistema"
 
-#: src/modules/systray/e_mod_main.c:897
+#: src/modules/systray/e_mod_main.c:906
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Só pode existir uma bandeja de sistema e você já a tem."
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:915
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "A bandeja não funciona num painel que esteja por baixo de tudo."
 
-#: src/modules/systray/e_mod_main.c:1104
+#: src/modules/systray/e_mod_main.c:1113
 msgid "Systray"
 msgstr "Bandeja do sistema"
 
@@ -9894,7 +9894,7 @@ msgid "Reverse order"
 msgstr "Memorizar ordenação"
 
 #: src/modules/notification/e_mod_config.c:178
-#: src/modules/clipboard/e_mod_config.c:228
+#: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "Etiqueta"
@@ -9905,7 +9905,7 @@ msgid "Labels length"
 msgstr "Texto da etiqueta"
 
 #: src/modules/notification/e_mod_config.c:186
-#: src/modules/clipboard/e_mod_config.c:239
+#: src/modules/clipboard/e_mod_config.c:256
 msgid "Items"
 msgstr "Itens"
 
@@ -9922,90 +9922,90 @@ msgid "App blacklist (use a delimiter)"
 msgstr ""
 
 #: src/modules/notification/e_mod_config.c:209
-#: src/modules/clipboard/e_mod_config.c:249
+#: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
 msgstr "Diretório"
 
-#: src/modules/clipboard/e_mod_config.c:177
+#: src/modules/clipboard/e_mod_config.c:191
 #, fuzzy
 msgid "Selection"
 msgstr "Seleção"
 
-#: src/modules/clipboard/e_mod_config.c:178
+#: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:181
+#: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:184
+#: src/modules/clipboard/e_mod_config.c:200
 #, fuzzy
 msgid " Synchronize Clipboards"
 msgstr "Copiar para a área de transferência"
 
-#: src/modules/clipboard/e_mod_config.c:191
+#: src/modules/clipboard/e_mod_config.c:208
 #, fuzzy
 msgid "Content"
 msgstr "Conteúdo"
 
-#: src/modules/clipboard/e_mod_config.c:192
-#: src/modules/clipboard/e_mod_config.c:229
+#: src/modules/clipboard/e_mod_config.c:209
+#: src/modules/clipboard/e_mod_config.c:246
 #, fuzzy
 msgid " Ignore Whitespace"
 msgstr "Ignorar"
 
-#: src/modules/clipboard/e_mod_config.c:195
+#: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:198
+#: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:202
-#: src/modules/clipboard/e_mod_main.c:885
-#: src/modules/clipboard/e_mod_main.c:886
-#: src/modules/clipboard/e_mod_main.c:887
+#: src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:893
+#: src/modules/clipboard/e_mod_main.c:894
+#: src/modules/clipboard/e_mod_main.c:895
 #, fuzzy
 msgid "Clipboard"
 msgstr "Copiar para a área de transferência"
 
-#: src/modules/clipboard/e_mod_config.c:208
+#: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:211
+#: src/modules/clipboard/e_mod_config.c:228
 #, fuzzy
 msgid " Confirm before Clearing"
 msgstr "Confirmação"
 
-#: src/modules/clipboard/e_mod_config.c:213
+#: src/modules/clipboard/e_mod_config.c:230
 #, fuzzy
 msgid " Save every Selection"
 msgstr "Eliminação segura"
 
-#: src/modules/clipboard/e_mod_config.c:217
+#: src/modules/clipboard/e_mod_config.c:234
 #, fuzzy
 msgid " Timer"
 msgstr "Temporizadores"
 
-#: src/modules/clipboard/e_mod_config.c:232
+#: src/modules/clipboard/e_mod_config.c:249
 #, fuzzy
 msgid " Label Length"
 msgstr "Texto da etiqueta"
 
-#: src/modules/clipboard/e_mod_config.c:240
+#: src/modules/clipboard/e_mod_config.c:257
 #, fuzzy
 msgid " Reverse Order"
 msgstr "Memorizar ordenação"
 
-#: src/modules/clipboard/e_mod_config.c:243
+#: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:274
+#: src/modules/clipboard/e_mod_config.c:291
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "Definições do teclado"
@@ -10030,12 +10030,12 @@ msgstr "Terminou a eliminação."
 msgid "Ignore history"
 msgstr "Ignorar ajustes"
 
-#: src/modules/clipboard/e_mod_main.c:636
+#: src/modules/clipboard/e_mod_main.c:644
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "Confirmação"
 
-#: src/modules/clipboard/e_mod_main.c:638
+#: src/modules/clipboard/e_mod_main.c:646
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
@@ -10043,12 +10043,12 @@ msgid ""
 msgstr ""
 "Solicitou a eliminação deste painel.<br><br>Tem a certeza que o quer fazer?"
 
-#: src/modules/clipboard/e_mod_main.c:723
+#: src/modules/clipboard/e_mod_main.c:731
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "Confirmação"
 
-#: src/modules/clipboard/e_mod_main.c:725
+#: src/modules/clipboard/e_mod_main.c:733
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
@@ -10056,12 +10056,12 @@ msgid ""
 msgstr ""
 "Solicitou a eliminação deste painel.<br><br>Tem a certeza que o quer fazer?"
 
-#: src/modules/clipboard/e_mod_main.c:753
+#: src/modules/clipboard/e_mod_main.c:761
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "Definições do teclado"
 
-#: src/modules/clipboard/e_mod_main.c:754
+#: src/modules/clipboard/e_mod_main.c:762
 msgid "Edit the item content:"
 msgstr ""
 
