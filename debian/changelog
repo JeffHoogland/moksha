@@ -1,3 +1,11 @@
+moksha (20210112bodhi30.3.3) bionic; urgency=low
+
+  *  Gadcon and shelf fix
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 12 Jan 2021 10:21:37 +0004
+
+
+
 moksha (20210110bodhi30.3.3) bionic; urgency=low
 
   *  Theme notification text scaled
