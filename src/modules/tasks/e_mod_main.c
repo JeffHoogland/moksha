@@ -417,7 +417,7 @@ _tasks_refill(Tasks *tasks)
                                             w,
                                             h * eina_list_count(tasks->items));
             
-             if (tasks->config->autoresize)
+             if (tasks->config->autoresize && tasks->horizontal)
              {
                evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
                if (th > gw)  w = gw / eina_list_count(tasks->items);
@@ -446,7 +446,7 @@ _tasks_refill_border(E_Border *border)
 {
    const Eina_List *l;
    Tasks *tasks;
-   Eina_Bool found = EINA_FALSE;
+   //~ Eina_Bool found = EINA_FALSE;
 
    EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
      {
@@ -457,7 +457,7 @@ _tasks_refill_border(E_Border *border)
              if (item->border == border)
                {
                   _tasks_item_refill(item);
-                  found = EINA_TRUE;
+                  //~ found = EINA_TRUE;
                   break;
                }
           }
