@@ -8,6 +8,7 @@ struct _E_Config_Dialog_Data
    int minw, minh;
    int icon_only;
    int text_only;
+   int autoresize;
 };
 
 /* Protos */
@@ -46,6 +47,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->minh = ci->minh;
    cfdata->icon_only = ci->icon_only;
    cfdata->text_only = ci->text_only;
+   cfdata->autoresize = ci->autoresize;
 }
 
 static void *
@@ -94,6 +96,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    cfdata->text = ob = e_widget_check_add(evas, _("Show text only"),
                            &(cfdata->text_only));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Item autoresize"),
+                           &(cfdata->autoresize));
+   e_widget_framelist_object_append(of, ob);
    e_widget_on_change_hook_set(ob, _toggle_check, cfdata);
    ow = e_widget_label_add(evas, _("Item width"));
    e_widget_framelist_object_append(of, ow);
@@ -122,6 +127,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->minh = cfdata->minh;
    ci->icon_only = cfdata->icon_only;
    ci->text_only = cfdata->text_only;
+   ci->autoresize = cfdata->autoresize;
    e_config_save_queue();
    _tasks_config_updated(ci);
    return 1;

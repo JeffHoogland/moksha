@@ -22,6 +22,7 @@ struct _Config_Item
    int minw, minh;
    Eina_Bool icon_only;
    Eina_Bool text_only;
+   Eina_Bool autoresize;
 };
 
 EAPI extern E_Module_Api e_modapi;

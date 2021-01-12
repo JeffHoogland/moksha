@@ -113,6 +113,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, minh, INT);
    E_CONFIG_VAL(D, T, icon_only, UCHAR);
    E_CONFIG_VAL(D, T, text_only, UCHAR);
+   E_CONFIG_VAL(D, T, autoresize, UCHAR);
 
    conf_edd = E_CONFIG_DD_NEW("Tasks_Config", Config);
 
@@ -375,31 +376,37 @@ _tasks_refill(Tasks *tasks)
    Eina_List *l;
    E_Border *border;
    Tasks_Item *item;
-   Evas_Coord w, h;
+   Evas_Coord w, h, tw, th;  
+   int gw, gh;
 
    while (tasks->items)
      {
         item = tasks->items->data;
         _tasks_item_remove(item);
      }
-   EINA_LIST_FOREACH(tasks_config->borders, l, border)
+   EINA_LIST_FOREACH(tasks_config->borders, l, border) 
      {
         _tasks_item_check_add(tasks, border);
      }
    if (tasks->items)
      {
         item = tasks->items->data;
-        edje_object_size_min_calc(item->o_item, &w, &h);
-        if (!tasks->config->icon_only)
+        evas_object_geometry_get(tasks->o_items, NULL, NULL, &tw, &th);
+//        edje_object_size_min_calc(item->o_item, &w, &h);
+        if (tasks->horizontal)
+          edje_object_size_min_restricted_calc(item->o_item, &w, &h, 0, th);
+        else
+          edje_object_size_min_restricted_calc(item->o_item, &w, &h, tw, 0);
+          
+        if (tasks->horizontal)
+          {   
+             if (w < tasks->config->minw) w = tasks->config->minw;
+             if (tasks->config->icon_only) w = h;
+          }
+        else
           {
-             if (tasks->horizontal)
-               {
-                  if (w < tasks->config->minw) w = tasks->config->minw;
-               }
-             else
-               {
-                  if (h < tasks->config->minh) h = tasks->config->minh;
-               }
+             if (h < tasks->config->minh) h = tasks->config->minh;
+             if (tasks->config->icon_only) h = w;
           }
         if (!tasks->gcc->resizable)
           {
@@ -411,6 +418,13 @@ _tasks_refill(Tasks *tasks)
                e_gadcon_client_min_size_set(tasks->gcc,
                                             w,
                                             h * eina_list_count(tasks->items));
+            
+             if (tasks->config->autoresize)
+             {
+               evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
+               if (th > gw)  w = gw / eina_list_count(tasks->items);
+               e_gadcon_client_min_size_set(tasks->gcc, gw - 10, h);
+             }
           }
      }
    else
