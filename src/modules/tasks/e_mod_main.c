@@ -175,6 +175,9 @@ e_modapi_init(E_Module *m)
          (E_EVENT_DESK_SHOW, _tasks_cb_event_desk_show, NULL));
    tasks_config->handlers = eina_list_append
        (tasks_config->handlers, ecore_event_handler_add
+         (E_EVENT_GADCON_POPULATE, _tasks_cb_event_desk_show, NULL));
+   tasks_config->handlers = eina_list_append
+       (tasks_config->handlers, ecore_event_handler_add
          (E_EVENT_BORDER_URGENT_CHANGE, _tasks_cb_event_border_urgent_change, NULL));
    tasks_config->borders = eina_list_clone(e_border_client_list());
    e_gadcon_provider_register(&_gadcon_class);
@@ -442,12 +445,13 @@ _tasks_refill_all(void)
      }
 }
 
+
 static void
 _tasks_refill_border(E_Border *border)
 {
    const Eina_List *l;
    Tasks *tasks;
-   //~ Eina_Bool found = EINA_FALSE;
+   Eina_Bool found = EINA_FALSE;
 
    EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
      {
@@ -458,13 +462,12 @@ _tasks_refill_border(E_Border *border)
              if (item->border == border)
                {
                   _tasks_item_refill(item);
-                  //~ found = EINA_TRUE;
+                  found = EINA_TRUE;
                   break;
                }
           }
      }
-   //~ if (!found) _tasks_refill_all();
-   _tasks_refill_all();
+   if (!found) _tasks_refill_all();
 }
 
 static void
