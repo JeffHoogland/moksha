@@ -422,7 +422,7 @@ _tasks_refill(Tasks *tasks)
                if (tasks->config->autoresize)
                {
                  evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
-                 e_gadcon_client_min_size_set(tasks->gcc, gw - 10, h);
+                 e_gadcon_client_min_size_set(tasks->gcc, gw - 2, gh);
                }
              }
              else
