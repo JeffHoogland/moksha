@@ -983,7 +983,7 @@ static Eina_Bool
 _timer_execute(void *data __UNUSED__)
 {
    _tasks_refill_all();
-   return EINA_FALSE;
+   return ECORE_CALLBACK_DONE;
 }
 
 static Eina_Bool
@@ -991,7 +991,7 @@ _tasks_cb_gadcon_populate()
 {
      timer_pop = ecore_timer_add
               (0.01, _timer_execute, NULL);
-   return EINA_FALSE;
+   return EINA_TRUE;
 }
 
 static Eina_Bool
