@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-10 17:51-0500\n"
+"POT-Creation-Date: 2021-01-13 08:00-0500\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -1999,40 +1999,40 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 #, fuzzy
 msgid "Gadget error"
 msgstr "Nom du fichier"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1681 src/bin/e_int_border_menu.c:160
 #, fuzzy
 msgid "Move to"
 msgstr "Texte de déplacement"
 
-#: src/bin/e_gadcon.c:1746
+#: src/bin/e_gadcon.c:1749
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
-#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "Tel quel"
 
-#: src/bin/e_gadcon.c:1772 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "Encart"
 
-#: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 #, fuzzy
 msgid "Look"
 msgstr "Verrous"
 
-#: src/bin/e_gadcon.c:1797 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
@@ -2042,16 +2042,16 @@ msgstr "Verrous"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/bin/e_gadcon.c:2437
+#: src/bin/e_gadcon.c:2440
 #, fuzzy
 msgid "Stop moving"
 msgstr "Arrêter l'édition"
 
-#: src/bin/e_gadcon.c:3088
+#: src/bin/e_gadcon.c:3091
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3089
+#: src/bin/e_gadcon.c:3092
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2685,7 +2685,7 @@ msgstr "Demande de position"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -7596,7 +7596,7 @@ msgstr "Taille de la fenêtre de redimensionnent"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
 #: src/modules/fileman/e_mod_config.c:364
 #: src/modules/winlist/e_int_config_winlist.c:216
-#: src/modules/tasks/e_mod_config.c:86
+#: src/modules/tasks/e_mod_config.c:88
 msgid "Display"
 msgstr "Affichage"
 
@@ -9437,7 +9437,7 @@ msgstr "Afficher les fenêtres des autres écrans"
 msgid "Show windows from current screen"
 msgstr "Afficher les fenêtres de l'écran courant"
 
-#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:87
+#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:89
 msgid "Show windows from all desktops"
 msgstr "Afficher les fenêtres de tous les bureaux"
 
@@ -10352,37 +10352,42 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Erreur de chargement du module"
 
-#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:736
+#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
 #, fuzzy
 msgid "Tasks"
 msgstr "Ne pas afficher dans la barre des tâches"
 
-#: src/modules/tasks/e_mod_config.c:34
+#: src/modules/tasks/e_mod_config.c:35
 #, fuzzy
-msgid "Tasks Configuration"
-msgstr "Configuration"
+msgid "Tasks Settings"
+msgstr "Paramètre du bureau"
 
-#: src/modules/tasks/e_mod_config.c:90
+#: src/modules/tasks/e_mod_config.c:92
 #, fuzzy
 msgid "Show icon only"
 msgstr "Montrer la description de l'icone"
 
-#: src/modules/tasks/e_mod_config.c:94
+#: src/modules/tasks/e_mod_config.c:96
 #, fuzzy
 msgid "Show text only"
 msgstr "Afficher les icônes sur le bureau"
 
-#: src/modules/tasks/e_mod_config.c:98
+#: src/modules/tasks/e_mod_config.c:100
 #, fuzzy
 msgid "Item width"
 msgstr "Largeur minimale"
 
-#: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
+#: src/modules/tasks/e_mod_config.c:102 src/modules/tasks/e_mod_config.c:110
 #, fuzzy, c-format
 msgid "%1.0f px"
 msgstr "%.0f pixels"
 
-#: src/modules/tasks/e_mod_config.c:103
+#: src/modules/tasks/e_mod_config.c:105
+#, fuzzy
+msgid "Shrink to fit"
+msgstr "Redimensionner à la taille du contenu"
+
+#: src/modules/tasks/e_mod_config.c:108
 #, fuzzy
 msgid "Item height"
 msgstr "Hauteur minimale"
@@ -11044,6 +11049,10 @@ msgstr "Changement de résolution"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Changement de résolution"
+
+#, fuzzy
+#~ msgid "Tasks Configuration"
+#~ msgstr "Configuration"
 
 #, fuzzy
 #~ msgid "Setup"

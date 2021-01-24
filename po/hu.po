@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-10 17:51-0500\n"
+"POT-Creation-Date: 2021-01-13 08:00-0500\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -1949,39 +1949,39 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Válassz egy képet"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 #, fuzzy
 msgid "Gadget error"
 msgstr "Bígyó kezelő"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1681 src/bin/e_int_border_menu.c:160
 #, fuzzy
 msgid "Move to"
 msgstr "Szöveg mozgatása"
 
-#: src/bin/e_gadcon.c:1746
+#: src/bin/e_gadcon.c:1749
 msgid "Automatically scroll contents"
 msgstr "Tartalom automatikus görgetése"
 
-#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "Egyszerű"
 
-#: src/bin/e_gadcon.c:1772 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "Beágyazott"
 
-#: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Kinézet"
 
-#: src/bin/e_gadcon.c:1797 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
@@ -1991,16 +1991,16 @@ msgstr "Kinézet"
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/bin/e_gadcon.c:2437
+#: src/bin/e_gadcon.c:2440
 #, fuzzy
 msgid "Stop moving"
 msgstr "abbahagyják a mozgást"
 
-#: src/bin/e_gadcon.c:3088
+#: src/bin/e_gadcon.c:3091
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3089
+#: src/bin/e_gadcon.c:3092
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2634,7 +2634,7 @@ msgstr "Hely kérés"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -7420,7 +7420,7 @@ msgstr "Ablak átméretezés geometria"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
 #: src/modules/fileman/e_mod_config.c:364
 #: src/modules/winlist/e_int_config_winlist.c:216
-#: src/modules/tasks/e_mod_config.c:86
+#: src/modules/tasks/e_mod_config.c:88
 msgid "Display"
 msgstr "Megjelenítés"
 
@@ -9239,7 +9239,7 @@ msgstr "Ablakok megjelenítése az összes képernyőről"
 msgid "Show windows from current screen"
 msgstr "Ablakok megjelenítése az aktuális képernyőről"
 
-#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:87
+#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:89
 msgid "Show windows from all desktops"
 msgstr "Minden asztal ablakainak megjelenítése"
 
@@ -10141,37 +10141,42 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Hiba a modul betöltésekor"
 
-#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:736
+#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
 #, fuzzy
 msgid "Tasks"
 msgstr "Feladatlista"
 
-#: src/modules/tasks/e_mod_config.c:34
+#: src/modules/tasks/e_mod_config.c:35
 #, fuzzy
-msgid "Tasks Configuration"
-msgstr "Címsor beállítása"
+msgid "Tasks Settings"
+msgstr "Asztal beállításai"
 
-#: src/modules/tasks/e_mod_config.c:90
+#: src/modules/tasks/e_mod_config.c:92
 #, fuzzy
 msgid "Show icon only"
 msgstr "Ikon címke megjelenítése"
 
-#: src/modules/tasks/e_mod_config.c:94
+#: src/modules/tasks/e_mod_config.c:96
 #, fuzzy
 msgid "Show text only"
 msgstr "Munkaasztal ikonok megjelenítése"
 
-#: src/modules/tasks/e_mod_config.c:98
+#: src/modules/tasks/e_mod_config.c:100
 #, fuzzy
 msgid "Item width"
 msgstr "Minimum szélesség"
 
-#: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
+#: src/modules/tasks/e_mod_config.c:102 src/modules/tasks/e_mod_config.c:110
 #, fuzzy, c-format
 msgid "%1.0f px"
 msgstr "%.0f px"
 
-#: src/modules/tasks/e_mod_config.c:103
+#: src/modules/tasks/e_mod_config.c:105
+#, fuzzy
+msgid "Shrink to fit"
+msgstr "Shrink to Content szélesség"
+
+#: src/modules/tasks/e_mod_config.c:108
 #, fuzzy
 msgid "Item height"
 msgstr "Minimum magasság"
@@ -10820,6 +10825,10 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Felbontás módosítása"
+
+#, fuzzy
+#~ msgid "Tasks Configuration"
+#~ msgstr "Címsor beállítása"
 
 #~ msgid "Setup"
 #~ msgstr "Beállítás"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-10 17:51-0500\n"
+"POT-Creation-Date: 2021-01-13 08:00-0500\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -1836,37 +1836,37 @@ msgstr "这个链接有问题。"
 msgid "Select an Image"
 msgstr "选择一个图像"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 msgid "Gadget error"
 msgstr "组件出错"
 
-#: src/bin/e_gadcon.c:1404
+#: src/bin/e_gadcon.c:1407
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s 不支持禁用自动滚动"
 
-#: src/bin/e_gadcon.c:1678 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1681 src/bin/e_int_border_menu.c:160
 msgid "Move to"
 msgstr "移动到"
 
-#: src/bin/e_gadcon.c:1746
+#: src/bin/e_gadcon.c:1749
 msgid "Automatically scroll contents"
 msgstr "自动滚动"
 
-#: src/bin/e_gadcon.c:1759 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "简易"
 
-#: src/bin/e_gadcon.c:1772 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "插入"
 
-#: src/bin/e_gadcon.c:1785 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "外观"
 
-#: src/bin/e_gadcon.c:1797 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:270
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
@@ -1876,15 +1876,15 @@ msgstr "外观"
 msgid "Remove"
 msgstr "删除"
 
-#: src/bin/e_gadcon.c:2437
+#: src/bin/e_gadcon.c:2440
 msgid "Stop moving"
 msgstr "停止移动"
 
-#: src/bin/e_gadcon.c:3088
+#: src/bin/e_gadcon.c:3091
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3089
+#: src/bin/e_gadcon.c:3092
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "支持 %2$s 需要 %1$s"
@@ -2484,7 +2484,7 @@ msgstr "请求位置"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:729
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -6955,7 +6955,7 @@ msgstr "改变几何尺寸"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
 #: src/modules/fileman/e_mod_config.c:364
 #: src/modules/winlist/e_int_config_winlist.c:216
-#: src/modules/tasks/e_mod_config.c:86
+#: src/modules/tasks/e_mod_config.c:88
 msgid "Display"
 msgstr "显示"
 
@@ -8600,7 +8600,7 @@ msgstr "在所有屏幕显示窗口"
 msgid "Show windows from current screen"
 msgstr "显示当前屏幕窗口"
 
-#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:87
+#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:89
 msgid "Show windows from all desktops"
 msgstr "在所有桌面显示窗口"
 
@@ -9461,32 +9461,38 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "上传截图"
 
-#: src/modules/tasks/e_mod_main.c:318 src/modules/tasks/e_mod_main.c:736
+#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
 msgid "Tasks"
 msgstr "任务栏"
 
-#: src/modules/tasks/e_mod_config.c:34
-msgid "Tasks Configuration"
-msgstr "任务栏配置"
+#: src/modules/tasks/e_mod_config.c:35
+#, fuzzy
+msgid "Tasks Settings"
+msgstr "桌面设置"
 
-#: src/modules/tasks/e_mod_config.c:90
+#: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
 msgstr "仅显示图标"
 
-#: src/modules/tasks/e_mod_config.c:94
+#: src/modules/tasks/e_mod_config.c:96
 msgid "Show text only"
 msgstr "仅显示文字"
 
-#: src/modules/tasks/e_mod_config.c:98
+#: src/modules/tasks/e_mod_config.c:100
 msgid "Item width"
 msgstr "项目宽度"
 
-#: src/modules/tasks/e_mod_config.c:100 src/modules/tasks/e_mod_config.c:105
+#: src/modules/tasks/e_mod_config.c:102 src/modules/tasks/e_mod_config.c:110
 #, c-format
 msgid "%1.0f px"
 msgstr "%1.0f 像素"
 
-#: src/modules/tasks/e_mod_config.c:103
+#: src/modules/tasks/e_mod_config.c:105
+#, fuzzy
+msgid "Shrink to fit"
+msgstr "缩至内容宽度"
+
+#: src/modules/tasks/e_mod_config.c:108
 msgid "Item height"
 msgstr "项目高度"
 
@@ -10105,6 +10111,9 @@ msgstr "音量改变"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "音量改变"
+
+#~ msgid "Tasks Configuration"
+#~ msgstr "任务栏配置"
 
 #~ msgid "Setup"
 #~ msgstr "设置"
