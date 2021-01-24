@@ -1,14 +1,10 @@
 [Desktop Entry]
-Encoding=UTF-8
 Type=Link
 Name=Root
-Name[ca]=Arrel
 Name[eo]=Radiko
-Name[es]=Raíz
-Name[fr]=Dossier racine
+Name[fr]=Racine
 Name[ru]=Корневой каталог
 Comment=The Root Filesystem base
-Comment[ca]=El directori arrel del sistema
 Comment[eo]=La radika dosiersistemo
 Comment[es]=El sistema de archivos root
 Comment[fr]=Le système de fichiers à la base
