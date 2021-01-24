@@ -233,12 +233,12 @@ parse_rules(void)
                      /* A hack to get it to parse right if
                       * the group name contains a space
                       */
-                     p = strstr(p, "  ");
-                     if (p)
-                       {
-                          while (p[0] == ' ')
-                            ++p;
-                       }
+                     //~ p = strstr(p, "  ");
+                     //~ if (p)
+                       //~ {
+                          //~ while (p[0] == ' ')
+                            //~ ++p;
+                       //~ }
 
                      txt = evas_textblock_text_markup_to_utf8(NULL, p);
                      group->description = eina_stringshare_add(txt);
