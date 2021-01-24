@@ -1,3 +1,12 @@
+moksha (0.3.2-6) focal; urgency=low
+
+  *  Stefan task changes
+  *  xkbswitch options group names fix
+  *  Localizations updates
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 24 Jan 2021 10:21:37 +0004
+
+
 moksha (0.3.2-5) focal; urgency=low
 
   *  Gadcon and shelf fix
