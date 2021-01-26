@@ -536,7 +536,7 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
      {
         evas_object_move(rect, x, y);
         evas_object_resize(rect, w, h);
-        evas_object_color_set(rect, 255, 255, 255, 0);
+        evas_object_color_set(rect, 0, 0, 0, 0);
         evas_object_event_callback_add(rect, EVAS_CALLBACK_MOUSE_DOWN,
                                        _battery_cb_warning_popup_hide, inst);
         evas_object_repeat_events_set(rect, 1);
