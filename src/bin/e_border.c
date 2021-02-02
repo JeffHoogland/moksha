@@ -9254,7 +9254,7 @@ _e_border_eval(E_Border *bd)
            ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
                            _e_border_event_border_icon_change_free, NULL);
         }
-        bd->changes.icon = 0;
+        bd->changes.icon = 1;
      }
 
    bd->new_client = 0;
