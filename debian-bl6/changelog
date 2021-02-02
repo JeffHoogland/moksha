@@ -1,3 +1,9 @@
+moksha (0.3.2-8) focal; urgency=low
+
+  * Support for shaped borders restored
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 02 Feb 2021 12:15:37 +0004
+
 moksha (0.3.2-7) focal; urgency=low
 
   * Support for shaped borders restored
