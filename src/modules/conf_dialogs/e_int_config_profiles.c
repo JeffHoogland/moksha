@@ -384,11 +384,39 @@ static void
 _cb_dialog_yes(void *data)
 {
    Del_Profile_Confirm_Data *d;
+   Efreet_Desktop *desk = NULL;
+   char *pdir, buff[PATH_MAX];
+   const char *label;
 
    d = data;
    if (!data) return;
 
    e_config_profile_del(d->cfdata->sel_profile);
+
+   pdir = e_config_profile_dir_get(d->cfdata->sel_profile);
+   snprintf(buff, sizeof(buff), "%s/profile.desktop", pdir);
+   desk = efreet_desktop_new(buff);
+   if (!desk)
+     {
+        e_prefix_data_snprintf(buff, sizeof(buff),
+                               "data/config/%s/", d->cfdata->sel_profile);
+        free(pdir);
+        pdir = strdup(buff);
+        if (pdir)
+          {
+             snprintf(buff, sizeof(buff), "%s/profile.desktop", pdir);
+             desk = efreet_desktop_new(buff);
+          }
+     }
+
+   label = d->cfdata->sel_profile;
+   if ((desk) && (desk->name)) label = desk->name;
+
+   free(pdir);
+   if (desk) efreet_desktop_free(desk);
+
+   e_action_predef_name_del("Profile: Switch", label);
+
    e_config_save_queue();
    _ilist_fill(d->cfdata);
 }

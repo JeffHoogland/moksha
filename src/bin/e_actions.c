@@ -91,6 +91,76 @@ static int        _action_groups_sort_cb(const void *d1, const void *d2);
 
 /* to save writing this in N places - the sections are defined here */
 /***************************************************************************/
+ACT_FN_GO_KEY(profile_switch, , __UNUSED__)
+{
+   E_Action *a;
+   const char *cur_profile;
+
+   if (!params) return;
+
+   cur_profile = e_config_profile_get();
+
+   if (strcmp(cur_profile, params) == 0) return;
+
+   e_config_save_flush();
+   e_config_profile_set(params);
+   // FIXME: at some point we need to investigate elm_profiles
+   //        and make them play well with our themes and profile code
+   // elm_config_profile_set(params);
+
+   e_config_profile_save();
+   e_config_save_block_set(1);
+
+   a = e_action_find("restart");
+   if ((a) && (a->func.go)) a->func.go(NULL, NULL);
+}
+
+static void
+_e_actions_profiles_create(void)
+{
+   E_Action *act;
+   Eina_List *profiles, *l;
+   int i = 0;
+
+   ACT_GO_KEY(profile_switch);
+
+   profiles = e_config_profile_list();
+   for (i = 0, l = profiles; l; l = l->next, i++)
+     {
+        Efreet_Desktop *desk = NULL;
+        char *prof, *pdir, buff[PATH_MAX];
+        const char *label;
+
+        prof = l->data;
+
+        pdir = e_config_profile_dir_get(prof);
+        snprintf(buff, sizeof(buff), "%s/profile.desktop", pdir);
+        desk = efreet_desktop_new(buff);
+        if (!desk)
+          {
+             e_prefix_data_snprintf(buff, sizeof(buff),
+                                    "data/config/%s/", prof);
+             free(pdir);
+             pdir = strdup(buff);
+             if (pdir)
+               {
+                  snprintf(buff, sizeof(buff), "%s/profile.desktop", pdir);
+                  desk = efreet_desktop_new(buff);
+               }
+          }
+
+        label = prof;
+        if ((desk) && (desk->name)) label = desk->name;
+        e_action_predef_name_set(N_("Profile: Switch"), label,
+                                 "profile_switch", prof, NULL, 0);
+
+        free(prof);
+        free(pdir);
+        if (desk) efreet_desktop_free(desk);
+     }
+   if (profiles) eina_list_free(profiles);
+}
+
 ACT_FN_GO(window_move, __UNUSED__)
 {
    if (!obj) obj = E_OBJECT(e_border_focused_get());
@@ -3566,6 +3636,8 @@ e_actions_init(void)
    e_action_predef_name_set(N_("Keyboard Layouts"),
                             N_("Previous keyboard layout"), "kbd_layout_prev",
                             NULL, NULL, 0);
+   /* profiles */
+   _e_actions_profiles_create();
    return 1;
 }
 
