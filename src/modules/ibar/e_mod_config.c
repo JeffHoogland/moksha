@@ -4,7 +4,7 @@
 struct _E_Config_Dialog_Data
 {
    const char       *dir;
-   int               show_label, eap_label;
+   int               show_label, eap_label, show_label_adjac;
    int               lock_move;
    int               track_launch;
    int               focus_flash;
@@ -66,6 +66,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    else
      cfdata->dir = eina_stringshare_add("");
    cfdata->show_label = ci->show_label;
+   cfdata->show_label_adjac = ci->show_label_adjac;
    cfdata->eap_label = ci->eap_label;
    cfdata->lock_move = ci->lock_move;
    cfdata->focus_flash = ci->focus_flash;
@@ -122,9 +123,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_frametable_object_append(of, ot, 1, 0, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Icon Labels"), 0);
-   ob = e_widget_check_add(evas, _("Show icon label"), &(cfdata->show_label));
+   of = e_widget_framelist_add(evas, _("Show Icon Labels"), 0);
+   ob = e_widget_check_add(evas, _("Overlapping Label"), &(cfdata->show_label));
    e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_check_add(evas, _("Adjacent Label"), &(cfdata->show_label_adjac));
+   //~ e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
    e_widget_framelist_object_append(of, ob);
 
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
@@ -166,6 +171,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->dir = NULL;
    if (cfdata->dir) ci->dir = eina_stringshare_ref(cfdata->dir);
    ci->show_label = cfdata->show_label;
+   ci->show_label_adjac = cfdata->show_label_adjac;
    ci->eap_label = cfdata->eap_label;
    ci->lock_move = cfdata->lock_move;
    ci->focus_flash = cfdata->focus_flash;

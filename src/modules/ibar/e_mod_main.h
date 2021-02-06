@@ -20,6 +20,7 @@ struct _Config_Item
    const char *id;
    const char *dir;
    int show_label;
+   int show_label_adjac;
    int eap_label;
    int lock_move;
    int focus_flash;

@@ -68,6 +68,8 @@ struct _IBar_Icon
    Efreet_Desktop  *app;
    Ecore_Timer     *reset_timer;
    E_Exec_Instance *exe_inst;
+   Evas_Object     *win;
+   E_Popup         *popup;
    int              mouse_down;
    struct
    {
@@ -518,6 +520,7 @@ _ibar_config_item_get(const char *id)
    ci->id = eina_stringshare_add(id);
    ci->dir = eina_stringshare_add("default");
    ci->show_label = 1;
+   ci->show_label_adjac = 0;
    ci->eap_label = 0;
    ci->lock_move = 0;
    ci->focus_flash = 1;
@@ -797,18 +800,77 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
                              b->io->eo->path);
    }
  */
+ 
+static void
+_adjacent_label_popup(void *data)
+{ 
+  IBar_Icon *ic;
+  E_Zone *zone;
+  int width, height, zw, zh;
+  Evas_Coord x, y, w, h;   
+  Eina_Bool theme_check;
+  
+  ic = data;
+  zone = ic->ibar->inst->gcc->gadcon->zone;
+   
+  ic->popup = e_popup_new(zone, 0, 0, 0, 0);
+  ic->win = edje_object_add(ic->popup->evas); 
+   
+  theme_check = e_theme_edje_object_set(ic->win,
+                           "base/theme/modules/ibar",
+                           "e/modules/ibar/adjacent_label");
+  if (!theme_check) 
+  {
+     evas_object_del(ic->win);
+     e_object_del(E_OBJECT(ic->popup));
+     return;
+  }
+  evas_object_show(ic->win);
+  
+  evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
+  zw = zone->w;
+  zh = zone->h;
+  width = strlen(ic->app->name) * e_scale * 8; 
+  height = 20 * e_scale;
+  
+  switch (ic->ibar->inst->orient)
+  {
+    case E_GADCON_ORIENT_LEFT: 
+      e_popup_move(ic->popup, x + w, y + h/4);
+      break;
+    case E_GADCON_ORIENT_RIGHT: 
+      e_popup_move(ic->popup, zw - w - width, y + h/4);
+      break;
+    case E_GADCON_ORIENT_BOTTOM: 
+      e_popup_move(ic->popup, x, zh - h - height);
+      break;
+    case E_GADCON_ORIENT_TOP: 
+      e_popup_move(ic->popup, x, h);
+      break;
+    default:
+     break;
+  }
+  evas_object_resize(ic->win, width, height);
+  e_popup_resize(ic->popup, width, height); 
+  edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
+  e_popup_edje_bg_object_set(ic->popup, ic->win); 
+  e_popup_show(ic->popup);
+}
 
 static void
 _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
-
+   
    ic = data;
+    
    if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
    ic->reset_timer = NULL;
    ic->focused = EINA_TRUE;
    if (ic->ibar->inst->ci->focus_flash)
       _ibar_icon_signal_emit(ic, "e,state,focused", "e");
+   if (ic->ibar->inst->ci->show_label_adjac)
+      _adjacent_label_popup(ic);
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
 }
@@ -825,6 +887,11 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
+   if (ic->ibar->inst->ci->show_label_adjac)
+   {
+     evas_object_del(ic->win);
+     e_object_del(E_OBJECT(ic->popup));
+   }
 }
 
 static void
@@ -1783,6 +1850,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, dir, STR);
    E_CONFIG_VAL(D, T, show_label, INT);
+   E_CONFIG_VAL(D, T, show_label_adjac, INT);
    E_CONFIG_VAL(D, T, eap_label, INT);
    E_CONFIG_VAL(D, T, lock_move, INT);
    E_CONFIG_VAL(D, T, focus_flash, INT);
@@ -1807,6 +1875,7 @@ e_modapi_init(E_Module *m)
         ci->id = eina_stringshare_add("ibar.1");
         ci->dir = eina_stringshare_add("default");
         ci->show_label = 1;
+        ci->show_label_adjac = 0;
         ci->eap_label = 0;
         ci->lock_move = 0;
         ci->focus_flash = 1;
