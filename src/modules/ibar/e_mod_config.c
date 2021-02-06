@@ -13,6 +13,8 @@ struct _E_Config_Dialog_Data
    Evas_Object      *radio_name;
    Evas_Object      *radio_comment;
    Evas_Object      *radio_generic;
+   Evas_Object      *label_adj;
+   Evas_Object      *label;
    E_Confirm_Dialog *dialog_delete;
 };
 
@@ -29,6 +31,7 @@ static void         _cb_confirm_dialog_yes(void *data);
 static void         _cb_confirm_dialog_destroy(void *data);
 static void         _load_tlist(E_Config_Dialog_Data *cfdata);
 static void         _show_label_cb_change(void *data, Evas_Object *obj);
+static void         _show_label_adj_cb_change(void *data, Evas_Object *obj);
 
 void
 _config_ibar_module(Config_Item *ci)
@@ -124,13 +127,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Show Icon Labels"), 0);
-   ob = e_widget_check_add(evas, _("Overlapping Label"), &(cfdata->show_label));
-   e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
+   cfdata->label = e_widget_check_add(evas, _("Overlapping Label"), &(cfdata->show_label));
+   e_widget_on_change_hook_set(cfdata->label, _show_label_cb_change, cfdata);
+   e_widget_framelist_object_append(of, cfdata->label);
    
-   ob = e_widget_check_add(evas, _("Adjacent Label"), &(cfdata->show_label_adjac));
-   //~ e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
+   cfdata->label_adj = e_widget_check_add(evas, _("Adjacent Label"), &(cfdata->show_label_adjac));
+   e_widget_on_change_hook_set(cfdata->label_adj, _show_label_adj_cb_change, cfdata);
+   e_widget_framelist_object_append(of, cfdata->label_adj);
 
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
 
@@ -333,5 +336,19 @@ _show_label_cb_change(void *data, Evas_Object *obj __UNUSED__)
    e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
    e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
    e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);
+   e_widget_check_checked_set(cfdata->label_adj, 0);
+}
+
+static void
+_show_label_adj_cb_change(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   if (!cfdata) return;
+   e_widget_disabled_set(cfdata->radio_name, cfdata->show_label);
+   e_widget_disabled_set(cfdata->radio_comment, cfdata->show_label);
+   e_widget_disabled_set(cfdata->radio_generic, cfdata->show_label);
+   e_widget_check_checked_set(cfdata->label, 0);
 }
 
