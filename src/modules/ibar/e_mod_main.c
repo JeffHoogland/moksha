@@ -836,15 +836,23 @@ _adjacent_label_popup(void *data)
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_LEFT: 
+    case E_GADCON_ORIENT_CORNER_LT:
+    case E_GADCON_ORIENT_CORNER_LB:
       e_popup_move(ic->popup, x + w, y + h/4);
       break;
     case E_GADCON_ORIENT_RIGHT: 
+    case E_GADCON_ORIENT_CORNER_RT:
+    case E_GADCON_ORIENT_CORNER_RB:
       e_popup_move(ic->popup, zw - w - width, y + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
+    case E_GADCON_ORIENT_CORNER_BL:
+    case E_GADCON_ORIENT_CORNER_BR:
       e_popup_move(ic->popup, x, zh - h - height);
       break;
     case E_GADCON_ORIENT_TOP: 
+    case E_GADCON_ORIENT_CORNER_TL:
+    case E_GADCON_ORIENT_CORNER_TR:
       e_popup_move(ic->popup, x, h);
       break;
     default:
@@ -871,7 +879,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
       _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label_adjac)
       _adjacent_label_popup(ic);
-   if (ic->ibar->inst->ci->show_label)
+   if (ic->ibar->inst->ci->show_label) 
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
 }
 
