@@ -343,6 +343,7 @@ _sync_state_changed(E_Config_Dialog_Data *cfdata)
 static int
 _update_widget(E_Config_Dialog_Data *cfdata)
 {
+  if (!cfdata->sync_widget) return 1;
   if(cfdata->clip_copy && cfdata->clip_select) {
     e_widget_disabled_set(cfdata->sync_widget, EINA_FALSE);
   } else {
