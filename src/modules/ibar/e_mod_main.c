@@ -1160,6 +1160,7 @@ _ibar_cb_icon_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
    evas_object_geometry_get(ic->o_holder, &x, &y, NULL, NULL);
    evas_object_move(ic->o_holder2, x, y);
    evas_object_raise(ic->o_holder2);
+   _adjacent_popup_destroy(ic);
 }
 
 static void
