@@ -804,8 +804,10 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
 static void
 _adjacent_popup_destroy(IBar_Icon *ic)
 {
-   evas_object_del(ic->win);
-   e_object_del(E_OBJECT(ic->popup));
+   if (ic->win)
+     evas_object_del(ic->win);
+   if (ic->popup)
+     e_object_del(E_OBJECT(ic->popup));
    return;
 } 
  
@@ -815,31 +817,27 @@ _adjacent_label_popup(void *data)
   IBar_Icon *ic;
   E_Zone *zone;
   int height, spacer;
-  Evas_Coord x, y, w, h;   
-  Evas_Coord gx, gy, gw, gh, pw;   
+  Evas_Coord x, y, w, h, gy, pw;   
   Eina_Bool theme_check;
   
   ic = data;
+  
   zone = ic->ibar->inst->gcc->gadcon->zone;
-   
   ic->popup = e_popup_new(zone, 0, 0, 0, 0);
   ic->win = edje_object_add(ic->popup->evas); 
-  e_popup_layer_set(ic->popup, E_LAYER_POPUP);
   theme_check = e_theme_edje_object_set(ic->win,
                            "base/theme/modules/ibar",
                            "e/modules/ibar/adjacent_label");
-  if (!theme_check) 
-     _adjacent_popup_destroy(ic);
 
+  if (!theme_check) _adjacent_popup_destroy(ic);
   evas_object_show(ic->win);
-  e_popup_edje_bg_object_set(ic->popup, ic->win); 
   
-  e_gadcon_client_viewport_geometry_get(ic->ibar->inst->gcc, &gx, &gy, &gw, &gh);
+  e_gadcon_client_viewport_geometry_get(ic->ibar->inst->gcc, NULL, &gy, NULL, NULL);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
   edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
   edje_object_size_min_calc(ic->win, &pw, NULL);
   height = 20 * e_scale;
-  spacer = 3 * e_scale;
+  spacer =  3 * e_scale;
   
   switch (ic->ibar->inst->orient)
   {
@@ -872,7 +870,6 @@ _adjacent_label_popup(void *data)
   
   evas_object_resize(ic->win, pw, height);
   e_popup_resize(ic->popup, pw, height); 
-  
   e_popup_show(ic->popup);
 }
 
