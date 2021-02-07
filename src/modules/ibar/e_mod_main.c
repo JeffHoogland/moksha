@@ -800,6 +800,14 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
                              b->io->eo->path);
    }
  */
+
+static void
+_adjacent_popup_destroy(IBar_Icon *ic)
+{
+   evas_object_del(ic->win);
+   e_object_del(E_OBJECT(ic->popup));
+   return;
+} 
  
 static void
 _adjacent_label_popup(void *data)
@@ -808,6 +816,7 @@ _adjacent_label_popup(void *data)
   E_Zone *zone;
   int width, height, zw, zh;
   Evas_Coord x, y, w, h;   
+  Evas_Coord gx, gy, gw, gh;   
   Eina_Bool theme_check;
   
   ic = data;
@@ -820,13 +829,11 @@ _adjacent_label_popup(void *data)
                            "base/theme/modules/ibar",
                            "e/modules/ibar/adjacent_label");
   if (!theme_check) 
-  {
-     evas_object_del(ic->win);
-     e_object_del(E_OBJECT(ic->popup));
-     return;
-  }
+     _adjacent_popup_destroy(ic);
+
   evas_object_show(ic->win);
   
+  e_gadcon_client_viewport_geometry_get(ic->ibar->inst->gcc, &gx, &gy, &gw, &gh);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
   zw = zone->w;
   zh = zone->h;
@@ -835,6 +842,9 @@ _adjacent_label_popup(void *data)
   
   switch (ic->ibar->inst->orient)
   {
+    case E_GADCON_ORIENT_FLOAT:
+      e_popup_move(ic->popup, x, gy - height);
+      break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
@@ -877,10 +887,10 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    ic->focused = EINA_TRUE;
    if (ic->ibar->inst->ci->focus_flash)
       _ibar_icon_signal_emit(ic, "e,state,focused", "e");
-   if (ic->ibar->inst->ci->show_label_adjac)
-      _adjacent_label_popup(ic);
    if (ic->ibar->inst->ci->show_label) 
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
+   if (ic->ibar->inst->ci->show_label_adjac)
+      _adjacent_label_popup(ic);
 }
 
 static void
@@ -896,10 +906,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
    if (ic->ibar->inst->ci->show_label_adjac)
-   {
-     evas_object_del(ic->win);
-     e_object_del(E_OBJECT(ic->popup));
-   }
+     _adjacent_popup_destroy(ic);
 }
 
 static void
