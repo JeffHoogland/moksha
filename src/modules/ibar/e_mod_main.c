@@ -814,9 +814,9 @@ _adjacent_label_popup(void *data)
 { 
   IBar_Icon *ic;
   E_Zone *zone;
-  int width, height, zw, zh, spacer;
+  int height, spacer;
   Evas_Coord x, y, w, h;   
-  Evas_Coord gx, gy, gw, gh;   
+  Evas_Coord gx, gy, gw, gh, pw;   
   Eina_Bool theme_check;
   
   ic = data;
@@ -824,7 +824,7 @@ _adjacent_label_popup(void *data)
    
   ic->popup = e_popup_new(zone, 0, 0, 0, 0);
   ic->win = edje_object_add(ic->popup->evas); 
-   
+  e_popup_layer_set(ic->popup, E_LAYER_POPUP);
   theme_check = e_theme_edje_object_set(ic->win,
                            "base/theme/modules/ibar",
                            "e/modules/ibar/adjacent_label");
@@ -832,19 +832,19 @@ _adjacent_label_popup(void *data)
      _adjacent_popup_destroy(ic);
 
   evas_object_show(ic->win);
+  e_popup_edje_bg_object_set(ic->popup, ic->win); 
   
   e_gadcon_client_viewport_geometry_get(ic->ibar->inst->gcc, &gx, &gy, &gw, &gh);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
-  zw = zone->w;
-  zh = zone->h;
-  width = strlen(ic->app->name) * e_scale * 8; 
+  edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
+  edje_object_size_min_calc(ic->win, &pw, NULL);
   height = 20 * e_scale;
   spacer = 3 * e_scale;
   
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
-      e_popup_move(ic->popup, x + w/2 - width/2, gy - height);
+      e_popup_move(ic->popup, x + w/2 - pw/2, gy - height);
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
@@ -854,26 +854,25 @@ _adjacent_label_popup(void *data)
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, zw - w - width - spacer, y + h/4);
-      //~ e_popup_move(ic->popup, zw - w - width, y + h/4);
+      e_popup_move(ic->popup, zone->w - w - pw - spacer, y + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, x + w/2 - width/2, zh - h - height - spacer);
+      e_popup_move(ic->popup, x + w/2 - pw/2, zone->h - h - height - spacer);
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, x + w/2 - width/2, h + spacer);
+      e_popup_move(ic->popup, x + w/2 - pw/2, h + spacer);
       break;
     default:
      break;
   }
-  evas_object_resize(ic->win, width, height);
-  e_popup_resize(ic->popup, width, height); 
-  edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
-  e_popup_edje_bg_object_set(ic->popup, ic->win); 
+  
+  evas_object_resize(ic->win, pw, height);
+  e_popup_resize(ic->popup, pw, height); 
+  
   e_popup_show(ic->popup);
 }
 
