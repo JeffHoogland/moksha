@@ -2811,7 +2811,7 @@ msgstr "Дополнительная справка"
 
 #: src/bin/e_int_menus.c:218
 msgid "About Bodhi Linux"
-msgstr ""
+msgstr "О системе Bodhi Linux"
 
 #: src/bin/e_int_menus.c:238
 #, fuzzy
@@ -3947,11 +3947,11 @@ msgstr "Установка содержимого панели инструме�
 
 #: src/bin/e_update.c:78
 msgid "Bother me later"
-msgstr ""
+msgstr "Напомнить позже"
 
 #: src/bin/e_update.c:80
 msgid "Never tell me"
-msgstr ""
+msgstr "Никогда не сообщать"
 
 #: src/bin/e_update.c:83
 #, fuzzy
@@ -3965,6 +3965,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
+"Ваша версия Enlightenment<br>не соответствует последнему выпуску.<br>"
+"Актуальная версия:<br><br>%s<br><br>Пожалуйста, посетите www.enlightenment.org<br>"
+"или обновите Вашу систему<br>для получения новой версии."
 
 #: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -4480,15 +4483,15 @@ msgstr "Выключить"
 
 #: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
-msgstr ""
+msgstr "Осталось: "
 
 #: src/modules/battery/e_mod_main.c:522
 msgid "hr"
-msgstr ""
+msgstr "ч"
 
 #: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
-msgstr ""
+msgstr "Вычисление времени..."
 
 #: src/modules/battery/e_mod_main.c:627
 msgid "N/A"
@@ -5672,11 +5675,11 @@ msgstr "Громкость изменена"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
-msgstr ""
+msgstr "Планшет вкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:407
 msgid "Tablet Off"
-msgstr ""
+msgstr "Планшет выкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
 #, fuzzy
@@ -5936,7 +5939,7 @@ msgstr "Автопрокрутка"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr " Убрать значки в меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 #, fuzzy
@@ -6859,7 +6862,7 @@ msgstr "Ошибка в файле темы"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
+msgstr "Эти файлы, вероятно, не являются темами Moksha:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
@@ -7550,7 +7553,7 @@ msgstr "Кнопка питания"
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
-msgstr ""
+msgstr "Макс. потребление"
 
 #: src/modules/cpufreq/e_mod_main.c:514
 #, fuzzy
@@ -8485,7 +8488,7 @@ msgstr "Перейти на рабочий стол"
 
 #: src/modules/winlist/e_int_config_winlist.c:236
 msgid "Move to current desk after switch"
-msgstr ""
+msgstr "На текущий стол после переключения"
 
 #: src/modules/winlist/e_int_config_winlist.c:240
 msgid "Selecting"
@@ -8627,7 +8630,7 @@ msgstr "Разное"
 
 #: src/modules/ibar/e_mod_config.c:147
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Подсветка значка"
 
 #: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
@@ -8963,7 +8966,7 @@ msgstr "Высокая температура"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Проверьте Ваше устройство или настройки!"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -8984,7 +8987,7 @@ msgstr "Выберите одно"
 
 #: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
 msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr ""
+msgstr "Пожалуйста, дождитесь загрузки настроек Moksha!"
 
 #: src/modules/wizard/page_040.c:36
 msgid "Adding missing App files"
@@ -9145,6 +9148,13 @@ msgid ""
 "this<br>is a terminal which can change its window name.<br>Alternatively, "
 "you can add a data.item to"
 msgstr ""
+"Опция перезапуска предназначена для использования<br>с приложениями терминалов "
+"для создания постоянных<br>терминалов, которые переоткрываются после закрытия<br>"
+"в стиле выпадающих терминалов quake.<br>Либо выбранное приложение не является "
+"терминалом,<br>либо неизвестен флаг командной строки для изменения заголовка<br>"
+"окна терминала. Отправьте отчёт об ошибке,<br>если это терминал, который умеет "
+"изменять<br>заголовок своего окна. В противном случае,<br>Вы можете добавить "
+"data.item к"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
