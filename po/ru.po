@@ -9570,42 +9570,36 @@ msgid "Cannot initialize network"
 msgstr "Не удалось инициализировать сеть"
 
 #: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Настройки блокировки экрана"
+msgstr "Снимок экрана"
 
 #: src/modules/shot/e_mod_config.c:106
-#, fuzzy
 msgid " Show the screenshot mode dialog"
-msgstr "Показывать на всех экранах"
+msgstr "Показывать диалог режима съёмки"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Screenshot guide (quality/share/save)"
 msgstr " Правила съёмки (качество/отправка/хранение)"
 
 #: src/modules/shot/e_mod_config.c:112
-#, fuzzy
 msgid " Show notifications"
-msgstr "Уведомления"
+msgstr " Показывать уведомления"
 
 #: src/modules/shot/e_mod_config.c:115
 msgid " Launch app after screenshot"
-msgstr " Запустить приложение после съёмки"
+msgstr " Запускать приложение после съёмки"
 
 #: src/modules/shot/e_mod_config.c:118
-#, fuzzy
 msgid "Application for opening:"
-msgstr "Свойства приложения"
+msgstr "Приложение для запуска:"
 
 #: src/modules/shot/e_mod_config.c:124
-#, fuzzy
 msgid "Folder for saving screenshots:"
-msgstr "Ошибка сохранения файла снимка экрана"
+msgstr "Папка для хранения снимков:"
 
 #: src/modules/shot/e_mod_config.c:130
-#, fuzzy
 msgid "Delay time [s]"
-msgstr "Дождаться приостановления"
+msgstr "Задержка [с]"
 
 #: src/modules/shot/e_mod_config.c:135
 msgid "Image quality [50-90 = jpg, 100 = png]"
@@ -9620,7 +9614,6 @@ msgid "Bind Take Shot in Wndows:Action"
 msgstr "Привяжите Сделать снимок в Windows:Action"
 
 #: src/modules/shot/e_mod_config.c:145
-#, fuzzy
 msgid "for window screenshot!"
 msgstr "для съёмки окна!"
 
