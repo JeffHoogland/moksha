@@ -3,6 +3,7 @@
 
 static const char *profile = NULL;
 static Evas_Object *textblock = NULL;
+static Eina_Bool iso_flag = EINA_FALSE;
 
 static void
 _profile_change(void *data __UNUSED__, Evas_Object *obj __UNUSED__)
@@ -75,6 +76,10 @@ wizard_page_show(E_Wizard_Page *pg)
                   continue;
                }
           }
+        if (!strcmp(prof, "ISO"))
+          {
+              iso_flag = EINA_TRUE;
+          }
         e_prefix_data_snprintf(buf, sizeof(buf), "data/config/%s", prof);
         // if it's not a system profile - don't offer it
         if (!ecore_file_is_dir(buf))
@@ -135,7 +140,12 @@ wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
 //   evas_object_del(pg->data);
 // actually apply profile
-   if (!profile) profile = "bodhi";
+   if (!profile)
+     {
+         if (iso_flag) profile = "ISO";
+     }
+   profile = profile ? profile : "bodhi";
+
    e_config_profile_set(profile);
    e_config_profile_del(e_config_profile_get());
    e_config_load();
