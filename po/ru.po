@@ -45,17 +45,16 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, Команда разработчиков Moksha.</"
-"><br><br>Мы надеемся, что вам так же понравится использовать эту программу, "
+"<title>Copyright &copy; 2020, Команда разработчиков Moksha.</><br><br>"
+"Мы надеемся, что вам так же понравится использовать эту программу, "
 "как нам понравилось её писать.<br><br>Для связи с разработчиками посетите:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -89,9 +88,8 @@ msgid "No"
 msgstr "Нет"
 
 #: src/bin/e_actions.c:2090
-#, fuzzy
 msgid "Action Params Syntax Error"
-msgstr "Параметры действия"
+msgstr "Синтаксическая ошибка в параметрах действия"
 
 #: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
 msgid "Exit"
@@ -2800,32 +2798,28 @@ msgid "Applications"
 msgstr "Приложения"
 
 #: src/bin/e_int_menus.c:206
-#, fuzzy
 msgid "About Operating System"
-msgstr "Ошибка системы аутентификации"
+msgstr "Об операционной системе"
 
 #: src/bin/e_int_menus.c:212
-#, fuzzy
 msgid "Help"
-msgstr "Дополнительная справка"
+msgstr "Помощь"
 
 #: src/bin/e_int_menus.c:218
 msgid "About Bodhi Linux"
 msgstr "О системе Bodhi Linux"
 
 #: src/bin/e_int_menus.c:238
-#, fuzzy
 msgid "About Moksha Desktop"
-msgstr "Об Moksha"
+msgstr "Об окружении Moksha"
 
 #: src/bin/e_int_menus.c:243 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "О теме"
 
 #: src/bin/e_int_menus.c:257
-#, fuzzy
 msgid "Restart Moksha"
-msgstr "Добро пожаловать в Moksha"
+msgstr "Перезапустить Moksha"
 
 #: src/bin/e_int_menus.c:335
 msgid "Virtual"
@@ -5942,9 +5936,8 @@ msgid " Disable Icons in Menus"
 msgstr " Убрать значки в меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid " Smart Menu Orientation"
-msgstr "Расположение"
+msgstr " Умное ориентирование меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -7665,9 +7658,8 @@ msgid "Everything Module"
 msgstr "Модуль Всё"
 
 #: src/modules/everything/e_mod_main.c:599
-#, fuzzy
 msgid "Quick Launcher"
-msgstr "Запуск"
+msgstr "Быстрый запуск"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
@@ -9997,7 +9989,7 @@ msgstr " Отсекать переводы строк"
 #: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
 msgid "Clipboard"
-msgstr "Буфер"
+msgstr "Буфер обмена"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
