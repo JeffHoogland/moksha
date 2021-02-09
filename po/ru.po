@@ -8238,9 +8238,8 @@ msgid "Spring Delay"
 msgstr "Задержка пружины"
 
 #: src/modules/fileman/e_mod_config.c:428
-#, fuzzy
 msgid "Custom FM to open dirs"
-msgstr "Пользовательские цвета"
+msgstr "Пользовательский ФМ для каталогов"
 
 #: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -9574,9 +9573,8 @@ msgid "Tasks"
 msgstr "Задачи"
 
 #: src/modules/tasks/e_mod_config.c:35
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Настройки стола"
+msgstr "Настройки задач"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
@@ -9596,7 +9594,6 @@ msgid "%1.0f px"
 msgstr "%1.0f пикс."
 
 #: src/modules/tasks/e_mod_config.c:105
-#, fuzzy
 msgid "Shrink to fit"
 msgstr "Ужимать под размер содержимого"
 
@@ -9635,7 +9632,6 @@ msgid "Tiling Configuration"
 msgstr "Конфигурация мозаичного режима"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
-#, fuzzy
 msgid "Floating"
 msgstr "Плавающе"
 
@@ -9791,7 +9787,6 @@ msgstr ""
 "продолжат работу."
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
 msgstr "Модуль уведомлений"
 
@@ -9860,24 +9855,20 @@ msgid "Use multiple monitor geometry"
 msgstr "Использовать многомониторную геометрию"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Настройки домашней страницы"
+msgstr "Настройки истории"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Таймеры"
+msgstr "Отметка времени"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Показать \"Все приложения\""
+msgstr "Показывать название приложения"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
-msgstr "Запомнить очередность"
+msgstr "В обратном порядке"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:245
@@ -10084,9 +10075,8 @@ msgid "Places"
 msgstr "Места"
 
 #: src/modules/places/e_mod_config.c:262
-#, fuzzy
 msgid "Show full disk alert"
-msgstr "Показывать полный путь"
+msgstr "Предупреждать о переполнении диска"
 
 #: src/modules/places/e_mod_config.c:266
 msgid "Capacity limit:"
@@ -10097,9 +10087,9 @@ msgid "Places Configuration Updated"
 msgstr "Настройки Мест обновлены"
 
 #: src/modules/places/e_mod_places.c:575
-#, fuzzy, c-format
+#, c-format
 msgid "Places warning!"
-msgstr "Настройка Мест"
+msgstr "Предупреждение Мест!"
 
 #: src/modules/places/e_mod_places.c:576
 #, c-format
@@ -10145,12 +10135,10 @@ msgid "Playback"
 msgstr "Воспроизведение"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
 msgstr "Выходы"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
 msgstr "Входы"
 
@@ -10164,16 +10152,14 @@ msgid "New volume"
 msgstr "Новая громкость"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Громкость изменена"
+msgstr "Громкость на пределе!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:136
-#, fuzzy
 msgid "Volume Changed"
 msgstr "Громкость изменена"
 
@@ -10190,14 +10176,12 @@ msgid "Mute volume"
 msgstr "Без звука"
 
 #: src/modules/mixer/e_mod_main.c:269
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Громкость изменена"
+msgstr "Громкость увеличена"
 
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Громкость изменена"
+msgstr "Звук выкл."
 
 #~ msgid "Tasks Configuration"
 #~ msgstr "Настройка задач"
