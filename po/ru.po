@@ -206,19 +206,16 @@ msgid "Sticky Mode Enable"
 msgstr "Включить \"липкий\" режим"
 
 #: src/bin/e_actions.c:3100
-#, fuzzy
 msgid "Always On Top Toggle"
-msgstr "Всегда наверху"
+msgstr "Переключить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3104
-#, fuzzy
 msgid "Always On Top Enable"
-msgstr "Всегда наверху"
+msgstr "Включить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3108
-#, fuzzy
 msgid "Always On Top Disable"
-msgstr "Всегда наверху"
+msgstr "Выключить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3113
 msgid "Iconic Mode Toggle"
@@ -10067,19 +10064,16 @@ msgid "Edit the item content:"
 msgstr "Изменить элемент:"
 
 #: src/modules/clipboard/e_mod_main.h:10
-#, fuzzy
 msgid "Show History"
-msgstr "Показывать курсор"
+msgstr "Показать историю"
 
 #: src/modules/clipboard/e_mod_main.h:11
-#, fuzzy
 msgid "Show Settings"
-msgstr "Настройки полки"
+msgstr "Показать настройки"
 
 #: src/modules/clipboard/e_mod_main.h:12
-#, fuzzy
 msgid "Clear History"
-msgstr "Очистить перекрытие"
+msgstr "Очистить историю"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10227,7 +10221,6 @@ msgid "Decrease Volume"
 msgstr "Убавить звук"
 
 #: src/modules/mixer/e_mod_main.c:256
-#, fuzzy
 msgid "Mute volume"
 msgstr "Без звука"
 
