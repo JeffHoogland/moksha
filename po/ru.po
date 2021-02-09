@@ -9328,19 +9328,16 @@ msgid "Systray"
 msgstr "Системный лоток"
 
 #: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
-#, fuzzy
 msgid "Screenshot"
 msgstr "Сделать снимок экрана"
 
 #: src/modules/shot/e_mod_main.c:98
-#, fuzzy
 msgid "Screenshot in: "
-msgstr "Сделать снимок экрана"
+msgstr "Съёмка через: "
 
 #: src/modules/shot/e_mod_main.c:113
-#, fuzzy
 msgid "Screenshot stored in"
-msgstr "Сделать снимок экрана"
+msgstr "Снимок сохранён в"
 
 #: src/modules/shot/e_mod_main.c:308
 msgid "Error - Folder does not exist"
@@ -9496,7 +9493,7 @@ msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
-"Выберите режим съёмки экрана...<br>Задержка задаётся в настройках модуля "
+"Выберите режим съёмки экрана... <br>Задержка задаётся в настройках модуля "
 "Снимок экрана<br>Текущая задержка: <b> %d с</b>"
 
 #: src/modules/shot/e_mod_main.c:1183
@@ -9504,9 +9501,8 @@ msgid "Instant shot"
 msgstr "Мгновенный снимок"
 
 #: src/modules/shot/e_mod_main.c:1184
-#, fuzzy
 msgid "Delayed shot"
-msgstr "Отложеное выполнение"
+msgstr "Снимок с задержкой"
 
 #: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
 msgid "Take Shot"
