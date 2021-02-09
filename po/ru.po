@@ -8914,9 +8914,8 @@ msgid "Check Interval"
 msgstr "Интервал проверок"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Высокая температура"
+msgstr "Уведомление о высокой температуре"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8952,9 +8951,8 @@ msgid "Temperature"
 msgstr "Температура"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Высокая температура"
+msgstr "Высокая температура процессора!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
