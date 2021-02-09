@@ -1285,9 +1285,8 @@ msgstr ""
 "запустилось."
 
 #: src/bin/e_exec.c:714
-#, fuzzy
 msgid "Execution Error"
-msgstr "Ошибка извлечения"
+msgstr "Ошибка выполнения"
 
 #: src/bin/e_exec.c:727 src/bin/e_exec.c:729
 #, c-format
@@ -1923,13 +1922,12 @@ msgstr ""
 "отмены."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
-"Зажмите нужную клавишу модификатора<br>и нажмите какую-нибудь кнопку мыши "
+"Зажмите нужную клавишу-модификатор<br>и нажмите какую-нибудь кнопку мыши "
 "или<br>покрутите колесико для задания привязки.<br>Нажмите <hilight>Escape</"
 "highlight> для отмены."
 
@@ -3376,12 +3374,12 @@ msgid "Almost Done"
 msgstr "Почти закончено"
 
 #: src/bin/e_main.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "Version: %s\n"
-msgstr "Права доступа"
+msgstr "Версия: %s\n"
 
 #: src/bin/e_main.c:1312
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3945,9 +3943,8 @@ msgid "Never tell me"
 msgstr "Никогда не сообщать"
 
 #: src/bin/e_update.c:83
-#, fuzzy
 msgid "Update Notice"
-msgstr "Обновления"
+msgstr "Уведомления об обновлениях"
 
 #: src/bin/e_update.c:87
 #, c-format
@@ -4468,9 +4465,8 @@ msgid "AC power is recommended."
 msgstr "Рекомендуется запитаться от сети."
 
 #: src/modules/battery/e_mod_main.c:516
-#, fuzzy
 msgid "Power now: "
-msgstr "Выключить"
+msgstr "Заряд: "
 
 #: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
@@ -4547,9 +4543,8 @@ msgid "ISO 8601"
 msgstr ""
 
 #: src/modules/clock/e_mod_config.c:119
-#, fuzzy
 msgid "Strftime"
-msgstr "Время выключения"
+msgstr "Strftime"
 
 #: src/modules/clock/e_mod_config.c:126
 msgid "Week"
@@ -6191,14 +6186,12 @@ msgid "Screen Setup"
 msgstr "Настройка экрана"
 
 #: src/modules/conf_randr/e_int_config_randr.c:128
-#, fuzzy
 msgid "Primary Output"
-msgstr "Выход"
+msgstr "Первичный вывод"
 
 #: src/modules/conf_randr/e_int_config_randr.c:146
-#, fuzzy
 msgid "Restore On Startup"
-msgstr "Блокировать при запуске"
+msgstr "Восстанавливать при запуске"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
 #, c-format
@@ -6235,9 +6228,8 @@ msgstr "Изображение..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Цвета"
+msgstr "Цвет..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -7299,9 +7291,8 @@ msgid "Both"
 msgstr "Оба"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:226
-#, fuzzy
 msgid "Manipulation"
-msgstr "Увеличение"
+msgstr "Манипуляции"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 msgid "Allow manipulation of maximized windows"
@@ -9776,7 +9767,7 @@ msgstr "Пусто"
 
 #: src/modules/notification/e_mod_main.c:525
 msgid "Enter Presentation Mode"
-msgstr "Включить режим презентации"
+msgstr "Переход в режим презентации"
 
 #: src/modules/notification/e_mod_main.c:526
 msgid "Moksha is in <b>presentation</b> mode."
@@ -9787,9 +9778,8 @@ msgid "Exited Presentation Mode"
 msgstr "Режим Презентации отключен"
 
 #: src/modules/notification/e_mod_main.c:531
-#, fuzzy
 msgid "Presentation mode is over."
-msgstr "Переключение режима презентаций"
+msgstr "Режим презентации завершён."
 
 #: src/modules/notification/e_mod_main.c:544
 msgid "Enter Offline Mode"
