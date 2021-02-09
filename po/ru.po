@@ -9930,14 +9930,12 @@ msgstr "Запомнить очередность"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:245
-#, fuzzy
 msgid "Labels"
-msgstr "Метка"
+msgstr "Метки"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr "Текст метки"
+msgstr "Длина метки"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:256
@@ -9958,14 +9956,12 @@ msgstr "Чёрный список приложений (использовать
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:266
-#, fuzzy
 msgid "History"
-msgstr "Каталог"
+msgstr "История"
 
 #: src/modules/clipboard/e_mod_config.c:191
-#, fuzzy
 msgid "Selection"
-msgstr "Выбор"
+msgstr "Выделение"
 
 #: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
@@ -9973,23 +9969,20 @@ msgstr " Использовать Копировать (Ctrl-C)"
 
 #: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
-msgstr ""
+msgstr " Использовать сразу (выделенное)"
 
 #: src/modules/clipboard/e_mod_config.c:200
-#, fuzzy
 msgid " Synchronize Clipboards"
-msgstr "Скопировать в буфер обмена"
+msgstr "Синхронизировать буферы обмена"
 
 #: src/modules/clipboard/e_mod_config.c:208
-#, fuzzy
 msgid "Content"
 msgstr "Содержимое"
 
 #: src/modules/clipboard/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:246
-#, fuzzy
 msgid " Ignore Whitespace"
-msgstr "Пропустить это"
+msgstr " Пропускать пробелы"
 
 #: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
@@ -10003,98 +9996,82 @@ msgstr " Отсекать переводы строк"
 #: src/modules/clipboard/e_mod_main.c:893
 #: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
-#, fuzzy
 msgid "Clipboard"
-msgstr "Скопировать в буфер обмена"
+msgstr "Буфер"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
 msgstr " Хранить историю"
 
 #: src/modules/clipboard/e_mod_config.c:228
-#, fuzzy
 msgid " Confirm before Clearing"
 msgstr " Подтверждать перед очисткой"
 
 #: src/modules/clipboard/e_mod_config.c:230
-#, fuzzy
 msgid " Save every Selection"
-msgstr "Безопасное удаление"
+msgstr " Хранить каждое выделение"
 
 #: src/modules/clipboard/e_mod_config.c:234
-#, fuzzy
 msgid " Timer"
-msgstr "Таймеры"
+msgstr "Таймер"
 
 #: src/modules/clipboard/e_mod_config.c:249
-#, fuzzy
 msgid " Label Length"
-msgstr "Текст метки"
+msgstr "Длина метки"
 
 #: src/modules/clipboard/e_mod_config.c:257
-#, fuzzy
 msgid " Reverse Order"
-msgstr "Запомнить очередность"
+msgstr "В обратном порядке"
 
 #: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
 msgstr " Элементов в истории"
 
 #: src/modules/clipboard/e_mod_config.c:291
-#, fuzzy
 msgid "Clipboard Settings"
-msgstr "Настройки клавиатуры"
+msgstr "Буфер обмена"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Не удалось заблокировать"
+msgstr "Зафиксировать"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d элемент"
+msgstr "Изменить"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Удаление завершено"
+msgstr "Удалить"
 
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Игнорировать подсказку"
+msgstr "Игнорировать историю"
 
 #: src/modules/clipboard/e_mod_main.c:644
-#, fuzzy
 msgid "Confirm History Deletion"
-msgstr "Подтвердите удаление полки"
+msgstr "Подтвердите удаление истории"
 
 #: src/modules/clipboard/e_mod_main.c:646
-#, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr ""
-"Вы запросили удалить эту полку.<br><br>Действительно хотите удалить её?"
+"Вы запросили удаление истории буфера обмена.<br><br>Действительно хотите удалить её?"
 
 #: src/modules/clipboard/e_mod_main.c:731
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Подтвердите удаление полки"
+msgstr "Подтвердите удаление элемента"
 
 #: src/modules/clipboard/e_mod_main.c:733
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Вы запросили удалить эту полку.<br><br>Действительно хотите удалить её?"
+"Вы запросили удаление текущего элемента.<br><br>Действительно хотите удалить его?"
 
 #: src/modules/clipboard/e_mod_main.c:761
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Настройки клавиатуры"
+msgstr "Буфер обмена: Изменение элемента"
 
 #: src/modules/clipboard/e_mod_main.c:762
 msgid "Edit the item content:"
