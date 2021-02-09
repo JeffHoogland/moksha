@@ -5619,11 +5619,11 @@ msgstr "Приближение изображения"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
 msgid "Brightness Down"
-msgstr "Увеличение подсветки"
+msgstr "Уменьшение подсветки"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
 msgid "Brightness Up"
-msgstr "Уменьшение подсветки"
+msgstr "Увеличение подсветки"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 #, fuzzy
@@ -5645,24 +5645,20 @@ msgid "Mute"
 msgstr "Без звука"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Громкость изменена"
+msgstr "Громкость"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
-#, fuzzy
 msgid "Brightness"
-msgstr "Уменьшение подсветки"
+msgstr "Яркость"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "Переместить вниз"
+msgstr "Тише"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
-#, fuzzy
 msgid "Volume Up"
-msgstr "Громкость изменена"
+msgstr "Громче"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
@@ -5673,29 +5669,24 @@ msgid "Tablet Off"
 msgstr "Планшет выкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
-#, fuzzy
 msgid "Screenlock"
 msgstr "Блокировка экрана"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:413
-#, fuzzy
 msgid "Battery Button"
-msgstr "Кнопка питания"
+msgstr "Кнопка батареи"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:416
-#, fuzzy
 msgid "Tablet Disabled"
-msgstr "Отключенный текст чекбокса"
+msgstr "Планшет выкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:417
-#, fuzzy
 msgid "Tablet Enabled"
-msgstr "Включено"
+msgstr "Планшет вкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:418
-#, fuzzy
 msgid "Tablet"
-msgstr "Включить"
+msgstr "Планшет"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:523
 msgid "ACPI Binding"
@@ -5736,7 +5727,6 @@ msgstr ""
 "hilight>.<br>Пожалуйста, выберите другую последовательность."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
