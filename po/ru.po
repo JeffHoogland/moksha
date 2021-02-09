@@ -7517,50 +7517,45 @@ msgid "Powersaving behavior"
 msgstr "Режим энергосбережения"
 
 #: src/modules/cpufreq/e_mod_main.c:414
-#, fuzzy
 msgid "Power State Min"
-msgstr "Кнопка питания"
+msgstr "Мин. потребление"
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
 msgstr "Макс. потребление"
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки помощника<br>частоты ЦПУ при помощи "
+"Произошла ошибка настройки помощника<ps/>частоты ЦПУ при помощи "
 "утилиты<br>setfreq этого модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Ваше ядро не поддерживает регулирование частоты<br>центрального процессора "
-"вообще. Может вы<br>не подгрузили необходимые модули ядра, или<br>ваш "
+"Ваше ядро не поддерживает регулирование частоты<ps/>центрального процессора "
+"вообще. Может вы<ps/>не подгрузили необходимые модули ядра, или<ps/>ваш "
 "процессор просто не поддерживает эту особенность."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки частоты ЦПУ<br>с помощью утилиты setfreq этого "
+"Произошла ошибка настройки частоты ЦПУ<ps/>с помощью утилиты setfreq этого "
 "модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки частоты ЦПУ<br>с помощью утилиты setfreq этого "
+"Произошла ошибка настройки частоты ЦПУ<ps/>с помощью утилиты setfreq этого "
 "модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
@@ -7568,54 +7563,48 @@ msgid "Cpufreq Error"
 msgstr "Ошибка Частоты ЦПУ"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
-#, fuzzy
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"Программа freqset не найдена в каталоге<br>модуля Частота ЦПУ (вызов функции "
-"stat<br>завершился неудачей)"
+"Программа freqset не найдена в каталоге<ps/>модуля Частота ЦПУ (вызов функции "
+"stat<ps/>завершился неудачей)"
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
 msgstr "Ошибка прав доступа в Частоте ЦПУ"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Файл программы freqset в каталоге модуля<br>Частота ЦПУ не принадлежит "
-"пользователю<br>root или для неё не установлен бит setuid.<br>Пожалуйста, "
-"исправьте это. Например так:<br><br>sudo chown root %s<br>sudo chmod u+s,a+x "
-"%s<br>"
+"Файл программы freqset в каталоге модуля<ps/>Частота ЦПУ не принадлежит "
+"пользователю<ps/>root или для неё не установлен бит setuid.<ps/>Пожалуйста, "
+"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
-#, fuzzy
 msgid "CPU Frequency"
-msgstr "Срочность"
+msgstr "Частота процессора"
 
 #: src/modules/cpufreq/e_mod_config.c:38
-#, fuzzy
 msgid "Cpu Frequency Control Settings"
-msgstr "Настройки курсора"
+msgstr "Настройки управления частотой процессора"
 
 #: src/modules/cpufreq/e_mod_config.c:91
-#, fuzzy
 msgid "Update poll interval"
-msgstr "Интервал очистки кэша"
+msgstr "Интервал обновления"
 
 #: src/modules/cpufreq/e_mod_config.c:107
-#, fuzzy
 msgid "Minimum Power State"
-msgstr "Кнопка питания"
+msgstr "Мин. потребление"
 
 #: src/modules/cpufreq/e_mod_config.c:113
-#, fuzzy
 msgid "Maximum Power State"
-msgstr "Кнопка питания"
+msgstr "Макс. потребление"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
