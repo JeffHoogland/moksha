@@ -23,7 +23,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Об Moksha"
+msgstr "Об окружении Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
@@ -7267,9 +7267,8 @@ msgid "Focus last focused window on lost focus"
 msgstr "При потере фокуса возвращать фокус предыдущему окну"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:330
-#, fuzzy
 msgid "Slide pointer to a new window which is focused"
-msgstr "Перемещать указатель к фокусированному окну"
+msgstr "Перемещать указатель к новому окну с фокусом"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:64
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
