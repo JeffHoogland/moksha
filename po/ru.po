@@ -23,7 +23,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Об Moksha"
+msgstr "Об окружении Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
@@ -45,17 +45,16 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, Команда разработчиков Moksha.</"
-"><br><br>Мы надеемся, что вам так же понравится использовать эту программу, "
+"<title>Copyright &copy; 2020, Команда разработчиков Moksha.</><br><br>"
+"Мы надеемся, что вам так же понравится использовать эту программу, "
 "как нам понравилось её писать.<br><br>Для связи с разработчиками посетите:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -89,9 +88,8 @@ msgid "No"
 msgstr "Нет"
 
 #: src/bin/e_actions.c:2090
-#, fuzzy
 msgid "Action Params Syntax Error"
-msgstr "Параметры действия"
+msgstr "Синтаксическая ошибка в параметрах действия"
 
 #: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
 msgid "Exit"
@@ -208,19 +206,16 @@ msgid "Sticky Mode Enable"
 msgstr "Включить \"липкий\" режим"
 
 #: src/bin/e_actions.c:3100
-#, fuzzy
 msgid "Always On Top Toggle"
-msgstr "Всегда наверху"
+msgstr "Переключить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3104
-#, fuzzy
 msgid "Always On Top Enable"
-msgstr "Всегда наверху"
+msgstr "Включить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3108
-#, fuzzy
 msgid "Always On Top Disable"
-msgstr "Всегда наверху"
+msgstr "Выключить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3113
 msgid "Iconic Mode Toggle"
@@ -1290,9 +1285,8 @@ msgstr ""
 "запустилось."
 
 #: src/bin/e_exec.c:714
-#, fuzzy
 msgid "Execution Error"
-msgstr "Ошибка извлечения"
+msgstr "Ошибка выполнения"
 
 #: src/bin/e_exec.c:727 src/bin/e_exec.c:729
 #, c-format
@@ -1928,13 +1922,12 @@ msgstr ""
 "отмены."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
-"Зажмите нужную клавишу модификатора<br>и нажмите какую-нибудь кнопку мыши "
+"Зажмите нужную клавишу-модификатор<br>и нажмите какую-нибудь кнопку мыши "
 "или<br>покрутите колесико для задания привязки.<br>Нажмите <hilight>Escape</"
 "highlight> для отмены."
 
@@ -2800,32 +2793,28 @@ msgid "Applications"
 msgstr "Приложения"
 
 #: src/bin/e_int_menus.c:206
-#, fuzzy
 msgid "About Operating System"
-msgstr "Ошибка системы аутентификации"
+msgstr "Об операционной системе"
 
 #: src/bin/e_int_menus.c:212
-#, fuzzy
 msgid "Help"
-msgstr "Дополнительная справка"
+msgstr "Помощь"
 
 #: src/bin/e_int_menus.c:218
 msgid "About Bodhi Linux"
 msgstr "О системе Bodhi Linux"
 
 #: src/bin/e_int_menus.c:238
-#, fuzzy
 msgid "About Moksha Desktop"
-msgstr "Об Moksha"
+msgstr "Об окружении Moksha"
 
 #: src/bin/e_int_menus.c:243 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "О теме"
 
 #: src/bin/e_int_menus.c:257
-#, fuzzy
 msgid "Restart Moksha"
-msgstr "Добро пожаловать в Moksha"
+msgstr "Перезапустить Moksha"
 
 #: src/bin/e_int_menus.c:335
 msgid "Virtual"
@@ -3385,12 +3374,12 @@ msgid "Almost Done"
 msgstr "Почти закончено"
 
 #: src/bin/e_main.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "Version: %s\n"
-msgstr "Права доступа"
+msgstr "Версия: %s\n"
 
 #: src/bin/e_main.c:1312
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3954,9 +3943,8 @@ msgid "Never tell me"
 msgstr "Никогда не сообщать"
 
 #: src/bin/e_update.c:83
-#, fuzzy
 msgid "Update Notice"
-msgstr "Обновления"
+msgstr "Уведомления об обновлениях"
 
 #: src/bin/e_update.c:87
 #, c-format
@@ -4477,9 +4465,8 @@ msgid "AC power is recommended."
 msgstr "Рекомендуется запитаться от сети."
 
 #: src/modules/battery/e_mod_main.c:516
-#, fuzzy
 msgid "Power now: "
-msgstr "Выключить"
+msgstr "Заряд: "
 
 #: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
@@ -4556,9 +4543,8 @@ msgid "ISO 8601"
 msgstr ""
 
 #: src/modules/clock/e_mod_config.c:119
-#, fuzzy
 msgid "Strftime"
-msgstr "Время выключения"
+msgstr "Strftime"
 
 #: src/modules/clock/e_mod_config.c:126
 msgid "Week"
@@ -5628,11 +5614,11 @@ msgstr "Приближение изображения"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
 msgid "Brightness Down"
-msgstr "Увеличение подсветки"
+msgstr "Уменьшение подсветки"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
 msgid "Brightness Up"
-msgstr "Уменьшение подсветки"
+msgstr "Увеличение подсветки"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 #, fuzzy
@@ -5654,24 +5640,20 @@ msgid "Mute"
 msgstr "Без звука"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Громкость изменена"
+msgstr "Громкость"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
-#, fuzzy
 msgid "Brightness"
-msgstr "Уменьшение подсветки"
+msgstr "Яркость"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "Переместить вниз"
+msgstr "Тише"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
-#, fuzzy
 msgid "Volume Up"
-msgstr "Громкость изменена"
+msgstr "Громче"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
@@ -5682,29 +5664,24 @@ msgid "Tablet Off"
 msgstr "Планшет выкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
-#, fuzzy
 msgid "Screenlock"
 msgstr "Блокировка экрана"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:413
-#, fuzzy
 msgid "Battery Button"
-msgstr "Кнопка питания"
+msgstr "Кнопка батареи"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:416
-#, fuzzy
 msgid "Tablet Disabled"
-msgstr "Отключенный текст чекбокса"
+msgstr "Планшет выкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:417
-#, fuzzy
 msgid "Tablet Enabled"
-msgstr "Включено"
+msgstr "Планшет вкл."
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:418
-#, fuzzy
 msgid "Tablet"
-msgstr "Включить"
+msgstr "Планшет"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:523
 msgid "ACPI Binding"
@@ -5745,7 +5722,6 @@ msgstr ""
 "hilight>.<br>Пожалуйста, выберите другую последовательность."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -5942,9 +5918,8 @@ msgid " Disable Icons in Menus"
 msgstr " Убрать значки в меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid " Smart Menu Orientation"
-msgstr "Расположение"
+msgstr " Умное ориентирование меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6211,14 +6186,12 @@ msgid "Screen Setup"
 msgstr "Настройка экрана"
 
 #: src/modules/conf_randr/e_int_config_randr.c:128
-#, fuzzy
 msgid "Primary Output"
-msgstr "Выход"
+msgstr "Первичный вывод"
 
 #: src/modules/conf_randr/e_int_config_randr.c:146
-#, fuzzy
 msgid "Restore On Startup"
-msgstr "Блокировать при запуске"
+msgstr "Восстанавливать при запуске"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
 #, c-format
@@ -6255,9 +6228,8 @@ msgstr "Изображение..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Цвета"
+msgstr "Цвет..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -7274,9 +7246,8 @@ msgid "Focus last focused window on lost focus"
 msgstr "При потере фокуса возвращать фокус предыдущему окну"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:330
-#, fuzzy
 msgid "Slide pointer to a new window which is focused"
-msgstr "Перемещать указатель к фокусированному окну"
+msgstr "Перемещать указатель к новому окну с фокусом"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:64
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
@@ -7320,9 +7291,8 @@ msgid "Both"
 msgstr "Оба"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:226
-#, fuzzy
 msgid "Manipulation"
-msgstr "Увеличение"
+msgstr "Манипуляции"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 msgid "Allow manipulation of maximized windows"
@@ -7547,50 +7517,45 @@ msgid "Powersaving behavior"
 msgstr "Режим энергосбережения"
 
 #: src/modules/cpufreq/e_mod_main.c:414
-#, fuzzy
 msgid "Power State Min"
-msgstr "Кнопка питания"
+msgstr "Мин. потребление"
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
 msgstr "Макс. потребление"
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки помощника<br>частоты ЦПУ при помощи "
+"Произошла ошибка настройки помощника<ps/>частоты ЦПУ при помощи "
 "утилиты<br>setfreq этого модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Ваше ядро не поддерживает регулирование частоты<br>центрального процессора "
-"вообще. Может вы<br>не подгрузили необходимые модули ядра, или<br>ваш "
+"Ваше ядро не поддерживает регулирование частоты<ps/>центрального процессора "
+"вообще. Может вы<ps/>не подгрузили необходимые модули ядра, или<ps/>ваш "
 "процессор просто не поддерживает эту особенность."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки частоты ЦПУ<br>с помощью утилиты setfreq этого "
+"Произошла ошибка настройки частоты ЦПУ<ps/>с помощью утилиты setfreq этого "
 "модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Произошла ошибка настройки частоты ЦПУ<br>с помощью утилиты setfreq этого "
+"Произошла ошибка настройки частоты ЦПУ<ps/>с помощью утилиты setfreq этого "
 "модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
@@ -7598,54 +7563,48 @@ msgid "Cpufreq Error"
 msgstr "Ошибка Частоты ЦПУ"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
-#, fuzzy
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"Программа freqset не найдена в каталоге<br>модуля Частота ЦПУ (вызов функции "
-"stat<br>завершился неудачей)"
+"Программа freqset не найдена в каталоге<ps/>модуля Частота ЦПУ (вызов функции "
+"stat<ps/>завершился неудачей)"
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
 msgstr "Ошибка прав доступа в Частоте ЦПУ"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Файл программы freqset в каталоге модуля<br>Частота ЦПУ не принадлежит "
-"пользователю<br>root или для неё не установлен бит setuid.<br>Пожалуйста, "
-"исправьте это. Например так:<br><br>sudo chown root %s<br>sudo chmod u+s,a+x "
-"%s<br>"
+"Файл программы freqset в каталоге модуля<ps/>Частота ЦПУ не принадлежит "
+"пользователю<ps/>root или для неё не установлен бит setuid.<ps/>Пожалуйста, "
+"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
-#, fuzzy
 msgid "CPU Frequency"
-msgstr "Срочность"
+msgstr "Частота процессора"
 
 #: src/modules/cpufreq/e_mod_config.c:38
-#, fuzzy
 msgid "Cpu Frequency Control Settings"
-msgstr "Настройки курсора"
+msgstr "Настройки управления частотой процессора"
 
 #: src/modules/cpufreq/e_mod_config.c:91
-#, fuzzy
 msgid "Update poll interval"
-msgstr "Интервал очистки кэша"
+msgstr "Интервал обновления"
 
 #: src/modules/cpufreq/e_mod_config.c:107
-#, fuzzy
 msgid "Minimum Power State"
-msgstr "Кнопка питания"
+msgstr "Мин. потребление"
 
 #: src/modules/cpufreq/e_mod_config.c:113
-#, fuzzy
 msgid "Maximum Power State"
-msgstr "Кнопка питания"
+msgstr "Макс. потребление"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
@@ -7665,9 +7624,8 @@ msgid "Everything Module"
 msgstr "Модуль Всё"
 
 #: src/modules/everything/e_mod_main.c:599
-#, fuzzy
 msgid "Quick Launcher"
-msgstr "Запуск"
+msgstr "Быстрый запуск"
 
 #: src/modules/everything/evry_config.c:78
 msgid "Everything Settings"
@@ -8280,9 +8238,8 @@ msgid "Spring Delay"
 msgstr "Задержка пружины"
 
 #: src/modules/fileman/e_mod_config.c:428
-#, fuzzy
 msgid "Custom FM to open dirs"
-msgstr "Пользовательские цвета"
+msgstr "Пользовательский ФМ для каталогов"
 
 #: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -8922,9 +8879,8 @@ msgid "Check Interval"
 msgstr "Интервал проверок"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Высокая температура"
+msgstr "Уведомление о высокой температуре"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8960,9 +8916,8 @@ msgid "Temperature"
 msgstr "Температура"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Высокая температура"
+msgstr "Высокая температура процессора!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
@@ -9372,19 +9327,16 @@ msgid "Systray"
 msgstr "Системный лоток"
 
 #: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
-#, fuzzy
 msgid "Screenshot"
 msgstr "Сделать снимок экрана"
 
 #: src/modules/shot/e_mod_main.c:98
-#, fuzzy
 msgid "Screenshot in: "
-msgstr "Сделать снимок экрана"
+msgstr "Съёмка через: "
 
 #: src/modules/shot/e_mod_main.c:113
-#, fuzzy
 msgid "Screenshot stored in"
-msgstr "Сделать снимок экрана"
+msgstr "Снимок сохранён в"
 
 #: src/modules/shot/e_mod_main.c:308
 msgid "Error - Folder does not exist"
@@ -9540,7 +9492,7 @@ msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
-"Выберите режим съёмки экрана...<br>Задержка задаётся в настройках модуля "
+"Выберите режим съёмки экрана... <br>Задержка задаётся в настройках модуля "
 "Снимок экрана<br>Текущая задержка: <b> %d с</b>"
 
 #: src/modules/shot/e_mod_main.c:1183
@@ -9548,9 +9500,8 @@ msgid "Instant shot"
 msgstr "Мгновенный снимок"
 
 #: src/modules/shot/e_mod_main.c:1184
-#, fuzzy
 msgid "Delayed shot"
-msgstr "Отложеное выполнение"
+msgstr "Снимок с задержкой"
 
 #: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
 msgid "Take Shot"
@@ -9570,42 +9521,36 @@ msgid "Cannot initialize network"
 msgstr "Не удалось инициализировать сеть"
 
 #: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Настройки блокировки экрана"
+msgstr "Снимок экрана"
 
 #: src/modules/shot/e_mod_config.c:106
-#, fuzzy
 msgid " Show the screenshot mode dialog"
-msgstr "Показывать на всех экранах"
+msgstr "Показывать диалог режима съёмки"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Screenshot guide (quality/share/save)"
 msgstr " Правила съёмки (качество/отправка/хранение)"
 
 #: src/modules/shot/e_mod_config.c:112
-#, fuzzy
 msgid " Show notifications"
-msgstr "Уведомления"
+msgstr " Показывать уведомления"
 
 #: src/modules/shot/e_mod_config.c:115
 msgid " Launch app after screenshot"
-msgstr " Запустить приложение после съёмки"
+msgstr " Запускать приложение после съёмки"
 
 #: src/modules/shot/e_mod_config.c:118
-#, fuzzy
 msgid "Application for opening:"
-msgstr "Свойства приложения"
+msgstr "Приложение для запуска:"
 
 #: src/modules/shot/e_mod_config.c:124
-#, fuzzy
 msgid "Folder for saving screenshots:"
-msgstr "Ошибка сохранения файла снимка экрана"
+msgstr "Папка для хранения снимков:"
 
 #: src/modules/shot/e_mod_config.c:130
-#, fuzzy
 msgid "Delay time [s]"
-msgstr "Дождаться приостановления"
+msgstr "Задержка [с]"
 
 #: src/modules/shot/e_mod_config.c:135
 msgid "Image quality [50-90 = jpg, 100 = png]"
@@ -9620,7 +9565,6 @@ msgid "Bind Take Shot in Wndows:Action"
 msgstr "Привяжите Сделать снимок в Windows:Action"
 
 #: src/modules/shot/e_mod_config.c:145
-#, fuzzy
 msgid "for window screenshot!"
 msgstr "для съёмки окна!"
 
@@ -9629,9 +9573,8 @@ msgid "Tasks"
 msgstr "Задачи"
 
 #: src/modules/tasks/e_mod_config.c:35
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Настройки стола"
+msgstr "Настройки задач"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
@@ -9651,7 +9594,6 @@ msgid "%1.0f px"
 msgstr "%1.0f пикс."
 
 #: src/modules/tasks/e_mod_config.c:105
-#, fuzzy
 msgid "Shrink to fit"
 msgstr "Ужимать под размер содержимого"
 
@@ -9690,7 +9632,6 @@ msgid "Tiling Configuration"
 msgstr "Конфигурация мозаичного режима"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
-#, fuzzy
 msgid "Floating"
 msgstr "Плавающе"
 
@@ -9807,7 +9748,7 @@ msgstr "Пусто"
 
 #: src/modules/notification/e_mod_main.c:525
 msgid "Enter Presentation Mode"
-msgstr "Включить режим презентации"
+msgstr "Переход в режим презентации"
 
 #: src/modules/notification/e_mod_main.c:526
 msgid "Moksha is in <b>presentation</b> mode."
@@ -9818,9 +9759,8 @@ msgid "Exited Presentation Mode"
 msgstr "Режим Презентации отключен"
 
 #: src/modules/notification/e_mod_main.c:531
-#, fuzzy
 msgid "Presentation mode is over."
-msgstr "Переключение режима презентаций"
+msgstr "Режим презентации завершён."
 
 #: src/modules/notification/e_mod_main.c:544
 msgid "Enter Offline Mode"
@@ -9847,7 +9787,6 @@ msgstr ""
 "продолжат работу."
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
 msgstr "Модуль уведомлений"
 
@@ -9916,35 +9855,29 @@ msgid "Use multiple monitor geometry"
 msgstr "Использовать многомониторную геометрию"
 
 #: src/modules/notification/e_mod_config.c:169
-#, fuzzy
 msgid "History Settings"
-msgstr "Настройки домашней страницы"
+msgstr "Настройки истории"
 
 #: src/modules/notification/e_mod_config.c:170
-#, fuzzy
 msgid "Time stamp"
-msgstr "Таймеры"
+msgstr "Отметка времени"
 
 #: src/modules/notification/e_mod_config.c:172
-#, fuzzy
 msgid "Show application name"
-msgstr "Показать \"Все приложения\""
+msgstr "Показывать название приложения"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Reverse order"
-msgstr "Запомнить очередность"
+msgstr "В обратном порядке"
 
 #: src/modules/notification/e_mod_config.c:178
 #: src/modules/clipboard/e_mod_config.c:245
-#, fuzzy
 msgid "Labels"
-msgstr "Метка"
+msgstr "Метки"
 
 #: src/modules/notification/e_mod_config.c:179
-#, fuzzy
 msgid "Labels length"
-msgstr "Текст метки"
+msgstr "Длина метки"
 
 #: src/modules/notification/e_mod_config.c:186
 #: src/modules/clipboard/e_mod_config.c:256
@@ -9965,14 +9898,12 @@ msgstr "Чёрный список приложений (использовать
 
 #: src/modules/notification/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:266
-#, fuzzy
 msgid "History"
-msgstr "Каталог"
+msgstr "История"
 
 #: src/modules/clipboard/e_mod_config.c:191
-#, fuzzy
 msgid "Selection"
-msgstr "Выбор"
+msgstr "Выделение"
 
 #: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
@@ -9980,23 +9911,20 @@ msgstr " Использовать Копировать (Ctrl-C)"
 
 #: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
-msgstr ""
+msgstr " Использовать сразу (выделенное)"
 
 #: src/modules/clipboard/e_mod_config.c:200
-#, fuzzy
 msgid " Synchronize Clipboards"
-msgstr "Скопировать в буфер обмена"
+msgstr "Синхронизировать буферы обмена"
 
 #: src/modules/clipboard/e_mod_config.c:208
-#, fuzzy
 msgid "Content"
 msgstr "Содержимое"
 
 #: src/modules/clipboard/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:246
-#, fuzzy
 msgid " Ignore Whitespace"
-msgstr "Пропустить это"
+msgstr " Пропускать пробелы"
 
 #: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
@@ -10010,117 +9938,98 @@ msgstr " Отсекать переводы строк"
 #: src/modules/clipboard/e_mod_main.c:893
 #: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
-#, fuzzy
 msgid "Clipboard"
-msgstr "Скопировать в буфер обмена"
+msgstr "Буфер обмена"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
 msgstr " Хранить историю"
 
 #: src/modules/clipboard/e_mod_config.c:228
-#, fuzzy
 msgid " Confirm before Clearing"
 msgstr " Подтверждать перед очисткой"
 
 #: src/modules/clipboard/e_mod_config.c:230
-#, fuzzy
 msgid " Save every Selection"
-msgstr "Безопасное удаление"
+msgstr " Хранить каждое выделение"
 
 #: src/modules/clipboard/e_mod_config.c:234
-#, fuzzy
 msgid " Timer"
-msgstr "Таймеры"
+msgstr "Таймер"
 
 #: src/modules/clipboard/e_mod_config.c:249
-#, fuzzy
 msgid " Label Length"
-msgstr "Текст метки"
+msgstr "Длина метки"
 
 #: src/modules/clipboard/e_mod_config.c:257
-#, fuzzy
 msgid " Reverse Order"
-msgstr "Запомнить очередность"
+msgstr "В обратном порядке"
 
 #: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
 msgstr " Элементов в истории"
 
 #: src/modules/clipboard/e_mod_config.c:291
-#, fuzzy
 msgid "Clipboard Settings"
-msgstr "Настройки клавиатуры"
+msgstr "Буфер обмена"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Не удалось заблокировать"
+msgstr "Зафиксировать"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d элемент"
+msgstr "Изменить"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Удаление завершено"
+msgstr "Удалить"
 
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Игнорировать подсказку"
+msgstr "Игнорировать историю"
 
 #: src/modules/clipboard/e_mod_main.c:644
-#, fuzzy
 msgid "Confirm History Deletion"
-msgstr "Подтвердите удаление полки"
+msgstr "Подтвердите удаление истории"
 
 #: src/modules/clipboard/e_mod_main.c:646
-#, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr ""
-"Вы запросили удалить эту полку.<br><br>Действительно хотите удалить её?"
+"Вы запросили удаление истории буфера обмена.<br><br>Действительно хотите удалить её?"
 
 #: src/modules/clipboard/e_mod_main.c:731
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Подтвердите удаление полки"
+msgstr "Подтвердите удаление элемента"
 
 #: src/modules/clipboard/e_mod_main.c:733
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Вы запросили удалить эту полку.<br><br>Действительно хотите удалить её?"
+"Вы запросили удаление текущего элемента.<br><br>Действительно хотите удалить его?"
 
 #: src/modules/clipboard/e_mod_main.c:761
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Настройки клавиатуры"
+msgstr "Буфер обмена: Изменение элемента"
 
 #: src/modules/clipboard/e_mod_main.c:762
 msgid "Edit the item content:"
 msgstr "Изменить элемент:"
 
 #: src/modules/clipboard/e_mod_main.h:10
-#, fuzzy
 msgid "Show History"
-msgstr "Показывать курсор"
+msgstr "Показать историю"
 
 #: src/modules/clipboard/e_mod_main.h:11
-#, fuzzy
 msgid "Show Settings"
-msgstr "Настройки полки"
+msgstr "Показать настройки"
 
 #: src/modules/clipboard/e_mod_main.h:12
-#, fuzzy
 msgid "Clear History"
-msgstr "Очистить перекрытие"
+msgstr "Очистить историю"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10166,9 +10075,8 @@ msgid "Places"
 msgstr "Места"
 
 #: src/modules/places/e_mod_config.c:262
-#, fuzzy
 msgid "Show full disk alert"
-msgstr "Показывать полный путь"
+msgstr "Предупреждать о переполнении диска"
 
 #: src/modules/places/e_mod_config.c:266
 msgid "Capacity limit:"
@@ -10179,9 +10087,9 @@ msgid "Places Configuration Updated"
 msgstr "Настройки Мест обновлены"
 
 #: src/modules/places/e_mod_places.c:575
-#, fuzzy, c-format
+#, c-format
 msgid "Places warning!"
-msgstr "Настройка Мест"
+msgstr "Предупреждение Мест!"
 
 #: src/modules/places/e_mod_places.c:576
 #, c-format
@@ -10227,12 +10135,10 @@ msgid "Playback"
 msgstr "Воспроизведение"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
 msgstr "Выходы"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
 msgstr "Входы"
 
@@ -10246,16 +10152,14 @@ msgid "New volume"
 msgstr "Новая громкость"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Громкость изменена"
+msgstr "Громкость на пределе!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:136
-#, fuzzy
 msgid "Volume Changed"
 msgstr "Громкость изменена"
 
@@ -10268,19 +10172,16 @@ msgid "Decrease Volume"
 msgstr "Убавить звук"
 
 #: src/modules/mixer/e_mod_main.c:256
-#, fuzzy
 msgid "Mute volume"
 msgstr "Без звука"
 
 #: src/modules/mixer/e_mod_main.c:269
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Громкость изменена"
+msgstr "Громкость увеличена"
 
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Громкость изменена"
+msgstr "Звук выкл."
 
 #~ msgid "Tasks Configuration"
 #~ msgstr "Настройка задач"
