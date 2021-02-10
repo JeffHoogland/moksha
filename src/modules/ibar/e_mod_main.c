@@ -852,7 +852,7 @@ _adjacent_label_popup(void *data)
       if (gy < height)
         e_popup_move(ic->popup, x % (zone->w) + w/2 - pw/2, gy + h + gap);
       else
-        e_popup_move(ic->popup, x % (zone->w + 1) + w/2 - pw/2, gy - height -gap);
+        e_popup_move(ic->popup, x % (zone->w) + w/2 - pw/2, gy - height -gap);
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
