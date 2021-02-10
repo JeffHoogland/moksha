@@ -850,29 +850,29 @@ _adjacent_label_popup(void *data)
   {
     case E_GADCON_ORIENT_FLOAT:
       if (gy < height)
-        e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy + h + gap);
+        e_popup_move(ic->popup, x % (zone->w) + w/2 - pw/2, gy + h + gap);
       else
-        e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy - height -gap);
+        e_popup_move(ic->popup, x % (zone->w + 1) + w/2 - pw/2, gy - height -gap);
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      e_popup_move(ic->popup, x + w + gap, gy + y - sy + h/4);
+      e_popup_move(ic->popup, x % (zone->w) + w + gap, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, gx - pw - gap, gy + y - sy + h/4);
+      e_popup_move(ic->popup, gx % (zone->w) - pw - gap, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy - height - gap);
+      e_popup_move(ic->popup, gx % (zone->w) + x - sx + w/2 - pw/2, gy - height - gap);
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, h + gap);
+      e_popup_move(ic->popup, gx % (zone->w) + x - sx + w/2 - pw/2, h + gap);
       break;
     default:
      break;
