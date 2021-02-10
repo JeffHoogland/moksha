@@ -1352,7 +1352,8 @@ _e_border_menu_cb_fav_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UN
 
    if (!(bd = data)) return;
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
-   menu = efreet_menu_parse(buf);
+   if (ecore_file_exists(buf))
+     menu = efreet_menu_parse(buf);
    if (!menu)
      menu = efreet_menu_new("Favorites");
    if (!menu) return;
