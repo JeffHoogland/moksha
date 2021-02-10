@@ -804,11 +804,14 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
 static void
 _adjacent_popup_destroy(IBar_Icon *ic)
 {
-   if (ic->win)
-     evas_object_del(ic->win);
+   if (!ic->win) return;
+   if (ic->win){     
+      evas_object_del(ic->win);
+      ic->win = NULL;
+   }
+
    if (ic->popup)
      e_object_del(E_OBJECT(ic->popup));
-   return;
 } 
  
 static void
@@ -817,7 +820,8 @@ _adjacent_label_popup(void *data)
   IBar_Icon *ic;
   E_Zone *zone;
   int height, spacer;
-  Evas_Coord x, y, w, h, gy, pw;   
+  Evas_Coord x, y, w, h;   
+  Evas_Coord gx, gy, sx, sy, pw;   
   Eina_Bool theme_check;
   
   ic = data;
@@ -832,7 +836,8 @@ _adjacent_label_popup(void *data)
   if (!theme_check) _adjacent_popup_destroy(ic);
   evas_object_show(ic->win);
   
-  e_gadcon_client_viewport_geometry_get(ic->ibar->inst->gcc, NULL, &gy, NULL, NULL);
+  e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &gx, &gy, NULL, NULL);
+  evas_object_geometry_get(ic->ibar->inst->o_ibar, &sx, &sy, NULL, NULL);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
   edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
   edje_object_size_min_calc(ic->win, &pw, NULL);
@@ -847,22 +852,22 @@ _adjacent_label_popup(void *data)
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      e_popup_move(ic->popup, x + w + spacer, y + h/4);
+      e_popup_move(ic->popup, x + w + spacer, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, zone->w - w - pw - spacer, y + h/4);
+      e_popup_move(ic->popup, zone->w - w - pw - spacer, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, x + w/2 - pw/2, zone->h - h - height - spacer);
+      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, zone->h - h - height - spacer);
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, x + w/2 - pw/2, h + spacer);
+      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, h + spacer);
       break;
     default:
      break;
@@ -1160,7 +1165,7 @@ _ibar_cb_icon_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
    evas_object_geometry_get(ic->o_holder, &x, &y, NULL, NULL);
    evas_object_move(ic->o_holder2, x, y);
    evas_object_raise(ic->o_holder2);
-   _adjacent_popup_destroy(ic);
+  _adjacent_popup_destroy(ic);  
 }
 
 static void
