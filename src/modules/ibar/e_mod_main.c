@@ -810,8 +810,10 @@ _adjacent_popup_destroy(IBar_Icon *ic)
       ic->win = NULL;
    }
 
-   if (ic->popup)
+   if (ic->popup){
+     e_popup_hide(ic->popup);  
      e_object_del(E_OBJECT(ic->popup));
+   }
 } 
  
 static void
@@ -819,7 +821,7 @@ _adjacent_label_popup(void *data)
 { 
   IBar_Icon *ic;
   E_Zone *zone;
-  int height, spacer;
+  int height, gap;
   Evas_Coord x, y, w, h;   
   Evas_Coord gx, gy, sx, sy, pw;   
   Eina_Bool theme_check;
@@ -842,32 +844,35 @@ _adjacent_label_popup(void *data)
   edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
   edje_object_size_min_calc(ic->win, &pw, NULL);
   height = 20 * e_scale;
-  spacer =  3 * e_scale;
+  gap =  3 * e_scale;
   
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
-      e_popup_move(ic->popup, x + w/2 - pw/2, gy - height);
+      if (gy < height)
+        e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy + h + gap);
+      else
+        e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy - height -gap);
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      e_popup_move(ic->popup, x + w + spacer, gy + y - sy + h/4);
+      e_popup_move(ic->popup, x + w + gap, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, zone->w - w - pw - spacer, gy + y - sy + h/4);
+      e_popup_move(ic->popup, gx - pw - gap, gy + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, zone->h - h - height - spacer);
+      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, gy - height - gap);
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, h + spacer);
+      e_popup_move(ic->popup, gx + x - sx + w/2 - pw/2, h + gap);
       break;
     default:
      break;
