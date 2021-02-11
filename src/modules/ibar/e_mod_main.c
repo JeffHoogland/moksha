@@ -827,7 +827,7 @@ _adjacent_label_popup(void *data)
   Eina_Bool theme_check;
   
   ic = data;
-  
+
   zone = ic->ibar->inst->gcc->gadcon->zone;
   ic->popup = e_popup_new(zone, 0, 0, 0, 0);
   ic->win = edje_object_add(ic->popup->evas); 
@@ -850,29 +850,35 @@ _adjacent_label_popup(void *data)
   {
     case E_GADCON_ORIENT_FLOAT:
       if (gy < height)
-        e_popup_move(ic->popup, x % (zone->w) + w/2 - pw/2, gy + h + gap);
+        e_popup_move(ic->popup, x - zone->x + w/2 - pw/2, 
+                                gy - zone->y + h + gap);
       else
-        e_popup_move(ic->popup, x % (zone->w) + w/2 - pw/2, gy - height -gap);
+        e_popup_move(ic->popup, x - zone->x + w/2 - pw/2, 
+                                gy -zone->y - height - gap);
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      e_popup_move(ic->popup, x % (zone->w) + w + gap, gy + y - sy + h/4);
+      e_popup_move(ic->popup, x + w + gap, 
+                              gy - zone->y + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, gx % (zone->w) - pw - gap, gy + y - sy + h/4);
+      e_popup_move(ic->popup, gx - zone->x + sx - pw - gap,
+                              gy - zone->y + y - sy + h/4);
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, gx % (zone->w) + x - sx + w/2 - pw/2, gy - height - gap);
+      e_popup_move(ic->popup, gx - zone->x + x - sx + w/2 - pw/2, 
+                              gy - zone->y - height - gap);
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, gx % (zone->w) + x - sx + w/2 - pw/2, h + gap);
+      e_popup_move(ic->popup, gx - zone->x + x - sx + w/2 - pw/2, 
+                              h + gap);
       break;
     default:
      break;
@@ -898,7 +904,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    if (ic->ibar->inst->ci->show_label) 
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
    if (ic->ibar->inst->ci->show_label_adjac)
-      _adjacent_label_popup(ic);
+     _adjacent_label_popup(ic);
 }
 
 static void
@@ -925,6 +931,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 
    ev = event_info;
    ic = data;
+  
    if (ev->button == 1)
      {
         ic->drag.x = ev->output.x;
@@ -1121,7 +1128,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    if (ic->drag.start)
      {
         int dx, dy;
-
+        
         dx = ev->cur.output.x - ic->drag.x;
         dy = ev->cur.output.y - ic->drag.y;
         if (((dx * dx) + (dy * dy)) >
