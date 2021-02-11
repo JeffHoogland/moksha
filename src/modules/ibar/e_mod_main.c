@@ -823,7 +823,9 @@ _adjacent_label_popup(void *data)
   E_Zone *zone;
   int height, gap;
   Evas_Coord x, y, w, h;   
+  Evas_Coord px = 0, py = 0;
   Evas_Coord gx, gy, sx, sy, pw;   
+
   Eina_Bool theme_check;
   
   ic = data;
@@ -849,41 +851,41 @@ _adjacent_label_popup(void *data)
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
+      px = x - zone->x + w/2 - pw/2;
       if (gy < height)
-        e_popup_move(ic->popup, x - zone->x + w/2 - pw/2, 
-                                gy - zone->y + h + gap);
+        py = gy - zone->y + h + gap;
       else
-        e_popup_move(ic->popup, x - zone->x + w/2 - pw/2, 
-                                gy -zone->y - height - gap);
+        py = gy -zone->y - height - gap;
       break;
     case E_GADCON_ORIENT_LEFT: 
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      e_popup_move(ic->popup, x + w + gap, 
-                              gy - zone->y + y - sy + h/4);
+      px = x + w + gap;
+      py = gy - zone->y + y - sy + h/4;
       break;
     case E_GADCON_ORIENT_RIGHT: 
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      e_popup_move(ic->popup, gx - zone->x + sx - pw - gap,
-                              gy - zone->y + y - sy + h/4);
+      px = gx - zone->x + sx - pw - gap;
+      py = gy - zone->y + y - sy + h/4;
       break;
     case E_GADCON_ORIENT_BOTTOM: 
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      e_popup_move(ic->popup, gx - zone->x + x - sx + w/2 - pw/2, 
-                              gy - zone->y - height - gap);
+      px = gx - zone->x + x - sx + (w - pw)/2;
+      py = gy - zone->y - height - gap;
       break;
     case E_GADCON_ORIENT_TOP: 
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      e_popup_move(ic->popup, gx - zone->x + x - sx + w/2 - pw/2, 
-                              h + gap);
+      px = gx - zone->x + x - sx + (w - pw)/2;
+      py = h + gap;
       break;
     default:
      break;
   }
   
+  e_popup_move(ic->popup, px, py);
   evas_object_resize(ic->win, pw, height);
   e_popup_resize(ic->popup, pw, height); 
   e_popup_show(ic->popup);
