@@ -45,8 +45,8 @@ _write_bodhi_desktops(char *usr)
         fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "terminology.desktop\n");
         fprintf(f, "pcmanfm.desktop\n");
-        if (!strcmp(usr, "bodhi"))
-           fprintf(f, "ubiquity.desktop\n");
+        /*if (!strcmp(usr, "bodhi"))
+           fprintf(f, "ubiquity.desktop\n");*/
         fclose(f);
      }
 }
