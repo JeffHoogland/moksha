@@ -2864,7 +2864,7 @@ msgstr "Okno bez názvu"
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
-msgstr "Shelf %s"
+msgstr "Lišta %s"
 
 #: src/bin/e_int_menus.c:1701
 msgid "Add a Shelf"
