@@ -2900,7 +2900,7 @@ msgstr "%3.0f pixelov"
 
 #: src/bin/e_int_shelf_config.c:202
 msgid "Shrink to Content Width"
-msgstr "Prsispôsobť veľkosti obsahu"
+msgstr "Prispôsobiť veľkosti obsahu"
 
 #: src/bin/e_int_shelf_config.c:213
 #: src/modules/conf_theme/e_int_config_fonts.c:652
@@ -9577,9 +9577,8 @@ msgid "%1.0f px"
 msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:105
-#, fuzzy
 msgid "Shrink to fit"
-msgstr "Prsispôsobť veľkosti obsahu"
+msgstr "Prispôsobiť veľkosť"
 
 #: src/modules/tasks/e_mod_config.c:108
 msgid "Item height"
