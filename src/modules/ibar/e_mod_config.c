@@ -126,7 +126,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_frametable_object_append(of, ot, 1, 0, 1, 1, 1, 1, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Show Icon Labels"), 0);
+   of = e_widget_framelist_add(evas, _("Show Icon Label"), 0);
    cfdata->label = e_widget_check_add(evas, _("Overlapping Label"), &(cfdata->show_label));
    e_widget_on_change_hook_set(cfdata->label, _show_label_cb_change, cfdata);
    e_widget_framelist_object_append(of, cfdata->label);
