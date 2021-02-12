@@ -941,6 +941,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.start = 1;
         ic->drag.dnd = 0;
         ic->mouse_down = 1;
+        _adjacent_popup_destroy(ic);
      }
    else if (ev->button == 3)
      {
