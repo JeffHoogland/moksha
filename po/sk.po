@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-13 08:00-0500\n"
+"POT-Creation-Date: 2021-02-12 13:10+0100\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "O desktope Moksha"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -32,8 +32,8 @@ msgstr "O desktope Moksha"
 msgid "Close"
 msgstr "Zatvoriť"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:709
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
+#: src/bin/e_actions.c:3547 src/bin/e_main.c:709
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -52,7 +52,12 @@ msgstr ""
 msgid "<title>The Team</><br><br>"
 msgstr "<title>Bodhi Tím</title>"
 
-#: src/bin/e_actions.c:360
+#: src/bin/e_actions.c:154
+#, fuzzy
+msgid "Profile: Switch"
+msgstr "Výber profilu"
+
+#: src/bin/e_actions.c:430
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data from this "
@@ -63,267 +68,267 @@ msgstr ""
 "tohto okna,<br>ktoré deteraz neboli uložené sa stratia!<br><br>Ste si istý, "
 "že chcete násilne ukončiť toto okno?"
 
-#: src/bin/e_actions.c:372
+#: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
 msgstr "Ste si istý, že chcete násilne ukončiť toto okno?"
 
-#: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "Násilne ukončiť"
 
-#: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
-#: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
-#: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
+#: src/bin/e_actions.c:447 src/bin/e_actions.c:2283 src/bin/e_actions.c:2377
+#: src/bin/e_actions.c:2437 src/bin/e_actions.c:2497 src/bin/e_actions.c:2562
+#: src/bin/e_actions.c:2627 src/bin/e_confirm_dialog.c:53
 #: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10479 src/bin/e_fm.c:10845
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Nie"
 
-#: src/bin/e_actions.c:2090
+#: src/bin/e_actions.c:2160
 #, fuzzy
 msgid "Action Params Syntax Error"
 msgstr "Akčné params"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:263
 msgid "Exit"
 msgstr "Ukončiť"
 
-#: src/bin/e_actions.c:2209
+#: src/bin/e_actions.c:2279
 msgid "Are you sure you want to exit Moksha?"
 msgstr "Ste si istý, že chcete skončiť?"
 
-#: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
-#: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
+#: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
+#: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:315
 msgid "Yes"
 msgstr "Áno"
 
-#: src/bin/e_actions.c:2302
+#: src/bin/e_actions.c:2372
 msgid "Logout"
 msgstr "Odhlásiť teraz"
 
-#: src/bin/e_actions.c:2303
+#: src/bin/e_actions.c:2373
 msgid "Are you sure you want to logout?"
 msgstr "Ste si istý, že sa chcete odhlásiť?"
 
-#: src/bin/e_actions.c:2361 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 msgid "Power off"
 msgstr "Vypnutie"
 
-#: src/bin/e_actions.c:2363
+#: src/bin/e_actions.c:2433
 msgid "Are you sure you want to power off your computer?"
 msgstr "Ste si istý, že chcete vypnúť Váš počítač?"
 
-#: src/bin/e_actions.c:2422 src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
 msgstr "Reštartovať"
 
-#: src/bin/e_actions.c:2423
+#: src/bin/e_actions.c:2493
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Ste si istý, že chcete reštartovať počítač?"
 
-#: src/bin/e_actions.c:2487 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 msgid "Suspend"
 msgstr "Úsporný režim"
 
-#: src/bin/e_actions.c:2488
+#: src/bin/e_actions.c:2558
 msgid "Are you sure you want to suspend your computer?"
 msgstr "Ste si istý, že chcete PC prepnúť do úsporného režimu?"
 
-#: src/bin/e_actions.c:2552 src/bin/e_actions.c:3528
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "Režim spánku"
 
-#: src/bin/e_actions.c:2553
+#: src/bin/e_actions.c:2623
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Ste si istý, že chcete prepnúť počítač do režimu spánku?"
 
-#: src/bin/e_actions.c:3041 src/bin/e_actions.c:3052 src/bin/e_actions.c:3071
-#: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
-#: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
-#: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
+#: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
+#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
+#: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
 #: src/modules/shot/e_mod_main.c:1278
 msgid "Window : Actions"
 msgstr "Okno : Operácie"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
+#: src/bin/e_actions.c:3111 src/bin/e_fm.c:11616
 #: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Presunúť"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
+#: src/bin/e_actions.c:3122 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "Zmeniť veľkosť"
 
-#: src/bin/e_actions.c:3063 src/bin/e_actions.c:3440 src/bin/e_actions.c:3442
-#: src/bin/e_actions.c:3444 src/bin/e_actions.c:3446 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3133 src/bin/e_actions.c:3510 src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3514 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "Menu"
 
-#: src/bin/e_actions.c:3063
+#: src/bin/e_actions.c:3133
 msgid "Window Menu"
 msgstr "Menu Okna"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Vyššie"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "Nižšie"
 
-#: src/bin/e_actions.c:3091 src/bin/e_actions.c:3095 src/bin/e_actions.c:3100
-#: src/bin/e_actions.c:3104 src/bin/e_actions.c:3108 src/bin/e_actions.c:3113
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3122 src/bin/e_actions.c:3126
-#: src/bin/e_actions.c:3132 src/bin/e_actions.c:3134 src/bin/e_actions.c:3137
-#: src/bin/e_actions.c:3140 src/bin/e_actions.c:3143 src/bin/e_actions.c:3146
-#: src/bin/e_actions.c:3148 src/bin/e_actions.c:3150 src/bin/e_actions.c:3152
-#: src/bin/e_actions.c:3159 src/bin/e_actions.c:3161 src/bin/e_actions.c:3163
-#: src/bin/e_actions.c:3165 src/bin/e_actions.c:3167 src/bin/e_actions.c:3171
-#: src/bin/e_actions.c:3176 src/bin/e_actions.c:3181 src/bin/e_actions.c:3187
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
+#: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
+#: src/bin/e_actions.c:3187 src/bin/e_actions.c:3192 src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3202 src/bin/e_actions.c:3204 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3210 src/bin/e_actions.c:3213 src/bin/e_actions.c:3216
+#: src/bin/e_actions.c:3218 src/bin/e_actions.c:3220 src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3251 src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3263
 msgid "Window : State"
 msgstr "Okno : Stav"
 
-#: src/bin/e_actions.c:3091
+#: src/bin/e_actions.c:3161
 msgid "Sticky Mode Toggle"
 msgstr "Zmeniť Lepkavosť"
 
-#: src/bin/e_actions.c:3095
+#: src/bin/e_actions.c:3165
 msgid "Sticky Mode Enable"
 msgstr "Povoliť Lepkavosť"
 
-#: src/bin/e_actions.c:3100
+#: src/bin/e_actions.c:3170
 msgid "Always On Top Toggle"
 msgstr "Vždy navrchu"
 
-#: src/bin/e_actions.c:3104
+#: src/bin/e_actions.c:3174
 msgid "Always On Top Enable"
 msgstr "Vždy navrchu povoliť"
 
-#: src/bin/e_actions.c:3108
+#: src/bin/e_actions.c:3178
 msgid "Always On Top Disable"
 msgstr "Vždy navrchu zakázať"
 
-#: src/bin/e_actions.c:3113
+#: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
 msgstr "Zmeniť Ikonifikáciu"
 
-#: src/bin/e_actions.c:3117
+#: src/bin/e_actions.c:3187
 msgid "Iconic Mode Enable"
 msgstr "Povoliť Ikonifikáciu"
 
-#: src/bin/e_actions.c:3122
+#: src/bin/e_actions.c:3192
 msgid "Fullscreen Mode Toggle"
 msgstr "Zmeniť Na celú obrazovku"
 
-#: src/bin/e_actions.c:3126
+#: src/bin/e_actions.c:3196
 msgid "Fullscreen Mode Enable"
 msgstr "Zobrazenie na celú obrazovku"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
 #: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "Maximalizovať"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "Maximalizovať zvisle"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "Maximalizovať vodorovne"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
 msgid "Maximize Left"
 msgstr "Maximalizovať vľavo"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
 msgid "Maximize Right"
 msgstr "Maximalizovať vpravo"
 
-#: src/bin/e_actions.c:3146
+#: src/bin/e_actions.c:3216
 msgid "Maximize Fullscreen"
 msgstr "Maximalizovať na celú obrazovku"
 
-#: src/bin/e_actions.c:3148
+#: src/bin/e_actions.c:3218
 msgid "Maximize Mode \"Smart\""
 msgstr "Inteligentný režim maximalizácie"
 
-#: src/bin/e_actions.c:3150
+#: src/bin/e_actions.c:3220
 msgid "Maximize Mode \"Expand\""
 msgstr "Režim maximalizácie „Zväčšiť“"
 
-#: src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3222
 msgid "Maximize Mode \"Fill\""
 msgstr "Režim maximalizácie „Vyplniť“"
 
-#: src/bin/e_actions.c:3159
+#: src/bin/e_actions.c:3229
 msgid "Shade Up Mode Toggle"
 msgstr "Roleta okna - nahor"
 
-#: src/bin/e_actions.c:3161
+#: src/bin/e_actions.c:3231
 msgid "Shade Down Mode Toggle"
 msgstr "Roleta okna - nadol"
 
-#: src/bin/e_actions.c:3163
+#: src/bin/e_actions.c:3233
 msgid "Shade Left Mode Toggle"
 msgstr "Roleta okna - vľavo"
 
-#: src/bin/e_actions.c:3165
+#: src/bin/e_actions.c:3235
 msgid "Shade Right Mode Toggle"
 msgstr "Roleta okna - vpravo"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3237
 msgid "Shade Mode Toggle"
 msgstr "Zmeniť režim - Roleta"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3241
 msgid "Set Shaded State"
 msgstr "Zapnúť zrolovanie okna"
 
-#: src/bin/e_actions.c:3172
+#: src/bin/e_actions.c:3242
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr ""
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3246
 msgid "Toggle Borderless State"
 msgstr "Stav bez Okrajov"
 
-#: src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3251
 msgid "Set Border"
 msgstr "Nastav Okraj"
 
-#: src/bin/e_actions.c:3187
+#: src/bin/e_actions.c:3257
 msgid "Cycle between Borders"
 msgstr "Prepínanie okrajov"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3263
 msgid "Toggle Pinned State"
 msgstr "Zmeniť stav Pripnutia"
 
-#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3212
-#: src/bin/e_actions.c:3217 src/bin/e_actions.c:3223 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3234 src/bin/e_actions.c:3240 src/bin/e_actions.c:3242
-#: src/bin/e_actions.c:3244 src/bin/e_actions.c:3246 src/bin/e_actions.c:3248
-#: src/bin/e_actions.c:3250 src/bin/e_actions.c:3252 src/bin/e_actions.c:3254
-#: src/bin/e_actions.c:3256 src/bin/e_actions.c:3258 src/bin/e_actions.c:3260
-#: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3270
-#: src/bin/e_actions.c:3272 src/bin/e_actions.c:3274 src/bin/e_actions.c:3276
-#: src/bin/e_actions.c:3278 src/bin/e_actions.c:3284 src/bin/e_actions.c:3290
-#: src/bin/e_actions.c:3296 src/bin/e_actions.c:3301 src/bin/e_actions.c:3303
-#: src/bin/e_actions.c:3305 src/bin/e_actions.c:3307 src/bin/e_actions.c:3309
-#: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
-#: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
-#: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3268 src/bin/e_actions.c:3270 src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287 src/bin/e_actions.c:3293 src/bin/e_actions.c:3298
+#: src/bin/e_actions.c:3304 src/bin/e_actions.c:3310 src/bin/e_actions.c:3312
+#: src/bin/e_actions.c:3314 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3354 src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3366 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3375 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -331,183 +336,183 @@ msgstr "Zmeniť stav Pripnutia"
 msgid "Desktop"
 msgstr "Plocha"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3268
 msgid "Flip Desktop Left"
 msgstr "Preklopiť plochu doľava"
 
-#: src/bin/e_actions.c:3200
+#: src/bin/e_actions.c:3270
 msgid "Flip Desktop Right"
 msgstr "Preklopiť plochu doprava"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3272
 msgid "Flip Desktop Up"
 msgstr "Preklopiť Plochu hore"
 
-#: src/bin/e_actions.c:3204
+#: src/bin/e_actions.c:3274
 msgid "Flip Desktop Down"
 msgstr "Preklopiť plochu dolu"
 
-#: src/bin/e_actions.c:3206
+#: src/bin/e_actions.c:3276
 msgid "Flip Desktop By..."
 msgstr "Preklopiť plochu podľa..."
 
-#: src/bin/e_actions.c:3212
+#: src/bin/e_actions.c:3282
 msgid "Flip To Previous Desktop"
 msgstr "Na predošlú plochu"
 
-#: src/bin/e_actions.c:3217
+#: src/bin/e_actions.c:3287
 msgid "Show The Desktop"
 msgstr "Zobraziť plochu"
 
-#: src/bin/e_actions.c:3223
+#: src/bin/e_actions.c:3293
 msgid "Show The Shelf"
 msgstr "Zobraziť lištu"
 
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3298
 msgid "Flip Desktop To..."
 msgstr "Preklopiť plochu na..."
 
-#: src/bin/e_actions.c:3234
+#: src/bin/e_actions.c:3304
 msgid "Flip Desktop Linearly..."
 msgstr "Preklopiť plochu lineárne..."
 
-#: src/bin/e_actions.c:3240
+#: src/bin/e_actions.c:3310
 msgid "Switch To Desktop 0"
 msgstr "Prepnúť na plochu 0"
 
-#: src/bin/e_actions.c:3242
+#: src/bin/e_actions.c:3312
 msgid "Switch To Desktop 1"
 msgstr "Prepnúť na plochu 1"
 
-#: src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3314
 msgid "Switch To Desktop 2"
 msgstr "Prepnúť na plochu 2"
 
-#: src/bin/e_actions.c:3246
+#: src/bin/e_actions.c:3316
 msgid "Switch To Desktop 3"
 msgstr "Prepnúť na plochu 3"
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3318
 msgid "Switch To Desktop 4"
 msgstr "Prepnúť na plochu 4"
 
-#: src/bin/e_actions.c:3250
+#: src/bin/e_actions.c:3320
 msgid "Switch To Desktop 5"
 msgstr "Prepnúť na plochu 5"
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3322
 msgid "Switch To Desktop 6"
 msgstr "Prepnúť na plochu 6"
 
-#: src/bin/e_actions.c:3254
+#: src/bin/e_actions.c:3324
 msgid "Switch To Desktop 7"
 msgstr "Prepnúť na plochu 7"
 
-#: src/bin/e_actions.c:3256
+#: src/bin/e_actions.c:3326
 msgid "Switch To Desktop 8"
 msgstr "Prepnúť na plochu 8"
 
-#: src/bin/e_actions.c:3258
+#: src/bin/e_actions.c:3328
 msgid "Switch To Desktop 9"
 msgstr "Prepnúť na plochu 9"
 
-#: src/bin/e_actions.c:3260
+#: src/bin/e_actions.c:3330
 msgid "Switch To Desktop 10"
 msgstr "Prepnúť na plochu 10"
 
-#: src/bin/e_actions.c:3262
+#: src/bin/e_actions.c:3332
 msgid "Switch To Desktop 11"
 msgstr "Prepnúť na plochu 11"
 
-#: src/bin/e_actions.c:3264
+#: src/bin/e_actions.c:3334
 msgid "Switch To Desktop..."
 msgstr "Prepnúť na plochu 12"
 
-#: src/bin/e_actions.c:3270
+#: src/bin/e_actions.c:3340
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Preklopiť plochu vľavo (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3342
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Preklopiť plochu vpravo (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3344
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Preklopiť plochu hore (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3346
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Preklopiť plochu dolu (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3348
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Preklopiť plochu podľa... (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3284
+#: src/bin/e_actions.c:3354
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Preklopiť plochu do... (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3290
+#: src/bin/e_actions.c:3360
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Preklopiť plochu lineárne... (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3296
+#: src/bin/e_actions.c:3366
 msgid "Flip Desktop In Direction..."
 msgstr "Prevrátiť desktop v smere..."
 
-#: src/bin/e_actions.c:3301
+#: src/bin/e_actions.c:3371
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Preklopiť na plochu 0 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3303
+#: src/bin/e_actions.c:3373
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Preklopiť na plochu 1 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3305
+#: src/bin/e_actions.c:3375
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Preklopiť na plochu 2 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3307
+#: src/bin/e_actions.c:3377
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Preklopiť na plochu 3 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3379
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Preklopiť na plochu 4 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3311
+#: src/bin/e_actions.c:3381
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Preklopiť na plochu 5 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3313
+#: src/bin/e_actions.c:3383
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Preklopiť na plochu 6 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3315
+#: src/bin/e_actions.c:3385
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Preklopiť na plochu 7 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3317
+#: src/bin/e_actions.c:3387
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Preklopiť na plochu 8 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3319
+#: src/bin/e_actions.c:3389
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Preklopiť na plochu 9 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3321
+#: src/bin/e_actions.c:3391
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Preklopiť na plochu 10 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3393
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Preklopiť na plochu 11 (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3325
+#: src/bin/e_actions.c:3395
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Preklopiť na plochu... (všetky obrazovky)"
 
-#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -516,19 +521,19 @@ msgstr "Preklopiť na plochu... (všetky obrazovky)"
 msgid "Window : List"
 msgstr "Okno : Zoznam"
 
-#: src/bin/e_actions.c:3331
+#: src/bin/e_actions.c:3401
 msgid "Jump to window..."
 msgstr "Prejsť do okna..."
 
-#: src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3405
 msgid "Jump to window... or start..."
 msgstr "Prejsť do okna... alebo na štart..."
 
-#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3352 src/bin/e_actions.c:3354 src/bin/e_actions.c:3356
-#: src/bin/e_actions.c:3361 src/bin/e_actions.c:3364 src/bin/e_actions.c:3367
-#: src/bin/e_actions.c:3369 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
-#: src/bin/e_actions.c:3376 src/bin/e_actions.c:3378 src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3414 src/bin/e_actions.c:3416
+#: src/bin/e_actions.c:3422 src/bin/e_actions.c:3424 src/bin/e_actions.c:3426
+#: src/bin/e_actions.c:3431 src/bin/e_actions.c:3434 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3439 src/bin/e_actions.c:3441 src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3446 src/bin/e_actions.c:3448 src/bin/e_actions.c:3450
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
@@ -536,199 +541,199 @@ msgstr "Prejsť do okna... alebo na štart..."
 msgid "Screen"
 msgstr "Obrazovka"
 
-#: src/bin/e_actions.c:3342
+#: src/bin/e_actions.c:3412
 msgid "Send Mouse To Screen 0"
 msgstr "Poslať myš na obrazovku 0"
 
-#: src/bin/e_actions.c:3344
+#: src/bin/e_actions.c:3414
 msgid "Send Mouse To Screen 1"
 msgstr "Poslať myš na obrazovku 1"
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3416
 msgid "Send Mouse To Screen..."
 msgstr "Poslať myš na obrazovku..."
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3422
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Poslať myš dopredu o 1 obrazovku"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3424
 msgid "Send Mouse Back 1 Screen"
 msgstr "Poslať myš dozadu o 1 obrazovku"
 
-#: src/bin/e_actions.c:3356
+#: src/bin/e_actions.c:3426
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Poslať myš dopredu/dozadu o obrazovky..."
 
-#: src/bin/e_actions.c:3361
+#: src/bin/e_actions.c:3431
 msgid "Dim"
 msgstr "Stlmiť"
 
-#: src/bin/e_actions.c:3364
+#: src/bin/e_actions.c:3434
 msgid "Undim"
 msgstr "Rozjasniť"
 
-#: src/bin/e_actions.c:3367
+#: src/bin/e_actions.c:3437
 msgid "Backlight Set"
 msgstr "Nastavenie Podsvietenia"
 
-#: src/bin/e_actions.c:3369
+#: src/bin/e_actions.c:3439
 msgid "Backlight Min"
 msgstr "Podsvietenie Min"
 
-#: src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3441
 msgid "Backlight Mid"
 msgstr "Podsvietenie Stred"
 
-#: src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3443
 msgid "Backlight Max"
 msgstr "Podsvietenie Max"
 
-#: src/bin/e_actions.c:3376
+#: src/bin/e_actions.c:3446
 msgid "Backlight Adjust"
 msgstr "Nastavenie podsvietenia"
 
-#: src/bin/e_actions.c:3378
+#: src/bin/e_actions.c:3448
 msgid "Backlight Up"
 msgstr "Zvýšiť jas"
 
-#: src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3450
 msgid "Backlight Down"
 msgstr "Znížiť jas"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3455
 msgid "Move To Center"
 msgstr "Do stredu"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3459
 msgid "Move To Coordinates..."
 msgstr "Presunúť na pozíciu..."
 
-#: src/bin/e_actions.c:3394
+#: src/bin/e_actions.c:3464
 msgid "Move By Coordinate Offset..."
 msgstr "Presunúť o..."
 
-#: src/bin/e_actions.c:3400
+#: src/bin/e_actions.c:3470
 msgid "Resize By..."
 msgstr "Zmena Veľkosti O..."
 
-#: src/bin/e_actions.c:3406
+#: src/bin/e_actions.c:3476
 msgid "Push in Direction..."
 msgstr "Posunúť v smere ..."
 
-#: src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3482
 msgid "Drag Icon..."
 msgstr "Presunúť ikonu..."
 
-#: src/bin/e_actions.c:3417 src/bin/e_actions.c:3419 src/bin/e_actions.c:3421
-#: src/bin/e_actions.c:3427 src/bin/e_actions.c:3433 src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3487 src/bin/e_actions.c:3489 src/bin/e_actions.c:3491
+#: src/bin/e_actions.c:3497 src/bin/e_actions.c:3503 src/bin/e_actions.c:3505
 msgid "Window : Moving"
 msgstr "Okno : Presun"
 
-#: src/bin/e_actions.c:3417
+#: src/bin/e_actions.c:3487
 msgid "To Next Desktop"
 msgstr "Na ďalšiu plochu"
 
-#: src/bin/e_actions.c:3419
+#: src/bin/e_actions.c:3489
 msgid "To Previous Desktop"
 msgstr "Na predošlú plochu"
 
-#: src/bin/e_actions.c:3421
+#: src/bin/e_actions.c:3491
 msgid "By Desktop #..."
 msgstr "Podľa č. plochy..."
 
-#: src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3497
 msgid "To Desktop..."
 msgstr "Na plochu..."
 
-#: src/bin/e_actions.c:3433
+#: src/bin/e_actions.c:3503
 msgid "To Next Screen"
 msgstr "Na ďalšiu obrazovku"
 
-#: src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3505
 msgid "To Previous Screen"
 msgstr "Na predošlú obrazovku"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3510
 msgid "Show Main Menu"
 msgstr "Zobraziť Hlavné menu"
 
-#: src/bin/e_actions.c:3442
+#: src/bin/e_actions.c:3512
 msgid "Show Favorites Menu"
 msgstr "Zobraziť menu Obľúbené"
 
-#: src/bin/e_actions.c:3444
+#: src/bin/e_actions.c:3514
 msgid "Show All Applications Menu"
 msgstr "Zobraziť všetky aplikácie Menu"
 
-#: src/bin/e_actions.c:3446
+#: src/bin/e_actions.c:3516
 msgid "Show Clients Menu"
 msgstr "Zobraziť menu Klienti"
 
-#: src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3518
 msgid "Show Menu..."
 msgstr "Zobraziť menu..."
 
-#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3460 src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:272
 #: src/modules/everything/evry_plug_apps.c:1176
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Spustiť"
 
-#: src/bin/e_actions.c:3455 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3525 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "Príkaz"
 
-#: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:698
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Aplikácia"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3535
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3469
+#: src/bin/e_actions.c:3539
 msgid "Restart"
 msgstr "Reštartovať"
 
-#: src/bin/e_actions.c:3477
+#: src/bin/e_actions.c:3547
 msgid "Exit Now"
 msgstr "Ukončiť teraz"
 
-#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3486
+#: src/bin/e_actions.c:3551 src/bin/e_actions.c:3556
 msgid "Moksha : Mode"
 msgstr "Moksha : režim"
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3552
 msgid "Presentation Mode Toggle"
 msgstr "Prepnúť režim prezentácie"
 
-#: src/bin/e_actions.c:3487
+#: src/bin/e_actions.c:3557
 msgid "Offline Mode Toggle"
 msgstr "Prepnúť režim offline"
 
-#: src/bin/e_actions.c:3491 src/bin/e_actions.c:3495 src/bin/e_actions.c:3499
+#: src/bin/e_actions.c:3561 src/bin/e_actions.c:3565 src/bin/e_actions.c:3569
 msgid "Moksha : Module"
 msgstr "Moksha : Modul"
 
-#: src/bin/e_actions.c:3492
+#: src/bin/e_actions.c:3562
 msgid "Enable the named module"
 msgstr "Povoliť pomenovaný modul"
 
-#: src/bin/e_actions.c:3496
+#: src/bin/e_actions.c:3566
 msgid "Disable the named module"
 msgstr "Zakázať pomenovaný modul"
 
-#: src/bin/e_actions.c:3500
+#: src/bin/e_actions.c:3570
 msgid "Toggle the named module"
 msgstr "Prepnúť pomenovaný modul"
 
-#: src/bin/e_actions.c:3504 src/bin/e_actions.c:3508 src/bin/e_actions.c:3512
-#: src/bin/e_actions.c:3516 src/bin/e_actions.c:3520 src/bin/e_actions.c:3524
-#: src/bin/e_actions.c:3528 src/bin/e_actions.c:3532 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3574 src/bin/e_actions.c:3578 src/bin/e_actions.c:3582
+#: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
+#: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -745,55 +750,55 @@ msgstr "Prepnúť pomenovaný modul"
 msgid "System"
 msgstr "Systém"
 
-#: src/bin/e_actions.c:3504
+#: src/bin/e_actions.c:3574
 msgid "Log Out"
 msgstr "Odhlásiť sa"
 
-#: src/bin/e_actions.c:3508
+#: src/bin/e_actions.c:3578
 msgid "Power Off Now"
 msgstr "Vypnúť teraz"
 
-#: src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3582
 msgid "Power Off"
 msgstr "Vypnúť"
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3590
 msgid "Suspend Now"
 msgstr "Úsporný režim"
 
-#: src/bin/e_actions.c:3532
+#: src/bin/e_actions.c:3602
 msgid "Hibernate Now"
 msgstr "Režim spánku"
 
-#: src/bin/e_actions.c:3540
+#: src/bin/e_actions.c:3610
 msgid "Lock"
 msgstr "Zamknúť"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1356
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1356
 msgid "Cleanup Windows"
 msgstr "Usporiadať okná"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 msgid "Generic : Actions"
 msgstr "Všeobecné : Operácie"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 msgid "Delayed Action"
 msgstr "Odložená operácia"
 
-#: src/bin/e_actions.c:3558 src/bin/e_actions.c:3562 src/bin/e_actions.c:3566
+#: src/bin/e_actions.c:3628 src/bin/e_actions.c:3632 src/bin/e_actions.c:3636
 msgid "Keyboard Layouts"
 msgstr "Rozloženie klávesnice"
 
-#: src/bin/e_actions.c:3559
+#: src/bin/e_actions.c:3629
 msgid "Use keyboard layout"
 msgstr "Použi klávesnicu"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3633
 msgid "Next keyboard layout"
 msgstr "Prepni ďalšiu klávesnicu"
 
-#: src/bin/e_actions.c:3567
+#: src/bin/e_actions.c:3637
 msgid "Previous keyboard layout"
 msgstr "Predchádzajúca klávesnica"
 
@@ -977,9 +982,8 @@ msgid "Decryption failed."
 msgstr "Dešifrovanie zlyhalo."
 
 #: src/bin/e_config.c:2077
-#, fuzzy
 msgid "The error is unknown to Moksha."
-msgstr "Vitajte v Moksha-e"
+msgstr "Neznáma chyba v dektope Moksha"
 
 #: src/bin/e_config.c:2099
 #, fuzzy, c-format
@@ -1128,11 +1132,11 @@ msgstr "Editor záznamov plochy"
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:132
+#: src/modules/ibar/e_mod_config.c:140
 msgid "Name"
 msgstr "Názov"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:136
+#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:144
 msgid "Comment"
 msgstr "Komentár"
 
@@ -1220,7 +1224,7 @@ msgstr "Vybrať spustiteľný súbor"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
+#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:649
@@ -1284,9 +1288,8 @@ msgstr ""
 "spustení."
 
 #: src/bin/e_exec.c:714
-#, fuzzy
 msgid "Execution Error"
-msgstr "Chyba pri vysunutí"
+msgstr "Chyba vykonania"
 
 #: src/bin/e_exec.c:727 src/bin/e_exec.c:729
 #, c-format
@@ -1515,7 +1518,7 @@ msgid "Eject"
 msgstr "Vysunúť"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:887
+#: src/modules/ibar/e_mod_main.c:987
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1889,7 +1892,7 @@ msgstr "Vzhľad"
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:892
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Odstrániť"
@@ -1915,14 +1918,13 @@ msgstr ""
 "Prosím zadajte skratku,<br><br>alebo klávesou <hilight>Esc</hilight> zrušte."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
 "Prosím stlačte modifikátor, ktorý chcete<br>a tlačidlo myši,<br> alebo "
-"použite koliesko, pre nastavenie skratky.<br>Stlačte <hilight>Escape</"
+"použite koliesko pre nastavenie skratky.<br>Stlačte <hilight>Escape</"
 "highlight> pre zrušenie."
 
 #: src/bin/e_grab_dialog.c:128
@@ -2505,11 +2507,11 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:880
+#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:980
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -2955,9 +2957,8 @@ msgid "Moksha cannot initialize Eina!\n"
 msgstr "Moksha nemôže inicializovať Eina!.\n"
 
 #: src/bin/e_main.c:297
-#, fuzzy
 msgid "Moksha could not create a logging domain!\n"
-msgstr "Moksha nemôže zinicializovať Súborový manažér.\n"
+msgstr "Moksha nemôže vytvoriť doménu logov.\n"
 
 #: src/bin/e_main.c:345
 msgid "Moksha cannot initialize Eet!\n"
@@ -3609,7 +3610,7 @@ msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:649
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
 #: src/modules/clipboard/e_mod_main.c:736
 msgid "Keep"
 msgstr "Ponechať"
@@ -3764,7 +3765,7 @@ msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_main.c:874
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 msgid "Contents"
 msgstr "Obsah"
 
@@ -4073,7 +4074,7 @@ msgstr[2] "%li pred minútami"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:24
+#: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "Neznámy"
 
@@ -4095,7 +4096,6 @@ msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr "Zlyhanie vytvorenia priečinku: %s .<br>Súbor s týmto menom už existuje"
 
 #: src/bin/e_utils.c:1081
-#, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4120,7 +4120,6 @@ msgid "%s Configuration Updated"
 msgstr "%s Konfigurácia Aktualizovaná"
 
 #: src/bin/e_utils.c:1103
-#, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -4128,11 +4127,11 @@ msgid ""
 "module was running. This is bad and<br>as a precaution your configuration "
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Vaša konfigurácia Moksha je NOVŠIA ako verzia Moksha.<br>To je veľmi "
-"zvláštne. Nemalo by sa to stať, jedine že by ste znížili verziu "
-"Moksha<br>alebo skopírovali konfiguráciu z miesta, kde bežala novšia verzia "
-"Moksha.<br>To je zlé a preventívne bola vaša konfigurácia obnovená na "
-"predvolené hodnoty.<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
+"Vaša konfigurácia je NOVŠIA ako verzia modulu.<br>To je veľmi zvláštne. "
+"Nemalo by sa to stať, jedine v prípade ak ste znížili verziu modulu<br>alebo "
+"skopírovali konfiguráciu z miesta, kde bežala novšia verzia modulu.<br>To je "
+"zlé a preventívne bola vaša konfigurácia obnovená na predvolené hodnoty."
+"<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
 
 #: src/bin/e_utils.c:1197
 #, c-format
@@ -4207,7 +4206,7 @@ msgstr[2] "%li minút"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:112 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Pridať"
 
@@ -4744,7 +4743,7 @@ msgid "Available Profiles"
 msgstr "Dostupné profily"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:115
+#: src/modules/wizard/page_020.c:120
 msgid "Select a profile"
 msgstr "Vybrať profil"
 
@@ -4993,9 +4992,8 @@ msgid "Show on screen #:"
 msgstr "Ukázať na obrazovke #:"
 
 #: src/modules/conf_display/e_int_config_desklock.c:304
-#, fuzzy
 msgid "Login Box"
-msgstr "Nastavenia prihlasovacej obrazovky"
+msgstr "Prihlasovací box"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
 #, fuzzy
@@ -5403,7 +5401,6 @@ msgid "Theme"
 msgstr "Téma"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:171
-#, fuzzy
 msgid "X"
 msgstr "X"
 
@@ -5655,24 +5652,20 @@ msgid "Mute"
 msgstr "Stlmiť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Hlasitosť zmenená"
+msgstr "Hlasitosť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
-#, fuzzy
 msgid "Brightness"
-msgstr "Zvýšiť podsvietenie"
+msgstr "Podsvietenie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "Posunút dole"
+msgstr "Znížiť hlasitisť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
-#, fuzzy
 msgid "Volume Up"
-msgstr "Hlasitosť zmenená"
+msgstr "Zvýšiť hlasitosť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
@@ -5683,7 +5676,6 @@ msgid "Tablet Off"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
-#, fuzzy
 msgid "Screenlock"
 msgstr "Uzamykanie obrazovky"
 
@@ -5746,14 +5738,13 @@ msgstr ""
 "<br> Zvoľte iné priradenie."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "hilight> to abort."
 msgstr ""
 "Prosím stlačte modifikátor, ktorý chcete<br>a tlačidlo myši,<br> alebo "
-"použite koliesko, pre nastavenie skratky.<br>Stlačte <hilight>Escape</"
+"použite koliesko pre nastavenie skratky.<br>Stlačte <hilight>Escape</"
 "highlight> pre zrušenie."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
@@ -5894,7 +5885,7 @@ msgid "Applications Display"
 msgstr "Zobrazenie aplikácií"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Generic"
 msgstr "Všeobecný názov"
 
@@ -6050,19 +6041,18 @@ msgstr "Nastavenie Enginu"
 
 #: src/modules/conf_performance/e_int_config_engine.c:87
 #: src/modules/conf_performance/e_int_config_engine.c:108
-#, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr "Použitie ARGB miesto v tvare okna"
+msgstr "Použite ARGB režim miesto režimu shape"
 
 #: src/modules/conf_performance/e_int_config_engine.c:110
-#, fuzzy
 msgid ""
 "You have chosen to enable ARGB composite support,<br>but your current screen "
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support?"
 msgstr ""
-"Rozhodli ste sa, aby ARGB kompozitný podporu,<br>ale vaše aktuálne obrazovku "
-"nepodporuje kompozitu.<br><br>Ste si istí, že chcete, aby ARGB podporu?"
+"Zvolili ste aby ARGB kompozitný režim,<br>ale vaša aktuálne nastavenie "
+"obrazovky nepodporuje tento režim.<br><br>Ste si istí, že chcete ARGB "
+"podporu?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -6117,7 +6107,6 @@ msgid "Caches"
 msgstr "Medzipamäte"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
-#, fuzzy
 msgid "Number of Edje files to cache"
 msgstr "Počet Edje súborov do vyrovnávacej pamäte"
 
@@ -6256,9 +6245,8 @@ msgstr "Obrázok..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Farby"
+msgstr "Farba..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -7550,9 +7538,8 @@ msgid "Powersaving behavior"
 msgstr "Režim šetrenia energiou"
 
 #: src/modules/cpufreq/e_mod_main.c:414
-#, fuzzy
 msgid "Power State Min"
-msgstr "Tlačidlo Zapnúť PC"
+msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
@@ -7618,19 +7605,16 @@ msgid ""
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:1508
-#, fuzzy
 msgid "CPU Frequency"
-msgstr "Urgencia"
+msgstr "CPU Frekvencia"
 
 #: src/modules/cpufreq/e_mod_config.c:38
-#, fuzzy
 msgid "Cpu Frequency Control Settings"
-msgstr "Modul pre ovládanie frekvencie CPU"
+msgstr "CPU Frekvencia - Nastavenie"
 
 #: src/modules/cpufreq/e_mod_config.c:91
-#, fuzzy
 msgid "Update poll interval"
-msgstr "Interval uvoľňóvania vyrovnávacej pamäte"
+msgstr "Interval obnovy"
 
 #: src/modules/cpufreq/e_mod_config.c:107
 #, fuzzy
@@ -8589,47 +8573,51 @@ msgstr "Prepínanie okien nemôže byť aktivované ACPI skratkami"
 msgid "Select a window"
 msgstr "Vybrať Okno"
 
-#: src/modules/ibar/e_mod_config.c:55
+#: src/modules/ibar/e_mod_config.c:58
 msgid "IBar Settings"
 msgstr "Nastavenia IBar"
 
-#: src/modules/ibar/e_mod_config.c:104
+#: src/modules/ibar/e_mod_config.c:108
 msgid "Selected source"
 msgstr "Vybraný zdroj"
 
-#: src/modules/ibar/e_mod_config.c:125
-msgid "Icon Labels"
-msgstr "Názvy ikon"
+#: src/modules/ibar/e_mod_config.c:129
+msgid "Show Icon Labels"
+msgstr "Zobrazovať názov ikony"
 
-#: src/modules/ibar/e_mod_config.c:126
-msgid "Show icon label"
-msgstr "Ukázať názov ikony"
+#: src/modules/ibar/e_mod_config.c:130
+msgid "Overlapping Label"
+msgstr "Názov cez ikonu"
 
-#: src/modules/ibar/e_mod_config.c:146
+#: src/modules/ibar/e_mod_config.c:134
+msgid "Adjacent Label"
+msgstr "Názov vedľa ikony"
+
+#: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
 msgstr "Rôzne"
 
-#: src/modules/ibar/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:155
 msgid "Icon focus flash"
 msgstr "Animácia ikony"
 
-#: src/modules/ibar/e_mod_config.c:149
+#: src/modules/ibar/e_mod_config.c:157
 msgid "Lock icon move"
 msgstr "Zamknúť presúvanie ikon"
 
-#: src/modules/ibar/e_mod_config.c:151
+#: src/modules/ibar/e_mod_config.c:159
 msgid "Track launch"
 msgstr "Sledovať spustenie"
 
-#: src/modules/ibar/e_mod_config.c:184
+#: src/modules/ibar/e_mod_config.c:193
 msgid "Create new IBar source"
 msgstr "Vytvoriť nový zdroj Ibar"
 
-#: src/modules/ibar/e_mod_config.c:185
+#: src/modules/ibar/e_mod_config.c:194
 msgid "Enter a name for this new source:"
 msgstr "Pridať názov pre tento nový zdroj"
 
-#: src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:208
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -8637,24 +8625,24 @@ msgid ""
 msgstr ""
 "Požadujete vymazať \"%s\".<br><br>Ste si istý, že chcete vymazať tento zdroj"
 
-#: src/modules/ibar/e_mod_config.c:203
+#: src/modules/ibar/e_mod_config.c:212
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ste si istý, že chcete zmazať tento zdroj?"
 
-#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1939
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:863
+#: src/modules/ibar/e_mod_main.c:963
 msgid "Create new Icon"
 msgstr "Vytvoriť novú ikonu"
 
-#: src/modules/ibar/e_mod_main.c:897
+#: src/modules/ibar/e_mod_main.c:997
 #, c-format
 msgid "Icon %s"
 msgstr "Ikony %s"
 
-#: src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:1939
 msgid "Focus IBar"
 msgstr "Aktivácia IBar-u"
 
@@ -8908,9 +8896,8 @@ msgid "Check Interval"
 msgstr "Perióda kontroly"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Konfigurácia Teploty"
+msgstr "Notifikácia vysokej teploty"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -8946,13 +8933,12 @@ msgid "Temperature"
 msgstr "Teplota"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Vysoká teplota"
+msgstr "Vysoká teplota CPU!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Skontrolujte svoje zariadenie!"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -8967,11 +8953,11 @@ msgid "Welcome to Moksha"
 msgstr "Vitajte v Moksha desktop"
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:52
+#: src/modules/wizard/page_020.c:53
 msgid "Select one"
 msgstr "Vyberte položku"
 
-#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Moment, nahráva sa nastavenie desktopu Moksha"
 
@@ -9550,14 +9536,13 @@ msgstr "Skratka v Okno:Operácie"
 msgid "for window screenshot!"
 msgstr "pre vytvorenie snímky okna"
 
-#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
+#: src/modules/tasks/e_mod_main.c:323 src/modules/tasks/e_mod_main.c:755
 msgid "Tasks"
 msgstr "Panel úloh"
 
 #: src/modules/tasks/e_mod_config.c:35
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Nastavenie plochy"
+msgstr "Nastavenie Panela úloh"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
@@ -9768,9 +9753,8 @@ msgstr ""
 "bežné úlohy"
 
 #: src/modules/notification/e_mod_main.c:634
-#, fuzzy
 msgid "Notification module"
-msgstr "Modul notifikácie"
+msgstr "Modul notifikácií"
 
 #: src/modules/notification/e_mod_main.c:654
 msgid "Error During DBus Init!"
@@ -10133,7 +10117,6 @@ msgid "New volume"
 msgstr "Nová hlasitosť"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
 msgstr "Maximálna hlasitosť!"
 
@@ -10164,2536 +10147,3 @@ msgstr "Zvýšiť hlasitosť"
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
 msgstr "Stlmiť hlasitosť"
-
-#~ msgid "Tasks Configuration"
-#~ msgstr "Konfigurácia panelu úloh"
-
-#~ msgid "Setup"
-#~ msgstr "Nastavenie"
-
-#~ msgid " No Menu Scroll (Experimental)"
-#~ msgstr " Menu bez posuvu do strany"
-
-#~ msgid "%s is probably not an E17 theme!"
-#~ msgstr "%s zrejme nie je E/Moksha téma!"
-
-#~ msgid "Clipboards"
-#~ msgstr "Schránky"
-
-#~ msgid "Capture"
-#~ msgstr "Zachytiť"
-
-#~ msgid "Output"
-#~ msgstr "Výstup"
-
-#~ msgid "Cards"
-#~ msgstr "Karty"
-
-#~ msgid "Channels"
-#~ msgstr "Kanály"
-
-#~ msgid "Card:"
-#~ msgstr "Karta:"
-
-#~ msgid "Channel:"
-#~ msgstr "Kanál:"
-
-#~ msgid "Left:"
-#~ msgstr "Vľavo:"
-
-#~ msgid "Right:"
-#~ msgstr "Vpravo:"
-
-#~ msgid "Lock Sliders"
-#~ msgstr "Zamknúť posuvníky"
-
-#~ msgid "Edit"
-#~ msgstr "Upraviť"
-
-#~ msgid "Show both sliders when locked"
-#~ msgstr "Zobraziť oba posúvače ak je zamknutý"
-
-#~ msgid "Show Popup on volume change via keybindings"
-#~ msgstr "Zobraziť upozornenie pri zmene hlasitosti klávesovými skratkami"
-
-#~ msgid "Sound Cards"
-#~ msgstr "Zvukové karty"
-
-#~ msgid "Mixer Settings"
-#~ msgstr "Nastavenie zmiešavača"
-
-#~ msgid "Mixer to use for global actions:"
-#~ msgstr "Mixer použiť pre globálne nastavenie:"
-
-#~ msgid "Display desktop notifications on volume change"
-#~ msgstr "Zobraziť notifikáciu zmeny hlasitosti na ploche"
-
-#~ msgid "Launch mixer..."
-#~ msgstr "Spustiť zmiešavač..."
-
-#~ msgid "Mixer Module Settings"
-#~ msgstr "Nastavenia zmiešavača"
-
-#~ msgid "Mixer"
-#~ msgstr "Zmiešavač"
-
-#~ msgid "Volume changed"
-#~ msgstr "Hlasitosť zmenená"
-
-#~ msgid "Mixer Settings Updated"
-#~ msgstr "Nastavenia mixéra aktualizované"
-
-#~ msgid "Mixer Module"
-#~ msgstr "Nastavenia modulu mixéra"
-
-#~ msgid "Mute Volume"
-#~ msgstr "Stlmiť hlasitosť"
-
-#~ msgid "Application Execution Error"
-#~ msgstr "Chyba pri spustení aplikácie"
-
-#~ msgid "Navigate..."
-#~ msgstr "Navigovať..."
-
-#~ msgid "Processing %d operation"
-#~ msgid_plural "Processing %d operations"
-#~ msgstr[0] "Vykonávanie %d operácie"
-#~ msgstr[1] "Vykonávanie %d operácií"
-#~ msgstr[2] "Vykonávanie %d operácií"
-
-#~ msgid "Filemanager is idle"
-#~ msgstr "Správca súborov je nečinný"
-
-#~ msgid "EFM Operation Info"
-#~ msgstr "EFM Prevádzkové Info"
-
-#~ msgid "About"
-#~ msgstr "O aplikácii..."
-
-#, fuzzy
-#~ msgid "Quick Start"
-#~ msgstr "Štart"
-
-#, fuzzy
-#~ msgid "Moksha cannot initialize E_Randr!\n"
-#~ msgstr "Moksha nemôže zinicializovať Súborový manažér.\n"
-
-#, fuzzy
-#~ msgid "Run Everything"
-#~ msgstr "Všetko"
-
-#, fuzzy
-#~ msgid "Compositor Error"
-#~ msgstr "Chyba pri odpájaní"
-
-#, fuzzy
-#~ msgid "Compositor Warning"
-#~ msgstr "Umiestnenie"
-
-#, fuzzy
-#~ msgid "Composite Settings"
-#~ msgstr "Umiestnenie"
-
-#~ msgid "Visible"
-#~ msgstr "Viditeľný"
-
-#, fuzzy
-#~ msgid "Focus-Out"
-#~ msgstr "Zaostrenie"
-
-#, fuzzy
-#~ msgid "Focus-In"
-#~ msgstr "Zaostrenie"
-
-#, fuzzy
-#~ msgid "Unused"
-#~ msgstr "(Nepoužité)"
-
-#, fuzzy
-#~ msgid "Dialog"
-#~ msgstr "Dialógy"
-
-#, fuzzy
-#~ msgid "Drag and Drop"
-#~ msgstr "Drag and Drop tlačidlo"
-
-#, fuzzy
-#~ msgid "Menu (Popup)"
-#~ msgstr "Nastaviť vyskakovacie okná"
-
-#, fuzzy
-#~ msgid "Splash"
-#~ msgstr "Text Úvodnej Obrazovky"
-
-#, fuzzy
-#~ msgid "Tooltip"
-#~ msgstr "Zobraziť lištu s nástrojmi"
-
-#, fuzzy
-#~ msgid "Utility"
-#~ msgstr "Utility"
-
-#, fuzzy
-#~ msgid "Style:"
-#~ msgstr "štýl"
-
-#, fuzzy
-#~ msgid "Edit Match"
-#~ msgstr "Upraviť Ikonu"
-
-#, fuzzy
-#~ msgid "Names"
-#~ msgstr "Meno"
-
-#, fuzzy
-#~ msgid "On"
-#~ msgstr "Otvoriť"
-
-#, fuzzy
-#~ msgid "Virtual Keyboard"
-#~ msgstr "Klávesová skratka"
-
-#, fuzzy
-#~ msgid "Del"
-#~ msgstr "Zmazať"
-
-#, fuzzy
-#~ msgid "Smooth scaling"
-#~ msgstr "Rozpätie"
-
-#~ msgid "Styles"
-#~ msgstr "Štýly"
-
-#, fuzzy
-#~ msgid "Effects"
-#~ msgstr "idle účinky"
-
-#, fuzzy
-#~ msgid "Sync windows"
-#~ msgstr "Okná"
-
-#, fuzzy
-#~ msgid "%1.2f Seconds"
-#~ msgstr "%.2f sekúnd"
-
-#, fuzzy
-#~ msgid "OpenGL"
-#~ msgstr "Otvoriť"
-
-#, fuzzy
-#~ msgid "OpenGL options"
-#~ msgstr "Voľby"
-
-#, fuzzy
-#~ msgid "Auto"
-#~ msgstr "Automatické skrývanie"
-
-#, fuzzy
-#~ msgid "Send dump"
-#~ msgstr "Poslať Na"
-
-#, fuzzy
-#~ msgid "Don't composite fullscreen windows"
-#~ msgstr "Nechajte okna cez celú obrazovku nad okne"
-
-#, fuzzy
-#~ msgid "Show Framerate"
-#~ msgstr "Počet Obrázkov"
-
-#, fuzzy
-#~ msgid "%1.0f Frames"
-#~ msgstr "%1.0f F"
-
-#, fuzzy
-#~ msgid "Corner"
-#~ msgstr "Popup"
-
-#, fuzzy
-#~ msgid "Top Left"
-#~ msgstr "Doľava"
-
-#, fuzzy
-#~ msgid "Top Right"
-#~ msgstr "Hore Vpravo"
-
-#, fuzzy
-#~ msgid "Bottom Left"
-#~ msgstr "Dole Vľavo"
-
-#, fuzzy
-#~ msgid "Bottom Right"
-#~ msgstr "Dole Vpravo"
-
-#, fuzzy
-#~ msgid "Select default style"
-#~ msgstr "Vybrať ohraničený štýl"
-
-#, fuzzy
-#~ msgid "Rendering"
-#~ msgstr "Zapamätať objednávku"
-
-#, fuzzy
-#~ msgid "Composite"
-#~ msgstr "Umiestnenie"
-
-#~ msgid "Dropshadow Settings"
-#~ msgstr "Nastavenie Dropshadow"
-
-#~ msgid "High Quality"
-#~ msgstr "Vysoká Kvalita"
-
-#~ msgid "Medium Quality"
-#~ msgstr "Stredná Kvalita"
-
-#~ msgid "Low Quality"
-#~ msgstr "Nízka Kvalita"
-
-#~ msgid "Blur Type"
-#~ msgstr "Rozostrené"
-
-#~ msgid "Very Fuzzy"
-#~ msgstr "Veľmi Rozmazané"
-
-#~ msgid "Fuzzy"
-#~ msgstr "Rozmazané"
-
-#~ msgid "Sharp"
-#~ msgstr "Ostré"
-
-#~ msgid "Very Sharp"
-#~ msgstr "Veľmi Ostré"
-
-#~ msgid "Shadow Distance"
-#~ msgstr "Vzdialenosť Tieňov"
-
-#~ msgid "Very Far"
-#~ msgstr "Veľmi Vzdialené"
-
-#~ msgid "Far"
-#~ msgstr "Vzdialené"
-
-#~ msgid "Near"
-#~ msgstr "Blízke"
-
-#~ msgid "Very Near"
-#~ msgstr "Veľmi Blízke"
-
-#~ msgid "Extremely Near"
-#~ msgstr "Extrémne Blízke"
-
-#~ msgid "Underneath"
-#~ msgstr "Pod"
-
-#~ msgid "Shadow Darkness"
-#~ msgstr "Tmavosť Tieňov"
-
-#~ msgid "Very Dark"
-#~ msgstr "Veľmi Tmavé"
-
-#~ msgid "Dark"
-#~ msgstr "Tmavé"
-
-#~ msgid "Light"
-#~ msgstr "Svetlé"
-
-#~ msgid "Very Light"
-#~ msgstr "Veľmi Svetlé"
-
-#~ msgid "Dropshadow"
-#~ msgstr "Tieň"
-
-#, fuzzy
-#~ msgid "Physics Settings"
-#~ msgstr "Základné Nastavenia"
-
-#, fuzzy
-#~ msgid "%2.0f Frames"
-#~ msgstr "%1.0f F"
-
-#, fuzzy
-#~ msgid "Maximum window mass"
-#~ msgstr "Maximálna Šírka"
-
-#, fuzzy
-#~ msgid "%2.1f kg"
-#~ msgstr "%1.1f sek"
-
-#, fuzzy
-#~ msgid "Desktop gravity"
-#~ msgstr "Názov plochy"
-
-#, fuzzy
-#~ msgid "%1.1f m/s^2"
-#~ msgstr "%1.1f sek"
-
-#, fuzzy
-#~ msgid "Disable Movement"
-#~ msgstr "Téma Ikony"
-
-#, fuzzy
-#~ msgid "Disable Rotation"
-#~ msgstr "Točenie"
-
-#, fuzzy
-#~ msgid "Ignore Fullscreen"
-#~ msgstr "Celá Obrazovka"
-
-#, fuzzy
-#~ msgid "Ignore Maximized"
-#~ msgstr "Maximalizované"
-
-#, fuzzy
-#~ msgid "Ignore Shelves"
-#~ msgstr "Ignorovať"
-
-#, fuzzy
-#~ msgid "Ignore"
-#~ msgstr "Ignorovať všetko"
-
-#, fuzzy
-#~ msgid "Physics Error"
-#~ msgstr "Systray"
-
-#, fuzzy
-#~ msgid "Compositing"
-#~ msgstr "Umiestnenie"
-
-#, fuzzy
-#~ msgid "Enable Compositing"
-#~ msgstr "Bytecode Vyhladzovanie"
-
-#~ msgid ""
-#~ "Moksha is in <b>presentation</b> mode.<br>During presentation mode, "
-#~ "screen saver, lock and power saving will be disabled so you are not "
-#~ "interrupted."
-#~ msgstr ""
-#~ "Moksha je v <b>prezentačnom</b> móde.<br>Počas prezentačného módu, šetrič "
-#~ "obrazovky, zámok obrazovky a úspora energie budú vypnuté, ale nie sú "
-#~ "prerušené."
-
-#~ msgid ""
-#~ "Presentation mode is over.<br>Now screen saver, lock and power saving "
-#~ "settings will be restored."
-#~ msgstr ""
-#~ "Prezentačný mód bol vypnutý.<br>Teraz budú obnovené nastavenia šetriča "
-#~ "obrazovky, zamknutie obrazovky a správy napájania"
-
-#~ msgid "Shelf"
-#~ msgstr "Shelf"
-
-#, fuzzy
-#~ msgid "%li Seconds"
-#~ msgstr "%.1f sekundy"
-
-#, fuzzy
-#~ msgid "%li Years"
-#~ msgstr "%li pred rokmi"
-
-#, fuzzy
-#~ msgid "%li Months"
-#~ msgstr "%li pred mesiacmi"
-
-#, fuzzy
-#~ msgid "%li Weeks"
-#~ msgstr "%li pred týždňami"
-
-#, fuzzy
-#~ msgid "%li Days"
-#~ msgstr "%li pred dňami"
-
-#, fuzzy
-#~ msgid "%li Hours"
-#~ msgstr "%li pred hodinami"
-
-#, fuzzy
-#~ msgid "%li Minutes"
-#~ msgstr "%li pred minútami"
-
-#~ msgid "Profile"
-#~ msgstr "Profil"
-
-#, fuzzy
-#~ msgid "Network Management"
-#~ msgstr "Správa napájania"
-
-#, fuzzy
-#~ msgid "Connman network service not found"
-#~ msgstr "Pripojenie k sieťovej služby."
-
-#, fuzzy
-#~ msgid "and class:"
-#~ msgstr "triedy okna"
-
-#, fuzzy
-#~ msgid "Enable Settings Daemon"
-#~ msgstr "Nastavenia mierky"
-
-#~ msgid "(No Windows)"
-#~ msgstr "(Žiadne Okná)"
-
-#~ msgid "No name!!"
-#~ msgstr "Žiadne meno!!"
-
-#, fuzzy
-#~ msgid "Show calendar"
-#~ msgstr "Zobraziť lištu s nástrojmi"
-
-#~ msgid "Resolution change"
-#~ msgstr "Zmeniť rozlíšenie"
-
-#~ msgid "Restore"
-#~ msgstr "Obnoviť"
-
-#~ msgid "Screen Resolution Settings"
-#~ msgstr "Nastavenie rozšírenia obrazovky"
-
-#~ msgid "Resolution"
-#~ msgstr "Rozlíšenie"
-
-#~ msgid "Restore on login"
-#~ msgstr "Obnoviť pri prihlásení"
-
-#~ msgid "Mirroring"
-#~ msgstr "Zrkadlenie"
-
-#~ msgid "Missing Features"
-#~ msgstr "Chýbajúce Vlastnosti"
-
-#~ msgid "No Refresh Rates Found"
-#~ msgstr "Nenájdená obnovovacia frekvencia"
-
-#~ msgid "Screen Resolution"
-#~ msgstr "Rozlíšenie Obrazovky"
-
-#~ msgid "<No Class>"
-#~ msgstr "<Bez triedy>"
-
-#~ msgid "<No Title>"
-#~ msgstr "<Bez názvu>"
-
-#~ msgid "<No Role>"
-#~ msgstr "<Bez úlohy>"
-
-#, fuzzy
-#~ msgid "Show Everything Dialog"
-#~ msgstr "Zobraziť všetko Dialóg"
-
-#, fuzzy
-#~ msgid "Everything"
-#~ msgstr "Všetko"
-
-#, fuzzy
-#~ msgid "System Control"
-#~ msgstr "System Control"
-
-#~ msgid "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
-#~ msgstr "Požadujete ukončenie Moksha.<br><br>Ste si istý, že chcete skončiť?"
-
-#~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
-#~ msgstr "Chystáte sa odhlásiť.<br><br>Ste si istý, že to chcete?"
-
-#, fuzzy
-#~ msgid "Log out"
-#~ msgstr "Odhlásiť sa"
-
-#~ msgid "Are you sure you want to turn off?"
-#~ msgstr "Ste si istý, že chcete vypnúť počítač?"
-
-#~ msgid ""
-#~ "You requested to turn off your Computer.<br><br>Are you sure you want to "
-#~ "shut down?"
-#~ msgstr ""
-#~ "Požadujete vypnutie počítača.<br><br>Ste si istý, že chcete vypnúť "
-#~ "počítač?"
-
-#~ msgid ""
-#~ "You requested to reboot your Computer.<br><br>Are you sure you want to "
-#~ "restart it?"
-#~ msgstr ""
-#~ "Požadujete reštartovanie počítača.<br><br>Ste si istý, že chcete "
-#~ "reštartovať počítač?"
-
-#~ msgid ""
-#~ "You requested to suspend your Computer.<br><br>Are you sure you want to "
-#~ "suspend?"
-#~ msgstr ""
-#~ "Požadujete prepnutie počítača do úsporného režimu.<br><br>Ste si istý, že "
-#~ "chcete prepnúť počítač do úsporného režimu?"
-
-#~ msgid ""
-#~ "You requested to hibernate your Computer.<br><br>Are you sure you want to "
-#~ "suspend to disk?"
-#~ msgstr ""
-#~ "Požadujete prepnutie počítača do režimu spánku.<br><br>Ste si istý, že "
-#~ "chcete prepnúť počítač do režimu spánku?"
-
-#~ msgid "Create a new Directory"
-#~ msgstr "Vytvoriť nový adresár"
-
-#~ msgid "New Directory Name:"
-#~ msgstr "Názov nového adresára:"
-
-#~ msgid "Maximize vertically"
-#~ msgstr "Maximalizovať vertikálne"
-
-#~ msgid "Maximize horizontally"
-#~ msgstr "Maximalizovať horizontálne"
-
-#, fuzzy
-#~ msgid "Maximize left"
-#~ msgstr "Maximalizovať"
-
-#, fuzzy
-#~ msgid "Maximize right"
-#~ msgstr "Maximalizovať"
-
-#, fuzzy
-#~ msgid "Read / Write"
-#~ msgstr "Čítať-zapisovať"
-
-#, fuzzy
-#~ msgid "Keep hidden windows"
-#~ msgstr "Vnútorné okná"
-
-#, fuzzy
-#~ msgid "Maximum hidden pixels"
-#~ msgstr "Maximálna Výška"
-
-#, fuzzy
-#~ msgid "Min hidden"
-#~ msgstr "Skrytý"
-
-#, fuzzy
-#~ msgid "30 Seconds"
-#~ msgstr "%.1f sekundy"
-
-#, fuzzy
-#~ msgid "1 Minute"
-#~ msgstr "%1.0f minút"
-
-#, fuzzy
-#~ msgid "5 Minutes"
-#~ msgstr "%li pred minútami"
-
-#
-#, fuzzy
-#~ msgid "30 Minutes"
-#~ msgstr "30 Minút"
-
-#
-#, fuzzy
-#~ msgid "2 Hours"
-#~ msgstr "1 Hodina"
-
-#
-#, fuzzy
-#~ msgid "10 Hours"
-#~ msgstr "1 Hodina"
-
-#, fuzzy
-#~ msgid "Max hidden"
-#~ msgstr "Skrytý"
-
-#, fuzzy
-#~ msgid "Timeouts"
-#~ msgstr "Skryť timeout"
-
-#~ msgid "Online..."
-#~ msgstr "Pripojený..."
-
-#, fuzzy
-#~ msgid "Open With..."
-#~ msgstr "Otvoriť s..."
-
-#, fuzzy
-#~ msgid "Open Terminal Here"
-#~ msgstr "Spustiť v termináli"
-
-#, fuzzy
-#~ msgid "Really Move"
-#~ msgstr "Skutočne veľký"
-
-#~ msgid "Show popup on urgent window"
-#~ msgstr "Zobraziť popup v naliehavom okne"
-
-#, fuzzy
-#~ msgid "Minimum Width"
-#~ msgstr "Minimálna Šírka"
-
-#, fuzzy
-#~ msgid "Minimum Height"
-#~ msgstr "Minimálna Výška"
-
-#~ msgid "Notification Box"
-#~ msgstr "Oznamovací dialóg"
-
-#~ msgid "Notification Box Configuration"
-#~ msgstr "Konfigurácia dialógu upozornení"
-
-#~ msgid "Show the popup on mouse over"
-#~ msgstr "Zobrazovať vyskakovacií dialóg pri presunutí myši naň"
-
-#~ msgid "Focus the source window when clicking"
-#~ msgstr "Zamerať zdrojové okno pri kliknutí"
-
-#, fuzzy
-#~ msgid "Revert focus when it is lost"
-#~ msgstr "Vrátiť sa sústrediť, keď sa stratil"
-
-#, fuzzy
-#~ msgid "Copying %s (eta: %d s)"
-#~ msgstr "Kopírovanie je zrušený"
-
-#, fuzzy
-#~ msgid "(no information)"
-#~ msgstr "(Bez informácie)"
-
-#, fuzzy
-#~ msgid "Using"
-#~ msgstr "Používanie menu"
-
-#~ msgid "Basic preview text: 123: 我的天空！"
-#~ msgstr "Jednoduchá ukážka textu: 123: 我的天空！"
-
-#~ msgid "Advanced Preview Text.. 我真的会写中文"
-#~ msgstr "Pokročilá ukážka textu.. 我真的会写中文"
-
-#~ msgid "%li Years ago"
-#~ msgstr "%li pred rokmi"
-
-#~ msgid "%li Months ago"
-#~ msgstr "%li pred mesiacmi"
-
-#~ msgid "%li Weeks ago"
-#~ msgstr "%li pred týždňami"
-
-#~ msgid "%li Days ago"
-#~ msgstr "%li pred dňami"
-
-#~ msgid "%li Hours ago"
-#~ msgstr "%li pred hodinami"
-
-#~ msgid "%li Minutes ago"
-#~ msgstr "%li pred minútami"
-
-#~ msgid "Specific Applications"
-#~ msgstr "Konkrétne aplikácie"
-
-#~ msgid "Always on desktop"
-#~ msgstr "Vždy na ploche"
-
-#, fuzzy
-#~ msgid "On top pressing"
-#~ msgstr "Na vrchole lisovanie"
-
-#~ msgid "Configuration"
-#~ msgstr "Konfigurácia"
-
-#~ msgid "Notification Configuration Updated"
-#~ msgstr "Konfigurácia upozorňovania bola aktualizovaná"
-
-#~ msgid ""
-#~ "Notification Module Configuration data needed upgrading. Your old "
-#~ "configuration<br> has been wiped and a new set of defaults initialized. "
-#~ "This<br>will happen regularly during development, so don't report "
-#~ "a<br>bug. This simply means the Notification module needs new "
-#~ "configuration<br>data by default for usable functionality that your "
-#~ "old<br>configuration simply lacks. This new set of defaults will "
-#~ "fix<br>that by adding it in. You can re-configure things now to "
-#~ "your<br>liking. Sorry for the inconvenience.<br>"
-#~ msgstr ""
-#~ "Konfiguračné údaje modulu upozorňovania bolo potrebné aktualizovať.<br> "
-#~ "Vaša stará konfigurácia bola zmazaná a boli inicializované nové "
-#~ "predvolené hodnoty.<br> To sa pravidelne stáva počas vývoja, takže to "
-#~ "neoznamujte ako chybu.<br> Jednoducho to znamená, že modul upozorňovania "
-#~ "potrebuje nové konfiguračné údaje<br> na funkcionalitu, ktorá vo vašej "
-#~ "pôvodnej konfigurácii jednoducho chýba.<br> Táto nová konfigurácia to "
-#~ "opraví tak, že pre ňu pridá predvolené hodnoty.<br> Teraz môžete veci "
-#~ "nakonfigurovať podľa svojej ľubovôle. Ospravedlňujeme sa za nepríjemnosti."
-#~ "<br>"
-
-#~ msgid ""
-#~ "Your Notification Module Configuration is NEWER than the Notification "
-#~ "Module version. This is very<br>strange. This should not happen unless "
-#~ "you downgraded<br>the Notification Module or copied the configuration "
-#~ "from a place where<br>a newer version of the Notification Module was "
-#~ "running. This is bad and<br>as a precaution your configuration has been "
-#~ "now restored to<br>defaults. Sorry for the inconvenience.<br>"
-#~ msgstr ""
-#~ "Vaša konfigurácia modulu upozorňovania je NOVŠIA ako verzia modulu "
-#~ "upozorňovania.<br>To je veľmi zvláštne. Nemalo by sa to stať, jedine že "
-#~ "by ste znížili verziu modulu upozorňovania<br>alebo skopírovali "
-#~ "konfiguráciu z miesta, kde bežala novšia verzia modulu upozorňovania."
-#~ "<br>To je zlé a preventívne bola vaša konfigurácia obnovená na predvolené "
-#~ "hodnoty.<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
-
-#~ msgid "Notification Configuration"
-#~ msgstr "Konfigurácia upozorňovania"
-
-#~ msgid "Levels of urgency to popup : "
-#~ msgstr "Urgentnosť vyskakovacieho okna: "
-
-#~ msgid "low"
-#~ msgstr "nízka"
-
-#~ msgid "normal"
-#~ msgstr "normálna"
-
-#~ msgid "critical"
-#~ msgstr "kritická"
-
-#~ msgid "%2.0f x"
-#~ msgstr "%2.0f x"
-
-#~ msgid "%2.0f y"
-#~ msgstr "%2.0f y"
-
-#~ msgid "Direction in which popups will stack themselves : "
-#~ msgstr "Smer, v ktorom sa skladajú upozornenia na seba: "
-
-#~ msgid "Gap"
-#~ msgstr "Medzera"
-
-#~ msgid "Size of the gap between two popups : "
-#~ msgstr "Veľkosť rozostupov medzi vyskakovacími dialógmi: "
-
-#~ msgid "Levels of urgency to store : "
-#~ msgstr "Koľko úrovní urgentnosti ukladať: "
-
-#~ msgid "%s"
-#~ msgstr "%s"
-
-#~ msgid "(No Shelves)"
-#~ msgstr "(žiadne shelves)"
-
-#~ msgid ""
-#~ "You requested to delete \"%s\".<br><br>Are you sure you want to delete "
-#~ "this shelf?"
-#~ msgstr ""
-#~ "Požadujete zmazať  \"%s\".<br><br>Ste si istý, že chcete zmazať tento "
-#~ "šelf?"
-
-#, fuzzy
-#~ msgid "By"
-#~ msgstr "podľa"
-
-#, fuzzy
-#~ msgid "Error getting data !"
-#~ msgstr "Chyba pri načítaní dát!"
-
-#~ msgid "Exchange wallpapers"
-#~ msgstr "Výmena tapety"
-
-#, fuzzy
-#~ msgid "Download"
-#~ msgstr "Unloadnutý"
-
-#, fuzzy
-#~ msgid "Getting data, please wait..."
-#~ msgstr "Získanie dát , čakajte prosím ..."
-
-#, fuzzy
-#~ msgid "Select a background from the list."
-#~ msgstr "Vyberte si pozadie zo zoznamu."
-
-#, fuzzy
-#~ msgid "Error: can't start the request."
-#~ msgstr "Chyba , nemožno spustiť požiadavku."
-
-#~ msgid " Online..."
-#~ msgstr " Pripojený..."
-
-#~ msgid "Exchange themes"
-#~ msgstr "Výmena témy"
-
-#~ msgid "Gadgets Manager"
-#~ msgstr "Správca gadgetov"
-
-#, fuzzy
-#~ msgid "Display App Name"
-#~ msgstr "Zobraziť App Name"
-
-#, fuzzy
-#~ msgid "Display App Comment"
-#~ msgstr "Zobraziť App komentár"
-
-#, fuzzy
-#~ msgid "Display App Generic"
-#~ msgstr "Zobraziť App Generic"
-
-#, fuzzy
-#~ msgid "Cannot toggle system's offline mode."
-#~ msgstr "Nemožno prepínať systému v režime offline režime."
-
-#, fuzzy
-#~ msgid "ConnMan Daemon is not running."
-#~ msgstr "ConnMan démon nebeží."
-
-#, fuzzy
-#~ msgid "Query system's offline mode."
-#~ msgstr "Dotaze systému režime off- line."
-
-#, fuzzy
-#~ msgid "ConnMan needs your passphrase"
-#~ msgstr "ConnMan potrebuje vaše heslo"
-
-#, fuzzy
-#~ msgid "Show passphrase as clear text"
-#~ msgstr "Zobraziť frázy ako obyčajný text"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#, fuzzy
-#~ msgid "Disconnect from network service."
-#~ msgstr "Odpojenie od siete služby."
-
-#, fuzzy
-#~ msgid "Service does not exist anymore"
-#~ msgstr "Služba už neexistuje"
-
-#, fuzzy
-#~ msgid "Could not set service's passphrase"
-#~ msgstr "Nedá nastaviť dopravou je heslo"
-
-#~ msgid "Controls"
-#~ msgstr "Ovládacie prvky"
-
-#, fuzzy
-#~ msgid "No ConnMan"
-#~ msgstr "nie ConnMan"
-
-#, fuzzy
-#~ msgid "No ConnMan server found."
-#~ msgstr "Žiadny server ConnMan nájdených."
-
-#, fuzzy
-#~ msgid "Offline mode: all radios are turned off"
-#~ msgstr "Offline mód , všetky rádia sú vypnuté"
-
-#, fuzzy
-#~ msgid "No Connection"
-#~ msgstr "Nastavenie pripojenia k sieti"
-
-#, fuzzy
-#~ msgid "disconnect"
-#~ msgstr "odpojiť"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Neznámy zväzok"
-
-#, fuzzy
-#~ msgid "No error"
-#~ msgstr "Chyba pri pripájaní"
-
-#, fuzzy
-#~ msgid "idle"
-#~ msgstr "Dlaždice"
-
-#, fuzzy
-#~ msgid "association"
-#~ msgstr "Prechody"
-
-#, fuzzy
-#~ msgid "configuration"
-#~ msgstr "Konfigurácia"
-
-#, fuzzy
-#~ msgid "ready"
-#~ msgstr "pripravený"
-
-#, fuzzy
-#~ msgid "login"
-#~ msgstr "Priame"
-
-#, fuzzy
-#~ msgid "online"
-#~ msgstr "Kontajnér"
-
-#, fuzzy
-#~ msgid "failure"
-#~ msgstr "Konfiguruj"
-
-#, fuzzy
-#~ msgid "enabled"
-#~ msgstr "Aktivovaný"
-
-#, fuzzy
-#~ msgid "available"
-#~ msgstr "Vyplniť dostupné miesto"
-
-#, fuzzy
-#~ msgid "connected"
-#~ msgstr "Chránené"
-
-#, fuzzy
-#~ msgid "offline"
-#~ msgstr "Nepripojený"
-
-#, fuzzy
-#~ msgid "Move To..."
-#~ msgstr "Viac..."
-
-#, fuzzy
-#~ msgid "Move By..."
-#~ msgstr "Viac..."
-
-#~ msgid "%i Files"
-#~ msgstr "%i Súbory"
-
-#~ msgid "%llu TiB"
-#~ msgstr "%llu TiB"
-
-#~ msgid "%llu GiB"
-#~ msgstr "%llu GiB"
-
-#~ msgid "%llu MiB"
-#~ msgstr "%llu MiB"
-
-#~ msgid "%llu KiB"
-#~ msgstr "%llu KiB"
-
-#~ msgid "%llu B"
-#~ msgstr "%llu B"
-
-#~ msgid "Others can read"
-#~ msgstr "Skupina môže čítať"
-
-#~ msgid "Others can write"
-#~ msgstr "Skupina môže zapisovať"
-
-#~ msgid "Owner can read"
-#~ msgstr "Vlastník  môže čítať"
-
-#~ msgid "Owner can write"
-#~ msgstr "Vlastník  môže zapisovať"
-
-#~ msgid "Lock the Window so it does only what I tell it to"
-#~ msgstr "Uzamknúť tak, aby došlo iba k zmenám, ktoré iniciuje užívateľ"
-
-#~ msgid ""
-#~ "Protect this window from being accidentally closed because it is important"
-#~ msgstr "Zabrániť náhodnému uzavretiu tohoto okna, pretože je dôležité"
-
-#~ msgid "Lock program changing:"
-#~ msgstr "Uzamknúť pred zmenou programom:"
-
-#~ msgid "Lock me from changing:"
-#~ msgstr "Uzamknúť pred zmenou užívateľom:"
-
-#~ msgid "Stop me from:"
-#~ msgstr "Zabrániť:"
-
-#~ msgid "Window Properties"
-#~ msgstr "Vlastnosti Okna"
-
-#~ msgid "Remember using"
-#~ msgstr "Zapamätať použitie"
-
-#~ msgid "Properties to remember"
-#~ msgstr "Zapamätať nastavenia"
-
-#~ msgid ""
-#~ "Possible IPC Hack Attempt. The IPC socket\n"
-#~ "directory already exists BUT has permissions\n"
-#~ "that are too leanient (must only be readable\n"
-#~ "and writable by the owner, and nobody else)\n"
-#~ "or is not owned by you. Please check:\n"
-#~ "%s/enlightenment-%s\n"
-#~ msgstr ""
-#~ "Možný pokus o IPC hack. IPC socket\n"
-#~ "adresár už existuje, ALE jeho práva\n"
-#~ "sú príliš veľké,(čítať môžu všetci,\n"
-#~ "ale zapisovať iba vlastník, a nikto iný)\n"
-#~ "alebo nie ste vlastníkom. Prosím skontrolujte:\n"
-#~ "%s/enlightenment-%s\n"
-
-#~ msgid ""
-#~ "The IPC socket directory cannot be created or\n"
-#~ "examined.\n"
-#~ "Please check:\n"
-#~ "%s/enlightenment-%s\n"
-#~ msgstr ""
-#~ "IPC socket adresár nemôže byť vytvorený alebo\n"
-#~ "preskúmaný.\n"
-#~ "Prosíme, skontrolujte:\n"
-#~ "%s/enlightenment-%s\n"
-
-#~ msgid "%'.0f MB"
-#~ msgstr "%'.0f MB"
-
-#, fuzzy
-#~ msgid "Import"
-#~ msgstr "Import..."
-
-#, fuzzy
-#~ msgid ""
-#~ "Configuration Panel Module Configuration data needed upgrading. Your old "
-#~ "configuration<br> has been wiped and a new set of defaults initialized. "
-#~ "This<br>will happen regularly during development, so don't report "
-#~ "a<br>bug. This simply means the module needs new configuration<br>data by "
-#~ "default for usable functionality that your old<br>configuration simply "
-#~ "lacks. This new set of defaults will fix<br>that by adding it in. You can "
-#~ "re-configure things now to your<br>liking. Sorry for the inconvenience."
-#~ "<br>"
-#~ msgstr ""
-#~ "Konfiguračné údaje bolo potrebné aktualizovať.<br> Vaša stará "
-#~ "konfigurácia bola zmazaná a boli inicializované nové predvolené hodnoty."
-#~ "<br> To sa pravidelne stáva počas vývoja, takže to neoznamujte ako chybu."
-#~ "<br> Jednoducho to znamená, že Moksha potrebuje nové konfiguračné "
-#~ "údaje<br> na funkcionalitu, ktorá vo vašej pôvodnej konfigurácii "
-#~ "jednoducho chýba.<br> Táto nová konfigurácia to opraví tak, že pre ňu "
-#~ "pridá predvolené hodnoty.<br> Teraz môžete veci nakonfigurovať podľa "
-#~ "svojej ľubovôle. Ospravedlňujeme sa za nepríjemnosti.<br>"
-
-#, fuzzy
-#~ msgid ""
-#~ "Your Configuration Panel Module configuration is NEWER than the module "
-#~ "version. This is very<br>strange. This should not happen unless you "
-#~ "downgraded<br>the module or copied the configuration from a place "
-#~ "where<br>a newer version of the module was running. This is bad and<br>as "
-#~ "a precaution your configuration has been now restored to<br>defaults. "
-#~ "Sorry for the inconvenience.<br>"
-#~ msgstr ""
-#~ "Vaša konfigurácia Moksha je NOVŠIA ako verzia Moksha.<br>To je veľmi "
-#~ "zvláštne. Nemalo by sa to stať, jedine že by ste znížili verziu "
-#~ "Moksha<br>alebo skopírovali konfiguráciu z miesta, kde bežala novšia "
-#~ "verzia Moksha.<br>To je zlé a preventívne bola vaša konfigurácia obnovená "
-#~ "na predvolené hodnoty.<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
-
-#, fuzzy
-#~ msgid "Configuration Panel Configuration Updated"
-#~ msgstr "Konfiguračný panel Konfigurácia Aktualizované"
-
-#~ msgid "Delete OK?"
-#~ msgstr "Odstrániť OK?"
-
-#, fuzzy
-#~ msgid "Even if on power"
-#~ msgstr "Aj keď na sile"
-
-#, fuzzy
-#~ msgid "Screensaver"
-#~ msgstr "Šetrič obrazovky"
-
-#, fuzzy
-#~ msgid "Initial timeout"
-#~ msgstr "Počiatočný Stav"
-
-#, fuzzy
-#~ msgid "Alternation timeout"
-#~ msgstr "striedanie timeout"
-
-#~ msgid "Preferred"
-#~ msgstr "Preferovaný"
-
-#~ msgid "Not Preferred"
-#~ msgstr "Nepreferovaný"
-
-#~ msgid "Exposure Events"
-#~ msgstr "Expozícia udalosti"
-
-#~ msgid "Allow"
-#~ msgstr "Povoiť"
-
-#~ msgid "Don't Allow"
-#~ msgstr "Nepovoliť"
-
-#~ msgid "Enable Display Power Management"
-#~ msgstr "Povoliť zobrazenie správy napájania"
-
-#~ msgid "Standby time"
-#~ msgstr "Pohotovostný čas"
-
-#, fuzzy
-#~ msgid "DPMS"
-#~ msgstr "DPMS"
-
-#~ msgid "Add Binding"
-#~ msgstr "Pridať väzbu"
-
-#~ msgid "Delete Binding"
-#~ msgstr "Odstrániť väzbu"
-
-#~ msgid "Modify Binding"
-#~ msgstr "Upraviť väzbu"
-
-#, fuzzy
-#~ msgid "Binding Edge Error"
-#~ msgstr "Väzba hrán Chyba"
-
-#, fuzzy
-#~ msgid "Power management"
-#~ msgstr "Správa napájania"
-
-#~ msgid "Wallpaper settings..."
-#~ msgstr "Nastavenia tapiet..."
-
-#~ msgid "Wallpaper Import Error"
-#~ msgstr "Zlyhal import tapety"
-
-#, fuzzy
-#~ msgid "Enable icon theme"
-#~ msgstr "Povoliť tému ikon"
-
-#, fuzzy
-#~ msgid "Icons override general theme"
-#~ msgstr "Ikonky prepísať všeobecné témy"
-
-#~ msgid "Scale with DPI"
-#~ msgstr "Mierka s DPI"
-
-#~ msgid "Relative"
-#~ msgstr "Relatívna"
-
-#~ msgid "Base DPI to scale relative to"
-#~ msgstr "Základné DPI v rozsahu porovnaní s"
-
-#~ msgid "Currently %i DPI"
-#~ msgstr "Aktuálne %i DPI"
-
-#~ msgid "Mouse Cursor"
-#~ msgstr "Kurzor Myši"
-
-#~ msgid "Maximize Policy"
-#~ msgstr "Pravidlá Maximalizácie"
-
-#, fuzzy
-#~ msgid "Window Stacking"
-#~ msgstr "okno Stohovacie"
-
-#~ msgid "Delete Remember(s)"
-#~ msgstr "Odstrániť Zapamätané"
-
-#~ msgid "%i.%i GHz"
-#~ msgstr "%i.%i GHz"
-
-#~ msgid "Fileman Settings Updated"
-#~ msgstr "Nastavenia fileman aktualizované"
-
-#, fuzzy
-#~ msgid "Sort Dirs First"
-#~ msgstr "Zoradiť dirs prvý"
-
-#, fuzzy
-#~ msgid "Show UDisks icons on desktop"
-#~ msgstr "Zobraziť ikony na ploche UDisks"
-
-#, fuzzy
-#~ msgid "Uncover"
-#~ msgstr "odkryť"
-
-#, fuzzy
-#~ msgid "Pager Button Grab"
-#~ msgstr "Pager Tlačidlo Grab"
-
-#, fuzzy
-#~ msgid "XKB Switcher Module"
-#~ msgstr "Nastavenia modulu zmiešavania"
-
-#~ msgid "Popup speed"
-#~ msgstr "Rýchlosť popup"
-
-#, fuzzy
-#~ msgid "Keys"
-#~ msgstr "klávesy"
-
-#, fuzzy
-#~ msgid "Hardware Switches"
-#~ msgstr "Hardwér"
-
-#~ msgid "About Text"
-#~ msgstr "O Texte"
-
-#~ msgid "Client List Settings"
-#~ msgstr "Zoznam nastavení klienta"
-
-#, fuzzy
-#~ msgid "Acpi"
-#~ msgstr "Akcia"
-
-#, fuzzy
-#~ msgid "Dim Screen"
-#~ msgstr "Táto obrazovka"
-
-#, fuzzy
-#~ msgid "Undim Screen"
-#~ msgstr "Táto obrazovka"
-
-#, fuzzy
-#~ msgid "Resizeable"
-#~ msgstr "Zmeniť veľkosť"
-
-#~ msgid "Stop move/resize this gadget"
-#~ msgstr "Ukončenie pohybu/zmeny veľkosti tohto gadgetu"
-
-#~ msgid ""
-#~ "Moksha cannot Initialize Ecore!\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže zinicializovať Ecore!\n"
-#~ "Možno máte nedostatok pamäte."
-
-#~ msgid ""
-#~ "Moksha cannot initialize the File system.\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže zinicializovať súborový systém.\n"
-#~ "Možno máte nedostatok pamäte."
-
-#~ msgid ""
-#~ "Moksha cannot initialize its X connection.\n"
-#~ "Have you set your DISPLAY variable?"
-#~ msgstr ""
-#~ "Moksha sa nemôže spojiť s X serverom.\n"
-#~ "Máte nastavenú premennú DISPLAY?"
-
-#~ msgid ""
-#~ "Moksha cannot initialize the connections system.\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže zinicializovať systém spojení.\n"
-#~ "Možno máte nedostatok pamäte."
-
-#~ msgid ""
-#~ "Moksha cannot initialize the IPC system.\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže zinicializovať systém IPC.\n"
-#~ "Možno máte nedostatok pamäte."
-
-#~ msgid ""
-#~ "Moksha cannot setup xinerama wrapping.\n"
-#~ "This should not happen."
-#~ msgstr ""
-#~ "Moksha nemôže nastaviť xinerama wrapping.\n"
-#~ "K tomu by nemalo dochádzať."
-
-#, fuzzy
-#~ msgid ""
-#~ "Moksha cannot setup randr wrapping.\n"
-#~ "This should not happen."
-#~ msgstr ""
-#~ "Moksha nemôže nastaviť xinerama wrapping.\n"
-#~ "K tomu by nemalo dochádzať."
-
-#~ msgid ""
-#~ "Moksha cannot initialize the Evas system.\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže zinicializovať systém Evas.\n"
-#~ "Možno máte nedostatok pamäte."
-
-#~ msgid ""
-#~ "Moksha cannot set up init screen.\n"
-#~ "Perhaps you are out of memory?"
-#~ msgstr ""
-#~ "Moksha nemôže spustiť úvodnú obrazovku.\n"
-#~ "Možno máte nedostatok pamäte?"
-
-#~ msgid "Setup FM"
-#~ msgstr "nastavenie FM"
-
-#~ msgid "Moksha cannot set up its shelf system."
-#~ msgstr "Moksha nemôže nastaviť shelf systém."
-
-#~ msgid "New Application"
-#~ msgstr "Nová aplikácia"
-
-#, fuzzy
-#~ msgid "%.2f"
-#~ msgstr "%1.2f"
-
-#~ msgid "Display Power Management Signaling"
-#~ msgstr "Zobraziť signalizáciu správy napájania"
-
-#, fuzzy
-#~ msgid "Default is plugin name"
-#~ msgstr "Štandardný Mód Dialógu"
-
-#~ msgid "Enable desktop icons"
-#~ msgstr "Povoliť ikony na ploche"
-
-#~ msgid "Focus mode"
-#~ msgstr "Mód zaostrenia"
-
-#~ msgid "Click to focus windows"
-#~ msgstr "Klikni k zameraniu okna"
-
-#~ msgid "Mouse over focuses windows"
-#~ msgstr "Myš nad zameranými oknami"
-
-#~ msgid "Select Icons to Add"
-#~ msgstr "Vybrať ikony k pridaniu"
-
-#~ msgid ""
-#~ "An error occurred while saving Moksha's<br>settings to disk. The error "
-#~ "could not be<br>deterimined.<br><br>The file where the error occurred was:"
-#~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-#~ msgstr ""
-#~ "Vyskytla sa chyba pri ukladaní nastavení<br>Moksha na disk. Chybu sa "
-#~ "nepodarilo<br>určiť.<br><br>Súbor, kde sa chyba vyskytla:<br>"
-#~ "%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov."
-#~ "<br>"
-
-#~ msgid ""
-#~ "Moksha's settings files are too big<br>for the file system they are being "
-#~ "saved to.<br>This error is very strange as the files should<br>be "
-#~ "extremely small. Please check the settings<br>for your home directory."
-#~ "<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
-#~ "been deleted to avoid corrupt data.<br>"
-#~ msgstr ""
-#~ "Súbory s nastaveniami Moksha<br>sú príliš veľké pre súborový systém, na "
-#~ "ktorý<br>sa ukladajú. Táto chyba je veľmi zvláštna,<br>pretože tieto "
-#~ "súbory by mali byť veľmi malé.<br>Prosím, skontrolujte nastavenia "
-#~ "vášho<br>domovského adresára.<br><br>Súbor, kde sa chyba vyskytla:<br>"
-#~ "%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov."
-#~ "<br>"
-
-#~ msgid ""
-#~ "An output error occurred when writing the settings<br>files for Moksha. "
-#~ "Your disk is having troubles<br>and possibly needs replacement."
-#~ "<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
-#~ "been deleted to avoid corrupt data.<br>"
-#~ msgstr ""
-#~ "Pri zapisovaní súborov s nastavením Moksha<br>sa vyskytla chyba. Váš disk "
-#~ "má problémy<br>a je možné, že ho treba vymeniť.<br><br>Súbor, kde sa "
-#~ "chyba vyskytla:<br>%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo "
-#~ "poškodeniu údajov.<br>"
-
-#~ msgid ""
-#~ "Moksha cannot write its settings file<br>because it ran out of space to "
-#~ "write the file.<br>You have either run out of disk space or have<br>gone "
-#~ "over your quota limit.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
-#~ msgstr ""
-#~ "Moksha nemohlo zapísať svoj súbor s nastavením, pretože mu došlo miesto "
-#~ "na zapísanie súboru.<br>Buď vám došlo miesto na disku alebo ste "
-#~ "prekročili svoju diskovú kvótu<br><br>Súbor, kde sa chyba vyskytla:<br>"
-#~ "%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov."
-#~ "<br>"
-
-#~ msgid "Add Application..."
-#~ msgstr "Pridať aplikáciu..."
-
-#~ msgid "More..."
-#~ msgstr "Viac..."
-
-#~ msgid "To Favorites Menu"
-#~ msgstr "K obľúbeným položkám"
-
-#~ msgid "Animated flip"
-#~ msgstr "Animované pretočenie"
-
-#~ msgid "Interaction"
-#~ msgstr "Interakcia"
-
-#, fuzzy
-#~ msgid "Spell Checker"
-#~ msgstr "Kontrola systému skončená"
-
-#, fuzzy
-#~ msgid "Everything Aspell"
-#~ msgstr "Všetko"
-
-#, fuzzy
-#~ msgid "Show home directory"
-#~ msgstr "Prejsť do nadradeného adresára"
-
-#~ msgid "Able to be resized"
-#~ msgstr "Umožniť Zmenu Veľkosti"
-
-#~ msgid "Remove this gadget"
-#~ msgstr "Odstrániť túto špecialitu"
-
-#~ msgid "Powersaving policy"
-#~ msgstr "Šetrenie energiou"
-
-#~ msgid "Change Icon Properties"
-#~ msgstr "Zmeniť Nastavenia Ikony"
-
-#~ msgid "Remove Icon"
-#~ msgstr "Odstrániť Ikonu"
-
-#~ msgid "Set Shelf Contents"
-#~ msgstr "Nastaviť obsah shelf-u"
-
-#~ msgid "Delete this Shelf"
-#~ msgstr "Zmazať tento Šelf"
-
-#~ msgid "Lock when Moksha starts"
-#~ msgstr "Zamknúť pri štarte Moksha"
-
-#~ msgid "User Wallpaper"
-#~ msgstr "Obrázok užívateľa"
-
-#, fuzzy
-#~ msgid "Screensaver Timer"
-#~ msgstr "Časovanie(a) šetriča obrazovky"
-
-#~ msgid "Color 1:"
-#~ msgstr "Farba 1:"
-
-#~ msgid "Color 2:"
-#~ msgstr "Farba 2:"
-
-#~ msgid "Fill Options"
-#~ msgstr "Vyplňte Voľby"
-
-#~ msgid "Diagonal Up"
-#~ msgstr "Diagonálna Hore"
-
-#~ msgid "Diagonal Down"
-#~ msgstr "Diagonálna dole"
-
-#~ msgid "Radial"
-#~ msgstr "Radiálne"
-
-#, fuzzy
-#~ msgid "Geometry when moving or resizing"
-#~ msgstr "Zobrazovať rozmery pri zmene veľkosti alebo polohe okna"
-
-#, fuzzy
-#~ msgid "New Window Placement"
-#~ msgstr "Automatické Umiestnenie Nového Okna"
-
-#, fuzzy
-#~ msgid "Border Icon Preference"
-#~ msgstr "Použiť E17 predvolené nastavenie ikôn"
-
-#~ msgid "Keyboard move and resize"
-#~ msgstr "Pohybovanie a menenie veľkosti klávesnicou"
-
-#~ msgid "Miscellaneous Options"
-#~ msgstr "Rozmanité Nastavenia"
-
-#, fuzzy
-#~ msgid "From other desks"
-#~ msgstr "Zobrazovať okná z ostatných plôch"
-
-#, fuzzy
-#~ msgid "From other screens"
-#~ msgstr "Zobrazovať okná z ostatných obrazoviek"
-
-#, fuzzy
-#~ msgid "Warp mouse"
-#~ msgstr "Rýchlosť Presúvania"
-
-#~ msgid "Add Application"
-#~ msgstr "Pridať aplikáciu"
-
-#~ msgid "Automatic Locking"
-#~ msgstr "Automatické Uzamykanie"
-
-#~ msgid "If deactivated before"
-#~ msgstr "Ak je deaktivovaný predtým"
-
-#~ msgid "Use custom screenlock"
-#~ msgstr "Použi vlastné zamknutie obrazovky"
-
-#, fuzzy
-#~ msgid "UPower"
-#~ msgstr "Nižšie"
-
-#, fuzzy
-#~ msgid "Show Executables"
-#~ msgstr "Príkaz"
-
-#, fuzzy
-#~ msgid "Set as Wallpaper"
-#~ msgstr "Nastaviť obrázok pozadia"
-
-#~ msgid "Desktop files scan done"
-#~ msgstr "Sken súborov plochy dokončený"
-
-#~ msgid "Desktop file scan"
-#~ msgstr "Sken súboru plochy"
-
-#~ msgid "Filename"
-#~ msgstr "Názov súboru"
-
-#~ msgid "Available Modules"
-#~ msgstr "Moduly k dispozícii"
-
-#~ msgid "Load Module"
-#~ msgstr "Nahrať modul"
-
-#~ msgid "Loaded Modules"
-#~ msgstr "Nahrané moduly"
-
-#~ msgid "Unload Module"
-#~ msgstr "Uvolniť modul"
-
-#~ msgid "Description: Unavailable"
-#~ msgstr "Popis: Nedostupný"
-
-#~ msgid "Selected Gadgets"
-#~ msgstr "Vybrané gadgety"
-
-#~ msgid "Set Contents..."
-#~ msgstr "Nastaviť obsah..."
-
-#~ msgid "Favorites Menu"
-#~ msgstr "Zoznam obľúbených"
-
-#~ msgid "Menu Item Captions"
-#~ msgstr "Popisky položiek menu"
-
-#~ msgid "About Dialog Title"
-#~ msgstr "Titulok dialógu o aplikácii"
-
-#~ msgid "About Dialog Version"
-#~ msgstr "O verzii dialógu o aplikácii"
-
-#~ msgid "Settings Dialog Title"
-#~ msgstr "Nastavenia dialógu o aplikácii"
-
-#~ msgid "List Item Odd Text"
-#~ msgstr "Označiť položky niektorého textu"
-
-#~ msgid "Disabled"
-#~ msgstr "Blokovaný"
-
-#~ msgid "Widget Colors"
-#~ msgstr "Farby widgetu"
-
-#~ msgid "Module Colors"
-#~ msgstr "Farby modulu"
-
-#~ msgid "Outline Color"
-#~ msgstr "Farba obrysu"
-
-#~ msgid "Defaults"
-#~ msgstr "Predvolené"
-
-#~ msgid "Add Edge"
-#~ msgstr "Pridať okraj"
-
-#~ msgid "Run Command Settings"
-#~ msgstr "Nastavenia Spustenie Príkazu"
-
-#~ msgid "Terminal Command (CTRL+RETURN to utilize)"
-#~ msgstr "Príḱaz terminálu (CTRL+RETURN využitý)"
-
-#~ msgid "Size Settings"
-#~ msgstr "Nastavenia Veľkosti"
-
-#~ msgid "X-Axis Alignment"
-#~ msgstr "X-ová Os"
-
-#~ msgid "Y-Axis Alignment"
-#~ msgstr "Y-ová Os"
-
-#~ msgid "Run Command"
-#~ msgstr "Spustiť Príkaz"
-
-#~ msgid "Icon Themes"
-#~ msgstr "Ikona motívu"
-
-#~ msgid "Add Key"
-#~ msgstr "Pridať klávesu"
-
-#~ msgid "Main Menu Settings"
-#~ msgstr "Hlavné nastavenia menu"
-
-#~ msgid "Show Favorites In Main Menu"
-#~ msgstr "Zobraziť obľúbené v hlavnom menu"
-
-#~ msgid "Show Name In Menu"
-#~ msgstr "Zobrazovať meno"
-
-#~ msgid "Show Generic In Menu"
-#~ msgstr "Zobrazovať všeobecné"
-
-#~ msgid "Show Comment In Menu"
-#~ msgstr "Zobrazovať komentár"
-
-#~ msgid "Autoscroll Settings"
-#~ msgstr "Nastavenia Autoscrollu"
-
-#~ msgid "%2.2f seconds"
-#~ msgstr "%2.2f sekundy"
-
-#~ msgid "Idle Cursor"
-#~ msgstr "Nečinný kurzor"
-
-#~ msgid "Use Moksha Cursor"
-#~ msgstr "Použiť Moksha Kurzor"
-
-#~ msgid "Use X Cursor"
-#~ msgstr "Použiť X Kurzor"
-
-#~ msgid "Cursor Size"
-#~ msgstr "Veľkosť Kurzora"
-
-#~ msgid "Cache Settings"
-#~ msgstr "Nastavenia Cache"
-
-#~ msgid "Size Of Font Cache"
-#~ msgstr "Veľkosť Cache pre Fonty"
-
-#~ msgid "Size Of Image Cache"
-#~ msgstr "Veľkosť Cache pre Obrázok"
-
-#~ msgid "Time until X screensaver starts"
-#~ msgstr "Čas do spustenia X šetriča obrazovky"
-
-#~ msgid "Time until X screensaver alternates"
-#~ msgstr "Čas do spustenia náhradného X šetriča obrazovky"
-
-#~ msgid "Animate the shading and unshading of windows"
-#~ msgstr "Animovať schovanie a odkrytie okien"
-
-#~ msgid "Follow the window as it moves"
-#~ msgstr "Sledovať okno pri pohybe"
-
-#~ msgid "Follow the window as it resizes"
-#~ msgstr "Sledovať okno pri zmene veľkosti"
-
-#~ msgid "Window Shading"
-#~ msgstr "Tiene Okien"
-
-#~ msgid "Window Border"
-#~ msgstr "Ohraničenie okna"
-
-#~ msgid "Prefer user defined icon"
-#~ msgstr "Preferujete užívateľom definovanú ikonu"
-
-#~ msgid "Prefer application provided icon"
-#~ msgstr "Preferujete aplikáciu pridelenú ikonu"
-
-#~ msgid "Click to focus"
-#~ msgstr "Kliknúť pre zaostrenie"
-
-#~ msgid "No new windows get focus"
-#~ msgstr "Nové okná nezískajú zaostrenie"
-
-#~ msgid "All new windows get focus"
-#~ msgstr "Všetky nové okná získajú zaostrenie"
-
-#~ msgid "Only new dialogs get focus if the parent has focus"
-#~ msgstr "Nové dialógy získajú zaostrenie pokiaľ rodič má zaostrenie"
-
-#~ msgid "A click on a window always raises it"
-#~ msgstr "Kliknutie na okno ho umiestni navrch"
-
-#~ msgid "A click in a window always focuses it"
-#~ msgstr "Kliknutie do okna naň zaostrí"
-
-#~ msgid "Resist moving or resizing a window over an obstacle"
-#~ msgstr "Zabrániť pohybu, alebo zmene veľkosti okna cez prekážku"
-
-#~ msgid "Resistance between windows:"
-#~ msgstr "Odolnosť medzi oknami:"
-
-#~ msgid "Resistance to desktop gadgets:"
-#~ msgstr "Odolnosť voči špecialitám plochy:"
-
-#~ msgid "Show iconified windows"
-#~ msgstr "Zobrazovať ikonifikované okná"
-
-#~ msgid "Selection Settings"
-#~ msgstr "Nastavenia Výberu"
-
-#~ msgid "Raise window while selecting"
-#~ msgstr "Zdvihnúť okno počas výberu"
-
-#~ msgid "Uncover windows while selecting"
-#~ msgstr "Odkryť okná počas výberu"
-
-#~ msgid "Warp Settings"
-#~ msgstr "Nastavenia Presunu"
-
-#~ msgid "Run Command Dialog"
-#~ msgstr "Spustiť Príkazový Dialóg"
-
-#~ msgid "Background Mode"
-#~ msgstr "Režim pozadia"
-
-#~ msgid "Fast"
-#~ msgstr "Rýchlo"
-
-#~ msgid "Slow"
-#~ msgstr "Pomaly"
-
-#~ msgid "Very Slow"
-#~ msgstr "Veľmi Pomaly"
-
-#~ msgid "200 F"
-#~ msgstr "200 F"
-
-#~ msgid "150 F"
-#~ msgstr "150 F"
-
-#~ msgid "110 F"
-#~ msgstr "110 F"
-
-#~ msgid "130 F"
-#~ msgstr "130 F"
-
-#~ msgid "90 F"
-#~ msgstr "90 F"
-
-#~ msgid "93 C"
-#~ msgstr "93 C"
-
-#~ msgid "65 C"
-#~ msgstr "65 C"
-
-#~ msgid "43 C"
-#~ msgstr "43 C"
-
-#~ msgid "55 C"
-#~ msgstr "55 C"
-
-#~ msgid "32 C"
-#~ msgstr "32 C"
-
-#~ msgid "Network Device"
-#~ msgstr "Sieťová jednotka"
-
-#~ msgid "LAN"
-#~ msgstr "LAN"
-
-#~ msgid "Specific Device"
-#~ msgstr "Špeciálne zariadenie"
-
-#~ msgid "Networks"
-#~ msgstr "Siete"
-
-#~ msgid ""
-#~ "You are trying to ask Moksha to remember to apply<br>properties (such as "
-#~ "size, location, border style etc.) to<br>a window that <hilight>does not "
-#~ "have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-#~ "Transience, Role etc. properties<br>with more than 1 other window on the "
-#~ "screen and remembering<br>properties for this window will apply to all "
-#~ "other windows<br>that match these properties.<br><br>You may wish to "
-#~ "enable the <hilight>Match only one window</hilight> option if<br>you only "
-#~ "intend one instance of this window to be modified, with<br>additional "
-#~ "instances not being modified.<br><br>This is just a warning in case you "
-#~ "did not intend this to happen.<br>If you did, simply press "
-#~ "<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-#~ "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are "
-#~ "not sure and nothing will be affected."
-#~ msgstr ""
-#~ "Chcete aby si Moksha zapamätal, že má aplikovať<br>nastavenia (ako je "
-#~ "veľkosť, umiestnenie, štýl okraju atď.) pre<br>okno, ktoré <hilight>nemá "
-#~ "unikátne nastavenia</hilight>.<br><br>To znamená, že zdieľa Meno/Triedu, "
-#~ "Priesvitnosť, Úlohu a ďalšie nastavenia s viac ako jedným ďalším oknom na "
-#~ "obrazovke a zapamätanie<br>nastavení pre toto okno sa aplikuje aj na "
-#~ "všetky ostatné okná<br>ktoré,majú rovnaké nastavenia.<br><br>Vhodné je "
-#~ "zapnúť voľbu <hilight>Aplikuj iba pre jedno okno</hilight> v prípade, že "
-#~ "si<br>prajete aby nastavenia platili iba pre jednu inštanciu tohoto okna "
-#~ "a<br>nie pre všetky inštancie.<br><br>Toto je iba varovanie pre prípad, "
-#~ "že neočakávate takýto priebeh.<br>V prípade, že očakávate stlačte "
-#~ "<hilight>Aplikuj</hilight> alebo <hilight>OK</hilight> tlačítko<br>a Vaše "
-#~ "nastavenia budú uložené. Stlač <hilight>Zrušiť</hilight> pokiaľ<br>nie si "
-#~ "si istý a žiadne zmeny sa neaplikujú."
-
-#~ msgid "Shelf Size"
-#~ msgstr "Velkosť Šelfu"
-
-#~ msgid "Configure Heading"
-#~ msgstr "Konfigurovať Smerovanie"
-
-#~ msgid "Expand the window"
-#~ msgstr "Zväčšiť okno"
-
-#~ msgid "Allow window manipulation"
-#~ msgstr "Povoliť manipuláciu s oknami"
-
-#~ msgid "Desktop Lock"
-#~ msgstr "Zámok Plochy"
-
-#~ msgid "Desktop %i, %i"
-#~ msgstr "Plocha %i, %i"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Uzamknúť Obrazovku"
-
-#~ msgid "Advanced Settings"
-#~ msgstr "Pokročilé Nastavenia"
-
-#~ msgid "Moksha Configuration"
-#~ msgstr "Moksha Konfigurácia"
-
-#~ msgid "Flip desktops when mouse at screen edge"
-#~ msgstr "Preklopiť plochu keď  je myš na okraji"
-
-#~ msgid "Time the mouse is at the edge before flipping:"
-#~ msgstr "Doba po ktorú je myš na okraji pred preklopením"
-
-#~ msgid "Search Path Configuration"
-#~ msgstr "Konfigurácia Prehľadávanej Cesty"
-
-#~ msgid "Dropshadow Configuration"
-#~ msgstr "Konfigurácia Tieňov"
-
-#~ msgid "IBar Configuration"
-#~ msgstr "Konfigurácia IBaru"
-
-#~ msgid "X reports there are no root windows and %i screens!\n"
-#~ msgstr "X hlási, že tu nie sú žiadne root-okná a %i obrazoviek!\n"
-
-#~ msgid "Disable this splash screen in the future?"
-#~ msgstr "Zablokovať úvodnú obrazovku pre budúcnosť?"
-
-#~ msgid "Moksha cannot set up its app system."
-#~ msgstr "Moksha nemôže spustiť systém pre aplikácie."
-
-#~ msgid "Moksha cannot set up its window list system."
-#~ msgstr "Moksha nemôže spustiť systém zoznamu okien"
-
-#~ msgid "Moksha Starting. Please wait."
-#~ msgstr "Moksha Štartuje. Prosím čakajte."
-
-#~ msgid "About..."
-#~ msgstr "O..."
-
-#~ msgid "Window list skip"
-#~ msgstr "Vynechať zo Zoznamu Okien"
-
-#~ msgid "Window Frame"
-#~ msgstr "Rám Okna"
-
-#~ msgid "When moving or resizing windows, resist at the boundaries"
-#~ msgstr "Pri hýbaní a zmene veľkosti okien, klásť odpor na okrajoch"
-
-#~ msgid "Module State"
-#~ msgstr "Stav Modulu"
-
-#~ msgid "Widget"
-#~ msgstr "Widget"
-
-#~ msgid "%2.1f pixels"
-#~ msgstr "%2.1f pixelov"
-
-#~ msgid "Font Class Configuration"
-#~ msgstr "Konfigurácia Triedy Fontu"
-
-#~ msgid ""
-#~ "Battery Running Low<br>Your battery is running low.<br>You may wish to "
-#~ "switch to an AC source."
-#~ msgstr ""
-#~ "Batéria je takmer vybitá<br>Vaša batéria je už skoro vybitá.<br>Bolo by "
-#~ "dobré pripojiť napájanie do siete."
-
-#~ msgid "NO INFO"
-#~ msgstr "NO INFO"
-
-#~ msgid "NO BAT"
-#~ msgstr "NO BAT"
-
-#~ msgid "BAD DRIVER"
-#~ msgstr "ZLÝ OVLÁDAČ"
-
-#~ msgid "FULL"
-#~ msgstr "PLNÁ"
-
-#~ msgid "Danger"
-#~ msgstr "Nebezpečenstvo"
-
-#~ msgid ""
-#~ "A basic battery meter that uses either<hilight>ACPI</hilight> or "
-#~ "<hilight>APM</hilight><br>on Linux to monitor your battery and AC power "
-#~ "adaptor<br>status. This will work under Linux and FreeBSD and is "
-#~ "only<br>as accurate as your BIOS or kernel drivers."
-#~ msgstr ""
-#~ "Základný ukazateľ stavu batérie, ktorý používa buď<hilight>ACPI</hilight> "
-#~ "alebo <hilight>APM</hilight><br>pre monitorovanie stavu napájacieho "
-#~ "adaptéra<br> a batérie. Funguje iba pod Linuxom, FreeBSD a "
-#~ "jeho<br>presnosť je ovplyvnená ovládačmi jadra alebo BIOSom."
-
-#~ msgid "Moksha Clock Module"
-#~ msgstr "Modul Hodiny pre Moksha"
-
-#~ msgid "A simple module to give E17 a clock."
-#~ msgstr "Jednoduchý modul, ktorý pridá do E17 hodiny."
-
-#~ msgid "Moksha Dropshadow Module"
-#~ msgstr "Modul Tiene pre Moksha"
-
-#~ msgid ""
-#~ "This is the dropshadow module that allows dropshadows to be cast<br>on "
-#~ "the desktop background - without special X-Server extensions<br>or "
-#~ "hardware acceleration."
-#~ msgstr ""
-#~ "Toto je modul tieňov, ktorý umožňuje oknám vytvárať tiene<br>na pracovnej "
-#~ "ploche bez potreby špeciálnych rozšírení X serveru<br>alebo hardvérovej "
-#~ "akcelerácie."
-
-#~ msgid ""
-#~ "You tried to drop an icon of an application that<br>does not have a "
-#~ "matching application file.<br><br>The icon cannot be added to IBar."
-#~ msgstr ""
-#~ "Snažíš sa pridať ikonu aplikácie, ktorá<br>nemá príslušný aplikačný súbor."
-#~ "<br><br>Ikona nemôže byť pridaná na IBar."
-
-#~ msgid "Moksha IBar Module"
-#~ msgstr "Moksha IBar Modul"
-
-#~ msgid ""
-#~ "This is the IBar Application Launcher bar module for Moksha.<br>It is a "
-#~ "first example module and is being used to flesh out several<br>interfaces "
-#~ "in Moksha 0.17.0. It is under heavy development,<br>so expect it to "
-#~ "<hilight>break often</hilight> and change as it improves."
-#~ msgstr ""
-#~ "Toto je IBar - lišta pre spúšťanie aplikácií pre Moksha.<br>Je to prvý "
-#~ "ukážkový modul a používa sa ako rozhranie pre spúšťanie <br>aplikácií v "
-#~ "Moksha 0.17.0. Prebieha na ňom intenzívny vývoj,<br>takže sa dá očakávať "
-#~ "<hilight>veľa chýb</hilight> a časté zmeny v rámci vylepšovania."
-
-#~ msgid "Moksha IBox Module"
-#~ msgstr "Moksha IBox Modul"
-
-#~ msgid ""
-#~ "This is the IBox Iconified Application module for Moksha.<br>It will hold "
-#~ "minimized applications"
-#~ msgstr ""
-#~ "Toto je IBox Aplikácia s minimalizovanými ikonami pre Moksha.<br>Sú v nej "
-#~ "umiestnené minimalizované aplikácie"
-
-#~ msgid "Moksha Pager Module"
-#~ msgstr "Modul Pager pre Moksha"
-
-#~ msgid "A pager module to navigate virtual desktops."
-#~ msgstr "Modul pager pre orientáciu vo virtuálnych plochách."
-
-#~ msgid "Moksha Temperature Module"
-#~ msgstr "Modul Teplota pre Moksha"
-
-#~ msgid ""
-#~ "A module to measure the <hilight>ACPI Thermal sensor</hilight> on Linux."
-#~ "<br>It is especially useful for modern Laptops with high speed<br>CPUs "
-#~ "that generate a lot of heat."
-#~ msgstr ""
-#~ "Modul, ktorý zobrazuje teplotu meranú <hilight>ACPI senzorom</hilight> na "
-#~ "Linuxe.<br>Svoje uplatnenie nájde najmä v moderných notebookoch s "
-#~ "rýchlymi<br>CPU, ktoré produkujú veľa tepla."
-
-#~ msgid "Temp 2"
-#~ msgstr "Teplota 2"
-
-#~ msgid "Temp 3"
-#~ msgstr "Teplota 3"
-
-#~ msgid ""
-#~ "A simple module to control the frequency of the system CPU.<br>This is "
-#~ "especially useful to save power on laptops."
-#~ msgstr ""
-#~ "Jednoduchý modul, ktorý umožňuje riadiť frekvenciu CPU.<br>Uplatní sa "
-#~ "najmä pri šetrení energie na notebookoch."
-
-#~ msgid "Moksha Start Module"
-#~ msgstr "Modul Start pre Moksha"
-
-#~ msgid "Experimental Button module for E17"
-#~ msgstr "Experimentálny Tlačítkový modul pre E17"
-
-#~ msgid "Moksha ITray Module"
-#~ msgstr "Moksha ITray Modul"
-
-#~ msgid "The border style"
-#~ msgstr "Štýl okraju"
-
-#~ msgid "Remove Row of Desktops"
-#~ msgstr "Odstrániť Riadok Plôch"
-
-#~ msgid "New Column of Desktops"
-#~ msgstr "Nový Stĺpec Plôch"
-
-#~ msgid "Remove Column of Desktops"
-#~ msgstr "Odstrániť Stĺpec Plôch"
-
-#~ msgid "Eap Editor"
-#~ msgstr "Eap Editor"
-
-#~ msgid ""
-#~ "Moksha was unable run the program:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "The command was not found\n"
-#~ msgstr ""
-#~ "Moksha nemôže spustiť program:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Nepodarilo sa nájsť príkaz\n"
-
-#~ msgid "Protect this file"
-#~ msgstr "Chrániť tento súbor"
-
-#~ msgid "Let others see this file"
-#~ msgstr "Umožniť ostatným prehliadať tento súbor"
-
-#~ msgid "Let others modify this file"
-#~ msgstr "Umožniť ostatným modifikovať tento súbor"
-
-#~ msgid "Dont let others see or modify this file"
-#~ msgstr "Znemožniť ostatným prehliadať alebo modifikovať tento súbor"
-
-#~ msgid "w"
-#~ msgstr "w"
-
-#~ msgid "x"
-#~ msgstr "x"
-
-#~ msgid ""
-#~ "Moksha cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Moksha.\n"
-#~ "Double check to see if Moksha is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again.\n"
-#~ "\n"
-#~ "If you use AFS then maybe you might want to make a symlink from\n"
-#~ "~/.ecore to /tmp/my_directory/ecore where sockets can be made."
-#~ msgstr ""
-#~ "Moksha nemôže otvoriť IPC soket.\n"
-#~ "Pravdepodobne ho používa už bežiaca kópia Moksha.\n"
-#~ "Skontrolujte, či už Moksha nebeží na tejto obrazovke,\n"
-#~ "pokiaľ nie, zmažte všetky súbory v ~/.ecore/enlightenment-*\n"
-#~ "a skúste spustiť znova.\n"
-#~ "\n"
-#~ "Pokiaľ používate AFS, tak je možné, že je treba vytvoriť symbolický link "
-#~ "z\n"
-#~ "~/.ecore na /tmp/my_directory/ecore kde majú byť vytvorené sokety."
-
-#~ msgid "Moksha IPC setup error!"
-#~ msgstr "Chyba v nastavení Moksha IPC!"
-
-#~ msgid ""
-#~ "Moksha cannot set up the IPC socket.\n"
-#~ "It likely is already in use by an existing copy of Moksha.\n"
-#~ "Double check to see if Moksha is not already on this display,\n"
-#~ "but if that fails try deleting all files in ~/.ecore/enlightenment-*\n"
-#~ "and try running again."
-#~ msgstr ""
-#~ "Moksha nemôže otvoriť IPC soket.\n"
-#~ "Pravdepodobne ho používa už bežiaca kópia Moksha.\n"
-#~ "Skontrolujte, či už Moksha nebeží na tejto obrazovke,\n"
-#~ "pokiaľ nie, zmažte všetky súbory v ~/.ecore/enlightenment-*\n"
-#~ "a skúste spustiť znova."
-
-#~ msgid "Automatic Width"
-#~ msgstr "Automatická Šírka"
-
-#~ msgid "Half Screen Width"
-#~ msgstr "Šírka Polovice Obrazovky"
-
-#~ msgid "Full Screen Width"
-#~ msgstr "Šírka Celej Obrazovky"
-
-#~ msgid "Half Screen Height"
-#~ msgstr "Výška Polovice Obrazovky"
-
-#~ msgid "Full Screen Height"
-#~ msgstr "Výška Celej Obrazovky"
-
-#~ msgid "End Edit Mode"
-#~ msgstr "Ukončiť Mód Úprav"
-
-#~ msgid "Very Small"
-#~ msgstr "Veľmi Malé"
-
-#~ msgid "Very Large"
-#~ msgstr "Veľmi Veľké"
-
-#~ msgid "Extremely Large"
-#~ msgstr "Extrémne Veľké"
-
-#~ msgid "Enormous"
-#~ msgstr "Enormné"
-
-#~ msgid "Gigantic"
-#~ msgstr "Gigantické"
-
-#~ msgid "Something Else"
-#~ msgstr "Niečo Iné"
-
-#~ msgid "Moksha Test Module"
-#~ msgstr "Moksha Test Modul"
-
-#~ msgid "Set Poll Time"
-#~ msgstr "Interval Aktualizácie"
-
-#~ msgid "Restore Controller on Startup"
-#~ msgstr "Obnoviť Ovládač pri Štarte"
-
-#~ msgid "Check Fast (0.5 sec)"
-#~ msgstr "Kontrolovať Rýchlo (0.5 sek)"
-
-#~ msgid "Check Medium (1 sec)"
-#~ msgstr "Kontrolovať Stredne Rýchlo (1 sek)"
-
-#~ msgid "Check Normal (2 sec)"
-#~ msgstr "Kontrolovať Normálne (2 sek)"
-
-#~ msgid "Check Slow (5 sec)"
-#~ msgstr "Kontrolovať Pomaly (5 sek)"
-
-#~ msgid "Check Very Slow (30 sec)"
-#~ msgstr "Kontrolovať Veľmi Pomaly (30 sek)"
-
-#~ msgid "No Digital Display"
-#~ msgstr "Žiaden Digitálny Displej"
-
-#~ msgid "Very Fast"
-#~ msgstr "Veľmi Rýchle"
-
-#~ msgid "Fix Aspect (Keep Height)"
-#~ msgstr "Opraviť Vzhľad (Drž Výšku)"
-
-#~ msgid "Fix Aspect (Keep Width)"
-#~ msgstr "Opraviť Vzhľad (Drž Šírku)"
-
-#~ msgid "Module to change screen resolution for E17"
-#~ msgstr "Modul pre zmenu rozlíšenia pre E17."
-
-#~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d in %d seconds."
-#~ msgstr ""
-#~ "Zachovať nové rozlíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré "
-#~ "rozlíšenie %dx%d za %d sekúnd."
-
-#~ msgid ""
-#~ "Keep new resolution <hilight>%dx%d</hilight>?<br><br>Restoring old "
-#~ "resolution %dx%d NOW!"
-#~ msgstr ""
-#~ "Zachovať nové rozlíšenie <hilight>%dx%d</hilight>?<br><br>Obnoviť staré "
-#~ "rozlíšenie %dx%d TERAZ!"
-
-#~ msgid "Set Alarm"
-#~ msgstr "Nastaviť Alarm"
-
-#~ msgid "20 mins"
-#~ msgstr "20 minút"
-
-#~ msgid "40 mins"
-#~ msgstr "40 minút"
-
-#~ msgid "50 mins"
-#~ msgstr "50 minút"
-
-#~ msgid "Check Fast (1 sec)"
-#~ msgstr "Kontrolovať Rýchlo (1 sek)"
-
-#~ msgid "Check Medium (5 sec)"
-#~ msgstr "Kontrolovať Stredne Rýchlo (5 sek)"
-
-#~ msgid "Check Normal (10 sec)"
-#~ msgstr "Kontrolovať Normálne (10 sek)"
-
-#~ msgid "Check Slow (30 sec)"
-#~ msgstr "Kontrolovať Pomaly (30 sek)"
-
-#~ msgid "Check Very Slow (60 sec)"
-#~ msgstr "Kontrolovať Veľmi Pomaly (60 sek)"
-
-#~ msgid "Both directions"
-#~ msgstr "Obidva smery"
-
-#~ msgid "EFM"
-#~ msgstr "EFM"
-
-#~ msgid "Show windows from all zones"
-#~ msgstr "Ukázať okná zo všetkých zón"
-
-#~ msgid "Desktop Lock Settings"
-#~ msgstr "Nastavenia Uzamknutia Plochy"
-
-#~ msgid "To Desktop 0"
-#~ msgstr "Na Plochu 0"
-
-#~ msgid "To Desktop 1"
-#~ msgstr "Na Plochu 1"
-
-#~ msgid "To Desktop 2"
-#~ msgstr "Na Plochu 2"
-
-#~ msgid "To Desktop 3"
-#~ msgstr "Na Plochu 3"
-
-#~ msgid "To Desktop 4"
-#~ msgstr "Na Plochu 4"
-
-#~ msgid "To Desktop 5"
-#~ msgstr "Na Plochu 5"
-
-#~ msgid "To Desktop 6"
-#~ msgstr "Na Plochu 6"
-
-#~ msgid "To Desktop 7"
-#~ msgstr "Na Plochu 7"
-
-#~ msgid "To Desktop 8"
-#~ msgstr "Na Plochu 8"
-
-#~ msgid "To Desktop 9"
-#~ msgstr "Na Plochu 9"
-
-#~ msgid "To Desktop 10"
-#~ msgstr "Na Plochu 10"
-
-#~ msgid "To Desktop 11"
-#~ msgstr "Na Plochu 11"
-
-#~ msgid "Unsorted"
-#~ msgstr "Nezotriedený"
-
-#~ msgid "Parameters"
-#~ msgstr "Parametre"
-
-#~ msgid ""
-#~ "You requested to delete \"%s\" keybinding.<br><br>Are you sure you want "
-#~ "to delete it?"
-#~ msgstr ""
-#~ "Požadujete vymazať klávesovú skratku\"%s\".<br><br>Ste si istý, že ju "
-#~ "chcete vymazať?"
-
-#~ msgid "Exit Moksha"
-#~ msgstr "Ukončiť Moksha"
-
-#~ msgid "App name"
-#~ msgstr "Názov aplikácie"
-
-#~ msgid "Moksha: Error!"
-#~ msgstr "Moksha: Chyba!"
-
-#~ msgid "My Group"
-#~ msgstr "Moja Skupina"
-
-#~ msgid "Everyone"
-#~ msgstr "Všetci"
-
-#~ msgid "Center Horizontally"
-#~ msgstr "Vystrediť Horizontálne"
-
-#~ msgid "Automatic Height"
-#~ msgstr "Automatická Výška"
-
-#~ msgid "Center Vertically"
-#~ msgstr "Vystrediť Vertikálne"
-
-#~ msgid "Allow Overlap"
-#~ msgstr "Povoliť Prekrývanie"
-
-#~ msgid "Theme Desklock Background"
-#~ msgstr "Pozadie pre Tému Uzamknutej Plochy"
-
-#~ msgid "Exebuf Settings"
-#~ msgstr "Nastavenia Exebuf"
-
-#~ msgid "Font Hinting Settings"
-#~ msgstr "Nastavenia Vyhladzovania Fontov"
-
-#~ msgid "No Hinting"
-#~ msgstr "Bez vyhladzovania"
-
-#~ msgid "Import An Image"
-#~ msgstr "Importovať Obrázok"
-
-#~ msgid "Center Image"
-#~ msgstr "Vystrediť Obrázok"
-
-#~ msgid "Scale Image"
-#~ msgstr "Roztiahnúť Obrázok"
-
-#~ msgid "Password Type"
-#~ msgstr "Typ Hesla"
-
-#~ msgid "Use my login password"
-#~ msgstr "Použiť moje prihlasovacie heslo"
-
-#~ msgid "Personalized password"
-#~ msgstr "Osobné heslo"
-
-#~ msgid "Personalized Password:"
-#~ msgstr "Osobné heslo:"
-
-#~ msgid "Show password"
-#~ msgstr "Ukázať heslo"
-
-#~ msgid "About…"
-#~ msgstr "O..."
-
-#~ msgid "Turned around"
-#~ msgstr "Dookola"
-
-#~ msgid "Assign Key Binding..."
-#~ msgstr "Priradiť klávesovú skratku..."
-
-#~ msgid "Contents Settings"
-#~ msgstr "Nastavenia Obsahu"
-
-#~ msgid "Begin editing"
-#~ msgstr "Začať editovať"
-
-#~ msgid "Shelf Location and Appearance Settings"
-#~ msgstr "Nastavenie Umiestnenia a  Vzhľadu Šelfu"
-
-#~ msgid "Auto-Apply Configuration Changes"
-#~ msgstr "Automaticky aplikovať zmeny v konfigurácii"
-
-#~ msgid "Left Top"
-#~ msgstr "Vľavo Hore"
-
-#~ msgid "Allow shading/resizing"
-#~ msgstr "Povoliť schovanie/zmenu veľkosti"
-
-#~ msgid "%1.2f px/s"
-#~ msgstr "%1.2f px/s"
-
-#~ msgid "Autoscroll Speed:"
-#~ msgstr "Rýchlosť Autoscrollu:"
-
-#~ msgid "Switch To Desktop…"
-#~ msgstr "Presunúť na Plochu..."
-
-#~ msgid "To Desktop…"
-#~ msgstr "Na Plochu..."
-
-#~ msgid "Shrink length fit contents"
-#~ msgstr "Zmenšiť dĺžku podľa obsahu"
-
-#~ msgid "Window Display Settings"
-#~ msgstr "Displej pre Okná"
-
-#~ msgid "Window Manipulation Settings"
-#~ msgstr "Manipulácia s Oknami"
-
-#~ msgid "Inset appearance"
-#~ msgstr "Vsadený vzhľad"
-
-#~ msgid "Clock Configuration"
-#~ msgstr "Konfigurácia Hodín"
-
-#~ msgid "12 Hour Display"
-#~ msgstr "12 Hodinový Displej"
-
-#~ msgid "24 Hour Display"
-#~ msgstr "24 Hodinový Displej"
-
-#~ msgid "Desktop Name Position"
-#~ msgstr "Umiestnenie Názvu Plochy"
-
-#~ msgid "Font Display Hinting"
-#~ msgstr "Vyhladzovanie Fontov"
-
-#~ msgid "Prev Key Binding"
-#~ msgstr "Pred. Klávesová Skratka"
-
-#~ msgid "Background Preview"
-#~ msgstr "Náhľad Na Pozadie"
-
-#~ msgid ""
-#~ "There was an error loading module named: %s<br>The full path to this "
-#~ "module is:<br>%s<br>The error reported was:<br>Module does not contain "
-#~ "all needed functions<br>"
-#~ msgstr ""
-#~ "Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>"
-#~ "%s<br>Došlo k chybe:<br>Modul neobsahuje všetkypotrebné funkcie<br>"
-
-#~ msgid ""
-#~ "This is the ITray system tray module for Moksha.<br>It will hold system "
-#~ "tray icons."
-#~ msgstr ""
-#~ "Toto je ITray systém, tray modul pre Moksha.<br>Je to miesto pretray "
-#~ "ikony systému."
-
-#~ msgid ""
-#~ "3 Moksha was unable to fork a child process:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ msgstr ""
-#~ "3 Moksha nemôže vytvoriť proces potomka:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-
-#~ msgid "Mouse Pointer Settings"
-#~ msgstr "Nastavenie Kurzora Myši"
-
-#~ msgid "New Row of Desktops"
-#~ msgstr "Nový Riadok Plôch"
-
-#~ msgid "10 Mins"
-#~ msgstr "10 minút"
-
-#~ msgid "IBar Module"
-#~ msgstr "IBar Modul"
-
-#~ msgid "Icon Size:"
-#~ msgstr "Veľkosť Ikony:"
-
-#~ msgid "IBox Module"
-#~ msgstr "IBox Modul"
-
-#~ msgid "Lifespan"
-#~ msgstr "Lifespan"
-
-#~ msgid "Remember This Instance Only"
-#~ msgstr "Zapamätať Si Iba Túto Inštanciu"
-
-#~ msgid "Match by Class"
-#~ msgstr "Porovnať podľa Triedy"
-
-#~ msgid "Match by Role"
-#~ msgstr "Porovnať podľa Úlohy"
-
-#~ msgid "Match by Transient Status"
-#~ msgstr "Porovnať podľa Stavu Priehľadnosti"
-
-#~ msgid "Remember Size"
-#~ msgstr "Zapamätať Veľkosť"
-
-#~ msgid "Remember Desktop"
-#~ msgstr "Zapamätať Plochu"
-
-#~ msgid "Remember Shaded State"
-#~ msgstr "Zapamätať Schovanie"
-
-#~ msgid "Remember Zone"
-#~ msgstr "Zapamätať Zónu"
-
-#~ msgid ""
-#~ "Error starting icon editor\n"
-#~ "\n"
-#~ "please install e_util_eapp_edit\n"
-#~ "or make sure it is in your PATH\n"
-#~ msgstr ""
-#~ "Vznikla chyba pri spúšťaní editoru ikon\n"
-#~ "\n"
-#~ "prosím nainštalujte e_util_eapp_edit\n"
-#~ "alebo sa uistite, že je uvedený v PATH\n"
-
-#~ msgid "Moksha Cpufreq Module"
-#~ msgstr "Modul Cpufreq pre Moksha"
-
-#~ msgid "CpuFreq"
-#~ msgstr "CpuFreq"
-
-#~ msgid "Wait Exit"
-#~ msgstr "Počkať pri Ukončení"
-
-#~ msgid ":"
-#~ msgstr ":"
-
-#~ msgid ""
-#~ "This is the ITray system tray module for Moksha.<br>It will hold system "
-#~ "tray icons.<br>Beware that this can be buggy due to many systray "
-#~ "providing<br>applications not handling the protocol properly, and the "
-#~ "way<br>systray icons work being very limiting and hacky. Do not "
-#~ "use<br>this module unless you absolutely must, and if you do, "
-#~ "beware<br>of issues that will appear."
-#~ msgstr ""
-#~ "Toto je ITray, systémový tray modul pre Moksha.<br>Sú doňho umiestnené "
-#~ "systémové tray ikony.<br>Varovanie tento modul môže vykazovať chyby, "
-#~ "pretože veľa aplikácií<br> je nedostatočne naprogramovaných pre "
-#~ "umiestnenie do systray a spôsob<br>akým systray funguje má isté "
-#~ "obmedzenia a nedostatky. Nepoužívajte<br>tento modul pokiaľ to nie je "
-#~ "skutočne nutné a v prípade, že ho použijete pozor<br>na chyby, ktoré sa "
-#~ "objavia."

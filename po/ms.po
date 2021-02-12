@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-13 08:00-0500\n"
+"POT-Creation-Date: 2021-02-12 13:10+0100\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "Mengenai Enlightment"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -33,8 +33,8 @@ msgstr "Mengenai Enlightment"
 msgid "Close"
 msgstr "Tutup"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:709
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
+#: src/bin/e_actions.c:3547 src/bin/e_main.c:709
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -53,7 +53,12 @@ msgstr ""
 msgid "<title>The Team</><br><br>"
 msgstr ""
 
-#: src/bin/e_actions.c:360
+#: src/bin/e_actions.c:154
+#, fuzzy
+msgid "Profile: Switch"
+msgstr "profil Pemilih"
+
+#: src/bin/e_actions.c:430
 #, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data from this "
@@ -61,307 +66,307 @@ msgid ""
 "want to kill this window?"
 msgstr ""
 
-#: src/bin/e_actions.c:372
+#: src/bin/e_actions.c:442
 #, fuzzy
 msgid "Are you sure you want to kill this window?"
 msgstr "Adakah anda pasti anda mahu untuk membunuh tetingkap ini."
 
-#: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
 #, fuzzy
 msgid "Kill"
 msgstr "membunuh"
 
-#: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
-#: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
-#: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
+#: src/bin/e_actions.c:447 src/bin/e_actions.c:2283 src/bin/e_actions.c:2377
+#: src/bin/e_actions.c:2437 src/bin/e_actions.c:2497 src/bin/e_actions.c:2562
+#: src/bin/e_actions.c:2627 src/bin/e_confirm_dialog.c:53
 #: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10479 src/bin/e_fm.c:10845
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "Tidak"
 
-#: src/bin/e_actions.c:2090
+#: src/bin/e_actions.c:2160
 #, fuzzy
 msgid "Action Params Syntax Error"
 msgstr "tindakan params"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:263
 #, fuzzy
 msgid "Exit"
 msgstr "keluar"
 
-#: src/bin/e_actions.c:2209
+#: src/bin/e_actions.c:2279
 #, fuzzy
 msgid "Are you sure you want to exit Moksha?"
 msgstr "Adakah anda pasti mahu keluar?"
 
-#: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
-#: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
+#: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
+#: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:315
 msgid "Yes"
 msgstr "Ya"
 
-#: src/bin/e_actions.c:2302
+#: src/bin/e_actions.c:2372
 #, fuzzy
 msgid "Logout"
 msgstr "Logout kini"
 
-#: src/bin/e_actions.c:2303
+#: src/bin/e_actions.c:2373
 #, fuzzy
 msgid "Are you sure you want to logout?"
 msgstr "Adakah anda pasti untuk log keluar?"
 
-#: src/bin/e_actions.c:2361 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 #, fuzzy
 msgid "Power off"
 msgstr "matikan"
 
-#: src/bin/e_actions.c:2363
+#: src/bin/e_actions.c:2433
 #, fuzzy
 msgid "Are you sure you want to power off your computer?"
 msgstr "Adakah anda pasti untuk log keluar?"
 
-#: src/bin/e_actions.c:2422 src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 #, fuzzy
 msgid "Reboot"
 msgstr "reboot"
 
-#: src/bin/e_actions.c:2423
+#: src/bin/e_actions.c:2493
 #, fuzzy
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Adakah anda pasti anda mahu reboot."
 
-#: src/bin/e_actions.c:2487 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 #, fuzzy
 msgid "Suspend"
 msgstr "menggantung"
 
-#: src/bin/e_actions.c:2488
+#: src/bin/e_actions.c:2558
 #, fuzzy
 msgid "Are you sure you want to suspend your computer?"
 msgstr "Adakah anda pasti untuk log keluar?"
 
-#: src/bin/e_actions.c:2552 src/bin/e_actions.c:3528
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 #, fuzzy
 msgid "Hibernate"
 msgstr "hibernate"
 
-#: src/bin/e_actions.c:2553
+#: src/bin/e_actions.c:2623
 #, fuzzy
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Adakah anda pasti anda mahu hibernate."
 
-#: src/bin/e_actions.c:3041 src/bin/e_actions.c:3052 src/bin/e_actions.c:3071
-#: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
-#: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
-#: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
+#: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
+#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
+#: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
 #: src/modules/shot/e_mod_main.c:1278
 #, fuzzy
 msgid "Window : Actions"
 msgstr "Tetingkap ; Tindakan"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
+#: src/bin/e_actions.c:3111 src/bin/e_fm.c:11616
 #: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Alihkan"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
+#: src/bin/e_actions.c:3122 src/bin/e_int_border_menu.c:717
 #, fuzzy
 msgid "Resize"
 msgstr "mengubah saiz"
 
-#: src/bin/e_actions.c:3063 src/bin/e_actions.c:3440 src/bin/e_actions.c:3442
-#: src/bin/e_actions.c:3444 src/bin/e_actions.c:3446 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3133 src/bin/e_actions.c:3510 src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3514 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "Menu"
 
-#: src/bin/e_actions.c:3063
+#: src/bin/e_actions.c:3133
 msgid "Window Menu"
 msgstr "Menu Tetingkap"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Naik"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
 #, fuzzy
 msgid "Lower"
 msgstr "Turunkan"
 
-#: src/bin/e_actions.c:3091 src/bin/e_actions.c:3095 src/bin/e_actions.c:3100
-#: src/bin/e_actions.c:3104 src/bin/e_actions.c:3108 src/bin/e_actions.c:3113
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3122 src/bin/e_actions.c:3126
-#: src/bin/e_actions.c:3132 src/bin/e_actions.c:3134 src/bin/e_actions.c:3137
-#: src/bin/e_actions.c:3140 src/bin/e_actions.c:3143 src/bin/e_actions.c:3146
-#: src/bin/e_actions.c:3148 src/bin/e_actions.c:3150 src/bin/e_actions.c:3152
-#: src/bin/e_actions.c:3159 src/bin/e_actions.c:3161 src/bin/e_actions.c:3163
-#: src/bin/e_actions.c:3165 src/bin/e_actions.c:3167 src/bin/e_actions.c:3171
-#: src/bin/e_actions.c:3176 src/bin/e_actions.c:3181 src/bin/e_actions.c:3187
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
+#: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
+#: src/bin/e_actions.c:3187 src/bin/e_actions.c:3192 src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3202 src/bin/e_actions.c:3204 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3210 src/bin/e_actions.c:3213 src/bin/e_actions.c:3216
+#: src/bin/e_actions.c:3218 src/bin/e_actions.c:3220 src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3251 src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3263
 #, fuzzy
 msgid "Window : State"
 msgstr "Negara tetingkap."
 
-#: src/bin/e_actions.c:3091
+#: src/bin/e_actions.c:3161
 #, fuzzy
 msgid "Sticky Mode Toggle"
 msgstr "Melekit Mod Togol"
 
-#: src/bin/e_actions.c:3095
+#: src/bin/e_actions.c:3165
 #, fuzzy
 msgid "Sticky Mode Enable"
 msgstr "Melekit Mod Togol"
 
-#: src/bin/e_actions.c:3100
+#: src/bin/e_actions.c:3170
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Sentiasa Top"
 
-#: src/bin/e_actions.c:3104
+#: src/bin/e_actions.c:3174
 #, fuzzy
 msgid "Always On Top Enable"
 msgstr "Sentiasa Top"
 
-#: src/bin/e_actions.c:3108
+#: src/bin/e_actions.c:3178
 #, fuzzy
 msgid "Always On Top Disable"
 msgstr "Sentiasa Top"
 
-#: src/bin/e_actions.c:3113
+#: src/bin/e_actions.c:3183
 #, fuzzy
 msgid "Iconic Mode Toggle"
 msgstr "Ikonik Mod Togol"
 
-#: src/bin/e_actions.c:3117
+#: src/bin/e_actions.c:3187
 #, fuzzy
 msgid "Iconic Mode Enable"
 msgstr "Ikonik Mod Togol"
 
-#: src/bin/e_actions.c:3122
+#: src/bin/e_actions.c:3192
 #, fuzzy
 msgid "Fullscreen Mode Toggle"
 msgstr "Skrin penuh Mod Togol"
 
-#: src/bin/e_actions.c:3126
+#: src/bin/e_actions.c:3196
 #, fuzzy
 msgid "Fullscreen Mode Enable"
 msgstr "Skrin penuh Mod Togol"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
 #: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "Maksimumkan"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "Maksimakan Menegak"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "Maksimakan Mendatar"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
 #, fuzzy
 msgid "Maximize Left"
 msgstr "Maksimumkan"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
 #, fuzzy
 msgid "Maximize Right"
 msgstr "Maksimumkan"
 
-#: src/bin/e_actions.c:3146
+#: src/bin/e_actions.c:3216
 #, fuzzy
 msgid "Maximize Fullscreen"
 msgstr "memaksimumkan Fullscreen"
 
-#: src/bin/e_actions.c:3148
+#: src/bin/e_actions.c:3218
 msgid "Maximize Mode \"Smart\""
 msgstr ""
 
-#: src/bin/e_actions.c:3150
+#: src/bin/e_actions.c:3220
 msgid "Maximize Mode \"Expand\""
 msgstr ""
 
-#: src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3222
 msgid "Maximize Mode \"Fill\""
 msgstr ""
 
-#: src/bin/e_actions.c:3159
+#: src/bin/e_actions.c:3229
 #, fuzzy
 msgid "Shade Up Mode Toggle"
 msgstr "Teduh Up Mod Togol"
 
-#: src/bin/e_actions.c:3161
+#: src/bin/e_actions.c:3231
 #, fuzzy
 msgid "Shade Down Mode Toggle"
 msgstr "Teduh Down Mod Togol"
 
-#: src/bin/e_actions.c:3163
+#: src/bin/e_actions.c:3233
 #, fuzzy
 msgid "Shade Left Mode Toggle"
 msgstr "Teduh Mod Togol Kiri"
 
-#: src/bin/e_actions.c:3165
+#: src/bin/e_actions.c:3235
 #, fuzzy
 msgid "Shade Right Mode Toggle"
 msgstr "Teduh Mod Togol Hak"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3237
 #, fuzzy
 msgid "Shade Mode Toggle"
 msgstr "Teduh Mod Togol"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3241
 #, fuzzy
 msgid "Set Shaded State"
 msgstr "negeri berlorek"
 
-#: src/bin/e_actions.c:3172
+#: src/bin/e_actions.c:3242
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr ""
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3246
 #, fuzzy
 msgid "Toggle Borderless State"
 msgstr "Togol Negeri tanpa sempadan"
 
-#: src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3251
 #, fuzzy
 msgid "Set Border"
 msgstr "Tetapkan Sempadan"
 
-#: src/bin/e_actions.c:3187
+#: src/bin/e_actions.c:3257
 #, fuzzy
 msgid "Cycle between Borders"
 msgstr "Kitaran antara sempadan"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3263
 #, fuzzy
 msgid "Toggle Pinned State"
 msgstr "Togol Negeri pin"
 
-#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3212
-#: src/bin/e_actions.c:3217 src/bin/e_actions.c:3223 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3234 src/bin/e_actions.c:3240 src/bin/e_actions.c:3242
-#: src/bin/e_actions.c:3244 src/bin/e_actions.c:3246 src/bin/e_actions.c:3248
-#: src/bin/e_actions.c:3250 src/bin/e_actions.c:3252 src/bin/e_actions.c:3254
-#: src/bin/e_actions.c:3256 src/bin/e_actions.c:3258 src/bin/e_actions.c:3260
-#: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3270
-#: src/bin/e_actions.c:3272 src/bin/e_actions.c:3274 src/bin/e_actions.c:3276
-#: src/bin/e_actions.c:3278 src/bin/e_actions.c:3284 src/bin/e_actions.c:3290
-#: src/bin/e_actions.c:3296 src/bin/e_actions.c:3301 src/bin/e_actions.c:3303
-#: src/bin/e_actions.c:3305 src/bin/e_actions.c:3307 src/bin/e_actions.c:3309
-#: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
-#: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
-#: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3268 src/bin/e_actions.c:3270 src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287 src/bin/e_actions.c:3293 src/bin/e_actions.c:3298
+#: src/bin/e_actions.c:3304 src/bin/e_actions.c:3310 src/bin/e_actions.c:3312
+#: src/bin/e_actions.c:3314 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3354 src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3366 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3375 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -370,227 +375,227 @@ msgstr "Togol Negeri pin"
 msgid "Desktop"
 msgstr "desktop"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3268
 #, fuzzy
 msgid "Flip Desktop Left"
 msgstr "Desktop flip kiri"
 
-#: src/bin/e_actions.c:3200
+#: src/bin/e_actions.c:3270
 #, fuzzy
 msgid "Flip Desktop Right"
 msgstr "Terbalikkan Hak Desktop"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3272
 #, fuzzy
 msgid "Flip Desktop Up"
 msgstr "Terbalikkan Desktop Sehingga"
 
-#: src/bin/e_actions.c:3204
+#: src/bin/e_actions.c:3274
 #, fuzzy
 msgid "Flip Desktop Down"
 msgstr "Terbalikkan Desktop Down"
 
-#: src/bin/e_actions.c:3206
+#: src/bin/e_actions.c:3276
 #, fuzzy
 msgid "Flip Desktop By..."
 msgstr "Terbalikkan Desktop Dengan ..."
 
-#: src/bin/e_actions.c:3212
+#: src/bin/e_actions.c:3282
 #, fuzzy
 msgid "Flip To Previous Desktop"
 msgstr "Ke Ruang Kerja Sebelumnya"
 
-#: src/bin/e_actions.c:3217
+#: src/bin/e_actions.c:3287
 #, fuzzy
 msgid "Show The Desktop"
 msgstr "Tunjukkan desktop"
 
-#: src/bin/e_actions.c:3223
+#: src/bin/e_actions.c:3293
 #, fuzzy
 msgid "Show The Shelf"
 msgstr "Tunjukkan rak"
 
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3298
 #, fuzzy
 msgid "Flip Desktop To..."
 msgstr "Terbalikkan Desktop Untuk ..."
 
-#: src/bin/e_actions.c:3234
+#: src/bin/e_actions.c:3304
 #, fuzzy
 msgid "Flip Desktop Linearly..."
 msgstr "Terbalikkan Desktop Lelurus ..."
 
-#: src/bin/e_actions.c:3240
+#: src/bin/e_actions.c:3310
 #, fuzzy
 msgid "Switch To Desktop 0"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3242
+#: src/bin/e_actions.c:3312
 #, fuzzy
 msgid "Switch To Desktop 1"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3314
 #, fuzzy
 msgid "Switch To Desktop 2"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3246
+#: src/bin/e_actions.c:3316
 #, fuzzy
 msgid "Switch To Desktop 3"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3318
 #, fuzzy
 msgid "Switch To Desktop 4"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3250
+#: src/bin/e_actions.c:3320
 #, fuzzy
 msgid "Switch To Desktop 5"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3322
 #, fuzzy
 msgid "Switch To Desktop 6"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3254
+#: src/bin/e_actions.c:3324
 #, fuzzy
 msgid "Switch To Desktop 7"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3256
+#: src/bin/e_actions.c:3326
 #, fuzzy
 msgid "Switch To Desktop 8"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3258
+#: src/bin/e_actions.c:3328
 #, fuzzy
 msgid "Switch To Desktop 9"
 msgstr "Beralih Untuk Desktop."
 
-#: src/bin/e_actions.c:3260
+#: src/bin/e_actions.c:3330
 #, fuzzy
 msgid "Switch To Desktop 10"
 msgstr "Beralih Untuk Desktop 10"
 
-#: src/bin/e_actions.c:3262
+#: src/bin/e_actions.c:3332
 #, fuzzy
 msgid "Switch To Desktop 11"
 msgstr "Beralih Untuk Desktop 11"
 
-#: src/bin/e_actions.c:3264
+#: src/bin/e_actions.c:3334
 #, fuzzy
 msgid "Switch To Desktop..."
 msgstr "Tukar Ke Desktop ..."
 
-#: src/bin/e_actions.c:3270
+#: src/bin/e_actions.c:3340
 #, fuzzy
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Flip kiri Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3342
 #, fuzzy
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Hak Desktop flip (Semua Skrin."
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3344
 #, fuzzy
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Terbalikkan Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3346
 #, fuzzy
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Terbalikkan Desktop Down (Semua Skrin."
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3348
 #, fuzzy
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Terbalikkan Desktop Dengan ... (Semua Skrin."
 
-#: src/bin/e_actions.c:3284
+#: src/bin/e_actions.c:3354
 #, fuzzy
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Terbalikkan Desktop Untuk ... (Semua Skrin."
 
-#: src/bin/e_actions.c:3290
+#: src/bin/e_actions.c:3360
 #, fuzzy
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Terbalikkan Desktop Lelurus ... (Semua Skrin."
 
-#: src/bin/e_actions.c:3296
+#: src/bin/e_actions.c:3366
 #, fuzzy
 msgid "Flip Desktop In Direction..."
 msgstr "Terbalikkan Desktop Di Arah ..."
 
-#: src/bin/e_actions.c:3301
+#: src/bin/e_actions.c:3371
 #, fuzzy
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Tukar Ke Desktop 0 (Semua Skrin."
 
-#: src/bin/e_actions.c:3303
+#: src/bin/e_actions.c:3373
 #, fuzzy
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Tukar Ke Desktop 1 (Semua Skrin."
 
-#: src/bin/e_actions.c:3305
+#: src/bin/e_actions.c:3375
 #, fuzzy
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Tukar Ke Desktop 2 (Semua Skrin."
 
-#: src/bin/e_actions.c:3307
+#: src/bin/e_actions.c:3377
 #, fuzzy
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Tukar Untuk Desktop 3 (Semua Skrin."
 
-#: src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3379
 #, fuzzy
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Tukar Ke Desktop 4 (Semua Skrin."
 
-#: src/bin/e_actions.c:3311
+#: src/bin/e_actions.c:3381
 #, fuzzy
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Tukar Ke Desktop 5 (Semua Skrin."
 
-#: src/bin/e_actions.c:3313
+#: src/bin/e_actions.c:3383
 #, fuzzy
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Tukar Ke Desktop 6 (Semua Skrin."
 
-#: src/bin/e_actions.c:3315
+#: src/bin/e_actions.c:3385
 #, fuzzy
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Tukar Ke Desktop 7 (Semua Skrin."
 
-#: src/bin/e_actions.c:3317
+#: src/bin/e_actions.c:3387
 #, fuzzy
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Tukar Untuk 8 Desktop (Semua Skrin."
 
-#: src/bin/e_actions.c:3319
+#: src/bin/e_actions.c:3389
 #, fuzzy
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Tukar Ke Desktop 9 (Semua Skrin."
 
-#: src/bin/e_actions.c:3321
+#: src/bin/e_actions.c:3391
 #, fuzzy
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Tukar Ke Desktop 10 (Semua Skrin."
 
-#: src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3393
 #, fuzzy
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Tukar Ke Desktop 11 (Semua Skrin."
 
-#: src/bin/e_actions.c:3325
+#: src/bin/e_actions.c:3395
 #, fuzzy
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Tukar Ke Desktop ... (Semua Skrin."
 
-#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -600,20 +605,20 @@ msgstr "Tukar Ke Desktop ... (Semua Skrin."
 msgid "Window : List"
 msgstr "Senarai tetingkap."
 
-#: src/bin/e_actions.c:3331
+#: src/bin/e_actions.c:3401
 #, fuzzy
 msgid "Jump to window..."
 msgstr "Lompat ke meja"
 
-#: src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3405
 msgid "Jump to window... or start..."
 msgstr ""
 
-#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3352 src/bin/e_actions.c:3354 src/bin/e_actions.c:3356
-#: src/bin/e_actions.c:3361 src/bin/e_actions.c:3364 src/bin/e_actions.c:3367
-#: src/bin/e_actions.c:3369 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
-#: src/bin/e_actions.c:3376 src/bin/e_actions.c:3378 src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3414 src/bin/e_actions.c:3416
+#: src/bin/e_actions.c:3422 src/bin/e_actions.c:3424 src/bin/e_actions.c:3426
+#: src/bin/e_actions.c:3431 src/bin/e_actions.c:3434 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3439 src/bin/e_actions.c:3441 src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3446 src/bin/e_actions.c:3448 src/bin/e_actions.c:3450
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
@@ -622,170 +627,170 @@ msgstr ""
 msgid "Screen"
 msgstr "skrin"
 
-#: src/bin/e_actions.c:3342
+#: src/bin/e_actions.c:3412
 #, fuzzy
 msgid "Send Mouse To Screen 0"
 msgstr "Menghantar Tetikus Untuk 0 Skrin"
 
-#: src/bin/e_actions.c:3344
+#: src/bin/e_actions.c:3414
 #, fuzzy
 msgid "Send Mouse To Screen 1"
 msgstr "Hantar Tetikus Kepada."
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3416
 #, fuzzy
 msgid "Send Mouse To Screen..."
 msgstr "Menghantar Tetikus Untuk Skrin ..."
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3422
 #, fuzzy
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Menghantar Tetikus Forward 1 Skrin"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3424
 #, fuzzy
 msgid "Send Mouse Back 1 Screen"
 msgstr "Menghantar Tetikus Kembali 1 Skrin"
 
-#: src/bin/e_actions.c:3356
+#: src/bin/e_actions.c:3426
 msgid "Send Mouse Forward/Back Screens..."
 msgstr ""
 
-#: src/bin/e_actions.c:3361
+#: src/bin/e_actions.c:3431
 #, fuzzy
 msgid "Dim"
 msgstr "malap"
 
-#: src/bin/e_actions.c:3364
+#: src/bin/e_actions.c:3434
 #, fuzzy
 msgid "Undim"
 msgstr "undim"
 
-#: src/bin/e_actions.c:3367
+#: src/bin/e_actions.c:3437
 #, fuzzy
 msgid "Backlight Set"
 msgstr "Set latar"
 
-#: src/bin/e_actions.c:3369
+#: src/bin/e_actions.c:3439
 #, fuzzy
 msgid "Backlight Min"
 msgstr "Min cahaya latar"
 
-#: src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3441
 #, fuzzy
 msgid "Backlight Mid"
 msgstr "latar Julat"
 
-#: src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3443
 #, fuzzy
 msgid "Backlight Max"
 msgstr "Max latar"
 
-#: src/bin/e_actions.c:3376
+#: src/bin/e_actions.c:3446
 #, fuzzy
 msgid "Backlight Adjust"
 msgstr "latar Laraskan"
 
-#: src/bin/e_actions.c:3378
+#: src/bin/e_actions.c:3448
 #, fuzzy
 msgid "Backlight Up"
 msgstr "latar Up"
 
-#: src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3450
 #, fuzzy
 msgid "Backlight Down"
 msgstr "latar Down"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3455
 #, fuzzy
 msgid "Move To Center"
 msgstr "Pindah Untuk Pusat"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3459
 #, fuzzy
 msgid "Move To Coordinates..."
 msgstr "Pindah Untuk Pusat"
 
-#: src/bin/e_actions.c:3394
+#: src/bin/e_actions.c:3464
 msgid "Move By Coordinate Offset..."
 msgstr ""
 
-#: src/bin/e_actions.c:3400
+#: src/bin/e_actions.c:3470
 #, fuzzy
 msgid "Resize By..."
 msgstr "Mengubah saiz By ..."
 
-#: src/bin/e_actions.c:3406
+#: src/bin/e_actions.c:3476
 #, fuzzy
 msgid "Push in Direction..."
 msgstr "Tolak Arah ..."
 
-#: src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3482
 #, fuzzy
 msgid "Drag Icon..."
 msgstr "Seret Ikon ..."
 
-#: src/bin/e_actions.c:3417 src/bin/e_actions.c:3419 src/bin/e_actions.c:3421
-#: src/bin/e_actions.c:3427 src/bin/e_actions.c:3433 src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3487 src/bin/e_actions.c:3489 src/bin/e_actions.c:3491
+#: src/bin/e_actions.c:3497 src/bin/e_actions.c:3503 src/bin/e_actions.c:3505
 #, fuzzy
 msgid "Window : Moving"
 msgstr "Tetingkap ; Melangkah"
 
-#: src/bin/e_actions.c:3417
+#: src/bin/e_actions.c:3487
 #, fuzzy
 msgid "To Next Desktop"
 msgstr "Ke Ruang Kerja Seterusnya"
 
-#: src/bin/e_actions.c:3419
+#: src/bin/e_actions.c:3489
 #, fuzzy
 msgid "To Previous Desktop"
 msgstr "Ke Ruang Kerja Sebelumnya"
 
-#: src/bin/e_actions.c:3421
+#: src/bin/e_actions.c:3491
 msgid "By Desktop #..."
 msgstr ""
 
-#: src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3497
 #, fuzzy
 msgid "To Desktop..."
 msgstr "Ke Desktop ..."
 
-#: src/bin/e_actions.c:3433
+#: src/bin/e_actions.c:3503
 #, fuzzy
 msgid "To Next Screen"
 msgstr "persediaan Skrin"
 
-#: src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3505
 #, fuzzy
 msgid "To Previous Screen"
 msgstr "Ke Ruang Kerja Sebelumnya"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3510
 #, fuzzy
 msgid "Show Main Menu"
 msgstr "Tunjukkan Menu Utama"
 
-#: src/bin/e_actions.c:3442
+#: src/bin/e_actions.c:3512
 #, fuzzy
 msgid "Show Favorites Menu"
 msgstr "Menunjukkan Pilihan Menu"
 
-#: src/bin/e_actions.c:3444
+#: src/bin/e_actions.c:3514
 #, fuzzy
 msgid "Show All Applications Menu"
 msgstr "Show All Menu Aplikasi"
 
-#: src/bin/e_actions.c:3446
+#: src/bin/e_actions.c:3516
 #, fuzzy
 msgid "Show Clients Menu"
 msgstr "Menunjukkan Pelanggan Menu"
 
-#: src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3518
 #, fuzzy
 msgid "Show Menu..."
 msgstr "Menunjukkan Menu ..."
 
-#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3460 src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:272
 #: src/modules/everything/evry_plug_apps.c:1176
 #: src/modules/fileman/e_mod_main.c:55
@@ -793,65 +798,65 @@ msgstr "Menunjukkan Menu ..."
 msgid "Launch"
 msgstr "Pelancaran"
 
-#: src/bin/e_actions.c:3455 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3525 src/bin/e_int_border_prop.c:468
 #, fuzzy
 msgid "Command"
 msgstr "perintah"
 
-#: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:698
 #: src/bin/e_int_border_menu.c:136
 #, fuzzy, c-format
 msgid "Application"
 msgstr "permohonan"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3535
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3469
+#: src/bin/e_actions.c:3539
 #, fuzzy
 msgid "Restart"
 msgstr "restart"
 
-#: src/bin/e_actions.c:3477
+#: src/bin/e_actions.c:3547
 #, fuzzy
 msgid "Exit Now"
 msgstr "keluar Sekarang"
 
-#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3486
+#: src/bin/e_actions.c:3551 src/bin/e_actions.c:3556
 msgid "Moksha : Mode"
 msgstr ""
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3552
 #, fuzzy
 msgid "Presentation Mode Toggle"
 msgstr "Taklimat Mod Togol"
 
-#: src/bin/e_actions.c:3487
+#: src/bin/e_actions.c:3557
 #, fuzzy
 msgid "Offline Mode Toggle"
 msgstr "Offline Mod Togol"
 
-#: src/bin/e_actions.c:3491 src/bin/e_actions.c:3495 src/bin/e_actions.c:3499
+#: src/bin/e_actions.c:3561 src/bin/e_actions.c:3565 src/bin/e_actions.c:3569
 #, fuzzy
 msgid "Moksha : Module"
 msgstr "Moksha"
 
-#: src/bin/e_actions.c:3492
+#: src/bin/e_actions.c:3562
 msgid "Enable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3496
+#: src/bin/e_actions.c:3566
 msgid "Disable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3500
+#: src/bin/e_actions.c:3570
 msgid "Toggle the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3504 src/bin/e_actions.c:3508 src/bin/e_actions.c:3512
-#: src/bin/e_actions.c:3516 src/bin/e_actions.c:3520 src/bin/e_actions.c:3524
-#: src/bin/e_actions.c:3528 src/bin/e_actions.c:3532 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3574 src/bin/e_actions.c:3578 src/bin/e_actions.c:3582
+#: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
+#: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -869,67 +874,67 @@ msgstr ""
 msgid "System"
 msgstr "sistem"
 
-#: src/bin/e_actions.c:3504
+#: src/bin/e_actions.c:3574
 #, fuzzy
 msgid "Log Out"
 msgstr "Log Out"
 
-#: src/bin/e_actions.c:3508
+#: src/bin/e_actions.c:3578
 #, fuzzy
 msgid "Power Off Now"
 msgstr "Kuasa Off Sekarang"
 
-#: src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3582
 #, fuzzy
 msgid "Power Off"
 msgstr "kuasa Off"
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3590
 #, fuzzy
 msgid "Suspend Now"
 msgstr "menggantung Sekarang"
 
-#: src/bin/e_actions.c:3532
+#: src/bin/e_actions.c:3602
 #, fuzzy
 msgid "Hibernate Now"
 msgstr "hibernate Sekarang"
 
-#: src/bin/e_actions.c:3540
+#: src/bin/e_actions.c:3610
 #, fuzzy
 msgid "Lock"
 msgstr "mengunci"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1356
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1356
 #, fuzzy
 msgid "Cleanup Windows"
 msgstr "pembersihan Windows"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 #, fuzzy
 msgid "Generic : Actions"
 msgstr "Tindakan ; generik"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 #, fuzzy
 msgid "Delayed Action"
 msgstr "Tindakan lambat"
 
-#: src/bin/e_actions.c:3558 src/bin/e_actions.c:3562 src/bin/e_actions.c:3566
+#: src/bin/e_actions.c:3628 src/bin/e_actions.c:3632 src/bin/e_actions.c:3636
 #, fuzzy
 msgid "Keyboard Layouts"
 msgstr "keyboard"
 
-#: src/bin/e_actions.c:3559
+#: src/bin/e_actions.c:3629
 #, fuzzy
 msgid "Use keyboard layout"
 msgstr "Buat Shortcut Keyboard"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3633
 #, fuzzy
 msgid "Next keyboard layout"
 msgstr "Buat Shortcut Keyboard"
 
-#: src/bin/e_actions.c:3567
+#: src/bin/e_actions.c:3637
 msgid "Previous keyboard layout"
 msgstr ""
 
@@ -1280,12 +1285,12 @@ msgstr "Desktop Entry Editor"
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:132
+#: src/modules/ibar/e_mod_config.c:140
 #, fuzzy
 msgid "Name"
 msgstr "nama"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:136
+#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:144
 #, fuzzy
 msgid "Comment"
 msgstr "Komen"
@@ -1387,7 +1392,7 @@ msgstr "Pilih laksana"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
+#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:649
@@ -1712,7 +1717,7 @@ msgid "Eject"
 msgstr "lentingkan"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:887
+#: src/modules/ibar/e_mod_main.c:987
 #, fuzzy
 msgid "Properties"
 msgstr "Hartanah"
@@ -2147,7 +2152,7 @@ msgstr "melihat"
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:892
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
 #: src/modules/xkbswitch/e_mod_config.c:267
 #, fuzzy
 msgid "Remove"
@@ -2848,11 +2853,11 @@ msgstr "Jawatan permintaan"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:880
+#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:980
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -3956,7 +3961,7 @@ msgstr "Adakah anda ingin untuk memunggah modul ini.<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:649
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
 #: src/modules/clipboard/e_mod_main.c:736
 msgid "Keep"
 msgstr ""
@@ -4122,7 +4127,7 @@ msgid "Rename Shelf"
 msgstr "menamakan semula fail"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_main.c:874
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 #, fuzzy
 msgid "Contents"
 msgstr "kandungan"
@@ -4447,7 +4452,7 @@ msgstr[1] ""
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:24
+#: src/modules/wizard/page_020.c:25
 #, fuzzy
 msgid "Unknown"
 msgstr "tidak diketahui"
@@ -4575,7 +4580,7 @@ msgstr[1] ""
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:112 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
 #, fuzzy
 msgid "Add"
 msgstr "Tambah"
@@ -5188,7 +5193,7 @@ msgid "Available Profiles"
 msgstr "Profil tersedia"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:115
+#: src/modules/wizard/page_020.c:120
 #, fuzzy
 msgid "Select a profile"
 msgstr "Pilih profil"
@@ -6488,7 +6493,7 @@ msgid "Applications Display"
 msgstr "aplikasi Paparan"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:148
 #, fuzzy
 msgid "Generic"
 msgstr "generik"
@@ -9669,81 +9674,85 @@ msgstr ""
 msgid "Select a window"
 msgstr "Pilih tetingkap"
 
-#: src/modules/ibar/e_mod_config.c:55
+#: src/modules/ibar/e_mod_config.c:58
 #, fuzzy
 msgid "IBar Settings"
 msgstr "ibar Tetapan"
 
-#: src/modules/ibar/e_mod_config.c:104
+#: src/modules/ibar/e_mod_config.c:108
 #, fuzzy
 msgid "Selected source"
 msgstr "Bar dipilih Source"
 
-#: src/modules/ibar/e_mod_config.c:125
+#: src/modules/ibar/e_mod_config.c:129
 #, fuzzy
-msgid "Icon Labels"
-msgstr "icon Labels"
-
-#: src/modules/ibar/e_mod_config.c:126
-#, fuzzy
-msgid "Show icon label"
+msgid "Show Icon Labels"
 msgstr "Tunjukkan Label Icon"
 
-#: src/modules/ibar/e_mod_config.c:146
+#: src/modules/ibar/e_mod_config.c:130
+msgid "Overlapping Label"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:134
+#, fuzzy
+msgid "Adjacent Label"
+msgstr "icon Labels"
+
+#: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:155
 msgid "Icon focus flash"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:149
+#: src/modules/ibar/e_mod_config.c:157
 #, fuzzy
 msgid "Lock icon move"
 msgstr "Mengunci Gantung"
 
-#: src/modules/ibar/e_mod_config.c:151
+#: src/modules/ibar/e_mod_config.c:159
 msgid "Track launch"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:184
+#: src/modules/ibar/e_mod_config.c:193
 #, fuzzy
 msgid "Create new IBar source"
 msgstr "Membina sumber Tbar baru"
 
-#: src/modules/ibar/e_mod_config.c:185
+#: src/modules/ibar/e_mod_config.c:194
 #, fuzzy
 msgid "Enter a name for this new source:"
 msgstr "Masukkan nama untuk sumber baru ini:"
 
-#: src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:208
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:203
+#: src/modules/ibar/e_mod_config.c:212
 #, fuzzy
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Adakah anda pasti anda mahu memadam sumber bar ini."
 
-#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1939
 #, fuzzy
 msgid "IBar"
 msgstr "ibar"
 
-#: src/modules/ibar/e_mod_main.c:863
+#: src/modules/ibar/e_mod_main.c:963
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Buat Icon baru"
 
-#: src/modules/ibar/e_mod_main.c:897
+#: src/modules/ibar/e_mod_main.c:997
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "ikon"
 
-#: src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:1939
 #, fuzzy
 msgid "Focus IBar"
 msgstr "memberi tumpuan"
@@ -10109,12 +10118,12 @@ msgid "Welcome to Moksha"
 msgstr ""
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:52
+#: src/modules/wizard/page_020.c:53
 #, fuzzy
 msgid "Select one"
 msgstr "pilih salah satu"
 
-#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
@@ -10735,7 +10744,7 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Modul Ralat memuatkan"
 
-#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
+#: src/modules/tasks/e_mod_main.c:323 src/modules/tasks/e_mod_main.c:755
 #, fuzzy
 msgid "Tasks"
 msgstr "taskbar"
@@ -11434,6 +11443,10 @@ msgstr "isipadu berubah"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "isipadu berubah"
+
+#, fuzzy
+#~ msgid "Show icon label"
+#~ msgstr "Tunjukkan Label Icon"
 
 #, fuzzy
 #~ msgid "Tasks Configuration"

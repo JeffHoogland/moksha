@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-01-13 08:00-0500\n"
+"POT-Creation-Date: 2021-02-12 13:10+0100\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "אודות Moksha"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2093 src/bin/e_actions.c:3081
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -32,8 +32,8 @@ msgstr "אודות Moksha"
 msgid "Close"
 msgstr "סגור"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3469 src/bin/e_actions.c:3473
-#: src/bin/e_actions.c:3477 src/bin/e_main.c:709
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
+#: src/bin/e_actions.c:3547 src/bin/e_main.c:709
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -53,7 +53,12 @@ msgstr ""
 msgid "<title>The Team</><br><br>"
 msgstr "<title>הצוות</title>"
 
-#: src/bin/e_actions.c:360
+#: src/bin/e_actions.c:154
+#, fuzzy
+msgid "Profile: Switch"
+msgstr "פרופיל בורר"
+
+#: src/bin/e_actions.c:430
 #, fuzzy, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data from this "
@@ -63,286 +68,286 @@ msgstr ""
 "אתה עומד לחסל את %s.<br><br>אנא קח בחשבון שכל הנתונים שבחלון זה,<br>שלא "
 "נשמרו עדיין יאבדו!<br><br>האם אתה בטוח שברצונך לחסל חלון זה?"
 
-#: src/bin/e_actions.c:372
+#: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
 msgstr "האם אתה בטוח שברצונך לחסל חלון זה?"
 
-#: src/bin/e_actions.c:375 src/bin/e_actions.c:3086
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
 msgid "Kill"
 msgstr "חסל"
 
-#: src/bin/e_actions.c:377 src/bin/e_actions.c:2213 src/bin/e_actions.c:2307
-#: src/bin/e_actions.c:2367 src/bin/e_actions.c:2427 src/bin/e_actions.c:2492
-#: src/bin/e_actions.c:2557 src/bin/e_confirm_dialog.c:53
+#: src/bin/e_actions.c:447 src/bin/e_actions.c:2283 src/bin/e_actions.c:2377
+#: src/bin/e_actions.c:2437 src/bin/e_actions.c:2497 src/bin/e_actions.c:2562
+#: src/bin/e_actions.c:2627 src/bin/e_confirm_dialog.c:53
 #: src/bin/e_desklock.c:1315 src/bin/e_fm.c:10479 src/bin/e_fm.c:10845
 #: src/bin/e_screensaver.c:191 src/modules/quickaccess/e_mod_quickaccess.c:1267
 msgid "No"
 msgstr "לא"
 
-#: src/bin/e_actions.c:2090
+#: src/bin/e_actions.c:2160
 #, fuzzy
 msgid "Action Params Syntax Error"
 msgstr "פעולה params"
 
-#: src/bin/e_actions.c:2208 src/bin/e_actions.c:3473 src/bin/e_int_menus.c:263
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:263
 msgid "Exit"
 msgstr "יציאה"
 
-#: src/bin/e_actions.c:2209
+#: src/bin/e_actions.c:2279
 #, fuzzy
 msgid "Are you sure you want to exit Moksha?"
 msgstr "האם אתה בטוח שברצונך לצאת?"
 
-#: src/bin/e_actions.c:2211 src/bin/e_actions.c:2305 src/bin/e_actions.c:2365
-#: src/bin/e_actions.c:2425 src/bin/e_actions.c:2490 src/bin/e_actions.c:2555
+#: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
+#: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
 #: src/modules/shot/e_mod_main.c:315
 msgid "Yes"
 msgstr "כן"
 
-#: src/bin/e_actions.c:2302
+#: src/bin/e_actions.c:2372
 #, fuzzy
 msgid "Logout"
 msgstr "התנתק כעת"
 
-#: src/bin/e_actions.c:2303
+#: src/bin/e_actions.c:2373
 #, fuzzy
 msgid "Are you sure you want to logout?"
 msgstr "אתה בטוח שברצונך להתנתק?"
 
-#: src/bin/e_actions.c:2361 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 #, fuzzy
 msgid "Power off"
 msgstr "כבה"
 
-#: src/bin/e_actions.c:2363
+#: src/bin/e_actions.c:2433
 #, fuzzy
 msgid "Are you sure you want to power off your computer?"
 msgstr "אתה בטוח שברצונך להתנתק?"
 
-#: src/bin/e_actions.c:2422 src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
 msgstr "הפעלה מחדש"
 
-#: src/bin/e_actions.c:2423
+#: src/bin/e_actions.c:2493
 #, fuzzy
 msgid "Are you sure you want to reboot your computer?"
 msgstr "האם אתה בטוח שברצונך לאתחל?"
 
-#: src/bin/e_actions.c:2487 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 msgid "Suspend"
 msgstr "השהיה"
 
-#: src/bin/e_actions.c:2488
+#: src/bin/e_actions.c:2558
 #, fuzzy
 msgid "Are you sure you want to suspend your computer?"
 msgstr "אתה בטוח שברצונך להתנתק?"
 
-#: src/bin/e_actions.c:2552 src/bin/e_actions.c:3528
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "עבור למצב שינה"
 
-#: src/bin/e_actions.c:2553
+#: src/bin/e_actions.c:2623
 #, fuzzy
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "האם אתה בטוח שברצונך לעבור למצב המתנה?"
 
-#: src/bin/e_actions.c:3041 src/bin/e_actions.c:3052 src/bin/e_actions.c:3071
-#: src/bin/e_actions.c:3076 src/bin/e_actions.c:3081 src/bin/e_actions.c:3086
-#: src/bin/e_actions.c:3385 src/bin/e_actions.c:3389 src/bin/e_actions.c:3394
-#: src/bin/e_actions.c:3400 src/bin/e_actions.c:3406 src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
+#: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
+#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
+#: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
 #: src/modules/shot/e_mod_main.c:1278
 msgid "Window : Actions"
 msgstr "חלון : פעולות"
 
-#: src/bin/e_actions.c:3041 src/bin/e_fm.c:11616
+#: src/bin/e_actions.c:3111 src/bin/e_fm.c:11616
 #: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "העבר"
 
-#: src/bin/e_actions.c:3052 src/bin/e_int_border_menu.c:717
+#: src/bin/e_actions.c:3122 src/bin/e_int_border_menu.c:717
 msgid "Resize"
 msgstr "שנה גודל"
 
-#: src/bin/e_actions.c:3063 src/bin/e_actions.c:3440 src/bin/e_actions.c:3442
-#: src/bin/e_actions.c:3444 src/bin/e_actions.c:3446 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3133 src/bin/e_actions.c:3510 src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3514 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "תפריט"
 
-#: src/bin/e_actions.c:3063
+#: src/bin/e_actions.c:3133
 msgid "Window Menu"
 msgstr "תפריט החלון"
 
-#: src/bin/e_actions.c:3071 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "הגבה"
 
-#: src/bin/e_actions.c:3076 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
 msgstr "הנמך"
 
-#: src/bin/e_actions.c:3091 src/bin/e_actions.c:3095 src/bin/e_actions.c:3100
-#: src/bin/e_actions.c:3104 src/bin/e_actions.c:3108 src/bin/e_actions.c:3113
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3122 src/bin/e_actions.c:3126
-#: src/bin/e_actions.c:3132 src/bin/e_actions.c:3134 src/bin/e_actions.c:3137
-#: src/bin/e_actions.c:3140 src/bin/e_actions.c:3143 src/bin/e_actions.c:3146
-#: src/bin/e_actions.c:3148 src/bin/e_actions.c:3150 src/bin/e_actions.c:3152
-#: src/bin/e_actions.c:3159 src/bin/e_actions.c:3161 src/bin/e_actions.c:3163
-#: src/bin/e_actions.c:3165 src/bin/e_actions.c:3167 src/bin/e_actions.c:3171
-#: src/bin/e_actions.c:3176 src/bin/e_actions.c:3181 src/bin/e_actions.c:3187
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
+#: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
+#: src/bin/e_actions.c:3187 src/bin/e_actions.c:3192 src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3202 src/bin/e_actions.c:3204 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3210 src/bin/e_actions.c:3213 src/bin/e_actions.c:3216
+#: src/bin/e_actions.c:3218 src/bin/e_actions.c:3220 src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3251 src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3263
 msgid "Window : State"
 msgstr "חלון : מצב"
 
-#: src/bin/e_actions.c:3091
+#: src/bin/e_actions.c:3161
 msgid "Sticky Mode Toggle"
 msgstr "החלפת מצב הדבקה"
 
-#: src/bin/e_actions.c:3095
+#: src/bin/e_actions.c:3165
 #, fuzzy
 msgid "Sticky Mode Enable"
 msgstr "החלפת מצב הדבקה"
 
-#: src/bin/e_actions.c:3100
+#: src/bin/e_actions.c:3170
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "תמיד עליון"
 
-#: src/bin/e_actions.c:3104
+#: src/bin/e_actions.c:3174
 #, fuzzy
 msgid "Always On Top Enable"
 msgstr "תמיד עליון"
 
-#: src/bin/e_actions.c:3108
+#: src/bin/e_actions.c:3178
 #, fuzzy
 msgid "Always On Top Disable"
 msgstr "תמיד עליון"
 
-#: src/bin/e_actions.c:3113
+#: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
 msgstr "החלפת מצב ממוזער"
 
-#: src/bin/e_actions.c:3117
+#: src/bin/e_actions.c:3187
 #, fuzzy
 msgid "Iconic Mode Enable"
 msgstr "החלפת מצב ממוזער"
 
-#: src/bin/e_actions.c:3122
+#: src/bin/e_actions.c:3192
 msgid "Fullscreen Mode Toggle"
 msgstr "החלפת מצב מסך מלא"
 
-#: src/bin/e_actions.c:3126
+#: src/bin/e_actions.c:3196
 #, fuzzy
 msgid "Fullscreen Mode Enable"
 msgstr "החלפת מצב מסך מלא"
 
-#: src/bin/e_actions.c:3132 src/bin/e_int_border_menu.c:418
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
 #: src/bin/e_int_border_menu.c:678
 msgid "Maximize"
 msgstr "הגדל"
 
-#: src/bin/e_actions.c:3134 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
 msgid "Maximize Vertically"
 msgstr "הגדל אנכית"
 
-#: src/bin/e_actions.c:3137 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
 msgid "Maximize Horizontally"
 msgstr "הגדל אופקית"
 
-#: src/bin/e_actions.c:3140 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
 #, fuzzy
 msgid "Maximize Left"
 msgstr "הגדל"
 
-#: src/bin/e_actions.c:3143 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
 #, fuzzy
 msgid "Maximize Right"
 msgstr "הגדל"
 
-#: src/bin/e_actions.c:3146
+#: src/bin/e_actions.c:3216
 msgid "Maximize Fullscreen"
 msgstr "הגדל למסך מלא"
 
-#: src/bin/e_actions.c:3148
+#: src/bin/e_actions.c:3218
 msgid "Maximize Mode \"Smart\""
 msgstr "מצב הגדלה \"חכם\""
 
-#: src/bin/e_actions.c:3150
+#: src/bin/e_actions.c:3220
 msgid "Maximize Mode \"Expand\""
 msgstr "מצב הגדלה \"הרחבה\""
 
-#: src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3222
 msgid "Maximize Mode \"Fill\""
 msgstr "מצב הגדלה \"מילוי\""
 
-#: src/bin/e_actions.c:3159
+#: src/bin/e_actions.c:3229
 msgid "Shade Up Mode Toggle"
 msgstr "החלפת מצב הצללה"
 
-#: src/bin/e_actions.c:3161
+#: src/bin/e_actions.c:3231
 msgid "Shade Down Mode Toggle"
 msgstr "החלפת מצב הצללה תחתית"
 
-#: src/bin/e_actions.c:3163
+#: src/bin/e_actions.c:3233
 msgid "Shade Left Mode Toggle"
 msgstr "החלפת מצב הצללה שמאלית"
 
-#: src/bin/e_actions.c:3165
+#: src/bin/e_actions.c:3235
 msgid "Shade Right Mode Toggle"
 msgstr "החלפת מצב הצללה ימנית"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3237
 msgid "Shade Mode Toggle"
 msgstr "החלפת מצב ההצללה"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3241
 #, fuzzy
 msgid "Set Shaded State"
 msgstr "מצב הצללה"
 
-#: src/bin/e_actions.c:3172
+#: src/bin/e_actions.c:3242
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr ""
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3246
 msgid "Toggle Borderless State"
 msgstr "החלפת מצב המסגרת"
 
-#: src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3251
 #, fuzzy
 msgid "Set Border"
 msgstr "מסגרת"
 
-#: src/bin/e_actions.c:3187
+#: src/bin/e_actions.c:3257
 #, fuzzy
 msgid "Cycle between Borders"
 msgstr "מחזור בין גבולות"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3263
 msgid "Toggle Pinned State"
 msgstr "החלפת מצב הנעיצה"
 
-#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3200 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3204 src/bin/e_actions.c:3206 src/bin/e_actions.c:3212
-#: src/bin/e_actions.c:3217 src/bin/e_actions.c:3223 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3234 src/bin/e_actions.c:3240 src/bin/e_actions.c:3242
-#: src/bin/e_actions.c:3244 src/bin/e_actions.c:3246 src/bin/e_actions.c:3248
-#: src/bin/e_actions.c:3250 src/bin/e_actions.c:3252 src/bin/e_actions.c:3254
-#: src/bin/e_actions.c:3256 src/bin/e_actions.c:3258 src/bin/e_actions.c:3260
-#: src/bin/e_actions.c:3262 src/bin/e_actions.c:3264 src/bin/e_actions.c:3270
-#: src/bin/e_actions.c:3272 src/bin/e_actions.c:3274 src/bin/e_actions.c:3276
-#: src/bin/e_actions.c:3278 src/bin/e_actions.c:3284 src/bin/e_actions.c:3290
-#: src/bin/e_actions.c:3296 src/bin/e_actions.c:3301 src/bin/e_actions.c:3303
-#: src/bin/e_actions.c:3305 src/bin/e_actions.c:3307 src/bin/e_actions.c:3309
-#: src/bin/e_actions.c:3311 src/bin/e_actions.c:3313 src/bin/e_actions.c:3315
-#: src/bin/e_actions.c:3317 src/bin/e_actions.c:3319 src/bin/e_actions.c:3321
-#: src/bin/e_actions.c:3323 src/bin/e_actions.c:3325 src/bin/e_actions.c:3540
-#: src/bin/e_actions.c:3545 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3268 src/bin/e_actions.c:3270 src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287 src/bin/e_actions.c:3293 src/bin/e_actions.c:3298
+#: src/bin/e_actions.c:3304 src/bin/e_actions.c:3310 src/bin/e_actions.c:3312
+#: src/bin/e_actions.c:3314 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3354 src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3366 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3375 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -350,184 +355,184 @@ msgstr "החלפת מצב הנעיצה"
 msgid "Desktop"
 msgstr "שולחן העבודה"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3268
 msgid "Flip Desktop Left"
 msgstr "הפוך את שולחן העבודה שמאלה"
 
-#: src/bin/e_actions.c:3200
+#: src/bin/e_actions.c:3270
 msgid "Flip Desktop Right"
 msgstr "הפוך את שולחן העבודה ימינה"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3272
 msgid "Flip Desktop Up"
 msgstr "הפוך את שולחן העבודה למעלה"
 
-#: src/bin/e_actions.c:3204
+#: src/bin/e_actions.c:3274
 msgid "Flip Desktop Down"
 msgstr "הפוך את שולחן העבודה למטה"
 
-#: src/bin/e_actions.c:3206
+#: src/bin/e_actions.c:3276
 msgid "Flip Desktop By..."
 msgstr "הפוך את שולחן העבודה ב־..."
 
-#: src/bin/e_actions.c:3212
+#: src/bin/e_actions.c:3282
 #, fuzzy
 msgid "Flip To Previous Desktop"
 msgstr "לשולחן העבודה הקודם"
 
-#: src/bin/e_actions.c:3217
+#: src/bin/e_actions.c:3287
 msgid "Show The Desktop"
 msgstr "הצג את שולחן העבודה"
 
-#: src/bin/e_actions.c:3223
+#: src/bin/e_actions.c:3293
 msgid "Show The Shelf"
 msgstr "הצג את המדף"
 
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3298
 msgid "Flip Desktop To..."
 msgstr "הפוך את שולחן העבודה אל..."
 
-#: src/bin/e_actions.c:3234
+#: src/bin/e_actions.c:3304
 msgid "Flip Desktop Linearly..."
 msgstr "הפוך את שולחן העבודה קווית..."
 
-#: src/bin/e_actions.c:3240
+#: src/bin/e_actions.c:3310
 msgid "Switch To Desktop 0"
 msgstr "החלף לשולחן העבודה 0"
 
-#: src/bin/e_actions.c:3242
+#: src/bin/e_actions.c:3312
 msgid "Switch To Desktop 1"
 msgstr "החלף לשולחן העבודה 1"
 
-#: src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3314
 msgid "Switch To Desktop 2"
 msgstr "החלף לשולחן העבודה 2"
 
-#: src/bin/e_actions.c:3246
+#: src/bin/e_actions.c:3316
 msgid "Switch To Desktop 3"
 msgstr "החלף לשולחן העבודה 3"
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3318
 msgid "Switch To Desktop 4"
 msgstr "החלף לשולחן העבודה 4"
 
-#: src/bin/e_actions.c:3250
+#: src/bin/e_actions.c:3320
 msgid "Switch To Desktop 5"
 msgstr "החלף לשולחן העבודה 5"
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3322
 msgid "Switch To Desktop 6"
 msgstr "החלף לשולחן העבודה 6"
 
-#: src/bin/e_actions.c:3254
+#: src/bin/e_actions.c:3324
 msgid "Switch To Desktop 7"
 msgstr "החלף לשולחן העבודה 7"
 
-#: src/bin/e_actions.c:3256
+#: src/bin/e_actions.c:3326
 msgid "Switch To Desktop 8"
 msgstr "החלף לשולחן העבודה 8"
 
-#: src/bin/e_actions.c:3258
+#: src/bin/e_actions.c:3328
 msgid "Switch To Desktop 9"
 msgstr "החלף לשולחן העבודה 9"
 
-#: src/bin/e_actions.c:3260
+#: src/bin/e_actions.c:3330
 msgid "Switch To Desktop 10"
 msgstr "החלף לשולחן העבודה 10"
 
-#: src/bin/e_actions.c:3262
+#: src/bin/e_actions.c:3332
 msgid "Switch To Desktop 11"
 msgstr "החלף לשולחן העבודה 11"
 
-#: src/bin/e_actions.c:3264
+#: src/bin/e_actions.c:3334
 msgid "Switch To Desktop..."
 msgstr "החלף לשולחן העבודה..."
 
-#: src/bin/e_actions.c:3270
+#: src/bin/e_actions.c:3340
 msgid "Flip Desktop Left (All Screens)"
 msgstr "הפוך את שולחן העבודה שמאלה (כל המסכים)"
 
-#: src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3342
 msgid "Flip Desktop Right (All Screens)"
 msgstr "הפוך את שולחן העבודה ימינה (כל המסכים)"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3344
 msgid "Flip Desktop Up (All Screens)"
 msgstr "הפוך את שולחן העבודה למעלה (כל המסכים)"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3346
 msgid "Flip Desktop Down (All Screens)"
 msgstr "הפוך את שולחן העבודה למטה (כל המסכים)"
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3348
 msgid "Flip Desktop By... (All Screens)"
 msgstr "הפוך את שולחן העבודה ב־... (כל המסכים)"
 
-#: src/bin/e_actions.c:3284
+#: src/bin/e_actions.c:3354
 msgid "Flip Desktop To... (All Screens)"
 msgstr "הפוך את שולחן העבודה אל... (כל המסכים)"
 
-#: src/bin/e_actions.c:3290
+#: src/bin/e_actions.c:3360
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "הפוך את שולחן העבודה קווית... (כל המסכים)"
 
-#: src/bin/e_actions.c:3296
+#: src/bin/e_actions.c:3366
 msgid "Flip Desktop In Direction..."
 msgstr "הפוך את כיוון שולחן העבודה..."
 
-#: src/bin/e_actions.c:3301
+#: src/bin/e_actions.c:3371
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "החלף לשולחן העבודה 0 (כל המסכים)"
 
-#: src/bin/e_actions.c:3303
+#: src/bin/e_actions.c:3373
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "החלף לשולחן העבודה 1 (כל המסכים)"
 
-#: src/bin/e_actions.c:3305
+#: src/bin/e_actions.c:3375
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "החלף לשולחן העבודה 2 (כל המסכים)"
 
-#: src/bin/e_actions.c:3307
+#: src/bin/e_actions.c:3377
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "החלף לשולחן העבודה 3 (כל המסכים)"
 
-#: src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3379
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "החלף לשולחן העבודה 4 (כל המסכים)"
 
-#: src/bin/e_actions.c:3311
+#: src/bin/e_actions.c:3381
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "החלף לשולחן העבודה 5 (כל המסכים)"
 
-#: src/bin/e_actions.c:3313
+#: src/bin/e_actions.c:3383
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "החלף לשולחן העבודה 6 (כל המסכים)"
 
-#: src/bin/e_actions.c:3315
+#: src/bin/e_actions.c:3385
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "החלף לשולחן העבודה 7 (כל המסכים)"
 
-#: src/bin/e_actions.c:3317
+#: src/bin/e_actions.c:3387
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "החלף לשולחן העבודה 8 (כל המסכים)"
 
-#: src/bin/e_actions.c:3319
+#: src/bin/e_actions.c:3389
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "החלף לשולחן העבודה 9 (כל המסכים)"
 
-#: src/bin/e_actions.c:3321
+#: src/bin/e_actions.c:3391
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "החלף לשולחן העבודה 10 (כל המסכים)"
 
-#: src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3393
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "החלף לשולחן העבודה 11 (כל המסכים)"
 
-#: src/bin/e_actions.c:3325
+#: src/bin/e_actions.c:3395
 msgid "Switch To Desktop... (All Screens)"
 msgstr "החלף לשולחן העבודה... (כל המסכים)"
 
-#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -537,20 +542,20 @@ msgstr "החלף לשולחן העבודה... (כל המסכים)"
 msgid "Window : List"
 msgstr "חלון , רשימת"
 
-#: src/bin/e_actions.c:3331
+#: src/bin/e_actions.c:3401
 #, fuzzy
 msgid "Jump to window..."
 msgstr "קפיצה אל השולחן"
 
-#: src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3405
 msgid "Jump to window... or start..."
 msgstr ""
 
-#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3352 src/bin/e_actions.c:3354 src/bin/e_actions.c:3356
-#: src/bin/e_actions.c:3361 src/bin/e_actions.c:3364 src/bin/e_actions.c:3367
-#: src/bin/e_actions.c:3369 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
-#: src/bin/e_actions.c:3376 src/bin/e_actions.c:3378 src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3414 src/bin/e_actions.c:3416
+#: src/bin/e_actions.c:3422 src/bin/e_actions.c:3424 src/bin/e_actions.c:3426
+#: src/bin/e_actions.c:3431 src/bin/e_actions.c:3434 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3439 src/bin/e_actions.c:3441 src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3446 src/bin/e_actions.c:3448 src/bin/e_actions.c:3450
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
@@ -558,217 +563,217 @@ msgstr ""
 msgid "Screen"
 msgstr "מסך"
 
-#: src/bin/e_actions.c:3342
+#: src/bin/e_actions.c:3412
 msgid "Send Mouse To Screen 0"
 msgstr "שלח את העכבר למסך 0"
 
-#: src/bin/e_actions.c:3344
+#: src/bin/e_actions.c:3414
 msgid "Send Mouse To Screen 1"
 msgstr "שלח את העכבר למסך 1"
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3416
 msgid "Send Mouse To Screen..."
 msgstr "שלח את העכבר למסך..."
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3422
 msgid "Send Mouse Forward 1 Screen"
 msgstr "שלח את העכבר מסך 1 קדימה"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3424
 msgid "Send Mouse Back 1 Screen"
 msgstr "שלח את העכבר מסך 1 אחורה"
 
-#: src/bin/e_actions.c:3356
+#: src/bin/e_actions.c:3426
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "שלח את העכבר קדימה/אחורה בין המסכים..."
 
-#: src/bin/e_actions.c:3361
+#: src/bin/e_actions.c:3431
 #, fuzzy
 msgid "Dim"
 msgstr "עמום"
 
-#: src/bin/e_actions.c:3364
+#: src/bin/e_actions.c:3434
 #, fuzzy
 msgid "Undim"
 msgstr "Undim"
 
-#: src/bin/e_actions.c:3367
+#: src/bin/e_actions.c:3437
 #, fuzzy
 msgid "Backlight Set"
 msgstr "תאורה אחורית הגדר"
 
-#: src/bin/e_actions.c:3369
+#: src/bin/e_actions.c:3439
 #, fuzzy
 msgid "Backlight Min"
 msgstr "תאורה אחורית מינימום"
 
-#: src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3441
 #, fuzzy
 msgid "Backlight Mid"
 msgstr "תאורה אחורית אמצע"
 
-#: src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3443
 #, fuzzy
 msgid "Backlight Max"
 msgstr "תאורה אחורית מקס"
 
-#: src/bin/e_actions.c:3376
+#: src/bin/e_actions.c:3446
 #, fuzzy
 msgid "Backlight Adjust"
 msgstr "התאמת תאורה אחורית"
 
-#: src/bin/e_actions.c:3378
+#: src/bin/e_actions.c:3448
 #, fuzzy
 msgid "Backlight Up"
 msgstr "תאורה אחורית עד"
 
-#: src/bin/e_actions.c:3380
+#: src/bin/e_actions.c:3450
 #, fuzzy
 msgid "Backlight Down"
 msgstr "כיבוי"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3455
 #, fuzzy
 msgid "Move To Center"
 msgstr "לעבור למרכז"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3459
 #, fuzzy
 msgid "Move To Coordinates..."
 msgstr "לעבור למרכז"
 
-#: src/bin/e_actions.c:3394
+#: src/bin/e_actions.c:3464
 msgid "Move By Coordinate Offset..."
 msgstr ""
 
-#: src/bin/e_actions.c:3400
+#: src/bin/e_actions.c:3470
 #, fuzzy
 msgid "Resize By..."
 msgstr "שנה גודל"
 
-#: src/bin/e_actions.c:3406
+#: src/bin/e_actions.c:3476
 #, fuzzy
 msgid "Push in Direction..."
 msgstr "לדחוף לכיוון ..."
 
-#: src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3482
 #, fuzzy
 msgid "Drag Icon..."
 msgstr "צור סמל"
 
-#: src/bin/e_actions.c:3417 src/bin/e_actions.c:3419 src/bin/e_actions.c:3421
-#: src/bin/e_actions.c:3427 src/bin/e_actions.c:3433 src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3487 src/bin/e_actions.c:3489 src/bin/e_actions.c:3491
+#: src/bin/e_actions.c:3497 src/bin/e_actions.c:3503 src/bin/e_actions.c:3505
 msgid "Window : Moving"
 msgstr "חלון : בתנועה"
 
-#: src/bin/e_actions.c:3417
+#: src/bin/e_actions.c:3487
 msgid "To Next Desktop"
 msgstr "לשולחן העבודה הבא"
 
-#: src/bin/e_actions.c:3419
+#: src/bin/e_actions.c:3489
 msgid "To Previous Desktop"
 msgstr "לשולחן העבודה הקודם"
 
-#: src/bin/e_actions.c:3421
+#: src/bin/e_actions.c:3491
 msgid "By Desktop #..."
 msgstr "לפי מס' שולחן העבודה..."
 
-#: src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3497
 msgid "To Desktop..."
 msgstr "לשולחן העבודה..."
 
-#: src/bin/e_actions.c:3433
+#: src/bin/e_actions.c:3503
 #, fuzzy
 msgid "To Next Screen"
 msgstr "הגדרת מסכים"
 
-#: src/bin/e_actions.c:3435
+#: src/bin/e_actions.c:3505
 #, fuzzy
 msgid "To Previous Screen"
 msgstr "לשולחן העבודה הקודם"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3510
 msgid "Show Main Menu"
 msgstr "הצג תפריט ראשי"
 
-#: src/bin/e_actions.c:3442
+#: src/bin/e_actions.c:3512
 msgid "Show Favorites Menu"
 msgstr "הצג תפריט מועדפים"
 
-#: src/bin/e_actions.c:3444
+#: src/bin/e_actions.c:3514
 msgid "Show All Applications Menu"
 msgstr "הצג תפריט כל היישומים"
 
-#: src/bin/e_actions.c:3446
+#: src/bin/e_actions.c:3516
 msgid "Show Clients Menu"
 msgstr "הצג תפריט לקוחות"
 
-#: src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3518
 msgid "Show Menu..."
 msgstr "הצג תפריט..."
 
-#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3460 src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:272
 #: src/modules/everything/evry_plug_apps.c:1176
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "הפעל"
 
-#: src/bin/e_actions.c:3455 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3525 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "פקודה"
 
-#: src/bin/e_actions.c:3460 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:698
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "יישום"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3535
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3469
+#: src/bin/e_actions.c:3539
 msgid "Restart"
 msgstr "הפעל מחדש"
 
-#: src/bin/e_actions.c:3477
+#: src/bin/e_actions.c:3547
 msgid "Exit Now"
 msgstr "צא עכשיו"
 
-#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3486
+#: src/bin/e_actions.c:3551 src/bin/e_actions.c:3556
 msgid "Moksha : Mode"
 msgstr "Moksha : מצב"
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3552
 msgid "Presentation Mode Toggle"
 msgstr "החלפת מצב הצגה"
 
-#: src/bin/e_actions.c:3487
+#: src/bin/e_actions.c:3557
 msgid "Offline Mode Toggle"
 msgstr "החלפת מצב בלתי מקוון"
 
-#: src/bin/e_actions.c:3491 src/bin/e_actions.c:3495 src/bin/e_actions.c:3499
+#: src/bin/e_actions.c:3561 src/bin/e_actions.c:3565 src/bin/e_actions.c:3569
 #, fuzzy
 msgid "Moksha : Module"
 msgstr "Moksha : מצב"
 
-#: src/bin/e_actions.c:3492
+#: src/bin/e_actions.c:3562
 #, fuzzy
 msgid "Enable the named module"
 msgstr "מודול ה־%s של Moksha"
 
-#: src/bin/e_actions.c:3496
+#: src/bin/e_actions.c:3566
 msgid "Disable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3500
+#: src/bin/e_actions.c:3570
 msgid "Toggle the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3504 src/bin/e_actions.c:3508 src/bin/e_actions.c:3512
-#: src/bin/e_actions.c:3516 src/bin/e_actions.c:3520 src/bin/e_actions.c:3524
-#: src/bin/e_actions.c:3528 src/bin/e_actions.c:3532 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3574 src/bin/e_actions.c:3578 src/bin/e_actions.c:3582
+#: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
+#: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:275
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -785,60 +790,60 @@ msgstr ""
 msgid "System"
 msgstr "מערכת"
 
-#: src/bin/e_actions.c:3504
+#: src/bin/e_actions.c:3574
 msgid "Log Out"
 msgstr "התנתק"
 
-#: src/bin/e_actions.c:3508
+#: src/bin/e_actions.c:3578
 msgid "Power Off Now"
 msgstr "כבה עכשיו"
 
-#: src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3582
 msgid "Power Off"
 msgstr "כבה"
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3590
 #, fuzzy
 msgid "Suspend Now"
 msgstr "השהיה"
 
-#: src/bin/e_actions.c:3532
+#: src/bin/e_actions.c:3602
 #, fuzzy
 msgid "Hibernate Now"
 msgstr "עבור למצב שינה"
 
-#: src/bin/e_actions.c:3540
+#: src/bin/e_actions.c:3610
 msgid "Lock"
 msgstr "נעל"
 
-#: src/bin/e_actions.c:3545 src/bin/e_int_menus.c:1356
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1356
 msgid "Cleanup Windows"
 msgstr "ניקוי החלונות"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 msgid "Generic : Actions"
 msgstr "כללי : פעולות"
 
-#: src/bin/e_actions.c:3550
+#: src/bin/e_actions.c:3620
 msgid "Delayed Action"
 msgstr "פעולה מעוכבת"
 
-#: src/bin/e_actions.c:3558 src/bin/e_actions.c:3562 src/bin/e_actions.c:3566
+#: src/bin/e_actions.c:3628 src/bin/e_actions.c:3632 src/bin/e_actions.c:3636
 #, fuzzy
 msgid "Keyboard Layouts"
 msgstr "קיצורי מקשים"
 
-#: src/bin/e_actions.c:3559
+#: src/bin/e_actions.c:3629
 #, fuzzy
 msgid "Use keyboard layout"
 msgstr "צור קיצור דרך במקלדת"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3633
 #, fuzzy
 msgid "Next keyboard layout"
 msgstr "צור קיצור דרך במקלדת"
 
-#: src/bin/e_actions.c:3567
+#: src/bin/e_actions.c:3637
 msgid "Previous keyboard layout"
 msgstr ""
 
@@ -1173,11 +1178,11 @@ msgstr "עורך רשומות שולחן העבודה"
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:132
+#: src/modules/ibar/e_mod_config.c:140
 msgid "Name"
 msgstr "שם"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:136
+#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:144
 msgid "Comment"
 msgstr "הערה"
 
@@ -1266,7 +1271,7 @@ msgstr "בחר קובץהפעלה"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:114 src/modules/ibar/e_mod_config.c:204
+#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:649
@@ -1575,7 +1580,7 @@ msgid "Eject"
 msgstr "לפלוט"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:887
+#: src/modules/ibar/e_mod_main.c:987
 msgid "Properties"
 msgstr "מאפיינים"
 
@@ -1982,7 +1987,7 @@ msgstr "מראה"
 #: src/modules/conf_applications/e_int_config_apps.c:291
 #: src/modules/conf_applications/e_int_config_apps.c:311
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:892
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "הסר"
@@ -2630,11 +2635,11 @@ msgstr "בקשת מיקום"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:385 src/modules/ibar/e_mod_main.c:880
+#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:980
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:743
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
@@ -3764,7 +3769,7 @@ msgstr "האם ברצונך לפרוק מודול זה?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:204 src/modules/clipboard/e_mod_main.c:649
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
 #: src/modules/clipboard/e_mod_main.c:736
 msgid "Keep"
 msgstr ""
@@ -3926,7 +3931,7 @@ msgid "Rename Shelf"
 msgstr "שנה את שם הקובץ"
 
 #: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_main.c:874
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 #, fuzzy
 msgid "Contents"
 msgstr "הערה"
@@ -4235,7 +4240,7 @@ msgstr[1] "לפני %li דקות"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:24
+#: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "לא ידוע"
 
@@ -4359,7 +4364,7 @@ msgstr[1] "%1.0f דקות"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:112 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "הוסף"
 
@@ -4953,7 +4958,7 @@ msgid "Available Profiles"
 msgstr "זמין פרופילים"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:115
+#: src/modules/wizard/page_020.c:120
 #, fuzzy
 msgid "Select a profile"
 msgstr "בחר פרופיל"
@@ -6252,7 +6257,7 @@ msgid "Applications Display"
 msgstr "יישומים"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:148
 #, fuzzy
 msgid "Generic"
 msgstr "שם כללי"
@@ -9396,81 +9401,85 @@ msgstr ""
 msgid "Select a window"
 msgstr "בחר חלון"
 
-#: src/modules/ibar/e_mod_config.c:55
+#: src/modules/ibar/e_mod_config.c:58
 #, fuzzy
 msgid "IBar Settings"
 msgstr "IBar הגדרות"
 
-#: src/modules/ibar/e_mod_config.c:104
+#: src/modules/ibar/e_mod_config.c:108
 #, fuzzy
 msgid "Selected source"
 msgstr "בר נבחרה מקור"
 
-#: src/modules/ibar/e_mod_config.c:125
+#: src/modules/ibar/e_mod_config.c:129
 #, fuzzy
-msgid "Icon Labels"
+msgid "Show Icon Labels"
+msgstr "הצג את תווית הסמל"
+
+#: src/modules/ibar/e_mod_config.c:130
+msgid "Overlapping Label"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:134
+#, fuzzy
+msgid "Adjacent Label"
 msgstr "סמל תוויות"
 
-#: src/modules/ibar/e_mod_config.c:126
-#, fuzzy
-msgid "Show icon label"
-msgstr "הצג תווית אייקון"
-
-#: src/modules/ibar/e_mod_config.c:146
+#: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:147
+#: src/modules/ibar/e_mod_config.c:155
 msgid "Icon focus flash"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:149
+#: src/modules/ibar/e_mod_config.c:157
 #, fuzzy
 msgid "Lock icon move"
 msgstr "נעל על השהיה"
 
-#: src/modules/ibar/e_mod_config.c:151
+#: src/modules/ibar/e_mod_config.c:159
 msgid "Track launch"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:184
+#: src/modules/ibar/e_mod_config.c:193
 #, fuzzy
 msgid "Create new IBar source"
 msgstr "יצירת מקור IBar חדש"
 
-#: src/modules/ibar/e_mod_config.c:185
+#: src/modules/ibar/e_mod_config.c:194
 #, fuzzy
 msgid "Enter a name for this new source:"
 msgstr "הזן שם עבור מקור חדש;"
 
-#: src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:208
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:203
+#: src/modules/ibar/e_mod_config.c:212
 #, fuzzy
 msgid "Are you sure you want to delete this bar source?"
 msgstr "האם אתה בטוח שברצונך למחוק זאת מקור בר."
 
-#: src/modules/ibar/e_mod_main.c:290 src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1939
 #, fuzzy
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:863
+#: src/modules/ibar/e_mod_main.c:963
 #, fuzzy
 msgid "Create new Icon"
 msgstr "ליצור אייקון חדש"
 
-#: src/modules/ibar/e_mod_main.c:897
+#: src/modules/ibar/e_mod_main.c:997
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "סמלים"
 
-#: src/modules/ibar/e_mod_main.c:1835
+#: src/modules/ibar/e_mod_main.c:1939
 #, fuzzy
 msgid "Focus IBar"
 msgstr "להתמקד"
@@ -9835,12 +9844,12 @@ msgid "Welcome to Moksha"
 msgstr ""
 
 #: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:52
+#: src/modules/wizard/page_020.c:53
 #, fuzzy
 msgid "Select one"
 msgstr "בחר אחת"
 
-#: src/modules/wizard/page_020.c:51 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
@@ -10459,7 +10468,7 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "שגיאה בטעינת מודול"
 
-#: src/modules/tasks/e_mod_main.c:317 src/modules/tasks/e_mod_main.c:750
+#: src/modules/tasks/e_mod_main.c:323 src/modules/tasks/e_mod_main.c:755
 #, fuzzy
 msgid "Tasks"
 msgstr "שורת המשימות"
@@ -11151,6 +11160,10 @@ msgstr "נפח השתנה"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "נפח השתנה"
+
+#, fuzzy
+#~ msgid "Show icon label"
+#~ msgstr "הצג תווית אייקון"
 
 #, fuzzy
 #~ msgid "Tasks Configuration"
