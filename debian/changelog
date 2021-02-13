@@ -1,30 +1,30 @@
-moksha (0.3.3-1) focal; urgency=low
+moksha (20210213bodhi30.3.3) focal; urgency=low
 
-  * iBar changes
-  * Disable firstboot landing
-  * Remove ubiquity.desktop from iBar contents on ISO
-  * RU localizations
-  * Switch Profiles via keybinding
-  * Regression bug fix over efl hack
-  * Border menu EFL warning fixed
   * Update Moksha version
+  * IBar changes
+  * Disable firstboot landing
+  * Remove Ubiquity from ISO ibar contents
+  * Update Russian translations
+  * Border Menu: fix harmless EFL ERR msg
+  * Support for ISO profile
+  * EFL clipboard fix due to EFL changes
+  * Keybinding support for Profile changes
 
- -- Robert Wiley <ylee@bodhilinux.com>  Sat, 13 Feb 2021 13:34:10 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 13 Feb 2021 14:25:10 +0004
 
-moksha (0.3.2-8) focal; urgency=low
+moksha (20210202bodhi30.3.3) bionic; urgency=low
 
-  * Support for shaped borders restored
+  *  Support for shaped borders restored
 
  -- Robert Wiley <ylee@bodhilinux.com>  Tue, 02 Feb 2021 12:15:37 +0004
 
-moksha (0.3.2-7) focal; urgency=low
+moksha (20210128bodhi30.3.3) bionic; urgency=low
 
-  * Support for shaped borders restored
+  *  Support for shaped borders restored
 
- -- Robert Wiley <ylee@bodhilinux.com>  Thu, 28 Jan 2021 07:21:09 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 28 Jan 2021 10:21:37 +0004
 
-
-moksha (0.3.2-6) focal; urgency=low
+moksha (20210124bodhi30.3.3) bionic; urgency=low
 
   *  Stefan task changes
   *  xkbswitch options group names fix
@@ -32,15 +32,13 @@ moksha (0.3.2-6) focal; urgency=low
 
  -- Robert Wiley <ylee@bodhilinux.com>  Sun, 24 Jan 2021 10:21:37 +0004
 
-
-moksha (0.3.2-5) focal; urgency=low
+moksha (20210112bodhi30.3.3) bionic; urgency=low
 
   *  Gadcon and shelf fix
 
  -- Robert Wiley <ylee@bodhilinux.com>  Tue, 12 Jan 2021 10:21:37 +0004
 
-
-moksha (0.3.2-4) focal; urgency=low
+moksha (20210110bodhi30.3.3) bionic; urgency=low
 
   *  Theme notification text scaled
   *  Clock screensaver events added
@@ -49,28 +47,234 @@ moksha (0.3.2-4) focal; urgency=low
 
  -- Robert Wiley <ylee@bodhilinux.com>  Sun, 10 Jan 2021 16:56:33 +0004
 
-
-moksha (0.3.2-3) focal; urgency=low
+moksha (20201223bodhi30.3.3) bionic; urgency=low
 
   *  e_icon changes
+  *  misc fixes
 
  -- Robert Wiley <ylee@bodhilinux.com>  Thu, 24 Dec 2020 06:40:16 +0004
 
+moksha (20201218bodhi30.3.2) bionic; urgency=low
 
-moksha (0.3.2-2) focal; urgency=low
-
-  *  Localization updates
-  *  Menu Changes
-  *  Battery popup
-  *  Tiling changes
-  *  Backlight VM cap fix
   *  Systray spacing hack
   *  Color dialog entry number sizing fix
+  *  French lang update
 
- -- Robert Wiley <ylee@bodhilinux.com>  Thu, 17 Dec 2020 07:39:07 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 18 Dec 2020 06:53:11 +0004
 
-moksha (0.3.2-1) focal; urgency=low
+moksha (20201211bodhi30.3.2) bionic; urgency=low
 
-  *  Initial commit for BL6.0
+  *  Backlight: caps fix for VM
 
- -- Robert Wiley <ylee@bodhilinux.com>  Sat, 03 Oct 2020 08:06:50 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 11 Dec 2020 09:26:29 +0004
+
+moksha (20201202bodhi30.3.2) bionic; urgency=low
+
+  *  French lang update
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Wed, 02 Dec 2020 06:56:43 +0004
+
+moksha (20201115bodhi30.3.2) bionic; urgency=low
+
+  *  Stefan changes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 15 Nov 2020 09:53:34 +0004
+
+moksha (20200816bodhi30.3.1) bionic; urgency=low
+
+  *  Temp module notification
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 16 Aug 2020 12:51:50 +0004
+
+moksha (20200802bodhi30.3.1) bionic; urgency=low
+
+  *  cpufeq seg fault fix
+  *  Restrict vol level to sane default 
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 02 Aug 2020 12:44:08 +0004
+
+
+moksha (20200714bodhi30.3.1) bionic; urgency=low
+
+  *  Moksha 0.3.1 
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 14 Jul 2020 08:29:03 +0004
+
+moksha (20190715bodhi30.3.1) bionic; urgency=low
+
+  *  Kill e update functionality
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 15 Jul 2019 07:01:16 +0004
+
+
+moksha (20181122bodhi30.3.0) bionic; urgency=low
+
+  *  Štefan Clock Module changes.
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 22 Nov 2018 07:27:49 +0004
+
+moksha (20180701bodhi30.3.0) bionic; urgency=low
+
+  *  Bodhi 5.0.0 RC
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Wed, 21 Aug 2018 23:20:21 +0004
+
+moksha (20180519bodhi10.3.0) unstable; urgency=low
+
+  *  Moksha 0.3.0 test
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Thu, 15 Mar 2018 02:22:13 +0004
+
+
+moksha (20180306bodhi10.2.1) unstable; urgency=low
+
+  * Preparing for Moksha 0.3.0
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Tue, 06 Mar 2018 06:25:19 +0004
+
+moksha (20210202bodhi30.3.3) bionic; urgency=low
+
+  *  Support for shaped borders restored
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 02 Feb 2021 12:15:37 +0004
+
+moksha (20210128bodhi30.3.3) bionic; urgency=low
+
+  *  Support for shaped borders restored
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 28 Jan 2021 10:21:37 +0004
+
+moksha (20210124bodhi30.3.3) bionic; urgency=low
+
+  *  Stefan task changes
+  *  xkbswitch options group names fix
+  *  Localizations updates
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 24 Jan 2021 10:21:37 +0004
+
+moksha (20210112bodhi30.3.3) bionic; urgency=low
+
+  *  Gadcon and shelf fix
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 12 Jan 2021 10:21:37 +0004
+
+moksha (20210110bodhi30.3.3) bionic; urgency=low
+
+  *  Theme notification text scaled
+  *  Clock screensaver events added
+  *  Refresh clock module date when resume from sleep
+  *  Use Elm copy for evry copy
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 10 Jan 2021 16:56:33 +0004
+
+moksha (20201223bodhi30.3.3) bionic; urgency=low
+
+  *  e_icon changes
+  *  misc fixes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 24 Dec 2020 06:40:16 +0004
+
+moksha (20201218bodhi30.3.2) bionic; urgency=low
+
+  *  Systray spacing hack
+  *  Color dialog entry number sizing fix
+  *  French lang update
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 18 Dec 2020 06:53:11 +0004
+
+moksha (20201211bodhi30.3.2) bionic; urgency=low
+
+  *  Backlight: caps fix for VM
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 11 Dec 2020 09:26:29 +0004
+
+moksha (20201202bodhi30.3.2) bionic; urgency=low
+
+  *  French lang update
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Wed, 02 Dec 2020 06:56:43 +0004
+
+moksha (20201115bodhi30.3.2) bionic; urgency=low
+
+  *  Stefan changes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 15 Nov 2020 09:53:34 +0004
+
+moksha (20200816bodhi30.3.1) bionic; urgency=low
+
+  *  Temp module notification
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 16 Aug 2020 12:51:50 +0004
+
+moksha (20200802bodhi30.3.1) bionic; urgency=low
+
+  *  cpufeq seg fault fix
+  *  Restrict vol level to sane default 
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 02 Aug 2020 12:44:08 +0004
+
+
+moksha (20200714bodhi30.3.1) bionic; urgency=low
+
+  *  Moksha 0.3.1 
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 14 Jul 2020 08:29:03 +0004
+
+moksha (20190715bodhi30.3.1) bionic; urgency=low
+
+  *  Kill e update functionality
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 15 Jul 2019 07:01:16 +0004
+
+
+moksha (20181122bodhi30.3.0) bionic; urgency=low
+
+  *  Štefan Clock Module changes.
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 22 Nov 2018 07:27:49 +0004
+
+moksha (20180701bodhi30.3.0) bionic; urgency=low
+
+  *  Bodhi 5.0.0 RC
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Wed, 21 Aug 2018 23:20:21 +0004
+
+moksha (20180519bodhi10.3.0) unstable; urgency=low
+
+  *  Moksha 0.3.0 test
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Thu, 15 Mar 2018 02:22:13 +0004
+
+
+moksha (20180306bodhi10.2.1) unstable; urgency=low
+
+  * Preparing for Moksha 0.3.0
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Tue, 06 Mar 2018 06:25:19 +0004
+
+
+moksha (20180224bodhi10.2.1) unstable; urgency=low
+
+  * Feature change and bug fux
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Sat, 24 Feb 2018 16:57:09 +0004
+
+
+moksha (20170126bodhi10.2.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Tue, 07 Apr 2015 15:22:08 +0000
+
+moksha (20180224bodhi10.2.1) unstable; urgency=low
+
+  * Feature change and bug fux
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Sat, 24 Feb 2018 16:57:09 +0004
+
+
+moksha (20170126bodhi10.2.1) unstable; urgency=low
+
+  * Initial release
+
+ -- Jeff Hoogland <jeffhoogland@linux.com>  Tue, 07 Apr 2015 15:22:08 +0000
