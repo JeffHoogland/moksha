@@ -1,3 +1,24 @@
+moksha (0.3.3-2) focal; urgency=low
+
+  * Theme and icon settings improvement to avoid user confusion
+  * Properly set mime type for file managers
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 13 Feb 2021 16:26:18 +0004
+
+moksha (0.3.3-1) focal; urgency=low
+
+  * Update Moksha version
+  * IBar changes
+  * Disable firstboot landing
+  * Remove Ubiquity from ISO ibar contents
+  * Update Russian translations
+  * Border Menu: fix harmless EFL ERR msg
+  * Support for ISO profile
+  * EFL clipboard fix due to EFL changes
+  * Keybinding support for Profile changes
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 13 Feb 2021 14:25:10 +0004
+
 moksha (0.3.2-8) focal; urgency=low
 
   * Support for shaped borders restored
