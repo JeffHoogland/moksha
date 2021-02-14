@@ -385,7 +385,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/mailto",
                                 cfdata->mailto_desktop);
         if ((cfdata->file_desktop) && (cfdata->file_desktop[0]))
-          efreet_ini_string_set(cfdata->ini, "x-scheme-handler/file",
+          efreet_ini_string_set(cfdata->ini, "inode/directory",
                                 cfdata->file_desktop);
         if ((cfdata->trash_desktop) && (cfdata->trash_desktop[0]))
           efreet_ini_string_set(cfdata->ini, "x-scheme-handler/trash",
