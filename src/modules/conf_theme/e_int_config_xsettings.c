@@ -35,6 +35,9 @@ struct _E_Config_Dialog_Data
    Ecore_Idler     *fill_icon_themes_delayed;
 };
 
+static Eina_Bool ilist_sel_theme = EINA_FALSE;
+static Eina_Bool ilist_sel_icon = EINA_FALSE;
+
 static const char *_icon_previews[4] =
 {
    "system-run",
@@ -85,7 +88,6 @@ static void *
 _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
-
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
    cfdata->widget_theme = eina_stringshare_add(e_config->xsettings.net_theme_name);
@@ -116,7 +118,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
 {
    if (cfdata->match_e17_icon_theme != e_config->xsettings.match_e17_icon_theme)
      return 1;
-   
+
    if (cfdata->match_icons_if_possible != e_config->xsettings.match_icons_if_possible)
      return 1;
 
@@ -151,7 +153,6 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    if ((cfdata->icon_theme && e_config->icon_theme) &&
        (strcmp(cfdata->icon_theme, e_config->icon_theme) != 0))
      return 1;
-
    return 0;
 }
 
@@ -468,8 +469,25 @@ _icon_theme_changed(void *data, Evas_Object *o __UNUSED__)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
+
+   if (ilist_sel_icon == EINA_TRUE)
+     e_widget_check_checked_set(cfdata->gui.icon_defined_in_theme, 0);
+   ilist_sel_icon = EINA_TRUE;
+
    if (cfdata->icon_populating) return;
    _populate_icon_preview(cfdata);
+}
+
+static void
+_theme_changed(void *data, Evas_Object *o __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+
+   if (ilist_sel_theme == EINA_TRUE)
+     e_widget_check_checked_set(cfdata->gui.match_theme, 0);
+   ilist_sel_theme = EINA_TRUE;
 }
 
 static Evas_Object *
@@ -486,9 +504,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    cfdata->gui.widget_list = ilist;
    e_widget_size_min_set(cfdata->gui.widget_list, 100, 100);
 
-   /* e_widget_on_change_hook_set(ilist, _icon_theme_changed, cfdata); */
+   e_widget_on_change_hook_set(ilist, _theme_changed, cfdata);
    e_widget_list_object_append(ol, ilist, 1, 1, 0.5);
-
    /* ow = e_widget_check_add(evas, _("Use icon theme for applications"),
     *                        &(cfdata->match_e17_icon_theme));
     * e_widget_list_object_append(ol, ow, 0, 0, 0.0); */
