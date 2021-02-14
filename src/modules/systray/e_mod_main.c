@@ -1162,7 +1162,7 @@ e_modapi_init(E_Module *m)
        delay = ecore_timer_add(d, _delay_gadget, NULL); 
      }
      else
-        e_gadcon_provider_register(&_gc_class);
+       delay = ecore_timer_add(2.0, _delay_gadget, NULL);
    }
         
    if (!_atom_manager)
