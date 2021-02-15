@@ -1,3 +1,10 @@
+moksha (0.3.3-3) focal; urgency=low
+
+  * Icon preview regression hack
+  * Systray delay issue
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 15 Feb 2021 07:23:41 +0004
+
 moksha (0.3.3-2) focal; urgency=low
 
   * Theme and icon settings improvement to avoid user confusion
