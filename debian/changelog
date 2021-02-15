@@ -1,4 +1,4 @@
-moksha (20210213bodhi30.3.3) focal; urgency=low
+moksha (20210215bodhi30.3.3) focal; urgency=low
 
   * Update Moksha version
   * IBar changes
@@ -9,8 +9,10 @@ moksha (20210213bodhi30.3.3) focal; urgency=low
   * Support for ISO profile
   * EFL clipboard fix due to EFL changes
   * Keybinding support for Profile changes
+  * Icon preview regression hack
+  * Systray delay issue
 
- -- Robert Wiley <ylee@bodhilinux.com>  Sat, 13 Feb 2021 14:25:10 +0004
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 15 Feb 2021 07:23:41 +0004
 
 moksha (20210202bodhi30.3.3) bionic; urgency=low
 
