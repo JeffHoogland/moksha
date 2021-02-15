@@ -540,7 +540,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    for (i = 0; i < sizeof(_icon_previews) / sizeof(_icon_previews[0]); i++)
      {
         cfdata->gui.icon_preview[i] = e_icon_add(evas);
-        e_icon_preload_set(cfdata->gui.icon_preview[i], EINA_TRUE);
+        e_icon_preload_set(cfdata->gui.icon_preview[i], EINA_FALSE);
         e_icon_scale_size_set(cfdata->gui.icon_preview[i], PREVIEW_SIZE);
         e_widget_framelist_object_append_full(of, cfdata->gui.icon_preview[i],
                                               0, 0, 0, 0, 0.5, 0.5,
