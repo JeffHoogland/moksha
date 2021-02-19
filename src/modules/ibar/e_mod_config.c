@@ -346,9 +346,9 @@ _show_label_adj_cb_change(void *data, Evas_Object *obj __UNUSED__)
 
    cfdata = data;
    if (!cfdata) return;
-   e_widget_disabled_set(cfdata->radio_name, cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_comment, cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_generic, cfdata->show_label);
+   e_widget_disabled_set(cfdata->radio_name, 1);
+   e_widget_disabled_set(cfdata->radio_comment, 1);
+   e_widget_disabled_set(cfdata->radio_generic, 1);
    e_widget_check_checked_set(cfdata->label, 0);
 }
 
