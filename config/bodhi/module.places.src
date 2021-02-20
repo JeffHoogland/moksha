@@ -6,7 +6,7 @@ group "Config" struct {
         }
     }
     value "version" int: 65679;
-    value "fm" string: "thunar";
+    value "fm" string: "pcmanfm";
     value "auto_mount" uchar: 0;
     value "boot_mount" uchar: 0;
     value "auto_open" uchar: 0;
