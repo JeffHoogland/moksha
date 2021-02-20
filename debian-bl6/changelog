@@ -1,3 +1,11 @@
+moksha (0.3.3-4) focal; urgency=low
+
+  * Update French po
+  * Set theme wallpaper as default
+  * Set thunar as default in multiple places
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 20 Feb 2021 05:04:43 -0400
+
 moksha (0.3.3-3) focal; urgency=low
 
   * Icon preview regression hack

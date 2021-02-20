@@ -11,8 +11,8 @@ Architecture: any
 Provides: enlightenment, x-window-manager
 Replaces: enlightenment
 Conflicts: e17, enlightenment
-Depends: ${shlibs:Depends}, ${misc:Depends}, bodhi-background-edj, dbus-x11
-Recommends: pm-utils,  gtk-recent, pavucontrol, terminology, bc, pcmanfm, udisks
+Depends: ${shlibs:Depends}, ${misc:Depends}, dbus-x11
+Recommends: pm-utils,  gtk-recent, pavucontrol, terminology, bc, thunar | pcmanfm, udisks
 Description: Moksha Desktop
  Moksha is an advanced window manager for X11 based on Enlightenment DR17.
 
