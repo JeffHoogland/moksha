@@ -44,7 +44,15 @@ _write_bodhi_desktops(char *usr)
            fprintf(f, "org.gnome.Epiphany.desktop\n");
         fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "terminology.desktop\n");
-        fprintf(f, "pcmanfm.desktop\n");
+        if (ecore_file_exists("/usr/share/applications/Thunar.desktop"))
+            // Ubuntu 18.04
+            fprintf(f, "Thunar.desktop\n");
+        else
+            if (ecore_file_exists("/usr/share/applications/thunar.desktop"))
+                // Ubuntu 20.04
+                fprintf(f, "thunar.desktop\n");
+            else
+                fprintf(f, "pcmanfm.desktop\n");
         /*if (!strcmp(usr, "bodhi"))
            fprintf(f, "ubiquity.desktop\n");*/
         fclose(f);
