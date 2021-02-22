@@ -1158,7 +1158,7 @@ _show_dialog(E_Object *obj, const char *params __UNUSED__)
    E_Manager *man;
    E_Container *con;
    E_Dialog *dia;
-   char buf[128];
+   char buf[512];
 
    if (_show_dialog_dia) return;
    
