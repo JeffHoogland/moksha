@@ -14,6 +14,7 @@ struct _E_Config_Dialog_Data
    /* menu page variables */
    int time_stamp;
    int show_app;
+   int show_count;
    int reverse;
    double item_length;
    double menu_items;
@@ -89,6 +90,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->dual_screen = notification_cfg->dual_screen;
    cfdata->time_stamp = notification_cfg->time_stamp;
    cfdata->show_app = notification_cfg->show_app;
+   cfdata->show_count = notification_cfg->show_count;
    cfdata->reverse = notification_cfg->reverse;
    cfdata->menu_items = notification_cfg->menu_items;
    cfdata->item_length = notification_cfg->item_length;
@@ -170,6 +172,8 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    ow = e_widget_check_add(evas, _("Time stamp"),  &(cfdata->time_stamp));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Show application name"),  &(cfdata->show_app));
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Show notification counter"),  &(cfdata->show_count));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Reverse order"),  &(cfdata->reverse));
    e_widget_framelist_object_append(of, ow);
@@ -268,6 +272,7 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    notification_cfg->dual_screen = cfdata->dual_screen;
    notification_cfg->time_stamp = cfdata->time_stamp;
    notification_cfg->show_app = cfdata->show_app;
+   notification_cfg->show_count = cfdata->show_count;
    notification_cfg->reverse = cfdata->reverse;
    notification_cfg->menu_items = cfdata->menu_items;
    notification_cfg->item_length = cfdata->item_length;

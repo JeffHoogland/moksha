@@ -395,7 +395,7 @@ gadget_text(int number)
   if (!notification_cfg->instances) return;
   inst = eina_list_data_get(notification_cfg->instances);  
     
-  if (number > 0)
+  if (number > 0 && notification_cfg->show_count)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
   else
      edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
@@ -623,6 +623,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, dual_screen, INT);
    E_CONFIG_VAL(D, T, time_stamp, INT);
    E_CONFIG_VAL(D, T, show_app, INT);
+   E_CONFIG_VAL(D, T, show_count, INT);
    E_CONFIG_VAL(D, T, reverse, INT);
    E_CONFIG_VAL(D, T, menu_items, DOUBLE);
    E_CONFIG_VAL(D, T, item_length, DOUBLE);
@@ -745,6 +746,7 @@ _notification_cfg_new(void)
    cfg->corner = CORNER_TR;
    cfg->time_stamp = 1;
    cfg->show_app = 0;
+   cfg->show_count = 1;
    cfg->reverse = 0;
    cfg->item_length = 60;
    cfg->menu_items = 20;
