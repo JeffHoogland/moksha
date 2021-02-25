@@ -330,6 +330,7 @@ main(int argc, char **argv)
    e_util_env_set("E_RESTART_OK", NULL);
    snprintf(moksha, 13, "Moksha-%.5s", VERSION);
    e_util_env_set("DESKTOP", moksha);
+   e_util_env_set("XDG_CURRENT_DESKTOP", "e");
    e_util_env_set("MOKSHA_VERSION", PACKAGE_VERSION);
    TS("Environment Variables Done");
 
