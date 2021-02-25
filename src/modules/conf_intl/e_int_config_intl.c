@@ -139,7 +139,7 @@ const E_Intl_Pair basic_language_predefined_pairs[] = {
    {"sv_SE.UTF-8", "se_flag.png", "Svenska"},
    {"tr_TR.UTF-8", "tr_flag.png", "Türkçe"},
    {"uk_UK.UTF-8", "ua_flag.png", "Українська мова"},
-   {"zh_CN.UTF-8", "cn_flag.png", "中文 (繁体)"},
+   {"zh_CN.UTF-8", "cn_flag.png", "中文 (简体)"},
    {"zh_TW.UTF-8", "tw_flag.png", "中文 (繁體)"},
    { NULL, NULL, NULL }
 };
