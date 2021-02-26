@@ -406,7 +406,7 @@ _e_configure_efreet_desktop_update(void)
              else
                {
                   snprintf(buf, sizeof(buf), "system/%s", label);
-                  if (!ic) ic = "preferences-system";
+                  if (!ic) ic = "system";
                   e_configure_registry_category_add("system", 1000,
                                                     _("System"),
                                                     NULL, ic);
