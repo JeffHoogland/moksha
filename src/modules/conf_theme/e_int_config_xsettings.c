@@ -35,8 +35,8 @@ struct _E_Config_Dialog_Data
    Ecore_Idler     *fill_icon_themes_delayed;
 };
 
-static Eina_Bool ilist_sel_theme = EINA_FALSE;
-static Eina_Bool ilist_sel_icon = EINA_FALSE;
+static Eina_Bool ilist_sel_theme;
+static Eina_Bool ilist_sel_icon;
 
 static const char *_icon_previews[4] =
 {
@@ -62,6 +62,8 @@ e_int_config_xsettings(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
    v->basic.check_changed = _basic_check_changed;
+   ilist_sel_theme = EINA_FALSE;
+   ilist_sel_icon = EINA_FALSE;
 
    cfd = e_config_dialog_new(con, _("Application Theme Settings"),
                              "E", "appearance/xsettings",
