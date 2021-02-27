@@ -23,7 +23,7 @@ e_modapi_init(E_Module *m)
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL,
                                      "preferences-extensions");
    e_configure_registry_item_add("extensions/gadman", 150, _("Gadgets"), NULL,
-                                 buf, _config_gadman_module);
+                                 "preferences-extensions", _config_gadman_module);
 
    /* Set this module to be loaded after all other modules, or we don't see
       modules loaded after this */
@@ -171,7 +171,7 @@ _gadman_desktop_menu_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUS
 }
 
 static void
-_gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon)
+_gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon __UNUSED__)
 {
    E_Menu_Item *mi;
 
@@ -181,7 +181,9 @@ _gadman_desktop_menu(E_Menu *m, void *d __UNUSED__, void *icon)
 
    mi = e_menu_item_new_relative(m, NULL);
    e_menu_item_label_set(mi, _("Change Gadgets"));
-   e_menu_item_icon_edje_set(mi, icon, "icon");
+   //~ e_menu_item_icon_edje_set(mi, icon, "icon");
+   e_util_menu_item_theme_icon_set(mi, "preferences-extensions");
+
    e_menu_item_callback_set(mi, _gadman_desktop_menu_cb, NULL);
 
    mi = e_menu_item_new_relative(m, mi);
@@ -195,13 +197,16 @@ _gadman_maug_cb(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 }
 
 static void
-_gadman_maug_add(void *data, E_Menu *m)
+_gadman_maug_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
 
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Gadgets"));
-   e_menu_item_icon_edje_set(mi, (char *)data, "icon");
+   //~ e_menu_item_icon_file_set(mi, "preferences-extensions"); 
+   e_util_menu_item_theme_icon_set(mi, "preferences-extensions");
+
+   //~ e_menu_item_icon_edje_set(mi, (char *)data, "icon");
    e_menu_item_callback_set(mi, _gadman_maug_cb, NULL);
 }
 

@@ -61,7 +61,7 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
-   char buf[4096];
+   //~ char buf[4096];
 
    /* check if config dialog exists ... */
    if (e_config_dialog_find("E", "extensions/gadman"))
@@ -75,10 +75,10 @@ _config_gadman_module(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply_data;
    v->basic.check_changed = _basic_check_changed;
 
-   snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-gadman.edj", Man->module->dir);
    cfd = e_config_dialog_new(con, _("Desktop Gadgets"),
                              "E", "extensions/gadman",
-                             buf, 0, v, Man);
+                             "preferences-extensions" , 0, v, Man);
 
    Man->config_dialog = cfd;
    return Man->config_dialog;
