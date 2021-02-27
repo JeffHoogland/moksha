@@ -2406,7 +2406,11 @@ e_border_focus_set(E_Border *bd,
 
         e_hints_active_window_set(bd->zone->container->manager, bd);
 
-        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+        if (bd->maximized != E_MAXIMIZE_NONE)
+          edje_object_signal_emit(bd->bg_object, "e,state,focused,maximized", "e");
+        else
+          edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+
         if (bd->icon_object && e_icon_edje_get(bd->icon_object))
           e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
 
