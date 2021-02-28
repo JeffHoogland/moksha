@@ -39,7 +39,7 @@ e_int_config_notification_module(E_Container *con,
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
+   //~ char buf[4096];
 
    if (e_config_dialog_find("Notification", "extensions/notification")) return NULL;
 
@@ -51,9 +51,9 @@ e_int_config_notification_module(E_Container *con,
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
 
-   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-notification.edj", notification_mod->dir);
    cfd = e_config_dialog_new(con, _("Notification Settings"), "Notification",
-                             "extensions/notification", buf, 0, v, NULL);
+                             "extensions/notification", "preferences-system-notifications", 0, v, NULL);
    notification_cfg->cfd = cfd;
    return cfd;
 }

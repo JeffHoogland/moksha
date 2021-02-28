@@ -57,7 +57,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/notification",
                            "e/modules/notification/logo");
-
+   
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
 
@@ -604,7 +604,7 @@ e_modapi_init(E_Module *m)
                                      "preferences-extensions");
    e_configure_registry_item_add("extensions/notification", 30, 
                                  _("Notification"), NULL,
-                                 buf, e_int_config_notification_module);
+                                 "preferences-system-notifications", e_int_config_notification_module);
 
 
    conf_edd = E_CONFIG_DD_NEW("Notification_Config", Config);
