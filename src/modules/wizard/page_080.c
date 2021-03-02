@@ -42,7 +42,6 @@ _write_bodhi_desktops(char *usr)
            fprintf(f, "firefox.desktop\n");
         else
            fprintf(f, "org.gnome.Epiphany.desktop\n");
-        fprintf(f, "bodhi-appcenter.desktop\n");
         fprintf(f, "terminology.desktop\n");
         if (ecore_file_exists("/usr/share/applications/Thunar.desktop"))
             // Ubuntu 18.04
