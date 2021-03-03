@@ -134,6 +134,7 @@ e_int_menus_main_new(void)
    Eina_List *l = NULL;
    int separator = 0;
    Eina_Bool sflag = EINA_FALSE;
+   Eina_Bool is_icon;
 
    dat = calloc(1, sizeof(Main_Data));
    m = e_menu_new();
@@ -204,7 +205,7 @@ e_int_menus_main_new(void)
    subm = e_menu_new();
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("About Operating System"));
-   e_util_menu_item_theme_icon_set(mi, "bodhi");
+   e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_submenu_set(mi, subm);
    e_object_unref(E_OBJECT(subm));
 
@@ -216,7 +217,7 @@ e_int_menus_main_new(void)
 #ifdef ENABLE_BODHI
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About Bodhi Linux"));
-   e_util_menu_item_theme_icon_set(mi, "help-about");
+   e_util_menu_item_theme_icon_set(mi, "bodhi");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
 #endif
 
@@ -236,7 +237,8 @@ e_int_menus_main_new(void)
 
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About Moksha Desktop"));
-   e_util_menu_item_theme_icon_set(mi, "help-about");
+   is_icon = e_util_menu_item_theme_icon_set(mi, "about-moksha");
+   if (!is_icon) e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_main_about, NULL);
 
    mi = e_menu_item_new(subm);
