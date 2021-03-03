@@ -456,7 +456,7 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_callback_set(mi, _e_mod_conf_cb, NULL);
 
    mi = e_menu_item_new(m);
-   e_menu_item_label_set(mi, _("Modes"));
+   e_menu_item_label_set(mi, _("Mode"));
    e_util_menu_item_theme_icon_set(mi, "preferences-modes");
    e_menu_item_submenu_set(mi, _e_mod_submenu_modes_get());
    e_object_unref(E_OBJECT(mi->submenu));
