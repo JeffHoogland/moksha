@@ -877,6 +877,16 @@ group { name: "e/modules/clock/calendar/day";
       }
    }
    parts {
+      part { name: "day"; type: RECT;
+             mouse_events: 1;
+             description { state: "default" 0.0;
+               color: 0 0 0 0;
+             }
+           }
+      program { name: "prev_clicked";
+            signal: "mouse,clicked,1*"; source: "day";
+            action: SIGNAL_EMIT "e,action,date,get" "";
+      }
       part { name: "e.text.label"; type: TEXT; mouse_events: 0;
          effect: SHADOW BOTTOM;
          scale: 1;
