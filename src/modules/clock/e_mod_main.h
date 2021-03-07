@@ -26,9 +26,12 @@ struct _Config_Item
   struct {
       int start, len; // 0->6 0 == sun, 6 == sat, number of days
    } weekend;
-   struct {
+  struct {
       int start; // 0->6 0 == sun, 6 == sat
    } week;
+  struct {
+      double hour, minute;
+   } timeset;
    int digital_clock;
    int digital_24h;
    int show_seconds;

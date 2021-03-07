@@ -21,6 +21,7 @@ struct _Instance
 
    char             year[8];
    char             month[64];
+   char             month_dec[6];
    int              weeks[53];
    const char      *daynames[7];
    unsigned char    daynums[7][6];
@@ -83,36 +84,36 @@ _clear_timestrs(Instance *inst)
 static void
 _todaystr_eval(Instance *inst, char *buf, int bufsz)
 {
-   if (!inst->cfg->show_date)
-     {
-        buf[0] = 0;
-     }
-   else
-     {
-        struct timeval timev;
-        struct tm *tm;
-        time_t tt;
+   
+    struct timeval timev;
+    struct tm *tm;
+    time_t tt;
 
-        tzset();
-        gettimeofday(&timev, NULL);
-        tt = (time_t)(timev.tv_sec);
-        tm = localtime(&tt);
-        if (tm)
-          {
-             if (inst->cfg->show_date == 1)
-               strftime(buf, bufsz, "%a, %e %b, %Y", (const struct tm *)tm);
-             else if (inst->cfg->show_date == 2)
-               strftime(buf, bufsz, "%a, %x", (const struct tm *)tm);
-             else if (inst->cfg->show_date == 3)
-               strftime(buf, bufsz, "%x", (const struct tm *)tm);
-             else if (inst->cfg->show_date == 4)
-               strftime(buf, bufsz, "%F", (const struct tm *)tm);
-             else if (inst->cfg->show_date == 5)
-              strftime(buf, bufsz, inst->cfg->custom_date_const, (const struct tm *)tm); 
-          }
-        else
-          buf[0] = 0;
-     }
+    tzset();
+    gettimeofday(&timev, NULL);
+    tt = (time_t)(timev.tv_sec);
+    tm = localtime(&tt);
+    if (tm)
+      {
+         if (inst->cfg->show_date == 1)
+           strftime(buf, bufsz, "%a, %e %b, %Y", (const struct tm *)tm);
+         else if (inst->cfg->show_date == 2)
+           strftime(buf, bufsz, "%a, %x", (const struct tm *)tm);
+         else if (inst->cfg->show_date == 3)
+           strftime(buf, bufsz, "%x", (const struct tm *)tm);
+         else if (inst->cfg->show_date == 4)
+           strftime(buf, bufsz, "%F", (const struct tm *)tm);
+         else if (inst->cfg->show_date == 5)
+          strftime(buf, bufsz, inst->cfg->custom_date_const, (const struct tm *)tm);
+
+         inst->cfg->timeset.hour = tm->tm_hour;
+         inst->cfg->timeset.minute = tm->tm_min;
+      }
+    else
+      buf[0] = 0;
+
+    if (!inst->cfg->show_date)
+      buf[0] = 0;
 }
 
 static void
@@ -229,7 +230,28 @@ _time_eval(Instance *inst)
         strftime(inst->year, sizeof(inst->year) - 1, "%Y", (const struct tm *)&tm2);
         inst->month[sizeof(inst->month) - 1] = 0;
         strftime(inst->month, sizeof(inst->month) - 1, "%B", (const struct tm *)&tm2); // %b for short month
+        strftime(inst->month_dec, sizeof(inst->month_dec) - 1, "%m", (const struct tm *)&tm2); // %m month as decimal
      }
+}
+
+static void
+_clock_date_set_cb(void *data, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Instance *inst = data;
+   char pkexec_cmd[PATH_MAX];
+   const char *cmd_sudo;
+   char date[512];
+   char buf[4096];
+   char command[64] = "date +%Y%m%d -s";
+
+   snprintf(date, 512, "%s%s%02d", inst->year, inst->month_dec,
+                atoi(edje_object_part_text_get(obj, "e.text.label")));
+   snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
+   cmd_sudo = eina_stringshare_add(pkexec_cmd);
+   snprintf(buf, sizeof(buf), "%s %s %s", cmd_sudo, command, date);
+   e_util_exe_safe_run(buf, NULL);
+   eina_stringshare_del(cmd_sudo);
+  _clock_popup_free(inst);
 }
 
 static void
@@ -263,7 +285,10 @@ _clock_month_update(Instance *inst)
              od = edje_object_part_table_child_get(oi, "e.table.days", x, y);
              snprintf(buf, sizeof(buf), "%i", (int)inst->daynums[x][y]);
              edje_object_part_text_set(od, "e.text.label", buf);
-             
+             //callback register for each day RECT to set up date
+             edje_object_signal_callback_add(od, "e,action,date,get", "*",
+                                   _clock_date_set_cb, inst);
+
              if (inst->dayweekends[x][y])
                edje_object_signal_emit(od, "e,state,weekend", "e");
              else
@@ -277,6 +302,7 @@ _clock_month_update(Instance *inst)
              else
                edje_object_signal_emit(od, "e,state,someday", "e");
              edje_object_message_signal_process(od);
+
           }
         // week number 
           
@@ -284,8 +310,9 @@ _clock_month_update(Instance *inst)
         ow = edje_object_part_table_child_get(oi, "e.table.days", 7, y);
         snprintf(buf, sizeof(buf), "%i", inst->weeks[y * 7]);
         edje_object_part_text_set(ow, "e.text.label", buf); 
+
         edje_object_signal_emit(ow, "e,state,week", "e");
-        
+
      }
    edje_object_message_signal_process(oi);
 }
@@ -307,6 +334,7 @@ _clock_month_next_cb(void *data, Evas_Object *obj __UNUSED__, const char *emissi
    _time_eval(inst);
    _clock_month_update(inst);
 }
+
 
 static void
 _clock_settings_cb(void *d1, void *d2 __UNUSED__)
@@ -905,6 +933,8 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, weekend.start, INT);
    E_CONFIG_VAL(D, T, weekend.len, INT);
    E_CONFIG_VAL(D, T, week.start, INT);
+   E_CONFIG_VAL(D, T, timeset.hour, DOUBLE);
+   E_CONFIG_VAL(D, T, timeset.minute, DOUBLE);
    E_CONFIG_VAL(D, T, digital_clock, INT);
    E_CONFIG_VAL(D, T, digital_24h, INT);
    E_CONFIG_VAL(D, T, show_seconds, INT);

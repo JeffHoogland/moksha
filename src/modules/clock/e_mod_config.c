@@ -5,6 +5,7 @@ struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
    char *custom_dat;
+   double hour, minute;
 };
 
 /* Protos */
@@ -54,6 +55,11 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         cfdata->custom_dat = strdup(ci->custom_date_const); 
     else
         cfdata->custom_dat = strdup("");
+
+   //sliders obtain the current time
+   cfdata->hour = ci->timeset.hour;
+   cfdata->minute = ci->timeset.minute;
+
    return cfdata;
 }
 
@@ -135,9 +141,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
      }
 
    e_widget_table_object_append(tab, of, 1, 0, 1, 2, 1, 1, 1, 1);
-
+   
    of = e_widget_frametable_add(evas, _("Weekend"), 0);
-
    ob = e_widget_label_add(evas, _("Start"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 0, 1, 0, 0);
    rg = e_widget_radio_group_new(&(cfdata->cfg.weekend.start));
@@ -166,7 +171,47 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_frametable_object_append(of, ob, 1, 7, 1, 1, 1, 1, 0, 0);
 
    e_widget_table_object_append(tab, of, 2, 0, 1, 2, 1, 1, 1, 1);
+
+   of = e_widget_frametable_add(evas, _("Time set"), 0);
+
+   ob = e_widget_label_add(evas, _("Hours"));
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 23, 1.0, 0,
+                            &(cfdata->hour), NULL, 30);
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_label_add(evas, _("Minutes"));
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 59, 1.0, 0,
+                            &(cfdata->minute), NULL, 30);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
+
+   e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);
+
+   of = e_widget_frametable_add(evas, _("Date set"), 0);
+
+   ob = e_widget_label_add(evas, _("Click on"));
+   e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
+   ob = e_widget_label_add(evas, _("calendar day"));
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
+
+   e_widget_table_object_append(tab, of, 3, 1, 1, 1, 1, 1, 1, 1);
+
    return tab;
+}
+
+static void
+ clock_time_set(E_Config_Dialog_Data *cfdata)
+{
+   char pkexec_cmd[PATH_MAX];
+   const char *cmd_sudo;
+   char buf[4096];
+   char command[64] = "date +%T -s";
+
+   snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
+   cmd_sudo = eina_stringshare_add(pkexec_cmd);
+   snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:00", cmd_sudo, command, cfdata->hour, cfdata->minute);
+   e_util_exe_safe_run(buf, NULL);
+   eina_stringshare_del(cmd_sudo);
 }
 
 static int
@@ -186,6 +231,9 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
    
+   if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
+     clock_time_set(cfdata);
+
    return 1;
 }
 
