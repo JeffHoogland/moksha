@@ -40,6 +40,8 @@ _write_bodhi_desktops(char *usr)
    if (f) 
      {  if (ecore_file_exists("/usr/share/applications/firefox.desktop"))
            fprintf(f, "firefox.desktop\n");
+        else if (ecore_file_exists("/usr/share/applications/chromium-browser.desktop"))
+           fprintf(f, "chromium-browser.desktop\n");
         else
            fprintf(f, "org.gnome.Epiphany.desktop\n");
         fprintf(f, "terminology.desktop\n");
