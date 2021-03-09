@@ -18,6 +18,8 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
 static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
 
+static E_Dialog *show_info_dia = NULL;
+
 void
 e_int_config_clock_module(E_Container *con, Config_Item *ci)
 {
@@ -71,6 +73,37 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    clock_config->config_dialog = NULL;
    E_FREE(cfdata);
    settings_opened = EINA_FALSE;
+}
+
+static void
+_show_info_del(void *data)
+{
+   if (show_info_dia == data)
+     show_info_dia = NULL;
+}
+
+static void
+show_info_cb() 
+{
+  E_Dialog *dia;
+  E_Manager *man;
+  E_Container *con;
+  char buf[512];
+  
+  if (show_info_dia) return;
+  if (!(man = e_manager_current_get())) return;
+  if (!(con = e_container_current_get(man))) return;
+  if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
+  
+  snprintf(buf, sizeof(buf), _("Click on a calendar day for date change. <br>" 
+                                "Use the mouse wheel for changing the year."));
+   e_dialog_title_set(dia, _("Clock module Information"));
+   e_dialog_icon_set(dia, "dialog-information", 64);
+   e_dialog_text_set(dia, buf);
+   e_object_del_attach_func_set(E_OBJECT(dia), _show_info_del);
+   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
+   e_dialog_show(dia);
+   show_info_dia = dia;
 }
 
 static Evas_Object *
@@ -190,11 +223,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 
    of = e_widget_frametable_add(evas, _("Date set"), 0);
 
-   ob = e_widget_label_add(evas, _("Click on"));
+   ob = e_widget_button_add(evas, " Info... ", "dialog-information", show_info_cb, NULL, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_label_add(evas, _("calendar day"));
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
-
+  
    e_widget_table_object_append(tab, of, 3, 1, 1, 1, 1, 1, 1, 1);
 
    return tab;

@@ -340,6 +340,20 @@ _clock_month_next_cb(void *data, Evas_Object *obj __UNUSED__, const char *emissi
    _clock_month_update(inst);
 }
 
+static void
+_clock_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
+{
+   Instance *inst = data;
+    Evas_Event_Mouse_Wheel *ev = event;
+
+   if (ev->z > 0)
+     inst->madj= inst->madj - 12;
+   else if (ev->z < 0)
+     inst->madj= inst->madj + 12;
+
+  _time_eval(inst);
+  _clock_month_update(inst);
+}
 
 static void
 _clock_settings_cb(void *d1, void *d2 __UNUSED__)
@@ -444,6 +458,10 @@ _clock_popup_new(Instance *inst)
                                    _clock_month_prev_cb, inst);
    edje_object_signal_callback_add(oi, "e,action,next", "*",
                                    _clock_month_next_cb, inst);
+   evas_object_event_callback_add(oi,
+                                  EVAS_CALLBACK_MOUSE_WHEEL,
+                                  _clock_cb_mouse_wheel,
+                                  inst);
    edje_object_message_signal_process(oi);
    evas_object_resize(oi, 500, 500);
    edje_object_size_min_restricted_calc(oi, &mw, &mh, 128, 128);
@@ -741,7 +759,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   EVAS_CALLBACK_MOUSE_DOWN,
                                   _clock_cb_mouse_down,
                                   inst);
-
    clock_instances = eina_list_append(clock_instances, inst);
 
    if (!update_today) _update_today_timer(NULL);
