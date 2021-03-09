@@ -70,6 +70,7 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    free(cfdata->custom_dat);
    clock_config->config_dialog = NULL;
    E_FREE(cfdata);
+   settings_opened = EINA_FALSE;
 }
 
 static Evas_Object *
@@ -177,12 +178,12 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    ob = e_widget_label_add(evas, _("Hours"));
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 23, 1.0, 0,
-                            &(cfdata->hour), NULL, 30);
+                            &(cfdata->hour), NULL, 40);
    e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
    ob = e_widget_label_add(evas, _("Minutes"));
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 0, 0);
    ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 59, 1.0, 0,
-                            &(cfdata->minute), NULL, 30);
+                            &(cfdata->minute), NULL, 40);
    e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
 
    e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);

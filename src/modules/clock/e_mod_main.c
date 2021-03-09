@@ -249,9 +249,12 @@ _clock_date_set_cb(void *data, Evas_Object *obj, const char *emission __UNUSED__
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
    snprintf(buf, sizeof(buf), "%s %s %s", cmd_sudo, command, date);
-   e_util_exe_safe_run(buf, NULL);
+   if (settings_opened)
+   {
+     e_util_exe_safe_run(buf, NULL);
+    _clock_popup_free(inst);
+   }
    eina_stringshare_del(cmd_sudo);
-  _clock_popup_free(inst);
 }
 
 static void
@@ -285,9 +288,6 @@ _clock_month_update(Instance *inst)
              od = edje_object_part_table_child_get(oi, "e.table.days", x, y);
              snprintf(buf, sizeof(buf), "%i", (int)inst->daynums[x][y]);
              edje_object_part_text_set(od, "e.text.label", buf);
-             //callback register for each day RECT to set up date
-             edje_object_signal_callback_add(od, "e,action,date,get", "*",
-                                   _clock_date_set_cb, inst);
 
              if (inst->dayweekends[x][y])
                edje_object_signal_emit(od, "e,state,weekend", "e");
@@ -300,7 +300,12 @@ _clock_month_update(Instance *inst)
              if (inst->daytoday[x][y])
                edje_object_signal_emit(od, "e,state,today", "e");
              else
+             {
                edje_object_signal_emit(od, "e,state,someday", "e");
+               //callback for each day RECT to set up date
+               edje_object_signal_callback_add(od, "e,action,date,get", "*",
+                                     _clock_date_set_cb, inst);
+             }
              edje_object_message_signal_process(od);
 
           }
@@ -341,9 +346,10 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
 {
    Instance *inst = d1;
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
-   e_object_del(E_OBJECT(inst->popup));
-   inst->popup = NULL;
-   inst->o_popclock = NULL;
+   settings_opened = EINA_TRUE;
+   //~ e_object_del(E_OBJECT(inst->popup));
+   //~ inst->popup = NULL;
+   //~ inst->o_popclock = NULL;
 }
 
 static Eina_Bool
