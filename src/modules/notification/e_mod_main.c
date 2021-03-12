@@ -141,7 +141,7 @@ read_items_eet(Eina_List **popup_items)
   
   history_file = eet_open(file_path, EET_FILE_MODE_READ);
   if (!history_file) {
-      printf("Failed to open notification eet file\n");
+      # printf("Failed to open notification eet file\n");
       *popup_items = NULL;
       return 0;
     }
