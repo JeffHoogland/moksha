@@ -882,7 +882,7 @@ e_modapi_init (E_Module *m)
 
   /* Initialize Einna_log for developers */
   _e_clipboard_log_dom = eina_log_domain_register("Clipboard", EINA_COLOR_ORANGE);
-  eina_log_domain_level_set("Clipboard", EINA_LOG_LEVEL_INFO);
+  // eina_log_domain_level_set("Clipboard", EINA_LOG_LEVEL_INFO);
 
   //e_module_delayed_set(m, 1);
 
