@@ -17,7 +17,7 @@ group "Config" struct {
     value "show_trash" uchar: 0;
     value "show_root" uchar: 0;
     value "show_temp" uchar: 0;
-    value "show_bookm" uchar: 0;
+    value "show_bookm" uchar: 1;
     value "alert_p" int: 90;
     value "alert_timeout" int: 10;
 }
