@@ -282,7 +282,7 @@ e_modapi_init(E_Module *m)
 
    e_configure_registry_category_add("menus", 60, _("Menus"), NULL, "preferences-menus");
    e_configure_registry_item_add("menus/conf",110, _("Configuration Panel"),
-                                 NULL, "configuration_section", e_int_config_conf_module);
+                                 NULL, "preferences-desktop", e_int_config_conf_module);
    conf_edd = E_CONFIG_DD_NEW("Config", Config);
 #undef T
 #undef D
