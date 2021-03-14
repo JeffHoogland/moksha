@@ -1,3 +1,19 @@
+moksha (20210314bodhi30.3.3) focal; urgency=low
+
+  * minor chinese localizations
+  * Notification counter toggle added
+  * XDG_CURRENT_DESKTOP support added
+  * Menu icons name change
+  * Set Date and Time feature added
+  * Everything icon changed to theme one
+  * Configuration panel icon changed
+  * Places icon changed to theme
+  * Bodhi profile: show bookmarks by default
+  * Suppress useless prints in stdout
+  * Chromium support to iBar
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 14 Mar 2021 15:00:35 -0400
+
 moksha (20210220bodhi30.3.3) focal; urgency=low
 
   * Update French po
