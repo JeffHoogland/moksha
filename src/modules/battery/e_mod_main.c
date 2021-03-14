@@ -783,7 +783,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   char buf[4096];
+   //~ char buf[4096];
 
 #ifdef HAVE_ENOTIFY
    e_notification_init();
@@ -855,11 +855,11 @@ e_modapi_init(E_Module *m)
 
    e_gadcon_provider_register(&_gadcon_class);
 
-   snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(m));
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-battery.edj", e_module_dir_get(m));
    e_configure_registry_category_add("advanced", 80, _("Advanced"), NULL,
                                      "preferences-advanced");
    e_configure_registry_item_add("advanced/battery", 100, _("Battery Meter"),
-                                 NULL, buf, e_int_config_battery_module);
+                                 NULL, "battery", e_int_config_battery_module);
 
    return m;
 }
