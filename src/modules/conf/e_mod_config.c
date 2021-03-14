@@ -33,7 +33,7 @@ e_int_config_conf_module(E_Container *con, const char *params __UNUSED__)
 
    snprintf(buf, sizeof(buf), "%s/e-module-conf.edj", conf->module->dir);
    cfd = e_config_dialog_new(con, _("Configuration Panel"), "Conf",
-                             "advanced/conf", buf, 0, v, NULL);
+                             "advanced/conf", "configuration_section", 0, v, NULL);
 
    conf->cfd = cfd;
    return cfd;
