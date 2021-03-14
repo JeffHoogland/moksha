@@ -46,7 +46,7 @@ e_int_config_places_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[PATH_MAX];
+   //~ char buf[PATH_MAX];
 
    /* is this config dialog already visible ? */
    if (e_config_dialog_find("Places", "fileman/places")) return NULL;
@@ -60,11 +60,11 @@ e_int_config_places_module(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
 
    /* Icon in the theme */
-   snprintf(buf, sizeof(buf), "%s/e-module-places.edj", places_conf->module->dir);
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-places.edj", places_conf->module->dir);
 
    /* create new config dialog */
    cfd = e_config_dialog_new(con, _("Places Settings"), "Places",
-                             "fileman/places", buf, 0, v, NULL);
+                             "fileman/places", "folder-open", 0, v, NULL);
    places_conf->cfd = cfd;
    return cfd;
 }

@@ -46,16 +46,16 @@ EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, "Places"};
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   char buf[PATH_MAX];
+   //~ char buf[PATH_MAX];
 
    /* Location of theme to load for this module */
-   snprintf(buf, sizeof(buf), "%s/e-module-places.edj", m->dir);
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-places.edj", m->dir);
 
    /* Display this Modules config info in the main Config Panel */
    e_configure_registry_category_add("fileman", 80, _("Files"),
                                      NULL, "system-file-manager");
    e_configure_registry_item_add("fileman/places", 80, _("Places"),
-                                 NULL, buf, e_int_config_places_module);
+                                 NULL, "folder-open", e_int_config_places_module);
                                  
    /* Define EET Data Storage */
    conf_item_edd = E_CONFIG_DD_NEW("Config_Item", Config_Item);
