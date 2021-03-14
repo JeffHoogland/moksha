@@ -883,7 +883,7 @@ group { name: "e/modules/clock/calendar/day";
                color: 0 0 0 0;
              }
            }
-      program { name: "prev_clicked";
+      program { name: "date_clicked";
             signal: "mouse,clicked,1*"; source: "day";
             action: SIGNAL_EMIT "e,action,date,get" "";
       }
