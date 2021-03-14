@@ -5,8 +5,14 @@ moksha (0.3.3-5) focal; urgency=low
   * XDG_CURRENT_DESKTOP support added
   * Menu icons name change
   * Set Date and Time feature added
-
- -- Robert Wiley <ylee@bodhilinux.com>  Sun, 07 Mar 2021 14:30:43 -0500
+  * Everything icon changed to theme one
+  * Configuration panel icon changed
+  * Places icon changed to theme
+  * Bodhi profile: show bookmarks by default
+  * Suppress useless prints in stdout
+  * Chromium support to iBar
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 14 Mar 2021 15:00:35 -0400
 
 moksha (0.3.3-4) focal; urgency=low
 
