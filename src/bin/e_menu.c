@@ -1190,16 +1190,16 @@ e_menu_idler_before(void)
                   // exceeds the screen limits. This menu is also used       //
                   // in Clipboard module   .                                 //
 
-                  //~ if (!m->parent_item)
-                    //~ {
-                       //~ int x, y, w, h;
+                  if (!m->parent_item)
+                    {
+                       int x, y, w, h;
 
-                       //~ e_zone_useful_geometry_get(m->zone, &x, &y, &w, &h);
-                       //~ if ((m->cur.x + m->cur.w) > (x + w))
-                         //~ m->cur.x = x + w - m->cur.w;
+                       e_zone_useful_geometry_get(m->zone, &x, &y, &w, &h);
+                       if ((m->cur.x + m->cur.w) > (x + w))
+                         m->cur.x = x + w - m->cur.w;
                        //~ if ((m->cur.y + m->cur.h) > (y + h))
                          //~ m->cur.y = y + h - m->cur.h;
-                    //~ }
+                    }
                   //*********************************************************//  
                   
                   m->prev.x = m->cur.x;
@@ -2753,24 +2753,24 @@ _e_menu_scroll_by(int dx, int dy)
    Eina_List *l;
    E_Menu *m;
 
-   /*this will scroll the current active menu which exceeds the screen 
+   /*this will scroll the last active menu which exceeds the screen
      limits*/
      
-   if (!_e_menu_autoscroll_x)
-   {
-       l = eina_list_last(_e_active_menus);
-       m = eina_list_data_get(l);
-       m->cur.x += dx;
-       m->cur.y += dy;
-   }
-   else
-   {
+   //~ if (!_e_menu_autoscroll_x)
+   //~ {
+       //~ l = eina_list_last(_e_active_menus);
+       //~ m = eina_list_data_get(l);
+       //~ m->cur.x += dx;
+       //~ m->cur.y += dy;
+   //~ }
+   //~ else
+   //~ {
     EINA_LIST_FOREACH(_e_active_menus, l, m)
       {
         m->cur.x += dx;
         m->cur.y += dy; 
       }
-   }
+   //~ }
 }
 
 static void
