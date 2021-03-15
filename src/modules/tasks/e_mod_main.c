@@ -264,7 +264,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Tasks *tasks;
 
-   if (timer_pop) ecore_timer_del(timer_pop);
+   timer_pop =  NULL;
    tasks = (Tasks *)gcc->data;
    tasks_config->tasks = eina_list_remove(tasks_config->tasks, tasks);
    _tasks_free(tasks);

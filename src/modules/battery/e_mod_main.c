@@ -413,7 +413,7 @@ _battery_cb_warning_popup_timeout(void *data)
    e_gadcon_popup_hide(inst->warning);
    battery_config->alert_timer = NULL;
    mouse_down = EINA_FALSE;
-   return ECORE_CALLBACK_CANCEL;
+   return ECORE_CALLBACK_DONE;
 }
 
 static void
@@ -871,8 +871,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    e_configure_registry_category_del("advanced");
    e_gadcon_provider_unregister(&_gadcon_class);
 
-   if (battery_config->alert_timer)
-     ecore_timer_del(battery_config->alert_timer);
+   battery_config->alert_timer = NULL;
 
    if (battery_config->batget_exe)
      {

@@ -996,8 +996,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (inst->job.size_apply)
      ecore_job_del(inst->job.size_apply);
    
-   if (delay)
-     ecore_timer_del(delay);
+   delay = NULL;
 
    if (instance == inst)
      instance = NULL;
@@ -1188,7 +1187,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gc_class);
    systray_mod = NULL;
-   delay = NULL;
+   //~ delay = NULL;
    return 1;
 }
 
