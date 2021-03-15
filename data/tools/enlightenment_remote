@@ -8,6 +8,7 @@
 #-------------------------------------------------------------------------------
 show_help(){
    # Actual implemented features:
+# shellcheck disable=SC2059
 printf "
 OPTIONS:
   -h This help
@@ -102,7 +103,7 @@ ERCS(){
 #===============================================================================
 ERGS(){
    result="$( dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" )"
-   echo $result
+   echo "$result"
    unset result
 }
 
@@ -118,7 +119,7 @@ ERGM(){
    result="${result%%]*}"
    for value in $result
    do
-      echo -n "$value "
+      printf %s "$value "
    done
    echo ""
    unset result value
@@ -135,7 +136,7 @@ ERGMI(){
    result="$( echo "$result" | sed 's/int32//g' )"
    for value in $result
    do
-      echo -n "$value "
+      printf %s "$value "
    done
    echo ""
    unset result value
@@ -157,7 +158,7 @@ ERGMST(){
       if test "$value" = "}"; then
          echo
       else
-         echo -n "$value "
+         printf %s "$value "
       fi
    done
    echo ""
@@ -215,7 +216,7 @@ er_lock(){
 #   E Version
 #-------------------------------------------------------------------------------
 er_version(){
-   echo $MOKSHA_VERSION
+   echo "$MOKSHA_VERSION"
 }
 
 #-------------------------------------------------------------------------------
@@ -357,7 +358,7 @@ er_efm_open_dir(){
    else
       EFM_DIR="$2"
    fi
-   enlightenment_open $EFM_DIR
+   enlightenment_open "$EFM_DIR"
 }
 
 #-------------------------------------------------------------------------------
@@ -425,7 +426,7 @@ er_window_unmaximize(){
 #       RETURNS:  just finishes and exit
 #===============================================================================
 
-if ! which dbus-send > /dev/null 2>&1; then
+if ! command -v dbus-send > /dev/null 2>&1; then
    echo "E: dbus-send command not found, please install it first"
    exit 1
 fi
@@ -670,7 +671,7 @@ echo "
   -transition-desk-get Get the transition used when switching desktops
   -transition-change-set OPT1 Set the transition used when changing backgrounds
   -transition-change-get Get the transition used when changing backgrounds
-  -focus-setting-set OPT1 Set the focus setting policy ("NONE", "NEW_WINDOW", "NEW_DIALOG", "NEW_DIALOG_IF_OWNER_FOCUSED")
+  -focus-setting-set OPT1 Set the focus setting policy (\"NONE\", \"NEW_WINDOW\", \"NEW_DIALOG\", \"NEW_DIALOG_IF_OWNER_FOCUSED\")
   -focus-setting-get Get the focus setting policy
   -exec-action OPT1 OPT2 Executes an action given the name (OPT1) and a string of parameters (OPT2).
   -theme-list List themes and associated categories
