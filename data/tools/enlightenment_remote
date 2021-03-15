@@ -63,10 +63,10 @@ Note: For more information see the '--help-dbus' option.
 show_help_dbus(){
    printf "
 This implementation of enlightenment_remote uses dbus calls to
-Moksha. This tool is a front-end, created for the ease-to-use of the 
+Moksha. This tool is a front-end, created for the ease-to-use of the
 users and in order to maintain a bit of compatibility with possible scripts.
 
-This tool depends of the command dbus-send, normally included in the main 
+This tool depends of the command dbus-send, normally included in the main
 dbus package. Some functions may require the DBus extension module to be loaded.
 
 If you want to see the list of actual dbus calls available for Moksha,
@@ -79,7 +79,7 @@ run: qdbus org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject
 #          NAME:  ERC
 #   DESCRIPTION:  eremote callback
 #    PARAMETERS:  interface/method call
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERC(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1"
@@ -89,14 +89,14 @@ ERC(){
 #          NAME:  ERCS
 #   DESCRIPTION:  eremote call with string parameter
 #    PARAMETERS:  interface/method call, string parameter
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERCS(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" string:"$2"
 }
 
 #===  FUNCTION  ================================================================
-#          NAME:  ERGS 
+#          NAME:  ERGS
 #   DESCRIPTION:  Get a (single) value (string)
 #    PARAMETERS:  interface/method call
 #       RETURNS:  value (string)
@@ -169,7 +169,7 @@ ERGMST(){
 #          NAME:  ERCIIIIS
 #   DESCRIPTION:  eremote call with int, int, int, int, string parameter
 #    PARAMETERS:  interface/method call, int, int, int, int, string
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERCIIIIS(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3" int32:"$4" int32:"$5" string:"$6"
@@ -179,7 +179,7 @@ ERCIIIIS(){
 #          NAME:  ERCIIII
 #   DESCRIPTION:  eremote call with int, int, int, int parameter
 #    PARAMETERS:  interface/method call, int, int, int, int
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERCIIII(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3" int32:"$4" int32:"$5"
@@ -189,7 +189,7 @@ ERCIIII(){
 #          NAME:  ERCII
 #   DESCRIPTION:  eremote call with int, int parameter
 #    PARAMETERS:  interface/method call, int, int
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERCII(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2" int32:"$3"
@@ -199,7 +199,7 @@ ERCII(){
 #          NAME:  ERCI
 #   DESCRIPTION:  eremote call with int parameter
 #    PARAMETERS:  interface/method call, int
-#       RETURNS:  
+#       RETURNS:
 #===============================================================================
 ERCI(){
    dbus-send --print-reply=literal --dest=org.enlightenment.wm.service /org/enlightenment/wm/RemoteObject "$1" int32:"$2"
@@ -442,7 +442,7 @@ case "$1" in
       er_restart
    ;;
    -exit)
-      er_exit 
+      er_exit
    ;;
    -module-list)
       er_module_list
