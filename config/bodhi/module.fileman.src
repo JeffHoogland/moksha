@@ -44,5 +44,5 @@ group "Fileman_Config" struct {
     value "tooltip.enable" uchar: 1;
     value "view.spring_delay" int: 1;
     value "view.toolbar_orient" uint: 5;
-    value "view.customFM" string: "pcmanfm";
+    value "view.customFM" string: "thunar";
 }
