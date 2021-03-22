@@ -1660,13 +1660,49 @@ e_util_open_bodhi_landing(void)
    e_exec(zone, NULL, buff, NULL, NULL);
 }
 
+/* e_open has always given us problems here which I have been blaming on efreet.
+ *    
+ *    x-www-browser is the safest bet if the browser used sets that
+ *      unfortunately not all browsers do. It will be set by default on
+ *      bodhi installs but perhaps unset by uninstalling a browser.
+ * 
+ *    gnome-www-browser is also set by many browsers so it is the next fallback
+ * 
+ *    Both x-www-browser and gnome-www-browser are set by update-alternatives
+ * 
+ *    exo-open installed by thunar is faster than xdg-open but by default
+ *      is configured to use debian sensible browser which is a shell script
+ *      that will use x-www-browser if it is present, otherwise uses 
+ *      $BROWSER if it is set and if not fails. $BROWSER is not set by default
+ *      in Bodhi. you can either set it or use exo-preferred-applications to
+ *      choose the default browser.
+ *     
+ *    xdg-open will use e_open if e is present ... this does not work 
+ *        with moksha unless xdg-open is hacked which may or may not 
+ *        be true on a bodhi install.
+ * 
+ *    we use e_open if all else fails.
+ * */
+ 
 EAPI void
 e_util_open_quick_start(void)
 {
    E_Zone *zone;
    char buff[PATH_MAX];
 
-   snprintf(buff, sizeof(buff), "enlightenment_open "
+   if (ecore_file_app_installed("x-www-browser"))
+     snprintf(buff, sizeof(buff), "x-www-browser "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
+   else
+     if (ecore_file_app_installed("gnome-www-browser"))
+        snprintf(buff, sizeof(buff), "gnome-www-browser "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
+     else
+        if (ecore_file_app_installed("exo-open"))
+          snprintf(buff, sizeof(buff), "exo-open --launch WebBrowser "
+            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
+        else
+          snprintf(buff, sizeof(buff), "enlightenment_open "
             "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
    zone = e_util_zone_current_get(e_manager_current_get());
    e_exec(zone, NULL, buff, NULL, NULL);
