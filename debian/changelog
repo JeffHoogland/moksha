@@ -1,3 +1,13 @@
+moksha (20210322bodhi30.3.6) focal; urgency=low
+
+  * Handle quickstart a little better
+  * Screen lock/unlock apps list save fix
+  * Tasks, Battery, Systray: I am destroying dead timers
+  * enlightenment_remote shellcheck compliant
+  * clipboard hist list issue for small screens fixed
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 22 Mar 2021 13:06:49 -0400
+
 moksha (20210314bodhi30.3.3) focal; urgency=low
 
   * minor chinese localizations
