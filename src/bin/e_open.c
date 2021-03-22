@@ -2,6 +2,7 @@
 #  include "config.h"
 # endif
 
+#include <Ecore_File.h>
 #include <Ecore_Getopt.h>
 #include <Efreet.h>
 #include <Efreet_Mime.h>
@@ -125,7 +126,7 @@ get_command(void *data, Efreet_Desktop *desktop __UNUSED__, char *command, int r
 }
 
 static char **
-mime_open(const char *mime, const char * const *argv, int argc)
+mime_open(const char *mime, const char *const *argv, int argc)
 {
    Efreet_Desktop *desktop = handler_find(mime);
    Eina_List *files = NULL;
@@ -182,7 +183,7 @@ append_single_quote_escaped(Eina_Strbuf *b, const char *str)
 }
 
 static char **
-single_command_open(const char *command, const char * const *argv, int argc)
+single_command_open(const char *command, const char *const *argv, int argc)
 {
    char **ret = calloc(2, sizeof(char *));
    Eina_Strbuf *b;
@@ -358,7 +359,7 @@ have_desktop:
 }
 
 static char **
-browser_open(const char * const *argv, int argc)
+browser_open(const char *const *argv, int argc)
 {
    const char *env = getenv("BROWSER");
    if (env) return single_command_open(env, argv, argc);
@@ -374,7 +375,11 @@ local_open(const char *path)
         char **ret = mime_open(mime, &path, 1);
         if (ret)
           return ret;
-        return single_command_open("pcmanfm", &path, 1);
+        if (ecore_file_app_installed("thunar"))
+            return single_command_open("thunar", &path, 1);
+        if (ecore_file_app_installed("pcmanfm"))
+            return single_command_open("pcmanfm", &path, 1);
+        // Otherwise fail
      }
 
    fprintf(stderr, "ERROR: Could not get mime type for: %s\n", path);
@@ -407,7 +412,8 @@ protocol_open(const char *str)
    return ret;
 }
 
-static const struct type_mime {
+static const struct type_mime
+{
    const char *type;
    const char *mime;
 } type_mimes[] = {
@@ -504,7 +510,7 @@ main(int argc, char *argv[])
         if (strcmp(type, "terminal") == 0)
           cmds = terminal_open();
         else if (strcmp(type, "browser") == 0)
-          cmds = browser_open((const char * const *)argv + args, argc - args);
+          cmds = browser_open((const char *const *)argv + args, argc - args);
         else
           {
              const struct type_mime *itr;
@@ -514,7 +520,7 @@ main(int argc, char *argv[])
                   if (strcmp(type, itr->type) == 0)
                     {
                        cmds = mime_open(itr->mime,
-                                        (const char * const *)argv + args,
+                                        (const char *const *)argv + args,
                                         argc - args);
                        break;
                     }

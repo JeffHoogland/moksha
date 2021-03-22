@@ -675,6 +675,7 @@ fi
 PKG_CHECK_MODULES(E_OPEN, [
   eina >= ${efl_version}
   ecore >= ${efl_version}
+  ecore-file >= ${efl_version}
   efreet >= ${efl_version}
   efreet-mime >= ${efl_version}
 ])
