@@ -4513,6 +4513,8 @@ msgid ""
 "Click on a calendar day for date change. <br>Use the mouse wheel for "
 "changing the year."
 msgstr ""
+"Vyber deň v kalendári pre nastavenie dátumu. <br>Použi koliesko myši pre "
+"zmenu roku."
 
 #: src/modules/clock/e_mod_config.c:100
 #, fuzzy
@@ -4586,23 +4588,20 @@ msgid "Days"
 msgstr "Dni"
 
 #: src/modules/clock/e_mod_config.c:209
-#, fuzzy
 msgid "Time set"
-msgstr "Časová značka"
+msgstr "Nastaviť čas"
 
 #: src/modules/clock/e_mod_config.c:211
 msgid "Hours"
-msgstr ""
+msgstr "Hodiny"
 
 #: src/modules/clock/e_mod_config.c:216
-#, fuzzy
 msgid "Minutes"
-msgstr "minúta"
+msgstr "Minúty"
 
 #: src/modules/clock/e_mod_config.c:224
-#, fuzzy
 msgid "Date set"
-msgstr "Dátum"
+msgstr "Nastaviť dátum"
 
 #: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
@@ -5964,7 +5963,7 @@ msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr " Nezobrazovať Ikony v ponuke "
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -9857,9 +9856,8 @@ msgid "Show application name"
 msgstr "Zobraziť názov aplikácie"
 
 #: src/modules/notification/e_mod_config.c:176
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Zobraziť notifikácie"
+msgstr " Zobraziť počítadlo notifikácií"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Reverse order"
