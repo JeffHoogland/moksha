@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-02-12 13:10+0100\n"
+"POT-Creation-Date: 2021-03-23 09:05+0100\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -43,7 +43,7 @@ msgid "Close"
 msgstr "Fermi"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
-#: src/bin/e_actions.c:3547 src/bin/e_main.c:709
+#: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -100,7 +100,7 @@ msgstr "Ne"
 msgid "Action Params Syntax Error"
 msgstr "Agaj Parametroj"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:263
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
 msgid "Exit"
 msgstr "Eliri"
 
@@ -748,15 +748,15 @@ msgstr "Baskuligi la nomatan modulon"
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:275
+#: src/modules/conf_applications/e_int_config_apps.c:320
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:745
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1140
+#: src/modules/conf_theme/e_int_config_theme.c:746
+#: src/modules/conf_theme/e_int_config_theme.c:1127
+#: src/modules/conf_theme/e_int_config_theme.c:1141
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -787,7 +787,7 @@ msgstr "Pasivumigi nun"
 msgid "Lock"
 msgstr "Ŝlosi"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1356
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
 msgid "Cleanup Windows"
 msgstr "Purigi fenestrojn"
 
@@ -897,6 +897,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
+#: src/modules/clock/e_mod_config.c:104
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1189,7 +1190,7 @@ msgstr "Labortabla dosiero"
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
-#: src/modules/notification/e_mod_config.c:165
+#: src/modules/notification/e_mod_config.c:167
 #: src/modules/places/e_mod_config.c:190
 msgid "General"
 msgstr "Ĝenerala"
@@ -1840,8 +1841,8 @@ msgstr "Aliaj:"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:521
+#: src/modules/conf_theme/e_int_config_theme.c:1435
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "Antaŭrigardo"
 
@@ -1904,9 +1905,9 @@ msgid "Look"
 msgstr "Aspekto"
 
 #: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:270
-#: src/modules/conf_applications/e_int_config_apps.c:291
-#: src/modules/conf_applications/e_int_config_apps.c:311
+#: src/modules/conf_applications/e_int_config_apps.c:315
+#: src/modules/conf_applications/e_int_config_apps.c:336
+#: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2239,7 +2240,7 @@ msgstr "Ekrano %d"
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
-#: src/modules/notification/e_mod_config.c:116
+#: src/modules/notification/e_mod_config.c:118
 #, c-format
 msgid "Normal"
 msgstr "Normala"
@@ -2374,8 +2375,8 @@ msgstr "Sudoriente"
 msgid "Static"
 msgstr "Fiksa"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:109
-#: src/modules/clock/e_mod_config.c:153
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:192
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2510,10 +2511,10 @@ msgid "Request Position"
 msgstr "Peti pozicion"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:398
-#: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
+#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -2782,18 +2783,18 @@ msgstr ""
 "certigu, ke viaj agordoj de la enigmetodo<br>estas korektaj kaj ke<br>la "
 "prenumeblo de viaj agordoj estas en<br>via VOJO<br>"
 
-#: src/bin/e_int_menus.c:140 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Ĉefa"
 
-#: src/bin/e_int_menus.c:163
-#: src/modules/conf_applications/e_int_config_apps.c:69
+#: src/bin/e_int_menus.c:164
+#: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Preferataj aplikaĵoj"
 
-#: src/bin/e_int_menus.c:174
-#: src/modules/conf_applications/e_int_config_apps.c:295
+#: src/bin/e_int_menus.c:175
+#: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -2801,61 +2802,61 @@ msgstr "Preferataj aplikaĵoj"
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
 #: src/modules/everything/evry_plug_apps.c:1417
-#: src/modules/notification/e_mod_config.c:202
+#: src/modules/notification/e_mod_config.c:206
 msgid "Applications"
 msgstr "Aplikaĵoj"
 
-#: src/bin/e_int_menus.c:206
+#: src/bin/e_int_menus.c:207
 #, fuzzy
 msgid "About Operating System"
 msgstr "Eraro de la sistemo de aŭtentigado"
 
-#: src/bin/e_int_menus.c:212
+#: src/bin/e_int_menus.c:213
 #, fuzzy
 msgid "Help"
 msgstr "Plia helpo"
 
-#: src/bin/e_int_menus.c:218
+#: src/bin/e_int_menus.c:219
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:238
+#: src/bin/e_int_menus.c:239
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "Pri Moksha"
 
-#: src/bin/e_int_menus.c:243 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "Pri ĉi tiu etoso"
 
-#: src/bin/e_int_menus.c:257
+#: src/bin/e_int_menus.c:259
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Bonvenon en Moksha"
 
-#: src/bin/e_int_menus.c:335
+#: src/bin/e_int_menus.c:337
 msgid "Virtual"
 msgstr "Virtuala"
 
-#: src/bin/e_int_menus.c:342 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Bretoj"
 
-#: src/bin/e_int_menus.c:351
+#: src/bin/e_int_menus.c:353
 msgid "Show/Hide All Windows"
 msgstr "Montri/kaŝi ĉiujn fenestrojn"
 
-#: src/bin/e_int_menus.c:727
+#: src/bin/e_int_menus.c:729
 msgid "No applications"
 msgstr "Neniu aplikaĵo"
 
-#: src/bin/e_int_menus.c:944
+#: src/bin/e_int_menus.c:946
 msgid "Set Virtual Desktops"
 msgstr "Agordi virtualajn labortablojn"
 
-#: src/bin/e_int_menus.c:1314
+#: src/bin/e_int_menus.c:1316
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2864,29 +2865,29 @@ msgstr "Agordi virtualajn labortablojn"
 msgid "Windows"
 msgstr "Fenestroj"
 
-#: src/bin/e_int_menus.c:1320 src/bin/e_int_menus.c:1513
+#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
 msgid "No windows"
 msgstr "Neniu fenestro"
 
-#: src/bin/e_int_menus.c:1369
+#: src/bin/e_int_menus.c:1371
 msgid "Lost Windows"
 msgstr "Perditaj fenestroj"
 
-#: src/bin/e_int_menus.c:1426 src/bin/e_int_menus.c:1526
+#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
 msgid "Untitled window"
 msgstr "Sentitola fenestro"
 
-#: src/bin/e_int_menus.c:1633 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Breto %s"
 
-#: src/bin/e_int_menus.c:1701
+#: src/bin/e_int_menus.c:1703
 msgid "Add a Shelf"
 msgstr "Aldoni breton"
 
-#: src/bin/e_int_menus.c:1708
+#: src/bin/e_int_menus.c:1710
 msgid "Delete a Shelf"
 msgstr "Forigi breton"
 
@@ -2941,7 +2942,7 @@ msgstr "Montri dum alklako de muso"
 msgid "Hide timeout"
 msgstr "Tempolimo de kaŝo"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:125
+#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:127
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f sekundoj"
@@ -2976,19 +2977,19 @@ msgstr "Eina ne pravalorizeblas de Moksha!\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Domajno de protokolado ne kreeblas de Moksha!\n"
 
-#: src/bin/e_main.c:345
+#: src/bin/e_main.c:346
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Eet ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:354
+#: src/bin/e_main.c:355
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Ecore ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:368
+#: src/bin/e_main.c:369
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "EIO ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:380
+#: src/bin/e_main.c:381
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -2996,7 +2997,7 @@ msgstr ""
 "Traktilo de elirsignalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:388
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3004,7 +3005,7 @@ msgstr ""
 "Traktilo de HUP-signalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3012,39 +3013,39 @@ msgstr ""
 "Traktilo de uzantsignalo ne agordeblas de Moksha.\n"
 "Ĉu eble la memoro finiĝis?"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Ecore_File ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Ecore_Con ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:422
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Ecore_Ipc ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:432
+#: src/bin/e_main.c:433
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Ecore_X ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:444
+#: src/bin/e_main.c:445
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr ""
 
-#: src/bin/e_main.c:454
+#: src/bin/e_main.c:455
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Ecore_Evas ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:464
+#: src/bin/e_main.c:465
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Elementary ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:475
+#: src/bin/e_main.c:476
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Emotion ne pravalorizeblas de Moksha!\n"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:491
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3054,7 +3055,7 @@ msgstr ""
 "en Evas. Bonvole kontrolu vian instaladon de Evas kaj Ecore\n"
 "kaj kontrolu, ke ili subtenas la modulon de bildigo de X11-programaroj."
 
-#: src/bin/e_main.c:498
+#: src/bin/e_main.c:499
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3064,15 +3065,15 @@ msgstr ""
 "Evas. Bonvole kontrolu vian instalon de Evas kaj Ecore kaj kontrolu\n"
 "ke ili eltenas la modulon de bildigo de Software Buffer."
 
-#: src/bin/e_main.c:508
+#: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha ne povis pravalorizi Edje!\n"
 
-#: src/bin/e_main.c:520
+#: src/bin/e_main.c:521
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha ne povis pravalorizi E_intl!\n"
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:531
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3080,7 +3081,7 @@ msgstr ""
 "Enlienghtenment ne povas difini sian averto-sistemon.\n"
 "Ĉu vi difinis vian variablon DISPLAY?"
 
-#: src/bin/e_main.c:549
+#: src/bin/e_main.c:550
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3088,31 +3089,31 @@ msgstr ""
 "Dosierujoj ne kreeblas de Moksha en via hejma dosierujo.\n"
 "Eble vi ne havas hejman dosierujon aŭ via disko estas plena?"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de dosiero-registrejon.\n"
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:569
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de agordoj.\n"
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:609
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha ne povis pravalorizi E_Xinerama!\n"
 
-#: src/bin/e_main.c:617
+#: src/bin/e_main.c:618
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha ne povas agordi sian medion.\n"
 
-#: src/bin/e_main.c:633
+#: src/bin/e_main.c:634
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de skalado.\n"
 
-#: src/bin/e_main.c:642
+#: src/bin/e_main.c:643
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de kursoroj.\n"
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:652
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3120,27 +3121,27 @@ msgstr ""
 "Vojoj ne agordeblas de Moksha por trovi dosierojn.\n"
 "Eble memoro ne sufiĉas?"
 
-#: src/bin/e_main.c:668
+#: src/bin/e_main.c:669
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de tiparoj.\n"
 
-#: src/bin/e_main.c:685
+#: src/bin/e_main.c:686
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha ne povas agordi sian etosan sistemon.\n"
 
-#: src/bin/e_main.c:701
+#: src/bin/e_main.c:702
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha ne povas agordi sian sistemon de pravalorizoj.\n"
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:717
 msgid "Starting International Support"
 msgstr "Komencante eltenon de internaciigo"
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:721
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de internaciigo.\n"
 
-#: src/bin/e_main.c:729
+#: src/bin/e_main.c:730
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3150,11 +3151,11 @@ msgstr ""
 "Eble vi ne havas permesojn pri ~/.cache/efreet aŭ mankas memoron\n"
 "aŭ diskospacon?"
 
-#: src/bin/e_main.c:754
+#: src/bin/e_main.c:755
 msgid "Setup Screens"
 msgstr "Agordi ekranojn"
 
-#: src/bin/e_main.c:758
+#: src/bin/e_main.c:759
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3162,241 +3163,241 @@ msgstr ""
 "La agordo de Moksha por la administrado de fenestroj por ĉiuj ekranoj de\n"
 "via sistemo malsukcesis. Eble alia fenestradministrilo funkcias?\n"
 
-#: src/bin/e_main.c:766
+#: src/bin/e_main.c:767
 msgid "Setup ACPI"
 msgstr "Agordi ACPI"
 
-#: src/bin/e_main.c:773
+#: src/bin/e_main.c:774
 msgid "Setup Backlight"
 msgstr "Agordi fonan lumon"
 
-#: src/bin/e_main.c:777
+#: src/bin/e_main.c:778
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha ne povas agordi la fonan lumon.\n"
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:785
 msgid "Setup Powersave Modes"
 msgstr "Agordi energisparadajn reĝimojn"
 
-#: src/bin/e_main.c:788
+#: src/bin/e_main.c:789
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha ne povas agordi la reĝimojn de energiŝparado.\n"
 
-#: src/bin/e_main.c:795
+#: src/bin/e_main.c:796
 msgid "Setup Screensaver"
 msgstr "Ebligi ekrankurtenon"
 
-#: src/bin/e_main.c:799
+#: src/bin/e_main.c:800
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha ne povas agordi la ekrankurtenon X.\n"
 
-#: src/bin/e_main.c:806
+#: src/bin/e_main.c:807
 msgid "Setup DPMS"
 msgstr "Agordi DPMS (administrado de energi-ŝparo de ekrano)"
 
-#: src/bin/e_main.c:810
+#: src/bin/e_main.c:811
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr ""
 "Moksha no povas agordi DPMS (administrado de energi-ŝparo de ekrano).\n"
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 msgid "Setup Desklock"
 msgstr "Agordi Labortablan Ŝloson"
 
-#: src/bin/e_main.c:821
+#: src/bin/e_main.c:822
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de labortabla ŝlosado.\n"
 
-#: src/bin/e_main.c:828
+#: src/bin/e_main.c:829
 msgid "Setup Popups"
 msgstr "Agordi ŝprucfenestrojn"
 
-#: src/bin/e_main.c:832
+#: src/bin/e_main.c:833
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha ne povas agordi sian ŝprucfenetran sistemon.\n"
 
-#: src/bin/e_main.c:844
+#: src/bin/e_main.c:845
 msgid "Setup Message Bus"
 msgstr "Agordi buson de mesaĝoj"
 
-#: src/bin/e_main.c:851
+#: src/bin/e_main.c:852
 msgid "Setup Paths"
 msgstr "Agordi vojojn"
 
-#: src/bin/e_main.c:857
+#: src/bin/e_main.c:858
 msgid "Setup System Controls"
 msgstr "Agordi Sistemajn Kontrolojn"
 
-#: src/bin/e_main.c:861
+#: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Sistema komanda sistemo ne pravalorizeblas de Moksha.\n"
 
-#: src/bin/e_main.c:868
+#: src/bin/e_main.c:869
 msgid "Setup Actions"
 msgstr "Agordi agadojn"
 
-#: src/bin/e_main.c:872
+#: src/bin/e_main.c:873
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de agadoj.\n"
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:880
 msgid "Setup Execution System"
 msgstr "Agordi la sistemon de lanĉo"
 
-#: src/bin/e_main.c:883
+#: src/bin/e_main.c:884
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de lanĉado.\n"
 
-#: src/bin/e_main.c:894
+#: src/bin/e_main.c:895
 msgid "Setup Filemanager"
 msgstr "Agordi dosieradministrilon"
 
-#: src/bin/e_main.c:898
+#: src/bin/e_main.c:899
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha ne povis pravalorizi la dosieradministrilon.\n"
 
-#: src/bin/e_main.c:905
+#: src/bin/e_main.c:906
 msgid "Setup Message System"
 msgstr "Agordi Mesaĝan Sistemon"
 
-#: src/bin/e_main.c:909
+#: src/bin/e_main.c:910
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de mesaĝoj.\n"
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:917
 msgid "Setup DND"
 msgstr "Agordi ŝovon kaj demeton"
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:921
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de ŝovo-demeto.\n"
 
-#: src/bin/e_main.c:927
+#: src/bin/e_main.c:928
 msgid "Setup Grab Input Handling"
 msgstr "Agordi traktadon de enigo-aparato"
 
-#: src/bin/e_main.c:931
+#: src/bin/e_main.c:932
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de traktado de uzanta enigo.\n"
 
-#: src/bin/e_main.c:938
+#: src/bin/e_main.c:939
 msgid "Setup Modules"
 msgstr "Agordi modulojn"
 
-#: src/bin/e_main.c:942 src/bin/e_main.c:1127
+#: src/bin/e_main.c:943 src/bin/e_main.c:1128
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de modulo.\n"
 
-#: src/bin/e_main.c:949
+#: src/bin/e_main.c:950
 msgid "Setup Remembers"
 msgstr "Agordi memorojn"
 
-#: src/bin/e_main.c:953
+#: src/bin/e_main.c:954
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha ne povas agordi memoradon.\n"
 
-#: src/bin/e_main.c:960
+#: src/bin/e_main.c:961
 msgid "Setup Color Classes"
 msgstr "Agordi Kolorajn Klasojn"
 
-#: src/bin/e_main.c:964
+#: src/bin/e_main.c:965
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de kolorklasoj.\n"
 
-#: src/bin/e_main.c:971
+#: src/bin/e_main.c:972
 msgid "Setup Gadcon"
 msgstr "Agordi Gadcon"
 
-#: src/bin/e_main.c:975
+#: src/bin/e_main.c:976
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha ne povas agordi sian kontrolsistemon de akcesoraĵoj.\n"
 
-#: src/bin/e_main.c:982
+#: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
 msgstr "Agordi ekranfonon"
 
-#: src/bin/e_main.c:986
+#: src/bin/e_main.c:987
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Moksha ne povas agordi sian ekranfonan sistemon.\n"
 
-#: src/bin/e_main.c:993
+#: src/bin/e_main.c:994
 msgid "Setup Mouse"
 msgstr "Agordi muson"
 
-#: src/bin/e_main.c:997
+#: src/bin/e_main.c:998
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha ne povas difini sian sistemon de muso.\n"
 
-#: src/bin/e_main.c:1004
+#: src/bin/e_main.c:1005
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha ne povas agordi aranĝojn XKB de klavaroj.\n"
 
-#: src/bin/e_main.c:1010
+#: src/bin/e_main.c:1011
 msgid "Setup Bindings"
 msgstr "Agordi bindojn"
 
-#: src/bin/e_main.c:1014
+#: src/bin/e_main.c:1015
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de bindoj.\n"
 
-#: src/bin/e_main.c:1021
+#: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
 msgstr "Agordi bildetilon"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha ne povas pravalorizi la bildetigan sistemon.\n"
 
-#: src/bin/e_main.c:1034
+#: src/bin/e_main.c:1035
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha ne povas pravalorizi la kaŝmemoran sistemon de piktogramoj.\n"
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha ne povas pravalorizi la sistemon XSettings.\n"
 
-#: src/bin/e_main.c:1053
+#: src/bin/e_main.c:1054
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha ne povas pravalorizi la ĝisdatigan sistemon.\n"
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 msgid "Setup Desktop Environment"
 msgstr "Agordi medion de labortabloj"
 
-#: src/bin/e_main.c:1066
+#: src/bin/e_main.c:1067
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha ne povas pravalorizi sian labortablan medion.\n"
 
-#: src/bin/e_main.c:1073
+#: src/bin/e_main.c:1074
 msgid "Setup File Ordering"
 msgstr "Agordi ordigon de dosieroj"
 
-#: src/bin/e_main.c:1077
+#: src/bin/e_main.c:1078
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha ne povas agordi sian sistemon de ordigo de dosieroj.\n"
 
-#: src/bin/e_main.c:1092
+#: src/bin/e_main.c:1093
 msgid "Load Modules"
 msgstr "Ŝargi Modulojn"
 
-#: src/bin/e_main.c:1123
+#: src/bin/e_main.c:1124
 msgid "Setup Shelves"
 msgstr "Agordi bretojn"
 
-#: src/bin/e_main.c:1134
+#: src/bin/e_main.c:1135
 msgid "Configure Shelves"
 msgstr ""
 
-#: src/bin/e_main.c:1145
+#: src/bin/e_main.c:1146
 msgid "Almost Done"
 msgstr "Preskaŭ Finita"
 
-#: src/bin/e_main.c:1302
+#: src/bin/e_main.c:1303
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "Permesoj"
 
-#: src/bin/e_main.c:1312
+#: src/bin/e_main.c:1313
 #, fuzzy, c-format
 msgid ""
 "Options:\n"
@@ -3451,7 +3452,7 @@ msgstr ""
 "\t\t(Mi ja scias kion mi farantas kaj akcesptas plenan respondecon por tio)\n"
 "\t\tSe vi bezonas tiun helpon, vi ne bezonas tiun elekteblon.\n"
 
-#: src/bin/e_main.c:1366
+#: src/bin/e_main.c:1367
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3467,11 +3468,11 @@ msgstr ""
 "kaj lanĉadon de aliaj bezonataj servoj, ktp.\n"
 "antaŭ la eko de enlightenment mem.\n"
 
-#: src/bin/e_main.c:1647
+#: src/bin/e_main.c:1648
 msgid "Testing Format Support"
 msgstr "Provado de elteno de formato"
 
-#: src/bin/e_main.c:1651
+#: src/bin/e_main.c:1652
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3479,14 +3480,14 @@ msgstr ""
 "Laŭ Moksha, Evas ne povas krei bufro-areaĵon. Bonvole kontrolu\n"
 "ke Evas enhavas eltenon de programa bufrilo-modulo.\n"
 
-#: src/bin/e_main.c:1663
+#: src/bin/e_main.c:1664
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
 "Moksha trovis ke Evas ne povas ŝargi SVG-dosierojn. BV kontroli ĉu Evas "
 "eltenas SVG-ŝargilon.\n"
 
-#: src/bin/e_main.c:1673
+#: src/bin/e_main.c:1674
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
@@ -3494,21 +3495,21 @@ msgstr ""
 "Moksha trovis ke Evas ne povas ŝargi JPEG-dosierojn. BV kontroli ĉu Evas "
 "eltenas JPEG-ŝargilon.\n"
 
-#: src/bin/e_main.c:1683
+#: src/bin/e_main.c:1684
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
 "Moksha trovis ke Evas ne povas ŝargi PNG-dosierojn. BV kontroli ĉu Evas "
 "eltenas PNG-ŝargilon.\n"
 
-#: src/bin/e_main.c:1693
+#: src/bin/e_main.c:1694
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
 "Moksha trovis ke Evas ne povas ŝargi EET-dosierojn. BV kontroli ĉu Evas "
 "eltenas EET-ŝargilon.\n"
 
-#: src/bin/e_main.c:1707
+#: src/bin/e_main.c:1708
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3517,7 +3518,7 @@ msgstr ""
 "eltenas \"fontconfig\"\n"
 "kaj la sistema \"fontconfig\" difinas iun tiparon 'Sans'.\n"
 
-#: src/bin/e_main.c:1920
+#: src/bin/e_main.c:1921
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3528,11 +3529,11 @@ msgstr ""
 "ŝargo de modulo<br>nomata: %s. Tiu modulo estis malŝaltita kaj ne "
 "estos<br>ŝargita."
 
-#: src/bin/e_main.c:1925 src/bin/e_main.c:1941
+#: src/bin/e_main.c:1926 src/bin/e_main.c:1942
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha fuŝis frue dum komenco kaj restartiĝis."
 
-#: src/bin/e_main.c:1926
+#: src/bin/e_main.c:1927
 #, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3543,7 +3544,7 @@ msgstr ""
 "ŝargo de modulo nomata: %s.<br><br>Tiu modulo estis malŝaltita kaj ne estos "
 "ŝargita."
 
-#: src/bin/e_main.c:1934
+#: src/bin/e_main.c:1935
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3555,7 +3556,7 @@ msgstr ""
 "de via agordo. La modulo de<br><br>agordo permesos elekti viajn modulojn de "
 "nove.\n"
 
-#: src/bin/e_main.c:1942
+#: src/bin/e_main.c:1943
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4195,8 +4196,8 @@ msgstr[0] "Unu minuto"
 msgstr[1] "%li minutoj"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:266
-#: src/modules/conf_applications/e_int_config_apps.c:287
+#: src/modules/conf_applications/e_int_config_apps.c:311
+#: src/modules/conf_applications/e_int_config_apps.c:332
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4211,13 +4212,13 @@ msgid "Add"
 msgstr "Aldoni"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:303
+#: src/modules/conf_applications/e_int_config_apps.c:348
 #: src/modules/xkbswitch/e_mod_config.c:250
 msgid "Up"
 msgstr "Supren"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:307
+#: src/modules/conf_applications/e_int_config_apps.c:352
 #: src/modules/xkbswitch/e_mod_config.c:256
 msgid "Down"
 msgstr "Suben"
@@ -4332,7 +4333,7 @@ msgstr "Aldoni al Preferata Menuo"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:752
+#: src/modules/conf_theme/e_int_config_theme.c:753
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "Iri al Patra Dosierujo"
@@ -4502,77 +4503,108 @@ msgstr "ERARO"
 msgid "Battery Meter"
 msgstr "Baterio-mesurilo"
 
-#: src/modules/clock/e_mod_config.c:37
+#: src/modules/clock/e_mod_config.c:40
 msgid "Clock Settings"
 msgstr "Agordo de horloĝo"
 
-#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
-#: src/modules/clock/e_mod_main.c:933
+#: src/modules/clock/e_mod_config.c:98
+#, c-format
+msgid ""
+"Click on a calendar day for date change. <br>Use the mouse wheel for "
+"changing the year."
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:100
+#, fuzzy
+msgid "Clock module Information"
+msgstr "Informoj pri ligilo"
+
+#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
+#: src/modules/clock/e_mod_main.c:986
 msgid "Clock"
 msgstr "Horloĝo"
 
-#: src/modules/clock/e_mod_config.c:92
+#: src/modules/clock/e_mod_config.c:132
 msgid "Analog"
 msgstr "Analoga"
 
-#: src/modules/clock/e_mod_config.c:94
+#: src/modules/clock/e_mod_config.c:134
 msgid "Digital"
 msgstr "Cifera"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:136
 msgid "Seconds"
 msgstr "Sekundoj"
 
-#: src/modules/clock/e_mod_config.c:99
+#: src/modules/clock/e_mod_config.c:139
 msgid "12 h"
 msgstr "12 h"
 
-#: src/modules/clock/e_mod_config.c:101
+#: src/modules/clock/e_mod_config.c:141
 msgid "24 h"
 msgstr "24 h"
 
-#: src/modules/clock/e_mod_config.c:106
+#: src/modules/clock/e_mod_config.c:146
 msgid "Date"
 msgstr "Dato"
 
-#: src/modules/clock/e_mod_config.c:111
+#: src/modules/clock/e_mod_config.c:151
 msgid "Full"
 msgstr "Plene"
 
-#: src/modules/clock/e_mod_config.c:113
+#: src/modules/clock/e_mod_config.c:153
 msgid "Numbers"
 msgstr "Numeroj"
 
-#: src/modules/clock/e_mod_config.c:115
+#: src/modules/clock/e_mod_config.c:155
 msgid "Date Only"
 msgstr "Nur dato"
 
-#: src/modules/clock/e_mod_config.c:117
+#: src/modules/clock/e_mod_config.c:157
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:119
+#: src/modules/clock/e_mod_config.c:159
 msgid "Strftime"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:126
+#: src/modules/clock/e_mod_config.c:166
 msgid "Week"
 msgstr "Semajno"
 
-#: src/modules/clock/e_mod_config.c:128 src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Startigo"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:179
 msgid "Weekend"
 msgstr "Semajnfino"
 
-#: src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:189
 msgid "Days"
 msgstr "Tagoj"
 
-#: src/modules/clock/e_mod_main.c:933
+#: src/modules/clock/e_mod_config.c:209
+#, fuzzy
+msgid "Time set"
+msgstr "Tempmezurilo"
+
+#: src/modules/clock/e_mod_config.c:211
+msgid "Hours"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:216
+#, fuzzy
+msgid "Minutes"
+msgstr "Unu minuto"
+
+#: src/modules/clock/e_mod_config.c:224
+#, fuzzy
+msgid "Date set"
+msgstr "Dato"
+
+#: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
 msgstr "Baskuligi kalendaron"
 
@@ -4605,37 +4637,40 @@ msgstr "Prezentaĵo"
 msgid "Offline"
 msgstr "Nekonektite"
 
-#: src/modules/conf/e_mod_main.c:459
-msgid "Modes"
-msgstr "Reĝimoj"
+#: src/modules/conf/e_mod_main.c:459 src/modules/fileman/e_mod_config.c:442
+#: src/modules/fileman/e_mod_config.c:445
+#: src/modules/fileman/e_mod_config.c:448
+#: src/modules/fileman/e_mod_config.c:451 src/modules/gadman/e_mod_config.c:208
+msgid "Mode"
+msgstr "Reĝimo"
 
-#: src/modules/conf_applications/e_int_config_apps.c:84
-#: src/modules/conf_applications/e_int_config_apps.c:98
+#: src/modules/conf_applications/e_int_config_apps.c:87
+#: src/modules/conf_applications/e_int_config_apps.c:101
 #: src/modules/conf_applications/e_mod_main.c:33
 msgid "IBar Applications"
 msgstr "Aplikaĵoj en IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:113
+#: src/modules/conf_applications/e_int_config_apps.c:116
 #: src/modules/conf_applications/e_mod_main.c:49
 msgid "Startup Applications"
 msgstr "Aplikaĵoj post startigo"
 
-#: src/modules/conf_applications/e_int_config_apps.c:129
+#: src/modules/conf_applications/e_int_config_apps.c:132
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
 msgstr "Aplikaĵoj post relanĉo"
 
-#: src/modules/conf_applications/e_int_config_apps.c:144
+#: src/modules/conf_applications/e_int_config_apps.c:147
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Screen Lock Applications"
 msgstr "Aplikaĵoj de ekranŝloso"
 
-#: src/modules/conf_applications/e_int_config_apps.c:159
+#: src/modules/conf_applications/e_int_config_apps.c:162
 #: src/modules/conf_applications/e_mod_main.c:41
 msgid "Screen Unlock Applications"
 msgstr "Aplikaĵoj de ekranmalŝloso"
 
-#: src/modules/conf_applications/e_int_config_apps.c:315
+#: src/modules/conf_applications/e_int_config_apps.c:360
 msgid "Order"
 msgstr "Ordo"
 
@@ -4936,9 +4971,9 @@ msgstr "Elekti ekranfonon..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:741
-#: src/modules/conf_theme/e_int_config_theme.c:1123
-#: src/modules/conf_theme/e_int_config_theme.c:1132
+#: src/modules/conf_theme/e_int_config_theme.c:742
+#: src/modules/conf_theme/e_int_config_theme.c:1124
+#: src/modules/conf_theme/e_int_config_theme.c:1133
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "Persona"
@@ -5524,7 +5559,7 @@ msgstr "Lingvoelektilo"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:171
 msgid "System Default"
 msgstr "Sistema aprioro"
 
@@ -5538,7 +5573,7 @@ msgstr "Lokaĵo elektita"
 msgid "Locale"
 msgstr "Lokaĵo"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:162
 msgid "Language"
 msgstr "Lingvo"
 
@@ -5885,7 +5920,7 @@ msgstr "Komentoj"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:203 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
 msgid "Gadgets"
 msgstr "Akcesoraĵoj"
 
@@ -5956,8 +5991,8 @@ msgstr "%2.2f s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:159
-#: src/modules/notification/e_mod_config.c:194
+#: src/modules/notification/e_mod_config.c:161
+#: src/modules/notification/e_mod_config.c:198
 msgid "Miscellaneous"
 msgstr "Diversaj"
 
@@ -5980,13 +6015,13 @@ msgid "Fonts"
 msgstr "Tiparoj"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1414
+#: src/modules/conf_theme/e_int_config_theme.c:1415
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr ""
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:552
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6145,7 +6180,7 @@ msgstr "ekz. registrado disken"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:920
-#: src/modules/notification/e_mod_config.c:114
+#: src/modules/notification/e_mod_config.c:116
 msgid "Low"
 msgstr "Malalta"
 
@@ -6829,34 +6864,34 @@ msgstr "Transpasoj"
 msgid "Theme Selector"
 msgstr "Etosa elektilo"
 
-#: src/modules/conf_theme/e_int_config_theme.c:620
+#: src/modules/conf_theme/e_int_config_theme.c:621
 msgid "Theme File Error"
 msgstr "Eraro de etosa dosiero"
 
-#: src/modules/conf_theme/e_int_config_theme.c:621
+#: src/modules/conf_theme/e_int_config_theme.c:622
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:786
+#: src/modules/conf_theme/e_int_config_theme.c:787
 msgid " Import..."
 msgstr " Enporti..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1405
+#: src/modules/conf_theme/e_int_config_theme.c:1406
 msgid "Theme Categories"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1423
+#: src/modules/conf_theme/e_int_config_theme.c:1424
 msgid "Assign"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1427
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1430
 msgid "Clear All"
 msgstr ""
 
@@ -6880,28 +6915,28 @@ msgstr ""
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr "Etoso ne importeblas de Moksha<br>kial okazis eraroj dum kopiado."
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:63
+#: src/modules/conf_theme/e_int_config_xsettings.c:68
 msgid "Application Theme Settings"
 msgstr "Agordoj de aplikaĵa etoso"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:496
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:515
+#: src/modules/conf_theme/e_int_config_xsettings.c:559
 msgid "Match Moksha theme if possible"
 msgstr "Kongri etosan de Moksha se eblas"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:505
+#: src/modules/conf_theme/e_int_config_xsettings.c:524
 msgid "Enable X Application Settings"
 msgstr "Ŝalti agordojn de X-aplikaĵoj"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:509
+#: src/modules/conf_theme/e_int_config_xsettings.c:528
 msgid "GTK Applications"
 msgstr "GTK-aplikaĵoj"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:544
+#: src/modules/conf_theme/e_int_config_xsettings.c:563
 msgid "Enable icon theme for applications"
 msgstr "Ŝalti piktograman etoson por aplikaĵoj"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:548
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Enable icon theme for Moksha"
 msgstr "Ŝalti piktograman etoson por Moksha"
 
@@ -8249,13 +8284,6 @@ msgstr "Propraj koloroj"
 msgid "Behavior"
 msgstr "Konduto"
 
-#: src/modules/fileman/e_mod_config.c:442
-#: src/modules/fileman/e_mod_config.c:445
-#: src/modules/fileman/e_mod_config.c:448
-#: src/modules/fileman/e_mod_config.c:451 src/modules/gadman/e_mod_config.c:208
-msgid "Mode"
-msgstr "Reĝimo"
-
 #: src/modules/fileman/e_mod_config.c:457
 msgid "Show device icons on desktop"
 msgstr "Montri aparatajn piktogramojn sur labortablo"
@@ -8291,9 +8319,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr "Grandeco de ŝpruchelpilo (Ekrana elcento)"
 
 #: src/modules/fileman/e_mod_config.c:483
-#: src/modules/notification/e_mod_config.c:181
-#: src/modules/notification/e_mod_config.c:189
-#: src/modules/notification/e_mod_config.c:197
+#: src/modules/notification/e_mod_config.c:185
+#: src/modules/notification/e_mod_config.c:193
+#: src/modules/notification/e_mod_config.c:201
 #, c-format
 msgid "%2.0f"
 msgstr "%2.0f"
@@ -8574,9 +8602,8 @@ msgstr "Agordoj de IBar"
 msgid "Selected source"
 msgstr "Elektata fonto"
 
-#: src/modules/ibar/e_mod_config.c:129
-#, fuzzy
-msgid "Show Icon Labels"
+#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
+msgid "Show Icon Label"
 msgstr "Montri etikedon de piktogramoj"
 
 #: src/modules/ibar/e_mod_config.c:130
@@ -8625,7 +8652,7 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ĉu vi certas, ke vi deziras forigi tiun bar-fonton?"
 
-#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1939
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1938
 msgid "IBar"
 msgstr "IBar"
 
@@ -8638,7 +8665,7 @@ msgstr "Krei novan piktogramon"
 msgid "Icon %s"
 msgstr "Piktogramo %s"
 
-#: src/modules/ibar/e_mod_main.c:1939
+#: src/modules/ibar/e_mod_main.c:1938
 msgid "Focus IBar"
 msgstr ""
 
@@ -8649,10 +8676,6 @@ msgstr "Agordoj de IBar"
 #: src/modules/ibox/e_mod_config.c:98
 msgid "Expand When On Desktop"
 msgstr "Etendi se ĝi estas sur labortablo"
-
-#: src/modules/ibox/e_mod_config.c:101
-msgid "Show Icon Label"
-msgstr "Montri etikedon de piktogramoj"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -8940,11 +8963,11 @@ msgstr "Sekva"
 msgid "Please Wait..."
 msgstr "Bonvole atendu..."
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:327
 msgid "Welcome to Moksha"
 msgstr "Bonvenon en Moksha"
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
+#: src/modules/wizard/page_010.c:163 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:53
 msgid "Select one"
 msgstr "Elekti iun"
@@ -9287,7 +9310,7 @@ msgstr "Nu unu akcesoraĵo de sistempleto povas esti kaj alia jam ekzistas."
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1113
+#: src/modules/systray/e_mod_main.c:1112
 msgid "Systray"
 msgstr "Sistempleto"
 
@@ -9755,122 +9778,127 @@ msgstr ""
 "Nun en <b>senreta</b> reĝimo.<br>Nun moduloj kiuj uzas reton daŭrigos "
 "ordinarajn taskojn."
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Notification module"
 msgstr "Modulo de sciigo"
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:54
+#: src/modules/notification/e_mod_config.c:55
 msgid "Notification Settings"
 msgstr "Agordoj de sciigoj"
 
-#: src/modules/notification/e_mod_config.c:111
+#: src/modules/notification/e_mod_config.c:113
 msgid "Urgency"
 msgstr "Urĝeco"
 
-#: src/modules/notification/e_mod_config.c:112
+#: src/modules/notification/e_mod_config.c:114
 msgid "Levels of urgency to display:"
 msgstr "Niveloj de vidigendaj urĝecoj:"
 
-#: src/modules/notification/e_mod_config.c:118
+#: src/modules/notification/e_mod_config.c:120
 msgid "Critical"
 msgstr "Gravega"
 
-#: src/modules/notification/e_mod_config.c:122
+#: src/modules/notification/e_mod_config.c:124
 msgid "Default Timeout"
 msgstr "Apriora tempolimo"
 
-#: src/modules/notification/e_mod_config.c:123
+#: src/modules/notification/e_mod_config.c:125
 msgid "Force timeout for all notifications"
 msgstr "Devigi tempolimon por ĉiuj sciigoj"
 
-#: src/modules/notification/e_mod_config.c:140
+#: src/modules/notification/e_mod_config.c:142
 msgid "Popup Corner"
 msgstr "Angulo de ŝprucfenestro"
 
-#: src/modules/notification/e_mod_config.c:142
+#: src/modules/notification/e_mod_config.c:144
 msgid "Top left"
 msgstr "Supre maldekstre"
 
-#: src/modules/notification/e_mod_config.c:144
+#: src/modules/notification/e_mod_config.c:146
 msgid "Top right"
 msgstr "Supre dekstre"
 
-#: src/modules/notification/e_mod_config.c:146
+#: src/modules/notification/e_mod_config.c:148
 msgid "Bottom left"
 msgstr "Sube maldekstre"
 
-#: src/modules/notification/e_mod_config.c:148
+#: src/modules/notification/e_mod_config.c:150
 msgid "Bottom right"
 msgstr "Sube dekstre"
 
-#: src/modules/notification/e_mod_config.c:160
+#: src/modules/notification/e_mod_config.c:162
 msgid "Ignore replace ID"
 msgstr "Malatenti anstataŭigon de ID"
 
-#: src/modules/notification/e_mod_config.c:162
+#: src/modules/notification/e_mod_config.c:164
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:169
+#: src/modules/notification/e_mod_config.c:171
 #, fuzzy
 msgid "History Settings"
 msgstr "Agordoj de sistempleto"
 
-#: src/modules/notification/e_mod_config.c:170
+#: src/modules/notification/e_mod_config.c:172
 #, fuzzy
 msgid "Time stamp"
 msgstr "Tempmezurilo"
 
-#: src/modules/notification/e_mod_config.c:172
+#: src/modules/notification/e_mod_config.c:174
 #, fuzzy
 msgid "Show application name"
 msgstr "Montri menuon pri ĉiuj aplikaĵoj"
 
-#: src/modules/notification/e_mod_config.c:174
+#: src/modules/notification/e_mod_config.c:176
+#, fuzzy
+msgid "Show notification counter"
+msgstr "Sciigo"
+
+#: src/modules/notification/e_mod_config.c:178
 #, fuzzy
 msgid "Reverse order"
 msgstr "Memorigi ordon"
 
-#: src/modules/notification/e_mod_config.c:178
+#: src/modules/notification/e_mod_config.c:182
 #: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "Etikedo"
 
-#: src/modules/notification/e_mod_config.c:179
+#: src/modules/notification/e_mod_config.c:183
 #, fuzzy
 msgid "Labels length"
 msgstr "Etikeda teksto"
 
-#: src/modules/notification/e_mod_config.c:186
+#: src/modules/notification/e_mod_config.c:190
 #: src/modules/clipboard/e_mod_config.c:256
 msgid "Items"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:187
+#: src/modules/notification/e_mod_config.c:191
 msgid "Items in history"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:195
+#: src/modules/notification/e_mod_config.c:199
 msgid "Gadget animation delay [s]"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:203
+#: src/modules/notification/e_mod_config.c:207
 msgid "App blacklist (use a delimiter)"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:209
+#: src/modules/notification/e_mod_config.c:213
 #: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
@@ -10188,6 +10216,13 @@ msgstr "Laŭteco ŝanĝita"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Portilo"
+
+#~ msgid "Modes"
+#~ msgstr "Reĝimoj"
+
+#, fuzzy
+#~ msgid "Show Icon Labels"
+#~ msgstr "Montri etikedon de piktogramoj"
 
 #~ msgid "Show icon label"
 #~ msgstr "Montri piktograman etikedon"

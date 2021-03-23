@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-02-12 13:10+0100\n"
+"POT-Creation-Date: 2021-03-23 09:05+0100\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -33,7 +33,7 @@ msgid "Close"
 msgstr "סגור"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
-#: src/bin/e_actions.c:3547 src/bin/e_main.c:709
+#: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:34
@@ -90,7 +90,7 @@ msgstr "לא"
 msgid "Action Params Syntax Error"
 msgstr "פעולה params"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:263
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
 msgid "Exit"
 msgstr "יציאה"
 
@@ -775,15 +775,15 @@ msgstr ""
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:275
+#: src/modules/conf_applications/e_int_config_apps.c:320
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:745
-#: src/modules/conf_theme/e_int_config_theme.c:1126
-#: src/modules/conf_theme/e_int_config_theme.c:1140
+#: src/modules/conf_theme/e_int_config_theme.c:746
+#: src/modules/conf_theme/e_int_config_theme.c:1127
+#: src/modules/conf_theme/e_int_config_theme.c:1141
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -816,7 +816,7 @@ msgstr "עבור למצב שינה"
 msgid "Lock"
 msgstr "נעל"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1356
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
 msgid "Cleanup Windows"
 msgstr "ניקוי החלונות"
 
@@ -919,6 +919,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
+#: src/modules/clock/e_mod_config.c:104
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1226,7 +1227,7 @@ msgstr "קובץ שולחן העבודה"
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
-#: src/modules/notification/e_mod_config.c:165
+#: src/modules/notification/e_mod_config.c:167
 #: src/modules/places/e_mod_config.c:190
 msgid "General"
 msgstr "כללי"
@@ -1917,8 +1918,8 @@ msgstr "אחר"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1434
-#: src/modules/conf_theme/e_int_config_xsettings.c:521
+#: src/modules/conf_theme/e_int_config_theme.c:1435
+#: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "תצוגה מקדימה"
 
@@ -1983,9 +1984,9 @@ msgid "Look"
 msgstr "מראה"
 
 #: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:270
-#: src/modules/conf_applications/e_int_config_apps.c:291
-#: src/modules/conf_applications/e_int_config_apps.c:311
+#: src/modules/conf_applications/e_int_config_apps.c:315
+#: src/modules/conf_applications/e_int_config_apps.c:336
+#: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2347,7 +2348,7 @@ msgstr "מסך"
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
-#: src/modules/notification/e_mod_config.c:116
+#: src/modules/notification/e_mod_config.c:118
 #, c-format
 msgid "Normal"
 msgstr "רגיל"
@@ -2485,8 +2486,8 @@ msgstr ""
 msgid "Static"
 msgstr "מצב"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:109
-#: src/modules/clock/e_mod_config.c:153
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:192
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2623,10 +2624,10 @@ msgid "Request Position"
 msgstr "בקשת מיקום"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:282
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:398
-#: src/modules/clock/e_mod_main.c:641 src/modules/conf/e_conf.c:136
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
+#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:136
 #: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -2898,18 +2899,18 @@ msgstr ""
 "שגיאה בהפעלתשיטת הזנה הפעלה<br><br>ודא<br>הקלט תצורת שיטה נכונה<br>כי "
 "הפעלה<br>התצורה של המחשב הוא<br>PATH שלך"
 
-#: src/bin/e_int_menus.c:140 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "ראשי"
 
-#: src/bin/e_int_menus.c:163
-#: src/modules/conf_applications/e_int_config_apps.c:69
+#: src/bin/e_int_menus.c:164
+#: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "יישומים מועדפים"
 
-#: src/bin/e_int_menus.c:174
-#: src/modules/conf_applications/e_int_config_apps.c:295
+#: src/bin/e_int_menus.c:175
+#: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -2917,62 +2918,62 @@ msgstr "יישומים מועדפים"
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
 #: src/modules/everything/evry_plug_apps.c:1417
-#: src/modules/notification/e_mod_config.c:202
+#: src/modules/notification/e_mod_config.c:206
 msgid "Applications"
 msgstr "יישומים"
 
-#: src/bin/e_int_menus.c:206
+#: src/bin/e_int_menus.c:207
 #, fuzzy
 msgid "About Operating System"
 msgstr "שגיאה במערכת האימות"
 
-#: src/bin/e_int_menus.c:212
+#: src/bin/e_int_menus.c:213
 msgid "Help"
 msgstr ""
 
-#: src/bin/e_int_menus.c:218
+#: src/bin/e_int_menus.c:219
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:238
+#: src/bin/e_int_menus.c:239
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "אודות Moksha"
 
-#: src/bin/e_int_menus.c:243 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "אודות ערכות הנושא"
 
-#: src/bin/e_int_menus.c:257
+#: src/bin/e_int_menus.c:259
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "אודות Moksha"
 
-#: src/bin/e_int_menus.c:335
+#: src/bin/e_int_menus.c:337
 msgid "Virtual"
 msgstr "וירטואלי"
 
-#: src/bin/e_int_menus.c:342 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "מדפים"
 
-#: src/bin/e_int_menus.c:351
+#: src/bin/e_int_menus.c:353
 msgid "Show/Hide All Windows"
 msgstr "הצגת/הסתרת כל החלונות"
 
-#: src/bin/e_int_menus.c:727
+#: src/bin/e_int_menus.c:729
 #, fuzzy
 msgid "No applications"
 msgstr "(אין יישומים)"
 
-#: src/bin/e_int_menus.c:944
+#: src/bin/e_int_menus.c:946
 #, fuzzy
 msgid "Set Virtual Desktops"
 msgstr "להגדיר שולחנות עבודה וירטואליים"
 
-#: src/bin/e_int_menus.c:1314
+#: src/bin/e_int_menus.c:1316
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2981,32 +2982,32 @@ msgstr "להגדיר שולחנות עבודה וירטואליים"
 msgid "Windows"
 msgstr "חלונות"
 
-#: src/bin/e_int_menus.c:1320 src/bin/e_int_menus.c:1513
+#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
 #, fuzzy
 msgid "No windows"
 msgstr "(אין חלונות)"
 
-#: src/bin/e_int_menus.c:1369
+#: src/bin/e_int_menus.c:1371
 msgid "Lost Windows"
 msgstr "חלונות שאבדו"
 
-#: src/bin/e_int_menus.c:1426 src/bin/e_int_menus.c:1526
+#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
 #, fuzzy
 msgid "Untitled window"
 msgstr "לסגור את החלון"
 
-#: src/bin/e_int_menus.c:1633 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "מדף מס'"
 
-#: src/bin/e_int_menus.c:1701
+#: src/bin/e_int_menus.c:1703
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "הוסף מדף"
 
-#: src/bin/e_int_menus.c:1708
+#: src/bin/e_int_menus.c:1710
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "מחק מדף"
@@ -3064,7 +3065,7 @@ msgstr "הצג עם לחיצת העכבר"
 msgid "Hide timeout"
 msgstr "משך הזמן עד להסתרה"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:125
+#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:127
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f שניות"
@@ -3101,22 +3102,22 @@ msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:345
+#: src/bin/e_main.c:346
 #, fuzzy
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:354
+#: src/bin/e_main.c:355
 #, fuzzy
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:368
+#: src/bin/e_main.c:369
 #, fuzzy
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:380
+#: src/bin/e_main.c:381
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3124,7 +3125,7 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות יציאה.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:387
+#: src/bin/e_main.c:388
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3132,7 +3133,7 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות HUP.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:394
+#: src/bin/e_main.c:395
 #, fuzzy
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
@@ -3141,47 +3142,47 @@ msgstr ""
 "Moksha לא הצליחה להגדיר יישום לטיפול באות HUP.\n"
 "יתכן כי אזל לך הזכרון?"
 
-#: src/bin/e_main.c:403
+#: src/bin/e_main.c:404
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:412
+#: src/bin/e_main.c:413
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:421
+#: src/bin/e_main.c:422
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:432
+#: src/bin/e_main.c:433
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:444
+#: src/bin/e_main.c:445
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:454
+#: src/bin/e_main.c:455
 #, fuzzy
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:464
+#: src/bin/e_main.c:465
 #, fuzzy
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:475
+#: src/bin/e_main.c:476
 #, fuzzy
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:490
+#: src/bin/e_main.c:491
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3191,7 +3192,7 @@ msgstr ""
 "התוכנתי של X11 תחת Evas. אנא בדוק את התקנות ה־Evas\n"
 "וה־Ecore שלך ובדוק שהן תומכות במנוע העיבוד התוכנתי של X11."
 
-#: src/bin/e_main.c:498
+#: src/bin/e_main.c:499
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3201,17 +3202,17 @@ msgstr ""
 "חוצץ תוכנתי תחת Evas. אנא בדוק את התקנות ה־Evas\n"
 "וה־Ecore שלך ובדוק שהם תומכים במנוע עיבוד החוצץ התוכנתי."
 
-#: src/bin/e_main.c:508
+#: src/bin/e_main.c:509
 #, fuzzy
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:520
+#: src/bin/e_main.c:521
 #, fuzzy
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:530
+#: src/bin/e_main.c:531
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3219,7 +3220,7 @@ msgstr ""
 "Moksha לא הצליחה להתחיל את מערכת התראות החירום.\n"
 "האם הגדרת את משתנה ה־DISPLAY כראוי?"
 
-#: src/bin/e_main.c:549
+#: src/bin/e_main.c:550
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3227,37 +3228,37 @@ msgstr ""
 "Moksha לא הצליחה ליצור תיקיות בתיקיית הבית שלך.\n"
 "יתכן שאין לך תיקיית בית או שהכונן מלא?"
 
-#: src/bin/e_main.c:559
+#: src/bin/e_main.c:560
 #, fuzzy
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת רישום הקבצים שלה."
 
-#: src/bin/e_main.c:568
+#: src/bin/e_main.c:569
 #, fuzzy
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת התצורה שלה."
 
-#: src/bin/e_main.c:608
+#: src/bin/e_main.c:609
 #, fuzzy
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:617
+#: src/bin/e_main.c:618
 #, fuzzy
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:633
+#: src/bin/e_main.c:634
 #, fuzzy
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת המידה שלה."
 
-#: src/bin/e_main.c:642
+#: src/bin/e_main.c:643
 #, fuzzy
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ההצבעה שלה."
 
-#: src/bin/e_main.c:651
+#: src/bin/e_main.c:652
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3265,31 +3266,31 @@ msgstr ""
 "Moksha לא הצליחה להגדיר את הנתיבים לחיפוש קבצים.\n"
 "יתכן שהזכרון אזל?"
 
-#: src/bin/e_main.c:668
+#: src/bin/e_main.c:669
 #, fuzzy
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הגופנים שלה."
 
-#: src/bin/e_main.c:685
+#: src/bin/e_main.c:686
 #, fuzzy
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:701
+#: src/bin/e_main.c:702
 #, fuzzy
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הבינאום שלה."
 
-#: src/bin/e_main.c:716
+#: src/bin/e_main.c:717
 msgid "Starting International Support"
 msgstr "הפעלת התמיכה בבינאום"
 
-#: src/bin/e_main.c:720
+#: src/bin/e_main.c:721
 #, fuzzy
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הבינאום שלה."
 
-#: src/bin/e_main.c:729
+#: src/bin/e_main.c:730
 #, fuzzy
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
@@ -3299,11 +3300,11 @@ msgstr ""
 "Moksha לא הצליחה להפעיל את מערכת שולחן העבודה FDO.\n"
 "יתכן שאזל לך הזכרון?"
 
-#: src/bin/e_main.c:754
+#: src/bin/e_main.c:755
 msgid "Setup Screens"
 msgstr "הגדרת מסכים"
 
-#: src/bin/e_main.c:758
+#: src/bin/e_main.c:759
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3311,273 +3312,273 @@ msgstr ""
 "הנסיון של Moksha להגדיר את ניהול החלונות עבור כל המסכים שבמערכת שלך\n"
 "נכשל. יתכן שישנו מנהל חלונות אחר פעיל?\n"
 
-#: src/bin/e_main.c:766
+#: src/bin/e_main.c:767
 #, fuzzy
 msgid "Setup ACPI"
 msgstr "הגדרת DPMS"
 
-#: src/bin/e_main.c:773
+#: src/bin/e_main.c:774
 #, fuzzy
 msgid "Setup Backlight"
 msgstr "הגדרת איגודים"
 
-#: src/bin/e_main.c:777
+#: src/bin/e_main.c:778
 #, fuzzy
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת ה־DPMS."
 
-#: src/bin/e_main.c:784
+#: src/bin/e_main.c:785
 #, fuzzy
 msgid "Setup Powersave Modes"
 msgstr "הגדרת מצבי חיסכון בחשמל"
 
-#: src/bin/e_main.c:788
+#: src/bin/e_main.c:789
 #, fuzzy
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha לא הצליחה להגדיר את מצבי החסכון בחשמל שלה."
 
-#: src/bin/e_main.c:795
+#: src/bin/e_main.c:796
 msgid "Setup Screensaver"
 msgstr "הגדרת שומר המסך"
 
-#: src/bin/e_main.c:799
+#: src/bin/e_main.c:800
 #, fuzzy
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha לא הצליחה להגדיר את שומר המסך של X."
 
-#: src/bin/e_main.c:806
+#: src/bin/e_main.c:807
 msgid "Setup DPMS"
 msgstr "הגדרת DPMS"
 
-#: src/bin/e_main.c:810
+#: src/bin/e_main.c:811
 #, fuzzy
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת ה־DPMS."
 
-#: src/bin/e_main.c:817
+#: src/bin/e_main.c:818
 msgid "Setup Desklock"
 msgstr "הגדרת נעילת המסך"
 
-#: src/bin/e_main.c:821
+#: src/bin/e_main.c:822
 #, fuzzy
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת נעילת המסך שלה."
 
-#: src/bin/e_main.c:828
+#: src/bin/e_main.c:829
 msgid "Setup Popups"
 msgstr "הגדרת חלוניות התרעה"
 
-#: src/bin/e_main.c:832
+#: src/bin/e_main.c:833
 #, fuzzy
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת חלוניות ההתרעה שלה."
 
-#: src/bin/e_main.c:844
+#: src/bin/e_main.c:845
 #, fuzzy
 msgid "Setup Message Bus"
 msgstr "הודעה הגדרת אוטובוס"
 
-#: src/bin/e_main.c:851
+#: src/bin/e_main.c:852
 #, fuzzy
 msgid "Setup Paths"
 msgstr "הגדרת נתיבים"
 
-#: src/bin/e_main.c:857
+#: src/bin/e_main.c:858
 msgid "Setup System Controls"
 msgstr "הגדרת פקדי מערכת"
 
-#: src/bin/e_main.c:861
+#: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:868
+#: src/bin/e_main.c:869
 msgid "Setup Actions"
 msgstr "הגדרת פעולות"
 
-#: src/bin/e_main.c:872
+#: src/bin/e_main.c:873
 #, fuzzy
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הפעולות שלה."
 
-#: src/bin/e_main.c:879
+#: src/bin/e_main.c:880
 msgid "Setup Execution System"
 msgstr "הגדרת מערכת הרצת הקבצים"
 
-#: src/bin/e_main.c:883
+#: src/bin/e_main.c:884
 #, fuzzy
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ה־exec שלה."
 
-#: src/bin/e_main.c:894
+#: src/bin/e_main.c:895
 #, fuzzy
 msgid "Setup Filemanager"
 msgstr "מנהל הקבצים"
 
-#: src/bin/e_main.c:898
+#: src/bin/e_main.c:899
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha לא הצליחה להפעיל את מנהל הקבצים.\n"
 
-#: src/bin/e_main.c:905
+#: src/bin/e_main.c:906
 msgid "Setup Message System"
 msgstr "הגדרת מערכת ההודעות"
 
-#: src/bin/e_main.c:909
+#: src/bin/e_main.c:910
 #, fuzzy
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha לא הצליחה לטעון את מערכת ההודעות שלה."
 
-#: src/bin/e_main.c:916
+#: src/bin/e_main.c:917
 msgid "Setup DND"
 msgstr "הגדרת DND"
 
-#: src/bin/e_main.c:920
+#: src/bin/e_main.c:921
 #, fuzzy
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ה־dnd שלה."
 
-#: src/bin/e_main.c:927
+#: src/bin/e_main.c:928
 #, fuzzy
 msgid "Setup Grab Input Handling"
 msgstr "גזל הגדרת קלט טיפול"
 
-#: src/bin/e_main.c:931
+#: src/bin/e_main.c:932
 #, fuzzy
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת הטיפול בקלט הגרירה."
 
-#: src/bin/e_main.c:938
+#: src/bin/e_main.c:939
 msgid "Setup Modules"
 msgstr "הגדרת מודולים"
 
-#: src/bin/e_main.c:942 src/bin/e_main.c:1127
+#: src/bin/e_main.c:943 src/bin/e_main.c:1128
 #, fuzzy
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת המודולים שלה."
 
-#: src/bin/e_main.c:949
+#: src/bin/e_main.c:950
 msgid "Setup Remembers"
 msgstr "הגדרת זכרונות"
 
-#: src/bin/e_main.c:953
+#: src/bin/e_main.c:954
 #, fuzzy
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את הגדרות הזכרון."
 
-#: src/bin/e_main.c:960
+#: src/bin/e_main.c:961
 msgid "Setup Color Classes"
 msgstr "הגדרת מחלקות צבע."
 
-#: src/bin/e_main.c:964
+#: src/bin/e_main.c:965
 #, fuzzy
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת מחלקות הצבע שלה."
 
-#: src/bin/e_main.c:971
+#: src/bin/e_main.c:972
 msgid "Setup Gadcon"
 msgstr "הגדרת בקרת היישומונים"
 
-#: src/bin/e_main.c:975
+#: src/bin/e_main.c:976
 #, fuzzy
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת בקרת היישומונים שלה."
 
-#: src/bin/e_main.c:982
+#: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
 msgstr "הגדרת רקע שולחן העבודה"
 
-#: src/bin/e_main.c:986
+#: src/bin/e_main.c:987
 #, fuzzy
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת הרקע לשולחן העבודה שלה."
 
-#: src/bin/e_main.c:993
+#: src/bin/e_main.c:994
 msgid "Setup Mouse"
 msgstr "הגדרת העכבר"
 
-#: src/bin/e_main.c:997
+#: src/bin/e_main.c:998
 #, fuzzy
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha לא הצליחה להגדיר את תצורת העכבר."
 
-#: src/bin/e_main.c:1004
+#: src/bin/e_main.c:1005
 #, fuzzy
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת סידור הקבצים שלה."
 
-#: src/bin/e_main.c:1010
+#: src/bin/e_main.c:1011
 msgid "Setup Bindings"
 msgstr "הגדרת איגודים"
 
-#: src/bin/e_main.c:1014
+#: src/bin/e_main.c:1015
 #, fuzzy
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת האיגודים שלה."
 
-#: src/bin/e_main.c:1021
+#: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
 msgstr "הגדרת ממזער התמונות"
 
-#: src/bin/e_main.c:1025
+#: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת מיזעור התמונות.\n"
 
-#: src/bin/e_main.c:1034
+#: src/bin/e_main.c:1035
 #, fuzzy
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:1043
+#: src/bin/e_main.c:1044
 #, fuzzy
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת מיזעור התמונות.\n"
 
-#: src/bin/e_main.c:1053
+#: src/bin/e_main.c:1054
 #, fuzzy
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha לא הצליחה להפעיל את מערכת פיקוד המערכת.\n"
 
-#: src/bin/e_main.c:1062
+#: src/bin/e_main.c:1063
 #, fuzzy
 msgid "Setup Desktop Environment"
 msgstr "הגדרת סביבת שולחן העבודה"
 
-#: src/bin/e_main.c:1066
+#: src/bin/e_main.c:1067
 #, fuzzy
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת ערכות הנושא שלה."
 
-#: src/bin/e_main.c:1073
+#: src/bin/e_main.c:1074
 #, fuzzy
 msgid "Setup File Ordering"
 msgstr "הגדרת קובץ הזמנה"
 
-#: src/bin/e_main.c:1077
+#: src/bin/e_main.c:1078
 #, fuzzy
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha לא הצליחה להגדיר את מערכת סידור הקבצים שלה."
 
-#: src/bin/e_main.c:1092
+#: src/bin/e_main.c:1093
 msgid "Load Modules"
 msgstr "טעינת מודולים"
 
-#: src/bin/e_main.c:1123
+#: src/bin/e_main.c:1124
 msgid "Setup Shelves"
 msgstr "הגדרת מדפים"
 
-#: src/bin/e_main.c:1134
+#: src/bin/e_main.c:1135
 msgid "Configure Shelves"
 msgstr "הגדרת מדפים"
 
-#: src/bin/e_main.c:1145
+#: src/bin/e_main.c:1146
 msgid "Almost Done"
 msgstr "כמעט בוצע"
 
-#: src/bin/e_main.c:1302
+#: src/bin/e_main.c:1303
 #, fuzzy, c-format
 msgid "Version: %s\n"
 msgstr "הרשאות"
 
-#: src/bin/e_main.c:1312
+#: src/bin/e_main.c:1313
 #, c-format
 msgid ""
 "Options:\n"
@@ -3607,7 +3608,7 @@ msgid ""
 "\t-version\n"
 msgstr ""
 
-#: src/bin/e_main.c:1366
+#: src/bin/e_main.c:1367
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3617,11 +3618,11 @@ msgid ""
 "before enlightenment itself begins running.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1647
+#: src/bin/e_main.c:1648
 msgid "Testing Format Support"
 msgstr "בדיקת התמיכה בעיצוב."
 
-#: src/bin/e_main.c:1651
+#: src/bin/e_main.c:1652
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3629,7 +3630,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח ליצור משטח עבודה לחוצץ. אנא בדוק\n"
 "את התמיכה של Evas במנוע חוצץ תוכנתי.\n"
 
-#: src/bin/e_main.c:1663
+#: src/bin/e_main.c:1664
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
@@ -3637,7 +3638,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי PNG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי PNG.\n"
 
-#: src/bin/e_main.c:1673
+#: src/bin/e_main.c:1674
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
@@ -3646,7 +3647,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי JPEG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי JPEG.\n"
 
-#: src/bin/e_main.c:1683
+#: src/bin/e_main.c:1684
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
@@ -3654,7 +3655,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי PNG. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי PNG.\n"
 
-#: src/bin/e_main.c:1693
+#: src/bin/e_main.c:1694
 #, fuzzy
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
@@ -3662,7 +3663,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון קבצי EET. בדוק כי ל־Evas\n"
 "ישנה תמיכה בטעינת קבצי EET.\n"
 
-#: src/bin/e_main.c:1707
+#: src/bin/e_main.c:1708
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3670,7 +3671,7 @@ msgstr ""
 "Moksha מצאה כי Evas לא מצליח לטעון הגופן 'Sans'. בדוק כי ל־Evas\n"
 "ישנה תמיכה ב־fontconfig ושמערכת ה־fontconfig מגדירה את הגופן 'Sans'.\n"
 
-#: src/bin/e_main.c:1920
+#: src/bin/e_main.c:1921
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3678,11 +3679,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1925 src/bin/e_main.c:1941
+#: src/bin/e_main.c:1926 src/bin/e_main.c:1942
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha קרסה מוקדם עם ההפעלה והופעלה מחדש"
 
-#: src/bin/e_main.c:1926
+#: src/bin/e_main.c:1927
 #, fuzzy, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3693,7 +3694,7 @@ msgstr ""
 "כדי<br>לסייע בהסרת מודולים בעיתיים כלשהם מהתצורה שלך.<br><br>חלונית תצורת "
 "המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
-#: src/bin/e_main.c:1934
+#: src/bin/e_main.c:1935
 #, fuzzy
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
@@ -3705,7 +3706,7 @@ msgstr ""
 "יטענו כדי לסייע בהסרת מודולים בעיתיים<br>כלשהם מהתצורה שלך. חלונית<br>תצורת "
 "המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
-#: src/bin/e_main.c:1942
+#: src/bin/e_main.c:1943
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -4353,8 +4354,8 @@ msgstr[0] "%1.0f דקות"
 msgstr[1] "%1.0f דקות"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:266
-#: src/modules/conf_applications/e_int_config_apps.c:287
+#: src/modules/conf_applications/e_int_config_apps.c:311
+#: src/modules/conf_applications/e_int_config_apps.c:332
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4369,13 +4370,13 @@ msgid "Add"
 msgstr "הוסף"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:303
+#: src/modules/conf_applications/e_int_config_apps.c:348
 #: src/modules/xkbswitch/e_mod_config.c:250
 msgid "Up"
 msgstr "למעלה"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:307
+#: src/modules/conf_applications/e_int_config_apps.c:352
 #: src/modules/xkbswitch/e_mod_config.c:256
 msgid "Down"
 msgstr "למטה"
@@ -4496,7 +4497,7 @@ msgstr "הוסף למועדפים"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:752
+#: src/modules/conf_theme/e_int_config_theme.c:753
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "עלה לתיקיית המבוא"
@@ -4685,84 +4686,115 @@ msgstr "שגיאה"
 msgid "Battery Meter"
 msgstr "מד הסוללה"
 
-#: src/modules/clock/e_mod_config.c:37
+#: src/modules/clock/e_mod_config.c:40
 #, fuzzy
 msgid "Clock Settings"
 msgstr "מקדו את הגדרות"
 
-#: src/modules/clock/e_mod_config.c:89 src/modules/clock/e_mod_main.c:746
-#: src/modules/clock/e_mod_main.c:933
+#: src/modules/clock/e_mod_config.c:98
+#, c-format
+msgid ""
+"Click on a calendar day for date change. <br>Use the mouse wheel for "
+"changing the year."
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:100
+#, fuzzy
+msgid "Clock module Information"
+msgstr "נתוני הקישור"
+
+#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
+#: src/modules/clock/e_mod_main.c:986
 msgid "Clock"
 msgstr "שעון"
 
-#: src/modules/clock/e_mod_config.c:92
+#: src/modules/clock/e_mod_config.c:132
 #, fuzzy
 msgid "Analog"
 msgstr "דיאלוגים"
 
-#: src/modules/clock/e_mod_config.c:94
+#: src/modules/clock/e_mod_config.c:134
 #, fuzzy
 msgid "Digital"
 msgstr "שעון דיגיטלי"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:136
 #, fuzzy
 msgid "Seconds"
 msgstr "%.1f שניות"
 
-#: src/modules/clock/e_mod_config.c:99
+#: src/modules/clock/e_mod_config.c:139
 msgid "12 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:101
+#: src/modules/clock/e_mod_config.c:141
 msgid "24 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:106
+#: src/modules/clock/e_mod_config.c:146
 msgid "Date"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:111
+#: src/modules/clock/e_mod_config.c:151
 msgid "Full"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:113
+#: src/modules/clock/e_mod_config.c:153
 msgid "Numbers"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:115
+#: src/modules/clock/e_mod_config.c:155
 #, fuzzy
 msgid "Date Only"
 msgstr "לקריאה בלבד"
 
-#: src/modules/clock/e_mod_config.c:117
+#: src/modules/clock/e_mod_config.c:157
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:119
+#: src/modules/clock/e_mod_config.c:159
 #, fuzzy
 msgid "Strftime"
 msgstr "את הזמן"
 
-#: src/modules/clock/e_mod_config.c:126
+#: src/modules/clock/e_mod_config.c:166
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:128 src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
 #: src/modules/start/e_mod_main.c:168
 #, fuzzy
 msgid "Start"
 msgstr "להפעיל"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:179
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:189
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:933
+#: src/modules/clock/e_mod_config.c:209
+#, fuzzy
+msgid "Time set"
+msgstr "טיימרים"
+
+#: src/modules/clock/e_mod_config.c:211
+#, fuzzy
+msgid "Hours"
+msgstr "לפני %li שעות"
+
+#: src/modules/clock/e_mod_config.c:216
+#, fuzzy
+msgid "Minutes"
+msgstr "לפני %li דקות"
+
+#: src/modules/clock/e_mod_config.c:224
+msgid "Date set"
+msgstr ""
+
+#: src/modules/clock/e_mod_main.c:986
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "קובץ הפעלה"
@@ -4800,43 +4832,46 @@ msgstr "הצגה"
 msgid "Offline"
 msgstr "לא מחובר"
 
-#: src/modules/conf/e_mod_main.c:459
+#: src/modules/conf/e_mod_main.c:459 src/modules/fileman/e_mod_config.c:442
+#: src/modules/fileman/e_mod_config.c:445
+#: src/modules/fileman/e_mod_config.c:448
+#: src/modules/fileman/e_mod_config.c:451 src/modules/gadman/e_mod_config.c:208
 #, fuzzy
-msgid "Modes"
-msgstr "מצבי"
+msgid "Mode"
+msgstr "העבר"
 
-#: src/modules/conf_applications/e_int_config_apps.c:84
-#: src/modules/conf_applications/e_int_config_apps.c:98
+#: src/modules/conf_applications/e_int_config_apps.c:87
+#: src/modules/conf_applications/e_int_config_apps.c:101
 #: src/modules/conf_applications/e_mod_main.c:33
 #, fuzzy
 msgid "IBar Applications"
 msgstr "IBar יישומים"
 
-#: src/modules/conf_applications/e_int_config_apps.c:113
+#: src/modules/conf_applications/e_int_config_apps.c:116
 #: src/modules/conf_applications/e_mod_main.c:49
 #, fuzzy
 msgid "Startup Applications"
 msgstr "אתחול יישומים"
 
-#: src/modules/conf_applications/e_int_config_apps.c:129
+#: src/modules/conf_applications/e_int_config_apps.c:132
 #: src/modules/conf_applications/e_mod_main.c:45
 #, fuzzy
 msgid "Restart Applications"
 msgstr "הפעלה מחדש של יישומים"
 
-#: src/modules/conf_applications/e_int_config_apps.c:144
+#: src/modules/conf_applications/e_int_config_apps.c:147
 #: src/modules/conf_applications/e_mod_main.c:37
 #, fuzzy
 msgid "Screen Lock Applications"
 msgstr "נעל מסך הגדרות"
 
-#: src/modules/conf_applications/e_int_config_apps.c:159
+#: src/modules/conf_applications/e_int_config_apps.c:162
 #: src/modules/conf_applications/e_mod_main.c:41
 #, fuzzy
 msgid "Screen Unlock Applications"
 msgstr "מוכרות יישומים"
 
-#: src/modules/conf_applications/e_int_config_apps.c:315
+#: src/modules/conf_applications/e_int_config_apps.c:360
 #, fuzzy
 msgid "Order"
 msgstr "מסגרת"
@@ -5187,9 +5222,9 @@ msgstr "בחררקע ..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:741
-#: src/modules/conf_theme/e_int_config_theme.c:1123
-#: src/modules/conf_theme/e_int_config_theme.c:1132
+#: src/modules/conf_theme/e_int_config_theme.c:742
+#: src/modules/conf_theme/e_int_config_theme.c:1124
+#: src/modules/conf_theme/e_int_config_theme.c:1133
 #: src/modules/gadman/e_mod_config.c:248
 #, fuzzy
 msgid "Personal"
@@ -5865,7 +5900,7 @@ msgstr "בורר השפות"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:171
 #, fuzzy
 msgid "System Default"
 msgstr "ברירת המחדל של המערכת"
@@ -5882,7 +5917,7 @@ msgstr "אזור נבחרים"
 msgid "Locale"
 msgstr "אזור"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:162
 #, fuzzy
 msgid "Language"
 msgstr "שפה"
@@ -6270,7 +6305,7 @@ msgstr "הערה"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:203 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
 #, fuzzy
 msgid "Gadgets"
 msgstr "גאדג'טים"
@@ -6348,8 +6383,8 @@ msgstr "%.1f שניות"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:159
-#: src/modules/notification/e_mod_config.c:194
+#: src/modules/notification/e_mod_config.c:161
+#: src/modules/notification/e_mod_config.c:198
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "שונות"
@@ -6377,14 +6412,14 @@ msgid "Fonts"
 msgstr "גופנים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1414
+#: src/modules/conf_theme/e_int_config_theme.c:1415
 #: src/modules/conf_theme/e_mod_main.c:180
 #, fuzzy
 msgid "Themes"
 msgstr "נושאים"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
-#: src/modules/conf_theme/e_int_config_xsettings.c:552
+#: src/modules/conf_theme/e_int_config_xsettings.c:571
 #: src/modules/everything/evry_config.c:438
 #: src/modules/everything/evry_config.c:464
 msgid "Icons"
@@ -6570,7 +6605,7 @@ msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:920
-#: src/modules/notification/e_mod_config.c:114
+#: src/modules/notification/e_mod_config.c:116
 #, fuzzy
 msgid "Low"
 msgstr "הנמך"
@@ -7379,39 +7414,39 @@ msgstr "מעברים"
 msgid "Theme Selector"
 msgstr "הנושא בורר"
 
-#: src/modules/conf_theme/e_int_config_theme.c:620
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, fuzzy
 msgid "Theme File Error"
 msgstr "ייבוא ​​נושא שגיאה"
 
-#: src/modules/conf_theme/e_int_config_theme.c:621
+#: src/modules/conf_theme/e_int_config_theme.c:622
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:786
+#: src/modules/conf_theme/e_int_config_theme.c:787
 #, fuzzy
 msgid " Import..."
 msgstr " ייבוא ​​..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1405
+#: src/modules/conf_theme/e_int_config_theme.c:1406
 #, fuzzy
 msgid "Theme Categories"
 msgstr "נושא קטגוריות"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1423
+#: src/modules/conf_theme/e_int_config_theme.c:1424
 #, fuzzy
 msgid "Assign"
 msgstr "להקצות"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1426
+#: src/modules/conf_theme/e_int_config_theme.c:1427
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 #, fuzzy
 msgid "Clear"
 msgstr "נקה"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1429
+#: src/modules/conf_theme/e_int_config_theme.c:1430
 #, fuzzy
 msgid "Clear All"
 msgstr "נקה הכל"
@@ -7437,33 +7472,33 @@ msgstr ""
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:63
+#: src/modules/conf_theme/e_int_config_xsettings.c:68
 #, fuzzy
 msgid "Application Theme Settings"
 msgstr "ערכת הצלמיות הגדרות"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:496
-#: src/modules/conf_theme/e_int_config_xsettings.c:540
+#: src/modules/conf_theme/e_int_config_xsettings.c:515
+#: src/modules/conf_theme/e_int_config_xsettings.c:559
 #, fuzzy
 msgid "Match Moksha theme if possible"
 msgstr "מודול ה־%s של Moksha"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:505
+#: src/modules/conf_theme/e_int_config_xsettings.c:524
 #, fuzzy
 msgid "Enable X Application Settings"
 msgstr "ערכת הצלמיות הגדרות"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:509
+#: src/modules/conf_theme/e_int_config_xsettings.c:528
 #, fuzzy
 msgid "GTK Applications"
 msgstr "יישומים"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:544
+#: src/modules/conf_theme/e_int_config_xsettings.c:563
 #, fuzzy
 msgid "Enable icon theme for applications"
 msgstr "השתמש בערכת נושא הסמל של יישומים"
 
-#: src/modules/conf_theme/e_int_config_xsettings.c:548
+#: src/modules/conf_theme/e_int_config_xsettings.c:567
 #, fuzzy
 msgid "Enable icon theme for Moksha"
 msgstr "אפשר ערכת הצלמיות"
@@ -9028,14 +9063,6 @@ msgstr "סמלים מותאמים אישית"
 msgid "Behavior"
 msgstr "התנהגות"
 
-#: src/modules/fileman/e_mod_config.c:442
-#: src/modules/fileman/e_mod_config.c:445
-#: src/modules/fileman/e_mod_config.c:448
-#: src/modules/fileman/e_mod_config.c:451 src/modules/gadman/e_mod_config.c:208
-#, fuzzy
-msgid "Mode"
-msgstr "העבר"
-
 #: src/modules/fileman/e_mod_config.c:457
 #, fuzzy
 msgid "Show device icons on desktop"
@@ -9076,9 +9103,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:483
-#: src/modules/notification/e_mod_config.c:181
-#: src/modules/notification/e_mod_config.c:189
-#: src/modules/notification/e_mod_config.c:197
+#: src/modules/notification/e_mod_config.c:185
+#: src/modules/notification/e_mod_config.c:193
+#: src/modules/notification/e_mod_config.c:201
 #, c-format
 msgid "%2.0f"
 msgstr ""
@@ -9411,9 +9438,8 @@ msgstr "IBar הגדרות"
 msgid "Selected source"
 msgstr "בר נבחרה מקור"
 
-#: src/modules/ibar/e_mod_config.c:129
-#, fuzzy
-msgid "Show Icon Labels"
+#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
+msgid "Show Icon Label"
 msgstr "הצג את תווית הסמל"
 
 #: src/modules/ibar/e_mod_config.c:130
@@ -9464,7 +9490,7 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "האם אתה בטוח שברצונך למחוק זאת מקור בר."
 
-#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1939
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1938
 #, fuzzy
 msgid "IBar"
 msgstr "IBar"
@@ -9479,7 +9505,7 @@ msgstr "ליצור אייקון חדש"
 msgid "Icon %s"
 msgstr "סמלים"
 
-#: src/modules/ibar/e_mod_main.c:1939
+#: src/modules/ibar/e_mod_main.c:1938
 #, fuzzy
 msgid "Focus IBar"
 msgstr "להתמקד"
@@ -9493,10 +9519,6 @@ msgstr "פתרונות מתקדמים הגדרות"
 #, fuzzy
 msgid "Expand When On Desktop"
 msgstr "הצמד לשולחן העבודה"
-
-#: src/modules/ibox/e_mod_config.c:101
-msgid "Show Icon Label"
-msgstr "הצג את תווית הסמל"
 
 #: src/modules/ibox/e_mod_config.c:105
 #, fuzzy
@@ -9839,11 +9861,11 @@ msgstr "הבא"
 msgid "Please Wait..."
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:327
 msgid "Welcome to Moksha"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
+#: src/modules/wizard/page_010.c:163 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:53
 #, fuzzy
 msgid "Select one"
@@ -10204,7 +10226,7 @@ msgstr "לא יכול להיות רק 1 גאדג 'ט Systray ואחד אחר כ�
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray לא יכול לעבוד המדףהמוגדר להלן הכל."
 
-#: src/modules/systray/e_mod_main.c:1113
+#: src/modules/systray/e_mod_main.c:1112
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"
@@ -10714,127 +10736,132 @@ msgstr ""
 "כעת במצב <b>מחובר</b>.<br>כעת המודולים המשתמשים ברשת יוכלו להמשיך במשימותיהם "
 "הרגילות."
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Notification module"
 msgstr "החלפת מצב הצגה"
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 msgid "Error During DBus Init!"
 msgstr "שגיאה במהלך הפעלת DBus!"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr "שגיאה במהלך הפעלת DBus! אנא בדוק האם dbus פעיל ומותקן כראוי."
 
-#: src/modules/notification/e_mod_config.c:54
+#: src/modules/notification/e_mod_config.c:55
 #, fuzzy
 msgid "Notification Settings"
 msgstr "אינטראקציה הגדרות"
 
-#: src/modules/notification/e_mod_config.c:111
+#: src/modules/notification/e_mod_config.c:113
 msgid "Urgency"
 msgstr "דחיפות"
 
-#: src/modules/notification/e_mod_config.c:112
+#: src/modules/notification/e_mod_config.c:114
 msgid "Levels of urgency to display:"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:118
+#: src/modules/notification/e_mod_config.c:120
 #, fuzzy
 msgid "Critical"
 msgstr "אנכי"
 
-#: src/modules/notification/e_mod_config.c:122
+#: src/modules/notification/e_mod_config.c:124
 msgid "Default Timeout"
 msgstr "עבר זמן ברירת המחדל."
 
-#: src/modules/notification/e_mod_config.c:123
+#: src/modules/notification/e_mod_config.c:125
 msgid "Force timeout for all notifications"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:140
+#: src/modules/notification/e_mod_config.c:142
 #, fuzzy
 msgid "Popup Corner"
 msgstr "קופץ גודל"
 
-#: src/modules/notification/e_mod_config.c:142
+#: src/modules/notification/e_mod_config.c:144
 msgid "Top left"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:144
+#: src/modules/notification/e_mod_config.c:146
 #, fuzzy
 msgid "Top right"
 msgstr "קופץ הגובה"
 
-#: src/modules/notification/e_mod_config.c:146
+#: src/modules/notification/e_mod_config.c:148
 msgid "Bottom left"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:148
+#: src/modules/notification/e_mod_config.c:150
 msgid "Bottom right"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:160
+#: src/modules/notification/e_mod_config.c:162
 msgid "Ignore replace ID"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:162
+#: src/modules/notification/e_mod_config.c:164
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:169
+#: src/modules/notification/e_mod_config.c:171
 #, fuzzy
 msgid "History Settings"
 msgstr "הגדרות אחרות"
 
-#: src/modules/notification/e_mod_config.c:170
+#: src/modules/notification/e_mod_config.c:172
 #, fuzzy
 msgid "Time stamp"
 msgstr "טיימרים"
 
-#: src/modules/notification/e_mod_config.c:172
+#: src/modules/notification/e_mod_config.c:174
 #, fuzzy
 msgid "Show application name"
 msgstr "הצג תפריט כל היישומים"
 
-#: src/modules/notification/e_mod_config.c:174
+#: src/modules/notification/e_mod_config.c:176
+#, fuzzy
+msgid "Show notification counter"
+msgstr "דיווחים"
+
+#: src/modules/notification/e_mod_config.c:178
 #, fuzzy
 msgid "Reverse order"
 msgstr "זכור את הסדר"
 
-#: src/modules/notification/e_mod_config.c:178
+#: src/modules/notification/e_mod_config.c:182
 #: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "לייבל"
 
-#: src/modules/notification/e_mod_config.c:179
+#: src/modules/notification/e_mod_config.c:183
 #, fuzzy
 msgid "Labels length"
 msgstr "תווית טקסט"
 
-#: src/modules/notification/e_mod_config.c:186
+#: src/modules/notification/e_mod_config.c:190
 #: src/modules/clipboard/e_mod_config.c:256
 #, fuzzy
 msgid "Items"
 msgstr "פריטים"
 
-#: src/modules/notification/e_mod_config.c:187
+#: src/modules/notification/e_mod_config.c:191
 msgid "Items in history"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:195
+#: src/modules/notification/e_mod_config.c:199
 msgid "Gadget animation delay [s]"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:203
+#: src/modules/notification/e_mod_config.c:207
 msgid "App blacklist (use a delimiter)"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:209
+#: src/modules/notification/e_mod_config.c:213
 #: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
@@ -11160,6 +11187,14 @@ msgstr "נפח השתנה"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "נפח השתנה"
+
+#, fuzzy
+#~ msgid "Modes"
+#~ msgstr "מצבי"
+
+#, fuzzy
+#~ msgid "Show Icon Labels"
+#~ msgstr "הצג את תווית הסמל"
 
 #, fuzzy
 #~ msgid "Show icon label"
@@ -11786,16 +11821,8 @@ msgstr "נפח השתנה"
 #~ msgstr "%1.0f דקות"
 
 #, fuzzy
-#~ msgid "5 Minutes"
-#~ msgstr "לפני %li דקות"
-
-#, fuzzy
 #~ msgid "30 Minutes"
 #~ msgstr "לפני %li דקות"
-
-#, fuzzy
-#~ msgid "2 Hours"
-#~ msgstr "לפני %li שעות"
 
 #, fuzzy
 #~ msgid "10 Hours"
