@@ -66,7 +66,8 @@ e_configure_show(E_Container *con, const char *params)
 {
    E_Configure *eco;
    E_Manager *man;
-   Evas_Coord ew, eh, mw, mh;
+   Evas_Coord mw, mh;
+   //~ Evas_Coord ew, eh, mw, mh;
    Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
@@ -182,8 +183,8 @@ e_configure_show(E_Container *con, const char *params)
    e_widget_size_min_get(eco->close, &mw, &mh);
    evas_object_size_hint_min_set(eco->close, mw, mh);
    edje_object_part_swallow(eco->edje, "e.swallow.button", eco->close);
-   edje_object_size_min_calc(eco->edje, &ew, &eh);
-   e_win_size_min_set(eco->win, ew, eh);
+   //~ edje_object_size_min_calc(eco->edje, &ew, &eh);
+   e_win_size_min_set(eco->win, 600, 500);
    e_util_win_auto_resize_fill(eco->win);
 
    evas_object_show(eco->edje);
