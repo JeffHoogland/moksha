@@ -3,13 +3,13 @@
 #
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
 # Heimen Stoffels <vistausss@gmail.com>, 2011.
-# Pjotr <pjotrvertaalt@gmail.com>, 2020.
+# Pjotr <pjotrvertaalt@gmail.com>, 2020-2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-03-23 09:05+0100\n"
-"PO-Revision-Date: 2020-10-29 12:55+0100\n"
+"PO-Revision-Date: 2021-03-25 17:05+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -44,14 +44,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
 msgstr ""
-"<title>Auteursrecht &copy; 2018, door de ontwikkelaarsploeg van Moksha.</"
+"<title>Auteursrecht &copy; 2020, door de ontwikkelaarsploeg van Moksha.</"
 "><br><br>We hopen dat u net zoveel plezier zult beleven aan het gebruiken "
 "van deze programmatuur, als wij aan het maken ervan.<br><br>Om contact op te "
 "nemen kunt u deze webstek bezoeken: <br><hilight>http://www.mokshadesktop."
@@ -62,9 +61,8 @@ msgid "<title>The Team</><br><br>"
 msgstr "<title>De ploeg</><br><br>"
 
 #: src/bin/e_actions.c:154
-#, fuzzy
 msgid "Profile: Switch"
-msgstr "Profielkiezer"
+msgstr "Profiel: Wisselen"
 
 #: src/bin/e_actions.c:430
 #, c-format
@@ -2175,9 +2173,8 @@ msgid "Shade"
 msgstr "Oprollen"
 
 #: src/bin/e_int_border_menu.c:212
-#, fuzzy
 msgid "Borderless"
-msgstr "Randen"
+msgstr "Randloos"
 
 #: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
@@ -4481,21 +4478,20 @@ msgid "AC power is recommended."
 msgstr "Netstroom wordt aangeraden."
 
 #: src/modules/battery/e_mod_main.c:516
-#, fuzzy
 msgid "Power now: "
-msgstr "Uitschakelen"
+msgstr "Lading nu: "
 
 #: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
-msgstr ""
+msgstr "Resterende tijd: "
 
 #: src/modules/battery/e_mod_main.c:522
 msgid "hr"
-msgstr ""
+msgstr "u"
 
 #: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
-msgstr ""
+msgstr "Tijd berekenen..."
 
 #: src/modules/battery/e_mod_main.c:627
 msgid "N/A"
@@ -4520,11 +4516,12 @@ msgid ""
 "Click on a calendar day for date change. <br>Use the mouse wheel for "
 "changing the year."
 msgstr ""
+"Klik op een kalenderdag voor datumwijziging.<br>Gebruik het muiswieltje voor "
+"het wijzigen van het jaar."
 
 #: src/modules/clock/e_mod_config.c:100
-#, fuzzy
 msgid "Clock module Information"
-msgstr "Koppelingsinformatie"
+msgstr "Klokmodule-informatie"
 
 #: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
 #: src/modules/clock/e_mod_main.c:986
@@ -4593,23 +4590,20 @@ msgid "Days"
 msgstr "Dagen"
 
 #: src/modules/clock/e_mod_config.c:209
-#, fuzzy
 msgid "Time set"
-msgstr "Tijdstempel"
+msgstr "Tijd instellen"
 
 #: src/modules/clock/e_mod_config.c:211
 msgid "Hours"
-msgstr ""
+msgstr "Uren"
 
 #: src/modules/clock/e_mod_config.c:216
-#, fuzzy
 msgid "Minutes"
-msgstr "Een minuut"
+msgstr "Minuten"
 
 #: src/modules/clock/e_mod_config.c:224
-#, fuzzy
 msgid "Date set"
-msgstr "Datum"
+msgstr "Datum instellen"
 
 #: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
@@ -8618,12 +8612,11 @@ msgstr "Toon pictogrametiket"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Overlappend etiket"
 
 #: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Pictogrametiketten"
+msgstr "Aangrenzend etiket"
 
 #: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
@@ -9608,9 +9601,8 @@ msgid "Tasks"
 msgstr "Taken"
 
 #: src/modules/tasks/e_mod_config.c:35
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Werkbladinstellingen"
+msgstr "Instellingen voor taken"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
@@ -9630,9 +9622,8 @@ msgid "%1.0f px"
 msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:105
-#, fuzzy
 msgid "Shrink to fit"
-msgstr "Krimp naar breedte van inhoud"
+msgstr "Krimp om passend te maken"
 
 #: src/modules/tasks/e_mod_config.c:108
 msgid "Item height"
@@ -9669,9 +9660,8 @@ msgid "Tiling Configuration"
 msgstr "Instellingen voor tegelen"
 
 #: src/modules/tiling/e_mod_tiling.c:4097
-#, fuzzy
 msgid "Floating"
-msgstr "Drijven"
+msgstr "Drijvend"
 
 #: src/modules/tiling/e_mod_tiling.c:4186
 #: src/modules/tiling/e_mod_tiling.c:4250
@@ -9838,7 +9828,7 @@ msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
-"Fout tijdens DBus-initialisatie! Controleer a.u.b. of dbus correct "
+"Fout tijdens DBus-initialisatie! Controleer a.u.b. of DBus correct "
 "geïnstalleerd is en draait."
 
 #: src/modules/notification/e_mod_config.c:55
@@ -9906,9 +9896,8 @@ msgid "Show application name"
 msgstr "Toepassingsnaam weergeven"
 
 #: src/modules/notification/e_mod_config.c:176
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Toon meldingen"
+msgstr "Toon meldingenteller"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Reverse order"
@@ -10193,9 +10182,8 @@ msgid "New volume"
 msgstr "Nieuw volume"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Limiet van volume is bereikt!"
+msgstr "Limiet van medium is bereikt."
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
@@ -10228,9 +10216,8 @@ msgstr "Volumedemping"
 #~ msgid "Modes"
 #~ msgstr "Modi"
 
-#, fuzzy
 #~ msgid "Show Icon Labels"
-#~ msgstr "Toon pictogrametiket"
+#~ msgstr "Toon pictogrametiketten"
 
 #~ msgid "Show icon label"
 #~ msgstr "Toon pictogrametiket"
