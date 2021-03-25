@@ -4514,21 +4514,20 @@ msgid "AC power is recommended."
 msgstr "Netzbetrieb empfohlen"
 
 #: src/modules/battery/e_mod_main.c:516
-#, fuzzy
 msgid "Power now: "
-msgstr "Ausschalten"
+msgstr "Akkustand: "
 
 #: src/modules/battery/e_mod_main.c:521
 msgid "Remaining time: "
-msgstr ""
+msgstr "Verbleibende Zeit: "
 
 #: src/modules/battery/e_mod_main.c:522
 msgid "hr"
-msgstr ""
+msgstr "Std"
 
 #: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
-msgstr ""
+msgstr "Verbleibende Zeit wird berechnet..."
 
 #: src/modules/battery/e_mod_main.c:627
 msgid "N/A"
@@ -4553,6 +4552,8 @@ msgid ""
 "Click on a calendar day for date change. <br>Use the mouse wheel for "
 "changing the year."
 msgstr ""
+"Klicken Sie zur Änderung des Datums auf einen Kalendertag. <br>Benutzen "
+"Sie das Mausrad um das Jahr zu ändern."
 
 #: src/modules/clock/e_mod_config.c:100
 #, fuzzy
@@ -4627,24 +4628,20 @@ msgid "Days"
 msgstr "Tage"
 
 #: src/modules/clock/e_mod_config.c:209
-#, fuzzy
 msgid "Time set"
-msgstr "Zeitschaltuhren"
+msgstr "Uhrzeit einstellen"
 
 #: src/modules/clock/e_mod_config.c:211
-#, fuzzy
 msgid "Hours"
-msgstr "2 Stunden"
+msgstr "Stunden"
 
 #: src/modules/clock/e_mod_config.c:216
-#, fuzzy
 msgid "Minutes"
-msgstr "5 Minuten"
+msgstr "Minuten"
 
 #: src/modules/clock/e_mod_config.c:224
-#, fuzzy
 msgid "Date set"
-msgstr "Datum"
+msgstr "Datum einstellen"
 
 #: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
@@ -6015,7 +6012,7 @@ msgstr "Autoscroll"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr " Symbole in Menüs ausblenden"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 #, fuzzy
@@ -8709,9 +8706,8 @@ msgid "Overlapping Label"
 msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Icon-Bezeichner"
+msgstr "Beschriftung neben Symbol"
 
 #: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
@@ -8719,7 +8715,7 @@ msgstr "Sonstiges"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Symbole unter Zeiger blinken"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Lock icon move"
@@ -9008,9 +9004,8 @@ msgid "Check Interval"
 msgstr "Abfrageintervall"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Temperatureinstellungen"
+msgstr "Benachrichtigung bei hoher Temperatur"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -9046,13 +9041,12 @@ msgid "Temperature"
 msgstr "Temperaturanzeige"
 
 #: src/modules/temperature/e_mod_main.c:82
-#, fuzzy
 msgid "High CPU temperature!"
-msgstr "Hohe Temperatur"
+msgstr "Hohe Prozessortemperatur!"
 
 #: src/modules/temperature/e_mod_main.c:83
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Gerät oder Einstellungen prüfen!"
 
 #: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
 msgid "Next"
@@ -9941,7 +9935,6 @@ msgstr ""
 "netzwerkbezogenen Aufgaben fort."
 
 #: src/modules/notification/e_mod_main.c:635
-#, fuzzy
 msgid "Notification module"
 msgstr "Benachrichtigungsmodul"
 
@@ -10010,9 +10003,8 @@ msgid "Use multiple monitor geometry"
 msgstr "Mehrfach-Bildschirm-Geometrie benutzen"
 
 #: src/modules/notification/e_mod_config.c:171
-#, fuzzy
 msgid "History Settings"
-msgstr "Mauszeiger-Einstellungen"
+msgstr "Einstellungen Verlauf"
 
 #: src/modules/notification/e_mod_config.c:172
 #, fuzzy
@@ -10020,19 +10012,16 @@ msgid "Time stamp"
 msgstr "Zeitschaltuhren"
 
 #: src/modules/notification/e_mod_config.c:174
-#, fuzzy
 msgid "Show application name"
-msgstr "Wählen Sie ein Anwendungsmenü aus"
+msgstr "Programmname anzeigen"
 
 #: src/modules/notification/e_mod_config.c:176
-#, fuzzy
 msgid "Show notification counter"
-msgstr "Benachrichtigung"
+msgstr "Anzahl der Benachrichtigungen anzeigen"
 
 #: src/modules/notification/e_mod_config.c:178
-#, fuzzy
 msgid "Reverse order"
-msgstr "Anordnung merken"
+msgstr "Reihenfolge umkehren"
 
 #: src/modules/notification/e_mod_config.c:182
 #: src/modules/clipboard/e_mod_config.c:245
@@ -10056,11 +10045,11 @@ msgstr ""
 
 #: src/modules/notification/e_mod_config.c:199
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Verzögerung der Gadget-Animation [s]"
 
 #: src/modules/notification/e_mod_config.c:207
 msgid "App blacklist (use a delimiter)"
-msgstr ""
+msgstr "Programme blockieren (Bei Auflistung Trennzeichen verwenden)"
 
 #: src/modules/notification/e_mod_config.c:213
 #: src/modules/clipboard/e_mod_config.c:266
@@ -10152,28 +10141,23 @@ msgid "Clipboard Settings"
 msgstr "Tastatureinstellungen"
 
 #: src/modules/clipboard/e_mod_main.c:367
-#, fuzzy
 msgid "Lock item"
-msgstr "Sperrung schlug fehl"
+msgstr "Eintrag fixieren"
 
 #: src/modules/clipboard/e_mod_main.c:378
-#, fuzzy
 msgid "Edit item"
-msgstr "%d Gegenstand"
+msgstr "Eintrag bearbeiten"
 
 #: src/modules/clipboard/e_mod_main.c:385
-#, fuzzy
 msgid "Delete item"
-msgstr "Entferne Taste"
+msgstr "Eintrag löschen"
 
 # see "Hints"
 #: src/modules/clipboard/e_mod_main.c:403
-#, fuzzy
 msgid "Ignore history"
-msgstr "Hinweis ignorieren"
+msgstr "Keinen Verlauf anlegen"
 
 #: src/modules/clipboard/e_mod_main.c:644
-#, fuzzy
 msgid "Confirm History Deletion"
 msgstr "Löschen der Ablage bestätigen"
 
@@ -10185,25 +10169,25 @@ msgid ""
 msgstr "Sie wollen diese Modulablage entfernen.<br><br>Sind Sie sicher?"
 
 #: src/modules/clipboard/e_mod_main.c:731
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Löschen der Ablage bestätigen"
+msgstr "Löschen des Eintrags bestätigen"
 
 #: src/modules/clipboard/e_mod_main.c:733
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
-msgstr "Sie wollen diese Modulablage entfernen.<br><br>Sind Sie sicher?"
+msgstr ""
+"Dies entfernt den ausgewählten Eintrag.<br><br>Sind Sie sicher, dass Sie "
+"diesen Eintrag entfernen möchten?"
 
 #: src/modules/clipboard/e_mod_main.c:761
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Tastatureinstellungen"
+msgstr "Zwischenablage: Eintrag bearbeiten"
 
 #: src/modules/clipboard/e_mod_main.c:762
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Eintrag bearbeiten:"
 
 #: src/modules/clipboard/e_mod_main.h:10
 #, fuzzy
@@ -10344,9 +10328,8 @@ msgid "New volume"
 msgstr "Neue Lautstärke"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Lautstärke geändert"
+msgstr "Lautstärkelimit erreicht!"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
