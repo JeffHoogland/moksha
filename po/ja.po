@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-03-23 09:05+0100\n"
+"POT-Creation-Date: 2021-03-25 18:31+0100\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -24,7 +24,7 @@ msgstr "Moksha について"
 #: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
-#: src/modules/conf/e_conf.c:179
+#: src/modules/conf/e_conf.c:180
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
@@ -787,9 +787,9 @@ msgstr "編集モード反転"
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
 #: src/modules/conf_theme/e_int_config_startup.c:258
-#: src/modules/conf_theme/e_int_config_theme.c:746
-#: src/modules/conf_theme/e_int_config_theme.c:1127
-#: src/modules/conf_theme/e_int_config_theme.c:1141
+#: src/modules/conf_theme/e_int_config_theme.c:745
+#: src/modules/conf_theme/e_int_config_theme.c:1126
+#: src/modules/conf_theme/e_int_config_theme.c:1140
 #: src/modules/gadman/e_mod_config.c:252 src/modules/syscon/e_mod_main.c:31
 #: src/modules/syscon/e_mod_main.c:35 src/modules/syscon/e_mod_main.c:129
 #: src/modules/syscon/e_syscon_gadget.c:141
@@ -1912,7 +1912,7 @@ msgstr "その他"
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
 #: src/modules/conf_theme/e_int_config_transitions.c:214
-#: src/modules/conf_theme/e_int_config_theme.c:1435
+#: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "プレビュー"
@@ -2627,8 +2627,8 @@ msgstr "要求の位置"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
-#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:136
-#: src/modules/conf/e_conf.c:146 src/modules/conf/e_mod_main.c:101
+#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:137
+#: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
@@ -4528,7 +4528,7 @@ msgstr "お気に入りに追加する"
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
 #: src/modules/conf_theme/e_int_config_startup.c:266
-#: src/modules/conf_theme/e_int_config_theme.c:753
+#: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
 msgstr "上のディレクトリへ移動"
@@ -5212,9 +5212,9 @@ msgstr "背景を選択する..."
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
 #: src/modules/conf_theme/e_int_config_startup.c:253
-#: src/modules/conf_theme/e_int_config_theme.c:742
-#: src/modules/conf_theme/e_int_config_theme.c:1124
-#: src/modules/conf_theme/e_int_config_theme.c:1133
+#: src/modules/conf_theme/e_int_config_theme.c:741
+#: src/modules/conf_theme/e_int_config_theme.c:1123
+#: src/modules/conf_theme/e_int_config_theme.c:1132
 #: src/modules/gadman/e_mod_config.c:248
 msgid "Personal"
 msgstr "ユーザー"
@@ -5845,7 +5845,7 @@ msgstr "使用する言語"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:171
+#: src/modules/wizard/page_010.c:170
 msgid "System Default"
 msgstr "システムデフォルト"
 
@@ -5859,7 +5859,7 @@ msgstr "選択されたロケール"
 msgid "Locale"
 msgstr "ロケール"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:162
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
 msgid "Language"
 msgstr "言語"
 
@@ -6336,7 +6336,7 @@ msgid "Fonts"
 msgstr "フォント"
 
 #: src/modules/conf_paths/e_int_config_paths.c:76
-#: src/modules/conf_theme/e_int_config_theme.c:1415
+#: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
 msgstr "テーマ"
@@ -7216,35 +7216,35 @@ msgstr "デスクトップ特殊効果"
 msgid "Theme Selector"
 msgstr "テーマの選択"
 
-#: src/modules/conf_theme/e_int_config_theme.c:621
+#: src/modules/conf_theme/e_int_config_theme.c:620
 #, fuzzy
 msgid "Theme File Error"
 msgstr "テーマのインポートエラー"
 
-#: src/modules/conf_theme/e_int_config_theme.c:622
+#: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
 msgstr ""
 
-#: src/modules/conf_theme/e_int_config_theme.c:787
+#: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
 msgstr "インポート..."
 
-#: src/modules/conf_theme/e_int_config_theme.c:1406
+#: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
 msgstr "テーマのカテゴリ"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1424
+#: src/modules/conf_theme/e_int_config_theme.c:1423
 msgid "Assign"
 msgstr "設定"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1427
+#: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
 #: src/modules/clipboard/e_mod_main.c:413
 msgid "Clear"
 msgstr "解除"
 
-#: src/modules/conf_theme/e_int_config_theme.c:1430
+#: src/modules/conf_theme/e_int_config_theme.c:1429
 msgid "Clear All"
 msgstr "全解除"
 
@@ -9444,11 +9444,11 @@ msgstr "次へ"
 msgid "Please Wait..."
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:327
+#: src/modules/wizard/e_wizard.c:325
 msgid "Welcome to Moksha"
 msgstr "Moksha にようこそ"
 
-#: src/modules/wizard/page_010.c:163 src/modules/wizard/page_011.c:146
+#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
 #: src/modules/wizard/page_020.c:53
 msgid "Select one"
 msgstr "一つ選んでください"
