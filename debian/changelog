@@ -1,3 +1,12 @@
+moksha (20210326bodhi30.3.7) focal; urgency=low
+
+  * xkbswitch: Alternative lookup path
+  * de, sk, nl localization updates
+  * Settings Panel size to 600x500
+  * Use thunar in bodhi profile
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 26 Mar 2021 13:47:34 -0400
+
 moksha (20210322bodhi30.3.6) focal; urgency=low
 
   * Handle quickstart a little better
