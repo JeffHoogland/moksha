@@ -21,6 +21,7 @@ find_rules(void)
 #endif
       "/usr/share/X11/xkb/rules/xorg.lst",
       "/usr/share/X11/xkb/rules/xfree86.lst",
+      "/usr/share/X11/xkb/rules/base.lst",
       "/usr/local/share/X11/xkb/rules/xorg.lst",
       "/usr/local/share/X11/xkb/rules/xfree86.lst",
       "/usr/X11R6/lib/X11/xkb/rules/xorg.lst",
