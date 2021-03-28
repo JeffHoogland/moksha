@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-03-25 18:31+0100\n"
-"PO-Revision-Date: 2020-10-24 12:37-0500\n"
+"PO-Revision-Date: 2021-03-28 08:10-0600\n"
 "Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -48,26 +48,24 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, por el Equipo de Desarrollo de  Moksha</"
-"><br><br>Esperamos que disfrute usando este software tanto como nosotros "
-"disfrutamos escribiéndolo.<br><br>Para contactarnos visite:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"<title>Derechos Reservados y Copia; 2020, por el Equipo de Desarrollo de "
+"Moksha</><br><br>Esperamos que disfrute usando este software tanto como "
+"nosotros disfrutamos escribiéndolo.<br><br>Para contactarnos visite:"
+"<br><hilight>http://www.mokshadesktop.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
 msgstr "<title>El Equipo</><br><br>"
 
 #: src/bin/e_actions.c:154
-#, fuzzy
 msgid "Profile: Switch"
-msgstr "Selector de perfiles"
+msgstr "Perfil: Cambiar"
 
 #: src/bin/e_actions.c:430
 #, c-format
@@ -4473,7 +4471,7 @@ msgstr "Tiempo restante"
 
 #: src/modules/battery/e_mod_main.c:522
 msgid "hr"
-msgstr ""
+msgstr "hr"
 
 #: src/modules/battery/e_mod_main.c:526
 msgid "Time calculating..."
@@ -4502,11 +4500,12 @@ msgid ""
 "Click on a calendar day for date change. <br>Use the mouse wheel for "
 "changing the year."
 msgstr ""
+"Pulse en un día del calendario para cambiar la fecha. <br>Use la rueda del "
+"ratón para cambiar el año."
 
 #: src/modules/clock/e_mod_config.c:100
-#, fuzzy
 msgid "Clock module Information"
-msgstr "Información del enlace"
+msgstr "Información del módulo Reloj"
 
 #: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
 #: src/modules/clock/e_mod_main.c:986
@@ -4575,24 +4574,20 @@ msgid "Days"
 msgstr "Días"
 
 #: src/modules/clock/e_mod_config.c:209
-#, fuzzy
 msgid "Time set"
-msgstr "Marca de tiempo"
+msgstr "Hora fijada"
 
 #: src/modules/clock/e_mod_config.c:211
-#, fuzzy
 msgid "Hours"
-msgstr "%li Horas"
+msgstr "Horas"
 
 #: src/modules/clock/e_mod_config.c:216
-#, fuzzy
 msgid "Minutes"
-msgstr "%li Minutos"
+msgstr "Minutos"
 
 #: src/modules/clock/e_mod_config.c:224
-#, fuzzy
 msgid "Date set"
-msgstr "Fecha"
+msgstr "Fecha fijada"
 
 #: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
@@ -8594,12 +8589,11 @@ msgstr "Mostrar etiqueta del icono"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Etiqueta Sobrepuesta"
 
 #: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Etiquetas del icono"
+msgstr "Etiquetas adyacente"
 
 #: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
@@ -9577,9 +9571,8 @@ msgid "Tasks"
 msgstr "Tareas"
 
 #: src/modules/tasks/e_mod_config.c:35
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Opciones de escritorio"
+msgstr "Configuración de Tareas"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
@@ -9599,9 +9592,8 @@ msgid "%1.0f px"
 msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:105
-#, fuzzy
 msgid "Shrink to fit"
-msgstr "Reducir hasta ancho del contenido"
+msgstr "Encoger para encajar"
 
 #: src/modules/tasks/e_mod_config.c:108
 msgid "Item height"
@@ -9871,9 +9863,8 @@ msgid "Show application name"
 msgstr "Mostrar el nombre de la aplicación"
 
 #: src/modules/notification/e_mod_config.c:176
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Mostrar notificaciones"
+msgstr "Mostrar contador de notificaciones"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Reverse order"
@@ -10162,7 +10153,6 @@ msgid "New volume"
 msgstr "Nuevo volumen"
 
 #: src/modules/mixer/e_mod_main.c:133
-#, fuzzy
 msgid "Volume limit reached!"
 msgstr "¡Límite del volumen alcanzado!"
 
