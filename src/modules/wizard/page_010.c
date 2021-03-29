@@ -1,5 +1,6 @@
 /* Language chooser */
 #include "e_wizard.h"
+#define MAX_LEN 256
 
 typedef struct _E_Intl_Pair E_Intl_Pair;
 
@@ -58,6 +59,27 @@ const E_Intl_Pair basic_language_predefined_pairs[] =
 
 static const char *lang = NULL;
 static Eina_List *blang_list = NULL;
+static char cur_lang[MAX_LEN]="System Default";
+
+static void
+_set_currrent(void)
+{
+   FILE *output;
+   char buffer[MAX_LEN];
+   char *ch;
+   
+   if ((output = popen("locale", "r")))
+      {
+      while (fgets(buffer, MAX_LEN - 1, output))
+         {
+          // Remove trailing newline and trailing quote
+          buffer[strcspn(buffer, "\n")] = 0;
+          if ((ch = strstr( buffer, "LANG=" )))
+           snprintf(cur_lang, MAX_LEN - 1, "%s", (char *) ch + 5);
+         }
+      pclose(output); 
+    }
+}
 
 static int
 _basic_lang_list_sort(const void *data1, const void *data2)
@@ -206,6 +228,21 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(of);
    e_wizard_page_show(o);
 //   pg->data = o;
+
+   /* On an installed system we do not want to show this wizard
+    *    But Bodhi wants this displayed for users running the ISO
+    */
+   if (! ecore_file_exists("/etc/bodhi/iso"))
+      {
+         _set_currrent();
+         // Should always be set so this is just paranoia
+         lang = strcmp(cur_lang, "System Default") ? NULL : cur_lang ;
+         eina_stringshare_del(e_config->language);
+         e_config->language = eina_stringshare_ref(lang);
+         e_intl_language_set(e_config->language);
+         e_wizard_labels_update();
+         return 0;
+      }
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
@@ -235,4 +272,3 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    e_wizard_labels_update();
    return 1;
 }
-
