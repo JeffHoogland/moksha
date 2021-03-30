@@ -63,6 +63,7 @@ lt_flag.png \
 lv_flag.png \
 ma_flag.png \
 mao_flag.png \
+md_flag.png \
 me_flag.png \
 mk_flag.png \
 ml_flag.png \
