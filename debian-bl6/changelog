@@ -1,3 +1,9 @@
+moksha (0.3.3-8) focal; urgency=low
+
+  * Improve e_wizard for ISO
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 30 Mar 2021 07:32:14 -0400
+
 moksha (0.3.3-7) focal; urgency=low
 
   * xkbswitch: Alternative lookup path

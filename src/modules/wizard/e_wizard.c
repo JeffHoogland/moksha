@@ -242,7 +242,12 @@ e_wizard_title_set(const char *title)
 EAPI void
 e_wizard_labels_update(void)
 {
-   edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+     {
+        edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+     }
+   else
+      edje_object_part_text_set(o_bg, "e.text.label", _("Please Wait..."));
 }
 
 EAPI const char *

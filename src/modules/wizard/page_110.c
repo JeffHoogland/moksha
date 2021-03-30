@@ -152,8 +152,8 @@ wizard_page_show(E_Wizard_Page *pg EINA_UNUSED)
           }
         e_config_save_queue();
         _recommend_connman(pg);
-     }*/
-   e_wizard_title_set(_("Checking to see if Connman exists"));
+     }
+   e_wizard_title_set(_("Checking to see if Connman exists"));*/
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 

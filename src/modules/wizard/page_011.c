@@ -171,7 +171,8 @@ wizard_page_show(E_Wizard_Page *pg)
 
    
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("Keyboard"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+      e_wizard_title_set(_("Keyboard"));
    of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
    ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &layout);
    e_widget_size_min_set(ob, 140 * e_scale, 140 * e_scale);

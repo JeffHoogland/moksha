@@ -31,7 +31,13 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
    Evas_Object *o;
 
-   e_wizard_title_set(_("Please Wait As We Are Loading Moksha Settings!"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+     {
+        e_wizard_title_set(_("Moksha"));
+     }
+   else
+      e_wizard_title_set(_("Please Wait As We Are Loading Moksha Settings!"));
+
    e_wizard_button_next_enable_set(0);
    o = edje_object_add(pg->evas);
    e_theme_edje_object_set(o, "base/theme/wizard", "e/wizard/firstpage");

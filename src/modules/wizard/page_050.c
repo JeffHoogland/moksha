@@ -1,8 +1,8 @@
 /* Ask about Scaling */
 #include "e_wizard.h"
 
-static double scale = 1.0;
-static Eina_List *obs = NULL;
+// static double scale = 1.0;
+// static Eina_List *obs = NULL;
 /*
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
@@ -15,7 +15,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 {
    return 1;
 }
-*/
+
 static void
 _scale_preview_sel_set(Evas_Object *ob, int sel)
 {
@@ -117,11 +117,11 @@ _scale_preview_new(Evas *e, double sc, double *scp)
 
    return ob;
 }
-
+*/
 EAPI int
-wizard_page_show(E_Wizard_Page *pg)
+wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
-   Evas_Object *o, *of, *ob;
+   /*Evas_Object *o, *of, *ob;
    Evas_Coord sw, sh;
 
    o = e_widget_list_add(pg->evas, 1, 0);
@@ -168,23 +168,24 @@ wizard_page_show(E_Wizard_Page *pg)
    e_wizard_button_next_enable_set(1);
 
    e_wizard_page_show(o);
-//   pg->data = o;
+//   pg->data = o;*/
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 
+/*
 EAPI int
 wizard_page_hide(E_Wizard_Page *pg __UNUSED__)
 {
    obs = eina_list_free(obs);
 //   evas_object_del(pg->data);
 
-/*   e_config->scale.use_dpi = 0;
+  e_config->scale.use_dpi = 0;
    e_config->scale.use_custom = 1;
    e_config->scale.factor = scale;
-   e_scale_update();*/
+   e_scale_update();
    return 1;
 }
-/*
+
 EAPI int
 wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
 {
