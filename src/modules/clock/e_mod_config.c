@@ -96,8 +96,8 @@ show_info_cb()
   if (!(con = e_container_current_get(man))) return;
   if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
   
-  snprintf(buf, sizeof(buf), _("Click on a calendar day for date change. <br>" 
-                                "Use the mouse wheel for changing the year."));
+  snprintf(buf, sizeof(buf), _("Click on a calendar day to change the date. <br>" 
+                                "Use the mouse wheel to change the year."));
    e_dialog_title_set(dia, _("Clock module Information"));
    e_dialog_icon_set(dia, "dialog-information", 64);
    e_dialog_text_set(dia, buf);
