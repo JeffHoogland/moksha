@@ -5,7 +5,7 @@ struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
    char *custom_dat;
-   double hour, minute;
+   double hour, minute, hour_tmp, minute_tmp;
 };
 
 /* Protos */
@@ -40,6 +40,7 @@ e_int_config_clock_module(E_Container *con, Config_Item *ci)
    cfd = e_config_dialog_new(con, _("Clock Settings"),
                              "E", "utils/clock", buf, 0, v, ci);
    clock_config->config_dialog = cfd;
+   settings_opened = EINA_TRUE;
 }
 
 static void *
@@ -59,8 +60,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         cfdata->custom_dat = strdup("");
 
    //sliders obtain the current time
-   cfdata->hour = ci->timeset.hour;
-   cfdata->minute = ci->timeset.minute;
+   cfdata->hour_tmp = cfdata->hour = ci->timeset.hour;
+   cfdata->minute_tmp = cfdata->minute = ci->timeset.minute;
 
    return cfdata;
 }
@@ -263,7 +264,8 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
    
-   if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
+   //~ if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
+   if ((cfdata->hour_tmp != cfdata->hour) || (cfdata->minute_tmp != cfdata->minute))
      clock_time_set(cfdata);
 
    return 1;

@@ -360,7 +360,6 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
 {
    Instance *inst = d1;
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
-   settings_opened = EINA_TRUE;
    //~ e_object_del(E_OBJECT(inst->popup));
    //~ inst->popup = NULL;
    //~ inst->o_popclock = NULL;
