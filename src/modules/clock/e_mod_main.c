@@ -488,7 +488,8 @@ _eval_instance_size(Instance *inst)
 
    if ((mw < 1) || (mh < 1))
      {
-        Evas_Coord x, y, sw = 0, sh = 0, ow, oh;
+        //~ Evas_Coord x, y, sw = 0, sh = 0, ow, oh;
+        Evas_Coord sw = 0, sh = 0, ow, oh;
         Eina_Bool horiz;
         const char *orient;
 
