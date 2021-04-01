@@ -16,7 +16,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 }
 */
 EAPI int
-wizard_page_show(E_Wizard_Page *pg)
+wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
   if (!focus_mode)
      {
