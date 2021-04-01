@@ -525,12 +525,7 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    }
    else
    {
-     if (battery_config->full == 100)
-       edje_object_part_text_set(popup_bg, "e.text.label", _("Battery charged"));
-     if ((battery_config->full > 20) || (battery_config->full < 100))
-       edje_object_part_text_set(popup_bg, "e.text.label", _("Battery power is OK"));
-     if (battery_config->full <= 20)
-       edje_object_part_text_set(popup_bg, "e.text.label", _("AC power is recommended"));
+       edje_object_part_text_set(popup_bg, "e.text.label", "");
    }
  }
 
