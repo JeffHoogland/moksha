@@ -313,8 +313,8 @@ group "E_Config" struct {
             value "overlap" int: 0;
             value "autohide" int: 0;
             value "autohide_show_action" int: 0;
-            value "hide_timeout" float: 1.0;
-            value "hide_duration" float: 1.0;
+            value "hide_timeout" float: 1.0000000000000000000000000;
+            value "hide_duration" float: 1.0000000000000000000000000;
             value "desk_show_mode" int: 0;
         }
     }
@@ -334,23 +334,6 @@ group "E_Config" struct {
                     value "state_info.seq" int: 1;
                     value "state_info.flags" int: 0;
                     value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "pager";
-                    value "id" string: "pager";
-                    value "geom.pos" int: 2258;
-                    value "geom.size" int: 141;
-                    value "geom.res" int: 2538;
-                    value "geom.pos_x" double: 0.0;
-                    value "geom.pos_y" double: 0.0;
-                    value "geom.size_w" double: 0.0;
-                    value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 7;
-                    value "state_info.flags" int: 3;
-                    value "style" string: "inset";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -426,32 +409,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "battery";
                     value "id" string: "battery";
-                    value "geom.pos" int: 767;
-                    value "geom.size" int: 32;
-                    value "geom.res" int: 1077;
+                    value "geom.pos" int: 1842;
+                    value "geom.size" int: 38;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 6;
+                    value "state_info.seq" int: 9;
                     value "state_info.flags" int: 3;
-                    value "style" string: "plain";
-                    value "orient" int: 0;
-                    value "autoscroll" uchar: 0;
-                    value "resizable" uchar: 0;
-                }
-                group "E_Config_Gadcon_Client" struct {
-                    value "name" string: "clock";
-                    value "id" string: "clock";
-                    value "geom.pos" int: 1759;
-                    value "geom.size" int: 101;
-                    value "geom.res" int: 1898;
-                    value "geom.pos_x" double: 0.0;
-                    value "geom.pos_y" double: 0.0;
-                    value "geom.size_w" double: 0.0;
-                    value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 8;
-                    value "state_info.flags" int: 1;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -477,15 +443,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "tasks";
                     value "id" string: "tasks.0";
-                    value "geom.pos" int: 57;
-                    value "geom.size" int: 250;
-                    value "geom.res" int: 1077;
+                    value "geom.pos" int: 160;
+                    value "geom.size" int: 597;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 3;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 3;
                     value "style" string: "inset";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 1;
@@ -494,15 +460,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "xkbswitch";
                     value "id" string: "xkbswitch";
-                    value "geom.pos" int: 384;
-                    value "geom.size" int: 32;
-                    value "geom.res" int: 800;
+                    value "geom.pos" int: 1804;
+                    value "geom.size" int: 38;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 9;
-                    value "state_info.flags" int: 0;
+                    value "state_info.seq" int: 8;
+                    value "state_info.flags" int: 3;
                     value "style" string: "plain";
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -511,15 +477,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "systray";
                     value "id" string: "systray";
-                    value "geom.pos" int: 798;
-                    value "geom.size" int: 2;
-                    value "geom.res" int: 1077;
+                    value "geom.pos" int: 1665;
+                    value "geom.size" int: 0;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 4;
-                    value "state_info.flags" int: 0;
+                    value "state_info.flags" int: 1;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -527,15 +493,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "syscon";
                     value "id" string: "syscon.1";
-                    value "geom.pos" int: 1116;
+                    value "geom.pos" int: 1880;
                     value "geom.size" int: 38;
-                    value "geom.res" int: 1154;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 9;
-                    value "state_info.flags" int: 1;
+                    value "state_info.seq" int: 10;
+                    value "state_info.flags" int: 3;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -544,14 +510,14 @@ group "E_Config" struct {
                     value "name" string: "ibar";
                     value "id" string: "ibar.2";
                     value "geom.pos" int: 38;
-                    value "geom.size" int: 80;
+                    value "geom.size" int: 116;
                     value "geom.res" int: 1154;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
                     value "state_info.seq" int: 2;
-                    value "state_info.flags" int: 3;
+                    value "state_info.flags" int: 0;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -559,15 +525,15 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "pulse_mixer";
                     value "id" string: "pulse_mixer";
-                    value "geom.pos" int: 799;
+                    value "geom.pos" int: 1799;
                     value "geom.size" int: 38;
-                    value "geom.res" int: 1077;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 5;
-                    value "state_info.flags" int: 0;
+                    value "state_info.seq" int: 6;
+                    value "state_info.flags" int: 1;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
                     value "resizable" uchar: 0;
@@ -575,14 +541,30 @@ group "E_Config" struct {
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "clipboard";
                     value "id" string: "clipboard";
-                    value "geom.pos" int: 1088;
+                    value "geom.pos" int: 1761;
                     value "geom.size" int: 38;
-                    value "geom.res" int: 1168;
+                    value "geom.res" int: 1918;
                     value "geom.pos_x" double: 0.0;
                     value "geom.pos_y" double: 0.0;
                     value "geom.size_w" double: 0.0;
                     value "geom.size_h" double: 0.0;
-                    value "state_info.seq" int: 6;
+                    value "state_info.seq" int: 5;
+                    value "state_info.flags" int: 1;
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "notification";
+                    value "id" string: "notification.1";
+                    value "geom.pos" int: 1840;
+                    value "geom.size" int: 80;
+                    value "geom.res" int: 1920;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0;
+                    value "geom.size_w" double: 0.0;
+                    value "geom.size_h" double: 0.0;
+                    value "state_info.seq" int: 7;
                     value "state_info.flags" int: 0;
                     value "orient" int: 0;
                     value "autoscroll" uchar: 0;
@@ -617,6 +599,42 @@ group "E_Config" struct {
             value "zone" uint: 0;
         }
         group "E_Config_Gadcon" struct {
+            group "clients" list {
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "clock";
+                    value "id" string: "clock.0";
+                    value "geom.pos" int: 32;
+                    value "geom.size" int: 0;
+                    value "geom.res" int: 0;
+                    value "geom.pos_x" double: 0.0;
+                    value "geom.pos_y" double: 0.0037037037037037038450515;
+                    value "geom.size_w" double: 0.0776041666666666685170384;
+                    value "geom.size_h" double: 0.1231481481481481454753890;
+                    value "state_info.seq" int: 0;
+                    value "state_info.flags" int: 0;
+                    value "style" string: "plain";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+                group "E_Config_Gadcon_Client" struct {
+                    value "name" string: "pager";
+                    value "id" string: "pager.2";
+                    value "geom.pos" int: 330;
+                    value "geom.size" int: 0;
+                    value "geom.res" int: 0;
+                    value "geom.pos_x" double: 0.9354166666666666740681535;
+                    value "geom.pos_y" double: 0.2138888888888888784034492;
+                    value "geom.size_w" double: 0.0630208333333333314829616;
+                    value "geom.size_h" double: 0.2629629629629629539167013;
+                    value "state_info.seq" int: 0;
+                    value "state_info.flags" int: 0;
+                    value "style" string: "inset";
+                    value "orient" int: 0;
+                    value "autoscroll" uchar: 0;
+                    value "resizable" uchar: 0;
+                }
+            }
             value "name" string: "gadman";
             value "id" int: 114;
             value "zone" uint: 0;
@@ -1662,6 +1680,12 @@ group "E_Config" struct {
             value "delayed" uchar: 1;
             value "priority" int: 100;
         }
+         group "E_Config_Module" struct {
+            value "name" string: "battery";
+            value "enabled" uchar: 1;
+            value "delayed" uchar: 0;
+            value "priority" int: 0;
+        }
         group "E_Config_Module" struct {
             value "name" string: "clipboard";
             value "enabled" uchar: 1;
@@ -1736,19 +1760,13 @@ group "E_Config" struct {
         }
         group "E_Config_Module" struct {
             value "name" string: "xkbswitch";
-            value "enabled" uchar: 0;
+            value "enabled" uchar: 1;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
             value "name" string: "conf";
             value "enabled" uchar: 1;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "conf_randr";
-            value "enabled" uchar: 0;
             value "delayed" uchar: 1;
             value "priority" int: 0;
         }
@@ -1873,18 +1891,6 @@ group "E_Config" struct {
             value "priority" int: 0;
         }
         group "E_Config_Module" struct {
-            value "name" string: "ecomorph";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 0;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
-            value "name" string: "engage";
-            value "enabled" uchar: 0;
-            value "delayed" uchar: 1;
-            value "priority" int: 0;
-        }
-        group "E_Config_Module" struct {
             value "name" string: "backlight";
             value "enabled" uchar: 0;
             value "delayed" uchar: 0;
@@ -1914,8 +1920,8 @@ group "E_Config" struct {
     value "font_cache" int: 512;
     value "edje_cache" int: 32;
     value "edje_collection_cache" int: 64;
-    value "zone_desks_x_count" int: 2;
-    value "zone_desks_y_count" int: 1;
+    value "zone_desks_x_count" int: 1;
+    value "zone_desks_y_count" int: 4;
     value "show_desktop_icons" int: 1;
     value "edge_flip_dragging" int: 0;
     value "use_composite" int: 0;
@@ -2124,7 +2130,7 @@ group "E_Config" struct {
     value "xsettings.net_theme_name" string: "MokshaArcGreen";
     value "update.check" uchar: 0;
     value "update.later" uchar: 0;
-    value "xkb.only_label" int: 0;
+    value "xkb.only_label" int: 1;
     value "xkb.default_model" string: "default";
     value "exe_always_single_instance" uchar: 0;
     value "use_desktop_window_profile" int: 0;
