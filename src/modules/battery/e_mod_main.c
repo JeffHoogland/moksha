@@ -519,13 +519,19 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
       
    if (edje_object_part_text_get(inst->o_battery, "e.text.time"))
    {
-   snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
-            edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
-   edje_object_part_text_set(popup_bg, "e.text.label", buf);
+     snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
+              edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
+     edje_object_part_text_set(popup_bg, "e.text.label", buf);
    }
    else
-   if (battery_config->full == 100)
-     edje_object_part_text_set(popup_bg, "e.text.label", _("Battery charged"));
+   {
+     if (battery_config->full == 100)
+       edje_object_part_text_set(popup_bg, "e.text.label", _("Battery charged"));
+     if ((battery_config->full > 20) || (battery_config->full < 100))
+       edje_object_part_text_set(popup_bg, "e.text.label", _("Battery power is OK."));
+     if (battery_config->full <= 20)
+       edje_object_part_text_set(popup_bg, "e.text.label", _("AC power is recommended."));
+   }
  }
 
    e_gadcon_popup_content_set(inst->warning, popup_bg);
