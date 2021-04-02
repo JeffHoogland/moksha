@@ -199,6 +199,8 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
      {
          FILE *f;
          f = fopen(shfile, "w");
+         if (ecore_file_exists("/usr/bin/elaptopcheck"))
+            fputs("elaptopcheck",f);
          if (f) fclose(f);
      }
      if (chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) < 0)
