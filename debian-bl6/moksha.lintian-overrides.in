@@ -8,3 +8,4 @@ moksha: shlib-without-versioned-soname
 moksha: new-package-should-close-itp-bug
 moksha: package-has-unnecessary-activation-of-ldconfig-trigger
 moksha: dev-pkg-without-shlib-symlink
+moksha:  library-not-linked-against-libc usr/lib/x86_64-linux-gnu/enlightenment/modules/wizard/linux-gnu-x86_64/page_020.so
