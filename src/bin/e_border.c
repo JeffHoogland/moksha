@@ -3187,10 +3187,10 @@ e_border_unfullscreen(E_Border *bd)
 
    ev = E_NEW(E_Event_Border_Unfullscreen, 1);
    ev->border = bd;
+   bd->changes.icon = 1;
    e_object_ref(E_OBJECT(bd));
    //   e_object_breadcrumb_add(E_OBJECT(bd), "border_unfullscreen_event");
    ecore_event_add(E_EVENT_BORDER_UNFULLSCREEN, ev, _e_border_event_border_unfullscreen_free, NULL);
-
    e_remember_update(bd);
 }
 
@@ -9258,7 +9258,7 @@ _e_border_eval(E_Border *bd)
            ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
                            _e_border_event_border_icon_change_free, NULL);
         }
-        bd->changes.icon = 1;
+        bd->changes.icon = 0;
      }
 
    bd->new_client = 0;
