@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-03-25 18:31+0100\n"
-"PO-Revision-Date: 2021-03-25 17:05+0100\n"
+"PO-Revision-Date: 2021-04-05 13:22+0200\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -1138,7 +1138,7 @@ msgstr ""
 
 #: src/bin/e_eap_editor.c:235
 msgid "Desktop Entry Editor"
-msgstr "Bureaubladelement-bewerker"
+msgstr "Bewerker van bureaubladvermeldingen"
 
 #: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
@@ -1593,7 +1593,7 @@ msgstr "Reeds doende met het maken van een nieuw bestand voor deze map."
 #: src/bin/e_fm.c:9677 src/bin/e_fm.c:9698
 #, c-format
 msgid "%s can't be written to!"
-msgstr "Naar %s kan niet worden geschreven."
+msgstr "Er kan niet naar %s worden geschreven."
 
 #: src/bin/e_fm.c:9717
 msgid "Directory"
@@ -3445,7 +3445,8 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tWees psychotisch.\n"
 "\t-locked\n"
-"\t\tStart met schermvergrendeling aan zodat er om een wachtwoord wordt gevraagd.\n"
+"\t\tStart met schermvergrendeling aan zodat er om een wachtwoord wordt "
+"gevraagd.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tIndien u deze hulp nodig heeft, heeft u deze optie niet nodig.\n"
 
@@ -3770,7 +3771,7 @@ msgstr ""
 
 #: src/bin/e_shelf.c:2345
 msgid "A shelf with that name and id already exists!"
-msgstr "Een plank met die naam en dat ID bestaat al."
+msgstr "Er bestaat al een plank met die naam en dat ID."
 
 #: src/bin/e_shelf.c:2364
 msgid "Rename Shelf"
@@ -5789,7 +5790,7 @@ msgid ""
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
 "Kan geen muiswielbinding instellen zonder aanpassers<br>op een venster: "
-"conflict met bestaande edje-signaalbindingen."
+"conflict met bestaande edje-signaalbindingen.<br>Moet hersteld worden!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -5963,7 +5964,7 @@ msgstr "Automatisch schuiven"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr "Pictogrammen uitschakelen in menu's"
+msgstr " Pictogrammen uitschakelen in menu's"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -6420,11 +6421,11 @@ msgstr "Controleer tekst uitgeschakeld"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:107
 msgid "Entry Text"
-msgstr "Elementtekst"
+msgstr "Vermeldingstekst"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:108
 msgid "Entry Text Disabled"
-msgstr "Elementtekst uitgeschakeld"
+msgstr "Vermeldingstekst uitgeschakeld"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:109
 msgid "Label Text"
@@ -6432,39 +6433,39 @@ msgstr "Etikettekst"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:110
 msgid "List Item Text Selected"
-msgstr "Lijst geselecteerde elementtekst"
+msgstr "Lijst van gekozen elementtekst"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "List Item Text (Even)"
-msgstr "Lijstelement-tekst (Even)"
+msgstr "Lijst van elementtekst (Even)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Item Background Base (Even)"
-msgstr "Basisachtergrond lijstelement (Even)"
+msgstr "Lijst van basisachtergrond element (Even)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:113
 msgid "List Item Text (Odd)"
-msgstr "Lijstelement-tekst (Oneven)"
+msgstr "Lijst van elementtekst (Oneven)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:114
 msgid "List Item Background Base (Odd)"
-msgstr "Basisachtergrond lijstelement (Oneven)"
+msgstr "Lijst van basisachtergrond element (Oneven)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:115
 msgid "List Header Text (Even)"
-msgstr "Lijst koptekst (Even)"
+msgstr "Lijst van koptekst (Even)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:116
 msgid "List Header Background Base (Even)"
-msgstr "Basisachtergrond koptekst (Even)"
+msgstr "Lijst van basisachtergrond koptekst (Even)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:117
 msgid "List Header Text (Odd)"
-msgstr "Lijst koptekst (Oneven)"
+msgstr "Lijst van koptekst (Oneven)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:119
 msgid "List Header Background Base (Odd)"
-msgstr "Basisachtergrond koptekst (Oneven)"
+msgstr "Lijst van basisachtergrond koptekst (Oneven)"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:120
 msgid "Radio Text"
@@ -6526,7 +6527,7 @@ msgstr "Geselecteerde %u gelijkmatige kleurklassen"
 #: src/modules/conf_theme/e_int_config_color_classes.c:288
 #: src/modules/conf_theme/e_int_config_color_classes.c:548
 msgid "No selected color class"
-msgstr "Niet-geselecteerde kleurklasse"
+msgstr "Geen geselecteerde kleurklasse"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:551
 msgid "Custom colors"
@@ -6571,7 +6572,7 @@ msgstr "Titelbalk"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:62
 msgid "Textblock Plain"
-msgstr "Tekstblok vlak"
+msgstr "Tekstblok eenvoudig"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:63
 msgid "Textblock Light"
@@ -6627,7 +6628,7 @@ msgstr "Digitale klok"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:82
 msgid "Entry"
-msgstr "Element"
+msgstr "Vermelding"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:83
 msgid "Frame"
@@ -6722,7 +6723,7 @@ msgstr "Enorm"
 #, c-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
-msgstr[0] "%d beeldpunten"
+msgstr[0] "%d beeldpunt"
 msgstr[1] "%d beeldpunten"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
@@ -7053,11 +7054,11 @@ msgstr "Randpictogram"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:131
 msgid "User defined"
-msgstr "Gebruikergespecificeerd"
+msgstr "Bepaald door gebruiker"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:133
 msgid "Application provided"
-msgstr "Door toepassing verschaft"
+msgstr "Verschaft door toepassing"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:137
 msgid "Move Geometry"
@@ -7200,7 +7201,7 @@ msgstr "Verhef vensters als muispijl erover gaat"
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:243
 #: src/modules/wizard/page_060.c:33
 msgid "Click"
-msgstr "Klik"
+msgstr "Klikken"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:245
 msgid "Pointer"
@@ -9162,7 +9163,7 @@ msgstr "Kan geen herstart instellen voor venster zonder naam en klasse."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:350
 msgid "Cannot set relaunch for internal E dialog!"
-msgstr "Kan geen herstart instellen voor interne E dialoog."
+msgstr "Kan geen herstart instellen voor interne E-dialoog."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:368
 #, c-format
@@ -9191,7 +9192,7 @@ msgstr "Meer hulp"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "The requested Quickaccess entry does not exist!"
-msgstr "Het verzochte element voor snelle toegang bestaat niet."
+msgstr "De verzochte vermelding voor snelle toegang bestaat niet."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "Keybind Error"
@@ -9246,7 +9247,7 @@ msgstr ""
 "venster wanneer actief zonder scherpstelling<br><hilight>Springmodus</"
 "hilight> - schakel naar werkblad van venster en verhef i.p.v. tonen/"
 "verbergen<br><hilight>Herstart na sluiten</hilight> - voer de opdracht van "
-"het element weer uit wanneer diens venster sluit<br><hilight>Tijdelijk</"
+"de vermelding weer uit wanneer diens venster sluit<br><hilight>Tijdelijk</"
 "hilight> - herinner alleen deze instantie van het venster (niet blijvend)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
@@ -9262,17 +9263,19 @@ msgstr "Stop"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:994
 msgid "Great! Activate the Quickaccess entry again to show it!"
-msgstr "Prima! Activeer de regel voor snelle toegang wederom om het te tonen."
+msgstr ""
+"Prima! Activeer de vermelding voor snelle toegang wederom om het te tonen."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:996
 msgid "Great! Activate the Quickaccess entry again to hide it!"
 msgstr ""
-"Prima! Activeer de regel voor snelle toegang wederom om het te verbergen."
+"Prima! Activeer de vermelding voor snelle toegang wederom om het te "
+"verbergen."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1016
 msgid "Well done.<br>Now to delete the entry we just made..."
 msgstr ""
-"Goed gedaan.<br>En nu, om de regel te verwijderen die we zojuist hebben "
+"Goed gedaan.<br>En nu, om de vermelding te verwijderen die we zojuist hebben "
 "gemaakt..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1032
@@ -9288,7 +9291,7 @@ msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
 msgstr ""
 "Het nieuwgetoonde venster zal de<br>bindingsvolgorde voor snelle toegang "
-"activeren.\t"
+"activeren."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
@@ -9303,7 +9306,7 @@ msgid ""
 "Quickaccess entries can be created from<br>the border menu of any window."
 "<br>Click Continue to see a demonstration."
 msgstr ""
-"Regels voor snelle toegang kunnen<br>worden gemaakt vanuit het "
+"Vermeldingen voor snelle toegang kunnen<br>worden gemaakt vanuit het "
 "randmenu<br>van elk venster. Klik op Doorgaan voor een demonstratie."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
@@ -9314,9 +9317,9 @@ msgid ""
 "keyboard shortcut."
 msgstr ""
 "Snelle toegang is een manier om door gebruikers<br>gekozen vensters en "
-"toepassingen te binden<br>aan sneltoetsen. Zodra er een regel is<br>gemaakt, "
-"kan het gekoppelde venster direct worden opgeroepen door<br>de sneltoets in "
-"te drukken."
+"toepassingen te binden<br>aan sneltoetsen. Zodra er een vermelding "
+"is<br>gemaakt, kan het gekoppelde venster direct worden opgeroepen "
+"door<br>de sneltoets in te drukken."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
@@ -9590,7 +9593,7 @@ msgstr "Info"
 
 #: src/modules/shot/e_mod_config.c:143
 msgid "Bind Take Shot in Wndows:Action"
-msgstr "Toe te passen instellingen"
+msgstr "Bind Maak Opname in Wndows:Action"
 
 #: src/modules/shot/e_mod_config.c:145
 msgid "for window screenshot!"
@@ -9988,7 +9991,7 @@ msgstr " Sla elke selectie op"
 
 #: src/modules/clipboard/e_mod_config.c:234
 msgid " Timer"
-msgstr " Tijdklok"
+msgstr " Aftelklok"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
@@ -10024,7 +10027,7 @@ msgstr "Geschiedenis negeren"
 
 #: src/modules/clipboard/e_mod_main.c:644
 msgid "Confirm History Deletion"
-msgstr "Bevestig verwijderen geschiedenis"
+msgstr "Bevestig verwijdering van geschiedenis"
 
 #: src/modules/clipboard/e_mod_main.c:646
 msgid ""
@@ -10034,7 +10037,7 @@ msgstr "U wilt de klembordgeschiedenis wissen.<br><br>Weet u het zeker?"
 
 #: src/modules/clipboard/e_mod_main.c:731
 msgid "Confirm Item Deletion"
-msgstr "Bevestig verwijderen van element"
+msgstr "Bevestig verwijdering van element"
 
 #: src/modules/clipboard/e_mod_main.c:733
 msgid ""
@@ -10125,7 +10128,7 @@ msgstr "Plaatsen-waarschuwing!"
 #: src/modules/places/e_mod_places.c:576
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
-msgstr "Schijf '%s' gebruik is %d %%."
+msgstr "Gebruik van schijf '%s' is %d %%."
 
 #: src/modules/places/e_mod_places.c:661
 msgid ""
@@ -10183,7 +10186,7 @@ msgstr "Nieuw volume"
 
 #: src/modules/mixer/e_mod_main.c:133
 msgid "Volume limit reached!"
-msgstr "Limiet van medium is bereikt."
+msgstr "Volumelimiet is bereikt."
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "EPulse"
