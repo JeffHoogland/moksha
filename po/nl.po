@@ -3445,7 +3445,7 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tWees psychotisch.\n"
 "\t-locked\n"
-"\t\tStart met schermvergendeling aan zodat een wachtwoord wordt gevraagd.\n"
+"\t\tStart met schermvergrendeling aan zodat er om een wachtwoord wordt gevraagd.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tIndien u deze hulp nodig heeft, heeft u deze optie niet nodig.\n"
 
@@ -5158,7 +5158,7 @@ msgstr "Virtuele werkbladen"
 
 #: src/modules/conf_display/e_mod_main.c:28
 msgid "Screen Lock"
-msgstr "Schermvergendeling"
+msgstr "Schermvergrendeling"
 
 #: src/modules/conf_display/e_mod_main.c:44
 msgid "Desk"
