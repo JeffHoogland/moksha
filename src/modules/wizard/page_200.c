@@ -35,6 +35,13 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    #endif
    // save the config now everyone has modified it
    e_config_save();
+   char shfile[PATH_MAX];
+   e_user_dir_concat_static(shfile, "applications/startup/startupcommands");
+   FILE *f;
+   f = fopen(shfile, "w");
+   if (ecore_file_exists("/usr/bin/elaptopcheck"))
+     fputs("elaptopcheck", f);
+   if (f) fclose(f);
 
    // disable restart env so we actually start a whole new session properly
    e_util_env_set("E_RESTART", NULL);
