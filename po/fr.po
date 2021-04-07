@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020, 2021.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-03-25 18:31+0100\n"
-"PO-Revision-Date: 2021-02-15 13:45+0100\n"
+"PO-Revision-Date: 2021-04-06 10:07+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -3232,12 +3232,11 @@ msgstr "Configuration des chemins"
 
 #: src/bin/e_main.c:858
 msgid "Setup System Controls"
-msgstr "Configuration des contrôles du système"
+msgstr "Paramètres des commandes système"
 
 #: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son gestionnaire de commandes système.\n"
+msgstr "Moksha ne parvient pas à initialiser le système System Command.\n"
 
 #: src/bin/e_main.c:869
 msgid "Setup Actions"
@@ -4533,11 +4532,12 @@ msgid ""
 "Click on a calendar day for date change. <br>Use the mouse wheel for "
 "changing the year."
 msgstr ""
+"Cliquez sur un jour du calendrier pour changer la date.<br>Utilisez la "
+"molette de la souris pour changer l'année."
 
 #: src/modules/clock/e_mod_config.c:100
-#, fuzzy
 msgid "Clock module Information"
-msgstr "Information sur le lien"
+msgstr "Information du module"
 
 #: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
 #: src/modules/clock/e_mod_main.c:986
@@ -4606,23 +4606,20 @@ msgid "Days"
 msgstr "Jours"
 
 #: src/modules/clock/e_mod_config.c:209
-#, fuzzy
 msgid "Time set"
-msgstr "Horodatage"
+msgstr "Réglage de  l'heure"
 
 #: src/modules/clock/e_mod_config.c:211
 msgid "Hours"
-msgstr ""
+msgstr "Heures"
 
 #: src/modules/clock/e_mod_config.c:216
-#, fuzzy
 msgid "Minutes"
-msgstr "Une minute"
+msgstr "Minutes"
 
 #: src/modules/clock/e_mod_config.c:224
-#, fuzzy
 msgid "Date set"
-msgstr "Date"
+msgstr "Réglage de la date"
 
 #: src/modules/clock/e_mod_main.c:986
 msgid "Toggle calendar"
@@ -6190,7 +6187,7 @@ msgstr "Niveaux autorisés"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:129
 msgid "Time to defer power-hungry tasks"
-msgstr "Reporter les tâches consommatrices en énergie"
+msgstr "Quand différer les tâches énergivores"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:140
 msgid "Min"
@@ -6206,7 +6203,7 @@ msgstr "Niveau"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:166
 msgid "e.g. Saving to disk"
-msgstr "ex. Enregistrement sur le disque"
+msgstr "p. ex. enregistrement sur disque"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:920
@@ -6705,15 +6702,15 @@ msgstr "Grand(e)"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:102
 msgid "Small Styled"
-msgstr "Style petit"
+msgstr "Petite stylée"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:103
 msgid "Normal Styled"
-msgstr "Style normal"
+msgstr "Normale stylée"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:104
 msgid "Large Styled"
-msgstr "Style grand"
+msgstr "Grande stylée"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:167
 msgid "Font Settings"
@@ -8903,7 +8900,7 @@ msgstr "Action par défaut"
 
 #: src/modules/syscon/e_mod_main.c:31
 msgid "System Controls"
-msgstr "Contrôles du système"
+msgstr "Commandes système"
 
 #: src/modules/syscon/e_mod_main.c:37
 msgid "Syscon"
@@ -9187,7 +9184,7 @@ msgstr "Comme ceci :"
 #: src/modules/quickaccess/e_mod_quickaccess.c:1247
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Quickaccess Help"
-msgstr "Aide sur les accès rapides"
+msgstr "Aide sur les accès rapides (Quickaccess)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
 msgid "Cannot set relaunch for window without name and class!"
@@ -9936,9 +9933,8 @@ msgid "Show application name"
 msgstr "Afficher le nom de l'application"
 
 #: src/modules/notification/e_mod_config.c:176
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Afficher les notifications"
+msgstr "Afficher le compteur de notifications"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Reverse order"
