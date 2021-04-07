@@ -492,6 +492,7 @@ _e_xsettings_theme_set(void)
 
                   e_user_homedir_snprintf(buf, sizeof(buf), ".themes/%s", _setting_theme);
                   eio_op = eio_file_direct_stat(buf, _e_xsettings_done_cb, _e_xsettings_error_cb, NULL);
+                  e_config->xsettings.net_theme_name = _setting_theme;
                   setting = EINA_TRUE;
                   return;
                }
