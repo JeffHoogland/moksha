@@ -1679,7 +1679,11 @@ e_gadcon_client_add_location_menu(E_Gadcon_Client *gcc, E_Menu *menu)
         mn = e_menu_new();
         mi = e_menu_item_new(menu);
         e_menu_item_label_set(mi, _("Move to"));
-        e_util_menu_item_theme_icon_set(mi, "preferences-look");
+        //~ e_util_menu_item_theme_icon_set(mi, "preferences-look");
+        e_menu_item_icon_edje_set(mi,
+                                  e_theme_edje_file_get("base/theme/borders",
+                                                        "e/widgets/border/default/sendto"),
+                                  "e/widgets/border/default/sendto");
         e_menu_item_submenu_set(mi, mn);
         e_menu_pre_activate_callback_set(mn, _e_gadcon_gadget_move_to_pre_cb, gcc);
         e_object_unref(E_OBJECT(mn));

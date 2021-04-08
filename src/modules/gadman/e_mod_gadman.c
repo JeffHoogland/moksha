@@ -117,14 +117,14 @@ gadman_init(E_Module *m)
    location = Man->location[GADMAN_LAYER_BG] = e_gadcon_location_new("Desktop", E_GADCON_SITE_DESKTOP,
                                     _e_gadman_client_add, NULL,
                                     _e_gadman_client_remove, NULL);
-   e_gadcon_location_set_icon_name(location, "preferences-desktop");
+   e_gadcon_location_set_icon_name(location, "desktop");
    e_gadcon_location_register(location);
 
    /* create and register "desktop hover" location */
    location = Man->location[GADMAN_LAYER_TOP] = e_gadcon_location_new("Desktop Hover", E_GADCON_SITE_DESKTOP,
                                     _e_gadman_client_add, NULL,
                                     _e_gadman_client_remove, NULL);
-   e_gadcon_location_set_icon_name(location, "preferences-desktop");
+   e_gadcon_location_set_icon_name(location, "desktop");
    e_gadcon_location_register(location);
 
    _e_gadman_handlers_add();
