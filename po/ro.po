@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-03-25 18:31+0100\n"
+"POT-Creation-Date: 2021-04-09 20:12+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -37,13 +37,13 @@ msgstr "Închide"
 #: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
-#: src/modules/wizard/page_000.c:34
+#: src/modules/wizard/page_000.c:36
 msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -116,7 +116,7 @@ msgstr "Logout acum"
 msgid "Are you sure you want to logout?"
 msgstr "Sigur doriți să vă deautentificați?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
 #, fuzzy
 msgid "Power off"
 msgstr "Oprirea"
@@ -942,9 +942,9 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
-#: src/modules/clock/e_mod_config.c:104
+#: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1071,7 +1071,7 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -2009,27 +2009,27 @@ msgstr ""
 msgid "Move to"
 msgstr "Mută"
 
-#: src/bin/e_gadcon.c:1749
+#: src/bin/e_gadcon.c:1753
 #, fuzzy
 msgid "Automatically scroll contents"
 msgstr "Conţinutul în mod automat de defilare"
 
-#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "Simplu"
 
-#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
 #, fuzzy
 msgid "Inset"
 msgstr "medalion"
 
-#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 #, fuzzy
 msgid "Look"
 msgstr "uite"
 
-#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
@@ -2040,16 +2040,16 @@ msgstr "uite"
 msgid "Remove"
 msgstr "scoate"
 
-#: src/bin/e_gadcon.c:2440
+#: src/bin/e_gadcon.c:2444
 #, fuzzy
 msgid "Stop moving"
 msgstr "se opresc"
 
-#: src/bin/e_gadcon.c:3091
+#: src/bin/e_gadcon.c:3095
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3092
+#: src/bin/e_gadcon.c:3096
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2470,7 +2470,7 @@ msgstr "Lista de fereastră"
 msgid "Pager"
 msgstr "pager"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
 #, fuzzy
 msgid "Taskbar"
 msgstr "Bara de activităţi"
@@ -2557,8 +2557,8 @@ msgstr ""
 msgid "Static"
 msgstr "de stat"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
-#: src/modules/clock/e_mod_config.c:192
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:193
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2601,7 +2601,6 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
-#: src/modules/wizard/page_050.c:95
 #, fuzzy
 msgid "Title"
 msgstr "titlu"
@@ -2646,7 +2645,7 @@ msgstr "Dimensiune de bază"
 msgid "Resize Steps"
 msgstr "Redimensionarea Paşi"
 
-#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:128
+#: src/bin/e_int_border_prop.c:457
 #, fuzzy
 msgid "Sizing"
 msgstr "dimensionarea"
@@ -2724,8 +2723,8 @@ msgstr "solicitare de poziţie"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
-#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:137
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -4033,18 +4032,18 @@ msgstr "reîmprospătare"
 msgid "Starting %s"
 msgstr "pornire"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:341
 #, fuzzy
 msgid "Checking System Permissions"
 msgstr "Verificarea permisiunilor de sistem"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
+#: src/bin/e_sys.c:416
 #, fuzzy
 msgid "System Check Done"
 msgstr "Sistem de control Done"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:484
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -4052,40 +4051,40 @@ msgid ""
 "first?<br><br>Auto logout in %d seconds."
 msgstr ""
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:544
 #, fuzzy
 msgid "Logout problems"
 msgstr "Logout probleme"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:546
 #, fuzzy
 msgid "Logout now"
 msgstr "Logout acum"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:548
 #, fuzzy
 msgid "Wait longer"
 msgstr "aşteptaţi mai mult"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:550
 #, fuzzy
 msgid "Cancel Logout"
 msgstr "Anulează Logout"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:594
 #, fuzzy
 msgid "Logout in progress"
 msgstr "Ieşire în curs"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:597
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
 msgid "Moksha is busy with another request"
 msgstr ""
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:631
 #, fuzzy
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
@@ -4094,7 +4093,7 @@ msgstr ""
 "Deconectarea.<br>Nu puteţi efectua alte<br>sistem de acţiuni , o dată pe "
 "ieşire a început."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:638
 #, fuzzy
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
@@ -4103,7 +4102,7 @@ msgstr ""
 "Oprire.<br>Nu poţi face orice alt sistem de acţiuni<br>o dată de închidere a "
 "fost pornit."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:644
 #, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
@@ -4112,7 +4111,7 @@ msgstr ""
 "Resetarea.<br>Nu poţi face orice alt sistem de acţiuni<br>o dată a început "
 "repornirea sistemului."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:650
 #, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
@@ -4121,7 +4120,7 @@ msgstr ""
 "De suspendare.<br>Până la suspendarea este complet , nu se pot "
 "efectua<br>orice alte acţiuni de sistem."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:656
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4130,59 +4129,59 @@ msgstr ""
 "Hibernare.<br>Nu puteţi efectua orice alt sistem de acţiuni de până "
 "la<br>acest lucru este complet."
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
 #, fuzzy
 msgid "EEK! This should not happen"
 msgstr "EEK. Acest lucru nu ar trebui să se întâmple"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:687
 #, fuzzy
 msgid "Power off failed."
 msgstr "Oprire a eşuat."
 
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:691
 #, fuzzy
 msgid "Reset failed."
 msgstr "Resetare eşuat."
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:695
 #, fuzzy
 msgid "Suspend failed."
 msgstr "Suspendare a eşuat."
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:699
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Hibernate nu a reuşit."
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:799
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:843
 #, fuzzy
 msgid "Resetting"
 msgstr "Resetarea"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:846
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:898
 #, fuzzy
 msgid "Suspending"
 msgstr "suspendarea"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:901
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:953
 #, fuzzy
 msgid "Hibernating"
 msgstr "hibernare"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:956
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
@@ -4333,7 +4332,6 @@ msgstr[1] ""
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:25
 #, fuzzy
 msgid "Unknown"
 msgstr "necunoscut"
@@ -4772,29 +4770,25 @@ msgstr "AC de alimentare este recomandat."
 msgid "Power now: "
 msgstr "Oprirea"
 
-#: src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:522
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:523
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:526
-msgid "Time calculating..."
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:630
 msgid "N/A"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
-#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
+#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
+#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
 #, fuzzy
 msgid "ERROR"
 msgstr "EROARE"
 
-#: src/modules/battery/e_mod_main.c:861
+#: src/modules/battery/e_mod_main.c:864
 #, fuzzy
 msgid "Battery Meter"
 msgstr "baterie"
@@ -4804,108 +4798,108 @@ msgstr "baterie"
 msgid "Clock Settings"
 msgstr "Focus Setări"
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:99
 #, c-format
 msgid ""
-"Click on a calendar day for date change. <br>Use the mouse wheel for "
-"changing the year."
+"Click on a calendar day to change the date. <br>Use the mouse wheel to "
+"change the year."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:100
+#: src/modules/clock/e_mod_config.c:101
 #, fuzzy
 msgid "Clock module Information"
 msgstr "link-ul de informaţii"
 
-#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 #, fuzzy
 msgid "Clock"
 msgstr "ceas"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:133
 #, fuzzy
 msgid "Analog"
 msgstr "dialoguri"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:135
 #, fuzzy
 msgid "Digital"
 msgstr "Ceas Digital"
 
-#: src/modules/clock/e_mod_config.c:136
+#: src/modules/clock/e_mod_config.c:137
 msgid "Seconds"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:140
 msgid "12 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:142
 msgid "24 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:146
+#: src/modules/clock/e_mod_config.c:147
 msgid "Date"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:152
 msgid "Full"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:154
 msgid "Numbers"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:156
 #, fuzzy
 msgid "Date Only"
 msgstr "Citeşte numai"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:158
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:159
+#: src/modules/clock/e_mod_config.c:160
 #, fuzzy
 msgid "Strftime"
 msgstr "oprit de timp"
 
-#: src/modules/clock/e_mod_config.c:166
+#: src/modules/clock/e_mod_config.c:167
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
+#: src/modules/clock/e_mod_config.c:169 src/modules/clock/e_mod_config.c:181
 #: src/modules/start/e_mod_main.c:168
 #, fuzzy
 msgid "Start"
 msgstr "începe"
 
-#: src/modules/clock/e_mod_config.c:179
+#: src/modules/clock/e_mod_config.c:180
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:189
+#: src/modules/clock/e_mod_config.c:190
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
+#: src/modules/clock/e_mod_config.c:210
 #, fuzzy
 msgid "Time set"
 msgstr "Timere"
 
-#: src/modules/clock/e_mod_config.c:211
+#: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:216
+#: src/modules/clock/e_mod_config.c:217
 msgid "Minutes"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:224
+#: src/modules/clock/e_mod_config.c:225
 msgid "Date set"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_main.c:988
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "Executabil"
@@ -5107,7 +5101,6 @@ msgid "Available Profiles"
 msgstr "profile disponibile"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:120
 #, fuzzy
 msgid "Select a profile"
 msgstr "Selectaţi un profil de"
@@ -6016,7 +6009,7 @@ msgstr "selectorul de limbi"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:193
 #, fuzzy
 msgid "System Default"
 msgstr "sistem implicit"
@@ -6033,7 +6026,7 @@ msgstr "Locale selectate"
 msgid "Locale"
 msgstr "Locale"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
 #, fuzzy
 msgid "Language"
 msgstr "limbă"
@@ -7939,7 +7932,6 @@ msgid "Raise windows on mouse over"
 msgstr "Ridica ferestrele de pe mouse-ul peste"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:243
-#: src/modules/wizard/page_060.c:33
 #, fuzzy
 msgid "Click"
 msgstr "clic"
@@ -8151,7 +8143,7 @@ msgid "Resize by"
 msgstr "Redimensionează"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 #, fuzzy
 msgid "Keyboard"
@@ -10005,62 +9997,38 @@ msgstr "la temperaturi ridicate"
 msgid "Check your device or settings!"
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
+#: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 #, fuzzy
 msgid "Next"
 msgstr "următor"
 
-#: src/modules/wizard/e_wizard.c:277
+#: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:53
+#: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
+msgid "Please Wait As We Are Loading Moksha Settings!"
+msgstr ""
+
+#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
 #, fuzzy
 msgid "Select one"
 msgstr "Selectaţi unul"
 
-#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
-msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr ""
-
-#: src/modules/wizard/page_040.c:36
-msgid "Adding missing App files"
-msgstr ""
-
-#: src/modules/wizard/page_050.c:130
-#, fuzzy
-msgid "Select preferred size"
-msgstr "Selectaţi dimensiunea preferată"
-
-#: src/modules/wizard/page_060.c:29
-#, fuzzy
-msgid "Focus by ..."
-msgstr "Focus de ..."
-
-#: src/modules/wizard/page_060.c:36
-#, fuzzy
-msgid "Mouse Over"
-msgstr "Mută"
-
-#: src/modules/wizard/page_110.c:156
-msgid "Checking to see if Connman exists"
-msgstr ""
-
-#: src/modules/wizard/page_170.c:24
+#: src/modules/wizard/page_170.c:25
 #, fuzzy
 msgid "Updates"
 msgstr "de stat"
 
-#: src/modules/wizard/page_170.c:26
+#: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
 msgstr ""
 
-#: src/modules/wizard/page_170.c:32
+#: src/modules/wizard/page_170.c:33
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -10073,20 +10041,20 @@ msgid ""
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
 
-#: src/modules/wizard/page_170.c:53
+#: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
 msgstr ""
 
-#: src/modules/wizard/page_180.c:26
+#: src/modules/wizard/page_180.c:27
 #, fuzzy
 msgid "Information"
 msgstr "link-ul de informaţii"
 
-#: src/modules/wizard/page_180.c:32
+#: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
 
-#: src/modules/wizard/page_180.c:38
+#: src/modules/wizard/page_180.c:39
 #, fuzzy
 msgid "Enable Taskbar"
 msgstr "Bara de activităţi"
@@ -10355,32 +10323,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
 #, fuzzy
 msgid "Systray Error"
 msgstr "systray Eroare"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:500
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:906
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Un alt systray există"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:907
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Nu poate fi doar un obiect gadget systray şi de alta există deja."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:916
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray nu se poate lucra într-un raft , care este setat mai jos totul."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1113
 #, fuzzy
 msgid "Systray"
 msgstr "systray"
@@ -11347,6 +11315,18 @@ msgstr "volumul schimbat"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "volumul schimbat"
+
+#, fuzzy
+#~ msgid "Select preferred size"
+#~ msgstr "Selectaţi dimensiunea preferată"
+
+#, fuzzy
+#~ msgid "Focus by ..."
+#~ msgstr "Focus de ..."
+
+#, fuzzy
+#~ msgid "Mouse Over"
+#~ msgstr "Mută"
 
 #, fuzzy
 #~ msgid "Modes"

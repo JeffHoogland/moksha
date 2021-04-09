@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-#
+# 
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,12 +13,12 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020, 2021.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-03-25 18:31+0100\n"
+"POT-Creation-Date: 2021-04-09 20:12+0200\n"
 "PO-Revision-Date: 2021-04-06 10:07+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -49,13 +49,14 @@ msgstr "Fermer"
 #: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
-#: src/modules/wizard/page_000.c:34
+#: src/modules/wizard/page_000.c:36
 msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -129,7 +130,7 @@ msgstr "Déconnexion"
 msgid "Are you sure you want to logout?"
 msgstr "Voulez-vous vraiment fermer la session ?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
 msgid "Power off"
 msgstr "Éteindre"
 
@@ -900,9 +901,9 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
-#: src/modules/clock/e_mod_config.c:104
+#: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1013,7 +1014,7 @@ msgstr ""
 "était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des "
 "données.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1893,24 +1894,24 @@ msgstr "%s ne gère pas la désactivation du défilement automatique"
 msgid "Move to"
 msgstr "Déplacer vers"
 
-#: src/bin/e_gadcon.c:1749
+#: src/bin/e_gadcon.c:1753
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique"
 
-#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "En plein"
 
-#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "En creux"
 
-#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Aspect"
 
-#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
@@ -1920,15 +1921,15 @@ msgstr "Aspect"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/bin/e_gadcon.c:2440
+#: src/bin/e_gadcon.c:2444
 msgid "Stop moving"
 msgstr "Insérer"
 
-#: src/bin/e_gadcon.c:3091
+#: src/bin/e_gadcon.c:3095
 msgid "Insufficent gadcon support"
 msgstr "Le support de gadcon est insuffisant"
 
-#: src/bin/e_gadcon.c:3092
+#: src/bin/e_gadcon.c:3096
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "Le module %s doit prendre en charge %s"
@@ -2292,7 +2293,7 @@ msgstr "Liste des fenêtres"
 msgid "Pager"
 msgstr "Miniature des bureaux"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
 msgid "Taskbar"
 msgstr "Barre des tâches"
 
@@ -2378,8 +2379,8 @@ msgstr "Sud-Est"
 msgid "Static"
 msgstr "Statique"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
-#: src/modules/clock/e_mod_config.c:192
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:193
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2417,7 +2418,6 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
-#: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "Titre"
 
@@ -2453,7 +2453,7 @@ msgstr "Taille de base"
 msgid "Resize Steps"
 msgstr "Redimensionnement incrémentiel"
 
-#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:128
+#: src/bin/e_int_border_prop.c:457
 msgid "Sizing"
 msgstr "Proportions"
 
@@ -2516,8 +2516,8 @@ msgstr "Demande de position"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
-#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:137
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -3813,16 +3813,16 @@ msgstr "Rafraîchir"
 msgid "Starting %s"
 msgstr "Démarrage de %s"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:341
 msgid "Checking System Permissions"
 msgstr "Vérification des permissions du système"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
+#: src/bin/e_sys.c:416
 msgid "System Check Done"
 msgstr "Vérification du système terminée"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:484
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3834,35 +3834,35 @@ msgstr ""
 "session<br>sans attendre la fermeture des applications ?<br><br>Fermeture "
 "automatique dans %d secondes."
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:544
 msgid "Logout problems"
 msgstr "La fermeture de session pose problème"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:546
 msgid "Logout now"
 msgstr "Fermer à l'instant la session"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:548
 msgid "Wait longer"
 msgstr "Attendre plus longtemps"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:550
 msgid "Cancel Logout"
 msgstr "Annuler la fermeture de session"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:594
 msgid "Logout in progress"
 msgstr "Déconnexion en cours"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:597
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Déconnexion en cours.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
 msgid "Moksha is busy with another request"
 msgstr "Moksha est occupé à traiter une autre requête"
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:631
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3870,7 +3870,7 @@ msgstr ""
 "Fermeture de session en cours.<br>Vous ne pouvez pas effectuer d'autres "
 "actions système<br>pendant cette phase."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:638
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3878,7 +3878,7 @@ msgstr ""
 "Extinction en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
 "système<br>pendant cette phase."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:644
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3886,7 +3886,7 @@ msgstr ""
 "Réamorçage en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
 "système<br>pendant cette phase."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:650
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3894,7 +3894,7 @@ msgstr ""
 "Mise en veille en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
 "système<br>pendant cette phase."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:656
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3902,51 +3902,51 @@ msgstr ""
 "Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres "
 "actions système<br>pendant cette phase."
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
 msgid "EEK! This should not happen"
 msgstr "ARGH ! ça ne devrait pas se produire…"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:687
 msgid "Power off failed."
 msgstr "Impossible d'éteindre l'ordinateur."
 
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:691
 msgid "Reset failed."
 msgstr "Le réamorçage a échoué."
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:695
 msgid "Suspend failed."
 msgstr "La mise en veille a échoué."
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:699
 msgid "Hibernate failed."
 msgstr "La mise en hibernation a échoué."
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:799
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Extinction en cours.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:843
 msgid "Resetting"
 msgstr "Réamorçage"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:846
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Réamorçage en cours.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:898
 msgid "Suspending"
 msgstr "Mise en veille"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:901
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Mise en veille.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:953
 msgid "Hibernating"
 msgstr "Mise en hibernation"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:956
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Mise en hibernation en cours.<br><hilight>Veuillez patienter.</hilight>"
@@ -4099,7 +4099,6 @@ msgstr[1] "Il y a %li minutes"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "Inconnu"
 
@@ -4497,28 +4496,24 @@ msgstr "Branchement sur le secteur recommandé."
 msgid "Power now: "
 msgstr "Charge de la batterie : "
 
-#: src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:522
 msgid "Remaining time: "
 msgstr "Temps restant : "
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:523
 msgid "hr"
 msgstr "h"
 
-#: src/modules/battery/e_mod_main.c:526
-msgid "Time calculating..."
-msgstr "Calcul du temps..."
-
-#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:630
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
-#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
+#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
+#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:861
+#: src/modules/battery/e_mod_main.c:864
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -4526,102 +4521,102 @@ msgstr "Surveillance de la batterie"
 msgid "Clock Settings"
 msgstr "Paramétrage de l'horloge"
 
-#: src/modules/clock/e_mod_config.c:98
-#, c-format
+#: src/modules/clock/e_mod_config.c:99
+#, fuzzy, c-format
 msgid ""
-"Click on a calendar day for date change. <br>Use the mouse wheel for "
-"changing the year."
+"Click on a calendar day to change the date. <br>Use the mouse wheel to "
+"change the year."
 msgstr ""
 "Cliquez sur un jour du calendrier pour changer la date.<br>Utilisez la "
 "molette de la souris pour changer l'année."
 
-#: src/modules/clock/e_mod_config.c:100
+#: src/modules/clock/e_mod_config.c:101
 msgid "Clock module Information"
 msgstr "Information du module"
 
-#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Horloge"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:133
 msgid "Analog"
 msgstr "Analogique"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:135
 msgid "Digital"
 msgstr "Numérique"
 
-#: src/modules/clock/e_mod_config.c:136
+#: src/modules/clock/e_mod_config.c:137
 msgid "Seconds"
 msgstr "Secondes"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:140
 msgid "12 h"
 msgstr "12 h"
 
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:142
 msgid "24 h"
 msgstr "24 h"
 
-#: src/modules/clock/e_mod_config.c:146
+#: src/modules/clock/e_mod_config.c:147
 msgid "Date"
 msgstr "Date"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:152
 msgid "Full"
 msgstr "Complète"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:154
 msgid "Numbers"
 msgstr "Nombres"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:156
 msgid "Date Only"
 msgstr "Date seule"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:158
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
-#: src/modules/clock/e_mod_config.c:159
+#: src/modules/clock/e_mod_config.c:160
 msgid "Strftime"
 msgstr "Strftime"
 
-#: src/modules/clock/e_mod_config.c:166
+#: src/modules/clock/e_mod_config.c:167
 msgid "Week"
 msgstr "Semaine"
 
-#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
+#: src/modules/clock/e_mod_config.c:169 src/modules/clock/e_mod_config.c:181
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Démarrer"
 
-#: src/modules/clock/e_mod_config.c:179
+#: src/modules/clock/e_mod_config.c:180
 msgid "Weekend"
 msgstr "Week-end"
 
-#: src/modules/clock/e_mod_config.c:189
+#: src/modules/clock/e_mod_config.c:190
 msgid "Days"
 msgstr "Jours"
 
-#: src/modules/clock/e_mod_config.c:209
+#: src/modules/clock/e_mod_config.c:210
 msgid "Time set"
 msgstr "Réglage de  l'heure"
 
-#: src/modules/clock/e_mod_config.c:211
+#: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
 msgstr "Heures"
 
-#: src/modules/clock/e_mod_config.c:216
+#: src/modules/clock/e_mod_config.c:217
 msgid "Minutes"
 msgstr "Minutes"
 
-#: src/modules/clock/e_mod_config.c:224
+#: src/modules/clock/e_mod_config.c:225
 msgid "Date set"
 msgstr "Réglage de la date"
 
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
 msgstr "(Dés)Activer le calendrier"
 
@@ -4790,7 +4785,6 @@ msgid "Available Profiles"
 msgstr "Profils disponibles"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:120
 msgid "Select a profile"
 msgstr "Sélectionnez un profil"
 
@@ -5584,7 +5578,7 @@ msgstr "Sélecteur de langue"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:193
 msgid "System Default"
 msgstr "Système (par défaut)"
 
@@ -5598,7 +5592,7 @@ msgstr "Paramètres régionaux"
 msgid "Locale"
 msgstr "Localisation"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
 msgid "Language"
 msgstr "Langue"
 
@@ -7212,7 +7206,6 @@ msgid "Raise windows on mouse over"
 msgstr "Élever les fenêtres lors du survol"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:243
-#: src/modules/wizard/page_060.c:33
 msgid "Click"
 msgstr "Au clic"
 
@@ -7382,7 +7375,7 @@ msgid "Resize by"
 msgstr "Redimensionner de :"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 msgid "Keyboard"
 msgstr "Clavier"
@@ -8979,56 +8972,35 @@ msgstr "Température du CPU élevée !"
 msgid "Check your device or settings!"
 msgstr "Vérifiez votre appareil ou les paramètres !"
 
-#: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
+#: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
 msgstr "Suivant"
 
-#: src/modules/wizard/e_wizard.c:277
+#: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
 msgstr "Veuillez patienter"
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
 msgstr "Bienvenue dans Moksha"
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:53
-msgid "Select one"
-msgstr "Choisissez"
-
-#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Veuillez patienter pendant le chargement des paramètres de Moksha !"
 
-#: src/modules/wizard/page_040.c:36
-msgid "Adding missing App files"
-msgstr "Ajout des fichiers d'application manquants"
+#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+msgid "Select one"
+msgstr "Choisissez"
 
-#: src/modules/wizard/page_050.c:130
-msgid "Select preferred size"
-msgstr "Choix des proportions"
-
-#: src/modules/wizard/page_060.c:29
-msgid "Focus by ..."
-msgstr "Focaliser..."
-
-#: src/modules/wizard/page_060.c:36
-msgid "Mouse Over"
-msgstr "Au survol de la souris"
-
-#: src/modules/wizard/page_110.c:156
-msgid "Checking to see if Connman exists"
-msgstr "Vérification de la présence de Connman"
-
-#: src/modules/wizard/page_170.c:24
+#: src/modules/wizard/page_170.c:25
 msgid "Updates"
 msgstr "Mises à jour"
 
-#: src/modules/wizard/page_170.c:26
+#: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
 msgstr "Vérifier la disponibilité de mises à jour"
 
-#: src/modules/wizard/page_170.c:32
+#: src/modules/wizard/page_170.c:33
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -9051,21 +9023,21 @@ msgstr ""
 "fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous exposez à des "
 "vulnérabilités et à devoir<br>vivre avec des bogues."
 
-#: src/modules/wizard/page_170.c:53
+#: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
 msgstr "Activer la vérification des mises à jour"
 
-#: src/modules/wizard/page_180.c:26
+#: src/modules/wizard/page_180.c:27
 msgid "Information"
 msgstr "Information"
 
-#: src/modules/wizard/page_180.c:32
+#: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
 "Une barre des tâches peut<br>être ajoutée pour montrer<br>les fenêtres et "
 "les applications ouvertes."
 
-#: src/modules/wizard/page_180.c:38
+#: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
 msgstr "Activer la barre des tâches"
 
@@ -9363,33 +9335,33 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "nom / identifiant de l'accès rapide"
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
 msgid "Systray Error"
 msgstr "Erreur : Zone de notification"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:500
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Zone de notification ne peut rendre son arrière-plan invisible pour "
 "correspondre à son rayon."
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:906
 msgid "Another systray exists"
 msgstr "Il y a déjà une zone de notification"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:907
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Il y a déjà une zone de notification active et seule une instance de ce "
 "gadget est autorisée."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:916
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Zone de notification ne peut fonctionner dans un rayon configuré en dessous "
 "de tout."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1113
 msgid "Systray"
 msgstr "Zone de notification"
 
@@ -10253,6 +10225,24 @@ msgstr "Augmentation du volume"
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
 msgstr "Son coupé"
+
+#~ msgid "Time calculating..."
+#~ msgstr "Calcul du temps..."
+
+#~ msgid "Adding missing App files"
+#~ msgstr "Ajout des fichiers d'application manquants"
+
+#~ msgid "Select preferred size"
+#~ msgstr "Choix des proportions"
+
+#~ msgid "Focus by ..."
+#~ msgstr "Focaliser..."
+
+#~ msgid "Mouse Over"
+#~ msgstr "Au survol de la souris"
+
+#~ msgid "Checking to see if Connman exists"
+#~ msgstr "Vérification de la présence de Connman"
 
 #~ msgid "Modes"
 #~ msgstr "Modes"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-03-25 18:31+0100\n"
+"POT-Creation-Date: 2021-04-09 20:12+0200\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -35,13 +35,13 @@ msgstr "閉じる"
 #: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
-#: src/modules/wizard/page_000.c:34
+#: src/modules/wizard/page_000.c:36
 msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -115,7 +115,7 @@ msgstr "ログアウト"
 msgid "Are you sure you want to logout?"
 msgstr "本当にログアウトしますか"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
 msgid "Power off"
 msgstr "電源断"
 
@@ -932,9 +932,9 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
-#: src/modules/clock/e_mod_config.c:104
+#: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1047,7 +1047,7 @@ msgstr ""
 "%s<br><br>です. 壊れたデータが使われないように, このファイルは削除されました."
 "<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1959,24 +1959,24 @@ msgstr ""
 msgid "Move to"
 msgstr "移動先"
 
-#: src/bin/e_gadcon.c:1749
+#: src/bin/e_gadcon.c:1753
 msgid "Automatically scroll contents"
 msgstr "自動的にスクロールする"
 
-#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "普通"
 
-#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "埋め込む"
 
-#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "外見"
 
-#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
@@ -1986,16 +1986,16 @@ msgstr "外見"
 msgid "Remove"
 msgstr "削除"
 
-#: src/bin/e_gadcon.c:2440
+#: src/bin/e_gadcon.c:2444
 #, fuzzy
 msgid "Stop moving"
 msgstr "編集を終了する"
 
-#: src/bin/e_gadcon.c:3091
+#: src/bin/e_gadcon.c:3095
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3092
+#: src/bin/e_gadcon.c:3096
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2394,7 +2394,7 @@ msgstr "ウィンドウリスト"
 msgid "Pager"
 msgstr "ページャ"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
 msgid "Taskbar"
 msgstr "タスクバー"
 
@@ -2481,8 +2481,8 @@ msgstr "ソト語(南部)"
 msgid "Static"
 msgstr "状態"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
-#: src/modules/clock/e_mod_config.c:192
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:193
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2522,7 +2522,6 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
-#: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "タイトル"
 
@@ -2558,7 +2557,7 @@ msgstr "ベースサイズ"
 msgid "Resize Steps"
 msgstr "サイズ増分"
 
-#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:128
+#: src/bin/e_int_border_prop.c:457
 #, fuzzy
 msgid "Sizing"
 msgstr "サイジング"
@@ -2626,8 +2625,8 @@ msgstr "要求の位置"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
-#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:137
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -3990,16 +3989,16 @@ msgstr "更新"
 msgid "Starting %s"
 msgstr "起動中"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:341
 msgid "Checking System Permissions"
 msgstr "システムパーミッションを確認中"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
+#: src/bin/e_sys.c:416
 msgid "System Check Done"
 msgstr "システム確認終了"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:484
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -4010,42 +4009,42 @@ msgstr ""
 "めです.<br>このアプリケーションを無視して、とにかくログアウトを完了させます"
 "か.<br><br>自動ログアウトまであと %d 秒."
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:544
 msgid "Logout problems"
 msgstr "ログアウトに問題があります"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:546
 msgid "Logout now"
 msgstr "ただちにログアウトする"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:548
 msgid "Wait longer"
 msgstr "待機する"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:550
 msgid "Cancel Logout"
 msgstr "ログアウトを取り消す"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:594
 msgid "Logout in progress"
 msgstr "ログアウト中"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:597
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "ログアウト処理中です.<br><hilight>しばらくお待ち下さい</hilight>"
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
 msgid "Moksha is busy with another request"
 msgstr "Moksha は現在他の処理で手一杯です."
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:631
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
 "ログアウト中です.<br>ログアウト処理が始まったら他のシステム処理はできません."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:638
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -4053,20 +4052,20 @@ msgstr ""
 "シャットダウン中です.<br>シャットダウン処理が始まったら他のシステム処理はでき"
 "ません."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:644
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr "再起動中です.<br>再起動処理が始まったら他のシステム処理はできません."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:650
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
 "サスペンド中です.<br>サスペンドが完了するまでは他のシステム処理はできません."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:656
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4075,52 +4074,52 @@ msgstr ""
 "冬眠。 これが完了するまで<br>あなたが他のシステム·アクション·<br>を実行するこ"
 "とはできません。"
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
 msgid "EEK! This should not happen"
 msgstr "ありゃりゃ, これはまずいよ"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:687
 msgid "Power off failed."
 msgstr "電源断に失敗しました"
 
 #
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:691
 msgid "Reset failed."
 msgstr "リセットが失敗しました"
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:695
 msgid "Suspend failed."
 msgstr "サスペンドが失敗しました"
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:699
 msgid "Hibernate failed."
 msgstr "ハイバネートに失敗しました"
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:799
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "電源断処理中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:843
 msgid "Resetting"
 msgstr "リセット中"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:846
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "リセット中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:898
 msgid "Suspending"
 msgstr "サスペンド中"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:901
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "サスペンド中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:953
 msgid "Hibernating"
 msgstr "ハイバネート中"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:956
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "ハイバネート中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
@@ -4270,7 +4269,6 @@ msgstr[1] "%li 分前"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "不明"
 
@@ -4684,30 +4682,26 @@ msgstr "AC 電源を使ってください."
 msgid "Power now: "
 msgstr "電源断"
 
-#: src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:522
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:523
 #, fuzzy
 msgid "hr"
 msgstr "r(読取)"
 
-#: src/modules/battery/e_mod_main.c:526
-msgid "Time calculating..."
-msgstr ""
-
-#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:630
 msgid "N/A"
 msgstr "不可"
 
-#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
-#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
+#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
+#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
 msgid "ERROR"
 msgstr "エラー"
 
 #
-#: src/modules/battery/e_mod_main.c:861
+#: src/modules/battery/e_mod_main.c:864
 msgid "Battery Meter"
 msgstr "バッテリメーター"
 
@@ -4716,112 +4710,112 @@ msgstr "バッテリメーター"
 msgid "Clock Settings"
 msgstr "フォーカスの設定"
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:99
 #, c-format
 msgid ""
-"Click on a calendar day for date change. <br>Use the mouse wheel for "
-"changing the year."
+"Click on a calendar day to change the date. <br>Use the mouse wheel to "
+"change the year."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:100
+#: src/modules/clock/e_mod_config.c:101
 #, fuzzy
 msgid "Clock module Information"
 msgstr "時計の設定"
 
-#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "時計"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:133
 #, fuzzy
 msgid "Analog"
 msgstr "設定ダイアログ"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:135
 #, fuzzy
 msgid "Digital"
 msgstr "デジタル表示"
 
-#: src/modules/clock/e_mod_config.c:136
+#: src/modules/clock/e_mod_config.c:137
 #, fuzzy
 msgid "Seconds"
 msgstr "%.1f 秒"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:140
 msgid "12 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:142
 msgid "24 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:146
+#: src/modules/clock/e_mod_config.c:147
 msgid "Date"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:152
 msgid "Full"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:154
 #, fuzzy
 msgid "Numbers"
 msgstr "列数"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:156
 #, fuzzy
 msgid "Date Only"
 msgstr "名前だけ"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:158
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:159
+#: src/modules/clock/e_mod_config.c:160
 #, fuzzy
 msgid "Strftime"
 msgstr "オフ時間"
 
-#: src/modules/clock/e_mod_config.c:166
+#: src/modules/clock/e_mod_config.c:167
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
+#: src/modules/clock/e_mod_config.c:169 src/modules/clock/e_mod_config.c:181
 #: src/modules/start/e_mod_main.c:168
 #, fuzzy
 msgid "Start"
 msgstr "スタート"
 
-#: src/modules/clock/e_mod_config.c:179
+#: src/modules/clock/e_mod_config.c:180
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:189
+#: src/modules/clock/e_mod_config.c:190
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
+#: src/modules/clock/e_mod_config.c:210
 #, fuzzy
 msgid "Time set"
 msgstr "タイマー"
 
 #
-#: src/modules/clock/e_mod_config.c:211
+#: src/modules/clock/e_mod_config.c:212
 #, fuzzy
 msgid "Hours"
 msgstr "1 時間"
 
-#: src/modules/clock/e_mod_config.c:216
+#: src/modules/clock/e_mod_config.c:217
 #, fuzzy
 msgid "Minutes"
 msgstr "%li 分前"
 
-#: src/modules/clock/e_mod_config.c:224
+#: src/modules/clock/e_mod_config.c:225
 msgid "Date set"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_main.c:988
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "ツールバーを表示する"
@@ -5010,7 +5004,6 @@ msgid "Available Profiles"
 msgstr "利用できるプロファイル"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:120
 msgid "Select a profile"
 msgstr "プロファイルを選択する"
 
@@ -5845,7 +5838,7 @@ msgstr "使用する言語"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:193
 msgid "System Default"
 msgstr "システムデフォルト"
 
@@ -5859,7 +5852,7 @@ msgstr "選択されたロケール"
 msgid "Locale"
 msgstr "ロケール"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
 msgid "Language"
 msgstr "言語"
 
@@ -7556,7 +7549,6 @@ msgid "Raise windows on mouse over"
 msgstr "マウスが乗っているウィンドウを自動的に一番上に出す"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:243
-#: src/modules/wizard/page_060.c:33
 msgid "Click"
 msgstr "クリック"
 
@@ -7743,7 +7735,7 @@ msgid "Resize by"
 msgstr "変更サイズ"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 msgid "Keyboard"
 msgstr "キーボード"
@@ -9436,60 +9428,36 @@ msgstr "高温"
 msgid "Check your device or settings!"
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
+#: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
 msgstr "次へ"
 
-#: src/modules/wizard/e_wizard.c:277
+#: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
 msgstr ""
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
 msgstr "Moksha にようこそ"
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:53
-msgid "Select one"
-msgstr "一つ選んでください"
-
-#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
-#: src/modules/wizard/page_040.c:36
-msgid "Adding missing App files"
-msgstr ""
+#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+msgid "Select one"
+msgstr "一つ選んでください"
 
-#: src/modules/wizard/page_050.c:130
-#, fuzzy
-msgid "Select preferred size"
-msgstr "推奨サイズを選択します。"
-
-#: src/modules/wizard/page_060.c:29
-#, fuzzy
-msgid "Focus by ..."
-msgstr "でフォーカス..."
-
-#: src/modules/wizard/page_060.c:36
-#, fuzzy
-msgid "Mouse Over"
-msgstr "使用頻度"
-
-#: src/modules/wizard/page_110.c:156
-msgid "Checking to see if Connman exists"
-msgstr ""
-
-#: src/modules/wizard/page_170.c:24
+#: src/modules/wizard/page_170.c:25
 #, fuzzy
 msgid "Updates"
 msgstr "更新する"
 
-#: src/modules/wizard/page_170.c:26
+#: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
 msgstr ""
 
-#: src/modules/wizard/page_170.c:32
+#: src/modules/wizard/page_170.c:33
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -9502,20 +9470,20 @@ msgid ""
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
 
-#: src/modules/wizard/page_170.c:53
+#: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
 msgstr ""
 
-#: src/modules/wizard/page_180.c:26
+#: src/modules/wizard/page_180.c:27
 #, fuzzy
 msgid "Information"
 msgstr "リンク情報"
 
-#: src/modules/wizard/page_180.c:32
+#: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
 
-#: src/modules/wizard/page_180.c:38
+#: src/modules/wizard/page_180.c:39
 #, fuzzy
 msgid "Enable Taskbar"
 msgstr "タスクバー"
@@ -9783,29 +9751,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
 #, fuzzy
 msgid "Systray Error"
 msgstr "トレイのエラー"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:500
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:906
 msgid "Another systray exists"
 msgstr "別の systray があります"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:907
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "使える systray ガジェットは１つだけですが、すでに存在します"
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:916
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systrayはに至るまでの下に設定されている棚で作業することはできません。"
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1113
 #, fuzzy
 msgid "Systray"
 msgstr "トレイ"
@@ -10795,6 +10763,18 @@ msgstr "解像度の変更"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "解像度の変更"
+
+#, fuzzy
+#~ msgid "Select preferred size"
+#~ msgstr "推奨サイズを選択します。"
+
+#, fuzzy
+#~ msgid "Focus by ..."
+#~ msgstr "でフォーカス..."
+
+#, fuzzy
+#~ msgid "Mouse Over"
+#~ msgstr "使用頻度"
 
 #~ msgid "Modes"
 #~ msgstr "モード"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-03-25 18:31+0100\n"
+"POT-Creation-Date: 2021-04-09 20:12+0200\n"
 "PO-Revision-Date: 2021-04-05 13:22+0200\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -39,13 +39,14 @@ msgstr "Sluiten"
 #: src/bin/e_actions.c:3547 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
-#: src/modules/wizard/page_000.c:34
+#: src/modules/wizard/page_000.c:36
 msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2020, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
 "org</><br><br>"
@@ -120,7 +121,7 @@ msgstr "Afmelden"
 msgid "Are you sure you want to logout?"
 msgstr "Weet u zeker dat u zich wilt afmelden?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
 msgid "Power off"
 msgstr "Uitschakelen"
 
@@ -891,9 +892,9 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
-#: src/modules/clock/e_mod_config.c:104
+#: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
@@ -1006,7 +1007,7 @@ msgstr ""
 "<br>%s<br><br>Het bestand waarbij de fout plaatsvond was:<br>%s<br><br>Dit "
 "bestand is verwijderd om corrupte gegevens te voorkomen.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:859
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1887,24 +1888,24 @@ msgstr "%s ondersteunt het uitschakelen van automatisch schuiven niet"
 msgid "Move to"
 msgstr "Verplaatsen naar"
 
-#: src/bin/e_gadcon.c:1749
+#: src/bin/e_gadcon.c:1753
 msgid "Automatically scroll contents"
 msgstr "Schuif automatisch door inhoud"
 
-#: src/bin/e_gadcon.c:1762 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
 msgid "Plain"
 msgstr "Vlak"
 
-#: src/bin/e_gadcon.c:1775 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
 msgid "Inset"
 msgstr "Inleg"
 
-#: src/bin/e_gadcon.c:1788 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Uiterlijk"
 
-#: src/bin/e_gadcon.c:1800 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
@@ -1914,15 +1915,15 @@ msgstr "Uiterlijk"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: src/bin/e_gadcon.c:2440
+#: src/bin/e_gadcon.c:2444
 msgid "Stop moving"
 msgstr "Stop met verplaatsen"
 
-#: src/bin/e_gadcon.c:3091
+#: src/bin/e_gadcon.c:3095
 msgid "Insufficent gadcon support"
 msgstr "Onvoldoende ondersteuning voor gadcon"
 
-#: src/bin/e_gadcon.c:3092
+#: src/bin/e_gadcon.c:3096
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "Module %s moet %s ondersteunen"
@@ -2290,7 +2291,7 @@ msgstr "Vensterlijst"
 msgid "Pager"
 msgstr "Pager"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:24
+#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
 msgid "Taskbar"
 msgstr "Taakbalk"
 
@@ -2376,8 +2377,8 @@ msgstr "Zuidoost"
 msgid "Static"
 msgstr "Statisch"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:149
-#: src/modules/clock/e_mod_config.c:192
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:150
+#: src/modules/clock/e_mod_config.c:193
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2415,7 +2416,6 @@ msgid "ICCCM"
 msgstr "ICCCM"
 
 #: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
-#: src/modules/wizard/page_050.c:95
 msgid "Title"
 msgstr "Titel"
 
@@ -2451,7 +2451,7 @@ msgstr "Basisgrootte"
 msgid "Resize Steps"
 msgstr "Stappen bij herschalen"
 
-#: src/bin/e_int_border_prop.c:457 src/modules/wizard/page_050.c:128
+#: src/bin/e_int_border_prop.c:457
 msgid "Sizing"
 msgstr "Afmetingen wijzigen"
 
@@ -2514,8 +2514,8 @@ msgstr "Verzoek positie"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:446
-#: src/modules/clock/e_mod_main.c:693 src/modules/conf/e_conf.c:137
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
@@ -3799,16 +3799,16 @@ msgstr "Verversen"
 msgid "Starting %s"
 msgstr "Bezig met starten van %s"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:341
 msgid "Checking System Permissions"
 msgstr "Systeemrechten nakijken"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
+#: src/bin/e_sys.c:416
 msgid "System Check Done"
 msgstr "Systeemcontrole is klaar"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:484
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3820,35 +3820,35 @@ msgstr ""
 "toepassingen<br>eerst af te sluiten? <br><br>Automatisch afmelden over %d "
 "seconden."
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:544
 msgid "Logout problems"
 msgstr "Afmeldproblemen"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:546
 msgid "Logout now"
 msgstr "Nu afmelden"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:548
 msgid "Wait longer"
 msgstr "Langer wachten"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:550
 msgid "Cancel Logout"
 msgstr "Afmelden afbreken"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:594
 msgid "Logout in progress"
 msgstr "Bezig met afmelden"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:597
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Bezig met afmelden.<br><hilight>Een ogenblik geduld a.u.b.</hilight>"
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
 msgid "Moksha is busy with another request"
 msgstr "Moksha is bezig met een andere aanvraag"
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:631
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3856,7 +3856,7 @@ msgstr ""
 "Bezig met afmelden.<br>U kunt geen andere systeemacties uitvoeren<br>wanneer "
 "het afmelden is begonnen."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:638
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3864,7 +3864,7 @@ msgstr ""
 "Bezig met uitschakelen.<br>U kunt geen andere systeemacties uitvoeren<br> "
 "wanneer het uitschakelen is begonnen."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:644
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3872,7 +3872,7 @@ msgstr ""
 "Bezig met herstarten.<br>U kunt geen andere systeemacties "
 "uitvoeren<br>wanneer het herstarten is begonnen."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:650
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3880,7 +3880,7 @@ msgstr ""
 "Bezig met ingaan pauzestand.<br>U kunt geen andere systeemacties "
 "uitvoeren<br>wanneer het pauzeren is begonnen."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:656
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3888,52 +3888,52 @@ msgstr ""
 "Bezig met ingaan slaapstand.<br>U kunt geen andere systeemacties "
 "uitvoeren<br> totdat dit is voltooid."
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
 msgid "EEK! This should not happen"
 msgstr "Ai! Dit zou niet moeten gebeuren"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:687
 msgid "Power off failed."
 msgstr "Uitschakelen is mislukt."
 
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:691
 msgid "Reset failed."
 msgstr "Herstarten is mislukt."
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:695
 msgid "Suspend failed."
 msgstr "Pauzestand is mislukt."
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:699
 msgid "Hibernate failed."
 msgstr "Slaapstand is mislukt."
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:799
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Bezig met uitschakelen.<br><hilight>Een ogenblik geduld a.u.b.</hilight>"
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:843
 msgid "Resetting"
 msgstr "Bezig met herstarten"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:846
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Bezig met herstarten.<br><hilight>Een ogenblik geduld a.u.b.</hilight>"
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:898
 msgid "Suspending"
 msgstr "Bezig met pauzestand"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:901
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Bezig met pauzestand.<br><hilight>Een ogenblik geduld a.u.b.</hilight>"
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:953
 msgid "Hibernating"
 msgstr "Bezig met slaapstand"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:956
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Bezig met slaapstand.<br><hilight>Een ogenblik geduld a.u.b.</hilight>"
 
@@ -4086,7 +4086,6 @@ msgstr[1] "%li minuten geleden"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
-#: src/modules/wizard/page_020.c:25
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -4482,28 +4481,24 @@ msgstr "Netstroom wordt aangeraden."
 msgid "Power now: "
 msgstr "Lading nu: "
 
-#: src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:522
 msgid "Remaining time: "
 msgstr "Resterende tijd: "
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:523
 msgid "hr"
 msgstr "u"
 
-#: src/modules/battery/e_mod_main.c:526
-msgid "Time calculating..."
-msgstr "Tijd berekenen..."
-
-#: src/modules/battery/e_mod_main.c:627
+#: src/modules/battery/e_mod_main.c:630
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:732 src/modules/battery/e_mod_main.c:734
-#: src/modules/battery/e_mod_main.c:741 src/modules/battery/e_mod_main.c:743
+#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
+#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
 msgid "ERROR"
 msgstr "FOUT"
 
-#: src/modules/battery/e_mod_main.c:861
+#: src/modules/battery/e_mod_main.c:864
 msgid "Battery Meter"
 msgstr "Acculadingmeter"
 
@@ -4511,102 +4506,102 @@ msgstr "Acculadingmeter"
 msgid "Clock Settings"
 msgstr "Klokinstellingen"
 
-#: src/modules/clock/e_mod_config.c:98
-#, c-format
+#: src/modules/clock/e_mod_config.c:99
+#, fuzzy, c-format
 msgid ""
-"Click on a calendar day for date change. <br>Use the mouse wheel for "
-"changing the year."
+"Click on a calendar day to change the date. <br>Use the mouse wheel to "
+"change the year."
 msgstr ""
 "Klik op een kalenderdag voor datumwijziging.<br>Gebruik het muiswieltje voor "
 "het wijzigen van het jaar."
 
-#: src/modules/clock/e_mod_config.c:100
+#: src/modules/clock/e_mod_config.c:101
 msgid "Clock module Information"
 msgstr "Klokmodule-informatie"
 
-#: src/modules/clock/e_mod_config.c:129 src/modules/clock/e_mod_main.c:797
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Klok"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:133
 msgid "Analog"
 msgstr "Analoog"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:135
 msgid "Digital"
 msgstr "Digitaal"
 
-#: src/modules/clock/e_mod_config.c:136
+#: src/modules/clock/e_mod_config.c:137
 msgid "Seconds"
 msgstr "Seconden"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:140
 msgid "12 h"
 msgstr "12 u"
 
-#: src/modules/clock/e_mod_config.c:141
+#: src/modules/clock/e_mod_config.c:142
 msgid "24 h"
 msgstr "24 u"
 
-#: src/modules/clock/e_mod_config.c:146
+#: src/modules/clock/e_mod_config.c:147
 msgid "Date"
 msgstr "Datum"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:152
 msgid "Full"
 msgstr "Volledig"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:154
 msgid "Numbers"
 msgstr "Getallen"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:156
 msgid "Date Only"
 msgstr "Alleen datum"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:158
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
-#: src/modules/clock/e_mod_config.c:159
+#: src/modules/clock/e_mod_config.c:160
 msgid "Strftime"
 msgstr "Strftime"
 
-#: src/modules/clock/e_mod_config.c:166
+#: src/modules/clock/e_mod_config.c:167
 msgid "Week"
 msgstr "Week"
 
-#: src/modules/clock/e_mod_config.c:168 src/modules/clock/e_mod_config.c:180
+#: src/modules/clock/e_mod_config.c:169 src/modules/clock/e_mod_config.c:181
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Start"
 
-#: src/modules/clock/e_mod_config.c:179
+#: src/modules/clock/e_mod_config.c:180
 msgid "Weekend"
 msgstr "Weekeinde"
 
-#: src/modules/clock/e_mod_config.c:189
+#: src/modules/clock/e_mod_config.c:190
 msgid "Days"
 msgstr "Dagen"
 
-#: src/modules/clock/e_mod_config.c:209
+#: src/modules/clock/e_mod_config.c:210
 msgid "Time set"
 msgstr "Tijd instellen"
 
-#: src/modules/clock/e_mod_config.c:211
+#: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
 msgstr "Uren"
 
-#: src/modules/clock/e_mod_config.c:216
+#: src/modules/clock/e_mod_config.c:217
 msgid "Minutes"
 msgstr "Minuten"
 
-#: src/modules/clock/e_mod_config.c:224
+#: src/modules/clock/e_mod_config.c:225
 msgid "Date set"
 msgstr "Datum instellen"
 
-#: src/modules/clock/e_mod_main.c:986
+#: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
 msgstr "Kalender omschakelen"
 
@@ -4775,7 +4770,6 @@ msgid "Available Profiles"
 msgstr "Beschikbare profielen"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:122
-#: src/modules/wizard/page_020.c:120
 msgid "Select a profile"
 msgstr "Kies een profiel"
 
@@ -5569,7 +5563,7 @@ msgstr "Taalkiezer"
 #: src/modules/conf_intl/e_int_config_intl.c:1062
 #: src/modules/conf_intl/e_int_config_intl.c:1511
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:170
+#: src/modules/wizard/page_010.c:193
 msgid "System Default"
 msgstr "Systeemstandaard"
 
@@ -5583,7 +5577,7 @@ msgstr "Gekozen regionalisering"
 msgid "Locale"
 msgstr "Regionalisering"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:161
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
 msgid "Language"
 msgstr "Taal"
 
@@ -7199,7 +7193,6 @@ msgid "Raise windows on mouse over"
 msgstr "Verhef vensters als muispijl erover gaat"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:243
-#: src/modules/wizard/page_060.c:33
 msgid "Click"
 msgstr "Klikken"
 
@@ -7370,7 +7363,7 @@ msgid "Resize by"
 msgstr "Herschaal met"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
-#: src/modules/wizard/page_011.c:145 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 msgid "Keyboard"
 msgstr "Toetsenbord"
@@ -8957,56 +8950,35 @@ msgstr "Hoge CPU-temperatuur!"
 msgid "Check your device or settings!"
 msgstr "Kijk uw apparaat of instellingen na."
 
-#: src/modules/wizard/e_wizard.c:245 src/modules/wizard/e_wizard.c:272
+#: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
 msgstr "Volgende"
 
-#: src/modules/wizard/e_wizard.c:277
+#: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
 msgstr "Ogenblikje a.u.b..."
 
-#: src/modules/wizard/e_wizard.c:325
+#: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
 msgstr "Welkom in Moksha"
 
-#: src/modules/wizard/page_010.c:162 src/modules/wizard/page_011.c:146
-#: src/modules/wizard/page_020.c:53
-msgid "Select one"
-msgstr "Kies er één"
-
-#: src/modules/wizard/page_020.c:52 src/modules/wizard/page_060.c:27
+#: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Wacht a.u.b. terwijl we de Moksha-instellingen laden."
 
-#: src/modules/wizard/page_040.c:36
-msgid "Adding missing App files"
-msgstr "Ontbrekende toepassingsbestanden toevoegen"
+#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+msgid "Select one"
+msgstr "Kies er één"
 
-#: src/modules/wizard/page_050.c:130
-msgid "Select preferred size"
-msgstr "Kies voorkeursgrootte"
-
-#: src/modules/wizard/page_060.c:29
-msgid "Focus by ..."
-msgstr "Scherpstellen met ..."
-
-#: src/modules/wizard/page_060.c:36
-msgid "Mouse Over"
-msgstr "Muis-eroverheen"
-
-#: src/modules/wizard/page_110.c:156
-msgid "Checking to see if Connman exists"
-msgstr "Aan het controleren of Connman bestaat"
-
-#: src/modules/wizard/page_170.c:24
+#: src/modules/wizard/page_170.c:25
 msgid "Updates"
 msgstr "Bijgewerkte pakketten"
 
-#: src/modules/wizard/page_170.c:26
+#: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
 msgstr "Controleer op beschikbare bijgewerkte pakketten"
 
-#: src/modules/wizard/page_170.c:32
+#: src/modules/wizard/page_170.c:33
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -9023,21 +8995,21 @@ msgstr ""
 "<br><br>Schakel dit dus niet uit!<br>Er wordt geen "
 "persoonlijke<br>informatie doorgegeven."
 
-#: src/modules/wizard/page_170.c:53
+#: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
 msgstr "Controleren op bijgewerkte pakketten inschakelen"
 
-#: src/modules/wizard/page_180.c:26
+#: src/modules/wizard/page_180.c:27
 msgid "Information"
 msgstr "Informatie"
 
-#: src/modules/wizard/page_180.c:32
+#: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
 "Er kan een werkbalk worden toegevoegd<br>om geopende vensters en "
 "toepassingen te tonen."
 
-#: src/modules/wizard/page_180.c:38
+#: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
 msgstr "Taakbalk inschakelen"
 
@@ -9333,30 +9305,30 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "naam snelle toegang/identificator"
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
 msgid "Systray Error"
 msgstr "Systeemvakfout"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:500
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Systray kan zijn achtergrond niet op onzichtbaar instellen wegens zijn plank."
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:906
 msgid "Another systray exists"
 msgstr "Een ander systeemvak bestaat reeds"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:907
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Er kan maar één systeemvakmini zijn en er bestaat er al een."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:916
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systeemvak kan niet werken op een plank die is ingesteld om beneden alles te "
 "zitten."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1113
 msgid "Systray"
 msgstr "Systeemvak"
 
@@ -10215,6 +10187,24 @@ msgstr "Volumetoename"
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
 msgstr "Volumedemping"
+
+#~ msgid "Time calculating..."
+#~ msgstr "Tijd berekenen..."
+
+#~ msgid "Adding missing App files"
+#~ msgstr "Ontbrekende toepassingsbestanden toevoegen"
+
+#~ msgid "Select preferred size"
+#~ msgstr "Kies voorkeursgrootte"
+
+#~ msgid "Focus by ..."
+#~ msgstr "Scherpstellen met ..."
+
+#~ msgid "Mouse Over"
+#~ msgstr "Muis-eroverheen"
+
+#~ msgid "Checking to see if Connman exists"
+#~ msgstr "Aan het controleren of Connman bestaat"
 
 #~ msgid "Modes"
 #~ msgstr "Modi"
