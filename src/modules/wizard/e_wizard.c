@@ -94,7 +94,7 @@ e_wizard_shutdown(void)
       {
          fputs("nm-applet.desktop\n", f);
          fputs("/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop\n", f);
-         fputs("/etc/xdg/autostart/xdg-user-dirs.desktop\n", f);
+         //fputs("/etc/xdg/autostart/xdg-user-dirs.desktop\n", f);
          fclose(f);
       }
    return 1;
