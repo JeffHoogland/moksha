@@ -6063,7 +6063,7 @@ msgstr "Omgevingsvariabelen"
 
 #: src/modules/conf_paths/e_int_config_env.c:332
 msgid "Unset"
-msgstr "Opheffing van instelling"
+msgstr "Niet-ingesteld"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
@@ -6107,7 +6107,7 @@ msgstr "%1.0f fps"
 
 #: src/modules/conf_performance/e_int_config_performance.c:113
 msgid "Application priority"
-msgstr "Toepassingsprioriteit"
+msgstr "Prioriteit van toepassing"
 
 #: src/modules/conf_performance/e_int_config_performance.c:119
 msgid "Allow module load delay"
@@ -6138,7 +6138,7 @@ msgstr "%1.0f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Caches"
-msgstr "Tijdelijke opslag"
+msgstr "Tijdelijke opslagruimtes"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
 msgid "Number of Edje files to cache"
@@ -6168,7 +6168,7 @@ msgstr "Instellingen van energiebeheer"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:120
 msgid "Levels Allowed"
-msgstr "Niveaus toegestaan"
+msgstr "Toegestane niveaus"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:129
 msgid "Time to defer power-hungry tasks"
@@ -6560,7 +6560,7 @@ msgstr "Vensterbeheerder"
 #: src/modules/conf_theme/e_int_config_color_classes.c:860
 #: src/modules/conf_theme/e_int_config_fonts.c:81
 msgid "Widgets"
-msgstr "Miniprogramma's"
+msgstr "Mini's"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:866
 msgid "Others"
@@ -6767,7 +6767,7 @@ msgstr "Terugval-lettertypes"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:696
 msgid "Fallback Name"
-msgstr "Terugvallernaam"
+msgstr "Terugvalnaam"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:704
 msgid "Enable Fallbacks"
@@ -6936,7 +6936,7 @@ msgstr "Thema-instellingen voor toepassingen"
 #: src/modules/conf_theme/e_int_config_xsettings.c:515
 #: src/modules/conf_theme/e_int_config_xsettings.c:559
 msgid "Match Moksha theme if possible"
-msgstr "Indien mogelijk, overeenkomstig Moksha-thema"
+msgstr "Indien mogelijk, overeenkomstig het Moksha-thema"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:524
 msgid "Enable X Application Settings"
@@ -6964,7 +6964,7 @@ msgstr "Randen"
 
 #: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
-msgstr "Schaling"
+msgstr "Schalen"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 msgid "Window List Menu Settings"
@@ -7008,7 +7008,7 @@ msgstr "Meest recent gebruikt"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:137
 msgid "Sort Order"
-msgstr "Sorteringsvolgorde"
+msgstr "Sorteervolgorde"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:142
 msgid "Group with owning desktop"
@@ -7499,7 +7499,7 @@ msgstr "Snel (4 tikken)"
 
 #: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:95
 msgid "Medium (8 ticks)"
-msgstr "Redelijk snel (8 tikken)"
+msgstr "Gemiddeld (8 tikken)"
 
 #: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:97
 msgid "Normal (32 ticks)"
@@ -7507,11 +7507,11 @@ msgstr "Normaal (32 tikken)"
 
 #: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:99
 msgid "Slow (64 ticks)"
-msgstr "Sloom (64 tikken)"
+msgstr "Langzaam (64 tikken)"
 
 #: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_config.c:101
 msgid "Very Slow (256 ticks)"
-msgstr "Erg sloom (256 tikken)"
+msgstr "Erg langzaam (256 tikken)"
 
 #: src/modules/cpufreq/e_mod_main.c:240
 msgid "Manual"
@@ -7519,7 +7519,7 @@ msgstr "Handmatig"
 
 #: src/modules/cpufreq/e_mod_main.c:244 src/modules/cpufreq/e_mod_main.c:280
 msgid "Lower Power Automatic"
-msgstr "Verlaag energie automatisch"
+msgstr "Verlaag stroomverbruik automatisch"
 
 #: src/modules/cpufreq/e_mod_main.c:246 src/modules/cpufreq/e_mod_main.c:282
 msgid "Automatic Interactive"
@@ -8034,8 +8034,8 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-" Oké, hier komt de uitleg van <hilight>Alles</hilight>...<br> Typ gewoon een "
-"paar letters van het element dat u zoekt. <br> Gebruik pijltjestoetsen "
+" Oké, hier komt de uitleg van <hilight>Alles</hilight>...<br> Tik gewoon een "
+"paar letters in van het element dat u zoekt. <br> Gebruik pijltjestoetsen "
 "<hilight>&lt;omhoog/omlaag&gt;</hilight> om een actie te selecteren. Druk "
 "daarna op <hilight>&lt;Enter&gt;</hilight> Deze pagina zal niet worden "
 "weergegeven wanneer u de volgende keer <hilight>Alles</hilight> opstart."
@@ -8189,7 +8189,7 @@ msgstr "Basisinformatie"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:137
 msgid "Mime:"
-msgstr "Mime:"
+msgstr "Bestandssoort:"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:147
 msgid "Use Generated Thumbnail"
@@ -8213,7 +8213,7 @@ msgstr "Gebruik standaard"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:299
 msgid "Select an Edje file"
-msgstr "Selecteer een Edje-bestand"
+msgstr "Kies een Edje-bestand"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:301
 msgid "Select an image"
