@@ -12,5 +12,5 @@ group "Pager_Config" struct {
     value "btn_noplace" uchar: 1;
     value "btn_desk" uchar: 2;
     value "flip_desk" uchar: 0;
-    value "disable_live_preview" uchar: 1;
+    value "disable_live_preview" uchar: 0;
 }
