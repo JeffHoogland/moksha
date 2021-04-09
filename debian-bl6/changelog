@@ -1,3 +1,15 @@
+moksha (0.3.3-9) focal; urgency=low
+
+  * Profile Tweaks
+  * Updated nl, es & fr localizations
+  * Gadcon menu MoveTo icons fix
+  * Application theme GTK list should show theme if Match moksha is checked
+  * Border focus frame for borderless apps
+  * Border fix for unfullscreen icon and shaped mode
+  * Mattery module improvements
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 09 Apr 2021 13:02:27 -0400
+
 moksha (0.3.3-8) focal; urgency=low
 
   * Improve e_wizard for ISO
