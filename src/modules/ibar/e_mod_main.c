@@ -1911,7 +1911,7 @@ e_modapi_init(E_Module *m)
         ci->show_label = 1;
         ci->show_label_adjac = 0;
         ci->eap_label = 0;
-        ci->lock_move = 0;
+        ci->lock_move = 1;
         ci->focus_flash = 1;
         ci->dont_track_launch = 0;
         ibar_config->items = eina_list_append(ibar_config->items, ci);

@@ -508,7 +508,7 @@ group "E_Config" struct {
                 }
                 group "E_Config_Gadcon_Client" struct {
                     value "name" string: "ibar";
-                    value "id" string: "ibar.2";
+                    value "id" string: "ibar.1";
                     value "geom.pos" int: 38;
                     value "geom.size" int: 116;
                     value "geom.res" int: 1154;
