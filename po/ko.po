@@ -52,9 +52,9 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, 인라이튼먼트 개발 팀</><br><br>우리가 이 "
+"<title>Copyright &copy; 2021, 인라이튼먼트 개발 팀</><br><br>우리가 이 "
 "프로그램을 즐겨 만든만큼 여러분도 즐겨 사용하길 바랍니다.<br><br>연락하시려"
-"면 다음을 방문하십시오:<br><hilight>http://www.enlightenment.org</><br><br>"
+"면 다음을 방문하십시오:<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

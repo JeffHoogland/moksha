@@ -46,16 +46,15 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>版权 &copy; 2000-2015 Moksha 开发团队</><br><br>我们希望您向我们编写这"
+"<title>版权 &copy; 2021 Moksha 开发团队</><br><br>我们希望您向我们编写这"
 "个软件时一样喜欢使用它。<br><br>联系我们请访问：<br><hilight>http://www."
-"enlightenment.org</><br><br>"
+"bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

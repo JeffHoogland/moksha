@@ -47,6 +47,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
+"<title>Copyright &copy; 2021, Vývojový tím Moksha</><br><br>Dúfame, "
+"že si užívate tento softvér tak, ako sme si my užili jeho vývoj."
+"<br><br>Neváhajte nás kontaktovať na: <br><hilight>http://www.bodhilinux.com</"
+"><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

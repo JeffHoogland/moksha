@@ -56,7 +56,7 @@ msgstr ""
 "<title>Copyright &copy; 2021, per Moksha Development Team</><br><br>Esperem "
 "que vostè gaudeixi tant utilitzant aquest programari com nosaltres hem "
 "gaudit de fer-lo.<br><br>Per contactar amb nosaltres visiteu:"
-"<br><hilight>http://www.mokshadesktop.org</><br><br>"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

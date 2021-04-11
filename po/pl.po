@@ -53,11 +53,10 @@ msgid ""
 "><br><br>"
 msgstr ""
 "Oto Moksha %s.\n"
-"Copyright © 1999-2005, by the Moksha Dev Team.\n"
+"Copyright © 12021, by the Moksha Dev Team.\n"
 "Mamy nadzieję, że jego użytkowanie sprawi Ci tyle przyjemności, co nam jego "
 "napisanie.\n"
 "\n"
-"Prosimy pomyśleć o mrówkojadach. One też potrzebują trochę miłości."
 
 #: src/bin/e_about.c:71
 #, fuzzy

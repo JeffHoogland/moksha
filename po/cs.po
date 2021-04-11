@@ -53,7 +53,7 @@ msgstr ""
 "<title>Copyright &copy; 2021, vyhrazen týmem vývojářů Moksha</"
 "><br><br>Doufáme, že si budete užívat tento software tak, jak jsme si "
 "užívali jeho vývoj.<br><br>Kontaktujte nás na:<br><highlight>http://www."
-"enlightenment.org</><br><br>"
+"bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

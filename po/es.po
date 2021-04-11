@@ -55,10 +55,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Derechos Reservados y Copia; 2020, por el Equipo de Desarrollo de "
+"<title>Derechos Reservados y Copia; 2021, por el Equipo de Desarrollo de "
 "Moksha</><br><br>Esperamos que disfrute usando este software tanto como "
 "nosotros disfrutamos escribiéndolo.<br><br>Para contactarnos visite:"
-"<br><hilight>http://www.mokshadesktop.org</><br><br>"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

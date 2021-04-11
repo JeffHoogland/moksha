@@ -52,10 +52,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, polo Equipo de Desenvolvemento de  "
+"<title>Copyright &copy; 2021, polo Equipo de Desenvolvemento de  "
 "Moksha</><br><br>Esperamos que gozara empregando este software tanto como "
 "nos gozamos escribíndoo.<br><br>Para contactar connosco visite:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"

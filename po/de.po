@@ -67,10 +67,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2000-2015, durch das Moksha Entwicklungsteam</"
+"<title>Copyright &copy; 2021, durch das Moksha Entwicklungsteam</"
 "><br><br>Wir hoffen, Ihnen macht das Benutzen dieser Software so viel Spaß "
 "wie uns das Schreiben derselben.<br><br>Um uns zu Kontaktieren, bitte "
-"besuchen Sie:<br><hilight>http://www.enlightenment.org</><br><br>"
+"besuchen Sie:<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
