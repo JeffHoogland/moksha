@@ -1154,6 +1154,7 @@ _cb_key_down(Evry_View *eview, const Ecore_Event_Key *ev)
              if (v->zoom == 2)
                _clear_items(v->span);
           }
+        evry_conf->view_zoom = v->zoom;
         _update_frame(v->span);
         goto end;
      }
@@ -1632,7 +1633,8 @@ _view_create(Evry_View *ev, const Evry_State *s, const Evas_Object *swallow)
 
    v->plugin = s->plugin;
    v->mode_prev = v->mode;
-   v->zoom = parent->zoom;
+   //~ v->zoom = parent->zoom;
+   v->zoom = evry_conf->view_zoom;
 
    v->bg = edje_object_add(v->evas);
    e_theme_edje_object_set(v->bg, "base/theme/modules/everything",
