@@ -8315,6 +8315,7 @@ _e_border_eval0(E_Border *bd)
         else
           bordername = e_config->theme_default_border_style;
         if (!bordername) bordername = "default";
+        bd->changes.icon = 1;
 
         if ((!bd->client.border.name) || (strcmp(bd->client.border.name, bordername)))
           {
