@@ -32,7 +32,7 @@ e_about_new(E_Container *con)
        "writing it.<br>"
        "<br>"
        "To contact us please visit:<br>"
-       "<hilight>http://www.mokshadesktop.org</><br>"
+       "<hilight>http://www.bodhilinux.com</><br>"
        "<br>"
       ),
        "All rights reserved.<br>"
