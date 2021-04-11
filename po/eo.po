@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-09 20:12+0200\n"
+"POT-Creation-Date: 2021-04-11 17:00+0200\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -54,8 +54,8 @@ msgstr "Moksha"
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
-"org</><br><br>"
+"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"><br><br>"
 msgstr ""
 
 #: src/bin/e_about.c:71
@@ -124,7 +124,7 @@ msgstr "Elsaluti"
 msgid "Are you sure you want to logout?"
 msgstr "Ĉu vi certe volas elsaluti?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 msgid "Power off"
 msgstr "Elŝalti"
 
@@ -895,7 +895,7 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
+#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -3798,16 +3798,16 @@ msgstr "Aktualigi"
 msgid "Starting %s"
 msgstr "Lanĉante %s"
 
-#: src/bin/e_sys.c:341
+#: src/bin/e_sys.c:295
 msgid "Checking System Permissions"
 msgstr "Kontrolado de sistemaj permesoj"
 
-#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
-#: src/bin/e_sys.c:416
+#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
+#: src/bin/e_sys.c:370
 msgid "System Check Done"
 msgstr "Kontrolo de sistemo finita."
 
-#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:438
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3818,42 +3818,42 @@ msgstr ""
 "volas fini la elsaluton<br>ĉiukaze sen fermi unue ilin?<br><br>Aŭtomata "
 "elsaluto post %d sekundoj."
 
-#: src/bin/e_sys.c:544
+#: src/bin/e_sys.c:498
 msgid "Logout problems"
 msgstr "Elsalutaj malfacilecoj"
 
-#: src/bin/e_sys.c:546
+#: src/bin/e_sys.c:500
 msgid "Logout now"
 msgstr "Elsaluti nun"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:502
 msgid "Wait longer"
 msgstr "Atendu pli longtempe"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:504
 msgid "Cancel Logout"
 msgstr "Rezigni elsaluton"
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:548
 msgid "Logout in progress"
 msgstr "Elsalutante"
 
-#: src/bin/e_sys.c:597
+#: src/bin/e_sys.c:551
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Elsalutado.<br><hilight>Bonvole atendu.</hilight>"
 
-#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
+#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
 msgid "Moksha is busy with another request"
 msgstr "Moksha estas okupata de alia peto"
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:585
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
 "Elsalutante.<br>Vi ne povas plenumi aliajn sistemajn agojn ĝis tio finiĝos."
 
-#: src/bin/e_sys.c:638
+#: src/bin/e_sys.c:592
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3861,7 +3861,7 @@ msgstr ""
 "Elŝaltado.<br>Vi ne povas fari iujn ajn aliajn sistemajn agadojn<br>antaŭ "
 "sistemfermo ekis."
 
-#: src/bin/e_sys.c:644
+#: src/bin/e_sys.c:598
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3869,7 +3869,7 @@ msgstr ""
 "Restartigado.<br>Vi ne povas fari aliajn sistemajn agadoj<br>antaŭ la "
 "relanĉo ekos."
 
-#: src/bin/e_sys.c:650
+#: src/bin/e_sys.c:604
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3877,7 +3877,7 @@ msgstr ""
 "Prokrastado.<br>Vi ne povas fari iujn ajn aliajn sistemajn agadoj<br>antaŭ "
 "la paŭzigo ekos."
 
-#: src/bin/e_sys.c:656
+#: src/bin/e_sys.c:610
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3885,51 +3885,51 @@ msgstr ""
 "Pasivumigante.<br>Vi ne povas efektivigi iun ajn sisteman agadon<br>ĝis ĝi "
 "plenumiĝos."
 
-#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
+#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
 msgstr "HUJ! Tio ne devus okazi"
 
-#: src/bin/e_sys.c:687
+#: src/bin/e_sys.c:641
 msgid "Power off failed."
 msgstr "La elŝalto malsukcesis."
 
-#: src/bin/e_sys.c:691
+#: src/bin/e_sys.c:645
 msgid "Reset failed."
 msgstr "La restartigo malsukcesis."
 
-#: src/bin/e_sys.c:695
+#: src/bin/e_sys.c:649
 msgid "Suspend failed."
 msgstr "Prokrastado malsukcesis."
 
-#: src/bin/e_sys.c:699
+#: src/bin/e_sys.c:653
 msgid "Hibernate failed."
 msgstr "Pasivumigo malsukcesis."
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Elŝalto.<br><hilight>Bonvole atendu</hilight>"
 
-#: src/bin/e_sys.c:843
+#: src/bin/e_sys.c:797
 msgid "Resetting"
 msgstr "Restartigante"
 
-#: src/bin/e_sys.c:846
+#: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Restartigante.<br><hilight>Bonvole atendu</hilight>"
 
-#: src/bin/e_sys.c:898
+#: src/bin/e_sys.c:852
 msgid "Suspending"
 msgstr "Prokrastante"
 
-#: src/bin/e_sys.c:901
+#: src/bin/e_sys.c:855
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Prokrastado.<br><hilight>Bonvole atendu</hilight>"
 
-#: src/bin/e_sys.c:953
+#: src/bin/e_sys.c:907
 msgid "Hibernating"
 msgstr "Pasivumigante"
 
-#: src/bin/e_sys.c:956
+#: src/bin/e_sys.c:910
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Pasivumigado.<br><hilight>Bonvole atendu.</hilight>"
 

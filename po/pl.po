@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-09 20:12+0200\n"
+"POT-Creation-Date: 2021-04-11 17:00+0200\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -49,8 +49,8 @@ msgstr "Moksha"
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
-"org</><br><br>"
+"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"><br><br>"
 msgstr ""
 "Oto Moksha %s.\n"
 "Copyright © 1999-2005, by the Moksha Dev Team.\n"
@@ -128,7 +128,7 @@ msgstr "Wylogowanie"
 msgid "Are you sure you want to logout?"
 msgstr "Czy na pewno chcesz się wylogować?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 msgid "Power off"
 msgstr "Wyłącz"
 
@@ -937,7 +937,7 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
+#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -3990,16 +3990,16 @@ msgstr "Odśwież"
 msgid "Starting %s"
 msgstr "Włączanie"
 
-#: src/bin/e_sys.c:341
+#: src/bin/e_sys.c:295
 msgid "Checking System Permissions"
 msgstr "Sprawdzanie uprawnień systemu"
 
-#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
-#: src/bin/e_sys.c:416
+#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
+#: src/bin/e_sys.c:370
 msgid "System Check Done"
 msgstr "Skończono sprawdzanie systemu"
 
-#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:438
 #, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -4010,35 +4010,35 @@ msgstr ""
 "<br>Czy chcesz się wylogować mimo tego bez wcześnijeszego<br>zamykania tych "
 "aplikacji?<br><br>Samoczynne wylogowanie za %d sekund."
 
-#: src/bin/e_sys.c:544
+#: src/bin/e_sys.c:498
 msgid "Logout problems"
 msgstr "Problemy przy wylogowaniu"
 
-#: src/bin/e_sys.c:546
+#: src/bin/e_sys.c:500
 msgid "Logout now"
 msgstr "Wyloguj teraz"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:502
 msgid "Wait longer"
 msgstr "Jeszcze poczekaj"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:504
 msgid "Cancel Logout"
 msgstr "Anuluj wylogowanie"
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:548
 msgid "Logout in progress"
 msgstr "Wylogowanie trwa"
 
-#: src/bin/e_sys.c:597
+#: src/bin/e_sys.c:551
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Trwa wylogowanie<br><hilight>Proszę czękać.</hilight>"
 
-#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
+#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
 msgid "Moksha is busy with another request"
 msgstr "Moksha jest zajęty przez inne zadanie"
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:585
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -4046,7 +4046,7 @@ msgstr ""
 "Wylogowywanie.<br>Nie możesz wykonywać innych akcji systemu<br>odkąd proces "
 "się rozpoczął."
 
-#: src/bin/e_sys.c:638
+#: src/bin/e_sys.c:592
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -4054,7 +4054,7 @@ msgstr ""
 "Wyłączanie.<br>Nie możesz wykonywać innych akcji systemu<br>odkąd proces się "
 "rozpoczął."
 
-#: src/bin/e_sys.c:644
+#: src/bin/e_sys.c:598
 #, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
@@ -4063,7 +4063,7 @@ msgstr ""
 "Resetowanie.<br>Nie można zrobić inny<br>akcje systemu porestarcie już się "
 "rozpoczęły."
 
-#: src/bin/e_sys.c:650
+#: src/bin/e_sys.c:604
 #, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
@@ -4072,7 +4072,7 @@ msgstr ""
 "Zawieszania.<br>Do zawieszenia ma zakończyć nie można wykonać<br>żadnych "
 "innych działań systemowych."
 
-#: src/bin/e_sys.c:656
+#: src/bin/e_sys.c:610
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4081,52 +4081,52 @@ msgstr ""
 "Hibernacją.<br>nie można wykonywać żadnych innych<br>akcje systemu , dopóki "
 "to jest kompletna."
 
-#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
+#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
 msgstr "EEK! To się nie powinno zdarzyć"
 
-#: src/bin/e_sys.c:687
+#: src/bin/e_sys.c:641
 msgid "Power off failed."
 msgstr "Błąd wyłączania."
 
-#: src/bin/e_sys.c:691
+#: src/bin/e_sys.c:645
 msgid "Reset failed."
 msgstr "Restet nieudany."
 
-#: src/bin/e_sys.c:695
+#: src/bin/e_sys.c:649
 #, fuzzy
 msgid "Suspend failed."
 msgstr "Zawiesić się nie powiodła."
 
-#: src/bin/e_sys.c:699
+#: src/bin/e_sys.c:653
 msgid "Hibernate failed."
 msgstr "Hibernacja nieudana."
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Wyłączanie.<br><hilight>Proszę czekać.</hilight>"
 
-#: src/bin/e_sys.c:843
+#: src/bin/e_sys.c:797
 msgid "Resetting"
 msgstr "Resetowanie"
 
-#: src/bin/e_sys.c:846
+#: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Resetowanie.<br><hilight>Proszę czekać.</hilight>"
 
-#: src/bin/e_sys.c:898
+#: src/bin/e_sys.c:852
 msgid "Suspending"
 msgstr "Usypianie"
 
-#: src/bin/e_sys.c:901
+#: src/bin/e_sys.c:855
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:953
+#: src/bin/e_sys.c:907
 msgid "Hibernating"
 msgstr "Hibernowanie"
 
-#: src/bin/e_sys.c:956
+#: src/bin/e_sys.c:910
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Hibernowanie.<br><hilight>Przoszę czekać.</hilight>"
 

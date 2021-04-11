@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-09 20:12+0200\n"
+"POT-Creation-Date: 2021-04-11 17:00+0200\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -44,8 +44,8 @@ msgstr "Moksha"
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
-"org</><br><br>"
+"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"><br><br>"
 msgstr ""
 
 #: src/bin/e_about.c:71
@@ -117,7 +117,7 @@ msgstr "התנתק כעת"
 msgid "Are you sure you want to logout?"
 msgstr "אתה בטוח שברצונך להתנתק?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 #, fuzzy
 msgid "Power off"
 msgstr "כבה"
@@ -917,7 +917,7 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
+#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -3956,16 +3956,16 @@ msgstr "לרענן"
 msgid "Starting %s"
 msgstr "מתחיל"
 
-#: src/bin/e_sys.c:341
+#: src/bin/e_sys.c:295
 msgid "Checking System Permissions"
 msgstr "בדיקת הרשאות המערכת"
 
-#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
-#: src/bin/e_sys.c:416
+#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
+#: src/bin/e_sys.c:370
 msgid "System Check Done"
 msgstr "בדיקת המערכת הושלמה"
 
-#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:438
 #, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3975,42 +3975,42 @@ msgstr ""
 "הניתוק אורך זמן רב מדי. כמה<br>מהיישומים מסרבים להסגר.<br>האם ברצונך לסיים "
 "את תהליך הניתוק<br>בכל זאת מבלי לסגור<br>יישומים אלו תחילה?"
 
-#: src/bin/e_sys.c:544
+#: src/bin/e_sys.c:498
 msgid "Logout problems"
 msgstr "בעיות ניתוק"
 
-#: src/bin/e_sys.c:546
+#: src/bin/e_sys.c:500
 msgid "Logout now"
 msgstr "התנתק כעת"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:502
 msgid "Wait longer"
 msgstr "המשך בהמתנה"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:504
 msgid "Cancel Logout"
 msgstr "ביטול הניתוק"
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:548
 msgid "Logout in progress"
 msgstr "הניתוק מתבצע כעת"
 
-#: src/bin/e_sys.c:597
+#: src/bin/e_sys.c:551
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
+#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
 msgid "Moksha is busy with another request"
 msgstr "Moksha עסוקה בטיפול בבקשה אחרת."
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:585
 #, fuzzy
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr "התנתקות.<br>אתה לא יכול לבצע פעולות אחרות במערכת<br>פעםלהתנתקות החלה."
 
-#: src/bin/e_sys.c:638
+#: src/bin/e_sys.c:592
 #, fuzzy
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
@@ -4019,77 +4019,77 @@ msgstr ""
 "את היכולות.<br>אתה לא יכול לעשות שום פעולה אחרת<br>מערכתכיבוי פעם אחת כבר "
 "החלה."
 
-#: src/bin/e_sys.c:644
+#: src/bin/e_sys.c:598
 #, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr "איפוס.<br>אתה לא יכול לעשות שום<br>פעולות אחרות במערכת פעם מחדשהחלה."
 
-#: src/bin/e_sys.c:650
+#: src/bin/e_sys.c:604
 #, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr "השעיית.<br>להשעות עד סיום לא ניתן לבצע כל פעולה<br>מערכת אחרים."
 
-#: src/bin/e_sys.c:656
+#: src/bin/e_sys.c:610
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr "שנת החורף.<br>אתה לא יכול לבצע כל פעולה אחרת<br>המערכת עד זה הושלמה."
 
-#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
+#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
 msgstr "לעזאזל! זה לא אמור לקרות"
 
-#: src/bin/e_sys.c:687
+#: src/bin/e_sys.c:641
 #, fuzzy
 msgid "Power off failed."
 msgstr "כבה נכשל."
 
-#: src/bin/e_sys.c:691
+#: src/bin/e_sys.c:645
 #, fuzzy
 msgid "Reset failed."
 msgstr "איפוס נכשל."
 
-#: src/bin/e_sys.c:695
+#: src/bin/e_sys.c:649
 #, fuzzy
 msgid "Suspend failed."
 msgstr "להשעות נכשל."
 
-#: src/bin/e_sys.c:699
+#: src/bin/e_sys.c:653
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "שינה נכשל."
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:843
+#: src/bin/e_sys.c:797
 #, fuzzy
 msgid "Resetting"
 msgstr "איפוס"
 
-#: src/bin/e_sys.c:846
+#: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:898
+#: src/bin/e_sys.c:852
 msgid "Suspending"
 msgstr "לקראת השהייה"
 
-#: src/bin/e_sys.c:901
+#: src/bin/e_sys.c:855
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr ""
 
-#: src/bin/e_sys.c:953
+#: src/bin/e_sys.c:907
 msgid "Hibernating"
 msgstr "לקראת תרדמת"
 
-#: src/bin/e_sys.c:956
+#: src/bin/e_sys.c:910
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-09 20:12+0200\n"
+"POT-Creation-Date: 2021-04-11 17:00+0200\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -49,8 +49,8 @@ msgstr "인라이튼먼트"
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.mokshadesktop."
-"org</><br><br>"
+"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"><br><br>"
 msgstr ""
 "<title>Copyright &copy; 2000-2015, 인라이튼먼트 개발 팀</><br><br>우리가 이 "
 "프로그램을 즐겨 만든만큼 여러분도 즐겨 사용하길 바랍니다.<br><br>연락하시려"
@@ -121,7 +121,7 @@ msgstr "로그아웃"
 msgid "Are you sure you want to logout?"
 msgstr "정말로 로그아웃 하시겠습니까?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:796
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
 msgid "Power off"
 msgstr "전원 끄기"
 
@@ -892,7 +892,7 @@ msgstr ""
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:665 src/bin/e_sys.c:706
+#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
 #: src/bin/e_update.c:76 src/bin/e_utils.c:600
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -3778,16 +3778,16 @@ msgstr "새로 고침"
 msgid "Starting %s"
 msgstr "시작중"
 
-#: src/bin/e_sys.c:341
+#: src/bin/e_sys.c:295
 msgid "Checking System Permissions"
 msgstr "시스템 권한 확인중"
 
-#: src/bin/e_sys.c:387 src/bin/e_sys.c:398 src/bin/e_sys.c:407
-#: src/bin/e_sys.c:416
+#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
+#: src/bin/e_sys.c:370
 msgid "System Check Done"
 msgstr "시스템 확인 완료"
 
-#: src/bin/e_sys.c:484
+#: src/bin/e_sys.c:438
 #, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -3798,35 +3798,35 @@ msgstr ""
 "습니다.<br>어쨌든 이 프로그램을 먼저 닫지 않고 로그아웃해서 끝내시겠습니까?"
 "<br><br>%d초 후 자동으로 로그아웃합니다."
 
-#: src/bin/e_sys.c:544
+#: src/bin/e_sys.c:498
 msgid "Logout problems"
 msgstr "로그아웃 문제"
 
-#: src/bin/e_sys.c:546
+#: src/bin/e_sys.c:500
 msgid "Logout now"
 msgstr "지금 로그아웃"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:502
 msgid "Wait longer"
 msgstr "좀 더 기다림"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:504
 msgid "Cancel Logout"
 msgstr "로그아웃 취소"
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:548
 msgid "Logout in progress"
 msgstr "로그아웃이 진행중입니다"
 
-#: src/bin/e_sys.c:597
+#: src/bin/e_sys.c:551
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "로그아웃 중입니다.<br><hilight>기다리십시오.</hilight>"
 
-#: src/bin/e_sys.c:626 src/bin/e_sys.c:681
+#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
 msgid "Moksha is busy with another request"
 msgstr "인라이튼먼트는 다른 요청을 처리하는 중입니다"
 
-#: src/bin/e_sys.c:631
+#: src/bin/e_sys.c:585
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3834,7 +3834,7 @@ msgstr ""
 "로그아웃하는 중입니다.<br>로그아웃이 시작되고 나면 다른 시스템 동작을<br>수행"
 "할 수 없습니다."
 
-#: src/bin/e_sys.c:638
+#: src/bin/e_sys.c:592
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3842,7 +3842,7 @@ msgstr ""
 "전원을 끄는 중입니다.<br>전원 끄기 동작이 시작되고 나면 다른 시스템 동작을"
 "<br>수행할 수 없습니다."
 
-#: src/bin/e_sys.c:644
+#: src/bin/e_sys.c:598
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3850,7 +3850,7 @@ msgstr ""
 "다시 시작중입니다.<br>다시 시작이 진행되기 시작하면 다른 시스템 동작을<br>수"
 "행할 수 없습니다."
 
-#: src/bin/e_sys.c:650
+#: src/bin/e_sys.c:604
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3858,7 +3858,7 @@ msgstr ""
 "대기 모드 진입중입니다.<br>대기 모드 진입이 완료되기 전까지는<br>다른 시스템 "
 "동작을 수행할 수 없습니다."
 
-#: src/bin/e_sys.c:656
+#: src/bin/e_sys.c:610
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3866,51 +3866,51 @@ msgstr ""
 "최대 절전모드 진입중입니다.<br>최대 절전모드 진입이 완료되기 전까지는<br>다"
 "른 시스템 동작을 수행할 수 없습니다."
 
-#: src/bin/e_sys.c:662 src/bin/e_sys.c:703
+#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
 msgid "EEK! This should not happen"
 msgstr "으잌! 있어서는 안될 일이 생겼습니다"
 
-#: src/bin/e_sys.c:687
+#: src/bin/e_sys.c:641
 msgid "Power off failed."
 msgstr "전원 끄기에 실패했습니다."
 
-#: src/bin/e_sys.c:691
+#: src/bin/e_sys.c:645
 msgid "Reset failed."
 msgstr "다시 시작에 실패했습니다."
 
-#: src/bin/e_sys.c:695
+#: src/bin/e_sys.c:649
 msgid "Suspend failed."
 msgstr "대기 모드 진입에 실패했습니다."
 
-#: src/bin/e_sys.c:699
+#: src/bin/e_sys.c:653
 msgid "Hibernate failed."
 msgstr "최대 절전 모드 진입에 실패했습니다."
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:753
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "전원을 끕니다.<br><hilight>기다리십시오.</hilight>"
 
-#: src/bin/e_sys.c:843
+#: src/bin/e_sys.c:797
 msgid "Resetting"
 msgstr "다시 시작중"
 
-#: src/bin/e_sys.c:846
+#: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "다시 시작중입니다.<br><hilight>기다리십시오.</hilight>"
 
-#: src/bin/e_sys.c:898
+#: src/bin/e_sys.c:852
 msgid "Suspending"
 msgstr "대기 모드 진입중"
 
-#: src/bin/e_sys.c:901
+#: src/bin/e_sys.c:855
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "대기 모드로 진입중입니다.<br><hilight>기다리십시오.</hilight>"
 
-#: src/bin/e_sys.c:953
+#: src/bin/e_sys.c:907
 msgid "Hibernating"
 msgstr "최대 절전 모드 진입중"
 
-#: src/bin/e_sys.c:956
+#: src/bin/e_sys.c:910
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "최대 절전 모드로 진입중입니다.<br><hilight>기다리십시오.</hilight>"
 
