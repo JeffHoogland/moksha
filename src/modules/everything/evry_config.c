@@ -574,7 +574,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
 #if 1
-   of = e_widget_framelist_add(e, _("Edge Popup Sizes"), 0);
+   of = e_widget_framelist_add(e, _("Edge Popup Size"), 0);
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
