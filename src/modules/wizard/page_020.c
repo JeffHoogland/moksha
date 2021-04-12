@@ -20,7 +20,8 @@ EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
    // actually apply profile
-   if (ecore_file_exists("/etc/bodhi/iso"))
+   if (ecore_file_exists("/etc/bodhi/iso") &&
+       ecore_file_exists("/usr/share/enlightenment/data/config/ISO/"))
      {
          profile = "ISO";
      }
