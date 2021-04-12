@@ -16,6 +16,7 @@ struct _Config
 
   E_Module *module;
   E_Config_Dialog *config_dialog;
+  Eina_Bool settings_opened;
 };
 
 struct _Config_Item
@@ -41,7 +42,6 @@ struct _Config_Item
 
 void e_int_config_clock_module(E_Container *con, Config_Item *ci);
 void e_int_clock_instances_redo(Eina_Bool all);
-Eina_Bool settings_opened;
 
 extern Config *clock_config;
 

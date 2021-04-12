@@ -249,7 +249,7 @@ _clock_date_set_cb(void *data, Evas_Object *obj, const char *emission __UNUSED__
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
    snprintf(buf, sizeof(buf), "%s %s %s", cmd_sudo, command, date);
-   if (settings_opened)
+   if (clock_config->settings_opened)
    {
      e_util_exe_safe_run(buf, NULL);
     _clock_popup_free(inst);
