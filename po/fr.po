@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020, 2021.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-04-11 17:00+0200\n"
-"PO-Revision-Date: 2021-04-06 10:07+0200\n"
+"PO-Revision-Date: 2021-04-12 16:26+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -54,7 +54,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -2812,7 +2811,7 @@ msgstr "Applications"
 
 #: src/bin/e_int_menus.c:207
 msgid "About Operating System"
-msgstr "À propos du système d'exploitation"
+msgstr "À propos du système"
 
 #: src/bin/e_int_menus.c:213
 msgid "Help"
@@ -4522,7 +4521,7 @@ msgid "Clock Settings"
 msgstr "Paramétrage de l'horloge"
 
 #: src/modules/clock/e_mod_config.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
@@ -8388,7 +8387,7 @@ msgstr "Fond"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Hover (Key Toggle)"
-msgstr "Incrustation (sur activation)"
+msgstr "Incrustation (action d'activation)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
