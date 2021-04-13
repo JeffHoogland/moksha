@@ -1,8 +1,6 @@
 /* Ibar setup */
 #include "e_wizard.h"
 
-static void _write_bodhi_desktops(char *usr);
-
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops, Eina_Bool *need_xdg_icons __UNUSED__)
 {
@@ -28,7 +26,7 @@ _write_bodhi_update(void)
 
 
 static void 
-_write_bodhi_desktops(char *usr) 
+_write_bodhi_desktops() 
 {
    FILE *f;
    char buf[PATH_MAX];
@@ -54,8 +52,6 @@ _write_bodhi_desktops(char *usr)
                 fprintf(f, "thunar.desktop\n");
             else
                 fprintf(f, "pcmanfm.desktop\n");
-        /*if (!strcmp(usr, "bodhi"))
-           fprintf(f, "ubiquity.desktop\n");*/
         fclose(f);
      }
 }
@@ -70,18 +66,9 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
-   struct passwd *pw;
-   char *usr;
-
    if (ecore_file_exists("/usr/bin/mintupdate-launcher"))
       _write_bodhi_update(); 
-   pw = getpwuid(getuid());
-   usr = pw->pw_name;
-   if (usr) 
-     {
-        //if (!strcmp(usr, "bodhi"))
-          _write_bodhi_desktops(usr);
-     }
+   _write_bodhi_desktops();
      
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
