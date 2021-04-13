@@ -242,7 +242,9 @@ wizard_page_show(E_Wizard_Page *pg)
          e_config->language = eina_stringshare_ref(lang);
          e_intl_language_set(e_config->language);
          e_wizard_labels_update();
-e_util_exe_safe_run("/usr/bin/xdg-user-dirs-update --force", NULL);
+         if (ecore_file_exists("/usr/bin/xdg-user-dirs-update"))
+            e_util_exe_safe_run("/usr/bin/xdg-user-dirs-update --force", NULL);
+
          return 0;
       }
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
@@ -272,6 +274,7 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    e_config->language = eina_stringshare_ref(lang);
    e_intl_language_set(e_config->language);
    e_wizard_labels_update();
-e_util_exe_safe_run("/usr/bin/xdg-user-dirs-update --force", NULL);
+   if (ecore_file_exists("/usr/bin/xdg-user-dirs-update"))
+      e_util_exe_safe_run("/usr/bin/xdg-user-dirs-update --force", NULL);
    return 1;
 }
