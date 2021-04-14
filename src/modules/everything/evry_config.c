@@ -539,20 +539,20 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
 
    e_widget_toolbook_page_show(otb2, 0);
 
-   /// GEOMERY ///
+   /// GEOMETRY ///
    o = e_widget_list_add(e, 0, 0);
    of = e_widget_framelist_add(e, _("Popup Size"), 0);
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_w, 800, 1, 0, NULL,
+                            evry_conf->min_w, 2000, 1, 0, NULL,
                             &(cfdata->width), 200);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(e, _("Popup Height"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_h, 800, 1, 0, NULL,
+                            evry_conf->min_h, 2000, 1, 0, NULL,
                             &(cfdata->height), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -578,14 +578,14 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_w, 800, 1, 0, NULL,
+                            evry_conf->min_w, 2000, 1, 0, NULL,
                             &(cfdata->edge_width), 200);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(e, _("Popup Height"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_h, 800, 1, 0, NULL,
+                            evry_conf->min_h, 2000, 1, 0, NULL,
                             &(cfdata->edge_height), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
