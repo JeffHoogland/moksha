@@ -145,7 +145,6 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     char  lock_str[10];
     char *lock_val = NULL;
     int size = 0;
-    int str_len = 0;
     unsigned int i =0;
     unsigned int item_num = 0;
     long version = 0;
@@ -189,11 +188,11 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     }
     /* Malloc properly sized str */
     CALLOC_DIGIT_STR(str, item_num);
-    str_len = sizeof(str);
+
     /* Read each item */
     for (i = 1; i <= item_num; i++){
         cd = E_NEW(Clip_Data, 1);
-        snprintf(str, str_len, "%d", i);
+        snprintf(str, item_num, "%d", i);
         ret = eet_read(history_file, str, &size);
         if (!ret) {
           ERR("History file corruption: %s", history_path);
@@ -264,14 +263,15 @@ save_history(Eina_List *items)
       /*   if !items, 0 items is assumed */
       n = eina_list_count(items);
       CALLOC_DIGIT_STR(str,n);
-      str_len = sizeof(str)-1;
+
+      str_len = 4;
       /* Write history version */
-      snprintf(str, str_len, "%d", (HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION));
-      eet_write(history_file, "VERSION",  str, strlen(str) + 1, 0);
+      snprintf(str, 2, "%d", (HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION));
+      eet_write(history_file, "VERSION",  str, 2, 0);
       /* If we have no items in history wrap it up and return */
       if(!items) {
-        snprintf(str, str_len, "%d", 0);
-        eet_write(history_file, "MAX_ITEMS",  str, strlen(str) + 1, 0);
+        snprintf(str, 2, "%d", 0);
+        eet_write(history_file, "MAX_ITEMS",  str, 2, 0);
         free(str);
         return eet_close(history_file);
       }
