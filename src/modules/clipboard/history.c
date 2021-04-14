@@ -11,14 +11,14 @@ do {                                                 \
   long _digits_ = 1;                                 \
   long _tempn_ = n;                                  \
   while (_tempn_ /= 10) _digits_++;                  \
-  str = calloc(_digits_ + 1, sizeof(char));          \
+  str = calloc(++_digits_ , sizeof(char)); \
   if (!str) {                                        \
     /* This is bad, leave it to calling function */  \
     CRI("ERROR: Memory allocation Failed!!");        \
     eet_close(history_file);                         \
     return EET_ERROR_OUT_OF_MEMORY;                  \
    }                                                 \
-   snprintf(str, _digits_, "%d", 0);                  \
+   snprintf(str, _digits_, "%1d", 0);                  \
  } while(0)
 
 #define PATH_MAX_ERR                                              \
