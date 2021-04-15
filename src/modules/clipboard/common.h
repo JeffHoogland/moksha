@@ -12,7 +12,9 @@
 #define LABEL_MAX  100
 #define TIMER_MIN  0
 #define TIMER_MAX  240
-
+#define HIST_MIN   5
+#define HIST_MAX   100
+#define HIST_MAX_DIGITS 3
 /* Stuff for convenience to compress code */
 #define IF_TRUE_RETURN(exp)             \
 do {                                    \

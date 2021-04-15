@@ -4,23 +4,9 @@
 #define DATA_DIR    CLIPBOARD_MOD_NAME
 #define HISTORY_NAME "history"
 #define HISTORY_VERSION     1 /* must be < 9  */
+#define LOCK_DIGITS (HIST_MAX_DIGITS + 7)
 
 /* convenience macros to compress code */
-#define CALLOC_DIGIT_STR(str, n)                     \
-do {                                                 \
-  long _digits_ = 1;                                 \
-  long _tempn_ = n;                                  \
-  while (_tempn_ /= 10) _digits_++;                  \
-  str = calloc(++_digits_ , sizeof(char)); \
-  if (!str) {                                        \
-    /* This is bad, leave it to calling function */  \
-    CRI("ERROR: Memory allocation Failed!!");        \
-    eet_close(history_file);                         \
-    return EET_ERROR_OUT_OF_MEMORY;                  \
-   }                                                 \
-   snprintf(str, _digits_, "%1d", 0);                  \
- } while(0)
-
 #define PATH_MAX_ERR                                              \
 do {                                                              \
   ERR("PATH_MAX exceeded. Need Len %d, PATH_MAX %d", len, PATH_MAX); \
@@ -141,14 +127,14 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     Eina_List *l = NULL;
     char history_path[PATH_MAX] = {0};
     char *ret = NULL;
-    char *str = NULL;
-    char  lock_str[10];
+    char str[HIST_MAX_DIGITS + 1];
+    char  lock_str[LOCK_DIGITS];
     char *lock_val = NULL;
     int size = 0;
     unsigned int i =0;
     unsigned int item_num = 0;
-    long version = 0;
-
+    unsigned int version = 0;
+    
     /* Open history file */
     if(!_set_history_path(history_path)) {
       ERR("History File Creation Error: %s", history_path);
@@ -187,19 +173,18 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
       return eet_close(history_file);
     }
     /* Malloc properly sized str */
-    CALLOC_DIGIT_STR(str, item_num);
+    //CALLOC_DIGIT_STR(str, item_num);
 
     /* Read each item */
     for (i = 1; i <= item_num; i++){
         cd = E_NEW(Clip_Data, 1);
-        snprintf(str, item_num, "%d", i);
+        eina_convert_itoa(i ,str);
         ret = eet_read(history_file, str, &size);
         if (!ret) {
           ERR("History file corruption: %s", history_path);
           *items = NULL;
           if (l)
             E_FREE_LIST(l, free_clip_data);
-          free(str);
           free(cd);
           return eet_close(history_file);
         }
@@ -218,7 +203,6 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     }
     /* and wrap it up */
     free(ret);
-    free(str);
     free(lock_val);
     *items = l;
     return eet_close(history_file);
@@ -244,11 +228,9 @@ save_history(Eina_List *items)
     Eina_List *l = NULL;
     Clip_Data *cd = NULL;
     char history_path[PATH_MAX] = {0};
-    char *str = NULL;
-    char lock_buf[10];
-    int str_len = 0;
+    char str[HIST_MAX_DIGITS + 1];
+    char lock_buf[LOCK_DIGITS];
     unsigned int i = 1;
-    unsigned int n = 0;
     Eet_Error ret;
 
     /* Open history file */
@@ -259,34 +241,27 @@ save_history(Eina_List *items)
     history_file = eet_open(history_path, EET_FILE_MODE_WRITE);
 
     if (history_file) {
-      /* Malloc properly sized str */
-      /*   if !items, 0 items is assumed */
-      n = eina_list_count(items);
-      CALLOC_DIGIT_STR(str,n);
-
-      str_len = 4;
       /* Write history version */
-      snprintf(str, 2, "%d", (HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION));
+      eina_convert_itoa((HISTORY_VERSION > 9 ? 9 : HISTORY_VERSION) ,str);
       eet_write(history_file, "VERSION",  str, 2, 0);
       /* If we have no items in history wrap it up and return */
       if(!items) {
-        snprintf(str, 2, "%d", 0);
+        eina_convert_itoa(0, str);
         eet_write(history_file, "MAX_ITEMS",  str, 2, 0);
-        free(str);
         return eet_close(history_file);
       }
       /* Otherwise write each item */
       EINA_LIST_FOREACH(items, l, cd) {
-        snprintf(str, str_len, "%d", i);
+        eina_convert_itoa(i ,str);
         eet_write(history_file, str,  cd->content, strlen(cd->content) + 1, 0);
-        snprintf(lock_buf, 10, "%d_lock", i);
+        snprintf(lock_buf, LOCK_DIGITS, "%d_lock", i);
         eet_write(history_file, lock_buf,  cd->lock, strlen(cd->lock) + 1, 0);
         i++;
       }
       /* and wrap it up */
+      eina_convert_itoa(eina_list_count(items), str);
       eet_write(history_file, "MAX_ITEMS",  str, strlen(str) + 1, 0);
       ret = eet_close(history_file);
-      free(str);
     } else {
       ERR("Unable to open history file: %s", history_path);
       return  EET_ERROR_BAD_OBJECT;
