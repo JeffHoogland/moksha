@@ -42,10 +42,7 @@ e_util_env_set(const char *var, const char *val)
         char buf[8192];
 
         snprintf(buf, sizeof(buf), "%s=%s", var, val);
-        if (getenv(var))
-          putenv(buf);
-        else
-          putenv(strdup(buf));
+        putenv(strdup(buf));
 #endif
      }
    else
