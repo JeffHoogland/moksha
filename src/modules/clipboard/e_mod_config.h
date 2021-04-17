@@ -1,9 +1,6 @@
 #ifndef E_MOD_CONFIG_H
 #define E_MOD_CONFIG_H
 
-#define HIST_MIN   5
-#define HIST_MAX   100
-
 /* We create a structure config for our module, and also a config structure
  * for every item element (you can have multiple gadgets for the same module) */
 typedef struct _Config Config;
