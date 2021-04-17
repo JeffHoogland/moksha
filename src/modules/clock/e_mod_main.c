@@ -549,7 +549,7 @@ _eval_instance_size(Instance *inst)
    if (mh < omh) mh = omh;
 
    e_gadcon_client_aspect_set(inst->gcc, mw, mh);
-   e_gadcon_client_min_size_set(inst->gcc, mw, mh);
+   //~ e_gadcon_client_min_size_set(inst->gcc, mw, mh);
 }
 
 void
