@@ -2601,8 +2601,8 @@ _evry_state_clear(Evry_Window *win)
      }
 
    /* replay mouse down to allow direct sliding back */
-   if (win->mouse_button)
-     evas_event_feed_mouse_down(win->evas, win->mouse_button, 0, 0, NULL);
+   //~ if (win->mouse_button)
+     //~ evas_event_feed_mouse_down(win->evas, win->mouse_button, 0, 0, NULL);
 }
 
 static void
