@@ -357,7 +357,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           }
      }
 
-   e_gadcon_unpopulate(cfdata->es->gadcon);
+   if (!recreate)
+     e_gadcon_unpopulate(cfdata->es->gadcon);
    if (!cfdata->escfg->style)
      {
         cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
@@ -413,6 +414,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_shelf_toggle(cfdata->es, 1);
 
    e_zone_useful_geometry_dirty(cfdata->es->zone);
+   e_zone_border_geometry_refresh(cfdata->es->zone);
    e_config_save_queue();
    cfdata->es->config_dialog = cfd;
    return 1;

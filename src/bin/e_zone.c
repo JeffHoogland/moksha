@@ -1856,3 +1856,33 @@ _e_zone_border_geometry_update(E_Zone *zone)
      }
 }
 
+EAPI void
+e_zone_border_geometry_refresh(E_Zone *zone)
+{
+   Eina_List *borders, *l;
+   E_Border *bd;
+   unsigned int zgeom[4];
+
+   zgeom[0] = zone->x;
+   zgeom[1] = zone->y;
+   zgeom[2] = zone->w;
+   zgeom[3] = zone->h;
+   borders = e_border_client_list();
+   EINA_LIST_FOREACH(borders, l, bd)
+     {
+        if (bd->maximized)
+        {
+          E_Maximize max;
+
+          if (bd->zone == zone)
+          ecore_x_window_prop_card32_set(bd->client.win,
+                                         E_ATOM_ZONE_GEOMETRY,
+                                         zgeom, 4);
+
+          max = bd->maximized;
+          e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+          e_border_maximize(bd, max);
+        }
+     }
+}
+
