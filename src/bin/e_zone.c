@@ -1856,6 +1856,8 @@ _e_zone_border_geometry_update(E_Zone *zone)
      }
 }
 
+
+
 EAPI void
 e_zone_border_geometry_refresh(E_Zone *zone)
 {
@@ -1872,16 +1874,13 @@ e_zone_border_geometry_refresh(E_Zone *zone)
      {
         if (bd->maximized)
         {
-          E_Maximize max;
-
           if (bd->zone == zone)
           ecore_x_window_prop_card32_set(bd->client.win,
                                          E_ATOM_ZONE_GEOMETRY,
                                          zgeom, 4);
 
-          max = bd->maximized;
-          e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-          e_border_maximize(bd, max);
+          e_border_unmaximize(bd,  E_MAXIMIZE_BOTH);
+          e_border_maximize(bd, e_config->maximize_policy & E_MAXIMIZE_TYPE);
         }
      }
 }
