@@ -2,7 +2,12 @@ group "E_Config" struct {
     group "env_vars" list {
         group "E_Config_Env_Var" struct {
             value "var" string: "QT_STYLE_OVERRIDE";
-            value "val" string: "gtk";
+            value "val" string: "gtk2";
+            value "unset" uchar: 0;
+        }
+        group "E_Config_Env_Var" struct {
+            value "var" string: "QT_QPA_PLATFORMTHEME";
+            value "val" string: "gtk2";
             value "unset" uchar: 0;
         }
         group "E_Config_Env_Var" struct {
