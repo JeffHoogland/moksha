@@ -488,8 +488,8 @@ _eval_instance_size(Instance *inst)
 
    if ((mw < 1) || (mh < 1))
      {
-        //~ Evas_Coord x, y, sw = 0, sh = 0, ow, oh;
-        Evas_Coord sw = 0, sh = 0, ow, oh;
+        Evas_Coord x, y, sw = 0, sh = 0, ow, oh;
+        //~ Evas_Coord sw = 0, sh = 0, ow, oh;
         Eina_Bool horiz;
         const char *orient;
 
@@ -536,8 +536,8 @@ _eval_instance_size(Instance *inst)
         evas_object_resize(inst->o_clock, sw, sh);
         edje_object_message_signal_process(inst->o_clock);
 
-        //~ edje_object_parts_extends_calc(inst->o_clock, &x, &y, &mw, &mh);
-        edje_object_size_min_calc(inst->o_clock, &mw, &mh);
+        edje_object_parts_extends_calc(inst->o_clock, &x, &y, &mw, &mh);
+        //~ edje_object_size_min_calc(inst->o_clock, &mw, &mh);
 
         evas_object_resize(inst->o_clock, ow, oh);
      }
