@@ -5,7 +5,7 @@
       name: "e/conf/wallpaper/main/window";
       images {
          image: "O/dia_grad.png" COMP;
-         image: "O/dia_topshad.png" COMP;
+         //~ image: "O/dia_topshad.png" COMP;
          image: "O/dia_botshad.png" COMP;
          image: "O/dia_botshad.png" COMP;
          image: "O/topsh.png" COMP;
