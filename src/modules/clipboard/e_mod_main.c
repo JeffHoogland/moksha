@@ -154,7 +154,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
   inst = E_NEW(Instance, 1);
 
   o = e_icon_add(gc->evas);
-  e_icon_fdo_icon_set(o, "edit-paste");
+  if (!e_icon_fdo_icon_set(o, "clipboard"))
+    e_icon_fdo_icon_set(o, "edit-paste");
+
   evas_object_show(o);
 
   gcc = e_gadcon_client_new(gc, name, id, style, o);
