@@ -8280,8 +8280,10 @@ _e_border_eval0(E_Border *bd)
           bordername = "borderless";
         else if (bd->bordername)
           bordername = bd->bordername;
-        else if ((bd->client.mwm.borderless) || (bd->borderless))
+        else if (bd->client.mwm.borderless)
           bordername = "pixel";
+        else if (bd->borderless)
+          bordername = "borderless";
         else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
           bordername = "borderless";
         else if (((bd->client.icccm.transient_for != 0) ||
