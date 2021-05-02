@@ -142,6 +142,7 @@ _item_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *ev
    Item *it = data;
    Smart_Data *sd = evas_object_smart_data_get(it->obj);
    const Evry_State *s;
+   int mouse = 1;
    if (!sd) return;
 
    sd->mouse_act = 1;
@@ -150,7 +151,10 @@ _item_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *ev
 
    s = sd->view->state;
 
-   if ((ev->button == 1) && (ev->flags & EVAS_BUTTON_DOUBLE_CLICK))
+   if (!evry_conf->single_click)
+      mouse = ev->flags & EVAS_BUTTON_DOUBLE_CLICK;
+
+   if ((ev->button == 1) && (mouse))
      {
         if (it != sd->cur_item)
           {
@@ -163,6 +167,11 @@ _item_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *ev
         else
           evry_plugin_action(s->selector->win, 1);
      }
+   else if ((ev->button == 3) && (evry_conf->single_click))
+   {
+      evry_item_select(s, it->item);
+      evry_selectors_switch(s->selector->win, 1, 0);
+   }
    else
      {
         sd->mouse_x = ev->canvas.x;
@@ -199,7 +208,7 @@ _item_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *even
              _pan_item_select(it->obj, it, 0);
           }
      }
-   else if (ev->button == 3)
+   else if ((ev->button == 3) && (!evry_conf->single_click))
      {
         evry_item_select(s, it->item);
         _pan_item_select(it->obj, it, 0);

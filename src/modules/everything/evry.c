@@ -1021,6 +1021,7 @@ _evry_selector_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    if (ev->button == 1)
      {
         if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
+        if (ev->flags)
           evry_plugin_action(sel->win, 1);
      }
 }

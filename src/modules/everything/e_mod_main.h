@@ -170,6 +170,7 @@ struct _Config
   Eina_List *collections;
 
   int scroll_animate;
+  int single_click;
   double scroll_speed;
 
   int hide_input;
