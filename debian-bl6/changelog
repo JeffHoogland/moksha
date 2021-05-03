@@ -7,8 +7,16 @@ moksha (0.3.3-9) focal; urgency=low
   * Border focus frame for borderless apps
   * Border fix for unfullscreen icon and shaped mode
   * Mattery module improvements
+  * Everything: single mouse click mode added
+  * Border correction related to borderless state
+  * Clipboard: if not clipboard icon, replace with fdo edit-paste
+  * Everything back button fix
+  * clipboard module: use eina_convert_itoa
+  * Fix gcc-10 warnings
+  * Evry config popup size increase
+  * Evry zoom feature added
   
- -- Robert Wiley <ylee@bodhilinux.com>  Fri, 09 Apr 2021 13:02:27 -0400
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 03 May 2021 16:05:11 -0400
 
 moksha (0.3.3-8) focal; urgency=low
 
