@@ -477,10 +477,6 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_check_add(e, _("Up/Down select next item in icon view"),
                            &(cfdata->cycle_mode));
    e_widget_framelist_object_append(of, ob);
-
-   ob = e_widget_check_add(e, _("Single mouse click"),
-                           &(cfdata->single_click));
-   e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 0, 1, 1, 1, 0, 1, 0);
 
 #if 0
@@ -504,6 +500,10 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_radio_add(e, _("Emacs style (ALT + n,p,f,b,m,i)"), 3, rg);
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(e, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
+   e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_check_add(e, _("Single mouse click"),
+                           &(cfdata->single_click));
    e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
 
