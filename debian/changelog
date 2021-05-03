@@ -1,4 +1,24 @@
-moksha (20210326bodhi30.3.7) focal; urgency=low
+moksha (20210503bodhi30.3.7) bionic; urgency=low
+
+  * Profile Tweaks
+  * Updated nl, es & fr localizations
+  * Gadcon menu MoveTo icons fix
+  * Application theme GTK list should show theme if Match moksha is checked
+  * Border focus frame for borderless apps
+  * Border fix for unfullscreen icon and shaped mode
+  * Mattery module improvements
+  * Everything: single mouse click mode added
+  * Border correction related to borderless state
+  * Clipboard: if not clipboard icon, replace with fdo edit-paste
+  * Everything back button fix
+  * clipboard module: use eina_convert_itoa
+  * Fix gcc-10 warnings
+  * Evry config popup size increase
+  * Evry zoom feature added
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Mon, 03 May 2021 16:05:11 -0400
+
+moksha (20210326bodhi30.3.7) bionic; urgency=low
 
   * xkbswitch: Alternative lookup path
   * de, sk, nl localization updates
@@ -7,7 +27,7 @@ moksha (20210326bodhi30.3.7) focal; urgency=low
   
  -- Robert Wiley <ylee@bodhilinux.com>  Fri, 26 Mar 2021 13:47:34 -0400
 
-moksha (20210322bodhi30.3.6) focal; urgency=low
+moksha (20210322bodhi30.3.6) bionic; urgency=low
 
   * Handle quickstart a little better
   * Screen lock/unlock apps list save fix
@@ -17,7 +37,7 @@ moksha (20210322bodhi30.3.6) focal; urgency=low
   
  -- Robert Wiley <ylee@bodhilinux.com>  Mon, 22 Mar 2021 13:06:49 -0400
 
-moksha (20210314bodhi30.3.3) focal; urgency=low
+moksha (20210314bodhi30.3.3) bionic; urgency=low
 
   * minor chinese localizations
   * Notification counter toggle added
@@ -33,7 +53,7 @@ moksha (20210314bodhi30.3.3) focal; urgency=low
   
  -- Robert Wiley <ylee@bodhilinux.com>  Sun, 14 Mar 2021 15:00:35 -0400
 
-moksha (20210220bodhi30.3.3) focal; urgency=low
+moksha (20210220bodhi30.3.3) bionic; urgency=low
 
   * Update French po
   * Set theme wallpaper as default
@@ -41,7 +61,7 @@ moksha (20210220bodhi30.3.3) focal; urgency=low
 
  -- Robert Wiley <ylee@bodhilinux.com>  Sat, 20 Feb 2021 05:04:43 -0400
 
-moksha (20210215bodhi30.3.3) focal; urgency=low
+moksha (20210215bodhi30.3.3) bionic; urgency=low
 
   * Update Moksha version
   * IBar changes
