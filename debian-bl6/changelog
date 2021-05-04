@@ -6,7 +6,7 @@ moksha (0.3.3-9) focal; urgency=low
   * Application theme GTK list should show theme if Match moksha is checked
   * Border focus frame for borderless apps
   * Border fix for unfullscreen icon and shaped mode
-  * Mattery module improvements
+  * Battery module improvements
   * Everything: single mouse click mode added
   * Border correction related to borderless state
   * Clipboard: if not clipboard icon, replace with fdo edit-paste
