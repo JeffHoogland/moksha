@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-11 17:00+0200\n"
+"POT-Creation-Date: 2021-05-04 12:47-0400\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -27,7 +27,7 @@ msgid "About Moksha"
 msgstr "关于 Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
-#: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
+#: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:180
@@ -52,8 +52,8 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>版权 &copy; 2021 Moksha 开发团队</><br><br>我们希望您向我们编写这"
-"个软件时一样喜欢使用它。<br><br>联系我们请访问：<br><hilight>http://www."
+"<title>版权 &copy; 2021 Moksha 开发团队</><br><br>我们希望您向我们编写这个软"
+"件时一样喜欢使用它。<br><br>联系我们请访问：<br><hilight>http://www."
 "bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -889,7 +889,7 @@ msgstr ""
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
-#: src/bin/e_update.c:76 src/bin/e_utils.c:600
+#: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1164,7 +1164,7 @@ msgstr "desktop 文件"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:378
+#: src/modules/everything/evry_config.c:381
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1201,7 +1201,7 @@ msgid "Select an Executable"
 msgstr "选择一个可执行文件"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1216,8 +1216,8 @@ msgstr "选择一个可执行文件"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Delete"
 msgstr "删除"
 
@@ -1238,7 +1238,7 @@ msgid "Select All"
 msgstr "全选"
 
 #: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:185
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:182
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1461,7 +1461,7 @@ msgid "View Mode"
 msgstr "显示模式"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:503
+#: src/modules/everything/evry_config.c:510
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "排序"
@@ -1482,7 +1482,7 @@ msgstr "动作..."
 msgid "Link"
 msgstr "连接"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1527,13 +1527,13 @@ msgstr "网格图标"
 msgid "Custom Icons"
 msgstr "自定义图标"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:430
-#: src/modules/everything/evry_config.c:460
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
+#: src/modules/everything/evry_config.c:463
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "列表"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
 msgid "Default View"
 msgstr "默认查看器"
 
@@ -1813,7 +1813,7 @@ msgstr "其它："
 msgid "Preview"
 msgstr "预览"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:426
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
 msgid "Default"
 msgstr "默认"
 
@@ -2473,7 +2473,7 @@ msgstr "请求位置"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
@@ -2493,8 +2493,8 @@ msgstr "请求位置"
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
 #: src/modules/notification/e_mod_main.c:308
-#: src/modules/clipboard/e_mod_main.c:281
-#: src/modules/clipboard/e_mod_main.c:426 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:283
+#: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 msgid "Settings"
 msgstr "设置"
 
@@ -2579,7 +2579,7 @@ msgstr "尺寸、位置和锁定"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
 msgid "All"
 msgstr "全部"
 
@@ -3559,8 +3559,8 @@ msgstr ""
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Keep"
 msgstr "保持"
 
@@ -3595,14 +3595,14 @@ msgstr "浮动"
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1029
 msgid "Horizontal"
 msgstr "水平"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
-#: src/modules/everything/evry_config.c:561
+#: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:1037
 msgid "Vertical"
 msgstr "垂直"
@@ -3682,11 +3682,11 @@ msgstr "书架出错"
 msgid "A shelf with that name already exists!"
 msgstr "该名字的书架已存在！"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2488
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
 msgid "Stop Moving Gadgets"
 msgstr "停止移动组件"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2490
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
 msgid "Begin Moving Gadgets"
 msgstr "开始移动组件"
 
@@ -3708,21 +3708,21 @@ msgstr "该名字和 ID 的书架已存在！"
 msgid "Rename Shelf"
 msgstr "重命名书架"
 
-#: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 msgid "Contents"
 msgstr "内容"
 
 # 定义面板的方向位置，如左上，右下啥的。
-#: src/bin/e_shelf.c:2448
+#: src/bin/e_shelf.c:2449
 msgid "Orientation"
 msgstr "位置"
 
-#: src/bin/e_shelf.c:2457 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "自动隐藏"
 
-#: src/bin/e_shelf.c:2464
+#: src/bin/e_shelf.c:2465
 msgid "Refresh"
 msgstr "刷新"
 
@@ -3897,17 +3897,17 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 
-#: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:183 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "Moksha 无法创建子进程：<br><br>%s<br>"
 
-#: src/bin/e_utils.c:239
+#: src/bin/e_utils.c:236
 msgid "Cannot exit - immortal windows."
 msgstr "无法退出--不死的窗口"
 
-#: src/bin/e_utils.c:240
+#: src/bin/e_utils.c:237
 #, fuzzy
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
@@ -3917,84 +3917,84 @@ msgstr ""
 "一些窗口仍然处在被生命周期锁定之中。<br>这意味着 Moksha 不允许它自己退出，除"
 "非这些窗口已经被关闭，<br>或者被去除生命周期锁。<br>"
 
-#: src/bin/e_utils.c:765
+#: src/bin/e_utils.c:780
 #, c-format
 msgid "%'.0f bytes"
 msgstr "%.0f 字节"
 
-#: src/bin/e_utils.c:769
+#: src/bin/e_utils.c:784
 #, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KiB"
 
-#: src/bin/e_utils.c:773
+#: src/bin/e_utils.c:788
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f MiB"
 
-#: src/bin/e_utils.c:777
+#: src/bin/e_utils.c:792
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GiB"
 
-#: src/bin/e_utils.c:781
+#: src/bin/e_utils.c:796
 #, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f TiB"
 
-#: src/bin/e_utils.c:800
+#: src/bin/e_utils.c:815
 #, c-format
 msgid "In the future"
 msgstr ""
 
-#: src/bin/e_utils.c:804
+#: src/bin/e_utils.c:819
 #, c-format
 msgid "In the last minute"
 msgstr ""
 
-#: src/bin/e_utils.c:808
+#: src/bin/e_utils.c:823
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "去年"
 msgstr[1] "%li 年前"
 
-#: src/bin/e_utils.c:813
+#: src/bin/e_utils.c:828
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] "上个月"
 msgstr[1] "%li 个月前"
 
-#: src/bin/e_utils.c:818
+#: src/bin/e_utils.c:833
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "上星期"
 msgstr[1] "%li 个星期前"
 
-#: src/bin/e_utils.c:823
+#: src/bin/e_utils.c:838
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] "昨天"
 msgstr[1] "%li 天前"
 
-#: src/bin/e_utils.c:828
+#: src/bin/e_utils.c:843
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] "一小时前"
 msgstr[1] "%li 小时前"
 
-#: src/bin/e_utils.c:833
+#: src/bin/e_utils.c:848
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] "1 分钟前"
 msgstr[1] "%li 分钟前"
 
-#: src/bin/e_utils.c:840 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:855 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
@@ -4005,23 +4005,23 @@ msgstr[1] "%li 分钟前"
 msgid "Unknown"
 msgstr "未知"
 
-#: src/bin/e_utils.c:911 src/bin/e_utils.c:919
+#: src/bin/e_utils.c:926 src/bin/e_utils.c:934
 msgid "Error creating directory"
 msgstr "无法创建目录"
 
-#: src/bin/e_utils.c:911
+#: src/bin/e_utils.c:926
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
 msgstr ""
 
-#: src/bin/e_utils.c:919
+#: src/bin/e_utils.c:934
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
-#: src/bin/e_utils.c:1081
+#: src/bin/e_utils.c:1096
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
@@ -4037,12 +4037,12 @@ msgstr ""
 "新的设置，来使用新增功能，<br>新的默认设置会增加进来。<br>您也可以现在就重新"
 "设置各项。<br>很抱歉要让您重新设置。"
 
-#: src/bin/e_utils.c:1090 src/bin/e_utils.c:1114
+#: src/bin/e_utils.c:1105 src/bin/e_utils.c:1129
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "%s 配置已经更新"
 
-#: src/bin/e_utils.c:1103
+#: src/bin/e_utils.c:1118
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -4055,54 +4055,54 @@ msgstr ""
 "的情况，为防万一您的配置文件已经被恢复到默认状态。<br>对此造成的的不便表示歉"
 "意。<br>"
 
-#: src/bin/e_utils.c:1197
+#: src/bin/e_utils.c:1212
 #, c-format
 msgid "Never"
 msgstr "从不"
 
-#: src/bin/e_utils.c:1201
+#: src/bin/e_utils.c:1216
 #, fuzzy, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
 msgstr[0] "%.1f 秒"
 msgstr[1] "%.1f 秒"
 
-#: src/bin/e_utils.c:1205
+#: src/bin/e_utils.c:1220
 #, fuzzy, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] "1 年"
 msgstr[1] "1 年"
 
-#: src/bin/e_utils.c:1210
+#: src/bin/e_utils.c:1225
 #, fuzzy, c-format
 msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] "1 个月"
 msgstr[1] "1 个月"
 
-#: src/bin/e_utils.c:1215
+#: src/bin/e_utils.c:1230
 #, fuzzy, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] "1 个星期"
 msgstr[1] "1 个星期"
 
-#: src/bin/e_utils.c:1220
+#: src/bin/e_utils.c:1235
 #, fuzzy, c-format
 msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] "1 天"
 msgstr[1] "1 天"
 
-#: src/bin/e_utils.c:1225
+#: src/bin/e_utils.c:1240
 #, fuzzy, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] "1 小时"
 msgstr[1] "1 小时"
 
-#: src/bin/e_utils.c:1230
+#: src/bin/e_utils.c:1245
 #, fuzzy, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4722,7 +4722,7 @@ msgstr "对话框设置"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
 msgid "General Settings"
 msgstr "常规设置"
 
@@ -4782,11 +4782,12 @@ msgstr "点击更改壁纸"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:405
-#: src/modules/everything/evry_config.c:547
+#: src/modules/everything/evry_config.c:408
 #: src/modules/everything/evry_config.c:554
-#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:604
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -4822,7 +4823,7 @@ msgid "Desktops"
 msgstr "桌面"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:495
+#: src/modules/everything/evry_config.c:498
 msgid "Off"
 msgstr "关"
 
@@ -4832,6 +4833,7 @@ msgstr "面板"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
+#: src/modules/everything/evry_config.c:601
 msgid "Zoom"
 msgstr "缩放"
 
@@ -5939,8 +5941,8 @@ msgstr "主题"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:438
-#: src/modules/everything/evry_config.c:464
+#: src/modules/everything/evry_config.c:441
+#: src/modules/everything/evry_config.c:467
 msgid "Icons"
 msgstr "图标"
 
@@ -6809,7 +6811,7 @@ msgstr "指派"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
-#: src/modules/clipboard/e_mod_main.c:413
+#: src/modules/clipboard/e_mod_main.c:415
 msgid "Clear"
 msgstr "清除"
 
@@ -7580,150 +7582,155 @@ msgstr "显示所有启动器"
 msgid "Everything Configuration"
 msgstr "配置任务中心"
 
-#: src/modules/everything/e_mod_main.c:408
+#: src/modules/everything/e_mod_main.c:409
 msgid "Everything Module"
 msgstr "任务中心模块"
 
-#: src/modules/everything/e_mod_main.c:599
+#: src/modules/everything/e_mod_main.c:601
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "启动器"
 
-#: src/modules/everything/evry_config.c:78
+#: src/modules/everything/evry_config.c:79
 msgid "Everything Settings"
 msgstr "设置任务中心"
 
-#: src/modules/everything/evry_config.c:364
+#: src/modules/everything/evry_config.c:367
 msgid "Available Plugins"
 msgstr "可用的插件"
 
-#: src/modules/everything/evry_config.c:370
+#: src/modules/everything/evry_config.c:373
 msgid "Move Up"
 msgstr "上移"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 msgid "Move Down"
 msgstr "下移"
 
-#: src/modules/everything/evry_config.c:379
+#: src/modules/everything/evry_config.c:382
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "配置"
 
-#: src/modules/everything/evry_config.c:385
+#: src/modules/everything/evry_config.c:388
 msgid "Enabled"
 msgstr "已启用"
 
-#: src/modules/everything/evry_config.c:391
+#: src/modules/everything/evry_config.c:394
 msgid "Show in \"All\""
 msgstr "显示在“全部”"
 
-#: src/modules/everything/evry_config.c:397
+#: src/modules/everything/evry_config.c:400
 msgid "Show in top-level"
 msgstr "显示在最上面一级"
 
-#: src/modules/everything/evry_config.c:403
+#: src/modules/everything/evry_config.c:406
 msgid "Minimum characters for search"
 msgstr "搜索的最少字符"
 
-#: src/modules/everything/evry_config.c:412
+#: src/modules/everything/evry_config.c:415
 msgid "Plugin Trigger"
 msgstr "插件激活"
 
-#: src/modules/everything/evry_config.c:417
+#: src/modules/everything/evry_config.c:420
 msgid "Search only when triggered"
 msgstr "仅在触发时搜索"
 
-#: src/modules/everything/evry_config.c:424
+#: src/modules/everything/evry_config.c:427
 msgid "Plugin View"
 msgstr "浏览插件"
 
-#: src/modules/everything/evry_config.c:434
-#: src/modules/everything/evry_config.c:462
+#: src/modules/everything/evry_config.c:437
+#: src/modules/everything/evry_config.c:465
 msgid "Detailed"
 msgstr "详细信息"
 
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:470
 msgid "Animate scrolling"
 msgstr "动画滚动"
 
-#: src/modules/everything/evry_config.c:474
+#: src/modules/everything/evry_config.c:477
 msgid "Up/Down select next item in icon view"
 msgstr "在图标视图中按上/下选择相邻项"
 
-#: src/modules/everything/evry_config.c:483
+#: src/modules/everything/evry_config.c:486
 msgid "Hide input when inactive"
 msgstr "不活动时隐藏输入"
 
-#: src/modules/everything/evry_config.c:488
+#: src/modules/everything/evry_config.c:491
 msgid "Hide list"
 msgstr "隐藏列表"
 
-#: src/modules/everything/evry_config.c:493
+#: src/modules/everything/evry_config.c:496
 msgid "Quick Navigation"
 msgstr "快速访问"
 
-#: src/modules/everything/evry_config.c:497
+#: src/modules/everything/evry_config.c:500
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Emacs 样式 (ALT + n,p,f,b,m,i)"
 
-#: src/modules/everything/evry_config.c:499
+#: src/modules/everything/evry_config.c:502
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi 样式 (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
+#, fuzzy
+msgid "Single mouse click"
+msgstr "鼠标点击时显示"
+
+#: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
 msgstr "不排序"
 
-#: src/modules/everything/evry_config.c:508
+#: src/modules/everything/evry_config.c:515
 msgid "By usage"
 msgstr "按使用情况"
 
-#: src/modules/everything/evry_config.c:511
+#: src/modules/everything/evry_config.c:518
 msgid "Most used"
 msgstr "最常用的"
 
-#: src/modules/everything/evry_config.c:514
+#: src/modules/everything/evry_config.c:521
 msgid "Last used"
 msgstr "最近使用的"
 
-#: src/modules/everything/evry_config.c:526
+#: src/modules/everything/evry_config.c:533
 msgid "Subject Plugins"
 msgstr "主题插件"
 
-#: src/modules/everything/evry_config.c:530
+#: src/modules/everything/evry_config.c:537
 msgid "Action Plugins"
 msgstr "动作插件"
 
-#: src/modules/everything/evry_config.c:534
+#: src/modules/everything/evry_config.c:541
 msgid "Object Plugins"
 msgstr "对象插件"
 
-#: src/modules/everything/evry_config.c:537
-#: src/modules/everything/evry_config.c:736
+#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:752
 msgid "Plugins"
 msgstr "插件"
 
-#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:551
 msgid "Popup Size"
 msgstr "弹出尺寸"
 
-#: src/modules/everything/evry_config.c:545
-#: src/modules/everything/evry_config.c:578
+#: src/modules/everything/evry_config.c:552
+#: src/modules/everything/evry_config.c:585
 msgid "Popup Width"
 msgstr "弹出宽度"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 msgid "Popup Height"
 msgstr "弹出高度"
 
-#: src/modules/everything/evry_config.c:560
+#: src/modules/everything/evry_config.c:567
 msgid "Popup Align"
 msgstr "弹出对齐"
 
-#: src/modules/everything/evry_config.c:563
 #: src/modules/everything/evry_config.c:570
+#: src/modules/everything/evry_config.c:577
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -7732,16 +7739,21 @@ msgstr "弹出对齐"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 msgid "Edge Popup Size"
 msgstr "弹出尺寸边缘"
 
-#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:602
+#, fuzzy
+msgid "Zoom value"
+msgstr "缩小"
+
+#: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
 msgid "Geometry"
 msgstr "几何形状"
 
-#: src/modules/everything/evry_config.c:631
+#: src/modules/everything/evry_config.c:647
 msgid "Everything Collection"
 msgstr "任务中心集合"
 
@@ -9199,27 +9211,27 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
 msgid "Systray Error"
 msgstr "系统托盘出错"
 
-#: src/modules/systray/e_mod_main.c:500
+#: src/modules/systray/e_mod_main.c:499
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 msgid "Another systray exists"
 msgstr "有另一个系统托盘存在"
 
-#: src/modules/systray/e_mod_main.c:907
+#: src/modules/systray/e_mod_main.c:906
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "只允许一个系统托盘的组件，目前已经有了一个。"
 
-#: src/modules/systray/e_mod_main.c:916
+#: src/modules/systray/e_mod_main.c:915
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1113
+#: src/modules/systray/e_mod_main.c:1112
 msgid "Systray"
 msgstr "系统托盘"
 
@@ -9643,7 +9655,7 @@ msgid "Notification"
 msgstr "通知"
 
 #: src/modules/notification/e_mod_main.c:287
-#: src/modules/clipboard/e_mod_main.c:395
+#: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr ""
 
@@ -9850,9 +9862,9 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:893
-#: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
+#: src/modules/clipboard/e_mod_main.c:896
+#: src/modules/clipboard/e_mod_main.c:897
 #, fuzzy
 msgid "Clipboard"
 msgstr "复制到剪贴板"
@@ -9895,56 +9907,56 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "键盘设置"
 
-#: src/modules/clipboard/e_mod_main.c:367
+#: src/modules/clipboard/e_mod_main.c:369
 #, fuzzy
 msgid "Lock item"
 msgstr "锁定失败"
 
-#: src/modules/clipboard/e_mod_main.c:378
+#: src/modules/clipboard/e_mod_main.c:380
 #, fuzzy
 msgid "Edit item"
 msgstr "%d 项"
 
-#: src/modules/clipboard/e_mod_main.c:385
+#: src/modules/clipboard/e_mod_main.c:387
 #, fuzzy
 msgid "Delete item"
 msgstr "删除完成"
 
-#: src/modules/clipboard/e_mod_main.c:403
+#: src/modules/clipboard/e_mod_main.c:405
 #, fuzzy
 msgid "Ignore history"
 msgstr "忽略提示"
 
-#: src/modules/clipboard/e_mod_main.c:644
+#: src/modules/clipboard/e_mod_main.c:646
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "确认删除书架"
 
-#: src/modules/clipboard/e_mod_main.c:646
+#: src/modules/clipboard/e_mod_main.c:648
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "您要求删除此书架。<br><br>您确定要删除吗？"
 
-#: src/modules/clipboard/e_mod_main.c:731
+#: src/modules/clipboard/e_mod_main.c:733
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "确认删除书架"
 
-#: src/modules/clipboard/e_mod_main.c:733
+#: src/modules/clipboard/e_mod_main.c:735
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "您要求删除此书架。<br><br>您确定要删除吗？"
 
-#: src/modules/clipboard/e_mod_main.c:761
+#: src/modules/clipboard/e_mod_main.c:763
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "键盘设置"
 
-#: src/modules/clipboard/e_mod_main.c:762
+#: src/modules/clipboard/e_mod_main.c:764
 msgid "Edit the item content:"
 msgstr ""
 

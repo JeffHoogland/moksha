@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-11 17:00+0200\n"
+"POT-Creation-Date: 2021-05-04 12:47-0400\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -22,7 +22,7 @@ msgid "About Moksha"
 msgstr "O desktope Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
-#: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
+#: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:180
@@ -47,10 +47,9 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2021, Vývojový tím Moksha</><br><br>Dúfame, "
-"že si užívate tento softvér tak, ako sme si my užili jeho vývoj."
-"<br><br>Neváhajte nás kontaktovať na: <br><hilight>http://www.bodhilinux.com</"
-"><br><br>"
+"<title>Copyright &copy; 2021, Vývojový tím Moksha</><br><br>Dúfame, že si "
+"užívate tento softvér tak, ako sme si my užili jeho vývoj.<br><br>Neváhajte "
+"nás kontaktovať na: <br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -889,7 +888,7 @@ msgstr ""
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
-#: src/bin/e_update.c:76 src/bin/e_utils.c:600
+#: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1180,7 +1179,7 @@ msgstr "Súbor plochy"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:378
+#: src/modules/everything/evry_config.c:381
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1217,7 +1216,7 @@ msgid "Select an Executable"
 msgstr "Vybrať spustiteľný súbor"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1232,8 +1231,8 @@ msgstr "Vybrať spustiteľný súbor"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Delete"
 msgstr "Zmazať"
 
@@ -1254,7 +1253,7 @@ msgid "Select All"
 msgstr "Vybrať všetky"
 
 #: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:185
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:182
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1481,7 +1480,7 @@ msgid "View Mode"
 msgstr "Režim zobrazenia"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:503
+#: src/modules/everything/evry_config.c:510
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Triedenie"
@@ -1502,7 +1501,7 @@ msgstr "Operácia..."
 msgid "Link"
 msgstr "Odkaz"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1547,13 +1546,13 @@ msgstr "Mriežka ikon"
 msgid "Custom Icons"
 msgstr "Vlastné ikony"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:430
-#: src/modules/everything/evry_config.c:460
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
+#: src/modules/everything/evry_config.c:463
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Zoznam"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
 msgid "Default View"
 msgstr "Predvolené zobrazenie"
 
@@ -1834,7 +1833,7 @@ msgstr "Ďaľšie:"
 msgid "Preview"
 msgstr "Náhľad"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:426
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
 msgid "Default"
 msgstr "Predvolené"
 
@@ -2500,7 +2499,7 @@ msgstr "Vyžadovať umiestnenie"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
@@ -2520,8 +2519,8 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
 #: src/modules/notification/e_mod_main.c:308
-#: src/modules/clipboard/e_mod_main.c:281
-#: src/modules/clipboard/e_mod_main.c:426 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:283
+#: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -2613,7 +2612,7 @@ msgstr "Veľkosť, umiestnenie a zámky"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
 msgid "All"
 msgstr "Všetko"
 
@@ -3614,8 +3613,8 @@ msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Keep"
 msgstr "Ponechať"
 
@@ -3651,14 +3650,14 @@ msgstr "Plávajúci"
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1029
 msgid "Horizontal"
 msgstr "Horizontálne"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
-#: src/modules/everything/evry_config.c:561
+#: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:1037
 msgid "Vertical"
 msgstr "Vertikálne"
@@ -3741,11 +3740,11 @@ msgstr "Chyba lišty"
 msgid "A shelf with that name already exists!"
 msgstr "Lišta s takým názvom už existuje!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2488
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
 msgid "Stop Moving Gadgets"
 msgstr "Ukončiť presúvanie widgetov"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2490
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
 msgid "Begin Moving Gadgets"
 msgstr "Začať presúvanie widgetov"
 
@@ -3768,20 +3767,20 @@ msgstr "Lišta s takým menom a ID už existuje"
 msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
-#: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 msgid "Contents"
 msgstr "Obsah"
 
-#: src/bin/e_shelf.c:2448
+#: src/bin/e_shelf.c:2449
 msgid "Orientation"
 msgstr "Orientácia"
 
-#: src/bin/e_shelf.c:2457 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Automatické skrývanie"
 
-#: src/bin/e_shelf.c:2464
+#: src/bin/e_shelf.c:2465
 msgid "Refresh"
 msgstr "Obnoviť"
 
@@ -3967,17 +3966,17 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 
-#: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:183 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "Moksha nemôže vytvoriť proces potomka:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:239
+#: src/bin/e_utils.c:236
 msgid "Cannot exit - immortal windows."
 msgstr "Nie je možné skončiť - nesmrteľné okná."
 
-#: src/bin/e_utils.c:240
+#: src/bin/e_utils.c:237
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Moksha will not allow itself to exit until these windows "
@@ -3987,42 +3986,42 @@ msgstr ""
 "znamená, že<br>Moksha nebude možné ukončiť pokiaľ tieto okná "
 "nebudú<br>uzatvorené, alebo lifespan zámok nebude vypnutý.<br>"
 
-#: src/bin/e_utils.c:765
+#: src/bin/e_utils.c:780
 #, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f Bytov"
 
-#: src/bin/e_utils.c:769
+#: src/bin/e_utils.c:784
 #, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_utils.c:773
+#: src/bin/e_utils.c:788
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.0f MB"
 
-#: src/bin/e_utils.c:777
+#: src/bin/e_utils.c:792
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.0f GB"
 
-#: src/bin/e_utils.c:781
+#: src/bin/e_utils.c:796
 #, c-format
 msgid "%'.1f TiB"
 msgstr "%'.0f TB"
 
-#: src/bin/e_utils.c:800
+#: src/bin/e_utils.c:815
 #, c-format
 msgid "In the future"
 msgstr "V budúcnosti"
 
-#: src/bin/e_utils.c:804
+#: src/bin/e_utils.c:819
 #, c-format
 msgid "In the last minute"
 msgstr "V poslednej minúte"
 
-#: src/bin/e_utils.c:808
+#: src/bin/e_utils.c:823
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
@@ -4030,7 +4029,7 @@ msgstr[0] "Minulý rok"
 msgstr[1] "Pred %li rokmi"
 msgstr[2] "Pred %li rokmi"
 
-#: src/bin/e_utils.c:813
+#: src/bin/e_utils.c:828
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
@@ -4038,7 +4037,7 @@ msgstr[0] "Minulý mesiac"
 msgstr[1] "Pred %li mesiacmi"
 msgstr[2] "Pred %li mesiacmi"
 
-#: src/bin/e_utils.c:818
+#: src/bin/e_utils.c:833
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
@@ -4046,7 +4045,7 @@ msgstr[0] "Minulý týždeň"
 msgstr[1] "Pred %li týždňami"
 msgstr[2] "Pred %li týždňami"
 
-#: src/bin/e_utils.c:823
+#: src/bin/e_utils.c:838
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
@@ -4054,7 +4053,7 @@ msgstr[0] "Včera"
 msgstr[1] "Pred %li dňami"
 msgstr[2] "Pred %li dňami"
 
-#: src/bin/e_utils.c:828
+#: src/bin/e_utils.c:843
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
@@ -4062,7 +4061,7 @@ msgstr[0] "Pred hodinou"
 msgstr[1] "%li pred hodinami"
 msgstr[2] "%li pred hodinami"
 
-#: src/bin/e_utils.c:833
+#: src/bin/e_utils.c:848
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
@@ -4070,7 +4069,7 @@ msgstr[0] "Pred minútou"
 msgstr[1] "%li pred minútami"
 msgstr[2] "%li pred minútami"
 
-#: src/bin/e_utils.c:840 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:855 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
@@ -4081,11 +4080,11 @@ msgstr[2] "%li pred minútami"
 msgid "Unknown"
 msgstr "Neznámy"
 
-#: src/bin/e_utils.c:911 src/bin/e_utils.c:919
+#: src/bin/e_utils.c:926 src/bin/e_utils.c:934
 msgid "Error creating directory"
 msgstr "Chyba pri vytváraní priečinku"
 
-#: src/bin/e_utils.c:911
+#: src/bin/e_utils.c:926
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
@@ -4093,12 +4092,12 @@ msgid ""
 msgstr ""
 "Zlyhanie vytvorenia priečinku: %s .<br>Skontrolujte správnosť privilégií"
 
-#: src/bin/e_utils.c:919
+#: src/bin/e_utils.c:934
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr "Zlyhanie vytvorenia priečinku: %s .<br>Súbor s týmto menom už existuje"
 
-#: src/bin/e_utils.c:1081
+#: src/bin/e_utils.c:1096
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4117,12 +4116,12 @@ msgstr ""
 "<br> Teraz môžete veci nakonfigurovať podľa svojej ľubovôle. Ospravedlňujeme "
 "sa za nepríjemnosti.<br>"
 
-#: src/bin/e_utils.c:1090 src/bin/e_utils.c:1114
+#: src/bin/e_utils.c:1105 src/bin/e_utils.c:1129
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "%s Konfigurácia Aktualizovaná"
 
-#: src/bin/e_utils.c:1103
+#: src/bin/e_utils.c:1118
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -4136,12 +4135,12 @@ msgstr ""
 "zlé a preventívne bola vaša konfigurácia obnovená na predvolené hodnoty."
 "<br>Ospravedlňujeme sa za nepríjemnosti.<br>"
 
-#: src/bin/e_utils.c:1197
+#: src/bin/e_utils.c:1212
 #, c-format
 msgid "Never"
 msgstr "Nikdy"
 
-#: src/bin/e_utils.c:1201
+#: src/bin/e_utils.c:1216
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
@@ -4149,7 +4148,7 @@ msgstr[0] "sekunda"
 msgstr[1] "%li sekundy"
 msgstr[2] "%li sekúnd"
 
-#: src/bin/e_utils.c:1205
+#: src/bin/e_utils.c:1220
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
@@ -4157,7 +4156,7 @@ msgstr[0] "rok"
 msgstr[1] "%li roky"
 msgstr[2] "%li rokov"
 
-#: src/bin/e_utils.c:1210
+#: src/bin/e_utils.c:1225
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
@@ -4165,7 +4164,7 @@ msgstr[0] "mesiac"
 msgstr[1] "%li mesiace"
 msgstr[2] "%li mesiacov"
 
-#: src/bin/e_utils.c:1215
+#: src/bin/e_utils.c:1230
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
@@ -4173,7 +4172,7 @@ msgstr[0] "týždeň"
 msgstr[1] "%li týždne"
 msgstr[2] "%li týždňov"
 
-#: src/bin/e_utils.c:1220
+#: src/bin/e_utils.c:1235
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
@@ -4181,7 +4180,7 @@ msgstr[0] "deň"
 msgstr[1] "%li dni"
 msgstr[2] "%li dní"
 
-#: src/bin/e_utils.c:1225
+#: src/bin/e_utils.c:1240
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
@@ -4189,7 +4188,7 @@ msgstr[0] "hodina"
 msgstr[1] "%li hodiny"
 msgstr[2] "%li hodín"
 
-#: src/bin/e_utils.c:1230
+#: src/bin/e_utils.c:1245
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4811,7 +4810,7 @@ msgstr "Nastavenie dialógov"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
 #, fuzzy
 msgid "General Settings"
 msgstr ""
@@ -4876,11 +4875,12 @@ msgstr "Zmena tapety"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:405
-#: src/modules/everything/evry_config.c:547
+#: src/modules/everything/evry_config.c:408
 #: src/modules/everything/evry_config.c:554
-#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:604
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -4916,7 +4916,7 @@ msgid "Desktops"
 msgstr "Pracovné plochy"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:495
+#: src/modules/everything/evry_config.c:498
 msgid "Off"
 msgstr "Vypnúť"
 
@@ -4926,6 +4926,7 @@ msgstr "Pole"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
+#: src/modules/everything/evry_config.c:601
 msgid "Zoom"
 msgstr "Priblížiť"
 
@@ -6027,8 +6028,8 @@ msgstr "Témy"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:438
-#: src/modules/everything/evry_config.c:464
+#: src/modules/everything/evry_config.c:441
+#: src/modules/everything/evry_config.c:467
 msgid "Icons"
 msgstr "Ikony"
 
@@ -6898,7 +6899,7 @@ msgstr "Priradiť"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
-#: src/modules/clipboard/e_mod_main.c:413
+#: src/modules/clipboard/e_mod_main.c:415
 msgid "Clear"
 msgstr "Vyčistiť"
 
@@ -7669,149 +7670,154 @@ msgstr "Zobraziť rýchly prístup"
 msgid "Everything Configuration"
 msgstr "Rýchly prístup (nastavenie)"
 
-#: src/modules/everything/e_mod_main.c:408
+#: src/modules/everything/e_mod_main.c:409
 msgid "Everything Module"
 msgstr "Modul rýchleho prístupu"
 
-#: src/modules/everything/e_mod_main.c:599
+#: src/modules/everything/e_mod_main.c:601
 msgid "Quick Launcher"
 msgstr "Rýchly prístup"
 
-#: src/modules/everything/evry_config.c:78
+#: src/modules/everything/evry_config.c:79
 msgid "Everything Settings"
 msgstr "Rýchly prístup (Nastavenia)"
 
-#: src/modules/everything/evry_config.c:364
+#: src/modules/everything/evry_config.c:367
 msgid "Available Plugins"
 msgstr "Dostupné doplnky"
 
-#: src/modules/everything/evry_config.c:370
+#: src/modules/everything/evry_config.c:373
 msgid "Move Up"
 msgstr "Posunút hore"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 msgid "Move Down"
 msgstr "Posunút dole"
 
-#: src/modules/everything/evry_config.c:379
+#: src/modules/everything/evry_config.c:382
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Konfigurovať"
 
-#: src/modules/everything/evry_config.c:385
+#: src/modules/everything/evry_config.c:388
 msgid "Enabled"
 msgstr "Povolený"
 
-#: src/modules/everything/evry_config.c:391
+#: src/modules/everything/evry_config.c:394
 msgid "Show in \"All\""
 msgstr "Zobraziť v ponukách"
 
-#: src/modules/everything/evry_config.c:397
+#: src/modules/everything/evry_config.c:400
 msgid "Show in top-level"
 msgstr "Zobraziť na najvyššej úrovni"
 
-#: src/modules/everything/evry_config.c:403
+#: src/modules/everything/evry_config.c:406
 msgid "Minimum characters for search"
 msgstr "Minimálne počet znakov pre vyhľadávanie"
 
-#: src/modules/everything/evry_config.c:412
+#: src/modules/everything/evry_config.c:415
 msgid "Plugin Trigger"
 msgstr "Doplnok spustenia"
 
-#: src/modules/everything/evry_config.c:417
+#: src/modules/everything/evry_config.c:420
 msgid "Search only when triggered"
 msgstr "Hľadať iba pri spustení"
 
-#: src/modules/everything/evry_config.c:424
+#: src/modules/everything/evry_config.c:427
 msgid "Plugin View"
 msgstr "Zobrazenie doplnkov"
 
-#: src/modules/everything/evry_config.c:434
-#: src/modules/everything/evry_config.c:462
+#: src/modules/everything/evry_config.c:437
+#: src/modules/everything/evry_config.c:465
 msgid "Detailed"
 msgstr "Podrobnosti"
 
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:470
 msgid "Animate scrolling"
 msgstr "Animované rolovanie"
 
-#: src/modules/everything/evry_config.c:474
+#: src/modules/everything/evry_config.c:477
 msgid "Up/Down select next item in icon view"
 msgstr "Posun po položkách v zobrazení ikon (Výber Hore/Dole) "
 
-#: src/modules/everything/evry_config.c:483
+#: src/modules/everything/evry_config.c:486
 msgid "Hide input when inactive"
 msgstr "Skryť vstup pri nečinnosti"
 
-#: src/modules/everything/evry_config.c:488
+#: src/modules/everything/evry_config.c:491
 msgid "Hide list"
 msgstr "Skryť zoznam"
 
-#: src/modules/everything/evry_config.c:493
+#: src/modules/everything/evry_config.c:496
 msgid "Quick Navigation"
 msgstr "Rýchla Navigácia"
 
-#: src/modules/everything/evry_config.c:497
+#: src/modules/everything/evry_config.c:500
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Emacs štýl (ALT + n,p,f,b,m,i)"
 
-#: src/modules/everything/evry_config.c:499
+#: src/modules/everything/evry_config.c:502
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi štýl (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
+#, fuzzy
+msgid "Single mouse click"
+msgstr "Zobraziť pri kliknutí myšou"
+
+#: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
 msgstr "Podľa abecedy"
 
-#: src/modules/everything/evry_config.c:508
+#: src/modules/everything/evry_config.c:515
 msgid "By usage"
 msgstr "Podľa používania"
 
-#: src/modules/everything/evry_config.c:511
+#: src/modules/everything/evry_config.c:518
 msgid "Most used"
 msgstr "V poslednej dobe používané"
 
-#: src/modules/everything/evry_config.c:514
+#: src/modules/everything/evry_config.c:521
 msgid "Last used"
 msgstr "Posledne použité"
 
-#: src/modules/everything/evry_config.c:526
+#: src/modules/everything/evry_config.c:533
 msgid "Subject Plugins"
 msgstr "Doplnky subjektov"
 
-#: src/modules/everything/evry_config.c:530
+#: src/modules/everything/evry_config.c:537
 msgid "Action Plugins"
 msgstr "Doplnky operácií"
 
-#: src/modules/everything/evry_config.c:534
+#: src/modules/everything/evry_config.c:541
 msgid "Object Plugins"
 msgstr "Doplnky objektov"
 
-#: src/modules/everything/evry_config.c:537
-#: src/modules/everything/evry_config.c:736
+#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:752
 msgid "Plugins"
 msgstr "Doplnky"
 
-#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:551
 msgid "Popup Size"
 msgstr "Veľkosť okna"
 
-#: src/modules/everything/evry_config.c:545
-#: src/modules/everything/evry_config.c:578
+#: src/modules/everything/evry_config.c:552
+#: src/modules/everything/evry_config.c:585
 msgid "Popup Width"
 msgstr "Šírka okna"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 msgid "Popup Height"
 msgstr "Výška okna"
 
-#: src/modules/everything/evry_config.c:560
+#: src/modules/everything/evry_config.c:567
 msgid "Popup Align"
 msgstr "Zarovnanie okna"
 
-#: src/modules/everything/evry_config.c:563
 #: src/modules/everything/evry_config.c:570
+#: src/modules/everything/evry_config.c:577
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -7820,16 +7826,21 @@ msgstr "Zarovnanie okna"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 msgid "Edge Popup Size"
 msgstr "Veľkosť Okraja Okna"
 
-#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:602
+#, fuzzy
+msgid "Zoom value"
+msgstr "Oddialiť"
+
+#: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
 msgid "Geometry"
 msgstr "Geometria Okna"
 
-#: src/modules/everything/evry_config.c:631
+#: src/modules/everything/evry_config.c:647
 #, fuzzy
 msgid "Everything Collection"
 msgstr "Reštart aplikácií"
@@ -9272,27 +9283,27 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
 msgid "Systray Error"
 msgstr "Chyba Systray"
 
-#: src/modules/systray/e_mod_main.c:500
+#: src/modules/systray/e_mod_main.c:499
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Systray nemôže nastaviť svoje pozadie na neviditeľné"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 msgid "Another systray exists"
 msgstr "Ďalší systray existuje"
 
-#: src/modules/systray/e_mod_main.c:907
+#: src/modules/systray/e_mod_main.c:906
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Tu môže byť len jeden widget systray a ďalší už existuje."
 
-#: src/modules/systray/e_mod_main.c:916
+#: src/modules/systray/e_mod_main.c:915
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým."
 
-#: src/modules/systray/e_mod_main.c:1113
+#: src/modules/systray/e_mod_main.c:1112
 msgid "Systray"
 msgstr "Systray"
 
@@ -9706,7 +9717,7 @@ msgid "Notification"
 msgstr "Notifikácia"
 
 #: src/modules/notification/e_mod_main.c:287
-#: src/modules/clipboard/e_mod_main.c:395
+#: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr "Prázdne"
 
@@ -9903,9 +9914,9 @@ msgid " Trim Newlines"
 msgstr " Zruš znak konca riadku"
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:893
-#: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
+#: src/modules/clipboard/e_mod_main.c:896
+#: src/modules/clipboard/e_mod_main.c:897
 msgid "Clipboard"
 msgstr "Správca schránky"
 
@@ -9941,37 +9952,37 @@ msgstr " Položiek v histórii"
 msgid "Clipboard Settings"
 msgstr "Nastavenie Správcu schránky"
 
-#: src/modules/clipboard/e_mod_main.c:367
+#: src/modules/clipboard/e_mod_main.c:369
 msgid "Lock item"
 msgstr "Zamknúť"
 
-#: src/modules/clipboard/e_mod_main.c:378
+#: src/modules/clipboard/e_mod_main.c:380
 msgid "Edit item"
 msgstr "Editovať"
 
-#: src/modules/clipboard/e_mod_main.c:385
+#: src/modules/clipboard/e_mod_main.c:387
 msgid "Delete item"
 msgstr "Vymazať"
 
-#: src/modules/clipboard/e_mod_main.c:403
+#: src/modules/clipboard/e_mod_main.c:405
 msgid "Ignore history"
 msgstr "Ignorovať históriu"
 
-#: src/modules/clipboard/e_mod_main.c:644
+#: src/modules/clipboard/e_mod_main.c:646
 msgid "Confirm History Deletion"
 msgstr "Potvrdiť zmazanie histórie"
 
-#: src/modules/clipboard/e_mod_main.c:646
+#: src/modules/clipboard/e_mod_main.c:648
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "Požadujete zmazanie histórie.<br><br>Ste si istý, že ju chcete zmazať?"
 
-#: src/modules/clipboard/e_mod_main.c:731
+#: src/modules/clipboard/e_mod_main.c:733
 msgid "Confirm Item Deletion"
 msgstr "Potvrdiť zmazanie položky"
 
-#: src/modules/clipboard/e_mod_main.c:733
+#: src/modules/clipboard/e_mod_main.c:735
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
@@ -9979,11 +9990,11 @@ msgstr ""
 "Požadujete zmazanie aktuálnej položky.<br><br>Ste si istý, že ju chcete "
 "zmazať?"
 
-#: src/modules/clipboard/e_mod_main.c:761
+#: src/modules/clipboard/e_mod_main.c:763
 msgid "Clipboard: Edit Item"
 msgstr "Manažér schránky: Editácia položky"
 
-#: src/modules/clipboard/e_mod_main.c:762
+#: src/modules/clipboard/e_mod_main.c:764
 msgid "Edit the item content:"
 msgstr "Editovať aktuálnu položku"
 

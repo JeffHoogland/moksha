@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-04-11 17:00+0200\n"
+"POT-Creation-Date: 2021-05-04 12:47-0400\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -23,7 +23,7 @@ msgid "About Moksha"
 msgstr "Despre Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
-#: src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
+#: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:180
@@ -943,7 +943,7 @@ msgstr ""
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
-#: src/bin/e_update.c:76 src/bin/e_utils.c:600
+#: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1259,7 +1259,7 @@ msgstr "Desktop fişier"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:378
+#: src/modules/everything/evry_config.c:381
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1298,7 +1298,7 @@ msgid "Select an Executable"
 msgstr "Selectaţi un executabil"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2477
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1313,8 +1313,8 @@ msgstr "Selectaţi un executabil"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Delete"
 msgstr "Șterge"
 
@@ -1335,7 +1335,7 @@ msgid "Select All"
 msgstr "Selectează tot"
 
 #: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:185
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:182
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1574,7 +1574,7 @@ msgid "View Mode"
 msgstr "Mod de vizualizare"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:503
+#: src/modules/everything/evry_config.c:510
 #: src/modules/fileman/e_mod_config.c:394
 #, fuzzy
 msgid "Sorting"
@@ -1598,7 +1598,7 @@ msgstr "Opțiuni"
 msgid "Link"
 msgstr "Legătură"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2472
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1647,13 +1647,13 @@ msgstr "Grid Icoane"
 msgid "Custom Icons"
 msgstr "Icoane personalizate"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:430
-#: src/modules/everything/evry_config.c:460
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
+#: src/modules/everything/evry_config.c:463
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Listă"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:458
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
 #, fuzzy
 msgid "Default View"
 msgstr "Implicit"
@@ -1964,7 +1964,7 @@ msgstr "alţii"
 msgid "Preview"
 msgstr "Previzualizează"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:426
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
 msgid "Default"
 msgstr "Implicit"
 
@@ -2722,7 +2722,7 @@ msgstr "solicitare de poziţie"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2443 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
 #: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
@@ -2742,8 +2742,8 @@ msgstr "solicitare de poziţie"
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:208
 #: src/modules/notification/e_mod_main.c:308
-#: src/modules/clipboard/e_mod_main.c:281
-#: src/modules/clipboard/e_mod_main.c:426 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:283
+#: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 #, fuzzy
 msgid "Settings"
 msgstr "Setări"
@@ -2830,7 +2830,7 @@ msgstr "Mărimea , poziţia şi Blocări"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1618 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
 #, fuzzy
 msgid "All"
 msgstr "toate"
@@ -3841,8 +3841,8 @@ msgstr "Doriţi să descărcaţi acest modul.<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:649
-#: src/modules/clipboard/e_mod_main.c:736
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:651
+#: src/modules/clipboard/e_mod_main.c:738
 msgid "Keep"
 msgstr ""
 
@@ -3875,7 +3875,7 @@ msgstr ""
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1029
 #, fuzzy
 msgid "Horizontal"
@@ -3883,7 +3883,7 @@ msgstr "orizontală"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
-#: src/modules/everything/evry_config.c:561
+#: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:1037
 #, fuzzy
 msgid "Vertical"
@@ -3973,12 +3973,12 @@ msgstr "Eroare la ejectare"
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2488
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "se opresc"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2490
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Scoateţi Gadget"
@@ -4006,23 +4006,23 @@ msgstr ""
 msgid "Rename Shelf"
 msgstr "Redenumește fișierul"
 
-#: src/bin/e_shelf.c:2438 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
 #, fuzzy
 msgid "Contents"
 msgstr "Comentariu"
 
-#: src/bin/e_shelf.c:2448
+#: src/bin/e_shelf.c:2449
 #, fuzzy
 msgid "Orientation"
 msgstr "prezentare"
 
-#: src/bin/e_shelf.c:2457 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "auto Hide"
 
-#: src/bin/e_shelf.c:2464
+#: src/bin/e_shelf.c:2465
 #, fuzzy
 msgid "Refresh"
 msgstr "reîmprospătare"
@@ -4229,102 +4229,102 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 
-#: src/bin/e_utils.c:186 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:183 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:239
+#: src/bin/e_utils.c:236
 #, fuzzy
 msgid "Cannot exit - immortal windows."
 msgstr "Nu se poate ieşi din - Windows nemuritoare."
 
-#: src/bin/e_utils.c:240
+#: src/bin/e_utils.c:237
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Moksha will not allow itself to exit until these windows "
 "have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:765
+#: src/bin/e_utils.c:780
 #, c-format
 msgid "%'.0f bytes"
 msgstr ""
 
-#: src/bin/e_utils.c:769
+#: src/bin/e_utils.c:784
 #, c-format
 msgid "%'.0f KiB"
 msgstr ""
 
-#: src/bin/e_utils.c:773
+#: src/bin/e_utils.c:788
 #, c-format
 msgid "%'.1f MiB"
 msgstr ""
 
-#: src/bin/e_utils.c:777
+#: src/bin/e_utils.c:792
 #, c-format
 msgid "%'.1f GiB"
 msgstr ""
 
-#: src/bin/e_utils.c:781
+#: src/bin/e_utils.c:796
 #, c-format
 msgid "%'.1f TiB"
 msgstr ""
 
-#: src/bin/e_utils.c:800
+#: src/bin/e_utils.c:815
 #, fuzzy, c-format
 msgid "In the future"
 msgstr "Înviitor"
 
-#: src/bin/e_utils.c:804
+#: src/bin/e_utils.c:819
 #, fuzzy, c-format
 msgid "In the last minute"
 msgstr "Înultimul minut"
 
-#: src/bin/e_utils.c:808
+#: src/bin/e_utils.c:823
 #, fuzzy, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "ultima utilizat"
 msgstr[1] "ultima utilizat"
 
-#: src/bin/e_utils.c:813
+#: src/bin/e_utils.c:828
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:818
+#: src/bin/e_utils.c:833
 #, fuzzy, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "ultima utilizat"
 msgstr[1] "ultima utilizat"
 
-#: src/bin/e_utils.c:823
+#: src/bin/e_utils.c:838
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:828
+#: src/bin/e_utils.c:843
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:833
+#: src/bin/e_utils.c:848
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:840 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:855 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
@@ -4336,24 +4336,24 @@ msgstr[1] ""
 msgid "Unknown"
 msgstr "necunoscut"
 
-#: src/bin/e_utils.c:911 src/bin/e_utils.c:919
+#: src/bin/e_utils.c:926 src/bin/e_utils.c:934
 #, fuzzy
 msgid "Error creating directory"
 msgstr "Eroare de încărcare Modulul"
 
-#: src/bin/e_utils.c:911
+#: src/bin/e_utils.c:926
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
 msgstr ""
 
-#: src/bin/e_utils.c:919
+#: src/bin/e_utils.c:934
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
-#: src/bin/e_utils.c:1081
+#: src/bin/e_utils.c:1096
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
@@ -4374,12 +4374,12 @@ msgstr ""
 "configura acum lucruri pe placul<br>dumneavoastră. Ne pare rău pentru "
 "neplăcerile create.<br>"
 
-#: src/bin/e_utils.c:1090 src/bin/e_utils.c:1114
+#: src/bin/e_utils.c:1105 src/bin/e_utils.c:1129
 #, c-format
 msgid "%s Configuration Updated"
 msgstr ""
 
-#: src/bin/e_utils.c:1103
+#: src/bin/e_utils.c:1118
 #, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
@@ -4395,54 +4395,54 @@ msgstr ""
 "precauţie<br>de configurare a fost acum restaurată la valorile "
 "implicite<br>. Ne pare rău pentru neplăcerile create.<br>"
 
-#: src/bin/e_utils.c:1197
+#: src/bin/e_utils.c:1212
 #, c-format
 msgid "Never"
 msgstr ""
 
-#: src/bin/e_utils.c:1201
+#: src/bin/e_utils.c:1216
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1205
+#: src/bin/e_utils.c:1220
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1210
+#: src/bin/e_utils.c:1225
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1215
+#: src/bin/e_utils.c:1230
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1220
+#: src/bin/e_utils.c:1235
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1225
+#: src/bin/e_utils.c:1240
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1230
+#: src/bin/e_utils.c:1245
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -5142,7 +5142,7 @@ msgstr "de dialog Setări"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:519 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
 #, fuzzy
 msgid "General Settings"
 msgstr "Setări generale"
@@ -5215,11 +5215,12 @@ msgstr "schimb de imagini de fundal"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:405
-#: src/modules/everything/evry_config.c:547
+#: src/modules/everything/evry_config.c:408
 #: src/modules/everything/evry_config.c:554
-#: src/modules/everything/evry_config.c:580
+#: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:604
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -5260,7 +5261,7 @@ msgid "Desktops"
 msgstr "desktop-uri"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:495
+#: src/modules/everything/evry_config.c:498
 #, fuzzy
 msgid "Off"
 msgstr "de pe"
@@ -5272,6 +5273,7 @@ msgstr "panou"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
+#: src/modules/everything/evry_config.c:601
 #, fuzzy
 msgid "Zoom"
 msgstr "zoom"
@@ -6529,8 +6531,8 @@ msgstr "teme"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:438
-#: src/modules/everything/evry_config.c:464
+#: src/modules/everything/evry_config.c:441
+#: src/modules/everything/evry_config.c:467
 #, fuzzy
 msgid "Icons"
 msgstr "icoane"
@@ -7571,7 +7573,7 @@ msgstr "atribui"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:295
-#: src/modules/clipboard/e_mod_main.c:413
+#: src/modules/clipboard/e_mod_main.c:415
 msgid "Clear"
 msgstr "Curăță"
 
@@ -8494,182 +8496,187 @@ msgstr "Totul arată Launcher"
 msgid "Everything Configuration"
 msgstr "totul de configurare"
 
-#: src/modules/everything/e_mod_main.c:408
+#: src/modules/everything/e_mod_main.c:409
 #, fuzzy
 msgid "Everything Module"
 msgstr "totul Modulul"
 
-#: src/modules/everything/e_mod_main.c:599
+#: src/modules/everything/e_mod_main.c:601
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "Lansează"
 
-#: src/modules/everything/evry_config.c:78
+#: src/modules/everything/evry_config.c:79
 #, fuzzy
 msgid "Everything Settings"
 msgstr "totul Setări"
 
-#: src/modules/everything/evry_config.c:364
+#: src/modules/everything/evry_config.c:367
 #, fuzzy
 msgid "Available Plugins"
 msgstr "plugin-uri disponibile"
 
-#: src/modules/everything/evry_config.c:370
+#: src/modules/everything/evry_config.c:373
 #, fuzzy
 msgid "Move Up"
 msgstr "Mută"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 #, fuzzy
 msgid "Move Down"
 msgstr "Mută"
 
-#: src/modules/everything/evry_config.c:379
+#: src/modules/everything/evry_config.c:382
 #: src/modules/connman/e_mod_main.c:323
 #, fuzzy
 msgid "Configure"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/everything/evry_config.c:385
+#: src/modules/everything/evry_config.c:388
 #, fuzzy
 msgid "Enabled"
 msgstr "activat"
 
-#: src/modules/everything/evry_config.c:391
+#: src/modules/everything/evry_config.c:394
 #, fuzzy
 msgid "Show in \"All\""
 msgstr "Arată în meniuri"
 
-#: src/modules/everything/evry_config.c:397
+#: src/modules/everything/evry_config.c:400
 #, fuzzy
 msgid "Show in top-level"
 msgstr "Arată în cel mai înalt nivel"
 
-#: src/modules/everything/evry_config.c:403
+#: src/modules/everything/evry_config.c:406
 #, fuzzy
 msgid "Minimum characters for search"
 msgstr "Caractere minime pentru căutare"
 
-#: src/modules/everything/evry_config.c:412
+#: src/modules/everything/evry_config.c:415
 #, fuzzy
 msgid "Plugin Trigger"
 msgstr "Plugin Trigger"
 
-#: src/modules/everything/evry_config.c:417
+#: src/modules/everything/evry_config.c:420
 #, fuzzy
 msgid "Search only when triggered"
 msgstr "Căutare numai atunci când a declanşat"
 
-#: src/modules/everything/evry_config.c:424
+#: src/modules/everything/evry_config.c:427
 #, fuzzy
 msgid "Plugin View"
 msgstr "Vezi Plugin"
 
-#: src/modules/everything/evry_config.c:434
-#: src/modules/everything/evry_config.c:462
+#: src/modules/everything/evry_config.c:437
+#: src/modules/everything/evry_config.c:465
 #, fuzzy
 msgid "Detailed"
 msgstr "detaliat"
 
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:470
 #, fuzzy
 msgid "Animate scrolling"
 msgstr "animaţi de defilare"
 
-#: src/modules/everything/evry_config.c:474
+#: src/modules/everything/evry_config.c:477
 msgid "Up/Down select next item in icon view"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:483
+#: src/modules/everything/evry_config.c:486
 #, fuzzy
 msgid "Hide input when inactive"
 msgstr "Ascunde de intrare atunci când inactiv"
 
-#: src/modules/everything/evry_config.c:488
+#: src/modules/everything/evry_config.c:491
 #, fuzzy
 msgid "Hide list"
 msgstr "Ascunde lista"
 
-#: src/modules/everything/evry_config.c:493
+#: src/modules/everything/evry_config.c:496
 #, fuzzy
 msgid "Quick Navigation"
 msgstr "navigare rapidă"
 
-#: src/modules/everything/evry_config.c:497
+#: src/modules/everything/evry_config.c:500
 #, fuzzy
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Emacs stil (ALT N, P , F , B, M , I."
 
-#: src/modules/everything/evry_config.c:499
+#: src/modules/everything/evry_config.c:502
 #, fuzzy
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi stil (ALT H, J , K , L , N , P, M , I."
 
 #: src/modules/everything/evry_config.c:505
 #, fuzzy
+msgid "Single mouse click"
+msgstr "Arata pe click de mouse"
+
+#: src/modules/everything/evry_config.c:512
+#, fuzzy
 msgid "No Sorting"
 msgstr "Stivuire"
 
-#: src/modules/everything/evry_config.c:508
+#: src/modules/everything/evry_config.c:515
 #, fuzzy
 msgid "By usage"
 msgstr "de utilizare"
 
-#: src/modules/everything/evry_config.c:511
+#: src/modules/everything/evry_config.c:518
 #, fuzzy
 msgid "Most used"
 msgstr "Cele mai utilizate"
 
-#: src/modules/everything/evry_config.c:514
+#: src/modules/everything/evry_config.c:521
 #, fuzzy
 msgid "Last used"
 msgstr "ultima utilizat"
 
-#: src/modules/everything/evry_config.c:526
+#: src/modules/everything/evry_config.c:533
 #, fuzzy
 msgid "Subject Plugins"
 msgstr "Plugin-uri Subiect"
 
-#: src/modules/everything/evry_config.c:530
+#: src/modules/everything/evry_config.c:537
 #, fuzzy
 msgid "Action Plugins"
 msgstr "Plugin-uri de acţiune"
 
-#: src/modules/everything/evry_config.c:534
+#: src/modules/everything/evry_config.c:541
 #, fuzzy
 msgid "Object Plugins"
 msgstr "Obiectul Plugin-uri"
 
-#: src/modules/everything/evry_config.c:537
-#: src/modules/everything/evry_config.c:736
+#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:752
 #, fuzzy
 msgid "Plugins"
 msgstr "Simplu"
 
-#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:551
 #, fuzzy
 msgid "Popup Size"
 msgstr "pop-up Dimensiune"
 
-#: src/modules/everything/evry_config.c:545
-#: src/modules/everything/evry_config.c:578
+#: src/modules/everything/evry_config.c:552
+#: src/modules/everything/evry_config.c:585
 #, fuzzy
 msgid "Popup Width"
 msgstr "popup Lăţime"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 #, fuzzy
 msgid "Popup Height"
 msgstr "popup Înălţime"
 
-#: src/modules/everything/evry_config.c:560
+#: src/modules/everything/evry_config.c:567
 #, fuzzy
 msgid "Popup Align"
 msgstr "Alinierea popup"
 
-#: src/modules/everything/evry_config.c:563
 #: src/modules/everything/evry_config.c:570
+#: src/modules/everything/evry_config.c:577
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -8678,18 +8685,23 @@ msgstr "Alinierea popup"
 msgid "%1.2f"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 #, fuzzy
 msgid "Edge Popup Size"
 msgstr "Popup Edge Dimensiune"
 
-#: src/modules/everything/evry_config.c:594
+#: src/modules/everything/evry_config.c:602
+#, fuzzy
+msgid "Zoom value"
+msgstr "Ieşire din cont"
+
+#: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
 #, fuzzy
 msgid "Geometry"
 msgstr "Încearcă din nou"
 
-#: src/modules/everything/evry_config.c:631
+#: src/modules/everything/evry_config.c:647
 #, fuzzy
 msgid "Everything Collection"
 msgstr "Aplicație"
@@ -10323,32 +10335,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:499 src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
 #, fuzzy
 msgid "Systray Error"
 msgstr "systray Eroare"
 
-#: src/modules/systray/e_mod_main.c:500
+#: src/modules/systray/e_mod_main.c:499
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Un alt systray există"
 
-#: src/modules/systray/e_mod_main.c:907
+#: src/modules/systray/e_mod_main.c:906
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Nu poate fi doar un obiect gadget systray şi de alta există deja."
 
-#: src/modules/systray/e_mod_main.c:916
+#: src/modules/systray/e_mod_main.c:915
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray nu se poate lucra într-un raft , care este setat mai jos totul."
 
-#: src/modules/systray/e_mod_main.c:1113
+#: src/modules/systray/e_mod_main.c:1112
 #, fuzzy
 msgid "Systray"
 msgstr "systray"
@@ -10813,7 +10825,7 @@ msgid "Notification"
 msgstr "rotaţie"
 
 #: src/modules/notification/e_mod_main.c:287
-#: src/modules/clipboard/e_mod_main.c:395
+#: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr ""
 
@@ -11028,9 +11040,9 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:893
-#: src/modules/clipboard/e_mod_main.c:894
 #: src/modules/clipboard/e_mod_main.c:895
+#: src/modules/clipboard/e_mod_main.c:896
+#: src/modules/clipboard/e_mod_main.c:897
 msgid "Clipboard"
 msgstr ""
 
@@ -11072,32 +11084,32 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ibar Setări"
 
-#: src/modules/clipboard/e_mod_main.c:367
+#: src/modules/clipboard/e_mod_main.c:369
 #, fuzzy
 msgid "Lock item"
 msgstr "Blocare eșuată"
 
-#: src/modules/clipboard/e_mod_main.c:378
+#: src/modules/clipboard/e_mod_main.c:380
 #, fuzzy
 msgid "Edit item"
 msgstr "Editare Icon"
 
-#: src/modules/clipboard/e_mod_main.c:385
+#: src/modules/clipboard/e_mod_main.c:387
 #, fuzzy
 msgid "Delete item"
 msgstr "ştergeţi făcut"
 
-#: src/modules/clipboard/e_mod_main.c:403
+#: src/modules/clipboard/e_mod_main.c:405
 #, fuzzy
 msgid "Ignore history"
 msgstr "ignoraţi acest"
 
-#: src/modules/clipboard/e_mod_main.c:644
+#: src/modules/clipboard/e_mod_main.c:646
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/clipboard/e_mod_main.c:646
+#: src/modules/clipboard/e_mod_main.c:648
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
@@ -11106,12 +11118,12 @@ msgstr ""
 "Aţi solicitat pentru a şterge acest raft.<br><br>Sunteţi sigur că doriţi să-"
 "l ştergeţi."
 
-#: src/modules/clipboard/e_mod_main.c:731
+#: src/modules/clipboard/e_mod_main.c:733
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "Confirmă ștergerea"
 
-#: src/modules/clipboard/e_mod_main.c:733
+#: src/modules/clipboard/e_mod_main.c:735
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
@@ -11120,12 +11132,12 @@ msgstr ""
 "Aţi solicitat pentru a şterge acest raft.<br><br>Sunteţi sigur că doriţi să-"
 "l ştergeţi."
 
-#: src/modules/clipboard/e_mod_main.c:761
+#: src/modules/clipboard/e_mod_main.c:763
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "Ibar Setări"
 
-#: src/modules/clipboard/e_mod_main.c:762
+#: src/modules/clipboard/e_mod_main.c:764
 msgid "Edit the item content:"
 msgstr ""
 
