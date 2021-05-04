@@ -7761,9 +7761,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi štýl (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Zobraziť pri kliknutí myšou"
+msgstr "Použi jednoduché kliknutie"
 
 #: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
@@ -7831,9 +7830,8 @@ msgid "Edge Popup Size"
 msgstr "Veľkosť Okraja Okna"
 
 #: src/modules/everything/evry_config.c:602
-#, fuzzy
 msgid "Zoom value"
-msgstr "Oddialiť"
+msgstr "Úroveň priblíženia"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
