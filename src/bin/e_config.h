@@ -56,6 +56,7 @@ struct _E_Config
    double      menus_fast_mouse_move_threshhold; // GUI
    double      menus_click_drag_timeout; // GUI
    int         border_shade_animate; // GUI
+   int         border_frame; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
    double      framerate; // GUI

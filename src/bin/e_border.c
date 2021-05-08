@@ -2409,7 +2409,12 @@ e_border_focus_set(E_Border *bd,
         if (bd->maximized != E_MAXIMIZE_NONE)
           edje_object_signal_emit(bd->bg_object, "e,state,focused,maximized", "e");
         else
-          edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+        {
+          if (!e_config->border_frame)
+            edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+          else
+            edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+        }
 
         if (bd->icon_object && e_icon_edje_get(bd->icon_object))
           e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
@@ -3176,7 +3181,6 @@ e_border_unfullscreen(E_Border *bd)
         if (bd->saved.maximized)
           e_border_maximize(bd, (e_config->maximize_policy & E_MAXIMIZE_TYPE) |
                             bd->saved.maximized);
-
         e_border_layer_set(bd, bd->saved.layer);
 
         e_hints_window_fullscreen_set(bd, 0);
@@ -8442,7 +8446,11 @@ _e_border_eval0(E_Border *bd)
                                                   _e_border_cb_signal_bind, bd);
                   if (bd->focused)
                     {
-                       edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+                         if (!e_config->border_frame)
+                           edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+                         else
+                           edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+
                        if (bd->icon_object && e_icon_edje_get(bd->icon_object))
                          e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
                     }

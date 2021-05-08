@@ -1917,6 +1917,7 @@ group "E_Config" struct {
     value "menus_fast_mouse_move_threshhold" double: 300.0;
     value "menus_click_drag_timeout" double: 0.25;
     value "border_shade_animate" int: 1;
+    value "border_frame" int: 0;
     value "border_shade_transition" int: 3;
     value "border_shade_speed" double: 3000.0;
     value "framerate" double: 60.0;
