@@ -2945,8 +2945,12 @@ e_border_unmaximize(E_Border *bd,
           {
              if (bd->bg_object)
                {
-                  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-                  _e_border_client_inset_calc(bd);
+                 if (!e_config->border_frame)
+                   edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
+                 else
+                   edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
+
+                _e_border_client_inset_calc(bd);
                }
 
              bd->maximized = E_MAXIMIZE_NONE;
@@ -2971,8 +2975,12 @@ e_border_unmaximize(E_Border *bd,
                {
                   if (bd->bg_object)
                     {
-                       edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-                       _e_border_client_inset_calc(bd);
+                      if (!e_config->border_frame)
+                        edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
+                      else
+                        edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
+
+                      _e_border_client_inset_calc(bd);
                     }
                }
              if (max & E_MAXIMIZE_VERTICAL)
@@ -3001,7 +3009,10 @@ e_border_unmaximize(E_Border *bd,
                   bd->maximized = E_MAXIMIZE_NONE;
                   _e_border_move_resize_internal(bd, x, y, w, h, 0, 1);
                   e_hints_window_size_unset(bd);
-                  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
+                  if (!e_config->border_frame)
+                    edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
+                  else
+                    edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
                }
              else
                {
