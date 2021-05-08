@@ -4503,12 +4503,12 @@ msgstr "Настройки часов"
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
-msgstr ""
+msgstr "Щёлкните по дню в календаре для изменения даты. <br>Используйте "
+"колесо мыши для изменения года."
 
 #: src/modules/clock/e_mod_config.c:101
-#, fuzzy
 msgid "Clock module Information"
-msgstr "Информация о ссылке"
+msgstr "Информация модуля Часы"
 
 #: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
@@ -4577,23 +4577,20 @@ msgid "Days"
 msgstr "Количество дней"
 
 #: src/modules/clock/e_mod_config.c:210
-#, fuzzy
 msgid "Time set"
-msgstr "Отметка времени"
+msgstr "Уст. время"
 
 #: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
-msgstr ""
+msgstr "Часы"
 
 #: src/modules/clock/e_mod_config.c:217
-#, fuzzy
 msgid "Minutes"
-msgstr "%li минута"
+msgstr "Минуты"
 
 #: src/modules/clock/e_mod_config.c:225
-#, fuzzy
 msgid "Date set"
-msgstr "Дата"
+msgstr "Уст. дату"
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
@@ -8613,16 +8610,15 @@ msgstr "Выбранный источник"
 
 #: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
 msgid "Show Icon Label"
-msgstr "Показывать метку значка"
+msgstr "Отображение надписи значка"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Перекрывающая надпись"
 
 #: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Метки значков"
+msgstr "Рядом расположенная надпись"
 
 #: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
