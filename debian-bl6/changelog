@@ -1,3 +1,13 @@
+moksha (0.3.3-10) focal; urgency=low
+
+  * Border: unmaximize event added
+  * Updated sk and fr localizations
+  * Updated some module and profile desktop files
+  * Update moksha.pot
+  * Update moksha config
+  
+ -- Robert Wiley <ylee@bodhilinux.com>  Sat, 08 May 2021 16:17:05 -0400
+
 moksha (0.3.3-9) focal; urgency=low
 
   * Profile Tweaks
