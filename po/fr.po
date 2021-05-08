@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020, 2021.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-05-04 12:47-0400\n"
-"PO-Revision-Date: 2021-04-12 16:26+0200\n"
+"PO-Revision-Date: 2021-05-07 12:55+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -63,7 +63,7 @@ msgstr ""
 "<title>Copyright &copy; 2021, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
-"veuillez visiter :<br><hilight>http://www.bodhilinux.com</><br><br>"
+"visitez :<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -221,7 +221,7 @@ msgstr "Activer l'ancrage"
 
 #: src/bin/e_actions.c:3170
 msgid "Always On Top Toggle"
-msgstr "Toujours au-dessus au choix"
+msgstr "Toujours au-dessus (in)actif"
 
 #: src/bin/e_actions.c:3174
 msgid "Always On Top Enable"
@@ -634,7 +634,7 @@ msgstr "Redimensionner de …"
 
 #: src/bin/e_actions.c:3476
 msgid "Push in Direction..."
-msgstr "En direction de …"
+msgstr "Déplacer vers…"
 
 #: src/bin/e_actions.c:3482
 msgid "Drag Icon..."
@@ -1138,7 +1138,7 @@ msgid ""
 "time the window starts up, and does not<br>change."
 msgstr ""
 "La fenêtre pour laquelle vous voulez créer<br>une icône ne possède ni nom ni "
-"classe.<br> Sans ces propriétés, vous devrez utiliser le<br>titre de la "
+"classe.<br> Sans ces propriétés, vous devez utiliser le<br>titre de la "
 "fenêtre à la place. Cela ne fonctionnera<br>qu'à condition que le titre de "
 "cette fenêtre<br>reste le même qu'au premier lancement."
 
@@ -1651,11 +1651,11 @@ msgstr "Enlever le fond d'écran"
 
 #: src/bin/e_fm.c:9913 src/bin/e_fm.c:10142
 msgid "Set overlay..."
-msgstr "Définir l'incrustation …"
+msgstr "Définir la surimpression…"
 
 #: src/bin/e_fm.c:9919
 msgid "Clear overlay"
-msgstr "Supprimer l'incrustation"
+msgstr "Supprimer la surimpression"
 
 #: src/bin/e_fm.c:10236 src/bin/e_fm.c:10577
 #, c-format
@@ -1862,7 +1862,7 @@ msgstr "Vignette"
 
 #: src/bin/e_fm_prop.c:533 src/modules/conf_display/e_int_config_desklock.c:364
 msgid "Custom"
-msgstr "Personnalisé"
+msgstr "Personnalisé(e)"
 
 #: src/bin/e_fm_prop.c:543
 msgid "Use this icon for all files of this type"
@@ -2048,7 +2048,7 @@ msgstr "%3.0f%%"
 
 #: src/bin/e_import_config_dialog.c:530
 msgid "Fill Color"
-msgstr "Couleur de fond"
+msgstr "Couleur de remplissage"
 
 #: src/bin/e_int_border_locks.c:66
 msgid "Window Locks"
@@ -2321,7 +2321,7 @@ msgstr "%1.3f–%1.3f"
 #: src/bin/e_int_border_prop.c:153 src/bin/e_int_border_prop.c:175
 #, c-format
 msgid "Withdrawn"
-msgstr "Retiré"
+msgstr "Non visible"
 
 #: src/bin/e_int_border_prop.c:161 src/bin/e_int_border_prop.c:183
 #, c-format
@@ -2331,7 +2331,7 @@ msgstr "Iconifié"
 #: src/bin/e_int_border_prop.c:216
 #, c-format
 msgid "Forget/Unmap"
-msgstr "Oublier/Supprimer"
+msgstr "Oublier / Cacher"
 
 #: src/bin/e_int_border_prop.c:220
 #, c-format
@@ -2587,12 +2587,12 @@ msgstr ""
 "sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie "
 "qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, "
 "etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation "
-"des propriétés pour cette fenêtre<br>s'appliquera à toutes les autres "
-"fenêtres qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un "
-"avertissement au cas où ce<br>n'était pas ce que vous recherchiez."
-"<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> "
-"et<br>vos paramètres seront acceptés.<br>Cliquez sur <hilight>Fermer</"
-"hilight> en cas de doute,<br>et rien ne sera modifié."
+"des propriétés pour cette fenêtre<br>s'applique à toutes les autres fenêtres "
+"qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement "
+"au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur "
+"<hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres "
+"seront acceptés.<br>Cliquez sur <hilight>Fermer</hilight> en cas de doute,"
+"<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:498
 msgid "No match properties set"
@@ -3154,7 +3154,7 @@ msgid ""
 msgstr ""
 "Moksha ne parvient pas à initialiser le système de menus FDO.\n"
 "Peut-être vous manque-t-il certaines permissions sur ~/.cache/efreet\n"
-"ou bien le système est-il à court de mémoire ou d'espace disque ?"
+"ou bien le système est à court de mémoire ou d'espace disque ?"
 
 #: src/bin/e_main.c:755
 msgid "Setup Screens"
@@ -3477,7 +3477,7 @@ msgstr ""
 "plutôt le lanceur « enlightenment_start ». Ce dernier se\n"
 "charge du paramétrage des variables d'environnement,\n"
 "des chemins et de la gestion de tout autre service\n"
-"nécessaire, avant même le démarrage d'Enlightenment.\n"
+"nécessaire avant le lancement d'Enlightenment.\n"
 
 #: src/bin/e_main.c:1648
 msgid "Testing Format Support"
@@ -3654,7 +3654,7 @@ msgstr "Module instable détecté"
 
 #: src/bin/e_module.c:823
 msgid "I know"
-msgstr "Je suis au courant"
+msgstr "C'est compris"
 
 #: src/bin/e_screensaver.c:183
 msgid ""
@@ -3882,7 +3882,7 @@ msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr ""
-"Réamorçage en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
+"Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
 "système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:604
@@ -3911,7 +3911,7 @@ msgstr "Impossible d'éteindre l'ordinateur."
 
 #: src/bin/e_sys.c:645
 msgid "Reset failed."
-msgstr "Le réamorçage a échoué."
+msgstr "Le redémarrage a échoué."
 
 #: src/bin/e_sys.c:649
 msgid "Suspend failed."
@@ -3927,11 +3927,11 @@ msgstr "Extinction en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:797
 msgid "Resetting"
-msgstr "Réamorçage"
+msgstr "Redémarrage"
 
 #: src/bin/e_sys.c:800
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "Réamorçage en cours.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Redémarrage en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:852
 msgid "Suspending"
@@ -4021,22 +4021,22 @@ msgstr "%'.0f octets"
 #: src/bin/e_utils.c:784
 #, c-format
 msgid "%'.0f KiB"
-msgstr "%'.0f Ko"
+msgstr "%'.0f Kio"
 
 #: src/bin/e_utils.c:788
 #, c-format
 msgid "%'.1f MiB"
-msgstr "%'.1f Mo"
+msgstr "%'.1f Mio"
 
 #: src/bin/e_utils.c:792
 #, c-format
 msgid "%'.1f GiB"
-msgstr "%'.1f Go"
+msgstr "%'.1f Gio"
 
 #: src/bin/e_utils.c:796
 #, c-format
 msgid "%'.1f TiB"
-msgstr "%'.1f To"
+msgstr "%'.1f Tio"
 
 #: src/bin/e_utils.c:815
 #, c-format
@@ -4190,7 +4190,7 @@ msgstr[1] "%li mois"
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] "Une semaine"
-msgstr[1] "%li semaine"
+msgstr[1] "%li semaines"
 
 #: src/bin/e_utils.c:1235
 #, c-format
@@ -4601,7 +4601,7 @@ msgstr "Jours"
 
 #: src/modules/clock/e_mod_config.c:210
 msgid "Time set"
-msgstr "Réglage de  l'heure"
+msgstr "Réglage de l'heure"
 
 #: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
@@ -4698,7 +4698,7 @@ msgstr "Applications par défaut"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:297
 msgid "Custom Browser Command"
-msgstr "Commande du navigateur personnalisée"
+msgstr "Commande du navigateur préféré"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:310
 msgid "Browser"
@@ -5392,7 +5392,7 @@ msgstr "Paramétrage de l'interaction"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:96
 msgid "Thumbscroll"
-msgstr "Navigation"
+msgstr "Défilement d'écran"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:98
 msgid "Enable Thumbscroll"
@@ -5750,8 +5750,8 @@ msgid ""
 "Please trigger the ACPI event you wish to bind to, <br><br>or "
 "<hilight>Escape</hilight> to abort."
 msgstr ""
-"Veuillez composer votre séquence au clavier,<br><vr>ou <hilight>Échap</"
-"hilight> pour annuler."
+"Composez votre séquence au clavier,<br><br>ou <hilight>Échap</hilight> pour "
+"annuler."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -5777,8 +5777,8 @@ msgid ""
 "%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
-"utilisée<br>par l'action <hilight>%s</hilight>.<br>Veuillez choisir une "
-"autre séquence de raccourci clavier."
+"utilisée<br>par l'action <hilight>%s</hilight>.<br>Chosissez une autre "
+"séquence de raccourci clavier."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5786,8 +5786,8 @@ msgid ""
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "hilight> to abort."
 msgstr ""
-"Veuillez appuyer sur le modificateur de votre choix et<br>sur un bouton de "
-"votre souris, ou tourner la molette,<br>afin d'assigner un raccourci souris."
+"Appuyez sur le modificateur de votre choix et<br>sur un bouton de votre "
+"souris ou<br> ou tournant la molette, afin d'assigner<br>un raccourci souris."
 "<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
@@ -7429,7 +7429,7 @@ msgstr "Transitoires"
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:39
 #: src/modules/conf_window_manipulation/e_mod_main.c:22
 msgid "Window Process Management"
-msgstr "Processus des fenêtres"
+msgstr "Gestion des processus des fenêtres"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:95
 msgid "Kill process if unclosable"
@@ -7674,7 +7674,7 @@ msgstr "Afficher Omni"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
-msgstr "Configuration d'Omni (Everything)"
+msgstr "Configuration du lanceur rapide (Omni)"
 
 #: src/modules/everything/e_mod_main.c:409
 msgid "Everything Module"
@@ -7686,7 +7686,7 @@ msgstr "Lanceur rapide"
 
 #: src/modules/everything/evry_config.c:79
 msgid "Everything Settings"
-msgstr "Paramétrage d'Omni"
+msgstr "Paramétrage du lanceur rapide (Omni)"
 
 #: src/modules/everything/evry_config.c:367
 msgid "Available Plugins"
@@ -7767,9 +7767,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Style Vi (Alt + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Afficher avec un clic de souris"
+msgstr "Utiliser le simple clic"
 
 #: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
@@ -7837,9 +7836,8 @@ msgid "Edge Popup Size"
 msgstr "Taille du bord du pop-up"
 
 #: src/modules/everything/evry_config.c:602
-#, fuzzy
 msgid "Zoom value"
-msgstr "Réduire"
+msgstr "Valeur de zoom"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
@@ -8144,7 +8142,7 @@ msgstr "La suppression sécurisée est annulée"
 #: src/modules/fileman/e_fwin.c:3028
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr "L'opération a échoué"
+msgstr "L'opération inconnue depuis l'esclave est annulée"
 
 #: src/modules/fileman/e_fwin.c:3038
 #, c-format
@@ -8399,7 +8397,7 @@ msgstr "Fond"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Hover (Key Toggle)"
-msgstr "Incrustation (action d'activation)"
+msgstr "Surimpression (action d'activation)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -9186,10 +9184,9 @@ msgid ""
 "<br>Please choose an action to take:"
 msgstr ""
 "La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br>ne peut être trouvée dans la base de données des<br>applications des "
-"accès rapides.<br>Cela signifie que soit l'application y est inconnue<br>ou "
-"qu'il n'est pas sensé de l'utiliser avec cette option.<br>Veuillez choisir "
-"une action à appliquer :"
+"%s<br>est introuvable dans la base de données des<br>applications des accès "
+"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9418,8 +9415,8 @@ msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
-"L'extension du fichier n'est pas spécifiée.<br>Veuillez utiliser « .jpg » ou "
-"« .png »<br>car les autres formats ne sont<br>pas pris en charge."
+"L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « ."
+"png »<br>car les autres formats ne sont<br>pas pris en charge."
 
 #: src/modules/shot/e_mod_main.c:452
 msgid "Select screenshot save location"
@@ -9627,7 +9624,7 @@ msgstr "Paramétrage de Tâches"
 
 #: src/modules/tasks/e_mod_config.c:92
 msgid "Show icon only"
-msgstr "Afficher uniquement l'icône"
+msgstr "Afficher uniquement les icônes"
 
 #: src/modules/tasks/e_mod_config.c:96
 msgid "Show text only"
@@ -10156,7 +10153,7 @@ msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
-"<b>Impossible d'exécuter EFM.</b><br>Veuillez choisir un gestionnaire de "
+"<b>Impossible d'exécuter EFM.</b><br>Choisissez un gestionnaire de "
 "fichiers<br>personnalisé dans la configuration du gadget."
 
 #: src/modules/places/e_mod_places.c:683
@@ -10182,7 +10179,7 @@ msgstr "éjecter"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
-msgstr "Contrôle du volume Efl"
+msgstr "Contrôle du volume (EFL)"
 
 #: src/modules/mixer/bin/main_window.c:125
 msgid "Playback"
