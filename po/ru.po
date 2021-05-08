@@ -4507,9 +4507,8 @@ msgstr "Щёлкните по дню в календаре для изменен
 "колесо мыши для изменения года."
 
 #: src/modules/clock/e_mod_config.c:101
-#, fuzzy
 msgid "Clock module Information"
-msgstr "Информация о ссылке"
+msgstr "Информация модуля Часы"
 
 #: src/modules/clock/e_mod_config.c:130 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
@@ -8611,16 +8610,15 @@ msgstr "Выбранный источник"
 
 #: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
 msgid "Show Icon Label"
-msgstr "Показывать метку значка"
+msgstr "Отображение надписи значка"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Перекрывающая надпись"
 
 #: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Метки значков"
+msgstr "Рядом расположенная надпись"
 
 #: src/modules/ibar/e_mod_config.c:154
 msgid "Misc"
