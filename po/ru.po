@@ -4503,7 +4503,8 @@ msgstr "Настройки часов"
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
-msgstr ""
+msgstr "Щёлкните по дню в календаре для изменения даты. <br>Используйте "
+"колесо мыши для изменения года."
 
 #: src/modules/clock/e_mod_config.c:101
 #, fuzzy
@@ -4577,23 +4578,20 @@ msgid "Days"
 msgstr "Количество дней"
 
 #: src/modules/clock/e_mod_config.c:210
-#, fuzzy
 msgid "Time set"
-msgstr "Отметка времени"
+msgstr "Уст. время"
 
 #: src/modules/clock/e_mod_config.c:212
 msgid "Hours"
-msgstr ""
+msgstr "Часы"
 
 #: src/modules/clock/e_mod_config.c:217
-#, fuzzy
 msgid "Minutes"
-msgstr "%li минута"
+msgstr "Минуты"
 
 #: src/modules/clock/e_mod_config.c:225
-#, fuzzy
 msgid "Date set"
-msgstr "Дата"
+msgstr "Уст. дату"
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
