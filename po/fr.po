@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-05-04 12:47-0400\n"
-"PO-Revision-Date: 2021-05-07 12:55+0200\n"
+"POT-Creation-Date: 2021-05-12 18:24+0200\n"
+"PO-Revision-Date: 2021-05-12 19:06+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -846,7 +846,7 @@ msgstr "Sélectionner"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:934
+#: src/bin/e_config.c:935
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -864,7 +864,7 @@ msgstr ""
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:951
+#: src/bin/e_config.c:952
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -880,11 +880,11 @@ msgstr ""
 "défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
-#: src/bin/e_config.c:1471 src/bin/e_config.c:2096
+#: src/bin/e_config.c:1473 src/bin/e_config.c:2098
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Moksha"
 
-#: src/bin/e_config.c:1474
+#: src/bin/e_config.c:1476
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -894,7 +894,7 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1484 src/bin/e_config.c:2109
+#: src/bin/e_config.c:1486 src/bin/e_config.c:2111
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
@@ -913,19 +913,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1987
+#: src/bin/e_config.c:1989
 msgid "Settings Upgraded"
 msgstr "Configuration mise à niveau"
 
-#: src/bin/e_config.c:2005
+#: src/bin/e_config.c:2007
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2013
+#: src/bin/e_config.c:2015
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -933,15 +933,15 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2017
+#: src/bin/e_config.c:2019
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Libérez de la mémoire."
 
-#: src/bin/e_config.c:2021
+#: src/bin/e_config.c:2023
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2025
+#: src/bin/e_config.c:2027
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -949,59 +949,59 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2029
+#: src/bin/e_config.c:2031
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2037
+#: src/bin/e_config.c:2039
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2041
+#: src/bin/e_config.c:2043
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2049
+#: src/bin/e_config.c:2051
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2053
+#: src/bin/e_config.c:2055
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2059
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2067
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2071
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2075
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2079
 msgid "The error is unknown to Moksha."
 msgstr "Moksha ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2101
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -5974,7 +5974,7 @@ msgstr "Défilement"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr "Pas d'icônes dans les menus"
+msgstr " Pas d'icônes dans les menus"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -6306,16 +6306,20 @@ msgstr "Ce bureau"
 msgid "This Screen"
 msgstr "Cet écran"
 
-#: src/modules/conf_theme/e_int_config_borders.c:30
-#: src/modules/conf_theme/e_int_config_borders.c:209
+#: src/modules/conf_theme/e_int_config_borders.c:31
+#: src/modules/conf_theme/e_int_config_borders.c:214
 msgid "Default Border Style"
 msgstr "Style de bordure par défaut"
 
-#: src/modules/conf_theme/e_int_config_borders.c:50
+#: src/modules/conf_theme/e_int_config_borders.c:51
 msgid "Window Border Selection"
 msgstr "Sélection de la bordure de fenêtre"
 
-#: src/modules/conf_theme/e_int_config_borders.c:255
+#: src/modules/conf_theme/e_int_config_borders.c:258
+msgid "No focused window frame if possible"
+msgstr "Ne pas encadrer la fenêtre focalisée"
+
+#: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
 msgstr "Mémoriser la bordure lors de la prochaine apparition de cette fenêtre"
 
@@ -7674,7 +7678,7 @@ msgstr "Afficher Omni"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
-msgstr "Configuration du lanceur rapide (Omni)"
+msgstr "Lanceur Omni"
 
 #: src/modules/everything/e_mod_main.c:409
 msgid "Everything Module"
@@ -8066,7 +8070,7 @@ msgstr ""
 "hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
 "<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
 "liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
-"des vignettes."
+"des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -10065,7 +10069,7 @@ msgstr ""
 
 #: src/modules/clipboard/e_mod_main.c:763
 msgid "Clipboard: Edit Item"
-msgstr "Presse-papiers : édition "
+msgstr "Presse-papiers : édition"
 
 #: src/modules/clipboard/e_mod_main.c:764
 msgid "Edit the item content:"
