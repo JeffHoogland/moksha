@@ -843,7 +843,22 @@ _adjacent_label_popup(void *data)
   e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &gx, &gy, NULL, NULL);
   evas_object_geometry_get(ic->ibar->inst->o_ibar, &sx, &sy, NULL, NULL);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
-  edje_object_part_text_set(ic->win, "e.text.label", ic->app->name); 
+
+  switch (ic->ibar->inst->ci->eap_label)
+  {
+    case 0: /* Eap Name */
+      edje_object_part_text_set(ic->win, "e.text.label", ic->app->name);
+      break;
+
+    case 1: /* Eap Comment */
+      edje_object_part_text_set(ic->win, "e.text.label", ic->app->comment);
+      break;
+
+    case 2: /* Eap Generic */
+      edje_object_part_text_set(ic->win, "e.text.label", ic->app->generic_name);
+      break;
+  }
+
   edje_object_size_min_calc(ic->win, &pw, NULL);
   height = 20 * e_scale;
   gap =  3 * e_scale;

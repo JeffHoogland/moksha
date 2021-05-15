@@ -139,15 +139,15 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    cfdata->radio_name = e_widget_radio_add(evas, _("Name"), 0, rg);
    e_widget_framelist_object_append(of, cfdata->radio_name);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_name, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_name, 1);
 
    cfdata->radio_comment = e_widget_radio_add(evas, _("Comment"), 1, rg);
    e_widget_framelist_object_append(of, cfdata->radio_comment);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_comment, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_comment, 1);
 
    cfdata->radio_generic = e_widget_radio_add(evas, _("Generic"), 2, rg);
    e_widget_framelist_object_append(of, cfdata->radio_generic);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_generic, 1);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -333,9 +333,12 @@ _show_label_cb_change(void *data, Evas_Object *obj __UNUSED__)
 
    cfdata = data;
    if (!cfdata) return;
-   e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);
+   if (!cfdata->show_label_adjac)
+   {
+      e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
+      e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
+      e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);
+   }
    e_widget_check_checked_set(cfdata->label_adj, 0);
 }
 
@@ -346,9 +349,12 @@ _show_label_adj_cb_change(void *data, Evas_Object *obj __UNUSED__)
 
    cfdata = data;
    if (!cfdata) return;
-   e_widget_disabled_set(cfdata->radio_name, 1);
-   e_widget_disabled_set(cfdata->radio_comment, 1);
-   e_widget_disabled_set(cfdata->radio_generic, 1);
+   if (!cfdata->show_label)
+   {
+      e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label_adjac);
+      e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label_adjac);
+      e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label_adjac);
+   }
    e_widget_check_checked_set(cfdata->label, 0);
 }
 
