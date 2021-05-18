@@ -1,3 +1,11 @@
+moksha (20210518bodhi30.3.3-11) focal; urgency=low
+
+  * Settings panel respects the icon set change
+  * iBar: comment and generic name for Adjacent mode
+  * fr and pt improvements
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 18 May 2021 17:27:14 -0400
+
 moksha (20210509bodhi30.3.10) bionic; urgency=low
 
   * Border: unmaximize event added
