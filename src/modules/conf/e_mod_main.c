@@ -24,7 +24,6 @@ static const char      *_gc_label(const E_Gadcon_Client_Class *client_class);
 static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas *evas);
 static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
 static void             _cb_action_conf(void *data, Evas_Object *obj, const char *emission, const char *source);
-static Eina_Bool        _cb_config_icons_changed(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev);
 
 static void             _conf_new(void);
 static void             _conf_free(void);
@@ -33,7 +32,6 @@ static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Config_DD *conf_edd = NULL;
-static Eina_List *handlers = NULL;
 
 Config *conf = NULL;
 
@@ -311,11 +309,6 @@ e_modapi_init(E_Module *m)
             ("config/2", e_mod_config_menu_add, NULL, NULL, NULL);
      }
 
-   E_LIST_HANDLER_APPEND(handlers, EFREET_EVENT_ICON_CACHE_UPDATE,
-                                  _cb_config_icons_changed, NULL);
-   E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_ICON_THEME,
-                                  _cb_config_icons_changed, NULL);
-
    e_gadcon_provider_register(&_gadcon_class);
    return m;
 }
@@ -353,8 +346,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         act = NULL;
      }
    conf_module = NULL;
-
-   E_FREE_LIST(handlers, ecore_event_handler_del);
 
    E_FREE(conf);
    E_CONFIG_DD_FREE(conf_edd);
@@ -486,15 +477,4 @@ static void
 _conf_free(void)
 {
    E_FREE(conf);
-}
-
-static Eina_Bool
-_cb_config_icons_changed(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
-{
-   E_Zone *zone = NULL;
-
-   e_configure_del();
-   zone = e_util_zone_current_get(e_manager_current_get());
-   e_configure_show(zone->container, NULL);
-   return ECORE_CALLBACK_PASS_ON;
 }
