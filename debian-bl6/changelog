@@ -1,8 +1,16 @@
+moksha (0.3.3-11) focal; urgency=low
+
+  * Settings panel respects the icon set change
+  * iBar: comment and generic name for Adjacent mode
+  * fr and pt improvements
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 18 May 2021 17:27:14 -0400
+
 moksha (0.3.3-10) focal; urgency=low
 
   * Border: unmaximize event added
-  * Updated sk and fr localizations
-  * Updated some module and profile desktop files
+  * Updated sk, ru and fr localizations
+  * Updated some module and profile desktop files fr improvements
   * Update moksha.pot
   * Update moksha config
   
