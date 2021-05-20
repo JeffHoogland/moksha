@@ -15,5 +15,5 @@ group "Notification_Config" struct {
     value "item_length" float: 60.00;
     value "menu_items" float: 20;
     value "jump_delay" float: 10;
-    value "blacklist" string: "";
+    value "blacklist" string: "EPulse";
 }

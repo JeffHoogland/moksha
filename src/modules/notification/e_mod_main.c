@@ -751,7 +751,7 @@ _notification_cfg_new(void)
    cfg->item_length = 60;
    cfg->menu_items = 20;
    cfg->jump_delay = 10;
-   cfg->blacklist = eina_stringshare_add("");
+   cfg->blacklist = eina_stringshare_add("EPulse");
 
    return cfg;
 }
