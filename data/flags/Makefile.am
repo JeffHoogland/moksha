@@ -71,6 +71,7 @@ mm_flag.png \
 mn_flag.png \
 mt_flag.png \
 mv_flag.png \
+mx_flag.png \
 my_flag.png \
 ng_flag.png \
 nl_flag.png \
