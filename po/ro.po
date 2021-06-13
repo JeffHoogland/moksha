@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-05-04 12:47-0400\n"
+"POT-Creation-Date: 2021-06-13 21:19+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "Despre Moksha"
 #: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
-#: src/modules/conf/e_conf.c:180
+#: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
@@ -735,7 +735,7 @@ msgid "Show Menu..."
 msgstr "Afişare Meniul ..."
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
-#: src/modules/conf/e_mod_main.c:272
+#: src/modules/conf/e_mod_main.c:273
 #: src/modules/everything/evry_plug_apps.c:1176
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
@@ -905,7 +905,7 @@ msgstr "Selectați o imagine"
 msgid "Cancel"
 msgstr "Renunță"
 
-#: src/bin/e_config.c:934
+#: src/bin/e_config.c:935
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -916,7 +916,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:951
+#: src/bin/e_config.c:952
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -925,18 +925,18 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1471 src/bin/e_config.c:2096
+#: src/bin/e_config.c:1473 src/bin/e_config.c:2098
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1474
+#: src/bin/e_config.c:1476
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1484 src/bin/e_config.c:2109
+#: src/bin/e_config.c:1486 src/bin/e_config.c:2111
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
 #: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
@@ -955,22 +955,22 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1987
+#: src/bin/e_config.c:1989
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "Setări modernizate"
 
-#: src/bin/e_config.c:2005
+#: src/bin/e_config.c:2007
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "De fişier EET este rău."
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Fisier de date este gol."
 
-#: src/bin/e_config.c:2013
+#: src/bin/e_config.c:2015
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -979,19 +979,19 @@ msgstr ""
 "Fişierul nu poate fi scris. Poate cădiscul este read-only<br>sau ai pierdut "
 "permisiunile la fişiere."
 
-#: src/bin/e_config.c:2017
+#: src/bin/e_config.c:2019
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "De memorie a fugit în timp ce pregătireade scriere. Vă rugăm să<br>de "
 "memorie de până gratuit."
 
-#: src/bin/e_config.c:2021
+#: src/bin/e_config.c:2023
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Aceasta este o eroare de generic."
 
-#: src/bin/e_config.c:2025
+#: src/bin/e_config.c:2027
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -1000,70 +1000,70 @@ msgstr ""
 "Fişier de setări este prea mare.<br>Ar trebui să fie foarte mici (câteva "
 "sute de KB de la cea mai mare)."
 
-#: src/bin/e_config.c:2029
+#: src/bin/e_config.c:2031
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Ai fugit din spaţiu în timp ce scriereafişierului"
 
-#: src/bin/e_config.c:2037
+#: src/bin/e_config.c:2039
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Dosarul a fost închis pe ea în timp ce scris."
 
-#: src/bin/e_config.c:2041
+#: src/bin/e_config.c:2043
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memorie - cartografiere (mmap) dinfişierul nu a reuşit."
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Codificarea nu a reuşit."
 
-#: src/bin/e_config.c:2049
+#: src/bin/e_config.c:2051
 #, fuzzy
 msgid "Signature failed."
 msgstr "Semnătura nu a reuşit."
 
-#: src/bin/e_config.c:2053
+#: src/bin/e_config.c:2055
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Semnătura a fost invalid."
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2059
 #, fuzzy
 msgid "Not signed."
 msgstr "Nu a semnat."
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Nu dispun de pus în aplicare."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2067
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "Prng nu a fost însămânţate."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2071
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Criptarea a eşuat."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2075
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Decriptarea a eşuat."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2079
 msgid "The error is unknown to Moksha."
 msgstr ""
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2101
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1619,7 +1619,7 @@ msgid "Eject"
 msgstr "Ejectează"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:987
+#: src/modules/ibar/e_mod_main.c:1002
 msgid "Properties"
 msgstr "Proprietăți"
 
@@ -2034,7 +2034,7 @@ msgstr "uite"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:992
+#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:1007
 #: src/modules/xkbswitch/e_mod_config.c:267
 #, fuzzy
 msgid "Remove"
@@ -2724,8 +2724,8 @@ msgstr "solicitare de poziţie"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
 #: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
-#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:137
-#: src/modules/conf/e_conf.c:147 src/modules/conf/e_mod_main.c:101
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
+#: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:152
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
@@ -2733,7 +2733,7 @@ msgstr "solicitare de poziţie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:980
+#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:995
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
@@ -2827,7 +2827,7 @@ msgstr "Dimensiunea şi poziţia"
 msgid "Size, Position and Locks"
 msgstr "Mărimea , poziţia şi Blocări"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:252
+#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
@@ -4007,7 +4007,7 @@ msgid "Rename Shelf"
 msgstr "Redenumește fișierul"
 
 #: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:974
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 #, fuzzy
 msgid "Contents"
 msgstr "Comentariu"
@@ -4904,8 +4904,8 @@ msgstr ""
 msgid "Toggle calendar"
 msgstr "Executabil"
 
-#: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:284
-#: src/modules/conf/e_mod_main.c:297
+#: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:285
+#: src/modules/conf/e_mod_main.c:298
 #, fuzzy
 msgid "Configuration Panel"
 msgstr "Panou de configurare"
@@ -4915,31 +4915,31 @@ msgstr "Panou de configurare"
 msgid "Show configurations in menu"
 msgstr "Panou de configurare"
 
-#: src/modules/conf/e_mod_main.c:272 src/modules/conf/e_mod_main.c:276
-#: src/modules/conf/e_mod_main.c:454
+#: src/modules/conf/e_mod_main.c:273 src/modules/conf/e_mod_main.c:277
+#: src/modules/conf/e_mod_main.c:455
 #, fuzzy
 msgid "Settings Panel"
 msgstr "Panoul de setări"
 
-#: src/modules/conf/e_mod_main.c:283
+#: src/modules/conf/e_mod_main.c:284
 #: src/modules/conf_menus/e_int_config_menus.c:279
 #: src/modules/conf_menus/e_mod_main.c:17
 #, fuzzy
 msgid "Menus"
 msgstr "meniuri"
 
-#: src/modules/conf/e_mod_main.c:421
+#: src/modules/conf/e_mod_main.c:422
 #: src/modules/conf_display/e_int_config_screensaver.c:206
 #, fuzzy
 msgid "Presentation"
 msgstr "prezentare"
 
-#: src/modules/conf/e_mod_main.c:429
+#: src/modules/conf/e_mod_main.c:430
 #, fuzzy
 msgid "Offline"
 msgstr "Offline"
 
-#: src/modules/conf/e_mod_main.c:459 src/modules/fileman/e_mod_config.c:442
+#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:442
 #: src/modules/fileman/e_mod_config.c:445
 #: src/modules/fileman/e_mod_config.c:448
 #: src/modules/fileman/e_mod_config.c:451 src/modules/gadman/e_mod_config.c:208
@@ -6840,18 +6840,22 @@ msgstr "acest Desktop"
 msgid "This Screen"
 msgstr "acest ecran"
 
-#: src/modules/conf_theme/e_int_config_borders.c:30
-#: src/modules/conf_theme/e_int_config_borders.c:209
+#: src/modules/conf_theme/e_int_config_borders.c:31
+#: src/modules/conf_theme/e_int_config_borders.c:214
 #, fuzzy
 msgid "Default Border Style"
 msgstr "Stil implicit de frontieră"
 
-#: src/modules/conf_theme/e_int_config_borders.c:50
+#: src/modules/conf_theme/e_int_config_borders.c:51
 #, fuzzy
 msgid "Window Border Selection"
 msgstr "Fereastra de frontieră de selecţie"
 
-#: src/modules/conf_theme/e_int_config_borders.c:255
+#: src/modules/conf_theme/e_int_config_borders.c:258
+msgid "No focused window frame if possible"
+msgstr ""
+
+#: src/modules/conf_theme/e_int_config_borders.c:264
 #, fuzzy
 msgid "Remember this Border for this window next time it appears"
 msgstr ""
@@ -9647,22 +9651,22 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Sunteţi sigur că doriţi să ştergeţi această sursă de bar?"
 
-#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1938
+#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1953
 #, fuzzy
 msgid "IBar"
 msgstr "Ibar"
 
-#: src/modules/ibar/e_mod_main.c:963
+#: src/modules/ibar/e_mod_main.c:978
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Creaţi Icon nou"
 
-#: src/modules/ibar/e_mod_main.c:997
+#: src/modules/ibar/e_mod_main.c:1012
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "icoane"
 
-#: src/modules/ibar/e_mod_main.c:1938
+#: src/modules/ibar/e_mod_main.c:1953
 #, fuzzy
 msgid "Focus IBar"
 msgstr "concentra"
@@ -11040,9 +11044,9 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:895
-#: src/modules/clipboard/e_mod_main.c:896
-#: src/modules/clipboard/e_mod_main.c:897
+#: src/modules/clipboard/e_mod_main.c:903
+#: src/modules/clipboard/e_mod_main.c:904
+#: src/modules/clipboard/e_mod_main.c:905
 msgid "Clipboard"
 msgstr ""
 
