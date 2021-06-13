@@ -6307,7 +6307,7 @@ msgstr "Výber okraja okna"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Bez rámu aktívneho okna (ak je to možné)"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
@@ -6887,7 +6887,7 @@ msgstr "Import témy zlyhal"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
+msgstr "Súbory v zozname pravdepodobne nie sú témami:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
@@ -7434,16 +7434,15 @@ msgstr "Ukončiť proces ak nie je možné zatvoriť"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:97
 msgid "Kill process instead of client"
-msgstr ""
+msgstr "Ukončiť proces namiesto klienta"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:99
 msgid "Kill timeout:"
 msgstr "Oneskorenie ukončenia procesu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:105
-#, fuzzy
 msgid "Ping clients"
-msgstr "Používanie menu"
+msgstr "Ping klientov"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:107
 msgid "Ping interval:"
@@ -7581,7 +7580,6 @@ msgid "Power State Max"
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
@@ -7590,7 +7588,6 @@ msgstr ""
 "utility modulu setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
@@ -7601,7 +7598,6 @@ msgstr ""
 "neumožňuje zmenu frekvencie."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
@@ -9471,8 +9467,8 @@ msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
-"Vyber režim snímky obrazovky... <br>Časovač je možné nastaviť vo "
-"vlastnostiach modulu <br>Aktuálna hodnota je: <b> %d s</b>"
+"Vyber režim snímky obrazovky... <br>Časovač je možné nastaviť v "
+"nastaveniach modulu <br>Aktuálna hodnota je: <b> %d s</b>"
 
 #: src/modules/shot/e_mod_main.c:1183
 msgid "Instant shot"
