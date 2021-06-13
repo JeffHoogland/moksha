@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-06-13 21:19+0200\n"
-"PO-Revision-Date: 2021-04-05 13:22+0200\n"
+"PO-Revision-Date: 2021-06-13 23:51+0200\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -4506,13 +4506,13 @@ msgid "Clock Settings"
 msgstr "Klokinstellingen"
 
 #: src/modules/clock/e_mod_config.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
 msgstr ""
-"Klik op een kalenderdag voor datumwijziging.<br>Gebruik het muiswieltje voor "
-"het wijzigen van het jaar."
+"Klik op een kalenderdag voor datumwijziging. <br>Gebruik het muiswieltje "
+"voor het wijzigen van het jaar."
 
 #: src/modules/clock/e_mod_config.c:101
 msgid "Clock module Information"
@@ -6302,7 +6302,7 @@ msgstr "Vensterrandselectie"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Geen scherpgestelde vensterlijst indien mogelijk"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
@@ -7760,9 +7760,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi-stijl (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Toon bij muisklik"
+msgstr "Enkele muisklik"
 
 #: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
@@ -7830,9 +7829,8 @@ msgid "Edge Popup Size"
 msgstr "Grootte van randopduikvenster"
 
 #: src/modules/everything/evry_config.c:602
-#, fuzzy
 msgid "Zoom value"
-msgstr "Verkleinen"
+msgstr "Vergrotingswaarde"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
