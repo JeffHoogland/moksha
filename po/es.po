@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-06-13 21:19+0200\n"
 "PO-Revision-Date: 2021-03-28 08:10-0600\n"
-"Last-Translator: Adrián Arévalo <adri58@gmail.com>\n"
+"Last-Translator: Alejandro Díaz <escuelaslinux@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -4902,7 +4902,7 @@ msgstr "Deslizar"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
 #: src/modules/everything/evry_config.c:601
 msgid "Zoom"
-msgstr "Zoom"
+msgstr "Acercamiento"
 
 #: src/modules/conf_display/e_int_config_desks.c:213
 msgid "Animation speed"
@@ -6276,7 +6276,7 @@ msgstr "Selección del borde de ventana"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Sin marco de ventana enfocada, de ser posible"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
@@ -7729,9 +7729,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Estilo Vi (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:505
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Mostrar al hacer click con el ratón"
+msgstr "Un solo clic del ratón"
 
 #: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
@@ -7799,9 +7798,8 @@ msgid "Edge Popup Size"
 msgstr "Tamaño del emergente de Esquina"
 
 #: src/modules/everything/evry_config.c:602
-#, fuzzy
 msgid "Zoom value"
-msgstr "Disminuir zoom"
+msgstr "Valor en el acercamiento"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
