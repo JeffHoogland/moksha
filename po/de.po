@@ -76,7 +76,7 @@ msgstr ""
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
-msgstr "<title>Die Mannschaft</title>"
+msgstr "<title>Die Mannschaft</><br><br>"
 
 #: src/bin/e_actions.c:154
 msgid "Profile: Switch"
