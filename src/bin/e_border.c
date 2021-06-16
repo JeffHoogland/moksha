@@ -2985,7 +2985,14 @@ e_border_unmaximize(E_Border *bd,
                {
                   if (bd->bg_object)
                     {
-                      if (!e_config->border_frame)
+                      const char *noframe;
+                      int nofrm = 0;
+
+                      noframe = edje_object_data_get(bd->bg_object, "noframe");
+                      if ((noframe) && (!strcmp(noframe, "1")))
+                        nofrm = 1;
+
+                      if ((!e_config->border_frame) || (!nofrm))
                         edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
                       else
                         edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
