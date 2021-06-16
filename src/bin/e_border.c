@@ -2410,7 +2410,14 @@ e_border_focus_set(E_Border *bd,
           edje_object_signal_emit(bd->bg_object, "e,state,focused,maximized", "e");
         else
         {
-          if (!e_config->border_frame)
+          const char *noframe;
+          int nofrm = 0;
+
+          noframe = edje_object_data_get(bd->bg_object, "noframe");
+          if ((noframe) && (!strcmp(noframe, "1")))
+            nofrm = 1;
+
+          if ((!e_config->border_frame) || (!nofrm))
             edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
           else
             edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
@@ -8460,13 +8467,13 @@ _e_border_eval0(E_Border *bd)
                                                   _e_border_cb_signal_bind, bd);
                   if (bd->focused)
                     {
-                         if (!e_config->border_frame)
-                           edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-                         else
-                           edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+                      if (!e_config->border_frame)
+                        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+                      else
+                        edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
 
-                       if (bd->icon_object && e_icon_edje_get(bd->icon_object))
-                         e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
+                      if (bd->icon_object && e_icon_edje_get(bd->icon_object))
+                        e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
                     }
                   if (bd->shaded)
                     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
