@@ -5274,9 +5274,8 @@ msgstr "panou"
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
 #: src/modules/everything/evry_config.c:601
-#, fuzzy
 msgid "Zoom"
-msgstr "zoom"
+msgstr "Marire"
 
 #: src/modules/conf_display/e_int_config_desks.c:213
 #, fuzzy
@@ -6853,7 +6852,7 @@ msgstr "Fereastra de frontieră de selecţie"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Lipsa margine fereastra daca e posibil"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 #, fuzzy
@@ -8612,9 +8611,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi stil (ALT H, J , K , L , N , P, M , I."
 
 #: src/modules/everything/evry_config.c:505
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Arata pe click de mouse"
+msgstr "Un singur clic "
 
 #: src/modules/everything/evry_config.c:512
 #, fuzzy
@@ -8695,9 +8693,8 @@ msgid "Edge Popup Size"
 msgstr "Popup Edge Dimensiune"
 
 #: src/modules/everything/evry_config.c:602
-#, fuzzy
 msgid "Zoom value"
-msgstr "Ieşire din cont"
+msgstr "Factor marire"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
