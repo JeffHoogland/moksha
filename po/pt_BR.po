@@ -6280,7 +6280,7 @@ msgstr "Seleção de contorno"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr "Não focar na moldura da janela se possível"
+msgstr "Não focar a moldura da janela se possível"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
