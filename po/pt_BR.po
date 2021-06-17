@@ -4898,7 +4898,7 @@ msgstr "Painel"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
 #: src/modules/everything/evry_config.c:601
 msgid "Zoom"
-msgstr "Ampliar"
+msgstr "Zoom"
 
 #: src/modules/conf_display/e_int_config_desks.c:213
 msgid "Animation speed"
@@ -6280,7 +6280,7 @@ msgstr "Seleção de contorno"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Não focar na moldura da janela se possível"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
@@ -7735,7 +7735,7 @@ msgstr "Estilo Vi (ALT + h,j,k,l,n,p,m,i)"
 #: src/modules/everything/evry_config.c:505
 #, fuzzy
 msgid "Single mouse click"
-msgstr "Mostrar ao clicar com o mouse"
+msgstr "Clique simples do mouse"
 
 #: src/modules/everything/evry_config.c:512
 msgid "No Sorting"
@@ -7805,7 +7805,7 @@ msgstr "Margens do alerta"
 #: src/modules/everything/evry_config.c:602
 #, fuzzy
 msgid "Zoom value"
-msgstr "Reduzir"
+msgstr "Valor do zoom"
 
 #: src/modules/everything/evry_config.c:610
 #: src/modules/winlist/e_int_config_winlist.c:296
