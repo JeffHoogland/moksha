@@ -5,3 +5,4 @@ moksha: non-empty-dependency_libs-in-la-file
 moksha: package-name-doesnt-match-sonames
 moksha: shared-lib-without-dependency-information 
 moksha: shlib-without-versioned-soname
+moksha: library-not-linked-against-libc

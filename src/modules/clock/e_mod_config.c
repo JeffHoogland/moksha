@@ -5,7 +5,7 @@ struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
    char *custom_dat;
-   double hour, minute;
+   double hour, minute, hour_tmp, minute_tmp;
 };
 
 /* Protos */
@@ -40,6 +40,7 @@ e_int_config_clock_module(E_Container *con, Config_Item *ci)
    cfd = e_config_dialog_new(con, _("Clock Settings"),
                              "E", "utils/clock", buf, 0, v, ci);
    clock_config->config_dialog = cfd;
+   clock_config->settings_opened = EINA_TRUE;
 }
 
 static void *
@@ -59,8 +60,8 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
         cfdata->custom_dat = strdup("");
 
    //sliders obtain the current time
-   cfdata->hour = ci->timeset.hour;
-   cfdata->minute = ci->timeset.minute;
+   cfdata->hour_tmp = cfdata->hour = ci->timeset.hour;
+   cfdata->minute_tmp = cfdata->minute = ci->timeset.minute;
 
    return cfdata;
 }
@@ -72,7 +73,7 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    free(cfdata->custom_dat);
    clock_config->config_dialog = NULL;
    E_FREE(cfdata);
-   settings_opened = EINA_FALSE;
+   clock_config->settings_opened = EINA_FALSE;
 }
 
 static void
@@ -95,8 +96,8 @@ show_info_cb()
   if (!(con = e_container_current_get(man))) return;
   if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
   
-  snprintf(buf, sizeof(buf), _("Click on a calendar day for date change. <br>" 
-                                "Use the mouse wheel for changing the year."));
+  snprintf(buf, sizeof(buf), _("Click on a calendar day to change the date. <br>" 
+                                "Use the mouse wheel to change the year."));
    e_dialog_title_set(dia, _("Clock module Information"));
    e_dialog_icon_set(dia, "dialog-information", 64);
    e_dialog_text_set(dia, buf);
@@ -263,7 +264,8 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
    
-   if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
+   //~ if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
+   if ((cfdata->hour_tmp != cfdata->hour) || (cfdata->minute_tmp != cfdata->minute))
      clock_time_set(cfdata);
 
    return 1;

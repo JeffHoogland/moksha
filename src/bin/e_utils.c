@@ -42,10 +42,7 @@ e_util_env_set(const char *var, const char *val)
         char buf[8192];
 
         snprintf(buf, sizeof(buf), "%s=%s", var, val);
-        if (getenv(var))
-          putenv(buf);
-        else
-          putenv(strdup(buf));
+        putenv(strdup(buf));
 #endif
      }
    else
@@ -707,6 +704,24 @@ e_util_shell_env_path_eval(const char *path)
                               v = (char *)efreet_cache_home_get();
                             else if (!strcmp(s, "XDG_DATA_HOME"))
                               v = (char *)efreet_data_home_get();
+                            else if (!strcmp(s, "XDG_DESKTOP_DIR"))
+                              v = (char *)efreet_desktop_dir_get();
+                            else if (!strcmp(s, "XDG_DOWNLOAD_DIR"))
+                              v = (char *)efreet_download_dir_get();
+                            else if (!strcmp(s, "XDG_TEMPLATES_DIR"))
+                              v = (char *)efreet_templates_dir_get();
+                            else if (!strcmp(s, "XDG_PUBLICSHARE_DIR"))
+                              v = (char *)efreet_public_share_dir_get();
+                            else if (!strcmp(s, "XDG_DOCUMENTS_DIR"))
+                              v = (char *)efreet_documents_dir_get();
+                            else if (!strcmp(s, "XDG_MUSIC_DIR"))
+                              v = (char *)efreet_music_dir_get();
+                            else if (!strcmp(s, "XDG_PICTURES_DIR"))
+                              v = (char *)efreet_pictures_dir_get();
+                            else if (!strcmp(s, "XDG_VIDEOS_DIR"))
+                              v = (char *)efreet_videos_dir_get();
+                            else if (!strcmp(s, "XDG_RUNTIME_DIR"))
+                              v = (char *)efreet_runtime_dir_get();
                          }
 
                        if (v)

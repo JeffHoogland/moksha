@@ -5,10 +5,7 @@ EET_EET = @eet_eet@
 EXTRA_DIST = \
 		profile.desktop \
 		icon.png \
-		e_randr.src \
-		e_remember_restart.src \
 		e.src \
-		exehist.src \
 		module.battery.src \
 		module.clock.src \
 		module.comp.src \
@@ -29,10 +26,7 @@ filesdir = $(datadir)/enlightenment/data/config/bodhi
 files_DATA = \
 		profile.desktop \
 		icon.png \
-		e_randr.cfg \
-		e_remember_restart.cfg \
 		e.cfg \
-		exehist.cfg \
 		module.battery.cfg \
 		module.clock.cfg \
 		module.comp.cfg \

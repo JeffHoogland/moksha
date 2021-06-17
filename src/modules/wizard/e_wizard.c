@@ -93,9 +93,8 @@ e_wizard_shutdown(void)
     if (f)
       {
          fputs("nm-applet.desktop\n", f);
-         fputs("elaptopcheck.desktop\n", f);
          fputs("/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop\n", f);
-         fputs("/etc/xdg/autostart/xdg-user-dirs.desktop\n", f);
+         //fputs("/etc/xdg/autostart/xdg-user-dirs.desktop\n", f);
          fclose(f);
       }
    return 1;
@@ -242,7 +241,12 @@ e_wizard_title_set(const char *title)
 EAPI void
 e_wizard_labels_update(void)
 {
-   edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+     {
+        edje_object_part_text_set(o_bg, "e.text.label", _("Next"));
+     }
+   else
+      edje_object_part_text_set(o_bg, "e.text.label", _("Please Wait..."));
 }
 
 EAPI const char *

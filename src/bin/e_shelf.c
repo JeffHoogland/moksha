@@ -2395,6 +2395,7 @@ _e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
              e_object_del(E_OBJECT(es));
              es = e_shelf_config_new(zone, cf_es);
              es->config_dialog = cfd;
+             e_zone_border_geometry_refresh(zone);
              return;
           }
         orient++;

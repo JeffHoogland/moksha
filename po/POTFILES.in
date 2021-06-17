@@ -4,6 +4,7 @@ src/bin/e_alert.c
 src/bin/e_atoms.c
 src/bin/e_bg.c
 src/bin/e_bindings.c
+src/bin/e_bodhi_about.c
 src/bin/e_border.c
 src/bin/e_box.c
 src/bin/e_canvas.c

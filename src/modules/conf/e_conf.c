@@ -23,6 +23,8 @@ struct _E_Configure
 
    Eina_List           *cats;
    Ecore_Event_Handler *mod_hdl;
+   Ecore_Event_Handler *mod_hdl2;
+   Ecore_Event_Handler *mod_hdl3;
 };
 
 struct _E_Configure_CB
@@ -133,6 +135,10 @@ e_configure_show(E_Container *con, const char *params)
    /* Event Handler for Module Updates */
    eco->mod_hdl = ecore_event_handler_add(E_EVENT_MODULE_UPDATE,
                                           _e_configure_module_update_cb, eco);
+   eco->mod_hdl2 = ecore_event_handler_add(E_EVENT_CONFIG_ICON_THEME,
+                                          _e_configure_module_update_cb, eco);
+   eco->mod_hdl3 = ecore_event_handler_add(EFREET_EVENT_ICON_CACHE_UPDATE,
+                                          _e_configure_module_update_cb, eco);
 
    e_win_title_set(eco->win, _("Settings"));
    e_win_name_class_set(eco->win, "E", "_configure");
@@ -212,6 +218,12 @@ _e_configure_free(E_Configure *eco)
    if (_e_configure->mod_hdl)
      ecore_event_handler_del(_e_configure->mod_hdl);
    _e_configure->mod_hdl = NULL;
+   if (_e_configure->mod_hdl2)
+     ecore_event_handler_del(_e_configure->mod_hdl2);
+   _e_configure->mod_hdl2 = NULL;
+   if (_e_configure->mod_hdl3)
+     ecore_event_handler_del(_e_configure->mod_hdl3);
+   _e_configure->mod_hdl3 = NULL;
    _e_configure = NULL;
    while (eco->cats)
      {

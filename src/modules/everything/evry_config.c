@@ -48,6 +48,7 @@ struct _E_Config_Dialog_Data
    int         edge_width, edge_height;
    double      rel_x, rel_y;
    int         scroll_animate;
+   int         single_click;
    double      scroll_speed;
 
    int         view_mode;
@@ -99,6 +100,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(cycle_mode);
    C(history_sort_mode);
    C(scroll_animate);
+   C(single_click);
    C(scroll_speed);
 #undef C
 
@@ -148,6 +150,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    C(cycle_mode);
    C(history_sort_mode);
    C(scroll_animate);
+   C(single_click);
    C(scroll_speed);
 #undef C
 
@@ -498,6 +501,10 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_radio_add(e, _("Vi style (ALT + h,j,k,l,n,p,m,i)"), 1, rg);
    e_widget_framelist_object_append(of, ob);
+   
+   ob = e_widget_check_add(e, _("Single mouse click"),
+                           &(cfdata->single_click));
+   e_widget_framelist_object_append(of, ob);
    e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
 
    of = e_widget_framelist_add(e, _("Sorting"), 0);
@@ -539,20 +546,20 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
 
    e_widget_toolbook_page_show(otb2, 0);
 
-   /// GEOMERY ///
+   /// GEOMETRY ///
    o = e_widget_list_add(e, 0, 0);
    of = e_widget_framelist_add(e, _("Popup Size"), 0);
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_w, 800, 1, 0, NULL,
+                            evry_conf->min_w, 2000, 1, 0, NULL,
                             &(cfdata->width), 200);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(e, _("Popup Height"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_h, 800, 1, 0, NULL,
+                            evry_conf->min_h, 2000, 1, 0, NULL,
                             &(cfdata->height), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -578,18 +585,27 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_label_add(e, _("Popup Width"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_w, 800, 1, 0, NULL,
+                            evry_conf->min_w, 2000, 1, 0, NULL,
                             &(cfdata->edge_width), 200);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(e, _("Popup Height"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
-                            evry_conf->min_h, 800, 1, 0, NULL,
+                            evry_conf->min_h, 2000, 1, 0, NULL,
                             &(cfdata->edge_height), 200);
    e_widget_framelist_object_append(of, ob);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 #endif
+
+   of = e_widget_framelist_add(e, _("Zoom"), 0);
+   ob = e_widget_label_add(e, _("Zoom value"));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_slider_add(e, 1, 0, _("%1.0f"),
+                            0, 2, 1, 0, NULL,
+                            &(cfdata->view_zoom), 200);
+   e_widget_framelist_object_append(of, ob);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"),
                                  o, 1, 0, 1, 0, 0.5, 0.0);

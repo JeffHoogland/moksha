@@ -1,5 +1,0 @@
-group "E_Exehist" struct {
-    group "history" list {
-
-    }
-}

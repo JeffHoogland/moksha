@@ -16,6 +16,7 @@ wizard_page_shutdown(E_Wizard_Page *pg __UNUSED__)
 EAPI int
 wizard_page_show(E_Wizard_Page *pg __UNUSED__)
 {
+#ifndef ENABLE_BODHI
    Eina_List *files;
    char buf[PATH_MAX], buf2[PATH_MAX], *file;
 
@@ -33,7 +34,7 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
         ecore_file_cp(buf, buf2);
         free(file);
      }
-
+#endif
    return 0; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 /*

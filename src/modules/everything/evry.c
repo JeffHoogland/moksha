@@ -1021,6 +1021,7 @@ _evry_selector_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    if (ev->button == 1)
      {
         if (ev->flags & EVAS_BUTTON_DOUBLE_CLICK)
+        if (ev->flags)
           evry_plugin_action(sel->win, 1);
      }
 }
@@ -2602,7 +2603,8 @@ _evry_state_clear(Evry_Window *win)
 
    /* replay mouse down to allow direct sliding back */
    if (win->mouse_button)
-     evas_event_feed_mouse_down(win->evas, win->mouse_button, 0, 0, NULL);
+     evas_event_feed_mouse_down(win->evas, 0, 0, 0, NULL);
+     //~ evas_event_feed_mouse_down(win->evas, win->mouse_button, 0, 0, NULL);
 }
 
 static void

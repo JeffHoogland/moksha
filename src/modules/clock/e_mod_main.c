@@ -249,7 +249,7 @@ _clock_date_set_cb(void *data, Evas_Object *obj, const char *emission __UNUSED__
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
    snprintf(buf, sizeof(buf), "%s %s %s", cmd_sudo, command, date);
-   if (settings_opened)
+   if (clock_config->settings_opened)
    {
      e_util_exe_safe_run(buf, NULL);
     _clock_popup_free(inst);
@@ -360,7 +360,6 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
 {
    Instance *inst = d1;
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
-   settings_opened = EINA_TRUE;
    //~ e_object_del(E_OBJECT(inst->popup));
    //~ inst->popup = NULL;
    //~ inst->o_popclock = NULL;
@@ -490,6 +489,7 @@ _eval_instance_size(Instance *inst)
    if ((mw < 1) || (mh < 1))
      {
         Evas_Coord x, y, sw = 0, sh = 0, ow, oh;
+        //~ Evas_Coord sw = 0, sh = 0, ow, oh;
         Eina_Bool horiz;
         const char *orient;
 
@@ -537,6 +537,8 @@ _eval_instance_size(Instance *inst)
         edje_object_message_signal_process(inst->o_clock);
 
         edje_object_parts_extends_calc(inst->o_clock, &x, &y, &mw, &mh);
+        //~ edje_object_size_min_calc(inst->o_clock, &mw, &mh);
+
         evas_object_resize(inst->o_clock, ow, oh);
      }
 
@@ -546,7 +548,7 @@ _eval_instance_size(Instance *inst)
    if (mw < omw) mw = omw;
    if (mh < omh) mh = omh;
 
-   e_gadcon_client_aspect_set(inst->gcc, mw, mh);
+   e_gadcon_client_aspect_set(inst->gcc, mw + 10, mh);
    e_gadcon_client_min_size_set(inst->gcc, mw, mh);
 }
 
@@ -834,7 +836,7 @@ _conf_item_get(const char *id)
    ci->week.start = 1;
    ci->digital_clock = 0;
    ci->digital_24h = 0;
-   ci->show_seconds = 1;
+   ci->show_seconds = 0;
    ci->show_date = 0;
 
    clock_config->items = eina_list_append(clock_config->items, ci);

@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    E_Container *container;
    const char  *bordername;
    int          remember_border;
+   int          frame;
 };
 
 E_Config_Dialog *
@@ -101,6 +102,8 @@ _fill_data(E_Config_Dialog_Data *cfdata)
      }
    else
      cfdata->bordername = eina_stringshare_add(e_config->theme_default_border_style);
+
+   cfdata->frame = e_config->border_frame;
 }
 
 static void
@@ -121,7 +124,8 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
                          (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))) ||
                       (!cfdata->remember_border && cfdata->border &&
                           ((cfdata->border->remember) &&
-                              (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))));
+                              (cfdata->border->remember->apply & E_REMEMBER_APPLY_BORDER))) ||
+                      (cfdata->frame != e_config->border_frame));
    if (cfdata->border)
      return (cfdata->bordername != cfdata->border->client.border.name) || (remch);
    else
@@ -144,6 +148,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
              bd->client.border.changed = 1;
           }
      }
+   e_config->border_frame = cfdata->frame;
    e_config_save_queue();
    return 1;
 }
@@ -249,6 +254,10 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 
    e_widget_framelist_object_append(of, ol);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
+   
+   ob = e_widget_check_add(evas, _("No focused window frame if possible"),
+                           &(cfdata->frame));
+   e_widget_list_object_append(o, ob, 1, 0, 0.0);
 
    if (cfdata->border)
      {

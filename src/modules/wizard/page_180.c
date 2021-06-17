@@ -21,7 +21,8 @@ wizard_page_show(E_Wizard_Page *pg)
    Evas_Object *o, *of, *ob;
 
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("Taskbar"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+      e_wizard_title_set(_("Taskbar"));
 
    of = e_widget_framelist_add(pg->evas, _("Information"), 0);
 

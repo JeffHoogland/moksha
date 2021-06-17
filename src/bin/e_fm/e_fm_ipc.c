@@ -47,10 +47,6 @@
 #define DEF_ROUND_TRIP_TOLERANCE 0.01
 #define DEF_MOD_BACKOFF          0.2
 
-#ifndef strdupa
-# define strdupa(str) strcpy(alloca(strlen(str) + 1), str)
-#endif
-
 typedef struct _E_Dir          E_Dir;
 typedef struct _E_Fop          E_Fop;
 typedef struct _E_Mod          E_Mod;
@@ -1257,8 +1253,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
    FILE *info = NULL;
    const char *filename;
    const char *escname = NULL;
-   char *dest, *trash_dir;
-   char buf[4096];
+   char *dest;
+   char buf[PATH_MAX + PATH_MAX + 20], trash_dir[PATH_MAX];
    unsigned int i = 0;
    struct tm *lt;
    time_t t;
@@ -1268,10 +1264,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 
    fop = (E_Fop *)data;
    if (!fop) return 0;
-
-   /* Check that 'home trash' and subsequesnt dirs exists, create if not */
-   snprintf(buf, sizeof(buf), "%s/Trash", efreet_data_home_get());
-   trash_dir = strdupa(buf);
+  /* Check that 'home trash' and subsequesnt dirs exists, create if not */
+   snprintf(trash_dir, sizeof(trash_dir), "%s/Trash", efreet_data_home_get());
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
    snprintf(buf, sizeof(buf), "%s/info", trash_dir);

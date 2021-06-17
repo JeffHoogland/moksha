@@ -25,14 +25,14 @@ e_about_new(E_Container *con)
    snprintf
      (buf, sizeof(buf), "%s%s",
      _(
-       "<title>Copyright &copy; 2020, by the Moksha "
+       "<title>Copyright &copy; 2021, by the Moksha "
        "Development Team</><br>"
        "<br>"
        "We hope you enjoy using this software as much as we enjoyed "
        "writing it.<br>"
        "<br>"
        "To contact us please visit:<br>"
-       "<hilight>http://www.mokshadesktop.org</><br>"
+       "<hilight>http://www.bodhilinux.com</><br>"
        "<br>"
       ),
        "All rights reserved.<br>"

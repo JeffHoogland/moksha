@@ -386,6 +386,7 @@ _config_init()
    E_CONFIG_VAL(D, T, rel_x, DOUBLE);
    E_CONFIG_VAL(D, T, rel_y, DOUBLE);
    E_CONFIG_VAL(D, T, scroll_animate, INT);
+   E_CONFIG_VAL(D, T, single_click, INT);
    E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, hide_input, INT);
    E_CONFIG_VAL(D, T, hide_list, INT);
@@ -420,6 +421,7 @@ _config_init()
         evry_conf->width = 455;
         evry_conf->height = 430;
         evry_conf->scroll_animate = 1;
+        evry_conf->single_click = 0;
         evry_conf->scroll_speed = 10.0;
         evry_conf->hide_input = 0;
         evry_conf->hide_list = 0;

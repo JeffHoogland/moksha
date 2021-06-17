@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 9
+#define E_CONFIG_FILE_GENERATION 10
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -56,6 +56,7 @@ struct _E_Config
    double      menus_fast_mouse_move_threshhold; // GUI
    double      menus_click_drag_timeout; // GUI
    int         border_shade_animate; // GUI
+   int         border_frame; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
    double      framerate; // GUI

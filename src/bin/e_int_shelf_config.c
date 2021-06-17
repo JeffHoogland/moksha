@@ -276,11 +276,13 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Config_Shelf_Desk *sd;
    int recreate = 0;
+   int geom_refresh = 0;
 
    if (cfdata->escfg->orient != cfdata->orient)
      {
         cfdata->escfg->orient = cfdata->orient;
         recreate = 1;
+        geom_refresh = 1;
      }
 
    if (cfdata->escfg->fit_along != cfdata->fit_along)
@@ -295,6 +297,7 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         cfdata->escfg->size = cfdata->size;
         cfdata->es->size = cfdata->size;
         recreate = 1;
+        geom_refresh = 1;
      }
 
    if (cfdata->layer == 0)
@@ -357,7 +360,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
           }
      }
 
-   e_gadcon_unpopulate(cfdata->es->gadcon);
+   if (!recreate)
+     e_gadcon_unpopulate(cfdata->es->gadcon);
    if (!cfdata->escfg->style)
      {
         cfdata->escfg->style = eina_stringshare_ref(cfdata->style);
@@ -413,6 +417,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      e_shelf_toggle(cfdata->es, 1);
 
    e_zone_useful_geometry_dirty(cfdata->es->zone);
+   if (geom_refresh)
+     e_zone_border_geometry_refresh(cfdata->es->zone);
    e_config_save_queue();
    cfdata->es->config_dialog = cfd;
    return 1;

@@ -32,6 +32,7 @@ static E_Module *conf_module = NULL;
 static E_Action *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
 static E_Config_DD *conf_edd = NULL;
+
 Config *conf = NULL;
 
 static Eina_List *instances = NULL;

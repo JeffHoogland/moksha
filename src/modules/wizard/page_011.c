@@ -1,5 +1,6 @@
 /* Language chooser */
 #include "e_wizard.h"
+#define MAX_LEN 256
 
 typedef struct _Layout Layout;
 
@@ -12,6 +13,9 @@ struct _Layout
 static const char *rules_file = NULL;
 static const char *layout = NULL;
 static Eina_List *layouts = NULL;
+static char cur_layout[MAX_LEN] = "us";
+static char cur_variant[MAX_LEN] = "basic";
+static Eina_Bool debian_flag = EINA_FALSE;
 
 static void
 find_rules(void)
@@ -52,6 +56,30 @@ _layout_sort_cb(const void *data1, const void *data2)
    const Layout *l1 = data1;
    const Layout *l2 = data2;
    return e_util_strcasecmp(l1->label ?: l1->name, l2->label ?: l2->name);
+}
+
+static void
+_debian_default(void)
+{
+   FILE *output;
+   char *ch;
+   char buffer[MAX_LEN];
+   // Respect Debian defaults
+   if ((output = fopen("/etc/default/keyboard","r")))
+      {
+		  while (fgets(buffer, MAX_LEN - 1, output))
+		  {
+			 // Remove trailing newline and trailing quote
+			 buffer[strcspn(buffer, "\n")] = 0;
+			 if (strlen(buffer) > 0)
+				buffer[strlen(buffer) - 1 ] = 0;
+			 if ((ch = strstr( buffer, "XKBLAYOUT=" )))
+				snprintf(cur_layout, MAX_LEN - 1, "%s", (char *) ch + 11);
+			 if ((ch = strstr(buffer, "XKBVARIANT=" )))
+				snprintf(cur_variant, MAX_LEN - 1, "%s", (char *) ch + 12);
+		  }
+		  pclose(output); 
+	  }
 }
 
 int
@@ -104,11 +132,15 @@ implement_layout(void)
              break;
           }
      }
+ 
    if (!found)
      {
         nl = E_NEW(E_Config_XKB_Layout, 1);
         nl->name = eina_stringshare_ref(layout);
-        nl->variant = eina_stringshare_add("basic");
+        if (!strcmp(layout, cur_layout))
+            nl->variant = eina_stringshare_add(cur_variant);
+        else
+           nl->variant = eina_stringshare_add("basic");
         nl->model = eina_stringshare_add("default");
         e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, nl);
         e_xkb_update(-1);
@@ -119,7 +151,6 @@ implement_layout(void)
 EAPI int
 wizard_page_init(E_Wizard_Page *pg __UNUSED__, Eina_Bool *need_xdg_desktops __UNUSED__, Eina_Bool *need_xdg_icons __UNUSED__)
 {
-   // parse kbd rules here
    find_rules();
    parse_rules();
    return 1;
@@ -137,26 +168,19 @@ wizard_page_show(E_Wizard_Page *pg)
    Evas_Object *o, *of, *ob, *ic;
    Eina_List *l;
    int i, sel = -1;
-   FILE *output;
-   char line[32];
-   char *key_current;
 
+   
    o = e_widget_list_add(pg->evas, 1, 0);
-   e_wizard_title_set(_("Keyboard"));
+   if (ecore_file_exists("/etc/bodhi/iso"))
+      e_wizard_title_set(_("Keyboard"));
    of = e_widget_framelist_add(pg->evas, _("Select one"), 0);
    ob = e_widget_ilist_add(pg->evas, 32 * e_scale, 32 * e_scale, &layout);
    e_widget_size_min_set(ob, 140 * e_scale, 140 * e_scale);
 
    e_widget_ilist_freeze(ob);
-   
-   output = popen("setxkbmap -query | grep layout", "r");
-   while (fscanf(output, "%[^,\n]\n", line) == 1);
-   pclose(output);
-   
-   key_current = line + strlen(line) - 1;
-   while (*(--key_current) != ' ');
-   key_current++;
-   
+   _debian_default();
+   debian_flag = EINA_TRUE;
+
    for (i = 0, l = layouts; l; l = l->next, i++)
      {
         Layout *lay;
@@ -171,7 +195,7 @@ wizard_page_show(E_Wizard_Page *pg)
         e_widget_ilist_append(ob, ic, _(label), NULL, NULL, lay->name);
         if (lay->name)
           {
-             if (!strcmp(lay->name, key_current)) sel = i;
+             if (!strcmp(lay->name, cur_layout)) sel = i;
           }
      }
 
@@ -188,6 +212,19 @@ wizard_page_show(E_Wizard_Page *pg)
    evas_object_show(ob);
    evas_object_show(of);
    e_wizard_page_show(o);
+
+   /* On an installed system we do not want to show this wizard
+    *	 except on systems not following debian standards.
+    *    But Bodhi wants this displayed for users running the ISO
+    */
+   if (! ecore_file_exists("/etc/bodhi/iso") &&
+        ecore_file_exists("/etc/default/keyboard"))
+      {    
+		  layout = cur_layout;
+		  implement_layout();
+		  return 0;
+      }
+      
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
 }
 

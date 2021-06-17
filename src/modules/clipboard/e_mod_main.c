@@ -154,7 +154,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
   inst = E_NEW(Instance, 1);
 
   o = e_icon_add(gc->evas);
-  e_icon_fdo_icon_set(o, "edit-paste");
+  if (!e_icon_fdo_icon_set(o, "clipboard"))
+    e_icon_fdo_icon_set(o, "edit-paste");
+
   evas_object_show(o);
 
   gcc = e_gadcon_client_new(gc, name, id, style, o);
@@ -820,6 +822,14 @@ _clip_inst_free(Instance *inst)
   E_FREE(inst);
 }
 
+static Eina_Bool
+_clip_cb_changed_icon_set(__UNUSED__ void *data, __UNUSED__ int ev_type, __UNUSED__ void *ev)
+{
+   e_gadcon_provider_unregister(&_gadcon_class);
+   e_gadcon_provider_register(&_gadcon_class);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
 /*
  * This is the first function called by e17 when you load the module
  */
@@ -910,6 +920,8 @@ e_modapi_init (E_Module *m)
   ecore_x_fixes_selection_notification_request(ecore_x_atom_get("CLIPBOARD"));
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_SELECTION_NOTIFY, _cb_event_selection, clip_inst);
   E_LIST_HANDLER_APPEND(clip_inst->handle, ECORE_X_EVENT_FIXES_SELECTION_NOTIFY, _cb_event_owner, clip_inst);
+  E_LIST_HANDLER_APPEND(clip_inst->handle, E_EVENT_CONFIG_ICON_THEME, _clip_cb_changed_icon_set, NULL);
+  E_LIST_HANDLER_APPEND(clip_inst->handle, EFREET_EVENT_ICON_CACHE_UPDATE, _clip_cb_changed_icon_set, NULL);
   clipboard.request(clip_inst->win, ECORE_X_SELECTION_TARGET_UTF8_STRING);
   
 

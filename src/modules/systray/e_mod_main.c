@@ -50,7 +50,6 @@ static Ecore_X_Atom _atom_xembed = 0;
 static Ecore_X_Atom _atom_xembed_info = 0;
 static Ecore_X_Atom _atom_st_num = 0;
 static int _last_st_num = -1;
-static Ecore_Timer *delay; 
 
 static E_Module *systray_mod = NULL;
 EINTERN Instance *instance = NULL; /* only one systray ever possible */
@@ -996,8 +995,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (inst->job.size_apply)
      ecore_job_del(inst->job.size_apply);
    
-   delay = NULL;
-
    if (instance == inst)
      instance = NULL;
 
@@ -1141,29 +1138,20 @@ static const E_Gadcon_Client_Class _gc_class =
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
 
 static Eina_Bool
-_delay_gadget(void __UNUSED__ *data)
+_delay_gadget(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     e_gadcon_provider_register(&_gc_class);
-    return ECORE_CALLBACK_CANCEL;
+    return ECORE_CALLBACK_PASS_ON;
 }
 
 EAPI void *
 e_modapi_init(E_Module *m)
 {
    systray_mod = m;
-   double d;
    
-   if (!delay)
-   {
-     if(getenv("MOKSHA_SYSTRAY_SHOW_DELAY"))
-     {
-       sscanf(getenv("MOKSHA_SYSTRAY_SHOW_DELAY"), "%lf", &d);
-       delay = ecore_timer_add(d, _delay_gadget, NULL); 
-     }
-     else
-       delay = ecore_timer_add(2.0, _delay_gadget, NULL);
-   }
-        
+   ecore_event_handler_add(E_EVENT_GADCON_POPULATE, _delay_gadget, NULL);
+   //~ e_gadcon_provider_register(&_gc_class);
+
    if (!_atom_manager)
      _atom_manager = ecore_x_atom_get("MANAGER");
    if (!_atom_st_orient)
@@ -1187,7 +1175,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    e_gadcon_provider_unregister(&_gc_class);
    systray_mod = NULL;
-   //~ delay = NULL;
    return 1;
 }
 

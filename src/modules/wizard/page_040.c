@@ -33,7 +33,8 @@ wizard_page_show(E_Wizard_Page *pg __UNUSED__)
    char buf[PATH_MAX], *file;
    int found, copies = 0;
 
-   e_wizard_title_set(_("Adding missing App files"));
+   if (! ecore_file_exists("/etc/bodhi/iso"))
+      e_wizard_title_set(_("Please Wait As We Are Loading Moksha Settings!"));
    e_wizard_button_next_enable_set(0);
    e_wizard_page_show(NULL);
    
