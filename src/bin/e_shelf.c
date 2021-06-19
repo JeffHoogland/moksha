@@ -1823,6 +1823,10 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
         if (es->cfg->autohide_show_action) e_shelf_toggle(es, 1);
         break;
 
+      case 2:
+        _e_shelf_cb_menu_edit(es, NULL, NULL);
+        break;
+
       case 3:
         mn = e_menu_new();
         e_menu_post_deactivate_callback_set(mn, _e_shelf_cb_menu_post, es);

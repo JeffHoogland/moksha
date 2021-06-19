@@ -852,6 +852,8 @@ _create_mover(E_Gadcon *gc)
                                    on_move, (void *)DRAG_START);
    edje_object_signal_callback_add(mover, "mouse,down,3", "*",
                                    gadman_gadget_edit_end, NULL);
+   edje_object_signal_callback_add(mover, "mouse,down,2", "*",
+                                   gadman_gadget_edit_end, NULL);
 
    edje_object_signal_callback_add(mover, "e,action,resize,left,start", "",
                                    on_left, (void *)DRAG_START);
@@ -1198,10 +1200,24 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 {
    Evas_Event_Mouse_Down *ev;
    E_Gadcon_Client *gcc;
+   E_Gadcon *gc;
 
    ev = event_info;
 
    gcc = data;
+
+   if (ev->button == 2)
+     {
+        int cx, cy, cw, ch;
+
+        e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &cx, &cy, &cw, &ch);
+
+        evas_event_feed_mouse_up(gcc->gadcon->evas, ev->button,
+                                 EVAS_BUTTON_NONE, ev->timestamp, NULL);
+        gc = gcc->gadcon;
+        if (!gc->editing)
+        gadman_gadget_edit_start(gcc);
+     }
 
    if (ev->button == 5)
      {
