@@ -417,6 +417,8 @@ _e_xsettings_icon_theme_set(void)
                {
                  if ((_setting_icon_theme = edje_file_data_get(ct->file, "icon-theme")))
                         e_config->icon_theme = eina_stringshare_add(_setting_icon_theme);
+                 else
+                   e_config->icon_theme = eina_stringshare_add("Enlightenment-X");
                }
          }
        _e_xsettings_string_set(_setting_icon_theme_name,
