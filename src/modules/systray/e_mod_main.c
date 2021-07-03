@@ -1138,7 +1138,7 @@ static const E_Gadcon_Client_Class _gc_class =
 EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, _Name};
 
 static Eina_Bool
-_delay_gadget(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_show_gadget(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
     e_gadcon_provider_register(&_gc_class);
     return ECORE_CALLBACK_PASS_ON;
@@ -1149,7 +1149,7 @@ e_modapi_init(E_Module *m)
 {
    systray_mod = m;
    
-   ecore_event_handler_add(E_EVENT_GADCON_POPULATE, _delay_gadget, NULL);
+   ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _show_gadget, NULL);
    //~ e_gadcon_provider_register(&_gc_class);
 
    if (!_atom_manager)
