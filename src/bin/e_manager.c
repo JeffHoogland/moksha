@@ -180,7 +180,8 @@ e_manager_manage_windows(E_Manager *man)
         atom_xmbed = atoms[0];
         atom_kde_netwm_systray = atoms[1];
         atom_kwm_dockwindow = atoms[2];
-        for (i = 0; i < wnum; i++)
+        //~ for (i = 0; i < wnum; i++)
+        for (i = wnum - 1; i >= 0; i--)
           {
              Ecore_X_Window_Attributes att;
              unsigned int ret_val, deskxy[2];
