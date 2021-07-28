@@ -76,6 +76,7 @@ static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
+static int fav_items = 0;
 
 
 static Eina_List *
@@ -157,7 +158,7 @@ e_int_menus_main_new(void)
    if (e_config->menu_favorites_show)
      {
         subm = e_int_menus_favorite_apps_new();
-        if (subm)
+        if (subm && fav_items)
           {
              dat->apps = subm;
              mi = e_menu_item_new(m);
@@ -323,6 +324,27 @@ e_int_menus_apps_new(const char *dir)
    return m;
 }
 
+E_Menu *
+e_int_menus_apps_empty()
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+
+   m = e_menu_new();
+
+   e_menu_title_set(m, _("Favorite Apps"));
+   mi = e_menu_item_new(m);
+   e_menu_item_separator_set(mi, 1);
+   mi = e_menu_item_new(m);
+
+   e_menu_item_label_set(mi, _("No applications"));
+   e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
+   e_menu_item_disabled_set(mi, 1);
+   fav_items = 0;
+    
+   return m;
+}
+
 EAPI E_Menu *
 e_int_menus_desktops_new(void)
 {
@@ -365,7 +387,11 @@ e_int_menus_favorite_apps_new(void)
    char buf[PATH_MAX];
 
    e_user_dir_concat_static(buf, "applications/menu/favorite.menu");
-   if (ecore_file_exists(buf)) m = e_int_menus_apps_new(buf);
+   if (ecore_file_exists(buf))
+     m = e_int_menus_apps_new(buf);
+   else
+     m = e_int_menus_apps_empty();
+
    if (m) _e_int_menus_apps_start(NULL, m);
    return m;
 }
@@ -683,13 +709,11 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
    if (menu->entries)
      {
         Efreet_Menu *entry;
-
+        fav_items = 1;
         EINA_LIST_FOREACH(menu->entries, l, entry)
           {
-
              mi = e_menu_item_new(m);
              _e_int_menus_item_label_set(entry, mi);
-
              if (entry->icon)
                {
                   if (entry->icon[0] == '/')
@@ -728,6 +752,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("No applications"));
         e_menu_item_disabled_set(mi, 1);
+        fav_items = 0;
      }
 }
 
