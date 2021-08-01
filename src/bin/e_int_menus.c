@@ -76,7 +76,7 @@ static Eina_Hash *_e_int_menus_app_menus_waiting = NULL;
 static Efreet_Menu *_e_int_menus_app_menu_default = NULL;
 static Ecore_Timer *_e_int_menus_app_cleaner = NULL;
 static Eina_List *handlers = NULL;
-static int fav_items = 0;
+static Eina_Bool fav_items = EINA_FALSE;
 
 
 static Eina_List *
@@ -340,7 +340,7 @@ e_int_menus_apps_empty()
    e_menu_item_label_set(mi, _("No applications"));
    e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
    e_menu_item_disabled_set(mi, 1);
-   fav_items = 0;
+   fav_items = EINA_FALSE;
     
    return m;
 }
@@ -709,7 +709,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
    if (menu->entries)
      {
         Efreet_Menu *entry;
-        fav_items = 1;
+        fav_items = EINA_TRUE;
         EINA_LIST_FOREACH(menu->entries, l, entry)
           {
              mi = e_menu_item_new(m);
@@ -752,7 +752,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("No applications"));
         e_menu_item_disabled_set(mi, 1);
-        fav_items = 0;
+        fav_items = EINA_FALSE;
      }
 }
 
