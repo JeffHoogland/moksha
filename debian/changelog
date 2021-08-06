@@ -1,3 +1,24 @@
+moksha (20210806bodhi30.3.3-12) focal; urgency=low
+
+  * Favorite apps menu fix
+  * Borders list order fix on restarts
+  * Systray: change E_Event to show gadget
+  * Improve pt_BR, de, es, nl, sk translations
+  * Icons set: fall to Gnome if not theme defined
+  * Mouse middle click for gadman move on the desktop and shelf
+  * Border: frame code improvements
+  * Border noframe/fullscreen support fix
+  * Update de.po
+  * Systray: show gadcon after E_EVENT_GADCON_POPULATE creates all gadgets on the shelf
+  * Minor localization tweaks
+  * Add MX spanish locale in wizard module
+  * Adding portuguese locale in wizard module
+  * Analog clock: odd issue with mouse click fix
+  * Notification: EPulse added to blacklist 
+  * Clipboard icon respects the icon set change
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 06 Aug 2021 17:04:00 -0400
+
 moksha (20210518bodhi30.3.3-11) focal; urgency=low
 
   * Settings panel respects the icon set change
