@@ -2993,10 +2993,10 @@ e_border_unmaximize(E_Border *bd,
                {
                   if (bd->bg_object)
                     {
-                      //~ if ((!e_config->border_frame) || (!noframe_check(bd))) 
-                        //~ edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-                      //~ else
-                        //~ edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
+                      if ((!e_config->border_frame) || (!noframe_check(bd)))
+                        edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
+                      else
+                        edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
 
                       _e_border_client_inset_calc(bd);
                     }
