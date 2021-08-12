@@ -1,3 +1,10 @@
+moksha (20210812bodhi30.3.3-12) focal; urgency=low
+
+  * Regression: Unmaximize window bottom fix
+  * xkbswitch nogflag text scaled
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 12 Aug 2021 16:24:35 -0400
+
 moksha (20210806bodhi30.3.3-12) focal; urgency=low
 
   * Favorite apps menu fix
