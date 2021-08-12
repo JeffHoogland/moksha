@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-06-13 21:19+0200\n"
+"POT-Creation-Date: 2021-08-06 17:06-0400\n"
 "PO-Revision-Date: 2021-05-12 19:06+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -105,7 +105,7 @@ msgstr "Non"
 msgid "Action Params Syntax Error"
 msgstr "Erreur de syntaxe des paramètres d'action"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:266
 msgid "Exit"
 msgstr "Quitter"
 
@@ -789,7 +789,7 @@ msgstr "Mise en hibernation immédiate"
 msgid "Lock"
 msgstr "Verrouiller"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1383
 msgid "Cleanup Windows"
 msgstr "Réorganiser les fenêtres"
 
@@ -1229,7 +1229,7 @@ msgid "Select an Executable"
 msgstr "Sélectionner un exécutable"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1454,7 +1454,7 @@ msgstr "Impossible d'éjecter le périphérique"
 #: src/bin/e_fm.c:9693 src/bin/e_fm.c:9698 src/bin/e_fm.c:10329
 #: src/bin/e_fm.c:10332 src/bin/e_fm.c:10335 src/bin/e_fm.c:10362
 #: src/bin/e_fm.c:10366 src/bin/e_fm.c:10369 src/bin/e_fm.c:10427
-#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2349
 msgid "Error"
 msgstr "Erreur"
 
@@ -1515,7 +1515,7 @@ msgstr "Actions…"
 msgid "Link"
 msgstr "Lien"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2477
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1784,7 +1784,7 @@ msgstr "Périphérique amovible"
 msgid "Cannot change permissions: %s"
 msgstr "Impossible de changer les permissions : %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2365
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2369
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1897,11 +1897,11 @@ msgstr "Déplacer vers"
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "En plein"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "En creux"
 
@@ -1915,7 +1915,7 @@ msgstr "Aspect"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Supprimer"
@@ -2513,8 +2513,8 @@ msgid "Request Position"
 msgstr "Demande de position"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:285
+#: src/bin/e_shelf.c:2448 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2786,17 +2786,17 @@ msgstr ""
 "configuration du système<br>de saisie est correcte et que l'exécutable "
 "est<br>dans votre PATH.<br>"
 
-#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:142 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Principal"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:165
 #: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Applications favorites"
 
-#: src/bin/e_int_menus.c:175
+#: src/bin/e_int_menus.c:176
 #: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
@@ -2809,53 +2809,58 @@ msgstr "Applications favorites"
 msgid "Applications"
 msgstr "Applications"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 msgid "About Operating System"
 msgstr "À propos du système"
 
-#: src/bin/e_int_menus.c:213
+#: src/bin/e_int_menus.c:214
 msgid "Help"
 msgstr "Aide"
 
-#: src/bin/e_int_menus.c:219
+#: src/bin/e_int_menus.c:220
 msgid "About Bodhi Linux"
 msgstr "À propos de Bodhi Linux"
 
-#: src/bin/e_int_menus.c:239
+#: src/bin/e_int_menus.c:240
 msgid "About Moksha Desktop"
 msgstr "À propos de Moksha"
 
-#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:246 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "À propos du thème"
 
-#: src/bin/e_int_menus.c:259
+#: src/bin/e_int_menus.c:260
 msgid "Restart Moksha"
 msgstr "Relancer Moksha"
 
-#: src/bin/e_int_menus.c:337
+#: src/bin/e_int_menus.c:335
+#, fuzzy
+msgid "Favorite Apps"
+msgstr "Favoris"
+
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
+msgid "No applications"
+msgstr "Aucune application"
+
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "Virtuel"
 
-#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Rayons"
 
-#: src/bin/e_int_menus.c:353
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "Voir / Cacher les fenêtres"
 
-#: src/bin/e_int_menus.c:729
-msgid "No applications"
-msgstr "Aucune application"
-
-#: src/bin/e_int_menus.c:946
+#: src/bin/e_int_menus.c:971
 msgid "Set Virtual Desktops"
 msgstr "Paramétrer les bureaux"
 
-#: src/bin/e_int_menus.c:1316
+#: src/bin/e_int_menus.c:1341
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2864,29 +2869,29 @@ msgstr "Paramétrer les bureaux"
 msgid "Windows"
 msgstr "Fenêtres"
 
-#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1347 src/bin/e_int_menus.c:1540
 msgid "No windows"
 msgstr "Pas de fenêtre"
 
-#: src/bin/e_int_menus.c:1371
+#: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
 msgstr "Fenêtres orphelines"
 
-#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
+#: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 msgid "Untitled window"
 msgstr "Fenêtre sans titre"
 
-#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1660 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Rayon %s"
 
-#: src/bin/e_int_menus.c:1703
+#: src/bin/e_int_menus.c:1728
 msgid "Add a Shelf"
 msgstr "Ajouter un rayon"
 
-#: src/bin/e_int_menus.c:1710
+#: src/bin/e_int_menus.c:1735
 msgid "Delete a Shelf"
 msgstr "Supprimer un rayon"
 
@@ -3673,14 +3678,14 @@ msgstr "Flottant"
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/everything/evry_config.c:575
-#: src/modules/gadman/e_mod_gadman.c:1029
+#: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horizontal(e)"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1037
+#: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertical(e)"
 
@@ -3762,11 +3767,11 @@ msgstr "Erreur de rayon"
 msgid "A shelf with that name already exists!"
 msgstr "Il existe déjà un rayon avec ce nom !"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
 msgid "Stop Moving Gadgets"
 msgstr "Figer les gadgets"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
 msgid "Begin Moving Gadgets"
 msgstr "Déplacer les gadgets"
 
@@ -3782,28 +3787,28 @@ msgstr ""
 "Vous avez demandé à supprimer ce rayon.<br><br>Voulez-vous vraiment le "
 "faire ?"
 
-#: src/bin/e_shelf.c:2345
+#: src/bin/e_shelf.c:2349
 msgid "A shelf with that name and id already exists!"
 msgstr "Un rayon avec ce nom et id existe déjà !"
 
-#: src/bin/e_shelf.c:2364
+#: src/bin/e_shelf.c:2368
 msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
-#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/bin/e_shelf.c:2449
+#: src/bin/e_shelf.c:2453
 msgid "Orientation"
 msgstr "Orientation"
 
-#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2462 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Masquer automatiquement"
 
-#: src/bin/e_shelf.c:2465
+#: src/bin/e_shelf.c:2469
 msgid "Refresh"
 msgstr "Rafraîchir"
 
@@ -5544,17 +5549,17 @@ msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "Moksha n'a pu importer cette configuration<br>à cause d'une erreur de copie."
 
-#: src/modules/conf_intl/e_int_config_intl.c:598
+#: src/modules/conf_intl/e_int_config_intl.c:601
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Paramétrage de la langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:621
+#: src/modules/conf_intl/e_int_config_intl.c:624
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "Paramétrage de la langue pour le verrouillage d'écran"
 
-#: src/modules/conf_intl/e_int_config_intl.c:954
+#: src/modules/conf_intl/e_int_config_intl.c:957
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5567,33 +5572,33 @@ msgstr ""
 "la<br>configuration des Variables<br>d'environnement pour les désactiver."
 "<br>Les variantes problématiques sont :<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:965
 msgid "Possible Locale problems"
 msgstr "Les paramètres régionaux peuvent poser problème"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1032
-#: src/modules/conf_intl/e_int_config_intl.c:1123
+#: src/modules/conf_intl/e_int_config_intl.c:1035
+#: src/modules/conf_intl/e_int_config_intl.c:1126
 msgid "Language Selector"
 msgstr "Sélecteur de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1062
-#: src/modules/conf_intl/e_int_config_intl.c:1511
+#: src/modules/conf_intl/e_int_config_intl.c:1065
+#: src/modules/conf_intl/e_int_config_intl.c:1514
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:193
+#: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Système (par défaut)"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1096
-#: src/modules/conf_intl/e_int_config_intl.c:1174
+#: src/modules/conf_intl/e_int_config_intl.c:1099
+#: src/modules/conf_intl/e_int_config_intl.c:1177
 msgid "Locale Selected"
 msgstr "Paramètres régionaux"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1097
-#: src/modules/conf_intl/e_int_config_intl.c:1175
+#: src/modules/conf_intl/e_int_config_intl.c:1100
+#: src/modules/conf_intl/e_int_config_intl.c:1178
 msgid "Locale"
 msgstr "Localisation"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
 msgid "Language"
 msgstr "Langue"
 
@@ -8441,19 +8446,19 @@ msgstr "Animations"
 msgid "Background Options"
 msgstr "Options du fond"
 
-#: src/modules/gadman/e_mod_gadman.c:991
+#: src/modules/gadman/e_mod_gadman.c:992
 msgid "Begin move/resize"
 msgstr "Déplacer / Redimensionner"
 
-#: src/modules/gadman/e_mod_gadman.c:1021
+#: src/modules/gadman/e_mod_gadman.c:1022
 msgid "Free"
 msgstr "Libre"
 
-#: src/modules/gadman/e_mod_gadman.c:1045
+#: src/modules/gadman/e_mod_gadman.c:1046
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/modules/gadman/e_mod_gadman.c:1066
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Add other gadgets"
 msgstr "Ajouter un autre gadget"
 
@@ -9001,7 +9006,7 @@ msgstr "Bienvenue dans Moksha"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Veuillez patienter pendant le chargement des paramètres de Moksha !"
 
-#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
 msgid "Select one"
 msgstr "Choisissez"
 
@@ -9347,33 +9352,33 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "nom / identifiant de l'accès rapide"
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
 msgid "Systray Error"
 msgstr "Erreur : Zone de notification"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:498
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Zone de notification ne peut rendre son arrière-plan invisible pour "
 "correspondre à son rayon."
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:904
 msgid "Another systray exists"
 msgstr "Il y a déjà une zone de notification"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Il y a déjà une zone de notification active et seule une instance de ce "
 "gadget est autorisée."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:914
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Zone de notification ne peut fonctionner dans un rayon configuré en dessous "
 "de tout."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1109
 msgid "Systray"
 msgstr "Zone de notification"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-06-13 21:19+0200\n"
+"POT-Creation-Date: 2021-08-06 17:06-0400\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -101,7 +101,7 @@ msgstr "Nie"
 msgid "Action Params Syntax Error"
 msgstr "Parametry akcji"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:266
 msgid "Exit"
 msgstr "Zakończ"
 
@@ -826,7 +826,7 @@ msgstr "Hibernacja"
 msgid "Lock"
 msgstr "Zablokuj"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1383
 msgid "Cleanup Windows"
 msgstr "Uporządkuj okna"
 
@@ -1289,7 +1289,7 @@ msgid "Select an Executable"
 msgstr "Wybierz plik wykonywalny"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1514,7 +1514,7 @@ msgstr "Nie można wysunąć urządzenia"
 #: src/bin/e_fm.c:9693 src/bin/e_fm.c:9698 src/bin/e_fm.c:10329
 #: src/bin/e_fm.c:10332 src/bin/e_fm.c:10335 src/bin/e_fm.c:10362
 #: src/bin/e_fm.c:10366 src/bin/e_fm.c:10369 src/bin/e_fm.c:10427
-#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2349
 msgid "Error"
 msgstr "Błąd"
 
@@ -1580,7 +1580,7 @@ msgstr "Akcje"
 msgid "Link"
 msgstr "Łącze"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2477
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1864,7 +1864,7 @@ msgstr "Urządzenie usuwalne"
 msgid "Cannot change permissions: %s"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2365
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2369
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1985,11 +1985,11 @@ msgstr "Opis Przesuwania"
 msgid "Automatically scroll contents"
 msgstr "Automatycznie przewiń zawartość"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "Zwykły"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Wstawka"
 
@@ -2004,7 +2004,7 @@ msgstr "Patrz"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Usuń"
@@ -2636,8 +2636,8 @@ msgid "Request Position"
 msgstr "Zarządaj pozycji"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:285
+#: src/bin/e_shelf.c:2448 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2918,17 +2918,17 @@ msgstr ""
 "konfiguracja metod wejścia<br>jest poprawna i że program jest w ścieżce "
 "przeszukiwania (PATH)<br>"
 
-#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:142 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Główne"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:165
 #: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Ulubione aplikacje"
 
-#: src/bin/e_int_menus.c:175
+#: src/bin/e_int_menus.c:176
 #: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
@@ -2941,57 +2941,62 @@ msgstr "Ulubione aplikacje"
 msgid "Applications"
 msgstr "Aplikacje"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 #, fuzzy
 msgid "About Operating System"
 msgstr "Błąd systemu uwierzytelniania"
 
-#: src/bin/e_int_menus.c:213
+#: src/bin/e_int_menus.c:214
 msgid "Help"
 msgstr ""
 
-#: src/bin/e_int_menus.c:219
+#: src/bin/e_int_menus.c:220
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:239
+#: src/bin/e_int_menus.c:240
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "O Moksha"
 
-#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:246 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "O wystroju"
 
-#: src/bin/e_int_menus.c:259
+#: src/bin/e_int_menus.c:260
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Zrestartuj Moksha"
 
-#: src/bin/e_int_menus.c:337
+#: src/bin/e_int_menus.c:335
+#, fuzzy
+msgid "Favorite Apps"
+msgstr "Ulubione"
+
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
+#, fuzzy
+msgid "No applications"
+msgstr "(Brak aplikacji)"
+
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "Wirtualny"
 
-#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Półki"
 
-#: src/bin/e_int_menus.c:353
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "Pokaż/Ukryj Wszystkie Okna"
 
-#: src/bin/e_int_menus.c:729
-#, fuzzy
-msgid "No applications"
-msgstr "(Brak aplikacji)"
-
-#: src/bin/e_int_menus.c:946
+#: src/bin/e_int_menus.c:971
 msgid "Set Virtual Desktops"
 msgstr "Ustaw wirtualne pulpity"
 
-#: src/bin/e_int_menus.c:1316
+#: src/bin/e_int_menus.c:1341
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3000,32 +3005,32 @@ msgstr "Ustaw wirtualne pulpity"
 msgid "Windows"
 msgstr "Okna"
 
-#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1347 src/bin/e_int_menus.c:1540
 #, fuzzy
 msgid "No windows"
 msgstr "(Żadnemu)"
 
-#: src/bin/e_int_menus.c:1371
+#: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
 msgstr "Utracone okna"
 
-#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
+#: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 #, fuzzy
 msgid "Untitled window"
 msgstr "Inne Ustawienia"
 
-#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1660 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Pólka #"
 
-#: src/bin/e_int_menus.c:1703
+#: src/bin/e_int_menus.c:1728
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "Dodaj półkę"
 
-#: src/bin/e_int_menus.c:1710
+#: src/bin/e_int_menus.c:1735
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Skasuj półkę"
@@ -3838,14 +3843,14 @@ msgstr ""
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/everything/evry_config.c:575
-#: src/modules/gadman/e_mod_gadman.c:1029
+#: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Poziomo"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1037
+#: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Pionowo"
 
@@ -3935,12 +3940,12 @@ msgstr "Pólka #"
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "Zakończ przesuwanie/zmianę rozmiaru składników"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Rozpocznij przesuwanie/zmianę rozmiaru składników"
@@ -3955,32 +3960,32 @@ msgid ""
 "it?"
 msgstr "Zażądałeś usunięcia tej półki.<br><br>Czy na pewno chcesz ją usunąć?"
 
-#: src/bin/e_shelf.c:2345
+#: src/bin/e_shelf.c:2349
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2364
+#: src/bin/e_shelf.c:2368
 #, fuzzy
 msgid "Rename Shelf"
 msgstr "Zmień nazwę pliku"
 
-#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 #, fuzzy
 msgid "Contents"
 msgstr "Komentarz"
 
-#: src/bin/e_shelf.c:2449
+#: src/bin/e_shelf.c:2453
 #, fuzzy
 msgid "Orientation"
 msgstr "Prezentacja"
 
-#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2462 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "Autoukrywanie"
 
-#: src/bin/e_shelf.c:2465
+#: src/bin/e_shelf.c:2469
 msgid "Refresh"
 msgstr "Odśwież"
 
@@ -5831,18 +5836,18 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:598
+#: src/modules/conf_intl/e_int_config_intl.c:601
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Opcje językowe"
 
-#: src/modules/conf_intl/e_int_config_intl.c:621
+#: src/modules/conf_intl/e_int_config_intl.c:624
 #: src/modules/conf_intl/e_mod_main.c:24
 #, fuzzy
 msgid "Desklock Language Settings"
 msgstr "Opcje językowe"
 
-#: src/modules/conf_intl/e_int_config_intl.c:954
+#: src/modules/conf_intl/e_int_config_intl.c:957
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5851,35 +5856,35 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:965
 #, fuzzy
 msgid "Possible Locale problems"
 msgstr "Możliwe problemy Locale"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1032
-#: src/modules/conf_intl/e_int_config_intl.c:1123
+#: src/modules/conf_intl/e_int_config_intl.c:1035
+#: src/modules/conf_intl/e_int_config_intl.c:1126
 msgid "Language Selector"
 msgstr "Wybór Języka"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1062
-#: src/modules/conf_intl/e_int_config_intl.c:1511
+#: src/modules/conf_intl/e_int_config_intl.c:1065
+#: src/modules/conf_intl/e_int_config_intl.c:1514
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:193
+#: src/modules/wizard/page_010.c:196
 #, fuzzy
 msgid "System Default"
 msgstr "Domyślne ustawienia systemu"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1096
-#: src/modules/conf_intl/e_int_config_intl.c:1174
+#: src/modules/conf_intl/e_int_config_intl.c:1099
+#: src/modules/conf_intl/e_int_config_intl.c:1177
 msgid "Locale Selected"
 msgstr "Lokalizacja wybrana"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1097
-#: src/modules/conf_intl/e_int_config_intl.c:1175
+#: src/modules/conf_intl/e_int_config_intl.c:1100
+#: src/modules/conf_intl/e_int_config_intl.c:1178
 msgid "Locale"
 msgstr "Lokalizacja"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
 msgid "Language"
 msgstr "Język"
 
@@ -9014,20 +9019,20 @@ msgstr "Animacje"
 msgid "Background Options"
 msgstr "Ustawienia Tła Pulpitu"
 
-#: src/modules/gadman/e_mod_gadman.c:991
+#: src/modules/gadman/e_mod_gadman.c:992
 #, fuzzy
 msgid "Begin move/resize"
 msgstr "Rozpocznij Przesuwanie/Zmianę Rozmiaru składników"
 
-#: src/modules/gadman/e_mod_gadman.c:1021
+#: src/modules/gadman/e_mod_gadman.c:1022
 msgid "Free"
 msgstr "Wolny"
 
-#: src/modules/gadman/e_mod_gadman.c:1045
+#: src/modules/gadman/e_mod_gadman.c:1046
 msgid "Appearance"
 msgstr "Wygląd"
 
-#: src/modules/gadman/e_mod_gadman.c:1066
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Add other gadgets"
 msgstr "Dodaj inne gadżety"
 
@@ -9649,7 +9654,7 @@ msgstr "Witaj w Moksha"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
 msgid "Select one"
 msgstr "Wybierz jeden"
 
@@ -9957,32 +9962,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
 #, fuzzy
 msgid "Systray Error"
 msgstr "Błąd Systray"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:498
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:904
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Innym systray istnieje"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Nie może być tylko jeden systray gadżet , a drugi już istnieje."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:914
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray nie może pracować w półce , który jest ustawiony poniżej wszystkiego."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1109
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"

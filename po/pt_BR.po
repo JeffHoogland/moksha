@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-06-13 21:19+0200\n"
+"POT-Creation-Date: 2021-08-06 17:06-0400\n"
 "PO-Revision-Date: 2021-03-29 19:48-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -49,10 +49,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos autorais &copy; 2000-2015, pela equipe de desenvolvimento do Moksha</"
-"><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto nós gostamos de "
-"desenvolvê-la.<br><br>Para nos contactar, consulte:<br><hilight>http://www.enlightenment."
-"org</><br><br>"
+"<title>Direitos autorais &copy; 2000-2015, pela equipe de desenvolvimento do "
+"Moksha</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto "
+"nós gostamos de desenvolvê-la.<br><br>Para nos contactar, consulte:"
+"<br><hilight>http://www.enlightenment.org</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -69,9 +69,9 @@ msgid ""
 "window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
 "want to kill this window?"
 msgstr ""
-"Está prestes a fechar %s.<br><br>Tenha em conta que todos os dados desta janela que "
-"ainda não tenham sido gravados serão perdidos!<br><br>Tem certeza de que quer fechar a "
-"janela?"
+"Está prestes a fechar %s.<br><br>Tenha em conta que todos os dados desta "
+"janela que ainda não tenham sido gravados serão perdidos!<br><br>Tem certeza "
+"de que quer fechar a janela?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
@@ -94,7 +94,7 @@ msgstr "Não"
 msgid "Action Params Syntax Error"
 msgstr "Erro de sintaxe nos parâmetros da ação"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:266
 msgid "Exit"
 msgstr "Sair"
 
@@ -778,7 +778,7 @@ msgstr "Hibernar agora"
 msgid "Lock"
 msgstr "Bloquear"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1383
 msgid "Cleanup Windows"
 msgstr "Limpar janelas"
 
@@ -845,14 +845,15 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your settings.<br>"
 msgstr ""
-"As configurações precisam ser atualizadas. As suas configurações antigas foram apagadas "
-"e serão iniciados novos valores pré-definidos.<br>Isto irá ocorrer recorrentemente "
-"durante o desenvolvimento, portanto não se deve reportar qualquer erro.<br>Isto "
-"significa que o Moksha precisa de dados que as suas antigas configurações não possuem."
-"<br>Este conjunto de valores corrige a situação.<br> Mais tarde poderá configurar o "
-"Moksha à suas preferências.<br>Desculpe por qualquer inconveniente.<br>"
+"As configurações precisam ser atualizadas. As suas configurações antigas "
+"foram apagadas e serão iniciados novos valores pré-definidos.<br>Isto irá "
+"ocorrer recorrentemente durante o desenvolvimento, portanto não se deve "
+"reportar qualquer erro.<br>Isto significa que o Moksha precisa de dados que "
+"as suas antigas configurações não possuem.<br>Este conjunto de valores "
+"corrige a situação.<br> Mais tarde poderá configurar o Moksha à suas "
+"preferências.<br>Desculpe por qualquer inconveniente.<br>"
 
-#: src/bin/e_config.c:951
+#: src/bin/e_config.c:952
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -860,10 +861,11 @@ msgid ""
 "a precaution your settings have been now restored to<br>defaults. Sorry for "
 "the inconvenience.<br>"
 msgstr ""
-"As suas configurações são mais recentes que as do Moksha.<br>Isto é muito estranho e só "
-"acontece se reverter a versão do Moksha ou se copiar as configurações de um local em que "
-"está instalada uma versão mais recente do Moksha.<br>Isto é ruim e por precaução, as "
-"configurações originais foram restauradas.<br>Desculpe qualquer inconveniente.<br>"
+"As suas configurações são mais recentes que as do Moksha.<br>Isto é muito "
+"estranho e só acontece se reverter a versão do Moksha ou se copiar as "
+"configurações de um local em que está instalada uma versão mais recente do "
+"Moksha.<br>Isto é ruim e por precaução, as configurações originais foram "
+"restauradas.<br>Desculpe qualquer inconveniente.<br>"
 
 #: src/bin/e_config.c:1473 src/bin/e_config.c:2098
 msgid "Moksha Settings Write Problems"
@@ -1212,7 +1214,7 @@ msgid "Select an Executable"
 msgstr "Escolha o executável"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1355,8 +1357,7 @@ msgstr "%s foi interrompido pelo sinal %i."
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Os detalhes remanescentes foram truncados. Grave a saída para vê-los."
-"***\n"
+"***Os detalhes remanescentes foram truncados. Grave a saída para vê-los.***\n"
 
 #: src/bin/e_exec.c:936
 msgid "Error Information"
@@ -1436,7 +1437,7 @@ msgstr "Não foi possível ejetar o dispositivo"
 #: src/bin/e_fm.c:9693 src/bin/e_fm.c:9698 src/bin/e_fm.c:10329
 #: src/bin/e_fm.c:10332 src/bin/e_fm.c:10335 src/bin/e_fm.c:10362
 #: src/bin/e_fm.c:10366 src/bin/e_fm.c:10369 src/bin/e_fm.c:10427
-#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2349
 msgid "Error"
 msgstr "Erro"
 
@@ -1496,7 +1497,7 @@ msgstr "Ações..."
 msgid "Link"
 msgstr "Link"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2477
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1765,7 +1766,7 @@ msgstr "Dispositivo removível"
 msgid "Cannot change permissions: %s"
 msgstr "Não foi possível alterar as permissões: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2365
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2369
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1878,11 +1879,11 @@ msgstr "Mover para"
 msgid "Automatically scroll contents"
 msgstr "Deslocar conteúdo automaticamente"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "Simples"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Moldura"
 
@@ -1896,7 +1897,7 @@ msgstr "Aparência"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Remover"
@@ -2497,8 +2498,8 @@ msgid "Request Position"
 msgstr "Solicita posição"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:285
+#: src/bin/e_shelf.c:2448 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2769,17 +2770,17 @@ msgstr ""
 "entrada<br><br>Certifique-se que o método de entrada está bem configurado e "
 "que o executável de configuração está no seu PATH<br>"
 
-#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:142 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "Principal"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:165
 #: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Aplicações favoritas"
 
-#: src/bin/e_int_menus.c:175
+#: src/bin/e_int_menus.c:176
 #: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
@@ -2792,53 +2793,58 @@ msgstr "Aplicações favoritas"
 msgid "Applications"
 msgstr "Aplicações"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 msgid "About Operating System"
 msgstr "Sobre o sistema operacional"
 
-#: src/bin/e_int_menus.c:213
+#: src/bin/e_int_menus.c:214
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/bin/e_int_menus.c:219
+#: src/bin/e_int_menus.c:220
 msgid "About Bodhi Linux"
 msgstr "Sobre o Bodhi Linux"
 
-#: src/bin/e_int_menus.c:239
+#: src/bin/e_int_menus.c:240
 msgid "About Moksha Desktop"
 msgstr "Sobre o Moksha"
 
-#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:246 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "Sobre o tema"
 
-#: src/bin/e_int_menus.c:259
+#: src/bin/e_int_menus.c:260
 msgid "Restart Moksha"
 msgstr "Reiniciar o Moksha"
 
-#: src/bin/e_int_menus.c:337
+#: src/bin/e_int_menus.c:335
+#, fuzzy
+msgid "Favorite Apps"
+msgstr "Favoritos"
+
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
+msgid "No applications"
+msgstr "Sem aplicações"
+
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "Virtual"
 
-#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Painéis"
 
-#: src/bin/e_int_menus.c:353
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "Mostrar/ocultar todas as janelas"
 
-#: src/bin/e_int_menus.c:729
-msgid "No applications"
-msgstr "Sem aplicações"
-
-#: src/bin/e_int_menus.c:946
+#: src/bin/e_int_menus.c:971
 msgid "Set Virtual Desktops"
 msgstr "Definir áreas de trabalho virtuais"
 
-#: src/bin/e_int_menus.c:1316
+#: src/bin/e_int_menus.c:1341
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2847,29 +2853,29 @@ msgstr "Definir áreas de trabalho virtuais"
 msgid "Windows"
 msgstr "Janelas"
 
-#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1347 src/bin/e_int_menus.c:1540
 msgid "No windows"
 msgstr "Sem janelas"
 
-#: src/bin/e_int_menus.c:1371
+#: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
 msgstr "Janelas perdidas"
 
-#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
+#: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 msgid "Untitled window"
 msgstr "Janela sem nome"
 
-#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1660 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Painel %s"
 
-#: src/bin/e_int_menus.c:1703
+#: src/bin/e_int_menus.c:1728
 msgid "Add a Shelf"
 msgstr "Adicionar painel"
 
-#: src/bin/e_int_menus.c:1710
+#: src/bin/e_int_menus.c:1735
 msgid "Delete a Shelf"
 msgstr "Apagar painel"
 
@@ -3644,14 +3650,14 @@ msgstr "Flutuante"
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/everything/evry_config.c:575
-#: src/modules/gadman/e_mod_gadman.c:1029
+#: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1037
+#: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -3733,11 +3739,11 @@ msgstr "Erro do painel"
 msgid "A shelf with that name already exists!"
 msgstr "Já existe um painel com este nome!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
 msgid "Stop Moving Gadgets"
 msgstr "Parar de mover gadgets"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
 msgid "Begin Moving Gadgets"
 msgstr "Começar a mover gadgets"
 
@@ -3751,28 +3757,28 @@ msgid ""
 "it?"
 msgstr "Solicitou apagar este painel.<br><br>Tem certeza disso?"
 
-#: src/bin/e_shelf.c:2345
+#: src/bin/e_shelf.c:2349
 msgid "A shelf with that name and id already exists!"
 msgstr "Já existe um painel com este nome e id!"
 
-#: src/bin/e_shelf.c:2364
+#: src/bin/e_shelf.c:2368
 msgid "Rename Shelf"
 msgstr "Renomear painel"
 
-#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 msgid "Contents"
 msgstr "Conteúdo"
 
-#: src/bin/e_shelf.c:2449
+#: src/bin/e_shelf.c:2453
 msgid "Orientation"
 msgstr "Orientação"
 
-#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2462 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Ocultar automaticamente"
 
-#: src/bin/e_shelf.c:2465
+#: src/bin/e_shelf.c:2469
 msgid "Refresh"
 msgstr "Atualizar"
 
@@ -4121,8 +4127,8 @@ msgstr ""
 "A configuração do seu módulo é mais recente que a versão do módulo.<br>Isto "
 "é muito estranho e só acontece se reverter o módulo ou se tiver copiado a "
 "configuração de um local em que está instalada uma versão mais recente do "
-"módulo.<br>Isto é ruim e por precaução, as suas configurações originais foram "
-"restauradas.<b>Desculpe qualquer inconveniente.<br>"
+"módulo.<br>Isto é ruim e por precaução, as suas configurações originais "
+"foram restauradas.<b>Desculpe qualquer inconveniente.<br>"
 
 #: src/bin/e_utils.c:1212
 #, c-format
@@ -5498,25 +5504,25 @@ msgid ""
 "Moksha was unable to import the configuration.<br><br>Are you sure this is "
 "really a valid configuration?"
 msgstr ""
-"O Moksha não conseguiu importar a configuração.<br><br>Tem certeza que "
-"esta é uma configuração válida?"
+"O Moksha não conseguiu importar a configuração.<br><br>Tem certeza que esta "
+"é uma configuração válida?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "O Moksha não conseguiu importar a<br>configuração devido a um erro de cópia."
 
-#: src/modules/conf_intl/e_int_config_intl.c:598
+#: src/modules/conf_intl/e_int_config_intl.c:601
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Configurações de idioma"
 
-#: src/modules/conf_intl/e_int_config_intl.c:621
+#: src/modules/conf_intl/e_int_config_intl.c:624
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "Configurações de idioma do bloqueio do sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:954
+#: src/modules/conf_intl/e_int_config_intl.c:957
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5530,33 +5536,33 @@ msgstr ""
 "variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>"
 "%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:965
 msgid "Possible Locale problems"
 msgstr "Possíveis problemas com localidade (idiomas, moedas, ...)"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1032
-#: src/modules/conf_intl/e_int_config_intl.c:1123
+#: src/modules/conf_intl/e_int_config_intl.c:1035
+#: src/modules/conf_intl/e_int_config_intl.c:1126
 msgid "Language Selector"
 msgstr "Seletor de idiomas"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1062
-#: src/modules/conf_intl/e_int_config_intl.c:1511
+#: src/modules/conf_intl/e_int_config_intl.c:1065
+#: src/modules/conf_intl/e_int_config_intl.c:1514
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:193
+#: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Padrão do sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1096
-#: src/modules/conf_intl/e_int_config_intl.c:1174
+#: src/modules/conf_intl/e_int_config_intl.c:1099
+#: src/modules/conf_intl/e_int_config_intl.c:1177
 msgid "Locale Selected"
 msgstr "Localidade selecionada"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1097
-#: src/modules/conf_intl/e_int_config_intl.c:1175
+#: src/modules/conf_intl/e_int_config_intl.c:1100
+#: src/modules/conf_intl/e_int_config_intl.c:1178
 msgid "Locale"
 msgstr "Localidade"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
 msgid "Language"
 msgstr "Idioma"
 
@@ -8403,19 +8409,19 @@ msgstr "Animações"
 msgid "Background Options"
 msgstr "Opções de fundo"
 
-#: src/modules/gadman/e_mod_gadman.c:991
+#: src/modules/gadman/e_mod_gadman.c:992
 msgid "Begin move/resize"
 msgstr "Mover/redimensionar"
 
-#: src/modules/gadman/e_mod_gadman.c:1021
+#: src/modules/gadman/e_mod_gadman.c:1022
 msgid "Free"
 msgstr "Livre"
 
-#: src/modules/gadman/e_mod_gadman.c:1045
+#: src/modules/gadman/e_mod_gadman.c:1046
 msgid "Appearance"
 msgstr "Aparência"
 
-#: src/modules/gadman/e_mod_gadman.c:1066
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Add other gadgets"
 msgstr "Adicionar mais gadgets"
 
@@ -8637,8 +8643,9 @@ msgstr "Indique o nome para esta origem:"
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
-msgstr "Solicitou apagar \"%s\".<br><br>Tem certeza que quer apagar essa "
-"origem de barra?"
+msgstr ""
+"Solicitou apagar \"%s\".<br><br>Tem certeza que quer apagar essa origem de "
+"barra?"
 
 #: src/modules/ibar/e_mod_config.c:212
 msgid "Are you sure you want to delete this bar source?"
@@ -8961,7 +8968,7 @@ msgstr "Bem-vindo ao Moksha"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Por favor aguarde, estamos carregando as configurações do Moksha!"
 
-#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
 msgid "Select one"
 msgstr "Escolha um"
 
@@ -9300,29 +9307,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "identificador/nome do acesso rápido"
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
 msgid "Systray Error"
 msgstr "Erro na bandeja do sistema"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:498
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Não é possível tornar a bandeja do sistema invisível para coincidir com o "
 "painel."
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:904
 msgid "Another systray exists"
 msgstr "Já existe uma bandeja de sistema"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Só pode existir um gadget como bandeja de sistema e você já a tem."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:914
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "A bandeja não funciona num painel que esteja atrás de tudo."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1109
 msgid "Systray"
 msgstr "Bandeja do sistema"
 
@@ -10805,12 +10812,12 @@ msgstr "Volume no mudo"
 #~ "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
 #~ "will be restored in %d seconds."
 #~ msgstr[0] ""
-#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso não."
-#~ "<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
+#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso "
+#~ "não.<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
 #~ "restaurada em %d segundo."
 #~ msgstr[1] ""
-#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso não."
-#~ "<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
+#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso "
+#~ "não.<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
 #~ "restaurada em %d segundos."
 
 #~ msgid ""
@@ -10822,21 +10829,21 @@ msgstr "Volume no mudo"
 #~ "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
 #~ "restored in %d seconds."
 #~ msgstr[0] ""
-#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso não."
-#~ "<br>Se não pressionar um botão, a resolução <br>%dx%d será restaurada em "
-#~ "%d segundo."
+#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso "
+#~ "não.<br>Se não pressionar um botão, a resolução <br>%dx%d será restaurada "
+#~ "em %d segundo."
 #~ msgstr[1] ""
 #~ "Parece-lhe correto? Se sim <hilight>Gravar</hilight>, se não Restaure."
-#~ "<br>Se não pressionar o botão, a resolução <br>%dx%d será restaurada em %d "
-#~ "segundos."
+#~ "<br>Se não pressionar o botão, a resolução <br>%dx%d será restaurada em "
+#~ "%d segundos."
 
 #~ msgid ""
 #~ "Does this look OK? <hilight>Save</hilight> if it does, or Restore if not."
 #~ "<br>If you do not press a button, the old resolution of<br>%d×%d at %d Hz "
 #~ "will be restored <hilight>IMMEDIATELY</hilight>."
 #~ msgstr ""
-#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso não."
-#~ "<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
+#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso "
+#~ "não.<br>Se não pressionar um botão, a resolução <br>%dx%d a %d Hz será "
 #~ "restaurada <hilight>imediatamente</hilight>."
 
 #~ msgid ""
@@ -10844,8 +10851,8 @@ msgstr "Volume no mudo"
 #~ "<br>If you do not press a button, the old resolution of<br>%d×%d will be "
 #~ "restored <hilight>IMMEDIATELY</hilight>."
 #~ msgstr ""
-#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso não."
-#~ "<br>Se não pressionar um botão, a resolução <br>%dx%d será restaurada "
+#~ "Parece-lhe correto? <hilight>Gravar</hilight> caso sim e restaure caso "
+#~ "não.<br>Se não pressionar um botão, a resolução <br>%dx%d será restaurada "
 #~ "<hilight>imediatamente</hilight>."
 
 #~ msgid "Resolution change"
@@ -11473,8 +11480,8 @@ msgstr "Volume no mudo"
 #~ "A configuração do seu módulo é mais recente que a do módulo.<br>Isto é "
 #~ "muito estranho e só acontece se reverter o módulo ou se tiver copiado a "
 #~ "configuração de um local em que está instalada uma versão mais recente do "
-#~ "módulo.<br>Isto é mau e por precaução, as suas configurações originais foram "
-#~ "restauradas.<br>Desculpe qualquer inconveniente.<br>"
+#~ "módulo.<br>Isto é mau e por precaução, as suas configurações originais "
+#~ "foram restauradas.<br>Desculpe qualquer inconveniente.<br>"
 
 #~ msgid "Configuration Panel Configuration Updated"
 #~ msgstr "A configuração do painel de configurações foi atualizada"
@@ -11593,12 +11600,12 @@ msgstr "Volume no mudo"
 #~ "fix<br>that by adding it in. You can re-configure things now to "
 #~ "your<br>liking. Sorry for the hiccup in your configuration.<br>"
 #~ msgstr ""
-#~ "As configurações do gerenciador de arquivos precisam ser atualizadas. As suas "
-#~ "antigas configurações foram apagadas e foram utilizados novos valores "
-#~ "padrão.<br>Isto irá ocorrer recorrentemente durante o desenvolvimento e "
-#~ "não deve reportar nenhum erro.<br>Isto apenas significa que o módulo "
-#~ "precisa de dados que as sua antiga configuração não possui.<br>Este "
-#~ "conjunto de valores irá corrigir esse fato.<br>Mais tarde poderá "
+#~ "As configurações do gerenciador de arquivos precisam ser atualizadas. As "
+#~ "suas antigas configurações foram apagadas e foram utilizados novos "
+#~ "valores padrão.<br>Isto irá ocorrer recorrentemente durante o "
+#~ "desenvolvimento e não deve reportar nenhum erro.<br>Isto apenas significa "
+#~ "que o módulo precisa de dados que as sua antiga configuração não possui."
+#~ "<br>Este conjunto de valores irá corrigir esse fato.<br>Mais tarde poderá "
 #~ "configurar o módulo ao seu gosto. Desculpe qualquer inconveniente.<br>"
 
 #~ msgid ""
@@ -11634,8 +11641,8 @@ msgstr "Volume no mudo"
 #~ "Please press a mouse button<br>Press <hilight>Escape</hilight> to abort."
 #~ "<br>Or <hilight>Del</hilight> to reset the button."
 #~ msgstr ""
-#~ "Pressione um botão do mouse.<br>Tecle <hilight>Escape</hilight> para abortar ou "
-#~ "<hilight>Del</hilight> para resetar o botão."
+#~ "Pressione um botão do mouse.<br>Tecle <hilight>Escape</hilight> para "
+#~ "abortar ou <hilight>Del</hilight> para resetar o botão."
 
 #~ msgid ""
 #~ "File has an unrecognized extension.<br>Please use '.jpg' or '.png' "

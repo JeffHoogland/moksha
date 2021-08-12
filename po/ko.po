@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-06-13 21:19+0200\n"
+"POT-Creation-Date: 2021-08-06 17:06-0400\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -97,7 +97,7 @@ msgstr "아니요"
 msgid "Action Params Syntax Error"
 msgstr "동작 인자"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:265
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:266
 msgid "Exit"
 msgstr "끝내기"
 
@@ -784,7 +784,7 @@ msgstr "지금 최대 절전모드로 전환"
 msgid "Lock"
 msgstr "잠그기"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1358
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1383
 msgid "Cleanup Windows"
 msgstr "창 정리"
 
@@ -1217,7 +1217,7 @@ msgid "Select an Executable"
 msgstr "실행 파일 선택"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2478
+#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
@@ -1440,7 +1440,7 @@ msgstr "장치를 꺼낼 수 없습니다"
 #: src/bin/e_fm.c:9693 src/bin/e_fm.c:9698 src/bin/e_fm.c:10329
 #: src/bin/e_fm.c:10332 src/bin/e_fm.c:10335 src/bin/e_fm.c:10362
 #: src/bin/e_fm.c:10366 src/bin/e_fm.c:10369 src/bin/e_fm.c:10427
-#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2345
+#: src/bin/e_fm.c:10652 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2349
 msgid "Error"
 msgstr "오류"
 
@@ -1500,7 +1500,7 @@ msgstr "동작..."
 msgid "Link"
 msgstr "링크"
 
-#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2473
+#: src/bin/e_fm.c:9169 src/bin/e_fm.c:10481 src/bin/e_shelf.c:2477
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1766,7 +1766,7 @@ msgstr "휴대용 장치"
 msgid "Cannot change permissions: %s"
 msgstr "권한을 바꿀 수 없습니다: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2365
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2369
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1879,11 +1879,11 @@ msgstr "이동"
 msgid "Automatically scroll contents"
 msgstr "내용을 자동으로 스크롤"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1001
+#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "일반"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1009
+#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "덧붙임"
 
@@ -1897,7 +1897,7 @@ msgstr "보기"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1057 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "제거"
@@ -2497,8 +2497,8 @@ msgid "Request Position"
 msgstr "위치 지정 요청"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:284
-#: src/bin/e_shelf.c:2444 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:285
+#: src/bin/e_shelf.c:2448 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2763,17 +2763,17 @@ msgstr ""
 "입력기 실행파일을 시작하는데 오류가 발생했습니다<br><br>입력기 설정이 올바른"
 "지 입력기 실행파일이 PATH 경로 상에<br> 있는지 확인하십시오<br>"
 
-#: src/bin/e_int_menus.c:141 src/modules/syscon/e_int_config_syscon.c:146
+#: src/bin/e_int_menus.c:142 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
 msgstr "메인"
 
-#: src/bin/e_int_menus.c:164
+#: src/bin/e_int_menus.c:165
 #: src/modules/conf_applications/e_int_config_apps.c:72
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "자주 실행하는 프로그램"
 
-#: src/bin/e_int_menus.c:175
+#: src/bin/e_int_menus.c:176
 #: src/modules/conf_applications/e_int_config_apps.c:340
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
@@ -2786,57 +2786,62 @@ msgstr "자주 실행하는 프로그램"
 msgid "Applications"
 msgstr "프로그램"
 
-#: src/bin/e_int_menus.c:207
+#: src/bin/e_int_menus.c:208
 #, fuzzy
 msgid "About Operating System"
 msgstr "인증 시스템 오류"
 
-#: src/bin/e_int_menus.c:213
+#: src/bin/e_int_menus.c:214
 #, fuzzy
 msgid "Help"
 msgstr "도움말 좀 더 보기"
 
-#: src/bin/e_int_menus.c:219
+#: src/bin/e_int_menus.c:220
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:239
+#: src/bin/e_int_menus.c:240
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "인라이튼먼트 정보"
 
-#: src/bin/e_int_menus.c:245 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:246 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "테마 정보"
 
-#: src/bin/e_int_menus.c:259
+#: src/bin/e_int_menus.c:260
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "인라이튼먼트 사용을 환영합니다"
 
-#: src/bin/e_int_menus.c:337
+#: src/bin/e_int_menus.c:335
+#, fuzzy
+msgid "Favorite Apps"
+msgstr "즐겨찾기"
+
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
+msgid "No applications"
+msgstr "프로그램 없음"
+
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "가상"
 
-#: src/bin/e_int_menus.c:344 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "서랍"
 
-#: src/bin/e_int_menus.c:353
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "모든 창 표시/숨기기"
 
-#: src/bin/e_int_menus.c:729
-msgid "No applications"
-msgstr "프로그램 없음"
-
-#: src/bin/e_int_menus.c:946
+#: src/bin/e_int_menus.c:971
 msgid "Set Virtual Desktops"
 msgstr "가상 데스크톱 설정"
 
-#: src/bin/e_int_menus.c:1316
+#: src/bin/e_int_menus.c:1341
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2845,29 +2850,29 @@ msgstr "가상 데스크톱 설정"
 msgid "Windows"
 msgstr "창"
 
-#: src/bin/e_int_menus.c:1322 src/bin/e_int_menus.c:1515
+#: src/bin/e_int_menus.c:1347 src/bin/e_int_menus.c:1540
 msgid "No windows"
 msgstr "창 없음"
 
-#: src/bin/e_int_menus.c:1371
+#: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
 msgstr "잃어버린 창"
 
-#: src/bin/e_int_menus.c:1428 src/bin/e_int_menus.c:1528
+#: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 msgid "Untitled window"
 msgstr "이름 없는 창"
 
-#: src/bin/e_int_menus.c:1635 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1660 src/bin/e_shelf.c:1638
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "서랍 #"
 
-#: src/bin/e_int_menus.c:1703
+#: src/bin/e_int_menus.c:1728
 msgid "Add a Shelf"
 msgstr "서랍 추가"
 
-#: src/bin/e_int_menus.c:1710
+#: src/bin/e_int_menus.c:1735
 msgid "Delete a Shelf"
 msgstr "서랍 삭제"
 
@@ -3642,14 +3647,14 @@ msgstr "소수"
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
 #: src/modules/everything/evry_config.c:575
-#: src/modules/gadman/e_mod_gadman.c:1029
+#: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "수평"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 #: src/modules/everything/evry_config.c:568
-#: src/modules/gadman/e_mod_gadman.c:1037
+#: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "수직"
 
@@ -3730,11 +3735,11 @@ msgstr "서랍 오류"
 msgid "A shelf with that name already exists!"
 msgstr "지정한 이름을 가진 서랍이 이미 존재합니다!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2489
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
 msgid "Stop Moving Gadgets"
 msgstr "가젯 이동 중지"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2491
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
 msgid "Begin Moving Gadgets"
 msgstr "가젯 이동 시작"
 
@@ -3748,28 +3753,28 @@ msgid ""
 "it?"
 msgstr "이 서랍의 삭제를 요청했습니다.<br><br>정말로 삭제하시겠습니까?"
 
-#: src/bin/e_shelf.c:2345
+#: src/bin/e_shelf.c:2349
 msgid "A shelf with that name and id already exists!"
 msgstr "지정한 이름과 ID를 가진 서랍이 이미 존재합니다!"
 
-#: src/bin/e_shelf.c:2364
+#: src/bin/e_shelf.c:2368
 msgid "Rename Shelf"
 msgstr "서랍 이름 바꾸기"
 
-#: src/bin/e_shelf.c:2439 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 msgid "Contents"
 msgstr "컨텐츠"
 
-#: src/bin/e_shelf.c:2449
+#: src/bin/e_shelf.c:2453
 msgid "Orientation"
 msgstr "방향"
 
-#: src/bin/e_shelf.c:2458 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2462 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "자동 숨기기"
 
-#: src/bin/e_shelf.c:2465
+#: src/bin/e_shelf.c:2469
 msgid "Refresh"
 msgstr "새로 고침"
 
@@ -5490,17 +5495,17 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "인라이튼먼트가 복사 오류로 인해 설정을 가져올 수 <br>없습니다."
 
-#: src/modules/conf_intl/e_int_config_intl.c:598
+#: src/modules/conf_intl/e_int_config_intl.c:601
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "언어 설정"
 
-#: src/modules/conf_intl/e_int_config_intl.c:621
+#: src/modules/conf_intl/e_int_config_intl.c:624
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "데스크 잠금 언어 설정"
 
-#: src/modules/conf_intl/e_int_config_intl.c:954
+#: src/modules/conf_intl/e_int_config_intl.c:957
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5512,33 +5517,33 @@ msgstr ""
 "습니다.<br>이 환경 변수가 영향을 미치는 것을<br>원치 않는다면 환경 변수 설정"
 "을 해제하십시오.<br>영향을 주는 변수는 다음과 같습니다:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:965
 msgid "Possible Locale problems"
 msgstr "가능한 로캘 문제"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1032
-#: src/modules/conf_intl/e_int_config_intl.c:1123
+#: src/modules/conf_intl/e_int_config_intl.c:1035
+#: src/modules/conf_intl/e_int_config_intl.c:1126
 msgid "Language Selector"
 msgstr "언어 선택"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1062
-#: src/modules/conf_intl/e_int_config_intl.c:1511
+#: src/modules/conf_intl/e_int_config_intl.c:1065
+#: src/modules/conf_intl/e_int_config_intl.c:1514
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:193
+#: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "시스템 기본값"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1096
-#: src/modules/conf_intl/e_int_config_intl.c:1174
+#: src/modules/conf_intl/e_int_config_intl.c:1099
+#: src/modules/conf_intl/e_int_config_intl.c:1177
 msgid "Locale Selected"
 msgstr "로캘 선택함"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1097
-#: src/modules/conf_intl/e_int_config_intl.c:1175
+#: src/modules/conf_intl/e_int_config_intl.c:1100
+#: src/modules/conf_intl/e_int_config_intl.c:1178
 msgid "Locale"
 msgstr "로캘"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:184
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
 msgid "Language"
 msgstr "언어"
 
@@ -8407,19 +8412,19 @@ msgstr "움직임"
 msgid "Background Options"
 msgstr "배경 옵션"
 
-#: src/modules/gadman/e_mod_gadman.c:991
+#: src/modules/gadman/e_mod_gadman.c:992
 msgid "Begin move/resize"
 msgstr "이동/크기 바꾸기 시작"
 
-#: src/modules/gadman/e_mod_gadman.c:1021
+#: src/modules/gadman/e_mod_gadman.c:1022
 msgid "Free"
 msgstr "자유롭게"
 
-#: src/modules/gadman/e_mod_gadman.c:1045
+#: src/modules/gadman/e_mod_gadman.c:1046
 msgid "Appearance"
 msgstr "모양새"
 
-#: src/modules/gadman/e_mod_gadman.c:1066
+#: src/modules/gadman/e_mod_gadman.c:1067
 msgid "Add other gadgets"
 msgstr "다른 가젯 추가"
 
@@ -8968,7 +8973,7 @@ msgstr "인라이튼먼트 사용을 환영합니다"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:185 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
 msgid "Select one"
 msgstr "하나 선택"
 
@@ -9299,32 +9304,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "빠른 접근 이름/식별자"
 
-#: src/modules/systray/e_mod_main.c:498 src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
 msgid "Systray Error"
 msgstr "시스템 표시줄 오류"
 
-#: src/modules/systray/e_mod_main.c:499
+#: src/modules/systray/e_mod_main.c:498
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "시스템 표시줄의 서랍에 꼭 맞게 배경을 보이지 않도록 설정할 수 없습니다."
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:904
 msgid "Another systray exists"
 msgstr "다른 시스템 표시줄이 존재합니다"
 
-#: src/modules/systray/e_mod_main.c:906
+#: src/modules/systray/e_mod_main.c:905
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "단 하나의 시스템 표시줄만 존재할 수 있으며 이미 다른 시스템 표시줄이 존재합니"
 "다."
 
-#: src/modules/systray/e_mod_main.c:915
+#: src/modules/systray/e_mod_main.c:914
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Everything 아래로 배치하도록 설정한 시스템 표시줄은 서랍에서 동작하지 않습니"
 "다."
 
-#: src/modules/systray/e_mod_main.c:1112
+#: src/modules/systray/e_mod_main.c:1109
 msgid "Systray"
 msgstr "시스템 표시줄"
 
