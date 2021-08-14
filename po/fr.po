@@ -1,6 +1,6 @@
 # French translation for Moksha.
 # This file is put in the public domain.
-# 
+#
 # Vincent 'Caro' Torri <vtorri at univ-evry dot fr>, 2005.
 # Sébastien HOUZE <shouze@nerim.net>, 2005.
 # Maxime BRUNEL <maxtoo@gentoofr.org>, 2005, 2006.
@@ -13,13 +13,13 @@
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
 # similar <similar@orange.fr>, 2020, 2021.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-08-06 17:06-0400\n"
-"PO-Revision-Date: 2021-05-12 19:06+0200\n"
+"PO-Revision-Date: 2021-08-14 18:21+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -2834,9 +2834,8 @@ msgid "Restart Moksha"
 msgstr "Relancer Moksha"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favoris"
+msgstr "Applis favorites"
 
 #: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
 msgid "No applications"
@@ -4627,7 +4626,7 @@ msgstr "(Dés)Activer le calendrier"
 #: src/modules/conf/e_mod_config.c:35 src/modules/conf/e_mod_main.c:285
 #: src/modules/conf/e_mod_main.c:298
 msgid "Configuration Panel"
-msgstr "Panneau de configuration"
+msgstr "Menu de configuration"
 
 #: src/modules/conf/e_mod_config.c:65
 msgid "Show configurations in menu"
@@ -4746,19 +4745,19 @@ msgstr "Ne lancer que des instances uniques"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
 msgid "X11 Basics"
-msgstr "Options basiques X11"
+msgstr "Options X11 basiques"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
 msgid "Load X Resources"
-msgstr "Activer les ressources de X"
+msgstr "Activer les ressources X (xrdb)"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
 msgid "Load X Modifier Map"
-msgstr "Activer la carte des modificateurs de X"
+msgstr "Activer les mappages X (xmodmap)"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
 msgid "Major Desktops"
-msgstr "Environnements de bureau majeurs"
+msgstr "Environnements de bureau principaux"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:109
 msgid "Start GNOME services on login"
@@ -5378,7 +5377,7 @@ msgstr "Signal :"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
 #: src/modules/conf_edgebindings/e_mod_main.c:25
 msgid "Signal Bindings"
-msgstr "Liaisons de signaux"
+msgstr "Raccourcis des signaux"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:865
 msgid "Signal Bindings Settings"
@@ -7412,11 +7411,11 @@ msgstr "Suivi du redimensionnement"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:280
 msgid "Follow Raise"
-msgstr "Suivi au-dessus"
+msgstr "Suivi du placement au-dessus"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:283
 msgid "Follow Lower"
-msgstr "Suivi au-dessous"
+msgstr "Suivi du placement au-dessous"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:286
 msgid "Follow Layer"
@@ -7855,7 +7854,7 @@ msgstr "Géométrie"
 
 #: src/modules/everything/evry_config.c:647
 msgid "Everything Collection"
-msgstr "Collection Omni"
+msgstr "Collections Omni"
 
 #: src/modules/everything/evry_gadget.c:169
 msgid "Everything Starter"
@@ -7863,7 +7862,7 @@ msgstr "Starter Omni"
 
 #: src/modules/everything/evry_gadget.c:587
 msgid "Everything Gadgets"
-msgstr "Gadgets de Omni"
+msgstr "Gadgets Omni"
 
 #: src/modules/everything/evry_gadget.c:685
 msgid "Plugin"
