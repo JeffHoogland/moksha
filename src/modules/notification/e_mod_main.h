@@ -83,8 +83,11 @@ struct _Popup_Data
   const char  *app_name;
   const char  *app_icon_image;
   Evas_Object *app_icon;
-  Ecore_Timer *timer;
+  Ecore_Timer *timer, *timer1;
   E_Zone *zone;
+  char *act_name_1;
+  char *act_name_2;
+  char *act_name_3;
 };
 
 struct _Popup_Items
