@@ -459,7 +459,7 @@ _notification_theme_cb_find(Popup_Data *popup,
 }
 
 static void
-_notification_theme_cb_action_1(Popup_Data *popup,
+_notification_button_1_cb(Popup_Data *popup,
                             Evas_Object *obj __UNUSED__,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
@@ -470,7 +470,7 @@ _notification_theme_cb_action_1(Popup_Data *popup,
 }
 
 static void
-_notification_theme_cb_action_2(Popup_Data *popup,
+_notification_button_2_cb(Popup_Data *popup,
                             Evas_Object *obj __UNUSED__,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
@@ -481,7 +481,7 @@ _notification_theme_cb_action_2(Popup_Data *popup,
 }
 
 static void
-_notification_theme_cb_action_3(Popup_Data *popup,
+_notification_button_3_cb(Popup_Data *popup,
                             Evas_Object *obj __UNUSED__,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
@@ -492,33 +492,33 @@ _notification_theme_cb_action_3(Popup_Data *popup,
 }
 
 static void
-_notification_action_1(Popup_Data *popup, E_Notification_Action *a)
+_notification_button_1(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_1 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_1", e_notification_action_name_get(a));
     edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
-       (Edje_Signal_Cb)_notification_theme_cb_action_1, popup);
+       (Edje_Signal_Cb)_notification_button_1_cb, popup);
 }
 
 static void
-_notification_action_2(Popup_Data *popup, E_Notification_Action *a)
+_notification_button_2(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_2 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button2,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_2", e_notification_action_name_get(a));
     edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
-       (Edje_Signal_Cb)_notification_theme_cb_action_2, popup);
+       (Edje_Signal_Cb)_notification_button_2_cb, popup);
 }
 
 static void
-_notification_action_3(Popup_Data *popup, E_Notification_Action *a)
+_notification_button_3(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_3 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button3,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_3", e_notification_action_name_get(a));
     edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
-       (Edje_Signal_Cb)_notification_theme_cb_action_3, popup);
+       (Edje_Signal_Cb)_notification_button_3_cb, popup);
 }
 
 static void
@@ -540,7 +540,7 @@ _notification_actions(Popup_Data *popup)
         act++;
         if (act_num == 1)
           {
-              _notification_action_2(popup, a);
+              _notification_button_2(popup, a);
           }
 
         if (act_num == 2)
@@ -548,10 +548,10 @@ _notification_actions(Popup_Data *popup)
             switch (act)
               {
                 case 1:
-                  _notification_action_1(popup, a);
+                  _notification_button_1(popup, a);
                  break;
                 case 2:
-                  _notification_action_3(popup, a);
+                  _notification_button_3(popup, a);
                  break;
               }
           }
@@ -561,13 +561,13 @@ _notification_actions(Popup_Data *popup)
             switch (act)
               {
                case 1:
-                  _notification_action_1(popup, a);
+                  _notification_button_1(popup, a);
                  break;
                case 2:
-                  _notification_action_2(popup, a);
+                  _notification_button_2(popup, a);
                  break;
                case 3:
-                  _notification_action_3(popup, a);
+                  _notification_button_3(popup, a);
                  break;
               }
           }
