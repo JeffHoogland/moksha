@@ -22,7 +22,11 @@ enum _Popup_Corner
     CORNER_TL,
     CORNER_TR,
     CORNER_BL,
-    CORNER_BR
+    CORNER_BR,
+    CORNER_R,
+    CORNER_L,
+    CORNER_T,
+    CORNER_B
   };
   
 struct _Instance

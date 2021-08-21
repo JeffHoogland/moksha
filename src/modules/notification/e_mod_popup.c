@@ -689,6 +689,26 @@ _notification_popup_place(Popup_Data *popup,
                      sw - (w + to_edge),
                      (sh - h) - (to_edge + pos));
         break;
+      case CORNER_R:
+        e_popup_move(popup->win,
+                     sw - (w + to_edge),
+                     sh / 2 - h / 2 + pos);
+        break;
+      case CORNER_T:
+        e_popup_move(popup->win,
+                     sw / 2 - w / 2,
+                     to_edge + pos);
+        break;
+      case CORNER_B:
+        e_popup_move(popup->win,
+                     sw / 2 - w / 2,
+                     (sh - h) - (to_edge + pos));
+        break;
+      case CORNER_L:
+        e_popup_move(popup->win,
+                     to_edge,
+                     sh / 2 - h / 2 + pos);
+        break;
       default:
         break;
      }

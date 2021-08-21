@@ -124,7 +124,7 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    of = e_widget_framelist_add(evas, _("Default Timeout"), 0);
    ow = e_widget_check_add(evas, _("Force timeout for all notifications"), &(cfdata->force_timeout));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, _("%.1f seconds"), 0.0, 15.0, 0.1, 0,
+   ow = e_widget_slider_add(evas, 1, 0, _("%.1f s"), 0.0, 15.0, 0.1, 0,
                             &(cfdata->timeout), NULL, 200);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
@@ -139,16 +139,32 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
     * e_widget_framelist_object_append(of, ow);
     * e_widget_list_object_append(o, of, 1, 1, 0.5); */
 
-   of = e_widget_framelist_add(evas, _("Popup Corner"), 0);
+   of = e_widget_frametable_add(evas, _("Popup Orientation"),1);
    rg = e_widget_radio_group_new(&(cfdata->corner));
-   ow = e_widget_radio_add(evas, _("Top left"), CORNER_TL, rg);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Top right"), CORNER_TR, rg);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Bottom left"), CORNER_BL, rg);
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_radio_add(evas, _("Bottom right"), CORNER_BR, rg);
-   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left",
+                                24, 24, CORNER_L, rg);
+   e_widget_frametable_object_append(of, ow, 0, 2, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right",
+                                24, 24, CORNER_R, rg);
+   e_widget_frametable_object_append(of, ow, 2, 2, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top",
+                                24, 24, CORNER_T, rg);
+   e_widget_frametable_object_append(of, ow, 1, 0, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom",
+                                24, 24, CORNER_B, rg);
+   e_widget_frametable_object_append(of, ow, 1, 4, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left",
+                                24, 24, CORNER_TL, rg);
+   e_widget_frametable_object_append(of, ow, 0, 0, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right",
+                                24, 24, CORNER_TR, rg);
+   e_widget_frametable_object_append(of, ow, 2, 0, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left",
+                                24, 24, CORNER_BL, rg);
+   e_widget_frametable_object_append(of, ow, 0, 4, 1, 1, 1, 1, 1, 1);
+   ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right",
+                                24, 24, CORNER_BR, rg);
+   e_widget_frametable_object_append(of, ow, 2, 4, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    /* of = e_widget_framelist_add(evas, _("Gap"), 0);
