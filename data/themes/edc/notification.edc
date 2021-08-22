@@ -111,25 +111,40 @@ group { name: "e/modules/notification/main";
    }
    
    parts {
+     part { "clip"; type: RECT;
+         scale: 1;
+         desc { "default";
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 1.0 0.75;
+         }
+         desc { "show";
+            rel1.relative: 0.0 0.0;
+            rel2.relative: 1.0 1.0;
+         }
+      }
       part { name: "base";
+         clip_to: "clip";
          description { state: "default" 0.0;
             image.normal: "darken_rounded_square.png";
-            image.border: 15 15 15 15;
+            image.border: 12 12 12 12;
          }
       }
       part { name: "titleclip"; type: RECT;
+         clip_to: "clip";
          description { state: "default" 0.0;
             rel2.to_x: "e.event.close";
             rel2.relative: 0.0 1.0;
          }
       }
       part { name: "bodyclip"; type: RECT;
+         clip_to: "clip";
          description { state: "default" 0.0;
             rel2.offset: -13 -13;
-            min: 220 80;
+            min: 220 140;
          }
       }
       part { name: "notification.swallow.app_icon"; type: SWALLOW; mouse_events: 0;
+         clip_to: "clip";
          description { state: "default" 0.0;
             align: 0.0 0.5;
             aspect: 1.0 1.0;
@@ -153,7 +168,9 @@ group { name: "e/modules/notification/main";
             rel1.to_y: "notification.text.title";
             rel1.relative: 1.0 1.0;
             rel1.offset: 4 4;
-            rel2.offset: -27 -13;
+            rel2.to: "base";
+            rel2.relative: 0.95 0.7;
+            //~ rel2.offset: -27 -13;
             text { style: "notification_style";
                min: 0 1;
             }
@@ -227,7 +244,110 @@ group { name: "e/modules/notification/main";
             fixed: 1 1;
          }
       }
-   }
+     text { "action_1_spacer"; mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.offset: 13 -23;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: 13 -23;
+            rel2.relative: 0.0 1.0;
+            color: 0 0 0 0;
+            color_class: "button_text";
+            align: 0.0 1.0;
+            min: 65 0;
+            text {
+               min: 1 1;
+               ellipsis: -1;
+               align: 0.5 0.5;
+               text_class: "button";
+               text_source: "e.text.action_1";
+            }
+            fixed: 1 1;
+         }
+      }
+      group { "act1_btn"; source: "e/widgets/button";
+         desc { "default";
+            rel1.to: "action_1_spacer";
+            rel2.to: "action_1_spacer";
+            min: SOURCE;
+            visible: 0;
+         }
+         desc { "show";
+            inherit: "default";
+            visible: 1;
+         }
+      }
+      alias: "e.text.action_1" "act1_btn:e.text.label";
+
+      text { "action_2_spacer";  mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.offset: 0 -23;
+            rel1.relative: 0.5 1.0;
+            rel2.offset: 0 -23;
+            rel2.relative: 0.5 1.0;
+            color: 0 0 0 0;
+            align: 0.5 1.0;
+            min: 65 0;
+            text {
+               min: 1 1;
+               ellipsis: -1;
+               align: 0.5 0.5;
+               text_class: "button";
+               text_source: "e.text.action_2";
+            }
+            fixed: 1 1;
+         }
+      }
+      group { "act2_btn"; source: "e/widgets/button";
+         desc { "default";
+            rel1.to: "action_2_spacer";
+            rel2.to: "action_2_spacer";
+            visible: 0;
+         }
+          desc { "show";
+            inherit: "default";
+            visible: 1;
+         }
+      }
+      alias: "e.text.action_2" "act2_btn:e.text.label";
+
+   text { "action_3_spacer";  mouse_events: 0;
+         scale: 1;
+         description { state: "default" 0.0;
+            rel.to: "base";
+            rel1.offset: -14 -23;
+            rel1.relative: 1.0 1.0;
+            rel2.offset: -14 -23;
+            rel2.relative: 1.0 1.0;
+            color: 0 0 0 0;
+            align: 1.0 1.0;
+            min: 65 0;
+            text {
+               min: 1 1;
+               ellipsis: -1;
+               align: 0.5 0.5;
+               text_class: "button";
+               text_source: "e.text.action_3";
+            }
+            fixed: 1 1;
+         }
+      }
+      group { "act3_btn"; source: "e/widgets/button";
+         desc { "default";
+            rel1.to: "action_3_spacer";
+            rel2.to: "action_3_spacer";
+            visible: 0;
+         }
+          desc { "show";
+            inherit: "default";
+            visible: 1;
+         }
+      }
+      alias: "e.text.action_3" "act3_btn:e.text.label";
+    }
    programs {
       program {
          signal: "mouse,down,1"; source: "e.event.close";
@@ -246,6 +366,63 @@ group { name: "e/modules/notification/main";
       program {
          signal: "mouse,clicked,1"; source: "base";
          action: SIGNAL_EMIT "notification,find" "theme";
+      }
+        program {
+         signal: "mouse,clicked,1";
+         source: "act1_btn";
+         action: SIGNAL_EMIT "notification,action_1" "";
+      }
+      program {
+         signal: "mouse,clicked,1";
+         source: "act2_btn";
+         action: SIGNAL_EMIT "notification,action_2" "";
+      }
+      program {
+         signal: "mouse,clicked,1";
+         source: "act3_btn";
+         action: SIGNAL_EMIT "notification,action_3" "";
+      }
+      program {
+         signal: "e,button1,hide";
+         source: "theme";
+         action: STATE_SET "default" 0.0;
+         target: "act1_btn";
+         target: "clip";
+      }
+      program {
+         signal: "e,button2,hide";
+         source: "theme";
+         action: STATE_SET "default" 0.0;
+         target: "act2_btn";
+         target: "clip";
+      }
+      program {
+         signal: "e,button3,hide";
+         source: "theme";
+         action: STATE_SET "default" 0.0;
+         target: "act3_btn";
+         target: "clip";
+      }
+      program {
+         signal: "e,button1,show";
+         source: "theme";
+         action: STATE_SET "show" 0.0;
+         target: "act1_btn";
+         target: "clip";
+      }
+      program {
+         signal: "e,button2,show";
+         source: "theme";
+         action: STATE_SET "show" 0.0;
+         target: "act2_btn";
+         target: "clip";
+      }
+      program {
+         signal: "e,button3,show";
+         source: "theme";
+         action: STATE_SET "show" 0.0;
+         target: "act3_btn";
+         target: "clip";
       }
 //      program {
 //         signal: "notification,new"; source: "notification";
