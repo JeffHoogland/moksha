@@ -92,6 +92,7 @@ struct _Popup_Data
   char *act_name_1;
   char *act_name_2;
   char *act_name_3;
+  Eina_Bool reg1, reg2, reg3;
 };
 
 struct _Popup_Items
