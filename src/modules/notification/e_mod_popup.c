@@ -501,7 +501,7 @@ _notification_button_1(Popup_Data *popup, E_Notification_Action *a)
     edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_1", e_notification_action_name_get(a));
     if (!popup->reg1)
-    edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
+      edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
        (Edje_Signal_Cb)_notification_button_1_cb, popup);
 }
 
