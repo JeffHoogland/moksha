@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-08-06 17:06-0400\n"
-"PO-Revision-Date: 2021-05-14 20:31+0100\n"
+"PO-Revision-Date: 2021-08-18 14:37+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
 "Language: pt\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -2818,9 +2818,8 @@ msgid "Restart Moksha"
 msgstr "Reiniciar o Moksha"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favoritos"
+msgstr "Aplicações favoritas"
 
 #: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
 msgid "No applications"
@@ -6284,7 +6283,7 @@ msgstr "Seleção do contorno"
 
 #: src/modules/conf_theme/e_int_config_borders.c:258
 msgid "No focused window frame if possible"
-msgstr ""
+msgstr "Sem moldura de janela focada, se possível"
 
 #: src/modules/conf_theme/e_int_config_borders.c:264
 msgid "Remember this Border for this window next time it appears"
