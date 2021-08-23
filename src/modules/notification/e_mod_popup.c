@@ -644,11 +644,11 @@ _notification_popup_new(E_Notification *n)
    edje_object_signal_callback_add
      (popup->theme, "notification,find", "theme",
      (Edje_Signal_Cb)_notification_theme_cb_find, popup);
-  
-   _notification_popup_refresh(popup);
-   next_pos = _notification_popup_place(popup, next_pos);
 
    popup->reg1 = popup->reg2 = popup->reg3 = EINA_FALSE;
+
+   _notification_popup_refresh(popup);
+   next_pos = _notification_popup_place(popup, next_pos);
 
    e_popup_show(popup->win);
    e_popup_layer_set(popup->win, E_LAYER_POPUP);
