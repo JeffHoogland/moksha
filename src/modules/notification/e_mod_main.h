@@ -47,6 +47,7 @@ struct _Config
   int force_timeout;
   int ignore_replacement;
   int dual_screen;
+  int mute;
   float timeout;
   Popup_Corner corner;
   Eina_List  *instances;

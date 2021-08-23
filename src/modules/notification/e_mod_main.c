@@ -184,6 +184,21 @@ return 1;
 }
 
 static void
+_mute_cb(void)
+{
+  Instance *inst = NULL;
+  EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
+
+  notification_cfg->mute = !notification_cfg->mute;
+
+  inst = eina_list_data_get(notification_cfg->instances);
+  if (notification_cfg->mute)
+    edje_object_part_text_set(inst->o_notif, "e.text.counter", "X");
+  else
+    edje_object_part_text_set(inst->o_notif, "e.text.counter", "");
+}
+
+static void
 _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    EINA_SAFETY_ON_NULL_RETURN(data);
@@ -296,6 +311,16 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_util_menu_item_theme_icon_set(mi, "edit-clear");
         e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->popup_items);
         
+        mi = e_menu_item_new(inst->menu);
+        e_menu_item_label_set(mi, _("Mute"));
+        e_menu_item_check_set(mi, 1);
+        e_util_menu_item_theme_icon_set(mi, "audio-volume-muted");
+        if (notification_cfg->mute)
+          e_menu_item_toggle_set(mi, 1);
+        else
+          e_menu_item_toggle_set(mi, 0);
+        e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->popup_items);
+
         if (notification_cfg->popup_items)
            e_menu_item_disabled_set(mi, EINA_FALSE);
         else
@@ -400,6 +425,9 @@ gadget_text(int number)
   else
      edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
   
+  if (notification_cfg->mute)
+    edje_object_part_text_set(inst->o_notif, "e.text.counter", "X");
+
   if (notification_cfg->jump_timer){
       ecore_timer_del(notification_cfg->jump_timer);
       notification_cfg->jump_timer = NULL;
