@@ -234,6 +234,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         evas_event_feed_mouse_up(inst->gcc->gadcon->evas, ev->button,
                                  EVAS_BUTTON_NONE, ev->timestamp, NULL);
      }
+   if (ev->button == 2)  //middle button
+     _mute_cb();
      
    if (ev->button == 1)  //left button
       {
