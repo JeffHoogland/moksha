@@ -454,12 +454,14 @@ _notification_notify(E_Notification *n)
    int popuped;
 
    if (e_desklock_state_get()) return 0;
+   if (notification_cfg->mute) return 0;
    appname = e_notification_app_name_get(n);
    replaces_id = e_notification_replaces_id_get(n);
    if (replaces_id) new_id = replaces_id;
    else new_id = notification_cfg->next_id++;
-  
+
    e_notification_id_set(n, new_id);
+
    popuped = notification_popup_notify(n, replaces_id, appname);
    if (!popuped)
      {

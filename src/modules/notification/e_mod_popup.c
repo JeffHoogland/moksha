@@ -197,8 +197,7 @@ notification_popup_notify(E_Notification *n,
    
    char *esc;
    char urgency;
-   
-   if (notification_cfg->mute) return 0;
+
    urgency = e_notification_hint_urgency_get(n);
 
    switch (urgency)
