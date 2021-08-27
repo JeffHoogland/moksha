@@ -1,3 +1,10 @@
+moksha (0.3.3-14) focal; urgency=low
+
+  * support for Notification actions
+  * Updated French localization
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Fri, 27 Aug 2021 09:52:26 -0400
+
 moksha (0.3.3-13) focal; urgency=low
 
   * Regression: Unmaximize window bottom fix
