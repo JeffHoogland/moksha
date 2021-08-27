@@ -949,6 +949,7 @@ _notification_popup_refresh(Popup_Data *popup)
    h = MIN(h, popup->zone->h / 2);
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h); 
+   _notification_actions(popup);
    _notification_popups_place();
 }
 
@@ -1024,7 +1025,7 @@ _notification_format_message(Popup_Data *popup)
                                   eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
      }
-     _notification_actions(popup);
+
      list_add_item (popup); 
 }
 
