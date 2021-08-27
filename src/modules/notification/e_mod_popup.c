@@ -500,7 +500,7 @@ _notification_button_1(Popup_Data *popup, E_Notification_Action *a)
     popup->act_name_1 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_1", e_notification_action_name_get(a));
-    if (!popup->reg1)
+    if (!popup->reg1 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
                               (Edje_Signal_Cb)_notification_button_1_cb, popup);
 }
@@ -511,7 +511,7 @@ _notification_button_2(Popup_Data *popup, E_Notification_Action *a)
     popup->act_name_2 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button2,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_2", e_notification_action_name_get(a));
-    if (!popup->reg2)
+    if (popup->reg2 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
                               (Edje_Signal_Cb)_notification_button_2_cb, popup);
 }
@@ -522,7 +522,7 @@ _notification_button_3(Popup_Data *popup, E_Notification_Action *a)
     popup->act_name_3 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button3,show", "theme");
     edje_object_part_text_set(popup->theme, "e.text.action_3", e_notification_action_name_get(a));
-    if (!popup->reg3)
+    if (popup->reg3 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
                               (Edje_Signal_Cb)_notification_button_3_cb, popup);
 }
