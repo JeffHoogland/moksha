@@ -467,7 +467,7 @@ _notification_button_1_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_1);
-  popup->reg1 = EINA_TRUE;
+  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
@@ -479,7 +479,7 @@ _notification_button_2_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_2);
-  popup->reg2 = EINA_TRUE;
+  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
@@ -491,7 +491,7 @@ _notification_button_3_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_3);
-  popup->reg3 = EINA_TRUE;
+  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
@@ -536,7 +536,7 @@ _notification_actions(Popup_Data *popup)
    
    k = e_notification_actions_get(popup->notif);
    act_num = eina_list_count(k);
-   
+
    // hide all 3 action buttons
    edje_object_signal_emit(popup->theme, "e,button*,hide", "theme");
 
