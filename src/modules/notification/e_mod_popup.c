@@ -502,7 +502,7 @@ _notification_button_1(Popup_Data *popup, E_Notification_Action *a)
     edje_object_part_text_set(popup->theme, "e.text.action_1", e_notification_action_name_get(a));
     if (!popup->reg1)
       edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
-       (Edje_Signal_Cb)_notification_button_1_cb, popup);
+                              (Edje_Signal_Cb)_notification_button_1_cb, popup);
 }
 
 static void
@@ -513,7 +513,7 @@ _notification_button_2(Popup_Data *popup, E_Notification_Action *a)
     edje_object_part_text_set(popup->theme, "e.text.action_2", e_notification_action_name_get(a));
     if (!popup->reg2)
       edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
-       (Edje_Signal_Cb)_notification_button_2_cb, popup);
+                              (Edje_Signal_Cb)_notification_button_2_cb, popup);
 }
 
 static void
@@ -524,7 +524,7 @@ _notification_button_3(Popup_Data *popup, E_Notification_Action *a)
     edje_object_part_text_set(popup->theme, "e.text.action_3", e_notification_action_name_get(a));
     if (!popup->reg3)
       edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
-         (Edje_Signal_Cb)_notification_button_3_cb, popup);
+                              (Edje_Signal_Cb)_notification_button_3_cb, popup);
 }
 
 static void
@@ -537,9 +537,8 @@ _notification_actions(Popup_Data *popup)
    k = e_notification_actions_get(popup->notif);
    act_num = eina_list_count(k);
    
-   edje_object_signal_emit(popup->theme, "e,button1,hide", "theme");
-   edje_object_signal_emit(popup->theme, "e,button2,hide", "theme");
-   edje_object_signal_emit(popup->theme, "e,button3,hide", "theme");
+   // hide all 3 action buttons
+   edje_object_signal_emit(popup->theme, "e,button*,hide", "theme");
 
    EINA_LIST_FOREACH(k, l, a)
      {
