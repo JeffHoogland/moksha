@@ -9811,9 +9811,8 @@ msgid "%.1f s"
 msgstr "%1.1f sek"
 
 #: src/modules/notification/e_mod_config.c:142
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Orientácia"
+msgstr "Pozícia notifikácie"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
