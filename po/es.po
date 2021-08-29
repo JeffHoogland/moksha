@@ -2827,9 +2827,8 @@ msgid "Restart Moksha"
 msgstr "Reiniciar Moksha"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favoritos"
+msgstr "Aplicaciones favoritas"
 
 #: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
 msgid "No applications"
@@ -9820,9 +9819,8 @@ msgid "%.1f s"
 msgstr "%1.1f s"
 
 #: src/modules/notification/e_mod_config.c:142
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Orientación"
+msgstr "Orientación del Popup"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"

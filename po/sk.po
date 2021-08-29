@@ -2821,7 +2821,6 @@ msgid "Restart Moksha"
 msgstr "Reštart Moksha desktopu"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
 msgstr "Obľúbené"
 
