@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-08-06 17:06-0400\n"
+"POT-Creation-Date: 2021-08-29 09:11+0200\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -1080,7 +1080,7 @@ msgstr "Alkalmaz"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:603
+#: src/modules/notification/e_mod_main.c:635
 msgid "Extensions"
 msgstr "Kiterjesztések"
 
@@ -1246,7 +1246,7 @@ msgstr "Desktop fájl"
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
-#: src/modules/notification/e_mod_config.c:167
+#: src/modules/notification/e_mod_config.c:183
 #: src/modules/places/e_mod_config.c:190
 msgid "General"
 msgstr "Általános"
@@ -2642,8 +2642,8 @@ msgstr "Hely kérés"
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
-#: src/modules/notification/e_mod_main.c:208
-#: src/modules/notification/e_mod_main.c:308
+#: src/modules/notification/e_mod_main.c:223
+#: src/modules/notification/e_mod_main.c:335
 #: src/modules/clipboard/e_mod_main.c:283
 #: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 msgid "Settings"
@@ -2922,7 +2922,7 @@ msgstr "Kedvencek"
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
 #: src/modules/everything/evry_plug_apps.c:1417
-#: src/modules/notification/e_mod_config.c:206
+#: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Alkalmazások"
 
@@ -3072,7 +3072,7 @@ msgstr "Mutasd egér kattintásra"
 msgid "Hide timeout"
 msgstr "Elrejtés ennyi idő után"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:127
+#: src/bin/e_int_shelf_config.c:237
 #, fuzzy, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -5959,6 +5959,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
+#: src/modules/notification/e_mod_main.c:317
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
 msgid "Mute"
@@ -6305,8 +6306,8 @@ msgstr "%1.2f mp"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:161
-#: src/modules/notification/e_mod_config.c:198
+#: src/modules/notification/e_mod_config.c:177
+#: src/modules/notification/e_mod_config.c:214
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "Egyéb beállítások"
@@ -7265,7 +7266,7 @@ msgid "Assign"
 msgstr "Hozzárendelés"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:295
+#: src/modules/notification/e_mod_main.c:312
 #: src/modules/clipboard/e_mod_main.c:415
 msgid "Clear"
 msgstr "Törlés"
@@ -8857,9 +8858,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:483
-#: src/modules/notification/e_mod_config.c:185
-#: src/modules/notification/e_mod_config.c:193
 #: src/modules/notification/e_mod_config.c:201
+#: src/modules/notification/e_mod_config.c:209
+#: src/modules/notification/e_mod_config.c:217
 #, c-format
 msgid "%2.0f"
 msgstr ""
@@ -10359,38 +10360,38 @@ msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:606
+#: src/modules/notification/e_mod_main.c:638
 msgid "Notification"
 msgstr "Értesítés"
 
-#: src/modules/notification/e_mod_main.c:287
+#: src/modules/notification/e_mod_main.c:304
 #: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:525
+#: src/modules/notification/e_mod_main.c:557
 msgid "Enter Presentation Mode"
 msgstr "Belépés a bemutató módba"
 
-#: src/modules/notification/e_mod_main.c:526
+#: src/modules/notification/e_mod_main.c:558
 #, fuzzy
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Javaslat a bemutató módba való belépéshez"
 
-#: src/modules/notification/e_mod_main.c:530
+#: src/modules/notification/e_mod_main.c:562
 msgid "Exited Presentation Mode"
 msgstr "Kilépve a bemutató módból"
 
-#: src/modules/notification/e_mod_main.c:531
+#: src/modules/notification/e_mod_main.c:563
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Bemutató mód"
 
-#: src/modules/notification/e_mod_main.c:544
+#: src/modules/notification/e_mod_main.c:576
 msgid "Enter Offline Mode"
 msgstr "Belépés kapcsolat nélküli módba"
 
-#: src/modules/notification/e_mod_main.c:545
+#: src/modules/notification/e_mod_main.c:577
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10398,11 +10399,11 @@ msgstr ""
 "Az Moksha <b>kapcsolat nélküli<b> módban fut.<br>Ez alatt azok a modulok, "
 "amelyek a netet használják, le lesznek állítva."
 
-#: src/modules/notification/e_mod_main.c:551
+#: src/modules/notification/e_mod_main.c:583
 msgid "Exited Offline Mode"
 msgstr "Kilépve a kapcsolat nélküli módból."
 
-#: src/modules/notification/e_mod_main.c:552
+#: src/modules/notification/e_mod_main.c:584
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10410,16 +10411,16 @@ msgstr ""
 "Most <b>online<b> módban van.<br>A hálózatot használó modulok ismét "
 "szabályosan működnek."
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:667
 #, fuzzy
 msgid "Notification module"
 msgstr "Belépés a bemutató módba"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:687
 msgid "Error During DBus Init!"
 msgstr "Hiba a DBus folyamat közben!"
 
-#: src/modules/notification/e_mod_main.c:656
+#: src/modules/notification/e_mod_main.c:688
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -10453,92 +10454,79 @@ msgstr "Alapértelmezett időtúllépés"
 msgid "Force timeout for all notifications"
 msgstr ""
 
+#: src/modules/notification/e_mod_config.c:127
+#, fuzzy, c-format
+msgid "%.1f s"
+msgstr "%1.1f mp"
+
 #: src/modules/notification/e_mod_config.c:142
 #, fuzzy
-msgid "Popup Corner"
-msgstr "Felbukkanó"
+msgid "Popup Orientation"
+msgstr "Bemutató"
 
-#: src/modules/notification/e_mod_config.c:144
-#, fuzzy
-msgid "Top left"
-msgstr "Szegély módosítása"
-
-#: src/modules/notification/e_mod_config.c:146
-#, fuzzy
-msgid "Top right"
-msgstr "Felugró asztal jobbra"
-
-#: src/modules/notification/e_mod_config.c:148
-msgid "Bottom left"
-msgstr ""
-
-#: src/modules/notification/e_mod_config.c:150
-msgid "Bottom right"
-msgstr ""
-
-#: src/modules/notification/e_mod_config.c:162
+#: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:164
+#: src/modules/notification/e_mod_config.c:180
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:171
+#: src/modules/notification/e_mod_config.c:187
 #, fuzzy
 msgid "History Settings"
 msgstr "Egyéb beállítások"
 
-#: src/modules/notification/e_mod_config.c:172
+#: src/modules/notification/e_mod_config.c:188
 #, fuzzy
 msgid "Time stamp"
 msgstr "Időmérő(k)"
 
-#: src/modules/notification/e_mod_config.c:174
+#: src/modules/notification/e_mod_config.c:190
 #, fuzzy
 msgid "Show application name"
 msgstr "Alkalmazás menü választása"
 
-#: src/modules/notification/e_mod_config.c:176
+#: src/modules/notification/e_mod_config.c:192
 #, fuzzy
 msgid "Show notification counter"
 msgstr "Értesítés"
 
-#: src/modules/notification/e_mod_config.c:178
+#: src/modules/notification/e_mod_config.c:194
 #, fuzzy
 msgid "Reverse order"
 msgstr "Emlékezz az utasításokra"
 
-#: src/modules/notification/e_mod_config.c:182
+#: src/modules/notification/e_mod_config.c:198
 #: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "Címke"
 
-#: src/modules/notification/e_mod_config.c:183
+#: src/modules/notification/e_mod_config.c:199
 #, fuzzy
 msgid "Labels length"
 msgstr "Címke szöveg"
 
-#: src/modules/notification/e_mod_config.c:190
+#: src/modules/notification/e_mod_config.c:206
 #: src/modules/clipboard/e_mod_config.c:256
 #, fuzzy
 msgid "Items"
 msgstr "elemek"
 
-#: src/modules/notification/e_mod_config.c:191
+#: src/modules/notification/e_mod_config.c:207
 msgid "Items in history"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:199
+#: src/modules/notification/e_mod_config.c:215
 msgid "Gadget animation delay [s]"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:207
+#: src/modules/notification/e_mod_config.c:223
 msgid "App blacklist (use a delimiter)"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:213
+#: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
@@ -10852,6 +10840,18 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Felbontás módosítása"
+
+#, fuzzy
+#~ msgid "Popup Corner"
+#~ msgstr "Felbukkanó"
+
+#, fuzzy
+#~ msgid "Top left"
+#~ msgstr "Szegély módosítása"
+
+#, fuzzy
+#~ msgid "Top right"
+#~ msgstr "Felugró asztal jobbra"
 
 #, fuzzy
 #~ msgid "Select preferred size"

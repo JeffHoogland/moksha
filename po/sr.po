@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-08-06 17:06-0400\n"
+"POT-Creation-Date: 2021-08-29 09:11+0200\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -1028,7 +1028,7 @@ msgstr "Примени"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:603
+#: src/modules/notification/e_mod_main.c:635
 msgid "Extensions"
 msgstr "Проширења"
 
@@ -1191,7 +1191,7 @@ msgstr "Датотека радне површи"
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
-#: src/modules/notification/e_mod_config.c:167
+#: src/modules/notification/e_mod_config.c:183
 #: src/modules/places/e_mod_config.c:190
 msgid "General"
 msgstr "Опште"
@@ -2531,8 +2531,8 @@ msgstr "Захтевај положај"
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
-#: src/modules/notification/e_mod_main.c:208
-#: src/modules/notification/e_mod_main.c:308
+#: src/modules/notification/e_mod_main.c:223
+#: src/modules/notification/e_mod_main.c:335
 #: src/modules/clipboard/e_mod_main.c:283
 #: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 msgid "Settings"
@@ -2803,7 +2803,7 @@ msgstr "Омиљени програми"
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
 #: src/modules/everything/evry_plug_apps.c:1417
-#: src/modules/notification/e_mod_config.c:206
+#: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Програми"
 
@@ -2948,7 +2948,7 @@ msgstr "Прикажи на клик миша"
 msgid "Hide timeout"
 msgstr "Време истека скривања"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:127
+#: src/bin/e_int_shelf_config.c:237
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунди"
@@ -5699,6 +5699,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
+#: src/modules/notification/e_mod_main.c:317
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
 msgid "Mute"
@@ -6027,8 +6028,8 @@ msgstr "%2.2f s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:161
-#: src/modules/notification/e_mod_config.c:198
+#: src/modules/notification/e_mod_config.c:177
+#: src/modules/notification/e_mod_config.c:214
 msgid "Miscellaneous"
 msgstr "Разно"
 
@@ -6930,7 +6931,7 @@ msgid "Assign"
 msgstr "Додели"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:295
+#: src/modules/notification/e_mod_main.c:312
 #: src/modules/clipboard/e_mod_main.c:415
 msgid "Clear"
 msgstr "Очисти"
@@ -8384,9 +8385,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr "Величина напомена (по проценту екранаског заузећа)"
 
 #: src/modules/fileman/e_mod_config.c:483
-#: src/modules/notification/e_mod_config.c:185
-#: src/modules/notification/e_mod_config.c:193
 #: src/modules/notification/e_mod_config.c:201
+#: src/modules/notification/e_mod_config.c:209
+#: src/modules/notification/e_mod_config.c:217
 #, c-format
 msgid "%2.0f"
 msgstr "%2.0f"
@@ -9821,37 +9822,37 @@ msgid "Variant"
 msgstr "Подврста"
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:606
+#: src/modules/notification/e_mod_main.c:638
 msgid "Notification"
 msgstr "Обавештења"
 
-#: src/modules/notification/e_mod_main.c:287
+#: src/modules/notification/e_mod_main.c:304
 #: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:525
+#: src/modules/notification/e_mod_main.c:557
 msgid "Enter Presentation Mode"
 msgstr "Покрени начин рада излагање"
 
-#: src/modules/notification/e_mod_main.c:526
+#: src/modules/notification/e_mod_main.c:558
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:530
+#: src/modules/notification/e_mod_main.c:562
 msgid "Exited Presentation Mode"
 msgstr "Изашао сам из начина рада излагања"
 
-#: src/modules/notification/e_mod_main.c:531
+#: src/modules/notification/e_mod_main.c:563
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Прекидач начина рада излагања"
 
-#: src/modules/notification/e_mod_main.c:544
+#: src/modules/notification/e_mod_main.c:576
 msgid "Enter Offline Mode"
 msgstr "Покрени рад ван мреже"
 
-#: src/modules/notification/e_mod_main.c:545
+#: src/modules/notification/e_mod_main.c:577
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9859,11 +9860,11 @@ msgstr ""
 "Просвећење је у стању <b>ван мреже</b>. <br>За време рада ван мреже, "
 "јединице које користе мрежу ће обуставити добављање удаљених услуга."
 
-#: src/modules/notification/e_mod_main.c:551
+#: src/modules/notification/e_mod_main.c:583
 msgid "Exited Offline Mode"
 msgstr "Изишао сам из рада ван мреже"
 
-#: src/modules/notification/e_mod_main.c:552
+#: src/modules/notification/e_mod_main.c:584
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9871,16 +9872,16 @@ msgstr ""
 "Сада сам у стању <b>на мрежи</b>. Јединице<br>које користе мрежу ће "
 "наставити са редовним задацима."
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:667
 #, fuzzy
 msgid "Notification module"
 msgstr "Јединица обавештења"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:687
 msgid "Error During DBus Init!"
 msgstr "Грешка приликом покретања Д-сабирнице!"
 
-#: src/modules/notification/e_mod_main.c:656
+#: src/modules/notification/e_mod_main.c:688
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -9912,88 +9913,78 @@ msgstr "Подразумевано време истека"
 msgid "Force timeout for all notifications"
 msgstr "Присили време истека свих обавештења"
 
+#: src/modules/notification/e_mod_config.c:127
+#, fuzzy, c-format
+msgid "%.1f s"
+msgstr "%1.1f s"
+
 #: src/modules/notification/e_mod_config.c:142
-msgid "Popup Corner"
-msgstr "Ћоше искакања"
+#, fuzzy
+msgid "Popup Orientation"
+msgstr "Усмерење"
 
-#: src/modules/notification/e_mod_config.c:144
-msgid "Top left"
-msgstr "Горе лево"
-
-#: src/modules/notification/e_mod_config.c:146
-msgid "Top right"
-msgstr "Горе десно"
-
-#: src/modules/notification/e_mod_config.c:148
-msgid "Bottom left"
-msgstr "Доле лево"
-
-#: src/modules/notification/e_mod_config.c:150
-msgid "Bottom right"
-msgstr "Доле десно"
-
-#: src/modules/notification/e_mod_config.c:162
+#: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
 msgstr "Занемари замену ЛБ"
 
-#: src/modules/notification/e_mod_config.c:164
+#: src/modules/notification/e_mod_config.c:180
 msgid "Use multiple monitor geometry"
 msgstr "Користи вишеструку размеру екрана"
 
-#: src/modules/notification/e_mod_config.c:171
+#: src/modules/notification/e_mod_config.c:187
 #, fuzzy
 msgid "History Settings"
 msgstr "Друге поставкее"
 
-#: src/modules/notification/e_mod_config.c:172
+#: src/modules/notification/e_mod_config.c:188
 #, fuzzy
 msgid "Time stamp"
 msgstr "Мерачи времена"
 
-#: src/modules/notification/e_mod_config.c:174
+#: src/modules/notification/e_mod_config.c:190
 #, fuzzy
 msgid "Show application name"
 msgstr "Прикажи изборник свих програма"
 
-#: src/modules/notification/e_mod_config.c:176
+#: src/modules/notification/e_mod_config.c:192
 #, fuzzy
 msgid "Show notification counter"
 msgstr "Обавештења"
 
-#: src/modules/notification/e_mod_config.c:178
+#: src/modules/notification/e_mod_config.c:194
 #, fuzzy
 msgid "Reverse order"
 msgstr "Памти распоред"
 
-#: src/modules/notification/e_mod_config.c:182
+#: src/modules/notification/e_mod_config.c:198
 #: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "Ознаке"
 
-#: src/modules/notification/e_mod_config.c:183
+#: src/modules/notification/e_mod_config.c:199
 #, fuzzy
 msgid "Labels length"
 msgstr "Текст ознаке"
 
-#: src/modules/notification/e_mod_config.c:190
+#: src/modules/notification/e_mod_config.c:206
 #: src/modules/clipboard/e_mod_config.c:256
 msgid "Items"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:191
+#: src/modules/notification/e_mod_config.c:207
 msgid "Items in history"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:199
+#: src/modules/notification/e_mod_config.c:215
 msgid "Gadget animation delay [s]"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:207
+#: src/modules/notification/e_mod_config.c:223
 msgid "App blacklist (use a delimiter)"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:213
+#: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
@@ -10324,6 +10315,21 @@ msgstr "Гласноћа је промењена"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Гласноћа је промењена"
+
+#~ msgid "Popup Corner"
+#~ msgstr "Ћоше искакања"
+
+#~ msgid "Top left"
+#~ msgstr "Горе лево"
+
+#~ msgid "Top right"
+#~ msgstr "Горе десно"
+
+#~ msgid "Bottom left"
+#~ msgstr "Доле лево"
+
+#~ msgid "Bottom right"
+#~ msgstr "Доле десно"
 
 #~ msgid "Adding missing App files"
 #~ msgstr "Додаје недостајуће датотеке програма"

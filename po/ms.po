@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-08-06 17:06-0400\n"
+"POT-Creation-Date: 2021-08-29 09:11+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -1161,7 +1161,7 @@ msgstr "memohon"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:603
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Extensions"
 msgstr "sambungan"
@@ -1342,7 +1342,7 @@ msgstr "fail desktop"
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
-#: src/modules/notification/e_mod_config.c:167
+#: src/modules/notification/e_mod_config.c:183
 #: src/modules/places/e_mod_config.c:190
 #, fuzzy
 msgid "General"
@@ -2860,8 +2860,8 @@ msgstr "Jawatan permintaan"
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
-#: src/modules/notification/e_mod_main.c:208
-#: src/modules/notification/e_mod_main.c:308
+#: src/modules/notification/e_mod_main.c:223
+#: src/modules/notification/e_mod_main.c:335
 #: src/modules/clipboard/e_mod_main.c:283
 #: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
 #, fuzzy
@@ -3169,7 +3169,7 @@ msgstr "Aplikasi kegemaran"
 #: src/modules/everything/evry_plug_apps.c:1147
 #: src/modules/everything/evry_plug_apps.c:1163
 #: src/modules/everything/evry_plug_apps.c:1417
-#: src/modules/notification/e_mod_config.c:206
+#: src/modules/notification/e_mod_config.c:222
 #, fuzzy
 msgid "Applications"
 msgstr "permohonan"
@@ -3336,7 +3336,7 @@ msgstr "Menunjukkan pada klik tetikus"
 msgid "Hide timeout"
 msgstr "menyembunyikan timeout"
 
-#: src/bin/e_int_shelf_config.c:237 src/modules/notification/e_mod_config.c:127
+#: src/bin/e_int_shelf_config.c:237
 #, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -6264,6 +6264,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
+#: src/modules/notification/e_mod_main.c:317
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
 #, fuzzy
@@ -6617,8 +6618,8 @@ msgstr ""
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
-#: src/modules/notification/e_mod_config.c:161
-#: src/modules/notification/e_mod_config.c:198
+#: src/modules/notification/e_mod_config.c:177
+#: src/modules/notification/e_mod_config.c:214
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "Pelbagai"
@@ -7698,7 +7699,7 @@ msgid "Assign"
 msgstr "Berikan"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:295
+#: src/modules/notification/e_mod_main.c:312
 #: src/modules/clipboard/e_mod_main.c:415
 #, fuzzy
 msgid "Clear"
@@ -9386,9 +9387,9 @@ msgid "Tooltip size (Screen percentage)"
 msgstr ""
 
 #: src/modules/fileman/e_mod_config.c:483
-#: src/modules/notification/e_mod_config.c:185
-#: src/modules/notification/e_mod_config.c:193
 #: src/modules/notification/e_mod_config.c:201
+#: src/modules/notification/e_mod_config.c:209
+#: src/modules/notification/e_mod_config.c:217
 #, c-format
 msgid "%2.0f"
 msgstr ""
@@ -10949,67 +10950,67 @@ msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:606
+#: src/modules/notification/e_mod_main.c:638
 #, fuzzy
 msgid "Notification"
 msgstr "putaran"
 
-#: src/modules/notification/e_mod_main.c:287
+#: src/modules/notification/e_mod_main.c:304
 #: src/modules/clipboard/e_mod_main.c:397
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:525
+#: src/modules/notification/e_mod_main.c:557
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:526
+#: src/modules/notification/e_mod_main.c:558
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:530
+#: src/modules/notification/e_mod_main.c:562
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:531
+#: src/modules/notification/e_mod_main.c:563
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Taklimat Mod Togol"
 
-#: src/modules/notification/e_mod_main.c:544
+#: src/modules/notification/e_mod_main.c:576
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "mod luar talian"
 
-#: src/modules/notification/e_mod_main.c:545
+#: src/modules/notification/e_mod_main.c:577
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:551
+#: src/modules/notification/e_mod_main.c:583
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "mod luar talian"
 
-#: src/modules/notification/e_mod_main.c:552
+#: src/modules/notification/e_mod_main.c:584
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:667
 #, fuzzy
 msgid "Notification module"
 msgstr "Mod Persembahan"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:687
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:656
+#: src/modules/notification/e_mod_main.c:688
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -11043,91 +11044,79 @@ msgstr "Paparan Default"
 msgid "Force timeout for all notifications"
 msgstr ""
 
+#: src/modules/notification/e_mod_config.c:127
+#, c-format
+msgid "%.1f s"
+msgstr ""
+
 #: src/modules/notification/e_mod_config.c:142
 #, fuzzy
-msgid "Popup Corner"
-msgstr "Saiz pop"
+msgid "Popup Orientation"
+msgstr "persembahan"
 
-#: src/modules/notification/e_mod_config.c:144
-msgid "Top left"
-msgstr ""
-
-#: src/modules/notification/e_mod_config.c:146
-#, fuzzy
-msgid "Top right"
-msgstr "Ketinggian popup"
-
-#: src/modules/notification/e_mod_config.c:148
-msgid "Bottom left"
-msgstr ""
-
-#: src/modules/notification/e_mod_config.c:150
-msgid "Bottom right"
-msgstr ""
-
-#: src/modules/notification/e_mod_config.c:162
+#: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:164
+#: src/modules/notification/e_mod_config.c:180
 msgid "Use multiple monitor geometry"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:171
+#: src/modules/notification/e_mod_config.c:187
 #, fuzzy
 msgid "History Settings"
 msgstr "Tetapan lain"
 
-#: src/modules/notification/e_mod_config.c:172
+#: src/modules/notification/e_mod_config.c:188
 #, fuzzy
 msgid "Time stamp"
 msgstr "pemasa"
 
-#: src/modules/notification/e_mod_config.c:174
+#: src/modules/notification/e_mod_config.c:190
 #, fuzzy
 msgid "Show application name"
 msgstr "Show All Menu Aplikasi"
 
-#: src/modules/notification/e_mod_config.c:176
+#: src/modules/notification/e_mod_config.c:192
 #, fuzzy
 msgid "Show notification counter"
 msgstr "putaran"
 
-#: src/modules/notification/e_mod_config.c:178
+#: src/modules/notification/e_mod_config.c:194
 #, fuzzy
 msgid "Reverse order"
 msgstr "Ingat Pesanan"
 
-#: src/modules/notification/e_mod_config.c:182
+#: src/modules/notification/e_mod_config.c:198
 #: src/modules/clipboard/e_mod_config.c:245
 #, fuzzy
 msgid "Labels"
 msgstr "label"
 
-#: src/modules/notification/e_mod_config.c:183
+#: src/modules/notification/e_mod_config.c:199
 #, fuzzy
 msgid "Labels length"
 msgstr "Teks label"
 
-#: src/modules/notification/e_mod_config.c:190
+#: src/modules/notification/e_mod_config.c:206
 #: src/modules/clipboard/e_mod_config.c:256
 #, fuzzy
 msgid "Items"
 msgstr "item"
 
-#: src/modules/notification/e_mod_config.c:191
+#: src/modules/notification/e_mod_config.c:207
 msgid "Items in history"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:199
+#: src/modules/notification/e_mod_config.c:215
 msgid "Gadget animation delay [s]"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:207
+#: src/modules/notification/e_mod_config.c:223
 msgid "App blacklist (use a delimiter)"
 msgstr ""
 
-#: src/modules/notification/e_mod_config.c:213
+#: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
 #, fuzzy
 msgid "History"
@@ -11457,6 +11446,14 @@ msgstr "isipadu berubah"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "isipadu berubah"
+
+#, fuzzy
+#~ msgid "Popup Corner"
+#~ msgstr "Saiz pop"
+
+#, fuzzy
+#~ msgid "Top right"
+#~ msgstr "Ketinggian popup"
 
 #, fuzzy
 #~ msgid "Select preferred size"
