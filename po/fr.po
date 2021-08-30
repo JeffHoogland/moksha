@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-08-29 09:11+0200\n"
-"PO-Revision-Date: 2021-08-14 18:21+0200\n"
+"PO-Revision-Date: 2021-08-30 20:44+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -9438,7 +9438,7 @@ msgstr "Enregistrer"
 #: src/modules/shot/e_mod_main.c:570
 #, c-format
 msgid "Uploaded %s / %s"
-msgstr "%s / %s envoyés"
+msgstr "%s / %s téléversés"
 
 #: src/modules/shot/e_mod_main.c:590
 msgid "Error - Upload Failed"
@@ -9882,14 +9882,13 @@ msgid "Force timeout for all notifications"
 msgstr "Forcer le délai pour toutes les notifications"
 
 #: src/modules/notification/e_mod_config.c:127
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
 msgstr "%1.1f s"
 
 #: src/modules/notification/e_mod_config.c:142
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Orientation"
+msgstr "Orientation du pop-up"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
@@ -10166,7 +10165,7 @@ msgstr "de libre sur"
 #: src/modules/places/e_mod_places.c:696
 #, c-format
 msgid "%s Not Mounted"
-msgstr "%s Pas Monté"
+msgstr "%s Non monté"
 
 #: src/modules/places/e_mod_places.c:723
 msgid "unmount"
