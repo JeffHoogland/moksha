@@ -424,38 +424,9 @@ _notification_theme_cb_find(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-
-  /* a simple minded e17 solution for app focus from notif popup */
-
-   //~ Eina_List *l;
-   //~ E_Border *bd;
-
-   //~ if (!popup->app_name) return;
-
-   //~ EINA_LIST_FOREACH(e_border_client_list(), l, bd)
-     //~ {
-        //~ size_t len, test;
-
-        //~ len = strlen(popup->app_name);
-        //~ test = eina_strlen_bounded(bd->client.icccm.name, len + 1);
-
-        //~ /* We can't be sure that the app_name really match the application name.
-         //~ * Some plugin put their name instead. But this search gives some good
-         //~ * results.
-         //~ */
-        //~ if (strncasecmp(bd->client.icccm.name, popup->app_name, (test < len) ? test : len))
-          //~ continue;
-
-        //~ e_desk_show(bd->desk);
-        //~ e_border_show(bd);
-        //~ e_border_raise(bd);
-        //~ e_border_focus_set_with_pointer(bd);
-        //~ break;
-     //~ }
-
-   /*d_bus notification version for app focus*/
-   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
+  e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), "default");
+  notification_popup_close(e_notification_id_get(popup->notif));
 }
 
 static void
