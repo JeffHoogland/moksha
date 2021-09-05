@@ -438,6 +438,7 @@ _notification_button_1_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_1);
+  notification_popup_close(e_notification_id_get(popup->notif));
   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
@@ -450,6 +451,7 @@ _notification_button_2_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_2);
+  notification_popup_close(e_notification_id_get(popup->notif));
   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
@@ -462,6 +464,7 @@ _notification_button_3_cb(Popup_Data *popup,
   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_3);
+  notification_popup_close(e_notification_id_get(popup->notif));
   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
@@ -971,7 +974,8 @@ _notification_popdown(Popup_Data                  *popup,
    e_object_del(E_OBJECT(popup->win));
    e_notification_closed_set(popup->notif, 1);
    e_notification_daemon_signal_notification_closed
-     (notification_cfg->daemon, e_notification_id_get(popup->notif), reason);
+     (notification_cfg->daemon, 0, reason);
+     //~ (notification_cfg->daemon, e_notification_id_get(popup->notif), reason);
    e_notification_unref(popup->notif);
    free(popup);
 }
