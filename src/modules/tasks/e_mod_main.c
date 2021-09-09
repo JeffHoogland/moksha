@@ -827,6 +827,7 @@ _tasks_adjacent_label_popup(void *data)
   Evas_Coord x, y, w, h;
   Evas_Coord px = 0, py = 0;
   Evas_Coord gx, gy, gw, gh, pw;
+  unsigned int max_len = 50;
 
   item = data;
   zone = item->tasks->gcc->gadcon->zone;
@@ -844,7 +845,24 @@ _tasks_adjacent_label_popup(void *data)
   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
 
   title = e_border_name_get(item->border);
-  edje_object_part_text_set(item->win, "e.text.label", title);
+
+  if (strlen(title) > max_len)
+     {
+        char *abbv;
+        const char *left, *right;
+
+        abbv = E_NEW(char, E_CLIENTLIST_MAX_CAPTION_LEN + 4);
+        left = title;
+        right = title + (strlen(title) - (max_len / 2));
+
+        strncpy(abbv, left, max_len / 2);
+        strncat(abbv, "...", 3);
+        strncat(abbv, right, max_len / 2);
+        edje_object_part_text_set(item->win, "e.text.label", abbv);
+        E_FREE(abbv);
+      }
+  else
+     edje_object_part_text_set(item->win, "e.text.label", title);
 
   edje_object_calc_force(item->win);
   edje_object_size_min_calc(item->win, &pw, NULL);
