@@ -115,6 +115,7 @@ e_modapi_init(E_Module *m)
 #define D conf_item_edd
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, show_all, INT);
+   E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, minw, INT);
    E_CONFIG_VAL(D, T, minh, INT);
    E_CONFIG_VAL(D, T, icon_only, UCHAR);
@@ -139,6 +140,7 @@ e_modapi_init(E_Module *m)
         config = E_NEW(Config_Item, 1);
         config->id = eina_stringshare_add("0");
         config->show_all = 0;
+        config->show_label = 0;
         config->minw = 100;
         config->minh = 32;
         tasks_config->items = eina_list_append(tasks_config->items, config);
@@ -716,6 +718,7 @@ _tasks_config_item_get(const char *id)
    config = E_NEW(Config_Item, 1);
    config->id = eina_stringshare_add(id);
    config->show_all = 0;
+   config->show_label = 0;
    config->minw = 100;
    config->minh = 32;
 
@@ -820,6 +823,7 @@ _tasks_adjacent_label_popup(void *data)
   Tasks_Item *item;
   E_Zone *zone;
   int height, gap;
+  const char *title;
   Evas_Coord x, y, w, h;
   Evas_Coord px = 0, py = 0;
   Evas_Coord gx, gy, gw, gh, pw;
@@ -839,7 +843,7 @@ _tasks_adjacent_label_popup(void *data)
   e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, &gw, &gh);
   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
 
-  char *title = ecore_x_icccm_title_get(item->border->client.win);
+  title = e_border_name_get(item->border);
   edje_object_part_text_set(item->win, "e.text.label", title);
 
   edje_object_calc_force(item->win);
@@ -885,7 +889,6 @@ _tasks_adjacent_label_popup(void *data)
   evas_object_resize(item->win, pw, height);
   e_popup_resize(item->popup, pw, height);
   e_popup_show(item->popup);
-  free(title);
 }
 
 static void
@@ -894,7 +897,8 @@ _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    Tasks_Item *item;
 
    item = data;
-  _tasks_adjacent_label_popup(item);
+   if (item->tasks->config->show_label)
+     _tasks_adjacent_label_popup(item);
 }
 
 static void
@@ -903,7 +907,8 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    Tasks_Item *item;
 
    item = data;
-  _tasks_adjacent_popup_destroy(item);
+   if (item->tasks->config->show_label)
+     _tasks_adjacent_popup_destroy(item);
 }
 
 static void

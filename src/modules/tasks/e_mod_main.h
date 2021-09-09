@@ -19,6 +19,7 @@ struct _Config_Item
 {
    const char *id;
    int show_all;
+   int show_label;
    int minw, minh;
    Eina_Bool icon_only;
    Eina_Bool text_only;
