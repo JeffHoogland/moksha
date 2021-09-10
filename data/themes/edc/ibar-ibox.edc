@@ -147,7 +147,6 @@ parts{
          scale: 1;
          description { state: "default" 0.0;
             fixed: 0 1;
-            max: 300 9999;
             rel1.to_x: "spacer";
             rel2.to_x: "spacer";
             rel1.relative: 0 0;
@@ -157,7 +156,7 @@ parts{
             color3: 0 0 0 128;
             text { font: FN; size: 10;
                min: 1 1;
-               ellipsis: 0;
+               ellipsis: -1;
                align: 0.5 0.5;
             }
          }
