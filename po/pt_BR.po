@@ -9584,9 +9584,8 @@ msgid "Tasks Settings"
 msgstr "Configurações das tarefas"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Mostrar somente texto"
+msgstr "Mostrar dica do item"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"

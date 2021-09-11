@@ -9557,9 +9557,8 @@ msgid "Tasks Settings"
 msgstr "Nastavenie Panela úloh"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Zobraziť len názov"
+msgstr "Zobraziť názov v nápovede"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
