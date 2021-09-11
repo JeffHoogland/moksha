@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-08-29 09:11+0200\n"
+"POT-Creation-Date: 2021-09-11 20:50+0200\n"
 "PO-Revision-Date: 2021-08-18 14:37+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
@@ -2514,7 +2514,7 @@ msgstr "Solicita posição"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:775
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:223
@@ -7060,7 +7060,7 @@ msgstr "Ao redimensionar"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
 #: src/modules/fileman/e_mod_config.c:364
 #: src/modules/winlist/e_int_config_winlist.c:216
-#: src/modules/tasks/e_mod_config.c:88
+#: src/modules/tasks/e_mod_config.c:90
 msgid "Display"
 msgstr "Exibição"
 
@@ -8700,7 +8700,7 @@ msgstr "Mostrar janelas de todos os ecrãs"
 msgid "Show windows from current screen"
 msgstr "Mostrar janelas do ecrã atual"
 
-#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:89
+#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:91
 msgid "Show windows from all desktops"
 msgstr "Mostrar janelas de todas as áreas de trabalho"
 
@@ -9568,36 +9568,41 @@ msgstr "Associar tirar foto nas janelas:Ação"
 msgid "for window screenshot!"
 msgstr "para captura de ecrã de janela!"
 
-#: src/modules/tasks/e_mod_main.c:323 src/modules/tasks/e_mod_main.c:755
+#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:782
 msgid "Tasks"
 msgstr "Tarefas"
 
-#: src/modules/tasks/e_mod_config.c:35
+#: src/modules/tasks/e_mod_config.c:36
 msgid "Tasks Settings"
 msgstr "Definições das tarefas"
 
-#: src/modules/tasks/e_mod_config.c:92
+#: src/modules/tasks/e_mod_config.c:94
+#, fuzzy
+msgid "Show item hint"
+msgstr "Mostrar apenas texto"
+
+#: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
 msgstr "Mostrar apenas ícones"
 
-#: src/modules/tasks/e_mod_config.c:96
+#: src/modules/tasks/e_mod_config.c:101
 msgid "Show text only"
 msgstr "Mostrar apenas texto"
 
-#: src/modules/tasks/e_mod_config.c:100
+#: src/modules/tasks/e_mod_config.c:105
 msgid "Item width"
 msgstr "Largura do item"
 
-#: src/modules/tasks/e_mod_config.c:102 src/modules/tasks/e_mod_config.c:110
+#: src/modules/tasks/e_mod_config.c:107 src/modules/tasks/e_mod_config.c:115
 #, c-format
 msgid "%1.0f px"
 msgstr "%1.0f px"
 
-#: src/modules/tasks/e_mod_config.c:105
+#: src/modules/tasks/e_mod_config.c:110
 msgid "Shrink to fit"
 msgstr "Reduzir para caber"
 
-#: src/modules/tasks/e_mod_config.c:108
+#: src/modules/tasks/e_mod_config.c:113
 msgid "Item height"
 msgstr "Altura do item"
 

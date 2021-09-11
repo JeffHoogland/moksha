@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-08-29 09:11+0200\n"
+"POT-Creation-Date: 2021-09-11 20:50+0200\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -2690,7 +2690,7 @@ msgstr "Demande de position"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:748
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:775
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:223
@@ -7641,7 +7641,7 @@ msgstr "Taille de la fenêtre de redimensionnent"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:158
 #: src/modules/fileman/e_mod_config.c:364
 #: src/modules/winlist/e_int_config_winlist.c:216
-#: src/modules/tasks/e_mod_config.c:88
+#: src/modules/tasks/e_mod_config.c:90
 msgid "Display"
 msgstr "Affichage"
 
@@ -9483,7 +9483,7 @@ msgstr "Afficher les fenêtres des autres écrans"
 msgid "Show windows from current screen"
 msgstr "Afficher les fenêtres de l'écran courant"
 
-#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:89
+#: src/modules/ibox/e_mod_config.c:169 src/modules/tasks/e_mod_config.c:91
 msgid "Show windows from all desktops"
 msgstr "Afficher les fenêtres de tous les bureaux"
 
@@ -10375,42 +10375,47 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Erreur de chargement du module"
 
-#: src/modules/tasks/e_mod_main.c:323 src/modules/tasks/e_mod_main.c:755
+#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:782
 #, fuzzy
 msgid "Tasks"
 msgstr "Ne pas afficher dans la barre des tâches"
 
-#: src/modules/tasks/e_mod_config.c:35
+#: src/modules/tasks/e_mod_config.c:36
 #, fuzzy
 msgid "Tasks Settings"
 msgstr "Paramètre du bureau"
 
-#: src/modules/tasks/e_mod_config.c:92
+#: src/modules/tasks/e_mod_config.c:94
+#, fuzzy
+msgid "Show item hint"
+msgstr "Afficher les icônes sur le bureau"
+
+#: src/modules/tasks/e_mod_config.c:97
 #, fuzzy
 msgid "Show icon only"
 msgstr "Montrer la description de l'icone"
 
-#: src/modules/tasks/e_mod_config.c:96
+#: src/modules/tasks/e_mod_config.c:101
 #, fuzzy
 msgid "Show text only"
 msgstr "Afficher les icônes sur le bureau"
 
-#: src/modules/tasks/e_mod_config.c:100
+#: src/modules/tasks/e_mod_config.c:105
 #, fuzzy
 msgid "Item width"
 msgstr "Largeur minimale"
 
-#: src/modules/tasks/e_mod_config.c:102 src/modules/tasks/e_mod_config.c:110
+#: src/modules/tasks/e_mod_config.c:107 src/modules/tasks/e_mod_config.c:115
 #, fuzzy, c-format
 msgid "%1.0f px"
 msgstr "%.0f pixels"
 
-#: src/modules/tasks/e_mod_config.c:105
+#: src/modules/tasks/e_mod_config.c:110
 #, fuzzy
 msgid "Shrink to fit"
 msgstr "Redimensionner à la taille du contenu"
 
-#: src/modules/tasks/e_mod_config.c:108
+#: src/modules/tasks/e_mod_config.c:113
 #, fuzzy
 msgid "Item height"
 msgstr "Hauteur minimale"
