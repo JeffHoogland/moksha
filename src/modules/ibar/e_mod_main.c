@@ -120,6 +120,7 @@ static void         _ibar_cb_drag_finished(E_Drag *data, int dropped);
 static void         _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y);
 static void         _ibar_inst_cb_scroll(void *data);
 static Eina_Bool    _ibar_cb_config_icons(void *data, int ev_type, void *ev);
+static void         _adjacent_popup_destroy(IBar_Icon *ic);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -632,6 +633,7 @@ _ibar_icon_new(IBar *b, Efreet_Desktop *desktop)
 static void
 _ibar_icon_free(IBar_Icon *ic)
 {
+   _adjacent_popup_destroy(ic);
    if (ic->reset_timer) ecore_timer_del(ic->reset_timer);
    ic->reset_timer = NULL;
    if (ic->ibar->ic_drop_before == ic)
@@ -956,7 +958,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.start = 1;
         ic->drag.dnd = 0;
         ic->mouse_down = 1;
-        _adjacent_popup_destroy(ic);
      }
    else if (ev->button == 3)
      {
@@ -1259,7 +1260,6 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 
    if (inst->ibar->o_drop) e_box_unpack(inst->ibar->o_drop);
    ic = _ibar_icon_at_coord(inst->ibar, x, y);
-
    inst->ibar->ic_drop_before = ic;
    if (ic)
      {
