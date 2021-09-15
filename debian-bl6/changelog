@@ -1,3 +1,11 @@
+moksha (0.3.3-15) focal; urgency=low
+
+  * tasks improvement and app hints added
+  * Notification actions
+  * Updated fr, sk, es, pt and pt_BR localizations
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Wed, 15 Sep 2021 17:05:45 -0400
+
 moksha (0.3.3-14) focal; urgency=low
 
   * support for Notification actions
