@@ -871,8 +871,8 @@ _notification_popup_refresh(Popup_Data *popup)
               perror ("snprintf failed");
               abort ();
             }
-
-          evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
+          if (!strstr(notification_cfg->blacklist, popup->app_name))
+            evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
           popup->app_icon_image = strdup(image_path);
           free (image_path);
         }
