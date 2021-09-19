@@ -15,7 +15,6 @@ static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Closed_Reason reason);
 static void        _notification_actions(Popup_Data *popup);
 static void         list_add_item(Popup_Data *popup);
-
 /* this function should be external in edje for use in cases such as this module.
  *
  * happily, it was decided that the function would not be external so that it could
@@ -510,6 +509,7 @@ _notification_actions(Popup_Data *popup)
    
    k = e_notification_actions_get(popup->notif);
    act_num = eina_list_count(k);
+   popup->act_numbers = act_num;
 
    // hide all 3 action buttons
    edje_object_signal_emit(popup->theme, "e,button*,hide", "theme");
@@ -915,14 +915,19 @@ _notification_popup_refresh(Popup_Data *popup)
    /* Fill up the event message */
    _notification_format_message(popup);
    
+   /* Read notification actions */
+   _notification_actions(popup);
+
    /* Compute the new size of the popup */
    edje_object_calc_force(popup->theme);
    edje_object_size_min_calc(popup->theme, &w, &h);
    w = MIN(w, popup->zone->w / 2);
    h = MIN(h, popup->zone->h / 2);
+
+   if (popup->act_numbers == 0)
+      h = h / 1.2;
    e_popup_resize(popup->win, w, h);
    evas_object_resize(popup->theme, w, h); 
-   _notification_actions(popup);
    _notification_popups_place();
 }
 
