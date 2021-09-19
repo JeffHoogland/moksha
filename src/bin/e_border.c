@@ -8313,6 +8313,8 @@ _e_border_eval0(E_Border *bd)
           bordername = "borderless";
         else if (bd->bordername)
           bordername = bd->bordername;
+        else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DOCK)
+          bordername = "borderless";
         else if (bd->client.mwm.borderless)
           bordername = "pixel";
         else if (bd->borderless)
