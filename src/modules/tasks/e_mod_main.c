@@ -872,31 +872,31 @@ _tasks_adjacent_label_popup(void *data)
   switch (item->tasks->gcc->gadcon->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
-        px = x - zone->x + w/2 - pw/2;
+        px = x - zone->x + w / 2 - pw / 2;
         py = zone->y + y - height - gap;
       break;
     case E_GADCON_ORIENT_LEFT:
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
         px = x + w + gap;
-        py = zone->y + gy + y + h/6;
+        py = zone->y + gy + y + h / 6;
       break;
     case E_GADCON_ORIENT_RIGHT:
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
         px = gx - zone->x + x - pw - gap;
-        py = zone->y + gy + y + h/6;
+        py = zone->y + gy + y + h / 6;
       break;
     case E_GADCON_ORIENT_BOTTOM:
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-        px = gx - zone->x + x + (w - pw)/2;
+        px = gx - zone->x + x + (w - pw) / 2;
         py = gy - zone->y - height - gap;
       break;
     case E_GADCON_ORIENT_TOP:
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-        px = gx + zone->x + x + (w - pw)/2;
+        px = gx + zone->x + x + (w - pw) / 2;
         py = zone->y + gh + gap;
       break;
     default:
