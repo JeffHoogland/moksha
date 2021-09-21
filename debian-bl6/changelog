@@ -2,6 +2,7 @@ moksha (0.3.4-1) focal; urgency=low
 
   * Borderless fix for DOCK type apps
   * Notification tweaks
+  * Places edc modernization and smaller images sizes in edj
 
  -- Robert Wiley <ylee@bodhilinux.com>  Tue, 21 Sep 2021 10:08:14 -0400
 
