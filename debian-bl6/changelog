@@ -1,3 +1,10 @@
+moksha (0.3.4-1) focal; urgency=low
+
+  * Borderless fix for DOCK type apps
+  * Notification tweaks
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Tue, 21 Sep 2021 10:08:14 -0400
+
 moksha (0.3.3-15) focal; urgency=low
 
   * tasks improvement and app hints added
