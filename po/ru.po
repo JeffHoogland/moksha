@@ -2823,7 +2823,6 @@ msgid "Restart Moksha"
 msgstr "Перезапустить Moksha"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
 msgstr "Избранное"
 
@@ -9857,14 +9856,13 @@ msgid "Force timeout for all notifications"
 msgstr "Применить тайм-аут ко всем уведомлениям"
 
 #: src/modules/notification/e_mod_config.c:127
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
 msgstr "%1.1f с"
 
 #: src/modules/notification/e_mod_config.c:142
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Расположение"
+msgstr "Размещение уведомлений"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
