@@ -247,7 +247,7 @@ e_gadcon_shutdown(void)
    if (_module_init_end_handler)
      ecore_event_handler_del(_module_init_end_handler);
    _module_init_end_handler = NULL;
-   E_LIST_FOREACH(gadcons, e_gadcon_unpopulate);
+   //~ E_LIST_FOREACH(gadcons, e_gadcon_unpopulate);
 
    return 1;
 }
@@ -560,13 +560,14 @@ e_gadcon_populate(E_Gadcon *gc)
 {
    Eina_List *l;
    E_Config_Gadcon_Client *cf_gcc;
-   E_Gadcon_Client_Class *cc;
+   //~ E_Gadcon_Client_Class *cc;
 
    E_OBJECT_CHECK_RETURN(gc, EINA_FALSE);
    E_OBJECT_TYPE_CHECK_RETURN(gc, E_GADCON_TYPE, EINA_FALSE);
    e_gadcon_layout_freeze(gc->o_container);
    EINA_LIST_FOREACH(gc->cf->clients, l, cf_gcc)
      {
+        E_Gadcon_Client_Class *cc;
         if (!cf_gcc->name) continue;
         cc = eina_hash_find(providers, cf_gcc->name);
         if (cc)
@@ -596,7 +597,7 @@ e_gadcon_unpopulate(E_Gadcon *gc)
    E_OBJECT_CHECK(gc);
    E_OBJECT_TYPE_CHECK(gc, E_GADCON_TYPE);
    /* Be careful, e_object_del does remove gcc from gc->clients */
-   if (gc->o_container) e_gadcon_layout_freeze(gc->o_container);
+   //~ if (gc->o_container) e_gadcon_layout_freeze(gc->o_container);
    while (gc->clients)
      {
         gcc = eina_list_data_get(gc->clients);
@@ -611,8 +612,8 @@ e_gadcon_unpopulate(E_Gadcon *gc)
    if (gc->awaiting_classes)
      eina_hash_free(gc->awaiting_classes);
    gc->awaiting_classes = NULL;
-   if (gc->o_container && (!stopping) && (!e_object_is_del(E_OBJECT(gc))))
-     e_gadcon_layout_thaw(gc->o_container);
+   //~ if (gc->o_container && (!stopping) && (!e_object_is_del(E_OBJECT(gc))))
+     //~ e_gadcon_layout_thaw(gc->o_container);
 }
 
 EAPI void
