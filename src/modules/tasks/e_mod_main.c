@@ -17,7 +17,7 @@ static E_Gadcon_Client_Class _gadcon_class = {
    "tasks",
    {
         _gc_init, _gc_shutdown, _gc_orient, _gc_label, _gc_icon, _gc_id_new, NULL,
-      e_gadcon_site_is_not_toolbar
+      NULL
    },
    E_GADCON_CLIENT_STYLE_PLAIN
 };
@@ -90,7 +90,6 @@ static Eina_Bool    _tasks_cb_window_focus_out(void *data, int type, void *event
 static Eina_Bool    _tasks_cb_event_border_property(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_desk_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_urgent_change(void *data, int type, void *event);
-static Eina_Bool    _tasks_cb_gadcon_populate();
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -182,9 +181,6 @@ e_modapi_init(E_Module *m)
    tasks_config->handlers = eina_list_append
        (tasks_config->handlers, ecore_event_handler_add
          (E_EVENT_DESK_SHOW, _tasks_cb_event_desk_show, NULL));
-   tasks_config->handlers = eina_list_append
-       (tasks_config->handlers, ecore_event_handler_add
-         (E_EVENT_GADCON_POPULATE, _tasks_cb_gadcon_populate, NULL));
    tasks_config->handlers = eina_list_append
        (tasks_config->handlers, ecore_event_handler_add
          (E_EVENT_BORDER_URGENT_CHANGE, _tasks_cb_event_border_urgent_change, NULL));
@@ -1116,21 +1112,6 @@ static Eina_Bool
 _tasks_cb_event_border_desk_set(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    _tasks_refill_all();
-   return EINA_TRUE;
-}
-
-static Eina_Bool
-_timer_execute(void *data __UNUSED__)
-{
-   _tasks_refill_all();
-   return ECORE_CALLBACK_DONE;
-}
-
-static Eina_Bool
-_tasks_cb_gadcon_populate()
-{
-     timer_pop = ecore_timer_add
-              (0.01, _timer_execute, NULL);
    return EINA_TRUE;
 }
 
