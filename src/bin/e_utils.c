@@ -1845,18 +1845,15 @@ e_util_elm_icon_set()
 {
    E_Config_Theme *ct;
    const char *icon_theme;
-            
-   
+
    if ((ct = e_theme_config_get("theme")))
    {
-     if ((icon_theme = edje_file_data_get(ct->file, "icon-theme")))
-     {
-        if (e_util_have_icon_theme(icon_theme))
+      icon_theme = e_config->icon_theme;
+      if (e_util_have_icon_theme(icon_theme))
         {         
           elm_config_icon_theme_set(icon_theme);
           elm_config_all_flush();
         }
-     }
    }
 }
 
