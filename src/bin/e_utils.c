@@ -1810,13 +1810,15 @@ e_util_elm_theme_set(const char *path)
 
    th_name =  ecore_file_strip_ext(ecore_file_file_get(path));
    if (e_util_have_elm_theme(th_name))
-   {
       snprintf(buf, sizeof(buf), "%s:%s", th_name, elm_theme_get(NULL));
-      elm_theme_set(NULL, buf);
-      elm_config_all_flush();
-      elm_config_save();
-      ret = EINA_TRUE;
-   }
+   else
+      snprintf(buf, sizeof(buf), "%s:%s", th_name, "Default");
+
+   elm_theme_set(NULL, buf);
+   elm_config_all_flush();
+   elm_config_save();
+   ret = EINA_TRUE;
+
    free(th_name);
    return ret;
 }
