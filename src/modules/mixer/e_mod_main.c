@@ -701,6 +701,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
     s->mute = ev->mute;
 
     mixer_context->sinks = eina_list_append(mixer_context->sinks, s);
+    mixer_context->sink_default = s;
     return ECORE_CALLBACK_DONE;
  }
 
