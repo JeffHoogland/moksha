@@ -1,3 +1,16 @@
+moksha (0.3.4-2) focal; urgency=low
+
+  * Mixer: switches to the last connected sink
+  * ELM theme falls to Default in case elm part is missing
+  * ELM icons set after app theme icon setup
+  * Clock: gadcon aspect changed to square
+  * Tasks: delete gadcon populate event
+  * Tasks module move on shelf when add/del gadgets (fix)
+  * Revert gadcon port from E
+  * Updated Russian localizations
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 07 Oct 2021 07:07:03 -0400
+
 moksha (0.3.4-1) focal; urgency=low
 
   * Borderless fix for DOCK type apps
