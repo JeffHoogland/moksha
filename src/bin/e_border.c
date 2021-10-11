@@ -6993,7 +6993,7 @@ _e_border_cb_mouse_move(void *data,
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
-   E_Action *a;
+   E_Maximize max = 0;
 
    ev = event;
    bd = data;
@@ -7024,14 +7024,15 @@ _e_border_cb_mouse_move(void *data,
 
              if(e_config->max_top_edge)
              {
-               a = e_action_find("window_maximized_toggle");
                if (bd->mouse.current.my < 1)
                {
-                 if ((a) && (a->func.go) && (!bd->maximized)) a->func.go(NULL, NULL);
+                 max = e_config->maximize_policy;
+                 e_border_maximize(bd, max);
                }
-               else
+               else if (bd->mouse.current.my > 30)
                {
-                 if ((a) && (a->func.go) && (bd->maximized)) a->func.go(NULL, NULL);
+                 max = e_config->maximize_policy;
+                 e_border_unmaximize(bd, max);
                }
              }
           }
