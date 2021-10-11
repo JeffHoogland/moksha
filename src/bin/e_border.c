@@ -7025,7 +7025,7 @@ _e_border_cb_mouse_move(void *data,
              if(e_config->max_top_edge)
              {
                a = e_action_find("window_maximized_toggle");
-               if (y < 1)
+               if (bd->mouse.current.my < 1)
                {
                  if ((a) && (a->func.go) && (!bd->maximized)) a->func.go(NULL, NULL);
                }
