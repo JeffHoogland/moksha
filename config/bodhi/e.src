@@ -1976,6 +1976,7 @@ group "E_Config" struct {
     value "allow_manip" int: 0;
     value "border_fix_on_shelf_toggle" int: 0;
     value "allow_above_fullscreen" int: 0;
+    value "max_top_edge" int: 0;
     value "kill_if_close_not_possible" int: 1;
     value "kill_process" int: 1;
     value "kill_timer_wait" double: 10.0;

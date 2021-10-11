@@ -6993,9 +6993,11 @@ _e_border_cb_mouse_move(void *data,
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
+   E_Action *a;
 
    ev = event;
    bd = data;
+
    if ((ev->window != bd->event_win) &&
        (ev->event_window != bd->win)) return ECORE_CALLBACK_PASS_ON;
    bd->mouse.current.mx = ev->root.x;
@@ -7019,6 +7021,19 @@ _e_border_cb_mouse_move(void *data,
                (bd->mouse.current.mx - bd->moveinfo.down.mx);
              y = bd->mouse.last_down[bd->moveinfo.down.button - 1].y +
                (bd->mouse.current.my - bd->moveinfo.down.my);
+
+             if(e_config->max_top_edge)
+             {
+               a = e_action_find("window_maximized_toggle");
+               if (y < 1)
+               {
+                 if ((a) && (a->func.go) && (!bd->maximized)) a->func.go(NULL, NULL);
+               }
+               else
+               {
+                 if ((a) && (a->func.go) && (bd->maximized)) a->func.go(NULL, NULL);
+               }
+             }
           }
         else
           {
@@ -7039,7 +7054,7 @@ _e_border_cb_mouse_move(void *data,
  
         if (e_config->screen_limits == E_SCREEN_LIMITS_WITHIN)
           _e_border_stay_within_container(bd, x, y, &new_x, &new_y);
-   
+
         bd->shelf_fix.x = 0;
         bd->shelf_fix.y = 0;
         bd->shelf_fix.modified = 0;
@@ -7090,7 +7105,6 @@ _e_border_cb_mouse_move(void *data,
              else
                {
                   int dx, dy;
-
                   dx = bd->drag.x - ev->root.x;
                   dy = bd->drag.y - ev->root.y;
                   if (((dx * dx) + (dy * dy)) >

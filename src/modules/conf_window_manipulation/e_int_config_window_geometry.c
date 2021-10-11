@@ -41,7 +41,8 @@ struct _E_Config_Dialog_Data
    int maximize_direction;
    int maximized_allow_manip;
    int border_fix_on_shelf_toggle;
-   int    allow_above_fullscreen;
+   int allow_above_fullscreen;
+   int max_top_edge;
 };
 
 E_Config_Dialog *
@@ -90,6 +91,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    cfdata->transient.iconify = e_config->transient.iconify;
    cfdata->maximize_policy = (e_config->maximize_policy & E_MAXIMIZE_TYPE);
    cfdata->allow_above_fullscreen = e_config->allow_above_fullscreen;
+   cfdata->max_top_edge = e_config->max_top_edge;
    if (cfdata->maximize_policy == E_MAXIMIZE_NONE)
      cfdata->maximize_policy = E_MAXIMIZE_FULLSCREEN;
    cfdata->maximize_direction = 
@@ -133,6 +135,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->allow_manip = cfdata->maximized_allow_manip;
    e_config->border_fix_on_shelf_toggle = cfdata->border_fix_on_shelf_toggle;
    e_config->allow_above_fullscreen = cfdata->allow_above_fullscreen;
+   e_config->max_top_edge = cfdata->max_top_edge;
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -161,6 +164,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
            (e_config->maximize_policy != (cfdata->maximize_policy | cfdata->maximize_direction)) ||
            (e_config->allow_manip != cfdata->maximized_allow_manip) ||
            (e_config->border_fix_on_shelf_toggle != cfdata->border_fix_on_shelf_toggle) ||
+           (e_config->max_top_edge != cfdata->max_top_edge) ||
            (e_config->allow_above_fullscreen != cfdata->allow_above_fullscreen));
 }
 
@@ -229,6 +233,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Allow windows above fullscreen window"),
                            &(cfdata->allow_above_fullscreen));
+   e_widget_framelist_object_append(of, ow);
+   ow = e_widget_check_add(evas, _("Maximize window when top edge drag"),
+                           &(cfdata->max_top_edge));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Maximization"), ol, 

@@ -555,6 +555,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, allow_manip, INT); /**/
    E_CONFIG_VAL(D, T, border_fix_on_shelf_toggle, INT); /**/
    E_CONFIG_VAL(D, T, allow_above_fullscreen, INT); /**/
+   E_CONFIG_VAL(D, T, max_top_edge, INT); /**/
    E_CONFIG_VAL(D, T, kill_if_close_not_possible, INT); /**/
    E_CONFIG_VAL(D, T, kill_process, INT); /**/
    E_CONFIG_VAL(D, T, kill_timer_wait, DOUBLE); /**/
@@ -1104,6 +1105,7 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->allow_manip, 0, 1);
      E_CONFIG_LIMIT(e_config->border_fix_on_shelf_toggle, 0, 1);
      E_CONFIG_LIMIT(e_config->allow_above_fullscreen, 0, 1);
+     E_CONFIG_LIMIT(e_config->max_top_edge, 0, 1);
      E_CONFIG_LIMIT(e_config->kill_if_close_not_possible, 0, 1);
      E_CONFIG_LIMIT(e_config->kill_process, 0, 1);
      E_CONFIG_LIMIT(e_config->kill_timer_wait, 0.0, 120.0);
