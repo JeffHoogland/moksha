@@ -7026,7 +7026,7 @@ _e_border_cb_mouse_move(void *data,
                {
                   if (bd->maximized)
                     {
-                      if (bd->mouse.current.my > 40)
+                      if (bd->mouse.current.my > bd->zone->y + 40)
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
@@ -7035,7 +7035,7 @@ _e_border_cb_mouse_move(void *data,
                     }
                   else
                     {
-                      if (bd->mouse.current.my < 1)
+                      if (bd->mouse.current.my < bd->zone->y + 1)
                         e_border_maximize(bd, e_config->maximize_policy);
                     }
                }
