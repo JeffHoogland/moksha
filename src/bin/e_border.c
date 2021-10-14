@@ -7030,7 +7030,6 @@ _e_border_cb_mouse_move(void *data,
                       max = E_MAXIMIZE_LEFT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
-                      bd->drag.start = 0;
                       return ECORE_CALLBACK_PASS_ON;
                     }
                   if (bd->mouse.current.mx > bd->zone->w - 2)
@@ -7038,7 +7037,6 @@ _e_border_cb_mouse_move(void *data,
                       max = E_MAXIMIZE_RIGHT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
-                      bd->drag.start = 0;
                       return ECORE_CALLBACK_PASS_ON;
                     }
 
