@@ -6993,6 +6993,7 @@ _e_border_cb_mouse_move(void *data,
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
+   E_Maximize max = 0;
 
    ev = event;
    bd = data;
@@ -7021,12 +7022,12 @@ _e_border_cb_mouse_move(void *data,
              y = bd->mouse.last_down[bd->moveinfo.down.button - 1].y +
                (bd->mouse.current.my - bd->moveinfo.down.my);
 
-             /* border top screen snap for umaximize */
+             /* screen edge snap for maximize/restore window*/
              if (e_config->max_top_edge)
                {
                   if (bd->maximized)
                     {
-                      if (bd->mouse.current.my > bd->zone->y + 40)
+                      if (bd->mouse.current.my > bd->zone->y + 100)
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
@@ -7038,6 +7039,23 @@ _e_border_cb_mouse_move(void *data,
                       if (bd->mouse.current.my < bd->zone->y + 1)
                         e_border_maximize(bd, e_config->maximize_policy);
                     }
+
+                  if (bd->mouse.current.mx < bd->zone->x + 1)
+                      {
+                        max = E_MAXIMIZE_LEFT;
+                        max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
+                        e_border_maximize(bd, max);
+                        bd->drag.start = 0;
+                        return ECORE_CALLBACK_PASS_ON;
+                      }
+                  if (bd->mouse.current.mx > bd->zone->w - 2)
+                      {
+                        max = E_MAXIMIZE_RIGHT;
+                        max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
+                        e_border_maximize(bd, max);
+                        bd->drag.start = 0;
+                        return ECORE_CALLBACK_PASS_ON;
+                      }
                }
           }
         else
