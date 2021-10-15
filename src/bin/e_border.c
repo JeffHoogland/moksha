@@ -6994,6 +6994,9 @@ _e_border_cb_mouse_move(void *data,
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
    E_Maximize max = 0;
+   int zx, zy, zw, zh;
+   int drag_offset;
+   int zone_num;
 
    ev = event;
    bd = data;
@@ -7002,6 +7005,11 @@ _e_border_cb_mouse_move(void *data,
        (ev->event_window != bd->win)) return ECORE_CALLBACK_PASS_ON;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
+
+   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+   zone_num = (int)bd->zone->num;
+   drag_offset = zw / 18;
+
    if (bd->moving)
      {
         int x, y, new_x, new_y;
@@ -7025,14 +7033,16 @@ _e_border_cb_mouse_move(void *data,
              /* screen edge snap for maximize/restore window*/
              if (e_config->max_top_edge)
                {
-                  if (bd->mouse.current.mx < bd->zone->x + 1)
+                  if ((bd->mouse.current.mx < zx * zone_num + 1) &&
+                      (bd->mouse.current.mx > zx * zone_num - drag_offset))
                     {
                       max = E_MAXIMIZE_LEFT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
-                  if (bd->mouse.current.mx > bd->zone->w - 2)
+                  if ((bd->mouse.current.mx > (zone_num + 1) * zw - 2) &&
+                      (bd->mouse.current.mx < (zone_num + 1) * zw + drag_offset))
                     {
                       max = E_MAXIMIZE_RIGHT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
@@ -7042,7 +7052,7 @@ _e_border_cb_mouse_move(void *data,
 
                   if (bd->maximized)
                     {
-                      if (bd->mouse.current.my > bd->zone->y + 50)
+                      if (bd->mouse.current.my > bd->zone->y + drag_offset)
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
