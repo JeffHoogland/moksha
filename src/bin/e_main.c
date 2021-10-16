@@ -2003,6 +2003,17 @@ _e_main_cb_idle_after(void *data __UNUSED__)
      TS("SLEEP");
    first_idle = 0;
    e_precache_end = EINA_TRUE;
+   
+   // every now and again trim malloc memory to stay lean-ish
+#ifdef HAVE_MALLOC_TRIM
+   static double t_last_clean = 0.0;
+   double t = ecore_time_get();
+   if ((t - t_last_clean) > 10.0)
+     {
+        t_last_clean = t;
+        malloc_trim(0);
+     }
+#endif
 
    return ECORE_CALLBACK_RENEW;
 }

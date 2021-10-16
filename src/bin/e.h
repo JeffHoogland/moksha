@@ -96,6 +96,10 @@ void *alloca (size_t);
 #  include <execinfo.h>
 # endif
 
+# ifdef HAVE_MALLOC_H
+#  include <malloc.h>
+# endif
+
 # include <setjmp.h>
 # include <Eina.h>
 # include <Eet.h>
