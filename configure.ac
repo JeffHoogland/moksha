@@ -154,6 +154,9 @@ dnl     defines HAVE_STRDUP if strdup is available
 AC_CHECK_FUNCS([strdup])
 dnl     defines HAVE_STRNDUP if strndup is available
 AC_CHECK_FUNCS([strndup])
+AC_CHECK_HEADERS([malloc.h])
+dnl     defines HAVE_MALLOC_TRIM if malloc_trim is available
+AC_CHECK_FUNCS([malloc_trim])
 
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
