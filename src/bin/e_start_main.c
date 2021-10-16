@@ -19,6 +19,12 @@
 #include <signal.h>
 #include <errno.h>
 
+# if !defined (__FreeBSD__) && !defined (__OpenBSD__)
+#  ifdef HAVE_MALLOC_H
+#   include <malloc.h>
+#  endif
+# endif
+
 #include <Eina.h>
 
 #  ifdef __GNUC__
@@ -542,8 +548,12 @@ main(int argc, char **argv)
                     ptrace(PT_CONTINUE, child, NULL, NULL);
                }
 #endif
+
              while (!done)
                {
+#ifdef HAVE_MALLOC_TRIM
+                  malloc_trim(0);
+#endif
                   result = waitpid(child, &status, 0);
 
                   if (result == child)
