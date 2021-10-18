@@ -243,6 +243,7 @@ static Ecore_X_Randr_Screen_Size screen_size = { -1, -1 };
 static int screen_size_index = -1;
 
 static int focus_track_frozen = 0;
+static int dir_vert;
 
 static int warp_to = 0;
 static int warp_to_x = 0;
@@ -3122,6 +3123,7 @@ e_border_fullscreen(E_Border *bd,
                                                                   NULL, NULL, NULL);
              sizes = ecore_x_randr_screen_primary_output_sizes_get(bd->zone->container->manager->root,
                                                                    &num_sizes);
+
              if (sizes)
                {
                   Ecore_X_Randr_Screen_Size best_size = { -1, -1 };
@@ -4413,6 +4415,7 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
    int x, y, w, h;
    E_Zone *zone_above, *zone_below, *zone_left, *zone_right;
 
+   dir_vert = 1;
    x = bd->zone->x;
    y = bd->zone->y;
    w = bd->zone->w;
@@ -4444,11 +4447,14 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
    if (zone_left)
         w = bd->zone->x + bd->zone->w;
 
-   if (zone_below)
+   if (zone_below){
         h = zone_below->y + zone_below->h;
-
-   if (zone_above)
+        dir_vert = 0;
+   }
+   if (zone_above){
         h = bd->zone->y + bd->zone->h;
+        dir_vert = 0;
+    }
 
    if ((zone_left) && (zone_right))
         w = bd->zone->w + zone_right->x;
@@ -6995,8 +7001,6 @@ _e_border_cb_mouse_move(void *data,
    E_Border *bd;
    E_Maximize max = 0;
    int zx, zy, zw, zh;
-   int drag_offset;
-   int zone_num;
 
    ev = event;
    bd = data;
@@ -7007,8 +7011,6 @@ _e_border_cb_mouse_move(void *data,
    bd->mouse.current.my = ev->root.y;
 
    e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
-   zone_num = (int)bd->zone->num;
-   drag_offset = zw / 18;
 
    if (bd->moving)
      {
@@ -7033,16 +7035,19 @@ _e_border_cb_mouse_move(void *data,
              /* screen edge snap for maximize/restore window*/
              if (e_config->max_top_edge)
                {
+                  int zone_num = bd->zone->id;
+                  int drag_gap = zw / 18;
+
                   if ((bd->mouse.current.mx < zx * zone_num + 1) &&
-                      (bd->mouse.current.mx > zx * zone_num - drag_offset))
+                      (bd->mouse.current.mx > zx * zone_num - drag_gap))
                     {
                       max = E_MAXIMIZE_LEFT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
-                  if ((bd->mouse.current.mx > (zone_num + 1) * zw - 2) &&
-                      (bd->mouse.current.mx < (zone_num + 1) * zw + drag_offset))
+                  if ((bd->mouse.current.mx > zw + zw * zone_num * dir_vert - 2) &&
+                      (bd->mouse.current.mx < zw + zw * zone_num * dir_vert + drag_gap))
                     {
                       max = E_MAXIMIZE_RIGHT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
@@ -7052,7 +7057,8 @@ _e_border_cb_mouse_move(void *data,
 
                   if (bd->maximized)
                     {
-                      if (bd->mouse.current.my > bd->zone->y + drag_offset)
+                      if ((bd->mouse.current.my > zy * zone_num + drag_gap) ||
+                          (bd->mouse.current.my < zy * zone_num - drag_gap))
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
@@ -7061,7 +7067,8 @@ _e_border_cb_mouse_move(void *data,
                     }
                   else
                     {
-                      if (bd->mouse.current.my < bd->zone->y + 1)
+                      if ((bd->mouse.current.my < zy * zone_num + 1) &&
+                          (bd->mouse.current.my > zy * zone_num - drag_gap))
                         e_border_maximize(bd, e_config->maximize_policy);
                     }
                }
