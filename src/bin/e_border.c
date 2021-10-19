@@ -243,7 +243,7 @@ static Ecore_X_Randr_Screen_Size screen_size = { -1, -1 };
 static int screen_size_index = -1;
 
 static int focus_track_frozen = 0;
-static int dir_vert;
+static int dir_horiz;
 
 static int warp_to = 0;
 static int warp_to_x = 0;
@@ -4415,7 +4415,7 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
    int x, y, w, h;
    E_Zone *zone_above, *zone_below, *zone_left, *zone_right;
 
-   dir_vert = 1;
+   dir_horiz = 1;
    x = bd->zone->x;
    y = bd->zone->y;
    w = bd->zone->w;
@@ -4449,12 +4449,12 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
 
    if (zone_below){
         h = zone_below->y + zone_below->h;
-        dir_vert = 0;
+        dir_horiz = 0;
    }
    if (zone_above){
         h = bd->zone->y + bd->zone->h;
-        dir_vert = 0;
-    }
+        dir_horiz = 0;
+   }
 
    if ((zone_left) && (zone_right))
         w = bd->zone->w + zone_right->x;
@@ -6999,8 +6999,6 @@ _e_border_cb_mouse_move(void *data,
 {
    Ecore_Event_Mouse_Move *ev;
    E_Border *bd;
-   E_Maximize max = 0;
-   int zx, zy, zw, zh;
 
    ev = event;
    bd = data;
@@ -7009,8 +7007,6 @@ _e_border_cb_mouse_move(void *data,
        (ev->event_window != bd->win)) return ECORE_CALLBACK_PASS_ON;
    bd->mouse.current.mx = ev->root.x;
    bd->mouse.current.my = ev->root.y;
-
-   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
 
    if (bd->moving)
      {
@@ -7035,30 +7031,34 @@ _e_border_cb_mouse_move(void *data,
              /* screen edge snap for maximize/restore window*/
              if (e_config->max_top_edge)
                {
-                  int zone_num = bd->zone->id;
-                  int drag_gap = zw / 18;
+                  E_Maximize max = 0;
+                  int zone_id = bd->zone->id;
+                  int zx, zy, zw, zh;
+                  int drag_gap;
 
-                  if ((bd->mouse.current.mx < zx * zone_num + 1) &&
-                      (bd->mouse.current.mx > zx * zone_num - drag_gap))
+                  e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
+                  drag_gap = zw / 18;
+
+                  if ((bd->mouse.current.mx < zx * zone_id + 1) &&
+                      (bd->mouse.current.mx > zx * zone_id - drag_gap))
                     {
                       max = E_MAXIMIZE_LEFT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
-                  if ((bd->mouse.current.mx > zw + zw * zone_num * dir_vert - 2) &&
-                      (bd->mouse.current.mx < zw + zw * zone_num * dir_vert + drag_gap))
+                  if ((bd->mouse.current.mx > zx + zw * zone_id * dir_horiz - 2) &&
+                      (bd->mouse.current.mx < zx + zw * zone_id * dir_horiz + drag_gap))
                     {
                       max = E_MAXIMIZE_RIGHT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
-
                   if (bd->maximized)
                     {
-                      if ((bd->mouse.current.my > zy * zone_num + drag_gap) ||
-                          (bd->mouse.current.my < zy * zone_num - drag_gap))
+                      if ((bd->mouse.current.my > zy * zone_id + drag_gap) ||
+                          (bd->mouse.current.my < zy * zone_id - drag_gap))
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
@@ -7067,8 +7067,8 @@ _e_border_cb_mouse_move(void *data,
                     }
                   else
                     {
-                      if ((bd->mouse.current.my < zy * zone_num + 1) &&
-                          (bd->mouse.current.my > zy * zone_num - drag_gap))
+                      if ((bd->mouse.current.my < zy * zone_id + 1) &&
+                          (bd->mouse.current.my > zy * zone_id - drag_gap))
                         e_border_maximize(bd, e_config->maximize_policy);
                     }
                }
