@@ -7027,15 +7027,14 @@ _e_border_cb_mouse_move(void *data,
              if (e_config->max_top_edge)
                {
                   E_Maximize max = 0;
-                  int zone_id = bd->zone->id;
                   int zx, zy, zw, zh;
                   int drag_gap;
 
                   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
                   drag_gap = zw / 18;
 
-                  if ((bd->mouse.current.mx < zx * zone_id + 1) &&
-                      (bd->mouse.current.mx > zx * zone_id - drag_gap))
+                  if ((bd->mouse.current.mx < zx + 1) &&
+                      (bd->mouse.current.mx > zx - drag_gap))
                     {
                       max = E_MAXIMIZE_LEFT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
@@ -7052,8 +7051,8 @@ _e_border_cb_mouse_move(void *data,
                     }
                   if (bd->maximized)
                     {
-                      if ((bd->mouse.current.my > zy * zone_id + drag_gap) ||
-                          (bd->mouse.current.my < zy * zone_id - drag_gap))
+                      if ((bd->mouse.current.my > zy + drag_gap) ||
+                          (bd->mouse.current.my < zy - drag_gap))
                         {
                           e_border_unmaximize(bd, e_config->maximize_policy);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
@@ -7062,8 +7061,8 @@ _e_border_cb_mouse_move(void *data,
                     }
                   else
                     {
-                      if ((bd->mouse.current.my < zy * zone_id + 1) &&
-                          (bd->mouse.current.my > zy * zone_id - drag_gap))
+                      if ((bd->mouse.current.my < zy + 1) &&
+                          (bd->mouse.current.my > zy - drag_gap))
                         e_border_maximize(bd, e_config->maximize_policy);
                     }
                }
