@@ -243,7 +243,6 @@ static Ecore_X_Randr_Screen_Size screen_size = { -1, -1 };
 static int screen_size_index = -1;
 
 static int focus_track_frozen = 0;
-static int dir_horiz;
 
 static int warp_to = 0;
 static int warp_to_x = 0;
@@ -4415,7 +4414,6 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
    int x, y, w, h;
    E_Zone *zone_above, *zone_below, *zone_left, *zone_right;
 
-   dir_horiz = 1;
    x = bd->zone->x;
    y = bd->zone->y;
    w = bd->zone->w;
@@ -4437,7 +4435,7 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
  
    if (!(zone_above) && (y))
         zone_above = e_container_zone_at_point_get(bd->zone->container, x, (h - 5));
-  
+
    if (!(zone_left) &&(x))
         zone_left = e_container_zone_at_point_get(bd->zone->container, (x - 5), y);
 
@@ -4447,14 +4445,11 @@ _e_border_zones_layout_calc(E_Border *bd, int *zx, int *zy, int *zw, int *zh)
    if (zone_left)
         w = bd->zone->x + bd->zone->w;
 
-   if (zone_below){
+   if (zone_below)
         h = zone_below->y + zone_below->h;
-        dir_horiz = 0;
-   }
-   if (zone_above){
+
+   if (zone_above)
         h = bd->zone->y + bd->zone->h;
-        dir_horiz = 0;
-   }
 
    if ((zone_left) && (zone_right))
         w = bd->zone->w + zone_right->x;
@@ -7047,8 +7042,8 @@ _e_border_cb_mouse_move(void *data,
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
-                  if ((bd->mouse.current.mx > zx + zw * zone_id * dir_horiz - 2) &&
-                      (bd->mouse.current.mx < zx + zw * zone_id * dir_horiz + drag_gap))
+                  if ((bd->mouse.current.mx > zx + zw - 2) &&
+                      (bd->mouse.current.mx < zx + zw + drag_gap))
                     {
                       max = E_MAXIMIZE_RIGHT;
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
