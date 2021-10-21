@@ -7106,14 +7106,17 @@ _e_border_cb_mouse_move(void *data,
                       (bd->mouse.current.mx > zx + drag_gap) &&
                       (bd->mouse.current.mx < zx + zw - drag_gap))
                     e_border_maximize(bd, e_config->maximize_policy);
-
-                  if ((bd->mouse.current.my > zy + drag_gap) ||
-                      (bd->mouse.current.my < zy - drag_gap))
-                    {
-                      e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-                      bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
-                                             bd->moveinfo.down.mx - bd->w /2;
-                    }
+                  
+                  if (bd->maximized)
+                  {
+                    if ((bd->mouse.current.my > zy + drag_gap) ||
+                        (bd->mouse.current.my < zy - drag_gap))
+                      {
+                        e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                        bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
+                                               bd->moveinfo.down.mx - bd->w /2;
+                      }
+                   } 
                }
           }
         else
