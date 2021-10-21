@@ -2759,8 +2759,24 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
              break;
 
+           case E_MAXIMIZE_LEFT_HALF_UP:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h / 2);
+             break;
+
+           case E_MAXIMIZE_LEFT_HALF_DOWN:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y + h / 2, w / 2, h / 2);
+             break;
+
            case E_MAXIMIZE_RIGHT:
              e_border_move_resize(bd, x1, bd->zone->y, w / 2, h);
+             break;
+
+           case E_MAXIMIZE_RIGHT_HALF_UP:
+             e_border_move_resize(bd, x1, bd->zone->y, w / 2, h / 2);
+             break;
+
+           case E_MAXIMIZE_RIGHT_HALF_DOWN:
+             e_border_move_resize(bd, x1, bd->zone->y + h / 2, w / 2, h / 2);
              break;
           }
         break;
@@ -2820,11 +2836,26 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
              e_border_move_resize(bd, zx, zy, zw / 2, zh);
              break;
 
+           case E_MAXIMIZE_LEFT_HALF_UP:
+             e_border_move_resize(bd, zx, zy, zw / 2, zh / 2);
+             break;
+
+           case E_MAXIMIZE_LEFT_HALF_DOWN:
+             e_border_move_resize(bd, zx, zy + zh / 2, zw / 2, zh / 2);
+             break;
+
            case E_MAXIMIZE_RIGHT:
              e_border_move_resize(bd, zx + zw / 2, zy, zw / 2, zh);
              break;
-          }
 
+           case E_MAXIMIZE_RIGHT_HALF_UP:
+             e_border_move_resize(bd, zx + zw / 2, zy, zw / 2, zh / 2);
+             break;
+
+           case E_MAXIMIZE_RIGHT_HALF_DOWN:
+             e_border_move_resize(bd, zx + zw / 2, zy + zh / 2, zw / 2, zh / 2);
+             break;
+          }
         break;
 
       case E_MAXIMIZE_FILL:
@@ -2865,6 +2896,14 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
 
            case E_MAXIMIZE_LEFT:
              e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h);
+             break;
+
+           case E_MAXIMIZE_LEFT_HALF_UP:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y, w / 2, h / 2);
+             break;
+
+           case E_MAXIMIZE_LEFT_HALF_DOWN:
+             e_border_move_resize(bd, bd->zone->x, bd->zone->y + h / 2, w / 2, h / 2);
              break;
 
            case E_MAXIMIZE_RIGHT:
@@ -2929,6 +2968,8 @@ e_border_maximize(E_Border *bd,
      /* left/right maximize */
      e_hints_window_maximized_set(bd, 0,
                                   ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
+                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT_HALF_DOWN) ||
+                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT_HALF_UP) ||
                                   ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
    else
      e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
@@ -3009,6 +3050,9 @@ e_border_unmaximize(E_Border *bd,
                   bd->saved.h = bd->saved.y = 0;
                   bd->maximized &= ~E_MAXIMIZE_VERTICAL;
                   bd->maximized &= ~E_MAXIMIZE_LEFT;
+                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_DOWN;
+                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_UP;
+                  bd->maximized &= ~E_MAXIMIZE_RIGHT;
                   bd->maximized &= ~E_MAXIMIZE_RIGHT;
                }
              if (max & E_MAXIMIZE_HORIZONTAL)
@@ -7036,19 +7080,33 @@ _e_border_cb_mouse_move(void *data,
                   if ((bd->mouse.current.mx < zx + 1) &&
                       (bd->mouse.current.mx > zx - drag_gap))
                     {
-                      max = E_MAXIMIZE_LEFT;
+                      if (bd->mouse.current.my < zy + 1)
+                        max = E_MAXIMIZE_LEFT_HALF_UP;
+                      else if (bd->mouse.current.my > zh - 2)
+                        max = E_MAXIMIZE_LEFT_HALF_DOWN;
+                      else
+                        max = E_MAXIMIZE_LEFT;
+
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
+
                   if ((bd->mouse.current.mx > zx + zw - 2) &&
                       (bd->mouse.current.mx < zx + zw + drag_gap))
                     {
-                      max = E_MAXIMIZE_RIGHT;
+                      if (bd->mouse.current.my < zy + 1)
+                        max = E_MAXIMIZE_RIGHT_HALF_UP;
+                      else if (bd->mouse.current.my > zh - 2)
+                        max = E_MAXIMIZE_RIGHT_HALF_DOWN;
+                      else
+                        max = E_MAXIMIZE_RIGHT;
+
                       max |= (e_config->maximize_policy & E_MAXIMIZE_TYPE);
                       e_border_maximize(bd, max);
                       return ECORE_CALLBACK_PASS_ON;
                     }
+
                   if (bd->maximized)
                     {
                       if ((bd->mouse.current.my > zy + drag_gap) ||
