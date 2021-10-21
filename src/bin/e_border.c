@@ -2968,8 +2968,6 @@ e_border_maximize(E_Border *bd,
      /* left/right maximize */
      e_hints_window_maximized_set(bd, 0,
                                   ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
-                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT_HALF_DOWN) ||
-                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT_HALF_UP) ||
                                   ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
    else
      e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
@@ -2999,7 +2997,6 @@ e_border_unmaximize(E_Border *bd,
      {
         bd->pre_res_change.valid = 0;
         bd->need_maximize = 0;
-
         if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
           {
              if (bd->bg_object)
@@ -3050,9 +3047,6 @@ e_border_unmaximize(E_Border *bd,
                   bd->saved.h = bd->saved.y = 0;
                   bd->maximized &= ~E_MAXIMIZE_VERTICAL;
                   bd->maximized &= ~E_MAXIMIZE_LEFT;
-                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_DOWN;
-                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_UP;
-                  bd->maximized &= ~E_MAXIMIZE_RIGHT;
                   bd->maximized &= ~E_MAXIMIZE_RIGHT;
                }
              if (max & E_MAXIMIZE_HORIZONTAL)
@@ -7113,15 +7107,12 @@ _e_border_cb_mouse_move(void *data,
                       (bd->mouse.current.mx < zx + zw - drag_gap))
                     e_border_maximize(bd, e_config->maximize_policy);
 
-                  if (bd->maximized)
+                  if ((bd->mouse.current.my > zy + drag_gap) ||
+                      (bd->mouse.current.my < zy - drag_gap))
                     {
-                      if ((bd->mouse.current.my > zy + drag_gap) ||
-                          (bd->mouse.current.my < zy - drag_gap))
-                        {
-                          e_border_unmaximize(bd, e_config->maximize_policy);
-                          bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
+                      e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                      bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
                                              bd->moveinfo.down.mx - bd->w /2;
-                        }
                     }
                }
           }
