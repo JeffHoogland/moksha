@@ -3047,7 +3047,11 @@ e_border_unmaximize(E_Border *bd,
                   bd->saved.h = bd->saved.y = 0;
                   bd->maximized &= ~E_MAXIMIZE_VERTICAL;
                   bd->maximized &= ~E_MAXIMIZE_LEFT;
+                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_DOWN;
+                  bd->maximized &= ~E_MAXIMIZE_LEFT_HALF_UP;
                   bd->maximized &= ~E_MAXIMIZE_RIGHT;
+                  bd->maximized &= ~E_MAXIMIZE_RIGHT_HALF_DOWN;
+                  bd->maximized &= ~E_MAXIMIZE_RIGHT_HALF_UP;
                }
              if (max & E_MAXIMIZE_HORIZONTAL)
                {
@@ -7107,7 +7111,7 @@ _e_border_cb_mouse_move(void *data,
                       (bd->mouse.current.mx < zx + zw - drag_gap))
                     e_border_maximize(bd, e_config->maximize_policy);
                   
-                  if (bd->maximized)
+                  if (bd->maximized & E_MAXIMIZE_TYPE)
                   {
                     if ((bd->mouse.current.my > zy + drag_gap) ||
                         (bd->mouse.current.my < zy - drag_gap))
