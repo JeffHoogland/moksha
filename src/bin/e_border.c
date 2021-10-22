@@ -7045,7 +7045,8 @@ _e_border_cb_mouse_move(void *data,
                (bd->mouse.current.my - bd->moveinfo.down.my);
 
              /* screen edge snap for maximize/restore window*/
-             if (e_config->max_top_edge)
+             if (e_config->max_top_edge && ((e_config->maximize_policy &
+                  E_MAXIMIZE_TYPE) == E_MAXIMIZE_SMART))
                {
                   E_Maximize max = 0;
                   int zx, zy, zw, zh;
