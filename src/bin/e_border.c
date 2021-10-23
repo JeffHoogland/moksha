@@ -2939,22 +2939,16 @@ e_border_maximize(E_Border *bd,
    bd->maximized &= ~E_MAXIMIZE_TYPE;
    /* Add new maximization. It must be added, so that VERTICAL + HORIZONTAL == BOTH */
 
-   //temporary trick for unmax corner win property
-   if (max == 0x000000a2 || max == 0x00000082)
-     max = 0x00000072;
-   if (max == 0x000000e2 || max == 0x000000c2)
-     max = 0x000000b2;
-
    bd->maximized |= max;
 
-   if ((bd->maximized & E_MAXIMIZE_DIRECTION) > E_MAXIMIZE_BOTH)
-     /* left/right maximize */
-     e_hints_window_maximized_set(bd, 0,
-                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
-                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
-   else
-     e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
-                                  bd->maximized & E_MAXIMIZE_VERTICAL);
+   //~ if ((bd->maximized & E_MAXIMIZE_DIRECTION) > E_MAXIMIZE_BOTH)
+     //~ /* left/right maximize */
+     //~ e_hints_window_maximized_set(bd, 0,
+                                  //~ ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
+                                  //~ ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
+   //~ else
+     //~ e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
+                                  //~ bd->maximized & E_MAXIMIZE_VERTICAL);
    e_remember_update(bd);
 }
 
@@ -2973,7 +2967,7 @@ e_border_unmaximize(E_Border *bd,
    if ((bd->shaded) || (bd->shading)) return;
    ecore_x_window_shadow_tree_flush();
    /* Remove directions not used */
-   max &= (bd->maximized & E_MAXIMIZE_DIRECTION);
+   //~ max &= (bd->maximized & E_MAXIMIZE_DIRECTION);
    /* Can only remove existing maximization directions */
    if (!max) return;
    if (bd->maximized & E_MAXIMIZE_TYPE)
@@ -7085,24 +7079,22 @@ _e_border_cb_mouse_move(void *data,
                       return ECORE_CALLBACK_PASS_ON;
                     }
 
-                  if ((bd->mouse.current.my < zy + 1) &&
-                      (bd->mouse.current.my > zy - drag_gap) &&
-                      (bd->mouse.current.mx > zx + drag_gap * 2) &&
-                      (bd->mouse.current.mx < zx + zw - drag_gap * 2))
-                  {
-                    e_border_maximize(bd, e_config->maximize_policy);
-                  }
-
                   if (bd->maximized & E_MAXIMIZE_TYPE)
                   {
-                    if ((bd->mouse.current.my > zy + drag_gap) ||
-                        (bd->mouse.current.my < zy - drag_gap))
+                      if ((bd->mouse.current.my > bd->moveinfo.down.my + drag_gap / 2) ||
+                          (bd->mouse.current.my < bd->moveinfo.down.my - drag_gap / 2))
                       {
                         e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
                         bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
                                                bd->moveinfo.down.mx - bd->w /2;
                       }
-                   } 
+                   }
+
+                  if ((bd->mouse.current.my < zy + 1) &&
+                      (bd->mouse.current.my > zy - drag_gap) &&
+                      (bd->mouse.current.mx > zx + drag_gap * 2) &&
+                      (bd->mouse.current.mx < zx + zw - drag_gap * 2))
+                    e_border_maximize(bd, e_config->maximize_policy);
                }
           }
         else
