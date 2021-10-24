@@ -7047,7 +7047,7 @@ _e_border_cb_mouse_move(void *data,
                   int drag_gap;
 
                   e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
-                  drag_gap = zw / 18;
+                  drag_gap = zw / 10;
 
                   if ((bd->mouse.current.mx < zx + 1) &&
                       (bd->mouse.current.mx > zx - drag_gap))
@@ -7079,16 +7079,26 @@ _e_border_cb_mouse_move(void *data,
                       return ECORE_CALLBACK_PASS_ON;
                     }
 
-                  if (bd->maximized & E_MAXIMIZE_TYPE)
-                  {
+                  if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
+                    {
                       if ((bd->mouse.current.my > bd->moveinfo.down.my + drag_gap / 2) ||
                           (bd->mouse.current.my < bd->moveinfo.down.my - drag_gap / 2))
-                      {
-                        e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
-                        bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
+                        {
+                          e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                          bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
                                                bd->moveinfo.down.mx - bd->w /2;
-                      }
-                   }
+                        }
+                    }
+                  else
+                    {
+                      if ((bd->mouse.current.my > zy + drag_gap / 2) ||
+                          (bd->mouse.current.my < zy - drag_gap / 2))
+                        {
+                          e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
+                          bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
+                                               bd->moveinfo.down.mx - bd->w /2;
+                        }
+                    }
 
                   if ((bd->mouse.current.my < zy + 1) &&
                       (bd->mouse.current.my > zy - drag_gap) &&
