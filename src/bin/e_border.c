@@ -8554,9 +8554,16 @@ _e_border_eval0(E_Border *bd)
                   if (bd->focused)
                     {
                       if ((!e_config->border_frame) || (!noframe_check(bd)))
-                        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+                        {
+                          if (bd->saved.maximized)
+                            edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+                          else
+                            edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
+                        }
                       else
-                        edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+                        {
+                          edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+                        }  
 
                       if (bd->icon_object && e_icon_edje_get(bd->icon_object))
                         e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
