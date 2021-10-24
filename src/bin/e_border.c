@@ -7082,7 +7082,9 @@ _e_border_cb_mouse_move(void *data,
                   if ((bd->maximized & E_MAXIMIZE_DIRECTION) != E_MAXIMIZE_BOTH)
                     {
                       if ((bd->mouse.current.my > bd->moveinfo.down.my + drag_gap / 2) ||
-                          (bd->mouse.current.my < bd->moveinfo.down.my - drag_gap / 2))
+                          (bd->mouse.current.my < bd->moveinfo.down.my - drag_gap / 2) ||
+                          (bd->mouse.current.mx > bd->moveinfo.down.mx + drag_gap / 2) ||
+                          (bd->mouse.current.mx < bd->moveinfo.down.mx - drag_gap / 2))
                         {
                           e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
                           bd->mouse.last_down[bd->moveinfo.down.button - 1].x =
