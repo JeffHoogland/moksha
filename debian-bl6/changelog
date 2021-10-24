@@ -1,3 +1,10 @@
+moksha (0.3.4-3) focal; urgency=low
+
+  * Border edge snap feature added
+  * malloc_trim added to reduce mem usuage some
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Sun, 24 Oct 2021 10:29:43 -0400
+
 moksha (0.3.4-2) focal; urgency=low
 
   * Mixer: switches to the last connected sink
