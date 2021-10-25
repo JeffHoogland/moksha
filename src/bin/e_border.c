@@ -7054,7 +7054,7 @@ _e_border_cb_mouse_move(void *data,
                     {
                       if (bd->mouse.current.my < zy + drag_gap)
                         max = E_MAXIMIZE_LEFT_TOP;
-                      else if (bd->mouse.current.my > zh - drag_gap)
+                      else if (bd->mouse.current.my > zy + zh - drag_gap)
                         max = E_MAXIMIZE_LEFT_BOTTOM;
                       else
                         max = E_MAXIMIZE_LEFT;
@@ -7069,7 +7069,7 @@ _e_border_cb_mouse_move(void *data,
                     {
                       if (bd->mouse.current.my < zy + drag_gap)
                         max = E_MAXIMIZE_RIGHT_TOP;
-                      else if (bd->mouse.current.my > zh - drag_gap)
+                      else if (bd->mouse.current.my > zy + zh - drag_gap)
                         max = E_MAXIMIZE_RIGHT_BOTTOM;
                       else
                         max = E_MAXIMIZE_RIGHT;
