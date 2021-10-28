@@ -1,3 +1,11 @@
+moksha (20211028bodhi30.3.4-3) bionic; urgency=low
+
+  * Border edge snap feature added
+  * Malloc_trim added to reduce mem useage some
+  * Clear app menu cache any time a desktop is edited internally
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 28 Oct 2021 05:38:43 -0400
+
 moksha (20211007bodhi30.3.4-2) bionic; urgency=low
 
   * Mixer: switches to the last connected sink
