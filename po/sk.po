@@ -7369,9 +7369,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Povoliť oknám byť nad oknami v plnoobrazovkom režime"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Prilepiť okno k okraju obrazovky"
+msgstr "Prilepiť okná k okraju obrazovky"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
