@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-09-11 20:50+0200\n"
+"POT-Creation-Date: 2021-10-30 21:13+0200\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -139,7 +139,7 @@ msgstr "Fermer la session"
 msgid "Are you sure you want to logout?"
 msgstr "Êtes-vous sur de vouloir fermer votre session ?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:752
 msgid "Power off"
 msgstr ""
 
@@ -185,11 +185,10 @@ msgid "Window : Actions"
 msgstr "Fenêtre : actions"
 
 #: src/bin/e_actions.c:3111 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Déplacer"
 
-#: src/bin/e_actions.c:3122 src/bin/e_int_border_menu.c:717
+#: src/bin/e_actions.c:3122
 msgid "Resize"
 msgstr "Changer la taille (resize)"
 
@@ -756,7 +755,7 @@ msgstr "Exécuter"
 msgid "Command"
 msgstr "Commande"
 
-#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
@@ -902,8 +901,8 @@ msgstr "Sélectionneur de thème"
 msgid "Select"
 msgstr "Sélectionner une icône"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10022
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:863
+#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10022
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -919,7 +918,7 @@ msgstr "Sélectionner une icône"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:935
+#: src/bin/e_config.c:936
 #, fuzzy
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
@@ -939,7 +938,7 @@ msgstr ""
 "nouveaux paramètres par défauts fixent ceci.<br>Vous pouvez reconfigurer "
 "tout à votre goût comme avant.<br>Désolé pour le désagrément occasionné.<br>"
 
-#: src/bin/e_config.c:952
+#: src/bin/e_config.c:953
 #, fuzzy
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
@@ -955,12 +954,12 @@ msgstr ""
 "précaution votre<br>configuration a été remise à zéro. Désolé pour les "
 "désagréments.<br>"
 
-#: src/bin/e_config.c:1473 src/bin/e_config.c:2098
+#: src/bin/e_config.c:1475 src/bin/e_config.c:2100
 #, fuzzy
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration d'Moksha"
 
-#: src/bin/e_config.c:1476
+#: src/bin/e_config.c:1478
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -970,13 +969,13 @@ msgstr ""
 "pas courant.<br><br>Le fichier sur lequel l'erreur est apparu est:<br>"
 "%s<br><br>Ce fichier a été effacé pour éviter des erreurs de corruption.<br>"
 
-#: src/bin/e_config.c:1486 src/bin/e_config.c:2111
-#: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_config.c:1488 src/bin/e_config.c:2113
+#: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:621 src/bin/e_sys.c:662
 #: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -989,97 +988,97 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1989
+#: src/bin/e_config.c:1991
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "Paramètre du bureau"
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2009
 msgid "The EET file handle is bad."
 msgstr ""
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2013
 msgid "The file data is empty."
 msgstr ""
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2017
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2021
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2025
 msgid "This is a generic error."
 msgstr ""
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2029
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2033
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2037
 msgid "You ran out of space while writing the file."
 msgstr ""
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2041
 msgid "The file was closed while writing."
 msgstr ""
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2045
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr ""
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2049
 msgid "X509 Encoding failed."
 msgstr ""
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2053
 #, fuzzy
 msgid "Signature failed."
 msgstr "L'hibernation de votre système a échoué."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2057
 msgid "The signature was invalid."
 msgstr ""
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2061
 #, fuzzy
 msgid "Not signed."
 msgstr "(Aucune fenêtre)"
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2065
 msgid "Feature not implemented."
 msgstr ""
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2069
 msgid "PRNG was not seeded."
 msgstr ""
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2073
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Délai avant hibernation"
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2077
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Délai avant hibernation"
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2081
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Bienvenue à Moksha 東京"
 
-#: src/bin/e_config.c:2101
+#: src/bin/e_config.c:2103
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1099,7 +1098,7 @@ msgstr ""
 msgid "Advanced"
 msgstr "Avancé"
 
-#: src/bin/e_config_dialog.c:261 src/bin/e_eap_editor.c:719
+#: src/bin/e_config_dialog.c:261 src/bin/e_eap_editor.c:720
 msgid "Basic"
 msgstr "Benêt"
 
@@ -1225,50 +1224,50 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Editer un élément du bureau"
 
-#: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
+#: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
 #: src/modules/ibar/e_mod_config.c:140
 msgid "Name"
 msgstr "Nom"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
 msgid "Comment"
 msgstr "Commentaire"
 
-#: src/bin/e_eap_editor.c:710
+#: src/bin/e_eap_editor.c:711
 msgid "URL"
 msgstr ""
 
-#: src/bin/e_eap_editor.c:732 src/bin/e_eap_editor.c:741
+#: src/bin/e_eap_editor.c:733 src/bin/e_eap_editor.c:742
 #: src/bin/e_fm_prop.c:495 src/modules/conf_theme/e_int_config_fonts.c:95
 #: src/modules/fileman/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "Icône"
 
-#: src/bin/e_eap_editor.c:745
+#: src/bin/e_eap_editor.c:746
 msgid "Generic Name"
 msgstr "Nom générique"
 
-#: src/bin/e_eap_editor.c:751
+#: src/bin/e_eap_editor.c:752
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Classe de fenêtre"
 
-#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:170
+#: src/bin/e_eap_editor.c:758 src/modules/fileman/e_int_config_mime.c:170
 msgid "Categories"
 msgstr "Catégories"
 
-#: src/bin/e_eap_editor.c:764
+#: src/bin/e_eap_editor.c:765
 #, fuzzy
 msgid "Mime Types"
 msgstr "Types Mime"
 
-#: src/bin/e_eap_editor.c:771
+#: src/bin/e_eap_editor.c:772
 msgid "Desktop file"
 msgstr "Fichier du bureau"
 
-#: src/bin/e_eap_editor.c:781 src/bin/e_int_border_prop.c:450
+#: src/bin/e_eap_editor.c:782 src/bin/e_int_border_prop.c:450
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
@@ -1281,31 +1280,31 @@ msgstr "Fichier du bureau"
 msgid "General"
 msgstr "Général"
 
-#: src/bin/e_eap_editor.c:784
+#: src/bin/e_eap_editor.c:785
 msgid "Startup Notify"
 msgstr "Notification de démarrage"
 
-#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1190
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1190
 msgid "Run in Terminal"
 msgstr "Exécuter dans un terminal"
 
-#: src/bin/e_eap_editor.c:788
+#: src/bin/e_eap_editor.c:789
 msgid "Show in Menus"
 msgstr "Montrer dans les Menus"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
+#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:224
 #, fuzzy
 msgid "Options"
 msgstr "Options de remplissage"
 
-#: src/bin/e_eap_editor.c:822
+#: src/bin/e_eap_editor.c:823
 #, fuzzy, c-format
 msgid "Select an Icon for '%s'"
 msgstr "Sélectionner une icône"
 
-#: src/bin/e_eap_editor.c:888
+#: src/bin/e_eap_editor.c:889
 #, fuzzy
 msgid "Select an Executable"
 msgstr "Sélectionner un programme"
@@ -1631,7 +1630,7 @@ msgid "Eject"
 msgstr ""
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1002
+#: src/modules/ibar/e_mod_main.c:1003
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -2005,59 +2004,59 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Sélectionner une image"
 
-#: src/bin/e_gadcon.c:1407
+#: src/bin/e_gadcon.c:1408
 #, fuzzy
 msgid "Gadget error"
 msgstr "Nom du fichier"
 
-#: src/bin/e_gadcon.c:1407
+#: src/bin/e_gadcon.c:1408
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1681 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:160
 #, fuzzy
 msgid "Move to"
 msgstr "Texte de déplacement"
 
-#: src/bin/e_gadcon.c:1753
+#: src/bin/e_gadcon.c:1754
 msgid "Automatically scroll contents"
 msgstr "Défilement automatique du contenu"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1767 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "Tel quel"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Encart"
 
-#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1793 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 #, fuzzy
 msgid "Look"
 msgstr "Verrous"
 
-#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/bin/e_gadcon.c:2444
+#: src/bin/e_gadcon.c:2445
 #, fuzzy
 msgid "Stop moving"
 msgstr "Arrêter l'édition"
 
-#: src/bin/e_gadcon.c:3095
+#: src/bin/e_gadcon.c:3096
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3096
+#: src/bin/e_gadcon.c:3097
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2330,7 +2329,7 @@ msgid "Borderless"
 msgstr "Bordures"
 
 #: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
 msgstr "Plein écran"
 
@@ -2364,6 +2363,14 @@ msgstr "Ajouter un raccourci clavier"
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Minimiser"
+
+#: src/bin/e_int_border_menu.c:703
+msgid "Move with keyboard"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:717
+msgid "Resize with keyboard"
+msgstr ""
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -2686,11 +2693,11 @@ msgstr "Demande de position"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:995
+#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:775
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:223
@@ -3940,14 +3947,14 @@ msgid "Float"
 msgstr ""
 
 #: src/bin/e_shelf.c:68
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horizontal"
 
 #: src/bin/e_shelf.c:69
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
@@ -4068,7 +4075,7 @@ msgid "Rename Shelf"
 msgstr "Renommer le fichier"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:990
 #, fuzzy
 msgid "Contents"
 msgstr "Commentaire"
@@ -4092,16 +4099,16 @@ msgstr "Rafraîchir"
 msgid "Starting %s"
 msgstr "Démarrage de %s"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:297
 msgid "Checking System Permissions"
 msgstr "Vérification des permissions système"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:343 src/bin/e_sys.c:354 src/bin/e_sys.c:363
+#: src/bin/e_sys.c:372
 msgid "System Check Done"
 msgstr "Vérification du système terminée"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:440
 #, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -4112,38 +4119,38 @@ msgstr ""
 "de se fermer.<br>Voulez-vous fermer votre session sans attendre <br>la "
 "fermeture de ces applications ?"
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:500
 msgid "Logout problems"
 msgstr "Problème de fermeture de session"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:502
 msgid "Logout now"
 msgstr "Fermer immédiatement votre session"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:504
 msgid "Wait longer"
 msgstr "Attendez plus longtemps"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:506
 msgid "Cancel Logout"
 msgstr "Annuler la fermeture de votre session"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:550
 msgid "Logout in progress"
 msgstr "Fermeture de votre session en cours"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:553
 #, fuzzy
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Fermeture de votre session en cours.<br><hilight>Veuillez patienter.</"
 "hilight>"
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:582 src/bin/e_sys.c:637
 msgid "Moksha is busy with another request"
 msgstr "Moksha est occupé à traîter une autre requête"
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:587
 #, fuzzy
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
@@ -4152,7 +4159,7 @@ msgstr ""
 "Moksha est en train de fermer votre session.<br>Vous ne pouvez effectuer "
 "d'autres actions système<br>lorsqu'une fermeture de session a commencé."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:594
 #, fuzzy
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
@@ -4161,7 +4168,7 @@ msgstr ""
 "Moksha est train d'éteindre votre système.<br>Vous ne pouvez effectuer "
 "d'autres actions système<br>pendant l'arrêt de votre ordinateur."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:600
 #, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
@@ -4170,7 +4177,7 @@ msgstr ""
 "Moksha est en train de redémarrer votre système.<br>Vous ne pouvez effectuer "
 "d'autres actions systèmes<br>lorsque qu'un redémarrage a commencé."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:606
 #, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
@@ -4180,7 +4187,7 @@ msgstr ""
 "effectuer d'autres actions système<br>tant que le roupillonn'est pas "
 "terminée."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:612
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4189,60 +4196,60 @@ msgstr ""
 "Moksha est en train de mettre votre système en hibernation.<br>Vous ne "
 "pouvez effectuer d'autres actions systèmes<br>tant que ce n'est pas terminée."
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:618 src/bin/e_sys.c:659
 msgid "EEK! This should not happen"
 msgstr "Saperlipopette, ça devrait pas arriver"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:643
 msgid "Power off failed."
 msgstr ""
 
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:647
 #, fuzzy
 msgid "Reset failed."
 msgstr "Fichier du bureau"
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:651
 #, fuzzy
 msgid "Suspend failed."
 msgstr "Délai avant hibernation"
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:655
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "L'hibernation de votre système a échoué."
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:755
 #, fuzzy
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Redémarrage de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:799
 #, fuzzy
 msgid "Resetting"
 msgstr "Paramètre du bureau"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:802
 #, fuzzy
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr ""
 "Redémarrage de votre ordinateur.<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:854
 msgid "Suspending"
 msgstr "Roupillon"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:857
 #, fuzzy
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Roupillon...<br><hilight>Veuillez patienter.</hilight>"
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:909
 msgid "Hibernating"
 msgstr "Mise en hibernation"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:912
 #, fuzzy
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr ""
@@ -5318,7 +5325,7 @@ msgstr "Animation du feuilletage"
 #: src/modules/conf_display/e_int_config_desks.c:216
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:275
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:248
 #, fuzzy, c-format
 msgid "%1.1f s"
 msgstr "%1.1f s"
@@ -6419,11 +6426,11 @@ msgstr "Principal"
 
 #: src/modules/conf_menus/e_int_config_menus.c:291
 #: src/modules/conf_menus/e_int_config_menus.c:296
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:189
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:196
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:251
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:186
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:200
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:253
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:258
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pixels"
@@ -7283,7 +7290,7 @@ msgid "Bytecode"
 msgstr "Bytecode"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:686
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:269
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:276
 #: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:278
 msgid "Automatic"
 msgstr "Automatique"
@@ -7348,7 +7355,7 @@ msgid "%1.2f x"
 msgstr "%1.2f"
 
 #: src/modules/conf_theme/e_int_config_scale.c:325
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:205
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
 #, fuzzy
 msgid "Policy"
 msgstr "Polonais"
@@ -7889,144 +7896,149 @@ msgstr "Refocaliser la dernière fenêtre lors d'un changement de bureau"
 msgid "Slide pointer to a new window which is focused"
 msgstr ""
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:64
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:65
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 #, fuzzy
 msgid "Window Geometry"
 msgstr "Taille de la fenêtre de déplacement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:177
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:181
 #, fuzzy
 msgid "Resist obstacles"
 msgstr "Résistance"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:179
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:183
 #, fuzzy
 msgid "Other windows"
 msgstr "Fenêtre interne"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:186
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:190
 #, fuzzy
 msgid "Edge of the screen"
 msgstr "Résistance au bord de l'écran"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:197
 #, fuzzy
 msgid "Desktop gadgets"
 msgstr "Nom du bureau"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:200
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:204
 msgid "Resistance"
 msgstr "Résistance"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:210
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:214
 msgid "Smart expansion"
 msgstr "Expansion intelligente"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:214
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:218
 msgid "Fill available space"
 msgstr "Remplir l'espace disponible"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:217
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 #, fuzzy
 msgid "Direction"
 msgstr "Sélectionner une icône"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
-msgid "Both"
-msgstr ""
-
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:226
-#, fuzzy
-msgid "Manipulation"
-msgstr "Manipulation de la Fenêtre"
-
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
-msgid "Allow manipulation of maximized windows"
+msgid "Both"
 msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
 #, fuzzy
+msgid "Manipulation"
+msgstr "Manipulation de la Fenêtre"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:231
+msgid "Allow manipulation of maximized windows"
+msgstr ""
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
+#, fuzzy
 msgid "Allow windows above fullscreen window"
 msgstr "Afficher les fenêtres des autres écrans"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
+#, fuzzy
+msgid "Snap window to the screen edge"
+msgstr "Feuilleter lors de déplacements de la souris au bord de l'écran"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 #, fuzzy
 msgid "Maximization"
 msgstr "Maximiser horizontalement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
 #, fuzzy
 msgid "Automatically accept changes after:"
 msgstr "Défilement automatique du contenu"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:244
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:251
 #, fuzzy
 msgid "Move by"
 msgstr "Déplacer"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:249
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:256
 #, fuzzy
 msgid "Resize by"
 msgstr "Changer la taille (resize)"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 #, fuzzy
 msgid "Keyboard"
 msgstr "Clavier & Souris"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:260
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:267
 msgid "Limit resize to useful geometry"
 msgstr ""
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:263
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:270
 #, fuzzy
 msgid "Move after resize"
 msgstr "Permettre le redimensionnement"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:266
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:273
 #, fuzzy
 msgid "Adjust windows on shelf hide"
 msgstr "Déplacer/redimensionner automatiquement lorsque le tablar se planque"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:274
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:281
 #, fuzzy
 msgid "Follow Move"
 msgstr "Curseur"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:277
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:284
 #, fuzzy
 msgid "Follow Resize"
 msgstr "Curseur"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:280
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:287
 #, fuzzy
 msgid "Follow Raise"
 msgstr "Curseur"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:283
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:290
 #, fuzzy
 msgid "Follow Lower"
 msgstr "Curseur"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:286
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:293
 #, fuzzy
 msgid "Follow Layer"
 msgstr "Curseur"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:289
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:296
 #, fuzzy
 msgid "Follow Desktop"
 msgstr "Tous les bureaux"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:292
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:299
 #, fuzzy
 msgid "Follow Iconify"
 msgstr "Minimiser"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:296
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:303
 #: src/modules/quickaccess/e_mod_config.c:312
 #, fuzzy
 msgid "Transients"
@@ -9425,16 +9437,16 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Êtes-vous sûr de vouloir supprimer cette source de barre ?"
 
-#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1953
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:978
+#: src/modules/ibar/e_mod_main.c:979
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Créer une icône"
 
-#: src/modules/ibar/e_mod_main.c:1012
+#: src/modules/ibar/e_mod_main.c:1013
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Icônes"
@@ -10375,7 +10387,7 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Erreur de chargement du module"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:782
+#: src/modules/tasks/e_mod_main.c:326 src/modules/tasks/e_mod_main.c:779
 #, fuzzy
 msgid "Tasks"
 msgstr "Ne pas afficher dans la barre des tâches"
@@ -12982,9 +12994,6 @@ msgstr "Changement de résolution"
 
 #~ msgid "Flip desktops when mouse at screen edge"
 #~ msgstr "Feuilleter le bureau lorsque la souris est au bord de l'écran"
-
-#~ msgid "Flip when moving mouse to the screen edge"
-#~ msgstr "Feuilleter lors de déplacements de la souris au bord de l'écran"
 
 #~ msgid "Time the mouse is at the edge before flipping:"
 #~ msgstr "Délai avant feuilletage lorsque la souris est au bord de l'écran :"

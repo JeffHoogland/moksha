@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-09-11 20:50+0200\n"
+"POT-Creation-Date: 2021-10-30 21:13+0200\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -117,7 +117,7 @@ msgstr "Kirjaudu ulos"
 msgid "Are you sure you want to logout?"
 msgstr "Haluatko varmasti uloskirjautua?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:750
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:752
 msgid "Power off"
 msgstr "Sammuta"
 
@@ -163,11 +163,10 @@ msgid "Window : Actions"
 msgstr "Ikkuna : Toiminnot"
 
 #: src/bin/e_actions.c:3111 src/bin/e_fm.c:11616
-#: src/bin/e_int_border_menu.c:703
 msgid "Move"
 msgstr "Siirrä"
 
-#: src/bin/e_actions.c:3122 src/bin/e_int_border_menu.c:717
+#: src/bin/e_actions.c:3122
 msgid "Resize"
 msgstr "Muuta kokoa"
 
@@ -721,7 +720,7 @@ msgstr "Käynnistä"
 msgid "Command"
 msgstr "Komento"
 
-#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:698
+#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
@@ -858,8 +857,8 @@ msgstr "Värivalitsin"
 msgid "Select"
 msgstr "Valitse jokin"
 
-#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:862
-#: src/bin/e_eap_editor.c:925 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10022
+#: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:863
+#: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10022
 #: src/bin/e_fm_prop.c:625 src/bin/e_import_dialog.c:196
 #: src/bin/e_import_config_dialog.c:541
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:637
@@ -875,7 +874,7 @@ msgstr "Valitse jokin"
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: src/bin/e_config.c:935
+#: src/bin/e_config.c:936
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -893,7 +892,7 @@ msgstr ""
 "korjaavat tämän lisäämällä nämä uudet<br>ominaisuudet. Voit tehdä haluamasi "
 "asetukset uudelleen.<br>Olemme pahoillamme häiriöstä.<br>"
 
-#: src/bin/e_config.c:952
+#: src/bin/e_config.c:953
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -907,11 +906,11 @@ msgstr ""
 "Mokshaista. Tämä on<br>huono asia, ja varokeinona asetuksesi on nyt "
 "palautettu<br> oletusasetuksiin. Olemme pahoillamme häiriöstä.<br>"
 
-#: src/bin/e_config.c:1473 src/bin/e_config.c:2098
+#: src/bin/e_config.c:1475 src/bin/e_config.c:2100
 msgid "Moksha Settings Write Problems"
 msgstr "Ongelmia Mokshain asetusten kirjoituksessa"
 
-#: src/bin/e_config.c:1476
+#: src/bin/e_config.c:1478
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -921,13 +920,13 @@ msgstr ""
 "Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>"
 "%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
 
-#: src/bin/e_config.c:1486 src/bin/e_config.c:2111
-#: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:860
-#: src/bin/e_eap_editor.c:923 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_config.c:1488 src/bin/e_config.c:2113
+#: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:619 src/bin/e_sys.c:660
+#: src/bin/e_module.c:822 src/bin/e_sys.c:621 src/bin/e_sys.c:662
 #: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
@@ -940,21 +939,21 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1989
+#: src/bin/e_config.c:1991
 msgid "Settings Upgraded"
 msgstr "Asetukset päivitetty"
 
-#: src/bin/e_config.c:2007
+#: src/bin/e_config.c:2009
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "EET tiedosto Kahva on huono."
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2013
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Tiedoston data on tyhjä."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2017
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -963,17 +962,17 @@ msgstr ""
 "Tiedostoa ei voi kirjoittaa. Ehkälevy on vain luku-<br>tai olet menettänyt "
 "käyttöoikeudet tiedostoja."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2021
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Muisti loppui kun valmistellaankirjoittaa.<br>Vapauta muistia."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2025
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Tämä onyleinen virhe."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2029
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -982,71 +981,71 @@ msgstr ""
 "Asetukset tiedosto on liian suuri.<br>Sen tulisi olla hyvin pieni (muutama "
 "sata KB korkeintaan)."
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2033
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2037
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Te loppui tila kirjoitettaessatiedostoa"
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2041
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Tiedoston lopetettiin sitä kirjoittaessani."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2045
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Muisti - kartoitus (mmap) jatiedostosta epäonnistui."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2049
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 koodaus epäonnistui."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2053
 #, fuzzy
 msgid "Signature failed."
 msgstr "Lepotilaan siirtyminen epäonnistui."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2057
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Allekirjoitus ei kelpaa."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2061
 #, fuzzy
 msgid "Not signed."
 msgstr "(Ei ikkunoita)"
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2065
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Ominaisuus ei ole toteutettu."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2069
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG ei siemennettiin."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2073
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Valmiustilaan siirtyminen epäonnistui."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2077
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Valmiustilaan siirtyminen epäonnistui."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2081
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Tervetuloa Mokshaiin"
 
-#: src/bin/e_config.c:2101
+#: src/bin/e_config.c:2103
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1066,7 +1065,7 @@ msgstr ""
 msgid "Advanced"
 msgstr "Lisäasetukset"
 
-#: src/bin/e_config_dialog.c:261 src/bin/e_eap_editor.c:719
+#: src/bin/e_config_dialog.c:261 src/bin/e_eap_editor.c:720
 msgid "Basic"
 msgstr "Perusasetukset"
 
@@ -1199,50 +1198,50 @@ msgstr ""
 msgid "Desktop Entry Editor"
 msgstr "Työpöydän alkioeditori"
 
-#: src/bin/e_eap_editor.c:677 src/bin/e_int_border_prop.c:445
+#: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
 #: src/modules/ibar/e_mod_config.c:140
 msgid "Name"
 msgstr "Nimi"
 
-#: src/bin/e_eap_editor.c:688 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
 msgid "Comment"
 msgstr "Kommentti"
 
-#: src/bin/e_eap_editor.c:710
+#: src/bin/e_eap_editor.c:711
 #, fuzzy
 msgid "URL"
 msgstr "URL"
 
-#: src/bin/e_eap_editor.c:732 src/bin/e_eap_editor.c:741
+#: src/bin/e_eap_editor.c:733 src/bin/e_eap_editor.c:742
 #: src/bin/e_fm_prop.c:495 src/modules/conf_theme/e_int_config_fonts.c:95
 #: src/modules/fileman/e_int_config_mime_edit.c:145
 msgid "Icon"
 msgstr "Kuvake"
 
-#: src/bin/e_eap_editor.c:745
+#: src/bin/e_eap_editor.c:746
 msgid "Generic Name"
 msgstr "Yleinen nimi"
 
-#: src/bin/e_eap_editor.c:751
+#: src/bin/e_eap_editor.c:752
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:103
 msgid "Window Class"
 msgstr "Ikkunan luokka"
 
-#: src/bin/e_eap_editor.c:757 src/modules/fileman/e_int_config_mime.c:170
+#: src/bin/e_eap_editor.c:758 src/modules/fileman/e_int_config_mime.c:170
 msgid "Categories"
 msgstr "Luokat"
 
-#: src/bin/e_eap_editor.c:764
+#: src/bin/e_eap_editor.c:765
 msgid "Mime Types"
 msgstr "Mime-tyypit"
 
-#: src/bin/e_eap_editor.c:771
+#: src/bin/e_eap_editor.c:772
 msgid "Desktop file"
 msgstr "Työpöytätiedosto"
 
-#: src/bin/e_eap_editor.c:781 src/bin/e_int_border_prop.c:450
+#: src/bin/e_eap_editor.c:782 src/bin/e_int_border_prop.c:450
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
@@ -1255,30 +1254,30 @@ msgstr "Työpöytätiedosto"
 msgid "General"
 msgstr "Yleiset"
 
-#: src/bin/e_eap_editor.c:784
+#: src/bin/e_eap_editor.c:785
 msgid "Startup Notify"
 msgstr "Käynnistyksen huomautus"
 
-#: src/bin/e_eap_editor.c:786 src/modules/everything/evry_plug_apps.c:1190
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1190
 msgid "Run in Terminal"
 msgstr "Aja päätteessä"
 
-#: src/bin/e_eap_editor.c:788
+#: src/bin/e_eap_editor.c:789
 msgid "Show in Menus"
 msgstr "Näytä valikoissa"
 
-#: src/bin/e_eap_editor.c:791 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
+#: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
 #: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Valinnat"
 
-#: src/bin/e_eap_editor.c:822
+#: src/bin/e_eap_editor.c:823
 #, fuzzy, c-format
 msgid "Select an Icon for '%s'"
 msgstr "Valitse kuvake"
 
-#: src/bin/e_eap_editor.c:888
+#: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
 msgstr "Valitse suoritettava ohjelma"
 
@@ -1595,7 +1594,7 @@ msgid "Eject"
 msgstr "Poista"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1002
+#: src/modules/ibar/e_mod_main.c:1003
 msgid "Properties"
 msgstr "Ominaisuudet"
 
@@ -1961,58 +1960,58 @@ msgstr ""
 msgid "Select an Image"
 msgstr "Valitse kuva"
 
-#: src/bin/e_gadcon.c:1407
+#: src/bin/e_gadcon.c:1408
 #, fuzzy
 msgid "Gadget error"
 msgstr "Vempainten hallinta"
 
-#: src/bin/e_gadcon.c:1407
+#: src/bin/e_gadcon.c:1408
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1681 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:160
 #, fuzzy
 msgid "Move to"
 msgstr "Ikkunan siirtoteksti"
 
-#: src/bin/e_gadcon.c:1753
+#: src/bin/e_gadcon.c:1754
 msgid "Automatically scroll contents"
 msgstr "Vieritä sisältöä automaattisesti"
 
-#: src/bin/e_gadcon.c:1766 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1767 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "Paljas"
 
-#: src/bin/e_gadcon.c:1779 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Upotettu"
 
-#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1793 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Ulkoasu"
 
-#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:315
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Poista"
 
-#: src/bin/e_gadcon.c:2444
+#: src/bin/e_gadcon.c:2445
 #, fuzzy
 msgid "Stop moving"
 msgstr "Lopeta liikkuvat"
 
-#: src/bin/e_gadcon.c:3095
+#: src/bin/e_gadcon.c:3096
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3096
+#: src/bin/e_gadcon.c:3097
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2286,7 +2285,7 @@ msgid "Borderless"
 msgstr "Kehykset"
 
 #: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:207
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
 msgstr "Koko näyttö"
 
@@ -2321,6 +2320,14 @@ msgstr "Luo Pikanäppäimet"
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Ikonisoi"
+
+#: src/bin/e_int_border_menu.c:703
+msgid "Move with keyboard"
+msgstr ""
+
+#: src/bin/e_int_border_menu.c:717
+msgid "Resize with keyboard"
+msgstr ""
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -2641,11 +2648,11 @@ msgstr "Vaadi sijaintia"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:387 src/modules/ibar/e_mod_main.c:995
+#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:775
+#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
 #: src/modules/notification/e_mod_main.c:223
@@ -3853,14 +3860,14 @@ msgid "Float"
 msgstr ""
 
 #: src/bin/e_shelf.c:68
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:219
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Leveyssuuntaan"
 
 #: src/bin/e_shelf.c:69
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:568
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
@@ -3980,7 +3987,7 @@ msgid "Rename Shelf"
 msgstr "Uudelleennimeä tiedosto"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:990
 #, fuzzy
 msgid "Contents"
 msgstr "Kommentti"
@@ -4004,16 +4011,16 @@ msgstr "Päivitys"
 msgid "Starting %s"
 msgstr "Aloitetaan"
 
-#: src/bin/e_sys.c:295
+#: src/bin/e_sys.c:297
 msgid "Checking System Permissions"
 msgstr "Tarkistetaan järjestelmän oikeuksia"
 
-#: src/bin/e_sys.c:341 src/bin/e_sys.c:352 src/bin/e_sys.c:361
-#: src/bin/e_sys.c:370
+#: src/bin/e_sys.c:343 src/bin/e_sys.c:354 src/bin/e_sys.c:363
+#: src/bin/e_sys.c:372
 msgid "System Check Done"
 msgstr "Järjestelmän tarkistus valmis"
 
-#: src/bin/e_sys.c:438
+#: src/bin/e_sys.c:440
 #, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
@@ -4024,35 +4031,35 @@ msgstr ""
 "sulkeutumasta.<br>Haluatko suorittaa uloskirjautumisen loppuun<br>joka "
 "tapauksessa sulkematta näitä<br>sovelluksia ensin?"
 
-#: src/bin/e_sys.c:498
+#: src/bin/e_sys.c:500
 msgid "Logout problems"
 msgstr "Sisäänkirjautumisen ongelmat"
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:502
 msgid "Logout now"
 msgstr "Kirjaudu ulos nyt"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:504
 msgid "Wait longer"
 msgstr "Odota pidempään"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:506
 msgid "Cancel Logout"
 msgstr "Peruuta uloskirjautuminen"
 
-#: src/bin/e_sys.c:548
+#: src/bin/e_sys.c:550
 msgid "Logout in progress"
 msgstr "Uloskirjautuminen käynnissä"
 
-#: src/bin/e_sys.c:551
+#: src/bin/e_sys.c:553
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Uloskirjautuminen käynnissä.<br><hilight>Odota hetki.</hilight>"
 
-#: src/bin/e_sys.c:580 src/bin/e_sys.c:635
+#: src/bin/e_sys.c:582 src/bin/e_sys.c:637
 msgid "Moksha is busy with another request"
 msgstr "Moksha on kiireinen toisen vaatimuksen takia"
 
-#: src/bin/e_sys.c:585
+#: src/bin/e_sys.c:587
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -4060,7 +4067,7 @@ msgstr ""
 "Kirjaudutaan ulos järjestelmästä.<br>Muita järjestelmätoimintoja ei voi "
 "suorittaa<br>kun uloskirjautuminen on alkanut."
 
-#: src/bin/e_sys.c:592
+#: src/bin/e_sys.c:594
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -4068,7 +4075,7 @@ msgstr ""
 "Kone sammutetaan.<br>Mitään muita järjestelmätoimintoja ei voida suorittaa "
 "sammutusprosessin käynnistyttyä."
 
-#: src/bin/e_sys.c:598
+#: src/bin/e_sys.c:600
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -4076,7 +4083,7 @@ msgstr ""
 "Järjestelmä käynnistetään uudelleen.<br>Muita järjestelmätoimintoja ei voi "
 "suorittaa,<br>kun uudelleenkäynnistys on alkanut."
 
-#: src/bin/e_sys.c:604
+#: src/bin/e_sys.c:606
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -4084,7 +4091,7 @@ msgstr ""
 "Asetutaan valmiustilaan.<br>Ennen valmiustilan loppuunsaattamista ei voi "
 "suorittaa<br>muita järjestelmätoimintoja."
 
-#: src/bin/e_sys.c:610
+#: src/bin/e_sys.c:612
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4093,51 +4100,51 @@ msgstr ""
 "Talviunille.<br>Et voi hoitaa muita järjestelmätoimintoja<br>kunnes tämä on "
 "valmis."
 
-#: src/bin/e_sys.c:616 src/bin/e_sys.c:657
+#: src/bin/e_sys.c:618 src/bin/e_sys.c:659
 msgid "EEK! This should not happen"
 msgstr "IIK! Tätä ei pitäisi tapahtua"
 
-#: src/bin/e_sys.c:641
+#: src/bin/e_sys.c:643
 msgid "Power off failed."
 msgstr "Koneen sammutus epäonnistui."
 
-#: src/bin/e_sys.c:645
+#: src/bin/e_sys.c:647
 msgid "Reset failed."
 msgstr "Uudelleenkäynnistys epäonnistui."
 
-#: src/bin/e_sys.c:649
+#: src/bin/e_sys.c:651
 msgid "Suspend failed."
 msgstr "Valmiustilaan siirtyminen epäonnistui."
 
-#: src/bin/e_sys.c:653
+#: src/bin/e_sys.c:655
 msgid "Hibernate failed."
 msgstr "Lepotilaan siirtyminen epäonnistui."
 
-#: src/bin/e_sys.c:753
+#: src/bin/e_sys.c:755
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Kone sammutetaan.<br><hilight>Odota hetki.</hilight>"
 
-#: src/bin/e_sys.c:797
+#: src/bin/e_sys.c:799
 msgid "Resetting"
 msgstr "Käynnistetään uudelleen"
 
-#: src/bin/e_sys.c:800
+#: src/bin/e_sys.c:802
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Kone käynnistetään uudelleen.<br><hilight>Odota hetki.</hilight>"
 
-#: src/bin/e_sys.c:852
+#: src/bin/e_sys.c:854
 msgid "Suspending"
 msgstr "Asetutaan valmiustilaan"
 
-#: src/bin/e_sys.c:855
+#: src/bin/e_sys.c:857
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Asetutaan valmiustilaan.<br><hilight>Odota hetki.</hilight>"
 
-#: src/bin/e_sys.c:907
+#: src/bin/e_sys.c:909
 msgid "Hibernating"
 msgstr "Asetutaan lepotilaan"
 
-#: src/bin/e_sys.c:910
+#: src/bin/e_sys.c:912
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Asetutaan lepotilaan.<br><hilight>Odota hetki.</hilight>"
 
@@ -5181,7 +5188,7 @@ msgstr "Animaatiot"
 #: src/modules/conf_display/e_int_config_desks.c:216
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:275
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:248
 #, fuzzy, c-format
 msgid "%1.1f s"
 msgstr "%1.1f sekuntia"
@@ -6273,11 +6280,11 @@ msgstr "Päävalikko"
 
 #: src/modules/conf_menus/e_int_config_menus.c:291
 #: src/modules/conf_menus/e_int_config_menus.c:296
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:182
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:189
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:196
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:251
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:186
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:200
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:253
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:258
 #, c-format
 msgid "%2.0f pixels"
 msgstr "%2.0f pikseliä"
@@ -7145,7 +7152,7 @@ msgid "Bytecode"
 msgstr "Tavukoodi"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:686
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:269
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:276
 #: src/modules/cpufreq/e_mod_main.c:242 src/modules/cpufreq/e_mod_main.c:278
 msgid "Automatic"
 msgstr "Automaattinen"
@@ -7208,7 +7215,7 @@ msgid "%1.2f x"
 msgstr "%1.2f"
 
 #: src/modules/conf_theme/e_int_config_scale.c:325
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:205
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
 msgid "Policy"
 msgstr "Käytäntö"
 
@@ -7741,142 +7748,147 @@ msgstr "Painopisteiden viimeinen ikkuna työpöydällä kytkin"
 msgid "Slide pointer to a new window which is focused"
 msgstr "Liu'uta osoitin vasta aktivoituun ikkunaan"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:64
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:65
 #: src/modules/conf_window_manipulation/e_mod_main.c:20
 msgid "Window Geometry"
 msgstr "Ikkunageometria"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:177
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:181
 #, fuzzy
 msgid "Resist obstacles"
 msgstr "Vastustus"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:179
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:183
 #, fuzzy
 msgid "Other windows"
 msgstr "Sisäiset ikkunat"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:186
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:190
 #, fuzzy
 msgid "Edge of the screen"
 msgstr "Edge ofnäytön"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:193
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:197
 #, fuzzy
 msgid "Desktop gadgets"
 msgstr "Työpöydän nimi"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:200
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:204
 msgid "Resistance"
 msgstr "Vastustus"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:210
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:214
 msgid "Smart expansion"
 msgstr "Älykäs laajennus"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:214
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:218
 msgid "Fill available space"
 msgstr "Täytä käytettävissä oleva tila"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:217
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:221
 msgid "Direction"
 msgstr "Suunta"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
 msgid "Both"
 msgstr "Molemmat"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:226
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
 #, fuzzy
 msgid "Manipulation"
 msgstr "Ikkunan manipulointi"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:227
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:231
 msgid "Allow manipulation of maximized windows"
 msgstr "Salli suurennettujen ikkunoiden käsittely"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
 #, fuzzy
 msgid "Allow windows above fullscreen window"
 msgstr "Salli ikkunoiden yläpuolella fullscreen -ikkunassa"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
+#, fuzzy
+msgid "Snap window to the screen edge"
+msgstr "Vaihda siirrettäessä hiiri näytön laidalle"
+
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 #, fuzzy
 msgid "Maximization"
 msgstr "Maksimoinnin suunta"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:239
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
 msgid "Automatically accept changes after:"
 msgstr "Hyväksy muutokset automaattisesti kun aikaa on kulunut:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:244
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:251
 #, fuzzy
 msgid "Move by"
 msgstr "Painallus siirtää:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:249
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:256
 #, fuzzy
 msgid "Resize by"
 msgstr "Painallus muuttaa kokoa:"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:254
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:279
 #, fuzzy
 msgid "Keyboard"
 msgstr "Näppäimistö & hiiri"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:260
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:267
 #, fuzzy
 msgid "Limit resize to useful geometry"
 msgstr "Rajoita kokoa hyödyllisiin geometrian"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:263
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:270
 #, fuzzy
 msgid "Move after resize"
 msgstr "Siirrä jälkeen kokomuutos"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:266
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:273
 #, fuzzy
 msgid "Adjust windows on shelf hide"
 msgstr "Säädä ikkunoiden hyllylle hide"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:274
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:281
 #, fuzzy
 msgid "Follow Move"
 msgstr "Seuraa Siirrä"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:277
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:284
 #, fuzzy
 msgid "Follow Resize"
 msgstr "Muuta kokoa"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:280
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:287
 #, fuzzy
 msgid "Follow Raise"
 msgstr "Seuraa Nosta"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:283
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:290
 #, fuzzy
 msgid "Follow Lower"
 msgstr "Sulkemasta ikkunaa"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:286
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:293
 #, fuzzy
 msgid "Follow Layer"
 msgstr "Seuraa Layer"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:289
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:296
 #, fuzzy
 msgid "Follow Desktop"
 msgstr "Kaikille työpöydille"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:292
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:299
 #, fuzzy
 msgid "Follow Iconify"
 msgstr "Ikonisoi"
 
-#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:296
+#: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:303
 #: src/modules/quickaccess/e_mod_config.c:312
 #, fuzzy
 msgid "Transients"
@@ -9264,16 +9276,16 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Haluatko varmasti poistaa palkin lähteen?"
 
-#: src/modules/ibar/e_mod_main.c:292 src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1953
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:978
+#: src/modules/ibar/e_mod_main.c:979
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Luo uusi kuvake"
 
-#: src/modules/ibar/e_mod_main.c:1012
+#: src/modules/ibar/e_mod_main.c:1013
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Kuvakkeet"
@@ -10198,7 +10210,7 @@ msgstr ""
 msgid "for window screenshot!"
 msgstr "Virhe moduulin lataamisessa"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:782
+#: src/modules/tasks/e_mod_main.c:326 src/modules/tasks/e_mod_main.c:779
 #, fuzzy
 msgid "Tasks"
 msgstr "Tehtäväpalkki"
@@ -12968,9 +12980,6 @@ msgstr "Tarkkuuden vaihto"
 
 #~ msgid "Flip desktops when mouse at screen edge"
 #~ msgstr "Vaihda työpöytää hiiren ollessa näytön reunassa"
-
-#~ msgid "Flip when moving mouse to the screen edge"
-#~ msgstr "Vaihda siirrettäessä hiiri näytön laidalle"
 
 #~ msgid "Time the mouse is at the edge before flipping:"
 #~ msgstr "Aika jonka hiiren täytyy olla näytön laidalla ennen vaihtoa:"
