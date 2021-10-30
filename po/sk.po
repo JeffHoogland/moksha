@@ -2198,11 +2198,11 @@ msgstr "Minimalizovať"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Presunúť"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Zmeniť veľkosť"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
