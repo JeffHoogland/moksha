@@ -234,7 +234,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_check_add(evas, _("Allow windows above fullscreen window"),
                            &(cfdata->allow_above_fullscreen));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Maximize window on the screen edge"),
+   ow = e_widget_check_add(evas, _("Snap window to the screen edge"),
                            &(cfdata->max_top_edge));
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
