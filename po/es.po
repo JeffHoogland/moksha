@@ -2209,11 +2209,11 @@ msgstr "Convertir en icono"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Mover con el teclado"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Cambiar tamaño con el teclado"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -7335,9 +7335,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Permitir ventanas por encima de ventanas a pantalla completa"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Voltear cuando se arrastren objetos al borde de la pantalla"
+msgstr "Acoplar ventanas hacia el borde de la pantalla"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
