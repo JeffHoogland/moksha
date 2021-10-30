@@ -28,7 +28,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2021-06-16 12:10+0200\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: E17-de\n"
@@ -7400,7 +7400,7 @@ msgstr "Fenster oberhalb von Vollbildfenstern zulassen"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Beim Ziehen von Objekten an Bildschirmkante umklappen"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

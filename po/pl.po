@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -7844,7 +7844,7 @@ msgstr "Pozwól na okna nad oknem w trybie pełnego ekranu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Przeskocz do następnego pulpitu, gdy mysz jest na brzegu ekranu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

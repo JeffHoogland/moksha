@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -7282,7 +7282,7 @@ msgstr "允许窗口位于全屏窗口之上"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "拖拽对象到屏幕边缘时翻转"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

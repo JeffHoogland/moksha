@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -7999,7 +7999,7 @@ msgstr "Tillåta att fönster ovan fullscreen fönster"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Byt skrivbord när musen kommer till kanten på skärmen"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

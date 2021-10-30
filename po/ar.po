@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -7387,7 +7387,7 @@ msgstr "اسمح للنوافذ بالبروز فوق النافذة المست�
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "قلب عند تحريك عناصر إلى حدود الشاشة"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

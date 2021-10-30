@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2009-06-03 16:28+0000\n"
 "Last-Translator: Erdal Ronahi <erdal.ronahi@gmail.com>\n"
 "Language-Team: Kurdish <ku@li.org>\n"
@@ -7120,7 +7120,7 @@ msgid "Allow windows above fullscreen window"
 msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr ""
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

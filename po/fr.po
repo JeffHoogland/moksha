@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2021-09-14 09:13+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -7377,7 +7377,7 @@ msgstr "Autoriser les fenêtres au-dessus de la fenêtre en plein écran"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Basculer lors du glissement d'objets au bord de l'écran"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

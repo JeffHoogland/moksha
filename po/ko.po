@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -7336,7 +7336,7 @@ msgstr "전체 화면 창 위의 창 허용"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "객체를 화면 가장자리로 끌면 변경"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

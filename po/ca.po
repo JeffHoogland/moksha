@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
@@ -7364,7 +7364,7 @@ msgstr "Permet finestres per sobre de finestra a pantalla completa"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Canvia quan s'arrosseguin objectes a la cantonada de la pantalla"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

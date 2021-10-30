@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -7959,7 +7959,7 @@ msgstr "Afficher les fenêtres des autres écrans"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Feuilleter lors de déplacements de la souris au bord de l'écran"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

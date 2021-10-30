@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2015-12-21 20:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -7388,7 +7388,7 @@ msgstr "Povolit okna nad oknem jež je přes celou plochu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Překlopit, když je kurzor na kraji obrazovky"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

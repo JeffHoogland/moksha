@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -7369,7 +7369,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Povoliť oknám byť nad oknami v plnoobrazovkom režime"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-msgid "Snap window to the screen edge"
+#, fuzzy
+msgid "Snap windows to the screen edge"
 msgstr "Prilepiť okno k okraju obrazovky"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241

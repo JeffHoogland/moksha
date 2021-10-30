@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:13+0200\n"
+"POT-Creation-Date: 2021-10-30 21:29+0200\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -7809,7 +7809,7 @@ msgstr "Salli ikkunoiden yläpuolella fullscreen -ikkunassa"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 #, fuzzy
-msgid "Snap window to the screen edge"
+msgid "Snap windows to the screen edge"
 msgstr "Vaihda siirrettäessä hiiri näytön laidalle"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
