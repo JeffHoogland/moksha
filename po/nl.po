@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-10-30 21:29+0200\n"
-"PO-Revision-Date: 2021-06-13 23:51+0200\n"
+"PO-Revision-Date: 2021-10-31 16:06+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -2211,11 +2211,11 @@ msgstr "Maak er een pictogram van"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Verplaatsen met toetsenbord"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Herschalen met toetsenbord"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -2840,9 +2840,8 @@ msgid "Restart Moksha"
 msgstr "Moksha herstarten"
 
 #: src/bin/e_int_menus.c:335
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favorieten"
+msgstr "Favoriete toepassingen"
 
 #: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:753
 msgid "No applications"
@@ -7365,9 +7364,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Sta vensters toe boven schermvullend venster"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Draai om bij het slepen van objecten naar de schermrand"
+msgstr "Klik vensters vast aan de schermrand"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -9611,9 +9609,8 @@ msgid "Tasks Settings"
 msgstr "Instellingen voor taken"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Toon alleen tekst"
+msgstr "Toon wenk voor element"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
@@ -9867,14 +9864,13 @@ msgid "Force timeout for all notifications"
 msgstr "Forceer verlooptijd voor alle meldingen"
 
 #: src/modules/notification/e_mod_config.c:127
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f s"
+msgstr "%.1f s"
 
 #: src/modules/notification/e_mod_config.c:142
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Oriëntatie"
+msgstr "Oriëntatie van opduikvenster"
 
 #: src/modules/notification/e_mod_config.c:178
 msgid "Ignore replace ID"
@@ -10192,7 +10188,7 @@ msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:136
 msgid "Volume Changed"
-msgstr "Volume veranderd"
+msgstr "Volume is veranderd"
 
 #: src/modules/mixer/e_mod_main.c:240
 msgid "Increase Volume"
