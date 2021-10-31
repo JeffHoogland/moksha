@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-10-30 21:29+0200\n"
-"PO-Revision-Date: 2021-09-15 15:14+0100\n"
+"PO-Revision-Date: 2021-10-30 22:07+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
 "Language: pt\n"
@@ -220,7 +220,7 @@ msgstr "Desativar sempre à frente"
 
 #: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
-msgstr "Alternar modo minimizado"
+msgstr "Modo minimizado"
 
 #: src/bin/e_actions.c:3187
 msgid "Iconic Mode Enable"
@@ -228,11 +228,11 @@ msgstr "Ativar minimização"
 
 #: src/bin/e_actions.c:3192
 msgid "Fullscreen Mode Toggle"
-msgstr "Alternar modo ecrã completo"
+msgstr "Modo de ecrã inteiro"
 
 #: src/bin/e_actions.c:3196
 msgid "Fullscreen Mode Enable"
-msgstr "Ativar ecrã completo"
+msgstr "Ativar modo de ecrã inteiro"
 
 #: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
 #: src/bin/e_int_border_menu.c:678
@@ -2107,7 +2107,7 @@ msgstr "Maximização"
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
 #: src/bin/e_int_border_remember.c:719
 msgid "Fullscreen state"
-msgstr "Ecrã completo"
+msgstr "Ecrã inteiro"
 
 #: src/bin/e_int_border_locks.c:325
 msgid "Program Locks"
@@ -2165,7 +2165,7 @@ msgstr "Sem contornos"
 #: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
-msgstr "Ecrã completo"
+msgstr "Ecrã inteiro"
 
 #: src/bin/e_int_border_menu.c:473
 msgid "Unmaximize"
@@ -2198,11 +2198,11 @@ msgstr "Minimizar"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Mover com o teclado"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Redimensionar com o teclado"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -5227,7 +5227,7 @@ msgstr "Opções gerais"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:307
 msgid "Allow binding activation with fullscreen windows"
-msgstr "Permitir ativação de associações nas janelas em ecrã completo"
+msgstr "Permitir ativação de associações nas janelas em ecrã inteiro"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
@@ -7335,12 +7335,11 @@ msgstr "Permitir manipulação de janelas maximizadas"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
 msgid "Allow windows above fullscreen window"
-msgstr "Permitir janelas por cima de janelas em ecrã completo"
+msgstr "Permitir janelas por cima de janelas em ecrã inteiro"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Mudar ao arrastar os objetos para as margens do ecrã"
+msgstr "Encaixar janelas na margem do ecrã"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -7993,7 +7992,7 @@ msgstr "Mudar para a janela"
 
 #: src/modules/everything/evry_plug_windows.c:445
 msgid "Toggle Fullscreen"
-msgstr "Alternar ecrã completo"
+msgstr "Ecrã inteiro"
 
 #: src/modules/everything/evry_plug_windows.c:459
 msgid "Send to Desktop"
