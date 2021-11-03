@@ -2,6 +2,7 @@ moksha (0.3.4-3) focal; urgency=low
 
   * Border edge snap feature added
   * malloc_trim added to reduce mem usuage some
+  * Clear app menu cache any time a desktop is edited internally
   * Updated localization
 
  -- Robert Wiley <ylee@bodhilinux.com>  Wed, 03 Nov 2021 05:26:22 -0400
