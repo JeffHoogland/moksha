@@ -2,8 +2,9 @@ moksha (0.3.4-3) focal; urgency=low
 
   * Border edge snap feature added
   * malloc_trim added to reduce mem usuage some
+  * Updated localization
 
- -- Robert Wiley <ylee@bodhilinux.com>  Sun, 24 Oct 2021 10:29:43 -0400
+ -- Robert Wiley <ylee@bodhilinux.com>  Wed, 03 Nov 2021 05:26:22 -0400
 
 moksha (0.3.4-2) focal; urgency=low
 
