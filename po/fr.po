@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-10-30 21:29+0200\n"
-"PO-Revision-Date: 2021-09-14 09:13+0200\n"
+"PO-Revision-Date: 2021-11-03 08:48+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -2213,11 +2213,11 @@ msgstr "Minimiser"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Déplacer avec le clavier"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Redimensionner avec le clavier"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -7376,9 +7376,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Autoriser les fenêtres au-dessus de la fenêtre en plein écran"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Basculer lors du glissement d'objets au bord de l'écran"
+msgstr "Réarranger la fenêtre contre le bord de l'écran"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
