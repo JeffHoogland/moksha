@@ -12,7 +12,7 @@ struct _E_Config_Dialog_Data
    int orient, fit_along;
    int size;
    const char *style;
-   int autohide, autohide_action;
+   int autohide, autohide_show_action;
    double hide_timeout, hide_duration;
    int desk_show_mode;
    Eina_List *handlers;
@@ -22,6 +22,7 @@ struct _E_Config_Dialog_Data
 static void *_create_data(E_Config_Dialog *cfd);
 static void _fill_data(E_Config_Dialog_Data *cfdata);
 static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int  _basic_check_changed(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static void _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj);
@@ -39,6 +40,7 @@ e_int_shelf_config(E_Shelf *es)
    v->free_cfdata = _free_data;
    v->basic.create_widgets = _basic_create;
    v->basic.apply_cfdata = _basic_apply;
+   v->basic.check_changed = _basic_check_changed;
 
    es->config_dialog =
      e_config_dialog_new(es->zone->container, _("Shelf Settings"),
@@ -107,13 +109,39 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    /* autohide */
    cfdata->autohide = cfdata->escfg->autohide;
-   cfdata->autohide_action = cfdata->escfg->autohide_show_action;
+   cfdata->autohide_show_action = cfdata->escfg->autohide_show_action;
    cfdata->hide_timeout = cfdata->escfg->hide_timeout;
    cfdata->hide_duration = cfdata->escfg->hide_duration;
 
    /* desktop */
    cfdata->desk_show_mode = cfdata->escfg->desk_show_mode;
    cfdata->desk_list = cfdata->escfg->desk_list;
+}
+
+static int
+_basic_check_changed(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+{
+#define CHECK(X) if (cfdata->X != cfdata->escfg->X) return 1
+   CHECK(overlap);
+   CHECK(orient);
+   CHECK(fit_along);
+   CHECK(size);
+   CHECK(style);
+   CHECK(autohide);
+   CHECK(autohide_show_action);
+   CHECK(desk_show_mode);
+   CHECK(desk_list);
+   //~ CHECK(layer);
+   if (((cfdata->layer == 0) && (cfdata->escfg->layer == 1)) ||
+       ((cfdata->layer == 1) && (cfdata->escfg->layer == 0)) ||
+       ((cfdata->layer == 2) && (cfdata->escfg->layer == E_LAYER_ABOVE)))
+     return 0;
+   else
+     return 1;
+
+   if (fabs(cfdata->hide_timeout - cfdata->escfg->hide_timeout) > 0.19) return 1;
+   if (fabs(cfdata->hide_duration - cfdata->escfg->hide_duration) > 0.04) return 1;
+   return 0;
 }
 
 static void
@@ -220,7 +248,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_on_change_hook_set(cfdata->o_autohide, _cb_autohide_change, cfdata);
    e_widget_list_object_append(ol, cfdata->o_autohide, 1, 1, 0.5);
 
-   rg = e_widget_radio_group_new(&(cfdata->autohide_action));
+   rg = e_widget_radio_group_new(&(cfdata->autohide_show_action));
    ow = e_widget_radio_add(evas, _("Show on mouse in"), 0, rg);
    e_widget_disabled_set(ow, !cfdata->autohide);
    cfdata->autohide_list = eina_list_append(cfdata->autohide_list, ow);
@@ -329,8 +357,8 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      }
 
    cfdata->escfg->overlap = cfdata->overlap;
-   e_shelf_autohide_set(cfdata->es, cfdata->autohide + (cfdata->autohide * cfdata->autohide_action));
-   cfdata->escfg->autohide_show_action = cfdata->autohide_action;
+   e_shelf_autohide_set(cfdata->es, cfdata->autohide + (cfdata->autohide * cfdata->autohide_show_action));
+   cfdata->escfg->autohide_show_action = cfdata->autohide_show_action;
    cfdata->escfg->hide_timeout = cfdata->hide_timeout;
    cfdata->escfg->hide_duration = cfdata->hide_duration;
    cfdata->escfg->desk_show_mode = cfdata->desk_show_mode;
