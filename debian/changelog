@@ -1,3 +1,9 @@
+moksha (20211104bodhi30.3.4-4) bionic; urgency=low
+
+  * Updated localization
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 04 Nov 2021 05:24:11 -0400
+
 moksha (20211103bodhi30.3.4-3) bionic; urgency=low
 
   * Border edge snap feature added
