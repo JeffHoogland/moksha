@@ -1,3 +1,9 @@
+moksha (0.3.4-4) focal; urgency=low
+
+  * Updated localization
+
+ -- Robert Wiley <ylee@bodhilinux.com>  Thu, 04 Nov 2021 06:29:03 -0400
+
 moksha (0.3.4-3) focal; urgency=low
 
   * Border edge snap feature added
