@@ -132,11 +132,9 @@ _basic_check_changed(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfd
    CHECK(desk_show_mode);
    CHECK(desk_list);
    //~ CHECK(layer);
-   if (((cfdata->layer == 0) && (cfdata->escfg->layer == 1)) ||
-       ((cfdata->layer == 1) && (cfdata->escfg->layer == 0)) ||
-       ((cfdata->layer == 2) && (cfdata->escfg->layer == E_LAYER_ABOVE)))
-     return 0;
-   else
+   if (((cfdata->layer == 0) && (cfdata->escfg->layer != 1)) ||
+       ((cfdata->layer == 1) && (cfdata->escfg->layer != 0)) ||
+       ((cfdata->layer == 2) && (cfdata->escfg->layer != E_LAYER_ABOVE)))
      return 1;
 
    if (fabs(cfdata->hide_timeout - cfdata->escfg->hide_timeout) > 0.19) return 1;
