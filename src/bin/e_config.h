@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 11
+#define E_CONFIG_FILE_GENERATION 12
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -110,6 +110,7 @@ struct _E_Config
    int         gadget_resist; // GUI
    int         geometry_auto_move; // GUI
    int         geometry_auto_resize_limit; // GUI
+   int         evry_launch_hist; // GUI
    int         winlist_warp_while_selecting; // GUI
    int         winlist_warp_at_end; // GUI
    double      winlist_warp_speed; // GUI

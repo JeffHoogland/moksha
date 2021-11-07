@@ -302,6 +302,7 @@ group "Config" struct {
     value "rel_x" double: 0.5000000000000000000000000;
     value "rel_y" double: 0.4299999999999999933386619;
     value "scroll_animate" int: 1;
+    value "launch_hist" int: 1;
     value "scroll_speed" double: 10.0000000000000000000000000;
     value "hide_input" int: 0;
     value "hide_list" int: 0;

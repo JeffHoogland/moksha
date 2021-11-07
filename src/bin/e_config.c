@@ -528,6 +528,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, gadget_resist, INT); /**/
    E_CONFIG_VAL(D, T, geometry_auto_resize_limit, INT); /**/
    E_CONFIG_VAL(D, T, geometry_auto_move, INT); /**/
+   E_CONFIG_VAL(D, T, evry_launch_hist, INT); /**/
    E_CONFIG_VAL(D, T, winlist_warp_while_selecting, INT); /**/
    E_CONFIG_VAL(D, T, winlist_warp_at_end, INT); /**/
    E_CONFIG_VAL(D, T, winlist_warp_speed, DOUBLE); /**/
@@ -1081,6 +1082,7 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->gadget_resist, 0, 100);
      E_CONFIG_LIMIT(e_config->geometry_auto_move, 0, 1);
      E_CONFIG_LIMIT(e_config->geometry_auto_resize_limit, 0, 1);
+     E_CONFIG_LIMIT(e_config->evry_launch_hist, 0, 1);
      E_CONFIG_LIMIT(e_config->winlist_warp_while_selecting, 0, 1);
      E_CONFIG_LIMIT(e_config->winlist_warp_at_end, 0, 1);
      E_CONFIG_LIMIT(e_config->winlist_warp_speed, 0.0, 1.0);

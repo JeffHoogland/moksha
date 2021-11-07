@@ -7,7 +7,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      1
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_GENERATION 1
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 #define SLIDE_LEFT   1
@@ -170,6 +170,7 @@ struct _Config
   Eina_List *collections;
 
   int scroll_animate;
+  int launch_hist;
   int single_click;
   double scroll_speed;
 
