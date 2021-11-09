@@ -14,6 +14,7 @@
 #include "E_Notify.h"
 
 static E_Module *shot_module = NULL;
+static Ecore_X_Window fake_win;
 
 static E_Action *border_act = NULL, *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
@@ -598,7 +599,8 @@ _upload_complete_cb(void *data, int ev_type __UNUSED__, void *event)
    if ((o_entry) && (url_ret))
      {
        e_widget_entry_text_set(o_entry, url_ret);
-       e_util_clipboard(shot_conf->xwin, url_ret, ECORE_X_SELECTION_CLIPBOARD);
+       e_widget_entry_select_all(o_entry) ;
+       e_util_clipboard(fake_win, url_ret, ECORE_X_SELECTION_CLIPBOARD);
      }
    _share_done();
    return EINA_FALSE;
@@ -1331,7 +1333,7 @@ e_modapi_init(E_Module *m)
           }
      }
 
-     shot_conf->xwin = ecore_x_window_new(0, 0, 0, 1, 1);
+     fake_win = ecore_x_window_new(0, 0, 0, 1, 1);
      if (!shot_conf) _shot_conf_new();
    shot_conf->module = m;
 
@@ -1387,7 +1389,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    #ifdef HAVE_ENOTIFY
    e_notification_shutdown();
    #endif
-   ecore_x_window_free(shot_conf->xwin);
+   ecore_x_window_free(fake_win);
    _shot_conf_free();
    
    return 1;

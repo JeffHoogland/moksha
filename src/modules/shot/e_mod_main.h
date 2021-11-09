@@ -41,7 +41,6 @@ struct _Config
    const char *path;
    unsigned char view_enable;
    double delay, pict_quality;
-   Ecore_X_Window xwin;
 };
 
 EAPI void *e_modapi_init(E_Module *m);
