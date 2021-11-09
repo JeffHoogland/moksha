@@ -34,12 +34,14 @@ struct _Config
    E_Module *module;
    E_Config_Dialog *cfd;
    Eina_List *conf_items;
+   
    int count, notify, version, full_dialog, mode_dialog; 
    
    const char *viewer;
    const char *path;
    unsigned char view_enable;
    double delay, pict_quality;
+   Ecore_X_Window xwin;
 };
 
 EAPI void *e_modapi_init(E_Module *m);

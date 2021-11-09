@@ -580,6 +580,7 @@ static Eina_Bool
 _upload_complete_cb(void *data, int ev_type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Url_Complete *ev = event;
+
    if (ev->url_con != url_up) return EINA_TRUE;
 
    if (data)
@@ -595,7 +596,10 @@ _upload_complete_cb(void *data, int ev_type __UNUSED__, void *event)
         return EINA_FALSE;
      }
    if ((o_entry) && (url_ret))
-      e_widget_entry_text_set(o_entry, url_ret);
+     {
+       e_widget_entry_text_set(o_entry, url_ret);
+       e_util_clipboard(shot_conf->xwin, url_ret, ECORE_X_SELECTION_CLIPBOARD);
+     }
    _share_done();
    return EINA_FALSE;
 }
@@ -722,7 +726,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
       
    e_widget_size_min_get(ol, &mw, &mh);
    e_dialog_content_set(dia, ol, mw, mh);
-   e_dialog_button_add(dia, _("Hide"), NULL, _upload_ok_cb, NULL);
+   e_dialog_button_add(dia, _("Copy link"), NULL, _upload_ok_cb, NULL);
    e_dialog_button_add(dia, _("Cancel"), NULL, _upload_cancel_cb, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_CON_EVENT_URL_COMPLETE, _upload_complete_cb, eina_list_last_data_get(dia->buttons));
    e_object_del_attach_func_set(E_OBJECT(dia), _win_share_del);
@@ -1316,8 +1320,7 @@ e_modapi_init(E_Module *m)
         if ((shot_conf->version >> 16) < MOD_CONFIG_FILE_EPOCH) 
           {
              /* config too old */
-	    _shot_conf_free();
-	    
+             _shot_conf_free();
           }
 
         /* Ardvarks */
@@ -1325,14 +1328,13 @@ e_modapi_init(E_Module *m)
           {
              /* config too new...wtf ? */
              _shot_conf_free();
-	     
           }
      }
-     
-     
+
+     shot_conf->xwin = ecore_x_window_new(0, 0, 0, 1, 1);
      if (!shot_conf) _shot_conf_new();
    shot_conf->module = m;
-   
+
    return m;
 }
 
@@ -1385,7 +1387,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    #ifdef HAVE_ENOTIFY
    e_notification_shutdown();
    #endif
-   
+   ecore_x_window_free(shot_conf->xwin);
    _shot_conf_free();
    
    return 1;
@@ -1394,6 +1396,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 EAPI int
 e_modapi_save(E_Module *m __UNUSED__)
 {
-	e_config_domain_save("module.takescreen", conf_edd, shot_conf);
+   e_config_domain_save("module.takescreen", conf_edd, shot_conf);
    return 1;
 }
