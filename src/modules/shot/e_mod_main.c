@@ -599,7 +599,7 @@ _upload_complete_cb(void *data, int ev_type __UNUSED__, void *event)
    if ((o_entry) && (url_ret))
      {
        e_widget_entry_text_set(o_entry, url_ret);
-       e_widget_entry_select_all(o_entry) ;
+       e_widget_entry_select_all(o_entry);
        e_util_clipboard(fake_win, url_ret, ECORE_X_SELECTION_CLIPBOARD);
      }
    _share_done();
