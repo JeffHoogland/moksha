@@ -2941,14 +2941,14 @@ e_border_maximize(E_Border *bd,
 
    bd->maximized |= max;
 
-   //~ if ((bd->maximized & E_MAXIMIZE_DIRECTION) > E_MAXIMIZE_BOTH)
-     //~ /* left/right maximize */
-     //~ e_hints_window_maximized_set(bd, 0,
-                                  //~ ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
-                                  //~ ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
-   //~ else
-     //~ e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
-                                  //~ bd->maximized & E_MAXIMIZE_VERTICAL);
+   if ((bd->maximized & E_MAXIMIZE_DIRECTION) > E_MAXIMIZE_BOTH)
+     /* left/right maximize */
+     e_hints_window_maximized_set(bd, 0,
+                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_LEFT) ||
+                                  ((bd->maximized & E_MAXIMIZE_DIRECTION) == E_MAXIMIZE_RIGHT));
+   else
+     e_hints_window_maximized_set(bd, bd->maximized & E_MAXIMIZE_HORIZONTAL,
+                                  bd->maximized & E_MAXIMIZE_VERTICAL);
    e_remember_update(bd);
 }
 
