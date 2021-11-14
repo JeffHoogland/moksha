@@ -276,7 +276,7 @@ e_dialog_show(E_Dialog *dia)
 
    edje_object_size_min_calc(dia->bg_object, &mw, &mh);
    e_win_resize(dia->win, mw, mh);
-   e_win_size_min_set(dia->win, mw, mh);
+   e_win_size_min_set(dia->win, mw, mh + 15);
    dia->min_w = mw;
    dia->min_h = mh;
    if (!dia->resizable) e_win_size_max_set(dia->win, mw, mh);
