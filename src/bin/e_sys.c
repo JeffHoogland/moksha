@@ -468,8 +468,6 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
                   strcat(apps, bd->client.icccm.class);
                   strcat(apps, "<br>");
                 }
-              else
-                  strcat(apps, "...<br>");
             }
         }
      }
