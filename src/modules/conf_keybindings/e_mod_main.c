@@ -324,7 +324,6 @@ _show_keybidings_cb()
                       "E", "_show_keybindings");
    if (!dia) return;
    e_dialog_title_set(dia, _("Basic Moksha Keybindings"));
-   e_dialog_border_icon_set(dia, "preferences-desktop-keyboard-shortcuts");
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_add(dia, _("Edit"), NULL, _edit_bindings, NULL);
    e_dialog_button_add(dia, _("Refresh"), "view-refresh", _refresh_dialog, NULL);
@@ -335,6 +334,7 @@ _show_keybidings_cb()
 
    _fill_dia_data(NULL, dia);
    e_dialog_show(dia);
+   e_dialog_border_icon_set(dia, "preferences-desktop-keyboard-shortcuts");
 }
 
 static void
