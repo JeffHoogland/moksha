@@ -1,5 +1,7 @@
 #include "e.h"
 
+#define DIA_HEIGHT_ADD 15 // hack for short dialog height
+
 /* local subsystem functions */
 static void _e_dialog_free(E_Dialog *dia);
 static void _e_dialog_del_func_cb(void *data, E_Dialog *dia);
@@ -275,8 +277,8 @@ e_dialog_show(E_Dialog *dia)
    edje_object_part_swallow(dia->bg_object, "e.swallow.buttons", o);
 
    edje_object_size_min_calc(dia->bg_object, &mw, &mh);
-   e_win_resize(dia->win, mw, mh);
-   e_win_size_min_set(dia->win, mw, mh + 15);
+   e_win_resize(dia->win, mw, mh + DIA_HEIGHT_ADD);
+   e_win_size_min_set(dia->win, mw, mh + DIA_HEIGHT_ADD);
    dia->min_w = mw;
    dia->min_h = mh;
    if (!dia->resizable) e_win_size_max_set(dia->win, mw, mh);
