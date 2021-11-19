@@ -56,30 +56,32 @@ _key_binding_get(const char *action, const char *params)
             switch (bi->modifiers)
             {
                case 0:
-                      sprintf(mod, " %s   ", bi->key);
+                      sprintf(mod, "%s", bi->key);
                       break;
                case 1:
-                      sprintf(mod, " SHIFT %s   ", bi->key);
+                      sprintf(mod, "SHIFT %s", bi->key);
                       break;
                case 2:
-                      sprintf(mod, " CTRL %s   ", bi->key);
+                      sprintf(mod, "CTRL %s", bi->key);
                       break;
                case 3:
-                      sprintf(mod, " CTRL SHIFT %s   ", bi->key);
+                      sprintf(mod, "CTRL SHIFT %s", bi->key);
                       break;
                case 4:
-                      sprintf(mod, " ALT %s   ", bi->key);
+                      sprintf(mod, "ALT %s", bi->key);
                       break;
                case 5:
-                      sprintf(mod, " ALT SHIFT %s   ", bi->key);
+                      sprintf(mod, "ALT SHIFT %s", bi->key);
                       break;
                case 6:
-                      sprintf(mod, " CTRL ALT %s   ", bi->key);
+                      sprintf(mod, "CTRL ALT %s", bi->key);
                       break;
                case 8:
-                      sprintf(mod, " WIN %s   ", bi->key);
+                      sprintf(mod, "WIN %s", bi->key);
                       break;
              }
+           if (eina_strbuf_length_get(b) > 0)
+             eina_strbuf_append(b, "; ");
            eina_strbuf_append(b, mod);
            eina_stringshare_del(bi->action);
            eina_stringshare_del(bi->params);
@@ -116,61 +118,61 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    o = e_widget_table_add(dia->win->evas, 0);
 
    ot = e_widget_frametable_add(o, _("WINDOWS"), 1);
-   ob = e_widget_label_add(o, _(" Close window:"));
+   ob = e_widget_label_add(o, _("Close window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_close", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Iconic mode toggle:"));
+   ob = e_widget_label_add(o, _("Iconic Mode Toggle:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_iconic_toggle",  NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Maximize window:"));
+   ob = e_widget_label_add(o, _("Maximize window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_maximized_toggle",  NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Tile Left:"));
+   ob = e_widget_label_add(o, _("Tile Left:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_maximized_toggle", "default left"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Tile Right:"));
+   ob = e_widget_label_add(o, _("Tile Right:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_maximized_toggle", "default right"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Next Window:"));
+   ob = e_widget_label_add(o, _("Next Window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 5, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("winlist", "next"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 5, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Always on top:"));
+   ob = e_widget_label_add(o, _("Always On Top Toggle:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 6, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_stack_top_toggle", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 6, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Fullscreen mode toggle:"));
+   ob = e_widget_label_add(o, _("Fullscreen Mode Toggle:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 7, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_fullscreen_toggle", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 7, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Kill Window:"));
+   ob = e_widget_label_add(o, _("Kill Window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 8, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_kill", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 8, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Window menu:"));
+   ob = e_widget_label_add(o, _("Window Menu:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 9, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_menu", NULL), NULL, NULL, NULL, NULL);
@@ -179,31 +181,31 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 
    //----------------------------------------------
    ot = e_widget_frametable_add(o, _("SYSTEM"), 1);
-   ob = e_widget_label_add(o, _(" Lock system:"));
+   ob = e_widget_label_add(o, _("Lock System:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("desk_lock", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Show main menu:"));
+   ob = e_widget_label_add(o, _("Show Main Menu:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("menu_show", "main"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Show Favorites Menu:"));
+   ob = e_widget_label_add(o, _("Show Favorites Menu:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("menu_show", "favorites"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" System Controls:"));
+   ob = e_widget_label_add(o, _("System Controls:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("syscon", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Restart Moksha:"));
+   ob = e_widget_label_add(o, _("Restart Moksha:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("restart", NULL), NULL, NULL, NULL, NULL);
@@ -277,31 +279,31 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 
     //----------------------------------------------
    ot = e_widget_frametable_add(o, _("MISCELLANEOUS"), 0);
-   ob = e_widget_label_add(o, _(" Quick Launcher:"));
+   ob = e_widget_label_add(o, _("Quick Launcher:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("everything", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Take Screenshot:"));
+   ob = e_widget_label_add(o, _("Take Screenshot:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("shot", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Show the Desktop:"));
+   ob = e_widget_label_add(o, _("Show the Desktop:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("desk_deskshow_toggle", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Terminal console:"));
+   ob = e_widget_label_add(o, _("Terminal console:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, "CTRL ALT F1...F7", NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" This Help:"));
+   ob = e_widget_label_add(o, _("This Help:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("show_keybinds", NULL), NULL, NULL, NULL, NULL);
