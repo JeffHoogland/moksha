@@ -463,8 +463,13 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
           pending++;
           if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG)
             {
-              strcat(apps, bd->client.icccm.class);
-              strcat(apps, "<br>");
+              if (pending <= 5)
+                {
+                  strcat(apps, bd->client.icccm.class);
+                  strcat(apps, "<br>");
+                }
+              else
+                  strcat(apps, "...<br>");
             }
         }
      }
