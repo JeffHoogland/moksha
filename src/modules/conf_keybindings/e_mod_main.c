@@ -118,7 +118,7 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    o = e_widget_table_add(dia->win->evas, 0);
 
    ot = e_widget_frametable_add(o, _("WINDOWS"), 1);
-   ob = e_widget_label_add(o, _("Close window:"));
+   ob = e_widget_label_add(o, _("Close Window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_close", NULL), NULL, NULL, NULL, NULL);
@@ -130,7 +130,7 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_button_add(o, _key_binding_get("window_iconic_toggle",  NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _("Maximize window:"));
+   ob = e_widget_label_add(o, _("Maximize Window:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_maximized_toggle",  NULL), NULL, NULL, NULL, NULL);
@@ -323,7 +323,7 @@ _show_keybidings_cb()
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
                       "E", "_show_keybindings");
    if (!dia) return;
-   e_dialog_title_set(dia, _("Basic Moksha Keybindings"));
+   e_dialog_title_set(dia, _("Basic Moksha Key Bindings"));
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
    e_dialog_button_add(dia, _("Edit"), NULL, _edit_bindings, NULL);
    e_dialog_button_add(dia, _("Refresh"), "view-refresh", _refresh_dialog, NULL);
