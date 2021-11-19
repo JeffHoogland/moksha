@@ -271,7 +271,7 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 
    ob = e_widget_label_add(o, _(" Switch to Desktop 9:"));
    e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 9, 1, 1, 1, 0, 1, 1, 0.0, 0.5, sw, sh, sw, sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 9, 1, 1, 1, 0, 1, 0, 0.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("desk_linear_flip_to", "9"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 9, 1, 1, 1, 0, 1, 0);
 
