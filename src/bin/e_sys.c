@@ -425,7 +425,7 @@ _e_sys_cb_logout_abort(void *data __UNUSED__, E_Dialog *dia)
 }
 
 static void
-_e_sys_logout_confirm_dialog_update(int remaining)
+_e_sys_logout_confirm_dialog_update(int remaining, const char *apps)
 {
    char txt[4096];
 
@@ -442,7 +442,8 @@ _e_sys_logout_confirm_dialog_update(int remaining)
               "Do you want to finish the logout<br>"
               "anyway without closing these<br>"
               "applications first?<br><br>"
-              "Auto logout in %d seconds."), remaining);
+              "%s<br>"
+              "Auto logout in %d seconds."), apps, remaining);
 
    e_dialog_text_set(_e_sys_logout_confirm_dialog, txt);
 }
@@ -453,10 +454,19 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
    Eina_List *l;
    E_Border *bd;
    int pending = 0;
+   char apps[PATH_MAX] = "";
 
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
-        if (!bd->internal) pending++;
+        if (!bd->internal)
+        {
+          pending++;
+          if (bd->client.netwm.type != ECORE_X_WINDOW_TYPE_DIALOG)
+            {
+              strcat(apps, bd->client.icccm.class);
+              strcat(apps, "<br>");
+            }
+        }
      }
    if (pending == 0) goto after;
    else if (_e_sys_logout_confirm_dialog)
@@ -474,7 +484,7 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
          */
         if (remaining > 0)
           {
-             _e_sys_logout_confirm_dialog_update(remaining);
+             _e_sys_logout_confirm_dialog_update(remaining, apps);
              return ECORE_CALLBACK_RENEW;
           }
         else
@@ -506,7 +516,7 @@ _e_sys_cb_logout_timer(void *data __UNUSED__)
                   e_dialog_button_add(dia, _("Cancel Logout"), NULL,
                                       _e_sys_cb_logout_abort, NULL);
                   e_dialog_button_focus_num(dia, 1);
-                  _e_sys_logout_confirm_dialog_update(E_LOGOUT_AUTO_TIME);
+                  _e_sys_logout_confirm_dialog_update(E_LOGOUT_AUTO_TIME, "");
                   e_win_centered_set(dia->win, 1);
                   e_dialog_show(dia);
                   _e_sys_logout_begin_time = now;
