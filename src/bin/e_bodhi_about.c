@@ -11,6 +11,7 @@
     "Gareth 'hippytaff' Williams<br>" \
     "Craig 'enigma9o7' Langman<br>" \
     "Gavin 'fidoedidoe' Fowler<br>" \
+    "Doug 'Deepspeed' Yanez<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Bob Raskin<br>" \
     "Kristi Hoogland<br><br>" \
@@ -38,7 +39,6 @@
     "Víctor 'esmirlin' Parra García<br>" \
     "Caerolle<br>" \
     "Gar Romero<br>" \
-    "Doug 'Deepspeed' Yanez<br>" \
     "Reuben L. Lillie<br>" \
     "Timmy 'timmy' Larsson<br>" \
     "Dennis “DennisD'" \

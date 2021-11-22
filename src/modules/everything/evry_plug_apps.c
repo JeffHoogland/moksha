@@ -639,7 +639,8 @@ _fetch(Evry_Plugin *plugin, const char *input)
              if (!p->apps_hist)
                {
                   ht = evry->history_types_get(EVRY_TYPE_APP);
-                  if (ht) eina_hash_foreach(ht->types, _hist_items_get_cb, p);
+                  if (ht && e_config->evry_launch_hist)
+                    eina_hash_foreach(ht->types, _hist_items_get_cb, p);
                }
 
              _desktop_list_add(p, p->apps_hist, NULL);

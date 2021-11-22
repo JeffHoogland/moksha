@@ -48,6 +48,7 @@ struct _E_Config_Dialog_Data
    int         edge_width, edge_height;
    double      rel_x, rel_y;
    int         scroll_animate;
+   int         launch_hist;
    int         single_click;
    double      scroll_speed;
 
@@ -100,6 +101,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(cycle_mode);
    C(history_sort_mode);
    C(scroll_animate);
+   C(launch_hist);
    C(single_click);
    C(scroll_speed);
 #undef C
@@ -150,10 +152,11 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    C(cycle_mode);
    C(history_sort_mode);
    C(scroll_animate);
+   C(launch_hist);
    C(single_click);
    C(scroll_speed);
 #undef C
-
+   e_config->evry_launch_hist = cfdata->launch_hist;
    if (evry_conf->conf_subjects) eina_list_free(evry_conf->conf_subjects);
    if (evry_conf->conf_actions) eina_list_free(evry_conf->conf_actions);
    if (evry_conf->conf_objects) eina_list_free(evry_conf->conf_objects);
@@ -470,6 +473,10 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_check_add(e, _("Animate scrolling"),
                            &(cfdata->scroll_animate));
    e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(e, _("Show recently used items"),
+                           &(cfdata->launch_hist));
+   e_widget_framelist_object_append(of, ob);
+
    /* ob = e_widget_slider_add(e, 1, 0, _("%1.1f"),
     *           5, 20, 0.1, 0, &(cfdata->scroll_speed), NULL, 10);
     * e_widget_framelist_object_append(of, ob); */

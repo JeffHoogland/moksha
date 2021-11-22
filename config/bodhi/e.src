@@ -1372,6 +1372,13 @@ group "E_Config" struct {
             value "params" string: "default right";
             value "any_mod" uchar: 0;
         }
+         group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 8;
+            value "key" string: "F1";
+            value "action" string: "show_keybinds";
+            value "any_mod" uchar: 0;
+        }
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
             value "modifiers" int: 8;
@@ -1950,6 +1957,7 @@ group "E_Config" struct {
     value "gadget_resist" int: 32;
     value "geometry_auto_resize_limit" int: 1;
     value "geometry_auto_move" int: 1;
+    value "evry_launch_hist" int: 1;
     value "winlist_warp_while_selecting" int: 1;
     value "winlist_warp_at_end" int: 1;
     value "winlist_warp_speed" double: 0.1;

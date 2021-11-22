@@ -2478,10 +2478,11 @@ _e_shelf_menu_pre_cb(void *data, E_Menu *m)
    e_util_menu_item_theme_icon_set(mi, "edit-rename");
    e_menu_item_callback_set(mi, _e_shelf_cb_menu_rename, es);
 
+   /* DUmmy proof shelf removal
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Delete"));
    e_util_menu_item_theme_icon_set(mi, "list-remove");
-   e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);
+   e_menu_item_callback_set(mi, _e_shelf_cb_menu_delete, es);*/
 
    if (m->parent_item) return;
 
