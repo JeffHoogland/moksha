@@ -177,39 +177,46 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    e_widget_frametable_object_append_full(ot, ob, 0, 9, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("window_menu", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 9, 1, 1, 1, 0, 1, 0);
+
    e_widget_table_object_append(o, ot, 0, 0, 1, 1, 1, 1, 1, 1);
 
    //----------------------------------------------
    ot = e_widget_frametable_add(o, _("SYSTEM"), 1);
-   ob = e_widget_label_add(o, _("Lock System:"));
+   ob = e_widget_label_add(o, _("Open Terminology:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 0, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, _key_binding_get("desk_lock", NULL), NULL, NULL, NULL, NULL);
+   ob = e_widget_button_add(o, _key_binding_get("exec", "terminology"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 0, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(o, _("Lock System:"));
+   e_widget_size_min_get(ob, &sw, &sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   ob = e_widget_button_add(o, _key_binding_get("desk_lock", NULL), NULL, NULL, NULL, NULL);
+   e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _("Show Main Menu:"));
    e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 1, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("menu_show", "main"), NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _("Show Favorites Menu:"));
    e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("menu_show", "favorites"), NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _("System Controls:"));
    e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("syscon", NULL), NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _("Restart Moksha:"));
    e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 5, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("restart", NULL), NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(ot, ob, 1, 5, 1, 1, 1, 0, 1, 0);
 
    e_widget_table_object_append(o, ot, 0, 1, 1, 1, 1, 1, 1, 1);
 
@@ -297,17 +304,17 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_button_add(o, _key_binding_get("desk_deskshow_toggle", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _("Terminal console:"));
-   e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, "CTRL ALT F1...F7", NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
-
    ob = e_widget_label_add(o, _("This Help:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
    ob = e_widget_button_add(o, _key_binding_get("show_keybinds", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
+
+   ob = e_widget_label_add(o, _("Terminal console:"));
+   e_widget_size_min_get(ob, &sw, &sh);
+   e_widget_frametable_object_append_full(ot, ob, 0, 4, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
+   ob = e_widget_button_add(o, "CTRL ALT F1...F7", NULL, NULL, NULL, NULL);
+   e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
 
    e_widget_table_object_append(o, ot, 1, 1, 1, 1, 1, 1, 1, 1);
 
