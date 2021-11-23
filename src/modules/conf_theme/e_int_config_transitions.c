@@ -201,6 +201,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    EINA_LIST_FOREACH(e_theme_transition_list(), l, t)
      {
         if (!t) continue;
+        t[0] = toupper(t[0]);
         e_widget_ilist_append(il, NULL, t, _trans_cb_changed, cfdata, NULL);
      }
 
@@ -274,12 +275,16 @@ _trans_cb_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
    const char *t;
+   char *p;
    int sel;
 
    cfdata = data;
    sel = e_widget_ilist_selected_get(cfdata->event_list);
 
    t = e_widget_ilist_selected_label_get(cfdata->trans_list);
+   p = strdup(t);
+   p[0] = tolower(p[0]);
+   t = p;
    if (!t) return;
 
    if (!strcmp(t, _("None"))) t = NULL;
@@ -305,6 +310,7 @@ _trans_cb_changed(void *data)
      }
    if (!t) return;
    _trans_preview_trans_set(cfdata, t);
+   free(p);
 }
 
 Evas_Object *
