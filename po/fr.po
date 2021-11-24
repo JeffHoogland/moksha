@@ -8886,7 +8886,7 @@ msgstr "Bureau au-dessus du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2937
 msgid "Popup Desk Down"
-msgstr "Bureau en dessous dupop-up"
+msgstr "Bureau en dessous du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2939
 msgid "Popup Desk Next"
