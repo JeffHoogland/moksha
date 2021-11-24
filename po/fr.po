@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-10-30 21:29+0200\n"
-"PO-Revision-Date: 2021-11-03 08:48+0100\n"
+"PO-Revision-Date: 2021-11-24 17:13+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -309,7 +309,7 @@ msgstr "Définir l'état d'enroulement"
 
 #: src/bin/e_actions.c:3242
 msgid "syntax: \"(0|1) (up|down|left|right)\""
-msgstr "syntaxe : \"(0|1) (up|down|left|right)\""
+msgstr "syntax: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3246
 msgid "Toggle Borderless State"
@@ -858,7 +858,7 @@ msgstr ""
 "Les données de configuration ont dû être mises à jour. Votre "
 "ancienne<br>configuration a été supprimée et de nouveaux paramètres "
 "par<br>défaut sont en place. Cela risque d'arriver en phase "
-"de<br>développement, ainsi il est inutile de faire un rapport de bogue."
+"de<br>développement, alors il est inutile de faire un rapport de bogue."
 "<br>Cela signifie simplement que Moksha a besoin<br>de fonctionnalités que "
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
@@ -875,7 +875,7 @@ msgstr ""
 "<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que "
 "vous n'ayez installé une version antérieure<br>ou copié la configuration "
 "depuis une machine sur laquelle<br>une version plus récente de Moksha était "
-"en cours. Ce n'est pas bon<br>et, par mesure de précaution, les valeurs par "
+"en cours. Ce n'est pas sain<br>et, par mesure de précaution, les valeurs par "
 "défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
@@ -954,7 +954,7 @@ msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
 #: src/bin/e_config.c:2037
 msgid "You ran out of space while writing the file."
-msgstr "Vous êtes tombé à cours d'espace lors de l'écriture du fichier."
+msgstr "Vous êtes tombé(e) à cours d'espace lors de l'écriture du fichier."
 
 #: src/bin/e_config.c:2041
 msgid "The file was closed while writing."
@@ -1964,7 +1964,7 @@ msgid ""
 "on this screen. Aborting startup.\n"
 msgstr ""
 "Une instance précédente de Moksha est encore\n"
-"active sur cet écran. Abandon du démarrage.\n"
+"active sur cet écran. Abandon du lancement.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
 #: src/bin/e_import_config_dialog.c:352 src/bin/e_import_config_dialog.c:362
@@ -4143,7 +4143,7 @@ msgid ""
 msgstr ""
 "La configuration a dû être mise à jour. Votre ancienne configuration<br>a "
 "été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela "
-"risque d'arriver en phase de développement, ainsi il est inutile<br>de faire "
+"risque d'arriver en phase de développement, alors il est inutile<br>de faire "
 "un rapport de bogue. Cela signifie simplement que le module a besoin<br>de "
 "cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez "
 "maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne "
@@ -4166,7 +4166,7 @@ msgstr ""
 "module. C'est vraiment étonnant. Cela ne devrait<br>pas se produire à moins "
 "que vous n'ayez installé une version<br>antérieure ou copié la configuration "
 "du module depuis une machine sur<br>laquelle une version plus récente était "
-"en cours. Ce n'est<br>pas bon et, par mesure de précaution, les valeurs "
+"en cours. Ce n'est<br>pas sain et, par mesure de précaution, les valeurs "
 "par<br>défaut de votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
@@ -5167,7 +5167,7 @@ msgstr "%1.0f seconde(s)"
 
 #: src/modules/conf_display/e_int_config_dpms.c:170
 msgid "Fade Time"
-msgstr "Durée du fondu"
+msgstr "Durée de la transition"
 
 #: src/modules/conf_display/e_int_config_dpms.c:172
 #, c-format
@@ -5547,8 +5547,8 @@ msgid ""
 "Moksha was unable to import the configuration.<br><br>Are you sure this is "
 "really a valid configuration?"
 msgstr ""
-"Moksha n'a pu importer la configuration.<br><br>Est-ce que cette "
-"configuration est vraiment valide ?"
+"Moksha n'a pu importer la configuration.<br><br>Est-ce vraiment une "
+"configuration valide ?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
@@ -5789,7 +5789,7 @@ msgid ""
 "%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
-"utilisée<br>par l'action <hilight>%s</hilight>.<br>Chosissez une autre "
+"utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
 "séquence de raccourci clavier."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
@@ -6085,7 +6085,7 @@ msgstr "Variables d'environnement"
 
 #: src/modules/conf_paths/e_int_config_env.c:332
 msgid "Unset"
-msgstr "Non assigné"
+msgstr "Non assignée"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
@@ -7739,7 +7739,7 @@ msgstr "Afficher au premier niveau"
 
 #: src/modules/everything/evry_config.c:406
 msgid "Minimum characters for search"
-msgstr "Nombre minimal de caractères pour la recherche"
+msgstr "Nombre min. de caractères pour la recherche"
 
 #: src/modules/everything/evry_config.c:415
 msgid "Plugin Trigger"
@@ -7853,7 +7853,7 @@ msgstr "%1.2f"
 
 #: src/modules/everything/evry_config.c:584
 msgid "Edge Popup Size"
-msgstr "Taille du bord du pop-up"
+msgstr "Taille du pop-up de bord"
 
 #: src/modules/everything/evry_config.c:602
 msgid "Zoom value"
@@ -8874,27 +8874,27 @@ msgstr "Afficher le pop-up de la miniature des bureaux"
 
 #: src/modules/pager/e_mod_main.c:2931
 msgid "Popup Desk Right"
-msgstr "Bureau à droite dans le pop-up"
+msgstr "Bureau à droite du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2933
 msgid "Popup Desk Left"
-msgstr "Bureau à gauche dans le pop-up"
+msgstr "Bureau à gauche du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2935
 msgid "Popup Desk Up"
-msgstr "Bureau au-dessus dans le pop-up"
+msgstr "Bureau au-dessus du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2937
 msgid "Popup Desk Down"
-msgstr "Bureau en dessous dans le pop-up"
+msgstr "Bureau en dessous du pop-up"
 
 #: src/modules/pager/e_mod_main.c:2939
 msgid "Popup Desk Next"
-msgstr "Bureau suivant dans le pop-up"
+msgstr "Bureau suivant"
 
 #: src/modules/pager/e_mod_main.c:2941
 msgid "Popup Desk Previous"
-msgstr "Bureau précédent dans le pop-up"
+msgstr "Bureau précédent"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
 msgid "Syscon Settings"
@@ -9045,7 +9045,7 @@ msgstr ""
 "jour de sécurité et de corrections de bogues, mais<br>aussi d'extensions."
 "<br><br>C'est d'une aide précieuse pour vous tenir informé des<br>correctifs "
 "disponibles dès leur parution. Pour ce faire,<br>Moksha se connecte à "
-"enlightenment.org et échange<ps/>des données comme le fait n'importe quel "
+"enlightenment.org et échange<ps/>des données comme le ferait n'importe quel "
 "navigateur.<br>Aucune information personnelle telle que le nom et le mot "
 "de<br>passe de l'utilisateur, ou quelque fichier personnel que ce<br>soit, "
 "n'est transmis. Si vous n'en voulez vraiment pas,<br>alors désactivez la "
@@ -9063,8 +9063,8 @@ msgstr "Information"
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
-"Une barre des tâches peut<br>être ajoutée pour montrer<br>les fenêtres et "
-"les applications ouvertes."
+"Une barre des tâches peut<br>être ajoutée pour montrer<br>applications et "
+"fenêtres ouvertes."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9869,8 +9869,8 @@ msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
 msgstr ""
-"Erreur durant l'initialisation de DBus ! Veuillez vérifier que dbus est "
-"correctement installé et fonctionne."
+"Erreur durant l'initialisation de DBus ! Vérifiez que dbus est correctement "
+"installé et fonctionne."
 
 #: src/modules/notification/e_mod_config.c:55
 msgid "Notification Settings"
