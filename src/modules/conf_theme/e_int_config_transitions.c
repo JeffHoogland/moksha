@@ -274,18 +274,15 @@ static void
 _trans_cb_changed(void *data)
 {
    E_Config_Dialog_Data *cfdata;
-   const char *t;
-   char *p;
+   char *t;
    int sel;
 
    cfdata = data;
    sel = e_widget_ilist_selected_get(cfdata->event_list);
 
-   t = e_widget_ilist_selected_label_get(cfdata->trans_list);
-   p = strdup(t);
-   p[0] = tolower(p[0]);
-   t = p;
+   t = (char *)e_widget_ilist_selected_label_get(cfdata->trans_list);
    if (!t) return;
+   t[0] = tolower(t[0]);
 
    if (!strcmp(t, _("None"))) t = NULL;
    switch (sel)
@@ -310,7 +307,6 @@ _trans_cb_changed(void *data)
      }
    if (!t) return;
    _trans_preview_trans_set(cfdata, t);
-   free(p);
 }
 
 Evas_Object *
