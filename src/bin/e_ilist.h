@@ -62,5 +62,6 @@ EAPI void         e_ilist_multi_select          (Evas_Object *obj, int n);
 EAPI void         e_ilist_range_select          (Evas_Object *obj, int n);
 EAPI void         e_ilist_item_label_set(E_Ilist_Item *si, const char *label);
 EAPI Eina_Bool  e_ilist_custom_edje_file_set(Evas_Object *obj, const char *file, const char *group);
+EAPI void e_ilist_disabled_set(Evas_Object *obj, Eina_Bool set);
 #endif
 #endif

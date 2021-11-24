@@ -437,9 +437,9 @@ EAPI void
 e_widget_disabled_set(Evas_Object *obj, int disabled)
 {
    API_ENTRY return;
-   if (sd->disabled == disabled) return;
-   sd->disabled = disabled;
-   if (sd->focused)
+   if (sd->disabled == !!disabled) return;
+   sd->disabled = !!disabled;
+   if (sd->focused && sd->disabled)
      {
         Evas_Object *o = NULL, *parent = NULL;
 
@@ -450,7 +450,8 @@ e_widget_disabled_set(Evas_Object *obj, int disabled)
              if (!o) break;
              parent = o;
           }
-        if (!e_widget_focus_jump(parent, 1))
+        e_widget_focus_jump(parent, 1);
+        if (sd->focused)
           {
              sd->focused = 0;
              if (sd->focus_func) sd->focus_func(obj);

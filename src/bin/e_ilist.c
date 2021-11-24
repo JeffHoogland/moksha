@@ -23,6 +23,7 @@ struct _E_Smart_Data
       unsigned int size;
       Ecore_Timer *timer;
    } typebuf;
+   Eina_Bool disabled : 1;
 };
 
 static void      _e_smart_init(void);
@@ -1392,5 +1393,26 @@ _e_ilist_item_new(E_Smart_Data *sd, Evas_Object *icon, Evas_Object *end, const c
                                   _e_smart_event_mouse_down, si);
    evas_object_event_callback_add(si->o_base, EVAS_CALLBACK_MOUSE_UP,
                                   _e_smart_event_mouse_up, si);
+   if (sd->disabled)
+     edje_object_signal_emit(si->o_base, "e,state,disabled", "e");
+   else
+     edje_object_signal_emit(si->o_base, "e,state,enabled", "e");
    return si;
+}
+
+EAPI void
+e_ilist_disabled_set(Evas_Object *obj, Eina_Bool set)
+{
+   E_Ilist_Item *ili;
+   const Eina_List *l;
+
+   API_ENTRY return;
+   sd->disabled = !!set;
+   EINA_LIST_FOREACH(sd->items, l, ili)
+     {
+        if (sd->disabled)
+          edje_object_signal_emit(ili->o_base, "e,state,disabled", "e");
+        else
+          edje_object_signal_emit(ili->o_base, "e,state,enabled", "e");
+     }
 }
