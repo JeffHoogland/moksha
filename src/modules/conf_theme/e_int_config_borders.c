@@ -228,7 +228,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         char buf[4096];
 
         ob = e_livethumb_add(evas);
-        e_livethumb_vsize_set(ob, 96, 96);
+        e_livethumb_vsize_set(ob, 128, 128);
         oj = edje_object_add(e_livethumb_evas_get(ob));
         snprintf(buf, sizeof(buf), "e/widgets/border/%s/border", str);
         e_theme_edje_object_set(oj, "base/theme/borders", buf);
