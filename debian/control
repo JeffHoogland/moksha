@@ -1,7 +1,7 @@
 Source: moksha
 Section: x11
 Priority: optional
-Maintainer: Jeff Hoogland <jeffhoogland@linux.com>
+Maintainer: Robert Wiley <ylee@bodhilinux.com>
 Homepage: http://mokshadesktop.org/
 Build-Depends:  debhelper (>= 9), dh-autoreconf, libefl-dev, libasound2-dev [linux-any], libxext-dev, libpam0g-dev, libxcb-shape0-dev, dbus-x11, libxcb-keysyms1-dev, libedbus-dev
 Standards-Version: 4.1.4
