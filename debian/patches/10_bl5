@@ -1,0 +1,17 @@
+Description: Adjust Bodhi version for Bodhi Linux 5.1
+ Ensure Bodhi reports the right version for Bodhi 5.1
+Author: Robert Wiley <ylee@bodhilinux.com>
+Origin: other
+Forwarded: no
+Last-Update: 2021-11-25
+
+--- a/src/bin/e_bodhi_about.c
++++ b/src/bin/e_bodhi_about.c
+@@ -1,6 +1,6 @@
+ #include "e.h"
+
+-#define BODHI_VERSION "6.0.0"
++#define BODHI_VERSION "5.1.0"
+ #define BODHI_ABOUT_TITLE "About Bodhi"
+ #define BODHI_ABOUT_TEXT "Bodhi Linux - The Enlightened Desktop"
+ #define BODHI_ABOUT_AUTHORS \
