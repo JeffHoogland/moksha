@@ -22,38 +22,38 @@ EAPI E_Module_Api e_modapi =
 static void
 _edit_bindings()
 {
-  E_Container *con;
+   E_Container *con;
 
-  con = e_container_current_get(e_manager_current_get());
-  e_int_config_keybindings(con, NULL);
+   con = e_container_current_get(e_manager_current_get());
+   e_int_config_keybindings(con, NULL);
 }
 
 static const char *
 _key_binding_get(const char *action, const char *params)
 {
-  Eina_List *l = NULL;
-  E_Config_Binding_Key *bi;
-  Eina_Strbuf *b;
-  char mod[PATH_MAX];
-  char *ret;
+   Eina_List *l = NULL;
+   E_Config_Binding_Key *bi;
+   Eina_Strbuf *b;
+   char mod[PATH_MAX];
+   char *ret;
 
-  b = eina_strbuf_new();
+   b = eina_strbuf_new();
 
-  EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
+   EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
      {
-        if (!bi) return NULL;
+       if (!bi) return NULL;
 
-        bi->key = eina_stringshare_add(bi->key);
-        bi->action = eina_stringshare_add(bi->action);
-        bi->params = eina_stringshare_ref(bi->params);
-        if (!bi->params) bi->params =  eina_stringshare_add("");
-        if (!params) params =  eina_stringshare_add("");
+       bi->key = eina_stringshare_add(bi->key);
+       bi->action = eina_stringshare_add(bi->action);
+       bi->params = eina_stringshare_ref(bi->params);
+       if (!bi->params) bi->params =  eina_stringshare_add("");
+       if (!params) params =  eina_stringshare_add("");
 
-        if ((!e_util_strcmp(bi->action, action)) &&
-            (!e_util_strcmp(bi->params, params)) &&
-             (e_util_strcmp(bi->key, "Execute")))
-          {
-            switch (bi->modifiers)
+      if ((!e_util_strcmp(bi->action, action)) &&
+          (!e_util_strcmp(bi->params, params)) &&
+           (e_util_strcmp(bi->key, "Execute")))
+        {
+          switch (bi->modifiers)
             {
                case 0:
                       sprintf(mod, "%s", bi->key);
@@ -79,21 +79,22 @@ _key_binding_get(const char *action, const char *params)
                case 8:
                       sprintf(mod, "WIN %s", bi->key);
                       break;
-             }
-           if (eina_strbuf_length_get(b) > 0)
-             eina_strbuf_append(b, "; ");
-           eina_strbuf_append(b, mod);
-           eina_stringshare_del(bi->action);
-           eina_stringshare_del(bi->params);
-           eina_stringshare_del(params);
-         }
-     }
+            }
 
-     ret = eina_strbuf_string_steal(b);
-     eina_strbuf_free(b);
-     if (ret[0]) return ret;
-     free(ret);
-     return strdup(TEXT_NONE_ACTION_KEY);
+          if (eina_strbuf_length_get(b) > 0)
+            eina_strbuf_append(b, "; ");
+          eina_strbuf_append(b, mod);
+          eina_stringshare_del(bi->action);
+          eina_stringshare_del(bi->params);
+          eina_stringshare_del(params);
+        }
+    }
+
+   ret = eina_strbuf_string_steal(b);
+   eina_strbuf_free(b);
+   if (ret[0]) return ret;
+   free(ret);
+   return strdup(TEXT_NONE_ACTION_KEY);
 }
 
 static void
