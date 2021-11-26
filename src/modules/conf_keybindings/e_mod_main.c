@@ -212,12 +212,6 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_button_add(o, _key_binding_get("syscon", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 4, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _("Restart Moksha:"));
-   e_widget_size_min_get(ob, &sw, &sh);
-   e_widget_frametable_object_append_full(ot, ob, 0, 5, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, _key_binding_get("restart", NULL), NULL, NULL, NULL, NULL);
-   e_widget_frametable_object_append(ot, ob, 1, 5, 1, 1, 1, 0, 1, 0);
-
    e_widget_table_object_append(o, ot, 0, 1, 1, 1, 1, 1, 1, 1);
 
     //----------------------------------------------
@@ -276,10 +270,10 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_button_add(o, _key_binding_get("desk_linear_flip_to", "8"), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 8, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _(" Switch to Desktop 9:"));
+   ob = e_widget_label_add(o, _(" Show the Desktop:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 9, 1, 1, 1, 0, 1, 0, 0.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, _key_binding_get("desk_linear_flip_to", "9"), NULL, NULL, NULL, NULL);
+   ob = e_widget_button_add(o, _key_binding_get("desk_deskshow_toggle", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 9, 1, 1, 1, 0, 1, 0);
 
    e_widget_table_object_append(o, ot, 1, 0, 1, 1, 1, 1, 1, 1);
@@ -298,10 +292,10 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_button_add(o, _key_binding_get("shot", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 1, 1, 1, 1, 0, 1, 0);
 
-   ob = e_widget_label_add(o, _("Show the Desktop:"));
+   ob = e_widget_label_add(o, _("Restart Moksha:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 2, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, _key_binding_get("desk_deskshow_toggle", NULL), NULL, NULL, NULL, NULL);
+   ob = e_widget_button_add(o, _key_binding_get("restart", NULL), NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 2, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _("This Help:"));
