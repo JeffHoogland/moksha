@@ -6040,7 +6040,7 @@ msgstr " Táto nápoveda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Basic Moksha Key Bindings"
-msgstr "Skratky pre myš"
+msgstr "Základné Klávesové skratky"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
