@@ -5398,9 +5398,8 @@ msgid "Enable Thumbscroll"
 msgstr "Povoliť rolovanie"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:103
-#, fuzzy
 msgid "Threshold for a thumb drag"
-msgstr "Prah pre palec ťahať"
+msgstr "Prah pre potiahnutie"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:106
 #: src/modules/conf_interaction/e_int_config_mouse.c:163
@@ -7910,9 +7909,8 @@ msgid "Animate scrolling"
 msgstr "Animované rolovanie"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Zobrazenie nedávnych súborov"
+msgstr "Zobrazenie nedávnych položiek"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -9605,9 +9603,8 @@ msgid "Screenshot is available at this location:"
 msgstr "Obrázok bol uložený na link:"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Kopírovať"
+msgstr "Kopírovať link"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
