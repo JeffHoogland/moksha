@@ -56,7 +56,6 @@ msgid "<title>The Team</><br><br>"
 msgstr "<title>Bodhi Tím</title>"
 
 #: src/bin/e_actions.c:154
-#, fuzzy
 msgid "Profile: Switch"
 msgstr "Výber profilu"
 
@@ -5906,192 +5905,159 @@ msgstr "Stlačenie extra kolieska (%d)"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "OKNÁ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Klonovať Okno"
+msgstr " Zavrieť okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Okno do popredia"
+msgstr " Maximalizovať okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "Zmeniť Ikonifikáciu"
+msgstr " Minimalizovať okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
-msgstr "Zmeniť Na celú obrazovku"
+msgstr " Okno na celú obrazovku:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:146
-#, fuzzy
 msgid " Always On Top Toggle:"
-msgstr "Vždy navrchu"
+msgstr " Vždy navrchu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:152
-#, fuzzy
 msgid " Next Window:"
-msgstr "Nasledujúce okno"
+msgstr " Nasledujúce okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Maximalizovať vpravo"
+msgstr " Maximalizovať vpravo:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
 msgid " Tile Left:"
-msgstr ""
+msgstr " Maximalizovať vľavo:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Všetky okná"
+msgstr " Ukončiť proces okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
-#, fuzzy
 msgid " Window Menu:"
-msgstr "Menu Okna"
+msgstr " Menu okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTÉM"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Spustiť v termináli"
+msgstr " Otvoriť Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Zamknúť"
+msgstr " Zamknúť systém:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
-#, fuzzy
 msgid " Show Main Menu:"
-msgstr "Zobraziť Hlavné menu"
+msgstr " Zobraziť Hlavné menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:204
-#, fuzzy
 msgid " Show Favorites Menu:"
-msgstr "Zobraziť menu Obľúbené"
+msgstr " Zobraziť Obľúbené:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
-#, fuzzy
 msgid " System Controls:"
-msgstr "Nastavenie systému"
+msgstr " Systémovové menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Zobraziť plochu"
+msgstr " Zobraziť plochu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:227
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Prepnúť na plochu 0"
+msgstr " Prepnúť na plochu 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:233
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Prepnúť na plochu 1"
+msgstr " Prepnúť na plochu 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:239
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Prepnúť na plochu 2"
+msgstr " Prepnúť na plochu 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:245
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Prepnúť na plochu 3"
+msgstr " Prepnúť na plochu 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:251
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Prepnúť na plochu 4"
+msgstr " Prepnúť na plochu 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:257
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Prepnúť na plochu 5"
+msgstr " Prepnúť na plochu 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:263
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Prepnúť na plochu 6"
+msgstr " Prepnúť na plochu 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:269
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Prepnúť na plochu 7"
+msgstr " Prepnúť na plochu 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:275
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Prepnúť na plochu 8"
+msgstr " Prepnúť na plochu 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "RǑZNE"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
-#, fuzzy
 msgid " Quick Launcher:"
-msgstr "Rýchly prístup"
+msgstr " Rýchly prístup:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:291
-#, fuzzy
 msgid " Take Screenshot:"
-msgstr "Snímka obrazovky"
+msgstr " Snímka obrazovky:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:297
-#, fuzzy
 msgid " Restart Moksha:"
-msgstr "Reštart Moksha desktopu"
+msgstr " Reštart desktopu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Terminálu príkaz"
+msgstr " Terminálové konzoly:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Táto plocha"
+msgstr " Táto nápoveda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Skratky pre myš"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
-#, fuzzy
 msgid "Edit"
-msgstr "Upraviť ikonu"
+msgstr "Upraviť"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
 msgstr "Klávesové skratky"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Zobraziť klávesové skratky"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
-#, fuzzy
 msgid "Show bindings"
-msgstr "Zobraziť Nastavenia"
+msgstr "Zobraziť klávesové skratky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
