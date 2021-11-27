@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-11-24 17:13+0100\n"
+"PO-Revision-Date: 2021-11-27 15:51+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -3833,7 +3833,7 @@ msgid "System Check Done"
 msgstr "Vérification du système terminée"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -3841,8 +3841,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?<br><br>Fermeture "
-"automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?<br><br>"
+"%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5289,8 +5289,8 @@ msgid ""
 "action.<br>Please choose another edge to bind."
 msgstr ""
 "La séquence de raccourci que vous avez choisie est déjà utilisée<br>par "
-"l'action <hilight>%s</hilight>.<br>Veuillez choisir une autre séquence pour "
-"le raccourci des bords."
+"l'action <hilight>%s</hilight>.<br>Choisissez une autre séquence pour le "
+"raccourci des bords."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
@@ -5919,192 +5919,159 @@ msgstr "Molette supplémentaire (%d) vers le bas"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "FENÊTRES"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Cloner la fenêtre"
+msgstr " Fermer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Élever la fenêtre"
+msgstr " Maximiser la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "(Dés)Activer le mode iconifié"
+msgstr " (Dés)Activer le mode iconifié :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
-msgstr "(Dés)Activer le mode plein écran"
+msgstr " Dés)Activer le mode plein écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:146
-#, fuzzy
 msgid " Always On Top Toggle:"
-msgstr "Toujours au-dessus (in)actif"
+msgstr " Toujours au-dessus (in)actif :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:152
-#, fuzzy
 msgid " Next Window:"
-msgstr "Fenêtre suivante"
+msgstr " Fenêtre suivante :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Droit :"
+msgstr " Juxtaposer à droite :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
-#, fuzzy
 msgid " Tile Left:"
-msgstr "En haut à gauche"
+msgstr " Juxtaposer à gauche :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Toutes les fenêtres"
+msgstr " Tuer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
-#, fuzzy
 msgid " Window Menu:"
-msgstr "Menu de la fenêtre"
+msgstr " Menu de la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTÈME"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Ouvrir un terminal ici"
+msgstr " Ouvrir Terminology :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Verrouiller l'élément"
+msgstr " Verrouiller le système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
-#, fuzzy
 msgid " Show Main Menu:"
-msgstr "Afficher le menu principal"
+msgstr " Afficher le menu principal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:204
-#, fuzzy
 msgid " Show Favorites Menu:"
-msgstr "Afficher le menu des favoris"
+msgstr " Afficher le menu des favoris :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
-#, fuzzy
 msgid " System Controls:"
-msgstr "Commandes système"
+msgstr " Commandes système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
-msgstr ""
+msgstr "BUREAU"
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Afficher le bureau"
+msgstr " Afficher le bureau :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:227
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Passer au bureau 0"
+msgstr " Passer au bureau 0 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:233
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Passer au bureau 1"
+msgstr " Passer au bureau 1 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:239
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Passer au bureau 2"
+msgstr " Passer au bureau 2 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:245
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Passer au bureau 3"
+msgstr " Passer au bureau 3 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:251
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Passer au bureau 4"
+msgstr " Passer au bureau 4 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:257
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Passer au bureau 5"
+msgstr " Passer au bureau 5 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:263
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Passer au bureau 6"
+msgstr " Passer au bureau 6 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:269
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Passer au bureau 7"
+msgstr " Passer au bureau 7 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:275
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Passer au bureau 8"
+msgstr " Passer au bureau 8 :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
-#, fuzzy
 msgid " Quick Launcher:"
-msgstr "Lanceur rapide"
+msgstr " Lanceur rapide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:291
-#, fuzzy
 msgid " Take Screenshot:"
-msgstr "Capture d'écran"
+msgstr " Capture d'écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:297
-#, fuzzy
 msgid " Restart Moksha:"
-msgstr "Relancer Moksha"
+msgstr " Relancer Moksha :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Commande du terminal"
+msgstr " Console de terminal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Ce bureau"
+msgstr " Afficher l'aide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Raccourcis souris"
+msgstr "Raccourcis clavier de base dans Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
 msgstr "Édition"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
 msgstr "Raccourcis clavier"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Afficher les raccourcis clavier de Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
-#, fuzzy
 msgid "Show bindings"
-msgstr "Afficher les paramètres"
+msgstr "Afficher les raccourcis"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -7954,9 +7921,8 @@ msgid "Animate scrolling"
 msgstr "Défilement animé"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Afficher les documents récents"
+msgstr "Afficher les éléments récents"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -9239,14 +9205,14 @@ msgid ""
 msgstr ""
 "Moksha peut vérifier la disponibilité de nouvelles versions,<br>de mises à "
 "jour de sécurité et de corrections de bogues, mais<br>aussi d'extensions."
-"<br><br>C'est d'une aide précieuse pour vous tenir informé des<br>correctifs "
-"disponibles dès leur parution. Pour ce faire,<br>Moksha se connecte à "
-"enlightenment.org et échange<ps/>des données comme le ferait n'importe quel "
-"navigateur.<br>Aucune information personnelle telle que le nom et le mot "
-"de<br>passe de l'utilisateur, ou quelque fichier personnel que ce<br>soit, "
-"n'est transmis. Si vous n'en voulez vraiment pas,<br>alors désactivez la "
-"fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous exposez à des "
-"vulnérabilités et à devoir<br>vivre avec des bogues."
+"<br><br>C'est d'une aide précieuse pour vous tenir informé(e) "
+"des<br>correctifs disponibles dès leur parution. Pour ce faire,<br>Moksha se "
+"connecte à enlightenment.org et échange<ps/>des données comme le ferait "
+"n'importe quel navigateur.<br>Aucune information personnelle telle que le "
+"nom et le mot de<br>passe de l'utilisateur, ou quelque fichier personnel que "
+"ce<br>soit, n'est transmis. Si vous n'en voulez vraiment pas,<br>alors "
+"désactivez la fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous "
+"exposez à des vulnérabilités et à devoir<br>vivre avec des bogues."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9713,9 +9679,8 @@ msgid "Screenshot is available at this location:"
 msgstr "La capture est disponible ici :"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Copier"
+msgstr "Copier le lien"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
