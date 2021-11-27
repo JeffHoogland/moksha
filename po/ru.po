@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:29+0200\n"
+"POT-Creation-Date: 2021-11-27 15:02+0100\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -32,7 +32,7 @@ msgstr "Об окружении Moksha"
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
+#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1192
 msgid "Close"
 msgstr "Закрыть"
 
@@ -109,7 +109,7 @@ msgstr "Действительно хотите выйти из Moksha?"
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:315
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "Да"
 
@@ -121,7 +121,7 @@ msgstr "Завершить сессию"
 msgid "Are you sure you want to logout?"
 msgstr "Действительно хотите завершить сессию?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:752
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
 msgstr "Выключить"
 
@@ -158,7 +158,7 @@ msgstr "Действительно хотите перевести систем�
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
 #: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
 #: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
-#: src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Window : Actions"
 msgstr "Окно : Действия"
 
@@ -334,7 +334,7 @@ msgstr "Переключить режим прикрепления"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -543,7 +543,7 @@ msgstr "Перейти к окну... или запуск..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:933 src/modules/shot/e_mod_main.c:1270
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:1276
 msgid "Screen"
 msgstr "Экран"
 
@@ -682,7 +682,7 @@ msgstr "Показать меню..."
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1176
+#: src/modules/everything/evry_plug_apps.c:1177
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Запуск"
@@ -831,13 +831,13 @@ msgstr "Выбрать"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:315 src/modules/shot/e_mod_main.c:468
-#: src/modules/shot/e_mod_main.c:726 src/modules/shot/e_mod_main.c:752
-#: src/modules/shot/e_mod_main.c:992 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:732 src/modules/shot/e_mod_main.c:758
+#: src/modules/shot/e_mod_main.c:998 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Отменить"
 
-#: src/bin/e_config.c:936
+#: src/bin/e_config.c:937
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -854,7 +854,7 @@ msgstr ""
 "<br>который и был инициализирован. Можете настроить всё заново.<br>Извините "
 "за неудобства.<br>"
 
-#: src/bin/e_config.c:953
+#: src/bin/e_config.c:954
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -868,11 +868,11 @@ msgstr ""
 "Moksha.<br>Это неправильно, и поэтому ваша конфигурация была сброшена<br>на "
 "стандартную. Извините за неудобство.<br>"
 
-#: src/bin/e_config.c:1475 src/bin/e_config.c:2100
+#: src/bin/e_config.c:1477 src/bin/e_config.c:2102
 msgid "Moksha Settings Write Problems"
 msgstr "Проблемы сохранения параметров Moksha"
 
-#: src/bin/e_config.c:1478
+#: src/bin/e_config.c:1480
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -881,17 +881,18 @@ msgstr ""
 "Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
 "%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
 
-#: src/bin/e_config.c:1488 src/bin/e_config.c:2113
+#: src/bin/e_config.c:1490 src/bin/e_config.c:2115
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:621 src/bin/e_sys.c:662
+#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
+#: src/modules/conf_keybindings/e_mod_main.c:330
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -900,19 +901,19 @@ msgstr ""
 msgid "OK"
 msgstr "ОК"
 
-#: src/bin/e_config.c:1991
+#: src/bin/e_config.c:1993
 msgid "Settings Upgraded"
 msgstr "Параметры обновлены"
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 msgid "The EET file handle is bad."
 msgstr "Повреждённый указатель ЕЕТ файла."
 
-#: src/bin/e_config.c:2013
+#: src/bin/e_config.c:2015
 msgid "The file data is empty."
 msgstr "Файл данных пуст."
 
-#: src/bin/e_config.c:2017
+#: src/bin/e_config.c:2019
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -920,16 +921,16 @@ msgstr ""
 "Не получилось записать файл. Возможно диск защищён от записи,<br>либо у вас "
 "нет прав на файлы."
 
-#: src/bin/e_config.c:2021
+#: src/bin/e_config.c:2023
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Кончилась память при подготовке к записи.<br>Пожалуйста освободите память."
 
-#: src/bin/e_config.c:2025
+#: src/bin/e_config.c:2027
 msgid "This is a generic error."
 msgstr "Это стандартная ошибка."
 
-#: src/bin/e_config.c:2029
+#: src/bin/e_config.c:2031
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -937,59 +938,59 @@ msgstr ""
 "Файл настроек слишком большой.<br>Он должен быть гораздо меньше<br>(максимум "
 "несколько сотен КБ)."
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "На диске замечены ошибки ввода-вывода.<br>Возможно стоит его заменить?"
 
-#: src/bin/e_config.c:2037
+#: src/bin/e_config.c:2039
 msgid "You ran out of space while writing the file."
 msgstr "Закончилось место во время записи файла."
 
-#: src/bin/e_config.c:2041
+#: src/bin/e_config.c:2043
 msgid "The file was closed while writing."
 msgstr "Файл был закрыт во время записи."
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Отображение файла в память (mmap) не удалось."
 
-#: src/bin/e_config.c:2049
+#: src/bin/e_config.c:2051
 msgid "X509 Encoding failed."
 msgstr "Кодирование X509 не удалось."
 
-#: src/bin/e_config.c:2053
+#: src/bin/e_config.c:2055
 msgid "Signature failed."
 msgstr "Подпись ошибочна."
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2059
 msgid "The signature was invalid."
 msgstr "Подпись недействительна."
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 msgid "Not signed."
 msgstr "Не подписано."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2067
 msgid "Feature not implemented."
 msgstr "Функция не реализована"
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2071
 msgid "PRNG was not seeded."
 msgstr "Не удалось задать начальное значение для ГПСЧ."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2075
 msgid "Encryption failed."
 msgstr "Шифрование не удалось."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2079
 msgid "Decryption failed."
 msgstr "Расшифровка не удалось."
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2083
 msgid "The error is unknown to Moksha."
 msgstr "Эта ошибка не известна Moksha."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2105
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1178,7 +1179,7 @@ msgstr "Файл .desktop"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:384
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1191,7 +1192,7 @@ msgstr "Общее"
 msgid "Startup Notify"
 msgstr "Уведомление о запуске"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1190
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1191
 msgid "Run in Terminal"
 msgstr "Запускать в терминале"
 
@@ -1215,8 +1216,7 @@ msgid "Select an Executable"
 msgstr "Выбрать исполняемый файл"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
-#: src/modules/conf_dialogs/e_int_config_profiles.c:135
+#: src/bin/e_shelf.c:1794 src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
@@ -1477,7 +1477,7 @@ msgid "View Mode"
 msgstr "Режим отображения"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:510
+#: src/modules/everything/evry_config.c:517
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Сортировка"
@@ -1543,13 +1543,13 @@ msgstr "Сетка значков"
 msgid "Custom Icons"
 msgstr "Пользовательские значки"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
-#: src/modules/everything/evry_config.c:463
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:436
+#: src/modules/everything/evry_config.c:466
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Список"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:464
 msgid "Default View"
 msgstr "Вид по умолчанию"
 
@@ -1832,13 +1832,13 @@ msgstr "Прочие:"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
-#: src/modules/conf_theme/e_int_config_transitions.c:214
+#: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "Предварительный просмотр"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:432
 msgid "Default"
 msgstr "По умолчанию"
 
@@ -2072,12 +2072,12 @@ msgid "Prevent Changes In:"
 msgstr "Предотвратить изменения в:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:194
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
 msgid "Position"
 msgstr "Позиция"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:205
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
 #: src/modules/conf_interaction/e_int_config_mouse.c:159
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2086,7 +2086,7 @@ msgstr "Размер"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Уровень"
@@ -2381,8 +2381,8 @@ msgstr "Неподвижный"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
 #: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:253
-#: src/modules/conf_theme/e_int_config_transitions.c:285
+#: src/modules/conf_theme/e_int_config_transitions.c:254
+#: src/modules/conf_theme/e_int_config_transitions.c:287
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -2525,7 +2525,7 @@ msgstr "Запрос позиции"
 #: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2621,7 +2621,7 @@ msgstr "Размер, позицию и замки"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:943
 msgid "All"
 msgstr "Все"
 
@@ -2798,9 +2798,9 @@ msgstr "Избранные приложения"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1147
-#: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1148
+#: src/modules/everything/evry_plug_apps.c:1164
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Приложения"
@@ -2890,81 +2890,81 @@ msgstr "Добавить полку"
 msgid "Delete a Shelf"
 msgstr "Удалить полку"
 
-#: src/bin/e_int_shelf_config.c:44
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Настройки полки"
 
-#: src/bin/e_int_shelf_config.c:143
+#: src/bin/e_int_shelf_config.c:169
 msgid "Above Everything"
 msgstr "Над всем"
 
-#: src/bin/e_int_shelf_config.c:145
+#: src/bin/e_int_shelf_config.c:171
 msgid "Below Windows"
 msgstr "Под окнами"
 
-#: src/bin/e_int_shelf_config.c:147
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Everything"
 msgstr "Под всем"
 
-#: src/bin/e_int_shelf_config.c:149
+#: src/bin/e_int_shelf_config.c:175
 msgid "Allow windows to overlap the shelf"
 msgstr "Позволять окнам перекрывать полку"
 
-#: src/bin/e_int_shelf_config.c:199
+#: src/bin/e_int_shelf_config.c:225
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Высота (%3.0f пикс.)"
 
-#: src/bin/e_int_shelf_config.c:202
+#: src/bin/e_int_shelf_config.c:228
 msgid "Shrink to Content Width"
 msgstr "Ужимать под размер содержимого"
 
-#: src/bin/e_int_shelf_config.c:213
+#: src/bin/e_int_shelf_config.c:239
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Стиль"
 
-#: src/bin/e_int_shelf_config.c:219
+#: src/bin/e_int_shelf_config.c:245
 msgid "Auto-hide the shelf"
 msgstr "Скрывать полку автоматически"
 
-#: src/bin/e_int_shelf_config.c:224
+#: src/bin/e_int_shelf_config.c:250
 msgid "Show on mouse in"
 msgstr "Показывать при подведении мыши"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:254
 msgid "Show on mouse click"
 msgstr "Показывать при щелчке мышью"
 
-#: src/bin/e_int_shelf_config.c:233
+#: src/bin/e_int_shelf_config.c:259
 msgid "Hide timeout"
 msgstr "Скрывать через"
 
-#: src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_shelf_config.c:263
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунд"
 
-#: src/bin/e_int_shelf_config.c:243
+#: src/bin/e_int_shelf_config.c:269
 msgid "Hide duration"
 msgstr "Продолжительность скрытия"
 
-#: src/bin/e_int_shelf_config.c:247
+#: src/bin/e_int_shelf_config.c:273
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f секунд"
 
-#: src/bin/e_int_shelf_config.c:252
+#: src/bin/e_int_shelf_config.c:278
 msgid "Auto Hide"
 msgstr "Автоскрытие"
 
-#: src/bin/e_int_shelf_config.c:258
+#: src/bin/e_int_shelf_config.c:284
 msgid "Show on all Desktops"
 msgstr "Показывать на всех столах"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:286
 msgid "Show on specified Desktops"
 msgstr "Показывать на указанных столах"
 
@@ -3656,14 +3656,14 @@ msgstr "Плавающе"
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
-#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Горизонтально"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Вертикально"
@@ -3746,11 +3746,11 @@ msgstr "Ошибка полки"
 msgid "A shelf with that name already exists!"
 msgstr "Полка с этим именем уже существует!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2494
 msgid "Stop Moving Gadgets"
 msgstr "Закончить перемещение гаджетов"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2496
 msgid "Begin Moving Gadgets"
 msgstr "Начать перемещение гаджетов"
 
@@ -3786,7 +3786,7 @@ msgstr "Расположение"
 msgid "Autohide"
 msgstr "Автоскрытие"
 
-#: src/bin/e_shelf.c:2469
+#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:332
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -3805,45 +3805,45 @@ msgid "System Check Done"
 msgstr "Проверка системы закончена"
 
 #: src/bin/e_sys.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>Auto logout in %d seconds."
+"first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "Выход из сессии занимает слишком много времени. <br>Некоторые приложения "
 "отказываются закрыться. <br>Вы хотите закончить выход, не закрывая эти "
 "<br>приложения?<br><br>Автоматический выход через %d секунд."
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:513
 msgid "Logout problems"
 msgstr "Проблемы с выходом из сессии"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:515
 msgid "Logout now"
 msgstr "Выйти сейчас"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:517
 msgid "Wait longer"
 msgstr "Подождите ещё"
 
-#: src/bin/e_sys.c:506
+#: src/bin/e_sys.c:519
 msgid "Cancel Logout"
 msgstr "Отменить выход из сессии"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:563
 msgid "Logout in progress"
 msgstr "Выполняется завершение сессии"
 
-#: src/bin/e_sys.c:553
+#: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Завершение сессии.<br><hilight>Пожалуйста подождите.</hilight>"
 
-#: src/bin/e_sys.c:582 src/bin/e_sys.c:637
+#: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
 msgstr "Moksha занят другим обращением"
 
-#: src/bin/e_sys.c:587
+#: src/bin/e_sys.c:600
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3851,7 +3851,7 @@ msgstr ""
 "Завершение сеанса.<br>Вы не можете выполнять другие действия<br>после "
 "завершения сеанса."
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:607
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3859,7 +3859,7 @@ msgstr ""
 "Выключение.<br>Вы не можете выполнять другие действия<br>после того, как "
 "инициировано выключение."
 
-#: src/bin/e_sys.c:600
+#: src/bin/e_sys.c:613
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3867,7 +3867,7 @@ msgstr ""
 "Перезагрузка.<br>Вы не можете выполнять другие действия<br>после того, как "
 "инициирована перезагрузка."
 
-#: src/bin/e_sys.c:606
+#: src/bin/e_sys.c:619
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3875,7 +3875,7 @@ msgstr ""
 "Переход в ждущий режим.<br>Пока переход не завершится, вы не "
 "можете<br>выполнять любые другие действия."
 
-#: src/bin/e_sys.c:612
+#: src/bin/e_sys.c:625
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3883,51 +3883,51 @@ msgstr ""
 "Переход в спящий режим.<br>Вы не можете выполнять другие действия, пока "
 "это<br>не завершится."
 
-#: src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
 msgstr "Блиииин! Этого не должно случаться"
 
-#: src/bin/e_sys.c:643
+#: src/bin/e_sys.c:656
 msgid "Power off failed."
 msgstr "Ошибка при отключении питания."
 
-#: src/bin/e_sys.c:647
+#: src/bin/e_sys.c:660
 msgid "Reset failed."
 msgstr "Ошибка при перезагрузке."
 
-#: src/bin/e_sys.c:651
+#: src/bin/e_sys.c:664
 msgid "Suspend failed."
 msgstr "Ошибка при переходе в ждущий режим."
 
-#: src/bin/e_sys.c:655
+#: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Ошибка при переходе в спящий режим."
 
-#: src/bin/e_sys.c:755
+#: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Отключение питания.<br><hilight>Пожалуйста подождите.</hilight>"
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:812
 msgid "Resetting"
 msgstr "Перезагрузка"
 
-#: src/bin/e_sys.c:802
+#: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Перезагрузка.<br><hilight>Пожалуйста, подождите.</hilight>"
 
-#: src/bin/e_sys.c:854
+#: src/bin/e_sys.c:867
 msgid "Suspending"
 msgstr "Переход в ждущий режим"
 
-#: src/bin/e_sys.c:857
+#: src/bin/e_sys.c:870
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Переход в режим ожидания.<br><hilight>Пожалуйста, ждите.</hilight>"
 
-#: src/bin/e_sys.c:909
+#: src/bin/e_sys.c:922
 msgid "Hibernating"
 msgstr "Переход в спящий режим"
 
-#: src/bin/e_sys.c:912
+#: src/bin/e_sys.c:925
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Переход в спящий режим.<br><hilight>Пожалуйста, ждите.</hilight>"
 
@@ -4084,7 +4084,7 @@ msgstr[2] "%li минут назад"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
 msgid "Unknown"
 msgstr "Неизвестный"
 
@@ -4809,7 +4809,7 @@ msgstr "Настройки диалогов"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:533 src/modules/ibox/e_mod_config.c:97
 msgid "General Settings"
 msgstr "Общие настройки"
 
@@ -4869,12 +4869,12 @@ msgstr "Нажмите для смены обоев"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:408
-#: src/modules/everything/evry_config.c:554
+#: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
-#: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:568
 #: src/modules/everything/evry_config.c:594
-#: src/modules/everything/evry_config.c:604
+#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:611
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -4910,7 +4910,7 @@ msgid "Desktops"
 msgstr "Рабочие столы"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:498
+#: src/modules/everything/evry_config.c:505
 msgid "Off"
 msgstr "Выкл."
 
@@ -4920,7 +4920,7 @@ msgstr "Гладко"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
-#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:608
 msgid "Zoom"
 msgstr "Увеличение"
 
@@ -5170,6 +5170,7 @@ msgstr "Стол"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
+#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Пусто>"
 
@@ -5268,22 +5269,22 @@ msgstr ""
 "по краю."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1308
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1328
 msgid "WIN"
 msgstr "WIN"
 
@@ -5368,7 +5369,7 @@ msgstr "Настройки привязок сигналов"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:17
+#: src/modules/conf_keybindings/e_mod_main.c:357
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Ввод"
@@ -5585,7 +5586,7 @@ msgstr "Язык"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:29
+#: src/modules/conf_keybindings/e_mod_main.c:369
 msgid "ACPI Bindings"
 msgstr "Привязки ACPI"
 
@@ -5750,15 +5751,16 @@ msgid "Key Bindings Settings"
 msgstr "Настройки привязок клавиш"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
-#: src/modules/conf_keybindings/e_mod_main.c:21
+#: src/modules/conf_keybindings/e_mod_main.c:349
+#: src/modules/conf_keybindings/e_mod_main.c:361
 msgid "Key Bindings"
 msgstr "Привязки клавиш"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1168
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
 msgid "Binding Key Error"
 msgstr "Ошибка привязки клавиши"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1169
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -5794,7 +5796,7 @@ msgid "Mouse Binding Error"
 msgstr "Ошибка привязки мыши"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:25
+#: src/modules/conf_keybindings/e_mod_main.c:365
 msgid "Mouse Bindings"
 msgstr "Привязки мыши"
 
@@ -5889,6 +5891,195 @@ msgstr "Дополнительное колёсико (%d) вверх"
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr "Дополнительное колёсико (%d) вниз"
+
+#: src/modules/conf_keybindings/e_mod_main.c:121
+msgid "WINDOWS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:122
+#, fuzzy
+msgid " Close Window:"
+msgstr "Клонировать окно"
+
+#: src/modules/conf_keybindings/e_mod_main.c:128
+#, fuzzy
+msgid " Maximize Window:"
+msgstr "Поднять окно"
+
+#: src/modules/conf_keybindings/e_mod_main.c:134
+#, fuzzy
+msgid " Iconic Mode Toggle:"
+msgstr "Переключить портретный режим "
+
+#: src/modules/conf_keybindings/e_mod_main.c:140
+#, fuzzy
+msgid " Fullscreen Mode Toggle:"
+msgstr "Переключить полноэкранный режим"
+
+#: src/modules/conf_keybindings/e_mod_main.c:146
+#, fuzzy
+msgid " Always On Top Toggle:"
+msgstr "Переключить \"всегда наверху\""
+
+#: src/modules/conf_keybindings/e_mod_main.c:152
+#, fuzzy
+msgid " Next Window:"
+msgstr "Следующее окно"
+
+#: src/modules/conf_keybindings/e_mod_main.c:158
+#, fuzzy
+msgid " Tile Right:"
+msgstr "Правый:"
+
+#: src/modules/conf_keybindings/e_mod_main.c:164
+#, fuzzy
+msgid " Tile Left:"
+msgstr "Верхний левый"
+
+#: src/modules/conf_keybindings/e_mod_main.c:170
+#, fuzzy
+msgid " Kill Window:"
+msgstr "Все окна"
+
+#: src/modules/conf_keybindings/e_mod_main.c:176
+#, fuzzy
+msgid " Window Menu:"
+msgstr "Меню Окна"
+
+#: src/modules/conf_keybindings/e_mod_main.c:185
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:186
+#, fuzzy
+msgid " Open Terminology:"
+msgstr "Открыть терминал здесь"
+
+#: src/modules/conf_keybindings/e_mod_main.c:192
+#, fuzzy
+msgid " Lock System:"
+msgstr "Зафиксировать"
+
+#: src/modules/conf_keybindings/e_mod_main.c:198
+#, fuzzy
+msgid " Show Main Menu:"
+msgstr "Показать главное меню"
+
+#: src/modules/conf_keybindings/e_mod_main.c:204
+#, fuzzy
+msgid " Show Favorites Menu:"
+msgstr "Показать избранное меню"
+
+#: src/modules/conf_keybindings/e_mod_main.c:210
+#, fuzzy
+msgid " System Controls:"
+msgstr "Управление системой"
+
+#: src/modules/conf_keybindings/e_mod_main.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:221
+#, fuzzy
+msgid " Show the Desktop:"
+msgstr "Показать рабочий стол"
+
+#: src/modules/conf_keybindings/e_mod_main.c:227
+#, fuzzy
+msgid " Switch to Desktop 0:"
+msgstr "Перейти на рабочий стол 0"
+
+#: src/modules/conf_keybindings/e_mod_main.c:233
+#, fuzzy
+msgid " Switch to Desktop 1:"
+msgstr "Перейти на рабочий стол 1"
+
+#: src/modules/conf_keybindings/e_mod_main.c:239
+#, fuzzy
+msgid " Switch to Desktop 2:"
+msgstr "Перейти на рабочий стол 2"
+
+#: src/modules/conf_keybindings/e_mod_main.c:245
+#, fuzzy
+msgid " Switch to Desktop 3:"
+msgstr "Перейти на рабочий стол 3"
+
+#: src/modules/conf_keybindings/e_mod_main.c:251
+#, fuzzy
+msgid " Switch to Desktop 4:"
+msgstr "Перейти на рабочий стол 4"
+
+#: src/modules/conf_keybindings/e_mod_main.c:257
+#, fuzzy
+msgid " Switch to Desktop 5:"
+msgstr "Перейти на рабочий стол 5"
+
+#: src/modules/conf_keybindings/e_mod_main.c:263
+#, fuzzy
+msgid " Switch to Desktop 6:"
+msgstr "Перейти на рабочий стол 6"
+
+#: src/modules/conf_keybindings/e_mod_main.c:269
+#, fuzzy
+msgid " Switch to Desktop 7:"
+msgstr "Перейти на рабочий стол 7"
+
+#: src/modules/conf_keybindings/e_mod_main.c:275
+#, fuzzy
+msgid " Switch to Desktop 8:"
+msgstr "Перейти на рабочий стол 8"
+
+#: src/modules/conf_keybindings/e_mod_main.c:284
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:285
+#, fuzzy
+msgid " Quick Launcher:"
+msgstr "Быстрый запуск"
+
+#: src/modules/conf_keybindings/e_mod_main.c:291
+#, fuzzy
+msgid " Take Screenshot:"
+msgstr "Сделать снимок экрана"
+
+#: src/modules/conf_keybindings/e_mod_main.c:297
+#, fuzzy
+msgid " Restart Moksha:"
+msgstr "Перезапустить Moksha"
+
+#: src/modules/conf_keybindings/e_mod_main.c:303
+#, fuzzy
+msgid " Terminal console:"
+msgstr "Команда вызова терминала"
+
+#: src/modules/conf_keybindings/e_mod_main.c:309
+#, fuzzy
+msgid " This Help:"
+msgstr "Этот рабочий стол"
+
+#: src/modules/conf_keybindings/e_mod_main.c:329
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "Привязки мыши"
+
+#: src/modules/conf_keybindings/e_mod_main.c:331
+msgid "Edit"
+msgstr "Изменить"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+#, fuzzy
+msgid "Keybindings"
+msgstr "Привязки клавиш"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+msgid "View Moksha Keybindings"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:382
+#, fuzzy
+msgid "Show bindings"
+msgstr "Показать настройки"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6028,8 +6219,8 @@ msgstr "Темы"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:441
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:444
+#: src/modules/everything/evry_config.c:470
 msgid "Icons"
 msgstr "Значки"
 
@@ -6188,13 +6379,13 @@ msgid "e.g. Saving to disk"
 msgstr "(например, сохранение на диск)"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:920
+#: src/modules/shot/e_mod_main.c:926
 #: src/modules/notification/e_mod_config.c:116
 msgid "Low"
 msgstr "Низкий"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:918
+#: src/modules/shot/e_mod_main.c:924
 msgid "Medium"
 msgstr "Средний"
 
@@ -6206,7 +6397,7 @@ msgid "%.0f s"
 msgstr "%.0f с"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:916
+#: src/modules/shot/e_mod_main.c:922
 msgid "High"
 msgstr "Высокий"
 
@@ -7673,154 +7864,159 @@ msgstr "Показать Всё-запускатель"
 msgid "Everything Configuration"
 msgstr "Конфигурация Всё"
 
-#: src/modules/everything/e_mod_main.c:409
+#: src/modules/everything/e_mod_main.c:410
 msgid "Everything Module"
 msgstr "Модуль Всё"
 
-#: src/modules/everything/e_mod_main.c:601
+#: src/modules/everything/e_mod_main.c:603
 msgid "Quick Launcher"
 msgstr "Быстрый запуск"
 
-#: src/modules/everything/evry_config.c:79
+#: src/modules/everything/evry_config.c:80
 msgid "Everything Settings"
 msgstr "Настройки Всё"
 
-#: src/modules/everything/evry_config.c:367
+#: src/modules/everything/evry_config.c:370
 msgid "Available Plugins"
 msgstr "Доступные плагины"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 msgid "Move Up"
 msgstr "Переместить вверх"
 
-#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:379
 msgid "Move Down"
 msgstr "Переместить вниз"
 
-#: src/modules/everything/evry_config.c:382
+#: src/modules/everything/evry_config.c:385
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Настроить"
 
-#: src/modules/everything/evry_config.c:388
+#: src/modules/everything/evry_config.c:391
 msgid "Enabled"
 msgstr "Включено"
 
-#: src/modules/everything/evry_config.c:394
+#: src/modules/everything/evry_config.c:397
 msgid "Show in \"All\""
 msgstr "Показывать в списке \"Все\""
 
-#: src/modules/everything/evry_config.c:400
+#: src/modules/everything/evry_config.c:403
 msgid "Show in top-level"
 msgstr "Показывать в меню верхнего уровня"
 
-#: src/modules/everything/evry_config.c:406
+#: src/modules/everything/evry_config.c:409
 msgid "Minimum characters for search"
 msgstr "Минимальное количество символов для поиска"
 
-#: src/modules/everything/evry_config.c:415
+#: src/modules/everything/evry_config.c:418
 msgid "Plugin Trigger"
 msgstr "Срабатывание плагина"
 
-#: src/modules/everything/evry_config.c:420
+#: src/modules/everything/evry_config.c:423
 msgid "Search only when triggered"
 msgstr "Искать только при срабатывании"
 
-#: src/modules/everything/evry_config.c:427
+#: src/modules/everything/evry_config.c:430
 msgid "Plugin View"
 msgstr "Вид плагина"
 
-#: src/modules/everything/evry_config.c:437
-#: src/modules/everything/evry_config.c:465
+#: src/modules/everything/evry_config.c:440
+#: src/modules/everything/evry_config.c:468
 msgid "Detailed"
 msgstr "Подробно"
 
-#: src/modules/everything/evry_config.c:470
+#: src/modules/everything/evry_config.c:473
 msgid "Animate scrolling"
 msgstr "Анимация прокрутки"
 
-#: src/modules/everything/evry_config.c:477
+#: src/modules/everything/evry_config.c:476
+#, fuzzy
+msgid "Show recently used items"
+msgstr "Показывать недавние файлы"
+
+#: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
 msgstr "Вверх / Вниз выбирает следующий элемент в пиктограммах"
 
-#: src/modules/everything/evry_config.c:486
+#: src/modules/everything/evry_config.c:493
 msgid "Hide input when inactive"
 msgstr "Скрывать ввод при бездействии"
 
-#: src/modules/everything/evry_config.c:491
+#: src/modules/everything/evry_config.c:498
 msgid "Hide list"
 msgstr "Скрывать список"
 
-#: src/modules/everything/evry_config.c:496
+#: src/modules/everything/evry_config.c:503
 msgid "Quick Navigation"
 msgstr "Быстрая навигация"
 
-#: src/modules/everything/evry_config.c:500
+#: src/modules/everything/evry_config.c:507
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Стиль Emacs (ALT·+·n,p,f,b,m,i)"
 
-#: src/modules/everything/evry_config.c:502
+#: src/modules/everything/evry_config.c:509
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Стиль Vi (ALT + h,j,k,l,n,p,m,i)"
 
-#: src/modules/everything/evry_config.c:505
+#: src/modules/everything/evry_config.c:512
 #, fuzzy
 msgid "Single mouse click"
 msgstr "Показывать при щелчке мышью"
 
-#: src/modules/everything/evry_config.c:512
+#: src/modules/everything/evry_config.c:519
 msgid "No Sorting"
 msgstr "Без сортировки"
 
-#: src/modules/everything/evry_config.c:515
+#: src/modules/everything/evry_config.c:522
 msgid "By usage"
 msgstr "По использованию"
 
-#: src/modules/everything/evry_config.c:518
+#: src/modules/everything/evry_config.c:525
 msgid "Most used"
 msgstr "Наиболее используемые"
 
-#: src/modules/everything/evry_config.c:521
+#: src/modules/everything/evry_config.c:528
 msgid "Last used"
 msgstr "Последние использованные"
 
-#: src/modules/everything/evry_config.c:533
+#: src/modules/everything/evry_config.c:540
 msgid "Subject Plugins"
 msgstr "Тематические плагины"
 
-#: src/modules/everything/evry_config.c:537
+#: src/modules/everything/evry_config.c:544
 msgid "Action Plugins"
 msgstr "Плагины действий"
 
-#: src/modules/everything/evry_config.c:541
+#: src/modules/everything/evry_config.c:548
 msgid "Object Plugins"
 msgstr "Плагины объектов"
 
-#: src/modules/everything/evry_config.c:544
-#: src/modules/everything/evry_config.c:752
+#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:759
 msgid "Plugins"
 msgstr "Плагины"
 
-#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:558
 msgid "Popup Size"
 msgstr "Размер всплывающего окна"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 msgid "Popup Width"
 msgstr "Ширина всплывающего окна"
 
-#: src/modules/everything/evry_config.c:559
-#: src/modules/everything/evry_config.c:592
+#: src/modules/everything/evry_config.c:566
+#: src/modules/everything/evry_config.c:599
 msgid "Popup Height"
 msgstr "Высота всплывающего окна"
 
-#: src/modules/everything/evry_config.c:567
+#: src/modules/everything/evry_config.c:574
 msgid "Popup Align"
 msgstr "Выравнивание всплывающего окна"
 
-#: src/modules/everything/evry_config.c:570
 #: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -7829,21 +8025,21 @@ msgstr "Выравнивание всплывающего окна"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:584
+#: src/modules/everything/evry_config.c:591
 msgid "Edge Popup Size"
 msgstr "Размер рамки всплывающего окна"
 
-#: src/modules/everything/evry_config.c:602
+#: src/modules/everything/evry_config.c:609
 #, fuzzy
 msgid "Zoom value"
 msgstr "Отдаление изображения"
 
-#: src/modules/everything/evry_config.c:610
+#: src/modules/everything/evry_config.c:617
 #: src/modules/winlist/e_int_config_winlist.c:296
 msgid "Geometry"
 msgstr "Геометрия"
 
-#: src/modules/everything/evry_config.c:647
+#: src/modules/everything/evry_config.c:654
 msgid "Everything Collection"
 msgstr "Всё - Коллекция"
 
@@ -7875,59 +8071,59 @@ msgstr[2] "%d элементов"
 msgid "No plugins loaded"
 msgstr "Не загружены плагины"
 
-#: src/modules/everything/evry_plug_apps.c:1155
+#: src/modules/everything/evry_plug_apps.c:1156
 msgid "Exebuf"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1170
-#: src/modules/everything/evry_plug_apps.c:1217
+#: src/modules/everything/evry_plug_apps.c:1171
+#: src/modules/everything/evry_plug_apps.c:1218
 #: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Открыть с помощью..."
 
-#: src/modules/everything/evry_plug_apps.c:1183
+#: src/modules/everything/evry_plug_apps.c:1184
 msgid "Open File..."
 msgstr "Открыть файл..."
 
-#: src/modules/everything/evry_plug_apps.c:1197
+#: src/modules/everything/evry_plug_apps.c:1198
 msgid "Edit Application Entry"
 msgstr "Редактировать запись о приложении"
 
-#: src/modules/everything/evry_plug_apps.c:1204
+#: src/modules/everything/evry_plug_apps.c:1205
 msgid "New Application Entry"
 msgstr "Создать запись о приложении"
 
-#: src/modules/everything/evry_plug_apps.c:1211
+#: src/modules/everything/evry_plug_apps.c:1212
 msgid "Run with Sudo"
 msgstr "Запустить с помощью Sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1224
+#: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/fileman/e_fwin.c:252
 msgid "Open Terminal here"
 msgstr "Открыть терминал здесь"
 
-#: src/modules/everything/evry_plug_apps.c:1230
+#: src/modules/everything/evry_plug_apps.c:1231
 msgid "Run Executable"
 msgstr "Запустить исполняемый файл"
 
-#: src/modules/everything/evry_plug_apps.c:1308
-#: src/modules/everything/evry_plug_apps.c:1436
+#: src/modules/everything/evry_plug_apps.c:1309
+#: src/modules/everything/evry_plug_apps.c:1437
 msgid "Everything Applications"
 msgstr "Приложения Всё"
 
-#: src/modules/everything/evry_plug_apps.c:1339
+#: src/modules/everything/evry_plug_apps.c:1340
 msgid "Commands"
 msgstr "Команды"
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1341
 msgid "Terminal Command"
 msgstr "Команда вызова терминала"
 
-#: src/modules/everything/evry_plug_apps.c:1345
+#: src/modules/everything/evry_plug_apps.c:1346
 msgid "Sudo GUI"
 msgstr "Графическая оболочка для Sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
@@ -9362,23 +9558,23 @@ msgstr "Системный лоток не работает в полке рас
 msgid "Systray"
 msgstr "Системный лоток"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
+#: src/modules/shot/e_mod_main.c:78 src/modules/shot/e_mod_main.c:1183
 msgid "Screenshot"
 msgstr "Сделать снимок экрана"
 
-#: src/modules/shot/e_mod_main.c:98
+#: src/modules/shot/e_mod_main.c:99
 msgid "Screenshot in: "
 msgstr "Съёмка через: "
 
-#: src/modules/shot/e_mod_main.c:113
+#: src/modules/shot/e_mod_main.c:114
 msgid "Screenshot stored in"
 msgstr "Снимок сохранён в"
 
-#: src/modules/shot/e_mod_main.c:308
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr "Ошибка - Папка не существует"
 
-#: src/modules/shot/e_mod_main.c:310
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
@@ -9386,20 +9582,20 @@ msgstr ""
 "Измените папку в настройках Снимок экрана<br><br>Меню-Настройки-Панель "
 "параметров-Расширения-Снимок экрана<br>Хотите сделать это прямо сейчас?"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
 msgstr "Ошибка сохранения файла снимка экрана"
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
 msgstr "Путь: %s"
 
-#: src/modules/shot/e_mod_main.c:388
+#: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
 msgstr "Ошибка — неизвестный формат"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9408,93 +9604,94 @@ msgstr ""
 "расширения<br>'.jpg' или '.png', так как другие форматы<br>пока не "
 "поддерживаются."
 
-#: src/modules/shot/e_mod_main.c:452
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr "Выберите место сохранения снимка"
 
-#: src/modules/shot/e_mod_main.c:466 src/modules/shot/e_mod_main.c:988
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:994
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Загружено %s / %s"
 
-#: src/modules/shot/e_mod_main.c:590
+#: src/modules/shot/e_mod_main.c:592
 msgid "Error - Upload Failed"
 msgstr "Ошибка — сбой при загрузке"
 
-#: src/modules/shot/e_mod_main.c:591
+#: src/modules/shot/e_mod_main.c:593
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Загрузка не удалась — код статуса:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:636
+#: src/modules/shot/e_mod_main.c:642
 msgid "Error - Can't create file"
 msgstr "Ошибка — не удалось создать файл"
 
-#: src/modules/shot/e_mod_main.c:637
+#: src/modules/shot/e_mod_main.c:643
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Не удалось создать временный файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:655
+#: src/modules/shot/e_mod_main.c:661
 msgid "Error - Can't open file"
 msgstr "Ошибка — не удалось открыть файл"
 
-#: src/modules/shot/e_mod_main.c:656
+#: src/modules/shot/e_mod_main.c:662
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Не удалось открыть временный файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:664
+#: src/modules/shot/e_mod_main.c:670
 msgid "Error - Bad size"
 msgstr "Ошибка — неправильный размер"
 
-#: src/modules/shot/e_mod_main.c:665
+#: src/modules/shot/e_mod_main.c:671
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Не удалось получить размер файла '%s'"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:681
 msgid "Error - Can't allocate memory"
 msgstr "Ошибка — не удалось выделить память"
 
-#: src/modules/shot/e_mod_main.c:676
+#: src/modules/shot/e_mod_main.c:682
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Не удалось выделить память для изображения: %s"
 
-#: src/modules/shot/e_mod_main.c:683
+#: src/modules/shot/e_mod_main.c:689
 msgid "Error - Can't read picture"
 msgstr "Ошибка — не удалось прочитать изображение"
 
-#: src/modules/shot/e_mod_main.c:684
+#: src/modules/shot/e_mod_main.c:690
 msgid "Cannot read picture"
 msgstr "Не удалось прочитать изображение"
 
-#: src/modules/shot/e_mod_main.c:706
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading screenshot"
 msgstr "Загрузка снимка экрана"
 
-#: src/modules/shot/e_mod_main.c:711
+#: src/modules/shot/e_mod_main.c:717
 msgid "Uploading ..."
 msgstr "Загрузка..."
 
-#: src/modules/shot/e_mod_main.c:716
+#: src/modules/shot/e_mod_main.c:722
 msgid "Screenshot is available at this location:"
 msgstr "Снимок доступен по этому адресу:"
 
-#: src/modules/shot/e_mod_main.c:725
-msgid "Hide"
-msgstr "Скрыть"
+#: src/modules/shot/e_mod_main.c:731
+#, fuzzy
+msgid "Copy link"
+msgstr "Копировать"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
 msgstr "Подтвердите отправку"
 
-#: src/modules/shot/e_mod_main.c:750
+#: src/modules/shot/e_mod_main.c:756
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9502,27 +9699,27 @@ msgstr ""
 "Это изображение будет загружено на<br>enlightenment.org. Оно будет в "
 "публичном доступе"
 
-#: src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:758
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: src/modules/shot/e_mod_main.c:853
+#: src/modules/shot/e_mod_main.c:859
 msgid "Where to put Screenshot..."
 msgstr "Где разместить снимок..."
 
-#: src/modules/shot/e_mod_main.c:905
+#: src/modules/shot/e_mod_main.c:911
 msgid "Quality"
 msgstr "Уровень качества"
 
-#: src/modules/shot/e_mod_main.c:914
+#: src/modules/shot/e_mod_main.c:920
 msgid "Perfect"
 msgstr "Идеальный"
 
-#: src/modules/shot/e_mod_main.c:990
+#: src/modules/shot/e_mod_main.c:996
 msgid "Share"
 msgstr "Поделиться"
 
-#: src/modules/shot/e_mod_main.c:1174
+#: src/modules/shot/e_mod_main.c:1180
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9531,32 +9728,32 @@ msgstr ""
 "Выберите режим съёмки экрана... <br>Задержка задаётся в настройках модуля "
 "Снимок экрана<br>Текущая задержка: <b> %d с</b>"
 
-#: src/modules/shot/e_mod_main.c:1183
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Instant shot"
 msgstr "Мгновенный снимок"
 
-#: src/modules/shot/e_mod_main.c:1184
+#: src/modules/shot/e_mod_main.c:1190
 msgid "Delayed shot"
 msgstr "Снимок с задержкой"
 
-#: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1230 src/modules/shot/e_mod_main.c:1284
 msgid "Take Shot"
 msgstr "Сделать снимок"
 
-#: src/modules/shot/e_mod_main.c:1235 src/modules/shot/e_mod_main.c:1270
-#: src/modules/shot/e_mod_main.c:1282
+#: src/modules/shot/e_mod_main.c:1241 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1288
 msgid "Take Screenshot"
 msgstr "Сделать снимок экрана"
 
-#: src/modules/shot/e_mod_main.c:1258
+#: src/modules/shot/e_mod_main.c:1264
 msgid "Shot Error"
 msgstr "Ошибка снимка"
 
-#: src/modules/shot/e_mod_main.c:1259
+#: src/modules/shot/e_mod_main.c:1265
 msgid "Cannot initialize network"
 msgstr "Не удалось инициализировать сеть"
 
-#: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:53
 msgid "Screenshot Settings"
 msgstr "Снимок экрана"
 
@@ -10220,6 +10417,9 @@ msgstr "Громкость увеличена"
 msgid "Volume Mute"
 msgstr "Звук выкл."
 
+#~ msgid "Hide"
+#~ msgstr "Скрыть"
+
 #~ msgid "Popup Corner"
 #~ msgstr "Угол появления уведомления"
 
@@ -10301,14 +10501,8 @@ msgstr "Звук выкл."
 #~ msgid "Left:"
 #~ msgstr "Левый:"
 
-#~ msgid "Right:"
-#~ msgstr "Правый:"
-
 #~ msgid "Lock Sliders"
 #~ msgstr "Фиксировать каналы"
-
-#~ msgid "Edit"
-#~ msgstr "Изменить"
 
 #~ msgid "Show both sliders when locked"
 #~ msgstr "Показывать оба бегунка при фиксации"
@@ -10562,9 +10756,6 @@ msgstr "Звук выкл."
 
 #~ msgid "Corner"
 #~ msgstr "Угол"
-
-#~ msgid "Top Left"
-#~ msgstr "Верхний левый"
 
 #~ msgid "Top Right"
 #~ msgstr "Верхний правый"

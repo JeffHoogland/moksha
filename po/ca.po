@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:29+0200\n"
+"POT-Creation-Date: 2021-11-27 15:02+0100\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
@@ -33,7 +33,7 @@ msgstr "Quant a l'entorn Moksha"
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
+#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1192
 msgid "Close"
 msgstr "Tanca"
 
@@ -111,7 +111,7 @@ msgstr "Segur que voleu sortir?"
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:315
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "Sí"
 
@@ -123,7 +123,7 @@ msgstr "Tanca sessió"
 msgid "Are you sure you want to logout?"
 msgstr "Segur que voleu tancar la sessió?"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:752
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
 msgstr "Apaga"
 
@@ -160,7 +160,7 @@ msgstr "Segur que voleu hibernar l'ordinador?"
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
 #: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
 #: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
-#: src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Window : Actions"
 msgstr "Finestra : Accions"
 
@@ -337,7 +337,7 @@ msgstr "Alterna: enganxa a l'Escriptori"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -546,7 +546,7 @@ msgstr "Salta a la finestra... o a l'inici..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:933 src/modules/shot/e_mod_main.c:1270
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:1276
 msgid "Screen"
 msgstr "Pantalla"
 
@@ -685,7 +685,7 @@ msgstr "Mostra menú..."
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1176
+#: src/modules/everything/evry_plug_apps.c:1177
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Executa"
@@ -834,13 +834,13 @@ msgstr "Selecciona"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:315 src/modules/shot/e_mod_main.c:468
-#: src/modules/shot/e_mod_main.c:726 src/modules/shot/e_mod_main.c:752
-#: src/modules/shot/e_mod_main.c:992 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:732 src/modules/shot/e_mod_main.c:758
+#: src/modules/shot/e_mod_main.c:998 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: src/bin/e_config.c:936
+#: src/bin/e_config.c:937
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -858,7 +858,7 @@ msgstr ""
 "<br> Ara podreu reconfigurar les coses com<br>desitgeu. Disculpeu les "
 "molèsties.<br>"
 
-#: src/bin/e_config.c:953
+#: src/bin/e_config.c:954
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -873,11 +873,11 @@ msgstr ""
 "i <br> com a precaució la vostra configuració ha estat restaurada <br> per "
 "defecte. Disculpeu les molèsties.<br>"
 
-#: src/bin/e_config.c:1475 src/bin/e_config.c:2100
+#: src/bin/e_config.c:1477 src/bin/e_config.c:2102
 msgid "Moksha Settings Write Problems"
 msgstr "Problemes en escriure les preferències d'Moksha"
 
-#: src/bin/e_config.c:1478
+#: src/bin/e_config.c:1480
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -887,17 +887,18 @@ msgstr ""
 "%s <br> <br> a:<br> %s<br> <br> La resta d'escriptura ha estat cancel·lada "
 "per seguretat.<br>"
 
-#: src/bin/e_config.c:1488 src/bin/e_config.c:2113
+#: src/bin/e_config.c:1490 src/bin/e_config.c:2115
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:621 src/bin/e_sys.c:662
+#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
+#: src/modules/conf_keybindings/e_mod_main.c:330
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -906,19 +907,19 @@ msgstr ""
 msgid "OK"
 msgstr "Accepta"
 
-#: src/bin/e_config.c:1991
+#: src/bin/e_config.c:1993
 msgid "Settings Upgraded"
 msgstr "Paràmetres actualitzats"
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 msgid "The EET file handle is bad."
 msgstr "L'identificador d'arxiu EET és dolent."
 
-#: src/bin/e_config.c:2013
+#: src/bin/e_config.c:2015
 msgid "The file data is empty."
 msgstr "L'arxiu de dades és buit."
 
-#: src/bin/e_config.c:2017
+#: src/bin/e_config.c:2019
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -926,17 +927,17 @@ msgstr ""
 "El fitxer no es pot escriure. Podria ser que el disc sigui de només "
 "lectura<br> o que hagi perdut els permisos dels seus fitxers."
 
-#: src/bin/e_config.c:2021
+#: src/bin/e_config.c:2023
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "S'ha quedat sense memòria mentre es preparava l'escriptura.<br>Si us plau, "
 "allibereu memòria."
 
-#: src/bin/e_config.c:2025
+#: src/bin/e_config.c:2027
 msgid "This is a generic error."
 msgstr "Això és un error genèric."
 
-#: src/bin/e_config.c:2029
+#: src/bin/e_config.c:2031
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -944,59 +945,59 @@ msgstr ""
 "L'arxiu de configuració és massa gran.<br>Hauria de ser molt petit (uns "
 "centenars de KB com a màxim)."
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Teniu errors d'entrada/sortida al disc.<br>Potser l'haureu de canviar?"
 
-#: src/bin/e_config.c:2037
+#: src/bin/e_config.c:2039
 msgid "You ran out of space while writing the file."
 msgstr "Us heu quedat sense espai per escriure el fitxer."
 
-#: src/bin/e_config.c:2041
+#: src/bin/e_config.c:2043
 msgid "The file was closed while writing."
 msgstr "El fitxer s'ha tancat mentre s'escrivia."
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "L'assignació de memòria (mmap) de l'arxiu ha fallat."
 
-#: src/bin/e_config.c:2049
+#: src/bin/e_config.c:2051
 msgid "X509 Encoding failed."
 msgstr "Ha fallat la codificació X509."
 
-#: src/bin/e_config.c:2053
+#: src/bin/e_config.c:2055
 msgid "Signature failed."
 msgstr "Ha fallat la signatura."
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2059
 msgid "The signature was invalid."
 msgstr "Signatura no vàlida."
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 msgid "Not signed."
 msgstr "No signat."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2067
 msgid "Feature not implemented."
 msgstr "Funció no implementada."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2071
 msgid "PRNG was not seeded."
 msgstr "Impossible generar nombre pseudo-aleatori."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2075
 msgid "Encryption failed."
 msgstr "Ha fallat el xifrat."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2079
 msgid "Decryption failed."
 msgstr "Ha fallat el desxifrat."
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2083
 msgid "The error is unknown to Moksha."
 msgstr "Aquest error és desconegut per a l'Moksha."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2105
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1186,7 +1187,7 @@ msgstr "Fitxer d'escriptori"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:384
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1199,7 +1200,7 @@ msgstr "General"
 msgid "Startup Notify"
 msgstr "Notificació d'inici"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1190
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1191
 msgid "Run in Terminal"
 msgstr "Executa en un terminal"
 
@@ -1223,8 +1224,7 @@ msgid "Select an Executable"
 msgstr "Seleccioneu un executable"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
-#: src/modules/conf_dialogs/e_int_config_profiles.c:135
+#: src/bin/e_shelf.c:1794 src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
@@ -1486,7 +1486,7 @@ msgid "View Mode"
 msgstr "Mode vista"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:510
+#: src/modules/everything/evry_config.c:517
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Ordre"
@@ -1552,13 +1552,13 @@ msgstr "Graella d'icones"
 msgid "Custom Icons"
 msgstr "Personalització icones"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
-#: src/modules/everything/evry_config.c:463
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:436
+#: src/modules/everything/evry_config.c:466
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Llista"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:464
 msgid "Default View"
 msgstr "Vista per defecte"
 
@@ -1838,13 +1838,13 @@ msgstr "Altres:"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
-#: src/modules/conf_theme/e_int_config_transitions.c:214
+#: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "Vista prèvia"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:432
 msgid "Default"
 msgstr "Per defecte"
 
@@ -2078,12 +2078,12 @@ msgid "Prevent Changes In:"
 msgstr "Prevenir canvis a:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:194
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
 msgid "Position"
 msgstr "Posició"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:205
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
 #: src/modules/conf_interaction/e_int_config_mouse.c:159
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2092,7 +2092,7 @@ msgstr "Mida"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Apilament"
@@ -2387,8 +2387,8 @@ msgstr "Estàtic"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
 #: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:253
-#: src/modules/conf_theme/e_int_config_transitions.c:285
+#: src/modules/conf_theme/e_int_config_transitions.c:254
+#: src/modules/conf_theme/e_int_config_transitions.c:287
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -2531,7 +2531,7 @@ msgstr "Demana posició"
 #: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2625,7 +2625,7 @@ msgstr "Mida, posició i bloquejos"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:943
 msgid "All"
 msgstr "Tot"
 
@@ -2802,9 +2802,9 @@ msgstr "Aplicacions preferides"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1147
-#: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1148
+#: src/modules/everything/evry_plug_apps.c:1164
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Aplicacions"
@@ -2896,81 +2896,81 @@ msgstr "Afegeix un tauler"
 msgid "Delete a Shelf"
 msgstr "Elimina un tauler"
 
-#: src/bin/e_int_shelf_config.c:44
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Configuració del tauler"
 
-#: src/bin/e_int_shelf_config.c:143
+#: src/bin/e_int_shelf_config.c:169
 msgid "Above Everything"
 msgstr "﻿Damunt de tot"
 
-#: src/bin/e_int_shelf_config.c:145
+#: src/bin/e_int_shelf_config.c:171
 msgid "Below Windows"
 msgstr "Per sota les finestres"
 
-#: src/bin/e_int_shelf_config.c:147
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Everything"
 msgstr "Sota de tot"
 
-#: src/bin/e_int_shelf_config.c:149
+#: src/bin/e_int_shelf_config.c:175
 msgid "Allow windows to overlap the shelf"
 msgstr "Permet a les finestres superposar-se al tauler"
 
-#: src/bin/e_int_shelf_config.c:199
+#: src/bin/e_int_shelf_config.c:225
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Alçada (%3.0f píxels)"
 
-#: src/bin/e_int_shelf_config.c:202
+#: src/bin/e_int_shelf_config.c:228
 msgid "Shrink to Content Width"
 msgstr "Ajusta a l'amplada del contingut"
 
-#: src/bin/e_int_shelf_config.c:213
+#: src/bin/e_int_shelf_config.c:239
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Estil"
 
-#: src/bin/e_int_shelf_config.c:219
+#: src/bin/e_int_shelf_config.c:245
 msgid "Auto-hide the shelf"
 msgstr "Amaga automàticament el tauler"
 
-#: src/bin/e_int_shelf_config.c:224
+#: src/bin/e_int_shelf_config.c:250
 msgid "Show on mouse in"
 msgstr "Mostra quan el ratolí estigui dins"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:254
 msgid "Show on mouse click"
 msgstr "Mostra quan es cliqui el ratolí"
 
-#: src/bin/e_int_shelf_config.c:233
+#: src/bin/e_int_shelf_config.c:259
 msgid "Hide timeout"
 msgstr "Temps d'espera ocultació"
 
-#: src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_shelf_config.c:263
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f segons"
 
-#: src/bin/e_int_shelf_config.c:243
+#: src/bin/e_int_shelf_config.c:269
 msgid "Hide duration"
 msgstr "Durada de l'ocultació"
 
-#: src/bin/e_int_shelf_config.c:247
+#: src/bin/e_int_shelf_config.c:273
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f segons"
 
-#: src/bin/e_int_shelf_config.c:252
+#: src/bin/e_int_shelf_config.c:278
 msgid "Auto Hide"
 msgstr "Amaga automàticament"
 
-#: src/bin/e_int_shelf_config.c:258
+#: src/bin/e_int_shelf_config.c:284
 msgid "Show on all Desktops"
 msgstr "Mostra a tots els escriptoris"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:286
 msgid "Show on specified Desktops"
 msgstr "Mostra als escriptoris especificats"
 
@@ -3668,14 +3668,14 @@ msgstr "Flota"
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
-#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horitzontal"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertical"
@@ -3758,11 +3758,11 @@ msgstr "Error del tauler"
 msgid "A shelf with that name already exists!"
 msgstr "Ja existeix un tauler amb aquest nom!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2494
 msgid "Stop Moving Gadgets"
 msgstr "Finalitza moure ginys"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2496
 msgid "Begin Moving Gadgets"
 msgstr "Moure ginys"
 
@@ -3797,7 +3797,7 @@ msgstr "Orientació"
 msgid "Autohide"
 msgstr "Amaga automàticament"
 
-#: src/bin/e_shelf.c:2469
+#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:332
 msgid "Refresh"
 msgstr "Refresca"
 
@@ -3816,46 +3816,46 @@ msgid "System Check Done"
 msgstr "Comprovació del sistema finalitzada"
 
 #: src/bin/e_sys.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>Auto logout in %d seconds."
+"first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "S'està trigant molt de temps en tancar la sessió. <br>Algunes aplicacions no "
 "es tanquen.<br>Voleu tancar la sessió<br>sense tancar "
 "aquestes<br>aplicacions primer?<br><br>Es tancarà la sessió automàticament "
 "en %d segons."
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:513
 msgid "Logout problems"
 msgstr "Problemes de sortida"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:515
 msgid "Logout now"
 msgstr "Sortir immediatament"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:517
 msgid "Wait longer"
 msgstr "Espera més temps"
 
-#: src/bin/e_sys.c:506
+#: src/bin/e_sys.c:519
 msgid "Cancel Logout"
 msgstr "Cancel·la sortida"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:563
 msgid "Logout in progress"
 msgstr "La sortida està en procés"
 
-#: src/bin/e_sys.c:553
+#: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "Sortida en procés.<br><hilight>Si us plau, espereu.</hilight>"
 
-#: src/bin/e_sys.c:582 src/bin/e_sys.c:637
+#: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
 msgstr "Moksha està ocupat amb una altra petició"
 
-#: src/bin/e_sys.c:587
+#: src/bin/e_sys.c:600
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
@@ -3863,7 +3863,7 @@ msgstr ""
 "Tancament de sessió.<br>No es pot realitzar cap altra acció de sistema<br>un "
 "cop el tancament de sessió ha començat."
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:607
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -3871,7 +3871,7 @@ msgstr ""
 "Apagant.<br>No es pot fer cap altra acció<br>de sistema una vegada a "
 "l'aturada s'ha iniciat."
 
-#: src/bin/e_sys.c:600
+#: src/bin/e_sys.c:613
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -3879,7 +3879,7 @@ msgstr ""
 "Reiniciant.<br>No es pot fer cap altra acció de sistema<br>un cop ha "
 "començat la reiniciada."
 
-#: src/bin/e_sys.c:606
+#: src/bin/e_sys.c:619
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -3887,7 +3887,7 @@ msgstr ""
 "Aturant temporalment.<br>Fins que l'aturada temporal s'hagi completat no es "
 "pot realitzar cap<br>altra acció de sistema."
 
-#: src/bin/e_sys.c:612
+#: src/bin/e_sys.c:625
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -3895,51 +3895,51 @@ msgstr ""
 "Hibernant.<br>Fins que la hibernació no s'hagi completat no pot realitzar "
 "cap<br>altra acció de sistema."
 
-#: src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
 msgstr "LLAMPS I TRONS! Això no hauria de passar"
 
-#: src/bin/e_sys.c:643
+#: src/bin/e_sys.c:656
 msgid "Power off failed."
 msgstr "Apagada fallida."
 
-#: src/bin/e_sys.c:647
+#: src/bin/e_sys.c:660
 msgid "Reset failed."
 msgstr "Reinici fallit."
 
-#: src/bin/e_sys.c:651
+#: src/bin/e_sys.c:664
 msgid "Suspend failed."
 msgstr "Aturada temporal fallida."
 
-#: src/bin/e_sys.c:655
+#: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Hibernació fallida."
 
-#: src/bin/e_sys.c:755
+#: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "Apagant.<br> <hilight> Si us plau, espereu.</hilight>"
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:812
 msgid "Resetting"
 msgstr "Reiniciant"
 
-#: src/bin/e_sys.c:802
+#: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "Reiniciant.<br><hilight>Espereu, si us plau.</hilight>"
 
-#: src/bin/e_sys.c:854
+#: src/bin/e_sys.c:867
 msgid "Suspending"
 msgstr "Aturant temporalment"
 
-#: src/bin/e_sys.c:857
+#: src/bin/e_sys.c:870
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "Aturant temporalment.<br><hilight>Espereu, si us plau.</hilight>"
 
-#: src/bin/e_sys.c:909
+#: src/bin/e_sys.c:922
 msgid "Hibernating"
 msgstr "Hibernant"
 
-#: src/bin/e_sys.c:912
+#: src/bin/e_sys.c:925
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "Hibernant.<br><hilight>Espereu, si us plau.</hilight>"
 
@@ -4090,7 +4090,7 @@ msgstr[1] "Fa %li minuts"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
 msgid "Unknown"
 msgstr "Desconegut"
 
@@ -4815,7 +4815,7 @@ msgstr "Preferències de diàleg"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:533 src/modules/ibox/e_mod_config.c:97
 msgid "General Settings"
 msgstr "Preferències generals"
 
@@ -4875,12 +4875,12 @@ msgstr "Cliqueu per canviar el fons de pantalla"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:408
-#: src/modules/everything/evry_config.c:554
+#: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
-#: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:568
 #: src/modules/everything/evry_config.c:594
-#: src/modules/everything/evry_config.c:604
+#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:611
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -4916,7 +4916,7 @@ msgid "Desktops"
 msgstr "Escriptoris"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:498
+#: src/modules/everything/evry_config.c:505
 msgid "Off"
 msgstr "Desactivat"
 
@@ -4926,7 +4926,7 @@ msgstr "Tauler"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
-#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:608
 msgid "Zoom"
 msgstr "Zoom"
 
@@ -5176,6 +5176,7 @@ msgstr "Escriptori"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
+#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Cap>"
 
@@ -5275,22 +5276,22 @@ msgstr ""
 "seqüència."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1308
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
 msgid "SHIFT"
 msgstr "MAJÚS"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1328
 msgid "WIN"
 msgstr "Super"
 
@@ -5375,7 +5376,7 @@ msgstr "Preferències senyals de drecera"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:17
+#: src/modules/conf_keybindings/e_mod_main.c:357
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Entrada"
@@ -5593,7 +5594,7 @@ msgstr "Llengua"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:29
+#: src/modules/conf_keybindings/e_mod_main.c:369
 msgid "ACPI Bindings"
 msgstr "Dreceres ACPI"
 
@@ -5757,15 +5758,16 @@ msgid "Key Bindings Settings"
 msgstr "Preferències dreceres de teclat"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
-#: src/modules/conf_keybindings/e_mod_main.c:21
+#: src/modules/conf_keybindings/e_mod_main.c:349
+#: src/modules/conf_keybindings/e_mod_main.c:361
 msgid "Key Bindings"
 msgstr "Dreceres teclat"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1168
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
 msgid "Binding Key Error"
 msgstr "Error de drecera de teclat"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1169
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -5802,7 +5804,7 @@ msgid "Mouse Binding Error"
 msgstr "Error drecera de ratolí"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:25
+#: src/modules/conf_keybindings/e_mod_main.c:365
 msgid "Mouse Bindings"
 msgstr "Dreceres ratolí"
 
@@ -5897,6 +5899,195 @@ msgstr "Roda extra (%d) amunt"
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr "Roda extra (%d) avall"
+
+#: src/modules/conf_keybindings/e_mod_main.c:121
+msgid "WINDOWS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:122
+#, fuzzy
+msgid " Close Window:"
+msgstr "Clona finestra"
+
+#: src/modules/conf_keybindings/e_mod_main.c:128
+#, fuzzy
+msgid " Maximize Window:"
+msgstr "Eleva finestra"
+
+#: src/modules/conf_keybindings/e_mod_main.c:134
+#, fuzzy
+msgid " Iconic Mode Toggle:"
+msgstr "Alterna mode minimitzat"
+
+#: src/modules/conf_keybindings/e_mod_main.c:140
+#, fuzzy
+msgid " Fullscreen Mode Toggle:"
+msgstr "Alterna mode pantalla completa"
+
+#: src/modules/conf_keybindings/e_mod_main.c:146
+#, fuzzy
+msgid " Always On Top Toggle:"
+msgstr "Alterna sempre al damunt"
+
+#: src/modules/conf_keybindings/e_mod_main.c:152
+#, fuzzy
+msgid " Next Window:"
+msgstr "Finestra següent"
+
+#: src/modules/conf_keybindings/e_mod_main.c:158
+#, fuzzy
+msgid " Tile Right:"
+msgstr "Dreta:"
+
+#: src/modules/conf_keybindings/e_mod_main.c:164
+#, fuzzy
+msgid " Tile Left:"
+msgstr "Superior esquerra"
+
+#: src/modules/conf_keybindings/e_mod_main.c:170
+#, fuzzy
+msgid " Kill Window:"
+msgstr "Totes les finestres"
+
+#: src/modules/conf_keybindings/e_mod_main.c:176
+#, fuzzy
+msgid " Window Menu:"
+msgstr "Menú de finestra"
+
+#: src/modules/conf_keybindings/e_mod_main.c:185
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:186
+#, fuzzy
+msgid " Open Terminology:"
+msgstr "Obre un terminal aquí"
+
+#: src/modules/conf_keybindings/e_mod_main.c:192
+#, fuzzy
+msgid " Lock System:"
+msgstr "Errada en el bloqueig"
+
+#: src/modules/conf_keybindings/e_mod_main.c:198
+#, fuzzy
+msgid " Show Main Menu:"
+msgstr "Mostra el menú principal"
+
+#: src/modules/conf_keybindings/e_mod_main.c:204
+#, fuzzy
+msgid " Show Favorites Menu:"
+msgstr "Mostra el menú preferits"
+
+#: src/modules/conf_keybindings/e_mod_main.c:210
+#, fuzzy
+msgid " System Controls:"
+msgstr "Controls sistema"
+
+#: src/modules/conf_keybindings/e_mod_main.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:221
+#, fuzzy
+msgid " Show the Desktop:"
+msgstr "Mostra l'escriptori"
+
+#: src/modules/conf_keybindings/e_mod_main.c:227
+#, fuzzy
+msgid " Switch to Desktop 0:"
+msgstr "Canvia a escriptori 0"
+
+#: src/modules/conf_keybindings/e_mod_main.c:233
+#, fuzzy
+msgid " Switch to Desktop 1:"
+msgstr "Canvia a escriptori 1"
+
+#: src/modules/conf_keybindings/e_mod_main.c:239
+#, fuzzy
+msgid " Switch to Desktop 2:"
+msgstr "Canvia a escriptori 2"
+
+#: src/modules/conf_keybindings/e_mod_main.c:245
+#, fuzzy
+msgid " Switch to Desktop 3:"
+msgstr "Canvia a escriptori 3"
+
+#: src/modules/conf_keybindings/e_mod_main.c:251
+#, fuzzy
+msgid " Switch to Desktop 4:"
+msgstr "Canvia a escriptori 4"
+
+#: src/modules/conf_keybindings/e_mod_main.c:257
+#, fuzzy
+msgid " Switch to Desktop 5:"
+msgstr "Canvia a escriptori 5"
+
+#: src/modules/conf_keybindings/e_mod_main.c:263
+#, fuzzy
+msgid " Switch to Desktop 6:"
+msgstr "Canvia a escriptori 6"
+
+#: src/modules/conf_keybindings/e_mod_main.c:269
+#, fuzzy
+msgid " Switch to Desktop 7:"
+msgstr "Canvia a escriptori 7"
+
+#: src/modules/conf_keybindings/e_mod_main.c:275
+#, fuzzy
+msgid " Switch to Desktop 8:"
+msgstr "Canvia a escriptori 8"
+
+#: src/modules/conf_keybindings/e_mod_main.c:284
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:285
+#, fuzzy
+msgid " Quick Launcher:"
+msgstr "Executa"
+
+#: src/modules/conf_keybindings/e_mod_main.c:291
+#, fuzzy
+msgid " Take Screenshot:"
+msgstr "Captura pantalla"
+
+#: src/modules/conf_keybindings/e_mod_main.c:297
+#, fuzzy
+msgid " Restart Moksha:"
+msgstr "Tornar a engegar Moksha"
+
+#: src/modules/conf_keybindings/e_mod_main.c:303
+#, fuzzy
+msgid " Terminal console:"
+msgstr "Comanda de terminal"
+
+#: src/modules/conf_keybindings/e_mod_main.c:309
+#, fuzzy
+msgid " This Help:"
+msgstr "Aquest escriptori"
+
+#: src/modules/conf_keybindings/e_mod_main.c:329
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "Dreceres ratolí"
+
+#: src/modules/conf_keybindings/e_mod_main.c:331
+msgid "Edit"
+msgstr "Edita"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+#, fuzzy
+msgid "Keybindings"
+msgstr "Dreceres teclat"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+msgid "View Moksha Keybindings"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:382
+#, fuzzy
+msgid "Show bindings"
+msgstr "Mostra configuració"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6037,8 +6228,8 @@ msgstr "Temes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:441
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:444
+#: src/modules/everything/evry_config.c:470
 msgid "Icons"
 msgstr "Icones"
 
@@ -6197,13 +6388,13 @@ msgid "e.g. Saving to disk"
 msgstr "ex: Guardant al disc"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:920
+#: src/modules/shot/e_mod_main.c:926
 #: src/modules/notification/e_mod_config.c:116
 msgid "Low"
 msgstr "Baix"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:918
+#: src/modules/shot/e_mod_main.c:924
 msgid "Medium"
 msgstr "Mig"
 
@@ -6215,7 +6406,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:916
+#: src/modules/shot/e_mod_main.c:922
 msgid "High"
 msgstr "Alt"
 
@@ -7683,154 +7874,159 @@ msgstr "Mostra llançador Everything"
 msgid "Everything Configuration"
 msgstr "Configuració Everything"
 
-#: src/modules/everything/e_mod_main.c:409
+#: src/modules/everything/e_mod_main.c:410
 msgid "Everything Module"
 msgstr "Mòdul Everything"
 
-#: src/modules/everything/e_mod_main.c:601
+#: src/modules/everything/e_mod_main.c:603
 msgid "Quick Launcher"
 msgstr "Executa"
 
-#: src/modules/everything/evry_config.c:79
+#: src/modules/everything/evry_config.c:80
 msgid "Everything Settings"
 msgstr "Preferències Everything"
 
-#: src/modules/everything/evry_config.c:367
+#: src/modules/everything/evry_config.c:370
 msgid "Available Plugins"
 msgstr "Connectors disponibles"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 msgid "Move Up"
 msgstr "Mou amunt"
 
-#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:379
 msgid "Move Down"
 msgstr "Mou avall"
 
-#: src/modules/everything/evry_config.c:382
+#: src/modules/everything/evry_config.c:385
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Configura"
 
-#: src/modules/everything/evry_config.c:388
+#: src/modules/everything/evry_config.c:391
 msgid "Enabled"
 msgstr "Activat"
 
-#: src/modules/everything/evry_config.c:394
+#: src/modules/everything/evry_config.c:397
 msgid "Show in \"All\""
 msgstr "Mostra en \"Tot\""
 
-#: src/modules/everything/evry_config.c:400
+#: src/modules/everything/evry_config.c:403
 msgid "Show in top-level"
 msgstr "Mostra al nivell superior"
 
-#: src/modules/everything/evry_config.c:406
+#: src/modules/everything/evry_config.c:409
 msgid "Minimum characters for search"
 msgstr "Caràcters mínims per a la recerca"
 
-#: src/modules/everything/evry_config.c:415
+#: src/modules/everything/evry_config.c:418
 msgid "Plugin Trigger"
 msgstr "Llançador del connector"
 
-#: src/modules/everything/evry_config.c:420
+#: src/modules/everything/evry_config.c:423
 msgid "Search only when triggered"
 msgstr "Només cerca quan s'activa"
 
-#: src/modules/everything/evry_config.c:427
+#: src/modules/everything/evry_config.c:430
 msgid "Plugin View"
 msgstr "Vista de connectors"
 
-#: src/modules/everything/evry_config.c:437
-#: src/modules/everything/evry_config.c:465
+#: src/modules/everything/evry_config.c:440
+#: src/modules/everything/evry_config.c:468
 msgid "Detailed"
 msgstr "Detallat"
 
-#: src/modules/everything/evry_config.c:470
+#: src/modules/everything/evry_config.c:473
 msgid "Animate scrolling"
 msgstr "Anima desplaçament"
 
-#: src/modules/everything/evry_config.c:477
+#: src/modules/everything/evry_config.c:476
+#, fuzzy
+msgid "Show recently used items"
+msgstr "Mostra fitxers recents"
+
+#: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
 msgstr "Amunt/Avall selecciona següent element a la vista d'icona"
 
-#: src/modules/everything/evry_config.c:486
+#: src/modules/everything/evry_config.c:493
 msgid "Hide input when inactive"
 msgstr "Oculta entrada quan sigui inactiva"
 
-#: src/modules/everything/evry_config.c:491
+#: src/modules/everything/evry_config.c:498
 msgid "Hide list"
 msgstr "Oculta llista"
 
-#: src/modules/everything/evry_config.c:496
+#: src/modules/everything/evry_config.c:503
 msgid "Quick Navigation"
 msgstr "Navegació ràpida"
 
-#: src/modules/everything/evry_config.c:500
+#: src/modules/everything/evry_config.c:507
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Estil Emacs (ALT + n,p,f,b,m,i)"
 
-#: src/modules/everything/evry_config.c:502
+#: src/modules/everything/evry_config.c:509
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Estil Vi (ALT + h,j,k,l,n,p,m,i)"
 
-#: src/modules/everything/evry_config.c:505
+#: src/modules/everything/evry_config.c:512
 #, fuzzy
 msgid "Single mouse click"
 msgstr "Mostra quan es cliqui el ratolí"
 
-#: src/modules/everything/evry_config.c:512
+#: src/modules/everything/evry_config.c:519
 msgid "No Sorting"
 msgstr "No ordenis"
 
-#: src/modules/everything/evry_config.c:515
+#: src/modules/everything/evry_config.c:522
 msgid "By usage"
 msgstr "Per ús"
 
-#: src/modules/everything/evry_config.c:518
+#: src/modules/everything/evry_config.c:525
 msgid "Most used"
 msgstr "Més usat"
 
-#: src/modules/everything/evry_config.c:521
+#: src/modules/everything/evry_config.c:528
 msgid "Last used"
 msgstr "Darrer ús"
 
-#: src/modules/everything/evry_config.c:533
+#: src/modules/everything/evry_config.c:540
 msgid "Subject Plugins"
 msgstr "Connectors personals"
 
-#: src/modules/everything/evry_config.c:537
+#: src/modules/everything/evry_config.c:544
 msgid "Action Plugins"
 msgstr "Connectors d'acció"
 
-#: src/modules/everything/evry_config.c:541
+#: src/modules/everything/evry_config.c:548
 msgid "Object Plugins"
 msgstr "Connectors d'objecte"
 
-#: src/modules/everything/evry_config.c:544
-#: src/modules/everything/evry_config.c:752
+#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:759
 msgid "Plugins"
 msgstr "Connectors"
 
-#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:558
 msgid "Popup Size"
 msgstr "Finestra emergent: Mida"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 msgid "Popup Width"
 msgstr "Finestra emergent: Amplada"
 
-#: src/modules/everything/evry_config.c:559
-#: src/modules/everything/evry_config.c:592
+#: src/modules/everything/evry_config.c:566
+#: src/modules/everything/evry_config.c:599
 msgid "Popup Height"
 msgstr "Finestra emergent: Alçada"
 
-#: src/modules/everything/evry_config.c:567
+#: src/modules/everything/evry_config.c:574
 msgid "Popup Align"
 msgstr "Finestra emergent: Alineació"
 
-#: src/modules/everything/evry_config.c:570
 #: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -7839,21 +8035,21 @@ msgstr "Finestra emergent: Alineació"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:584
+#: src/modules/everything/evry_config.c:591
 msgid "Edge Popup Size"
 msgstr "Finestra emergent: Mida vora"
 
-#: src/modules/everything/evry_config.c:602
+#: src/modules/everything/evry_config.c:609
 #, fuzzy
 msgid "Zoom value"
 msgstr "Disminueix zoom"
 
-#: src/modules/everything/evry_config.c:610
+#: src/modules/everything/evry_config.c:617
 #: src/modules/winlist/e_int_config_winlist.c:296
 msgid "Geometry"
 msgstr "Geometria"
 
-#: src/modules/everything/evry_config.c:647
+#: src/modules/everything/evry_config.c:654
 msgid "Everything Collection"
 msgstr "Everything: Col·lecció"
 
@@ -7884,59 +8080,59 @@ msgstr[1] "%d elements"
 msgid "No plugins loaded"
 msgstr "No s'han carregat connectors"
 
-#: src/modules/everything/evry_plug_apps.c:1155
+#: src/modules/everything/evry_plug_apps.c:1156
 msgid "Exebuf"
 msgstr "Exebuf"
 
-#: src/modules/everything/evry_plug_apps.c:1170
-#: src/modules/everything/evry_plug_apps.c:1217
+#: src/modules/everything/evry_plug_apps.c:1171
+#: src/modules/everything/evry_plug_apps.c:1218
 #: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Obre amb..."
 
-#: src/modules/everything/evry_plug_apps.c:1183
+#: src/modules/everything/evry_plug_apps.c:1184
 msgid "Open File..."
 msgstr "Obre fitxer..."
 
-#: src/modules/everything/evry_plug_apps.c:1197
+#: src/modules/everything/evry_plug_apps.c:1198
 msgid "Edit Application Entry"
 msgstr "Edita aplicació"
 
-#: src/modules/everything/evry_plug_apps.c:1204
+#: src/modules/everything/evry_plug_apps.c:1205
 msgid "New Application Entry"
 msgstr "Nova aplicació"
 
-#: src/modules/everything/evry_plug_apps.c:1211
+#: src/modules/everything/evry_plug_apps.c:1212
 msgid "Run with Sudo"
 msgstr "Executa amb sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1224
+#: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/fileman/e_fwin.c:252
 msgid "Open Terminal here"
 msgstr "Obre un terminal aquí"
 
-#: src/modules/everything/evry_plug_apps.c:1230
+#: src/modules/everything/evry_plug_apps.c:1231
 msgid "Run Executable"
 msgstr "Executa"
 
-#: src/modules/everything/evry_plug_apps.c:1308
-#: src/modules/everything/evry_plug_apps.c:1436
+#: src/modules/everything/evry_plug_apps.c:1309
+#: src/modules/everything/evry_plug_apps.c:1437
 msgid "Everything Applications"
 msgstr "Everything: Aplicacions"
 
-#: src/modules/everything/evry_plug_apps.c:1339
+#: src/modules/everything/evry_plug_apps.c:1340
 msgid "Commands"
 msgstr "Comandes"
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1341
 msgid "Terminal Command"
 msgstr "Comanda de terminal"
 
-#: src/modules/everything/evry_plug_apps.c:1345
+#: src/modules/everything/evry_plug_apps.c:1346
 msgid "Sudo GUI"
 msgstr "Interfície gràfica de Sudo"
 
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
@@ -9377,23 +9573,23 @@ msgstr ""
 msgid "Systray"
 msgstr "Safata del sistema"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
+#: src/modules/shot/e_mod_main.c:78 src/modules/shot/e_mod_main.c:1183
 msgid "Screenshot"
 msgstr "Captura pantalla"
 
-#: src/modules/shot/e_mod_main.c:98
+#: src/modules/shot/e_mod_main.c:99
 msgid "Screenshot in: "
 msgstr "Captura pantalla: "
 
-#: src/modules/shot/e_mod_main.c:113
+#: src/modules/shot/e_mod_main.c:114
 msgid "Screenshot stored in"
 msgstr "Captura pantalla desada en"
 
-#: src/modules/shot/e_mod_main.c:308
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr "Error - el directori no existeix"
 
-#: src/modules/shot/e_mod_main.c:310
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
@@ -9401,20 +9597,20 @@ msgstr ""
 "Canviar el directori per la configuració de captures<br><br>Menu-"
 "Preferències-Tot-Avançades-Fer captura<br><br>Vol configurar-ho ara?"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:361
 msgid "Error saving screenshot file"
 msgstr "Error guardant la captura de pantalla"
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
 msgstr "Ruta: %s"
 
-#: src/modules/shot/e_mod_main.c:388
+#: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
 msgstr "Error - Format desconegut"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9423,93 +9619,94 @@ msgstr ""
 "extensions '.jpg' o '.png'<br>ja que els altres formats no són <br>admesos "
 "en aquests moments."
 
-#: src/modules/shot/e_mod_main.c:452
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr "Seleccioneu la ubicació on guardar la captura"
 
-#: src/modules/shot/e_mod_main.c:466 src/modules/shot/e_mod_main.c:988
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:994
 msgid "Save"
 msgstr "Desa"
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Pujat %s / %s"
 
-#: src/modules/shot/e_mod_main.c:590
+#: src/modules/shot/e_mod_main.c:592
 msgid "Error - Upload Failed"
 msgstr "Error - pujada fallida"
 
-#: src/modules/shot/e_mod_main.c:591
+#: src/modules/shot/e_mod_main.c:593
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Pujada fallida amb el codi d'estat:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:636
+#: src/modules/shot/e_mod_main.c:642
 msgid "Error - Can't create file"
 msgstr "Error - No es pot crear el fitxer"
 
-#: src/modules/shot/e_mod_main.c:637
+#: src/modules/shot/e_mod_main.c:643
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "No es poden crear fitxers temporals '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:655
+#: src/modules/shot/e_mod_main.c:661
 msgid "Error - Can't open file"
 msgstr "Error - No es pot obrir el fitxer"
 
-#: src/modules/shot/e_mod_main.c:656
+#: src/modules/shot/e_mod_main.c:662
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "No es poden obrir fitxers temporals '%s':%s"
 
-#: src/modules/shot/e_mod_main.c:664
+#: src/modules/shot/e_mod_main.c:670
 msgid "Error - Bad size"
 msgstr "Error - Mida errònia"
 
-#: src/modules/shot/e_mod_main.c:665
+#: src/modules/shot/e_mod_main.c:671
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "No es pot obtenir la mida del fitxer '%s'"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:681
 msgid "Error - Can't allocate memory"
 msgstr "Error - No es pot assignar memòria"
 
-#: src/modules/shot/e_mod_main.c:676
+#: src/modules/shot/e_mod_main.c:682
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "No es pot assignar memòria per la imatge: %s"
 
-#: src/modules/shot/e_mod_main.c:683
+#: src/modules/shot/e_mod_main.c:689
 msgid "Error - Can't read picture"
 msgstr "Error - No es pot llegir la imatge"
 
-#: src/modules/shot/e_mod_main.c:684
+#: src/modules/shot/e_mod_main.c:690
 msgid "Cannot read picture"
 msgstr "No es pot llegir la imatge"
 
-#: src/modules/shot/e_mod_main.c:706
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading screenshot"
 msgstr "Pujant captura de pantalla"
 
-#: src/modules/shot/e_mod_main.c:711
+#: src/modules/shot/e_mod_main.c:717
 msgid "Uploading ..."
 msgstr "Pujant ..."
 
-#: src/modules/shot/e_mod_main.c:716
+#: src/modules/shot/e_mod_main.c:722
 msgid "Screenshot is available at this location:"
 msgstr "La captura de pantalla és a:"
 
-#: src/modules/shot/e_mod_main.c:725
-msgid "Hide"
-msgstr "Oculta"
+#: src/modules/shot/e_mod_main.c:731
+#, fuzzy
+msgid "Copy link"
+msgstr "Copia"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
 msgstr "Confirmeu compartició"
 
-#: src/modules/shot/e_mod_main.c:750
+#: src/modules/shot/e_mod_main.c:756
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9517,27 +9714,27 @@ msgstr ""
 "Aquesta imatge s'actualitzarà<br> a enlightenment.org. Això la farà visible "
 "públicament."
 
-#: src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:758
 msgid "Confirm"
 msgstr "Confirma"
 
-#: src/modules/shot/e_mod_main.c:853
+#: src/modules/shot/e_mod_main.c:859
 msgid "Where to put Screenshot..."
 msgstr "On voleu desar la captura de pantalla..."
 
-#: src/modules/shot/e_mod_main.c:905
+#: src/modules/shot/e_mod_main.c:911
 msgid "Quality"
 msgstr "Qualitat"
 
-#: src/modules/shot/e_mod_main.c:914
+#: src/modules/shot/e_mod_main.c:920
 msgid "Perfect"
 msgstr "Perfecte"
 
-#: src/modules/shot/e_mod_main.c:990
+#: src/modules/shot/e_mod_main.c:996
 msgid "Share"
 msgstr "Comparteix"
 
-#: src/modules/shot/e_mod_main.c:1174
+#: src/modules/shot/e_mod_main.c:1180
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9547,32 +9744,32 @@ msgstr ""
 "configura en les preferències del mòdul de Captura de pantalla<br>La demora "
 "actual és: <b>%d s</b>"
 
-#: src/modules/shot/e_mod_main.c:1183
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Instant shot"
 msgstr "Captura de pantalla"
 
-#: src/modules/shot/e_mod_main.c:1184
+#: src/modules/shot/e_mod_main.c:1190
 msgid "Delayed shot"
 msgstr "Captura postergada"
 
-#: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1230 src/modules/shot/e_mod_main.c:1284
 msgid "Take Shot"
 msgstr "Captura finestra"
 
-#: src/modules/shot/e_mod_main.c:1235 src/modules/shot/e_mod_main.c:1270
-#: src/modules/shot/e_mod_main.c:1282
+#: src/modules/shot/e_mod_main.c:1241 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1288
 msgid "Take Screenshot"
 msgstr "Captura pantalla"
 
-#: src/modules/shot/e_mod_main.c:1258
+#: src/modules/shot/e_mod_main.c:1264
 msgid "Shot Error"
 msgstr "Error captura"
 
-#: src/modules/shot/e_mod_main.c:1259
+#: src/modules/shot/e_mod_main.c:1265
 msgid "Cannot initialize network"
 msgstr "No es pot inicialitzar la xarxa"
 
-#: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:53
 msgid "Screenshot Settings"
 msgstr "Configuració de la captura de pantalla"
 
@@ -10249,6 +10446,9 @@ msgstr "Volum augmentat"
 msgid "Volume Mute"
 msgstr "Volum silenciat"
 
+#~ msgid "Hide"
+#~ msgstr "Oculta"
+
 #~ msgid "Popup Corner"
 #~ msgstr "Cantonada de finestres emergents"
 
@@ -10327,14 +10527,8 @@ msgstr "Volum silenciat"
 #~ msgid "Left:"
 #~ msgstr "Esquerra:"
 
-#~ msgid "Right:"
-#~ msgstr "Dreta:"
-
 #~ msgid "Lock Sliders"
 #~ msgstr "Bloqueja botons lliscants"
-
-#~ msgid "Edit"
-#~ msgstr "Edita"
 
 #~ msgid "Show both sliders when locked"
 #~ msgstr "Mostra ambdós botons lliscants quan estiguin bloquejats"
@@ -10607,9 +10801,6 @@ msgstr "Volum silenciat"
 
 #~ msgid "Corner"
 #~ msgstr "Cantonada"
-
-#~ msgid "Top Left"
-#~ msgstr "Superior esquerra"
 
 #~ msgid "Top Right"
 #~ msgstr "Superior Dreta"

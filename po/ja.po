@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-10-30 21:29+0200\n"
+"POT-Creation-Date: 2021-11-27 15:02+0100\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "Moksha について"
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1186
+#: src/modules/fileman/e_fwin.c:2583 src/modules/shot/e_mod_main.c:1192
 msgid "Close"
 msgstr "閉じる"
 
@@ -102,7 +102,7 @@ msgstr "本当に終了しますか"
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10482
 #: src/bin/e_screensaver.c:189 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:315
+#: src/modules/shot/e_mod_main.c:316
 msgid "Yes"
 msgstr "はい"
 
@@ -115,7 +115,7 @@ msgstr "ログアウト"
 msgid "Are you sure you want to logout?"
 msgstr "本当にログアウトしますか"
 
-#: src/bin/e_actions.c:2431 src/bin/e_sys.c:752
+#: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
 msgstr "電源断"
 
@@ -156,7 +156,7 @@ msgstr "本当にハイバネートしますか"
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
 #: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
 #: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
-#: src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1284
 msgid "Window : Actions"
 msgstr "ウィンドウ: 動作"
 
@@ -351,7 +351,7 @@ msgstr "位置固定状態反転"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:267
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -563,7 +563,7 @@ msgstr ""
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:933 src/modules/shot/e_mod_main.c:1270
+#: src/modules/shot/e_mod_main.c:939 src/modules/shot/e_mod_main.c:1276
 msgid "Screen"
 msgstr "画面"
 
@@ -718,7 +718,7 @@ msgstr "指定のメニューを表示する..."
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1176
+#: src/modules/everything/evry_plug_apps.c:1177
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "コマンドの実行"
@@ -876,13 +876,13 @@ msgstr "選択"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:315 src/modules/shot/e_mod_main.c:468
-#: src/modules/shot/e_mod_main.c:726 src/modules/shot/e_mod_main.c:752
-#: src/modules/shot/e_mod_main.c:992 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
+#: src/modules/shot/e_mod_main.c:732 src/modules/shot/e_mod_main.c:758
+#: src/modules/shot/e_mod_main.c:998 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_config.c:936
+#: src/bin/e_config.c:937
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -899,7 +899,7 @@ msgstr ""
 "ルト設定<br>を追加すれば更新されます. これで好きなように設定できます.ちょっと"
 "面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:953
+#: src/bin/e_config.c:954
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -912,11 +912,11 @@ msgstr ""
 "定をコピーしない限りあり得ません.<br>これではまずいので, 念のためデフォルトの"
 "設定に置き換えました.<br>ご不便をおかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1475 src/bin/e_config.c:2100
+#: src/bin/e_config.c:1477 src/bin/e_config.c:2102
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha の設定書込時の問題"
 
-#: src/bin/e_config.c:1478
+#: src/bin/e_config.c:1480
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -925,17 +925,18 @@ msgstr ""
 "%s から %s へ設定ファイルの移動中にエラーが起きました.<br>安全のため書き出し"
 "はここで強制終了しました."
 
-#: src/bin/e_config.c:1488 src/bin/e_config.c:2113
+#: src/bin/e_config.c:1490 src/bin/e_config.c:2115
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:621 src/bin/e_sys.c:662
+#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:597
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
+#: src/modules/conf_keybindings/e_mod_main.c:330
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -944,19 +945,19 @@ msgstr ""
 msgid "OK"
 msgstr "了解"
 
-#: src/bin/e_config.c:1991
+#: src/bin/e_config.c:1993
 msgid "Settings Upgraded"
 msgstr "設定が更新されました"
 
-#: src/bin/e_config.c:2009
+#: src/bin/e_config.c:2011
 msgid "The EET file handle is bad."
 msgstr "EETファイルハンドルがおかしいです"
 
-#: src/bin/e_config.c:2013
+#: src/bin/e_config.c:2015
 msgid "The file data is empty."
 msgstr "ファイルデータが空です"
 
-#: src/bin/e_config.c:2017
+#: src/bin/e_config.c:2019
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -964,78 +965,78 @@ msgstr ""
 "このファイルには書き込めません.<br>ディスクが読み出し専用になっているか書き込"
 "み権限がありません"
 
-#: src/bin/e_config.c:2021
+#: src/bin/e_config.c:2023
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "書き出し準備中のメモリ不足になりました. メモリ解放してください."
 
-#: src/bin/e_config.c:2025
+#: src/bin/e_config.c:2027
 #, fuzzy
 msgid "This is a generic error."
 msgstr "これは一般的なエラーです。"
 
-#: src/bin/e_config.c:2029
+#: src/bin/e_config.c:2031
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "設定ファイルが大きすぎます.<br>ずっと小さいはずです (せいぜい数百KB程度)"
 
-#: src/bin/e_config.c:2033
+#: src/bin/e_config.c:2035
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "ディスクの入出力エラーです. 交換した方がいいかも."
 
-#: src/bin/e_config.c:2037
+#: src/bin/e_config.c:2039
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "ファイル書き出し中にスペースが不足しました"
 
-#: src/bin/e_config.c:2041
+#: src/bin/e_config.c:2043
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "書き出し中にファイルがクローズされました"
 
-#: src/bin/e_config.c:2045
+#: src/bin/e_config.c:2047
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "ファイルのメモリマップ (mmap) が失敗しました"
 
-#: src/bin/e_config.c:2049
+#: src/bin/e_config.c:2051
 msgid "X509 Encoding failed."
 msgstr "X509エンコーディングが失敗しました"
 
-#: src/bin/e_config.c:2053
+#: src/bin/e_config.c:2055
 msgid "Signature failed."
 msgstr "署名に失敗しました"
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2059
 msgid "The signature was invalid."
 msgstr "署名が不正です"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2063
 msgid "Not signed."
 msgstr "署名がありません"
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2067
 msgid "Feature not implemented."
 msgstr "機能が未実装です"
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2071
 msgid "PRNG was not seeded."
 msgstr "PRNGの種がありません"
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2075
 msgid "Encryption failed."
 msgstr "暗号化が失敗しました"
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2079
 #, fuzzy
 msgid "Decryption failed."
 msgstr "復号化が失敗しました"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2083
 msgid "The error is unknown to Moksha."
 msgstr "未知のエラーです"
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2105
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1229,7 +1230,7 @@ msgstr "desktop ファイル"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:381
+#: src/modules/everything/evry_config.c:384
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1242,7 +1243,7 @@ msgstr "一般"
 msgid "Startup Notify"
 msgstr "起動通知"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1190
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1191
 msgid "Run in Terminal"
 msgstr "端末内で実行"
 
@@ -1266,8 +1267,7 @@ msgid "Select an Executable"
 msgstr "プログラムの選択"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9161 src/bin/e_fm.c:10844
-#: src/bin/e_shelf.c:1794 src/bin/e_shelf.c:2482
-#: src/modules/conf_dialogs/e_int_config_profiles.c:135
+#: src/bin/e_shelf.c:1794 src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
@@ -1537,7 +1537,7 @@ msgid "View Mode"
 msgstr "表示モード"
 
 #: src/bin/e_fm.c:8809 src/bin/e_fm.c:8969
-#: src/modules/everything/evry_config.c:510
+#: src/modules/everything/evry_config.c:517
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "整列"
@@ -1604,13 +1604,13 @@ msgstr "グリッドアイコン"
 msgid "Custom Icons"
 msgstr "カスタムアイコン"
 
-#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:433
-#: src/modules/everything/evry_config.c:463
+#: src/bin/e_fm.c:9491 src/modules/everything/evry_config.c:436
+#: src/modules/everything/evry_config.c:466
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "リスト"
 
-#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:461
+#: src/bin/e_fm.c:9499 src/modules/everything/evry_config.c:464
 msgid "Default View"
 msgstr "デフォルトの表示形式"
 
@@ -1910,13 +1910,13 @@ msgstr "その他"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
-#: src/modules/conf_theme/e_int_config_transitions.c:214
+#: src/modules/conf_theme/e_int_config_transitions.c:215
 #: src/modules/conf_theme/e_int_config_theme.c:1434
 #: src/modules/conf_theme/e_int_config_xsettings.c:540
 msgid "Preview"
 msgstr "プレビュー"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:429
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:432
 msgid "Default"
 msgstr "デフォルト"
 
@@ -2164,12 +2164,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:194
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
 msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:205
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
 #: src/modules/conf_interaction/e_int_config_mouse.c:159
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2178,7 +2178,7 @@ msgstr "サイズ"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:152
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "積み重ね順"
@@ -2494,8 +2494,8 @@ msgstr "状態"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
 #: src/modules/conf_theme/e_int_config_transitions.c:199
-#: src/modules/conf_theme/e_int_config_transitions.c:253
-#: src/modules/conf_theme/e_int_config_transitions.c:285
+#: src/modules/conf_theme/e_int_config_transitions.c:254
+#: src/modules/conf_theme/e_int_config_transitions.c:287
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:99
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:112
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:126
@@ -2645,7 +2645,7 @@ msgstr "要求の位置"
 #: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1185
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
 #: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
 #: src/modules/xkbswitch/e_mod_main.c:367
 #: src/modules/xkbswitch/e_mod_main.c:408
@@ -2741,7 +2741,7 @@ msgstr "サイズ, 位置, およびロック"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:937
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:943
 msgid "All"
 msgstr "すべて"
 
@@ -2920,9 +2920,9 @@ msgstr "お気に入りのアプリケーション"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1147
-#: src/modules/everything/evry_plug_apps.c:1163
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1148
+#: src/modules/everything/evry_plug_apps.c:1164
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "アプリケーション"
@@ -3021,81 +3021,81 @@ msgstr "シェルフを追加する"
 msgid "Delete a Shelf"
 msgstr "シェルフを削除する"
 
-#: src/bin/e_int_shelf_config.c:44
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "シェルフの設定"
 
-#: src/bin/e_int_shelf_config.c:143
+#: src/bin/e_int_shelf_config.c:169
 msgid "Above Everything"
 msgstr "常に一番上"
 
-#: src/bin/e_int_shelf_config.c:145
+#: src/bin/e_int_shelf_config.c:171
 msgid "Below Windows"
 msgstr "ウィンドウの下"
 
-#: src/bin/e_int_shelf_config.c:147
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Everything"
 msgstr "常に一番下"
 
-#: src/bin/e_int_shelf_config.c:149
+#: src/bin/e_int_shelf_config.c:175
 msgid "Allow windows to overlap the shelf"
 msgstr "ウィンドウがこのシェルフと重なることを許可する"
 
-#: src/bin/e_int_shelf_config.c:199
+#: src/bin/e_int_shelf_config.c:225
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "高さ (%3.0f px)"
 
-#: src/bin/e_int_shelf_config.c:202
+#: src/bin/e_int_shelf_config.c:228
 msgid "Shrink to Content Width"
 msgstr "中身の幅まで縮小する"
 
-#: src/bin/e_int_shelf_config.c:213
+#: src/bin/e_int_shelf_config.c:239
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "スタイル"
 
-#: src/bin/e_int_shelf_config.c:219
+#: src/bin/e_int_shelf_config.c:245
 msgid "Auto-hide the shelf"
 msgstr "シェルフを自動的に隠す"
 
-#: src/bin/e_int_shelf_config.c:224
+#: src/bin/e_int_shelf_config.c:250
 msgid "Show on mouse in"
 msgstr "マウスが乗ったら出す"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:254
 msgid "Show on mouse click"
 msgstr "マウスをクリックしたら出す"
 
-#: src/bin/e_int_shelf_config.c:233
+#: src/bin/e_int_shelf_config.c:259
 msgid "Hide timeout"
 msgstr "指定時間後に隠蔽開始"
 
-#: src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_shelf_config.c:263
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f 秒"
 
-#: src/bin/e_int_shelf_config.c:243
+#: src/bin/e_int_shelf_config.c:269
 msgid "Hide duration"
 msgstr "隠蔽に要する時間"
 
-#: src/bin/e_int_shelf_config.c:247
+#: src/bin/e_int_shelf_config.c:273
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f 秒"
 
-#: src/bin/e_int_shelf_config.c:252
+#: src/bin/e_int_shelf_config.c:278
 msgid "Auto Hide"
 msgstr "自動隠蔽"
 
-#: src/bin/e_int_shelf_config.c:258
+#: src/bin/e_int_shelf_config.c:284
 msgid "Show on all Desktops"
 msgstr "全デスクトップに表示する"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:286
 msgid "Show on specified Desktops"
 msgstr "指定のデスクトップに表示する"
 
@@ -3850,14 +3850,14 @@ msgstr ""
 
 #: src/bin/e_shelf.c:68
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
-#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "横に広げる"
 
 #: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "縦に広げる"
@@ -3948,12 +3948,12 @@ msgstr "シェルフ #"
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2493
+#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2494
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "ガジェットの位置と大きさの変更を終了する"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2495
+#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2496
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "ガジェットの位置と大きさの変更を始める"
@@ -3992,7 +3992,7 @@ msgstr "プレゼンテーション"
 msgid "Autohide"
 msgstr "自動隠蔽"
 
-#: src/bin/e_shelf.c:2469
+#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:332
 msgid "Refresh"
 msgstr "更新"
 
@@ -4011,52 +4011,52 @@ msgid "System Check Done"
 msgstr "システム確認終了"
 
 #: src/bin/e_sys.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>Auto logout in %d seconds."
+"first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "ログアウトに時間がかかり過ぎています.<br>閉じられないアプリケーションがあるた"
 "めです.<br>このアプリケーションを無視して、とにかくログアウトを完了させます"
 "か.<br><br>自動ログアウトまであと %d 秒."
 
-#: src/bin/e_sys.c:500
+#: src/bin/e_sys.c:513
 msgid "Logout problems"
 msgstr "ログアウトに問題があります"
 
-#: src/bin/e_sys.c:502
+#: src/bin/e_sys.c:515
 msgid "Logout now"
 msgstr "ただちにログアウトする"
 
-#: src/bin/e_sys.c:504
+#: src/bin/e_sys.c:517
 msgid "Wait longer"
 msgstr "待機する"
 
-#: src/bin/e_sys.c:506
+#: src/bin/e_sys.c:519
 msgid "Cancel Logout"
 msgstr "ログアウトを取り消す"
 
-#: src/bin/e_sys.c:550
+#: src/bin/e_sys.c:563
 msgid "Logout in progress"
 msgstr "ログアウト中"
 
-#: src/bin/e_sys.c:553
+#: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
 msgstr "ログアウト処理中です.<br><hilight>しばらくお待ち下さい</hilight>"
 
-#: src/bin/e_sys.c:582 src/bin/e_sys.c:637
+#: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
 msgstr "Moksha は現在他の処理で手一杯です."
 
-#: src/bin/e_sys.c:587
+#: src/bin/e_sys.c:600
 msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
 "ログアウト中です.<br>ログアウト処理が始まったら他のシステム処理はできません."
 
-#: src/bin/e_sys.c:594
+#: src/bin/e_sys.c:607
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
@@ -4064,20 +4064,20 @@ msgstr ""
 "シャットダウン中です.<br>シャットダウン処理が始まったら他のシステム処理はでき"
 "ません."
 
-#: src/bin/e_sys.c:600
+#: src/bin/e_sys.c:613
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr "再起動中です.<br>再起動処理が始まったら他のシステム処理はできません."
 
-#: src/bin/e_sys.c:606
+#: src/bin/e_sys.c:619
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
 "サスペンド中です.<br>サスペンドが完了するまでは他のシステム処理はできません."
 
-#: src/bin/e_sys.c:612
+#: src/bin/e_sys.c:625
 #, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
@@ -4086,52 +4086,52 @@ msgstr ""
 "冬眠。 これが完了するまで<br>あなたが他のシステム·アクション·<br>を実行するこ"
 "とはできません。"
 
-#: src/bin/e_sys.c:618 src/bin/e_sys.c:659
+#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
 msgstr "ありゃりゃ, これはまずいよ"
 
-#: src/bin/e_sys.c:643
+#: src/bin/e_sys.c:656
 msgid "Power off failed."
 msgstr "電源断に失敗しました"
 
 #
-#: src/bin/e_sys.c:647
+#: src/bin/e_sys.c:660
 msgid "Reset failed."
 msgstr "リセットが失敗しました"
 
-#: src/bin/e_sys.c:651
+#: src/bin/e_sys.c:664
 msgid "Suspend failed."
 msgstr "サスペンドが失敗しました"
 
-#: src/bin/e_sys.c:655
+#: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "ハイバネートに失敗しました"
 
-#: src/bin/e_sys.c:755
+#: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
 msgstr "電源断処理中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:799
+#: src/bin/e_sys.c:812
 msgid "Resetting"
 msgstr "リセット中"
 
-#: src/bin/e_sys.c:802
+#: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
 msgstr "リセット中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:854
+#: src/bin/e_sys.c:867
 msgid "Suspending"
 msgstr "サスペンド中"
 
-#: src/bin/e_sys.c:857
+#: src/bin/e_sys.c:870
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
 msgstr "サスペンド中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
-#: src/bin/e_sys.c:909
+#: src/bin/e_sys.c:922
 msgid "Hibernating"
 msgstr "ハイバネート中"
 
-#: src/bin/e_sys.c:912
+#: src/bin/e_sys.c:925
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
 msgstr "ハイバネート中です.<br><hilight>しばらくお待ち下さい.</hilight>"
 
@@ -4280,7 +4280,7 @@ msgstr[1] "%li 分前"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1173
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
 msgid "Unknown"
 msgstr "不明"
 
@@ -5053,7 +5053,7 @@ msgstr "設定ダイアログの設定"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:526 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:533 src/modules/ibox/e_mod_config.c:97
 msgid "General Settings"
 msgstr "一般設定"
 
@@ -5114,12 +5114,12 @@ msgstr "壁紙の交換"
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:206
 #: src/modules/conf_interaction/e_int_config_mouse.c:212
-#: src/modules/everything/evry_config.c:408
-#: src/modules/everything/evry_config.c:554
+#: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
-#: src/modules/everything/evry_config.c:587
+#: src/modules/everything/evry_config.c:568
 #: src/modules/everything/evry_config.c:594
-#: src/modules/everything/evry_config.c:604
+#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:611
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -5157,7 +5157,7 @@ msgid "Desktops"
 msgstr "デスクトップ"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:498
+#: src/modules/everything/evry_config.c:505
 msgid "Off"
 msgstr "無効"
 
@@ -5167,7 +5167,7 @@ msgstr "パン"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
-#: src/modules/everything/evry_config.c:601
+#: src/modules/everything/evry_config.c:608
 msgid "Zoom"
 msgstr "ズーム"
 
@@ -5434,6 +5434,7 @@ msgstr "デスク"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
+#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "無し"
 
@@ -5534,25 +5535,25 @@ msgstr ""
 "<br><hilight>%s</hilight><br>他のエッジバインドシーケンスを選んで下さい."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1308
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1313
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
 #, fuzzy
 msgid "SHIFT"
 msgstr "シフト"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1328
 #, fuzzy
 msgid "WIN"
 msgstr "WINの"
@@ -5652,7 +5653,7 @@ msgstr "エッジバインディング設定"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:17
+#: src/modules/conf_keybindings/e_mod_main.c:357
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "入力"
@@ -5872,7 +5873,7 @@ msgstr "言語"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:29
+#: src/modules/conf_keybindings/e_mod_main.c:369
 #, fuzzy
 msgid "ACPI Bindings"
 msgstr "マウスバインド追加"
@@ -6060,15 +6061,16 @@ msgid "Key Bindings Settings"
 msgstr "キーバインドの設定"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
-#: src/modules/conf_keybindings/e_mod_main.c:21
+#: src/modules/conf_keybindings/e_mod_main.c:349
+#: src/modules/conf_keybindings/e_mod_main.c:361
 msgid "Key Bindings"
 msgstr "キーバインド"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1168
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
 msgid "Binding Key Error"
 msgstr "キーシーケンスのバインドエラー"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1169
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -6104,7 +6106,7 @@ msgid "Mouse Binding Error"
 msgstr "マウスバインド"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:25
+#: src/modules/conf_keybindings/e_mod_main.c:365
 msgid "Mouse Bindings"
 msgstr "マウスバインド"
 
@@ -6201,6 +6203,196 @@ msgstr ""
 #, c-format
 msgid "Extra Wheel (%d) Down"
 msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:121
+msgid "WINDOWS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:122
+#, fuzzy
+msgid " Close Window:"
+msgstr "ウィンドウ整頓"
+
+#: src/modules/conf_keybindings/e_mod_main.c:128
+#, fuzzy
+msgid " Maximize Window:"
+msgstr "ウィンドウのレイズ"
+
+#: src/modules/conf_keybindings/e_mod_main.c:134
+#, fuzzy
+msgid " Iconic Mode Toggle:"
+msgstr "アイコンモード反転"
+
+#: src/modules/conf_keybindings/e_mod_main.c:140
+#, fuzzy
+msgid " Fullscreen Mode Toggle:"
+msgstr "全画面モード反転"
+
+#: src/modules/conf_keybindings/e_mod_main.c:146
+#, fuzzy
+msgid " Always On Top Toggle:"
+msgstr "常に手前に表示"
+
+#: src/modules/conf_keybindings/e_mod_main.c:152
+#, fuzzy
+msgid " Next Window:"
+msgstr "次のウィンドウ"
+
+#: src/modules/conf_keybindings/e_mod_main.c:158
+#, fuzzy
+msgid " Tile Right:"
+msgstr "右:"
+
+#: src/modules/conf_keybindings/e_mod_main.c:164
+#, fuzzy
+msgid " Tile Left:"
+msgstr "左へ"
+
+#: src/modules/conf_keybindings/e_mod_main.c:170
+#, fuzzy
+msgid " Kill Window:"
+msgstr "全ウィンドウ"
+
+#
+#: src/modules/conf_keybindings/e_mod_main.c:176
+#, fuzzy
+msgid " Window Menu:"
+msgstr "ウィンドウメニュー"
+
+#: src/modules/conf_keybindings/e_mod_main.c:185
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:186
+#, fuzzy
+msgid " Open Terminology:"
+msgstr "端末を開く"
+
+#: src/modules/conf_keybindings/e_mod_main.c:192
+#, fuzzy
+msgid " Lock System:"
+msgstr "ロックに失敗しました."
+
+#: src/modules/conf_keybindings/e_mod_main.c:198
+#, fuzzy
+msgid " Show Main Menu:"
+msgstr "メインメニューを表示する"
+
+#: src/modules/conf_keybindings/e_mod_main.c:204
+#, fuzzy
+msgid " Show Favorites Menu:"
+msgstr "お気に入りメニューを表示する"
+
+#: src/modules/conf_keybindings/e_mod_main.c:210
+#, fuzzy
+msgid " System Controls:"
+msgstr "システムコントロール"
+
+#: src/modules/conf_keybindings/e_mod_main.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:221
+#, fuzzy
+msgid " Show the Desktop:"
+msgstr "デスクトップ背景を出す"
+
+#: src/modules/conf_keybindings/e_mod_main.c:227
+#, fuzzy
+msgid " Switch to Desktop 0:"
+msgstr "デスクトップ 0 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:233
+#, fuzzy
+msgid " Switch to Desktop 1:"
+msgstr "デスクトップ 1 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:239
+#, fuzzy
+msgid " Switch to Desktop 2:"
+msgstr "デスクトップ 2 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:245
+#, fuzzy
+msgid " Switch to Desktop 3:"
+msgstr "デスクトップ 3 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:251
+#, fuzzy
+msgid " Switch to Desktop 4:"
+msgstr "デスクトップ 4 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:257
+#, fuzzy
+msgid " Switch to Desktop 5:"
+msgstr "デスクトップ 5 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:263
+#, fuzzy
+msgid " Switch to Desktop 6:"
+msgstr "デスクトップ 6 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:269
+#, fuzzy
+msgid " Switch to Desktop 7:"
+msgstr "デスクトップ 7 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:275
+#, fuzzy
+msgid " Switch to Desktop 8:"
+msgstr "デスクトップ 8 に切り替える"
+
+#: src/modules/conf_keybindings/e_mod_main.c:284
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:285
+#, fuzzy
+msgid " Quick Launcher:"
+msgstr "ランチャー"
+
+#: src/modules/conf_keybindings/e_mod_main.c:291
+#, fuzzy
+msgid " Take Screenshot:"
+msgstr "スクリーンを準備中"
+
+#: src/modules/conf_keybindings/e_mod_main.c:297
+#, fuzzy
+msgid " Restart Moksha:"
+msgstr "Moksha 再起動"
+
+#: src/modules/conf_keybindings/e_mod_main.c:303
+#, fuzzy
+msgid " Terminal console:"
+msgstr "端末起動コマンド"
+
+#: src/modules/conf_keybindings/e_mod_main.c:309
+#, fuzzy
+msgid " This Help:"
+msgstr "このデスクトップ"
+
+#: src/modules/conf_keybindings/e_mod_main.c:329
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "マウスバインド"
+
+#: src/modules/conf_keybindings/e_mod_main.c:331
+msgid "Edit"
+msgstr "編集"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+#, fuzzy
+msgid "Keybindings"
+msgstr "キーバインド"
+
+#: src/modules/conf_keybindings/e_mod_main.c:377
+msgid "View Moksha Keybindings"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_mod_main.c:382
+#, fuzzy
+msgid "Show bindings"
+msgstr "シェルフの設定"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6351,8 +6543,8 @@ msgstr "テーマ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:441
-#: src/modules/everything/evry_config.c:467
+#: src/modules/everything/evry_config.c:444
+#: src/modules/everything/evry_config.c:470
 msgid "Icons"
 msgstr "アイコン"
 
@@ -6521,13 +6713,13 @@ msgid "e.g. Saving to disk"
 msgstr ""
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:920
+#: src/modules/shot/e_mod_main.c:926
 #: src/modules/notification/e_mod_config.c:116
 msgid "Low"
 msgstr "低"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:918
+#: src/modules/shot/e_mod_main.c:924
 msgid "Medium"
 msgstr "普通"
 
@@ -6539,7 +6731,7 @@ msgid "%.0f s"
 msgstr "%1.0f 秒"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:916
+#: src/modules/shot/e_mod_main.c:922
 msgid "High"
 msgstr "高"
 
@@ -8081,157 +8273,162 @@ msgstr "すべてランチャーを表示する"
 msgid "Everything Configuration"
 msgstr "Everythingの設定"
 
-#: src/modules/everything/e_mod_main.c:409
+#: src/modules/everything/e_mod_main.c:410
 msgid "Everything Module"
 msgstr "Everythingモジュール"
 
-#: src/modules/everything/e_mod_main.c:601
+#: src/modules/everything/e_mod_main.c:603
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "ランチャー"
 
-#: src/modules/everything/evry_config.c:79
+#: src/modules/everything/evry_config.c:80
 msgid "Everything Settings"
 msgstr "Everythingの設定"
 
-#: src/modules/everything/evry_config.c:367
+#: src/modules/everything/evry_config.c:370
 msgid "Available Plugins"
 msgstr "利用できるプラグイン"
 
-#: src/modules/everything/evry_config.c:373
+#: src/modules/everything/evry_config.c:376
 msgid "Move Up"
 msgstr "上へ"
 
-#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:379
 msgid "Move Down"
 msgstr "下へ"
 
 #
-#: src/modules/everything/evry_config.c:382
+#: src/modules/everything/evry_config.c:385
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "設定"
 
-#: src/modules/everything/evry_config.c:388
+#: src/modules/everything/evry_config.c:391
 msgid "Enabled"
 msgstr "有効"
 
-#: src/modules/everything/evry_config.c:394
+#: src/modules/everything/evry_config.c:397
 msgid "Show in \"All\""
 msgstr "\"ALL\"に表示する"
 
-#: src/modules/everything/evry_config.c:400
+#: src/modules/everything/evry_config.c:403
 msgid "Show in top-level"
 msgstr "トップレベルに表示する"
 
-#: src/modules/everything/evry_config.c:406
+#: src/modules/everything/evry_config.c:409
 msgid "Minimum characters for search"
 msgstr "検索最小文字数"
 
-#: src/modules/everything/evry_config.c:415
+#: src/modules/everything/evry_config.c:418
 msgid "Plugin Trigger"
 msgstr "プラグイントリガー"
 
-#: src/modules/everything/evry_config.c:420
+#: src/modules/everything/evry_config.c:423
 msgid "Search only when triggered"
 msgstr "トリガーがかかったときのみ検索"
 
-#: src/modules/everything/evry_config.c:427
+#: src/modules/everything/evry_config.c:430
 msgid "Plugin View"
 msgstr "プラグイン表示"
 
-#: src/modules/everything/evry_config.c:437
-#: src/modules/everything/evry_config.c:465
+#: src/modules/everything/evry_config.c:440
+#: src/modules/everything/evry_config.c:468
 msgid "Detailed"
 msgstr "詳細"
 
-#: src/modules/everything/evry_config.c:470
+#: src/modules/everything/evry_config.c:473
 msgid "Animate scrolling"
 msgstr "スクロールをアニメ化"
 
-#: src/modules/everything/evry_config.c:477
+#: src/modules/everything/evry_config.c:476
+#, fuzzy
+msgid "Show recently used items"
+msgstr "最近のファイルを表示する"
+
+#: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:486
+#: src/modules/everything/evry_config.c:493
 msgid "Hide input when inactive"
 msgstr "アクティブ以外は入力を隠す"
 
-#: src/modules/everything/evry_config.c:491
+#: src/modules/everything/evry_config.c:498
 msgid "Hide list"
 msgstr "リストを隠す"
 
-#: src/modules/everything/evry_config.c:496
+#: src/modules/everything/evry_config.c:503
 msgid "Quick Navigation"
 msgstr "クイックナビ"
 
-#: src/modules/everything/evry_config.c:500
+#: src/modules/everything/evry_config.c:507
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Emacsスタイル"
 
-#: src/modules/everything/evry_config.c:502
+#: src/modules/everything/evry_config.c:509
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Viスタイル"
 
-#: src/modules/everything/evry_config.c:505
+#: src/modules/everything/evry_config.c:512
 #, fuzzy
 msgid "Single mouse click"
 msgstr "マウスをクリックしたら出す"
 
-#: src/modules/everything/evry_config.c:512
+#: src/modules/everything/evry_config.c:519
 #, fuzzy
 msgid "No Sorting"
 msgstr "整列"
 
-#: src/modules/everything/evry_config.c:515
+#: src/modules/everything/evry_config.c:522
 msgid "By usage"
 msgstr "用途"
 
-#: src/modules/everything/evry_config.c:518
+#: src/modules/everything/evry_config.c:525
 msgid "Most used"
 msgstr "使用頻度"
 
-#: src/modules/everything/evry_config.c:521
+#: src/modules/everything/evry_config.c:528
 msgid "Last used"
 msgstr "最終使用"
 
-#: src/modules/everything/evry_config.c:533
+#: src/modules/everything/evry_config.c:540
 msgid "Subject Plugins"
 msgstr "サブジェクトプラグイン"
 
-#: src/modules/everything/evry_config.c:537
+#: src/modules/everything/evry_config.c:544
 msgid "Action Plugins"
 msgstr "アクションプラグイン"
 
-#: src/modules/everything/evry_config.c:541
+#: src/modules/everything/evry_config.c:548
 msgid "Object Plugins"
 msgstr "オブジェクトプラグイン"
 
-#: src/modules/everything/evry_config.c:544
-#: src/modules/everything/evry_config.c:752
+#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:759
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: src/modules/everything/evry_config.c:551
+#: src/modules/everything/evry_config.c:558
 msgid "Popup Size"
 msgstr "ポップアップサイズ"
 
-#: src/modules/everything/evry_config.c:552
-#: src/modules/everything/evry_config.c:585
+#: src/modules/everything/evry_config.c:559
+#: src/modules/everything/evry_config.c:592
 msgid "Popup Width"
 msgstr "ポップアップ幅"
 
-#: src/modules/everything/evry_config.c:559
-#: src/modules/everything/evry_config.c:592
+#: src/modules/everything/evry_config.c:566
+#: src/modules/everything/evry_config.c:599
 msgid "Popup Height"
 msgstr "ポップアップ高"
 
-#: src/modules/everything/evry_config.c:567
+#: src/modules/everything/evry_config.c:574
 msgid "Popup Align"
 msgstr "ポップアップ整列"
 
-#: src/modules/everything/evry_config.c:570
 #: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:302
@@ -8240,21 +8437,21 @@ msgstr "ポップアップ整列"
 msgid "%1.2f"
 msgstr ""
 
-#: src/modules/everything/evry_config.c:584
+#: src/modules/everything/evry_config.c:591
 msgid "Edge Popup Size"
 msgstr "エッジポップアップサイズ"
 
-#: src/modules/everything/evry_config.c:602
+#: src/modules/everything/evry_config.c:609
 #, fuzzy
 msgid "Zoom value"
 msgstr "ログアウト"
 
-#: src/modules/everything/evry_config.c:610
+#: src/modules/everything/evry_config.c:617
 #: src/modules/winlist/e_int_config_winlist.c:296
 msgid "Geometry"
 msgstr "ジオメトリ"
 
-#: src/modules/everything/evry_config.c:647
+#: src/modules/everything/evry_config.c:654
 msgid "Everything Collection"
 msgstr "Everythingコレクション"
 
@@ -8289,63 +8486,63 @@ msgstr[1] ""
 msgid "No plugins loaded"
 msgstr "プラグインがロードされていません"
 
-#: src/modules/everything/evry_plug_apps.c:1155
+#: src/modules/everything/evry_plug_apps.c:1156
 #, fuzzy
 msgid "Exebuf"
 msgstr "Typebuf"
 
-#: src/modules/everything/evry_plug_apps.c:1170
-#: src/modules/everything/evry_plug_apps.c:1217
+#: src/modules/everything/evry_plug_apps.c:1171
+#: src/modules/everything/evry_plug_apps.c:1218
 #: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "開く..."
 
-#: src/modules/everything/evry_plug_apps.c:1183
+#: src/modules/everything/evry_plug_apps.c:1184
 msgid "Open File..."
 msgstr "ファイルを開く..."
 
-#: src/modules/everything/evry_plug_apps.c:1197
+#: src/modules/everything/evry_plug_apps.c:1198
 msgid "Edit Application Entry"
 msgstr "アプリケーションの編集"
 
-#: src/modules/everything/evry_plug_apps.c:1204
+#: src/modules/everything/evry_plug_apps.c:1205
 msgid "New Application Entry"
 msgstr "新しいアプリケーションエントリ"
 
-#: src/modules/everything/evry_plug_apps.c:1211
+#: src/modules/everything/evry_plug_apps.c:1212
 msgid "Run with Sudo"
 msgstr "sudoで実行する"
 
-#: src/modules/everything/evry_plug_apps.c:1224
+#: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/fileman/e_fwin.c:252
 #, fuzzy
 msgid "Open Terminal here"
 msgstr "端末を開く"
 
-#: src/modules/everything/evry_plug_apps.c:1230
+#: src/modules/everything/evry_plug_apps.c:1231
 #, fuzzy
 msgid "Run Executable"
 msgstr "実行ファイル名"
 
-#: src/modules/everything/evry_plug_apps.c:1308
-#: src/modules/everything/evry_plug_apps.c:1436
+#: src/modules/everything/evry_plug_apps.c:1309
+#: src/modules/everything/evry_plug_apps.c:1437
 msgid "Everything Applications"
 msgstr "Everythingアプリケーション"
 
-#: src/modules/everything/evry_plug_apps.c:1339
+#: src/modules/everything/evry_plug_apps.c:1340
 msgid "Commands"
 msgstr "コマンド"
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1341
 msgid "Terminal Command"
 msgstr "端末起動コマンド"
 
-#: src/modules/everything/evry_plug_apps.c:1345
+#: src/modules/everything/evry_plug_apps.c:1346
 #, fuzzy
 msgid "Sudo GUI"
 msgstr "須藤GUI"
 
-#: src/modules/everything/evry_plug_apps.c:1417
+#: src/modules/everything/evry_plug_apps.c:1418
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 #, fuzzy
@@ -9812,213 +10009,213 @@ msgstr "Systrayはに至るまでの下に設定されている棚で作業す�
 msgid "Systray"
 msgstr "トレイ"
 
-#: src/modules/shot/e_mod_main.c:77 src/modules/shot/e_mod_main.c:1177
+#: src/modules/shot/e_mod_main.c:78 src/modules/shot/e_mod_main.c:1183
 #, fuzzy
 msgid "Screenshot"
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:98
+#: src/modules/shot/e_mod_main.c:99
 #, fuzzy
 msgid "Screenshot in: "
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:113
+#: src/modules/shot/e_mod_main.c:114
 #, fuzzy
 msgid "Screenshot stored in"
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:308
+#: src/modules/shot/e_mod_main.c:309
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:310
+#: src/modules/shot/e_mod_main.c:311
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:361
 #, fuzzy
 msgid "Error saving screenshot file"
 msgstr "モジュールのロードエラー"
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:362
 #, fuzzy, c-format
 msgid "Path: %s"
 msgstr "E のパス"
 
-#: src/modules/shot/e_mod_main.c:388
+#: src/modules/shot/e_mod_main.c:389
 #, fuzzy
 msgid "Error - Unknown format"
 msgstr "エラー情報"
 
-#: src/modules/shot/e_mod_main.c:389
+#: src/modules/shot/e_mod_main.c:390
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:452
+#: src/modules/shot/e_mod_main.c:453
 msgid "Select screenshot save location"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:466 src/modules/shot/e_mod_main.c:988
+#: src/modules/shot/e_mod_main.c:467 src/modules/shot/e_mod_main.c:994
 msgid "Save"
 msgstr "保存する"
 
-#: src/modules/shot/e_mod_main.c:570
+#: src/modules/shot/e_mod_main.c:571
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:590
+#: src/modules/shot/e_mod_main.c:592
 #, fuzzy
 msgid "Error - Upload Failed"
 msgstr "モジュールのロードエラー"
 
-#: src/modules/shot/e_mod_main.c:591
+#: src/modules/shot/e_mod_main.c:593
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:636
+#: src/modules/shot/e_mod_main.c:642
 #, fuzzy
 msgid "Error - Can't create file"
 msgstr "モジュールのロードエラー"
 
-#: src/modules/shot/e_mod_main.c:637
+#: src/modules/shot/e_mod_main.c:643
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:655
+#: src/modules/shot/e_mod_main.c:661
 msgid "Error - Can't open file"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:656
+#: src/modules/shot/e_mod_main.c:662
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:664
+#: src/modules/shot/e_mod_main.c:670
 #, fuzzy
 msgid "Error - Bad size"
 msgstr "モジュールのロードエラー"
 
-#: src/modules/shot/e_mod_main.c:665
+#: src/modules/shot/e_mod_main.c:671
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:681
 msgid "Error - Can't allocate memory"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:676
+#: src/modules/shot/e_mod_main.c:682
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:683
+#: src/modules/shot/e_mod_main.c:689
 msgid "Error - Can't read picture"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:684
+#: src/modules/shot/e_mod_main.c:690
 #, fuzzy
 msgid "Cannot read picture"
 msgstr "アイコンが追加できません"
 
-#: src/modules/shot/e_mod_main.c:706
+#: src/modules/shot/e_mod_main.c:712
 msgid "Uploading screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:711
+#: src/modules/shot/e_mod_main.c:717
 msgid "Uploading ..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:716
+#: src/modules/shot/e_mod_main.c:722
 msgid "Screenshot is available at this location:"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:725
+#: src/modules/shot/e_mod_main.c:731
 #, fuzzy
-msgid "Hide"
-msgstr "自動隠蔽"
+msgid "Copy link"
+msgstr "コピー"
 
 #
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:755
 #, fuzzy
 msgid "Confirm Share"
 msgstr "削除確認"
 
-#: src/modules/shot/e_mod_main.c:750
+#: src/modules/shot/e_mod_main.c:756
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 
 #
-#: src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:758
 #, fuzzy
 msgid "Confirm"
 msgstr "設定"
 
-#: src/modules/shot/e_mod_main.c:853
+#: src/modules/shot/e_mod_main.c:859
 msgid "Where to put Screenshot..."
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:905
+#: src/modules/shot/e_mod_main.c:911
 msgid "Quality"
 msgstr "品質"
 
-#: src/modules/shot/e_mod_main.c:914
+#: src/modules/shot/e_mod_main.c:920
 msgid "Perfect"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:990
+#: src/modules/shot/e_mod_main.c:996
 #, fuzzy
 msgid "Share"
 msgstr "くっきりとした影"
 
-#: src/modules/shot/e_mod_main.c:1174
+#: src/modules/shot/e_mod_main.c:1180
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1183
+#: src/modules/shot/e_mod_main.c:1189
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1184
+#: src/modules/shot/e_mod_main.c:1190
 #, fuzzy
 msgid "Delayed shot"
 msgstr "遅延動作"
 
-#: src/modules/shot/e_mod_main.c:1224 src/modules/shot/e_mod_main.c:1278
+#: src/modules/shot/e_mod_main.c:1230 src/modules/shot/e_mod_main.c:1284
 #, fuzzy
 msgid "Take Shot"
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:1235 src/modules/shot/e_mod_main.c:1270
-#: src/modules/shot/e_mod_main.c:1282
+#: src/modules/shot/e_mod_main.c:1241 src/modules/shot/e_mod_main.c:1276
+#: src/modules/shot/e_mod_main.c:1288
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:1258
+#: src/modules/shot/e_mod_main.c:1264
 #, fuzzy
 msgid "Shot Error"
 msgstr "マウントエラー"
 
 #
-#: src/modules/shot/e_mod_main.c:1259
+#: src/modules/shot/e_mod_main.c:1265
 #, fuzzy
 msgid "Cannot initialize network"
 msgstr "Moksha でファイルマネージャが初期化できません.\n"
 
-#: src/modules/shot/e_mod_main.c:1289 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:53
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "スクリーンロックの設定"
@@ -10789,6 +10986,10 @@ msgid "Volume Mute"
 msgstr "解像度の変更"
 
 #, fuzzy
+#~ msgid "Hide"
+#~ msgstr "自動隠蔽"
+
+#, fuzzy
 #~ msgid "Popup Corner"
 #~ msgstr "ポップアップサイズ"
 
@@ -10871,14 +11072,8 @@ msgstr "解像度の変更"
 #~ msgid "Left:"
 #~ msgstr "左:"
 
-#~ msgid "Right:"
-#~ msgstr "右:"
-
 #~ msgid "Lock Sliders"
 #~ msgstr "スライダ固定"
-
-#~ msgid "Edit"
-#~ msgstr "編集"
 
 #~ msgid "Show both sliders when locked"
 #~ msgstr "ロック時にスライダを両方表示する"
@@ -11071,10 +11266,6 @@ msgstr "解像度の変更"
 #, fuzzy
 #~ msgid "Corner"
 #~ msgstr "ポップアップサイズ"
-
-#, fuzzy
-#~ msgid "Top Left"
-#~ msgstr "左へ"
 
 #, fuzzy
 #~ msgid "Top Right"
