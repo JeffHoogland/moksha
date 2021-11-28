@@ -7,6 +7,7 @@ typedef struct _E_Intl_Region_Node   E_Intl_Region_Node;
 static void        *_create_data(E_Config_Dialog *cfd);
 static void        *_create_desklock_data(E_Config_Dialog *cfd);
 static void         _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
+static int          _basic_advanced_check_changed(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int          _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -594,8 +595,10 @@ e_int_config_intl(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
+   v->advanced.check_changed = _basic_advanced_check_changed;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.check_changed = _basic_advanced_check_changed;
 
    cfd = e_config_dialog_new(con,
                              _("Language Settings"),
@@ -617,8 +620,10 @@ e_int_config_desklock_intl(E_Container *con, const char *params __UNUSED__)
    v->free_cfdata = _free_data;
    v->advanced.create_widgets = _advanced_create_widgets;
    v->advanced.apply_cfdata = _advanced_apply_data;
+   v->advanced.check_changed = _basic_advanced_check_changed;
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.apply_cfdata = _basic_apply_data;
+   v->basic.check_changed = _basic_advanced_check_changed;
 
    cfd = e_config_dialog_new(con,
                              _("Desklock Language Settings"),
@@ -991,6 +996,21 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    e_config_save_queue();
    return 1;
+}
+
+static int
+_basic_advanced_check_changed(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+{
+   const char *previous;
+
+   if (cfdata->desklock)
+     previous = e_config->desklock_language;
+   else
+     previous = e_config->language;
+
+   if (e_util_both_str_empty(previous, cfdata->cur_language))
+     return 0;
+   return e_util_strcmp(previous, cfdata->cur_language);
 }
 
 static int
