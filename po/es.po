@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-03-28 08:10-0600\n"
+"PO-Revision-Date: 2021-11-27 15:08-0600\n"
 "Last-Translator: Alejandro Díaz <escuelaslinux@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -48,7 +48,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -3810,15 +3809,15 @@ msgid "System Check Done"
 msgstr "Comprobación del sistema terminada"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Se está tardando demasiado en cerrar sesión. Algunas aplicaciones no se "
-"cierran.<br>Desea cerrar sesión sin cerrar estas aplicaciones?"
-"<br><br>Cerrando sesión en %d segundos."
+"Se está tardando demasiado en cerrar sesión. <br>Algunas aplicaciones "
+"rechazan ser cerradas.<br>Desea cerrar la sesión sin cerrar primero estas "
+"aplicaciones?<br><br>%s<br>Cerrando sesión en %d segundos."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -4473,11 +4472,11 @@ msgstr "Se recomienda enchufar a la corriente."
 
 #: src/modules/battery/e_mod_main.c:516
 msgid "Power now: "
-msgstr "Carga de Batería"
+msgstr "Carga de Batería: "
 
 #: src/modules/battery/e_mod_main.c:522
 msgid "Remaining time: "
-msgstr "Tiempo restante"
+msgstr "Tiempo restante: "
 
 #: src/modules/battery/e_mod_main.c:523
 msgid "hr"
@@ -4501,7 +4500,7 @@ msgid "Clock Settings"
 msgstr "Preferencias del reloj"
 
 #: src/modules/clock/e_mod_config.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
@@ -5879,192 +5878,159 @@ msgstr "Rueda Extra (%d) abajo"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "VENTANAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Clonar ventana"
+msgstr "Cerrar ventana:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Elevar ventana"
+msgstr "Maximizar ventana:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "Alternar modo iconificado"
+msgstr "Alternar modo iconificado:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
-msgstr "Alternar pantalla completa"
+msgstr "Alternar pantalla completa:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:146
-#, fuzzy
 msgid " Always On Top Toggle:"
-msgstr "Activar/desactivar Siempre encima"
+msgstr "Alternar siempre encima:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:152
-#, fuzzy
 msgid " Next Window:"
-msgstr "Próxima ventana"
+msgstr "Siguiente ventana:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Derecha:"
+msgstr "Maximizar a la derecha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
-#, fuzzy
 msgid " Tile Left:"
-msgstr "Arriba a la izquierda"
+msgstr "Maximizar a la izquierda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Todas las ventanas"
+msgstr "Terminar ventana:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
-#, fuzzy
 msgid " Window Menu:"
-msgstr "Menú de ventana"
+msgstr "Menú de ventana:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Abrir terminal aquí"
+msgstr "Abrir Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Bloquear elemento"
+msgstr "Bloquear sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
-#, fuzzy
 msgid " Show Main Menu:"
-msgstr "Mostrar menú principal"
+msgstr "Mostrar menú principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:204
-#, fuzzy
 msgid " Show Favorites Menu:"
-msgstr "Mostrar menú de favoritos"
+msgstr "Mostrar menú de Favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
-#, fuzzy
 msgid " System Controls:"
-msgstr "Controles del Sistema"
+msgstr "Controles del Sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
-msgstr ""
+msgstr "ESCRITORIO"
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Mostrar escritorio"
+msgstr "Mostrar el escritorio:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:227
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Cambiar al escritorio 0"
+msgstr "Cambiar al escritorio 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:233
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Cambiar al escritorio 1"
+msgstr "Cambiar al escritorio 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:239
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Cambiar al escritorio 2"
+msgstr "Cambiar al escritorio 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:245
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Cambiar al escritorio 3"
+msgstr "Cambiar al escritorio 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:251
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Cambiar al escritorio 4"
+msgstr "Cambiar al escritorio 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:257
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Cambiar al escritorio 5"
+msgstr "Cambiar al escritorio 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:263
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Cambiar al escritorio 6"
+msgstr "Cambiar al escritorio 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:269
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Cambiar al escritorio 7"
+msgstr "Cambiar al escritorio 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:275
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Cambiar al escritorio 8"
+msgstr "Cambiar al escritorio 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "MISCELÁNEOS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
-#, fuzzy
 msgid " Quick Launcher:"
-msgstr "Lanzador Rápido"
+msgstr "Lanzador Rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:291
-#, fuzzy
 msgid " Take Screenshot:"
-msgstr "Capturar Pantalla"
+msgstr "Capturar Pantalla:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:297
-#, fuzzy
 msgid " Restart Moksha:"
-msgstr "Reiniciar Moksha"
+msgstr "Reiniciar Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Comando de la terminal"
+msgstr "Consola de terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Este escritorio"
+msgstr "Esta ayuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Atajos de ratón"
+msgstr "Atajos de teclado básicos de Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
 msgstr "Editar"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
 msgstr "Atajos de teclado"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Mostrar atajos de Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
-#, fuzzy
 msgid "Show bindings"
-msgstr "Mostrar Configuración"
+msgstr "Mostrar atajos"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -7912,13 +7878,12 @@ msgid "Animate scrolling"
 msgstr "Animar desplazamiento"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Mostrar archivos recientes"
+msgstr "Mostrar elementos recientes"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
-msgstr "Arriba/abajo selecciona el siguiente objeto en la vista de icono"
+msgstr "Arriba/abajo selecciona el siguiente elemento en la vista de icono"
 
 #: src/modules/everything/evry_config.c:493
 msgid "Hide input when inactive"
@@ -9647,9 +9612,8 @@ msgid "Screenshot is available at this location:"
 msgstr "La captura de pantalla está disponible en esta ubicación:"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Copiar"
+msgstr "Copiar URL"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
