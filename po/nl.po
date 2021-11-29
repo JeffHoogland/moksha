@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-10-31 16:06+0100\n"
+"PO-Revision-Date: 2021-11-29 11:59+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
 "Language: nl\n"
@@ -3819,16 +3819,16 @@ msgid "System Check Done"
 msgstr "Systeemcontrole is klaar"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Afmelden duurt te lang.<br>Sommige toepassingen weigeren af te sluiten."
+"Afmelden duurt te lang.<br>Enkele toepassingen laten zich niet afsluiten."
 "<br>Wilt u alsnog het afmelden<br>voltooien zonder deze "
-"toepassingen<br>eerst af te sluiten? <br><br>Automatisch afmelden over %d "
-"seconden."
+"toepassingen<br>eerst af te sluiten? <br><br>%s<br>Automatisch afmelden over "
+"%d seconden."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5904,192 +5904,159 @@ msgstr "Extra wiel (%d) omlaag"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "VENSTERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Venster klonen"
+msgstr " Venster sluiten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Venster verheffen"
+msgstr " Venster maximaliseren:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "Pictogrammodus omschakelen"
+msgstr " Pictogrammodus omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
-msgstr "Volledig-scherm-modus omschakelen"
+msgstr " Volledig-scherm-modus omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:146
-#, fuzzy
 msgid " Always On Top Toggle:"
-msgstr "Altijd op voorgrond omschakelen"
+msgstr " Altijd op voorgrond omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:152
-#, fuzzy
 msgid " Next Window:"
-msgstr "Volgend venster"
+msgstr " Volgende venster:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Rechts maximaliseren"
+msgstr " Rechts tegelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
 msgid " Tile Left:"
-msgstr ""
+msgstr " Links tegelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Alle vensters"
+msgstr " Venster geforceerd afsluiten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
-#, fuzzy
 msgid " Window Menu:"
-msgstr "Venstermenu"
+msgstr " Venstermenu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTEEM"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Open terminalvenster hier"
+msgstr " Terminology openen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Element vergrendelen"
+msgstr " Systeem vergrendelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
-#, fuzzy
 msgid " Show Main Menu:"
-msgstr "Hoofdmenu weergeven"
+msgstr " Hoofdmenu weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:204
-#, fuzzy
 msgid " Show Favorites Menu:"
-msgstr "Favorietenmenu Weergeven"
+msgstr " Favorietenmenu weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
-#, fuzzy
 msgid " System Controls:"
-msgstr "Systeeminstellingen"
+msgstr " Systeemknoppen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
-msgstr ""
+msgstr "BUREAUBLAD"
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Bureaublad weergeven"
+msgstr " Bureaublad weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:227
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Schakel naar werkblad 0"
+msgstr " Schakelen naar werkblad 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:233
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Schakel naar werkblad 1"
+msgstr " Schakelen naar werkblad 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:239
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Schakel naar werkblad 2"
+msgstr " Schakelen naar werkblad 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:245
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Schakel naar werkblad 3"
+msgstr " Schakelen naar werkblad 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:251
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Schakel naar werkblad 4"
+msgstr " Schakelen naar werkblad 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:257
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Schakel naar werkblad 5"
+msgstr " Schakelen naar werkblad 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:263
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Schakel naar werkblad 6"
+msgstr " Schakelen naar werkblad 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:269
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Schakel naar werkblad 7"
+msgstr " Schakelen naar werkblad 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:275
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Schakel naar werkblad 8"
+msgstr " Schakelen naar werkblad 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
-#, fuzzy
 msgid " Quick Launcher:"
-msgstr "Snelstarter"
+msgstr " Snelstarter:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:291
-#, fuzzy
 msgid " Take Screenshot:"
-msgstr "Schermafdruk maken"
+msgstr " Schermafdruk maken:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:297
-#, fuzzy
 msgid " Restart Moksha:"
-msgstr "Moksha herstarten"
+msgstr " Moksha herstarten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Terminalopdracht"
+msgstr " Terminalvenster:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Dit werkblad"
+msgstr " Deze hulptekst:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Muisbindingen"
+msgstr "Eenvoudige toetsbindingen voor Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
-#, fuzzy
 msgid "Edit"
-msgstr "Bewerk pictogram"
+msgstr "Bewerken"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
 msgstr "Toetsbindingen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Toetsbindingen van Moksha bekijken"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
-#, fuzzy
 msgid "Show bindings"
-msgstr "Toon instellingen"
+msgstr "Toon toetsbindingen"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -7943,9 +7910,8 @@ msgid "Animate scrolling"
 msgstr "Animeer schuiven"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Toon recente bestanden"
+msgstr "Toon recent gebruikte elementen"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -9679,9 +9645,8 @@ msgid "Screenshot is available at this location:"
 msgstr "Schermafdruk is beschikbaar op deze locatie:"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Kopiëren"
+msgstr "Koppeling kopiëren"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
