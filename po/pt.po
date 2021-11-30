@@ -1,16 +1,16 @@
-# Portuguese translation of e17
+# Portuguese translations for Moksha desktop
 # This file is public domain.
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: e17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"Project-Id-Version: moksha\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-10-30 22:07+0100\n"
+"PO-Revision-Date: 2021-11-30 14:28+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
-"Language-Team: Portuguese (https://l10n.gnome.org/teams/pt/)\n"
+"Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Sobre o Moksha"
+msgstr "Acerca do Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
@@ -49,8 +49,8 @@ msgid ""
 "><br><br>"
 msgstr ""
 "<title>Direitos de autor &copy; 2021, pela equipa de desenvolvimento do "
-"Moksha</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto "
-"nós gostamos de a desenvolver<br><br>Para nos contactar, consulte:"
+"Moksha</><br><br>Esperamos que goste de usar esta aplicação tanto quanto nós "
+"gostamos de a desenvolver<br><br>Para nos contactar, visite a página:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -68,13 +68,13 @@ msgid ""
 "window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
 "want to kill this window?"
 msgstr ""
-"Está prestes a fechar %s.<br><br>Tenha em conta que todos os dados desta "
+"Está prestes a terminar %s.<br><br>Tenha em conta que todos os dados desta "
 "janela<br>que ainda não tenham sido gravados serão perdidos!<br><br>Tem a "
-"certeza que quer fechar a janela?"
+"certeza que quer terminar a janela?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
-msgstr "Tem a certeza que quer fechar esta janela?"
+msgstr "Tem a certeza que quer terminar esta janela?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
@@ -208,15 +208,15 @@ msgstr "Ativar fixação"
 
 #: src/bin/e_actions.c:3170
 msgid "Always On Top Toggle"
-msgstr "Modo sempre à frente"
+msgstr "Modo sempre por cima"
 
 #: src/bin/e_actions.c:3174
 msgid "Always On Top Enable"
-msgstr "Ativar sempre à frente"
+msgstr "Ativar sempre por cima"
 
 #: src/bin/e_actions.c:3178
 msgid "Always On Top Disable"
-msgstr "Desativar sempre à frente"
+msgstr "Desativar sempre por cima"
 
 #: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
@@ -257,19 +257,19 @@ msgstr "Maximizar à direita"
 
 #: src/bin/e_actions.c:3216
 msgid "Maximize Fullscreen"
-msgstr "Maximizar em todo o ecrã"
+msgstr "Maximizar ecrâ inteiro"
 
 #: src/bin/e_actions.c:3218
 msgid "Maximize Mode \"Smart\""
-msgstr "Maximizar - Modo inteligente"
+msgstr "Maximizar - Modo \"Inteligente\""
 
 #: src/bin/e_actions.c:3220
 msgid "Maximize Mode \"Expand\""
-msgstr "Maximizar - Modo expandir"
+msgstr "Maximizar - Modo \"Expandir\""
 
 #: src/bin/e_actions.c:3222
 msgid "Maximize Mode \"Fill\""
-msgstr "Maximizar - Modo preencher"
+msgstr "Maximizar - Modo \"Preencher\""
 
 #: src/bin/e_actions.c:3229
 msgid "Shade Up Mode Toggle"
@@ -293,7 +293,7 @@ msgstr "Alternar modo enrolamento"
 
 #: src/bin/e_actions.c:3241
 msgid "Set Shaded State"
-msgstr "Definir enrolamento"
+msgstr "Definir estado de enrolamento"
 
 #: src/bin/e_actions.c:3242
 msgid "syntax: \"(0|1) (up|down|left|right)\""
@@ -1324,7 +1324,7 @@ msgstr "%s foi interrompido por um erro de vírgula flutuante."
 #: src/bin/e_exec.c:757
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
-msgstr "%s foi interrompido por um sinal ininterrupto."
+msgstr "%s foi interrompido por um sinal de terminar ininterrupto."
 
 #: src/bin/e_exec.c:761
 #, c-format
@@ -1393,7 +1393,7 @@ msgstr "Este erro vai ser gravado como %s/%s.log"
 
 #: src/bin/e_fm.c:1061
 msgid "Nonexistent path"
-msgstr "Caminho inexistente"
+msgstr "Localização inexistente"
 
 #: src/bin/e_fm.c:1064
 #, c-format
@@ -2148,7 +2148,7 @@ msgstr "Janela"
 
 #: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
 msgid "Always on Top"
-msgstr "Sempre à frente"
+msgstr "Sempre por cima"
 
 #: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
@@ -2775,7 +2775,7 @@ msgid ""
 msgstr ""
 "Ocorreu um erro ao iniciar o executável do<br><br>método de "
 "introdução<br>Certifique-se que o método está bem configurado<br>e que o "
-"executável está no seu PATH.<br>"
+"executável está na sua PATH.<br>"
 
 #: src/bin/e_int_menus.c:142 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
@@ -3112,7 +3112,8 @@ msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"O Moksha não conseguiu configurar os diretórios de pesquisa!\n"
+"O Moksha não conseguiu configurar a localização para os diretórios de "
+"pesquisa!\n"
 "Será que tem memória suficiente?"
 
 #: src/bin/e_main.c:669
@@ -3215,7 +3216,7 @@ msgstr "Configurar canal de mensagens"
 
 #: src/bin/e_main.c:852
 msgid "Setup Paths"
-msgstr "Configurar caminhos"
+msgstr "Configurar localizações"
 
 #: src/bin/e_main.c:858
 msgid "Setup System Controls"
@@ -3327,11 +3328,11 @@ msgstr "O Moksha não conseguiu configurar os esquemas do teclado!\n"
 
 #: src/bin/e_main.c:1011
 msgid "Setup Bindings"
-msgstr "Configurar associações"
+msgstr "Configurar ligações"
 
 #: src/bin/e_main.c:1015
 msgid "Moksha cannot set up its bindings system.\n"
-msgstr "O Moksha não conseguiu configurar o sistema de associações!\n"
+msgstr "O Moksha não conseguiu configurar o sistema de ligações!\n"
 
 #: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
@@ -3460,7 +3461,7 @@ msgstr ""
 "Está a executar o Moksha diretamente. Isto\n"
 "não é bom. Não utilize o binário \"enlightenment\".\n"
 "Utilize o lançador \"enlightenment_start\". Este irá\n"
-"fazer a gestão das variáveis de ambiente, caminhos,\n"
+"fazer a gestão das variáveis de ambiente, localizações,\n"
 "bem como iniciar outros serviços necessários,\n"
 "antes de iniciar a sessão.\n"
 
@@ -3586,8 +3587,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Ocorreu um erro ao carregar o módulo: %s<br>O caminho para o módulo é:<br>"
-"%s<br>O erro reportado foi:<br>%s.<br>"
+"Ocorreu um erro ao carregar o módulo: %s<br>A localização para o módulo é:"
+"<br>%s<br>O erro reportado foi:<br>%s.<br>"
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions"
@@ -3802,15 +3803,16 @@ msgid "System Check Done"
 msgstr "Verificações terminadas"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Está a levar muito tempo para sair da sessão.<br>Algumas aplicações não "
-"querem ser fechadas.<br>Pretende continuar apesar das aplicações não terem "
-"sido fechadas?<br><br>A sessão será terminada em %d segundos."
+"A sessão está a demorar muito tempo a terminar.<br>Algumas aplicações "
+"recusam-se a fechar.<br>Deseja terminar a sessão<br>de qualquer forma sem "
+"fechar primeiro<br>estas aplicações?<br><br>%s<br>A sessão irá terminar "
+"automaticamente dentro de %d segundos."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3902,7 +3904,7 @@ msgstr "Falha ao hibernar."
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "A desligar.<br><hilight>Por favor aguarde.</hilight>"
+msgstr "A desligar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:812
 msgid "Resetting"
@@ -5174,12 +5176,12 @@ msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
-msgstr "Definições da associação das margens"
+msgstr "Definições de ligações das margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
 #: src/modules/conf_edgebindings/e_mod_main.c:21
 msgid "Edge Bindings"
-msgstr "Associação das margens"
+msgstr "Ligações das margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
@@ -5200,7 +5202,7 @@ msgstr "Eliminar tudo"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Restore Default Bindings"
-msgstr "Restaurar associações padrão"
+msgstr "Restaurar ligações predefinidas"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
@@ -5348,11 +5350,11 @@ msgstr "Sinal:"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
 #: src/modules/conf_edgebindings/e_mod_main.c:25
 msgid "Signal Bindings"
-msgstr "Associação dos sinais"
+msgstr "Ligações dos sinais"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:865
 msgid "Signal Bindings Settings"
-msgstr "Definições da associação de sinais"
+msgstr "Definições das ligações de sinais"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
@@ -5576,7 +5578,7 @@ msgstr "Idioma"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
 #: src/modules/conf_keybindings/e_mod_main.c:369
 msgid "ACPI Bindings"
-msgstr "Associação ACPI"
+msgstr "Ligações ACPI"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:349
 msgid "AC Adapter Unplugged"
@@ -5735,13 +5737,13 @@ msgstr "Uma tecla"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:106
 msgid "Key Bindings Settings"
-msgstr "Definições da associação do teclado"
+msgstr "Definições das ligações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
 #: src/modules/conf_keybindings/e_mod_main.c:349
 #: src/modules/conf_keybindings/e_mod_main.c:361
 msgid "Key Bindings"
-msgstr "Associação do teclado"
+msgstr "Ligações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
 msgid "Binding Key Error"
@@ -5768,15 +5770,15 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
-msgstr "Definições da associação do rato"
+msgstr "Definições das ligações do rato"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:249
 msgid ""
 "Unable to set a mouse wheel binding without modifiers<br>on a window: "
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
-"Não foi possível definir a associação da rota do rato de<br>uma janela sem "
-"modificadores pois existe um conflito com<br>uma associação edje. Corrija!"
+"Não foi possível definir a ligação da rota do rato de<br>uma janela sem "
+"modificadores pois existe um conflito com<br>uma ligação edje. CORRIGE-ME!!!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -5785,7 +5787,7 @@ msgstr "Erro na associação do rato"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
 #: src/modules/conf_keybindings/e_mod_main.c:365
 msgid "Mouse Bindings"
-msgstr "Associação do rato"
+msgstr "Ligações do rato"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:328
 msgid "Action Context"
@@ -5881,192 +5883,159 @@ msgstr "Roda extra (%d) para baixo"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Clonar janela"
+msgstr " Fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Mostrar janela"
+msgstr " Maximizar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "Modo minimizado"
+msgstr " Alternar entre modo minimizado:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
-msgstr "Modo de ecrã inteiro"
+msgstr " Alternar entre modo de ecrã inteiro:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:146
-#, fuzzy
 msgid " Always On Top Toggle:"
-msgstr "Modo sempre à frente"
+msgstr " Alternar entre modo sempre por cima:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:152
-#, fuzzy
 msgid " Next Window:"
-msgstr "Janela seguinte"
+msgstr " Janela seguinte:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Direita:"
+msgstr " Organizar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
-#, fuzzy
 msgid " Tile Left:"
-msgstr "Margem superior esquerda"
+msgstr " Organizar à esquerda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Todas as janelas"
+msgstr " Terminar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
-#, fuzzy
 msgid " Window Menu:"
-msgstr "Menu da janela"
+msgstr " Menu da janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Abrir terminal aqui"
+msgstr " Abrir o Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Bloquear item"
+msgstr " Bloquear o sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
-#, fuzzy
 msgid " Show Main Menu:"
-msgstr "Mostrar menu principal"
+msgstr " Mostrar menu principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:204
-#, fuzzy
 msgid " Show Favorites Menu:"
-msgstr "Mostrar menu de favoritos"
+msgstr " Mostrar menu de favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
-#, fuzzy
 msgid " System Controls:"
-msgstr "Controlos do sistema"
+msgstr " Controlos do sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
-msgstr ""
+msgstr "COMPUTADOR"
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Mostrar área de trabalho"
+msgstr " Mostrar a área de trabalho:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:227
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Mudar para a área de trabalho 0"
+msgstr " Mudar para a área de trabalho 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:233
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Mudar para a área de trabalho 1"
+msgstr " Mudar para a área de trabalho 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:239
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Mudar para a área de trabalho 2"
+msgstr " Mudar para a área de trabalho 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:245
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Mudar para a área de trabalho 3"
+msgstr " Mudar para a área de trabalho 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:251
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Mudar para a área de trabalho 4"
+msgstr " Mudar para a área de trabalho 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:257
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Mudar para a área de trabalho 5"
+msgstr " Mudar para a área de trabalho 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:263
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Mudar para a área de trabalho 6"
+msgstr " Mudar para a área de trabalho 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:269
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Mudar para a área de trabalho 7"
+msgstr " Mudar para a área de trabalho 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:275
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Mudar para a área de trabalho 8"
+msgstr " Mudar para a área de trabalho 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "DIVERSOS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
-#, fuzzy
 msgid " Quick Launcher:"
-msgstr "Lançador rápido"
+msgstr " Lançador rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:291
-#, fuzzy
 msgid " Take Screenshot:"
-msgstr "Captura de ecrã"
+msgstr " Capturar ecrã:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:297
-#, fuzzy
 msgid " Restart Moksha:"
-msgstr "Reiniciar o Moksha"
+msgstr " Reiniciar o Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Comando do terminal"
+msgstr " Consola do terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Esta área de trabalho"
+msgstr " Esta ajuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Associação do rato"
+msgstr "Ligações básicas de teclas do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
 msgstr "Editar"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
-msgstr "Associação do teclado"
+msgstr "Ligações de teclas"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Ver ligações de teclas do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
-#, fuzzy
 msgid "Show bindings"
-msgstr "Mostrar definições"
+msgstr "Mostrar ligações"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6221,7 +6190,7 @@ msgstr "Mensagens"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 msgid "Moksha Paths"
-msgstr "Caminhos Moksha"
+msgstr "Localizações do Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7916,9 +7885,8 @@ msgid "Animate scrolling"
 msgstr "Deslocação animada"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Mostrar ficheiros recentes"
+msgstr "Mostrar itens recentemente usados"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -8262,7 +8230,7 @@ msgstr "Clonar janela"
 
 #: src/modules/fileman/e_fwin.c:2164
 msgid "Copy Path"
-msgstr "Copiar caminho"
+msgstr "Copiar localização"
 
 #: src/modules/fileman/e_fwin.c:2180
 msgid "Run"
@@ -8436,7 +8404,7 @@ msgstr "Extensões de ficheiro"
 
 #: src/modules/fileman/e_mod_config.c:347
 msgid "Full Path In Title"
-msgstr "Caminho completo no título"
+msgstr "Localização completa no título"
 
 #: src/modules/fileman/e_mod_config.c:350
 msgid "Icons On Desktop"
@@ -9564,7 +9532,7 @@ msgstr "Ocorreu um erro ao gravar a captura de ecrã"
 #: src/modules/shot/e_mod_main.c:362
 #, c-format
 msgid "Path: %s"
-msgstr "Caminho: %s"
+msgstr "Localização: %s"
 
 #: src/modules/shot/e_mod_main.c:389
 msgid "Error - Unknown format"
@@ -9657,9 +9625,8 @@ msgid "Screenshot is available at this location:"
 msgstr "A captura está disponível neste local:"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Copiar"
+msgstr "Copiar endereço da ligação"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
@@ -10383,7 +10350,7 @@ msgstr "Aumento do volume"
 
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
-msgstr "Volume Mudo"
+msgstr "Volume mudo"
 
 #~ msgid "Hide"
 #~ msgstr "Ocultar"
