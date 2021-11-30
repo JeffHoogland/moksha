@@ -5968,7 +5968,7 @@ msgstr " Favorietenmenu weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:210
 msgid " System Controls:"
-msgstr " Systeemknoppen:"
+msgstr " Systeemtoetsen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
