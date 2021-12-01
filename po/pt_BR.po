@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-03-29 19:48-0300\n"
+"PO-Revision-Date: 2021-12-01 10:56-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -49,10 +49,10 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos autorais &copy; 2000-2015, pela equipe de desenvolvimento do "
+"<title>Direitos autorais &copy; 2021, pela equipe de desenvolvimento do "
 "Moksha</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto "
-"nós gostamos de desenvolvê-la.<br><br>Para nos contactar, consulte:"
-"<br><hilight>http://www.enlightenment.org</><br><br>"
+"nós gostamos de desenvolvê-la.<br><br>Para nos contactar, visite:"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -71,16 +71,16 @@ msgid ""
 msgstr ""
 "Está prestes a fechar %s.<br><br>Tenha em conta que todos os dados desta "
 "janela que ainda não tenham sido gravados serão perdidos!<br><br>Tem certeza "
-"de que quer fechar a janela?"
+"de que quer forçar fechar a janela?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
-msgstr "Tem certeza de que quer fechar esta janela?"
+msgstr "Tem certeza de que quer forçar fechar esta janela?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
 msgid "Kill"
-msgstr "Fechar"
+msgstr "Forçar Fechar"
 
 #: src/bin/e_actions.c:447 src/bin/e_actions.c:2283 src/bin/e_actions.c:2377
 #: src/bin/e_actions.c:2437 src/bin/e_actions.c:2497 src/bin/e_actions.c:2562
@@ -124,7 +124,7 @@ msgstr "Desligar"
 
 #: src/bin/e_actions.c:2433
 msgid "Are you sure you want to power off your computer?"
-msgstr "Tem certeza que quer desligar?"
+msgstr "Tem certeza que quer desligar seu computador?"
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
@@ -132,7 +132,7 @@ msgstr "Reiniciar"
 
 #: src/bin/e_actions.c:2493
 msgid "Are you sure you want to reboot your computer?"
-msgstr "Tem certeza que quer reiniciar?"
+msgstr "Tem certeza que quer reiniciar seu computador?"
 
 #: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 msgid "Suspend"
@@ -140,7 +140,7 @@ msgstr "Suspender"
 
 #: src/bin/e_actions.c:2558
 msgid "Are you sure you want to suspend your computer?"
-msgstr "Tem certeza que quer suspender?"
+msgstr "Tem certeza que quer suspender seu computador?"
 
 #: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
@@ -149,7 +149,7 @@ msgstr "Hibernar"
 
 #: src/bin/e_actions.c:2623
 msgid "Are you sure you want to hibernate your computer?"
-msgstr "Tem certeza que quer hibernar?"
+msgstr "Tem certeza que quer hibernar seu computador?"
 
 #: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
@@ -180,11 +180,11 @@ msgstr "Menu da janela"
 #: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
-msgstr "Mostrar"
+msgstr "Avançar"
 
 #: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
-msgstr "Ocultar"
+msgstr "Recuar"
 
 #: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
 #: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
@@ -221,11 +221,11 @@ msgstr "Desativar sempre à frente"
 
 #: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
-msgstr "Alternar modo minimizado"
+msgstr "Alternar modo ícone"
 
 #: src/bin/e_actions.c:3187
 msgid "Iconic Mode Enable"
-msgstr "Ativar minimização"
+msgstr "Ativar modo ícone"
 
 #: src/bin/e_actions.c:3192
 msgid "Fullscreen Mode Toggle"
@@ -306,11 +306,11 @@ msgstr "Alternar estado sem contornos"
 
 #: src/bin/e_actions.c:3251
 msgid "Set Border"
-msgstr "Definir contornos"
+msgstr "Definir bordas"
 
 #: src/bin/e_actions.c:3257
 msgid "Cycle between Borders"
-msgstr "Percorrer contornos"
+msgstr "Ciclar entre bordas"
 
 #: src/bin/e_actions.c:3263
 msgid "Toggle Pinned State"
@@ -337,7 +337,7 @@ msgstr "Alternar estado fixo"
 #: src/modules/classicmenu/e_mod_main.c:72
 #: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:848
 msgid "Desktop"
-msgstr "Desktop"
+msgstr "Área de trabalho"
 
 #: src/bin/e_actions.c:3268
 msgid "Flip Desktop Left"
@@ -578,7 +578,7 @@ msgstr "Restaurar"
 
 #: src/bin/e_actions.c:3437
 msgid "Backlight Set"
-msgstr "Definir iluminação"
+msgstr "Definir luz de fundo"
 
 #: src/bin/e_actions.c:3439
 msgid "Backlight Min"
@@ -975,15 +975,15 @@ msgstr "Opção não implementada."
 
 #: src/bin/e_config.c:2071
 msgid "PRNG was not seeded."
-msgstr "O PRNG não foi semeado."
+msgstr "O PRNG não foi inicializado."
 
 #: src/bin/e_config.c:2075
 msgid "Encryption failed."
-msgstr "Falha ao encriptar"
+msgstr "Falha ao encriptar."
 
 #: src/bin/e_config.c:2079
 msgid "Decryption failed."
-msgstr "Falha ao desencriptar"
+msgstr "Falha ao desencriptar."
 
 #: src/bin/e_config.c:2083
 msgid "The error is unknown to Moksha."
@@ -1039,7 +1039,7 @@ msgstr "Preferências"
 #: src/bin/e_container.c:124
 #, c-format
 msgid "Container %d"
-msgstr "Contentor %d"
+msgstr "Receptáculo %d"
 
 #: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
@@ -1099,9 +1099,9 @@ msgid ""
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
-"Desbloqueou a área de trabalho muito depressa.<br><br>Pretende ativar o modo "
-"de <b>apresentação</b> e inativar temporariamente<br>a proteção de tela, os "
-"bloqueios e a economia de energia?"
+"Você desbloqueou a área de trabalho muito depressa.<br><br>Gostaria de "
+"ativar o modo de <b>apresentação</b> e desativar temporariamente<br>a "
+"proteção de tela, os bloqueios e a economia de energia?"
 
 #: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:193
 msgid "No, but increase timeout"
@@ -1531,7 +1531,7 @@ msgstr "Propriedades do arquivo"
 
 #: src/bin/e_fm.c:9445
 msgid "Use default"
-msgstr "Utilizar predefinições"
+msgstr "Utilizar definições padrão"
 
 #: src/bin/e_fm.c:9475 src/modules/fileman/e_mod_config.c:319
 msgid "Grid Icons"
@@ -1600,7 +1600,7 @@ msgstr "Mostrar arquivos ocultos"
 
 #: src/bin/e_fm.c:9774
 msgid "Remember Ordering"
-msgstr "Memorizar ordenação"
+msgstr "Lembrar ordenação"
 
 #: src/bin/e_fm.c:9783
 msgid "Sort Now"
@@ -1636,7 +1636,7 @@ msgstr "Definir sobreposição..."
 
 #: src/bin/e_fm.c:9919
 msgid "Clear overlay"
-msgstr "Remover sobreposição"
+msgstr "Limpar sobreposição"
 
 #: src/bin/e_fm.c:10236 src/bin/e_fm.c:10577
 #, c-format
@@ -2198,11 +2198,11 @@ msgstr "Minimizar"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Mover com teclado"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Redimensionar com teclado"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -2210,7 +2210,7 @@ msgstr "Ignorar"
 
 #: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
-msgstr "Contorno"
+msgstr "Borda"
 
 #: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
@@ -2220,7 +2220,7 @@ msgstr "Bloqueios"
 #: src/bin/e_int_border_menu.c:770
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
-msgstr "Memorizar"
+msgstr "Lembrar"
 
 #: src/bin/e_int_border_menu.c:792
 msgid "ICCCM/NetWM"
@@ -2313,12 +2313,12 @@ msgstr "%1.3f–%1.3f"
 #: src/bin/e_int_border_prop.c:153 src/bin/e_int_border_prop.c:175
 #, c-format
 msgid "Withdrawn"
-msgstr "Retirar"
+msgstr "Retirado"
 
 #: src/bin/e_int_border_prop.c:161 src/bin/e_int_border_prop.c:183
 #, c-format
 msgid "Iconic"
-msgstr "Minimizado"
+msgstr "Icônico"
 
 #: src/bin/e_int_border_prop.c:216
 #, c-format
@@ -2597,13 +2597,13 @@ msgid ""
 "way of remembering this window."
 msgstr ""
 "Está tentando fazer o Moksha se lembrar de aplicar propriedades (tais como "
-"tamanho, localização, contornos...) a uma janela <hilight>sem especificar o "
-"método</hilight>.<br><br>Tem que especificar, pelo menos, 1 método para "
-"lembrar desta janela."
+"tamanho, localização, estilo da borda...) a uma janela <hilight>sem "
+"especificar o método</hilight>.<br><br>Tem que especificar, pelo menos, 1 "
+"método para lembrar desta janela."
 
 #: src/bin/e_int_border_remember.c:601
 msgid "Nothing"
-msgstr "Nenhum"
+msgstr "Nada"
 
 #: src/bin/e_int_border_remember.c:603
 msgid "Size and Position"
@@ -2638,7 +2638,7 @@ msgstr "Tipo de janela"
 
 #: src/bin/e_int_border_remember.c:683
 msgid "wildcard matches are allowed"
-msgstr "Caracteres-curinga são permitidos."
+msgstr "Caracteres-curinga são permitidos"
 
 #: src/bin/e_int_border_remember.c:685
 msgid "Transience"
@@ -3475,7 +3475,7 @@ msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"O Moksha descobriu que o Evas nãoo consegue criar o \"buffer\" da tela.\n"
+"O Moksha descobriu que o Evas não consegue criar o \"buffer\" da tela.\n"
 "Verifique se o Evas tem suporte a \"Software Buffer\".\n"
 
 #: src/bin/e_main.c:1664
@@ -3528,7 +3528,7 @@ msgstr ""
 
 #: src/bin/e_main.c:1926 src/bin/e_main.c:1942
 msgid "Moksha crashed early on start and has been restarted"
-msgstr "O Moksha terminou ao iniciar a sessão e foi reiniciado."
+msgstr "O Moksha terminou ao iniciar a sessão e foi reiniciado"
 
 #: src/bin/e_main.c:1927
 #, c-format
@@ -3685,35 +3685,35 @@ msgstr "Embaixo"
 
 #: src/bin/e_shelf.c:74
 msgid "Top-left Corner"
-msgstr "Em cima (à esquerda)"
+msgstr "Canto superior esquerdo"
 
 #: src/bin/e_shelf.c:75
 msgid "Top-right Corner"
-msgstr "Em cima (à direita)"
+msgstr "Canto superior direito"
 
 #: src/bin/e_shelf.c:76
 msgid "Bottom-left Corner"
-msgstr "Embaixo (à esquerda)"
+msgstr "Canto inferior esquerdo"
 
 #: src/bin/e_shelf.c:77
 msgid "Bottom-right Corner"
-msgstr "Embaixo (à direita)"
+msgstr "Canto inferior direito"
 
 #: src/bin/e_shelf.c:78
 msgid "Left-top Corner"
-msgstr "À esquerda (em cima)"
+msgstr "Canto esquerdo superior"
 
 #: src/bin/e_shelf.c:79
 msgid "Right-top Corner"
-msgstr "À direita (em cima)"
+msgstr "Canto direito superior"
 
 #: src/bin/e_shelf.c:80
 msgid "Left-bottom Corner"
-msgstr "À esquerda (embaixo)"
+msgstr "Canto esquerdo inferior"
 
 #: src/bin/e_shelf.c:81
 msgid "Right-bottom Corner"
-msgstr "À direita (embaixo)"
+msgstr "Canto direito interior"
 
 #: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1123
 #, c-format
@@ -3803,15 +3803,16 @@ msgid "System Check Done"
 msgstr "Verificações do sistema terminadas"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "Sair da sessão está demorando muito tempo.<br>Algumas aplicações não querem "
-"ser fechadas.<br>Pretende continuar apesar das aplicações não terem sido "
-"fechadas?<br><br>A sessão será terminada em %d segundos."
+"ser fechadas.<br>Você quer terminar o logout<br>de qualquer maneira sem "
+"fechar essas<br>aplicações primeiro?<br><br>%s<br>A sessão será terminada "
+"automaticamente em %d segundos."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3883,7 +3884,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
-msgstr "Isto não devia acontecer"
+msgstr "Eita! Isto não devia acontecer"
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -4498,7 +4499,7 @@ msgid "Clock Settings"
 msgstr "Definições do relógio"
 
 #: src/modules/clock/e_mod_config.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
@@ -5815,7 +5816,7 @@ msgstr "Zona"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:354
 msgid "Container"
-msgstr "Contentor"
+msgstr "Receptáculo"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:358
 msgid "Manager"
@@ -5882,25 +5883,21 @@ msgstr "Roda extra (%d) para baixo"
 
 #: src/modules/conf_keybindings/e_mod_main.c:121
 msgid "WINDOWS"
-msgstr ""
+msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:122
-#, fuzzy
 msgid " Close Window:"
-msgstr "Clonar janela"
+msgstr "Fechar janela"
 
 #: src/modules/conf_keybindings/e_mod_main.c:128
-#, fuzzy
 msgid " Maximize Window:"
-msgstr "Trazer janela à frente"
+msgstr "Maximizar janela"
 
 #: src/modules/conf_keybindings/e_mod_main.c:134
-#, fuzzy
 msgid " Iconic Mode Toggle:"
-msgstr "Alternar modo minimizado"
+msgstr "Alternar modo ícone"
 
 #: src/modules/conf_keybindings/e_mod_main.c:140
-#, fuzzy
 msgid " Fullscreen Mode Toggle:"
 msgstr "Alternar modo tela cheia"
 
@@ -5915,19 +5912,16 @@ msgid " Next Window:"
 msgstr "Janela seguinte"
 
 #: src/modules/conf_keybindings/e_mod_main.c:158
-#, fuzzy
 msgid " Tile Right:"
-msgstr "Direita:"
+msgstr "Empilhar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:164
-#, fuzzy
 msgid " Tile Left:"
-msgstr "Margem superior esquerda"
+msgstr "Empilhar à esquerda"
 
 #: src/modules/conf_keybindings/e_mod_main.c:170
-#, fuzzy
 msgid " Kill Window:"
-msgstr "Todas as janelas"
+msgstr "Forçar fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:176
 #, fuzzy
@@ -5936,17 +5930,15 @@ msgstr "Menu da janela"
 
 #: src/modules/conf_keybindings/e_mod_main.c:185
 msgid "SYSTEM"
-msgstr ""
+msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:186
-#, fuzzy
 msgid " Open Terminology:"
-msgstr "Abrir terminal aqui"
+msgstr "Abrir Terminology aqui"
 
 #: src/modules/conf_keybindings/e_mod_main.c:192
-#, fuzzy
 msgid " Lock System:"
-msgstr "Travar item"
+msgstr "Bloquear sistema"
 
 #: src/modules/conf_keybindings/e_mod_main.c:198
 #, fuzzy
@@ -5965,7 +5957,7 @@ msgstr "Controles do sistema"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid "DESKTOP"
-msgstr ""
+msgstr "ÁREA DE TRABALHO"
 
 #: src/modules/conf_keybindings/e_mod_main.c:221
 #, fuzzy
@@ -6019,7 +6011,7 @@ msgstr "Mudar para a área de trabalho 8"
 
 #: src/modules/conf_keybindings/e_mod_main.c:284
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "MISCELÂNEA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:285
 #, fuzzy
@@ -6037,32 +6029,28 @@ msgid " Restart Moksha:"
 msgstr "Reiniciar o Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:303
-#, fuzzy
 msgid " Terminal console:"
-msgstr "Comando do terminal"
+msgstr "Console do terminal"
 
 #: src/modules/conf_keybindings/e_mod_main.c:309
-#, fuzzy
 msgid " This Help:"
-msgstr "Esta área de trabalho"
+msgstr "Esta ajuda"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Associações do mouse"
+msgstr "Teclas de atalho básicas do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
 msgstr "Editar"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
-#, fuzzy
 msgid "Keybindings"
-msgstr "Associações do teclado"
+msgstr "Teclas de atalho"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Visualizar teclas de atalho do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:382
 #, fuzzy
@@ -6319,7 +6307,7 @@ msgstr "Caches"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
 msgid "Number of Edje files to cache"
-msgstr "Número de arquivos edje a guardar"
+msgstr "Número de arquivos Edje a guardar"
 
 #: src/modules/conf_performance/e_int_config_performance.c:150
 #, c-format
@@ -6328,7 +6316,7 @@ msgstr "%1.0f arquivos"
 
 #: src/modules/conf_performance/e_int_config_performance.c:154
 msgid "Number of Edje collections to cache"
-msgstr "Número de coleções edje a guardar"
+msgstr "Número de coleções Edje a guardar"
 
 #: src/modules/conf_performance/e_int_config_performance.c:156
 #, c-format
@@ -6337,7 +6325,7 @@ msgstr "%1.0f coleções"
 
 #: src/modules/conf_performance/e_int_config_performance.c:159
 msgid "Edje Cache"
-msgstr "Cache edje"
+msgstr "Cache Edje"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:41
 msgid "Power Management Settings"
@@ -6492,19 +6480,19 @@ msgstr "Memorizar contorno para esta janela na próxima vez que aparecer"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
 msgid "Border Title"
-msgstr "Título do contorno"
+msgstr "Título da borda"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
 msgid "Border Title Active"
-msgstr "Título do contorno ativo"
+msgstr "Título da borda ativo"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Frame"
-msgstr "Moldura do contorno"
+msgstr "Moldura da borda"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
 msgid "Border Frame Active"
-msgstr "Moldura do contorno ativa"
+msgstr "Moldura da borda ativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:82
 msgid "Error Text"
@@ -6656,11 +6644,11 @@ msgstr "Texto da caixa de opção inativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
 msgid "Slider Text"
-msgstr "Texto do cursor"
+msgstr "Texto da barra deslizante"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:123
 msgid "Slider Text Disabled"
-msgstr "Texto do cursor inativo"
+msgstr "Texto da barra deslizante inativo"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:124
 msgid "Frame Background Base"
@@ -6998,7 +6986,7 @@ msgstr "%1.2f x"
 #: src/modules/conf_theme/e_int_config_scale.c:325
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
 msgid "Policy"
-msgstr "Políticas"
+msgstr "Política"
 
 #: src/modules/conf_theme/e_int_config_scale.c:330
 msgid "Minimum"
@@ -7531,9 +7519,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Permitir janelas por cima de janelas em tela cheia"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Mudar ao arrastar os objetos para as margens da tela"
+msgstr "Grudar objetos nas margens da tela"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -7621,11 +7608,11 @@ msgstr "Intervalo para terminar:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:105
 msgid "Ping clients"
-msgstr "Analisar programas"
+msgstr "\"Ping\"-ar clientes"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:107
 msgid "Ping interval:"
-msgstr "Intervalo:"
+msgstr "Intervalo de ping:"
 
 #: src/modules/conf_window_manipulation/e_mod_main.c:19
 msgid "Window Focus"
@@ -7918,9 +7905,8 @@ msgid "Animate scrolling"
 msgstr "Rolagem animada"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Mostrar arquivos recentes"
+msgstr "Mostrar itens usados recentemente"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -9265,7 +9251,7 @@ msgstr "Entradas"
 
 #: src/modules/quickaccess/e_mod_config.c:336
 msgid "Hide Instead Of Raising"
-msgstr "Ocultar em vez de mostrar"
+msgstr "Ocultar em vez de avançar"
 
 #: src/modules/quickaccess/e_mod_config.c:339
 msgid "Hide If Focus Lost"
@@ -9438,7 +9424,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
-msgstr "Eliminou a entrada sozinho!<br>Assim é que se faz!"
+msgstr "Eliminou a entrada sozinho, seu pilantra!<br>Assim é que se faz!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
 #: src/modules/quickaccess/e_mod_quickaccess.c:1018
@@ -9481,7 +9467,7 @@ msgstr "Demonstração"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr "Esta é o diálogo de demonstração do módulo Acesso rápido."
+msgstr "Este éu diálogo de demonstração usado no tutorial do Acesso rápido."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
@@ -9665,9 +9651,8 @@ msgid "Screenshot is available at this location:"
 msgstr "A captura está disponível neste local:"
 
 #: src/modules/shot/e_mod_main.c:731
-#, fuzzy
 msgid "Copy link"
-msgstr "Copiar"
+msgstr "Copiar link"
 
 #: src/modules/shot/e_mod_main.c:755
 msgid "Confirm Share"
@@ -9839,7 +9824,7 @@ msgstr "Mostrar título das janelas"
 
 #: src/modules/tiling/e_mod_config.c:189
 msgid "Key hints"
-msgstr "Ajuda de teclas"
+msgstr "Dicas de teclas"
 
 #: src/modules/tiling/e_mod_config.c:200
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
