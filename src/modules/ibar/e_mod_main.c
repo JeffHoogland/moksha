@@ -867,7 +867,7 @@ _adjacent_label_popup(void *data)
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
-        px = x - zone->x + w/2 - pw/2;
+        px = x - zone->x + w / 2 - pw / 2;
       if (y < height)
         py = zone->y + y + h + gap;
       else
