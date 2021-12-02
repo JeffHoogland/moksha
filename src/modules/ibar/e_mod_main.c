@@ -824,9 +824,9 @@ _adjacent_label_popup(void *data)
   IBar_Icon *ic;
   E_Zone *zone;
   int height, gap;
-  Evas_Coord x, y, w, h;   
+  Evas_Coord x, y, w, h;
   Evas_Coord px = 0, py = 0;
-  Evas_Coord gx, gy, sx, sy, pw;   
+  Evas_Coord gx, gy, pw, gw, gh;
 
   Eina_Bool theme_check;
   
@@ -842,8 +842,7 @@ _adjacent_label_popup(void *data)
   if (!theme_check) _adjacent_popup_destroy(ic);
   evas_object_show(ic->win);
   
-  e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &gx, &gy, NULL, NULL);
-  evas_object_geometry_get(ic->ibar->inst->o_ibar, &sx, &sy, NULL, NULL);
+  e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, &gw, &gh);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
 
   switch (ic->ibar->inst->ci->eap_label)
@@ -868,35 +867,35 @@ _adjacent_label_popup(void *data)
   switch (ic->ibar->inst->orient)
   {
     case E_GADCON_ORIENT_FLOAT:
-      px = x - zone->x + w/2 - pw/2;
-      if (gy < height)
-        py = gy - zone->y + h + gap;
+        px = x - zone->x + w/2 - pw/2;
+      if (y < height)
+        py = zone->y + y + h + gap;
       else
-        py = gy -zone->y - height - gap;
+        py = zone->y + y - height - gap;
       break;
-    case E_GADCON_ORIENT_LEFT: 
+    case E_GADCON_ORIENT_LEFT:
     case E_GADCON_ORIENT_CORNER_LT:
     case E_GADCON_ORIENT_CORNER_LB:
-      px = x + w + gap;
-      py = gy - zone->y + y - sy + h/4;
+        px = x + w + gap;
+        py = zone->y + gy + y + h / 6;
       break;
-    case E_GADCON_ORIENT_RIGHT: 
+    case E_GADCON_ORIENT_RIGHT:
     case E_GADCON_ORIENT_CORNER_RT:
     case E_GADCON_ORIENT_CORNER_RB:
-      px = gx - zone->x + sx - pw - gap;
-      py = gy - zone->y + y - sy + h/4;
+        px = gx - zone->x + x - pw - gap;
+        py = zone->y + gy + y + h / 6;
       break;
-    case E_GADCON_ORIENT_BOTTOM: 
+    case E_GADCON_ORIENT_BOTTOM:
     case E_GADCON_ORIENT_CORNER_BL:
     case E_GADCON_ORIENT_CORNER_BR:
-      px = gx - zone->x + x - sx + (w - pw)/2;
-      py = gy - zone->y - height - gap;
+        px = gx - zone->x + x + (w - pw) / 2;
+        py = gy - zone->y - height - gap;
       break;
-    case E_GADCON_ORIENT_TOP: 
+    case E_GADCON_ORIENT_TOP:
     case E_GADCON_ORIENT_CORNER_TL:
     case E_GADCON_ORIENT_CORNER_TR:
-      px = gx - zone->x + x - sx + (w - pw)/2;
-      py = h + gap;
+        px = gx + zone->x + x + (w - pw) / 2;
+        py = zone->y + gh + gap;
       break;
     default:
      break;
