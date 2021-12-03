@@ -1967,7 +1967,7 @@ group "E_Config" struct {
     value "winlist_list_show_other_desk_iconified" int: 1;
     value "winlist_list_show_other_screen_iconified" int: 0;
     value "winlist_list_show_other_desk_windows" int: 0;
-    value "winlist_list_show_other_screen_windows" int: 0;
+    value "winlist_list_show_other_screen_windows" int: 1;
     value "winlist_list_uncover_while_selecting" int: 0;
     value "winlist_list_jump_desk_while_selecting" int: 0;
     value "winlist_list_focus_while_selecting" int: 1;
@@ -2050,7 +2050,7 @@ group "E_Config" struct {
     value "dpms_suspend_timeout" int: 300;
     value "dpms_off_timeout" int: 300;
     value "clientlist_group_by" int: 0;
-    value "clientlist_include_all_zones" int: 0;
+    value "clientlist_include_all_zones" int: 1;
     value "clientlist_separate_with" int: 0;
     value "clientlist_sort_by" int: 0;
     value "clientlist_separate_iconified_apps" int: 0;
