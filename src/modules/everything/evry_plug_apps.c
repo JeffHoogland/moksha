@@ -890,6 +890,56 @@ _exec_term_check_item(Evry_Action *act __UNUSED__, const Evry_Item *it)
 }
 
 static int
+_sudo_env_contains(const char *app)
+{
+   char *realp, *realp2, *env2 = NULL, *p, *p2;
+   char buf[PATH_MAX], buf2[PATH_MAX];
+   const char *env;
+   ssize_t p_len;
+   int ret = 0;
+
+   if (!app) return ret;
+   realp = realpath(app, buf);
+   if (!realp) realp = (char *)app;
+
+   env = getenv("MOKSHA_PKEXEC");
+   if (!env) goto done;
+   env2 = strdup(env);
+   if (!env2) goto done;
+
+   p = env2;
+   while (p)
+     {
+        p2 = strchr(p, ':');
+
+        if (p2) p_len = p2 - p;
+        else p_len = strlen(p);
+
+        if (p_len <= 0) goto next;
+        if (p2) *p2 = 0;
+        realp2 = realpath(p, buf2);
+        if (realp2)
+          {
+             if (!strcmp(realp, realp2)) goto ok;
+          }
+        else
+          {
+             if (!strcmp(realp, p)) goto ok;
+          }
+next:
+        if (p2) p = p2 + 1;
+        else break;
+     }
+   // failed to find
+   goto done;
+ok:
+   ret = 1;
+done:
+   free(env2);
+   return ret;
+}
+
+static int
 _exec_sudo_action(Evry_Action *act)
 {
    GET_APP(app, act->it1.item);
@@ -898,7 +948,11 @@ _exec_sudo_action(Evry_Action *act)
    int ret;
 
    tmp = E_NEW(Evry_Item_App, 1);
-   snprintf(buf, sizeof(buf), "%s %s",
+   if (_sudo_env_contains((app->desktop ? app->desktop->exec : app->file)))
+      snprintf(buf, sizeof(buf), "pkexec %s",
+            (app->desktop ? app->desktop->exec : app->file));
+   else
+      snprintf(buf, sizeof(buf), "%s %s",
             _conf->cmd_sudo,
             (app->desktop ? app->desktop->exec : app->file));
 
