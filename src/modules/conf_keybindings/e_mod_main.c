@@ -303,7 +303,7 @@ _fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
    ob = e_widget_label_add(o, _(" Terminal console:"));
    e_widget_size_min_get(ob, &sw, &sh);
    e_widget_frametable_object_append_full(ot, ob, 0, 3, 1, 1, 1, 0, 1, 0, 1.0, 0.5, sw, sh, sw, sh);
-   ob = e_widget_button_add(o, "CTRL ALT F1...F7", NULL, NULL, NULL, NULL);
+   ob = e_widget_button_add(o, "CTRL ALT F1..F7", NULL, NULL, NULL, NULL);
    e_widget_frametable_object_append(ot, ob, 1, 3, 1, 1, 1, 0, 1, 0);
 
    ob = e_widget_label_add(o, _(" This Help:"));
