@@ -20,6 +20,11 @@ group "E_Config" struct {
             value "val" string: "0";
             value "unset" uchar: 0;
         }
+        group "E_Config_Env_Var" struct {
+            value "var" string: "MOKSHA_PKEXEC";
+            value "val" string: "leafpad:thunar";
+            value "unset" uchar: 0;
+        }
     }
     group "syscon.actions" list {
         group "E_Config_Syscon_Action" struct {
