@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-11-27 15:51+0100\n"
+"PO-Revision-Date: 2021-12-09 11:47+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -2881,7 +2881,7 @@ msgstr "Pas de fenêtre"
 
 #: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
-msgstr "Fenêtres orphelines"
+msgstr "F. orphelines"
 
 #: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 msgid "Untitled window"
@@ -3242,7 +3242,7 @@ msgstr "Configuration des chemins"
 
 #: src/bin/e_main.c:858
 msgid "Setup System Controls"
-msgstr "Paramètres des commandes système"
+msgstr "Configuration des commandes système"
 
 #: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
@@ -6121,7 +6121,7 @@ msgstr "Afficher les paramètres du gadget au premier niveau"
 
 #: src/modules/conf_menus/e_int_config_menus.c:289
 msgid "Margin"
-msgstr "Marge"
+msgstr "Marge de défilement"
 
 #: src/modules/conf_menus/e_int_config_menus.c:291
 #: src/modules/conf_menus/e_int_config_menus.c:296
@@ -6136,7 +6136,7 @@ msgstr "%2.0f pixels"
 
 #: src/modules/conf_menus/e_int_config_menus.c:294
 msgid "Cursor Margin"
-msgstr "Marge du pointeur"
+msgstr "Marge de défilement du curseur"
 
 #: src/modules/conf_menus/e_int_config_menus.c:299
 msgid "Autoscroll"
@@ -9733,12 +9733,12 @@ msgstr "Capture différée"
 
 #: src/modules/shot/e_mod_main.c:1230 src/modules/shot/e_mod_main.c:1284
 msgid "Take Shot"
-msgstr "Capturer l'écran"
+msgstr "Capture d'écran"
 
 #: src/modules/shot/e_mod_main.c:1241 src/modules/shot/e_mod_main.c:1276
 #: src/modules/shot/e_mod_main.c:1288
 msgid "Take Screenshot"
-msgstr "Capture d'écran"
+msgstr "Capturer l'écran"
 
 #: src/modules/shot/e_mod_main.c:1264
 msgid "Shot Error"
@@ -9827,7 +9827,7 @@ msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:110
 msgid "Shrink to fit"
-msgstr "Réduire à la largeur du contenu"
+msgstr "Ajuster la taille au contenu"
 
 #: src/modules/tasks/e_mod_config.c:113
 msgid "Item height"
