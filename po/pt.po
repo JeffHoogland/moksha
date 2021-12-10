@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
-"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-11-30 14:28+0000\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2021-12-02 22:56+0100\n"
+"PO-Revision-Date: 2021-12-10 11:55+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -829,7 +829,7 @@ msgstr "Selecionar"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:316 src/modules/shot/e_mod_main.c:469
 #: src/modules/shot/e_mod_main.c:732 src/modules/shot/e_mod_main.c:758
-#: src/modules/shot/e_mod_main.c:998 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:998 src/modules/xkbswitch/e_mod_config.c:559
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -894,7 +894,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:528
+#: src/modules/xkbswitch/e_mod_config.c:558
 msgid "OK"
 msgstr "Aceitar"
 
@@ -1198,7 +1198,7 @@ msgid "Show in Menus"
 msgstr "Mostrar no menu"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8816 src/bin/e_fm.c:8976
-#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:364
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Opções"
@@ -1517,7 +1517,7 @@ msgid "Eject"
 msgstr "Ejetar"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1003
+#: src/modules/ibar/e_mod_main.c:1002
 msgid "Properties"
 msgstr "Propriedades"
 
@@ -1896,8 +1896,8 @@ msgstr "Aparência"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
-#: src/modules/xkbswitch/e_mod_config.c:267
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1007
+#: src/modules/xkbswitch/e_mod_config.c:297
 msgid "Remove"
 msgstr "Remover"
 
@@ -2517,7 +2517,7 @@ msgstr "Solicita posição"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
+#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:995
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
@@ -2865,7 +2865,7 @@ msgstr "Sem janelas"
 
 #: src/bin/e_int_menus.c:1396
 msgid "Lost Windows"
-msgstr "Janelas perdidas"
+msgstr "Janelas órfãs"
 
 #: src/bin/e_int_menus.c:1453 src/bin/e_int_menus.c:1553
 msgid "Untitled window"
@@ -3772,7 +3772,7 @@ msgid "Rename Shelf"
 msgstr "Renomear painel"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:990
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:989
 msgid "Contents"
 msgstr "Conteúdo"
 
@@ -4204,19 +4204,19 @@ msgstr[1] "%li minutos"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:292
 msgid "Add"
 msgstr "Adicionar"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:348
-#: src/modules/xkbswitch/e_mod_config.c:250
+#: src/modules/xkbswitch/e_mod_config.c:280
 msgid "Up"
 msgstr "Subir"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:352
-#: src/modules/xkbswitch/e_mod_config.c:256
+#: src/modules/xkbswitch/e_mod_config.c:286
 msgid "Down"
 msgstr "Descer"
 
@@ -5521,17 +5521,17 @@ msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "O Moksha não conseguiu importar a configuração<br>devido a erros de cópia."
 
-#: src/modules/conf_intl/e_int_config_intl.c:601
+#: src/modules/conf_intl/e_int_config_intl.c:604
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Definições de idioma"
 
-#: src/modules/conf_intl/e_int_config_intl.c:624
+#: src/modules/conf_intl/e_int_config_intl.c:629
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "Definições de idioma do bloqueio do sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:957
+#: src/modules/conf_intl/e_int_config_intl.c:962
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5544,29 +5544,29 @@ msgstr ""
 "variáveis de ambiente para <br>não as utilizar. <br>As variáveis de ambiente "
 "que podem afetar o seu idioma são:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:965
+#: src/modules/conf_intl/e_int_config_intl.c:970
 msgid "Possible Locale problems"
 msgstr "Problemas com idiomas"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1035
-#: src/modules/conf_intl/e_int_config_intl.c:1126
+#: src/modules/conf_intl/e_int_config_intl.c:1055
+#: src/modules/conf_intl/e_int_config_intl.c:1146
 msgid "Language Selector"
 msgstr "Seletor de idiomas"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1065
-#: src/modules/conf_intl/e_int_config_intl.c:1514
+#: src/modules/conf_intl/e_int_config_intl.c:1085
+#: src/modules/conf_intl/e_int_config_intl.c:1534
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Definições do sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1099
-#: src/modules/conf_intl/e_int_config_intl.c:1177
+#: src/modules/conf_intl/e_int_config_intl.c:1119
+#: src/modules/conf_intl/e_int_config_intl.c:1197
 msgid "Locale Selected"
 msgstr "Configuração regional escolhida"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1100
-#: src/modules/conf_intl/e_int_config_intl.c:1178
+#: src/modules/conf_intl/e_int_config_intl.c:1120
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Locale"
 msgstr "Configuração regional"
 
@@ -6075,7 +6075,7 @@ msgstr "Comentários"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:328
 msgid "Gadgets"
 msgstr "Gadgets"
 
@@ -6085,7 +6085,7 @@ msgstr "Mostrar definições do gadget no nível superior"
 
 #: src/modules/conf_menus/e_int_config_menus.c:289
 msgid "Margin"
-msgstr "Margem"
+msgstr "Margem de deslocamento"
 
 #: src/modules/conf_menus/e_int_config_menus.c:291
 #: src/modules/conf_menus/e_int_config_menus.c:296
@@ -6100,7 +6100,7 @@ msgstr "%2.0f pixeis"
 
 #: src/modules/conf_menus/e_int_config_menus.c:294
 msgid "Cursor Margin"
-msgstr "Margem do cursor"
+msgstr "Margem de deslocamento do cursor"
 
 #: src/modules/conf_menus/e_int_config_menus.c:299
 msgid "Autoscroll"
@@ -6112,11 +6112,11 @@ msgstr " Desativar ícones nos menus"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
-msgstr " Orientação Menu Inteligente"
+msgstr " Orientação do menu inteligente"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
-msgstr "Velocidade da deslocação do menu"
+msgstr "Velocidade de deslocamento do menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:309
 #, c-format
@@ -6125,7 +6125,7 @@ msgstr "%5.0f pixeis/s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:312
 msgid "Fast Mouse Move Threshold"
-msgstr "Limite para a deslocação rápida do rato"
+msgstr "Limite de movimento rápido do rato"
 
 #: src/modules/conf_menus/e_int_config_menus.c:314
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:192
@@ -6135,7 +6135,7 @@ msgstr "%4.0f pixeis/s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:317
 msgid "Click Drag Timeout"
-msgstr "Intervalo para clique e arrastamento"
+msgstr "Tempo limite do arrastar"
 
 #: src/modules/conf_menus/e_int_config_menus.c:319
 #, c-format
@@ -6635,7 +6635,7 @@ msgstr "Base para o fundo da imagem"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:125
 msgid "Scroller Frame Background Base"
-msgstr "Base para o fundo da imagem da deslocação"
+msgstr "Base para o fundo da moldura de deslocamento"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:130
 msgid "Module Label"
@@ -8822,20 +8822,20 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Tem a certeza que quer eliminar esta fonte?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1952
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:979
+#: src/modules/ibar/e_mod_main.c:978
 msgid "Create new Icon"
 msgstr "Criar novo ícone"
 
-#: src/modules/ibar/e_mod_main.c:1013
+#: src/modules/ibar/e_mod_main.c:1012
 #, c-format
 msgid "Icon %s"
 msgstr "Ícone %s"
 
-#: src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:1952
 msgid "Focus IBar"
 msgstr "Focar IBar"
 
@@ -9680,12 +9680,12 @@ msgstr "Captura adiada"
 
 #: src/modules/shot/e_mod_main.c:1230 src/modules/shot/e_mod_main.c:1284
 msgid "Take Shot"
-msgstr "Obter captura de ecrã"
+msgstr "Captura de ecrã"
 
 #: src/modules/shot/e_mod_main.c:1241 src/modules/shot/e_mod_main.c:1276
 #: src/modules/shot/e_mod_main.c:1288
 msgid "Take Screenshot"
-msgstr "Captura de ecrã"
+msgstr "Capturar o ecrã"
 
 #: src/modules/shot/e_mod_main.c:1264
 msgid "Shot Error"
@@ -9881,35 +9881,35 @@ msgstr "Enviar para o canto inferior direito"
 msgid "Send to lower left corner"
 msgstr "Enviar para o canto inferior esquerdo"
 
-#: src/modules/xkbswitch/e_mod_config.c:73
+#: src/modules/xkbswitch/e_mod_config.c:75
 msgid "Keyboard Settings"
 msgstr "Definições do teclado"
 
-#: src/modules/xkbswitch/e_mod_config.c:276
+#: src/modules/xkbswitch/e_mod_config.c:306
 msgid "Configurations"
 msgstr "Definições"
 
-#: src/modules/xkbswitch/e_mod_config.c:285
+#: src/modules/xkbswitch/e_mod_config.c:315
 msgid "Models"
 msgstr "Modelos"
 
-#: src/modules/xkbswitch/e_mod_config.c:300
+#: src/modules/xkbswitch/e_mod_config.c:330
 msgid "Label only"
 msgstr "Só texto"
 
-#: src/modules/xkbswitch/e_mod_config.c:483
+#: src/modules/xkbswitch/e_mod_config.c:513
 msgid "Add New Configuration"
 msgstr "Adicionar nova configuração"
 
-#: src/modules/xkbswitch/e_mod_config.c:496
+#: src/modules/xkbswitch/e_mod_config.c:526
 msgid "Available"
 msgstr "Disponível"
 
-#: src/modules/xkbswitch/e_mod_config.c:503
+#: src/modules/xkbswitch/e_mod_config.c:533
 msgid "Model"
 msgstr "Modelo"
 
-#: src/modules/xkbswitch/e_mod_config.c:510
+#: src/modules/xkbswitch/e_mod_config.c:540
 msgid "Variant"
 msgstr "Variante"
 
