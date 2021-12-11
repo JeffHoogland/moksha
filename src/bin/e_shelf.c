@@ -36,7 +36,7 @@ static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev)
 static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
-static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
+//~ static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
 static void          _e_shelf_event_rename_end_cb(void *data, E_Event_Shelf *ev);
 
 static Eina_List *shelves = NULL;
@@ -96,7 +96,7 @@ e_shelf_init(void)
    E_EVENT_SHELF_ADD = ecore_event_type_new();
    E_EVENT_SHELF_DEL = ecore_event_type_new();
    _e_shelf_gadcon_populate_handler = ecore_event_handler_add(E_EVENT_GADCON_POPULATE, _e_shelf_gadcon_populate_handler_cb, NULL);
-   _e_shelf_module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _e_shelf_module_init_end_handler_cb, NULL);
+   //~ _e_shelf_module_init_end_handler = ecore_event_handler_add(E_EVENT_MODULE_INIT_END, _e_shelf_module_init_end_handler_cb, NULL);
    return 1;
 }
 
@@ -2286,33 +2286,33 @@ _e_shelf_cb_instant_hide_timer(void *data)
    return ECORE_CALLBACK_CANCEL;
 }
 
-static Eina_Bool
-_e_shelf_module_init_end_timer_cb(void *data)
-{
-   E_Shelf *es = data;
-   if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
-   es->module_init_end_timer = NULL;
-   return EINA_FALSE;
-}
+//~ static Eina_Bool
+//~ _e_shelf_module_init_end_timer_cb(void *data)
+//~ {
+   //~ E_Shelf *es = data;
+   //~ if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
+   //~ es->module_init_end_timer = NULL;
+   //~ return EINA_FALSE;
+//~ }
 
-static Eina_Bool
-_e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
-{
-   Eina_List *l;
-   E_Shelf *es;
+//~ static Eina_Bool
+//~ _e_shelf_module_init_end_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+//~ {
+   //~ Eina_List *l;
+   //~ E_Shelf *es;
 
-   EINA_LIST_FOREACH(shelves, l, es)
-     {
-        if ((!es->gadcon->populate_requests) || (!es->gadcon->cf->clients))
-          {
-             if (e_shelf_desk_visible(es, NULL))
-               e_shelf_show(es);
-          }
-        else if (!es->module_init_end_timer)
-          es->module_init_end_timer = ecore_timer_add(3.0, _e_shelf_module_init_end_timer_cb, es);
-     }
-   return ECORE_CALLBACK_RENEW;
-}
+   //~ EINA_LIST_FOREACH(shelves, l, es)
+     //~ {
+        //~ if ((!es->gadcon->populate_requests) || (!es->gadcon->cf->clients))
+          //~ {
+             //~ if (e_shelf_desk_visible(es, NULL))
+               //~ e_shelf_show(es);
+          //~ }
+        //~ else if (!es->module_init_end_timer)
+          //~ es->module_init_end_timer = ecore_timer_add(3.0, _e_shelf_module_init_end_timer_cb, es);
+     //~ }
+   //~ return ECORE_CALLBACK_RENEW;
+//~ }
 
 static Eina_Bool
 _e_shelf_gadcon_populate_handler_cb(void *data __UNUSED__, int type __UNUSED__, void *event)
