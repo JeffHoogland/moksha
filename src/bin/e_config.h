@@ -111,6 +111,7 @@ struct _E_Config
    int         geometry_auto_move; // GUI
    int         geometry_auto_resize_limit; // GUI
    int         evry_launch_hist; // GUI
+   int         systray_on_demand; // GUI
    int         winlist_warp_while_selecting; // GUI
    int         winlist_warp_at_end; // GUI
    double      winlist_warp_speed; // GUI

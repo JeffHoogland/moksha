@@ -55,6 +55,8 @@ static E_Module *systray_mod = NULL;
 EINTERN Instance *instance = NULL; /* only one systray ever possible */
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
+static void   _systray_size_apply_do(Instance *inst);
+
 static Eina_Bool
 _is_horiz(Instance *inst)
 {
@@ -142,6 +144,7 @@ _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
    zone = e_util_zone_current_get(e_manager_current_get());
 
    m = e_menu_new();
+
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
@@ -155,6 +158,11 @@ _systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 {
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
+   if (ev->button == 1)
+   {
+      e_config->systray_on_demand = !e_config->systray_on_demand;
+     _systray_size_apply_do(inst);
+   }
    if (ev->button == 3)
      _systray_menu_new(inst, ev);
 }
@@ -166,6 +174,7 @@ _systray_size_apply_do(Instance *inst)
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
    int icon_num;
    double space;
+   int expand_check;
    
    edje_object_message_signal_process(inst->ui.gadget);
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
@@ -188,10 +197,33 @@ _systray_size_apply_do(Instance *inst)
        space = e_config->scale.factor;
 
    edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
-   e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space , mh + icon_num * space);
-
    evas_object_geometry_get(o, &x, &y, &w, &h);
-   ecore_x_window_move_resize(inst->win.base, x, y, w, h);
+
+   /* check if theme contains expand button */
+   o = edje_object_part_object_get(inst->ui.gadget, "expand_butt");
+   expand_check = o ? 1: 0;
+
+   if (expand_check == 0)
+     {
+       e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
+                                               mh + icon_num * space);
+       ecore_x_window_move_resize(inst->win.base, x, y, w, h);
+       e_config->systray_on_demand = 1;
+       return;
+     }
+
+   /* systray show/hide expand toggle button */
+   if (e_config->systray_on_demand)
+     {
+       e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
+                                               mh + icon_num * space);
+       ecore_x_window_move_resize(inst->win.base, x, y, w, h);
+     }
+   else
+     {
+       e_gadcon_client_min_size_set(inst->gcc, 15 , 15);
+       ecore_x_window_move_resize(inst->win.base, x, y, 0, 0);
+     }
 }
 
 static void
@@ -419,7 +451,6 @@ _systray_icon_del_list(Instance *inst, Eina_List *l, Icon *icon)
    ecore_x_window_reparent(icon->win, 0, 0, 0);
    evas_object_del(icon->o);
    free(icon);
-
    _systray_size_apply(inst);
 }
 
@@ -767,7 +798,7 @@ _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
        }
    if (found)
      {
-        //~ _systray_deactivate(inst);
+        _systray_deactivate(inst);
         if (!_systray_activate(inst))
           {
              if (!inst->timer.retry)
