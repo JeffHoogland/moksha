@@ -170,7 +170,7 @@ _systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 static void
 _systray_size_apply_do(Instance *inst)
 {
-   const Evas_Object *o;
+   const Evas_Object *o, *butt;
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
    int icon_num;
    double space;
@@ -197,16 +197,16 @@ _systray_size_apply_do(Instance *inst)
        space = e_config->scale.factor;
 
    edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
-   evas_object_geometry_get(o, &x, &y, &w, &h);
 
    /* check if theme contains expand button */
-   o = edje_object_part_object_get(inst->ui.gadget, "expand_butt");
-   expand_check = o ? 1: 0;
+   butt = edje_object_part_object_get(inst->ui.gadget, "expand_butt");
+   expand_check = butt ? 1: 0;
 
    if (expand_check == 0)
      {
        e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
                                                mh + icon_num * space);
+       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, w, h);
        e_config->systray_on_demand = 1;
        return;
@@ -217,11 +217,13 @@ _systray_size_apply_do(Instance *inst)
      {
        e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
                                                mh + icon_num * space);
+       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, w, h);
      }
    else
      {
        e_gadcon_client_min_size_set(inst->gcc, 15 , 15);
+       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, 0, 0);
      }
 }
