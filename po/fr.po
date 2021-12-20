@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2021-11-27 15:02+0100\n"
-"PO-Revision-Date: 2021-12-09 11:47+0100\n"
+"PO-Revision-Date: 2021-12-20 13:17+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -2188,7 +2188,7 @@ msgstr "Restaurer"
 
 #: src/bin/e_int_border_menu.c:615
 msgid "Edit Icon"
-msgstr "Éditer l'icône"
+msgstr "Modifier l'icône"
 
 #: src/bin/e_int_border_menu.c:623
 msgid "Create Icon"
@@ -3098,8 +3098,8 @@ msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"Moksha ne parvient pas à créer aucun dossier dans votre dossier personnel.\n"
-"Peut-être n'avez-vous pas de dossier personnel,\n"
+"Moksha ne peut créer aucun dossier dans votre répertoire personnel.\n"
+"Peut-être n'avez-vous pas de répertoire personnel,\n"
 "ou que votre disque dur est plein ?"
 
 #: src/bin/e_main.c:560
@@ -6059,7 +6059,7 @@ msgstr "Raccourcis clavier de base dans Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:331
 msgid "Edit"
-msgstr "Édition"
+msgstr "Modifier"
 
 #: src/modules/conf_keybindings/e_mod_main.c:377
 msgid "Keybindings"
@@ -9203,14 +9203,14 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"Moksha peut vérifier la disponibilité de nouvelles versions,<br>de mises à "
-"jour de sécurité et de corrections de bogues, mais<br>aussi d'extensions."
-"<br><br>C'est d'une aide précieuse pour vous tenir informé(e) "
+"Moksha peut vérifier la présence de nouvelles versions,<br>de mises à jour "
+"de sécurité et de corrections de bogues,<br>ainsi que la disponibilité "
+"d'extensions.<br><br>C'est d'une aide précieuse pour vous tenir informé(e) "
 "des<br>correctifs disponibles dès leur parution. Pour ce faire,<br>Moksha se "
 "connecte à enlightenment.org et échange<ps/>des données comme le ferait "
 "n'importe quel navigateur.<br>Aucune information personnelle telle que le "
-"nom et le mot de<br>passe de l'utilisateur, ou quelque fichier personnel que "
-"ce<br>soit, n'est transmis. Si vous n'en voulez vraiment pas,<br>alors "
+"nom, le mot de<br>passe de l'utilisateur, ou quelque fichier personnel que "
+"ce<br>soit, n'est transmise. Si vous n'en voulez vraiment pas,<br>alors "
 "désactivez la fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous "
 "exposez à des vulnérabilités et à devoir<br>vivre avec des bogues."
 
