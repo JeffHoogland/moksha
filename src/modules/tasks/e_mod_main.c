@@ -89,6 +89,7 @@ static Eina_Bool    _tasks_cb_window_focus_in(void *data, int type, void *event)
 static Eina_Bool    _tasks_cb_window_focus_out(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_property(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_desk_show(void *data, int type, void *event);
+static Eina_Bool    _tasks_cb_event_systray_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_urgent_change(void *data, int type, void *event);
 
 static E_Config_DD *conf_edd = NULL;
@@ -184,6 +185,10 @@ e_modapi_init(E_Module *m)
    tasks_config->handlers = eina_list_append
        (tasks_config->handlers, ecore_event_handler_add
          (E_EVENT_BORDER_URGENT_CHANGE, _tasks_cb_event_border_urgent_change, NULL));
+   tasks_config->handlers = eina_list_append
+       (tasks_config->handlers, ecore_event_handler_add
+         (E_EVENT_SYSTRAY_CHANGED, _tasks_cb_event_systray_show, NULL));
+
    tasks_config->borders = eina_list_clone(e_border_client_list());
    e_gadcon_provider_register(&_gadcon_class);
    return m;
@@ -998,6 +1003,13 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 /************ BORDER CALLBACKS *********************/
+
+static Eina_Bool
+_tasks_cb_event_systray_show(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   _tasks_refill_all();
+   return EINA_TRUE;
+}
 
 static Eina_Bool
 _tasks_cb_event_border_add(void *data __UNUSED__, int type __UNUSED__, void *event)

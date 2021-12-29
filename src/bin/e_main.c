@@ -1757,6 +1757,12 @@ _e_main_screens_init(void)
         free(roots);
         return 0;
      }
+   TS("\tscreens: systray");
+   if (!e_systray_init())
+     {
+        free(roots);
+        return 0;
+     }
    TS("\tscreens: win");
    if (!e_win_init())
      {

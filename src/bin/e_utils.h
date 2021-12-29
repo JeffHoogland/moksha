@@ -14,6 +14,9 @@
    e_util_dialog_internal(title, __tmpbuf); \
 }
 
+extern EAPI int E_EVENT_SYSTRAY_CHANGED;
+
+EINTERN int       e_systray_init(void);
 EAPI void         e_util_wakeup(void);
 EAPI void         e_util_env_set(const char *var, const char *val);
 EAPI E_Zone      *e_util_zone_current_get(E_Manager *man);

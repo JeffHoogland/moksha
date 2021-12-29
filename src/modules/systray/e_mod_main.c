@@ -158,10 +158,12 @@ _systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 {
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
+
    if (ev->button == 1)
    {
       e_config->systray_on_demand = !e_config->systray_on_demand;
      _systray_size_apply_do(inst);
+      ecore_event_add(E_EVENT_SYSTRAY_CHANGED, NULL, NULL, NULL);
    }
    if (ev->button == 3)
      _systray_menu_new(inst, ev);

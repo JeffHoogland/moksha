@@ -11,6 +11,7 @@ EAPI E_Path *path_icons = NULL;
 EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
 EAPI E_Path *path_messages = NULL;
+EAPI int E_EVENT_SYSTRAY_CHANGED = 0;
 
 /* local subsystem functions */
 static Eina_Bool    _e_util_cb_delayed_del(void *data);
@@ -1873,6 +1874,13 @@ e_util_copy_safely(char* dst, const char* src, uint32_t len)
 {
     strncpy(dst, src, len - 1);
     dst[len - 1] = '\0';
+}
+
+EINTERN int
+e_systray_init(void)
+{
+ E_EVENT_SYSTRAY_CHANGED = ecore_event_type_new();
+ return 1;
 }
 
 #endif
