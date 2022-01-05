@@ -4,7 +4,6 @@
 #define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - The Enlightened Desktop"
 #define BODHI_ABOUT_AUTHORS \
-    "Jeff Hoogland<br>" \
     "Rbt 'ylee' Wiley<br>" \
     "Štefan 'the_waiter' Uram<br>" \
     "Jason 'Tristam' Thomas<br>" \
@@ -14,12 +13,13 @@
     "Doug 'Deepspeed' Yanez<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Janne Tamming" \
-    "Bob Raskin<br>" \
-    "Kristi Hoogland<br><br>" \
+    "Bob Raskin<br><br>" \
     "In memory:<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
     "Mark 'ottermaton' Strawser<br><br>" \
     "Past contributors:<br>" \
+    "Jeff Hoogland<br>" \
+     "Kristi Hoogland<br>" \
     "Joris 'aeonius' van Dijk<br>" \
     "Stace 'sef' Fauske<br>" \
     "Kai 'kuuko' Huuhko<br>" \
