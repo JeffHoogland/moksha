@@ -13,6 +13,7 @@
     "Gavin 'fidoedidoe' Fowler<br>" \
     "Doug 'Deepspeed' Yanez<br>" \
     "Roger 'JollyRoger' Carter<br>" \
+    "Janne Tamming" \
     "Bob Raskin<br>" \
     "Kristi Hoogland<br><br>" \
     "In memory:<br>" \
