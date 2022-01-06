@@ -138,10 +138,11 @@ group { name: "e/modules/notification/main";
          }
       }
       part { name: "bodyclip"; type: RECT;
+         scale: 1;
          clip_to: "clip";
          description { state: "default" 0.0;
             rel2.offset: -13 -13;
-            min: 220 140;
+            min: 220 115;
          }
       }
       part { name: "notification.swallow.app_icon"; type: SWALLOW; mouse_events: 0;
