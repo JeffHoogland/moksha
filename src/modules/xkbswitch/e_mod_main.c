@@ -135,11 +135,8 @@ _xkb_update_icon(int cur_group)
         EINA_LIST_FOREACH(instances, l, inst)
           {
              if (!e_config_xkb_layout_eq(e_config->xkb.current_layout, inst->layout))
-               {
-                  e_config_xkb_layout_free(inst->layout);
-                  inst->layout = e_config->xkb.current_layout;
-               }
-             E_FN_DEL(evas_object_del, inst->o_xkbflag);
+               inst->layout = e_config_xkb_layout_dup(e_config->xkb.current_layout);
+             E_FREE_FUNC(inst->o_xkbflag, evas_object_del);
              e_theme_edje_object_set(inst->o_xkbswitch,
                                      "base/theme/modules/xkbswitch",
                                      "e/modules/xkbswitch/noflag");
@@ -152,10 +149,7 @@ _xkb_update_icon(int cur_group)
         EINA_LIST_FOREACH(instances, l, inst)
           {
              if (!e_config_xkb_layout_eq(e_config->xkb.current_layout, inst->layout))
-               {
-                  e_config_xkb_layout_free(inst->layout);
-                  inst->layout = e_config->xkb.current_layout;
-               }
+               inst->layout = e_config_xkb_layout_dup(e_config->xkb.current_layout);
              if (!inst->o_xkbflag)
                inst->o_xkbflag = e_icon_add(inst->gcc->gadcon->evas);
              e_theme_edje_object_set(inst->o_xkbswitch,
@@ -307,7 +301,7 @@ _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event __UNU
    Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
 
    //INF("xkb group %d", ev->group);
-   e_config->xkb.cur_group = ev->group;
+   //~ e_config->xkb.cur_group = ev->group;
    _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
 }
