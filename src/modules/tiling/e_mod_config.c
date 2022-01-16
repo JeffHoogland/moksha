@@ -336,6 +336,7 @@ e_int_config_tiling_module(E_Container *con,
     E_Config_Dialog *cfd;
     E_Config_Dialog_View *v;
     char buf[PATH_MAX];
+    Efreet_Icon *ic;
 
     if (e_config_dialog_find("E", "windows/tiling"))
         return NULL;
@@ -347,8 +348,15 @@ e_int_config_tiling_module(E_Container *con,
     v->basic.apply_cfdata = _basic_apply_data;
     v->basic.create_widgets = _basic_create_widgets;
 
-    snprintf(buf, sizeof(buf), "%s/e-module-tiling.edj",
+    ic = efreet_icon_find(e_config->icon_theme,
+               "gnome-panel-workspace-switcher",
+                                            48);
+    if (ic)
+      snprintf(buf, sizeof(buf),"gnome-panel-workspace-switcher");
+    else
+      snprintf(buf, sizeof(buf),"%s/e-module-tiling.edj",
              e_module_dir_get(tiling_g.module));
+
     cfd = e_config_dialog_new(con,
                               _("Tiling Configuration"),
                               "E", "windows/tiling",
