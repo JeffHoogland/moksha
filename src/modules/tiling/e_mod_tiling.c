@@ -96,7 +96,8 @@ static struct tiling_mod_main_g
                          *handler_desk_show,
                          *handler_desk_before_show,
                          *handler_desk_set,
-                         *handler_container_resize;
+                         *handler_container_resize,
+                         *handler_icon_change;
     E_Border_Hook        *pre_border_assign_hook;
     E_Border_Menu_Hook   *border_menu_hook;
     Desk_Split_Type      *current_split_type;
@@ -4127,6 +4128,30 @@ _clear_border_extras(void *data)
     E_FREE(extra);
 }
 
+static bool
+_register_conf_item(void *data __UNUSED__, int type __UNUSED__, E_Event_Container_Resize *ev __UNUSED__)
+{
+    Efreet_Icon *ic;
+
+    ic = efreet_icon_find(e_config->icon_theme,
+               "gnome-panel-workspace-switcher",
+                                            48);
+    if (ic)
+      snprintf(_G.edj_path, sizeof(_G.edj_path),"gnome-panel-workspace-switcher");
+    else
+      snprintf(_G.edj_path, sizeof(_G.edj_path),"%s/e-module-tiling.edj",
+             e_module_dir_get(tiling_g.module));
+
+    e_configure_registry_item_del("windows/tiling");
+    e_configure_registry_category_del("windows");
+
+    e_configure_registry_category_add("windows", 50, _("Windows"), NULL,
+                                      "preferences-system-windows");
+    e_configure_registry_item_add("windows/tiling", 150, _("Tiling"),
+                                  NULL, _G.edj_path,
+                                  e_int_config_tiling_module);
+    return true;
+}
 
 EAPI E_Module_Api e_modapi =
 {
@@ -4175,6 +4200,7 @@ e_modapi_init(E_Module *m)
     HANDLER(_G.handler_desk_before_show, DESK_BEFORE_SHOW, _desk_before_show_hook);
     HANDLER(_G.handler_desk_set, BORDER_DESK_SET, (void *) _desk_set_hook);
     HANDLER(_G.handler_container_resize, CONTAINER_RESIZE, (void *) _container_resize_hook);
+    HANDLER(_G.handler_icon_change, CONFIG_ICON_THEME, (void *) _register_conf_item);
 #undef HANDLER
 
 #define ACTION_ADD(_act, _cb, _title, _value, _params, _example, _editable)  \
@@ -4243,13 +4269,7 @@ e_modapi_init(E_Module *m)
 #undef ACTION_ADD
 
     /* Configuration entries */
-    snprintf(_G.edj_path, sizeof(_G.edj_path),"%s/e-module-tiling.edj",
-             e_module_dir_get(m));
-    e_configure_registry_category_add("windows", 50, _("Windows"), NULL,
-                                      "preferences-system-windows");
-    e_configure_registry_item_add("windows/tiling", 150, _("Tiling"),
-                                  NULL, _G.edj_path,
-                                  e_int_config_tiling_module);
+    _register_conf_item(NULL, 0, NULL);
 
     /* Configuration itself */
     _G.config_edd = E_CONFIG_DD_NEW("Tiling_Config", Config);
@@ -4386,6 +4406,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
     FREE_HANDLER(_G.handler_desk_show);
     FREE_HANDLER(_G.handler_desk_before_show);
     FREE_HANDLER(_G.handler_desk_set);
+    FREE_HANDLER(_G.handler_icon_change);
 #undef FREE_HANDLER
 
 
