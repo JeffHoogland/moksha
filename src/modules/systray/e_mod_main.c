@@ -101,7 +101,6 @@ _redo_sizing(Instance *inst)
      }
 }
 
-
 static Eina_Bool
 _systray_site_is_safe(E_Gadcon_Site site)
 {
@@ -144,7 +143,6 @@ _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
    zone = e_util_zone_current_get(e_manager_current_get());
 
    m = e_menu_new();
-
    m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
    e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y, NULL, NULL);
    e_menu_activate_mouse(m, zone, x + ev->output.x, y + ev->output.y,
@@ -176,8 +174,16 @@ _systray_size_apply_do(Instance *inst)
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
    int icon_num;
    double space;
-   int expand_check;
-   
+   int expand_check, is_arrow = 1;
+
+   if (getenv("MOKSHA_SYSTRAY_ARROW"))
+     sscanf(getenv("MOKSHA_SYSTRAY_ARROW"), "%d", &is_arrow);
+
+   if (is_arrow == 1)
+       edje_object_signal_emit(inst->ui.gadget, "e,arrow,show,*", _sig_source);
+   else
+       edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
+
    edje_object_message_signal_process(inst->ui.gadget);
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
    if (!o) return;
@@ -193,9 +199,9 @@ _systray_size_apply_do(Instance *inst)
    else
      ecore_x_window_show(inst->win.base);
 
-    if(getenv("MOKSHA_SYSTRAY_SPACING"))
+   if (getenv("MOKSHA_SYSTRAY_SPACING"))
        sscanf(getenv("MOKSHA_SYSTRAY_SPACING"), "%lf", &space);
-    else
+   else
        space = e_config->scale.factor;
 
    edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
@@ -204,7 +210,7 @@ _systray_size_apply_do(Instance *inst)
    butt = edje_object_part_object_get(inst->ui.gadget, "expand_butt");
    expand_check = butt ? 1: 0;
 
-   if (expand_check == 0)
+   if (expand_check == 0 || is_arrow == 0)
      {
        e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
                                                mh + icon_num * space);
