@@ -35,7 +35,7 @@ _key_binding_get(const char *action, const char *params)
    E_Config_Binding_Key *bi;
    Eina_Strbuf *b;
    char mod[PATH_MAX];
-   char *ret;
+   char *actstr, *ret;
 
    b = eina_strbuf_new();
 
@@ -47,10 +47,11 @@ _key_binding_get(const char *action, const char *params)
        bi->action = eina_stringshare_add(bi->action);
        bi->params = eina_stringshare_ref(bi->params);
        if (!bi->params) bi->params =  eina_stringshare_add("");
-       if (!params) params =  eina_stringshare_add("");
+       if (!params) actstr =  strdup("");
+       else actstr = strdup(params);
 
       if ((!e_util_strcmp(bi->action, action)) &&
-          (!e_util_strcmp(bi->params, params)) &&
+          (!e_util_strcmp(bi->params, actstr)) &&
            (e_util_strcmp(bi->key, "Execute")))
         {
           switch (bi->modifiers)
@@ -86,7 +87,7 @@ _key_binding_get(const char *action, const char *params)
           eina_strbuf_append(b, mod);
           eina_stringshare_del(bi->action);
           eina_stringshare_del(bi->params);
-          eina_stringshare_del(params);
+          free(actstr);
         }
     }
 
