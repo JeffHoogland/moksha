@@ -241,7 +241,6 @@ _gc_id_new (const E_Gadcon_Client_Class *client_class __UNUSED__)
 static void
 _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mouse_Event *event)
 {
-  EINA_SAFETY_ON_NULL_RETURN(data);
   EINA_SAFETY_ON_NULL_RETURN(event);
 
   Eina_Bool mouse_event = (ecore_event_current_type_get() == MOUSE_BUTTON);
