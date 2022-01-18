@@ -244,7 +244,13 @@ _cb_menu_show(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, Mo
   EINA_SAFETY_ON_NULL_RETURN(event);
 
   Eina_Bool mouse_event = (ecore_event_current_type_get() == MOUSE_BUTTON);
-  Instance *inst = mouse_event ? data: clip_inst->inst;
+  Instance *inst;
+  if (mouse_event){
+    EINA_SAFETY_ON_NULL_RETURN(data);
+    inst = data;
+  }
+  else
+    inst = clip_inst->inst;
   Evas_Coord x, y, w, h;
   unsigned dir, timestamp;
 
