@@ -905,9 +905,9 @@ e_modapi_init (E_Module *m)
   act = e_action_add("clipboard");
   if (act) {
     act->func.go = (void *) _cb_action_switch;
-    e_action_predef_name_set(_("Clipboard"), ACT_FLOAT, "clipboard", "float",    NULL, 0);
-    e_action_predef_name_set(_("Clipboard"), ACT_CONFIG,   "clipboard", "settings", NULL, 0);
-    e_action_predef_name_set(_("Clipboard"), ACT_CLEAR,   "clipboard", "clear",    NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_FLOAT, "clipboard", "float", NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_CONFIG, "clipboard", "settings", NULL, 0);
+    e_action_predef_name_set(_("Clipboard"), ACT_CLEAR, "clipboard", "clear", NULL, 0);
   }
 
   /* Create a global clip_inst for our module
