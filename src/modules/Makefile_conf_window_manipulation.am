@@ -1,5 +1,6 @@
 conf_window_manipulationdir = $(MDIR)/conf_window_manipulation
-conf_window_manipulation_DATA = conf_window_manipulation/module.desktop
+conf_window_manipulation_DATA = conf_window_manipulation/module.desktop \
+                                conf_window_manipulation/e-module-conf_window_manipulation.edj
 
 EXTRA_DIST += $(conf_window_manipulation_DATA)
 
