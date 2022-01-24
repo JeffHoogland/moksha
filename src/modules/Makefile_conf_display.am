@@ -1,5 +1,6 @@
 conf_displaydir = $(MDIR)/conf_display
-conf_display_DATA = conf_display/module.desktop
+conf_display_DATA = conf_display/module.desktop \
+                    conf_display/e-module-conf_display.edj
 
 EXTRA_DIST += $(conf_display_DATA)
 

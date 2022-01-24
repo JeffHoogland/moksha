@@ -32,5 +32,5 @@ Comment[pt]=Definições do ecrã.
 Comment[ru]=Используется для настройки экрана.
 Comment[sr]=Користи се за подешавње приказа екрана.
 Comment[tr]=Ekran yapılandırmak için kullanılır.
-Icon=preferences-desktop-display
+Icon=e-module-conf_display
 X-Enlightenment-ModuleType=settings
