@@ -1,6 +1,6 @@
 conf_edgebindingsdir = $(MDIR)/conf_edgebindings
 conf_edgebindings_DATA = conf_edgebindings/e-module-conf_edgebindings.edj \
-			 conf_edgebindings/module.desktop
+                         conf_edgebindings/module.desktop
 
 EXTRA_DIST += $(conf_edgebindings_DATA)
 
