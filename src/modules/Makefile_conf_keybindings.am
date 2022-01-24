@@ -1,5 +1,6 @@
 conf_keybindingsdir = $(MDIR)/conf_keybindings
-conf_keybindings_DATA = conf_keybindings/module.desktop
+conf_keybindings_DATA = conf_keybindings/module.desktop \
+                        conf_keybindings/e-module-conf_bindings.edj
 
 EXTRA_DIST += $(conf_keybindings_DATA)
 
