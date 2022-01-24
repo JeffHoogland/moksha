@@ -33,5 +33,5 @@ Comment[pt]=Configuração e alteração dos esquemas de teclado.
 Comment[ru]=Настройка и переключение раскладки клавиатуры.
 Comment[sr]=Подешавања распореда и измењивача тастатуре.
 Comment[tr]=Klavye yerleşim yapılandırma ve değiştirici.
-Icon=preferences-desktop-keyboard
+Icon=e-module-xkbswitch
 X-Enlightenment-ModuleType=utils
