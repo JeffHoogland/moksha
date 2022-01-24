@@ -1,5 +1,6 @@
 conf_themedir = $(MDIR)/conf_theme
-conf_theme_DATA = conf_theme/module.desktop
+conf_theme_DATA = conf_theme/e-module-conf_theme.edj \
+                  conf_theme/module.desktop
 
 EXTRA_DIST += $(conf_theme_DATA)
 

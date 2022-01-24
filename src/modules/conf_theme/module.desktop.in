@@ -38,5 +38,5 @@ Comment[pt]=Permite-lhe configurar as preferências do tema.
 Comment[ru]=Используется для настройки темы.
 Comment[sr]=Користи се за подешавање теме.
 Comment[tr]=Tema seçimlerinizi yapılandırmakta kullanılır.
-Icon=preferences-desktop-theme
+Icon=e-module-conf_theme
 X-Enlightenment-ModuleType=settings
