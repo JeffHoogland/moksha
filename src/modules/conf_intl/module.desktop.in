@@ -38,5 +38,5 @@ Comment[pt]=Permite-lhe escolher o idioma do sistema.
 Comment[ru]=Используется для выбора языка системы по умолчанию.
 Comment[sr]=Користи се за избор подразумеваног језика.
 Comment[tr]=Öntanımlı dil seçmek için kullanılır.
-Icon=preferences-desktop-locale
+Icon=e-module-conf_intl
 X-Enlightenment-ModuleType=settings

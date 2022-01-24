@@ -1,5 +1,6 @@
 conf_intldir = $(MDIR)/conf_intl
-conf_intl_DATA = conf_intl/module.desktop
+conf_intl_DATA = conf_intl/e-module-conf_intl.edj \
+                 conf_intl/module.desktop
 
 EXTRA_DIST += $(conf_intl_DATA)
 
