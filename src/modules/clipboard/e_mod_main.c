@@ -208,7 +208,11 @@ static Evas_Object *
 _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas * evas)
 {
   Evas_Object *o = e_icon_add(evas);
-  e_icon_fdo_icon_set(o, "edit-paste");
+  char buf[PATH_MAX];
+
+  o = edje_object_add(evas);
+  snprintf (buf, sizeof(buf), "%s/e-module-clipboard.edj", e_module_dir_get(clip_cfg->module));
+  edje_object_file_set(o, buf, "icon");
   return o;
 }
 
@@ -892,6 +896,7 @@ e_modapi_init (E_Module *m)
   if (!clip_cfg)
     _clip_config_new(m);
 
+  clip_cfg->module = m;
   /* Be sure we initialize our clipboard 'object' */
   init_clipboard_struct(clip_cfg);
 
@@ -963,7 +968,7 @@ e_modapi_init (E_Module *m)
   e_gadcon_provider_register(&_gadcon_class);
 
   /* Give E the module */
-  return m;
+  return clip_cfg->module;
 }
 
 static void
