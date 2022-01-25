@@ -55,7 +55,7 @@ e_modapi_init(E_Module *m)
        ("main/1", _e_mod_menu_add, NULL, NULL, NULL);
 
    e_configure_registry_category_add
-     ("launcher", 80, _("Launcher"), NULL, "modules-launcher");
+     ("launcher", 80, _("Launcher"), NULL, "system-run");
 
    //~ snprintf(buf, sizeof(buf), "%s/e-module-everything.edj", e_module_dir_get(m));
    //~ module_icon = eina_stringshare_add(buf);
