@@ -77,7 +77,6 @@ e_modapi_init(E_Module *m)
                                  _xkb_cfg_dialog);
    _xkb.module = m;
    ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
-   ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed_state, NULL);
    /* Gadcon */
    e_gadcon_provider_register(&_gc_class);
    return m;
