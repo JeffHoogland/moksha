@@ -28,11 +28,9 @@ e_int_config_shot_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[4096];
+   //~ char buf[4096];
 
    /* is this config dialog already visible ? */
-   
-  
    if (e_config_dialog_find("E", "extensions/takescreenshot")) return NULL;
 
    v = E_NEW(E_Config_Dialog_View, 1);
@@ -44,14 +42,11 @@ e_int_config_shot_module(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
 
    /* Icon in the theme */
-   snprintf(buf, sizeof(buf), "%s/e-module-shot.edj", shot_conf->module->dir);
+   //~ snprintf(buf, sizeof(buf), "%s/e-module-shot.edj", shot_conf->module->dir);
 
    /* create our config dialog */
-   
- 
-   
    cfd = e_config_dialog_new(con, _("Screenshot Settings"), "E", 
-                             "extensions/takescreenshot", buf, 0, v, NULL);
+                             "extensions/takescreenshot", "screenshot", 0, v, NULL);
 
    e_dialog_resizable_set(cfd->dia, 0);
    shot_conf->cfd = cfd;
