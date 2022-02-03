@@ -2929,7 +2929,7 @@ e_border_maximize(E_Border *bd,
      }
 
    bd->saved.zone = bd->zone->num;
-   e_hints_window_size_set(bd);
+   //~ e_hints_window_size_set(bd);
 
    e_border_raise(bd);
 
