@@ -448,39 +448,43 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    Evas_Object *rect = NULL, *popup_bg = NULL;
    int x, y, w, h;
 
-  if (warn){               //warn 1 = warning, warn 0 = actual state
-     if ((!inst) || (inst->warning))
-       return;
-  }
-  else{
-     if ((!inst))
-       return;
-  }
-
- mouse_down = EINA_TRUE;
- if (warn){                  
- #ifdef HAVE_ENOTIFY
-   static E_Notification *notification;
-
-   if (battery_config->desktop_notifications)
+   if (warn)       //warn 1 = warning, warn 0 = actual state
      {
-        if (notification) return;
-        notification = e_notification_full_new
-          (
-            _("Battery"),
-            0,
-            "battery-low",
-            _("Your battery is low!"),
-            _("AC power is recommended."),
-            (battery_config->alert_timeout * 1000)
-          );
-        e_notification_send(notification, NULL, NULL);
-        e_notification_unref(notification);
-        notification = NULL;
-        return;
+       if ((!inst) || (inst->warning))
+         return;
      }
- #endif
- }
+   else
+     {
+       if ((!inst))
+         return;
+    }
+
+   mouse_down = EINA_TRUE;
+   if (warn)
+     {
+       #ifdef HAVE_ENOTIFY
+       static E_Notification *notification;
+
+       if (battery_config->desktop_notifications)
+         {
+           if (notification) return;
+           notification = e_notification_full_new
+           (
+              _("Battery"),
+              0,
+              "battery-low",
+              _("Your battery is low!"),
+              _("AC power is recommended."),
+              (battery_config->alert_timeout * 1000)
+           );
+           e_notification_send(notification, NULL, NULL);
+           e_notification_unref(notification);
+           notification = NULL;
+           return;
+         }
+       #endif
+      }
+
    inst->warning = e_gadcon_popup_new(inst->gcc);
    if (!inst->warning) return;
 
@@ -505,29 +509,29 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    else
      edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
 
- if (warn){
-   edje_object_part_text_set(popup_bg, "e.text.title",
-                             _("Your battery is low!"));
-   edje_object_part_text_set(popup_bg, "e.text.label",
+   if (warn)
+     {
+       edje_object_part_text_set(popup_bg, "e.text.title",
+                                 _("Your battery is low!"));
+       edje_object_part_text_set(popup_bg, "e.text.label",
                              _("AC power is recommended."));
- }
- else{
-   char buf[64] = "";
-   snprintf(buf, sizeof(buf), "%s%s", _("Power now: "),
-            edje_object_part_text_get(inst->o_battery, "e.text.reading"));
-   edje_object_part_text_set(popup_bg, "e.text.title", buf);
-      
-   if (edje_object_part_text_get(inst->o_battery, "e.text.time"))
-   {
-     snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
-              edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
-     edje_object_part_text_set(popup_bg, "e.text.label", buf);
-   }
+     }
    else
-   {
-       edje_object_part_text_set(popup_bg, "e.text.label", "");
-   }
- }
+     {
+       char buf[64] = "";
+       snprintf(buf, sizeof(buf), "%s%s", _("Power now: "),
+            edje_object_part_text_get(inst->o_battery, "e.text.reading"));
+       edje_object_part_text_set(popup_bg, "e.text.title", buf);
+      
+       if (edje_object_part_text_get(inst->o_battery, "e.text.time"))
+         {
+           snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
+              edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
+           edje_object_part_text_set(popup_bg, "e.text.label", buf);
+         }
+       else
+         edje_object_part_text_set(popup_bg, "e.text.label", "");
+     }
 
    e_gadcon_popup_content_set(inst->warning, popup_bg);
    e_gadcon_popup_show(inst->warning);
@@ -549,19 +553,20 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    _battery_face_time_set(inst->popup_battery, t);
    _battery_face_level_set(inst->popup_battery, percent);
    
-if (warn){
-   edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
-
-   if ((battery_config->alert_timeout > 0) &&
-       (!battery_config->alert_timer))
+   if (warn)
      {
-        battery_config->alert_timer =
-          ecore_timer_add(battery_config->alert_timeout,
+       edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
+
+       if ((battery_config->alert_timeout > 0) &&
+          (!battery_config->alert_timer))
+         {
+           battery_config->alert_timer =
+           ecore_timer_add(battery_config->alert_timeout,
                           _battery_cb_warning_popup_timeout, inst);
+         }
      }
-}
-else
-    ecore_timer_add(5,_battery_cb_warning_popup_timeout, inst);
+   else
+     ecore_timer_add(5,_battery_cb_warning_popup_timeout, inst);
 }
 
 static Eina_Bool
