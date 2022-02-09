@@ -905,6 +905,9 @@ _tasks_adjacent_label_popup(void *data)
      break;
   }
 
+  if (px < 0) px = 0;
+  if (px + pw > zone->w) px = zone->w - pw;
+
   e_popup_move(item->popup, px, py);
   evas_object_resize(item->win, pw, height);
   e_popup_resize(item->popup, pw, height);

@@ -900,7 +900,10 @@ _adjacent_label_popup(void *data)
     default:
      break;
   }
-  
+
+  if (px < 0) px = 0;
+  if (px + pw > zone->w) px = zone->w - pw;
+
   e_popup_move(ic->popup, px, py);
   evas_object_resize(ic->win, pw, height);
   e_popup_resize(ic->popup, pw, height); 
