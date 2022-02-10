@@ -657,6 +657,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Print",
                     0, 0,
                     "shot", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Sys_Req",
+                    E_BINDING_MODIFIER_ALT, 0,
+                    "border_shot", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86Standby",
                     0, 0,
                     "suspend", "now");

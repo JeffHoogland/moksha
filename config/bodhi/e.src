@@ -1238,6 +1238,14 @@ group "E_Config" struct {
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
             value "modifiers" int: 4;
+            value "key" string: "Sys_Req";
+            value "action" string: "border_shot";
+            value "params" string: "0";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 4;
             value "key" string: "F1";
             value "action" string: "desk_linear_flip_to";
             value "params" string: "0";
