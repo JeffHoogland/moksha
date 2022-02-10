@@ -9724,7 +9724,7 @@ msgstr "Info"
 #: src/modules/shot/e_mod_config.c:138
 #, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Seleccione donde guardar la captura de pantalla"
+msgstr "Alt+PtrSc: Captura de pantalla de la ventana activa"
 
 #: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 msgid "Tasks"
