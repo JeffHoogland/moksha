@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-11-27 15:02+0100\n"
+"POT-Creation-Date: 2022-02-10 20:59+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -25,7 +25,7 @@ msgid "About Moksha"
 msgstr "Moksha Hakkında"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
-#: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
@@ -681,7 +681,7 @@ msgstr "Menüyü... Göster"
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1177
+#: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Başlat"
@@ -745,7 +745,7 @@ msgstr "Adı geçen modüle geç"
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
-#: src/modules/conf_theme/e_int_config_startup.c:258
+#: src/modules/conf_theme/e_int_config_startup.c:259
 #: src/modules/conf_theme/e_int_config_theme.c:745
 #: src/modules/conf_theme/e_int_config_theme.c:1126
 #: src/modules/conf_theme/e_int_config_theme.c:1140
@@ -836,7 +836,7 @@ msgstr "Seç"
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/bin/e_config.c:937
+#: src/bin/e_config.c:938
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -855,7 +855,7 @@ msgstr ""
 "düzenleyebilirsiniz. Ayarlarınızda meydana gelen aksaklıktan dolayı özür "
 "dileriz<br>"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:955
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -869,11 +869,11 @@ msgstr ""
 "çalışıyor. Bu durum kötü ve <br>önlem olarak sizin ayarlarınız  <br> "
 "varsayılan hale  geri getirildi. Bu rahatsızlıktan dolayı üzgünüz.<br>"
 
-#: src/bin/e_config.c:1477 src/bin/e_config.c:2102
+#: src/bin/e_config.c:1479 src/bin/e_config.c:2104
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha Ayarları Yazma Sorunları"
 
-#: src/bin/e_config.c:1480
+#: src/bin/e_config.c:1482
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -882,18 +882,18 @@ msgstr ""
 "Moksha ayar dosyalarını taşırken bir hata ile karşılaştı<br>şuradan:<br>"
 "%s<br><br>şuraya:<br>%s<br><br>Kalan işlemler güvenlik için iptal edildi.<br>"
 
-#: src/bin/e_config.c:1490 src/bin/e_config.c:2115
+#: src/bin/e_config.c:1492 src/bin/e_config.c:2117
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
-#: src/bin/e_update.c:76 src/bin/e_utils.c:597
+#: src/bin/e_update.c:76 src/bin/e_utils.c:598
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:330
+#: src/modules/conf_keybindings/e_mod_main.c:328
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -902,19 +902,19 @@ msgstr ""
 msgid "OK"
 msgstr "Tamam"
 
-#: src/bin/e_config.c:1993
+#: src/bin/e_config.c:1995
 msgid "Settings Upgraded"
 msgstr "Ayarlar Yükseltildi"
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2013
 msgid "The EET file handle is bad."
 msgstr "EET Dosya işleyicisi sorunlu"
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2017
 msgid "The file data is empty."
 msgstr "Dosya verisi boş."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2021
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -922,74 +922,74 @@ msgstr ""
 "Dosya yazılabilir değil. Diskiniz salt-okunur<b> durumda veya dosyalarınızın "
 "yetkilerini yitirmişsiniz."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2025
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Yazmaya hazırlanırken bellek bitti.<br>Lütfen belleği boşaltın."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2029
 msgid "This is a generic error."
 msgstr "Bu genel bir hatadır."
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2033
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "Ayar dosyası çok büyük.<br>Çok daha küçük olmalı (en fazla bir kaç yüz KB)."
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2037
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Diskinizin I/O sorunları var.<br>Değiştirilmesi gerekiyor olabilir?"
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2041
 msgid "You ran out of space while writing the file."
 msgstr "Dosya yazılırken boş alan kalmadı."
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2045
 msgid "The file was closed while writing."
 msgstr "Yazma sırasında dosya kapatıldı."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2049
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Dosyanın bellek haritalaması (mmap) başarısız."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2053
 msgid "X509 Encoding failed."
 msgstr "X509 Kodlaması başarısız."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2057
 msgid "Signature failed."
 msgstr "İmza başarısız."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2061
 msgid "The signature was invalid."
 msgstr "İmza geçersiz."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2065
 msgid "Not signed."
 msgstr "İmzalanmadı."
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2069
 msgid "Feature not implemented."
 msgstr "Özellik gerçeklenmedi."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2073
 msgid "PRNG was not seeded."
 msgstr ""
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2077
 msgid "Encryption failed."
 msgstr "Şifreleme hatası."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2081
 msgid "Decryption failed."
 msgstr "Şifre açılması işleminde hata."
 
-#: src/bin/e_config.c:2083
+#: src/bin/e_config.c:2085
 msgid "The error is unknown to Moksha."
 msgstr "Bu hata Moksha tarafından bilinmiyor."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2107
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -999,7 +999,7 @@ msgstr ""
 "Moksha bu ayar dosyasını yazarken bir hata ile karşılaştı.<br>%s<br><br>Hata "
 "oluşan dosya şu:<br>%s<br><br>Bu dosya bozuk veriler nedeniyle silindi."
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:867
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1182,7 +1182,7 @@ msgstr "Genel"
 msgid "Startup Notify"
 msgstr "Açılışta Bildir"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1191
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1245
 msgid "Run in Terminal"
 msgstr "Terminalde Çalıştır"
 
@@ -1220,8 +1220,8 @@ msgstr "Çalıştırılabilir Dosya Seç"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:651
-#: src/modules/clipboard/e_mod_main.c:738
+#: src/modules/clipboard/e_mod_main.c:660
+#: src/modules/clipboard/e_mod_main.c:747
 msgid "Delete"
 msgstr "Sil"
 
@@ -1242,7 +1242,7 @@ msgid "Select All"
 msgstr "Tümünü Seç"
 
 #: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:182
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1508,7 +1508,7 @@ msgid "Eject"
 msgstr "Çıkarma"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1003
+#: src/modules/ibar/e_mod_main.c:1005
 msgid "Properties"
 msgstr "Özellikler"
 
@@ -1881,20 +1881,20 @@ msgstr "Görünüm"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Kaldır"
 
-#: src/bin/e_gadcon.c:2445
+#: src/bin/e_gadcon.c:2447
 msgid "Stop moving"
 msgstr "Taşımayı durdur"
 
-#: src/bin/e_gadcon.c:3096
+#: src/bin/e_gadcon.c:3098
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3097
+#: src/bin/e_gadcon.c:3099
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2502,17 +2502,17 @@ msgstr "Pozisyon İste"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
+#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
-#: src/modules/xkbswitch/e_mod_main.c:367
-#: src/modules/xkbswitch/e_mod_main.c:408
+#: src/modules/shot/e_mod_config.c:99 src/modules/tasks/e_mod_main.c:777
+#: src/modules/xkbswitch/e_mod_main.c:361
+#: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:223
 #: src/modules/notification/e_mod_main.c:335
-#: src/modules/clipboard/e_mod_main.c:283
-#: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:292
+#: src/modules/clipboard/e_mod_main.c:437 src/modules/places/e_mod_main.c:520
 msgid "Settings"
 msgstr ""
 
@@ -2778,9 +2778,9 @@ msgstr "Favori Uygulamalar"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1148
-#: src/modules/everything/evry_plug_apps.c:1164
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1202
+#: src/modules/everything/evry_plug_apps.c:1218
+#: src/modules/everything/evry_plug_apps.c:1472
 #: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Uygulamalar"
@@ -2844,7 +2844,7 @@ msgstr "Sanal Masaüstlerini Ayarla"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4148
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Pencereler"
@@ -3485,7 +3485,7 @@ msgstr ""
 "desteği olduğunu ve fontconfig'in 'Sans' yazı tipini tanımladığını kontrol "
 "edin.\n"
 
-#: src/bin/e_main.c:1921
+#: src/bin/e_main.c:1927
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3493,11 +3493,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1926 src/bin/e_main.c:1942
+#: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha açılamadan çöktü ve yeniden başlatıldı"
 
-#: src/bin/e_main.c:1927
+#: src/bin/e_main.c:1933
 #, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3505,7 +3505,7 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1935
+#: src/bin/e_main.c:1941
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3513,7 +3513,7 @@ msgid ""
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
 
-#: src/bin/e_main.c:1943
+#: src/bin/e_main.c:1949
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -3573,8 +3573,8 @@ msgstr ""
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:651
-#: src/modules/clipboard/e_mod_main.c:738
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:660
+#: src/modules/clipboard/e_mod_main.c:747
 msgid "Keep"
 msgstr "Sakla"
 
@@ -3720,7 +3720,7 @@ msgid "Rename Shelf"
 msgstr "Rafı Yeniden Adlandır"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:990
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
 msgid "Contents"
 msgstr "İçindekiler"
 
@@ -3732,7 +3732,7 @@ msgstr "Yönelim"
 msgid "Autohide"
 msgstr "Otomatik Gizle"
 
-#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:332
+#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Yenile"
 
@@ -3915,17 +3915,17 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 
-#: src/bin/e_utils.c:183 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "Moksha alt işlem yaratamadı:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:236
+#: src/bin/e_utils.c:237
 msgid "Cannot exit - immortal windows."
 msgstr "Çıkamıyor - Ölümsüz Pencereler."
 
-#: src/bin/e_utils.c:237
+#: src/bin/e_utils.c:238
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Moksha will not allow itself to exit until these windows "
@@ -3935,111 +3935,111 @@ msgstr ""
 "bu pencereler<br>kapatılana ya da Lifespan lock kaldırılana kadar çıkmaya "
 "izin vermeyecek.<br>"
 
-#: src/bin/e_utils.c:780
+#: src/bin/e_utils.c:781
 #, c-format
 msgid "%'.0f bytes"
 msgstr ""
 
-#: src/bin/e_utils.c:784
+#: src/bin/e_utils.c:785
 #, c-format
 msgid "%'.0f KiB"
 msgstr ""
 
-#: src/bin/e_utils.c:788
+#: src/bin/e_utils.c:789
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f MiB"
 
-#: src/bin/e_utils.c:792
+#: src/bin/e_utils.c:793
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GiB"
 
-#: src/bin/e_utils.c:796
+#: src/bin/e_utils.c:797
 #, c-format
 msgid "%'.1f TiB"
 msgstr ""
 
-#: src/bin/e_utils.c:815
+#: src/bin/e_utils.c:816
 #, c-format
 msgid "In the future"
 msgstr "Gelecekte"
 
-#: src/bin/e_utils.c:819
+#: src/bin/e_utils.c:820
 #, c-format
 msgid "In the last minute"
 msgstr "Son dakikada"
 
-#: src/bin/e_utils.c:823
+#: src/bin/e_utils.c:824
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:828
+#: src/bin/e_utils.c:829
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:833
+#: src/bin/e_utils.c:834
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:838
+#: src/bin/e_utils.c:839
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:843
+#: src/bin/e_utils.c:844
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:848
+#: src/bin/e_utils.c:849
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:855 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
 msgid "Unknown"
 msgstr "Bilinmiyor"
 
-#: src/bin/e_utils.c:926 src/bin/e_utils.c:934
+#: src/bin/e_utils.c:927 src/bin/e_utils.c:935
 msgid "Error creating directory"
 msgstr "Dizin oluşturuken hata"
 
-#: src/bin/e_utils.c:926
+#: src/bin/e_utils.c:927
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
 msgstr ""
 
-#: src/bin/e_utils.c:934
+#: src/bin/e_utils.c:935
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
-#: src/bin/e_utils.c:1096
+#: src/bin/e_utils.c:1097
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4050,12 +4050,12 @@ msgid ""
 "the hiccup in your configuration.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:1105 src/bin/e_utils.c:1129
+#: src/bin/e_utils.c:1106 src/bin/e_utils.c:1130
 #, c-format
 msgid "%s Configuration Updated"
 msgstr ""
 
-#: src/bin/e_utils.c:1118
+#: src/bin/e_utils.c:1119
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -4064,54 +4064,54 @@ msgid ""
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_utils.c:1212
+#: src/bin/e_utils.c:1213
 #, c-format
 msgid "Never"
 msgstr "Asla"
 
-#: src/bin/e_utils.c:1216
+#: src/bin/e_utils.c:1217
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1220
+#: src/bin/e_utils.c:1221
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1225
+#: src/bin/e_utils.c:1226
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1230
+#: src/bin/e_utils.c:1231
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1235
+#: src/bin/e_utils.c:1236
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1240
+#: src/bin/e_utils.c:1241
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1245
+#: src/bin/e_utils.c:1246
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4255,7 +4255,7 @@ msgstr "Favorilere Ekle"
 #: src/bin/e_widget_fsel.c:339
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
-#: src/modules/conf_theme/e_int_config_startup.c:266
+#: src/modules/conf_theme/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
@@ -4379,7 +4379,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Donanım"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:470
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:473
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Pil"
@@ -4388,37 +4388,37 @@ msgstr "Pil"
 msgid "Power Management Timing"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:473 src/modules/battery/e_mod_main.c:510
+#: src/modules/battery/e_mod_main.c:476 src/modules/battery/e_mod_main.c:515
 msgid "Your battery is low!"
 msgstr "Pil zayıf!"
 
-#: src/modules/battery/e_mod_main.c:474 src/modules/battery/e_mod_main.c:512
+#: src/modules/battery/e_mod_main.c:477 src/modules/battery/e_mod_main.c:517
 msgid "AC power is recommended."
 msgstr "AC güce geçmeniz önerilir."
 
-#: src/modules/battery/e_mod_main.c:516
+#: src/modules/battery/e_mod_main.c:522
 #, fuzzy
 msgid "Power now: "
 msgstr "Kapat"
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:528
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:529
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:630
+#: src/modules/battery/e_mod_main.c:635
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
-#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
+#: src/modules/battery/e_mod_main.c:740 src/modules/battery/e_mod_main.c:742
+#: src/modules/battery/e_mod_main.c:749 src/modules/battery/e_mod_main.c:751
 msgid "ERROR"
 msgstr "HATA"
 
-#: src/modules/battery/e_mod_main.c:864
+#: src/modules/battery/e_mod_main.c:869
 msgid "Battery Meter"
 msgstr "Pil Göstergesi"
 
@@ -4887,7 +4887,7 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_imc.c:803
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
-#: src/modules/conf_theme/e_int_config_startup.c:253
+#: src/modules/conf_theme/e_int_config_startup.c:254
 #: src/modules/conf_theme/e_int_config_theme.c:741
 #: src/modules/conf_theme/e_int_config_theme.c:1123
 #: src/modules/conf_theme/e_int_config_theme.c:1132
@@ -5184,22 +5184,22 @@ msgid ""
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1328
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1331
 msgid "WIN"
 msgstr "WIN"
 
@@ -5282,7 +5282,7 @@ msgstr ""
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:357
+#: src/modules/conf_keybindings/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Giriş"
@@ -5445,17 +5445,17 @@ msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "Moksha kopyalama hatası nedeniyle yapılandırma<br>dosyasını içe aktaramadı."
 
-#: src/modules/conf_intl/e_int_config_intl.c:601
+#: src/modules/conf_intl/e_int_config_intl.c:604
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Dil Ayarları"
 
-#: src/modules/conf_intl/e_int_config_intl.c:624
+#: src/modules/conf_intl/e_int_config_intl.c:629
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:957
+#: src/modules/conf_intl/e_int_config_intl.c:962
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5464,29 +5464,29 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:965
+#: src/modules/conf_intl/e_int_config_intl.c:970
 msgid "Possible Locale problems"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:1035
-#: src/modules/conf_intl/e_int_config_intl.c:1126
+#: src/modules/conf_intl/e_int_config_intl.c:1055
+#: src/modules/conf_intl/e_int_config_intl.c:1146
 msgid "Language Selector"
 msgstr "Dil Seçici"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1065
-#: src/modules/conf_intl/e_int_config_intl.c:1514
+#: src/modules/conf_intl/e_int_config_intl.c:1085
+#: src/modules/conf_intl/e_int_config_intl.c:1534
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Sistem Ön Tanımlı"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1099
-#: src/modules/conf_intl/e_int_config_intl.c:1177
+#: src/modules/conf_intl/e_int_config_intl.c:1119
+#: src/modules/conf_intl/e_int_config_intl.c:1197
 msgid "Locale Selected"
 msgstr "Yerel Seçildi"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1100
-#: src/modules/conf_intl/e_int_config_intl.c:1178
+#: src/modules/conf_intl/e_int_config_intl.c:1120
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Locale"
 msgstr "Yerel"
 
@@ -5496,7 +5496,7 @@ msgstr "Dil"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:369
+#: src/modules/conf_keybindings/e_mod_main.c:367
 msgid "ACPI Bindings"
 msgstr ""
 
@@ -5666,16 +5666,16 @@ msgid "Key Bindings Settings"
 msgstr "Kısayol Tuş Ayarları"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
-#: src/modules/conf_keybindings/e_mod_main.c:349
-#: src/modules/conf_keybindings/e_mod_main.c:361
+#: src/modules/conf_keybindings/e_mod_main.c:347
+#: src/modules/conf_keybindings/e_mod_main.c:359
 msgid "Key Bindings"
 msgstr "Kısayol Tuşları"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
 msgid "Binding Key Error"
 msgstr "Kısayol Tuşu Hatası"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -5711,7 +5711,7 @@ msgid "Mouse Binding Error"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:365
+#: src/modules/conf_keybindings/e_mod_main.c:363
 msgid "Mouse Bindings"
 msgstr "Fare Kısayolları"
 
@@ -5807,191 +5807,191 @@ msgstr ""
 msgid "Extra Wheel (%d) Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:121
+#: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:122
+#: src/modules/conf_keybindings/e_mod_main.c:120
 #, fuzzy
 msgid " Close Window:"
 msgstr "Pencereyi Yükselt"
 
-#: src/modules/conf_keybindings/e_mod_main.c:128
+#: src/modules/conf_keybindings/e_mod_main.c:126
 #, fuzzy
 msgid " Maximize Window:"
 msgstr "Pencereyi Yükselt"
 
-#: src/modules/conf_keybindings/e_mod_main.c:134
+#: src/modules/conf_keybindings/e_mod_main.c:132
 #, fuzzy
 msgid " Iconic Mode Toggle:"
 msgstr "Simgesel Kipi Değiştir"
 
-#: src/modules/conf_keybindings/e_mod_main.c:140
+#: src/modules/conf_keybindings/e_mod_main.c:138
 #, fuzzy
 msgid " Fullscreen Mode Toggle:"
 msgstr "Tam Ekran Kipi Değiştir"
 
-#: src/modules/conf_keybindings/e_mod_main.c:146
+#: src/modules/conf_keybindings/e_mod_main.c:144
 #, fuzzy
 msgid " Always On Top Toggle:"
 msgstr "Her zaman üstte"
 
-#: src/modules/conf_keybindings/e_mod_main.c:152
+#: src/modules/conf_keybindings/e_mod_main.c:150
 #, fuzzy
 msgid " Next Window:"
 msgstr "Sonraki Pencere"
 
-#: src/modules/conf_keybindings/e_mod_main.c:158
+#: src/modules/conf_keybindings/e_mod_main.c:156
 #, fuzzy
 msgid " Tile Right:"
 msgstr "Sağ:"
 
-#: src/modules/conf_keybindings/e_mod_main.c:164
+#: src/modules/conf_keybindings/e_mod_main.c:162
 #, fuzzy
 msgid " Tile Left:"
 msgstr "Üst Sol"
 
-#: src/modules/conf_keybindings/e_mod_main.c:170
+#: src/modules/conf_keybindings/e_mod_main.c:168
 #, fuzzy
 msgid " Kill Window:"
 msgstr "Tüm pencereler"
 
-#: src/modules/conf_keybindings/e_mod_main.c:176
+#: src/modules/conf_keybindings/e_mod_main.c:174
 #, fuzzy
 msgid " Window Menu:"
 msgstr "Pencere Menüsü"
 
-#: src/modules/conf_keybindings/e_mod_main.c:185
+#: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:186
+#: src/modules/conf_keybindings/e_mod_main.c:184
 #, fuzzy
 msgid " Open Terminology:"
 msgstr "Terminalde Çalıştır"
 
-#: src/modules/conf_keybindings/e_mod_main.c:192
+#: src/modules/conf_keybindings/e_mod_main.c:190
 #, fuzzy
 msgid " Lock System:"
 msgstr "Kilitleme Başarısız Oldu"
 
-#: src/modules/conf_keybindings/e_mod_main.c:198
+#: src/modules/conf_keybindings/e_mod_main.c:196
 #, fuzzy
 msgid " Show Main Menu:"
 msgstr "Ana Menüyü Göster"
 
-#: src/modules/conf_keybindings/e_mod_main.c:204
+#: src/modules/conf_keybindings/e_mod_main.c:202
 #, fuzzy
 msgid " Show Favorites Menu:"
 msgstr "Favoriler Menüsünü Göster"
 
-#: src/modules/conf_keybindings/e_mod_main.c:210
+#: src/modules/conf_keybindings/e_mod_main.c:208
 #, fuzzy
 msgid " System Controls:"
 msgstr "Sistem Kontrolleri"
 
-#: src/modules/conf_keybindings/e_mod_main.c:219
+#: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:221
+#: src/modules/conf_keybindings/e_mod_main.c:219
 #, fuzzy
 msgid " Show the Desktop:"
 msgstr "Masaüstünü Göster"
 
-#: src/modules/conf_keybindings/e_mod_main.c:227
+#: src/modules/conf_keybindings/e_mod_main.c:225
 #, fuzzy
 msgid " Switch to Desktop 0:"
 msgstr "Masaüstü 0 'a geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:233
+#: src/modules/conf_keybindings/e_mod_main.c:231
 #, fuzzy
 msgid " Switch to Desktop 1:"
 msgstr "Masaüstü 1 'e geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:239
+#: src/modules/conf_keybindings/e_mod_main.c:237
 #, fuzzy
 msgid " Switch to Desktop 2:"
 msgstr "Masaüstü 2 'ye geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:245
+#: src/modules/conf_keybindings/e_mod_main.c:243
 #, fuzzy
 msgid " Switch to Desktop 3:"
 msgstr "Masaüstü 3 'e geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:251
+#: src/modules/conf_keybindings/e_mod_main.c:249
 #, fuzzy
 msgid " Switch to Desktop 4:"
 msgstr "Masaüstü 4 'e geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:257
+#: src/modules/conf_keybindings/e_mod_main.c:255
 #, fuzzy
 msgid " Switch to Desktop 5:"
 msgstr "Masaüstü 5 'e geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:263
+#: src/modules/conf_keybindings/e_mod_main.c:261
 #, fuzzy
 msgid " Switch to Desktop 6:"
 msgstr "Masaüstü 6 'ya geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:269
+#: src/modules/conf_keybindings/e_mod_main.c:267
 #, fuzzy
 msgid " Switch to Desktop 7:"
 msgstr "Masaüstü 7 'ye geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:275
+#: src/modules/conf_keybindings/e_mod_main.c:273
 #, fuzzy
 msgid " Switch to Desktop 8:"
 msgstr "Masaüstü 8 'e geç"
 
-#: src/modules/conf_keybindings/e_mod_main.c:284
+#: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:285
+#: src/modules/conf_keybindings/e_mod_main.c:283
 #, fuzzy
 msgid " Quick Launcher:"
 msgstr "Başlatıcı"
 
-#: src/modules/conf_keybindings/e_mod_main.c:291
+#: src/modules/conf_keybindings/e_mod_main.c:289
 #, fuzzy
 msgid " Take Screenshot:"
 msgstr "Ekran Görüntüsü Yakala"
 
-#: src/modules/conf_keybindings/e_mod_main.c:297
+#: src/modules/conf_keybindings/e_mod_main.c:295
 #, fuzzy
 msgid " Restart Moksha:"
 msgstr "Moksha'a Hoş Geldiniz"
 
-#: src/modules/conf_keybindings/e_mod_main.c:303
+#: src/modules/conf_keybindings/e_mod_main.c:301
 #, fuzzy
 msgid " Terminal console:"
 msgstr "Konsol Komutu"
 
-#: src/modules/conf_keybindings/e_mod_main.c:309
+#: src/modules/conf_keybindings/e_mod_main.c:307
 #, fuzzy
 msgid " This Help:"
 msgstr "Bu Masaüstü"
 
-#: src/modules/conf_keybindings/e_mod_main.c:329
+#: src/modules/conf_keybindings/e_mod_main.c:327
 #, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Fare Kısayolları"
 
-#: src/modules/conf_keybindings/e_mod_main.c:331
+#: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"
 msgstr "Düzenle"
 
-#: src/modules/conf_keybindings/e_mod_main.c:377
+#: src/modules/conf_keybindings/e_mod_main.c:375
 #, fuzzy
 msgid "Keybindings"
 msgstr "Kısayol Tuşları"
 
-#: src/modules/conf_keybindings/e_mod_main.c:377
+#: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:382
+#: src/modules/conf_keybindings/e_mod_main.c:380
 #, fuzzy
 msgid "Show bindings"
 msgstr "Raf Ayarları"
@@ -6947,7 +6947,7 @@ msgstr "Kısıtlamalar"
 msgid "Startup Settings"
 msgstr "Açılış Ayarları"
 
-#: src/modules/conf_theme/e_int_config_startup.c:317
+#: src/modules/conf_theme/e_int_config_startup.c:318
 msgid "Show Splash Screen on Login"
 msgstr "Açılışta Splash Ekranını Göster"
 
@@ -7004,7 +7004,7 @@ msgstr "Ata"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:312
-#: src/modules/clipboard/e_mod_main.c:415
+#: src/modules/clipboard/e_mod_main.c:424
 msgid "Clear"
 msgstr "Temizle"
 
@@ -7478,7 +7478,7 @@ msgstr "Şununla yeniden boyutlandır"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
-#: src/modules/xkbswitch/e_mod_main.c:279
+#: src/modules/xkbswitch/e_mod_main.c:273
 msgid "Keyboard"
 msgstr "Klavye"
 
@@ -7987,59 +7987,59 @@ msgstr[1] "%d öge"
 msgid "No plugins loaded"
 msgstr "Hiçbir eklenti yüklenmedi"
 
-#: src/modules/everything/evry_plug_apps.c:1156
+#: src/modules/everything/evry_plug_apps.c:1210
 msgid "Exebuf"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1171
-#: src/modules/everything/evry_plug_apps.c:1218
+#: src/modules/everything/evry_plug_apps.c:1225
+#: src/modules/everything/evry_plug_apps.c:1272
 #: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Şununla Aç..."
 
-#: src/modules/everything/evry_plug_apps.c:1184
+#: src/modules/everything/evry_plug_apps.c:1238
 msgid "Open File..."
 msgstr "Dosya Aç..."
 
-#: src/modules/everything/evry_plug_apps.c:1198
+#: src/modules/everything/evry_plug_apps.c:1252
 msgid "Edit Application Entry"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1205
+#: src/modules/everything/evry_plug_apps.c:1259
 msgid "New Application Entry"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1212
+#: src/modules/everything/evry_plug_apps.c:1266
 msgid "Run with Sudo"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1225
+#: src/modules/everything/evry_plug_apps.c:1279
 #: src/modules/fileman/e_fwin.c:252
 msgid "Open Terminal here"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1231
+#: src/modules/everything/evry_plug_apps.c:1285
 msgid "Run Executable"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1309
-#: src/modules/everything/evry_plug_apps.c:1437
+#: src/modules/everything/evry_plug_apps.c:1363
+#: src/modules/everything/evry_plug_apps.c:1491
 msgid "Everything Applications"
 msgstr "Herşey Uygulamaları"
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1394
 msgid "Commands"
 msgstr "Komutlar"
 
-#: src/modules/everything/evry_plug_apps.c:1341
+#: src/modules/everything/evry_plug_apps.c:1395
 msgid "Terminal Command"
 msgstr "Konsol Komutu"
 
-#: src/modules/everything/evry_plug_apps.c:1346
+#: src/modules/everything/evry_plug_apps.c:1400
 msgid "Sudo GUI"
 msgstr "Sudo Grafik Arabirimi"
 
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1472
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
@@ -8791,20 +8791,20 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Bu çubuğu ve içeriğini silmek istediğinize emin misiniz?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:979
+#: src/modules/ibar/e_mod_main.c:981
 msgid "Create new Icon"
 msgstr ""
 
-#: src/modules/ibar/e_mod_main.c:1013
+#: src/modules/ibar/e_mod_main.c:1015
 #, c-format
 msgid "Icon %s"
 msgstr "Simge %s"
 
-#: src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:1955
 msgid "Focus IBar"
 msgstr ""
 
@@ -9421,29 +9421,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
+#: src/modules/systray/e_mod_main.c:538 src/modules/systray/e_mod_main.c:954
 msgid "Systray Error"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:498
+#: src/modules/systray/e_mod_main.c:539
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:904
+#: src/modules/systray/e_mod_main.c:945
 msgid "Another systray exists"
 msgstr "Başka bir sistem çekmecesi mevcut"
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:946
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Sadece bir tane sistem çekmecesi aracı olabilir ve şu anda bir tanesi zaten "
 "mevcut."
 
-#: src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:955
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:1109
+#: src/modules/systray/e_mod_main.c:1150
 msgid "Systray"
 msgstr "Sistem Çekmecesi"
 
@@ -9637,60 +9637,55 @@ msgstr ""
 msgid "Cannot initialize network"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:48
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Ekran Kilidi Ayarları"
 
-#: src/modules/shot/e_mod_config.c:106
+#: src/modules/shot/e_mod_config.c:101
 #, fuzzy
 msgid " Show the screenshot mode dialog"
 msgstr "Tüm ekranlarda göster"
 
-#: src/modules/shot/e_mod_config.c:109
+#: src/modules/shot/e_mod_config.c:104
 msgid " Screenshot guide (quality/share/save)"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:112
+#: src/modules/shot/e_mod_config.c:107
 #, fuzzy
 msgid " Show notifications"
 msgstr "Bildirim"
 
-#: src/modules/shot/e_mod_config.c:115
+#: src/modules/shot/e_mod_config.c:110
 msgid " Launch app after screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:118
+#: src/modules/shot/e_mod_config.c:113
 #, fuzzy
 msgid "Application for opening:"
 msgstr "Uygulama Özellikleri"
 
-#: src/modules/shot/e_mod_config.c:124
+#: src/modules/shot/e_mod_config.c:119
 msgid "Folder for saving screenshots:"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:130
+#: src/modules/shot/e_mod_config.c:125
 msgid "Delay time [s]"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:135
+#: src/modules/shot/e_mod_config.c:130
 msgid "Image quality [50-90 = jpg, 100 = png]"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:142
+#: src/modules/shot/e_mod_config.c:137
 msgid "Info"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:143
-msgid "Bind Take Shot in Wndows:Action"
+#: src/modules/shot/e_mod_config.c:138
+msgid "Alt+PrtSc: screenshot active window"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:145
-#, fuzzy
-msgid "for window screenshot!"
-msgstr "Tüm ekranlardaki pencereleri göster"
-
-#: src/modules/tasks/e_mod_main.c:326 src/modules/tasks/e_mod_main.c:779
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -9754,81 +9749,81 @@ msgstr ""
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 
-#: src/modules/tiling/e_mod_config.c:353
+#: src/modules/tiling/e_mod_config.c:361
 msgid "Tiling Configuration"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4097
+#: src/modules/tiling/e_mod_tiling.c:4098
 #, fuzzy
 msgid "Floating"
 msgstr "Float"
 
-#: src/modules/tiling/e_mod_tiling.c:4186
-#: src/modules/tiling/e_mod_tiling.c:4250
+#: src/modules/tiling/e_mod_tiling.c:4150
+#: src/modules/tiling/e_mod_tiling.c:4212
 msgid "Tiling"
 msgstr "Döşeme"
 
-#: src/modules/tiling/e_mod_tiling.c:4193
+#: src/modules/tiling/e_mod_tiling.c:4219
 msgid "Toggle floating"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4196
+#: src/modules/tiling/e_mod_tiling.c:4222
 msgid "Add a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4199
+#: src/modules/tiling/e_mod_tiling.c:4225
 msgid "Remove a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4202
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Toggle between rows and columns"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4205
+#: src/modules/tiling/e_mod_tiling.c:4231
 msgid "Swap a window with an other"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4209
+#: src/modules/tiling/e_mod_tiling.c:4235
 msgid "Move window"
 msgstr "Pencereyi taşı"
 
-#: src/modules/tiling/e_mod_tiling.c:4212
+#: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Move window to the left"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4215
+#: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Move window to the right"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4218
+#: src/modules/tiling/e_mod_tiling.c:4244
 msgid "Move window up"
 msgstr "Pencereyi yukarı taşı"
 
-#: src/modules/tiling/e_mod_tiling.c:4221
+#: src/modules/tiling/e_mod_tiling.c:4247
 msgid "Move window down"
 msgstr "Pencereyi aşağı taşı"
 
-#: src/modules/tiling/e_mod_tiling.c:4225
+#: src/modules/tiling/e_mod_tiling.c:4251
 msgid "Adjust transitions"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4228
+#: src/modules/tiling/e_mod_tiling.c:4254
 msgid "Focus a particular window"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4232
+#: src/modules/tiling/e_mod_tiling.c:4258
 msgid "Send to upper right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4235
+#: src/modules/tiling/e_mod_tiling.c:4261
 msgid "Send to upper left corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4238
+#: src/modules/tiling/e_mod_tiling.c:4264
 msgid "Send to lower right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4241
+#: src/modules/tiling/e_mod_tiling.c:4267
 msgid "Send to lower left corner"
 msgstr ""
 
@@ -9870,7 +9865,7 @@ msgid "Notification"
 msgstr "Bildirim"
 
 #: src/modules/notification/e_mod_main.c:304
-#: src/modules/clipboard/e_mod_main.c:397
+#: src/modules/clipboard/e_mod_main.c:406
 msgid "Empty"
 msgstr ""
 
@@ -10071,9 +10066,9 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:903
-#: src/modules/clipboard/e_mod_main.c:904
-#: src/modules/clipboard/e_mod_main.c:905
+#: src/modules/clipboard/e_mod_main.c:913
+#: src/modules/clipboard/e_mod_main.c:914
+#: src/modules/clipboard/e_mod_main.c:915
 #, fuzzy
 msgid "Clipboard"
 msgstr "Panoya Kopyala"
@@ -10115,56 +10110,56 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Klavye Ayarları"
 
-#: src/modules/clipboard/e_mod_main.c:369
+#: src/modules/clipboard/e_mod_main.c:378
 #, fuzzy
 msgid "Lock item"
 msgstr "Kilitleme Başarısız Oldu"
 
-#: src/modules/clipboard/e_mod_main.c:380
+#: src/modules/clipboard/e_mod_main.c:389
 #, fuzzy
 msgid "Edit item"
 msgstr "%d öge"
 
-#: src/modules/clipboard/e_mod_main.c:387
+#: src/modules/clipboard/e_mod_main.c:396
 #, fuzzy
 msgid "Delete item"
 msgstr "Silme işlemi tamamlandı"
 
-#: src/modules/clipboard/e_mod_main.c:405
+#: src/modules/clipboard/e_mod_main.c:414
 #, fuzzy
 msgid "Ignore history"
 msgstr "Görmezden gel"
 
-#: src/modules/clipboard/e_mod_main.c:646
+#: src/modules/clipboard/e_mod_main.c:655
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "Silme İşlemini Onayla"
 
-#: src/modules/clipboard/e_mod_main.c:648
+#: src/modules/clipboard/e_mod_main.c:657
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "Bu rafı silmek istediniz.<br><..."
 
-#: src/modules/clipboard/e_mod_main.c:733
+#: src/modules/clipboard/e_mod_main.c:742
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "Silme İşlemini Onayla"
 
-#: src/modules/clipboard/e_mod_main.c:735
+#: src/modules/clipboard/e_mod_main.c:744
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "Bu rafı silmek istediniz.<br><..."
 
-#: src/modules/clipboard/e_mod_main.c:763
+#: src/modules/clipboard/e_mod_main.c:772
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "Klavye Ayarları"
 
-#: src/modules/clipboard/e_mod_main.c:764
+#: src/modules/clipboard/e_mod_main.c:773
 msgid "Edit the item content:"
 msgstr ""
 
@@ -10335,6 +10330,10 @@ msgstr ""
 #: src/modules/mixer/e_mod_main.c:276 src/modules/mixer/e_mod_main.c:283
 msgid "Volume Mute"
 msgstr ""
+
+#, fuzzy
+#~ msgid "for window screenshot!"
+#~ msgstr "Tüm ekranlardaki pencereleri göster"
 
 #~ msgid "Hide"
 #~ msgstr "Gizle"

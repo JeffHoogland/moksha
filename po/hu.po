@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2021-11-27 15:02+0100\n"
+"POT-Creation-Date: 2022-02-10 20:59+0100\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -24,7 +24,7 @@ msgid "About Moksha"
 msgstr "Az Moksharõl"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
-#: src/bin/e_bodhi_about.c:56 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1059
 #: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
@@ -714,7 +714,7 @@ msgstr "Menü megjelenítése..."
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
-#: src/modules/everything/evry_plug_apps.c:1177
+#: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Indítás"
@@ -780,7 +780,7 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
 #: src/modules/conf_theme/e_int_config_wallpaper.c:625
-#: src/modules/conf_theme/e_int_config_startup.c:258
+#: src/modules/conf_theme/e_int_config_startup.c:259
 #: src/modules/conf_theme/e_int_config_theme.c:745
 #: src/modules/conf_theme/e_int_config_theme.c:1126
 #: src/modules/conf_theme/e_int_config_theme.c:1140
@@ -877,7 +877,7 @@ msgstr "Válassz egy"
 msgid "Cancel"
 msgstr "Mégsem"
 
-#: src/bin/e_config.c:937
+#: src/bin/e_config.c:938
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -894,7 +894,7 @@ msgstr ""
 "és<br>ezek az elõzõ fájlokból hiányoztak. Mindent visszaállíthatsz,<br>ahogy "
 "neked tetszik. Az esetleges galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:955
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -908,11 +908,11 @@ msgstr ""
 "nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:1477 src/bin/e_config.c:2102
+#: src/bin/e_config.c:1479 src/bin/e_config.c:2104
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha konfiguráció írási problémák"
 
-#: src/bin/e_config.c:1480
+#: src/bin/e_config.c:1482
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -922,18 +922,18 @@ msgstr ""
 "nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>%s<br><br> A "
 "fájl törölve lett.<br>"
 
-#: src/bin/e_config.c:1490 src/bin/e_config.c:2115
+#: src/bin/e_config.c:1492 src/bin/e_config.c:2117
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
 #: src/bin/e_fm.c:10021 src/bin/e_fm.c:10751 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
-#: src/bin/e_update.c:76 src/bin/e_utils.c:597
+#: src/bin/e_update.c:76 src/bin/e_utils.c:598
 #: src/modules/clock/e_mod_config.c:105
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:330
+#: src/modules/conf_keybindings/e_mod_main.c:328
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -942,21 +942,21 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:1993
+#: src/bin/e_config.c:1995
 msgid "Settings Upgraded"
 msgstr "Beállítások frissítve"
 
-#: src/bin/e_config.c:2011
+#: src/bin/e_config.c:2013
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "Az EET fájlleíróba rossz."
 
-#: src/bin/e_config.c:2015
+#: src/bin/e_config.c:2017
 #, fuzzy
 msgid "The file data is empty."
 msgstr "A fájl adatai üres."
 
-#: src/bin/e_config.c:2019
+#: src/bin/e_config.c:2021
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -965,18 +965,18 @@ msgstr ""
 "A fájl nem írható. Talán a lemez csak olvasható<br>vagy elveszett "
 "engedélyeket a fájlokat."
 
-#: src/bin/e_config.c:2023
+#: src/bin/e_config.c:2025
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Memória elfogyott , miközben készül az írás.<br>szabadítson fel memóriát."
 
-#: src/bin/e_config.c:2027
+#: src/bin/e_config.c:2029
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Ez egy általános hiba."
 
-#: src/bin/e_config.c:2031
+#: src/bin/e_config.c:2033
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -985,71 +985,71 @@ msgstr ""
 "A beállítások fájl túl nagy.<br>Meg kell nagyon kicsi (néhány száz KB "
 "legfeljebb)."
 
-#: src/bin/e_config.c:2035
+#: src/bin/e_config.c:2037
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2039
+#: src/bin/e_config.c:2041
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Ha elfogyott a hely a fájl írása közben"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2045
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "A fájl -én zárult , hogy írás közben."
 
-#: src/bin/e_config.c:2047
+#: src/bin/e_config.c:2049
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memory -mapping (mmap) a fájl nem sikerült."
 
-#: src/bin/e_config.c:2051
+#: src/bin/e_config.c:2053
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 kódolás nem sikerült."
 
-#: src/bin/e_config.c:2055
+#: src/bin/e_config.c:2057
 #, fuzzy
 msgid "Signature failed."
 msgstr "Hibernálás nem sikerült."
 
-#: src/bin/e_config.c:2059
+#: src/bin/e_config.c:2061
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Az aláírás érvénytelen."
 
-#: src/bin/e_config.c:2063
+#: src/bin/e_config.c:2065
 #, fuzzy
 msgid "Not signed."
 msgstr "(Nincsenek ablakok)"
 
-#: src/bin/e_config.c:2067
+#: src/bin/e_config.c:2069
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Szolgáltatás nem hajtották végre."
 
-#: src/bin/e_config.c:2071
+#: src/bin/e_config.c:2073
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG nem a maggal."
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2077
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Felfüggesztés nem sikerült."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2081
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Felfüggesztés nem sikerült."
 
-#: src/bin/e_config.c:2083
+#: src/bin/e_config.c:2085
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Üdvözlünk az Mokshaben"
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2107
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1060,7 +1060,7 @@ msgstr ""
 "nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>%s<br><br> A "
 "fájl törölve lett.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:862
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:867
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1255,7 +1255,7 @@ msgstr "Általános"
 msgid "Startup Notify"
 msgstr "Indulás"
 
-#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1191
+#: src/bin/e_eap_editor.c:787 src/modules/everything/evry_plug_apps.c:1245
 msgid "Run in Terminal"
 msgstr "Futtatás terminálban"
 
@@ -1293,8 +1293,8 @@ msgstr "Egy futtatható kiválasztása"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:651
-#: src/modules/clipboard/e_mod_main.c:738
+#: src/modules/clipboard/e_mod_main.c:660
+#: src/modules/clipboard/e_mod_main.c:747
 msgid "Delete"
 msgstr "Törlés"
 
@@ -1315,7 +1315,7 @@ msgid "Select All"
 msgstr "Mindent kijelöl"
 
 #: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:182
+#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1589,7 +1589,7 @@ msgid "Eject"
 msgstr "Lemez kiadása"
 
 #: src/bin/e_fm.c:9213 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1003
+#: src/modules/ibar/e_mod_main.c:1005
 msgid "Properties"
 msgstr "Tulajdonságok"
 
@@ -1991,21 +1991,21 @@ msgstr "Kinézet"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
+#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Eltávolítás"
 
-#: src/bin/e_gadcon.c:2445
+#: src/bin/e_gadcon.c:2447
 #, fuzzy
 msgid "Stop moving"
 msgstr "abbahagyják a mozgást"
 
-#: src/bin/e_gadcon.c:3096
+#: src/bin/e_gadcon.c:3098
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3097
+#: src/bin/e_gadcon.c:3099
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2642,17 +2642,17 @@ msgstr "Hely kérés"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:996
+#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
-#: src/modules/shot/e_mod_config.c:104 src/modules/tasks/e_mod_main.c:772
-#: src/modules/xkbswitch/e_mod_main.c:367
-#: src/modules/xkbswitch/e_mod_main.c:408
+#: src/modules/shot/e_mod_config.c:99 src/modules/tasks/e_mod_main.c:777
+#: src/modules/xkbswitch/e_mod_main.c:361
+#: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:223
 #: src/modules/notification/e_mod_main.c:335
-#: src/modules/clipboard/e_mod_main.c:283
-#: src/modules/clipboard/e_mod_main.c:428 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:292
+#: src/modules/clipboard/e_mod_main.c:437 src/modules/places/e_mod_main.c:520
 msgid "Settings"
 msgstr ""
 
@@ -2926,9 +2926,9 @@ msgstr "Kedvencek"
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:213
-#: src/modules/everything/evry_plug_apps.c:1148
-#: src/modules/everything/evry_plug_apps.c:1164
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1202
+#: src/modules/everything/evry_plug_apps.c:1218
+#: src/modules/everything/evry_plug_apps.c:1472
 #: src/modules/notification/e_mod_config.c:222
 msgid "Applications"
 msgstr "Alkalmazások"
@@ -2992,7 +2992,7 @@ msgstr "Virtuális asztalok beállítása"
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
-#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4248
+#: src/modules/winlist/e_mod_main.c:27 src/modules/tiling/e_mod_tiling.c:4148
 #: src/modules/classicmenu/e_mod_main.c:87
 msgid "Windows"
 msgstr "Ablakok"
@@ -3689,7 +3689,7 @@ msgstr ""
 "hogy az Evas támogatja-e a betűtípusbeállítást, és hogy a rendszer "
 "betűtípusa a 'Sans'-e.\n"
 
-#: src/bin/e_main.c:1921
+#: src/bin/e_main.c:1927
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3697,11 +3697,11 @@ msgid ""
 "not be loaded."
 msgstr ""
 
-#: src/bin/e_main.c:1926 src/bin/e_main.c:1942
+#: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Az E17 sérült már az indítás elején, ezért újra lett indítva."
 
-#: src/bin/e_main.c:1927
+#: src/bin/e_main.c:1933
 #, fuzzy, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3713,7 +3713,7 @@ msgstr ""
 "távolítod a hibákat<br>a beálításodból. a modul beállítások ablak<br>újra "
 "lehetővé teszi, hogy kiválaszd a <br>moduljaidat ismét."
 
-#: src/bin/e_main.c:1935
+#: src/bin/e_main.c:1941
 #, fuzzy
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
@@ -3726,7 +3726,7 @@ msgstr ""
 "távolítod a hibákat<br>a beálításodból. a modul beállítások ablak<br>újra "
 "lehetővé teszi, hogy kiválaszd a <br>moduljaidat ismét."
 
-#: src/bin/e_main.c:1943
+#: src/bin/e_main.c:1949
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -3791,8 +3791,8 @@ msgstr "Szeretnéd a modult kikapcsolni?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:651
-#: src/modules/clipboard/e_mod_main.c:738
+#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:660
+#: src/modules/clipboard/e_mod_main.c:747
 msgid "Keep"
 msgstr ""
 
@@ -3955,7 +3955,7 @@ msgid "Rename Shelf"
 msgstr "Fájl átnevezése"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:990
+#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
 #, fuzzy
 msgid "Contents"
 msgstr "Megjegyzés"
@@ -3970,7 +3970,7 @@ msgstr "Bemutató"
 msgid "Autohide"
 msgstr "Automatikus elrejtés"
 
-#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:332
+#: src/bin/e_shelf.c:2469 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Frissítés"
 
@@ -4157,17 +4157,17 @@ msgid ""
 "update your system packages<br>to get a new version."
 msgstr ""
 
-#: src/bin/e_utils.c:183 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "Az Moksha képtelen volt új folyamatot elágaztatni:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:236
+#: src/bin/e_utils.c:237
 msgid "Cannot exit - immortal windows."
 msgstr "Nem tudok kilépni - halhatatlan ablakok"
 
-#: src/bin/e_utils.c:237
+#: src/bin/e_utils.c:238
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Moksha will not allow itself to exit until these windows "
@@ -4177,112 +4177,112 @@ msgstr ""
 "Moksha nem tud addig kilépni, amíg ezek az ablakok nyitva vannak<br>vagy az "
 "Élettartam zár el nem lett távolítva<br>"
 
-#: src/bin/e_utils.c:780
+#: src/bin/e_utils.c:781
 #, fuzzy, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f Bájt"
 
-#: src/bin/e_utils.c:784
+#: src/bin/e_utils.c:785
 #, fuzzy, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KB"
 
-#: src/bin/e_utils.c:788
+#: src/bin/e_utils.c:789
 #, fuzzy, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:792
+#: src/bin/e_utils.c:793
 #, fuzzy, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:796
+#: src/bin/e_utils.c:797
 #, fuzzy, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f GB"
 
-#: src/bin/e_utils.c:815
+#: src/bin/e_utils.c:816
 #, fuzzy, c-format
 msgid "In the future"
 msgstr "A jövőben"
 
-#: src/bin/e_utils.c:819
+#: src/bin/e_utils.c:820
 #, fuzzy, c-format
 msgid "In the last minute"
 msgstr "Az utolsó percben"
 
-#: src/bin/e_utils.c:823
+#: src/bin/e_utils.c:824
 #, fuzzy, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "Utoljára módosítva:"
 msgstr[1] "Utoljára módosítva:"
 
-#: src/bin/e_utils.c:828
+#: src/bin/e_utils.c:829
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:833
+#: src/bin/e_utils.c:834
 #, fuzzy, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "Utoljára módosítva:"
 msgstr[1] "Utoljára módosítva:"
 
-#: src/bin/e_utils.c:838
+#: src/bin/e_utils.c:839
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:843
+#: src/bin/e_utils.c:844
 #, fuzzy, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] "%li órája"
 msgstr[1] "%li órája"
 
-#: src/bin/e_utils.c:848
+#: src/bin/e_utils.c:849
 #, fuzzy, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] "%li perce"
 msgstr[1] "%li perce"
 
-#: src/bin/e_utils.c:855 src/bin/e_widget_filepreview.c:538
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
 #: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
 #: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1176
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: src/bin/e_utils.c:926 src/bin/e_utils.c:934
+#: src/bin/e_utils.c:927 src/bin/e_utils.c:935
 #, fuzzy
 msgid "Error creating directory"
 msgstr "Hiba a modul betöltésekor"
 
-#: src/bin/e_utils.c:926
+#: src/bin/e_utils.c:927
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
 msgstr ""
 
-#: src/bin/e_utils.c:934
+#: src/bin/e_utils.c:935
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
-#: src/bin/e_utils.c:1096
+#: src/bin/e_utils.c:1097
 #, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
@@ -4301,12 +4301,12 @@ msgstr ""
 "Ezek az új alapértelmezett beállítások helyjehozták a hibákat.<br>Most már "
 "testreszabhatod a modult.<br> Elnézésedet kérjük a kellemetlenségekért.<br>"
 
-#: src/bin/e_utils.c:1105 src/bin/e_utils.c:1129
+#: src/bin/e_utils.c:1106 src/bin/e_utils.c:1130
 #, fuzzy, c-format
 msgid "%s Configuration Updated"
 msgstr "Címsor beállítása"
 
-#: src/bin/e_utils.c:1118
+#: src/bin/e_utils.c:1119
 #, fuzzy
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
@@ -4322,12 +4322,12 @@ msgstr ""
 "alapértelmezett beállítások vissza lettek állítva.<br> Elnézést a "
 "kellemetlenségekért.<br>"
 
-#: src/bin/e_utils.c:1212
+#: src/bin/e_utils.c:1213
 #, c-format
 msgid "Never"
 msgstr ""
 
-#: src/bin/e_utils.c:1216
+#: src/bin/e_utils.c:1217
 #, fuzzy, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
@@ -4342,42 +4342,42 @@ msgstr[1] ""
 "#-#-#-#-#  hu.po (hu)  #-#-#-#-#\n"
 "%.1f másodperc"
 
-#: src/bin/e_utils.c:1220
+#: src/bin/e_utils.c:1221
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1225
+#: src/bin/e_utils.c:1226
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1230
+#: src/bin/e_utils.c:1231
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1235
+#: src/bin/e_utils.c:1236
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1240
+#: src/bin/e_utils.c:1241
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:1245
+#: src/bin/e_utils.c:1246
 #, fuzzy, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4525,7 +4525,7 @@ msgstr "Hozzáadás a Kedvencekhez"
 #: src/bin/e_widget_fsel.c:339
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:91
 #: src/modules/conf_intl/e_int_config_imc.c:815
-#: src/modules/conf_theme/e_int_config_startup.c:266
+#: src/modules/conf_theme/e_int_config_startup.c:267
 #: src/modules/conf_theme/e_int_config_theme.c:752
 #: src/modules/gadman/e_mod_config.c:256
 msgid "Go up a Directory"
@@ -4659,7 +4659,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Hárdver"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:470
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:473
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Akkumulátor"
@@ -4669,37 +4669,37 @@ msgstr "Akkumulátor"
 msgid "Power Management Timing"
 msgstr "Energiakezelés"
 
-#: src/modules/battery/e_mod_main.c:473 src/modules/battery/e_mod_main.c:510
+#: src/modules/battery/e_mod_main.c:476 src/modules/battery/e_mod_main.c:515
 msgid "Your battery is low!"
 msgstr "Hamarosan le fog merülni az akku!"
 
-#: src/modules/battery/e_mod_main.c:474 src/modules/battery/e_mod_main.c:512
+#: src/modules/battery/e_mod_main.c:477 src/modules/battery/e_mod_main.c:517
 msgid "AC power is recommended."
 msgstr "AC áramforrás ajánlott."
 
-#: src/modules/battery/e_mod_main.c:516
+#: src/modules/battery/e_mod_main.c:522
 #, fuzzy
 msgid "Power now: "
 msgstr "Kikapcsolás"
 
-#: src/modules/battery/e_mod_main.c:522
+#: src/modules/battery/e_mod_main.c:528
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:529
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:630
+#: src/modules/battery/e_mod_main.c:635
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:735 src/modules/battery/e_mod_main.c:737
-#: src/modules/battery/e_mod_main.c:744 src/modules/battery/e_mod_main.c:746
+#: src/modules/battery/e_mod_main.c:740 src/modules/battery/e_mod_main.c:742
+#: src/modules/battery/e_mod_main.c:749 src/modules/battery/e_mod_main.c:751
 msgid "ERROR"
 msgstr "HIBA"
 
-#: src/modules/battery/e_mod_main.c:864
+#: src/modules/battery/e_mod_main.c:869
 msgid "Battery Meter"
 msgstr "Akkumulátor mérő"
 
@@ -5204,7 +5204,7 @@ msgstr "Válassza ki a háttér ..."
 #: src/modules/conf_intl/e_int_config_imc.c:803
 #: src/modules/conf_theme/e_int_config_wallpaper.c:462
 #: src/modules/conf_theme/e_int_config_wallpaper.c:621
-#: src/modules/conf_theme/e_int_config_startup.c:253
+#: src/modules/conf_theme/e_int_config_startup.c:254
 #: src/modules/conf_theme/e_int_config_theme.c:741
 #: src/modules/conf_theme/e_int_config_theme.c:1123
 #: src/modules/conf_theme/e_int_config_theme.c:1132
@@ -5531,22 +5531,22 @@ msgstr ""
 "következő folyamat által:<hilight>%s</hilight>.<br>Kérlek válassz másikat."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1311
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1316
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1322
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1328
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1331
 msgid "WIN"
 msgstr "WIN"
 
@@ -5640,7 +5640,7 @@ msgstr "Él Kötések beállítások"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:357
+#: src/modules/conf_keybindings/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Bevitel"
@@ -5807,18 +5807,18 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "Az E17 nem tudja importálni a beállítást<br> egy másolási hiba miatt."
 
-#: src/modules/conf_intl/e_int_config_intl.c:601
+#: src/modules/conf_intl/e_int_config_intl.c:604
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Nyelvi beállítások"
 
-#: src/modules/conf_intl/e_int_config_intl.c:624
+#: src/modules/conf_intl/e_int_config_intl.c:629
 #: src/modules/conf_intl/e_mod_main.c:24
 #, fuzzy
 msgid "Desklock Language Settings"
 msgstr "Nyelvi beállítások"
 
-#: src/modules/conf_intl/e_int_config_intl.c:957
+#: src/modules/conf_intl/e_int_config_intl.c:962
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5827,30 +5827,30 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:965
+#: src/modules/conf_intl/e_int_config_intl.c:970
 #, fuzzy
 msgid "Possible Locale problems"
 msgstr "Lehetséges problémák Lokál"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1035
-#: src/modules/conf_intl/e_int_config_intl.c:1126
+#: src/modules/conf_intl/e_int_config_intl.c:1055
+#: src/modules/conf_intl/e_int_config_intl.c:1146
 msgid "Language Selector"
 msgstr "Nyelv választó"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1065
-#: src/modules/conf_intl/e_int_config_intl.c:1514
+#: src/modules/conf_intl/e_int_config_intl.c:1085
+#: src/modules/conf_intl/e_int_config_intl.c:1534
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Alapértelmezett"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1099
-#: src/modules/conf_intl/e_int_config_intl.c:1177
+#: src/modules/conf_intl/e_int_config_intl.c:1119
+#: src/modules/conf_intl/e_int_config_intl.c:1197
 msgid "Locale Selected"
 msgstr "Területi beállítás kiválasztva"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1100
-#: src/modules/conf_intl/e_int_config_intl.c:1178
+#: src/modules/conf_intl/e_int_config_intl.c:1120
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Locale"
 msgstr "Területi beállítás"
 
@@ -5860,7 +5860,7 @@ msgstr "Nyelv"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:369
+#: src/modules/conf_keybindings/e_mod_main.c:367
 #, fuzzy
 msgid "ACPI Bindings"
 msgstr "Művelet hozzáadása"
@@ -6051,16 +6051,16 @@ msgid "Key Bindings Settings"
 msgstr "Billentyűparancsok beállításai"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
-#: src/modules/conf_keybindings/e_mod_main.c:349
-#: src/modules/conf_keybindings/e_mod_main.c:361
+#: src/modules/conf_keybindings/e_mod_main.c:347
+#: src/modules/conf_keybindings/e_mod_main.c:359
 msgid "Key Bindings"
 msgstr "Gyorsbillentyűk"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1171
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
 msgid "Binding Key Error"
 msgstr "Billentyűkombináció hiba"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1172
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -6097,7 +6097,7 @@ msgid "Mouse Binding Error"
 msgstr "Egér műveletek"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:365
+#: src/modules/conf_keybindings/e_mod_main.c:363
 msgid "Mouse Bindings"
 msgstr "Egér műveletek"
 
@@ -6196,191 +6196,191 @@ msgstr ""
 msgid "Extra Wheel (%d) Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:121
+#: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:122
+#: src/modules/conf_keybindings/e_mod_main.c:120
 #, fuzzy
 msgid " Close Window:"
 msgstr "Ablakok tisztogatása"
 
-#: src/modules/conf_keybindings/e_mod_main.c:128
+#: src/modules/conf_keybindings/e_mod_main.c:126
 #, fuzzy
 msgid " Maximize Window:"
 msgstr "Ablak előtérbe hozása"
 
-#: src/modules/conf_keybindings/e_mod_main.c:134
+#: src/modules/conf_keybindings/e_mod_main.c:132
 #, fuzzy
 msgid " Iconic Mode Toggle:"
 msgstr "Ikonizált módra vált"
 
-#: src/modules/conf_keybindings/e_mod_main.c:140
+#: src/modules/conf_keybindings/e_mod_main.c:138
 #, fuzzy
 msgid " Fullscreen Mode Toggle:"
 msgstr "Teljes képernyő módra vált"
 
-#: src/modules/conf_keybindings/e_mod_main.c:146
+#: src/modules/conf_keybindings/e_mod_main.c:144
 #, fuzzy
 msgid " Always On Top Toggle:"
 msgstr "Mindig felül"
 
-#: src/modules/conf_keybindings/e_mod_main.c:152
+#: src/modules/conf_keybindings/e_mod_main.c:150
 #, fuzzy
 msgid " Next Window:"
 msgstr "Következő ablak"
 
-#: src/modules/conf_keybindings/e_mod_main.c:158
+#: src/modules/conf_keybindings/e_mod_main.c:156
 #, fuzzy
 msgid " Tile Right:"
 msgstr "Jobb:"
 
-#: src/modules/conf_keybindings/e_mod_main.c:164
+#: src/modules/conf_keybindings/e_mod_main.c:162
 #, fuzzy
 msgid " Tile Left:"
 msgstr "Szegély módosítása"
 
-#: src/modules/conf_keybindings/e_mod_main.c:170
+#: src/modules/conf_keybindings/e_mod_main.c:168
 #, fuzzy
 msgid " Kill Window:"
 msgstr "Ablakok"
 
-#: src/modules/conf_keybindings/e_mod_main.c:176
+#: src/modules/conf_keybindings/e_mod_main.c:174
 #, fuzzy
 msgid " Window Menu:"
 msgstr "Ablak menü"
 
-#: src/modules/conf_keybindings/e_mod_main.c:185
+#: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:186
+#: src/modules/conf_keybindings/e_mod_main.c:184
 #, fuzzy
 msgid " Open Terminology:"
 msgstr "Futtatás terminálban"
 
-#: src/modules/conf_keybindings/e_mod_main.c:192
+#: src/modules/conf_keybindings/e_mod_main.c:190
 #, fuzzy
 msgid " Lock System:"
 msgstr "Zárolás nem sikerült!"
 
-#: src/modules/conf_keybindings/e_mod_main.c:198
+#: src/modules/conf_keybindings/e_mod_main.c:196
 #, fuzzy
 msgid " Show Main Menu:"
 msgstr "Saját Menü mutatása"
 
-#: src/modules/conf_keybindings/e_mod_main.c:204
+#: src/modules/conf_keybindings/e_mod_main.c:202
 #, fuzzy
 msgid " Show Favorites Menu:"
 msgstr "Kedvencek menü megjelenítése"
 
-#: src/modules/conf_keybindings/e_mod_main.c:210
+#: src/modules/conf_keybindings/e_mod_main.c:208
 #, fuzzy
 msgid " System Controls:"
 msgstr "Rendszer felügyelők"
 
-#: src/modules/conf_keybindings/e_mod_main.c:219
+#: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:221
+#: src/modules/conf_keybindings/e_mod_main.c:219
 #, fuzzy
 msgid " Show the Desktop:"
 msgstr "Munkaasztal megjelenítése"
 
-#: src/modules/conf_keybindings/e_mod_main.c:227
+#: src/modules/conf_keybindings/e_mod_main.c:225
 #, fuzzy
 msgid " Switch to Desktop 0:"
 msgstr "Váltás a 0-ás asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:233
+#: src/modules/conf_keybindings/e_mod_main.c:231
 #, fuzzy
 msgid " Switch to Desktop 1:"
 msgstr "Váltás az 1-es asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:239
+#: src/modules/conf_keybindings/e_mod_main.c:237
 #, fuzzy
 msgid " Switch to Desktop 2:"
 msgstr "Váltás a 2-es asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:245
+#: src/modules/conf_keybindings/e_mod_main.c:243
 #, fuzzy
 msgid " Switch to Desktop 3:"
 msgstr "Váltás a 3-as asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:251
+#: src/modules/conf_keybindings/e_mod_main.c:249
 #, fuzzy
 msgid " Switch to Desktop 4:"
 msgstr "Váltás a 4-es asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:257
+#: src/modules/conf_keybindings/e_mod_main.c:255
 #, fuzzy
 msgid " Switch to Desktop 5:"
 msgstr "Váltás az 5-ös asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:263
+#: src/modules/conf_keybindings/e_mod_main.c:261
 #, fuzzy
 msgid " Switch to Desktop 6:"
 msgstr "Váltás a 6-os asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:269
+#: src/modules/conf_keybindings/e_mod_main.c:267
 #, fuzzy
 msgid " Switch to Desktop 7:"
 msgstr "Váltás a 7-es asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:275
+#: src/modules/conf_keybindings/e_mod_main.c:273
 #, fuzzy
 msgid " Switch to Desktop 8:"
 msgstr "Váltás a 8-as asztalra"
 
-#: src/modules/conf_keybindings/e_mod_main.c:284
+#: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:285
+#: src/modules/conf_keybindings/e_mod_main.c:283
 #, fuzzy
 msgid " Quick Launcher:"
 msgstr "Indítás"
 
-#: src/modules/conf_keybindings/e_mod_main.c:291
+#: src/modules/conf_keybindings/e_mod_main.c:289
 #, fuzzy
 msgid " Take Screenshot:"
 msgstr "képernyők beállítása"
 
-#: src/modules/conf_keybindings/e_mod_main.c:297
+#: src/modules/conf_keybindings/e_mod_main.c:295
 #, fuzzy
 msgid " Restart Moksha:"
 msgstr "Üdvözlünk az Mokshaben"
 
-#: src/modules/conf_keybindings/e_mod_main.c:303
+#: src/modules/conf_keybindings/e_mod_main.c:301
 #, fuzzy
 msgid " Terminal console:"
 msgstr "Megadott parancs"
 
-#: src/modules/conf_keybindings/e_mod_main.c:309
+#: src/modules/conf_keybindings/e_mod_main.c:307
 #, fuzzy
 msgid " This Help:"
 msgstr "Ez a munkaasztal"
 
-#: src/modules/conf_keybindings/e_mod_main.c:329
+#: src/modules/conf_keybindings/e_mod_main.c:327
 #, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Egér műveletek"
 
-#: src/modules/conf_keybindings/e_mod_main.c:331
+#: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"
 msgstr "Szerkeszt"
 
-#: src/modules/conf_keybindings/e_mod_main.c:377
+#: src/modules/conf_keybindings/e_mod_main.c:375
 #, fuzzy
 msgid "Keybindings"
 msgstr "Gyorsbillentyűk"
 
-#: src/modules/conf_keybindings/e_mod_main.c:377
+#: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:382
+#: src/modules/conf_keybindings/e_mod_main.c:380
 #, fuzzy
 msgid "Show bindings"
 msgstr "Polc beállítások"
@@ -7407,7 +7407,7 @@ msgstr "Feltételek"
 msgid "Startup Settings"
 msgstr "Indítási beállítások"
 
-#: src/modules/conf_theme/e_int_config_startup.c:317
+#: src/modules/conf_theme/e_int_config_startup.c:318
 msgid "Show Splash Screen on Login"
 msgstr "Splash képernyő megjelenítése a bejelentkezésnél"
 
@@ -7465,7 +7465,7 @@ msgstr "Hozzárendelés"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:312
-#: src/modules/clipboard/e_mod_main.c:415
+#: src/modules/clipboard/e_mod_main.c:424
 msgid "Clear"
 msgstr "Törlés"
 
@@ -8000,7 +8000,7 @@ msgstr "Átméretezés:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
-#: src/modules/xkbswitch/e_mod_main.c:279
+#: src/modules/xkbswitch/e_mod_main.c:273
 #, fuzzy
 msgid "Keyboard"
 msgstr "Gyorsbillentyű"
@@ -8568,69 +8568,69 @@ msgstr[1] ""
 msgid "No plugins loaded"
 msgstr "Nem plugins betöltve"
 
-#: src/modules/everything/evry_plug_apps.c:1156
+#: src/modules/everything/evry_plug_apps.c:1210
 #, fuzzy
 msgid "Exebuf"
 msgstr "Típus:"
 
-#: src/modules/everything/evry_plug_apps.c:1171
-#: src/modules/everything/evry_plug_apps.c:1218
+#: src/modules/everything/evry_plug_apps.c:1225
+#: src/modules/everything/evry_plug_apps.c:1272
 #: src/modules/fileman/e_fwin.c:2194 src/modules/fileman/e_fwin.c:2580
 msgid "Open with..."
 msgstr "Megnyitás ezzel..."
 
-#: src/modules/everything/evry_plug_apps.c:1184
+#: src/modules/everything/evry_plug_apps.c:1238
 #, fuzzy
 msgid "Open File..."
 msgstr "Megnyitás ezzel..."
 
-#: src/modules/everything/evry_plug_apps.c:1198
+#: src/modules/everything/evry_plug_apps.c:1252
 #, fuzzy
 msgid "Edit Application Entry"
 msgstr "Alkalmazás hozzáadása"
 
-#: src/modules/everything/evry_plug_apps.c:1205
+#: src/modules/everything/evry_plug_apps.c:1259
 #, fuzzy
 msgid "New Application Entry"
 msgstr "Új program"
 
-#: src/modules/everything/evry_plug_apps.c:1212
+#: src/modules/everything/evry_plug_apps.c:1266
 msgid "Run with Sudo"
 msgstr ""
 
-#: src/modules/everything/evry_plug_apps.c:1225
+#: src/modules/everything/evry_plug_apps.c:1279
 #: src/modules/fileman/e_fwin.c:252
 #, fuzzy
 msgid "Open Terminal here"
 msgstr "Futtatás terminálban"
 
-#: src/modules/everything/evry_plug_apps.c:1231
+#: src/modules/everything/evry_plug_apps.c:1285
 #, fuzzy
 msgid "Run Executable"
 msgstr "Futtatható program"
 
-#: src/modules/everything/evry_plug_apps.c:1309
-#: src/modules/everything/evry_plug_apps.c:1437
+#: src/modules/everything/evry_plug_apps.c:1363
+#: src/modules/everything/evry_plug_apps.c:1491
 #, fuzzy
 msgid "Everything Applications"
 msgstr "Alkalmazások újraindítása"
 
-#: src/modules/everything/evry_plug_apps.c:1340
+#: src/modules/everything/evry_plug_apps.c:1394
 #, fuzzy
 msgid "Commands"
 msgstr "Parancs"
 
-#: src/modules/everything/evry_plug_apps.c:1341
+#: src/modules/everything/evry_plug_apps.c:1395
 #, fuzzy
 msgid "Terminal Command"
 msgstr "Megadott parancs"
 
-#: src/modules/everything/evry_plug_apps.c:1346
+#: src/modules/everything/evry_plug_apps.c:1400
 #, fuzzy
 msgid "Sudo GUI"
 msgstr "sudo GUI"
 
-#: src/modules/everything/evry_plug_apps.c:1418
+#: src/modules/everything/evry_plug_apps.c:1472
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 #, fuzzy
@@ -9438,21 +9438,21 @@ msgstr "A \"%s\" törlését kérted.<br><br> Biztosan törölni szeretnéd?"
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Biztosan törölni szeretnéd?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:979
+#: src/modules/ibar/e_mod_main.c:981
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Hozzon létre új ikon"
 
-#: src/modules/ibar/e_mod_main.c:1013
+#: src/modules/ibar/e_mod_main.c:1015
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Ikonok"
 
-#: src/modules/ibar/e_mod_main.c:1953
+#: src/modules/ibar/e_mod_main.c:1955
 #, fuzzy
 msgid "Focus IBar"
 msgstr "Fókusz"
@@ -10089,29 +10089,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:497 src/modules/systray/e_mod_main.c:913
+#: src/modules/systray/e_mod_main.c:538 src/modules/systray/e_mod_main.c:954
 #, fuzzy
 msgid "Systray Error"
 msgstr "Rendszertálca"
 
-#: src/modules/systray/e_mod_main.c:498
+#: src/modules/systray/e_mod_main.c:539
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:904
+#: src/modules/systray/e_mod_main.c:945
 msgid "Another systray exists"
 msgstr "Egy másik rendszertálca már létezik"
 
-#: src/modules/systray/e_mod_main.c:905
+#: src/modules/systray/e_mod_main.c:946
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Itt csak egy rendszertálca modul lehet, de már egy létezik."
 
-#: src/modules/systray/e_mod_main.c:914
+#: src/modules/systray/e_mod_main.c:955
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray nem tud dolgozni egy polc , ami alá be mindent."
 
-#: src/modules/systray/e_mod_main.c:1109
+#: src/modules/systray/e_mod_main.c:1150
 msgid "Systray"
 msgstr "Rendszertálca"
 
@@ -10317,62 +10317,57 @@ msgstr "Csatolási hiba"
 msgid "Cannot initialize network"
 msgstr "Az E17 nem tudta elindítani a fájlkezelõt!\n"
 
-#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:53
+#: src/modules/shot/e_mod_main.c:1295 src/modules/shot/e_mod_config.c:48
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Képernyő zárolási beállítások"
 
-#: src/modules/shot/e_mod_config.c:106
+#: src/modules/shot/e_mod_config.c:101
 #, fuzzy
 msgid " Show the screenshot mode dialog"
 msgstr "Mutasd az összes képernyőn"
 
-#: src/modules/shot/e_mod_config.c:109
+#: src/modules/shot/e_mod_config.c:104
 msgid " Screenshot guide (quality/share/save)"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:112
+#: src/modules/shot/e_mod_config.c:107
 #, fuzzy
 msgid " Show notifications"
 msgstr "Értesítés"
 
-#: src/modules/shot/e_mod_config.c:115
+#: src/modules/shot/e_mod_config.c:110
 msgid " Launch app after screenshot"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:118
+#: src/modules/shot/e_mod_config.c:113
 #, fuzzy
 msgid "Application for opening:"
 msgstr "Az alkalmazás ikonjának használata "
 
-#: src/modules/shot/e_mod_config.c:124
+#: src/modules/shot/e_mod_config.c:119
 #, fuzzy
 msgid "Folder for saving screenshots:"
 msgstr "Hiba a modul betöltésekor"
 
-#: src/modules/shot/e_mod_config.c:130
+#: src/modules/shot/e_mod_config.c:125
 #, fuzzy
 msgid "Delay time [s]"
 msgstr "Késleltetést felfüggeszti"
 
-#: src/modules/shot/e_mod_config.c:135
+#: src/modules/shot/e_mod_config.c:130
 msgid "Image quality [50-90 = jpg, 100 = png]"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:142
+#: src/modules/shot/e_mod_config.c:137
 msgid "Info"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:143
-msgid "Bind Take Shot in Wndows:Action"
+#: src/modules/shot/e_mod_config.c:138
+msgid "Alt+PrtSc: screenshot active window"
 msgstr ""
 
-#: src/modules/shot/e_mod_config.c:145
-#, fuzzy
-msgid "for window screenshot!"
-msgstr "Hiba a modul betöltésekor"
-
-#: src/modules/tasks/e_mod_main.c:326 src/modules/tasks/e_mod_main.c:779
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 #, fuzzy
 msgid "Tasks"
 msgstr "Feladatlista"
@@ -10443,93 +10438,93 @@ msgstr "Gyorsbillentyűk"
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 
-#: src/modules/tiling/e_mod_config.c:353
+#: src/modules/tiling/e_mod_config.c:361
 #, fuzzy
 msgid "Tiling Configuration"
 msgstr "Címsor beállítása"
 
-#: src/modules/tiling/e_mod_tiling.c:4097
+#: src/modules/tiling/e_mod_tiling.c:4098
 #, fuzzy
 msgid "Floating"
 msgstr "Indulás folyamatban"
 
-#: src/modules/tiling/e_mod_tiling.c:4186
-#: src/modules/tiling/e_mod_tiling.c:4250
+#: src/modules/tiling/e_mod_tiling.c:4150
+#: src/modules/tiling/e_mod_tiling.c:4212
 #, fuzzy
 msgid "Tiling"
 msgstr "Szavazás"
 
-#: src/modules/tiling/e_mod_tiling.c:4193
+#: src/modules/tiling/e_mod_tiling.c:4219
 #, fuzzy
 msgid "Toggle floating"
 msgstr "Az eszköztár megjelenítése"
 
-#: src/modules/tiling/e_mod_tiling.c:4196
+#: src/modules/tiling/e_mod_tiling.c:4222
 msgid "Add a stack"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4199
+#: src/modules/tiling/e_mod_tiling.c:4225
 #, fuzzy
 msgid "Remove a stack"
 msgstr "Modul eltávolítása"
 
-#: src/modules/tiling/e_mod_tiling.c:4202
+#: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Toggle between rows and columns"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4205
+#: src/modules/tiling/e_mod_tiling.c:4231
 msgid "Swap a window with an other"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4209
+#: src/modules/tiling/e_mod_tiling.c:4235
 #, fuzzy
 msgid "Move window"
 msgstr "(Nincsenek ablakok)"
 
-#: src/modules/tiling/e_mod_tiling.c:4212
+#: src/modules/tiling/e_mod_tiling.c:4238
 #, fuzzy
 msgid "Move window to the left"
 msgstr "Ablak bal oldalán"
 
-#: src/modules/tiling/e_mod_tiling.c:4215
+#: src/modules/tiling/e_mod_tiling.c:4241
 #, fuzzy
 msgid "Move window to the right"
 msgstr "Ablak jobb oldalán"
 
-#: src/modules/tiling/e_mod_tiling.c:4218
+#: src/modules/tiling/e_mod_tiling.c:4244
 #, fuzzy
 msgid "Move window up"
 msgstr "(Nincsenek ablakok)"
 
-#: src/modules/tiling/e_mod_tiling.c:4221
+#: src/modules/tiling/e_mod_tiling.c:4247
 #, fuzzy
 msgid "Move window down"
 msgstr "Ablak azonosító"
 
-#: src/modules/tiling/e_mod_tiling.c:4225
+#: src/modules/tiling/e_mod_tiling.c:4251
 #, fuzzy
 msgid "Adjust transitions"
 msgstr "Átmenetek"
 
-#: src/modules/tiling/e_mod_tiling.c:4228
+#: src/modules/tiling/e_mod_tiling.c:4254
 msgid "Focus a particular window"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4232
+#: src/modules/tiling/e_mod_tiling.c:4258
 #, fuzzy
 msgid "Send to upper right corner"
 msgstr "Felbukkanó"
 
-#: src/modules/tiling/e_mod_tiling.c:4235
+#: src/modules/tiling/e_mod_tiling.c:4261
 #, fuzzy
 msgid "Send to upper left corner"
 msgstr "Felbukkanó"
 
-#: src/modules/tiling/e_mod_tiling.c:4238
+#: src/modules/tiling/e_mod_tiling.c:4264
 msgid "Send to lower right corner"
 msgstr ""
 
-#: src/modules/tiling/e_mod_tiling.c:4241
+#: src/modules/tiling/e_mod_tiling.c:4267
 msgid "Send to lower left corner"
 msgstr ""
 
@@ -10578,7 +10573,7 @@ msgid "Notification"
 msgstr "Értesítés"
 
 #: src/modules/notification/e_mod_main.c:304
-#: src/modules/clipboard/e_mod_main.c:397
+#: src/modules/clipboard/e_mod_main.c:406
 msgid "Empty"
 msgstr ""
 
@@ -10782,9 +10777,9 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:903
-#: src/modules/clipboard/e_mod_main.c:904
-#: src/modules/clipboard/e_mod_main.c:905
+#: src/modules/clipboard/e_mod_main.c:913
+#: src/modules/clipboard/e_mod_main.c:914
+#: src/modules/clipboard/e_mod_main.c:915
 msgid "Clipboard"
 msgstr ""
 
@@ -10826,56 +10821,56 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "IBar beállítások"
 
-#: src/modules/clipboard/e_mod_main.c:369
+#: src/modules/clipboard/e_mod_main.c:378
 #, fuzzy
 msgid "Lock item"
 msgstr "Zárolás nem sikerült!"
 
-#: src/modules/clipboard/e_mod_main.c:380
+#: src/modules/clipboard/e_mod_main.c:389
 #, fuzzy
 msgid "Edit item"
 msgstr "Ikon szerkesztése"
 
-#: src/modules/clipboard/e_mod_main.c:387
+#: src/modules/clipboard/e_mod_main.c:396
 #, fuzzy
 msgid "Delete item"
 msgstr "Billentyű törlése"
 
-#: src/modules/clipboard/e_mod_main.c:405
+#: src/modules/clipboard/e_mod_main.c:414
 #, fuzzy
 msgid "Ignore history"
 msgstr "Elveti ezt"
 
-#: src/modules/clipboard/e_mod_main.c:646
+#: src/modules/clipboard/e_mod_main.c:655
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "A törlés megerősítése"
 
-#: src/modules/clipboard/e_mod_main.c:648
+#: src/modules/clipboard/e_mod_main.c:657
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "A polc törlését választottad.<br><br>Biztosan törölni akarod?"
 
-#: src/modules/clipboard/e_mod_main.c:733
+#: src/modules/clipboard/e_mod_main.c:742
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "A törlés megerősítése"
 
-#: src/modules/clipboard/e_mod_main.c:735
+#: src/modules/clipboard/e_mod_main.c:744
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "A polc törlését választottad.<br><br>Biztosan törölni akarod?"
 
-#: src/modules/clipboard/e_mod_main.c:763
+#: src/modules/clipboard/e_mod_main.c:772
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "IBar beállítások"
 
-#: src/modules/clipboard/e_mod_main.c:764
+#: src/modules/clipboard/e_mod_main.c:773
 msgid "Edit the item content:"
 msgstr ""
 
@@ -11053,6 +11048,10 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Felbontás módosítása"
+
+#, fuzzy
+#~ msgid "for window screenshot!"
+#~ msgstr "Hiba a modul betöltésekor"
 
 #, fuzzy
 #~ msgid "Hide"
