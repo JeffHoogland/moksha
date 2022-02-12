@@ -1146,7 +1146,7 @@ _e_typebuf_add(Evas_Object *obj, const char *s)
      }
 
    strcat(sd->typebuf.buf, s);
-   edje_object_part_text_set(sd->o_edje, "e.text.typebuf_label", sd->typebuf.buf);
+   edje_object_part_text_set(sd->o_edje, "e.text.label", sd->typebuf.buf);
    edje_object_signal_emit(sd->o_edje, "e,state,typebuf,start", "e");
    _e_typebuf_match(obj);
    _e_typebuf_timer_update(obj);
