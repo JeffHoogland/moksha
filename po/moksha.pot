@@ -43,7 +43,7 @@ msgstr ""
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
