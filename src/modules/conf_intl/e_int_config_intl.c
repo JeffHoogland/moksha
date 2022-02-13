@@ -102,6 +102,13 @@ struct _E_Config_Dialog_Data
    Eina_Bool desklock : 1;
 };
 
+const char *alphabet[] = {
+    "a","b","c","d","e","f","g","h","i",
+    "j","k","l","m","n","o","p","q","r",
+    "s","t","u","v","w","x","y","z"
+};
+
+
 const E_Intl_Pair basic_language_predefined_pairs[] = {
    {"ar_AE.UTF-8", "ara_flag.png", "العربية"},
    {"bg_BG.UTF-8", "bg_flag.png", "Български"},
@@ -838,13 +845,42 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    return;
 }
 
+static void
+_focus_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   e_widget_focus_set(cfdata->gui.blang_list, 1);
+}
+
 static void *
 _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
+   Evas_Object *o;
+   Evas_Modifier_Mask mask;
+   Eina_Bool kg;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
+
+   /* Event Obj for keydown */
+   o = evas_object_rectangle_add(cfd->dia->win->evas);
+   mask = 0;
+   kg = evas_object_key_grab(o, "Down", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Down\" key events to object %p.\n", o);
+   kg = evas_object_key_grab(o, "Up", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Up\" key events to object %p.\n", o);
+   for (int i = 0; i < 26; i++)
+   {
+     kg = evas_object_key_grab(o, alphabet[i], mask, ~mask, 0);
+     if (!kg)
+       fprintf(stderr, "ERROR: unable to redirect \"Up\" key events to object %p.\n", o);
+   }
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
+                                  _focus_cb, cfdata);
+
    _fill_data(cfdata);
    return cfdata;
 }
@@ -1054,7 +1090,8 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    o = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, _("Language Selector"), 0);
    ob = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_blang));
-   e_widget_size_min_set(ob, 100, 80);
+   e_widget_size_min_set(ob, 100, 140);
+
    e_widget_on_change_hook_set(ob, _ilist_basic_language_cb_change, cfdata);
    cfdata->gui.blang_list = ob;
    e_widget_framelist_object_append(of, ob);
@@ -1083,6 +1120,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_prefix_data_snprintf(buf, sizeof(buf), "data/flags/%s", "lang-system.png");
    ic = e_util_icon_add(buf, evas);
    e_widget_ilist_append(cfdata->gui.blang_list, ic, _("System Default"), NULL, NULL, "");
+
    if ((!cur_sig_loc) || (!cfdata->cur_language))
      e_widget_ilist_selected_set(cfdata->gui.blang_list, i);
    i++;
@@ -1126,7 +1164,6 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
    e_widget_frametable_object_append(of, cfdata->gui.locale_entry,
                                      1, 0, 1, 1, 1, 1, 1, 0);
    e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
-
    return o;
 }
 
