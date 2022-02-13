@@ -846,10 +846,16 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 }
 
 static void
-_focus_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_focus_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event )
 {
+   Evas_Event_Key_Down *ev = event;
    E_Config_Dialog_Data *cfdata = data;
+
    e_widget_focus_set(cfdata->gui.blang_list, 1);
+   if (((!strcmp(ev->key, "Return")) ||
+        (!strcmp(ev->key, "KP_Enter")) ||
+        (!strcmp(ev->key, "space"))))
+     _basic_apply_data(cfdata->cfd, cfdata);
 }
 
 static void *
@@ -866,12 +872,18 @@ _create_data(E_Config_Dialog *cfd)
    /* Event Obj for keydown */
    o = evas_object_rectangle_add(cfd->dia->win->evas);
    mask = 0;
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
+   mask = 0;
    kg = evas_object_key_grab(o, "Down", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"Down\" key events to object %p.\n", o);
+   mask = 0;
    kg = evas_object_key_grab(o, "Up", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"Up\" key events to object %p.\n", o);
+   mask = 0;
    for (int i = 0; i < 26; i++)
    {
      kg = evas_object_key_grab(o, alphabet[i], mask, ~mask, 0);
