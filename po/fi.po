@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-02-10 20:59+0100\n"
+"POT-Creation-Date: 2022-02-14 14:44+0100\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -42,7 +42,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -5833,18 +5833,18 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "Moksha ei voinut tuoda asetuksia kopiointivirheen<br>vuoksi."
 
-#: src/modules/conf_intl/e_int_config_intl.c:604
+#: src/modules/conf_intl/e_int_config_intl.c:611
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Kieliasetukset"
 
-#: src/modules/conf_intl/e_int_config_intl.c:629
+#: src/modules/conf_intl/e_int_config_intl.c:636
 #: src/modules/conf_intl/e_mod_main.c:24
 #, fuzzy
 msgid "Desklock Language Settings"
 msgstr "Kieliasetukset"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:1013
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5853,30 +5853,30 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:970
+#: src/modules/conf_intl/e_int_config_intl.c:1021
 #, fuzzy
 msgid "Possible Locale problems"
 msgstr "Mahdolliset Locale ongelmia"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1055
-#: src/modules/conf_intl/e_int_config_intl.c:1146
+#: src/modules/conf_intl/e_int_config_intl.c:1106
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Language Selector"
 msgstr "Kielen valinta"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1085
-#: src/modules/conf_intl/e_int_config_intl.c:1534
+#: src/modules/conf_intl/e_int_config_intl.c:1137
+#: src/modules/conf_intl/e_int_config_intl.c:1586
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "Järjestelmän oletus"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1119
-#: src/modules/conf_intl/e_int_config_intl.c:1197
+#: src/modules/conf_intl/e_int_config_intl.c:1172
+#: src/modules/conf_intl/e_int_config_intl.c:1249
 msgid "Locale Selected"
 msgstr "Valittu lokaali"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1120
-#: src/modules/conf_intl/e_int_config_intl.c:1198
+#: src/modules/conf_intl/e_int_config_intl.c:1173
+#: src/modules/conf_intl/e_int_config_intl.c:1250
 msgid "Locale"
 msgstr "Lokaali"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-02-10 20:59+0100\n"
+"POT-Creation-Date: 2022-02-14 14:44+0100\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -46,8 +46,9 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -5453,17 +5454,17 @@ msgstr "Moksha 无法导入该配置。<br><br>您确定这是一个有效的配
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "Moksha 无法导入配置，<br>复制错误。"
 
-#: src/modules/conf_intl/e_int_config_intl.c:604
+#: src/modules/conf_intl/e_int_config_intl.c:611
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "语言设置"
 
-#: src/modules/conf_intl/e_int_config_intl.c:629
+#: src/modules/conf_intl/e_int_config_intl.c:636
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "桌面锁定语言设置"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:1013
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5472,29 +5473,29 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:970
+#: src/modules/conf_intl/e_int_config_intl.c:1021
 msgid "Possible Locale problems"
 msgstr "可能是语言环境问题"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1055
-#: src/modules/conf_intl/e_int_config_intl.c:1146
+#: src/modules/conf_intl/e_int_config_intl.c:1106
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Language Selector"
 msgstr "语言选择器"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1085
-#: src/modules/conf_intl/e_int_config_intl.c:1534
+#: src/modules/conf_intl/e_int_config_intl.c:1137
+#: src/modules/conf_intl/e_int_config_intl.c:1586
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "系统默认"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1119
-#: src/modules/conf_intl/e_int_config_intl.c:1197
+#: src/modules/conf_intl/e_int_config_intl.c:1172
+#: src/modules/conf_intl/e_int_config_intl.c:1249
 msgid "Locale Selected"
 msgstr "选定的区域"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1120
-#: src/modules/conf_intl/e_int_config_intl.c:1198
+#: src/modules/conf_intl/e_int_config_intl.c:1173
+#: src/modules/conf_intl/e_int_config_intl.c:1250
 msgid "Locale"
 msgstr "区域"
 

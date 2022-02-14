@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-02-10 20:59+0100\n"
+"POT-Creation-Date: 2022-02-14 14:44+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -47,7 +47,7 @@ msgstr "인라이튼먼트"
 #: src/bin/e_about.c:28
 #, fuzzy
 msgid ""
-"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -5503,17 +5503,17 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "인라이튼먼트가 복사 오류로 인해 설정을 가져올 수 <br>없습니다."
 
-#: src/modules/conf_intl/e_int_config_intl.c:604
+#: src/modules/conf_intl/e_int_config_intl.c:611
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "언어 설정"
 
-#: src/modules/conf_intl/e_int_config_intl.c:629
+#: src/modules/conf_intl/e_int_config_intl.c:636
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "데스크 잠금 언어 설정"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:1013
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5525,29 +5525,29 @@ msgstr ""
 "습니다.<br>이 환경 변수가 영향을 미치는 것을<br>원치 않는다면 환경 변수 설정"
 "을 해제하십시오.<br>영향을 주는 변수는 다음과 같습니다:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:970
+#: src/modules/conf_intl/e_int_config_intl.c:1021
 msgid "Possible Locale problems"
 msgstr "가능한 로캘 문제"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1055
-#: src/modules/conf_intl/e_int_config_intl.c:1146
+#: src/modules/conf_intl/e_int_config_intl.c:1106
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Language Selector"
 msgstr "언어 선택"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1085
-#: src/modules/conf_intl/e_int_config_intl.c:1534
+#: src/modules/conf_intl/e_int_config_intl.c:1137
+#: src/modules/conf_intl/e_int_config_intl.c:1586
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 msgid "System Default"
 msgstr "시스템 기본값"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1119
-#: src/modules/conf_intl/e_int_config_intl.c:1197
+#: src/modules/conf_intl/e_int_config_intl.c:1172
+#: src/modules/conf_intl/e_int_config_intl.c:1249
 msgid "Locale Selected"
 msgstr "로캘 선택함"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1120
-#: src/modules/conf_intl/e_int_config_intl.c:1198
+#: src/modules/conf_intl/e_int_config_intl.c:1173
+#: src/modules/conf_intl/e_int_config_intl.c:1250
 msgid "Locale"
 msgstr "로캘"
 

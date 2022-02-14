@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-02-10 20:59+0100\n"
+"POT-Creation-Date: 2022-02-14 14:44+0100\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -64,7 +64,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2021, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -5977,18 +5977,18 @@ msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "Moksha n'a pu importer cette configuration<br>dû à une erreur de copie."
 
-#: src/modules/conf_intl/e_int_config_intl.c:604
+#: src/modules/conf_intl/e_int_config_intl.c:611
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Paramètres de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:629
+#: src/modules/conf_intl/e_int_config_intl.c:636
 #: src/modules/conf_intl/e_mod_main.c:24
 #, fuzzy
 msgid "Desklock Language Settings"
 msgstr "Paramètres de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:962
+#: src/modules/conf_intl/e_int_config_intl.c:1013
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5997,30 +5997,30 @@ msgid ""
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:970
+#: src/modules/conf_intl/e_int_config_intl.c:1021
 msgid "Possible Locale problems"
 msgstr ""
 
-#: src/modules/conf_intl/e_int_config_intl.c:1055
-#: src/modules/conf_intl/e_int_config_intl.c:1146
+#: src/modules/conf_intl/e_int_config_intl.c:1106
+#: src/modules/conf_intl/e_int_config_intl.c:1198
 msgid "Language Selector"
 msgstr "Sélectionneur de langue"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1085
-#: src/modules/conf_intl/e_int_config_intl.c:1534
+#: src/modules/conf_intl/e_int_config_intl.c:1137
+#: src/modules/conf_intl/e_int_config_intl.c:1586
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:196
 #, fuzzy
 msgid "System Default"
 msgstr "Utiliser Valeurs par défaut"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1119
-#: src/modules/conf_intl/e_int_config_intl.c:1197
+#: src/modules/conf_intl/e_int_config_intl.c:1172
+#: src/modules/conf_intl/e_int_config_intl.c:1249
 msgid "Locale Selected"
 msgstr "Locale sélectionnée"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1120
-#: src/modules/conf_intl/e_int_config_intl.c:1198
+#: src/modules/conf_intl/e_int_config_intl.c:1173
+#: src/modules/conf_intl/e_int_config_intl.c:1250
 msgid "Locale"
 msgstr "Locale"
 
