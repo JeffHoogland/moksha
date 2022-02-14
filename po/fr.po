@@ -12,14 +12,14 @@
 # rustyBSD <rustyBSD@gmx.fr>, 2015.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
-# similar <similar@orange.fr>, 2020, 2021.
+# similar <similar@orange.fr>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-02-14 14:44+0100\n"
-"PO-Revision-Date: 2021-12-20 13:17+0100\n"
+"PO-Revision-Date: 2022-02-14 17:23+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -54,14 +54,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2021, par l'équipe de développement de Moksha</"
+"<title>Copyright &copy; 2022, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
 "visitez :<br><hilight>http://www.bodhilinux.com</><br><br>"
@@ -9790,9 +9789,8 @@ msgid "Info"
 msgstr "Info"
 
 #: src/modules/shot/e_mod_config.c:138
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Sélection de l'emplacement d'enregistrement"
+msgstr "Alt+Imp. écran : capture d'écran de la fenêtre active"
 
 #: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 msgid "Tasks"
