@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-02-14 14:44+0100\n"
-"PO-Revision-Date: 2022-02-14 17:14+0100\n"
+"PO-Revision-Date: 2022-02-14 17:23+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -9790,7 +9790,7 @@ msgstr "Info"
 
 #: src/modules/shot/e_mod_config.c:138
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Alt+Imp. écran : Capture d'écran de la fenêtre active"
+msgstr "Alt+Imp. écran : capture d'écran de la fenêtre active"
 
 #: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 msgid "Tasks"
