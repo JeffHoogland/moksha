@@ -1,14 +1,15 @@
 # Portuguese translations for Moksha desktop
 # This file is public domain.
+# Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-02-14 14:44+0100\n"
-"PO-Revision-Date: 2021-12-10 11:55+0000\n"
+"PO-Revision-Date: 2022-02-14 22:34+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -42,16 +43,15 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos de autor &copy; 2021, pela equipa de desenvolvimento do "
-"Moksha</><br><br>Esperamos que goste de usar esta aplicação tanto quanto nós "
-"gostamos de a desenvolver<br><br>Para nos contactar, visite a página:"
+"<title>Direitos de autor &copy; 2022, pela equipa de desenvolvimento do "
+"Moksha</><br><br>Esperamos que goste de usar este software tanto quanto nós "
+"gostamos de o desenvolver<br><br>Para nos contactar, visite a página:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -9737,9 +9737,8 @@ msgid "Info"
 msgstr "Informação"
 
 #: src/modules/shot/e_mod_config.c:138
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Escolha o local para gravar a captura"
+msgstr "Alt+PrtSc: captura de ecrã da janela ativa"
 
 #: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:784
 msgid "Tasks"
