@@ -886,11 +886,8 @@ _notification_popup_refresh(Popup_Data *popup)
                  notification_mod->dir);
         popup->app_icon = edje_object_add(popup->e);
         if (!e_theme_edje_object_set(popup->app_icon, 
-                                     "base/theme/modules/notification",
-                                     "e/modules/notification/logo"))
-          if (!e_theme_edje_object_set(popup->app_icon, 
                                        "base/theme/modules/notification",
-                                       "modules/notification/logo"))
+                                       "e/modules/notification/logo"))
             edje_object_file_set(popup->app_icon, buf, 
                                  "modules/notification/logo");
         w = width;
