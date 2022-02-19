@@ -889,7 +889,7 @@ _notification_popup_refresh(Popup_Data *popup)
                                        "base/theme/modules/notification",
                                        "e/modules/notification/logo"))
             edje_object_file_set(popup->app_icon, buf, 
-                                 "modules/notification/logo");
+                                 "e/modules/notification/logo");
         w = width;
         h = height;
      }
