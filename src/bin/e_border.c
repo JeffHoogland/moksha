@@ -7014,7 +7014,7 @@ window_snap_do(E_Border *bd)
 
       e_zone_useful_geometry_get(bd->zone, &zx, &zy, &zw, &zh);
       drag_gap = zw / 10;
-      printf("x: %d ", bd->mouse.current.mx);
+
       if ((bd->mouse.current.mx < zx + 1) &&
           (bd->mouse.current.mx > zx - drag_gap))
         {
