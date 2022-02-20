@@ -838,6 +838,17 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    return;
 }
 
+static void
+_enter_key_down_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event )
+{
+   Evas_Event_Key_Down *ev = event;
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (((!strcmp(ev->key, "Return")) ||
+        (!strcmp(ev->key, "KP_Enter"))))
+     _basic_apply_data(cfdata->cfd, cfdata);
+}
+
  static Eina_Bool
 _focus_cb(void *data)
 {
@@ -851,10 +862,25 @@ static void *
 _create_data(E_Config_Dialog *cfd)
 {
    E_Config_Dialog_Data *cfdata;
+   Evas_Object *o;
+   Evas_Modifier_Mask mask;
+   Eina_Bool kg;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-
+   
+   o = evas_object_rectangle_add(cfd->dia->win->evas);
+   mask = 0;
+   kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"KP_Enter\" key events to object %p.\n", o);
+   mask = 0;
+   kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
+   if (!kg)
+     fprintf(stderr, "ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
+   
+   evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
+                                  _enter_key_down_cb, cfdata);
    ecore_timer_add(0.2, _focus_cb, cfdata);
 
    _fill_data(cfdata);
