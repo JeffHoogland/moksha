@@ -559,7 +559,6 @@ _notification_popup_new(E_Notification *n)
    E_Container *con;
    Popup_Data *popup;
   
-   char buf[PATH_MAX];
    const Eina_List *l, *screens;
    E_Screen *scr;
    E_Zone *zone = NULL;
@@ -597,10 +596,7 @@ _notification_popup_new(E_Notification *n)
    popup->e = popup->win->evas;
 
    /* Setup the theme */
-   snprintf(buf, sizeof(buf), "%s/e-module-notification.edj",
-            notification_mod->dir);
    popup->theme = edje_object_add(popup->e);
-
    e_theme_edje_object_set(popup->theme,
                            "base/theme/modules/notification",
                            "e/modules/notification/main");
