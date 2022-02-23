@@ -13,6 +13,7 @@
     "Doug 'Deepspeed' Yanez<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Janne Tamming<br>" \
+    "MohammadReza 'REZA' Mirzaeie" \
     "Bob Raskin<br><br>" \
     "In memory:<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
