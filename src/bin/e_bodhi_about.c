@@ -13,14 +13,14 @@
     "Doug 'Deepspeed' Yanez<br>" \
     "Roger 'JollyRoger' Carter<br>" \
     "Janne Tamming<br>" \
-    "MohammadReza 'REZA' Mirzaeie" \
+    "MohammadReza 'REZA' Mirzaeie<br>" \
     "Bob Raskin<br><br>" \
     "In memory:<br>" \
     "Charles 'Charles@Bodhi' van de Beek<br>" \
     "Mark 'ottermaton' Strawser<br><br>" \
     "Past contributors:<br>" \
     "Jeff Hoogland<br>" \
-     "Kristi Hoogland<br>" \
+    "Kristi Hoogland<br>" \
     "Joris 'aeonius' van Dijk<br>" \
     "Stace 'sef' Fauske<br>" \
     "Kai 'kuuko' Huuhko<br>" \
