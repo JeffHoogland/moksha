@@ -75,6 +75,8 @@ struct _CFColor_Class_Description
  */
 static const CFColor_Class_Description _color_classes_wm[] =
 {
+   CCDESC_S("border_base", N_("Border Base")),
+   CCDESC_S("border_base_active", N_("Border Base Active")),
    CCDESC_T("border_title", N_("Border Title")),
    CCDESC_T("border_title_active", N_("Border Title Active")),
    CCDESC_S("border_frame", N_("Border Frame")),
