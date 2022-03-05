@@ -217,7 +217,7 @@ static void      _e_border_hide(E_Border *bd);
 static void       _e_border_move_lost_window_to_center(E_Border *bd);
 static void      _e_border_reset_lost_window(E_Border *bd);
 static Eina_Bool _e_border_pointer_warp_to_center_timer(void *data);
-static Eina_Bool  noframe_check(E_Border *bd);
+
 /* local subsystem globals */
 static Eina_List *handlers = NULL;
 static Eina_List *borders = NULL;
@@ -404,19 +404,6 @@ EAPI Eina_Bool
 e_border_focus_lock_get(void)
 {
    return focus_locked;
-}
-
-static Eina_Bool noframe_check(E_Border *bd)
-{
-   // checks the theme if possible to noframe feature
-   const char *noframe;
-   Eina_Bool nofrm = EINA_FALSE;
-
-   noframe = edje_object_data_get(bd->bg_object, "noframe");
-   if ((noframe) && (!strcmp(noframe, "1")))
-      nofrm = EINA_TRUE;
-
-   return nofrm;
 }
 
 EAPI E_Border *
@@ -2420,13 +2407,7 @@ e_border_focus_set(E_Border *bd,
 
         e_hints_active_window_set(bd->zone->container->manager, bd);
 
-        if ((!e_config->border_frame) || (!noframe_check(bd)))
-          edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-        else
-          edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
-
-        if ((e_config->border_frame) && (bd->client.mwm.borderless))
-          edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
+        edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 
         if (bd->maximized != E_MAXIMIZE_NONE)
           edje_object_signal_emit(bd->bg_object, "e,state,focused,maximized", "e");
@@ -2662,10 +2643,7 @@ e_border_unshade(E_Border *bd,
         bd->shaded = 0;
         bd->changes.shaded = 1;
         bd->changed = 1;
-        if (!e_config->border_frame)
-          edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
-        else
-          edje_object_signal_emit(bd->bg_object, "e,state,unshaded,noframe", "e");
+        edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
         e_border_frame_recalc(bd);
         ev = E_NEW(E_Event_Border_Resize, 1);
         ev->border = bd;
@@ -2977,14 +2955,7 @@ e_border_unmaximize(E_Border *bd,
         if ((bd->maximized & E_MAXIMIZE_TYPE) == E_MAXIMIZE_FULLSCREEN)
           {
              if (bd->bg_object)
-               {
-                 //~ if (!e_config->border_frame) 
-                   //~ edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-                 //~ else
-                   //~ edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
-
                 _e_border_client_inset_calc(bd);
-               }
 
              bd->maximized = E_MAXIMIZE_NONE;
              _e_border_move_resize_internal(bd,
@@ -3008,11 +2979,7 @@ e_border_unmaximize(E_Border *bd,
                {
                   if (bd->bg_object)
                     {
-                      if ((!e_config->border_frame) || (!noframe_check(bd)))
                         edje_object_signal_emit(bd->bg_object, "e,action,unmaximize,fullscreen", "e");
-                      else
-                        edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
-
                       _e_border_client_inset_calc(bd);
                     }
                }
@@ -3042,10 +3009,7 @@ e_border_unmaximize(E_Border *bd,
                   bd->maximized = E_MAXIMIZE_NONE;
                   _e_border_move_resize_internal(bd, x, y, w, h, 0, 1);
                   e_hints_window_size_unset(bd);
-                  if (!e_config->border_frame)
-                    edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
-                  else
-                    edje_object_signal_emit(bd->bg_object, "e,action,unmax,noframe", "e");
+                  edje_object_signal_emit(bd->bg_object, "e,action,unmaximize", "e");
                }
              else
                {
@@ -8574,20 +8538,13 @@ _e_border_eval0(E_Border *bd)
                                                   _e_border_cb_signal_bind, bd);
                   if (bd->focused)
                     {
-                      if ((!e_config->border_frame) || (!noframe_check(bd)))
-                        {
-                          if (bd->saved.maximized)
-                            edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
-                          else
-                            edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
-                        }
-                      else
-                        {
+                       if (bd->saved.maximized)
                           edje_object_signal_emit(bd->bg_object, "e,state,focused,noframe", "e");
-                        }  
+                       else
+                          edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
 
-                      if (bd->icon_object && e_icon_edje_get(bd->icon_object))
-                        e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
+                       if (bd->icon_object && e_icon_edje_get(bd->icon_object))
+                         e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
                     }
                   if (bd->shaded)
                     edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
@@ -9716,16 +9673,10 @@ _e_border_shade_animator(void *data)
         bd->shade.anim = NULL;
 
         if (bd->shaded)
-        {
           edje_object_signal_emit(bd->bg_object, "e,state,shaded", "e");
-        }
         else
-        {
-          if (!e_config->border_frame)
-            edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
-          else
-            edje_object_signal_emit(bd->bg_object, "e,state,unshaded,noframe", "e");
-        }
+          edje_object_signal_emit(bd->bg_object, "e,state,unshaded", "e");
+
         edje_object_message_signal_process(bd->bg_object);
         e_border_frame_recalc(bd);
 
