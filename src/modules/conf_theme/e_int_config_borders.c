@@ -239,7 +239,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
      }
 
    e_widget_size_min_get(ol, &w, &h);
-   e_widget_size_min_set(ol, w > 200 ? w : 200, 100);
+   e_widget_size_min_set(ol, w > 200 ? w : 200, 280);
 
    e_widget_ilist_go(ol);
    e_widget_ilist_selected_set(ol, sel);

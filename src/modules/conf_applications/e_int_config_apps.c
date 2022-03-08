@@ -301,7 +301,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
         e_widget_ilist_multi_select_set(cfdata->apps_xdg.o_list, EINA_TRUE);
         e_widget_size_min_get(cfdata->apps_xdg.o_list, &mw, NULL);
         if (mw < (200 * e_scale)) mw = (200 * e_scale);
-        e_widget_size_min_set(cfdata->apps_xdg.o_list, mw, (75 * e_scale));
+        e_widget_size_min_set(cfdata->apps_xdg.o_list, mw, 240);
         e_widget_table_object_append(ot, cfdata->apps_xdg.o_list, 0, 0, 2, 1, 1, 1, 1, 1);
 
         cfdata->apps_xdg.o_desc = e_widget_textblock_add(evas);
@@ -327,7 +327,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_multi_select_set(cfdata->apps_user.o_list, EINA_TRUE);
    e_widget_size_min_get(cfdata->apps_user.o_list, &mw, NULL);
    if (mw < (200 * e_scale)) mw = (200 * e_scale);
-   e_widget_size_min_set(cfdata->apps_user.o_list, mw, (75 * e_scale));
+   e_widget_size_min_set(cfdata->apps_user.o_list, mw, 240);
    e_widget_table_object_append(ot, cfdata->apps_user.o_list, 0, 0, 2, 1, 1, 1, 1, 1);
    cfdata->apps_user.o_add = e_widget_button_add(evas, _("Add"), "list-add",
                                                  _cb_add, &cfdata->apps_user, NULL);
