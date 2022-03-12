@@ -76,7 +76,8 @@ e_modapi_init(E_Module *m)
                                  "preferences-desktop-keyboard",
                                  _xkb_cfg_dialog);
    _xkb.module = m;
-   ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
+   //~ ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
+   ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed_state, NULL);
    /* Gadcon */
    e_gadcon_provider_register(&_gc_class);
    return m;
@@ -302,7 +303,7 @@ _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event __UNU
 
    //INF("xkb group %d", ev->group);
    //~ e_config->xkb.cur_group = ev->group;
-   _xkb_update_icon(ev->group);
+   _xkb_update_icon(e_config->xkb.cur_group);
    return ECORE_CALLBACK_PASS_ON;
 }
 

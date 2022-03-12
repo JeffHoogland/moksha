@@ -3,48 +3,130 @@
 static void _e_xkb_update_event(int);
 
 static int _e_xkb_cur_group = -1;
+static Ecore_Exe *cur_exe;
 
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
-static Eina_Bool
-_e_xkb_init_timer(void *data)
+static Ecore_Event_Handler *xkb_new_keyboard_handler = NULL;
+static Ecore_Event_Handler *xkb_state_handler = NULL;
+static Ecore_Event_Handler *xkb_keymap_handler = NULL;
+static Ecore_Timer *save_group = NULL;
+static int skip_new_keyboard = 0;
+
+static void
+_eval_cur_group(void)
 {
-   Eina_List *l;
-   E_Config_XKB_Layout *cl2, *cl = data;
+  Eina_List *l;
+   E_Config_XKB_Layout *cl2, *cl = NULL;
    int cur_group = -1;
+
+   cl = e_config->xkb.current_layout;
+   if (!cl) cl = e_config->xkb.sel_layout;
 
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
      {
         cur_group++;
         if (!cl2->name) continue;
-        if (e_config_xkb_layout_eq(cl, cl2))
+        if (!cl || e_config_xkb_layout_eq(cl, cl2))
           {
              INF("Setting keyboard layout: %s|%s|%s", cl2->name, cl2->model, cl2->variant);
-             e_xkb_update(cur_group);
-             break;
+             e_config->xkb.cur_group = cur_group;
+             return;
           }
      }
+   e_config->xkb.cur_group = 0;
+}
+
+static Eina_Bool
+_e_xkb_init_timer(void *data EINA_UNUSED)
+{
+   _eval_cur_group();
+
+   e_xkb_update(e_config->xkb.cur_group);
+   ecore_x_xkb_track_state();
    return EINA_FALSE;
+}
+
+static Eina_Bool
+_e_xkb_save_group(void *data)
+{
+   int group = (intptr_t)data;
+
+   if (e_config->xkb.cur_group != group)
+     {
+        e_config->xkb.cur_group = group;
+        e_config_save_queue();
+        e_xkb_update(e_config->xkb.cur_group);
+     }
+   save_group = NULL;
+   return EINA_FALSE;
+}
+
+
+static Eina_Bool
+_xkb_new_state(void* data EINA_UNUSED, int type EINA_UNUSED, void *event)
+{
+   Ecore_X_Event_Xkb *ev = event;
+
+   if (save_group) ecore_timer_del(save_group);
+   save_group = ecore_timer_loop_add(0.5, _e_xkb_save_group, (void *)(intptr_t)ev->group);
+
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+
+static Eina_Bool
+_xkb_new_keyboard(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+{
+   if (skip_new_keyboard > 0)
+     {
+        skip_new_keyboard --;
+        return ECORE_CALLBACK_PASS_ON;
+     }
+
+   e_xkb_update(-1);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_xkb_keymap(void* data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+{
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+kb_exe_del(void *d EINA_UNUSED, int t EINA_UNUSED, Ecore_Exe_Event_Del *ev)
+{
+   if (ev->exe == cur_exe)
+     cur_exe = NULL;
+   return ECORE_CALLBACK_RENEW;
 }
 
 /* externally accessible functions */
 EAPI int
 e_xkb_init(void)
 {
-   E_EVENT_XKB_CHANGED = ecore_event_type_new();
+   if (!E_EVENT_XKB_CHANGED)
+     {
+        E_EVENT_XKB_CHANGED = ecore_event_type_new();
+        ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)kb_exe_del, NULL);
+     }
+   xkb_state_handler = ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_new_state, NULL);
+   xkb_new_keyboard_handler = ecore_event_handler_add(ECORE_X_EVENT_XKB_NEWKBD_NOTIFY, _xkb_new_keyboard, NULL);
+   xkb_keymap_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_KEYMAP, _xkb_keymap, NULL);
    e_xkb_update(-1);
-   if (e_config->xkb.cur_layout)
-     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
-   else if (e_config->xkb.selected_layout)
-     ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.sel_layout);
-   else if (e_config->xkb.used_layouts)
-      ecore_timer_add(1.5, _e_xkb_init_timer, eina_list_data_get(e_config->xkb.used_layouts));
+   ecore_timer_add(1.5, _e_xkb_init_timer, NULL);
    return 1;
 }
 
 EAPI int
 e_xkb_shutdown(void)
 {
+    E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
+    E_FREE_FUNC(xkb_state_handler, ecore_event_handler_del);
+    E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
+    ecore_timer_del(save_group);
+    save_group = NULL;
    return 1;
 }
 
@@ -142,8 +224,10 @@ e_xkb_update(int cur_group)
                }
           }
      }
+   skip_new_keyboard ++;
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
-   ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+   E_FREE_FUNC(cur_exe, ecore_exe_kill);
+   cur_exe = ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
 
@@ -222,10 +306,13 @@ e_xkb_layout_set(const E_Config_XKB_Layout *cl)
         if (e_config_xkb_layout_eq(cl, cl2))
           {
              INF("Setting keyboard layout: %s|%s|%s", cl2->name, cl2->model, cl2->variant);
+             eina_stringshare_replace(&e_config->xkb.cur_layout, cl->name);
+             eina_stringshare_replace(&e_config->xkb.selected_layout, cl->name);
              e_xkb_update(cur_group);
              break;
           }
      }
+   _e_xkb_update_event(e_config->xkb.cur_group);
    e_config_save_queue();
 }
 
@@ -248,6 +335,7 @@ e_xkb_e_icon_flag_setup(Evas_Object *eicon, const char *name)
    char buf[PATH_MAX];
 
    e_xkb_flag_file_get(buf, sizeof(buf), name);
+   e_icon_preload_set(eicon, EINA_FALSE);
    e_icon_file_set(eicon, buf);
    e_icon_size_get(eicon, &w, &h);
    evas_object_size_hint_aspect_set(eicon, EVAS_ASPECT_CONTROL_BOTH, w, h);
