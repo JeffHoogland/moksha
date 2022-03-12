@@ -115,7 +115,7 @@ e_xkb_init(void)
    xkb_new_keyboard_handler = ecore_event_handler_add(ECORE_X_EVENT_XKB_NEWKBD_NOTIFY, _xkb_new_keyboard, NULL);
    xkb_keymap_handler = ecore_event_handler_add(ECORE_X_EVENT_WINDOW_KEYMAP, _xkb_keymap, NULL);
    e_xkb_update(-1);
-   ecore_timer_add(1.5, _e_xkb_init_timer, NULL);
+   ecore_timer_loop_add(1.5, _e_xkb_init_timer, NULL);
    return 1;
 }
 
