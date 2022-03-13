@@ -84,7 +84,7 @@ _xkb_new_keyboard(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA
         return ECORE_CALLBACK_PASS_ON;
      }
 
-   e_xkb_update(-1);
+   e_xkb_update(e_config->xkb.cur_group);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -122,11 +122,11 @@ e_xkb_init(void)
 EAPI int
 e_xkb_shutdown(void)
 {
-    E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
-    E_FREE_FUNC(xkb_state_handler, ecore_event_handler_del);
-    E_FREE_FUNC(xkb_keymap_handler, ecore_event_handler_del);
-    ecore_timer_del(save_group);
-    save_group = NULL;
+   E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
+   E_FREE_FUNC(xkb_state_handler, ecore_event_handler_del);
+   E_FREE_FUNC(xkb_keymap_handler, ecore_event_handler_del);
+   ecore_timer_del(save_group);
+   save_group = NULL;
    return 1;
 }
 
@@ -138,11 +138,16 @@ e_xkb_update(int cur_group)
    Eina_List *l;
    Eina_Strbuf *buf;
 
+   e_config->xkb.cur_group = cur_group;
+   e_config_save_queue();
+
    if ((!e_config->xkb.used_layouts) && (!e_config->xkb.used_options) && (!e_config->xkb.default_model)) return;
-   if (cur_group != -1)
+   if (cur_group != _e_xkb_cur_group)
      {
         _e_xkb_cur_group = cur_group;
+        e_managers_keys_ungrab();
         ecore_x_xkb_select_group(cur_group);
+        e_managers_keys_grab();
         e_deskenv_xmodmap_run();
         _e_xkb_update_event(cur_group);
         return;
@@ -297,8 +302,10 @@ e_xkb_layout_set(const E_Config_XKB_Layout *cl)
 
    EINA_SAFETY_ON_NULL_RETURN(cl);
    if (e_config_xkb_layout_eq(e_config->xkb.current_layout, cl)) return;
+   cl2 = e_config_xkb_layout_dup(e_config->xkb.current_layout);
    e_config_xkb_layout_free(e_config->xkb.current_layout);
-   e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
+   //~ e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
+   e_config->xkb.current_layout = cl2;
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
      {
         cur_group++;
