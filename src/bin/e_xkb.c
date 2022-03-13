@@ -124,7 +124,7 @@ e_xkb_shutdown(void)
 {
     E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
     E_FREE_FUNC(xkb_state_handler, ecore_event_handler_del);
-    E_FREE_FUNC(xkb_new_keyboard_handler, ecore_event_handler_del);
+    E_FREE_FUNC(xkb_keymap_handler, ecore_event_handler_del);
     ecore_timer_del(save_group);
     save_group = NULL;
    return 1;
