@@ -76,8 +76,7 @@ e_modapi_init(E_Module *m)
                                  "preferences-desktop-keyboard",
                                  _xkb_cfg_dialog);
    _xkb.module = m;
-   //~ ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
-   ecore_event_handler_add(E_EVENT_XKB_CHANGED, _xkb_changed_state, NULL);
+   ecore_event_handler_add(ECORE_X_EVENT_XKB_STATE_NOTIFY, _xkb_changed_state, NULL);
    /* Gadcon */
    e_gadcon_provider_register(&_gc_class);
    return m;
@@ -299,11 +298,11 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 static Eina_Bool
 _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   //~ Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
+   Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
 
    //INF("xkb group %d", ev->group);
    //~ e_config->xkb.cur_group = ev->group;
-   _xkb_update_icon(e_config->xkb.cur_group);
+   _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -540,7 +539,6 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
    e_xkb_layout_set(cl);
    e_config_xkb_layout_free(e_config->xkb.sel_layout);
    e_config->xkb.sel_layout = e_config_xkb_layout_dup(cl);
-   (void)cur_group;
-   //~ _xkb_update_icon(cur_group);
+   _xkb_update_icon(cur_group);
 }
 
