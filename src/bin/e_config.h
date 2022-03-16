@@ -58,6 +58,7 @@ struct _E_Config
    int         border_shade_animate; // GUI
    int         border_shade_transition; // GUI
    double      border_shade_speed; // GUI
+   int         border_frame; // GUI
    double      framerate; // GUI
    int         priority; // GUI
    int         image_cache; // GUI

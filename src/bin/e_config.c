@@ -475,6 +475,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, menus_fast_mouse_move_threshhold, DOUBLE); /**/
    E_CONFIG_VAL(D, T, menus_click_drag_timeout, DOUBLE); /**/
    E_CONFIG_VAL(D, T, border_shade_animate, INT); /**/
+   E_CONFIG_VAL(D, T, border_frame, INT); /**/
    E_CONFIG_VAL(D, T, border_shade_transition, INT); /**/
    E_CONFIG_VAL(D, T, border_shade_speed, DOUBLE); /**/
    E_CONFIG_VAL(D, T, framerate, DOUBLE); /**/
@@ -1053,6 +1054,7 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->border_shade_animate, 0, 1);
      E_CONFIG_LIMIT(e_config->border_shade_transition, 0, 8);
      E_CONFIG_LIMIT(e_config->border_shade_speed, 1.0, 20000.0);
+     E_CONFIG_LIMIT(e_config->border_frame, 0, 1);
      E_CONFIG_LIMIT(e_config->framerate, 1.0, 200.0);
      E_CONFIG_LIMIT(e_config->priority, 0, 19);
      E_CONFIG_LIMIT(e_config->image_cache, 0, 256 * 1024);
