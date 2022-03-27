@@ -258,11 +258,12 @@ e_widget_csel_add(Evas *evas, E_Color *color, Eina_Bool alpha_enabled)
         evas_object_show(o);
         wd->sliders = eina_list_append(wd->sliders, o);
         e_widget_on_change_hook_set(o, _e_wid_cb_color_changed, wd);
-        e_widget_size_min_set(o, 32, 16);
+        e_widget_size_min_set(o, 64 * e_scale, 16);
         e_widget_table_object_append(frame, o, 1, i, 6, 1, 1, 1, 1, 0);
 
         o = e_widget_entry_add(evas, &(wd->values[i]), NULL, NULL, NULL);
         e_widget_sub_object_add(obj, o);
+        e_widget_size_min_set(o, 32 * e_scale, 16);
         evas_object_show(o);
         wd->entries = eina_list_append(wd->entries, o);
         e_widget_table_object_append(frame, o, 7, i, 2, 1, 1, 1, 1, 0);
