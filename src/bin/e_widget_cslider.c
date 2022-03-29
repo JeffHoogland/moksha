@@ -34,10 +34,12 @@ static void _e_wid_resize(void *data, Evas *e, Evas_Object *obj, void *event_inf
 static void _e_wid_cb_drag_start(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_cb_drag_stop(void *data, Evas_Object *obj, const char *emission, const char *source);
 static void _e_wid_cb_drag(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_cb_wheel_up(void *data, Evas_Object *obj, const char *emission, const char *source);
+static void _e_wid_cb_wheel_down(void *data, Evas_Object *obj, const char *emission, const char *source);
 
 static void _e_wid_cb_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_cb_move(void *data, Evas *e, Evas_Object *obj, void *event_info);
- static void _e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
+static void _e_wid_cb_up(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
 Evas_Object *
 e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int vertical, int fixed)
@@ -65,7 +67,7 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    o = edje_object_add(evas);
    wd->o_cslider = o;
    e_theme_edje_object_set(o, "base/theme/widgets",
-			   "e/widgets/cslider");
+                              "e/widgets/cslider");
    if (wd->vertical)
      edje_object_signal_emit(o, "e,state,direction,v", "e");
    else
@@ -79,6 +81,8 @@ e_widget_cslider_add(Evas *evas, E_Color_Component mode, E_Color *color, int ver
    edje_object_signal_callback_add(wd->o_cslider, "drag,start", "*", _e_wid_cb_drag_start, obj);
    edje_object_signal_callback_add(wd->o_cslider, "drag", "*", _e_wid_cb_drag, obj);
    edje_object_signal_callback_add(wd->o_cslider, "drag,stop", "*", _e_wid_cb_drag_stop, obj);
+   edje_object_signal_callback_add(wd->o_cslider, "mouse,wheel,0,1", "*", _e_wid_cb_wheel_up, obj);
+   edje_object_signal_callback_add(wd->o_cslider, "mouse,wheel,0,-1", "*", _e_wid_cb_wheel_down, obj);
 
    e_widget_sub_object_add(obj, o);
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
@@ -536,15 +540,15 @@ _e_wid_cb_drag(void *data, Evas_Object *obj __UNUSED__, const char *emission __U
 
    if (wd->dragging == 1)
      {
-	double val, valx, valy;
+        double val, valx, valy;
 
         edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
                                         &valx, &valy);
-	if (wd->vertical) val = valy;
-	else val = valx;
-	if (val > 1) val = 1;
-	if (val < 0) val = 0;
-	_e_wid_value_set(o_wid, val);
+        if (wd->vertical) val = valy;
+        else val = valx;
+        if (val > 1) val = 1;
+        if (val < 0) val = 0;
+        _e_wid_value_set(o_wid, val);
      }
 }
 
@@ -621,4 +625,43 @@ _e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
      {
         _e_wid_mouse_handle(o_wid, ev->cur.canvas.x, ev->cur.canvas.y);
      }
+}
+
+static void
+_e_wid_cb_wheel_up(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Evas_Object *o_wid;
+   E_Widget_Data *wd;
+   double val, valx, valy;
+
+   o_wid = data;
+   wd = e_widget_data_get(o_wid);
+   edje_object_part_drag_step(wd->o_cslider, "e.dragable.cursor", -0.002, -0.002);
+   edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
+                                        &valx, &valy);
+   if (wd->vertical) val = valy;
+   else val = valx;
+   if (val > 1) val = 1;
+   if (val < 0) val = 0;
+   _e_wid_value_set(o_wid, val);
+}
+
+static void
+_e_wid_cb_wheel_down(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
+{
+   Evas_Object *o_wid;
+   E_Widget_Data *wd;
+   double val, valx, valy;
+
+   o_wid = data;
+   wd = e_widget_data_get(o_wid);
+
+   edje_object_part_drag_step(wd->o_cslider, "e.dragable.cursor", 0.002, 0.002);
+   edje_object_part_drag_value_get(wd->o_cslider, "e.dragable.cursor",
+                                        &valx, &valy);
+   if (wd->vertical) val = valy;
+   else val = valx;
+   if (val > 1) val = 1;
+   if (val < 0) val = 0;
+   _e_wid_value_set(o_wid, val);
 }
