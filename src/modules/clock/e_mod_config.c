@@ -50,13 +50,12 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    
    ci = cfd->data;
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   
 
    memcpy(&(cfdata->cfg), ci, sizeof(Config_Item));
-    if (ci->custom_date_const) 
-        cfdata->custom_dat = strdup(ci->custom_date_const); 
-    else
-        cfdata->custom_dat = strdup("");
+   if (ci->custom_date_const)
+     cfdata->custom_dat = strdup(ci->custom_date_const);
+   else
+     cfdata->custom_dat = strdup("");
 
    //sliders obtain the current time
    cfdata->hour_tmp = cfdata->hour = ci->timeset.hour;
@@ -84,17 +83,17 @@ _show_info_del(void *data)
 static void
 show_info_cb() 
 {
-  E_Dialog *dia;
-  E_Manager *man;
-  E_Container *con;
-  char buf[512];
+   E_Dialog *dia;
+   E_Manager *man;
+   E_Container *con;
+   char buf[512];
   
-  if (show_info_dia) return;
-  if (!(man = e_manager_current_get())) return;
-  if (!(con = e_container_current_get(man))) return;
-  if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
+   if (show_info_dia) return;
+   if (!(man = e_manager_current_get())) return;
+   if (!(con = e_container_current_get(man))) return;
+   if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
   
-  snprintf(buf, sizeof(buf), _("Click on a calendar day to change the date. <br>" 
+   snprintf(buf, sizeof(buf), _("Click on a calendar day to change the date. <br>"
                                 "Use the mouse wheel to change the year."));
    e_dialog_title_set(dia, _("Clock module Information"));
    e_dialog_icon_set(dia, "dialog-information", 64);
