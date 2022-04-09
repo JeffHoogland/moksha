@@ -40,7 +40,6 @@ e_int_config_clock_module(E_Container *con, Config_Item *ci)
    cfd = e_config_dialog_new(con, _("Clock Settings"),
                              "E", "utils/clock", buf, 0, v, ci);
    clock_config->config_dialog = cfd;
-   clock_config->settings_opened = EINA_TRUE;
 }
 
 static void *
@@ -73,7 +72,6 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
    free(cfdata->custom_dat);
    clock_config->config_dialog = NULL;
    E_FREE(cfdata);
-   clock_config->settings_opened = EINA_FALSE;
 }
 
 static void

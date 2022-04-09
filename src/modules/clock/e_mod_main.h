@@ -16,7 +16,6 @@ struct _Config
 
   E_Module *module;
   E_Config_Dialog *config_dialog;
-  Eina_Bool settings_opened;
 };
 
 struct _Config_Item
