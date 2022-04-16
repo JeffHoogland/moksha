@@ -39,7 +39,6 @@ struct _Instance
    E_Gadcon_Client *gcc;
    Evas_Object     *o_battery;
    Evas_Object     *popup_battery;
-   Evas_Object     *popup_bg;
    E_Gadcon_Popup  *warning;
 };
 
@@ -447,7 +446,7 @@ static void
 _battery_warning_popup(Instance *inst, int t, double percent, int warn)
 {
    Evas *e = NULL;
-   Evas_Object *rect = NULL;
+   Evas_Object *rect = NULL, *popup_bg = NULL;;
    int x, y, w, h;
 
    if (warn)       //warn 1 = warning, warn 0 = actual state
@@ -490,36 +489,36 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
 
    e = inst->warning->win->evas;
 
-   inst->popup_bg = edje_object_add(e);
+   popup_bg = edje_object_add(e);
    inst->popup_battery = edje_object_add(e);
 
-   if ((!inst->popup_bg) || (!inst->popup_battery))
+   if ((!popup_bg) || (!inst->popup_battery))
      {
         e_object_free(E_OBJECT(inst->warning));
         inst->warning = NULL;
         return;
      }
 
-   e_theme_edje_object_set(inst->popup_bg, "base/theme/modules/battery/popup",
+   e_theme_edje_object_set(popup_bg, "base/theme/modules/battery/popup",
                            "e/modules/battery/popup");
    e_theme_edje_object_set(inst->popup_battery, "base/theme/modules/battery",
                            "e/modules/battery/main");
-   if (edje_object_part_exists(inst->popup_bg, "e.swallow.battery"))
+   if (edje_object_part_exists(popup_bg, "e.swallow.battery"))
     {
-       edje_object_part_swallow(inst->popup_bg, "e.swallow.battery", inst->popup_battery);
+       edje_object_part_swallow(popup_bg, "e.swallow.battery", inst->popup_battery);
        if (bat_charging)
-         edje_object_signal_emit(inst->popup_bg, "e,state,charging", "e");
+         edje_object_signal_emit(popup_bg, "e,state,charging", "e");
        else
-         edje_object_signal_emit(inst->popup_bg, "e,state,discharging", "e");
+         edje_object_signal_emit(popup_bg, "e,state,discharging", "e");
      }
    else
-     edje_object_part_swallow(inst->popup_bg, "battery", inst->popup_battery);
+     edje_object_part_swallow(popup_bg, "battery", inst->popup_battery);
 
    if (warn)
      {
-       edje_object_part_text_set(inst->popup_bg, "e.text.title",
+       edje_object_part_text_set(popup_bg, "e.text.title",
                                  _("Your battery is low!"));
-       edje_object_part_text_set(inst->popup_bg, "e.text.label",
+       edje_object_part_text_set(popup_bg, "e.text.label",
                              _("AC power is recommended."));
      }
    else
@@ -527,19 +526,19 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
        char buf[64] = "";
        snprintf(buf, sizeof(buf), "%s%s", _("Power now: "),
             edje_object_part_text_get(inst->o_battery, "e.text.reading"));
-       edje_object_part_text_set(inst->popup_bg, "e.text.title", buf);
+       edje_object_part_text_set(popup_bg, "e.text.title", buf);
       
        if (edje_object_part_text_get(inst->o_battery, "e.text.time"))
          {
            snprintf(buf, sizeof(buf), "%s%s %s", _("Remaining time: "),
               edje_object_part_text_get(inst->o_battery, "e.text.time"), _("hr"));
-           edje_object_part_text_set(inst->popup_bg, "e.text.label", buf);
+           edje_object_part_text_set(popup_bg, "e.text.label", buf);
          }
        else
-         edje_object_part_text_set(inst->popup_bg, "e.text.label", "");
+         edje_object_part_text_set(popup_bg, "e.text.label", "");
      }
 
-   e_gadcon_popup_content_set(inst->warning, inst->popup_bg);
+   e_gadcon_popup_content_set(inst->warning, popup_bg);
    e_gadcon_popup_show(inst->warning);
 
    evas_object_geometry_get(inst->warning->o_bg, &x, &y, &w, &h);
