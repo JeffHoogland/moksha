@@ -450,14 +450,12 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
 
    if (warn)       //warn 1 = warning, warn 0 = actual state
      {
-       if ((!inst) || (inst->warning))
-         return;
+       if ((!inst) || (inst->warning)) return;
      }
    else
      {
-       if ((!inst))
-         return;
-    }
+       if ((!inst)) return;
+     }
 
    mouse_down = EINA_TRUE;
    if (warn)
@@ -566,7 +564,7 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
          }
      }
    else
-     ecore_timer_add(5,_battery_cb_warning_popup_timeout, inst);
+     ecore_timer_add(5.0 ,_battery_cb_warning_popup_timeout, inst);
 }
 
 static Eina_Bool
