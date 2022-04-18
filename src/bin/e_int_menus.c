@@ -875,7 +875,7 @@ _e_int_menus_apps_free_hook2(void *obj)
    m = obj;
    // XXX TODO: this should be automatic in e_menu, just get references right!
    // XXX TODO: fix references and remove me!!!
-   EINA_LIST_FOREACH_SAFE (m->items, l, l_next, mi)
+   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));
@@ -984,7 +984,7 @@ _e_int_menus_desktops_free_hook(void *obj)
    m = obj;
    // XXX TODO: this should be automatic in e_menu, just get references right!
    // XXX TODO: fix references and remove me!!!
-   EINA_LIST_FOREACH_SAFE (m->items, l, l_next, mi)
+   EINA_LIST_FOREACH_SAFE(m->items, l, l_next, mi)
      {
         if (mi->submenu)
           e_object_del(E_OBJECT(mi->submenu));
