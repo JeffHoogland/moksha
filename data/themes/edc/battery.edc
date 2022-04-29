@@ -307,16 +307,66 @@ group { name: "e/modules/battery/popup";
             align: 0.0 0.5;
          }
       }
-      part { name: "charge";
+      part { name: "fade_clip"; type: RECT;
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            color: 128 128 128 255;
+         }
+      }
+      part { name: "pulse_clip"; type: RECT;
+         clip_to: "fade_clip";
+         description { state: "default" 0.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 1.0;
+            color: 255 255 255 255;
+         }
+         description { state: "faded" 0.0;
+            color: 255 255 255 64;
+         }
+      }
+      part { name: "pwr"; type: SPACER;
          description { state: "default" 0.0;
             rel1.to: "e.swallow.battery";
-            rel1.relative: (2/5) (2/5);
-            rel1.offset: -1 2;
+            rel1.relative: 0.40 0.44;
             rel2.to: "e.swallow.battery";
-            rel2.relative: (3/5) (3/5);
-            rel2.offset: 1 4;
+            rel2.relative: 0.60 0.64;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            min: 5 5;
+            step: 5 5;
+         }
+      }
+       part { name: "pwr1";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "pwr";
+            rel1.relative: (2/5) 0.0;
+            rel1.offset: -5 -5;
+            rel2.to: "pwr";
+            rel2.relative: (3/5) 1.0;
+            rel2.offset: 4 4;
             image.normal: "glow_med_white.png";
-            //~ image.border: 10 10 1O 10;
+            image.border: 5 5 5 5;
+            fill.smooth: 0;
+            visible: 0;
+         }
+         description { state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+         }
+      }
+      part { name: "pwr2";
+         clip_to: "pulse_clip";
+         description { state: "default" 0.0;
+            rel1.to: "pwr";
+            rel1.relative: 0.0 (2/5);
+            rel1.offset: -5 -5;
+            rel2.to: "pwr";
+            rel2.relative: 1.0 (3/5);
+            rel2.offset: 4 4;
+            image.normal: "glow_med_white.png";
             image.border: 5 5 5 5;
             fill.smooth: 0;
             visible: 0;
@@ -364,12 +414,14 @@ group { name: "e/modules/battery/popup";
       program {
          signal: "e,state,charging"; source: "e";
          action: STATE_SET "visible" 0.0;
-         target: "charge";
+         target: "pwr1";
+         target: "pwr2";
       }
       program {
          signal: "e,state,discharging"; source: "e";
          action: STATE_SET "default" 0.0;
-         target: "charge";
+         target: "pwr1";
+         target: "pwr2";
       }
    }
 }
