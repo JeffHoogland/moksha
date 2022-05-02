@@ -617,7 +617,6 @@ _tasks_item_remove(Tasks_Item *item)
 {
    item->tasks->items = eina_list_remove(item->tasks->items, item);
    e_box_unpack(item->o_item);
-   _tasks_adjacent_popup_destroy(item);
    _tasks_item_free(item);
 }
 
@@ -625,6 +624,7 @@ static void
 _tasks_item_free(Tasks_Item *item)
 {
    if (item->o_icon) evas_object_del(item->o_icon);
+   _tasks_adjacent_popup_destroy(item);
    e_object_unref(E_OBJECT(item->border));
    evas_object_del(item->o_item);
    free(item);
