@@ -104,7 +104,7 @@ e_int_config_edgebindings(E_Container *con, const char *params)
 
    cfd = e_config_dialog_new(con, _("Edge Bindings Settings"), "E",
                              "keyboard_and_mouse/edge_bindings",
-                             "enlightenment/edges", 0, v, NULL);
+                             "preferences-desktop-edge-bindings", 0, v, NULL);
    if ((params) && (params[0]))
      {
         cfd->cfdata->params = eina_stringshare_add(params);

@@ -864,7 +864,7 @@ e_int_config_signalbindings(E_Container *con, const char *params)
 
    cfd = e_config_dialog_new(con, _("Signal Bindings Settings"), "E",
                              "keyboard_and_mouse/signal_bindings",
-                             "enlightenment/signals", 0, v, NULL);
+                             "preferences-desktop-signal-bindings", 0, v, NULL);
    if ((params) && (params[0]))
      {
         cfd->cfdata->params = eina_stringshare_add(params);
