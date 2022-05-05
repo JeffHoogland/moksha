@@ -74,7 +74,7 @@ _config_pager_module(Config_Item *ci)
             pager_config->module->dir);
    con = e_container_current_get(e_manager_current_get());
    cfd = e_config_dialog_new(con, _("Pager Settings"), "E",
-                             "_e_mod_pager_config_dialog", buff, 0, v, ci);
+                             "_e_mod_pager_config_dialog", "preferences-pager", 0, v, ci);
    pager_config->config_dialog = cfd;
 }
 
