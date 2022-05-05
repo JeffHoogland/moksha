@@ -628,7 +628,7 @@ e_int_config_desklock_intl(E_Container *con, const char *params __UNUSED__)
    cfd = e_config_dialog_new(con,
                              _("Desklock Language Settings"),
                              "E", "language/desklock_language_settings",
-                             "preferences-desktop-locale", 0, v, NULL);
+                             "preferences-desklock-locale", 0, v, NULL);
    return cfd;
 }
 
