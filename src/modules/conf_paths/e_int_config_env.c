@@ -35,7 +35,7 @@ e_int_config_env(E_Container *con, const char *params __UNUSED__)
 
    cfd = e_config_dialog_new(con, _("Environment Variables"),
                  "E", "advanced/environment_variables",
-                 "preferences-system", 0, v, NULL);
+                 "preferences-variables", 0, v, NULL);
    return cfd;
 }
 
