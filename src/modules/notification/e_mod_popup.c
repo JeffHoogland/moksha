@@ -271,6 +271,7 @@ write_history(Eina_List *popup_items)
 {
    Eina_List *l = NULL;
    char str[10] = "";
+   char id[10] = "";
    char dir[PATH_MAX];
    char file_path[PATH_MAX + 12];
    unsigned int i = 1;
@@ -283,32 +284,48 @@ write_history(Eina_List *popup_items)
    snprintf(file_path, sizeof(file_path), "%s/notif_list", dir); 
    
    history_file = eet_open(file_path, EET_FILE_MODE_WRITE);
+
    if (history_file){
      if(!notification_cfg->popup_items) 
      {
         snprintf(str, sizeof(str), "%d", 0);
-        eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+        eet_write(history_file, "ITEMS_NUM",  str, strlen(str) + 1, 0);
         ret = eet_close(history_file); 
         return ret;
       }
    EINA_LIST_FOREACH(popup_items, l, items) {
         snprintf(str, sizeof(str), "dtime%d", i);
-        eet_write(history_file, str,  items->item_date_time, strlen(items->item_date_time) + 1, 0);
+        eet_write(history_file, str, items->item_date_time, strlen(items->item_date_time) + 1, 0);
         snprintf(str, sizeof(str), "app%d", i);
-        eet_write(history_file, str,  items->item_app, strlen(items->item_app) + 1, 0);
+        eet_write(history_file, str, items->item_app, strlen(items->item_app) + 1, 0);
         snprintf(str, sizeof(str), "icon%d", i);
-        eet_write(history_file, str,  items->item_icon, strlen(items->item_icon) + 1, 0);
+        eet_write(history_file, str, items->item_icon, strlen(items->item_icon) + 1, 0);
         snprintf(str, sizeof(str), "img%d", i);
-        eet_write(history_file, str,  items->item_icon_img, strlen(items->item_icon_img) + 1, 0);
+        eet_write(history_file, str, items->item_icon_img, strlen(items->item_icon_img) + 1, 0);
         snprintf(str, sizeof(str), "title%d", i);
-        eet_write(history_file, str,  items->item_title, strlen(items->item_title) + 1, 0);
+        eet_write(history_file, str, items->item_title, strlen(items->item_title) + 1, 0);
         snprintf(str, sizeof(str), "body%d", i);
-        eet_write(history_file, str,  items->item_body, strlen(items->item_body) + 1, 0);
+        eet_write(history_file, str, items->item_body, strlen(items->item_body) + 1, 0);
+        snprintf(str, sizeof(str), "key1%d", i);
+        eet_write(history_file, str, items->item_key_1, strlen(items->item_key_1) + 1, 0);
+        snprintf(str, sizeof(str), "key2%d", i);
+        eet_write(history_file, str, items->item_key_2, strlen(items->item_key_2) + 1, 0);
+        snprintf(str, sizeof(str), "key3%d", i);
+        eet_write(history_file, str, items->item_key_3, strlen(items->item_key_3) + 1, 0);
+        snprintf(str, sizeof(str), "butt1%d", i);
+        eet_write(history_file, str, items->item_but_1, strlen(items->item_but_1) + 1, 0);
+        snprintf(str, sizeof(str), "butt2%d", i);
+        eet_write(history_file, str, items->item_but_2, strlen(items->item_but_2) + 1, 0);
+        snprintf(str, sizeof(str), "butt3%d", i);
+        eet_write(history_file, str, items->item_but_3, strlen(items->item_but_3) + 1, 0);
+        snprintf(str, sizeof(str), "id%d", i);
+        eina_convert_itoa(items->notif_id, id);
+        eet_write(history_file, str, id, strlen(id) + 1, 0);
         i++;
       }
    int count = eina_list_count(notification_cfg->popup_items);
    snprintf(str, sizeof(str), "%d", count);
-   eet_write(history_file, "ITEMS",  str, strlen(str) + 1, 0);
+   eet_write(history_file, "ITEMS_NUM",  str, strlen(str) + 1, 0);
    ret = eet_close(history_file); 
    }
    else {
@@ -472,7 +489,8 @@ _notification_button_1(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_1 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
-    edje_object_part_text_set(popup->theme, "e.text.action_1", e_notification_action_name_get(a));
+    popup->but_name_1 = strdup(e_notification_action_name_get(a));
+    edje_object_part_text_set(popup->theme, "e.text.action_1", popup->but_name_1);
     if (popup->reg1 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
                               (Edje_Signal_Cb)_notification_button_1_cb, popup);
@@ -483,7 +501,8 @@ _notification_button_2(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_2 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button2,show", "theme");
-    edje_object_part_text_set(popup->theme, "e.text.action_2", e_notification_action_name_get(a));
+    popup->but_name_2 = strdup(e_notification_action_name_get(a));
+    edje_object_part_text_set(popup->theme, "e.text.action_2", popup->but_name_2);
     if (popup->reg2 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
                               (Edje_Signal_Cb)_notification_button_2_cb, popup);
@@ -494,7 +513,8 @@ _notification_button_3(Popup_Data *popup, E_Notification_Action *a)
  {
     popup->act_name_3 = strdup(e_notification_action_id_get(a));
     edje_object_signal_emit(popup->theme, "e,button3,show", "theme");
-    edje_object_part_text_set(popup->theme, "e.text.action_3", e_notification_action_name_get(a));
+    popup->but_name_3 = strdup(e_notification_action_name_get(a));
+    edje_object_part_text_set(popup->theme, "e.text.action_3", popup->but_name_3);
     if (popup->reg3 == EINA_FALSE)
       edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
                               (Edje_Signal_Cb)_notification_button_3_cb, popup);
@@ -539,13 +559,13 @@ _notification_actions(Popup_Data *popup)
           {
             switch (act)
               {
-               case 1:
+                case 1:
                   _notification_button_1(popup, a);
                  break;
-               case 2:
+                case 2:
                   _notification_button_2(popup, a);
                  break;
-               case 3:
+                case 3:
                   _notification_button_3(popup, a);
                  break;
               }
@@ -905,11 +925,11 @@ _notification_popup_refresh(Popup_Data *popup)
                             popup->app_icon);
    edje_object_signal_emit(popup->theme, "notification,icon", "notification");
 
+    /* Read notification actions */
+   _notification_actions(popup);
+
    /* Fill up the event message */
    _notification_format_message(popup);
-   
-   /* Read notification actions */
-   _notification_actions(popup);
 
    /* Compute the new size of the popup */
    edje_object_calc_force(popup->theme);
@@ -975,6 +995,13 @@ _notification_popdown(Popup_Data                  *popup,
      (notification_cfg->daemon, 0, reason);
      //~ (notification_cfg->daemon, e_notification_id_get(popup->notif), reason);
    e_notification_unref(popup->notif);
+   
+   free(popup->act_name_1);
+   free(popup->act_name_2);
+   free(popup->act_name_3);
+   free(popup->but_name_1);
+   free(popup->but_name_2);
+   free(popup->but_name_3);
    free(popup);
 }
 
@@ -998,61 +1025,83 @@ _notification_format_message(Popup_Data *popup)
         eina_strbuf_free(buf);
      }
 
-     list_add_item (popup); 
+   list_add_item (popup); 
 }
 
 static void
 list_add_item(Popup_Data *popup)
 {
-  Popup_Items *items; 
-  char *file;
-  Eina_Bool ret;
+   Popup_Items *items; 
+   char *file;
+   Eina_Bool ret;
+
+   if (!notification_cfg->instances) return;
+
+   items = E_NEW(Popup_Items, 1); 
+   if (!items) return;
+
+   const char *icon_path = e_notification_app_icon_get(popup->notif);
+   const char *title = e_notification_summary_get(popup->notif);
+   const char *b = e_notification_body_get(popup->notif);
+
+   items->item_date_time = get_time();         // add date and time
+   items->item_app = strdup(popup->app_name);  // add app name
+   items->item_title = strdup(title);          // add title
+   items->item_body = strdup(b);               // add text body
+
+   if (strstr(icon_path, "tmp"))               // add icon path
+     items->item_icon = strdup(""); 
+   else
+     items->item_icon = strdup(icon_path); 
   
-  if (!notification_cfg->instances) return;
+   if (strlen(popup->app_icon_image) > 0)      // do we have an icon image?
+     items->item_icon_img = strdup(popup->app_icon_image); 
+   else
+     items->item_icon_img = strdup("noimage");
   
-  items = E_NEW(Popup_Items, 1); 
-  if (!items) return;
-  
-  const char *icon_path = e_notification_app_icon_get(popup->notif);
-  const char *title = e_notification_summary_get(popup->notif);
-  const char *b = e_notification_body_get(popup->notif);
-  
-  items->item_date_time = get_time();         // add date and time
-  items->item_app = strdup(popup->app_name);  // add app name
-  items->item_title = strdup(title);          // add title
-  items->item_body = strdup(b);               // add text body
-  if (strstr(icon_path, "tmp"))               // add icon path
-    items->item_icon = strdup(""); 
-  else
-    items->item_icon = strdup(icon_path); 
-  
-  if (strlen(popup->app_icon_image) > 0)      // do we have an icon image?
-    items->item_icon_img = strdup(popup->app_icon_image); 
-  else
-    items->item_icon_img = strdup("noimage");
-  
+   if (popup->act_name_1) items->item_key_1 = strdup(popup->act_name_1);
+   else items->item_key_1 = strdup("");
+
+   if (popup->act_name_2) items->item_key_2 = strdup(popup->act_name_2);
+   else items->item_key_2 = strdup("");
+
+   if (popup->act_name_3) items->item_key_3 = strdup(popup->act_name_3);
+   else items->item_key_3 = strdup("");
+
+   if (popup->but_name_1) items->item_but_1 = strdup(popup->but_name_1);
+   else items->item_but_1 = strdup("");
+
+   if (popup->but_name_2) items->item_but_2 = strdup(popup->but_name_2);
+   else items->item_but_2 = strdup("");
+
+   if (popup->but_name_3) items->item_but_3 = strdup(popup->but_name_3);
+   else items->item_but_3 = strdup("");
+
+   items->notif_id = e_notification_id_get(popup->notif);
+
   /* Apps blacklist check */  
-  if (strstr(notification_cfg->blacklist, items->item_app))
-     return;
+   if (strstr(notification_cfg->blacklist, items->item_app)) return;
 
   /* Add item to the menu if less then menu items limit */  
-  if (notification_cfg->clicked_item == EINA_FALSE){
-      if (notification_cfg->new_item < notification_cfg->menu_items) notification_cfg->new_item++;
-      if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
+   if (notification_cfg->clicked_item == EINA_FALSE)
+     {
+       if (notification_cfg->new_item < notification_cfg->menu_items) 
+         notification_cfg->new_item++;
+       if (eina_list_count(notification_cfg->popup_items) < notification_cfg->menu_items)
          notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
-      else 
-      {
-        file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
-        ret = ecore_file_remove(file);   
-        if (!ret) 
-          printf("Notification: Error during hint file removing!\n");
-        notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
-                                        eina_list_last(notification_cfg->popup_items));
-        notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
-      }
-  }
+       else 
+         {
+           file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
+           ret = ecore_file_remove(file);   
+           if (!ret) 
+             printf("Notification: Error during hint file removing!\n");
+           notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
+                                           eina_list_last(notification_cfg->popup_items));
+           notification_cfg->popup_items = eina_list_prepend(notification_cfg->popup_items, items);
+         }
+     }
  
- notification_cfg->clicked_item = EINA_FALSE;
- gadget_text(notification_cfg->new_item);
- write_history(notification_cfg->popup_items);
+   notification_cfg->clicked_item = EINA_FALSE;
+   gadget_text(notification_cfg->new_item);
+   write_history(notification_cfg->popup_items);
 }

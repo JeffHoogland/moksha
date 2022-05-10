@@ -220,7 +220,7 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    e_widget_list_object_append(o, of, 1, 1, 0.5);
    
    of = e_widget_framelist_add(evas, _("Applications"), 0);
-   ow = e_widget_label_add(evas, _("App blacklist (use a delimiter)"));
+   ow = e_widget_label_add(evas, _("Apps blacklist (app1,app2,app3...)"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->blacklist, NULL, NULL, NULL);
    e_widget_framelist_object_append(of, ow);

@@ -90,9 +90,8 @@ struct _Popup_Data
   Evas_Object *app_icon;
   Ecore_Timer *timer;
   E_Zone *zone;
-  char *act_name_1;
-  char *act_name_2;
-  char *act_name_3;
+  char *act_name_1, *act_name_2, *act_name_3;
+  char *but_name_1, *but_name_2, *but_name_3;
   int   act_numbers;
   Eina_Bool reg1, reg2, reg3;
 };
@@ -105,6 +104,9 @@ struct _Popup_Items
   char *item_icon_img;
   char *item_title;
   char *item_body;
+  char *item_key_1, *item_key_2, *item_key_3;
+  char *item_but_1, *item_but_2, *item_but_3;
+  unsigned int notif_id;
 };
 
 
