@@ -336,6 +336,11 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_util_menu_item_theme_icon_set(mi, "edit-clear");
         e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->popup_items);
         
+        if (notification_cfg->popup_items)
+          e_menu_item_disabled_set(mi, EINA_FALSE);
+        else
+          e_menu_item_disabled_set(mi, EINA_TRUE);
+
         mi = e_menu_item_new(inst->menu);
         e_menu_item_label_set(mi, _("Mute"));
         e_menu_item_check_set(mi, 1);
@@ -346,11 +351,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           e_menu_item_toggle_set(mi, 0);
         e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->popup_items);
 
-        if (notification_cfg->popup_items)
-           e_menu_item_disabled_set(mi, EINA_FALSE);
-        else
-           e_menu_item_disabled_set(mi, EINA_TRUE);
-        
         mi = e_menu_item_new(inst->menu);
         e_menu_item_separator_set(mi, EINA_TRUE);
 
