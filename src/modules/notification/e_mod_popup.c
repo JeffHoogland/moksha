@@ -440,9 +440,9 @@ _notification_theme_cb_find(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-  e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
+   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), "default");
-  notification_popup_close(e_notification_id_get(popup->notif));
+   notification_popup_close(e_notification_id_get(popup->notif));
 }
 
 static void
@@ -451,11 +451,11 @@ _notification_button_1_cb(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-  e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
+   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_1);
-  notification_popup_close(e_notification_id_get(popup->notif));
-  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
+   notification_popup_close(e_notification_id_get(popup->notif));
+   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
@@ -464,11 +464,11 @@ _notification_button_2_cb(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-  e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
+   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_2);
-  notification_popup_close(e_notification_id_get(popup->notif));
-  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
+   notification_popup_close(e_notification_id_get(popup->notif));
+   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
@@ -477,46 +477,46 @@ _notification_button_3_cb(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-  e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
+   e_notification_daemon_signal_action_invoked(notification_cfg->daemon,
                      e_notification_id_get(popup->notif), 
                      popup->act_name_3);
-  notification_popup_close(e_notification_id_get(popup->notif));
-  popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
+   notification_popup_close(e_notification_id_get(popup->notif));
+   popup->reg1 = popup->reg2 = popup->reg3 = EINA_TRUE;
 }
 
 static void
 _notification_button_1(Popup_Data *popup, E_Notification_Action *a)
  {
-    popup->act_name_1 = strdup(e_notification_action_id_get(a));
-    edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
-    popup->but_name_1 = strdup(e_notification_action_name_get(a));
-    edje_object_part_text_set(popup->theme, "e.text.action_1", popup->but_name_1);
-    if (popup->reg1 == EINA_FALSE)
-      edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
+   popup->act_name_1 = strdup(e_notification_action_id_get(a));
+   edje_object_signal_emit(popup->theme, "e,button1,show", "theme");
+   popup->but_name_1 = strdup(e_notification_action_name_get(a));
+   edje_object_part_text_set(popup->theme, "e.text.action_1", popup->but_name_1);
+   if (popup->reg1 == EINA_FALSE)
+     edje_object_signal_callback_add(popup->theme, "notification,action_1", "",
                               (Edje_Signal_Cb)_notification_button_1_cb, popup);
 }
 
 static void
 _notification_button_2(Popup_Data *popup, E_Notification_Action *a)
  {
-    popup->act_name_2 = strdup(e_notification_action_id_get(a));
-    edje_object_signal_emit(popup->theme, "e,button2,show", "theme");
-    popup->but_name_2 = strdup(e_notification_action_name_get(a));
-    edje_object_part_text_set(popup->theme, "e.text.action_2", popup->but_name_2);
-    if (popup->reg2 == EINA_FALSE)
-      edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
+   popup->act_name_2 = strdup(e_notification_action_id_get(a));
+   edje_object_signal_emit(popup->theme, "e,button2,show", "theme");
+   popup->but_name_2 = strdup(e_notification_action_name_get(a));
+   edje_object_part_text_set(popup->theme, "e.text.action_2", popup->but_name_2);
+   if (popup->reg2 == EINA_FALSE)
+     edje_object_signal_callback_add(popup->theme, "notification,action_2", "",
                               (Edje_Signal_Cb)_notification_button_2_cb, popup);
 }
 
 static void
 _notification_button_3(Popup_Data *popup, E_Notification_Action *a)
  {
-    popup->act_name_3 = strdup(e_notification_action_id_get(a));
-    edje_object_signal_emit(popup->theme, "e,button3,show", "theme");
-    popup->but_name_3 = strdup(e_notification_action_name_get(a));
-    edje_object_part_text_set(popup->theme, "e.text.action_3", popup->but_name_3);
-    if (popup->reg3 == EINA_FALSE)
-      edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
+   popup->act_name_3 = strdup(e_notification_action_id_get(a));
+   edje_object_signal_emit(popup->theme, "e,button3,show", "theme");
+   popup->but_name_3 = strdup(e_notification_action_name_get(a));
+   edje_object_part_text_set(popup->theme, "e.text.action_3", popup->but_name_3);
+   if (popup->reg3 == EINA_FALSE)
+     edje_object_signal_callback_add(popup->theme, "notification,action_3", "",
                               (Edje_Signal_Cb)_notification_button_3_cb, popup);
 }
 
@@ -1079,10 +1079,10 @@ list_add_item(Popup_Data *popup)
 
    items->notif_id = e_notification_id_get(popup->notif);
 
-  /* Apps blacklist check */  
+   /* Apps blacklist check */
    if (strstr(notification_cfg->blacklist, items->item_app)) return;
 
-  /* Add item to the menu if less then menu items limit */  
+   /* Add item to the menu if less then menu items limit */
    if (notification_cfg->clicked_item == EINA_FALSE)
      {
        if (notification_cfg->new_item < notification_cfg->menu_items) 
