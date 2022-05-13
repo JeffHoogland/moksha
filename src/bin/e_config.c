@@ -651,6 +651,17 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, mouse_accel_denominator, INT);
    E_CONFIG_VAL(D, T, mouse_accel_threshold, INT);
 
+   E_CONFIG_VAL(D, T, touch_accel, DOUBLE);
+   E_CONFIG_VAL(D, T, touch_natural_scroll, UCHAR);
+   E_CONFIG_VAL(D, T, touch_emulate_middle_button, UCHAR);
+   E_CONFIG_VAL(D, T, touch_tap_to_click, UCHAR);
+   E_CONFIG_VAL(D, T, touch_clickpad, UCHAR);
+   E_CONFIG_VAL(D, T, touch_scrolling_2finger, UCHAR);
+   E_CONFIG_VAL(D, T, touch_scrolling_edge, UCHAR);
+   E_CONFIG_VAL(D, T, touch_scrolling_circular, UCHAR);
+   E_CONFIG_VAL(D, T, touch_scrolling_horiz, UCHAR);
+   E_CONFIG_VAL(D, T, touch_palm_detect, UCHAR);
+
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
    E_CONFIG_VAL(D, T, desk_flip_wrap, INT);
@@ -1182,6 +1193,14 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->mouse_accel_numerator, 1, 10);
      E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);
      E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
+
+     E_CONFIG_LIMIT(e_config->touch_tap_to_click, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_clickpad, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_scrolling_2finger, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_scrolling_edge, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_scrolling_circular, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_scrolling_horiz, 0, 1);
+     E_CONFIG_LIMIT(e_config->touch_palm_detect, 0, 1);
 
      E_CONFIG_LIMIT(e_config->menu_favorites_show, 0, 1);
      E_CONFIG_LIMIT(e_config->menu_scroll_toggle, 0, 1);
