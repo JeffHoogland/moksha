@@ -55,8 +55,8 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    v->basic.check_changed = _basic_check_changed;
 
    cfd = e_config_dialog_new(con, _("Mouse Settings"), "E",
-			     "keyboard_and_mouse/mouse_settings",
-			     "preferences-desktop-mouse", 0, v, NULL);
+                             "keyboard_and_mouse/mouse_settings",
+                             "preferences-desktop-mouse", 0, v, NULL);
    return cfd;
 }
 
@@ -248,13 +248,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_label_add(evas, _("Acceleration"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 30.0, 1.0, 0,
-			    &(cfdata->numerator), NULL, 100);
+                            &(cfdata->numerator), NULL, 100);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Threshold"));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0,
-			    &(cfdata->threshold), NULL, 100);
+                            &(cfdata->threshold), NULL, 100);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
