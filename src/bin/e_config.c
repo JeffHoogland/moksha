@@ -1029,6 +1029,13 @@ while (!e_config)
         //e_sys_action_do(E_SYS_RESTART, NULL);
         return;
      }
+
+#define CONFIG_VERSION_CHECK(VERSION) \
+  if ((e_config->config_version - (E_CONFIG_FILE_EPOCH * 1000000)) < (VERSION))
+
+#define CONFIG_VERSION_UPDATE_INFO(VERSION) \
+  INF("Performing config upgrade for %d.%d", E_CONFIG_FILE_EPOCH, VERSION);
+
    if (e_config->config_version < E_CONFIG_FILE_VERSION)
      {
         if (e_config->config_version - (E_CONFIG_FILE_EPOCH * 1000000) < 5)
@@ -1053,6 +1060,18 @@ while (!e_config)
                    }
               }
           }
+          CONFIG_VERSION_CHECK(15)
+            {
+               CONFIG_VERSION_UPDATE_INFO(15);
+               e_config->touch_tap_to_click = 1;
+               e_config->touch_emulate_middle_button = 1;
+               e_config->touch_clickpad = 0;
+               e_config->touch_scrolling_2finger = 1;
+               e_config->touch_scrolling_edge = 1;
+               e_config->touch_scrolling_horiz = 0;
+               e_config->touch_palm_detect = 1;
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;

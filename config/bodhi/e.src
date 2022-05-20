@@ -2079,9 +2079,9 @@ group "E_Config" struct {
     value "touch_natural_scroll" uchar: 0;
     value "touch_emulate_middle_button" uchar: 1;
     value "touch_tap_to_click" uchar: 1;
-    value "touch_clickpad" uchar: 1;
+    value "touch_clickpad" uchar: 0;
     value "touch_scrolling_2finger" uchar: 1;
-    value "touch_scrolling_edge" uchar: 0;
+    value "touch_scrolling_edge" uchar: 1;
     value "touch_scrolling_circular" uchar: 0;
     value "touch_scrolling_horiz" uchar: 0;
     value "touch_palm_detect" uchar: 1;
