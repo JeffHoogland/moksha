@@ -153,9 +153,15 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
   Instance *inst = NULL;
   inst = E_NEW(Instance, 1);
 
-  o = e_icon_add(gc->evas);
-  if (!e_icon_fdo_icon_set(o, "clipboard"))
-    e_icon_fdo_icon_set(o, "edit-paste");
+  o = edje_object_add(gc->evas);
+
+  if (!e_theme_edje_object_set(o, "base/theme/modules/clipboard",
+                           "e/modules/clipboard/main"))
+    {
+       o = e_icon_add(gc->evas);
+       if (!e_icon_fdo_icon_set(o, "clipboard"))
+          e_icon_fdo_icon_set(o, "edit-paste");
+    }
 
   evas_object_show(o);
 
