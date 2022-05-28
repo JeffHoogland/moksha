@@ -647,9 +647,11 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, clientlist_max_caption_len, INT);
 
    E_CONFIG_VAL(D, T, mouse_hand, INT);
-   E_CONFIG_VAL(D, T, mouse_accel_numerator, INT);
-   E_CONFIG_VAL(D, T, mouse_accel_denominator, INT);
+
+   E_CONFIG_VAL(D, T, mouse_accel, DOUBLE);
    E_CONFIG_VAL(D, T, mouse_accel_threshold, INT);
+   E_CONFIG_VAL(D, T, mouse_natural_scroll, UCHAR);
+   E_CONFIG_VAL(D, T, mouse_emulate_middle_button, UCHAR);
 
    E_CONFIG_VAL(D, T, touch_accel, DOUBLE);
    E_CONFIG_VAL(D, T, touch_natural_scroll, UCHAR);
@@ -1072,6 +1074,12 @@ while (!e_config)
                e_config->touch_palm_detect = 1;
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(16)
+            {
+               CONFIG_VERSION_UPDATE_INFO(16);
+               e_config->mouse_emulate_middle_button = 1;
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -1209,9 +1217,9 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->clientlist_limit_caption_len, 0, 1);
      E_CONFIG_LIMIT(e_config->clientlist_max_caption_len, 2, E_CLIENTLIST_MAX_CAPTION_LEN);
 
-     E_CONFIG_LIMIT(e_config->mouse_accel_numerator, 1, 10);
-     E_CONFIG_LIMIT(e_config->mouse_accel_denominator, 1, 10);
-     E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 1, 10);
+     E_CONFIG_LIMIT(e_config->mouse_accel, -1.0, 1.0);
+     E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 0, 10);
+     E_CONFIG_LIMIT(e_config->mouse_natural_scroll, 0, 1);
 
      E_CONFIG_LIMIT(e_config->touch_tap_to_click, 0, 1);
      E_CONFIG_LIMIT(e_config->touch_clickpad, 0, 1);

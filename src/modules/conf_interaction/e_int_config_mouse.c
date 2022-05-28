@@ -21,9 +21,11 @@ struct _E_Config_Dialog_Data
    } gui;
 
    int mouse_hand;
-   double numerator;
-   double denominator;
-   double threshold;
+
+   double mouse_accel;
+   double mouse_accel_threshold;
+   int mouse_natural_scroll;
+   int mouse_emulate_middle_button;
 
    double touch_accel;
    int touch_natural_scroll;
@@ -69,9 +71,11 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->cursor_size = e_config->cursor_size;
 
    cfdata->mouse_hand = e_config->mouse_hand;
-   cfdata->numerator = e_config->mouse_accel_numerator;
-   cfdata->denominator = e_config->mouse_accel_denominator;
-   cfdata->threshold = e_config->mouse_accel_threshold;
+
+   cfdata->mouse_accel = e_config->mouse_accel;
+   cfdata->mouse_accel_threshold = e_config->mouse_accel_threshold;
+   cfdata->mouse_natural_scroll = e_config->mouse_natural_scroll;
+   cfdata->mouse_emulate_middle_button = e_config->mouse_emulate_middle_button;
 
    cfdata->touch_accel = e_config->touch_accel;
    cfdata->touch_natural_scroll = e_config->touch_natural_scroll;
@@ -100,14 +104,15 @@ _create_data(E_Config_Dialog *cfd)
 static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   return !((cfdata->show_cursor == e_config->show_cursor) &&
+    return !((cfdata->show_cursor == e_config->show_cursor) &&
             (cfdata->idle_cursor == e_config->idle_cursor) &&
             (cfdata->use_e_cursor == e_config->use_e_cursor) &&
             (cfdata->cursor_size == e_config->cursor_size) &&
             (cfdata->mouse_hand == e_config->mouse_hand) &&
-            EINA_DBL_EQ(cfdata->numerator, e_config->mouse_accel_numerator) &&
-            EINA_DBL_EQ(cfdata->denominator, e_config->mouse_accel_denominator) &&
-            EINA_DBL_EQ(cfdata->threshold, e_config->mouse_accel_threshold) &&
+            EINA_DBL_EQ(cfdata->mouse_accel, e_config->mouse_accel) &&
+            EINA_DBL_EQ(cfdata->mouse_accel_threshold, e_config->mouse_accel_threshold) &&
+            (cfdata->mouse_natural_scroll == e_config->mouse_natural_scroll) &&
+            (cfdata->mouse_emulate_middle_button == e_config->mouse_emulate_middle_button) &&
             EINA_DBL_EQ(cfdata->touch_accel, e_config->touch_accel) &&
             (cfdata->touch_natural_scroll == e_config->touch_natural_scroll) &&
             (cfdata->touch_emulate_middle_button == e_config->touch_emulate_middle_button) &&
@@ -139,9 +144,11 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->cursor_size = cfdata->cursor_size;
 
    e_config->mouse_hand = cfdata->mouse_hand;
-   e_config->mouse_accel_numerator = cfdata->numerator;
-   e_config->mouse_accel_denominator = cfdata->denominator;
-   e_config->mouse_accel_threshold = cfdata->threshold;
+
+   e_config->mouse_accel = cfdata->mouse_accel;
+   e_config->mouse_accel_threshold = cfdata->mouse_accel_threshold;
+   e_config->mouse_natural_scroll = cfdata->mouse_natural_scroll;
+   e_config->mouse_emulate_middle_button = cfdata->mouse_emulate_middle_button;
 
    e_config->touch_accel = cfdata->touch_accel;
    e_config->touch_natural_scroll = cfdata->touch_natural_scroll;
@@ -243,22 +250,33 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 1, 1, 1, 1);
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Mouse Acceleration"), 0);
-
-   ob = e_widget_label_add(evas, _("Acceleration"));
-   e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 30.0, 1.0, 0,
-                            &(cfdata->numerator), NULL, 100);
+   of = e_widget_framelist_add(evas, _("Acceleration"), 0);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), -1.0, 1.0, 0.1, 0,
+                            &(cfdata->mouse_accel), NULL, 100);
    e_widget_framelist_object_append(of, ob);
 
    ob = e_widget_label_add(evas, _("Threshold"));
    e_widget_framelist_object_append(of, ob);
-   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 1.0, 10.0, 1.0, 0,
-                            &(cfdata->threshold), NULL, 100);
+   ob = e_widget_slider_add(evas, 1, 0, _("%1.0f"), 0.0, 10.0, 1.0, 0,
+                            &(cfdata->mouse_accel_threshold), NULL, 100);
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
-   e_widget_toolbook_page_append(otb, NULL, _("Mouse"), ol, 
+
+   of = e_widget_framelist_add(evas, _("Buttons"), 0);
+
+   oc = e_widget_check_add(evas, _("Middle mouse button emulation"), &(cfdata->mouse_emulate_middle_button));
+   e_widget_framelist_object_append(of, oc);
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Scrolling"), 0);
+
+   oc = e_widget_check_add(evas, _("Natural scrolling"), &(cfdata->mouse_natural_scroll));
+   e_widget_framelist_object_append(of, oc);
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   e_widget_toolbook_page_append(otb, NULL, _("Mouse"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);

@@ -25,8 +25,8 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
           (dev_slot, prop, &num, &fmt, &size);
         if (dev_flags == DEVICE_FLAG_TOUCHPAD)
           cfval = e_config->touch_emulate_middle_button;
-        //~ else
-          //~ cfval = e_config->mouse_emulate_middle_button;
+        else
+          cfval = e_config->mouse_emulate_middle_button;
         if ((val) && (size == 8) && (num == 1) && (cfval != val[0]))
           {
              val[0] = cfval;
@@ -44,7 +44,7 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
         if (dev_flags == DEVICE_FLAG_TOUCHPAD)
           cfval = e_config->touch_accel;
         else
-          cfval = e_config->mouse_accel_numerator;
+          cfval = e_config->mouse_accel;
         if ((val) && (size == 32) && (num == 1) && (fabs(cfval - val[0]) >= 0.01))
           {
              val[0] = cfval;
@@ -133,8 +133,8 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
           (dev_slot, prop, &num, &fmt, &size);
         if (dev_flags == DEVICE_FLAG_TOUCHPAD)
           cfval = e_config->touch_natural_scroll;
-        //~ else
-          //~ cfval = e_config->mouse_natural_scroll;
+        else
+          cfval = e_config->mouse_natural_scroll;
         if ((val) && (size == 8) && (num == 1) && (cfval != val[0]))
           {
              val[0] = cfval;
@@ -342,12 +342,12 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
             (((e_config->touch_natural_scroll && ((val[0] > 0) || (val[1] > 0)))) ||
              ((!e_config->touch_natural_scroll && ((val[0] < 0) || (val[1] < 0))))))
           {
-             //~ if (e_config->mouse_natural_scroll)
-               //~ {
-                  //~ if (val[0] > 0) val[0] = -val[0];
-                  //~ if (val[1] > 0) val[1] = -val[1];
-               //~ }
-             //~ else
+             if (e_config->mouse_natural_scroll)
+               {
+                  if (val[0] > 0) val[0] = -val[0];
+                  if (val[1] > 0) val[1] = -val[1];
+               }
+             else
                {
                   if (val[0] < 0) val[0] = -val[0];
                   if (val[1] < 0) val[1] = -val[1];
@@ -365,34 +365,34 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
 
    ///////////////////////////////////////////////////////////////////////////
    // evdev devices
-   //~ else if (!strcmp(prop, "Evdev Middle Button Emulation"))
-     //~ {
-        //~ unsigned char *val = ecore_x_input_device_property_get
-          //~ (dev_slot, prop, &num, &fmt, &size);
-        //~ if ((val) && (size == 8) && (num == 1) &&
-            //~ (e_config->mouse_emulate_middle_button) != (val[0]))
-          //~ {
-             //~ val[0] = e_config->mouse_emulate_middle_button;
-             //~ printf("DEV: change [%s] [%s] -> %i\n", dev, prop, val[0]);
-             //~ ecore_x_input_device_property_set
-               //~ (dev_slot, prop, val, num, fmt, size);
-          //~ }
-        //~ free(val);
-     //~ }
-   //~ else if (!strcmp(prop, "Evdev Middle Button Timeout"))
-     //~ {
-        //~ unsigned short *val = ecore_x_input_device_property_get
-          //~ (dev_slot, prop, &num, &fmt, &size);
-        //~ if ((val) && (size == 16) && (num == 1) &&
-            //~ (e_config->mouse_emulate_middle_button && (val[0] != 50)))
-          //~ {
-             //~ val[0] = 50;
-             //~ printf("DEV: change [%s] [%s] -> %i\n", dev, prop, val[0]);
-             //~ ecore_x_input_device_property_set
-               //~ (dev_slot, prop, val, num, fmt, size);
-          //~ }
-        //~ free(val);
-     //~ }
+   else if (!strcmp(prop, "Evdev Middle Button Emulation"))
+     {
+        unsigned char *val = ecore_x_input_device_property_get
+          (dev_slot, prop, &num, &fmt, &size);
+        if ((val) && (size == 8) && (num == 1) &&
+            (e_config->mouse_emulate_middle_button) != (val[0]))
+          {
+             val[0] = e_config->mouse_emulate_middle_button;
+             printf("DEV: change [%s] [%s] -> %i\n", dev, prop, val[0]);
+             ecore_x_input_device_property_set
+               (dev_slot, prop, val, num, fmt, size);
+          }
+        free(val);
+     }
+   else if (!strcmp(prop, "Evdev Middle Button Timeout"))
+     {
+        unsigned short *val = ecore_x_input_device_property_get
+          (dev_slot, prop, &num, &fmt, &size);
+        if ((val) && (size == 16) && (num == 1) &&
+            (e_config->mouse_emulate_middle_button && (val[0] != 50)))
+          {
+             val[0] = 50;
+             printf("DEV: change [%s] [%s] -> %i\n", dev, prop, val[0]);
+             ecore_x_input_device_property_set
+               (dev_slot, prop, val, num, fmt, size);
+          }
+        free(val);
+     }
 }
 
 static void
@@ -477,15 +477,14 @@ devices_apply(Eina_Bool force)
 
    // generic accel - if synatics or evdev props found?
      {
-        //~ int accel_numerator, accel_denominator;
+        int accel_numerator, accel_denominator;
 
-        //~ accel_numerator = 20 + (e_config->mouse_accel_numerator * 20.0);
-        //~ accel_denominator = 10;
-        if (!ecore_x_pointer_control_set(e_config->mouse_accel_numerator,
-                                    e_config->mouse_accel_denominator,
-                                    e_config->mouse_accel_threshold))
-          return;
+        accel_numerator = 20 + (e_config->mouse_accel * 20.0);
+        accel_denominator = 10;
+        ecore_x_pointer_control_set(accel_numerator, accel_denominator,
+                                    e_config->mouse_accel_threshold);
      }
+
    // button mapping - for mouse hand and natural scroll
      {
         unsigned char map[256] = { 0 };
@@ -516,19 +515,19 @@ devices_apply(Eina_Bool force)
                }
              // if we are not on libinput or synaptics drivers anywehre then
              // swap buttons the old fashioned way
-             //~ if ((n >= 5) && (!driver_libinput) && (!driver_synaptics))
-               //~ {
-                  //~ if (e_config->mouse_natural_scroll)
-                    //~ {
-                       //~ map[3] = 5;
-                       //~ map[4] = 4;
-                    //~ }
-                  //~ else
-                    //~ {
-                       //~ map[3] = 4;
-                       //~ map[4] = 5;
-                    //~ }
-               //~ }
+             if ((n >= 5) && (!driver_libinput) && (!driver_synaptics))
+               {
+                  if (e_config->mouse_natural_scroll)
+                    {
+                       map[3] = 5;
+                       map[4] = 4;
+                    }
+                  else
+                    {
+                       map[3] = 4;
+                       map[4] = 5;
+                    }
+               }
              ecore_x_pointer_mapping_set(map, n);
           }
      }
