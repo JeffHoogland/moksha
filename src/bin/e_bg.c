@@ -268,6 +268,7 @@ e_bg_zone_update(E_Zone *zone, E_Bg_Transition transition)
      {
         o = e_icon_add(zone->container->bg_evas);
         evas_object_data_set(o, "e_zone", zone);
+        e_icon_scale_size_set(o, 0);
         e_icon_file_key_set(o, bgfile, NULL);
         e_icon_fill_inside_set(o, 0);
      }
