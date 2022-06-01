@@ -10090,7 +10090,7 @@ msgstr "Trvanie animácie [s]"
 
 #: src/modules/notification/e_mod_config.c:223
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Ignorovanie aplikácií (ap1,ap2,ap3...)"
 
 #: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
