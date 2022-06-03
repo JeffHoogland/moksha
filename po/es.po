@@ -5459,21 +5459,18 @@ msgstr "Botones"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:269
 #: src/modules/conf_interaction/e_int_config_mouse.c:298
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Botón central"
+msgstr "Emulación de botón medio del ratón"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:274
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
-#, fuzzy
 msgid "Scrolling"
-msgstr "Sondeo"
+msgstr "Desplazamiento"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:276
 #: src/modules/conf_interaction/e_int_config_mouse.c:311
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Animar desplazamiento"
+msgstr "Desplazamiento natural"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:280
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5482,45 +5479,39 @@ msgstr "Ratón"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:295
 msgid "Tap to click"
-msgstr ""
+msgstr "Toque para dar click"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:301
-#, fuzzy
 msgid "Clickpad"
-msgstr "Click"
+msgstr "Panel de click"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:304
 msgid "Palm detect"
-msgstr ""
+msgstr "Detección de palmas de manos"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:314
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Alineación horizontal"
+msgstr "Desplazamiento horizontal"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:317
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Animar desplazamiento"
+msgstr "Desplazamiento de borde"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:320
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Animar desplazamiento"
+msgstr "Desplazamiento a dos dedos"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Animar desplazamiento"
+msgstr "Desplazamiento circular"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:327
-#, fuzzy
 msgid "Touchpad"
-msgstr "Táctil"
+msgstr "Panel táctil"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
-msgstr "Táctil"
+msgstr "Toque"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -10109,7 +10100,7 @@ msgstr "Retraso en la animación del Gadget"
 
 #: src/modules/notification/e_mod_config.c:223
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Lista negra de apps (app1, app2, app3...)"
 
 #: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
