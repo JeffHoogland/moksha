@@ -786,6 +786,7 @@ define([CHECK_MODULE_NOTIFICATION],
 AM_CONDITIONAL(HAVE_ALSA, false)
 define([CHECK_MODULE_MIXER],
 [
+  AC_E_CHECK_PKG(MIXER, [ libpulse-simple libpulse ], [], [MIXER=false])
   if test "x$enable_alsa" = "x" || test "x$enable_alsa" = "xdefault" || test "x$enable_alsa" = "xyes"; then
     AC_E_CHECK_PKG(ALSA, [alsa >= 1.0.8],
     [ SOUND_CFLAGS="$ALSA_CFLAGS -DHAVE_ALSA $SOUND_CFLAGS"
@@ -843,11 +844,6 @@ fi
 
 AM_CONDITIONAL([HAVE_WAYLAND_CLIENTS], [test "x${have_wayland_clients}" = "xyes"])
 
-PKG_CHECK_MODULES([PULSE],
-	[
-		libpulse-simple
-		libpulse
-	 ])
 
 AC_E_OPTIONAL_MODULE([ibar], true)
 AC_E_OPTIONAL_MODULE([clock], true)

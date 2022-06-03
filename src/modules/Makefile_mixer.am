@@ -30,8 +30,8 @@ mixer_lib_libepulse_la_CFLAGS = $(AM_CFLAGS)
 mixer_lib_libepulse_la_CFLAGS +=  \
 	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
 	@ELM_CFLAGS@ \
-	@PULSE_CFLAGS@
-mixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @PULSE_LIBS@
+	@MIXER_CFLAGS@
+mixer_lib_libepulse_la_LIBADD = @ELM_LIBS@ @MIXER_LIBS@
 mixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
 mixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
 
@@ -43,7 +43,7 @@ bin_PROGRAMS = \
 mixer_bin_epulse_LDADD = \
 	mixer/lib/libepulse.la \
 	@ELM_LIBS@ \
-	@PULSE_LIBS@
+	@MIXER_LIBS@
 
 mixer_bin_epulse_SOURCES = \
 	mixer/bin/main_window.h \
@@ -60,14 +60,14 @@ mixer_bin_epulse_CFLAGS = $(AM_CFLAGS)
 mixer_bin_epulse_CFLAGS +=  \
 	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
 	@ELM_CFLAGS@ \
-	@PULSE_CFLAGS@
+	@MIXER_CFLAGS@
 
 mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 mixerpkg_LTLIBRARIES = mixer/module.la
 
 mixer_module_la_CFLAGS = $(AM_CFLAGS)
 mixer_module_la_CFLAGS += @ELM_CFLAGS@ \
-	@PULSE_CFLAGS@
+	@MIXER_CFLAGS@
 
 mixer_module_la_SOURCES  = mixer/e_mod_main.h \
 			     mixer/e_mod_main.c
@@ -76,7 +76,7 @@ mixer_module_la_LIBADD = \
 	mixer/lib/libepulse.la \
 	@ELM_LIBS@ \
 	@E_LIBS@ \
-	@PULSE_LIBS@
+	@MIXER_LIBS@
 
 mixer_module_la_LDFLAGS = -module -avoid-version
 
