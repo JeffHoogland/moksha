@@ -663,8 +663,8 @@ PKG_CHECK_MODULES(E_OPEN, [
 
 AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= ${efl_version} ecore-imf-evas >= ${efl_version} ], [], [:])
 
-e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
-e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
+e_libs="$E_LIBS $LIBINTL $fnmatch_libs $ECORE_IMF_LIBS $execinfo_libs"
+e_cflags="-DUSE_E_CONFIG_H $E_CFLAGS $ECORE_IMF_CFLAGS"
 e_configflags="-DUSE_E_CONFIG_H"
 
 AC_SUBST(e_libs)
