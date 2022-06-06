@@ -40,12 +40,12 @@ AM_INIT_AUTOMAKE([1.11 dist-bzip2 -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_GNU_SOURCE
+AC_PROG_MKDIR_P
 AC_C_BIGENDIAN
 AC_PROG_CC_C99
 AM_PROG_CC_C_O
 AC_C_CONST
 AC_FUNC_ALLOCA
-AC_PROG_MKDIR_P
 AC_C___ATTRIBUTE__
 
 LT_INIT([disable-static])
@@ -297,7 +297,7 @@ ALL_LINGUAS="bg ca cs da de el eo es fi fr fr_CH he hu it ja ko nb nl pl pt_BR r
 AC_SUBST(ALL_LINGUAS)
 
 m4_ifdef([AM_GNU_GETTEXT_VERSION], [
-AM_GNU_GETTEXT_VERSION([0.18])
+AM_GNU_GETTEXT_VERSION([0.19])
 ])
 
 m4_ifdef([AC_GNU_GETTEXT], [
