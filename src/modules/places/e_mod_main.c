@@ -198,6 +198,7 @@ static E_Gadcon_Client *
 _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
 {
    Instance *inst = NULL;
+   char buf[PATH_MAX];
 
    inst = E_NEW(Instance, 1);
    inst->conf_item = _places_conf_item_get(id);
@@ -212,8 +213,13 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    }
    else
    {
-      inst->o_icon = e_icon_add(gc->evas);
-      e_util_icon_theme_set(inst->o_icon, "drive-harddisk");
+      snprintf(buf, sizeof(buf), "%s/e-module-places.edj", places_conf->module->dir);
+
+      inst->o_icon = edje_object_add(gc->evas);
+      if (!e_theme_edje_object_set(inst->o_icon, "base/theme/modules/places",
+                                                 "modules/places/main"))
+        edje_object_file_set(inst->o_icon, buf, "icon");
+
       inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_icon);
       evas_object_event_callback_add(inst->o_icon, EVAS_CALLBACK_MOUSE_DOWN,
                                      _places_icon_cb_mouse_down, inst);
