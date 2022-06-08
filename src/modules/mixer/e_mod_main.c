@@ -588,7 +588,7 @@ _gc_icon(const E_Gadcon_Client_Class *client_class EINA_UNUSED, Evas *evas)
    char buf[4096] = { 0 };
 
    o = edje_object_add(evas);
-   snprintf(buf, sizeof(buf), "%s/mixer.edj",
+   snprintf(buf, sizeof(buf), "%s/e-module-mixer.edj",
             e_module_dir_get(mixer_context->module));
    edje_object_file_set(o, buf, "icon");
 
