@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-05-30 22:01+0200\n"
-"PO-Revision-Date: 2022-02-27 11:07-0300\n"
+"PO-Revision-Date: 2022-06-12 18:38-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Bookmarks: -1,782,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: src/bin/e_about.c:18
@@ -5458,21 +5458,18 @@ msgstr "Botões"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:269
 #: src/modules/conf_interaction/e_int_config_mouse.c:298
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Botão do meio"
+msgstr "Emulação de botão do meio"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:274
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
-#, fuzzy
 msgid "Scrolling"
-msgstr "Em análise"
+msgstr "Rolagem"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:276
 #: src/modules/conf_interaction/e_int_config_mouse.c:311
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Rolagem animada"
+msgstr "Rolagem natural"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:280
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5481,41 +5478,35 @@ msgstr "Mouse"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:295
 msgid "Tap to click"
-msgstr ""
+msgstr "Tocar para clicar"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:301
-#, fuzzy
 msgid "Clickpad"
-msgstr "Clique"
+msgstr "Clickpad"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:304
 msgid "Palm detect"
-msgstr ""
+msgstr "Detectar palma"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:314
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Alinhamento horizontal"
+msgstr "Rolagem horizontal"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:317
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Rolagem animada"
+msgstr "Rolagem de borda"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:320
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Rolagem animada"
+msgstr "Rolagem com 2 dedos"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Rolagem animada"
+msgstr "Rolagem circular"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:327
-#, fuzzy
 msgid "Touchpad"
-msgstr "Toque"
+msgstr "Touchpad"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
@@ -5953,27 +5944,27 @@ msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 msgid " Close Window:"
-msgstr "Fechar janela"
+msgstr "Fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
 msgid " Maximize Window:"
-msgstr "Maximizar janela"
+msgstr "Maximizar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
 msgid " Iconic Mode Toggle:"
-msgstr "Alternar modo ícone"
+msgstr "Alternar modo ícone:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
 msgid " Fullscreen Mode Toggle:"
-msgstr "Alternar modo tela cheia"
+msgstr "Alternar modo tela cheia:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
 msgid " Always On Top Toggle:"
-msgstr "Modo sempre à frente"
+msgstr "Modo sempre à frente:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
 msgid " Next Window:"
-msgstr "Janela seguinte"
+msgstr "Janela seguinte:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
 msgid " Tile Right:"
@@ -5981,7 +5972,7 @@ msgstr "Empilhar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
 msgid " Tile Left:"
-msgstr "Empilhar à esquerda"
+msgstr "Empilhar à esquerda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
 msgid " Kill Window:"
@@ -5989,7 +5980,7 @@ msgstr "Forçar terminar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
 msgid " Window Menu:"
-msgstr "Menu da janela"
+msgstr "Menu da janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
@@ -5997,23 +5988,23 @@ msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
 msgid " Open Terminology:"
-msgstr "Abrir Terminology aqui"
+msgstr "Abrir Terminology aqui:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
 msgid " Lock System:"
-msgstr "Bloquear sistema"
+msgstr "Bloquear sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
 msgid " Show Main Menu:"
-msgstr "Mostrar menu principal"
+msgstr "Mostrar menu principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
 msgid " Show Favorites Menu:"
-msgstr "Mostrar menu de favoritos"
+msgstr "Mostrar menu de favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 msgid " System Controls:"
-msgstr "Controles do sistema"
+msgstr "Controles do sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -6021,43 +6012,43 @@ msgstr "ÁREA DE TRABALHO"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
-msgstr "Mostrar área de trabalho"
+msgstr "Mostrar área de trabalho:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
 msgid " Switch to Desktop 0:"
-msgstr "Mudar para a área de trabalho 0"
+msgstr "Mudar para a área de trabalho 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
 msgid " Switch to Desktop 1:"
-msgstr "Mudar para a área de trabalho 1"
+msgstr "Mudar para a área de trabalho 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
 msgid " Switch to Desktop 2:"
-msgstr "Mudar para a área de trabalho 2"
+msgstr "Mudar para a área de trabalho 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
 msgid " Switch to Desktop 3:"
-msgstr "Mudar para a área de trabalho 3"
+msgstr "Mudar para a área de trabalho 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
 msgid " Switch to Desktop 4:"
-msgstr "Mudar para a área de trabalho 4"
+msgstr "Mudar para a área de trabalho 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
 msgid " Switch to Desktop 5:"
-msgstr "Mudar para a área de trabalho 5"
+msgstr "Mudar para a área de trabalho 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
 msgid " Switch to Desktop 6:"
-msgstr "Mudar para a área de trabalho 6"
+msgstr "Mudar para a área de trabalho 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
 msgid " Switch to Desktop 7:"
-msgstr "Mudar para a área de trabalho 7"
+msgstr "Mudar para a área de trabalho 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
 msgid " Switch to Desktop 8:"
-msgstr "Mudar para a área de trabalho 8"
+msgstr "Mudar para a área de trabalho 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
@@ -6065,23 +6056,23 @@ msgstr "MISCELÂNEA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid " Quick Launcher:"
-msgstr "Iniciador rápido"
+msgstr "Iniciador rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 msgid " Take Screenshot:"
-msgstr "Capturar tela"
+msgstr "Capturar tela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
 msgid " Restart Moksha:"
-msgstr "Reiniciar o Moksha"
+msgstr "Reiniciar o Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
 msgid " Terminal console:"
-msgstr "Console do terminal"
+msgstr "Console do terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 msgid " This Help:"
-msgstr "Esta ajuda"
+msgstr "Esta ajuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -6520,14 +6511,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Memorizar contorno para esta janela na próxima vez que aparecer"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Estilo do contorno"
+msgstr "Base da borda"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Moldura da borda ativa"
+msgstr "Base da borda ativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -9506,7 +9495,7 @@ msgstr "Demonstração"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr "Este éu diálogo de demonstração usado no tutorial do Acesso rápido."
+msgstr "Este é um diálogo de demonstração usado no tutorial do Acesso rápido."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
@@ -10125,7 +10114,7 @@ msgstr "Atraso na animação do gadget [s]"
 
 #: src/modules/notification/e_mod_config.c:223
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Lista negra de apps (app1, app2, app3...)"
 
 #: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
