@@ -76,7 +76,7 @@ static void  _e_wid_fprev_preview_font(E_Widget_Data *wd);
 static void  _e_wid_fprev_preview_fm(E_Widget_Data *wd);
 
 static void
-_e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
+_e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd = data;
    Evas_Object *o;
@@ -262,7 +262,7 @@ _fprev_video_size(E_Widget_Data *wd, Evas_Object *obj)
 }
 
 static void
-_e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *event_info EINA_UNUSED)
+_e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
 {
    double t, tot;
 
@@ -275,14 +275,14 @@ _e_wid_fprev_preview_video_position(E_Widget_Data *wd, Evas_Object *obj, void *e
 }
 
 static void
-_e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *event_info EINA_UNUSED)
+_e_wid_fprev_preview_video_opened(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
 {
    e_widget_entry_text_set(wd->o_preview_extra_entry, e_util_time_str_get(emotion_object_play_length_get(obj)));
    _fprev_video_size(wd, obj);
 }
 
 static void
-_e_wid_fprev_preview_video_resize(E_Widget_Data *wd, Evas_Object *obj, void *event_info EINA_UNUSED)
+_e_wid_fprev_preview_video_resize(E_Widget_Data *wd, Evas_Object *obj, void *event_info __UNUSED__)
 {
    int w, h;
    char buf[128];
@@ -965,37 +965,37 @@ _e_wid_fprev_preview_reset(E_Widget_Data *wd)
 }
 
 static void
-_e_wid_cb_selected(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_wid_cb_selected(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "selected", obj);
 }
 
 static void
-_e_wid_cb_selection_change(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_wid_cb_selection_change(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "selection_change", obj);
 }
 
 static void
-_e_wid_cb_dir_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_wid_cb_dir_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "dir_changed", obj);
 }
 
 static void
-_e_wid_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_wid_cb_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "changed", obj);
 }
 
 static void
-_e_wid_cb_file_deleted(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_wid_cb_file_deleted(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    evas_object_smart_callback_call(data, "files_deleted", obj);
 }
 
 static void
-_e_wid_fprev_preview_txt_map_success(void *data, Eio_File *handler EINA_UNUSED, void *map, size_t length)
+_e_wid_fprev_preview_txt_map_success(void *data, Eio_File *handler __UNUSED__, void *map, size_t length)
 {
    E_Widget_Data *wd = data;
    Eina_Strbuf *buf;
@@ -1025,7 +1025,7 @@ _e_wid_fprev_preview_txt_map_success(void *data, Eio_File *handler EINA_UNUSED, 
 static void _e_wid_fprev_preview_txt_open_success(void *data, Eio_File *handler, Eina_File *file);
 
 static void
-_e_wid_fprev_preview_txt_error(void *data, Eio_File *handler EINA_UNUSED, int error EINA_UNUSED)
+_e_wid_fprev_preview_txt_error(void *data, Eio_File *handler __UNUSED__, int error __UNUSED__)
 {
    E_Widget_Data *wd = data;
 
@@ -1045,7 +1045,7 @@ _e_wid_fprev_preview_txt_error(void *data, Eio_File *handler EINA_UNUSED, int er
 }
 
 static void
-_e_wid_fprev_preview_txt_open_success(void *data, Eio_File *handler EINA_UNUSED, Eina_File *file)
+_e_wid_fprev_preview_txt_open_success(void *data, Eio_File *handler __UNUSED__, Eina_File *file)
 {
    E_Widget_Data *wd = data;
    unsigned int length = eina_file_size_get(file);
@@ -1268,7 +1268,7 @@ _e_wid_fprev_preview_fm(E_Widget_Data *wd)
 }
 
 static Eina_Bool
-_e_wid_fprev_cb_del(E_Widget_Data *wd, int type EINA_UNUSED, Eio_Monitor_Event *ev)
+_e_wid_fprev_cb_del(E_Widget_Data *wd, int type __UNUSED__, Eio_Monitor_Event *ev)
 {
    if (wd->monitor != ev->monitor) return ECORE_CALLBACK_RENEW;
    _e_wid_fprev_clear_widgets(wd);
@@ -1279,7 +1279,7 @@ _e_wid_fprev_cb_del(E_Widget_Data *wd, int type EINA_UNUSED, Eio_Monitor_Event *
 }
 
 static Eina_Bool
-_e_wid_fprev_cb_mod(E_Widget_Data *wd, int type EINA_UNUSED, Eio_Monitor_Event *ev)
+_e_wid_fprev_cb_mod(E_Widget_Data *wd, int type __UNUSED__, Eio_Monitor_Event *ev)
 {
    if (wd->monitor != ev->monitor) return ECORE_CALLBACK_RENEW;
    _e_wid_fprev_preview_file(wd);
