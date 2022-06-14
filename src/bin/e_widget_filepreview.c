@@ -1,7 +1,6 @@
 #include "e.h"
 #include "e_fm_device.h"
 #include <sys/statvfs.h>
-#include <Elementary.h>
 #ifdef HAVE_EMOTION
 # include <Emotion.h>
 #endif
@@ -380,8 +379,8 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
         path = efreet_mime_type_icon_get(mime, e_config->icon_theme, 128);
         if (path && !audio_artwork)
           {
-             wd->o_preview_artwork = elm_icon_add(o);
-             elm_image_file_set(wd->o_preview_artwork, path, NULL);
+             wd->o_preview_artwork = e_icon_add(o);
+             evas_object_image_file_set(wd->o_preview_artwork, path, NULL);
           }
         else
           {
@@ -395,9 +394,9 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
      {
         if (mime && !strncmp(mime, "audio/",6))
           e_widget_size_min_set(table, 192, 192);
-	evas_object_resize(wd->o_preview_artwork, 256, 256);
-	evas_object_image_fill_set(wd->o_preview_artwork, 0, 0, 256, 256);
-	evas_object_size_hint_max_set(wd->o_preview_artwork, 256, 256);
+        evas_object_resize(wd->o_preview_artwork, 256, 256);
+        evas_object_image_fill_set(wd->o_preview_artwork, 0, 0, 256, 256);
+        evas_object_size_hint_max_set(wd->o_preview_artwork, 256, 256);
         e_widget_table_object_append(wd->o_preview_properties_table,
                                      wd->o_preview_artwork, 0, 0, 2, 2, 1, 1, 1, 1);
         evas_object_show(wd->o_preview_artwork);
