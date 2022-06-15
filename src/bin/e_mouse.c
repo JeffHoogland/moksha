@@ -1,5 +1,3 @@
-#define EXECUTIVE_MODE_ENABLED
-#define E_COMP_X
 #include "e.h"
 
 typedef enum
