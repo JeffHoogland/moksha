@@ -614,7 +614,7 @@ _clear_menu_cb(void)
        {
          ret = ecore_file_remove(items->item_icon_img);
          if (!ret)
-         printf("Notif: Error during files removing!\n");
+           printf("Notif: Error during files removing!\n");
        }
    }
 
