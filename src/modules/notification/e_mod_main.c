@@ -606,12 +606,16 @@ _clear_menu_cb(void)
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
    Popup_Items *items;
    Eina_List *l;
-   Eina_Bool ret;
+   Eina_Bool ret, check;
   
    EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
-     ret = ecore_file_remove(items->item_icon_img);    
-     if (!ret) 
-       printf("Notif: Error during files removing!\n");
+     check = ecore_file_exists(items->item_icon_img);
+     if (check)
+       {
+         ret = ecore_file_remove(items->item_icon_img);
+         if (!ret)
+         printf("Notif: Error during files removing!\n");
+       }
    }
 
    clear_menu();
