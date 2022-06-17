@@ -1033,7 +1033,6 @@ list_add_item(Popup_Data *popup)
 {
    Popup_Items *items; 
    char *file;
-   Eina_Bool ret;
 
    if (!notification_cfg->instances) return;
 
@@ -1092,8 +1091,7 @@ list_add_item(Popup_Data *popup)
        else 
          {
            file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->popup_items))->item_icon_img;
-           ret = ecore_file_remove(file);   
-           if (!ret) 
+           if (!ecore_file_remove(file))
              printf("Notification: Error during hint file removing!\n");
            notification_cfg->popup_items = eina_list_remove_list(notification_cfg->popup_items, 
                                            eina_list_last(notification_cfg->popup_items));
