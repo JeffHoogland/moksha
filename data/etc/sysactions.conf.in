@@ -43,10 +43,10 @@
 # user and group name can use glob matches (* == all for example) like the
 # shell. as can action names allowed or denied. 
 
-action:   halt      /sbin/shutdown -h now
-action:   reboot    /sbin/shutdown -r now
-action:   suspend   sudo pm-suspend
-action:   hibernate sudo pm-hibernate
+action:   halt      @HALT@
+action:   reboot    @REBOOT@
+action:   suspend   @SUSPEND@
+action:   hibernate @HIBERNATE@
 action:   /bin/mount /bin/mount
 action:   /bin/umount /bin/umount
 action:   /usr/bin/eject /usr/bin/eject

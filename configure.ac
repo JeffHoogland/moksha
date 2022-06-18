@@ -112,6 +112,12 @@ PKG_CHECK_MODULES([EFL], [efl],
 AC_DEFINE_UNQUOTED(EFL_VERSION, ["$EFL_VERSION"], [Determine EFL version])
 AC_DEFINE_UNQUOTED(EFL_MINOR, [$EFL_MINOR], [Determine EFL minor version])
 
+# Detect systemd user session directory properly
+EFL_PKG_CHECK_VAR([USER_SESSION_DIR], [systemd >= 192], [systemduserunitdir],
+	[have_systemd_user_session="yes"], [have_systemd_user_session="no"])
+AM_CONDITIONAL([HAVE_SYSTEMD_USER_SESSION], [test "x${have_systemd_user_session}" = "xyes"])
+AC_SUBST([USER_SESSION_DIR])
+
 AC_CHECK_HEADERS([sys/timerfd.h sys/ptrace.h arpa/inet.h netinet/in.h])
 
 dnl AC_CHECK_HEADERS(X11/extensions/shape.h,, AC_MSG_ERROR([Cannot find X11/extensions/shape.h. Make sure your CFLAGS environment variable contains include lines for the location of this file]))
@@ -892,32 +898,43 @@ AC_E_OPTIONAL_MODULE([clipboard], true)
 AC_E_OPTIONAL_MODULE([places], true)
 AC_E_OPTIONAL_MODULE([classicmenu], true)
 
+HALT="/sbin/shutdown -h now"
+REBOOT="/sbin/shutdown -r now"
 SUSPEND=""
 HIBERNATE=""
 case "$host_os" in
    freebsd*|pcbsd*)
       SUSPEND="acpiconf -s3"
       AC_MSG_NOTICE([use suspend method: $SUSPEND])
-      AC_SUBST(SUSPEND)
       HIBERNATE="acpiconf -s4"
       AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
-      AC_SUBST(HIBERNATE)
       ;;
    *)
-      AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
-      if test "$SUSPEND" = "/etc/acpi/sleep.sh" ; then
-         SUSPEND="/etc/acpi/sleep.sh force"
-         AC_MSG_NOTICE([use suspend method: $SUSPEND])
-      fi
-
-      AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
-      if test "$HIBERNATE" = "/etc/acpi/hibernate.sh" ; then
-         HIBERNATE="/etc/acpi/hibernate.sh force"
-         AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      if test "x${have_systemd_user_session}" = "xyes"; then
+         HALT="/usr/bin/systemctl poweroff"
+         REBOOT="/usr/bin/systemctl reboot"
+         SUSPEND="/usr/bin/systemctl suspend"
+         HIBERNATE="/usr/bin/systemctl hibernate"
+         AC_MSG_NOTICE([use systemctl for halt, reboot, suspend and hibernate])
+      else
+         AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+         if test "$SUSPEND" = "/etc/acpi/sleep.sh" ; then
+            SUSPEND="/etc/acpi/sleep.sh force"
+            AC_MSG_NOTICE([use suspend method: $SUSPEND])
+         fi
+         AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+         if test "$HIBERNATE" = "/etc/acpi/hibernate.sh" ; then
+            HIBERNATE="/etc/acpi/hibernate.sh force"
+            AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+         fi
       fi
       ;;
 esac
 
+AC_SUBST(HALT)
+AC_SUBST(REBOOT)
+AC_SUBST(SUSPEND)
+AC_SUBST(HIBERNATE)
 m4_ifdef([v_mic],
    [
     EFL_COMPILER_FLAG([-Wshadow])
