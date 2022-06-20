@@ -154,7 +154,7 @@ e_int_border_menu_create(E_Border *bd)
    mi = e_menu_item_new(m);
    e_menu_item_separator_set(mi, 1);
 
-   if ((!bd->sticky) && ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1)))
+   if ((!bd->sticky) && ((eina_list_count(bd->zone->container->zones) > 1) || ((bd->zone->desk_x_count > 1) || (bd->zone->desk_y_count > 1))))
      {
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("Move to"));
