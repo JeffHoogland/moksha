@@ -377,7 +377,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
         break;
      }
      
-   posit=m->cur.x;
+   posit = m->cur.x;
 
    pmi = _e_menu_item_active_get();
    if (pmi) e_menu_item_active_set(pmi, 0);
@@ -2261,16 +2261,17 @@ _e_menu_reposition(E_Menu *m)
 
    if (!m->parent_item) return;
    
-   /* Menu style on the right screen side */
-   if ((posit < m->zone->w/2) || (!e_config->menu_scroll_toggle)){
-     m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;  //E style
-     scrl_toggle = EINA_FALSE;
-   }
+   /* Menu direction on the right screen area */
+   if ((posit < m->zone->w / 2) || (!e_config->menu_scroll_toggle))
+     {
+       m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;  //E style
+       scrl_toggle = EINA_FALSE;
+     }
    else
-   {
-     m->cur.x = m->parent_item->menu->cur.x - m->cur.w;                     //LXDE style
-     scrl_toggle = EINA_TRUE;
-   }
+     {
+       m->cur.x = m->parent_item->menu->cur.x - m->cur.w;                     //LXDE style
+       scrl_toggle = EINA_TRUE;
+     }
    parent_item_bottom = m->parent_item->menu->cur.y + m->parent_item->y;
    if (m->cur.h > m->zone->h)
      {
