@@ -2262,7 +2262,7 @@ _e_menu_reposition(E_Menu *m)
    if (!m->parent_item) return;
    
    /* Menu direction on the right screen area */
-   if ((posit < m->zone->w / 2) || (!e_config->menu_scroll_toggle))
+   if ((posit < m->zone->x + m->zone->w / 2) || (!e_config->menu_scroll_toggle))
      {
        m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;  //E style
        scrl_toggle = EINA_FALSE;
