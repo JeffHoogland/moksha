@@ -363,7 +363,9 @@ _slider_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
    pa_volume_t v;
    Sink *s = mixer_context->sink_default;
 
-   val = (int)e_slider_value_get(obj);
+   //~ val = (int)e_slider_value_get(obj);
+   e_widget_slider_value_int_get(obj, &val);
+
    v = INT_TO_PA_VOLUME(val);
 
    pa_cvolume_set(&s->volume, s->volume.channels, v);
@@ -376,16 +378,14 @@ _popup_add_slider(Instance *inst)
    pa_volume_t vol = pa_cvolume_avg(&mixer_context->sink_default->volume);
    int value = PA_VOLUME_TO_INT(vol);
 
-   Evas_Object *slider = e_slider_add(inst->popup->win->evas);
-
-   evas_object_show(slider);
-   e_slider_orientation_set(slider, 1);
-   e_slider_value_range_set(slider, 0.0, 100.0);
-   e_slider_value_format_display_set(slider, NULL);
+   //~ Evas_Object *slider = e_slider_add(inst->popup->win->evas);
+   //~ e_slider_orientation_set(slider, 1);
+   //~ e_slider_value_range_set(slider, 0.0, 153.0);
+   //~ e_slider_value_format_display_set(slider, NULL);
+   Evas_Object *slider = e_widget_slider_add(inst->popup->win->evas,  1, 0, "%2.0f", 0, 153, 1.0, 0, NULL, &value, 40);
    evas_object_smart_callback_add(slider, "changed", _slider_changed_cb,
                                   NULL);
-
-   e_slider_value_set(slider, value);
+   //~ e_slider_value_set(slider, value);
    return slider;
 }
 
