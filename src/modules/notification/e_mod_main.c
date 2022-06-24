@@ -57,7 +57,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/notification",
                            "e/modules/notification/logo");
-   
+
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
 
@@ -136,8 +136,8 @@ read_items_eet(Eina_List **popup_items)
    unsigned int items_number, i;
    Popup_Items *items = NULL;
    Eet_File *history_file = NULL;
-  
-   snprintf(file_path, sizeof(file_path), "%s/notification/notif_list", efreet_data_home_get()); 
+
+   snprintf(file_path, sizeof(file_path), "%s/notification/notif_list", efreet_data_home_get());
 
    history_file = eet_open(file_path, EET_FILE_MODE_READ);
    if (!history_file) {
@@ -147,7 +147,7 @@ read_items_eet(Eina_List **popup_items)
    }
    /* Read Number of items */
    ret = eet_read(history_file, "ITEMS_NUM", &size);
-  
+
    if (!ret) {
      printf("Notification file corruption\n");
      *popup_items = NULL;
@@ -155,7 +155,7 @@ read_items_eet(Eina_List **popup_items)
    }
 
    items_number = strtol(ret, NULL, 10);
-   
+
    for (i = 1; i <= items_number; i++){
      items = E_NEW(Popup_Items, 1);
      snprintf(str, 10, "dtime%d", i);
@@ -197,13 +197,13 @@ read_items_eet(Eina_List **popup_items)
      snprintf(str, 10, "id%d", i);
      ret = eet_read(history_file, str, &size);
      items->notif_id = atoi(ret);
-        
+
      l = eina_list_append(l, items);
    }
-   
-   *popup_items = l;  
+
+   *popup_items = l;
    eet_close(history_file);
-   return 1; 
+   return 1;
 }
 
 static void
@@ -227,26 +227,26 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    EINA_SAFETY_ON_NULL_RETURN(data);
    EINA_SAFETY_ON_NULL_RETURN(event_info);
    Popup_Items *items = NULL;
-   
+
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
-   
+
    notification_cfg->clicked_item = EINA_FALSE;
 
    inst = data;
    ev = event_info;
    if (ev->button == 3)  //right button
      {
-        E_Menu *m; 
+        E_Menu *m;
         E_Menu_Item *mi;
         int cx, cy;
- 
+
         m = e_menu_new();
         mi = e_menu_item_new(m);
         e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "configure");
         e_menu_item_callback_set(mi, _cb_config_show, NULL);
-        
+
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
                                           &cx, &cy, NULL, NULL);
@@ -259,63 +259,63 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
      }
    if (ev->button == 2)  //middle button
      _mute_cb();
-     
+
    if (ev->button == 1)  //left button
       {
-        unsigned dir = E_GADCON_ORIENT_VERT; 
+        unsigned dir = E_GADCON_ORIENT_VERT;
         Evas_Coord x, y, w, h;
         int cx, cy;
-  
+
         evas_object_geometry_get(inst->o_notif, &x, &y, &w, &h);
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &cx, &cy,
                                           NULL, NULL);
         x += cx;
         y += cy;
-        
+
         E_Menu_Item *mi;
         inst->menu = e_menu_new();
         Eina_List *l = NULL;
-        
+
         if (notification_cfg->popup_items)
         {
           if (notification_cfg->reverse)
             notification_cfg->popup_items = eina_list_reverse(notification_cfg->popup_items);
-        
+
           EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
              mi = e_menu_item_new(inst->menu);
              Eina_Strbuf *buff = eina_strbuf_new();
              int i;
-             
+
              if (notification_cfg->time_stamp){
                 eina_strbuf_append(buff, items->item_date_time);
                 eina_strbuf_append(buff, " ");
-             }  
-             if (notification_cfg->show_app){ 
+             }
+             if (notification_cfg->show_app){
                 eina_strbuf_append(buff, items->item_app);
                 eina_strbuf_append(buff, ": ");
              }
              eina_strbuf_append(buff, items->item_title);
              eina_strbuf_append(buff, ", ");
-             eina_strbuf_append(buff, items->item_body); 
+             eina_strbuf_append(buff, items->item_body);
              eina_strbuf_append(buff, " ");
              eina_strbuf_replace_all(buff, "\n", " ");
-             
+
              if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
                i = eina_strbuf_length_get(buff);
              else
                i = notification_cfg->item_length;
-               
-             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL, 
-                         eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));  
-                                             
-             eina_strbuf_free(buff); 
-             
+
+             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL,
+                         eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));
+
+             eina_strbuf_free(buff);
+
              notification_cfg->new_item = 0;
              gadget_text(notification_cfg->new_item);
              e_menu_item_disabled_set(mi, EINA_FALSE);
              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
 
-             if (strlen(items->item_icon) > 0) 
+             if (strlen(items->item_icon) > 0)
                e_util_menu_item_theme_icon_set(mi, items->item_icon);
              else
                e_menu_item_icon_file_set(mi,  items->item_icon_img);
@@ -324,10 +324,10 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           else
           {
             mi = e_menu_item_new(inst->menu);
-            e_menu_item_label_set(mi, _("Empty")); 
+            e_menu_item_label_set(mi, _("Empty"));
             e_menu_item_disabled_set(mi, EINA_TRUE);
           }
-        
+
         mi = e_menu_item_new(inst->menu);
         e_menu_item_separator_set(mi, EINA_TRUE);
 
@@ -335,7 +335,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_menu_item_label_set(mi, _("Clear"));
         e_util_menu_item_theme_icon_set(mi, "edit-clear");
         e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->popup_items);
-        
+
         if (notification_cfg->popup_items)
           e_menu_item_disabled_set(mi, EINA_FALSE);
         else
@@ -358,7 +358,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         e_menu_item_label_set(mi, _("Settings"));
         e_util_menu_item_theme_icon_set(mi, "preferences-system");
         e_menu_item_callback_set(mi, _cb_config_show, NULL);
-        
+
         if (ev) {
           e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
 
@@ -368,7 +368,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           case E_GADCON_ORIENT_CORNER_TR:
             dir = E_MENU_POP_DIRECTION_DOWN;
             break;
-          
+
           case E_GADCON_ORIENT_BOTTOM:
           case E_GADCON_ORIENT_CORNER_BL:
           case E_GADCON_ORIENT_CORNER_BR:
@@ -417,7 +417,7 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
       e_object_del(E_OBJECT(inst->menu));
       inst->menu = NULL;
     }
-  
+
    if (notification_cfg->reverse)
       notification_cfg->popup_items = eina_list_reverse(notification_cfg->popup_items);
 }
@@ -428,9 +428,9 @@ _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
    if (!notification_cfg) return;
    if (notification_cfg->cfd) return;
    e_int_config_notification_module(m->zone->container, NULL);
-} 
+}
 
-static Eina_Bool 
+static Eina_Bool
 _notif_delay_stop_cb(Instance *inst)
 {
    edje_object_signal_emit(inst->o_notif, "stop", "");
@@ -441,16 +441,17 @@ void
 gadget_text(int number)
 {
    Instance *inst = NULL;
-   char *buf = (char *)malloc(sizeof(char) * number);   
+   char *buf = (char *) malloc(sizeof(char) * HIST_MAX_DIGITS + 1);
+
    snprintf(buf, sizeof(number), "%d", number);
 
    if (!notification_cfg->instances) return;
-   inst = eina_list_data_get(notification_cfg->instances);  
+   inst = eina_list_data_get(notification_cfg->instances);
 
    if (number > 0 && notification_cfg->show_count)
-     edje_object_part_text_set(inst->o_notif, "e.text.counter", buf); 
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", buf);
    else
-     edje_object_part_text_set(inst->o_notif, "e.text.counter", ""); 
+     edje_object_part_text_set(inst->o_notif, "e.text.counter", "");
 
    if (notification_cfg->mute)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", "X");
@@ -460,22 +461,22 @@ gadget_text(int number)
      ecore_timer_del(notification_cfg->jump_timer);
      notification_cfg->jump_timer = NULL;
    }
-  
+
    if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0))
    {
      edje_object_signal_emit(inst->o_notif, "blink", "");
-     notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay, 
+     notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay,
                                    (Ecore_Task_Cb)_notif_delay_stop_cb, inst);
    }
    else
      edje_object_signal_emit(inst->o_notif, "stop", "");
-    
+
    free(buf);
 }
 
 static unsigned int
 _notification_notify(E_Notification *n)
-{ 
+{
    const char *appname;
    unsigned int replaces_id, new_id;
    int popuped;
@@ -495,7 +496,7 @@ _notification_notify(E_Notification *n)
         e_notification_hint_urgency_set(n, 4);
         notification_popup_notify(n, replaces_id, appname);
      }
-     
+
    return new_id;
 }
 
@@ -539,11 +540,11 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    Popup_Items *sel_item = (Popup_Items *) selected_item;
    char *temp_icon = "";
    int check = 0;
-   
+
    notification_cfg->clicked_item = EINA_TRUE;
    /* remove the current item from the list */
    notification_cfg->popup_items = eina_list_remove(notification_cfg->popup_items, sel_item);
-   
+
    /* show the current item as notification */
    if (strlen(sel_item->item_icon) > 0)
      temp_icon = strdup(sel_item->item_icon);
@@ -595,7 +596,7 @@ free_menu_data(Popup_Items *items)
 static void
 clear_menu(void)
 {
-   EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
+   EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
    if (notification_cfg->popup_items)
      E_FREE_LIST(notification_cfg->popup_items, free_menu_data);
 }
@@ -603,10 +604,10 @@ clear_menu(void)
 static void
 _clear_menu_cb(void)
 {
-   EINA_SAFETY_ON_NULL_RETURN(notification_cfg); 
+   EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
    Popup_Items *items;
    Eina_List *l;
-  
+
    EINA_LIST_FOREACH(notification_cfg->popup_items, l, items) {
      if (ecore_file_exists(items->item_icon_img))
        {
@@ -706,7 +707,7 @@ e_modapi_init(E_Module *m)
    /* register config panel entry */
    e_configure_registry_category_add("extensions", 90, _("Extensions"), NULL,
                                      "preferences-extensions");
-   e_configure_registry_item_add("extensions/notification", 30, 
+   e_configure_registry_item_add("extensions/notification", 30,
                                  _("Notification"), NULL,
                                  "preferences-system-notifications", e_int_config_notification_module);
 
@@ -746,8 +747,11 @@ e_modapi_init(E_Module *m)
 
    if (!notification_cfg)
         notification_cfg = _notification_cfg_new();
-     
-    notification_cfg->version = MOD_CONFIG_FILE_VERSION;   
+
+   // Normally shouldn't happen but borked settings can cause it, so being safe here for now
+   if (!notification_cfg->blacklist) notification_cfg->blacklist=eina_stringshare_add("");
+
+   notification_cfg->version = MOD_CONFIG_FILE_VERSION;
 
    /* set up the notification daemon */
    e_notification_daemon_init();
@@ -773,10 +777,10 @@ e_modapi_init(E_Module *m)
          notification_cfg);
    notification_cfg->initial_mode_timer = ecore_timer_add
        (0.1, (Ecore_Task_Cb)_notification_cb_initial_mode_timer, notification_cfg);
-   
+
    e_gadcon_provider_register(&_gadcon_class);
    read_items_eet(&(notification_cfg->popup_items));
-   
+
    notification_cfg->clicked_item = EINA_FALSE;
    notification_cfg->new_item = 0;
    //~ notification_cfg->module = m;
@@ -789,7 +793,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (notification_cfg->initial_mode_timer)
      ecore_timer_del(notification_cfg->initial_mode_timer);
-   
+
    if (notification_cfg->jump_timer)
      ecore_timer_del(notification_cfg->jump_timer);
 
@@ -863,7 +867,7 @@ _notification_cfg_new(void)
 static void
 _notification_cfg_free(Config *cfg)
 {
-   if (cfg->blacklist) eina_stringshare_del(cfg->blacklist); 
+   if (cfg->blacklist) eina_stringshare_del(cfg->blacklist);
    clear_menu();
    E_FREE(cfg);
 }

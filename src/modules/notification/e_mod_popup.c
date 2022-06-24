@@ -278,11 +278,10 @@ write_history(Eina_List *popup_items)
    int ret;
    Eet_File *history_file = NULL;
    Popup_Items *items = NULL;
-   
-   snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get()); 
+
    if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
    snprintf(file_path, sizeof(file_path), "%s/notif_list", dir); 
-   
+   printf("NOTIFY PATH %s\n", file_path);
    history_file = eet_open(file_path, EET_FILE_MODE_WRITE);
 
    if (history_file){
@@ -1079,7 +1078,7 @@ list_add_item(Popup_Data *popup)
    items->notif_id = e_notification_id_get(popup->notif);
 
    /* Apps blacklist check */
-   if (!notification_cfg->blacklist || strstr(notification_cfg->blacklist, items->item_app)) return;
+   if (strstr(notification_cfg->blacklist, items->item_app)) return;
 
    /* Add item to the menu if less then menu items limit */
    if (notification_cfg->clicked_item == EINA_FALSE)
