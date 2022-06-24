@@ -206,7 +206,7 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    of = e_widget_framelist_add(evas, _("Items"), 0);
    ow = e_widget_label_add(evas, _("Items in history"));
    e_widget_framelist_object_append(of, ow);
-   ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), 10, 50, 1, 0,
+   ow = e_widget_slider_add(evas, 1, 0, _("%2.0f"), HIST_MIN, HIST_MAX, 1, 0,
                              &(cfdata->menu_items), NULL, 100);
    e_widget_framelist_object_append(of, ow);
    e_widget_list_object_append(o, of, 1, 1, 0.5);

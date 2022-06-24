@@ -10,6 +10,11 @@
 #define MOD_CONFIG_FILE_GENERATION 1
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
+/* Notification history list defines */
+#define HIST_MIN    5
+#define HIST_MAX   50
+#define HIST_MAX_DIGITS 2
+
 typedef enum   _Popup_Corner Popup_Corner;
 typedef struct _Config Config;
 typedef struct _Popup_Data Popup_Data;
