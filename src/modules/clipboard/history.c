@@ -134,7 +134,7 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
     unsigned int i =0;
     unsigned int item_num = 0;
     unsigned int version = 0;
-    
+
     /* Open history file */
     if(!_set_history_path(history_path)) {
       ERR("History File Creation Error: %s", history_path);
@@ -191,9 +191,9 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
         snprintf(lock_str, sizeof(lock_str), "%d_lock", i);
         lock_val = eet_read(history_file, lock_str, &size);
           /* prevention for new eet file lock item */
-        if (!lock_val) 
-			lock_val = strdup("U"); 
-        
+        if (!lock_val)
+          lock_val = strdup("U");
+
         // FIXME: DATA VALIDATION
         cd->content = strdup(ret);
         cd->lock = strdup(lock_val);
