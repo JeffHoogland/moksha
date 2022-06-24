@@ -443,8 +443,7 @@ gadget_text(int number)
    Instance *inst = NULL;
    char *buf = (char *) malloc(sizeof(char) * HIST_MAX_DIGITS + 1);
 
-   snprintf(buf, sizeof(number), "%d", number);
-
+   eina_convert_itoa(number, buf);
    if (!notification_cfg->instances) return;
    inst = eina_list_data_get(notification_cfg->instances);
 
