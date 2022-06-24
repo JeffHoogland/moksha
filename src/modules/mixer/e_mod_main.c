@@ -356,9 +356,9 @@ _check_changed_cb(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED,
 }
 
 static void
-_slider_changed_cb(void *data EINA_UNUSED, Evas_Object *obj,
-                   void *event EINA_UNUSED)
+_slider_changed_cb(void *data EINA_UNUSED, Evas_Object *obj)
 {
+   EINA_SAFETY_ON_NULL_RETURN(obj);
    int val;
    pa_volume_t v;
    Sink *s = mixer_context->sink_default;
@@ -378,14 +378,9 @@ _popup_add_slider(Instance *inst)
    pa_volume_t vol = pa_cvolume_avg(&mixer_context->sink_default->volume);
    int value = PA_VOLUME_TO_INT(vol);
 
-   //~ Evas_Object *slider = e_slider_add(inst->popup->win->evas);
-   //~ e_slider_orientation_set(slider, 1);
-   //~ e_slider_value_range_set(slider, 0.0, 153.0);
-   //~ e_slider_value_format_display_set(slider, NULL);
    Evas_Object *slider = e_widget_slider_add(inst->popup->win->evas,  1, 0, "%1.0f", 0, 153, 1.0, 0, NULL, &value, 40);
-   evas_object_smart_callback_add(slider, "changed", _slider_changed_cb,
-                                  NULL);
-   //~ e_slider_value_set(slider, value);
+   e_widget_on_change_hook_set(slider, _slider_changed_cb, NULL);
+
    return slider;
 }
 
