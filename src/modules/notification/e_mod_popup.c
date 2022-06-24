@@ -1079,7 +1079,7 @@ list_add_item(Popup_Data *popup)
    items->notif_id = e_notification_id_get(popup->notif);
 
    /* Apps blacklist check */
-   if (strstr(notification_cfg->blacklist, items->item_app)) return;
+   if (!notification_cfg->blacklist || strstr(notification_cfg->blacklist, items->item_app)) return;
 
    /* Add item to the menu if less then menu items limit */
    if (notification_cfg->clicked_item == EINA_FALSE)
