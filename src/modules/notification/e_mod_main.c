@@ -537,7 +537,7 @@ static void
 _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    Popup_Items *sel_item = (Popup_Items *) selected_item;
-   char *temp_icon = "";
+   char *temp_icon = NULL;
    int check = 0;
 
    notification_cfg->clicked_item = EINA_TRUE;
@@ -560,7 +560,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    if (!notification_cfg->popup_items)
       notification_cfg->clicked_item = EINA_FALSE;
 
-   free(temp_icon);
+   E_FREE(temp_icon);
 }
 
 void
