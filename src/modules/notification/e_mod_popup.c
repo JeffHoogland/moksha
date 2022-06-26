@@ -220,7 +220,7 @@ notification_popup_notify(E_Notification *n,
 
    esc = _nedje_text_escape(e_notification_body_get(n));
    e_notification_body_set(n, esc);
-   free(esc);
+   E_FREE(esc);
 
    if (replaces_id && (popup = _notification_popup_find(replaces_id)))
      {
@@ -408,7 +408,7 @@ _notification_popup_merge(E_Notification *n)
    e_notification_unref(popup->notif);
    popup->notif = n;
    e_notification_ref(popup->notif);
-   if (len >= 65536) free(body_final);
+   if (len >= 65536) E_FREE(body_final);
 
    return popup;
 }
@@ -646,7 +646,7 @@ _notification_popup_new(E_Notification *n)
    
    return popup;
 error:
-   free(popup);
+   E_FREE(popup);
    e_notification_unref(n);
    return NULL;
 }
@@ -890,7 +890,7 @@ _notification_popup_refresh(Popup_Data *popup)
           if (!strstr(notification_cfg->blacklist, popup->app_name))
             evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
           popup->app_icon_image = strdup(image_path);
-          free (image_path);
+          E_FREE(image_path);
         }
      }
 
@@ -996,13 +996,13 @@ _notification_popdown(Popup_Data                  *popup,
      //~ (notification_cfg->daemon, e_notification_id_get(popup->notif), reason);
    e_notification_unref(popup->notif);
    
-   free(popup->act_name_1);
-   free(popup->act_name_2);
-   free(popup->act_name_3);
-   free(popup->but_name_1);
-   free(popup->but_name_2);
-   free(popup->but_name_3);
-   free(popup);
+   E_FREE(popup->act_name_1);
+   E_FREE(popup->act_name_2);
+   E_FREE(popup->act_name_3);
+   E_FREE(popup->but_name_1);
+   E_FREE(popup->but_name_2);
+   E_FREE(popup->but_name_3);
+   E_FREE(popup);
 }
 
 static void

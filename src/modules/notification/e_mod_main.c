@@ -470,7 +470,7 @@ gadget_text(int number)
    else
      edje_object_signal_emit(inst->o_notif, "stop", "");
 
-   free(buf);
+   E_FREE(buf);
 }
 
 static unsigned int
@@ -567,29 +567,29 @@ void
 free_menu_data(Popup_Items *items)
 {
    EINA_SAFETY_ON_NULL_RETURN(items);
-   free(items->item_app);
+   E_FREE(items->item_app);
    items->item_app = NULL;
-   free(items->item_body);
+   E_FREE(items->item_body);
    items->item_body = NULL;
-   free(items->item_date_time);
+   E_FREE(items->item_date_time);
    items->item_date_time = NULL;
-   free(items->item_icon);
+   E_FREE(items->item_icon);
    items->item_icon = NULL;
-   free(items->item_title);
+   E_FREE(items->item_title);
    items->item_title = NULL;
-   free(items->item_key_1);
+   E_FREE(items->item_key_1);
    items->item_key_1 = NULL;
-   free(items->item_key_2);
+   E_FREE(items->item_key_2);
    items->item_key_2 = NULL;
-   free(items->item_key_3);
+   E_FREE(items->item_key_3);
    items->item_key_3 = NULL;
-   free(items->item_but_1);
+   E_FREE(items->item_but_1);
    items->item_but_1 = NULL;
-   free(items->item_but_2);
+   E_FREE(items->item_but_2);
    items->item_but_2 = NULL;
-   free(items->item_but_3);
+   E_FREE(items->item_but_3);
    items->item_but_3 = NULL;
-   free(items);
+   E_FREE(items);
 }
 
 static void
