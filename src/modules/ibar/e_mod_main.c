@@ -838,6 +838,22 @@ _ibar_icon_free(IBar_Icon *ic)
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
    if (ic->app) efreet_desktop_unref(ic->app);
    ic->exe_current = NULL;
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,
+                                  _ibar_cb_icon_mouse_in, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT,
+                                  _ibar_cb_icon_mouse_out, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _ibar_cb_icon_mouse_down, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_UP,
+                                  _ibar_cb_icon_mouse_up, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_MOVE,
+                                  _ibar_cb_icon_mouse_move, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_WHEEL,
+                                  _ibar_cb_icon_wheel, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOVE,
+                                  _ibar_cb_icon_move, ic);
+   evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_RESIZE,
+                                  _ibar_cb_icon_resize, ic);
    ic->ibar->not_in_order_count -= ic->not_in_order;
    if (ic->ibar->ic_drop_before == ic)
      ic->ibar->ic_drop_before = NULL;
@@ -1049,6 +1065,7 @@ _ibar_cb_icon_menu_hidden(void *data, Evas_Object *obj EINA_UNUSED, const char *
 
    E_OBJECT_DEL_SET(ic->menu, NULL);
    E_FREE_FUNC(ic->menu, e_object_del);
+   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
 }
 
 static void
@@ -1214,7 +1231,7 @@ _ibar_icon_menu_hide(IBar_Icon *ic, Eina_Bool grab)
 {
    if (!ic->menu) return;
    if (ic->menu_grabbed != grab) return;
-   if (ic->ibar->menu_icon == ic)
+   if (ic->ibar && (ic->ibar->menu_icon == ic))
      ic->ibar->menu_icon = NULL;
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    ic->menu_grabbed = EINA_FALSE;
