@@ -825,6 +825,13 @@ static void
 _ibar_icon_free(IBar_Icon *ic)
 {
    E_Exec_Instance *inst;
+   
+   if (ic->ibar->menu_icon == ic) ic->ibar->menu_icon = NULL;
+   if (ic->ibar->ic_drop_before == ic) ic->ibar->ic_drop_before = NULL;
+   if (ic->menu) e_object_data_set(E_OBJECT(ic->menu), NULL);
+   E_FREE_FUNC(ic->menu, e_object_del);
+   E_FREE_FUNC(ic->timer, ecore_timer_del);
+   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
 
    ic->ibar->icons = eina_inlist_remove(ic->ibar->icons, EINA_INLIST_GET(ic));
    eina_hash_del_by_key(ic->ibar->icon_hash, _desktop_name_get(ic->app));
@@ -838,9 +845,6 @@ _ibar_icon_free(IBar_Icon *ic)
    EINA_LIST_FREE(ic->exes, inst)
      if (!ic->not_in_order)
        e_exec_instance_watcher_del(inst, _ibar_instance_watch, ic);
-   E_FREE_FUNC(ic->menu, e_object_del);
-   E_FREE_FUNC(ic->timer, ecore_timer_del);
-   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    evas_object_del(ic->o_holder);
    evas_object_del(ic->o_holder2);
    if (ic->exe_inst)
@@ -1024,6 +1028,8 @@ static void
 _ibar_cb_icon_menu_del(void *obj)
 {
    IBar_Icon *ic = e_object_data_get(obj);
+
+   if (!ic) return;
    ic->menu = NULL;
 }
 
@@ -1254,8 +1260,10 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
    if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
      {
-        if (ic->hide_timer) ecore_timer_del(ic->hide_timer);
-        ic->hide_timer = ecore_timer_add(2.0, _ibar_cb_out_hide_delay, ic);
+         if (ic->hide_timer)
+          ecore_timer_reset(ic->hide_timer);
+        else
+          ic->hide_timer = ecore_timer_add(1.0, _ibar_cb_out_hide_delay, ic);
      }
 }
 
@@ -1649,6 +1657,7 @@ _ibar_cb_drag_finished(E_Drag *drag, int dropped)
    IBar *i = e_object_data_get(E_OBJECT(drag));
 
    efreet_desktop_unref(drag->data);
+   if (!i) return;
    if (!dropped)
      {
         _ibar_empty(i);
