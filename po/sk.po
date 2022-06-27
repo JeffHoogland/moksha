@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-05-30 22:01+0200\n"
+"POT-Creation-Date: 2022-06-27 20:03+0200\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -882,7 +882,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1538 src/bin/e_config.c:2163
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:734
 #: src/bin/e_fm.c:10054 src/bin/e_fm.c:10784 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1005,7 +1005,7 @@ msgstr ""
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:479
+#: src/modules/mixer/e_mod_main.c:474
 msgid "Advanced"
 msgstr "Pokročilé"
 
@@ -1020,7 +1020,7 @@ msgstr "Použiť"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:706
+#: src/modules/notification/e_mod_main.c:707
 msgid "Extensions"
 msgstr "Rozšírenia"
 
@@ -1136,11 +1136,11 @@ msgstr "Editor záznamov plochy"
 #: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:134
 msgid "Name"
 msgstr "Názov"
 
-#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:138
 msgid "Comment"
 msgstr "Komentár"
 
@@ -1227,7 +1227,7 @@ msgstr "Vybrať spustiteľný súbor"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_config.c:209
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:666
@@ -1251,148 +1251,151 @@ msgstr "Vložiť"
 msgid "Select All"
 msgstr "Vybrať všetky"
 
-#: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
+#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Chyba pri spustení"
 
-#: src/bin/e_exec.c:401
-msgid "Moksha was unable to get current directory"
+#: src/bin/e_exec.c:484
+#, fuzzy
+msgid "Enlightenment was unable to get current directory"
 msgstr "Moksha nemôže identifikovať aktuálny adresár"
 
-#: src/bin/e_exec.c:409
-#, c-format
-msgid "Moksha was unable to change to directory:<br><br>%s"
+#: src/bin/e_exec.c:492
+#, fuzzy, c-format
+msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr "Moksha nemôže zmeniť adresár:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:420
-#, c-format
-msgid "Moksha was unable to restore to directory:<br><br>%s"
+#: src/bin/e_exec.c:503
+#, fuzzy, c-format
+msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr "Moksha nemôže obnoviť adresár:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:469
-#, c-format
-msgid "Moksha was unable to fork a child process:<br><br>%s"
+#: src/bin/e_exec.c:563
+#, fuzzy, c-format
+msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr "Moksha nemôže vytvoriť proces potomka:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:725
 msgid "Application run error"
 msgstr "Chyba pri spustení aplikácie"
 
-#: src/bin/e_exec.c:607
-#, c-format
+#: src/bin/e_exec.c:727
+#, fuzzy, c-format
 msgid ""
-"Moksha was unable to run the application:<br><br>%s<br><br>The application "
-"failed to start."
+"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"application failed to start."
 msgstr ""
 "Moksha nemôže spustiť aplikáciu.<br><br>%s<br><br>Aplikácia zlyhala pri "
 "spustení."
 
-#: src/bin/e_exec.c:714
-msgid "Execution Error"
-msgstr "Chyba vykonania"
+#: src/bin/e_exec.c:837
+#, fuzzy
+msgid "Application Execution Error"
+msgstr "Chyba pri spustení aplikácie"
 
-#: src/bin/e_exec.c:727 src/bin/e_exec.c:729
+#: src/bin/e_exec.c:850 src/bin/e_exec.c:852
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s neočakávane ukončil svoj beh."
 
-#: src/bin/e_exec.c:735
+#: src/bin/e_exec.c:858
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Návratová hodnota %2$s vrátila aplikácia %1$i."
 
-#: src/bin/e_exec.c:743
+#: src/bin/e_exec.c:866
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s prerušil signál Interrupt."
 
-#: src/bin/e_exec.c:746
+#: src/bin/e_exec.c:869
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s bol prerušený signálom Quit."
 
-#: src/bin/e_exec.c:750
+#: src/bin/e_exec.c:873
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s prerušil signál Abort."
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:876
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s prerušila chyba pohyblivej desatinnej čiarky."
 
-#: src/bin/e_exec.c:757
+#: src/bin/e_exec.c:880
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s prerušil signál Uninterruptable Kill."
 
-#: src/bin/e_exec.c:761
+#: src/bin/e_exec.c:884
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s prerušila chyba segmentácie."
 
-#: src/bin/e_exec.c:765
+#: src/bin/e_exec.c:888
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s prerušila prerušená rúra."
 
-#: src/bin/e_exec.c:768
+#: src/bin/e_exec.c:891
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s prerušil signál Termination."
 
-#: src/bin/e_exec.c:772
+#: src/bin/e_exec.c:895
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s prerušila chyba zbernice."
 
-#: src/bin/e_exec.c:775
+#: src/bin/e_exec.c:898
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s prerušil signál č. %i."
 
-#: src/bin/e_exec.c:832
+#: src/bin/e_exec.c:954
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***Zvyšný výstup bol vynechaný vo výpise. Zobraziť ho môžete uložením "
 "výstupu.***\n"
 
-#: src/bin/e_exec.c:936
-msgid "Error Information"
-msgstr "Informácia o chybe"
-
-#: src/bin/e_exec.c:944
-msgid "Error Signal Information"
-msgstr "Informácia chybového signálu"
-
-#: src/bin/e_exec.c:954 src/bin/e_exec.c:961
-msgid "Output Data"
-msgstr "Výstupné dáta"
-
-#: src/bin/e_exec.c:962
-msgid "There was no output."
-msgstr "Žiaden výstup."
-
-#: src/bin/e_exec.c:970 src/bin/e_exec.c:977
+#: src/bin/e_exec.c:1013 src/bin/e_exec.c:1091 src/bin/e_exec.c:1098
 msgid "Error Logs"
 msgstr "Záznamy chýb"
 
-#: src/bin/e_exec.c:978
+#: src/bin/e_exec.c:1019 src/bin/e_exec.c:1099
 msgid "There was no error message."
 msgstr "Žiadne chybové hlásenie."
 
-#: src/bin/e_exec.c:985
+#: src/bin/e_exec.c:1023 src/bin/e_exec.c:1106
 msgid "Save This Message"
 msgstr "Uložiť túto správu"
 
-#: src/bin/e_exec.c:990 src/bin/e_exec.c:993
+#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1031 src/bin/e_exec.c:1111
+#: src/bin/e_exec.c:1114
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Tento chybový záznam sa uloží ako %s/%s.log"
+
+#: src/bin/e_exec.c:1057
+msgid "Error Information"
+msgstr "Informácia o chybe"
+
+#: src/bin/e_exec.c:1065
+msgid "Error Signal Information"
+msgstr "Informácia chybového signálu"
+
+#: src/bin/e_exec.c:1075 src/bin/e_exec.c:1082
+msgid "Output Data"
+msgstr "Výstupné dáta"
+
+#: src/bin/e_exec.c:1083
+msgid "There was no output."
+msgstr "Žiaden výstup."
 
 #: src/bin/e_fm.c:1069
 msgid "Nonexistent path"
@@ -1521,7 +1524,7 @@ msgid "Eject"
 msgstr "Vysunúť"
 
 #: src/bin/e_fm.c:9246 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1005
+#: src/modules/ibar/e_mod_main.c:1344
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1775,8 +1778,8 @@ msgstr "Názov:"
 msgid "Location:"
 msgstr "Umiestnenie"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
-#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
+#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
 msgid "Size:"
 msgstr "Veľkosť:"
 
@@ -1895,7 +1898,7 @@ msgstr "Vzhľad"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
+#: src/modules/gadman/e_mod_gadman.c:1058
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Odstrániť"
@@ -2290,7 +2293,7 @@ msgstr "Zoznam úloh"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:82
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
 #, c-format
 msgid "%i×%i"
 msgstr ""
@@ -2517,7 +2520,7 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
+#: src/modules/ibar/e_mod_main.c:447 src/modules/ibar/e_mod_main.c:1337
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
@@ -2527,7 +2530,7 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/notification/e_mod_main.c:246
 #: src/modules/notification/e_mod_main.c:358
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -3624,7 +3627,7 @@ msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:666
+#: src/modules/ibar/e_mod_config.c:209 src/modules/clipboard/e_mod_main.c:666
 #: src/modules/clipboard/e_mod_main.c:753
 msgid "Keep"
 msgstr "Ponechať"
@@ -3779,7 +3782,7 @@ msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
+#: src/modules/ibar/e_mod_main.c:441 src/modules/ibar/e_mod_main.c:1331
 msgid "Contents"
 msgstr "Obsah"
 
@@ -4080,9 +4083,9 @@ msgstr[0] "Pred minútou"
 msgstr[1] "%li pred minútami"
 msgstr[2] "%li pred minútami"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
-#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
-#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4219,7 +4222,7 @@ msgstr[2] "%li minút"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:114 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Pridať"
 
@@ -4263,76 +4266,77 @@ msgstr ""
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
+#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
+#: src/bin/e_widget_filepreview.c:543
 msgid "Resolution:"
 msgstr "Rozlíšenie"
 
-#: src/bin/e_widget_filepreview.c:89
+#: src/bin/e_widget_filepreview.c:104
 msgid "Mime-type:"
 msgstr "Typy MIME"
 
-#: src/bin/e_widget_filepreview.c:267
+#: src/bin/e_widget_filepreview.c:413
 #, c-format
 msgid "%3.1f%%"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:273
+#: src/bin/e_widget_filepreview.c:419
 msgid "Length:"
 msgstr "Dĺžka"
 
-#: src/bin/e_widget_filepreview.c:330
+#: src/bin/e_widget_filepreview.c:486
 msgid "Used:"
 msgstr "Použité:"
 
-#: src/bin/e_widget_filepreview.c:332
+#: src/bin/e_widget_filepreview.c:488
 msgid "Reserved:"
 msgstr "Rezervované:"
 
-#: src/bin/e_widget_filepreview.c:333
+#: src/bin/e_widget_filepreview.c:489
 msgid "Mount status:"
 msgstr "Stav pripojenia"
 
-#: src/bin/e_widget_filepreview.c:335
+#: src/bin/e_widget_filepreview.c:491
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/bin/e_widget_filepreview.c:385
+#: src/bin/e_widget_filepreview.c:546
 msgid "Owner:"
 msgstr "Majiteľ:"
 
-#: src/bin/e_widget_filepreview.c:386
+#: src/bin/e_widget_filepreview.c:547
 msgid "Permissions:"
 msgstr "Oprávnenia:"
 
-#: src/bin/e_widget_filepreview.c:387
+#: src/bin/e_widget_filepreview.c:548
 msgid "Modified:"
 msgstr "Zmenené:"
 
-#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
-#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
+#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
 #, c-format
 msgid "Read Only"
 msgstr "Iba na čítanie"
 
-#: src/bin/e_widget_filepreview.c:527 src/bin/e_widget_filepreview.c:716
+#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
 msgid "Read-Write"
 msgstr "Čítať-zapisovať"
 
-#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
+#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
 msgid "Unmounted"
 msgstr "Odpojené"
 
-#: src/bin/e_widget_filepreview.c:640
+#: src/bin/e_widget_filepreview.c:832
 #, c-format
 msgid "You"
 msgstr "Ty"
 
-#: src/bin/e_widget_filepreview.c:689
+#: src/bin/e_widget_filepreview.c:881
 #, c-format
 msgid "Protected"
 msgstr "Chránené"
 
-#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
 #, c-format
 msgid "Forbidden"
 msgstr "Zakázané"
@@ -5748,7 +5752,7 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:345
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:432
 msgid "Mute"
 msgstr "Stlmiť"
 
@@ -6143,7 +6147,7 @@ msgid "Applications Display"
 msgstr "Zobrazenie aplikácií"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:148
+#: src/modules/ibar/e_mod_config.c:142
 msgid "Generic"
 msgstr "Všeobecný názov"
 
@@ -8835,51 +8839,59 @@ msgstr "Prepínanie okien nemôže byť aktivované ACPI skratkami"
 msgid "Select a window"
 msgstr "Vybrať Okno"
 
-#: src/modules/ibar/e_mod_config.c:58
+#: src/modules/ibar/e_mod_config.c:56
 msgid "IBar Settings"
 msgstr "Nastavenia IBar"
 
-#: src/modules/ibar/e_mod_config.c:108
+#: src/modules/ibar/e_mod_config.c:106
 msgid "Selected source"
 msgstr "Vybraný zdroj"
 
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
-msgid "Show Icon Label"
+#: src/modules/ibar/e_mod_config.c:118
+#, fuzzy
+msgid "Setup"
+msgstr "Nastavenie DND"
+
+#: src/modules/ibar/e_mod_config.c:127
+#, fuzzy
+msgid "Icon Labels"
 msgstr "Zobrazovať názov ikony"
 
-#: src/modules/ibar/e_mod_config.c:130
-msgid "Overlapping Label"
-msgstr "Názov cez ikonu"
+#: src/modules/ibar/e_mod_config.c:128
+#, fuzzy
+msgid "Show icon label"
+msgstr "Zobrazovať názov ikony"
 
-#: src/modules/ibar/e_mod_config.c:134
-msgid "Adjacent Label"
-msgstr "Názov vedľa ikony"
-
-#: src/modules/ibar/e_mod_config.c:154
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Misc"
 msgstr "Rôzne"
 
-#: src/modules/ibar/e_mod_config.c:155
-msgid "Icon focus flash"
-msgstr "Animácia ikony"
-
-#: src/modules/ibar/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
 msgstr "Zamknúť presúvanie ikon"
 
-#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:151
+msgid "Don't add items on launch"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:153
 msgid "Track launch"
 msgstr "Sledovať spustenie"
 
-#: src/modules/ibar/e_mod_config.c:193
+#: src/modules/ibar/e_mod_config.c:155
+#, fuzzy
+msgid "Menu on mouse over"
+msgstr "Okno pod myšou do popredia (bez kliknutia)"
+
+#: src/modules/ibar/e_mod_config.c:189
 msgid "Create new IBar source"
 msgstr "Vytvoriť nový zdroj Ibar"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:190
 msgid "Enter a name for this new source:"
 msgstr "Pridať názov pre tento nový zdroj"
 
-#: src/modules/ibar/e_mod_config.c:208
+#: src/modules/ibar/e_mod_config.c:204
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -8887,24 +8899,34 @@ msgid ""
 msgstr ""
 "Požadujete vymazať \"%s\".<br><br>Ste si istý, že chcete vymazať tento zdroj"
 
-#: src/modules/ibar/e_mod_config.c:212
+#: src/modules/ibar/e_mod_config.c:208
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ste si istý, že chcete zmazať tento zdroj?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:2530
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:981
+#: src/modules/ibar/e_mod_main.c:430 src/modules/ibar/e_mod_main.c:1320
 msgid "Create new Icon"
 msgstr "Vytvoriť novú ikonu"
 
-#: src/modules/ibar/e_mod_main.c:1015
+#: src/modules/ibar/e_mod_main.c:1351
+#, fuzzy
+msgid "Add to bar"
+msgstr "Pridať do Ibar modulu"
+
+#: src/modules/ibar/e_mod_main.c:1357
+#, fuzzy
+msgid "Remove from bar"
+msgstr "Odstrániť zásobník"
+
+#: src/modules/ibar/e_mod_main.c:1363
 #, c-format
 msgid "Icon %s"
 msgstr "Ikony %s"
 
-#: src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:2530
 msgid "Focus IBar"
 msgstr "Aktivácia IBar-u"
 
@@ -8915,6 +8937,10 @@ msgstr "Nastavenia IBox"
 #: src/modules/ibox/e_mod_config.c:98
 msgid "Expand When On Desktop"
 msgstr "Roztiahnuť ak je na ploche"
+
+#: src/modules/ibox/e_mod_config.c:101
+msgid "Show Icon Label"
+msgstr "Zobrazovať názov ikony"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -9940,7 +9966,7 @@ msgid "Variant"
 msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:710
 msgid "Notification"
 msgstr "Notifikácia"
 
@@ -9949,27 +9975,27 @@ msgstr "Notifikácia"
 msgid "Empty"
 msgstr "Prázdne"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 msgid "Enter Presentation Mode"
 msgstr "Vstup do režimu Prezentácie"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:630
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha je v režime <br>prezentácie<br>"
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:634
 msgid "Exited Presentation Mode"
 msgstr "Ukončenie režimu prezentácie "
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 msgid "Presentation mode is over."
 msgstr "Režim prezentácie je ukončený"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:648
 msgid "Enter Offline Mode"
 msgstr "Vstup do offline režimu"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:649
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9977,11 +10003,11 @@ msgstr ""
 "Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
 "moduly ktoré využívajú vzdialené služby."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 msgid "Exited Offline Mode"
 msgstr "Ukončenie offline režimu"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9989,15 +10015,15 @@ msgstr ""
 "Teraz v <b>online</b> režime.<br>Moduly používajúce sieť teraz znovu spustia "
 "bežné úlohy"
 
-#: src/modules/notification/e_mod_main.c:738
+#: src/modules/notification/e_mod_main.c:739
 msgid "Notification module"
 msgstr "Modul notifikácií"
 
-#: src/modules/notification/e_mod_main.c:758
+#: src/modules/notification/e_mod_main.c:762
 msgid "Error During DBus Init!"
 msgstr "Chyba počas inicializácie DBus!"
 
-#: src/modules/notification/e_mod_main.c:759
+#: src/modules/notification/e_mod_main.c:763
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -10265,7 +10291,7 @@ msgid "Temp"
 msgstr "Dočasné"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:270
 #: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:932
 msgid "Places"
 msgstr "Miesta"
@@ -10278,7 +10304,7 @@ msgstr "Zobraziť výstrahu plného disku"
 msgid "Capacity limit:"
 msgstr "Limit kapacity disku"
 
-#: src/modules/places/e_mod_main.c:411
+#: src/modules/places/e_mod_main.c:417
 msgid "Places Configuration Updated"
 msgstr "Konfigurácia modulu aktualizovaná"
 
@@ -10378,6 +10404,18 @@ msgstr "Zvýšiť hlasitosť"
 msgid "Volume Mute"
 msgstr "Stlmiť hlasitosť"
 
+#~ msgid "Execution Error"
+#~ msgstr "Chyba vykonania"
+
+#~ msgid "Overlapping Label"
+#~ msgstr "Názov cez ikonu"
+
+#~ msgid "Adjacent Label"
+#~ msgstr "Názov vedľa ikony"
+
+#~ msgid "Icon focus flash"
+#~ msgstr "Animácia ikony"
+
 #~ msgid "Mouse Acceleration"
 #~ msgstr "Akcelerácia myši"
 
@@ -10431,6 +10469,3 @@ msgstr "Stlmiť hlasitosť"
 
 #~ msgid "Modes"
 #~ msgstr "Režimy"
-
-#~ msgid "Show Icon Labels"
-#~ msgstr "Zobrazovať názov ikony"

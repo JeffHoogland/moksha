@@ -20,11 +20,11 @@ struct _Config_Item
    const char *id;
    const char *dir;
    int show_label;
-   int show_label_adjac;
    int eap_label;
    int lock_move;
-   int focus_flash;
+   int dont_add_nonorder;
    unsigned char dont_track_launch;
+   unsigned char dont_icon_menu_mouseover;
 };
 
 EAPI extern E_Module_Api e_modapi;

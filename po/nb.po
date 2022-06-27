@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-05-30 22:01+0200\n"
+"POT-Creation-Date: 2022-06-27 20:03+0200\n"
 "PO-Revision-Date: 2010-05-09 22:20+0100\n"
 "Last-Translator: Audun Gangsto <feitingen@gmail.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -912,7 +912,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1538 src/bin/e_config.c:2163
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:734
 #: src/bin/e_fm.c:10054 src/bin/e_fm.c:10784 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1051,7 +1051,7 @@ msgstr ""
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:479
+#: src/modules/mixer/e_mod_main.c:474
 msgid "Advanced"
 msgstr "Avansert"
 
@@ -1066,7 +1066,7 @@ msgstr "Bruk"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:706
+#: src/modules/notification/e_mod_main.c:707
 msgid "Extensions"
 msgstr "Utvidelser"
 
@@ -1186,11 +1186,11 @@ msgstr "Desktop Entry Editor"
 #: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:134
 msgid "Name"
 msgstr "Navn"
 
-#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:138
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -1278,7 +1278,7 @@ msgstr "Velg et Program"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_config.c:209
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:666
@@ -1302,152 +1302,152 @@ msgstr "Lim inn"
 msgid "Select All"
 msgstr "Velg Alle"
 
-#: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
+#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Kjørefeil"
 
 # (hehe)
-#: src/bin/e_exec.c:401
+#: src/bin/e_exec.c:484
 #, fuzzy
-msgid "Moksha was unable to get current directory"
+msgid "Enlightenment was unable to get current directory"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:409
+#: src/bin/e_exec.c:492
 #, fuzzy, c-format
-msgid "Moksha was unable to change to directory:<br><br>%s"
+msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:420
+#: src/bin/e_exec.c:503
 #, fuzzy, c-format
-msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:469
+#: src/bin/e_exec.c:563
 #, fuzzy, c-format
-msgid "Moksha was unable to fork a child process:<br><br>%s"
+msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:725
 msgid "Application run error"
 msgstr "Kjørefeil i applikasjon"
 
-#: src/bin/e_exec.c:607
-#, c-format
+#: src/bin/e_exec.c:727
+#, fuzzy, c-format
 msgid ""
-"Moksha was unable to run the application:<br><br>%s<br><br>The application "
-"failed to start."
+"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"application failed to start."
 msgstr ""
 "Moksha klarte ikke kjøre applikasjonen:<br><br>%s<br><br>Applikasjonen "
 "startet ikke opp."
 
-#: src/bin/e_exec.c:714
-#, fuzzy
-msgid "Execution Error"
-msgstr "Utløsningsfeil"
+#: src/bin/e_exec.c:837
+msgid "Application Execution Error"
+msgstr "Feil ved kjøring av applikasjon"
 
-#: src/bin/e_exec.c:727 src/bin/e_exec.c:729
+#: src/bin/e_exec.c:850 src/bin/e_exec.c:852
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s sluttet uventet å kjøre."
 
-#: src/bin/e_exec.c:735
+#: src/bin/e_exec.c:858
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr ""
 
-#: src/bin/e_exec.c:743
+#: src/bin/e_exec.c:866
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:746
+#: src/bin/e_exec.c:869
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:750
+#: src/bin/e_exec.c:873
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:876
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr ""
 
-#: src/bin/e_exec.c:757
+#: src/bin/e_exec.c:880
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:761
+#: src/bin/e_exec.c:884
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr ""
 
-#: src/bin/e_exec.c:765
+#: src/bin/e_exec.c:888
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr ""
 
-#: src/bin/e_exec.c:768
+#: src/bin/e_exec.c:891
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:772
+#: src/bin/e_exec.c:895
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr ""
 
-#: src/bin/e_exec.c:775
+#: src/bin/e_exec.c:898
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr ""
 
-#: src/bin/e_exec.c:832
+#: src/bin/e_exec.c:954
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:936
-msgid "Error Information"
-msgstr "Feilinformasjon"
-
-#: src/bin/e_exec.c:944
-msgid "Error Signal Information"
-msgstr "Feilsignalinformasjon"
-
-#: src/bin/e_exec.c:954 src/bin/e_exec.c:961
-msgid "Output Data"
-msgstr "Utdata"
-
-#: src/bin/e_exec.c:962
-msgid "There was no output."
-msgstr "Det var ingen utdata"
-
-#: src/bin/e_exec.c:970 src/bin/e_exec.c:977
+#: src/bin/e_exec.c:1013 src/bin/e_exec.c:1091 src/bin/e_exec.c:1098
 msgid "Error Logs"
 msgstr "Feillogger"
 
-#: src/bin/e_exec.c:978
+#: src/bin/e_exec.c:1019 src/bin/e_exec.c:1099
 msgid "There was no error message."
 msgstr "Det var ingen feilmelding."
 
-#: src/bin/e_exec.c:985
+#: src/bin/e_exec.c:1023 src/bin/e_exec.c:1106
 msgid "Save This Message"
 msgstr "Lagre Denne Beskjeden"
 
-#: src/bin/e_exec.c:990 src/bin/e_exec.c:993
+#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1031 src/bin/e_exec.c:1111
+#: src/bin/e_exec.c:1114
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Denne feilloggen vil bli lagret som %s/%s.log"
+
+#: src/bin/e_exec.c:1057
+msgid "Error Information"
+msgstr "Feilinformasjon"
+
+#: src/bin/e_exec.c:1065
+msgid "Error Signal Information"
+msgstr "Feilsignalinformasjon"
+
+#: src/bin/e_exec.c:1075 src/bin/e_exec.c:1082
+msgid "Output Data"
+msgstr "Utdata"
+
+#: src/bin/e_exec.c:1083
+msgid "There was no output."
+msgstr "Det var ingen utdata"
 
 #: src/bin/e_fm.c:1069
 msgid "Nonexistent path"
@@ -1584,7 +1584,7 @@ msgid "Eject"
 msgstr "Løs Ut"
 
 #: src/bin/e_fm.c:9246 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1005
+#: src/modules/ibar/e_mod_main.c:1344
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -1864,8 +1864,8 @@ msgstr "Navn:"
 msgid "Location:"
 msgstr "rotasjon"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
-#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
+#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
 msgid "Size:"
 msgstr "Størrelse:"
 
@@ -1992,7 +1992,7 @@ msgstr "se"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
+#: src/modules/gadman/e_mod_gadman.c:1058
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Fjern"
@@ -2418,7 +2418,7 @@ msgstr "Oppgavelinje"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:82
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
 #, c-format
 msgid "%i×%i"
 msgstr ""
@@ -2660,7 +2660,7 @@ msgstr "Be om posisjon"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
+#: src/modules/ibar/e_mod_main.c:447 src/modules/ibar/e_mod_main.c:1337
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
@@ -2670,7 +2670,7 @@ msgstr "Be om posisjon"
 #: src/modules/notification/e_mod_main.c:246
 #: src/modules/notification/e_mod_main.c:358
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -3827,7 +3827,7 @@ msgstr "Vil du laste ut denne modulen?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:666
+#: src/modules/ibar/e_mod_config.c:209 src/modules/clipboard/e_mod_main.c:666
 #: src/modules/clipboard/e_mod_main.c:753
 msgid "Keep"
 msgstr ""
@@ -3995,7 +3995,7 @@ msgid "Rename Shelf"
 msgstr "Gi nytt navn"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
+#: src/modules/ibar/e_mod_main.c:441 src/modules/ibar/e_mod_main.c:1331
 #, fuzzy
 msgid "Contents"
 msgstr "Kommentar"
@@ -4307,9 +4307,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "%li minutter siden"
 msgstr[1] "%li minutter siden"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
-#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
-#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4440,7 +4440,7 @@ msgstr[1] "%1.0f minutter"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:114 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Legg til"
 
@@ -4485,81 +4485,82 @@ msgstr ""
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
+#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
+#: src/bin/e_widget_filepreview.c:543
 #, fuzzy
 msgid "Resolution:"
 msgstr "Oppløsning"
 
-#: src/bin/e_widget_filepreview.c:89
+#: src/bin/e_widget_filepreview.c:104
 #, fuzzy
 msgid "Mime-type:"
 msgstr "MIME-typer"
 
-#: src/bin/e_widget_filepreview.c:267
+#: src/bin/e_widget_filepreview.c:413
 #, c-format
 msgid "%3.1f%%"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:273
+#: src/bin/e_widget_filepreview.c:419
 msgid "Length:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:330
+#: src/bin/e_widget_filepreview.c:486
 msgid "Used:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:332
+#: src/bin/e_widget_filepreview.c:488
 msgid "Reserved:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:333
+#: src/bin/e_widget_filepreview.c:489
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:335
+#: src/bin/e_widget_filepreview.c:491
 msgid "Type:"
 msgstr "Type:"
 
-#: src/bin/e_widget_filepreview.c:385
+#: src/bin/e_widget_filepreview.c:546
 msgid "Owner:"
 msgstr "Eier"
 
-#: src/bin/e_widget_filepreview.c:386
+#: src/bin/e_widget_filepreview.c:547
 msgid "Permissions:"
 msgstr "Tillatelser:"
 
-#: src/bin/e_widget_filepreview.c:387
+#: src/bin/e_widget_filepreview.c:548
 #, fuzzy
 msgid "Modified:"
 msgstr "Sist Endret:"
 
-#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
-#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
+#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
 #, fuzzy, c-format
 msgid "Read Only"
 msgstr "Skrivebeskyttet"
 
-#: src/bin/e_widget_filepreview.c:527 src/bin/e_widget_filepreview.c:716
+#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
 #, fuzzy
 msgid "Read-Write"
 msgstr "Lese-og skrivetilgang"
 
-#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
+#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
 #, fuzzy
 msgid "Unmounted"
 msgstr "Avmonter"
 
-#: src/bin/e_widget_filepreview.c:640
+#: src/bin/e_widget_filepreview.c:832
 #, c-format
 msgid "You"
 msgstr "Du"
 
-#: src/bin/e_widget_filepreview.c:689
+#: src/bin/e_widget_filepreview.c:881
 #, fuzzy, c-format
 msgid "Protected"
 msgstr "beskyttet"
 
-#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
 #, fuzzy, c-format
 msgid "Forbidden"
 msgstr "Forbidden"
@@ -6159,7 +6160,7 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:345
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:432
 msgid "Mute"
 msgstr "Demp"
 
@@ -6608,7 +6609,7 @@ msgid "Applications Display"
 msgstr "Applikasjoner"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:148
+#: src/modules/ibar/e_mod_config.c:142
 #, fuzzy
 msgid "Generic"
 msgstr "Generelt Navn"
@@ -9713,55 +9714,62 @@ msgstr ""
 msgid "Select a window"
 msgstr "Velg et vindu"
 
-#: src/modules/ibar/e_mod_config.c:58
+#: src/modules/ibar/e_mod_config.c:56
 msgid "IBar Settings"
 msgstr "IBar Innstillinger"
 
-#: src/modules/ibar/e_mod_config.c:108
+#: src/modules/ibar/e_mod_config.c:106
 #, fuzzy
 msgid "Selected source"
 msgstr "Valgt Barkilde"
 
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
-msgid "Show Icon Label"
+#: src/modules/ibar/e_mod_config.c:118
+#, fuzzy
+msgid "Setup"
+msgstr "Oppsett"
+
+#: src/modules/ibar/e_mod_config.c:127
+#, fuzzy
+msgid "Icon Labels"
 msgstr "Vis Ikonetiketter"
 
-#: src/modules/ibar/e_mod_config.c:130
-msgid "Overlapping Label"
-msgstr ""
-
-#: src/modules/ibar/e_mod_config.c:134
+#: src/modules/ibar/e_mod_config.c:128
 #, fuzzy
-msgid "Adjacent Label"
-msgstr "Ikonetiketter"
+msgid "Show icon label"
+msgstr "Vis Ikonetiketter"
 
-#: src/modules/ibar/e_mod_config.c:154
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Misc"
 msgstr "Diverse"
 
-#: src/modules/ibar/e_mod_config.c:155
-msgid "Icon focus flash"
-msgstr ""
-
-#: src/modules/ibar/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:149
 #, fuzzy
 msgid "Lock icon move"
 msgstr "Lås på Suspend"
 
-#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:151
+msgid "Don't add items on launch"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:153
 #, fuzzy
 msgid "Track launch"
 msgstr "Hurtigstart"
 
-#: src/modules/ibar/e_mod_config.c:193
+#: src/modules/ibar/e_mod_config.c:155
+#, fuzzy
+msgid "Menu on mouse over"
+msgstr "Hev vinduene på musen over"
+
+#: src/modules/ibar/e_mod_config.c:189
 msgid "Create new IBar source"
 msgstr "Lag ny IBarkilde"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:190
 msgid "Enter a name for this new source:"
 msgstr "Fyll inn et navn for den nye kilden:"
 
-#: src/modules/ibar/e_mod_config.c:208
+#: src/modules/ibar/e_mod_config.c:204
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -9770,25 +9778,35 @@ msgstr ""
 "Du har bedt om å slette \"%s\".<br><br>Er du sikker på at du vil slette "
 "denne barkilden?"
 
-#: src/modules/ibar/e_mod_config.c:212
+#: src/modules/ibar/e_mod_config.c:208
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Are you sure you want to delete this bar source?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:2530
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:981
+#: src/modules/ibar/e_mod_main.c:430 src/modules/ibar/e_mod_main.c:1320
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Opprett ny Ikon"
 
-#: src/modules/ibar/e_mod_main.c:1015
+#: src/modules/ibar/e_mod_main.c:1351
+#, fuzzy
+msgid "Add to bar"
+msgstr "Legg til Ibar"
+
+#: src/modules/ibar/e_mod_main.c:1357
+#, fuzzy
+msgid "Remove from bar"
+msgstr "Fjern Gadget"
+
+#: src/modules/ibar/e_mod_main.c:1363
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Ikoner"
 
-#: src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:2530
 #, fuzzy
 msgid "Focus IBar"
 msgstr "Fokus"
@@ -9801,6 +9819,10 @@ msgstr "IBoxinnstillinger"
 #, fuzzy
 msgid "Expand When On Desktop"
 msgstr "Ingen ikoner på skrivebord"
+
+#: src/modules/ibox/e_mod_config.c:101
+msgid "Show Icon Label"
+msgstr "Vis Ikonetiketter"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -10928,7 +10950,7 @@ msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:710
 #, fuzzy
 msgid "Notification"
 msgstr "rotasjon"
@@ -10938,57 +10960,57 @@ msgstr "rotasjon"
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:630
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:634
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:648
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "Frakoblet modus"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:649
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "Frakoblet modus"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:738
+#: src/modules/notification/e_mod_main.c:739
 #, fuzzy
 msgid "Notification module"
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:758
+#: src/modules/notification/e_mod_main.c:762
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:759
+#: src/modules/notification/e_mod_main.c:763
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -11298,7 +11320,7 @@ msgid "Temp"
 msgstr "Temperatur 1"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:270
 #: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:932
 msgid "Places"
 msgstr "Steder"
@@ -11312,7 +11334,7 @@ msgstr "Vis fullstendig bane"
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:411
+#: src/modules/places/e_mod_main.c:417
 #, fuzzy
 msgid "Places Configuration Updated"
 msgstr "Konfigurasjonen er oppgradert"
@@ -11423,6 +11445,14 @@ msgid "Volume Mute"
 msgstr "Endre oppløsning"
 
 #, fuzzy
+#~ msgid "Execution Error"
+#~ msgstr "Utløsningsfeil"
+
+#, fuzzy
+#~ msgid "Adjacent Label"
+#~ msgstr "Ikonetiketter"
+
+#, fuzzy
 #~ msgid "Mouse Acceleration"
 #~ msgstr "mus Akselerasjon"
 
@@ -11459,20 +11489,8 @@ msgstr "Endre oppløsning"
 #~ msgstr "modi"
 
 #, fuzzy
-#~ msgid "Show Icon Labels"
-#~ msgstr "Vis Ikonetiketter"
-
-#, fuzzy
-#~ msgid "Show icon label"
-#~ msgstr "Vis Ikonetiketter"
-
-#, fuzzy
 #~ msgid "Tasks Configuration"
 #~ msgstr "ITray oppsett"
-
-#, fuzzy
-#~ msgid "Setup"
-#~ msgstr "Oppsett"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"
@@ -11546,9 +11564,6 @@ msgstr "Endre oppløsning"
 #, fuzzy
 #~ msgid "Mute Volume"
 #~ msgstr "nytt volum"
-
-#~ msgid "Application Execution Error"
-#~ msgstr "Feil ved kjøring av applikasjon"
 
 #, fuzzy
 #~ msgid "Filemanager is idle"

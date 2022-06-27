@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-05-30 22:01+0200\n"
+"POT-Creation-Date: 2022-06-27 20:03+0200\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -1011,7 +1011,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1538 src/bin/e_config.c:2163
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:734
 #: src/bin/e_fm.c:10054 src/bin/e_fm.c:10784 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1149,7 +1149,7 @@ msgstr ""
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:479
+#: src/modules/mixer/e_mod_main.c:474
 #, fuzzy
 msgid "Advanced"
 msgstr "edasijõudnud"
@@ -1167,7 +1167,7 @@ msgstr "kohaldama"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:706
+#: src/modules/notification/e_mod_main.c:707
 #, fuzzy
 msgid "Extensions"
 msgstr "Extensions"
@@ -1289,12 +1289,12 @@ msgstr "Desktop Entry Editor"
 #: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:134
 #, fuzzy
 msgid "Name"
 msgstr "nimi"
 
-#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:138
 #, fuzzy
 msgid "Comment"
 msgstr "kommentaar"
@@ -1395,7 +1395,7 @@ msgstr "ValiTeostatavad"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_config.c:209
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:666
@@ -1424,154 +1424,155 @@ msgstr "pasta"
 msgid "Select All"
 msgstr "vali kõik"
 
-#: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
+#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 #, fuzzy
 msgid "Run Error"
 msgstr "Run viga"
 
-#: src/bin/e_exec.c:401
-msgid "Moksha was unable to get current directory"
+#: src/bin/e_exec.c:484
+msgid "Enlightenment was unable to get current directory"
 msgstr ""
 
-#: src/bin/e_exec.c:409
+#: src/bin/e_exec.c:492
 #, c-format
-msgid "Moksha was unable to change to directory:<br><br>%s"
+msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:420
+#: src/bin/e_exec.c:503
 #, c-format
-msgid "Moksha was unable to restore to directory:<br><br>%s"
+msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:469
+#: src/bin/e_exec.c:563
 #, c-format
-msgid "Moksha was unable to fork a child process:<br><br>%s"
+msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:725
 #, fuzzy
 msgid "Application run error"
 msgstr "Taotlus run viga"
 
-#: src/bin/e_exec.c:607
+#: src/bin/e_exec.c:727
 #, c-format
 msgid ""
-"Moksha was unable to run the application:<br><br>%s<br><br>The application "
-"failed to start."
+"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"application failed to start."
 msgstr ""
 
-#: src/bin/e_exec.c:714
+#: src/bin/e_exec.c:837
 #, fuzzy
-msgid "Execution Error"
-msgstr "Eject viga"
+msgid "Application Execution Error"
+msgstr "Taotluse täitmine Viga"
 
-#: src/bin/e_exec.c:727 src/bin/e_exec.c:729
+#: src/bin/e_exec.c:850 src/bin/e_exec.c:852
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr ""
 
-#: src/bin/e_exec.c:735
+#: src/bin/e_exec.c:858
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr ""
 
-#: src/bin/e_exec.c:743
+#: src/bin/e_exec.c:866
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:746
+#: src/bin/e_exec.c:869
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:750
+#: src/bin/e_exec.c:873
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:876
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr ""
 
-#: src/bin/e_exec.c:757
+#: src/bin/e_exec.c:880
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:761
+#: src/bin/e_exec.c:884
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr ""
 
-#: src/bin/e_exec.c:765
+#: src/bin/e_exec.c:888
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr ""
 
-#: src/bin/e_exec.c:768
+#: src/bin/e_exec.c:891
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:772
+#: src/bin/e_exec.c:895
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr ""
 
-#: src/bin/e_exec.c:775
+#: src/bin/e_exec.c:898
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr ""
 
-#: src/bin/e_exec.c:832
+#: src/bin/e_exec.c:954
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:936
-#, fuzzy
-msgid "Error Information"
-msgstr "Error Information"
-
-#: src/bin/e_exec.c:944
-#, fuzzy
-msgid "Error Signal Information"
-msgstr "Viga Signal Information"
-
-#: src/bin/e_exec.c:954 src/bin/e_exec.c:961
-#, fuzzy
-msgid "Output Data"
-msgstr "väljundandmed"
-
-#: src/bin/e_exec.c:962
-#, fuzzy
-msgid "There was no output."
-msgstr "Ei olnud toodangut."
-
-#: src/bin/e_exec.c:970 src/bin/e_exec.c:977
+#: src/bin/e_exec.c:1013 src/bin/e_exec.c:1091 src/bin/e_exec.c:1098
 #, fuzzy
 msgid "Error Logs"
 msgstr "viga Logid"
 
-#: src/bin/e_exec.c:978
+#: src/bin/e_exec.c:1019 src/bin/e_exec.c:1099
 #, fuzzy
 msgid "There was no error message."
 msgstr "Puudus veateate."
 
-#: src/bin/e_exec.c:985
+#: src/bin/e_exec.c:1023 src/bin/e_exec.c:1106
 #, fuzzy
 msgid "Save This Message"
 msgstr "Salvesta see sõnum"
 
-#: src/bin/e_exec.c:990 src/bin/e_exec.c:993
+#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1031 src/bin/e_exec.c:1111
+#: src/bin/e_exec.c:1114
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr ""
+
+#: src/bin/e_exec.c:1057
+#, fuzzy
+msgid "Error Information"
+msgstr "Error Information"
+
+#: src/bin/e_exec.c:1065
+#, fuzzy
+msgid "Error Signal Information"
+msgstr "Viga Signal Information"
+
+#: src/bin/e_exec.c:1075 src/bin/e_exec.c:1082
+#, fuzzy
+msgid "Output Data"
+msgstr "väljundandmed"
+
+#: src/bin/e_exec.c:1083
+#, fuzzy
+msgid "There was no output."
+msgstr "Ei olnud toodangut."
 
 #: src/bin/e_fm.c:1069
 #, fuzzy
@@ -1720,7 +1721,7 @@ msgid "Eject"
 msgstr "Eject"
 
 #: src/bin/e_fm.c:9246 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1005
+#: src/modules/ibar/e_mod_main.c:1344
 #, fuzzy
 msgid "Properties"
 msgstr "omadused"
@@ -2013,8 +2014,8 @@ msgstr "nimi;"
 msgid "Location:"
 msgstr "pöörlemine"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
-#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
+#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
 #, fuzzy
 msgid "Size:"
 msgstr "suurus:"
@@ -2155,7 +2156,7 @@ msgstr "Vaata"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
+#: src/modules/gadman/e_mod_gadman.c:1058
 #: src/modules/xkbswitch/e_mod_config.c:267
 #, fuzzy
 msgid "Remove"
@@ -2607,7 +2608,7 @@ msgstr "Taskbar"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:82
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
 #, c-format
 msgid "%i×%i"
 msgstr ""
@@ -2863,7 +2864,7 @@ msgstr "taotlus seisukoha"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
+#: src/modules/ibar/e_mod_main.c:447 src/modules/ibar/e_mod_main.c:1337
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
@@ -2873,7 +2874,7 @@ msgstr "taotlus seisukoha"
 #: src/modules/notification/e_mod_main.c:246
 #: src/modules/notification/e_mod_main.c:358
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:526
 #, fuzzy
 msgid "Settings"
 msgstr "seaded"
@@ -3976,7 +3977,7 @@ msgstr "Kas soovite maha laadida see moodul.<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:666
+#: src/modules/ibar/e_mod_config.c:209 src/modules/clipboard/e_mod_main.c:666
 #: src/modules/clipboard/e_mod_main.c:753
 msgid "Keep"
 msgstr ""
@@ -4141,7 +4142,7 @@ msgid "Rename Shelf"
 msgstr "Nimeta fail"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
+#: src/modules/ibar/e_mod_main.c:441 src/modules/ibar/e_mod_main.c:1331
 #, fuzzy
 msgid "Contents"
 msgstr "sisu"
@@ -4458,9 +4459,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
-#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
-#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4592,7 +4593,7 @@ msgstr[1] ""
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:114 src/modules/xkbswitch/e_mod_config.c:262
 #, fuzzy
 msgid "Add"
 msgstr "lisama"
@@ -4640,84 +4641,85 @@ msgstr ""
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
+#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
+#: src/bin/e_widget_filepreview.c:543
 #, fuzzy
 msgid "Resolution:"
 msgstr "resolutsiooni:"
 
-#: src/bin/e_widget_filepreview.c:89
+#: src/bin/e_widget_filepreview.c:104
 #, fuzzy
 msgid "Mime-type:"
 msgstr "Mime tüübid"
 
-#: src/bin/e_widget_filepreview.c:267
+#: src/bin/e_widget_filepreview.c:413
 #, c-format
 msgid "%3.1f%%"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:273
+#: src/bin/e_widget_filepreview.c:419
 msgid "Length:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:330
+#: src/bin/e_widget_filepreview.c:486
 msgid "Used:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:332
+#: src/bin/e_widget_filepreview.c:488
 msgid "Reserved:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:333
+#: src/bin/e_widget_filepreview.c:489
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:335
+#: src/bin/e_widget_filepreview.c:491
 #, fuzzy
 msgid "Type:"
 msgstr "tüüp;"
 
-#: src/bin/e_widget_filepreview.c:385
+#: src/bin/e_widget_filepreview.c:546
 #, fuzzy
 msgid "Owner:"
 msgstr "Omanik:"
 
-#: src/bin/e_widget_filepreview.c:386
+#: src/bin/e_widget_filepreview.c:547
 #, fuzzy
 msgid "Permissions:"
 msgstr "õigused:"
 
-#: src/bin/e_widget_filepreview.c:387
+#: src/bin/e_widget_filepreview.c:548
 #, fuzzy
 msgid "Modified:"
 msgstr "Viimati muudetud:"
 
-#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
-#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
+#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
 #, fuzzy, c-format
 msgid "Read Only"
 msgstr "Read Only"
 
-#: src/bin/e_widget_filepreview.c:527 src/bin/e_widget_filepreview.c:716
+#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
 #, fuzzy
 msgid "Read-Write"
 msgstr "Kirjutatavuse"
 
-#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
+#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
 #, fuzzy
 msgid "Unmounted"
 msgstr "lahutada"
 
-#: src/bin/e_widget_filepreview.c:640
+#: src/bin/e_widget_filepreview.c:832
 #, fuzzy, c-format
 msgid "You"
 msgstr "te"
 
-#: src/bin/e_widget_filepreview.c:689
+#: src/bin/e_widget_filepreview.c:881
 #, fuzzy, c-format
 msgid "Protected"
 msgstr "kaitstud"
 
-#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
 #, fuzzy, c-format
 msgid "Forbidden"
 msgstr "keelatud"
@@ -6341,7 +6343,7 @@ msgstr ""
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:345
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:432
 #, fuzzy
 msgid "Mute"
 msgstr "vaigistamiseks"
@@ -6793,7 +6795,7 @@ msgid "Applications Display"
 msgstr "Taotlused Näita"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:148
+#: src/modules/ibar/e_mod_config.c:142
 #, fuzzy
 msgid "Generic"
 msgstr "geneeriline"
@@ -9982,85 +9984,101 @@ msgstr ""
 msgid "Select a window"
 msgstr "Valiaken"
 
-#: src/modules/ibar/e_mod_config.c:58
+#: src/modules/ibar/e_mod_config.c:56
 #, fuzzy
 msgid "IBar Settings"
 msgstr "IBAR Settings"
 
-#: src/modules/ibar/e_mod_config.c:108
+#: src/modules/ibar/e_mod_config.c:106
 #, fuzzy
 msgid "Selected source"
 msgstr "Valitud Bar Source"
 
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
+#: src/modules/ibar/e_mod_config.c:118
 #, fuzzy
-msgid "Show Icon Label"
+msgid "Setup"
+msgstr "Setup"
+
+#: src/modules/ibar/e_mod_config.c:127
+#, fuzzy
+msgid "Icon Labels"
 msgstr "Show Icon Label"
 
-#: src/modules/ibar/e_mod_config.c:130
-msgid "Overlapping Label"
-msgstr ""
-
-#: src/modules/ibar/e_mod_config.c:134
+#: src/modules/ibar/e_mod_config.c:128
 #, fuzzy
-msgid "Adjacent Label"
-msgstr "Icon Labels"
+msgid "Show icon label"
+msgstr "Show Icon Label"
 
-#: src/modules/ibar/e_mod_config.c:154
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Misc"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:155
-msgid "Icon focus flash"
-msgstr ""
-
-#: src/modules/ibar/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:149
 #, fuzzy
 msgid "Lock icon move"
 msgstr "Lukk Peatada"
 
-#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:151
+msgid "Don't add items on launch"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:153
 msgid "Track launch"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:193
+#: src/modules/ibar/e_mod_config.c:155
+#, fuzzy
+msgid "Menu on mouse over"
+msgstr "Tõsta aknaid hiirega üle"
+
+#: src/modules/ibar/e_mod_config.c:189
 #, fuzzy
 msgid "Create new IBar source"
 msgstr "Loo uus IBAR allikas"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:190
 #, fuzzy
 msgid "Enter a name for this new source:"
 msgstr "Sisestage nimi uus allikas:"
 
-#: src/modules/ibar/e_mod_config.c:208
+#: src/modules/ibar/e_mod_config.c:204
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:212
+#: src/modules/ibar/e_mod_config.c:208
 #, fuzzy
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Oled sa kindel, et soovite kustutada selle baari allikas."
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:2530
 #, fuzzy
 msgid "IBar"
 msgstr "IBAR"
 
-#: src/modules/ibar/e_mod_main.c:981
+#: src/modules/ibar/e_mod_main.c:430 src/modules/ibar/e_mod_main.c:1320
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Loo uus Icon"
 
-#: src/modules/ibar/e_mod_main.c:1015
+#: src/modules/ibar/e_mod_main.c:1351
+#, fuzzy
+msgid "Add to bar"
+msgstr "Lisa IBAR"
+
+#: src/modules/ibar/e_mod_main.c:1357
+#, fuzzy
+msgid "Remove from bar"
+msgstr "Eemalda vidin"
+
+#: src/modules/ibar/e_mod_main.c:1363
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "ikoonid"
 
-#: src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:2530
 #, fuzzy
 msgid "Focus IBar"
 msgstr "keskenduma"
@@ -10074,6 +10092,11 @@ msgstr "iBox Settings"
 #, fuzzy
 msgid "Expand When On Desktop"
 msgstr "Pin to Desktop"
+
+#: src/modules/ibox/e_mod_config.c:101
+#, fuzzy
+msgid "Show Icon Label"
+msgstr "Show Icon Label"
 
 #: src/modules/ibox/e_mod_config.c:105
 #, fuzzy
@@ -11215,7 +11238,7 @@ msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:710
 #, fuzzy
 msgid "Notification"
 msgstr "pöörlemine"
@@ -11225,57 +11248,57 @@ msgstr "pöörlemine"
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Esitlusrežiim"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:630
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:634
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Esitlusrežiim"
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Esitlusrežiim Toggle"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:648
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "võrguta režiimis"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:649
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "võrguta režiimis"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:738
+#: src/modules/notification/e_mod_main.c:739
 #, fuzzy
 msgid "Notification module"
 msgstr "Esitlusrežiim"
 
-#: src/modules/notification/e_mod_main.c:758
+#: src/modules/notification/e_mod_main.c:762
 msgid "Error During DBus Init!"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:759
+#: src/modules/notification/e_mod_main.c:763
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -11584,7 +11607,7 @@ msgid "Temp"
 msgstr ""
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:270
 #: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:932
 #, fuzzy
 msgid "Places"
@@ -11599,7 +11622,7 @@ msgstr "Näita Full Path"
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:411
+#: src/modules/places/e_mod_main.c:417
 #, fuzzy
 msgid "Places Configuration Updated"
 msgstr "Configuration Panel Konfiguratsioon uuendatud"
@@ -11711,6 +11734,14 @@ msgid "Volume Mute"
 msgstr "mahu muutus"
 
 #, fuzzy
+#~ msgid "Execution Error"
+#~ msgstr "Eject viga"
+
+#, fuzzy
+#~ msgid "Adjacent Label"
+#~ msgstr "Icon Labels"
+
+#, fuzzy
 #~ msgid "Mouse Acceleration"
 #~ msgstr "Mouse Kiirendus"
 
@@ -11747,20 +11778,8 @@ msgstr "mahu muutus"
 #~ msgstr "Modes"
 
 #, fuzzy
-#~ msgid "Show Icon Labels"
-#~ msgstr "Show Icon Label"
-
-#, fuzzy
-#~ msgid "Show icon label"
-#~ msgstr "Show Icon Label"
-
-#, fuzzy
 #~ msgid "Tasks Configuration"
 #~ msgstr "konfiguratsioon"
-
-#, fuzzy
-#~ msgid "Setup"
-#~ msgstr "Setup"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"
@@ -11849,10 +11868,6 @@ msgstr "mahu muutus"
 #, fuzzy
 #~ msgid "Mute Volume"
 #~ msgstr "New maht"
-
-#, fuzzy
-#~ msgid "Application Execution Error"
-#~ msgstr "Taotluse täitmine Viga"
 
 #, fuzzy
 #~ msgid "Filemanager is idle"

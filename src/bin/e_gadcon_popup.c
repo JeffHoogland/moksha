@@ -7,6 +7,16 @@ static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj);
 static void _e_gadcon_popup_position(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
+static void
+_e_gadcon_popup_del_cb(void *obj)
+{
+   E_Gadcon_Popup *pop;
+
+   pop = e_object_data_get(obj);
+   pop->win = NULL;
+   e_object_del(E_OBJECT(pop));
+}
+
 /* externally accessible functions */
 
 EAPI E_Gadcon_Popup *
@@ -21,12 +31,14 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc)
    zone = e_gadcon_client_zone_get(gcc);
    pop->win = e_popup_new(zone, 0, 0, 0, 0);
    e_popup_layer_set(pop->win, E_LAYER_POPUP);
+   e_object_data_set(E_OBJECT(pop->win), pop);
+   E_OBJECT_DEL_SET(pop->win, _e_gadcon_popup_del_cb);
 
    o = edje_object_add(pop->win->evas);
    e_theme_edje_object_set(o, "base/theme/gadman", "e/gadman/popup");
-   evas_object_show(o);
-   evas_object_move(o, 0, 0);
-   e_popup_edje_bg_object_set(pop->win, o);
+   //~ evas_object_show(o);
+   //~ evas_object_move(o, 0, 0);
+   //~ e_popup_edje_bg_object_set(pop->win, o);
    pop->o_bg = o;
 
    pop->gcc = gcc;

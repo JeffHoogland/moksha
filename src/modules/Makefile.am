@@ -12,7 +12,8 @@ AM_CPPFLAGS = -I. \
 	      -I$(top_srcdir) \
 	      -I$(top_srcdir)/src/bin \
 	      -I$(top_builddir)/src/bin \
-	      -I$(top_srcdir)/src/modules
+	      -I$(top_srcdir)/src/modules \
+	      -DE_BINDIR=\"$(bindir)\"
 AM_CFLAGS = @e_cflags@
 LIBS += @e_libs@ @dlopen_libs@
 

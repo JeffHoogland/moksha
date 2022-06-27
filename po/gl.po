@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-05-30 22:01+0200\n"
+"POT-Creation-Date: 2022-06-27 20:03+0200\n"
 "PO-Revision-Date: 2013-09-19 10:28+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -891,7 +891,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1538 src/bin/e_config.c:2163
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:614
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:734
 #: src/bin/e_fm.c:10054 src/bin/e_fm.c:10784 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1015,7 +1015,7 @@ msgstr ""
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
 #: src/modules/cpufreq/e_mod_main.c:1506 src/modules/syscon/e_mod_main.c:36
-#: src/modules/mixer/e_mod_main.c:479
+#: src/modules/mixer/e_mod_main.c:474
 msgid "Advanced"
 msgstr "Avanzado"
 
@@ -1030,7 +1030,7 @@ msgstr "Aplicar"
 
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
-#: src/modules/notification/e_mod_main.c:706
+#: src/modules/notification/e_mod_main.c:707
 msgid "Extensions"
 msgstr "Extensións"
 
@@ -1145,11 +1145,11 @@ msgstr "Entrada do editor de escritorio"
 #: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:140
+#: src/modules/ibar/e_mod_config.c:134
 msgid "Name"
 msgstr "Nome"
 
-#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:144
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:138
 msgid "Comment"
 msgstr "Comentario"
 
@@ -1236,7 +1236,7 @@ msgstr "Seleccione un executable"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:213
+#: src/modules/ibar/e_mod_config.c:116 src/modules/ibar/e_mod_config.c:209
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:666
@@ -1260,147 +1260,148 @@ msgstr "Pegar"
 msgid "Select All"
 msgstr "Seleccionar Todo"
 
-#: src/bin/e_exec.c:400 src/bin/e_exec.c:408 src/bin/e_exec.c:419
-#: src/bin/e_exec.c:468 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
+#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Erro de execución"
 
-#: src/bin/e_exec.c:401
-msgid "Moksha was unable to get current directory"
+#: src/bin/e_exec.c:484
+#, fuzzy
+msgid "Enlightenment was unable to get current directory"
 msgstr "Moksha foi incapaz de obter o directorio actual"
 
-#: src/bin/e_exec.c:409
-#, c-format
-msgid "Moksha was unable to change to directory:<br><br>%s"
+#: src/bin/e_exec.c:492
+#, fuzzy, c-format
+msgid "Enlightenment was unable to change to directory:<br><br>%s"
 msgstr "Moksha foi incapaz de cambiar para o directorio:<br><br>%s"
 
-#: src/bin/e_exec.c:420
-#, c-format
-msgid "Moksha was unable to restore to directory:<br><br>%s"
+#: src/bin/e_exec.c:503
+#, fuzzy, c-format
+msgid "Enlightenment was unable to restore to directory:<br><br>%s"
 msgstr "Moksha foi incapaz de restaurar para o directorio:<br><br>%s"
 
-#: src/bin/e_exec.c:469
-#, c-format
-msgid "Moksha was unable to fork a child process:<br><br>%s"
+#: src/bin/e_exec.c:563
+#, fuzzy, c-format
+msgid "Enlightenment was unable to fork a child process:<br><br>%s"
 msgstr "Moksha foi incapaz de bifurcar o proceso fillo :<br><br>%s"
 
-#: src/bin/e_exec.c:605
+#: src/bin/e_exec.c:725
 msgid "Application run error"
 msgstr "Erro ó executar a aplicación"
 
-#: src/bin/e_exec.c:607
-#, c-format
+#: src/bin/e_exec.c:727
+#, fuzzy, c-format
 msgid ""
-"Moksha was unable to run the application:<br><br>%s<br><br>The application "
-"failed to start."
+"Enlightenment was unable to run the application:<br><br>%s<br><br>The "
+"application failed to start."
 msgstr ""
 "Moksha foi incapaz de executar a aplicación:<br><br>%s<br><br>A aplicación "
 "fallou ó iniciarse."
 
-#: src/bin/e_exec.c:714
-#, fuzzy
-msgid "Execution Error"
-msgstr "Erro ó expulsar"
+#: src/bin/e_exec.c:837
+msgid "Application Execution Error"
+msgstr "Erro de execución da aplicación"
 
-#: src/bin/e_exec.c:727 src/bin/e_exec.c:729
+#: src/bin/e_exec.c:850 src/bin/e_exec.c:852
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s deixou de funcionar inesperadamente."
 
-#: src/bin/e_exec.c:735
+#: src/bin/e_exec.c:858
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Devolveuse un código de saída de %i dende %s."
 
-#: src/bin/e_exec.c:743
+#: src/bin/e_exec.c:866
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s foi interrompido por un Sinal de interrupción."
 
-#: src/bin/e_exec.c:746
+#: src/bin/e_exec.c:869
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s foi interrompido por un Sinal de saída."
 
-#: src/bin/e_exec.c:750
+#: src/bin/e_exec.c:873
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s foi interrompido por un Sinal de cancelación."
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:876
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s foi interrompido por un Erro de coma flotante."
 
-#: src/bin/e_exec.c:757
+#: src/bin/e_exec.c:880
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s foi interrompido por un Sinal de matar initerrumpible."
 
-#: src/bin/e_exec.c:761
+#: src/bin/e_exec.c:884
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s foi interrompido por un Fallo de segmentación."
 
-#: src/bin/e_exec.c:765
+#: src/bin/e_exec.c:888
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s foi interrompido por unha Canalización rota."
 
-#: src/bin/e_exec.c:768
+#: src/bin/e_exec.c:891
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s foi interrompido por un Sinal de finalización"
 
-#: src/bin/e_exec.c:772
+#: src/bin/e_exec.c:895
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s foi interrompido por un Erro de Bus."
 
-#: src/bin/e_exec.c:775
+#: src/bin/e_exec.c:898
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s foi interrompido polo sinal número %i."
 
-#: src/bin/e_exec.c:832
+#: src/bin/e_exec.c:954
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***A saída restante estropeouse. Garde a saída para vela.***\n"
 
-#: src/bin/e_exec.c:936
-msgid "Error Information"
-msgstr "Erro de información"
-
-#: src/bin/e_exec.c:944
-msgid "Error Signal Information"
-msgstr "Información do sinal de erro"
-
-#: src/bin/e_exec.c:954 src/bin/e_exec.c:961
-msgid "Output Data"
-msgstr "Datos de saída"
-
-#: src/bin/e_exec.c:962
-msgid "There was no output."
-msgstr "Non houbo saída."
-
-#: src/bin/e_exec.c:970 src/bin/e_exec.c:977
+#: src/bin/e_exec.c:1013 src/bin/e_exec.c:1091 src/bin/e_exec.c:1098
 msgid "Error Logs"
 msgstr "Rexistro de erros"
 
-#: src/bin/e_exec.c:978
+#: src/bin/e_exec.c:1019 src/bin/e_exec.c:1099
 msgid "There was no error message."
 msgstr "Non houbo mensaxe de erro."
 
-#: src/bin/e_exec.c:985
+#: src/bin/e_exec.c:1023 src/bin/e_exec.c:1106
 msgid "Save This Message"
 msgstr "Gardar esta menxase"
 
-#: src/bin/e_exec.c:990 src/bin/e_exec.c:993
+#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1031 src/bin/e_exec.c:1111
+#: src/bin/e_exec.c:1114
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Estea mensaxe de erro gardarase como %s/%s.log"
+
+#: src/bin/e_exec.c:1057
+msgid "Error Information"
+msgstr "Erro de información"
+
+#: src/bin/e_exec.c:1065
+msgid "Error Signal Information"
+msgstr "Información do sinal de erro"
+
+#: src/bin/e_exec.c:1075 src/bin/e_exec.c:1082
+msgid "Output Data"
+msgstr "Datos de saída"
+
+#: src/bin/e_exec.c:1083
+msgid "There was no output."
+msgstr "Non houbo saída."
 
 #: src/bin/e_fm.c:1069
 msgid "Nonexistent path"
@@ -1529,7 +1530,7 @@ msgid "Eject"
 msgstr "Expulsar"
 
 #: src/bin/e_fm.c:9246 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1005
+#: src/modules/ibar/e_mod_main.c:1344
 msgid "Properties"
 msgstr "Propiedades"
 
@@ -1789,8 +1790,8 @@ msgstr "Nome:"
 msgid "Location:"
 msgstr "Localización:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:274
-#: src/bin/e_widget_filepreview.c:331 src/bin/e_widget_filepreview.c:383
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
+#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
 msgid "Size:"
 msgstr "Tamaño:"
 
@@ -1909,7 +1910,7 @@ msgstr "Aparencia"
 #: src/modules/conf_applications/e_int_config_apps.c:336
 #: src/modules/conf_applications/e_int_config_apps.c:356
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1010
+#: src/modules/gadman/e_mod_gadman.c:1058
 #: src/modules/xkbswitch/e_mod_config.c:267
 msgid "Remove"
 msgstr "Eliminar"
@@ -2306,7 +2307,7 @@ msgstr "Barra de tarefas"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:82
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
 #, c-format
 msgid "%i×%i"
 msgstr "%i×%i"
@@ -2533,7 +2534,7 @@ msgstr "Solicitar posición"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:388 src/modules/ibar/e_mod_main.c:998
+#: src/modules/ibar/e_mod_main.c:447 src/modules/ibar/e_mod_main.c:1337
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:305
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1191
@@ -2543,7 +2544,7 @@ msgstr "Solicitar posición"
 #: src/modules/notification/e_mod_main.c:246
 #: src/modules/notification/e_mod_main.c:358
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:520
+#: src/modules/clipboard/e_mod_main.c:443 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Preferencias"
 
@@ -3640,7 +3641,7 @@ msgstr "Que se debe facer con este módulo?<br>"
 #: src/bin/e_module.c:606 src/bin/e_shelf.c:1794
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:213 src/modules/clipboard/e_mod_main.c:666
+#: src/modules/ibar/e_mod_config.c:209 src/modules/clipboard/e_mod_main.c:666
 #: src/modules/clipboard/e_mod_main.c:753
 msgid "Keep"
 msgstr "Manter"
@@ -3797,7 +3798,7 @@ msgid "Rename Shelf"
 msgstr "Renomear"
 
 #: src/bin/e_shelf.c:2443 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_main.c:992
+#: src/modules/ibar/e_mod_main.c:441 src/modules/ibar/e_mod_main.c:1331
 msgid "Contents"
 msgstr "Contidos"
 
@@ -4095,9 +4096,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "Fai un minuto"
 msgstr[1] "Fai %li minutos"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:538
-#: src/bin/e_widget_filepreview.c:539 src/bin/e_widget_filepreview.c:540
-#: src/bin/e_widget_filepreview.c:571 src/bin/e_widget_filepreview.c:582
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4229,7 +4230,7 @@ msgstr[1] "%li minutos"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:116 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:114 src/modules/xkbswitch/e_mod_config.c:262
 msgid "Add"
 msgstr "Engadir"
 
@@ -4273,76 +4274,77 @@ msgstr "V"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: src/bin/e_widget_filepreview.c:81 src/bin/e_widget_filepreview.c:382
+#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
+#: src/bin/e_widget_filepreview.c:543
 msgid "Resolution:"
 msgstr "Resolución:"
 
-#: src/bin/e_widget_filepreview.c:89
+#: src/bin/e_widget_filepreview.c:104
 msgid "Mime-type:"
 msgstr "Tipo-mime:"
 
-#: src/bin/e_widget_filepreview.c:267
+#: src/bin/e_widget_filepreview.c:413
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:273
+#: src/bin/e_widget_filepreview.c:419
 msgid "Length:"
 msgstr "Lonxitude:"
 
-#: src/bin/e_widget_filepreview.c:330
+#: src/bin/e_widget_filepreview.c:486
 msgid "Used:"
 msgstr "Empregado:"
 
-#: src/bin/e_widget_filepreview.c:332
+#: src/bin/e_widget_filepreview.c:488
 msgid "Reserved:"
 msgstr "Reservado:"
 
-#: src/bin/e_widget_filepreview.c:333
+#: src/bin/e_widget_filepreview.c:489
 msgid "Mount status:"
 msgstr "Estado da montaxe:"
 
-#: src/bin/e_widget_filepreview.c:335
+#: src/bin/e_widget_filepreview.c:491
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/bin/e_widget_filepreview.c:385
+#: src/bin/e_widget_filepreview.c:546
 msgid "Owner:"
 msgstr "Propietario:"
 
-#: src/bin/e_widget_filepreview.c:386
+#: src/bin/e_widget_filepreview.c:547
 msgid "Permissions:"
 msgstr "Permisos:"
 
-#: src/bin/e_widget_filepreview.c:387
+#: src/bin/e_widget_filepreview.c:548
 msgid "Modified:"
 msgstr "Modificado:"
 
-#: src/bin/e_widget_filepreview.c:525 src/bin/e_widget_filepreview.c:691
-#: src/bin/e_widget_filepreview.c:700 src/bin/e_widget_filepreview.c:709
+#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
+#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
 #, c-format
 msgid "Read Only"
 msgstr "Só lectura"
 
-#: src/bin/e_widget_filepreview.c:527 src/bin/e_widget_filepreview.c:716
+#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
 msgid "Read-Write"
 msgstr "Lectura-Escritura"
 
-#: src/bin/e_widget_filepreview.c:530 src/bin/e_widget_filepreview.c:541
+#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
 msgid "Unmounted"
 msgstr "Desmontado"
 
-#: src/bin/e_widget_filepreview.c:640
+#: src/bin/e_widget_filepreview.c:832
 #, c-format
 msgid "You"
 msgstr "Vostede"
 
-#: src/bin/e_widget_filepreview.c:689
+#: src/bin/e_widget_filepreview.c:881
 #, c-format
 msgid "Protected"
 msgstr "Protexido"
 
-#: src/bin/e_widget_filepreview.c:698 src/bin/e_widget_filepreview.c:707
+#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
 #, c-format
 msgid "Forbidden"
 msgstr "Prohíbido"
@@ -5766,7 +5768,7 @@ msgstr "Vaio"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:345
 #: src/modules/mixer/bin/playbacks_view.c:305
-#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:437
+#: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:432
 msgid "Mute"
 msgstr "Silenciar"
 
@@ -6203,7 +6205,7 @@ msgid "Applications Display"
 msgstr "Visualización dos aplicativos"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:148
+#: src/modules/ibar/e_mod_config.c:142
 msgid "Generic"
 msgstr "Xenérico"
 
@@ -8923,52 +8925,57 @@ msgstr "A lista de xanelas non se pode activar dende unha asociación  ACPI"
 msgid "Select a window"
 msgstr "Seleccione unha xanela"
 
-#: src/modules/ibar/e_mod_config.c:58
+#: src/modules/ibar/e_mod_config.c:56
 msgid "IBar Settings"
 msgstr "Configuracións de IBar"
 
-#: src/modules/ibar/e_mod_config.c:108
+#: src/modules/ibar/e_mod_config.c:106
 msgid "Selected source"
 msgstr "Fonte seleccionada"
 
-#: src/modules/ibar/e_mod_config.c:129 src/modules/ibox/e_mod_config.c:101
-msgid "Show Icon Label"
+#: src/modules/ibar/e_mod_config.c:118
+msgid "Setup"
+msgstr "Configuración"
+
+#: src/modules/ibar/e_mod_config.c:127
+#, fuzzy
+msgid "Icon Labels"
 msgstr "Amosa-la etiqueta da icona"
 
-#: src/modules/ibar/e_mod_config.c:130
-msgid "Overlapping Label"
-msgstr ""
+#: src/modules/ibar/e_mod_config.c:128
+msgid "Show icon label"
+msgstr "Amosa-la etiqueta da icona"
 
-#: src/modules/ibar/e_mod_config.c:134
-#, fuzzy
-msgid "Adjacent Label"
-msgstr "Etiquetas das iconas"
-
-#: src/modules/ibar/e_mod_config.c:154
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Misc"
 msgstr "Miscelánea"
 
-#: src/modules/ibar/e_mod_config.c:155
-msgid "Icon focus flash"
-msgstr ""
-
-#: src/modules/ibar/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:149
 msgid "Lock icon move"
 msgstr "Bloquear o movemento de iconas"
 
-#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:151
+msgid "Don't add items on launch"
+msgstr ""
+
+#: src/modules/ibar/e_mod_config.c:153
 msgid "Track launch"
 msgstr "Seguir inicio das aplicacións"
 
-#: src/modules/ibar/e_mod_config.c:193
+#: src/modules/ibar/e_mod_config.c:155
+#, fuzzy
+msgid "Menu on mouse over"
+msgstr "Mostrar xanelas ó pasar o rato por riba"
+
+#: src/modules/ibar/e_mod_config.c:189
 msgid "Create new IBar source"
 msgstr "Crear unha nova fonte IBar"
 
-#: src/modules/ibar/e_mod_config.c:194
+#: src/modules/ibar/e_mod_config.c:190
 msgid "Enter a name for this new source:"
 msgstr "Introduza un nome para esta nova fonte:"
 
-#: src/modules/ibar/e_mod_config.c:208
+#: src/modules/ibar/e_mod_config.c:204
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -8977,24 +8984,34 @@ msgstr ""
 "Solicitou eliminar \"%s\".<br><br>Está seguro de que quere eliminar esta "
 "barra orixe?"
 
-#: src/modules/ibar/e_mod_config.c:212
+#: src/modules/ibar/e_mod_config.c:208
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Está seguro de quere eliminar esta fonte da barra?"
 
-#: src/modules/ibar/e_mod_main.c:293 src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:314 src/modules/ibar/e_mod_main.c:2530
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:981
+#: src/modules/ibar/e_mod_main.c:430 src/modules/ibar/e_mod_main.c:1320
 msgid "Create new Icon"
 msgstr "Crear unha nova Icona"
 
-#: src/modules/ibar/e_mod_main.c:1015
+#: src/modules/ibar/e_mod_main.c:1351
+#, fuzzy
+msgid "Add to bar"
+msgstr "Engadir ó IBar"
+
+#: src/modules/ibar/e_mod_main.c:1357
+#, fuzzy
+msgid "Remove from bar"
+msgstr "Eliminar a morea"
+
+#: src/modules/ibar/e_mod_main.c:1363
 #, c-format
 msgid "Icon %s"
 msgstr "Icona %s"
 
-#: src/modules/ibar/e_mod_main.c:1955
+#: src/modules/ibar/e_mod_main.c:2530
 msgid "Focus IBar"
 msgstr "Enfocar IBar"
 
@@ -9005,6 +9022,10 @@ msgstr "Configuracións de IBox"
 #: src/modules/ibox/e_mod_config.c:98
 msgid "Expand When On Desktop"
 msgstr "Expandir no escritorio"
+
+#: src/modules/ibox/e_mod_config.c:101
+msgid "Show Icon Label"
+msgstr "Amosa-la etiqueta da icona"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -10086,7 +10107,7 @@ msgid "Variant"
 msgstr "Variante"
 
 #: src/modules/notification/e_mod_main.c:102
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:710
 msgid "Notification"
 msgstr "Notificación"
 
@@ -10095,28 +10116,28 @@ msgstr "Notificación"
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 msgid "Enter Presentation Mode"
 msgstr "Entrar no modo de presentación"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:630
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:633
+#: src/modules/notification/e_mod_main.c:634
 msgid "Exited Presentation Mode"
 msgstr "Saiu do modo de presentación"
 
-#: src/modules/notification/e_mod_main.c:634
+#: src/modules/notification/e_mod_main.c:635
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Alternar modo presentación"
 
-#: src/modules/notification/e_mod_main.c:647
+#: src/modules/notification/e_mod_main.c:648
 msgid "Enter Offline Mode"
 msgstr "Entrar no modo sen conexión"
 
-#: src/modules/notification/e_mod_main.c:648
+#: src/modules/notification/e_mod_main.c:649
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10124,11 +10145,11 @@ msgstr ""
 "Moksha está en modo <b>sen conexión</b>.<br>Durante o modo sen conexión, os "
 "módulos que empreguen a rede pararán de analizar servizos remotos."
 
-#: src/modules/notification/e_mod_main.c:654
+#: src/modules/notification/e_mod_main.c:655
 msgid "Exited Offline Mode"
 msgstr "Saíu do modo sen conexión"
 
-#: src/modules/notification/e_mod_main.c:655
+#: src/modules/notification/e_mod_main.c:656
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10136,16 +10157,16 @@ msgstr ""
 "Agora en modo <b>conectado</b>.<br>Os módulos que empreguen a rede retomarán "
 "as tarefas."
 
-#: src/modules/notification/e_mod_main.c:738
+#: src/modules/notification/e_mod_main.c:739
 #, fuzzy
 msgid "Notification module"
 msgstr "Módulo de notificacións"
 
-#: src/modules/notification/e_mod_main.c:758
+#: src/modules/notification/e_mod_main.c:762
 msgid "Error During DBus Init!"
 msgstr "Erro ó iniciar DBus!"
 
-#: src/modules/notification/e_mod_main.c:759
+#: src/modules/notification/e_mod_main.c:763
 msgid ""
 "Error during DBus init! Please check if dbus is correctly installed and "
 "running."
@@ -10447,7 +10468,7 @@ msgid "Temp"
 msgstr "Temporal"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
-#: src/modules/places/e_mod_main.c:312 src/modules/places/e_mod_places.c:270
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:270
 #: src/modules/places/e_mod_places.c:579 src/modules/places/e_mod_places.c:932
 msgid "Places"
 msgstr "Lugares"
@@ -10461,7 +10482,7 @@ msgstr "Amosar aviso de batería baixa"
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:411
+#: src/modules/places/e_mod_main.c:417
 msgid "Places Configuration Updated"
 msgstr "Configuración de Lugares actualizada"
 
@@ -10568,6 +10589,14 @@ msgstr "Volume cambiado"
 msgid "Volume Mute"
 msgstr "Volume cambiado"
 
+#, fuzzy
+#~ msgid "Execution Error"
+#~ msgstr "Erro ó expulsar"
+
+#, fuzzy
+#~ msgid "Adjacent Label"
+#~ msgstr "Etiquetas das iconas"
+
 #~ msgid "Mouse Acceleration"
 #~ msgstr "Aceleración do rato"
 
@@ -10611,18 +10640,8 @@ msgstr "Volume cambiado"
 #~ msgid "Modes"
 #~ msgstr "Ḿodos"
 
-#, fuzzy
-#~ msgid "Show Icon Labels"
-#~ msgstr "Amosa-la etiqueta da icona"
-
-#~ msgid "Show icon label"
-#~ msgstr "Amosa-la etiqueta da icona"
-
 #~ msgid "Tasks Configuration"
 #~ msgstr "Configuración das tarefas"
-
-#~ msgid "Setup"
-#~ msgstr "Configuración"
 
 #, fuzzy
 #~ msgid " No Menu Scroll (Experimental)"
@@ -10694,9 +10713,6 @@ msgstr "Volume cambiado"
 
 #~ msgid "Mute Volume"
 #~ msgstr "Silenciar volumen"
-
-#~ msgid "Application Execution Error"
-#~ msgstr "Erro de execución da aplicación"
 
 #~ msgid "Navigate..."
 #~ msgstr "Navegar..."
