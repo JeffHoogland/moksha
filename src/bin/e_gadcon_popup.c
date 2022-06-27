@@ -36,9 +36,9 @@ e_gadcon_popup_new(E_Gadcon_Client *gcc)
 
    o = edje_object_add(pop->win->evas);
    e_theme_edje_object_set(o, "base/theme/gadman", "e/gadman/popup");
-   //~ evas_object_show(o);
-   //~ evas_object_move(o, 0, 0);
-   //~ e_popup_edje_bg_object_set(pop->win, o);
+   evas_object_show(o);
+   evas_object_move(o, 0, 0);
+   e_popup_edje_bg_object_set(pop->win, o);
    pop->o_bg = o;
 
    pop->gcc = gcc;
