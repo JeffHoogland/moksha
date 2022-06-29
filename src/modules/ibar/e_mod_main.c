@@ -1115,7 +1115,6 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    e_object_data_set(E_OBJECT(ic->menu), ic);
    E_OBJECT_DEL_SET(ic->menu, _ibar_cb_icon_menu_del);
    
-   
    //~ e = e_comp_get(ic->menu)->evas;
    e = ic->menu->win->evas;
    o = edje_object_add(e);
@@ -1135,16 +1134,14 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              
              e_theme_edje_object_set(it, "base/theme/modules/ibar",
                                      "e/modules/ibar/menu/item");
-             //~ e_popup_object_add(ic->menu->win, it);
-             edje_object_part_box_append(o, "e.box", it);
+             e_popup_object_add(ic->menu->win, it);
              //~ img = e_comp_win_image_mirror_add(bd->cw);
-             img = bd->icon_object;
+             img = e_border_icon_add(bd, bd->bg_object); 
              evas_object_event_callback_add(img, EVAS_CALLBACK_DEL,
                                             _ibar_cb_icon_menu_img_del, it);
              txt = e_border_name_get(bd);
-             //~ e_util_dialog_internal("bd", txt);
-             //~ w = bd->cw->pw;
-             //~ h = bd->cw->ph;
+             w = bd->client.w;
+             h = bd->client.h;
              e_popup_object_add(ic->menu->win, img);
              evas_object_show(img);
              //~ edje_extern_object_aspect_set(img, EDJE_ASPECT_CONTROL_BOTH, w, h);
@@ -1182,7 +1179,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    edje_object_signal_callback_add(o, "e,action,hide,done", "*",
                                    _ibar_cb_icon_menu_hidden, ic);
    e_popup_resize(ic->menu->win, w, h);
-   evas_object_resize(e, w, h);
+   evas_object_resize(o, w, h);
+   evas_object_show(o);
    edje_object_signal_emit(o, "e,state,hidden", "e");
    edje_object_message_signal_process(o);
    e_gadcon_popup_show(ic->menu);
@@ -1280,7 +1278,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
          if (ic->hide_timer)
           ecore_timer_reset(ic->hide_timer);
         else
-          ic->hide_timer = ecore_timer_add(1.0, _ibar_cb_out_hide_delay, ic);
+          ic->hide_timer = ecore_timer_add(3.0, _ibar_cb_out_hide_delay, ic);
      }
 }
 
