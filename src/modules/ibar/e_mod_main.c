@@ -1109,6 +1109,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    E_Exec_Instance *exe;
    Evas *e;
    int w, h;
+   E_Zone *zone;
 
    if (!ic->exes) return; //FIXME
    ic->menu = e_gadcon_popup_new(ic->ibar->inst->gcc);
@@ -1117,6 +1118,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    E_OBJECT_DEL_SET(ic->menu, _ibar_cb_icon_menu_del);
    
    //~ e = e_comp_get(ic->menu)->evas;
+   zone = ic->ibar->inst->gcc->gadcon->zone;
    e = ic->menu->win->evas;
    o = edje_object_add(e);
    e_theme_edje_object_set(o, "base/theme/modules/ibar",
@@ -1201,6 +1203,9 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
         ox = (x + (iw / 2)) - (w / 2);
       else
         oy = (y + (ih / 2)) - (h / 2);
+     
+      if (ox < 0) ox = 0;
+      if (ox + w > zone->w) ox = zone->w - w;
       e_popup_move(ic->menu->win, ox, oy);
    }
    edje_object_signal_emit(o, "e,action,show", "e");
