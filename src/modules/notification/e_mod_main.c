@@ -568,27 +568,16 @@ free_menu_data(Popup_Items *items)
 {
    EINA_SAFETY_ON_NULL_RETURN(items);
    E_FREE(items->item_app);
-   items->item_app = NULL;
    E_FREE(items->item_body);
-   items->item_body = NULL;
    E_FREE(items->item_date_time);
-   items->item_date_time = NULL;
    E_FREE(items->item_icon);
-   items->item_icon = NULL;
    E_FREE(items->item_title);
-   items->item_title = NULL;
    E_FREE(items->item_key_1);
-   items->item_key_1 = NULL;
    E_FREE(items->item_key_2);
-   items->item_key_2 = NULL;
    E_FREE(items->item_key_3);
-   items->item_key_3 = NULL;
    E_FREE(items->item_but_1);
-   items->item_but_1 = NULL;
    E_FREE(items->item_but_2);
-   items->item_but_2 = NULL;
    E_FREE(items->item_but_3);
-   items->item_but_3 = NULL;
    E_FREE(items);
 }
 
