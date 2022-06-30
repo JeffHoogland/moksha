@@ -70,6 +70,7 @@ struct _IBar_Icon
    Evas_Object     *o_holder2, *o_icon2;
    Efreet_Desktop  *app;
    Ecore_Timer     *reset_timer;
+   Ecore_Timer     *show_timer; //for menu
    Ecore_Timer     *timer;
    Ecore_Timer     *hide_timer;
    E_Exec_Instance *exe_inst;
@@ -131,6 +132,7 @@ static void         _ibar_drop_position_update(Instance *inst, Evas_Coord x, Eva
 static void         _ibar_inst_cb_scroll(void *data);
 static Eina_Bool    _ibar_cb_config_icons(void *data, int ev_type, void *ev);
 
+static Eina_Bool    _ibar_cb_out_hide_delay(void *data);
 static void         _ibar_icon_menu_show(IBar_Icon *ic, Eina_Bool grab);
 static void         _ibar_icon_menu_hide(IBar_Icon *ic, Eina_Bool grab);
 
@@ -832,6 +834,7 @@ _ibar_icon_free(IBar_Icon *ic)
    E_FREE_FUNC(ic->menu, e_object_del);
    E_FREE_FUNC(ic->timer, ecore_timer_del);
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->show_timer, ecore_timer_del);
 
    ic->ibar->icons = eina_inlist_remove(ic->ibar->icons, EINA_INLIST_GET(ic));
    eina_hash_del_by_key(ic->ibar->icon_hash, _desktop_name_get(ic->app));
@@ -1101,6 +1104,26 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
 }
 
 static void
+_ibar_icon_menu_mouse_in(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+   IBar_Icon *ic = data;
+
+   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
+}
+
+static void
+_ibar_icon_menu_mouse_out(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+   IBar_Icon *ic = data;
+
+   if (e_menu_grab_window_get()) return;
+   if (ic->hide_timer)
+     ecore_timer_reset(ic->hide_timer);
+   else
+     ic->hide_timer = ecore_timer_add(0.5, _ibar_cb_out_hide_delay, ic);
+}
+
+static void
 _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
 {
    Evas_Object *o, *it;
@@ -1179,6 +1202,11 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
         e_object_del(E_OBJECT(ic->menu));
         return;
      }
+   if (!grab)
+     {
+        evas_object_event_callback_add(ic->menu->win->evas, EVAS_CALLBACK_MOUSE_IN, _ibar_icon_menu_mouse_in, ic);
+        evas_object_event_callback_add(ic->menu->win->evas, EVAS_CALLBACK_MOUSE_OUT, _ibar_icon_menu_mouse_out, ic);
+     }
    edje_object_calc_force(o);
    edje_object_size_min_calc(o, &w, &h);
    evas_object_size_hint_min_set(o, w, h);
@@ -1219,6 +1247,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
      e_popup_hide(ic->menu->win);
 }
 
+
+
 static void
 _ibar_icon_menu_show(IBar_Icon *ic, Eina_Bool grab)
 {
@@ -1251,10 +1281,20 @@ _ibar_icon_menu_hide(IBar_Icon *ic, Eina_Bool grab)
    edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
 }
 
+static Eina_Bool
+_ibar_icon_mouse_in_timer(void *data)
+{
+   IBar_Icon *ic = data;
+
+   ic->show_timer = NULL;
+   _ibar_icon_menu_show(ic, EINA_FALSE);
+   return EINA_FALSE;
+}
+
 static void
 _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-   IBar_Icon *ic;
+  IBar_Icon *ic;
 
    ic = data;
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
@@ -1264,7 +1304,12 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
-     _ibar_icon_menu_show(ic, EINA_FALSE);
+     {
+        if (ic->show_timer)
+          ecore_timer_reset(ic->show_timer);
+        else
+          ic->show_timer = ecore_timer_add(0.2, _ibar_icon_mouse_in_timer, ic);
+     }
 }
 
 static Eina_Bool
@@ -1284,6 +1329,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 
    ic = data;
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->show_timer, ecore_timer_del);
    ic->focused = EINA_FALSE;
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->inst->ci->show_label)
@@ -1336,6 +1382,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
    else if (ev->button == 2)
      {
+        E_FREE_FUNC(ic->show_timer, ecore_timer_del);
         E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
         E_FREE_FUNC(ic->timer, ecore_timer_del);
         _ibar_icon_menu_show(ic, EINA_TRUE);
@@ -1346,7 +1393,13 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         E_Menu_Item *mi;
         char buf[256];
         int cx, cy;
-
+        
+        E_FREE_FUNC(ic->show_timer, ecore_timer_del);
+        E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
+        E_FREE_FUNC(ic->timer, ecore_timer_del);
+        
+        if (ic->menu)
+          _ibar_icon_menu_hide(ic, ic->menu_grabbed);
         m = e_menu_new();
 
         /* FIXME: other icon options go here too */
