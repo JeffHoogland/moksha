@@ -1155,6 +1155,20 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              edje_object_part_swallow(it, "e.swallow.icon", img);
              //~ evas_object_pass_events_set(it, 1);
              edje_object_part_text_set(it, "e.text.title", txt);
+             if (bd->focused)
+               edje_object_signal_emit(it, "e,state,focused", "e");
+             if (bd->sticky)
+               {
+                 if (bd->zone != ic->ibar->inst->gcc->gadcon->zone)
+                   edje_object_signal_emit(it, "e,state,otherscreen", "e");
+               }
+             else
+               {
+                 if (bd->zone != ic->ibar->inst->gcc->gadcon->zone)
+                   edje_object_signal_emit(it, "e,state,otherscreen", "e");
+                 else if (bd->desk != e_desk_current_get(ic->ibar->inst->gcc->gadcon->zone))
+                   edje_object_signal_emit(it, "e,state,otherdesk", "e");
+               }
              edje_object_calc_force(it);
              edje_object_size_min_calc(it, &w, &h);
              //~ edje_extern_object_min_size_set(it, w, h);
