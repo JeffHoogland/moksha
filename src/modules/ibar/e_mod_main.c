@@ -1085,7 +1085,6 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
      }
    edje_object_calc_force(ic->menu->o_bg);
    edje_object_size_min_calc(ic->menu->o_bg, &w, &h);
-   //~ edje_extern_object_min_size_set(ic->menu->o_bg, w, h);
    evas_object_size_hint_min_set(ic->menu->o_bg, w, h);
    if (e_box_orientation_get(ic->ibar->o_box))
      {
@@ -1117,7 +1116,6 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    e_object_data_set(E_OBJECT(ic->menu), ic);
    E_OBJECT_DEL_SET(ic->menu, _ibar_cb_icon_menu_del);
    
-   //~ e = e_comp_get(ic->menu)->evas;
    zone = ic->ibar->inst->gcc->gadcon->zone;
    e = ic->menu->win->evas;
    o = edje_object_add(e);
@@ -1138,22 +1136,17 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              e_theme_edje_object_set(it, "base/theme/modules/ibar",
                                      "e/modules/ibar/menu/item");
              e_popup_object_add(ic->menu->win, it);
-             //~ img = e_comp_win_image_mirror_add(bd->cw);
              img = e_border_icon_add(bd, evas_object_evas_get(it));
              evas_object_event_callback_add(img, EVAS_CALLBACK_DEL,
                                             _ibar_cb_icon_menu_img_del, it);
              txt = e_border_name_get(bd);
-             //~ w = bd->client.w;
-             //~ h = bd->client.h;
              w = h = 48;
              evas_object_show(img);
              e_popup_object_add(ic->menu->win, img);
              
-             //~ edje_extern_object_aspect_set(img, EDJE_ASPECT_CONTROL_BOTH, w, h);
              evas_object_size_hint_aspect_set(img, EVAS_ASPECT_CONTROL_BOTH, w, h);
              
              edje_object_part_swallow(it, "e.swallow.icon", img);
-             //~ evas_object_pass_events_set(it, 1);
              edje_object_part_text_set(it, "e.text.title", txt);
              if (bd->focused)
                edje_object_signal_emit(it, "e,state,focused", "e");
@@ -1171,7 +1164,6 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
                }
              edje_object_calc_force(it);
              edje_object_size_min_calc(it, &w, &h);
-             //~ edje_extern_object_min_size_set(it, w, h);
              evas_object_size_hint_min_set(it, w, h);
              evas_object_show(it);
              evas_object_event_callback_add(it, EVAS_CALLBACK_MOUSE_UP,
@@ -1190,7 +1182,6 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    edje_object_calc_force(o);
    edje_object_size_min_calc(o, &w, &h);
    evas_object_size_hint_min_set(o, w, h);
-   //~ edje_extern_object_min_size_set(o, w, h); 
    /* gadcon popups don't really prevent this,
     * so away we go!
     */
