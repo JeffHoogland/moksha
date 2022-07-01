@@ -675,6 +675,7 @@ _ibar_config_item_get(const char *id)
    ci->lock_move = 0;
    ci->dont_add_nonorder = 0;
    ci->dont_track_launch = 0;
+   ci->focus_flash = 1;
    ci->dont_icon_menu_mouseover = 0;
    ibar_config->items = eina_list_append(ibar_config->items, ci);
    return ci;
@@ -1299,7 +1300,8 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    ic = data;
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
    ic->focused = EINA_TRUE;
-   _ibar_icon_signal_emit(ic, "e,state,focused", "e");
+   if (ic->ibar->inst->ci->focus_flash)
+      _ibar_icon_signal_emit(ic, "e,state,focused", "e");
    if (ic->ibar->inst->ci->show_label)
      _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
@@ -1476,7 +1478,8 @@ _ibar_cb_icon_reset(void *data)
    
    if (ic->focused)
      {
-        _ibar_icon_signal_emit(ic, "e,state,focused", "e");
+        if (ic->ibar->inst->ci->focus_flash)
+          _ibar_icon_signal_emit(ic, "e,state,focused", "e");
         if (ic->ibar->inst->ci->show_label)
           _ibar_icon_signal_emit(ic, "e,action,show,label", "e");
      }
@@ -1982,7 +1985,8 @@ _ibar_icon_unfocus_focus(IBar_Icon *ic1, IBar_Icon *ic2)
    if (ic2)
      {
         ic2->focused = EINA_TRUE;
-        _ibar_icon_signal_emit(ic2, "e,state,focused", "e");
+        if (ic2->ibar->inst->ci->focus_flash)
+          _ibar_icon_signal_emit(ic2, "e,state,focused", "e");
         if (ic2->ibar->inst->ci->show_label)
           _ibar_icon_signal_emit(ic2, "e,action,show,label", "e");
      }
@@ -2566,6 +2570,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, show_label, INT);
    E_CONFIG_VAL(D, T, eap_label, INT);
    E_CONFIG_VAL(D, T, lock_move, INT);
+   E_CONFIG_VAL(D, T, focus_flash, INT);
    E_CONFIG_VAL(D, T, dont_add_nonorder, INT);
    E_CONFIG_VAL(D, T, dont_track_launch, UCHAR);
    E_CONFIG_VAL(D, T, dont_icon_menu_mouseover, UCHAR);
@@ -2593,6 +2598,7 @@ e_modapi_init(E_Module *m)
         ci->lock_move = 0;
         ci->dont_add_nonorder = 0;
         ci->dont_track_launch = 0;
+        ci->focus_flash = 1;
         ci->dont_icon_menu_mouseover = 0;
         ibar_config->items = eina_list_append(ibar_config->items, ci);
      }

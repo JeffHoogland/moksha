@@ -9,6 +9,7 @@ struct _E_Config_Dialog_Data
    int               track_launch;
    int               dont_add_nonorder;
    int               icon_menu_mouseover;
+   int               focus_flash;
 
    Evas_Object      *tlist;
    Evas_Object      *radio_name;
@@ -67,6 +68,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    else
      cfdata->dir = eina_stringshare_add("");
    cfdata->show_label = ci->show_label;
+   cfdata->focus_flash = ci->focus_flash;
    cfdata->eap_label = ci->eap_label;
    cfdata->lock_move = ci->lock_move;
    cfdata->dont_add_nonorder = ci->dont_add_nonorder;
@@ -146,6 +148,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Misc"), 0);
+   ob = e_widget_check_add(evas, _("Icon focus flash"), &(cfdata->focus_flash));
+   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Lock icon move"), &(cfdata->lock_move));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Don't add items on launch"), &(cfdata->dont_add_nonorder));
@@ -174,6 +178,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->lock_move = cfdata->lock_move;
    ci->dont_add_nonorder = cfdata->dont_add_nonorder;
    ci->dont_track_launch = !cfdata->track_launch;
+   ci->focus_flash = cfdata->focus_flash;
    ci->dont_icon_menu_mouseover = !cfdata->icon_menu_mouseover;
    _ibar_config_update(ci);
    e_config_save_queue();

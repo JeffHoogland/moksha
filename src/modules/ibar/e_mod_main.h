@@ -23,6 +23,7 @@ struct _Config_Item
    int eap_label;
    int lock_move;
    int dont_add_nonorder;
+   int focus_flash;
    unsigned char dont_track_launch;
    unsigned char dont_icon_menu_mouseover;
 };
