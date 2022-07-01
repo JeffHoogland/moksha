@@ -9385,8 +9385,16 @@ _e_border_eval(E_Border *bd)
                            _e_border_event_border_icon_change_free, NULL);
         }
         
-        if ((bd->new_client || bd->re_manage) && bd->desktop && (!bd->exe_inst))
-          e_exec_phony(bd);
+        if (bd->desktop)
+          {
+             if (!bd->exe_inst)
+               e_exec_phony(bd);
+             if (!bd->exe_inst->desktop)
+               {
+                  efreet_desktop_ref(bd->desktop);
+                  bd->exe_inst->desktop = bd->desktop;
+               }
+          }
         bd->changes.icon = 0;
      }
 
