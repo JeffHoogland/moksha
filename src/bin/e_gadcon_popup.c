@@ -81,10 +81,8 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
    if (pop->win->visible) return;
-
-   e_popup_show(pop->win);
-
    _e_gadcon_popup_position(pop);
+   e_popup_show(pop->win);
 }
 
 EAPI void
