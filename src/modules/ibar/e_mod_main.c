@@ -1039,7 +1039,25 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, v
         e_int_border_menu_show(bd, ev->canvas.x, ev->canvas.y, 0, ev->timestamp);
         return;
      }
-   e_border_activate(bd, 1);
+
+   if (bd->iconic)
+     {
+        e_border_uniconify(bd);
+        e_border_focus_set(bd, 1, 1);
+     }
+   else
+     {
+       if (bd->focused)
+         {
+            e_border_iconify(bd);
+         }
+       else
+         {
+            e_border_raise(bd);
+            e_border_focus_set(bd, 1, 1);
+         }
+     }
+   //~ e_border_activate(bd, 1);
    if (!ic) return;
    edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
 }
