@@ -1255,8 +1255,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
       else
         oy = (y + (ih / 2)) - (h / 2);
      
-      if (ox < 0) ox = 0;
-      if (ox + w > zone->w) ox = zone->w - w;
+      ox = E_CLAMP(ox, zone->x, zone->x + zone->w - w);
       e_popup_move(ic->menu->win, ox, oy);
    }
    edje_object_signal_emit(o, "e,action,show", "e");
