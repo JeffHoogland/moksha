@@ -1126,7 +1126,6 @@ static void
 _ibar_icon_menu_mouse_in(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {
    IBar_Icon *ic = data;
-
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
 }
 
@@ -1223,8 +1222,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
      }
    if (!grab)
      {
-        evas_object_event_callback_add(ic->menu->win->evas, EVAS_CALLBACK_MOUSE_IN, _ibar_icon_menu_mouse_in, ic);
-        evas_object_event_callback_add(ic->menu->win->evas, EVAS_CALLBACK_MOUSE_OUT, _ibar_icon_menu_mouse_out, ic);
+        evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN, _ibar_icon_menu_mouse_in, ic);
+        evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT, _ibar_icon_menu_mouse_out, ic);
      }
    edje_object_calc_force(o);
    edje_object_size_min_calc(o, &w, &h);
@@ -1359,7 +1358,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
          if (ic->hide_timer)
           ecore_timer_reset(ic->hide_timer);
         else
-          ic->hide_timer = ecore_timer_add(3.0, _ibar_cb_out_hide_delay, ic);
+          ic->hide_timer = ecore_timer_add(0.75, _ibar_cb_out_hide_delay, ic);
      }
 }
 
