@@ -8265,19 +8265,20 @@ _e_border_eval0(E_Border *bd)
         {
            char *str = NULL;
 
-           if ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
-               ((bd->client.icccm.client_leader > 0) &&
-                ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
-               )
+           if ((!bd->internal) &&
+              ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
+              ((bd->client.icccm.client_leader > 0) &&
+                ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str)))
+              )
              {
-                if (!strncmp(str, "E_START|", 8))
-                  {
-                     int id;
+               if (!strncmp(str, "E_START|", 8))
+                 {
+                    int id;
 
-                     id = atoi(str + 8);
-                     if (id > 0) bd->client.netwm.startup_id = id;
-                  }
-                free(str);
+                    id = atoi(str + 8);
+                    if (id > 0) bd->client.netwm.startup_id = id;
+                 }
+               free(str);
              }
         }
         /* It's ok not to have fetch flag, should only be set on startup
