@@ -1046,6 +1046,7 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, v
    Evas_Event_Mouse_Up *ev = event_info;
 
    ic = evas_object_data_get(obj, "ibar_icon");
+   if (!ic) return;
    if (ev->button == 3)
      {
         e_int_border_menu_show(bd, ev->canvas.x, ev->canvas.y, 0, ev->timestamp);
@@ -1120,6 +1121,7 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
    IBar_Icon *ic = evas_object_data_del(data, "ibar_icon");
 
    if (!ic) return; //menu is closing
+   evas_object_data_del(obj, "ibar_icon");
    if (!ic->menu) return; //who knows
    edje_object_part_box_remove(ic->menu->o_bg, "e.box", data);
    evas_object_del(data);
@@ -1357,10 +1359,8 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
      {
-        if (ic->show_timer)
-          ecore_timer_reset(ic->show_timer);
-        else
-          ic->show_timer = ecore_timer_add(0.2, _ibar_icon_mouse_in_timer, ic);
+        E_FREE_FUNC(ic->show_timer, ecore_timer_del);
+        ic->show_timer = ecore_timer_add(0.2, _ibar_icon_mouse_in_timer, ic);
      }
 }
 
