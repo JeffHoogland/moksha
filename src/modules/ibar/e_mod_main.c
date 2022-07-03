@@ -87,6 +87,7 @@ struct _IBar_Icon
    Eina_Bool       focused : 1;
    Eina_Bool       not_in_order : 1;
    Eina_Bool       menu_grabbed : 1;
+   Eina_Bool       starting : 1;
 };
 
 static IBar        *_ibar_new(Evas *evas, Instance *inst);
@@ -1611,7 +1612,8 @@ _ibar_instance_watch(void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type)
    switch (type)
      {
       case E_EXEC_WATCH_STARTED:
-        _ibar_icon_signal_emit(ic, "e,state,started", "e");
+        if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
+        ic->starting = EINA_FALSE;
         if (!ic->exes) _ibar_icon_signal_emit(ic, "e,state,on", "e");
         if (ic->exe_inst == inst) ic->exe_inst = NULL;
         if (!eina_list_data_find(ic->exes, inst))
@@ -1666,7 +1668,8 @@ _ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going)
                {
                   ic->exe_inst = einst;
                   e_exec_instance_watcher_add(einst, _ibar_instance_watch, ic);
-                  _ibar_icon_signal_emit(ic, "e,state,starting", "e");
+                  if (!ic->starting) _ibar_icon_signal_emit(ic, "e,state,starting", "e");
+                  ic->starting = EINA_TRUE;
                }
           }
      }
@@ -2477,7 +2480,8 @@ _ibar_cb_bd_prop(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Property
           {
              if (ic)
                {
-                  _ibar_icon_signal_emit(ic, "e,state,started", "e");
+                  if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
+                  ic->starting = EINA_FALSE;
                   if (!ic->exes) _ibar_icon_signal_emit(ic, "e,state,on", "e");
                   if (!eina_list_data_find(ic->exes, ev->border->exe_inst))
                     ic->exes = eina_list_append(ic->exes, ev->border->exe_inst);
@@ -2526,7 +2530,8 @@ _ibar_cb_exec_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Exec_Instance *exe)
         ic = eina_hash_find(b->icon_hash, _desktop_name_get(exe->desktop));
         if (ic)
           {
-             _ibar_icon_signal_emit(ic, "e,state,started", "e");
+             if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
+             ic->starting = EINA_FALSE;
              ic->exes = eina_list_remove(ic->exes, exe);
              if (ic->exe_inst == exe) ic->exe_inst = NULL;
              if (!ic->exes)
@@ -2567,7 +2572,8 @@ _ibar_cb_exec_new_client(void *d EINA_UNUSED, int t EINA_UNUSED, E_Exec_Instance
         ic = eina_hash_find(b->icon_hash, _desktop_name_get(exe->desktop));
         if (ic)
           {
-             _ibar_icon_signal_emit(ic, "e,state,started", "e");
+             if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
+             ic->starting = EINA_FALSE;
              if (!ic->exes) _ibar_icon_signal_emit(ic, "e,state,on", "e");
              if (skip) continue;
              if (!eina_list_data_find(ic->exes, exe))
