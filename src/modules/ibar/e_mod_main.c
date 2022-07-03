@@ -751,16 +751,11 @@ _ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
      {
         Evas_Coord dx, dy, dw, dh;
 
+        /* block drops in the non-order section */
+        if (ic->not_in_order) continue;
         evas_object_geometry_get(ic->o_holder, &dx, &dy, &dw, &dh);
         if (E_INSIDE(x, y, dx, dy, dw, dh))
-          {
-             if (ic->not_in_order)
-               {
-                  /* block drops in the non-order section */
-                  return NULL;
-               }
-             return ic;
-          }
+          return ic;
      }
    return NULL;
 }
@@ -953,9 +948,11 @@ _ibar_cb_app_change(void *data, E_Order *eo __UNUSED__)
    EINA_INLIST_FOREACH(io->bars, b)
      {
         _ibar_empty(b);
-        _ibar_fill(b);
-        _ibar_resize_handle(b);
-        if (b->inst) _gc_orient(b->inst->gcc, -1);
+        if (b->inst)
+          {
+             _ibar_fill(b);
+             if (b->inst->gcc) _gc_orient(b->inst->gcc, -1);
+          }
      }
 }
 
