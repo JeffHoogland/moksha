@@ -853,7 +853,6 @@ _ibar_icon_free(IBar_Icon *ic)
    eina_hash_del_by_key(ic->ibar->icon_hash, _desktop_name_get(ic->app));
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
    if (ic->app) efreet_desktop_unref(ic->app);
-   ic->exe_current = NULL;
    evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,
                                   _ibar_cb_icon_mouse_in, ic);
    evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_OUT,
@@ -874,9 +873,17 @@ _ibar_icon_free(IBar_Icon *ic)
    if (ic->ibar->ic_drop_before == ic)
      ic->ibar->ic_drop_before = NULL;
    _ibar_icon_empty(ic);
-   EINA_LIST_FREE(ic->exes, inst)
-     if (!ic->not_in_order)
-       e_exec_instance_watcher_del(inst, _ibar_instance_watch, ic);
+    EINA_LIST_FREE(ic->exes, inst)
+     {
+        E_Border *bd;
+        Eina_List *ll;
+
+        if (!ic->not_in_order)
+          e_exec_instance_watcher_del(inst, _ibar_instance_watch, ic);
+        EINA_LIST_FOREACH(inst->borders, ll, bd)
+          if (bd->border_menu)
+            evas_object_event_callback_del(bd->border_menu->bg_object, EVAS_CALLBACK_HIDE, _ibar_cb_icon_menu_client_menu_del);
+     }
    evas_object_del(ic->o_holder);
    evas_object_del(ic->o_holder2);
    if (ic->exe_inst)
@@ -1101,6 +1108,12 @@ _ibar_cb_icon_menu_del(void *obj)
 }
 
 static void
+_ibar_cb_icon_menu_autodel(void *data, void *pop EINA_UNUSED)
+{
+   _ibar_cb_icon_menu_hide_begin(data);
+}
+
+static void
 _ibar_cb_icon_menu_shown(void *data, Evas_Object *obj EINA_UNUSED, const char *sig EINA_UNUSED, const char *src EINA_UNUSED)
 {
    IBar_Icon *ic = data;
@@ -1109,18 +1122,14 @@ _ibar_cb_icon_menu_shown(void *data, Evas_Object *obj EINA_UNUSED, const char *s
 }
 
 static void
-_ibar_cb_icon_menu_autodel(void *data, void *pop EINA_UNUSED)
-{
-   _ibar_cb_icon_menu_hide_begin(data);
-}
-
-static void
 _ibar_cb_icon_menu_hidden(void *data, Evas_Object *obj EINA_UNUSED, const char *sig EINA_UNUSED, const char *src EINA_UNUSED)
 {
    IBar_Icon *ic = data;
 
-   E_OBJECT_DEL_SET(ic->menu, NULL);
-   E_FREE_FUNC(ic->menu, e_object_del);
+   //~ E_OBJECT_DEL_SET(ic->menu, NULL);
+   if (!ic->menu) return;
+   if (ic->menu) e_object_del(E_OBJECT(ic->menu));
+   ic->menu = NULL;
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
 }
 
