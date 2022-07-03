@@ -1127,10 +1127,15 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
    if (!ic->menu) return; //who knows
    edje_object_part_box_remove(ic->menu->o_bg, "e.box", data);
    evas_object_del(data);
-   if (eina_list_count(ic->exes) < 2)
+   if (eina_list_count(ic->exes) <= 1)
      {
-        evas_object_pass_events_set(ic->menu->o_bg, 1);
-        edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+        E_Exec_Instance *inst = eina_list_data_get(ic->exes);
+        
+        if ((!inst) || (!inst->borders))
+          {
+            evas_object_pass_events_set(ic->menu->o_bg, 1);
+            edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+          }
         return;
      }
    edje_object_calc_force(ic->menu->o_bg);
