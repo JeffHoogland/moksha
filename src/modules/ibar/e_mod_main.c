@@ -1546,15 +1546,25 @@ _ibar_cb_icon_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    E_Exec_Instance *exe;
    IBar_Icon *ic = data;
    E_Border *cur, *sel = NULL;
-   Eina_List *l;
+   Eina_List *l, *exe_current = NULL;
 
    if (!ic->exes) return;
 
    cur = e_border_focused_get();
-   if (!ic->exe_current)
-     ic->exe_current = ic->exes;
+   //~ cur = e_border_stack_bottom_get(cur);
+   if (cur && cur->exe_inst)
+     {
+        EINA_LIST_FOREACH(ic->exes, l, exe)
+          if (cur->exe_inst == exe)
+            {
+               exe_current = l;
+               break;
+            }
+     }
+   if (!exe_current)
+     exe_current = ic->exes;
 
-   exe = eina_list_data_get(ic->exe_current);
+   exe = eina_list_data_get(exe_current);
    if (ev->z < 0)
      {
         if (cur && (cur->exe_inst == exe))
@@ -1564,9 +1574,9 @@ _ibar_cb_icon_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
           }
         if (!sel)
           {
-             ic->exe_current = eina_list_next(ic->exe_current);
-             if (!ic->exe_current)
-               ic->exe_current = ic->exes;
+             exe_current = eina_list_next(exe_current);
+             if (!exe_current)
+               exe_current = ic->exes;
           }
      }
    else if (ev->z > 0)
@@ -1578,21 +1588,18 @@ _ibar_cb_icon_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
           }
         if (!sel)
           {
-             ic->exe_current = eina_list_prev(ic->exe_current);
-             if (!ic->exe_current)
-               ic->exe_current = eina_list_last(ic->exes);
+             exe_current = eina_list_prev(exe_current);
+             if (!exe_current)
+               exe_current = eina_list_last(ic->exes);
           }
      }
 
    if (!sel)
      {
-        if (ic->exe_current)
-          {
-             exe = eina_list_data_get(ic->exe_current);
-             sel = eina_list_data_get(exe->borders);
-             if (sel == cur)
-               sel = eina_list_data_get(eina_list_next(exe->borders));
-          }
+        exe = eina_list_data_get(exe_current);
+        sel = eina_list_data_get(exe->borders);
+        if (sel == cur)
+          sel = eina_list_data_get(eina_list_next(exe->borders));
      }
 
    if (sel)
