@@ -899,13 +899,11 @@ _ibar_icon_fill(IBar_Icon *ic)
    evas_object_name_set(ic->o_icon, "icon");
    e_icon_fdo_icon_set(ic->o_icon, ic->app->icon);
    edje_object_part_swallow(ic->o_holder, "e.swallow.content", ic->o_icon);
-   evas_object_pass_events_set(ic->o_icon, 1);
    evas_object_show(ic->o_icon);
    if (ic->o_icon2) evas_object_del(ic->o_icon2);
    ic->o_icon2 = e_icon_add(evas_object_evas_get(ic->ibar->o_box));
    e_icon_fdo_icon_set(ic->o_icon2, ic->app->icon);
    edje_object_part_swallow(ic->o_holder2, "e.swallow.content", ic->o_icon2);
-   evas_object_pass_events_set(ic->o_icon2, 1);
    evas_object_show(ic->o_icon2);
 
    switch (ic->ibar->inst->ci->eap_label)
@@ -1588,8 +1586,11 @@ _ibar_cb_icon_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 
    if (!sel)
      {
-        exe = eina_list_data_get(ic->exe_current);
-        sel = eina_list_data_get(exe->borders);
+        if (ic->exe_current)
+          {
+             if ((exe = eina_list_data_get(ic->exe_current)))
+               sel = eina_list_data_get(exe->borders);
+          }
      }
 
    if (sel)
