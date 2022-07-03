@@ -1891,11 +1891,14 @@ _ibar_inst_cb_move(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
+   int x,y;
 
    ev = event_info;
    inst = data;
    _ibar_drop_position_update(inst, ev->x, ev->y);
-   e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
+   //~ e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
+   evas_object_geometry_get(inst->ibar->o_outerbox, &x, &y, NULL, NULL);
+   e_gadcon_client_autoscroll_update(inst->gcc, ev->x - x, ev->y - y);
 }
 
 static void
