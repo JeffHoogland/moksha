@@ -45,6 +45,7 @@ EAPI void        e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o);
 EAPI void        e_popup_layer_set(E_Popup *pop, E_Layer layer);
 EAPI void        e_popup_idler_before(void);
 EAPI void        e_popup_object_add(E_Popup *pop, Evas_Object *obj);
+EAPI void        e_popup_object_remove(E_Popup *pop, Evas_Object *obj);
 EAPI E_Popup    *e_popup_find_by_window(Ecore_X_Window win);
 
 #endif
