@@ -976,6 +976,13 @@ _ibar_cb_obj_moveresize(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
 }
 
 static void
+_ibar_cb_menu_icon_action_exec(void *data, E_Menu *m EINA_UNUSED, E_Menu_Item *mi EINA_UNUSED)
+{
+   Efreet_Desktop_Action *action = (Efreet_Desktop_Action*)data;
+   e_exec(NULL, NULL, action->exec, NULL, "ibar");
+}
+
+static void
 _ibar_cb_menu_icon_new(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Container *con;
@@ -1142,17 +1149,20 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
    edje_object_size_min_calc(ic->menu->o_bg, &w, &h);
    evas_object_size_hint_min_set(ic->menu->o_bg, w, h);
    if (e_box_orientation_get(ic->ibar->o_box))
-     {
-        int ny;
+    {
+        int cx, cy, cw, ch, ny;
+        E_Zone *zone;
 
-        if (ic->menu->win->y > (ic->menu->win->zone->h / 2))
-          ny = ic->menu->win->y - (h - ic->menu->win->h);
+        evas_object_geometry_get(ic->menu->o_bg, &cx, &cy, &cw, &ch);
+        zone = e_gadcon_zone_get(ic->ibar->inst->gcc->gadcon);
+        if (cy > (zone->h / 2))
+          ny = cy - (h - ch);
         else
-          ny = ic->menu->win->y;
-        e_popup_move_resize(ic->menu->win, ic->menu->win->x, ny, w, h);
+          ny = cy;
+        evas_object_geometry_set(ic->menu->o_bg, cx, ny, w, h);
      }
    else
-     e_popup_resize(ic->menu->win, w, h);
+      evas_object_resize(ic->menu->o_bg, w, h);
 }
 
 static void
@@ -1361,7 +1371,7 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
      {
         E_FREE_FUNC(ic->show_timer, ecore_timer_del);
-        ic->show_timer = ecore_timer_add(0.2, _ibar_icon_mouse_in_timer, ic);
+        ic->show_timer = ecore_timer_loop_add(0.2, _ibar_icon_mouse_in_timer, ic);
      }
 }
 
@@ -1442,8 +1452,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
      }
    else if (ev->button == 3)
      {
+        Eina_List *it; 
         E_Menu *m, *mo;
         E_Menu_Item *mi;
+        Efreet_Desktop_Action *action;
         char buf[256];
         int cx, cy;
         
@@ -1511,6 +1523,20 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
                                           mi);
         e_menu_item_submenu_set(mi, mo);
         e_object_unref(E_OBJECT(mo));
+        
+        if (ic->app->actions)
+          {
+             mi = NULL;
+             EINA_LIST_FOREACH(ic->app->actions, it, action)
+               {
+                  mi = e_menu_item_new_relative(m, mi);
+                  e_menu_item_label_set(mi, action->name);
+                  e_util_menu_item_theme_icon_set(mi, action->icon);
+                  e_menu_item_callback_set(mi, _ibar_cb_menu_icon_action_exec, action);
+               }
+             mi = e_menu_item_new_relative(m, mi);
+             e_menu_item_separator_set(mi, 1);
+          }
         e_gadcon_client_menu_set(ic->ibar->inst->gcc, m);
 
         e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
