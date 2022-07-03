@@ -1039,6 +1039,14 @@ _ibar_cb_menu_configuration(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __
 }
 
 static void
+_ibar_cb_icon_menu_hide_begin(IBar_Icon *ic)
+{
+   if (!ic->menu) return;
+   evas_object_pass_events_set(ic->menu->o_bg, 1);
+   edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+}
+
+static void
 _ibar_cb_icon_menu_mouse_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, void *event_info)
 {
    IBar_Icon *ic;
@@ -1072,9 +1080,8 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, v
          }
      }
    //~ e_border_activate(bd, 1);
-   if (!ic) return;
-   evas_object_pass_events_set(ic->menu->o_bg, 1);
-   edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+   if (ic)
+     _ibar_cb_icon_menu_hide_begin(ic);
 }
 
 static void
@@ -1097,11 +1104,7 @@ _ibar_cb_icon_menu_shown(void *data, Evas_Object *obj EINA_UNUSED, const char *s
 static void
 _ibar_cb_icon_menu_autodel(void *data, void *pop EINA_UNUSED)
 {
-   IBar_Icon *ic = data;
-
-   if (!ic->menu) return;
-   evas_object_pass_events_set(ic->menu->o_bg, 1);
-   edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+   _ibar_cb_icon_menu_hide_begin(data);
 }
 
 static void
@@ -1131,10 +1134,9 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EIN
         
         if ((!inst) || (!inst->borders))
           {
-            evas_object_pass_events_set(ic->menu->o_bg, 1);
-            edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+            _ibar_cb_icon_menu_hide_begin(ic); 
+            return;
           }
-        return;
      }
    edje_object_calc_force(ic->menu->o_bg);
    edje_object_size_min_calc(ic->menu->o_bg, &w, &h);
@@ -1167,9 +1169,9 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA
 
    if (e_menu_grab_window_get()) return;
    if (ic->hide_timer)
-     ecore_timer_reset(ic->hide_timer);
+     ecore_timer_loop_reset(ic->hide_timer);
    else
-     ic->hide_timer = ecore_timer_add(0.5, _ibar_cb_out_hide_delay, ic);
+     ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
 }
 
 static void
@@ -1330,8 +1332,7 @@ _ibar_icon_menu_hide(IBar_Icon *ic, Eina_Bool grab)
      ic->ibar->menu_icon = NULL;
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    ic->menu_grabbed = EINA_FALSE;
-   evas_object_pass_events_set(ic->menu->o_bg, 1);
-   edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+   _ibar_cb_icon_menu_hide_begin(ic);
 }
 
 static Eina_Bool
@@ -1388,10 +1389,10 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      _ibar_icon_signal_emit(ic, "e,action,hide,label", "e");
    if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
      {
-         if (ic->hide_timer)
-          ecore_timer_reset(ic->hide_timer);
+        if (ic->hide_timer)
+          ecore_timer_loop_reset(ic->hide_timer);
         else
-          ic->hide_timer = ecore_timer_add(0.75, _ibar_cb_out_hide_delay, ic);
+          ic->hide_timer = ecore_timer_loop_add(0.75, _ibar_cb_out_hide_delay, ic);
      }
 }
 
