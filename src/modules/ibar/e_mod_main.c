@@ -1126,10 +1126,9 @@ _ibar_cb_icon_menu_hidden(void *data, Evas_Object *obj EINA_UNUSED, const char *
 {
    IBar_Icon *ic = data;
 
-   //~ E_OBJECT_DEL_SET(ic->menu, NULL);
-   if (!ic->menu) return;
-   if (ic->menu) e_object_del(E_OBJECT(ic->menu));
-   ic->menu = NULL;
+   E_OBJECT_DEL_SET(ic->menu, NULL);
+   E_FREE_FUNC(ic->menu, e_object_del);
+   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
 }
 
