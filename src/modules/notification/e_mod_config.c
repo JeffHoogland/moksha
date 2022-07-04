@@ -301,6 +301,7 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    t = strdup(cfdata->blacklist);
    *t = toupper(*t);
    notification_cfg->blacklist = eina_stringshare_add(t);
+   E_FREE(t);
 
    e_modapi_save(notification_mod);
    return 1;
