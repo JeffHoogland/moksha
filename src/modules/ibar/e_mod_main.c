@@ -109,7 +109,7 @@ static void         _ibar_icon_free(IBar_Icon *ic);
 static void         _ibar_icon_fill(IBar_Icon *ic);
 static void         _ibar_icon_empty(IBar_Icon *ic);
 static void         _ibar_sep_create(IBar *b);
-static void         _ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src);
+static void         _ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src);
 static void         _ibar_cb_app_change(void *data, E_Order *eo);
 static void         _ibar_cb_obj_moveresize(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void         _ibar_cb_menu_icon_new(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -942,16 +942,16 @@ _ibar_icon_empty(IBar_Icon *ic)
 }
 
 static void
-_ibar_icon_signal_emit(IBar_Icon *ic, char *sig, char *src)
+_ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src)
 {
    if (ic->o_holder)
      edje_object_signal_emit(ic->o_holder, sig, src);
    if (ic->o_icon && e_icon_edje_get(ic->o_icon))
-     edje_object_signal_emit(ic->o_icon, sig, src);
+     e_icon_edje_emit(ic->o_icon, sig, src);
    if (ic->o_holder2)
      edje_object_signal_emit(ic->o_holder2, sig, src);
-   if (ic->o_icon2 && e_icon_edje_get(ic->o_icon))
-     edje_object_signal_emit(ic->o_icon2, sig, src);
+   if (ic->o_icon2 && e_icon_edje_get(ic->o_icon2))
+     e_icon_edje_emit(ic->o_icon2, sig, src);
 }
 
 static void
