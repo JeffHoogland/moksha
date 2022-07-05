@@ -1727,7 +1727,7 @@ _ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going)
      }
    _ibar_icon_signal_emit(ic, "e,action,exec", "e");
    if (keep_going)
-     ic->reset_timer = ecore_timer_add(1.0, _ibar_cb_icon_reset, ic);
+     ic->reset_timer = ecore_timer_loop_add(1.0, _ibar_cb_icon_reset, ic);
 }
 
 static void
