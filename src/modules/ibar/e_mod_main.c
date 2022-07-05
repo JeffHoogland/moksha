@@ -77,6 +77,7 @@ struct _IBar_Icon
    Eina_List       *exes; //all instances
    Eina_List       *exe_current;
    E_Gadcon_Popup  *menu;
+   const char      *hashname;
    int              mouse_down;
    struct
    {
@@ -568,14 +569,8 @@ _ibar_fill(IBar *b)
    _ibar_empty_handle(b);
    _ibar_resize_handle(b);
    if (!b->inst->gcc) return;
-   e_box_size_min_get(b->o_box, &w, &h);
-   e_box_pack_options_set(b->o_box,
-                          1, 1, /* fill */
-                          1, 1, /* expand */
-                          0.5, 0.5, /* align */
-                          w, h, /* min */
-                          w, h /* max */
-                          );
+   evas_object_size_hint_min_get(b->o_box, &w, &h);
+   evas_object_size_hint_max_set(b->o_box, w, h);
 }
 
 static void
@@ -801,7 +796,17 @@ _ibar_icon_new(IBar *b, Efreet_Desktop *desktop, Eina_Bool notinorder)
 
    _ibar_icon_fill(ic);
    b->icons = eina_inlist_append(b->icons, EINA_INLIST_GET(ic));
-   eina_hash_add(b->icon_hash, _desktop_name_get(ic->app), ic);
+   if (eina_hash_find(b->icon_hash, _desktop_name_get(ic->app)))
+     {
+        char buf[PATH_MAX];
+
+        ERR("Ibar - Unexpected: icon with same desktop path created twice");
+        snprintf(buf, sizeof(buf), "%s::%1.20f",
+                 _desktop_name_get(ic->app), ecore_time_get());
+        ic->hashname = eina_stringshare_add(buf);
+     }
+   else ic->hashname = eina_stringshare_add(_desktop_name_get(ic->app));
+   eina_hash_add(b->icon_hash, ic->hashname, ic);
    if (notinorder)
      {
         ic->not_in_order = 1;
@@ -841,7 +846,7 @@ static void
 _ibar_icon_free(IBar_Icon *ic)
 {
    E_Exec_Instance *inst;
-   
+
    if (ic->ibar->menu_icon == ic) ic->ibar->menu_icon = NULL;
    if (ic->ibar->ic_drop_before == ic) ic->ibar->ic_drop_before = NULL;
    if (ic->menu) e_object_data_set(E_OBJECT(ic->menu), NULL);
@@ -851,7 +856,8 @@ _ibar_icon_free(IBar_Icon *ic)
    E_FREE_FUNC(ic->show_timer, ecore_timer_del);
 
    ic->ibar->icons = eina_inlist_remove(ic->ibar->icons, EINA_INLIST_GET(ic));
-   eina_hash_del_by_key(ic->ibar->icon_hash, _desktop_name_get(ic->app));
+   eina_hash_del_by_key(ic->ibar->icon_hash, ic->hashname);
+   E_FREE_FUNC(ic->hashname, eina_stringshare_del);
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
    if (ic->app) efreet_desktop_unref(ic->app);
    evas_object_event_callback_del_full(ic->o_holder, EVAS_CALLBACK_MOUSE_IN,
@@ -1136,14 +1142,15 @@ static void
 _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    int w, h;
-   IBar_Icon *ic = evas_object_data_del(data, "ibar_icon");
+   IBar_Icon *ic;
 
+   ic = evas_object_data_del(obj, "ibar_icon");
    if (!ic) return; //menu is closing
+
    evas_object_data_del(obj, "ibar_icon");
-   ic->menu->win->objects = eina_list_remove(ic->menu->win->objects, obj);
    if (!ic->menu) return; //who knows
    edje_object_part_box_remove(ic->menu->o_bg, "e.box", data);
-   
+
    evas_object_del(data);
    if (eina_list_count(ic->exes) <= 1)
      {
@@ -1231,13 +1238,14 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
                                      "e/modules/ibar/menu/item");
              e_popup_object_add(ic->menu->win, it);
              img = e_border_icon_add(bd, evas_object_evas_get(it));
+             evas_object_data_set(img, "ibar_icon", ic);
+
              evas_object_event_callback_add(img, EVAS_CALLBACK_DEL,
                                             _ibar_cb_icon_menu_img_del, it);
              txt = e_border_name_get(bd);
              w = h = 48;
              evas_object_show(img);
              e_popup_object_add(ic->menu->win, img);
-             
              evas_object_size_hint_aspect_set(img, EVAS_ASPECT_CONTROL_BOTH, w, h);
              
              edje_object_part_swallow(it, "e.swallow.icon", img);
@@ -1448,7 +1456,7 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.dnd = 0;
         ic->mouse_down = 1;
         if (!ic->timer)
-          ic->timer = ecore_timer_add(0.35, _ibar_cb_icon_menu_cb, ic);
+          ic->timer = ecore_timer_loop_add(0.35, _ibar_cb_icon_menu_cb, ic);
      }
    else if (ev->button == 2)
      {
