@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-05-30 22:01+0200\n"
-"PO-Revision-Date: 2022-02-14 22:34+0000\n"
+"PO-Revision-Date: 2022-07-07 15:44+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -5460,21 +5460,18 @@ msgstr "Botões"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:269
 #: src/modules/conf_interaction/e_int_config_mouse.c:298
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Roda"
+msgstr "Emulação do botão central do rato"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:274
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
-#, fuzzy
 msgid "Scrolling"
-msgstr "Análise"
+msgstr "Deslocamento"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:276
 #: src/modules/conf_interaction/e_int_config_mouse.c:311
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Deslocação animada"
+msgstr "Deslocamento natural"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:280
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5483,41 +5480,35 @@ msgstr "Rato"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:295
 msgid "Tap to click"
-msgstr ""
+msgstr "Tocar para clicar"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:301
-#, fuzzy
 msgid "Clickpad"
-msgstr "Clique"
+msgstr "Clickpad"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:304
 msgid "Palm detect"
-msgstr ""
+msgstr "Deteção de palma"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:314
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Alinhamento horizontal"
+msgstr "Deslocamento horizontal"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:317
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Deslocação animada"
+msgstr "Deslocamento de margem"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:320
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Deslocação animada"
+msgstr "Deslocamento com 2 dedos"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Deslocação animada"
+msgstr "Deslocamento circular"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:327
-#, fuzzy
 msgid "Touchpad"
-msgstr "Toque"
+msgstr "Touchpad"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
@@ -5954,43 +5945,43 @@ msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 msgid " Close Window:"
-msgstr " Fechar janela:"
+msgstr "Fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
 msgid " Maximize Window:"
-msgstr " Maximizar janela:"
+msgstr "Maximizar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
 msgid " Iconic Mode Toggle:"
-msgstr " Alternar entre modo minimizado:"
+msgstr "Alternar entre modo minimizado:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
 msgid " Fullscreen Mode Toggle:"
-msgstr " Alternar entre modo de ecrã inteiro:"
+msgstr "Alternar entre modo de ecrã inteiro:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
 msgid " Always On Top Toggle:"
-msgstr " Alternar entre modo sempre por cima:"
+msgstr "Alternar entre modo sempre por cima:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
 msgid " Next Window:"
-msgstr " Janela seguinte:"
+msgstr "Janela seguinte:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
 msgid " Tile Right:"
-msgstr " Organizar à direita:"
+msgstr "Organizar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
 msgid " Tile Left:"
-msgstr " Organizar à esquerda:"
+msgstr "Organizar à esquerda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
 msgid " Kill Window:"
-msgstr " Terminar janela:"
+msgstr "Terminar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
 msgid " Window Menu:"
-msgstr " Menu da janela:"
+msgstr "Menu da janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
@@ -5998,23 +5989,23 @@ msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
 msgid " Open Terminology:"
-msgstr " Abrir o Terminology:"
+msgstr "Abrir o Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
 msgid " Lock System:"
-msgstr " Bloquear o sistema:"
+msgstr "Bloquear o sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
 msgid " Show Main Menu:"
-msgstr " Mostrar menu principal:"
+msgstr "Mostrar menu principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
 msgid " Show Favorites Menu:"
-msgstr " Mostrar menu de favoritos:"
+msgstr "Mostrar menu de favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 msgid " System Controls:"
-msgstr " Controlos do sistema:"
+msgstr "Controlos do sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -6022,43 +6013,43 @@ msgstr "COMPUTADOR"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
-msgstr " Mostrar a área de trabalho:"
+msgstr "Mostrar a área de trabalho:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
 msgid " Switch to Desktop 0:"
-msgstr " Mudar para a área de trabalho 0:"
+msgstr "Mudar para a área de trabalho 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
 msgid " Switch to Desktop 1:"
-msgstr " Mudar para a área de trabalho 1:"
+msgstr "Mudar para a área de trabalho 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
 msgid " Switch to Desktop 2:"
-msgstr " Mudar para a área de trabalho 2:"
+msgstr "Mudar para a área de trabalho 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
 msgid " Switch to Desktop 3:"
-msgstr " Mudar para a área de trabalho 3:"
+msgstr "Mudar para a área de trabalho 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
 msgid " Switch to Desktop 4:"
-msgstr " Mudar para a área de trabalho 4:"
+msgstr "Mudar para a área de trabalho 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
 msgid " Switch to Desktop 5:"
-msgstr " Mudar para a área de trabalho 5:"
+msgstr "Mudar para a área de trabalho 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
 msgid " Switch to Desktop 6:"
-msgstr " Mudar para a área de trabalho 6:"
+msgstr "Mudar para a área de trabalho 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
 msgid " Switch to Desktop 7:"
-msgstr " Mudar para a área de trabalho 7:"
+msgstr "Mudar para a área de trabalho 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
 msgid " Switch to Desktop 8:"
-msgstr " Mudar para a área de trabalho 8:"
+msgstr "Mudar para a área de trabalho 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
@@ -6066,23 +6057,23 @@ msgstr "DIVERSOS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid " Quick Launcher:"
-msgstr " Lançador rápido:"
+msgstr "Lançador rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 msgid " Take Screenshot:"
-msgstr " Capturar ecrã:"
+msgstr "Capturar ecrã:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
 msgid " Restart Moksha:"
-msgstr " Reiniciar o Moksha:"
+msgstr "Reiniciar o Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
 msgid " Terminal console:"
-msgstr " Consola do terminal:"
+msgstr "Consola do terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 msgid " This Help:"
-msgstr " Esta ajuda:"
+msgstr "Esta ajuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -6175,11 +6166,11 @@ msgstr "Deslocação automática"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr " Desativar ícones nos menus"
+msgstr "Desativar ícones nos menus"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
-msgstr " Orientação do menu inteligente"
+msgstr "Orientação do menu inteligente"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6521,14 +6512,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Memorizar contorno para esta janela na próxima vez que aparecer"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Estilo do contorno"
+msgstr "Base do contorno"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Moldura do contorno ativa"
+msgstr "Base do contorno ativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -7103,7 +7092,7 @@ msgstr "Os ficheiros listados provavelmente não são temas Moksha:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
-msgstr " Importar..."
+msgstr "Importar..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
@@ -8262,7 +8251,7 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-"  Muito bem, aqui vem uma pequena explicação sobre o <hilight>Everything</"
+"Muito bem, aqui vem uma pequena explicação sobre o <hilight>Everything</"
 "hilight>...<br>  Digite algumas letras do que está a procurar.<br>  Utilize "
 "o cursor <hilight>&lt;cima/baixo&gt;</hilight> para escolher um item da "
 "lista.<br>  Prima  <hilight>&lt;tab&gt;</hilight> para selecionar uma ação e "
@@ -9570,7 +9559,7 @@ msgstr "Captura de ecrã"
 
 #: src/modules/shot/e_mod_main.c:99
 msgid "Screenshot in: "
-msgstr "Captura de ecrã em : "
+msgstr "Captura de ecrã em: "
 
 #: src/modules/shot/e_mod_main.c:114
 msgid "Screenshot stored in"
@@ -9764,19 +9753,19 @@ msgstr "Definições da captura de ecrã"
 
 #: src/modules/shot/e_mod_config.c:101
 msgid " Show the screenshot mode dialog"
-msgstr " Mostrar a janela do modo de captura de ecrã"
+msgstr "Mostrar a janela do modo de captura de ecrã"
 
 #: src/modules/shot/e_mod_config.c:104
 msgid " Screenshot guide (quality/share/save)"
-msgstr " Guia de captura de ecrã (qualidade/partilha/gravar)"
+msgstr "Guia de captura de ecrã (qualidade/partilha/gravar)"
 
 #: src/modules/shot/e_mod_config.c:107
 msgid " Show notifications"
-msgstr " Mostrar notificações"
+msgstr "Mostrar notificações"
 
 #: src/modules/shot/e_mod_config.c:110
 msgid " Launch app after screenshot"
-msgstr " Iniciar aplicação após captura de ecrã"
+msgstr "Iniciar aplicação após captura de ecrã"
 
 #: src/modules/shot/e_mod_config.c:113
 msgid "Application for opening:"
@@ -10122,7 +10111,7 @@ msgstr "Atraso na animação do gadget [s]"
 
 #: src/modules/notification/e_mod_config.c:223
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Lista negra de aplicações (app1,app2,app3...)"
 
 #: src/modules/notification/e_mod_config.c:229
 #: src/modules/clipboard/e_mod_config.c:266
@@ -10135,15 +10124,15 @@ msgstr "Seleção"
 
 #: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
-msgstr " Usar copiar (Ctrl-C)"
+msgstr "Usar copiar (Ctrl-C)"
 
 #: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
-msgstr " Usar Principal (Seleção)"
+msgstr "Usar Principal (Seleção)"
 
 #: src/modules/clipboard/e_mod_config.c:200
 msgid " Synchronize Clipboards"
-msgstr " Sincronizar áreas de transferência"
+msgstr "Sincronizar áreas de transferência"
 
 #: src/modules/clipboard/e_mod_config.c:208
 msgid "Content"
@@ -10152,15 +10141,15 @@ msgstr "Conteúdo"
 #: src/modules/clipboard/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:246
 msgid " Ignore Whitespace"
-msgstr " Ignorar espaço em branco"
+msgstr "Ignorar espaço em branco"
 
 #: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
-msgstr " Arrumar espaço em branco"
+msgstr "Arrumar espaço em branco"
 
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
-msgstr " Arrumar quebras de linha"
+msgstr "Arrumar quebras de linha"
 
 #: src/modules/clipboard/e_mod_config.c:219
 #: src/modules/clipboard/e_mod_main.c:919
@@ -10171,31 +10160,31 @@ msgstr "Área de transferência"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
-msgstr " Guardar histórico"
+msgstr "Guardar histórico"
 
 #: src/modules/clipboard/e_mod_config.c:228
 msgid " Confirm before Clearing"
-msgstr " Confirmar antes de limpar"
+msgstr "Confirmar antes de limpar"
 
 #: src/modules/clipboard/e_mod_config.c:230
 msgid " Save every Selection"
-msgstr " Guardar todas as seleções"
+msgstr "Guardar todas as seleções"
 
 #: src/modules/clipboard/e_mod_config.c:234
 msgid " Timer"
-msgstr " Temporizador"
+msgstr "Temporizador"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
-msgstr " Comprimento da etiqueta"
+msgstr "Comprimento da etiqueta"
 
 #: src/modules/clipboard/e_mod_config.c:257
 msgid " Reverse Order"
-msgstr " Ordem invertida"
+msgstr "Ordem invertida"
 
 #: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
-msgstr " Itens no histórico"
+msgstr "Itens no histórico"
 
 #: src/modules/clipboard/e_mod_config.c:291
 msgid "Clipboard Settings"
