@@ -95,6 +95,7 @@ e.h \
 e_hints.h \
 e_icon.h \
 e_ilist.h \
+e_inc_terms.h\
 e_import_config_dialog.h \
 e_import_dialog.h \
 e_includes.h \
