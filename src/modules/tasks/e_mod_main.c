@@ -858,7 +858,7 @@ _tasks_adjacent_label_popup(void *data)
         right = title + (strlen(title) - (max_len / 2));
 
         strncpy(abbv, left, max_len / 2);
-        strncat(abbv, "...", 3);
+        strncat(abbv, "...", 4);
         strncat(abbv, right, max_len / 2);
         edje_object_part_text_set(item->win, "e.text.label", abbv);
         E_FREE(abbv);
