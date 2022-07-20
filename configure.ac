@@ -537,6 +537,28 @@ PKG_CHECK_MODULES(E_GRABBER, [
   ecore-x >= ${efl_version}
 ])
 
+efm_requires="\
+ecore >= $efl_version \
+ecore-file >= $efl_version \
+ecore-ipc >= $efl_version \
+eet >= $efl_version \
+efreet >= $efl_version \
+edbus >= ${edbus_version} \
+eina >= $efl_version"
+efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
+
+AC_MSG_WARN([EFM requirements : $efm_requires])
+
+PKG_CHECK_MODULES(E_FM, [$efm_requires])
+
+PKG_CHECK_MODULES(E_FM_CMDLINE, [
+  eina >= ${efl_version}
+  ecore >= ${efl_version}
+  ecore-file >= ${efl_version}
+  edbus >= ${edbus_version}
+  dbus-1
+])
+
 PKG_CHECK_MODULES(E_FM_OP, [
   ecore >= ${efl_version}
   ecore-file >= ${efl_version}
@@ -954,6 +976,7 @@ enlightenment.pc
 src/Makefile
 src/bin/Makefile
 src/bin/e_fm_shared_types.h
+src/bin/e_fm/Makefile
 src/modules/Makefile
 src/modules/ibar/module.desktop
 src/modules/clock/module.desktop
