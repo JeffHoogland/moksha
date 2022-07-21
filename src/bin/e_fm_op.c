@@ -1788,7 +1788,7 @@ _e_fm_op_destroy_atom(E_Fm_Op_Task *task)
    return 1;
 
 finish:
-   close(fd);
+   if (fd != -1) close(fd);
    fd = -1;
    E_FREE(buf);
    task->finished = 1;
