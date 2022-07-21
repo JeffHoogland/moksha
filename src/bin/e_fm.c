@@ -4707,6 +4707,11 @@ _e_fm2_icon_free(E_Fm2_Icon *ic)
 {
    if (ic->queued) abort();
    if (ic->inserted) abort();
+   if (ic->eio)
+     {
+        eio_file_cancel(ic->eio);
+        ic->eio = NULL;
+     }
    /* free icon, object data etc. etc. */
    if (ic->sd->last_placed == ic)
      {
