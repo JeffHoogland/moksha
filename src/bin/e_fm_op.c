@@ -78,12 +78,12 @@ void *alloca(size_t);
 typedef struct _E_Fm_Op_Task      E_Fm_Op_Task;
 typedef struct _E_Fm_Op_Copy_Data E_Fm_Op_Copy_Data;
 
-static E_Fm_Op_Task *_e_fm_op_task_new();
+static E_Fm_Op_Task *_e_fm_op_task_new(void);
 static void          _e_fm_op_task_free(void *t);
 
 static void          _e_fm_op_remove_link_task(E_Fm_Op_Task *task);
 static Eina_Bool     _e_fm_op_stdin_data(void *data, Ecore_Fd_Handler *fd_handler);
-static void          _e_fm_op_set_up_idlers();
+static void          _e_fm_op_set_up_idlers(void);
 static void          _e_fm_op_delete_idler(int *mark);
 static int           _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, Eina_List **node, E_Fm_Op_Task *task);
 
