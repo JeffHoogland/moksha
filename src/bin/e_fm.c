@@ -2312,14 +2312,11 @@ e_fm2_icon_geometry_get(E_Fm2_Icon *ic, int *x, int *y, int *w, int *h)
 {
    int xx, yy, ww, hh;
 
-   if (x)
-      *x = 0;
-   if (y)
-      *y = 0;
-   if (w)
-      *w = 0;
-   if (h)
-      *h = 0;
+   if (x) *x = 0;
+   if (y) *y = 0;
+   if (w) *w = 0;
+   if (h) *h = 0;
+
    if (ic)
      {
         evas_object_geometry_get(ic->obj, &xx, &yy, &ww, &hh);
