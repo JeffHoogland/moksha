@@ -1705,12 +1705,10 @@ _e_fwin_changed(void *data,
      }
    else
      {
-#define RELEASE_STR(x) if (x) {eina_stringshare_del(x); (x) = NULL; }
-        RELEASE_STR(fwin->wallpaper_file);
-        RELEASE_STR(fwin->overlay_file);
-        RELEASE_STR(fwin->scrollframe_file);
-        RELEASE_STR(fwin->theme_file);
-#undef RELEASE_STR
+        eina_stringshare_replace(&fwin->wallpaper_file, NULL);
+        eina_stringshare_replace(&fwin->overlay_file, NULL);
+        eina_stringshare_replace(&fwin->scrollframe_file, NULL);
+        eina_stringshare_replace(&fwin->theme_file, NULL);
      }
    if (fwin->under_obj) evas_object_hide(fwin->under_obj);
    if (fwin->wallpaper_file)
