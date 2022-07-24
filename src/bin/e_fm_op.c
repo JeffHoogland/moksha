@@ -1207,7 +1207,7 @@ _e_fm_op_handle_overwrite(E_Fm_Op_Task *task)
           {
              _e_fm_op_overwrite = 1;
              _e_fm_op_update_progress_report_simple(0, task->src.name, task->dst.name);
-             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_OVERWRITE, "%s", task->dst.name);
+             _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_OVERWRITE, "Cannot overwrite '%s': %s.", task->dst.name);
           }
      }
 
@@ -1266,7 +1266,7 @@ _e_fm_op_copy_link(E_Fm_Op_Task *task)
    lnk_path = ecore_file_readlink(task->src.name);
    if (!lnk_path)
      {
-        _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s'.", task->src.name);
+        _E_FM_OP_ERROR_SEND_WORK(task, E_FM_OP_ERROR, "Cannot read link '%s': %s.", task->src.name);
      }
 
    E_FM_OP_DEBUG("Creating link from '%s' to '%s'\n", lnk_path, task->dst.name);
