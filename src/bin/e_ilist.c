@@ -7,7 +7,7 @@
 typedef struct _E_Smart_Data E_Smart_Data;
 struct _E_Smart_Data
 {
-   Evas_Coord    x, y, w, h, iw, ih;
+   Evas_Coord    x, y, w, h, iw, ih, mw, mh;
    Evas_Object  *o_smart, *o_edje, *o_box;
    Eina_List    *items;
    Eina_List    *selected_items;
@@ -1105,6 +1105,8 @@ _e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Obje
    int w, h;
    e_scrollframe_child_viewport_size_get(scr, &w, &h);
    evas_object_resize(sd->o_edje, w, h);
+   sd->mw = w;
+   sd->mh = h;
 }
 
 static void
@@ -1190,6 +1192,8 @@ _e_typebuf_match(Evas_Object *obj)
         n++;
      }
 
+   evas_object_move(sd->o_edje, sd->mw / 4, sd->mh / 16);
+   evas_object_resize(sd->o_edje, sd->mw / 2, sd->mh);
    free(match);
 }
 
