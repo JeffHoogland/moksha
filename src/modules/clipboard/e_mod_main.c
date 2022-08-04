@@ -351,10 +351,9 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
 
   inst->menu = e_menu_new();
   
-  
-  if (!mouse_event){
-    e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
-  }
+  //~ if (!mouse_event){
+    //~ e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
+  //~ }
 
   if (clip_inst->items){
     Eina_List *it;
@@ -404,7 +403,6 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
       e_menu_item_submenu_set(mi, subm); 
       
       e_object_unref(E_OBJECT(subm));
-      
     }
   }
   else {
@@ -444,13 +442,15 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   e_util_menu_item_theme_icon_set(mi, "preferences-system");
   e_menu_item_callback_set(mi, _cb_config_show, NULL);
 
-  if (mouse_event) {
+  /* Deactivate callback */
+  if (mouse_event)
     e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
+
     /* Proper menu orientation
      *  We display not relatively to the gadget, but similarly to
      *  the start menu - thus the need for direction etc.
      */
-    switch (inst->gcc->gadcon->orient) {
+  switch (inst->gcc->gadcon->orient) {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
       case E_GADCON_ORIENT_CORNER_TR:
@@ -481,7 +481,6 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
         dir = E_MENU_POP_DIRECTION_AUTO;
         break;
     }
-  }
   return dir;
 }
 
