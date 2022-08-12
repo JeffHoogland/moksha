@@ -198,7 +198,7 @@ _env_path_prepend(const char *env, const char *path)
         strcat(s, p2);
         if (p)
           {
-			 if (p[0] != ':') strcat(s, ":");
+             if (p[0] != ':') strcat(s, ":");
              strcat(s, p);
           }
         env_set(env, s);
@@ -512,10 +512,9 @@ main(int argc, char **argv)
      {
         pid_t child;
 
-	stop_ptrace = EINA_FALSE;
+        stop_ptrace = EINA_FALSE;
 
         child = fork();
-
         if (child < 0) /* failed attempt */
           return -1;
         else if (child == 0)
@@ -608,19 +607,19 @@ main(int argc, char **argv)
 #endif
                             /* And call gdb if available */
                             r = 0;
-			    /* Check if patch to prevent ptrace to another process is present in the kernel. */
-			    {
-			       int fd;
-			       char c;
+             /* Check if patch to prevent ptrace to another process is present in the kernel. */
+                {
+                   int fd;
+                   char c;
 
-			       fd = open("/proc/sys/kernel/yama/ptrace_scope", O_RDONLY);
-			       if (fd != -1)
-				 {
-				    if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
-				      bad_kernel = EINA_TRUE;
-				   close(fd); 
-				 }
-			    }
+                   fd = open("/proc/sys/kernel/yama/ptrace_scope", O_RDONLY);
+                   if (fd != -1)
+                 {
+                   if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
+                     bad_kernel = EINA_TRUE;
+                   close(fd);
+                 }
+                }
 
                             if (home && !bad_kernel)
                               {
@@ -630,7 +629,7 @@ main(int argc, char **argv)
                                           "--pid=%i "
                                           "-batch "
                                           "-ex 'set logging file %s/.e-crashdump.txt' "
-					  "-ex 'set logging on' "
+                                          "-ex 'set logging on' "
                                           "-ex 'thread apply all backtrace full' "
                                           "-ex detach > /dev/null 2>&1 < /dev/zero",
                                           child,
