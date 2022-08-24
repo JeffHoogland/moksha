@@ -8552,6 +8552,8 @@ _e_fm2_smart_del(Evas_Object *obj)
      _e_fm2_list_remove = eina_list_append(_e_fm2_list_remove, sd->obj);
    if (sd->desktop) efreet_desktop_free(sd->desktop);
    sd->desktop = NULL;
+   if (sd->dnd_scroller) ecore_animator_del(sd->dnd_scroller);
+   sd->dnd_scroller = NULL;
    free(sd);
    e_fm2_custom_file_flush();
 }
