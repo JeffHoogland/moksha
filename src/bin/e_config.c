@@ -654,6 +654,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, mouse_emulate_middle_button, UCHAR);
 
    E_CONFIG_VAL(D, T, touch_accel, DOUBLE);
+   E_CONFIG_VAL(D, T, touch_extras, UCHAR);
    E_CONFIG_VAL(D, T, touch_natural_scroll, UCHAR);
    E_CONFIG_VAL(D, T, touch_emulate_middle_button, UCHAR);
    E_CONFIG_VAL(D, T, touch_tap_to_click, UCHAR);
@@ -1080,6 +1081,12 @@ while (!e_config)
                e_config->mouse_emulate_middle_button = 1;
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(17)
+            {
+               CONFIG_VERSION_UPDATE_INFO(17);
+               e_config->touch_extras = 0;
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -1221,6 +1228,7 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->mouse_accel_threshold, 0, 10);
      E_CONFIG_LIMIT(e_config->mouse_natural_scroll, 0, 1);
 
+     E_CONFIG_LIMIT(e_config->touch_extras, 0, 1);
      E_CONFIG_LIMIT(e_config->touch_tap_to_click, 0, 1);
      E_CONFIG_LIMIT(e_config->touch_clickpad, 0, 1);
      E_CONFIG_LIMIT(e_config->touch_scrolling_2finger, 0, 1);

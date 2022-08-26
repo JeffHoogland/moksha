@@ -37,6 +37,7 @@ struct _E_Config_Dialog_Data
    int touch_scrolling_circular;
    int touch_scrolling_horiz;
    int touch_palm_detect;
+   int touch_extras;
 };
 
 E_Config_Dialog *
@@ -87,6 +88,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->touch_scrolling_circular = e_config->touch_scrolling_circular;
    cfdata->touch_scrolling_horiz = e_config->touch_scrolling_horiz;
    cfdata->touch_palm_detect = e_config->touch_palm_detect;
+   cfdata->touch_extras = e_config->touch_extras;
 }
 
 static void *
@@ -115,6 +117,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
             (cfdata->mouse_emulate_middle_button == e_config->mouse_emulate_middle_button) &&
             EINA_DBL_EQ(cfdata->touch_accel, e_config->touch_accel) &&
             (cfdata->touch_natural_scroll == e_config->touch_natural_scroll) &&
+            (cfdata->touch_extras == e_config->touch_extras) &&
             (cfdata->touch_emulate_middle_button == e_config->touch_emulate_middle_button) &&
             (cfdata->touch_tap_to_click == e_config->touch_tap_to_click) &&
             (cfdata->touch_clickpad == e_config->touch_clickpad) &&
@@ -150,6 +153,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    e_config->mouse_natural_scroll = cfdata->mouse_natural_scroll;
    e_config->mouse_emulate_middle_button = cfdata->mouse_emulate_middle_button;
 
+   e_config->touch_extras = cfdata->touch_extras;
    e_config->touch_accel = cfdata->touch_accel;
    e_config->touch_natural_scroll = cfdata->touch_natural_scroll;
    e_config->touch_emulate_middle_button = cfdata->touch_emulate_middle_button;
@@ -189,10 +193,26 @@ _use_e_cursor_cb_change(void *data, Evas_Object *obj __UNUSED__)
    e_widget_disabled_set(cfdata->gui.idle_cursor, disabled);
 }
 
+//~ static void
+//~ _mouse_cb_change(void *data, Evas_Object *obj __UNUSED__)
+//~ {
+   //~ E_Config_Dialog_Data *cfdata = data;
+   //~ e_widget_check_checked_set(cfdata->touch_natur, e_widget_check_checked_get(cfdata->mouse_natur));
+   //~ cfdata->touch_natural_scroll = cfdata->mouse_natural_scroll;
+//~ }
+
+static void
+_touch_cb_change(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   //~ e_widget_check_checked_set(cfdata->mouse_natur, e_widget_check_checked_get(cfdata->touch_natur));
+   cfdata->mouse_natural_scroll = cfdata->touch_natural_scroll;
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
-   Evas_Object *otb, *ol, *of, *ob, *oc;
+   Evas_Object *otb, *ol, *of, *ob, *oc, *ex;
    E_Radio_Group *rg;
 
    otb = e_widget_toolbook_add(evas, (24 * e_scale), (24 * e_scale));
@@ -271,37 +291,50 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
-   of = e_widget_framelist_add(evas, _("Scrolling"), 0);
+   //~ of = e_widget_framelist_add(evas, _("Scrolling"), 0);
 
-   oc = e_widget_check_add(evas, _("Natural scrolling"), &(cfdata->mouse_natural_scroll));
-   e_widget_framelist_object_append(of, oc);
+   //~ oc = e_widget_check_add(evas, _("Natural scrolling"), &(cfdata->mouse_natural_scroll));
+   //~ cfdata->mouse_natur = oc;
+   //~ e_widget_on_change_hook_set(cfdata->mouse_natur, _mouse_cb_change, cfdata);
+   //~ e_widget_framelist_object_append(of, oc);
 
-   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+   //~ e_widget_list_object_append(ol, of, 1, 0, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Mouse"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
+   
+   of = e_widget_framelist_add(evas, _("Settings"), 0);
+
+   ex = e_widget_check_add(evas, _("Enable Devices Extras"), &(cfdata->touch_extras));
+   e_widget_framelist_object_append(of, ex);
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Acceleration"), 0);
 
    ob = e_widget_slider_add(evas, 1, 0, _("%1.1f"), -1.0, 1.0, 0.1, 0,
                             &(cfdata->touch_accel), NULL, 100);
+   e_widget_check_widget_disable_on_unchecked_add(ex, ob);
    e_widget_framelist_object_append(of, ob);
-
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
 
    of = e_widget_framelist_add(evas, _("Buttons"), 0);
 
    oc = e_widget_check_add(evas, _("Tap to click"), &(cfdata->touch_tap_to_click));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Middle mouse button emulation"), &(cfdata->touch_emulate_middle_button));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Clickpad"), &(cfdata->touch_clickpad));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Palm detect"), &(cfdata->touch_palm_detect));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
@@ -309,18 +342,25 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    of = e_widget_framelist_add(evas, _("Scrolling"), 0);
 
    oc = e_widget_check_add(evas, _("Natural scrolling"), &(cfdata->touch_natural_scroll));
+   e_widget_on_change_hook_set(oc, _touch_cb_change, cfdata);
+   cfdata->mouse_natural_scroll = cfdata->touch_natural_scroll;
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Horizontal scrolling"), &(cfdata->touch_scrolling_horiz));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Edge scrolling"), &(cfdata->touch_scrolling_edge));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("2 finger scrolling"), &(cfdata->touch_scrolling_2finger));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    oc = e_widget_check_add(evas, _("Circular scrolling"), &(cfdata->touch_scrolling_circular));
+   e_widget_check_widget_disable_on_unchecked_add(ex, oc);
    e_widget_framelist_object_append(of, oc);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);

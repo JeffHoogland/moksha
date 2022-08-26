@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 16
+#define E_CONFIG_FILE_GENERATION 17
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -243,6 +243,7 @@ struct _E_Config
    unsigned char             mouse_natural_scroll; // GUI
    unsigned char             mouse_emulate_middle_button; // GUI
 
+   unsigned char             touch_extras; // GUI
    double                    touch_accel; // GUI
    unsigned char             touch_natural_scroll; // GUI
    unsigned char             touch_emulate_middle_button; // GUI

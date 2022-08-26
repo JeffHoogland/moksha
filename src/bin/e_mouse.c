@@ -394,6 +394,68 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
 }
 
 static void
+generic_apply()
+{
+   // generic accel - if synatics or evdev props found?
+     {
+        int accel_numerator, accel_denominator;
+
+        accel_numerator = 20 + (e_config->mouse_accel * 20.0);
+        accel_denominator = 10;
+        ecore_x_pointer_control_set(accel_numerator, accel_denominator,
+                                    e_config->mouse_accel_threshold);
+     }
+
+   // button mapping - for mouse hand and natural scroll
+     {
+        unsigned char map[256] = { 0 };
+        int n;
+
+        if (ecore_x_pointer_mapping_get(map, 256))
+          {
+             for (n = 0; n < 256; n++)
+               {
+                  if (!map[n]) break;
+               }
+             if (n < 3)
+               {
+                  map[0]  = 1;
+                  map[1]  = 2;
+                  map[2]  = 3;
+                  n = 3;
+               }
+             if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
+               {
+                  map[0] = 1;
+                  map[2] = 3;
+               }
+             else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
+               {
+                  map[0] = 3;
+                  map[2] = 1;
+               }
+             // if we are not on libinput or synaptics drivers anywehre then
+             // swap buttons the old fashioned way
+             //~ if ((n >= 5) && (!synaptics_check))
+               //~ {
+                  //~ if (e_config->mouse_natural_scroll)
+                    //~ {
+                       //~ map[3] = 5;
+                       //~ map[4] = 4;
+                    //~ }
+                  //~ else
+                    //~ {
+                       //~ map[3] = 4;
+                       //~ map[4] = 5;
+                    //~ }
+               //~ }
+             ecore_x_pointer_mapping_set(map, n);
+          }
+     }
+}
+
+
+static void
 devices_apply(Eina_Bool force)
 {
    int num_devs, i;
@@ -472,68 +534,12 @@ devices_apply(Eina_Bool force)
              ecore_x_input_device_properties_free(props, num_props);
           }
      }
-
-   // generic accel - if synatics or evdev props found?
-     {
-        int accel_numerator, accel_denominator;
-
-        accel_numerator = 20 + (e_config->mouse_accel * 20.0);
-        accel_denominator = 10;
-        ecore_x_pointer_control_set(accel_numerator, accel_denominator,
-                                    e_config->mouse_accel_threshold);
-     }
-
-   // button mapping - for mouse hand and natural scroll
-     {
-        unsigned char map[256] = { 0 };
-        int n;
-
-        if (ecore_x_pointer_mapping_get(map, 256))
-          {
-             for (n = 0; n < 256; n++)
-               {
-                  if (!map[n]) break;
-               }
-             if (n < 3)
-               {
-                  map[0]  = 1;
-                  map[1]  = 2;
-                  map[2]  = 3;
-                  n = 3;
-               }
-             if (e_config->mouse_hand == E_MOUSE_HAND_RIGHT)
-               {
-                  map[0] = 1;
-                  map[2] = 3;
-               }
-             else if (e_config->mouse_hand == E_MOUSE_HAND_LEFT)
-               {
-                  map[0] = 3;
-                  map[2] = 1;
-               }
-             // if we are not on libinput or synaptics drivers anywehre then
-             // swap buttons the old fashioned way
-             if ((n >= 5) && (!driver_libinput) && (!driver_synaptics))
-               {
-                  if (e_config->mouse_natural_scroll)
-                    {
-                       map[3] = 5;
-                       map[4] = 4;
-                    }
-                  else
-                    {
-                       map[3] = 4;
-                       map[4] = 5;
-                    }
-               }
-             ecore_x_pointer_mapping_set(map, n);
-          }
-     }
 }
 
 EAPI int
 e_mouse_update(void)
 {
-    devices_apply(EINA_TRUE);
+    if (e_config->touch_extras) devices_apply(EINA_TRUE);
+    generic_apply();
     return 1;
 }
