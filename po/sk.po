@@ -5495,11 +5495,11 @@ msgstr "Myš"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Extra nastavenia zariadení"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:324
 msgid "Tap to click"
-msgstr "Ťuknutie ako klik"
+msgstr "Klepnutím kliknúť"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:332
 msgid "Clickpad"
