@@ -5471,7 +5471,7 @@ msgstr "Ratón"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Habilitar Extras del Dispositivo"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:324
 msgid "Tap to click"
