@@ -56,8 +56,10 @@ E_Config_Dialog *
 e_int_config_apps_add(Evas_Object *parent __UNUSED__, const char *params __UNUSED__)
 {
    E_Desktop_Edit *ed;
+   E_Container *con;
 
-   if (!(ed = e_desktop_edit(NULL, NULL))) return NULL;
+   con = e_container_current_get(e_manager_current_get());
+   if (!(ed = e_desktop_edit(con, NULL))) return NULL;
    return ed->cfd;
 }
 
