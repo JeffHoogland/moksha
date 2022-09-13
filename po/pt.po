@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-09-04 10:04+0200\n"
-"PO-Revision-Date: 2022-07-07 15:44+0100\n"
+"PO-Revision-Date: 2022-09-13 15:53+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -5472,7 +5472,7 @@ msgstr "Rato"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Activar definições adicionais"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:324
 msgid "Tap to click"
