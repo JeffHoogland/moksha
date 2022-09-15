@@ -6030,7 +6030,7 @@ msgstr "Zobraziť Obľúbené:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 msgid "System Controls:"
-msgstr "Systémovové menu:"
+msgstr "Systémové menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
