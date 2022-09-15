@@ -6078,7 +6078,7 @@ msgstr " Prepnúť na plochu 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
-msgstr "RǑZNE"
+msgstr "RÔZNE"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid "Quick Launcher:"
