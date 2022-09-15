@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-09-04 10:04+0200\n"
+"POT-Creation-Date: 2022-09-14 16:53+0200\n"
 "PO-Revision-Date: 2022-09-13 15:53+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -738,7 +738,7 @@ msgstr "Alternar módulo referenciado"
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:320
+#: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
@@ -1893,9 +1893,9 @@ msgid "Look"
 msgstr "Aparência"
 
 #: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:315
-#: src/modules/conf_applications/e_int_config_apps.c:336
-#: src/modules/conf_applications/e_int_config_apps.c:356
+#: src/modules/conf_applications/e_int_config_apps.c:317
+#: src/modules/conf_applications/e_int_config_apps.c:338
+#: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2513,7 +2513,7 @@ msgstr "Solicita posição"
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
-#: src/modules/conf_interaction/e_int_config_mouse.c:307
+#: src/modules/conf_interaction/e_int_config_mouse.c:266
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
@@ -2784,13 +2784,13 @@ msgid "Main"
 msgstr "Principal"
 
 #: src/bin/e_int_menus.c:165
-#: src/modules/conf_applications/e_int_config_apps.c:72
+#: src/modules/conf_applications/e_int_config_apps.c:74
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Aplicações favoritas"
 
 #: src/bin/e_int_menus.c:176
-#: src/modules/conf_applications/e_int_config_apps.c:340
+#: src/modules/conf_applications/e_int_config_apps.c:342
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -4195,8 +4195,8 @@ msgstr[0] "Um minuto"
 msgstr[1] "%li minutos"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps.c:332
+#: src/modules/conf_applications/e_int_config_apps.c:313
+#: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4211,13 +4211,13 @@ msgid "Add"
 msgstr "Adicionar"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:348
+#: src/modules/conf_applications/e_int_config_apps.c:350
 #: src/modules/xkbswitch/e_mod_config.c:250
 msgid "Up"
 msgstr "Subir"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:352
+#: src/modules/conf_applications/e_int_config_apps.c:354
 #: src/modules/xkbswitch/e_mod_config.c:256
 msgid "Down"
 msgstr "Descer"
@@ -4637,33 +4637,33 @@ msgstr "Offline"
 msgid "Mode"
 msgstr "Modo"
 
-#: src/modules/conf_applications/e_int_config_apps.c:87
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:89
+#: src/modules/conf_applications/e_int_config_apps.c:103
 #: src/modules/conf_applications/e_mod_main.c:33
 msgid "IBar Applications"
 msgstr "Aplicações da IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:116
+#: src/modules/conf_applications/e_int_config_apps.c:118
 #: src/modules/conf_applications/e_mod_main.c:49
 msgid "Startup Applications"
 msgstr "Aplicações a carregar ao arrancar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:132
+#: src/modules/conf_applications/e_int_config_apps.c:134
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
 msgstr "Aplicações a carregar ao reiniciar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:147
+#: src/modules/conf_applications/e_int_config_apps.c:149
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Screen Lock Applications"
 msgstr "Aplicações a carregar ao bloquear o ecrã"
 
-#: src/modules/conf_applications/e_int_config_apps.c:162
+#: src/modules/conf_applications/e_int_config_apps.c:164
 #: src/modules/conf_applications/e_mod_main.c:41
 msgid "Screen Unlock Applications"
 msgstr "Aplicações a carregar ao desbloquear o ecrã"
 
-#: src/modules/conf_applications/e_int_config_apps.c:360
+#: src/modules/conf_applications/e_int_config_apps.c:362
 msgid "Order"
 msgstr "Ordem"
 
@@ -4860,7 +4860,7 @@ msgstr "Clique para alterar o papel de parede"
 #: src/modules/conf_display/e_int_config_desks.c:170
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
-#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:288
 #: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:568
@@ -5433,84 +5433,84 @@ msgstr "Efeitos de inatividade"
 msgid "Cursor"
 msgstr "Cursor"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:266
+#: src/modules/conf_interaction/e_int_config_mouse.c:268
+msgid "Enable Devices Extras"
+msgstr "Activar definições adicionais"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:273
 msgid "Mouse Hand"
 msgstr "Mão utilizada"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:274
-#: src/modules/conf_interaction/e_int_config_mouse.c:314
+#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:321
 msgid "Acceleration"
 msgstr "Velocidade"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:275
-#: src/modules/conf_interaction/e_int_config_mouse.c:316
+#: src/modules/conf_interaction/e_int_config_mouse.c:282
+#: src/modules/conf_interaction/e_int_config_mouse.c:323
 #: src/modules/fileman/e_mod_config.c:477
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr "%1.1f"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:279
+#: src/modules/conf_interaction/e_int_config_mouse.c:286
 msgid "Threshold"
 msgstr "Limite"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:287
-#: src/modules/conf_interaction/e_int_config_mouse.c:322
+#: src/modules/conf_interaction/e_int_config_mouse.c:294
+#: src/modules/conf_interaction/e_int_config_mouse.c:329
 #: src/modules/conf_theme/e_int_config_fonts.c:85
 msgid "Buttons"
 msgstr "Botões"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:289
-#: src/modules/conf_interaction/e_int_config_mouse.c:328
+#: src/modules/conf_interaction/e_int_config_mouse.c:296
+#: src/modules/conf_interaction/e_int_config_mouse.c:335
 msgid "Middle mouse button emulation"
 msgstr "Emulação do botão central do rato"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:302
+#: src/modules/conf_interaction/e_int_config_mouse.c:309
 #: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "Rato"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:309
-msgid "Enable Devices Extras"
-msgstr "Activar definições adicionais"
-
-#: src/modules/conf_interaction/e_int_config_mouse.c:324
+#: src/modules/conf_interaction/e_int_config_mouse.c:331
 msgid "Tap to click"
 msgstr "Tocar para clicar"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:332
+#: src/modules/conf_interaction/e_int_config_mouse.c:339
 msgid "Clickpad"
 msgstr "Clickpad"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:336
+#: src/modules/conf_interaction/e_int_config_mouse.c:343
 msgid "Palm detect"
 msgstr "Deteção de palma"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:342
+#: src/modules/conf_interaction/e_int_config_mouse.c:349
 msgid "Scrolling"
 msgstr "Deslocamento"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:344
+#: src/modules/conf_interaction/e_int_config_mouse.c:351
 msgid "Natural scrolling"
 msgstr "Deslocamento natural"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:350
+#: src/modules/conf_interaction/e_int_config_mouse.c:357
 msgid "Horizontal scrolling"
 msgstr "Deslocamento horizontal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:354
+#: src/modules/conf_interaction/e_int_config_mouse.c:361
 msgid "Edge scrolling"
 msgstr "Deslocamento de margem"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:358
+#: src/modules/conf_interaction/e_int_config_mouse.c:365
 msgid "2 finger scrolling"
 msgstr "Deslocamento com 2 dedos"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:362
+#: src/modules/conf_interaction/e_int_config_mouse.c:369
 msgid "Circular scrolling"
 msgstr "Deslocamento circular"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:367
+#: src/modules/conf_interaction/e_int_config_mouse.c:374
 msgid "Touchpad"
 msgstr "Touchpad"
 
@@ -5948,43 +5948,53 @@ msgid "WINDOWS"
 msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-msgid " Close Window:"
+#, fuzzy
+msgid "Close Window:"
 msgstr "Fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-msgid " Maximize Window:"
+#, fuzzy
+msgid "Maximize Window:"
 msgstr "Maximizar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-msgid " Iconic Mode Toggle:"
+#, fuzzy
+msgid "Iconic Mode Toggle:"
 msgstr "Alternar entre modo minimizado:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-msgid " Fullscreen Mode Toggle:"
+#, fuzzy
+msgid "Fullscreen Mode Toggle:"
 msgstr "Alternar entre modo de ecrã inteiro:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-msgid " Always On Top Toggle:"
+#, fuzzy
+msgid "Always On Top Toggle:"
 msgstr "Alternar entre modo sempre por cima:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-msgid " Next Window:"
+#, fuzzy
+msgid "Next Window:"
 msgstr "Janela seguinte:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-msgid " Tile Right:"
+#, fuzzy
+msgid "Tile Right:"
 msgstr "Organizar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-msgid " Tile Left:"
+#, fuzzy
+msgid "Tile Left:"
 msgstr "Organizar à esquerda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-msgid " Kill Window:"
+#, fuzzy
+msgid "Kill Window:"
 msgstr "Terminar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-msgid " Window Menu:"
+#, fuzzy
+msgid "Window Menu:"
 msgstr "Menu da janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
@@ -5992,23 +6002,28 @@ msgid "SYSTEM"
 msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-msgid " Open Terminology:"
+#, fuzzy
+msgid "Open Terminology:"
 msgstr "Abrir o Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-msgid " Lock System:"
+#, fuzzy
+msgid "Lock System:"
 msgstr "Bloquear o sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-msgid " Show Main Menu:"
+#, fuzzy
+msgid "Show Main Menu:"
 msgstr "Mostrar menu principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-msgid " Show Favorites Menu:"
+#, fuzzy
+msgid "Show Favorites Menu:"
 msgstr "Mostrar menu de favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-msgid " System Controls:"
+#, fuzzy
+msgid "System Controls:"
 msgstr "Controlos do sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
@@ -6060,23 +6075,28 @@ msgid "MISCELLANEOUS"
 msgstr "DIVERSOS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-msgid " Quick Launcher:"
+#, fuzzy
+msgid "Quick Launcher:"
 msgstr "Lançador rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-msgid " Take Screenshot:"
+#, fuzzy
+msgid "Take Screenshot:"
 msgstr "Capturar ecrã:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-msgid " Restart Moksha:"
+#, fuzzy
+msgid "Restart Moksha:"
 msgstr "Reiniciar o Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-msgid " Terminal console:"
+#, fuzzy
+msgid "Terminal console:"
 msgstr "Consola do terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-msgid " This Help:"
+#, fuzzy
+msgid "This Help:"
 msgstr "Esta ajuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327

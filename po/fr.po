@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-09-04 10:04+0200\n"
+"POT-Creation-Date: 2022-09-14 16:53+0200\n"
 "PO-Revision-Date: 2022-09-04 10:36+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -749,7 +749,7 @@ msgstr "Basculer l'état du module nommé"
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:320
+#: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
@@ -1748,8 +1748,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
-"<br><hilight>%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
+"%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -1910,9 +1910,9 @@ msgid "Look"
 msgstr "Aspect"
 
 #: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:315
-#: src/modules/conf_applications/e_int_config_apps.c:336
-#: src/modules/conf_applications/e_int_config_apps.c:356
+#: src/modules/conf_applications/e_int_config_apps.c:317
+#: src/modules/conf_applications/e_int_config_apps.c:338
+#: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2527,7 +2527,7 @@ msgstr "Demande de position"
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
-#: src/modules/conf_interaction/e_int_config_mouse.c:307
+#: src/modules/conf_interaction/e_int_config_mouse.c:266
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
@@ -2799,13 +2799,13 @@ msgid "Main"
 msgstr "Principal"
 
 #: src/bin/e_int_menus.c:165
-#: src/modules/conf_applications/e_int_config_apps.c:72
+#: src/modules/conf_applications/e_int_config_apps.c:74
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "Applications favorites"
 
 #: src/bin/e_int_menus.c:176
-#: src/modules/conf_applications/e_int_config_apps.c:340
+#: src/modules/conf_applications/e_int_config_apps.c:342
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -3842,8 +3842,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?"
-"<br><br>%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?<br><br>"
+"%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -4226,8 +4226,8 @@ msgstr[0] "Une minute"
 msgstr[1] "%li minutes"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps.c:332
+#: src/modules/conf_applications/e_int_config_apps.c:313
+#: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4242,13 +4242,13 @@ msgid "Add"
 msgstr "Ajouter"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:348
+#: src/modules/conf_applications/e_int_config_apps.c:350
 #: src/modules/xkbswitch/e_mod_config.c:250
 msgid "Up"
 msgstr "Monter"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:352
+#: src/modules/conf_applications/e_int_config_apps.c:354
 #: src/modules/xkbswitch/e_mod_config.c:256
 msgid "Down"
 msgstr "Descendre"
@@ -4668,33 +4668,33 @@ msgstr "Hors-ligne"
 msgid "Mode"
 msgstr "Mode"
 
-#: src/modules/conf_applications/e_int_config_apps.c:87
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:89
+#: src/modules/conf_applications/e_int_config_apps.c:103
 #: src/modules/conf_applications/e_mod_main.c:33
 msgid "IBar Applications"
 msgstr "Applications dans l'IBar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:116
+#: src/modules/conf_applications/e_int_config_apps.c:118
 #: src/modules/conf_applications/e_mod_main.c:49
 msgid "Startup Applications"
 msgstr "Applications à l'ouverture de session"
 
-#: src/modules/conf_applications/e_int_config_apps.c:132
+#: src/modules/conf_applications/e_int_config_apps.c:134
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
 msgstr "Applications à relancer"
 
-#: src/modules/conf_applications/e_int_config_apps.c:147
+#: src/modules/conf_applications/e_int_config_apps.c:149
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Screen Lock Applications"
 msgstr "Applications de l'écran de verrouillage"
 
-#: src/modules/conf_applications/e_int_config_apps.c:162
+#: src/modules/conf_applications/e_int_config_apps.c:164
 #: src/modules/conf_applications/e_mod_main.c:41
 msgid "Screen Unlock Applications"
 msgstr "Applications de l'écran de déverrouillage"
 
-#: src/modules/conf_applications/e_int_config_apps.c:360
+#: src/modules/conf_applications/e_int_config_apps.c:362
 msgid "Order"
 msgstr "Ordre"
 
@@ -4893,7 +4893,7 @@ msgstr "Cliquer pour changer le fond d'écran"
 #: src/modules/conf_display/e_int_config_desks.c:170
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
-#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:288
 #: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:568
@@ -5467,84 +5467,84 @@ msgstr "Effets quand inactif"
 msgid "Cursor"
 msgstr "Pointeur"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:266
+#: src/modules/conf_interaction/e_int_config_mouse.c:268
+msgid "Enable Devices Extras"
+msgstr "Activer les paramètres supplémentaires"
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:273
 msgid "Mouse Hand"
 msgstr "Latéralité"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:274
-#: src/modules/conf_interaction/e_int_config_mouse.c:314
+#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:321
 msgid "Acceleration"
 msgstr "Accélération"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:275
-#: src/modules/conf_interaction/e_int_config_mouse.c:316
+#: src/modules/conf_interaction/e_int_config_mouse.c:282
+#: src/modules/conf_interaction/e_int_config_mouse.c:323
 #: src/modules/fileman/e_mod_config.c:477
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr "%1.1f"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:279
+#: src/modules/conf_interaction/e_int_config_mouse.c:286
 msgid "Threshold"
 msgstr "Seuil"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:287
-#: src/modules/conf_interaction/e_int_config_mouse.c:322
+#: src/modules/conf_interaction/e_int_config_mouse.c:294
+#: src/modules/conf_interaction/e_int_config_mouse.c:329
 #: src/modules/conf_theme/e_int_config_fonts.c:85
 msgid "Buttons"
 msgstr "Boutons"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:289
-#: src/modules/conf_interaction/e_int_config_mouse.c:328
+#: src/modules/conf_interaction/e_int_config_mouse.c:296
+#: src/modules/conf_interaction/e_int_config_mouse.c:335
 msgid "Middle mouse button emulation"
 msgstr "Émulation bouton central de la souris"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:302
+#: src/modules/conf_interaction/e_int_config_mouse.c:309
 #: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "Souris"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:309
-msgid "Enable Devices Extras"
-msgstr "Activer les paramètres supplémentaires"
-
-#: src/modules/conf_interaction/e_int_config_mouse.c:324
+#: src/modules/conf_interaction/e_int_config_mouse.c:331
 msgid "Tap to click"
 msgstr "Toucher pour cliquer"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:332
+#: src/modules/conf_interaction/e_int_config_mouse.c:339
 msgid "Clickpad"
 msgstr "Clickpad"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:336
+#: src/modules/conf_interaction/e_int_config_mouse.c:343
 msgid "Palm detect"
 msgstr "Détection de la paume"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:342
+#: src/modules/conf_interaction/e_int_config_mouse.c:349
 msgid "Scrolling"
 msgstr "Défilement"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:344
+#: src/modules/conf_interaction/e_int_config_mouse.c:351
 msgid "Natural scrolling"
 msgstr "Défilement naturel"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:350
+#: src/modules/conf_interaction/e_int_config_mouse.c:357
 msgid "Horizontal scrolling"
 msgstr "Défilement horizontal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:354
+#: src/modules/conf_interaction/e_int_config_mouse.c:361
 msgid "Edge scrolling"
 msgstr "Défilement des bords"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:358
+#: src/modules/conf_interaction/e_int_config_mouse.c:365
 msgid "2 finger scrolling"
 msgstr "Défilement à deux doigts"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:362
+#: src/modules/conf_interaction/e_int_config_mouse.c:369
 msgid "Circular scrolling"
 msgstr "Défilement circulaire"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:367
+#: src/modules/conf_interaction/e_int_config_mouse.c:374
 msgid "Touchpad"
 msgstr "Pavé tactile"
 
@@ -5848,9 +5848,8 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -5984,43 +5983,53 @@ msgid "WINDOWS"
 msgstr "FENÊTRES"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-msgid " Close Window:"
+#, fuzzy
+msgid "Close Window:"
 msgstr " Fermer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-msgid " Maximize Window:"
+#, fuzzy
+msgid "Maximize Window:"
 msgstr " Maximiser la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-msgid " Iconic Mode Toggle:"
+#, fuzzy
+msgid "Iconic Mode Toggle:"
 msgstr " (Dés)Activer le mode iconifié :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-msgid " Fullscreen Mode Toggle:"
+#, fuzzy
+msgid "Fullscreen Mode Toggle:"
 msgstr " Dés)Activer le mode plein écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-msgid " Always On Top Toggle:"
+#, fuzzy
+msgid "Always On Top Toggle:"
 msgstr " Toujours au-dessus (in)actif :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-msgid " Next Window:"
+#, fuzzy
+msgid "Next Window:"
 msgstr " Fenêtre suivante :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-msgid " Tile Right:"
+#, fuzzy
+msgid "Tile Right:"
 msgstr " Juxtaposer à droite :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-msgid " Tile Left:"
+#, fuzzy
+msgid "Tile Left:"
 msgstr " Juxtaposer à gauche :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-msgid " Kill Window:"
+#, fuzzy
+msgid "Kill Window:"
 msgstr " Tuer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-msgid " Window Menu:"
+#, fuzzy
+msgid "Window Menu:"
 msgstr " Menu de la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
@@ -6028,23 +6037,28 @@ msgid "SYSTEM"
 msgstr "SYSTÈME"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-msgid " Open Terminology:"
+#, fuzzy
+msgid "Open Terminology:"
 msgstr " Ouvrir Terminology :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-msgid " Lock System:"
+#, fuzzy
+msgid "Lock System:"
 msgstr " Verrouiller le système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-msgid " Show Main Menu:"
+#, fuzzy
+msgid "Show Main Menu:"
 msgstr " Afficher le menu principal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-msgid " Show Favorites Menu:"
+#, fuzzy
+msgid "Show Favorites Menu:"
 msgstr " Afficher le menu des favoris :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-msgid " System Controls:"
+#, fuzzy
+msgid "System Controls:"
 msgstr " Commandes système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
@@ -6096,23 +6110,28 @@ msgid "MISCELLANEOUS"
 msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-msgid " Quick Launcher:"
+#, fuzzy
+msgid "Quick Launcher:"
 msgstr " Lanceur rapide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-msgid " Take Screenshot:"
+#, fuzzy
+msgid "Take Screenshot:"
 msgstr " Capture d'écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-msgid " Restart Moksha:"
+#, fuzzy
+msgid "Restart Moksha:"
 msgstr " Relancer Moksha :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-msgid " Terminal console:"
+#, fuzzy
+msgid "Terminal console:"
 msgstr " Console de terminal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-msgid " This Help:"
+#, fuzzy
+msgid "This Help:"
 msgstr " Afficher l'aide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
@@ -7880,8 +7899,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
-"u+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
+"+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8280,11 +8299,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8299,18 +8318,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
-"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
-"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
+"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
+"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
+"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
+"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
+"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
+"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
+"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
+"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
+"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
+"des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9421,9 +9440,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
-"<br>%s<br>est introuvable dans la base de données des<br>applications des "
-"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
+"%s<br>est introuvable dans la base de données des<br>applications des accès "
+"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379

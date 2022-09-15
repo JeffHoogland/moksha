@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-09-04 10:04+0200\n"
+"POT-Creation-Date: 2022-09-14 16:53+0200\n"
 "PO-Revision-Date: 2015-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
@@ -735,7 +735,7 @@ msgstr ""
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:320
+#: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
@@ -1852,9 +1852,9 @@ msgid "Look"
 msgstr ""
 
 #: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:315
-#: src/modules/conf_applications/e_int_config_apps.c:336
-#: src/modules/conf_applications/e_int_config_apps.c:356
+#: src/modules/conf_applications/e_int_config_apps.c:317
+#: src/modules/conf_applications/e_int_config_apps.c:338
+#: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2466,7 +2466,7 @@ msgstr "要求位置"
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
-#: src/modules/conf_interaction/e_int_config_mouse.c:307
+#: src/modules/conf_interaction/e_int_config_mouse.c:266
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
@@ -2731,13 +2731,13 @@ msgid "Main"
 msgstr "主選單"
 
 #: src/bin/e_int_menus.c:165
-#: src/modules/conf_applications/e_int_config_apps.c:72
+#: src/modules/conf_applications/e_int_config_apps.c:74
 #: src/modules/conf_applications/e_mod_main.c:29
 msgid "Favorite Applications"
 msgstr "我的最愛"
 
 #: src/bin/e_int_menus.c:176
-#: src/modules/conf_applications/e_int_config_apps.c:340
+#: src/modules/conf_applications/e_int_config_apps.c:342
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -4030,8 +4030,8 @@ msgid_plural "%li Minutes"
 msgstr[0] "一分鐘"
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps.c:332
+#: src/modules/conf_applications/e_int_config_apps.c:313
+#: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4046,13 +4046,13 @@ msgid "Add"
 msgstr "新增"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:348
+#: src/modules/conf_applications/e_int_config_apps.c:350
 #: src/modules/xkbswitch/e_mod_config.c:250
 msgid "Up"
 msgstr "往上"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:352
+#: src/modules/conf_applications/e_int_config_apps.c:354
 #: src/modules/xkbswitch/e_mod_config.c:256
 msgid "Down"
 msgstr "往下"
@@ -4479,33 +4479,33 @@ msgstr "離線"
 msgid "Mode"
 msgstr "模式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:87
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:89
+#: src/modules/conf_applications/e_int_config_apps.c:103
 #: src/modules/conf_applications/e_mod_main.c:33
 msgid "IBar Applications"
 msgstr "IBar 應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:116
+#: src/modules/conf_applications/e_int_config_apps.c:118
 #: src/modules/conf_applications/e_mod_main.c:49
 msgid "Startup Applications"
 msgstr "自動啟動之應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:132
+#: src/modules/conf_applications/e_int_config_apps.c:134
 #: src/modules/conf_applications/e_mod_main.c:45
 msgid "Restart Applications"
 msgstr "自動重新啟動之應用程式"
 
-#: src/modules/conf_applications/e_int_config_apps.c:147
+#: src/modules/conf_applications/e_int_config_apps.c:149
 #: src/modules/conf_applications/e_mod_main.c:37
 msgid "Screen Lock Applications"
 msgstr ""
 
-#: src/modules/conf_applications/e_int_config_apps.c:162
+#: src/modules/conf_applications/e_int_config_apps.c:164
 #: src/modules/conf_applications/e_mod_main.c:41
 msgid "Screen Unlock Applications"
 msgstr ""
 
-#: src/modules/conf_applications/e_int_config_apps.c:360
+#: src/modules/conf_applications/e_int_config_apps.c:362
 msgid "Order"
 msgstr ""
 
@@ -4706,7 +4706,7 @@ msgstr "點選以變更桌布"
 #: src/modules/conf_display/e_int_config_desks.c:170
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
-#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:288
 #: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:568
@@ -5277,87 +5277,87 @@ msgstr ""
 msgid "Cursor"
 msgstr "游標"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:266
+#: src/modules/conf_interaction/e_int_config_mouse.c:268
+msgid "Enable Devices Extras"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:273
 msgid "Mouse Hand"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:274
-#: src/modules/conf_interaction/e_int_config_mouse.c:314
+#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:321
 msgid "Acceleration"
 msgstr "加速"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:275
-#: src/modules/conf_interaction/e_int_config_mouse.c:316
+#: src/modules/conf_interaction/e_int_config_mouse.c:282
+#: src/modules/conf_interaction/e_int_config_mouse.c:323
 #: src/modules/fileman/e_mod_config.c:477
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr "%1.1f"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:279
+#: src/modules/conf_interaction/e_int_config_mouse.c:286
 msgid "Threshold"
 msgstr "閥值"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:287
-#: src/modules/conf_interaction/e_int_config_mouse.c:322
+#: src/modules/conf_interaction/e_int_config_mouse.c:294
+#: src/modules/conf_interaction/e_int_config_mouse.c:329
 #: src/modules/conf_theme/e_int_config_fonts.c:85
 msgid "Buttons"
 msgstr "按鈕"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:289
-#: src/modules/conf_interaction/e_int_config_mouse.c:328
+#: src/modules/conf_interaction/e_int_config_mouse.c:296
+#: src/modules/conf_interaction/e_int_config_mouse.c:335
 #, fuzzy
 msgid "Middle mouse button emulation"
 msgstr "中鍵"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:302
+#: src/modules/conf_interaction/e_int_config_mouse.c:309
 #: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "滑鼠"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:309
-msgid "Enable Devices Extras"
-msgstr ""
-
-#: src/modules/conf_interaction/e_int_config_mouse.c:324
+#: src/modules/conf_interaction/e_int_config_mouse.c:331
 msgid "Tap to click"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:332
+#: src/modules/conf_interaction/e_int_config_mouse.c:339
 #, fuzzy
 msgid "Clickpad"
 msgstr "點選"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:336
+#: src/modules/conf_interaction/e_int_config_mouse.c:343
 msgid "Palm detect"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:342
+#: src/modules/conf_interaction/e_int_config_mouse.c:349
 msgid "Scrolling"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:344
+#: src/modules/conf_interaction/e_int_config_mouse.c:351
 msgid "Natural scrolling"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:350
+#: src/modules/conf_interaction/e_int_config_mouse.c:357
 #, fuzzy
 msgid "Horizontal scrolling"
 msgstr "水平"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:354
+#: src/modules/conf_interaction/e_int_config_mouse.c:361
 msgid "Edge scrolling"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:358
+#: src/modules/conf_interaction/e_int_config_mouse.c:365
 msgid "2 finger scrolling"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:362
+#: src/modules/conf_interaction/e_int_config_mouse.c:369
 msgid "Circular scrolling"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:367
+#: src/modules/conf_interaction/e_int_config_mouse.c:374
 msgid "Touchpad"
 msgstr ""
 
@@ -5796,51 +5796,51 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 #, fuzzy
-msgid " Close Window:"
+msgid "Close Window:"
 msgstr "上移視窗"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
 #, fuzzy
-msgid " Maximize Window:"
+msgid "Maximize Window:"
 msgstr "上移視窗"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
 #, fuzzy
-msgid " Iconic Mode Toggle:"
+msgid "Iconic Mode Toggle:"
 msgstr "切換圖示化"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
 #, fuzzy
-msgid " Fullscreen Mode Toggle:"
+msgid "Fullscreen Mode Toggle:"
 msgstr "切換全螢幕模式"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-msgid " Always On Top Toggle:"
+msgid "Always On Top Toggle:"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
 #, fuzzy
-msgid " Next Window:"
+msgid "Next Window:"
 msgstr "下一個視窗"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
 #, fuzzy
-msgid " Tile Right:"
+msgid "Tile Right:"
 msgstr "右:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
 #, fuzzy
-msgid " Tile Left:"
+msgid "Tile Left:"
 msgstr "左:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
 #, fuzzy
-msgid " Kill Window:"
+msgid "Kill Window:"
 msgstr "所有視窗"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
 #, fuzzy
-msgid " Window Menu:"
+msgid "Window Menu:"
 msgstr "視窗選單"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
@@ -5849,27 +5849,27 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
 #, fuzzy
-msgid " Open Terminology:"
+msgid "Open Terminology:"
 msgstr "執行於終端機"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
 #, fuzzy
-msgid " Lock System:"
+msgid "Lock System:"
 msgstr "無法鎖定"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
 #, fuzzy
-msgid " Show Main Menu:"
+msgid "Show Main Menu:"
 msgstr "顯示主選單"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
 #, fuzzy
-msgid " Show Favorites Menu:"
+msgid "Show Favorites Menu:"
 msgstr "顯示「我的最愛」選單"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 #, fuzzy
-msgid " System Controls:"
+msgid "System Controls:"
 msgstr "設定系統控制"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
@@ -5932,26 +5932,26 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 #, fuzzy
-msgid " Quick Launcher:"
+msgid "Quick Launcher:"
 msgstr "開始"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 #, fuzzy
-msgid " Take Screenshot:"
+msgid "Take Screenshot:"
 msgstr "螢幕"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
 #, fuzzy
-msgid " Restart Moksha:"
+msgid "Restart Moksha:"
 msgstr "歡迎使用Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-msgid " Terminal console:"
+msgid "Terminal console:"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 #, fuzzy
-msgid " This Help:"
+msgid "This Help:"
 msgstr "此桌面"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327

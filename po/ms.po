@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-09-04 10:04+0200\n"
+"POT-Creation-Date: 2022-09-14 16:53+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -857,7 +857,7 @@ msgstr ""
 #: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
 #: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
-#: src/modules/conf_applications/e_int_config_apps.c:320
+#: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
 #: src/modules/conf_intl/e_int_config_imc.c:808
 #: src/modules/conf_theme/e_int_config_wallpaper.c:466
@@ -2148,9 +2148,9 @@ msgid "Look"
 msgstr "melihat"
 
 #: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
-#: src/modules/conf_applications/e_int_config_apps.c:315
-#: src/modules/conf_applications/e_int_config_apps.c:336
-#: src/modules/conf_applications/e_int_config_apps.c:356
+#: src/modules/conf_applications/e_int_config_apps.c:317
+#: src/modules/conf_applications/e_int_config_apps.c:338
+#: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058 src/modules/ibar/e_mod_main.c:1008
 #: src/modules/xkbswitch/e_mod_config.c:267
@@ -2855,7 +2855,7 @@ msgstr "Jawatan permintaan"
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
-#: src/modules/conf_interaction/e_int_config_mouse.c:307
+#: src/modules/conf_interaction/e_int_config_mouse.c:266
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
@@ -3162,14 +3162,14 @@ msgid "Main"
 msgstr "utama"
 
 #: src/bin/e_int_menus.c:165
-#: src/modules/conf_applications/e_int_config_apps.c:72
+#: src/modules/conf_applications/e_int_config_apps.c:74
 #: src/modules/conf_applications/e_mod_main.c:29
 #, fuzzy
 msgid "Favorite Applications"
 msgstr "Aplikasi kegemaran"
 
 #: src/bin/e_int_menus.c:176
-#: src/modules/conf_applications/e_int_config_apps.c:340
+#: src/modules/conf_applications/e_int_config_apps.c:342
 #: src/modules/conf_menus/e_int_config_menus.c:262
 #: src/modules/conf_menus/e_int_config_menus.c:285
 #: src/modules/conf_theme/e_int_config_fonts.c:58
@@ -4581,8 +4581,8 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/bin/e_widget_config_list.c:60
-#: src/modules/conf_applications/e_int_config_apps.c:311
-#: src/modules/conf_applications/e_int_config_apps.c:332
+#: src/modules/conf_applications/e_int_config_apps.c:313
+#: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
@@ -4598,14 +4598,14 @@ msgid "Add"
 msgstr "Tambah"
 
 #: src/bin/e_widget_config_list.c:80
-#: src/modules/conf_applications/e_int_config_apps.c:348
+#: src/modules/conf_applications/e_int_config_apps.c:350
 #: src/modules/xkbswitch/e_mod_config.c:250
 #, fuzzy
 msgid "Up"
 msgstr "sehingga"
 
 #: src/bin/e_widget_config_list.c:86
-#: src/modules/conf_applications/e_int_config_apps.c:352
+#: src/modules/conf_applications/e_int_config_apps.c:354
 #: src/modules/xkbswitch/e_mod_config.c:256
 #, fuzzy
 msgid "Down"
@@ -5080,38 +5080,38 @@ msgstr "Offline"
 msgid "Mode"
 msgstr "Alihkan"
 
-#: src/modules/conf_applications/e_int_config_apps.c:87
-#: src/modules/conf_applications/e_int_config_apps.c:101
+#: src/modules/conf_applications/e_int_config_apps.c:89
+#: src/modules/conf_applications/e_int_config_apps.c:103
 #: src/modules/conf_applications/e_mod_main.c:33
 #, fuzzy
 msgid "IBar Applications"
 msgstr "Permohonan ibar"
 
-#: src/modules/conf_applications/e_int_config_apps.c:116
+#: src/modules/conf_applications/e_int_config_apps.c:118
 #: src/modules/conf_applications/e_mod_main.c:49
 #, fuzzy
 msgid "Startup Applications"
 msgstr "Permohonan startup"
 
-#: src/modules/conf_applications/e_int_config_apps.c:132
+#: src/modules/conf_applications/e_int_config_apps.c:134
 #: src/modules/conf_applications/e_mod_main.c:45
 #, fuzzy
 msgid "Restart Applications"
 msgstr "restart Aplikasi"
 
-#: src/modules/conf_applications/e_int_config_apps.c:147
+#: src/modules/conf_applications/e_int_config_apps.c:149
 #: src/modules/conf_applications/e_mod_main.c:37
 #, fuzzy
 msgid "Screen Lock Applications"
 msgstr "Skrin Tetapan Lock"
 
-#: src/modules/conf_applications/e_int_config_apps.c:162
+#: src/modules/conf_applications/e_int_config_apps.c:164
 #: src/modules/conf_applications/e_mod_main.c:41
 #, fuzzy
 msgid "Screen Unlock Applications"
 msgstr "Permohonan yang diketahui"
 
-#: src/modules/conf_applications/e_int_config_apps.c:360
+#: src/modules/conf_applications/e_int_config_apps.c:362
 #, fuzzy
 msgid "Order"
 msgstr "perintah"
@@ -5346,7 +5346,7 @@ msgstr "pertukaran wallpapers"
 #: src/modules/conf_display/e_int_config_desks.c:170
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
-#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:288
 #: src/modules/everything/evry_config.c:411
 #: src/modules/everything/evry_config.c:561
 #: src/modules/everything/evry_config.c:568
@@ -6003,97 +6003,97 @@ msgstr "kesan terbiar"
 msgid "Cursor"
 msgstr "menunjukkan kursor"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:266
+#: src/modules/conf_interaction/e_int_config_mouse.c:268
+msgid "Enable Devices Extras"
+msgstr ""
+
+#: src/modules/conf_interaction/e_int_config_mouse.c:273
 #, fuzzy
 msgid "Mouse Hand"
 msgstr "Tangan tetikus"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:274
-#: src/modules/conf_interaction/e_int_config_mouse.c:314
+#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:321
 #, fuzzy
 msgid "Acceleration"
 msgstr "pecutan"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:275
-#: src/modules/conf_interaction/e_int_config_mouse.c:316
+#: src/modules/conf_interaction/e_int_config_mouse.c:282
+#: src/modules/conf_interaction/e_int_config_mouse.c:323
 #: src/modules/fileman/e_mod_config.c:477
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:279
+#: src/modules/conf_interaction/e_int_config_mouse.c:286
 #, fuzzy
 msgid "Threshold"
 msgstr "ambang"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:287
-#: src/modules/conf_interaction/e_int_config_mouse.c:322
+#: src/modules/conf_interaction/e_int_config_mouse.c:294
+#: src/modules/conf_interaction/e_int_config_mouse.c:329
 #: src/modules/conf_theme/e_int_config_fonts.c:85
 #, fuzzy
 msgid "Buttons"
 msgstr "butang"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:289
-#: src/modules/conf_interaction/e_int_config_mouse.c:328
+#: src/modules/conf_interaction/e_int_config_mouse.c:296
+#: src/modules/conf_interaction/e_int_config_mouse.c:335
 #, fuzzy
 msgid "Middle mouse button emulation"
 msgstr "Alihkan"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:302
+#: src/modules/conf_interaction/e_int_config_mouse.c:309
 #: src/modules/conf_interaction/e_mod_main.c:24
 #, fuzzy
 msgid "Mouse"
 msgstr "Alihkan"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:309
-msgid "Enable Devices Extras"
-msgstr ""
-
-#: src/modules/conf_interaction/e_int_config_mouse.c:324
+#: src/modules/conf_interaction/e_int_config_mouse.c:331
 msgid "Tap to click"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:332
+#: src/modules/conf_interaction/e_int_config_mouse.c:339
 #, fuzzy
 msgid "Clickpad"
 msgstr "klik"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:336
+#: src/modules/conf_interaction/e_int_config_mouse.c:343
 msgid "Palm detect"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:342
+#: src/modules/conf_interaction/e_int_config_mouse.c:349
 #, fuzzy
 msgid "Scrolling"
 msgstr "mengundi"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:344
+#: src/modules/conf_interaction/e_int_config_mouse.c:351
 #, fuzzy
 msgid "Natural scrolling"
 msgstr "bernyawa menatal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:350
+#: src/modules/conf_interaction/e_int_config_mouse.c:357
 #, fuzzy
 msgid "Horizontal scrolling"
 msgstr "penjajaran mendatar"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:354
+#: src/modules/conf_interaction/e_int_config_mouse.c:361
 #, fuzzy
 msgid "Edge scrolling"
 msgstr "bernyawa menatal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:358
+#: src/modules/conf_interaction/e_int_config_mouse.c:365
 #, fuzzy
 msgid "2 finger scrolling"
 msgstr "bernyawa menatal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:362
+#: src/modules/conf_interaction/e_int_config_mouse.c:369
 #, fuzzy
 msgid "Circular scrolling"
 msgstr "bernyawa menatal"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:367
+#: src/modules/conf_interaction/e_int_config_mouse.c:374
 #, fuzzy
 msgid "Touchpad"
 msgstr "menyentuh"
@@ -6579,52 +6579,52 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 #, fuzzy
-msgid " Close Window:"
+msgid "Close Window:"
 msgstr "pembersihan Windows"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
 #, fuzzy
-msgid " Maximize Window:"
+msgid "Maximize Window:"
 msgstr "meningkatkan Window"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
 #, fuzzy
-msgid " Iconic Mode Toggle:"
+msgid "Iconic Mode Toggle:"
 msgstr "Ikonik Mod Togol"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
 #, fuzzy
-msgid " Fullscreen Mode Toggle:"
+msgid "Fullscreen Mode Toggle:"
 msgstr "Skrin penuh Mod Togol"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
 #, fuzzy
-msgid " Always On Top Toggle:"
+msgid "Always On Top Toggle:"
 msgstr "Sentiasa Top"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
 #, fuzzy
-msgid " Next Window:"
+msgid "Next Window:"
 msgstr "Tetingkap seterusnya"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
 #, fuzzy
-msgid " Tile Right:"
+msgid "Tile Right:"
 msgstr "kanan;"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
 #, fuzzy
-msgid " Tile Left:"
+msgid "Tile Left:"
 msgstr "Left:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
 #, fuzzy
-msgid " Kill Window:"
+msgid "Kill Window:"
 msgstr "semua tingkap"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
 #, fuzzy
-msgid " Window Menu:"
+msgid "Window Menu:"
 msgstr "Menu Tetingkap"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
@@ -6633,27 +6633,27 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
 #, fuzzy
-msgid " Open Terminology:"
+msgid "Open Terminology:"
 msgstr "Diuruskan di Terminal"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
 #, fuzzy
-msgid " Lock System:"
+msgid "Lock System:"
 msgstr "kunci Gagal"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
 #, fuzzy
-msgid " Show Main Menu:"
+msgid "Show Main Menu:"
 msgstr "Tunjukkan Menu Utama"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
 #, fuzzy
-msgid " Show Favorites Menu:"
+msgid "Show Favorites Menu:"
 msgstr "Menunjukkan Pilihan Menu"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 #, fuzzy
-msgid " System Controls:"
+msgid "System Controls:"
 msgstr "sistem Kawalan"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
@@ -6716,27 +6716,27 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 #, fuzzy
-msgid " Quick Launcher:"
+msgid "Quick Launcher:"
 msgstr "pelancar"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 #, fuzzy
-msgid " Take Screenshot:"
+msgid "Take Screenshot:"
 msgstr "persediaan Skrin"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
 #, fuzzy
-msgid " Restart Moksha:"
+msgid "Restart Moksha:"
 msgstr "Mengenai Enlightment"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
 #, fuzzy
-msgid " Terminal console:"
+msgid "Terminal console:"
 msgstr "Perintah terminal"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 #, fuzzy
-msgid " This Help:"
+msgid "This Help:"
 msgstr "Desktop ini"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
