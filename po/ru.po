@@ -5967,52 +5967,42 @@ msgid "WINDOWS"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
 msgstr "Клонировать окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
 msgstr "Поднять окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
 msgstr "Переключить портретный режим "
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
 msgstr "Переключить полноэкранный режим"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
 msgstr "Переключить \"всегда наверху\""
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
 msgstr "Следующее окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
 msgstr "Правый:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
 msgstr "Верхний левый"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
 msgstr "Все окна"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
 msgstr "Меню Окна"
 
@@ -6021,27 +6011,22 @@ msgid "SYSTEM"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
 msgstr "Открыть терминал здесь"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
 msgstr "Зафиксировать"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
 msgstr "Показать главное меню"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
 msgstr "Показать избранное меню"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
 msgstr "Управление системой"
 
@@ -6050,86 +6035,70 @@ msgid "DESKTOP"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Показать рабочий стол"
+msgstr " Показать рабочий стол"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Перейти на рабочий стол 0"
+msgstr " Перейти на рабочий стол 0"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Перейти на рабочий стол 1"
+msgstr " Перейти на рабочий стол 1"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Перейти на рабочий стол 2"
+msgstr " Перейти на рабочий стол 2"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Перейти на рабочий стол 3"
+msgstr " Перейти на рабочий стол 3"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Перейти на рабочий стол 4"
+msgstr " Перейти на рабочий стол 4"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Перейти на рабочий стол 5"
+msgstr " Перейти на рабочий стол 5"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Перейти на рабочий стол 6"
+msgstr " Перейти на рабочий стол 6"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Перейти на рабочий стол 7"
+msgstr " Перейти на рабочий стол 7"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Перейти на рабочий стол 8"
+msgstr " Перейти на рабочий стол 8"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
 msgstr "Быстрый запуск"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
 msgstr "Сделать снимок экрана"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
 msgstr "Перезапустить Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
 msgstr "Команда вызова терминала"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
 msgstr "Этот рабочий стол"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Привязки мыши"
 
@@ -6138,7 +6107,6 @@ msgid "Edit"
 msgstr "Изменить"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
-#, fuzzy
 msgid "Keybindings"
 msgstr "Привязки клавиш"
 
@@ -6147,7 +6115,6 @@ msgid "View Moksha Keybindings"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
-#, fuzzy
 msgid "Show bindings"
 msgstr "Показать настройки"
 

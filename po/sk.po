@@ -5969,83 +5969,68 @@ msgid "WINDOWS"
 msgstr "OKNÁ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr " Zavrieť okno:"
+msgstr "Zavrieť okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr " Maximalizovať okno:"
+msgstr "Maximalizovať okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr " Minimalizovať okno:"
+msgstr "Minimalizovať okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr " Okno na celú obrazovku:"
+msgstr "Okno na celú obrazovku:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr " Vždy navrchu:"
+msgstr "Vždy navrchu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr " Nasledujúce okno:"
+msgstr "Nasledujúce okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr " Maximalizovať vpravo:"
+msgstr "Maximalizovať vpravo:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr " Maximalizovať vľavo:"
+msgstr "Maximalizovať vľavo:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr " Ukončiť proces okna:"
+msgstr "Ukončiť proces okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr " Menu okna:"
+msgstr "Menu okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
 msgstr "SYSTÉM"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr " Otvoriť Terminology:"
+msgstr "Otvoriť Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr " Zamknúť systém:"
+msgstr "Zamknúť systém:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr " Zobraziť Hlavné menu:"
+msgstr "Zobraziť Hlavné menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr " Zobraziť Obľúbené:"
+msgstr "Zobraziť Obľúbené:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr " Systémovové menu:"
+msgstr "Systémovové menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -6100,28 +6085,24 @@ msgid "Quick Launcher:"
 msgstr "Rýchly prístup:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr " Snímka obrazovky:"
+msgstr "Snímka obrazovky:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr " Reštart desktopu:"
+msgstr "Reštart desktopu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr " Terminálové konzoly:"
+msgstr "Terminálové konzoly:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr " Táto nápoveda:"
+msgstr "Táto nápoveda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
-msgstr "Základné Klávesové skratky"
+msgstr "Základné klávesové skratky"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"

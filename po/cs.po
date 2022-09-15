@@ -6145,12 +6145,10 @@ msgid "Terminal console:"
 msgstr "Příkaz terminálu"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr "Tato plocha"
+msgstr "Tato nápověda"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Vazby myši"
 
@@ -6159,7 +6157,6 @@ msgid "Edit"
 msgstr "Upravit"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
-#, fuzzy
 msgid "Keybindings"
 msgstr "Klávesové zkratky"
 
