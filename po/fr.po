@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-09-14 16:53+0200\n"
-"PO-Revision-Date: 2022-09-04 10:36+0200\n"
+"PO-Revision-Date: 2022-09-16 08:01+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -1748,8 +1748,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
-"%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
+"<br><hilight>%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -3842,8 +3842,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?<br><br>"
-"%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?"
+"<br><br>%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5848,8 +5848,9 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -5983,83 +5984,68 @@ msgid "WINDOWS"
 msgstr "FENÊTRES"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr " Fermer la fenêtre :"
+msgstr "Fermer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr " Maximiser la fenêtre :"
+msgstr "Maximiser la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr " (Dés)Activer le mode iconifié :"
+msgstr "(Dés)Activer le mode iconifié :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr " Dés)Activer le mode plein écran :"
+msgstr "Dés)Activer le mode plein écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr " Toujours au-dessus (in)actif :"
+msgstr "Toujours au-dessus (in)actif :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr " Fenêtre suivante :"
+msgstr "Fenêtre suivante :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr " Juxtaposer à droite :"
+msgstr "Juxtaposer à droite :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr " Juxtaposer à gauche :"
+msgstr "Juxtaposer à gauche :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr " Tuer la fenêtre :"
+msgstr "Tuer la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr " Menu de la fenêtre :"
+msgstr "Menu de la fenêtre :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
 msgstr "SYSTÈME"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr " Ouvrir Terminology :"
+msgstr "Ouvrir Terminology :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr " Verrouiller le système :"
+msgstr "Verrouiller le système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr " Afficher le menu principal :"
+msgstr "Afficher le menu principal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr " Afficher le menu des favoris :"
+msgstr "Afficher le menu des favoris :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr " Commandes système :"
+msgstr "Commandes système :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -6110,29 +6096,24 @@ msgid "MISCELLANEOUS"
 msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
-msgstr " Lanceur rapide :"
+msgstr "Lanceur rapide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr " Capture d'écran :"
+msgstr "Capture d'écran :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr " Relancer Moksha :"
+msgstr "Relancer Moksha :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr " Console de terminal :"
+msgstr "Console de terminal :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr " Afficher l'aide :"
+msgstr "Afficher l'aide :"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -7899,8 +7880,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8299,11 +8280,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8318,18 +8299,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
-"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
-"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
-"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
-"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
-"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
-"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
-"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
-"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
-"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
-"des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
+"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
+"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
+"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
+"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
+"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
+"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
+"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
+"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
+"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
+"d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9440,9 +9421,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br>est introuvable dans la base de données des<br>applications des accès "
-"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
+"<br>%s<br>est introuvable dans la base de données des<br>applications des "
+"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
