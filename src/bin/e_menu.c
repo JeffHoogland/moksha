@@ -43,6 +43,7 @@ static void         _e_menu_submenu_activate(E_Menu_Item *mi);
 static void         _e_menu_submenu_deactivate(E_Menu_Item *mi);
 static void         _e_menu_reposition(E_Menu *m);
 static int          _e_menu_active_call(void);
+static int          _e_menu_active_call_edit(void *event);
 static int          _e_menu_realize_call(E_Menu_Item *mi);
 static void         _e_menu_item_activate_next(void);
 static void         _e_menu_item_activate_previous(void);
@@ -2327,6 +2328,33 @@ _e_menu_active_call(void)
 }
 
 static int
+_e_menu_active_call_edit(void *event)
+{
+   E_Menu_Item *mi;
+   Ecore_Event_Mouse_Button *ev = event;
+
+   mi = _e_menu_item_active_get();
+    if (mi)
+     {
+        if (mi->check)
+          e_menu_item_toggle_set(mi, !mi->toggle);
+        if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
+          e_menu_item_toggle_set(mi, 1);
+        if (mi->cb.func){
+          if (ev->buttons == 1)
+            mi->cb.func(mi->cb.data, mi->menu, mi);
+          else
+            e_desktop_edit(mi->menu->zone->container, mi->cb.data);
+          item_has_cb = 1;
+        }
+        else
+          item_has_cb = 0;
+        return 1;
+     }
+   return -1;
+}
+
+static int
 _e_menu_realize_call(E_Menu_Item *mi)
 {
    if (mi)
@@ -3069,7 +3097,7 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
          */
      }
    else
-     ret = _e_menu_active_call();
+     ret = _e_menu_active_call_edit(ev);
    _e_menu_activate_maybe_drag = 0;
    _e_menu_activate_dragging = 0;
    
