@@ -72,7 +72,7 @@ main(int argc,
             (!strcmp(argv[i], "--help")))
           {
              printf(
-               "This is an internal tool for Enlightenment.\n"
+               "This is an internal tool for Moksha.\n"
                "do not use it.\n"
                );
              exit(0);
@@ -649,7 +649,7 @@ auth_etc_enlightenment_sysactions(char *a,
         deny = 0;
         if (!strcmp(id, "user:"))
           {
-             if (!fnmatch(ugname, *gp, 0))
+             if (!fnmatch(ugname, u, 0))
                {
                   if (!strcmp(perm, "allow:")) allow = 1;
                   else if (!strcmp(perm, "deny:"))
