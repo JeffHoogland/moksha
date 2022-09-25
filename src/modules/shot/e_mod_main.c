@@ -97,7 +97,7 @@ Eina_Bool _timer_cb(void *data)
      {
        if (shot_conf->notify)
          _notify(shot_conf->count, _("Screenshot in: "), "... ", 1024, 1);
-       
+
        shot_conf->count--;
        return ECORE_CALLBACK_PASS_ON;
      }
@@ -140,7 +140,7 @@ _shot_conf_new(void)
    shot_conf->mode_dialog = 1;
    shot_conf->delay = 5.0;
    shot_conf->pict_quality = 80.0;
-   
+
    IFMODCFGEND;
    shot_conf->version = MOD_CONFIG_FILE_VERSION;
 
@@ -157,7 +157,6 @@ _shot_conf_free(void)
    if (shot_conf->path) eina_stringshare_del(shot_conf->path);
    E_FREE(shot_conf);
 }
-
 
 static void
 _win_cancel_cb(void *data __UNUSED__, void *data2 __UNUSED__)
@@ -248,7 +247,7 @@ _key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      }            
    else if (!strcmp(ev->key, "Escape"))
      _win_cancel_cb(NULL, NULL);
-}            
+}
 
 static void
 _save_key_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
@@ -281,7 +280,7 @@ _screen_change_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *even
 static void
 _cb_dialog_yes(void *data __UNUSED__)
 {
-  e_int_config_shot_module(NULL,NULL);
+  e_int_config_shot_module(NULL, NULL);
 }
 
 static void
@@ -305,34 +304,30 @@ _save_to(const char *file)
    if (screen == -1)
      {
         if (!evas_object_image_save(o_img, file, NULL, opts))
-        {
-          e_confirm_dialog_show(_("Error - Folder does not exist"),
-                          "application-exit",
-                          _("Change folder in Take Screenshot settings<br>"
-                          "<br>"
-                          "Menu-Settings-All-Advanced-Take Screenshot<br>"
-                          "<br>"
-                          "Would you like to set up it now?"),
-                          _("Yes"), _("Cancel"),
-                          _cb_dialog_yes, NULL, NULL, NULL,
-                          _cb_dialog_cancel, NULL);
-        }
+          {
+             e_confirm_dialog_show(_("Error - Folder does not exist"),
+                             "application-exit",
+                             _("Change folder in Take Screenshot settings<br>"
+                             "<br>"
+                             "Menu-Settings-All-Advanced-Take Screenshot<br>"
+                             "<br>"
+                             "Would you like to set up it now?"),
+                             _("Yes"), _("Cancel"),
+                             _cb_dialog_yes, NULL, NULL, NULL,
+                             _cb_dialog_cancel, NULL);
+          }
         else
-        {
-           if (shot_conf->notify)
-              timer = ecore_timer_add(1.2, _notify_cb, NULL);
-	    }
-  }
-        
-        
+          {
+             if (shot_conf->notify)
+               timer = ecore_timer_add(1.2, _notify_cb, NULL);
+          }
+     }
    else
      {
         Evas_Object *o;
         Eina_List *l;
         E_Zone *z = NULL;
-        
-        
-        
+
         EINA_LIST_FOREACH(scon->zones, l, z)
           {
              if (screen == (int)z->num) break;
@@ -377,10 +372,9 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
   
    Ecore_Exe *exe;
    char buf[150];
-   
 
    dia = fsel_dia;
-   
+
    file = e_widget_fsel_selection_path_get(o_fsel);
    
    if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, ".jpg")) && (!eina_str_has_extension(file, ".png"))))
@@ -394,14 +388,14 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
         return;
      }
    _save_to(file);
-   
+
    if ((shot_conf->view_enable) && (shot_conf->viewer)) 
-   {
-       snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
-       exe = e_util_exe_safe_run(buf, NULL);
-       if (exe) ecore_exe_free(exe);
-   }
-   
+     {
+        snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
+        exe = e_util_exe_safe_run(buf, NULL);
+        if (exe) ecore_exe_free(exe);
+     }
+
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
      {
@@ -476,11 +470,11 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    mask = 0;
    if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
-   
+
    if (shot_conf->full_dialog) 
      e_dialog_show(dia);
    else
-    _file_select_ok_cb(NULL,NULL);
+    _file_select_ok_cb(NULL, NULL);
 }
 
 static void
@@ -623,7 +617,7 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    char buf[PATH_MAX];
    FILE *f;
    int i, fd = -1;
-   
+
    srand(time(NULL));
    for (i = 0; i < 10240; i++)
      {
@@ -779,7 +773,7 @@ _rect_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         else
            e_widget_radio_toggle_set(o_radio[z->num], 0);
      }
-   
+
    EINA_LIST_FOREACH(scon->zones, l, z)
      {
         if (screen == -1)
@@ -851,7 +845,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    ecore_x_image_to_argb_convert(src, bpp, bpl, colormap, visual,
                                  0, 0, sw, sh,
                                  dst, (sw * sizeof(int)), 0, 0);
-   
+
    if (win) e_object_del(E_OBJECT(win));
    win = e_win_new(e_container_current_get(e_manager_current_get()));
    
@@ -862,13 +856,13 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_dialog_set(win, 1);
    e_win_centered_set(win, 1);
    e_win_name_class_set(win, "E", "_shot_dialog");
-   
+
    o = edje_object_add(evas);
    o_bg = o;;
    e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
-   
+
    o = e_widget_list_add(evas, 0, 0);
    o_content = o;
    e_widget_size_min_get(o, &w, &h);
@@ -886,7 +880,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    op = o;
 
    evas2 = e_widget_preview_evas_get(op);
-   
+
    o = evas_object_image_filled_add(evas2);
    o_img = o;
    evas_object_image_colorspace_set(o, EVAS_COLORSPACE_ARGB8888);
@@ -901,10 +895,10 @@ _shot_now(E_Zone *zone, E_Border *bd)
 
    evas_object_show(op);
    evas_object_show(oa);
-   
+
    e_widget_aspect_child_set(oa, op);
    e_widget_list_object_append(o_content, oa, 0, 0, 0.5);
-   
+
    o = e_widget_list_add(evas, 1, 1);
    o_hlist = o;
 
@@ -915,7 +909,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    if ((shot_conf->pict_quality>=80) && (shot_conf->pict_quality<100)) quality=90;
    if ((shot_conf->pict_quality>=60) && (shot_conf->pict_quality<80)) quality=70;
    if (shot_conf->pict_quality<60) quality=50;
-   
+
    rg = e_widget_radio_group_new(&quality);
    o = e_widget_radio_add(evas, _("Perfect"), 100, rg);
    e_widget_framelist_object_append(ol, o);
@@ -983,26 +977,26 @@ _shot_now(E_Zone *zone, E_Border *bd)
    evas_object_size_hint_min_set(o, w, h);
    edje_object_part_swallow(o_bg, "e.swallow.content", o);
    evas_object_show(o);
-   
+
    ///////////////////////////////////////////////////////////////////////
-   
+
    o = e_widget_list_add(evas, 1, 1);
    o_box = o;
    e_widget_on_focus_hook_set(o, _on_focus_cb, NULL);
    edje_object_part_swallow(o_bg, "e.swallow.buttons", o);
-   
+
    o = e_widget_button_add(evas, _("Save"), NULL, _win_save_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Share"), NULL, _win_share_confirm_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Cancel"), NULL, _win_cancel_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
-   
+
    o = o_box;
    e_widget_size_min_get(o, &w, &h);
    evas_object_size_hint_min_set(o, w, h);
    edje_object_part_swallow(o_bg, "e.swallow.buttons", o);
-   
+
    o = evas_object_rectangle_add(evas);
    o_event = o;
    mask = 0;
@@ -1018,7 +1012,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    mask = 0;
    if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _key_down_cb, NULL);
-   
+
    edje_object_size_min_calc(o_bg, &w, &h);
    evas_object_resize(o_bg, w, h);
    e_win_resize(win, w, h);
@@ -1026,9 +1020,9 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_size_max_set(win, 99999, 99999);
    if (shot_conf->full_dialog) e_win_show(win);
    e_win_border_icon_set(win, "screenshot");
-   
+
    if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
-   if (!shot_conf->full_dialog) _win_save_cb(win,NULL);
+   if (!shot_conf->full_dialog) _win_save_cb(win, NULL);
 }
 
 static Eina_Bool
@@ -1059,10 +1053,10 @@ _shot(E_Zone *zone, Eina_Bool instant)
 {
    if (!instant)
        shot_conf->count = shot_conf->delay;
- 
+
    if (timer) ecore_timer_del(timer);
    if (timer_sec) ecore_timer_del(timer_sec);
-  
+
    if (shot_conf->delay > 0)
        timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
    else
@@ -1109,13 +1103,13 @@ _e_mod_action_cb(E_Object *obj, Eina_Bool instant)
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (!zone) return;
    if (timer)
-      {
-         ecore_timer_del(timer);
-         timer = NULL;
-         ecore_timer_del(timer_sec);
-         timer_sec = NULL;
-      }
-      
+     {
+        ecore_timer_del(timer);
+        timer = NULL;
+        ecore_timer_del(timer_sec);
+        timer_sec = NULL;
+     }
+
   _shot(zone, instant);
 }
 
@@ -1167,12 +1161,12 @@ _show_dialog(E_Object *obj, const char *params __UNUSED__)
    char buf[512];
 
    if (_show_dialog_dia) return;
-   
+
    if (!shot_conf->mode_dialog){
        _e_mod_action_cb(obj, EINA_FALSE);
        return;
    }
-   
+
    if (!(man = e_manager_current_get())) return;
    if (!(con = e_container_current_get(man))) return;
    if (!(dia = e_dialog_new(con, "E", "_shot_dialog"))) return;
@@ -1236,7 +1230,7 @@ static void
 _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
 {
    E_Menu_Item *mi;
-   
+
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Take Screenshot"));
    e_util_menu_item_theme_icon_set(mi, "screenshot");
@@ -1265,9 +1259,9 @@ e_modapi_init(E_Module *m)
                            _("Cannot initialize network"));
         return NULL;
      }
- 
+
    e_module_delayed_set(m, 1);
-   
+
    shot_module = m;
    act = e_action_add("shot");
    if (act)
@@ -1276,7 +1270,7 @@ e_modapi_init(E_Module *m)
         e_action_predef_name_set(N_("Screen"), N_("Take Screenshot"),
                                  "shot", NULL, NULL, 0);
      }
-     
+
    border_act = e_action_add("border_shot");
    if (border_act)
      {
@@ -1287,11 +1281,10 @@ e_modapi_init(E_Module *m)
    maug = e_int_menus_menu_augmentation_add_sorted
       ("main/2",  _("Take Screenshot"), _e_mod_menu_add, NULL, NULL, NULL);
    border_hook = e_int_border_menu_hook_add(_bd_hook, NULL);
-   
-      
-  e_configure_registry_category_add("extensions", 90, "Takescreenshot", 
+
+   e_configure_registry_category_add("extensions", 90, "Takescreenshot", 
                                  NULL, "preferences-extensions");
-         
+
    e_configure_registry_item_add("extensions/takescreenshot", 20, _("Screenshot Settings"), 
                                  NULL, "screenshot", e_int_config_shot_module);
   
@@ -1312,7 +1305,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, mode_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, delay, DOUBLE); /* our var from header */
    E_CONFIG_VAL(D, T, pict_quality, DOUBLE); /* our var from header */
-   
+
    E_CONFIG_LIST(D, T, conf_items, conf_item_edd); /* the list */
 
    shot_conf = e_config_domain_load("module.takescreen", conf_edd);
@@ -1385,13 +1378,13 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    shot_module = NULL;
    e_int_border_menu_hook_del(border_hook);
    ecore_con_url_shutdown();
-   
+
    #ifdef HAVE_ENOTIFY
    e_notification_shutdown();
    #endif
    ecore_x_window_free(fake_win);
    _shot_conf_free();
-   
+
    return 1;
 }
 

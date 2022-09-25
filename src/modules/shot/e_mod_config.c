@@ -10,7 +10,6 @@ struct _E_Config_Dialog_Data
    double delay, pict_quality;
    char *viewer;
    char *path;
-   
 };
 
 /* Local Function Prototypes */
@@ -86,7 +85,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->notify = shot_conf->notify;
    cfdata->full_dialog = shot_conf->full_dialog;
    cfdata->mode_dialog = shot_conf->mode_dialog;
-
 }
 
 static Evas_Object *
@@ -97,47 +95,47 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    o = e_widget_list_add(evas, 0, 0);
 
    of = e_widget_framelist_add(evas, _("Settings"), 0);
-   
+
    ow = e_widget_check_add(evas, _(" Show the screenshot mode dialog"), &(cfdata->mode_dialog));
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_check_add(evas, _(" Screenshot guide (quality/share/save)"), &(cfdata->full_dialog));
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_check_add(evas, _(" Show notifications"), &(cfdata->notify));
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_check_add(evas, _(" Launch app after screenshot"), &(cfdata->view_enable));
    e_widget_framelist_object_append(of, ow);
-      
+
    ow = e_widget_label_add(evas, _("Application for opening:"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->viewer, NULL, NULL, NULL);
    e_widget_size_min_set(ow, 60, 28);
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_label_add(evas, _("Folder for saving screenshots:"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_entry_add(evas, &cfdata->path, NULL, NULL, NULL);
    e_widget_size_min_set(ow, 60, 28);
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_label_add(evas, _("Delay time [s]"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 0.0, 10.0, 1.0, 0, &(cfdata->delay), NULL, 100);
    e_widget_framelist_object_append(of, ow);
-   
+
    ow = e_widget_label_add(evas, _("Image quality [50-90 = jpg, 100 = png]"));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_slider_add(evas, 1, 0, "%1.0f", 50.0, 100.0, 10.0, 0, &(cfdata->pict_quality), NULL, 100);
    e_widget_framelist_object_append(of, ow);
-   
+
    e_widget_list_object_append(o, of, 1, 0, 0.5);
-   
+
    of = e_widget_framelist_add(evas, _("Info"), 0);   
    ow = e_widget_label_add(evas, _("Alt+PrtSc: screenshot active window"));
    e_widget_framelist_object_append(of, ow);
-   
+
    e_widget_list_object_append(o, of, 1, 0, 0.5);
 
    return o;
@@ -150,14 +148,13 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    if (shot_conf->viewer) eina_stringshare_del( shot_conf->viewer);
    if (cfdata->viewer)
       shot_conf->viewer = eina_stringshare_add(cfdata->viewer);
-  
+
    if (shot_conf->path) eina_stringshare_del(shot_conf->path);
    if (cfdata->path) 
      shot_conf->path = eina_stringshare_add(cfdata->path);
    else
      shot_conf->path = eina_stringshare_add(e_user_homedir_get());
-  
-  
+
    shot_conf->notify = cfdata->notify;
    shot_conf->view_enable = cfdata->view_enable;
    shot_conf->delay = cfdata->delay;
@@ -165,6 +162,6 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    shot_conf->full_dialog = cfdata->full_dialog;
    shot_conf->mode_dialog = cfdata->mode_dialog;
    e_config_save_queue();
-   
+
    return 1;
 }
