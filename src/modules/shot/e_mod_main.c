@@ -12,6 +12,10 @@
 #include <time.h>
 #include "e_mod_main.h"
 #include "E_Notify.h"
+#ifdef HAVE_ELEMENTARY
+#include <Elementary.h>
+static Evas_Object * win_cp = NULL;
+#endif
 
 static E_Module *shot_module = NULL;
 static Ecore_X_Window fake_win;
@@ -26,7 +30,7 @@ static Evas_Object *o_bg = NULL, *o_box = NULL, *o_content = NULL;
 static Evas_Object *o_event = NULL, *o_img = NULL, *o_hlist = NULL;
 static E_Manager *sman = NULL;
 static E_Container *scon = NULL;
-static int quality = 80;
+static int quality = 100;
 static int screen = -1;
 #define MAXZONES 64
 static Evas_Object *o_rectdim[MAXZONES] = { NULL };
@@ -50,7 +54,6 @@ static void _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia);
 static void _cb_dialog_yes(void *data __UNUSED__);
 static void _cb_dialog_cancel(void *data __UNUSED__);
 static Eina_Bool _notify_cb(void *data __UNUSED__);
-
 
 static void _shot_conf_new(void);
 static void _shot_conf_free(void);
@@ -111,7 +114,10 @@ Eina_Bool _timer_cb(void *data)
 static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
-   _notify(1, _("Screenshot stored in"), shot_conf->path, 3000, 0);
+   if ((shot_conf->clipboard) && ((!shot_conf->view_enable) || (!shot_conf->viewer)))
+     _notify(1, _("Screenshot copied in"), _("Clipboard"), 3000, 0);
+   else
+     _notify(1, _("Screenshot stored in"), shot_conf->path, 3000, 0);
    timer = NULL;
    return ECORE_CALLBACK_DONE;
 }
@@ -136,10 +142,11 @@ _shot_conf_new(void)
    snprintf(buf, sizeof(buf), "desktop");
    shot_conf->path = eina_stringshare_add(buf);
    shot_conf->notify = 1;
+   shot_conf->clipboard = 1;
    shot_conf->full_dialog = 0;
    shot_conf->mode_dialog = 1;
    shot_conf->delay = 5.0;
-   shot_conf->pict_quality = 80.0;
+   shot_conf->pict_quality = 100.0;
 
    IFMODCFGEND;
    shot_conf->version = MOD_CONFIG_FILE_VERSION;
@@ -363,13 +370,41 @@ _save_to(const char *file)
      }
 }
 
+static void
+clipboard_copy(const char *file)
+{
+   FILE *f = fopen(file, "r");
+   win_cp = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
 
+   if (!f) return;
+   fseek(f, 0, SEEK_END);
+   fsize = ftell(f);
+   fseek(f, 0, SEEK_SET);
+   if (fsize > 0)
+     {
+        fdata = malloc(fsize);
+        if (fdata)
+          {
+             if (fread(fdata, fsize, 1, f) == 1)
+               {
+                  elm_cnp_selection_set(win_cp,
+                                        ELM_SEL_TYPE_CLIPBOARD,
+                                        ELM_SEL_FORMAT_IMAGE,
+                                        fdata, fsize);
+               }
+             free(fdata);
+          }
+     }
+   fclose(f);
+
+   if ((!shot_conf->view_enable) || (!shot_conf->viewer))
+     eina_file_unlink(file);
+}
 
 static void
 _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    const char *file;
-  
    Ecore_Exe *exe;
    char buf[150];
 
@@ -389,12 +424,15 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
      }
    _save_to(file);
 
-   if ((shot_conf->view_enable) && (shot_conf->viewer)) 
+   if ((shot_conf->view_enable) && (shot_conf->viewer))
      {
         snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
         exe = e_util_exe_safe_run(buf, NULL);
         if (exe) ecore_exe_free(exe);
      }
+
+   if (shot_conf->clipboard)
+     clipboard_copy(file);
 
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
@@ -1301,6 +1339,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, path, STR); /* our var from header */
    E_CONFIG_VAL(D, T, view_enable, INT); /* our var from header */
    E_CONFIG_VAL(D, T, notify, INT); /* our var from header */
+   E_CONFIG_VAL(D, T, clipboard, INT); /* our var from header */
    E_CONFIG_VAL(D, T, full_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, mode_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, delay, DOUBLE); /* our var from header */

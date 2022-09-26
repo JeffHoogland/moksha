@@ -16,7 +16,7 @@
  * You need to increment GENERATION when you add new values to the
  * configuration file but is not needed to delete the existing conf  */
 #define MOD_CONFIG_FILE_EPOCH 0x0002
-#define MOD_CONFIG_FILE_GENERATION 0x008d
+#define MOD_CONFIG_FILE_GENERATION 0x008e
 #define MOD_CONFIG_FILE_VERSION \
    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -35,7 +35,7 @@ struct _Config
    E_Config_Dialog *cfd;
    Eina_List *conf_items;
 
-   int count, notify, version, full_dialog, mode_dialog; 
+   int count, notify, version, full_dialog, mode_dialog, clipboard;
 
    const char *viewer;
    const char *path;

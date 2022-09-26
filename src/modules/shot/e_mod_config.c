@@ -6,7 +6,7 @@
  * just use the E_Config_Dialog_Data for your data structures declarations */
 struct _E_Config_Dialog_Data 
 {
-   int view_enable, notify, full_dialog, mode_dialog; 
+   int view_enable, notify, full_dialog, mode_dialog, clipboard;
    double delay, pict_quality;
    char *viewer;
    char *path;
@@ -83,6 +83,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->delay = shot_conf->delay;
    cfdata->pict_quality = shot_conf->pict_quality;
    cfdata->notify = shot_conf->notify;
+   cfdata->clipboard = shot_conf->clipboard;
    cfdata->full_dialog = shot_conf->full_dialog;
    cfdata->mode_dialog = shot_conf->mode_dialog;
 }
@@ -103,6 +104,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    e_widget_framelist_object_append(of, ow);
 
    ow = e_widget_check_add(evas, _(" Show notifications"), &(cfdata->notify));
+   e_widget_framelist_object_append(of, ow);
+
+   ow = e_widget_check_add(evas, _(" Copy to Clipboard"), &(cfdata->clipboard));
    e_widget_framelist_object_append(of, ow);
 
    ow = e_widget_check_add(evas, _(" Launch app after screenshot"), &(cfdata->view_enable));
@@ -156,6 +160,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      shot_conf->path = eina_stringshare_add(e_user_homedir_get());
 
    shot_conf->notify = cfdata->notify;
+   shot_conf->clipboard = cfdata->clipboard;
    shot_conf->view_enable = cfdata->view_enable;
    shot_conf->delay = cfdata->delay;
    shot_conf->pict_quality = cfdata->pict_quality;

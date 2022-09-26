@@ -14,7 +14,10 @@ shot_module_la_SOURCES = shot/e_mod_main.c \
 
 if HAVE_ENOTIFY
 shot_module_la_CFLAGS += @ENOTIFY_CFLAGS@
+shot_module_la_CFLAGS += @ELM_CFLAGS@
 shot_module_la_LIBADD = @ENOTIFY_LIBS@
+shot_module_la_LIBADD = @ELM_LIBS@
+
 endif
 
 .PHONY: shot install-shot
