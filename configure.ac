@@ -812,6 +812,7 @@ define([CHECK_MODULE_NOTIFICATION],
 ])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
+AM_CONDITIONAL(HAVE_MIXER, false)
 define([CHECK_MODULE_MIXER],
 [
   AC_E_CHECK_PKG(MIXER, [ libpulse-simple libpulse ], [], [MIXER=false])
