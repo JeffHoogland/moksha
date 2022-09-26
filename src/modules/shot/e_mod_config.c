@@ -105,10 +105,10 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
 
    ow = e_widget_check_add(evas, _(" Show notifications"), &(cfdata->notify));
    e_widget_framelist_object_append(of, ow);
-
+#ifdef HAVE_ELEMENTARY
    ow = e_widget_check_add(evas, _(" Copy to Clipboard"), &(cfdata->clipboard));
    e_widget_framelist_object_append(of, ow);
-
+#endif
    ow = e_widget_check_add(evas, _(" Launch app after screenshot"), &(cfdata->view_enable));
    e_widget_framelist_object_append(of, ow);
 

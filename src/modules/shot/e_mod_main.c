@@ -370,6 +370,7 @@ _save_to(const char *file)
      }
 }
 
+#ifdef HAVE_ELEMENTARY
 static void
 clipboard_copy(const char *file)
 {
@@ -400,7 +401,7 @@ clipboard_copy(const char *file)
    if ((!shot_conf->view_enable) || (!shot_conf->viewer))
      eina_file_unlink(file);
 }
-
+#endif
 static void
 _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
 {
@@ -431,9 +432,10 @@ _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
         if (exe) ecore_exe_free(exe);
      }
 
+#ifdef HAVE_ELEMENTARY
    if (shot_conf->clipboard)
      clipboard_copy(file);
-
+#endif
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
    if (win)
      {
