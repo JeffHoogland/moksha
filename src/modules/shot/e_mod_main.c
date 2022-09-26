@@ -115,7 +115,7 @@ static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
    if ((shot_conf->clipboard) && ((!shot_conf->view_enable) || (!shot_conf->viewer)))
-     _notify(1, _("Screenshot copied in"), _("Clipboard"), 3000, 0);
+     _notify(1, _("Screenshot copied to"), _("Clipboard"), 3000, 0);
    else
      _notify(1, _("Screenshot stored in"), shot_conf->path, 3000, 0);
    timer = NULL;
