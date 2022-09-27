@@ -114,10 +114,7 @@ Eina_Bool _timer_cb(void *data)
 static Eina_Bool
 _notify_cb(void *data __UNUSED__)
 {
-   if ((shot_conf->clipboard) && ((!shot_conf->view_enable) || (!shot_conf->viewer)))
-     _notify(1, _("Screenshot copied to"), _("Clipboard"), 3000, 0);
-   else
-     _notify(1, _("Screenshot stored in"), shot_conf->path, 3000, 0);
+   _notify(1, _("Screenshot stored in"), shot_conf->path, 3000, 0);
    timer = NULL;
    return ECORE_CALLBACK_DONE;
 }
@@ -134,7 +131,7 @@ _shot_conf_new(void)
 #define IFMODCFGEND }
 
    /* setup defaults */
-   IFMODCFG(0x008d);
+   IFMODCFG(0x008e);
   
    shot_conf->view_enable = 1;
    snprintf(buff, sizeof(buff), "xdg-open");
@@ -398,8 +395,8 @@ clipboard_copy(const char *file)
      }
    fclose(f);
 
-   if ((!shot_conf->view_enable) || (!shot_conf->viewer))
-     eina_file_unlink(file);
+   //~ if ((!shot_conf->view_enable) || (!shot_conf->viewer))
+     //~ eina_file_unlink(file);
 }
 #endif
 static void
