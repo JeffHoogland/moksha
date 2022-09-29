@@ -37,7 +37,7 @@ AH_BOTTOM([
 ])
 
 AM_INIT_AUTOMAKE([1.11 dist-bzip2])
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([no])])
 
 AC_GNU_SOURCE
 AC_PROG_MKDIR_P
@@ -661,6 +661,7 @@ if test "x$want_elementary" != "xno"; then
       requirements_e="${requirements_e} elementary >= ${efl_version}"
    fi
 fi
+AM_CONDITIONAL([HAVE_ELEMENTARY], [test "x${want_elementary}" = "xyes"])
 
 want_emotion=auto
 have_emotion=no

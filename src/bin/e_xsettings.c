@@ -423,7 +423,9 @@ _e_xsettings_icon_theme_set(void)
          }
        _e_xsettings_string_set(_setting_icon_theme_name,
                                 e_config->icon_theme);
+#ifdef HAVE_ELEMENTARY
         e_util_elm_icon_set();
+#endif
        return;
      }
 

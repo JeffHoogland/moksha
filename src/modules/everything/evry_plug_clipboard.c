@@ -10,7 +10,7 @@ static int
 _action(Evry_Action *action)
 {
    const Evry_Item *it = action->it1.item;
-
+#ifdef HAVE_ELEMENTARY
    elm_cnp_selection_set(clipboard_win,
                         ELM_SEL_TYPE_PRIMARY,
                         ELM_SEL_FORMAT_TEXT,
@@ -19,7 +19,7 @@ _action(Evry_Action *action)
                         ELM_SEL_TYPE_CLIPBOARD,
                         ELM_SEL_FORMAT_TEXT,
                         it->label, strlen(it->label));
-
+#endif
    return 1;
 }
 
