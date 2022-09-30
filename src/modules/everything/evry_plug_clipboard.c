@@ -2,6 +2,8 @@
 #ifdef HAVE_ELEMENTARY
 # include <Elementary.h>
 static Evas_Object * clipboard_win = NULL;
+#else
+static Ecore_X_Window clipboard_win = 0;
 #endif
 
 static Evry_Action *act;
@@ -19,6 +21,9 @@ _action(Evry_Action *action)
                         ELM_SEL_TYPE_CLIPBOARD,
                         ELM_SEL_FORMAT_TEXT,
                         it->label, strlen(it->label));
+#else
+   e_util_clipboard(clipboard_win, it->label, ECORE_X_SELECTION_CLIPBOARD);
+   e_util_clipboard(clipboard_win, it->label, ECORE_X_SELECTION_PRIMARY);
 #endif
    return 1;
 }
@@ -36,10 +41,13 @@ evry_plug_clipboard_init(void)
      return EINA_FALSE;
 #ifdef HAVE_ELEMENTARY
    Evas_Object *win = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
-   //ecore_x_icccm_name_class_set(win, "evry", "clipboard");
+#else
+   Ecore_X_Window win = ecore_x_window_input_new(0, 0, 0, 1, 1);
+   ecore_x_icccm_name_class_set(win, "evry", "clipboard");
+#endif
    if (!win) return EINA_FALSE;
 
-//FIXME: Icon name doesn't follow FDO Spec
+   // FIXME: Icon name doesn't follow FDO Spec
    act = EVRY_ACTION_NEW("Copy to Clipboard",
                          EVRY_TYPE_TEXT, 0,
                          "everything-clipboard",
@@ -50,8 +58,6 @@ evry_plug_clipboard_init(void)
    clipboard_win = win;
 
    return EINA_TRUE;
-#endif
-   return EINA_FALSE;
 }
 
 void
@@ -59,8 +65,10 @@ evry_plug_clipboard_shutdown(void)
 {
 #ifdef HAVE_ELEMENTARY
    if (clipboard_win) evas_object_del(clipboard_win);
+#else
+   ecore_x_window_free(clipboard_win);
+#endif
    clipboard_win = NULL;
    evry_action_free(act);
-#endif
 }
 
