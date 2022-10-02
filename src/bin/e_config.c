@@ -1268,9 +1268,9 @@ while (!e_config)
 
      E_CONFIG_LIMIT(e_config->multiscreen_flip, 0, 1);
 
-	 E_CONFIG_LIMIT(e_config->backlight.normal, 0.05, 1.0);
-	 E_CONFIG_LIMIT(e_config->backlight.dim, 0.05, 1.0);
-	 E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0, 1);
+     E_CONFIG_LIMIT(e_config->backlight.normal, 0.05, 1.0);
+     E_CONFIG_LIMIT(e_config->backlight.dim, 0.05, 1.0);
+     E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0, 1);
 
      if (!e_config->icon_theme)
        e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default

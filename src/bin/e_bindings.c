@@ -194,7 +194,6 @@ e_bindings_mouse_reset(void)
    EINA_LIST_FOREACH(e_config->mouse_bindings, l, ebm)
      e_bindings_mouse_add(ebm->context, ebm->button, ebm->modifiers,
                           ebm->any_mod, ebm->action, ebm->params);
-
 }
 
 EAPI void
@@ -430,7 +429,6 @@ e_bindings_key_find(const char *key, E_Binding_Modifier mod, int any_mod)
             (binding->mod == mod) && (binding->any_mod == any_mod))
           return binding;
      }
-
    return NULL;
 }
 
