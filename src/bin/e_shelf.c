@@ -10,8 +10,8 @@ static void         _e_shelf_toggle_border_fix(E_Shelf *es);
 static void         _e_shelf_cb_menu_config(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_shelf_cb_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_shelf_cb_menu_contents(void *data, E_Menu *m, E_Menu_Item *mi);
-static void         _e_shelf_cb_confirm_dialog_yes(void *data);
-static void         _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
+//static void         _e_shelf_cb_confirm_dialog_yes(void *data);
+//static void         _e_shelf_cb_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void         _e_shelf_menu_append(E_Shelf *es, E_Menu *mn);
 static void         _e_shelf_cb_menu_items_append(void *data, E_Gadcon_Client *gcc, E_Menu *mn);
 static void         _e_shelf_cb_locked_set(void *data, int lock);
@@ -19,7 +19,7 @@ static void         _e_shelf_cb_urgent_show(void *data);
 static void         _e_shelf_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
 //static Eina_Bool    _e_shelf_cb_mouse_out(void *data, int type, void *event);
-//static void          _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
+//static void         _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static void         _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
@@ -1749,6 +1749,8 @@ _e_shelf_cb_menu_contents(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UN
    if (!es->gadcon->config_dialog) e_int_gadcon_config_shelf(es->gadcon);
 }
 
+/* Prevent deleting shelf from context menu
+ *
 static void
 _e_shelf_cb_confirm_dialog_destroy(void *data)
 {
@@ -1768,6 +1770,7 @@ _e_shelf_cb_confirm_dialog_yes(void *data)
    es->cfg_delete = 1;
    e_object_del(E_OBJECT(es));
 }
+
 
 static void
 _e_shelf_cb_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
@@ -1794,7 +1797,7 @@ _e_shelf_cb_menu_delete(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUS
                          _("Delete"), _("Keep"),
                          _e_shelf_cb_confirm_dialog_yes, NULL, data, NULL,
                          _e_shelf_cb_confirm_dialog_destroy, data);
-}
+} */
 
 static void
 _e_shelf_cb_menu_post(void *data, E_Menu *m __UNUSED__)
