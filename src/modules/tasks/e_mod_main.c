@@ -763,9 +763,9 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      {
         E_Menu *m;
         E_Menu_Item *mi;
-        int cx, cy, cw, ch;
+        int cx, cy;
 
-        e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &cx, &cy, &cw, &ch);
+        e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &cx, &cy, NULL, NULL);
 
         e_int_border_menu_create(item->border);
 
