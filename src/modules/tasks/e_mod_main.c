@@ -388,8 +388,7 @@ _tasks_refill(Tasks *tasks)
    Eina_List *l;
    E_Border *border;
    Tasks_Item *item;
-   Evas_Coord w, h, tw, th;  
-   int gw, gh;
+   Evas_Coord w, h, tw, th, gw, gh;
 
    while (tasks->items)
      {
@@ -454,7 +453,6 @@ _tasks_refill_all(void)
         _tasks_refill(tasks);
      }
 }
-
 
 static void
 _tasks_refill_border(E_Border *border)
@@ -826,9 +824,8 @@ _tasks_adjacent_label_popup(void *data)
   E_Zone *zone;
   int height, gap;
   const char *title;
-  Evas_Coord x, y, w, h;
+  Evas_Coord x, y, w, h, gx, gy, gh, pw;
   Evas_Coord px = 0, py = 0;
-  Evas_Coord gx, gy, gw, gh, pw;
   unsigned int max_len = 50;
 
   item = data;
@@ -843,7 +840,7 @@ _tasks_adjacent_label_popup(void *data)
   e_popup_edje_bg_object_set(item->popup, item->win);
   evas_object_show(item->win);
 
-  e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, &gw, &gh);
+  e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, NULL, &gh);
   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
 
   title = e_border_name_get(item->border);

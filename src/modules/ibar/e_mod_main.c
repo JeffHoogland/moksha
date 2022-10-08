@@ -824,9 +824,8 @@ _adjacent_label_popup(void *data)
   IBar_Icon *ic;
   E_Zone *zone;
   int height, gap;
-  Evas_Coord x, y, w, h;
+  Evas_Coord x, y, w, h, gx, gy, pw, gh;
   Evas_Coord px = 0, py = 0;
-  Evas_Coord gx, gy, pw, gw, gh;
 
   Eina_Bool theme_check;
   
@@ -842,7 +841,7 @@ _adjacent_label_popup(void *data)
   if (!theme_check) _adjacent_popup_destroy(ic);
   evas_object_show(ic->win);
   
-  e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, &gw, &gh);
+  e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, &gh);
   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
 
   switch (ic->ibar->inst->ci->eap_label)
