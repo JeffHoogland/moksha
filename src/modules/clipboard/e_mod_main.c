@@ -450,6 +450,9 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
      *  We display not relatively to the gadget, but similarly to
      *  the start menu - thus the need for direction etc.
      */
+  
+  if (!inst->gcc) return E_GADCON_ORIENT_FLOAT;
+  
   switch (inst->gcc->gadcon->orient) {
       case E_GADCON_ORIENT_TOP:
       case E_GADCON_ORIENT_CORNER_TL:
