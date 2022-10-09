@@ -158,11 +158,11 @@ _systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
    Evas_Event_Mouse_Down *ev = event;
 
    if (ev->button == 1)
-   {
-      e_config->systray_on_demand = !e_config->systray_on_demand;
-     _systray_size_apply_do(inst);
-      ecore_event_add(E_EVENT_SYSTRAY_CHANGED, NULL, NULL, NULL);
-   }
+     {
+        e_config->systray_on_demand = !e_config->systray_on_demand;
+       _systray_size_apply_do(inst);
+        ecore_event_add(E_EVENT_SYSTRAY_CHANGED, NULL, NULL, NULL);
+     }
    if (ev->button == 3)
      _systray_menu_new(inst, ev);
 }
@@ -172,17 +172,16 @@ _systray_size_apply_do(Instance *inst)
 {
    const Evas_Object *o, *butt;
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
-   int icon_num;
+   int icon_num, is_arrow = 1;
    double space;
-   int expand_check, is_arrow = 1;
 
    if (getenv("MOKSHA_SYSTRAY_ARROW"))
      sscanf(getenv("MOKSHA_SYSTRAY_ARROW"), "%d", &is_arrow);
 
-   if (is_arrow == 1)
-       edje_object_signal_emit(inst->ui.gadget, "e,arrow,show,*", _sig_source);
+   if (is_arrow)
+     edje_object_signal_emit(inst->ui.gadget, "e,arrow,show,*", _sig_source);
    else
-       edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
+     edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
 
    edje_object_message_signal_process(inst->ui.gadget);
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
@@ -200,21 +199,20 @@ _systray_size_apply_do(Instance *inst)
      ecore_x_window_show(inst->win.base);
 
    if (getenv("MOKSHA_SYSTRAY_SPACING"))
-       sscanf(getenv("MOKSHA_SYSTRAY_SPACING"), "%lf", &space);
+     sscanf(getenv("MOKSHA_SYSTRAY_SPACING"), "%lf", &space);
    else
-       space = e_config->scale.factor;
+     space = e_scale;
 
    edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
+   evas_object_geometry_get(o, &x, &y, &w, &h);
 
    /* check if theme contains expand button */
    butt = edje_object_part_object_get(inst->ui.gadget, "expand_butt");
-   expand_check = butt ? 1: 0;
 
-   if (expand_check == 0 || is_arrow == 0)
+   if (!butt || !is_arrow)
      {
-       e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
+       e_gadcon_client_min_size_set(inst->gcc, w * icon_num * space,
                                                mh + icon_num * space);
-       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, w, h);
        e_config->systray_on_demand = 1;
        return;
@@ -225,13 +223,11 @@ _systray_size_apply_do(Instance *inst)
      {
        e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
                                                mh + icon_num * space);
-       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, w, h);
      }
    else
      {
        e_gadcon_client_min_size_set(inst->gcc, 15 , 15);
-       evas_object_geometry_get(o, &x, &y, &w, &h);
        ecore_x_window_move_resize(inst->win.base, x, y, 0, 0);
      }
 }
