@@ -1075,12 +1075,6 @@ while (!e_config)
                e_config->touch_palm_detect = 1;
                e_config_save_queue();
             }
-          CONFIG_VERSION_CHECK(16)
-            {
-               CONFIG_VERSION_UPDATE_INFO(16);
-               e_config->mouse_emulate_middle_button = 1;
-               e_config_save_queue();
-            }
           CONFIG_VERSION_CHECK(17)
             {
                CONFIG_VERSION_UPDATE_INFO(17);
