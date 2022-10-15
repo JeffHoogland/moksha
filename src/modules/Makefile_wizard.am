@@ -28,7 +28,6 @@ wizardpkg_LTLIBRARIES  = wizard/module.la \
 			 wizard/page_080.la \
 			 wizard/page_090.la \
 			 wizard/page_100.la \
-			 wizard/page_110.la \
 			 wizard/page_120.la \
 			 wizard/page_130.la \
 			 wizard/page_140.la \
@@ -64,11 +63,6 @@ wizard_page_080_la_SOURCES        = wizard/page_080.c
 wizard_page_090_la_SOURCES        = wizard/page_090.c
 
 wizard_page_100_la_SOURCES        = wizard/page_100.c
-
-wizard_page_110_la_SOURCES        = wizard/page_110.c
-if USE_MODULE_CONNMAN
-wizard_page_110_la_LIBADD         = @ECONNMAN_LIBS@
-endif
 
 wizard_page_120_la_SOURCES        = wizard/page_120.c
 

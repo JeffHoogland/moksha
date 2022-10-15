@@ -1,376 +1,383 @@
-#ifdef HAVE_CONFIG_H
 #include "config.h"
-#endif
-
-#ifdef HAVE_ALLOCA_H
-# include <alloca.h>
-#elif defined __GNUC__
-# define alloca __builtin_alloca
-#elif defined _AIX
-# define alloca __alloca
-#elif defined _MSC_VER
-# include <malloc.h>
-# define alloca _alloca
-#else
-# include <stddef.h>
-# ifdef  __cplusplus
-extern "C"
-# endif
-void *alloca(size_t);
-#endif
-
-#ifdef __linux__
-#include <features.h>
-#endif
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/param.h>
-#include <utime.h>
-#include <math.h>
-#include <fnmatch.h>
-#include <limits.h>
-#include <ctype.h>
-#include <time.h>
-#include <dirent.h>
-#include <pwd.h>
-#include <glob.h>
-#include <errno.h>
-#include <signal.h>
-#include <Ecore.h>
-#include <Ecore_Ipc.h>
-#include <Ecore_File.h>
-#include <Eet.h>
-#include <E_DBus.h>
-#include <E_Ukit.h>
 
 #include "e_fm_shared_device.h"
 #include "e_fm_shared_codec.h"
 #include "e_fm_ipc.h"
-#include "e_fm_device.h"
 
+#include "e_macros.h"
 #include "e_fm_main_udisks.h"
 #include "e_fm_main.h"
 
-static E_DBus_Signal_Handler *_udisks_poll = NULL;
-static E_DBus_Signal_Handler *_udisks_add = NULL;
-static E_DBus_Signal_Handler *_udisks_del = NULL;
-static E_DBus_Signal_Handler *_udisks_chg = NULL;
-static E_DBus_Connection *_e_fm_main_udisks_conn = NULL;
+#define E_TYPEDEFS
+#include "e_fm_op.h"
+
+#define UDISKS_BUS "org.freedesktop.UDisks"
+#define UDISKS_PATH "/org/freedesktop/UDisks"
+#define UDISKS_INTERFACE "org.freedesktop.UDisks"
+#define UDISKS_DEVICE_INTERFACE "org.freedesktop.UDisks.Device"
+
+static Eldbus_Connection *_e_fm_main_udisks_conn = NULL;
+static Eldbus_Proxy *_e_fm_main_udisks_proxy = NULL;
 static Eina_List *_e_stores = NULL;
 static Eina_List *_e_vols = NULL;
 
-static void _e_fm_main_udisks_cb_dev_all(void *user_data __UNUSED__,
-                             E_Ukit_String_List_Return *ret,
-                             DBusError      *error);
-static void _e_fm_main_udisks_cb_dev_verify(const char *udi,
-                                            E_Ukit_Property *ret,
-                                            DBusError      *error);
-static void _e_fm_main_udisks_cb_dev_add_verify(const char *udi,
-                             E_Ukit_Property *ret,
-                             DBusError      *error);
-static void _e_fm_main_udisks_cb_dev_add(void        *data,
-                                         DBusMessage *msg);
-static void _e_fm_main_udisks_cb_dev_del(void        *data,
-                                         DBusMessage *msg);
-static void _e_fm_main_udisks_cb_dev_chg(void        *data,
-                                         DBusMessage *msg);
-static void _e_fm_main_udisks_cb_prop_modified(E_Volume    *v,
-                                   DBusMessage *msg);
-static void _e_fm_main_udisks_cb_store_prop(E_Storage *s,
-                                E_Ukit_Properties *ret,
-                                DBusError *error);
-static void _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
-                              E_Ukit_Properties      *ret,
-                              DBusError *error);
-static void _e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
-                                 DBusError          *error);
-static void _e_fm_main_udisks_cb_vol_unmounted(E_Volume               *v,
-                                   DBusError          *error);
-static void _e_fm_main_udisks_cb_vol_unmounted_before_eject(E_Volume      *v,
-                                                void      *method_return __UNUSED__,
-                                                DBusError *error);
+static void _e_fm_main_udisks_cb_dev_all(void *data, const Eldbus_Message *msg,
+                                         Eldbus_Pending *pending);
+static void _e_fm_main_udisks_cb_dev_verify(void *data, const Eldbus_Message *msg,
+                                            Eldbus_Pending *pending);
+static void _e_fm_main_udisks_cb_dev_add(void *data, const Eldbus_Message *msg);
+static void _e_fm_main_udisks_cb_dev_del(void *data, const Eldbus_Message *msg);
+static void _e_fm_main_udisks_cb_prop_modified(void *data, const Eldbus_Message *msg);
+static void _e_fm_main_udisks_cb_store_prop(void *data, const Eldbus_Message *msg,
+                                            Eldbus_Pending *pending);
+static void _e_fm_main_udisks_cb_vol_prop(void *data, const Eldbus_Message *msg,
+                                          Eldbus_Pending *pending);
+static void _e_fm_main_udisks_cb_vol_mounted(E_Volume *v);
+static void _e_fm_main_udisks_cb_vol_unmounted(E_Volume *v);
+static void _e_fm_main_udisks_cb_vol_unmounted_before_eject(E_Volume *v);
 
 static Eina_Bool _e_fm_main_udisks_cb_vol_ejecting_after_unmount(E_Volume *v);
-static void      _e_fm_main_udisks_cb_vol_ejected(E_Volume               *v,
-                                 void *method_return __UNUSED__,
-                                 DBusError          *error);
+static void      _e_fm_main_udisks_cb_vol_ejected(E_Volume *v);
 static int _e_fm_main_udisks_format_error_msg(char     **buf,
                                               E_Volume  *v,
-                                              DBusError *error);
-static void _e_fm_main_udisks_test(void        *data,
-                                   DBusMessage *msg,
-                                   DBusError   *error);
-static void _e_fm_main_udisks_poll(void        *data,
-                                   DBusMessage *msg);
+                                              const char *name,
+                                              const char *message);
 
 static Eina_Bool _e_fm_main_udisks_vol_mount_timeout(E_Volume *v);
 static Eina_Bool _e_fm_main_udisks_vol_unmount_timeout(E_Volume *v);
 static Eina_Bool _e_fm_main_udisks_vol_eject_timeout(E_Volume *v);
+static E_Storage *_storage_find_by_dbus_path(const char *path);
+static E_Volume *_volume_find_by_dbus_path(const char *path);
+static void _volume_del(E_Volume *v);
 
 static void
-_e_fm_main_udisks_poll(void *data   __UNUSED__,
-                       DBusMessage *msg)
+_e_fm_main_udisks_name_start(void *data EINA_UNUSED, const Eldbus_Message *msg,
+                             Eldbus_Pending *pending EINA_UNUSED)
 {
-   DBusError err;
-   const char *name, *from, *to;
+   unsigned flag = 0;
+   Eldbus_Object *obj;
 
-   dbus_error_init(&err);
-   if (!dbus_message_get_args(msg, &err,
-                              DBUS_TYPE_STRING, &name,
-                              DBUS_TYPE_STRING, &from,
-                              DBUS_TYPE_STRING, &to,
-                              DBUS_TYPE_INVALID))
-     dbus_error_free(&err);
-
-   //INF("name: %s\nfrom: %s\nto: %s", name, from, to);
-   if ((name) && !strcmp(name, E_UDISKS_BUS))
-     _e_fm_main_udisks_test(NULL, NULL, NULL);
-}
-
-static void
-_e_fm_main_udisks_test(void *data       __UNUSED__,
-                       DBusMessage *msg __UNUSED__,
-                       DBusError       *error)
-{
-   if ((error) && (dbus_error_is_set(error)))
+   if (!eldbus_message_arguments_get(msg, "u", &flag) || !flag)
      {
-        dbus_error_free(error);
         _e_fm_main_udisks_catch(EINA_FALSE);
         return;
      }
-   if (_udisks_poll)
-     e_dbus_signal_handler_del(_e_fm_main_udisks_conn, _udisks_poll);
+   obj = eldbus_object_get(_e_fm_main_udisks_conn, UDISKS_BUS, UDISKS_PATH);
+   _e_fm_main_udisks_proxy = eldbus_proxy_get(obj, UDISKS_INTERFACE);
 
-   e_udisks_get_all_devices(_e_fm_main_udisks_conn, (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_all, NULL);
+   eldbus_proxy_call(_e_fm_main_udisks_proxy, "EnumerateDevices",
+                    _e_fm_main_udisks_cb_dev_all, NULL, -1, "");
 
-   if (!_udisks_add)
-     _udisks_add = e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
-                               E_UDISKS_PATH,
-                               E_UDISKS_BUS,
-                               "DeviceAdded", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_add, NULL);
-   if (!_udisks_del)
-     _udisks_del = e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
-                               E_UDISKS_PATH,
-                               E_UDISKS_BUS,
-                               "DeviceRemoved", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_del, NULL);
-   if (!_udisks_chg)
-     _udisks_chg = e_dbus_signal_handler_add(_e_fm_main_udisks_conn, E_UDISKS_BUS,
-                               E_UDISKS_PATH,
-                               E_UDISKS_BUS,
-                               "DeviceChanged", (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_dev_chg, NULL);
+   eldbus_proxy_signal_handler_add(_e_fm_main_udisks_proxy, "DeviceAdded",
+                                  _e_fm_main_udisks_cb_dev_add, NULL);
+   eldbus_proxy_signal_handler_add(_e_fm_main_udisks_proxy, "DeviceRemoved",
+                                  _e_fm_main_udisks_cb_dev_del, NULL);
    _e_fm_main_udisks_catch(EINA_TRUE); /* signal usage of udisks for mounting */
 }
 
 static void
-_e_fm_main_udisks_cb_dev_all(void *user_data __UNUSED__,
-                             E_Ukit_String_List_Return *ret,
-                             DBusError      *error)
+_e_fm_main_udisks_cb_dev_all(void *data EINA_UNUSED, const Eldbus_Message *msg,
+                             Eldbus_Pending *pending EINA_UNUSED)
 {
-   Eina_List *l;
-   const char *udi;
+   const char *name, *txt, *path;
+   Eldbus_Message_Iter *array;
 
-   if (!ret || !ret->strings) return;
-
-   if (dbus_error_is_set(error))
+   if (eldbus_message_error_get(msg, &name, &txt))
      {
-        dbus_error_free(error);
+        ERR("Error %s %s.", name, txt);
         return;
      }
 
-   EINA_LIST_FOREACH(ret->strings, l, udi)
+   if (!eldbus_message_arguments_get(msg, "ao", &array))
      {
-	         INF("DB INIT DEV+: %s", udi);
-          e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
-                                (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_verify, (void*)eina_stringshare_add(udi));
-     }
-}
-
-
-static void
-_e_fm_main_udisks_cb_dev_verify(const char *udi,
-                             E_Ukit_Property *ret,
-                             DBusError      *error)
-{
-   if (!ret) return;
-
-   if (dbus_error_is_set(error))
-     {
-        dbus_error_free(error);
+        ERR("Error getting arguments.");
         return;
      }
 
-   if ((!ret->val.s) || (!ret->val.s[0])) /* storage */
-     _e_fm_main_udisks_storage_add(udi);
-   else if (!strcmp(ret->val.s, "filesystem"))
+   while (eldbus_message_iter_get_and_next(array, 'o', &path))
      {
-	INF("DB VOL+: %s", udi);
-          _e_fm_main_udisks_volume_add(udi, EINA_TRUE);
+        Eldbus_Message *new_msg;
+        new_msg = eldbus_message_method_call_new(UDISKS_BUS, path,
+                                                ELDBUS_FDO_INTERFACE_PROPERTIES, "Get");
+        eldbus_message_arguments_append(new_msg, "ss", UDISKS_DEVICE_INTERFACE, "IdUsage");
+        eldbus_connection_send(_e_fm_main_udisks_conn, new_msg,
+                              _e_fm_main_udisks_cb_dev_verify,
+                              eina_stringshare_add(path), -1);
+        INF("DB INIT DEV+: %s", path);
      }
-   else
-     eina_stringshare_del(udi);
 }
 
-static void
-_e_fm_main_udisks_cb_dev_add_verify(const char *udi,
-                             E_Ukit_Property *ret,
-                             DBusError      *error)
-{
-   if (!ret) return;
 
-   if (dbus_error_is_set(error))
+static void
+_e_fm_main_udisks_cb_dev_verify(void *data, const Eldbus_Message *msg,
+                                Eldbus_Pending *pending EINA_UNUSED)
+{
+   const char *name, *txt, *id_usage, *path = data;
+   Eldbus_Message_Iter *variant;
+
+   if (eldbus_message_error_get(msg, &name, &txt))
      {
-        dbus_error_free(error);
-        return;
-     }
-
-   if ((!ret->val.s) || (!ret->val.s[0])) /* storage */
-     _e_fm_main_udisks_storage_add(udi);
-   else if (!strcmp(ret->val.s, "filesystem"))
-     {
-          INF("DB VOL+: %s", udi);
-          _e_fm_main_udisks_volume_add(udi, EINA_FALSE);
-     }
-   else
-     eina_stringshare_del(udi);
-}
-
-static void
-_e_fm_main_udisks_cb_dev_add(void *data   __UNUSED__,
-                             DBusMessage *msg)
-{
-   DBusError err;
-   char *udi = NULL;
-
-   dbus_error_init(&err);
-   dbus_message_get_args(msg, &err, DBUS_TYPE_OBJECT_PATH, &udi, DBUS_TYPE_INVALID);
-   if (!udi) return;
-   e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
-                         (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_add_verify, (void*)eina_stringshare_add(udi));
-}
-
-static void
-_e_fm_main_udisks_cb_dev_del(void *data   __UNUSED__,
-                             DBusMessage *msg)
-{
-   DBusError err;
-   char *udi;
-   E_Volume *v;
-
-   dbus_error_init(&err);
-
-   dbus_message_get_args(msg,
-                         &err, DBUS_TYPE_OBJECT_PATH,
-                         &udi, DBUS_TYPE_INVALID);
-   INF("DB DEV-: %s", udi);
-   if ((v = _e_fm_main_udisks_volume_find(udi)))
-     {
-        if (v->optype == E_VOLUME_OP_TYPE_EJECT)
-          _e_fm_main_udisks_cb_vol_ejected(v, msg, &err);
-     }
-   _e_fm_main_udisks_volume_del(udi);
-   _e_fm_main_udisks_storage_del(udi);
-}
-
-static void
-_e_fm_main_udisks_cb_dev_chg(void *data   __UNUSED__,
-                             DBusMessage *msg)
-{
-   DBusError err;
-   char *udi;
-
-   dbus_error_init(&err);
-
-   dbus_message_get_args(msg, &err,
-                         DBUS_TYPE_OBJECT_PATH, &udi,
-                         DBUS_TYPE_INVALID);
-   INF("DB STORE CAP+: %s", udi);
-   e_udisks_get_property(_e_fm_main_udisks_conn, udi, "IdUsage",
-                         (E_DBus_Callback_Func)_e_fm_main_udisks_cb_dev_add_verify, (void*)eina_stringshare_add(udi));
-}
-
-static void
-_e_fm_main_udisks_cb_prop_modified(E_Volume    *v,
-                                   DBusMessage *msg)
-{
-   if (!v) return;
-
-   if (dbus_message_get_error_name(msg))
-     {
-        ERR("DBUS ERROR: %s", dbus_message_get_error_name(msg));
-        return;
-     }
-   e_udisks_get_all_properties(_e_fm_main_udisks_conn, v->udi,
-                                      (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_prop, v);
-}
-
-static void
-_e_fm_main_udisks_cb_store_prop(E_Storage *s,
-                                E_Ukit_Properties *ret,
-                                DBusError *error)
-{
-   const char *str;
-   int err = 0;
-
-   if (!ret) goto error;
-
-   if (dbus_error_is_set(error))
-     {
-        dbus_error_free(error);
+        ERR("Error %s %s.", name, txt);
         goto error;
      }
 
-   s->bus = e_ukit_property_string_get(ret, "DriveConnectionInterface", &err);
-   if (err) goto error;
-   s->bus = eina_stringshare_add(s->bus);
-   {
-      const Eina_List *l;
+   if (!eldbus_message_arguments_get(msg, "v", &variant))
+     {
+        ERR("Error getting arguments.");
+        goto error;
+     }
 
-      l = e_ukit_property_strlist_get(ret, "DriveMediaCompatibility", &err);
-      if (err) goto error;
-      if (l) s->drive_type = eina_stringshare_add(l->data);
-   }
-   s->model = e_ukit_property_string_get(ret, "DriveModel", &err);
-   if (err) goto error;
-   s->model = eina_stringshare_add(s->model);
-   s->vendor = e_ukit_property_string_get(ret, "DriveVendor", &err);
-   if (err) goto error;
-   s->vendor = eina_stringshare_add(s->vendor);
-   s->serial = e_ukit_property_string_get(ret, "DriveSerial", &err);
-//   if (err) goto error;
-   if (err) ERR("Error getting serial for %s", s->udi);
-   s->serial = eina_stringshare_add(s->serial);
+   if (!eldbus_message_iter_arguments_get(variant, "s", &id_usage))
+     {
+        ERR("Type of variant not expected");
+        goto error;
+     }
 
-   //s->removable = e_ukit_property_bool_get(ret, "DeviceIsRemovable", &err);
-   s->system_internal = e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err);
-   if (s->system_internal) goto error; /* only track non internal */
-   str = e_ukit_property_string_get(ret, "IdUsage", &err);
-   if (str && (!strcmp(str, "filesystem")))
-     _e_fm_main_udisks_volume_add(s->udi, EINA_TRUE);
+   if (!id_usage[0])
+     _e_fm_main_udisks_storage_add(path);
+   else if(!strcmp(id_usage, "filesystem"))
+     _e_fm_main_udisks_volume_add(path, EINA_TRUE);
+   else
+     eina_stringshare_del(path);
+   return;
+error:
+   eina_stringshare_del(path);
+}
+
+static void
+_e_fm_main_udisks_cb_dev_verify_added(void *data, const Eldbus_Message *msg,
+                                Eldbus_Pending *pending EINA_UNUSED)
+{
+   const char *name, *txt, *id_usage, *path = data;
+   Eldbus_Message_Iter *variant;
+
+   if (eldbus_message_error_get(msg, &name, &txt))
+     {
+        ERR("Error %s %s.", name, txt);
+        goto error;
+     }
+
+   if (!eldbus_message_arguments_get(msg, "v", &variant))
+     {
+        ERR("Error getting arguments.");
+        goto error;
+     }
+
+   if (!eldbus_message_iter_arguments_get(variant, "s", &id_usage))
+     {
+        ERR("Type of variant not expected");
+        goto error;
+     }
+
+   DBG("%s usage=%s", path, id_usage);
+   if (!id_usage[0])
+     {
+        E_Storage *s;
+        s = _storage_find_by_dbus_path(path);
+        if (!s)
+          _e_fm_main_udisks_storage_add(path);
+        else
+          eldbus_proxy_property_get_all(s->proxy,
+                                       _e_fm_main_udisks_cb_store_prop, s);
+     }
+   else if(!strcmp(id_usage, "filesystem"))
+     {
+        E_Volume *v;
+        v = _volume_find_by_dbus_path(path);
+        if (!v)
+          _e_fm_main_udisks_volume_add(path, EINA_TRUE);
+        else
+          eldbus_proxy_property_get_all(v->proxy,
+                                       _e_fm_main_udisks_cb_vol_prop, v);
+     }
+   else
+     eina_stringshare_del(path);
+   return;
+error:
+   eina_stringshare_del(path);
+}
+
+static void
+_e_fm_main_udisks_cb_dev_add(void *data EINA_UNUSED, const Eldbus_Message *msg)
+{
+   Eldbus_Message *new;
+   E_Volume *v;
+   char *path;
+
+   if (!eldbus_message_arguments_get(msg, "o", &path))
+     return;
+   DBG("DB DEV+: %s", path);
+
+   v = _volume_find_by_dbus_path(path);
+   if (v)
+     {
+        eldbus_proxy_property_get_all(v->proxy, _e_fm_main_udisks_cb_vol_prop, v);
+        return;
+     }
+
+   new = eldbus_message_method_call_new(UDISKS_BUS, path, ELDBUS_FDO_INTERFACE_PROPERTIES, "Get");
+   eldbus_message_arguments_append(new, "ss", UDISKS_DEVICE_INTERFACE, "IdUsage");
+   eldbus_connection_send(_e_fm_main_udisks_conn, new,
+                         _e_fm_main_udisks_cb_dev_verify_added,
+                         eina_stringshare_add(path), -1);
+}
+
+static void
+_e_fm_main_udisks_cb_dev_del(void *data EINA_UNUSED, const Eldbus_Message *msg)
+{
+   char *path;
+   E_Volume *v;
+
+   if (!eldbus_message_arguments_get(msg, "o", &path))
+     return;
+   DBG("DB DEV-: %s", path);
+   if ((v = _volume_find_by_dbus_path(path)))
+     {
+        if (v->optype == E_VOLUME_OP_TYPE_EJECT)
+          _e_fm_main_udisks_cb_vol_ejected(v);
+     }
+   _e_fm_main_udisks_volume_del(path);
+   _e_fm_main_udisks_storage_del(path);
+}
+
+static void
+_e_fm_main_udisks_cb_prop_modified(void *data,
+                                   const Eldbus_Message *msg EINA_UNUSED)
+{
+   E_Volume *v = data;
+   eldbus_proxy_property_get_all(v->proxy, _e_fm_main_udisks_cb_vol_prop, v);
+}
+
+static Eina_Bool
+_storage_del(void *data)
+{
+   const char *path = data;
+   _e_fm_main_udisks_storage_del(path);
+   return ECORE_CALLBACK_CANCEL;
+}
+
+static void
+_e_fm_main_udisks_cb_store_prop(void *data, const Eldbus_Message *msg,
+                                Eldbus_Pending *pending EINA_UNUSED)
+{
+   E_Storage *s = data;
+   const char *name, *txt;
+   Eldbus_Message_Iter *dict, *entry;
+
+   if (eldbus_message_error_get(msg, &name, &txt))
+     {
+        ERR("Error %s %s.", name, txt);
+        return;
+     }
+   if (!eldbus_message_arguments_get(msg, "a{sv}", &dict))
+     {
+        ERR("Error getting arguments.");
+        return;
+     }
+
+   while (eldbus_message_iter_get_and_next(dict, 'e', &entry))
+     {
+        char *key;
+        Eldbus_Message_Iter *var;
+
+        if (!eldbus_message_iter_arguments_get(entry, "sv", &key, &var))
+          continue;
+        if (!strcmp(key, "DeviceFile"))
+          {
+             const char *udi;
+             if (eldbus_message_iter_arguments_get(var, "s", &udi))
+               eina_stringshare_replace(&s->udi, udi);
+          }
+        else if (!strcmp(key, "DriveConnectionInterface"))
+          {
+             const char *bus;
+             if (eldbus_message_iter_arguments_get(var, "s", &bus))
+               {
+                  if (s->bus)
+                    eina_stringshare_del(bus);
+                  s->bus = eina_stringshare_add(bus);
+               }
+          }
+        else if (!strcmp(key, "DriveMediaCompatibility"))
+          {
+             Eldbus_Message_Iter *inner_array;
+             const char *media;
+
+             if (!eldbus_message_iter_arguments_get(var, "as", &inner_array))
+               continue;
+
+             while(eldbus_message_iter_get_and_next(inner_array, 's', &media))
+               {
+                  eina_stringshare_replace(&s->drive_type, media);
+                  break;
+               }
+          }
+        else if (!strcmp(key, "DriveModel"))
+          {
+             const char *model;
+             if (eldbus_message_iter_arguments_get(var, "s", &model))
+               eina_stringshare_replace(&s->model, model);
+          }
+        else if (!strcmp(key, "DriveVendor"))
+           {
+              const char *vendor;
+              if (eldbus_message_iter_arguments_get(var, "s", &vendor))
+                {
+                   if (s->vendor)
+                     eina_stringshare_del(s->vendor);
+                   s->vendor = eina_stringshare_add(vendor);
+                }
+           }
+        else if (!strcmp(key, "DriveSerial"))
+           {
+              const char *serial;
+              if (eldbus_message_iter_arguments_get(var, "s", &serial))
+                {
+                   if (s->serial)
+                     eina_stringshare_del(s->serial);
+                   s->serial = eina_stringshare_add(serial);
+                }
+           }
+        else if (!strcmp(key, "DeviceIsSystemInternal"))
+          eldbus_message_iter_arguments_get(var, "b", &s->system_internal);
+        else if (!strcmp(key, "DeviceIsMediaAvailable"))
+          eldbus_message_iter_arguments_get(var, "b", &s->media_available);
+        else if (!strcmp(key, "DeviceSize"))
+          eldbus_message_iter_arguments_get(var, "t", &s->media_size);
+        else if (!strcmp(key, "DriveIsMediaEjectable"))
+          eldbus_message_iter_arguments_get(var, "b", &s->requires_eject);
+        else if (!strcmp(key, "DriveCanDetach"))
+          eldbus_message_iter_arguments_get(var, "b", &s->hotpluggable);
+        else if (!strcmp(key, "DeviceIsMediaChangeDetectionInhibited"))
+          eldbus_message_iter_arguments_get(var, "b", &s->media_check_enabled);
+        else if (!strcmp(key, "DevicePresentationIconName"))
+          {
+             const char *icon;
+             if (eldbus_message_iter_arguments_get(var, "s", &icon))
+               {
+                  if (s->icon.drive)
+                    eina_stringshare_del(s->icon.drive);
+                  s->icon.drive = NULL;
+                  if (icon[0])
+                    s->icon.drive = eina_stringshare_add(icon);
+                  s->icon.volume = s->icon.drive;
+               }
+          }
+     }
+   if (!s->udi)
+     {
+        ERR("removing storage with null udi %s", s->dbus_path);
+        ecore_idler_add(_storage_del, s->dbus_path);
+        return;
+     }
+   if (s->system_internal)
+     {
+        DBG("removing storage internal %s", s->udi);
+        ecore_idler_add(_storage_del, s->udi);
+        return;
+     }
    /* force it to be removable if it passed the above tests */
    s->removable = EINA_TRUE;
-
-// ubuntu 10.04 - only dvd is reported as removable. usb storage and mmcblk
-// is not - but its not "system internal".
-//   if (!s->removable) goto error; /* only track removable media */
-   s->media_available = e_ukit_property_bool_get(ret, "DeviceIsMediaAvailable", &err);
-   s->media_size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
-
-   s->requires_eject = e_ukit_property_bool_get(ret, "DriveIsMediaEjectable", &err);
-   s->hotpluggable = e_ukit_property_bool_get(ret, "DriveCanDetach", &err);
-   s->media_check_enabled = !e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err);
-
-   s->icon.drive = e_ukit_property_string_get(ret, "DevicePresentationIconName", &err);
-   if (s->icon.drive && s->icon.drive[0]) s->icon.drive = eina_stringshare_add(s->icon.drive);
-   else s->icon.drive = NULL;
-   s->icon.volume = e_ukit_property_string_get(ret, "DevicePresentationIconName", &err);
-   if (s->icon.volume && s->icon.volume[0]) s->icon.volume = eina_stringshare_add(s->icon.volume);
-   else s->icon.volume = NULL;
-
    INF("++STO:\n  udi: %s\n  bus: %s\n  drive_type: %s\n  model: %s\n  vendor: %s\n  serial: %s\n  icon.drive: %s\n  icon.volume: %s\n", s->udi, s->bus, s->drive_type, s->model, s->vendor, s->serial, s->icon.drive, s->icon.volume);
    s->validated = EINA_TRUE;
    {
@@ -388,147 +395,218 @@ _e_fm_main_udisks_cb_store_prop(E_Storage *s,
         }
    }
    return;
+}
 
-error:
-//   ERR("ERR %s", s->udi);
-   _e_fm_main_udisks_storage_del(s->udi);
+static Eina_Bool
+_idler_volume_del(void *data)
+{
+   const char *path = data;
+   _e_fm_main_udisks_volume_del(path);
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
-_e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
-                              E_Ukit_Properties      *ret,
-                              DBusError *error)
+_e_fm_main_udisks_cb_vol_prop(void *data, const Eldbus_Message *msg,
+                              Eldbus_Pending *pending EINA_UNUSED)
 {
+   E_Volume *v = data;
    E_Storage *s = NULL;
-   int err = 0;
-   const char *str = NULL;
+   const char *txt, *message;
+   Eldbus_Message_Iter *array, *dict;
 
-   if ((!v) || (!ret)) goto error;
+   DBG("volume=%s",v->dbus_path);
 
-   if (dbus_error_is_set(error))
+   if (eldbus_message_error_get(msg, &txt, &message))
      {
-        dbus_error_free(error);
-        ERR("err");
+        ERR("Error: %s %s\nVolume: %s", txt, message, v->udi);
+        return;
      }
 
-   if (e_ukit_property_bool_get(ret, "DeviceIsSystemInternal", &err)) goto error;
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-
-   /* skip partitions with presentation hide set */
-   if (e_ukit_property_bool_get(ret, "DevicePresentationHide", &err)) goto error;
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-
-   /* skip volumes with volume.ignore set */
-   if (e_ukit_property_bool_get(ret, "DeviceIsMediaChangeDetectionInhibited", &err)) goto error;
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-   /* skip volumes that aren't filesystems */
-   str = e_ukit_property_string_get(ret, "IdUsage", &err);
-   EINA_SAFETY_ON_TRUE_GOTO(err || (!str), error);
-   if (!str[0]) goto error; /* probably removal event */
-   if (strcmp(str, "filesystem"))
+   if (!eldbus_message_arguments_get(msg, "a{sv}", &array))
      {
-        if (strcmp(str, "crypto"))
-          v->encrypted = e_ukit_property_bool_get(ret, "DeviceIsLuks", &err);
+        ERR("Error getting values.");
+        return;
+     }
 
-        if (!v->encrypted)
+   while (eldbus_message_iter_get_and_next(array, 'e', &dict))
+     {
+        Eldbus_Message_Iter *var;
+        const char *key;
+
+        if (!eldbus_message_iter_arguments_get(dict, "sv", &key, &var))
+          continue;
+        if (!strcmp(key, "DeviceFile"))
           {
-             ERR("I don't know what's going on here but I don't like it.");
-             goto error;
+             const char *udi;
+             if (!eldbus_message_iter_arguments_get(var, "s", &udi))
+               continue;
+             if (udi && v->first_time)
+               eina_stringshare_replace(&v->udi, udi);
           }
-     }
-   str = NULL;
-
-   eina_stringshare_replace(&v->uuid, e_ukit_property_string_get(ret, "IdUuid", &err));
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-
-   eina_stringshare_replace(&v->label, e_ukit_property_string_get(ret, "IdLabel", &err));
-   if (!v->label) eina_stringshare_replace(&v->label, v->uuid);
-   if (!v->label) eina_stringshare_replace(&v->label, e_ukit_property_string_get(ret, "DeviceFile", &err)); /* avoid having blank labels */
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-   if (!v->encrypted)
-     {
-        const Eina_List *l;
-
-        l = e_ukit_property_strlist_get(ret, "DeviceMountPaths", &err);
-        EINA_SAFETY_ON_TRUE_GOTO(err, error);
-        if (l) eina_stringshare_replace(&v->mount_point, eina_stringshare_add(l->data));
-
-        eina_stringshare_replace(&v->fstype, e_ukit_property_string_get(ret, "IdType", &err));
-        EINA_SAFETY_ON_TRUE_GOTO(err, error);
-        v->size = e_ukit_property_uint64_get(ret, "DeviceSize", &err);
-        EINA_SAFETY_ON_TRUE_GOTO(err, error);
-        v->mounted = e_ukit_property_bool_get(ret, "DeviceIsMounted", &err);
-        EINA_SAFETY_ON_TRUE_GOTO(err, error);
-     }
-   else
-     v->unlocked = e_ukit_property_bool_get(ret, "DeviceIsLuksCleartext", &err);
-
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-   v->partition = e_ukit_property_bool_get(ret, "DeviceIsPartition", &err);
-   EINA_SAFETY_ON_TRUE_GOTO(err, error);
-
-   if (v->partition)
-     {
-        v->partition_number = e_ukit_property_int_get(ret, "PartitionNumber", NULL);
-        eina_stringshare_replace(&v->partition_label, e_ukit_property_string_get(ret, "PartitionLabel", NULL));
-     }
-
-   if (v->unlocked)
-     {
-        const char *enc;
-        E_Volume *venc;
-
-        enc = e_ukit_property_string_get(ret, "LuksCleartextSlave", &err);
-        venc = _e_fm_main_udisks_volume_find(enc);
-        eina_stringshare_replace(&v->parent, venc->parent);
-        v->storage = venc->storage;
-        v->storage->volumes = eina_list_append(v->storage->volumes, v);
-     }
-   else
-     {
-        eina_stringshare_replace(&v->parent, e_ukit_property_string_get(ret, "PartitionSlave", &err));
-
-        if (!err)
+        else if (!strcmp(key, "DeviceIsSystemInternal"))
           {
-             if (v->parent && v->partition)
+             Eina_Bool internal;
+             eldbus_message_iter_arguments_get(var, "b", &internal);
+             if (internal)
                {
-                  s = e_storage_find(v->parent);
-                  if (s)
-                    {
-                       v->storage = s;
-                       if (!eina_list_data_find_list(s->volumes, v))
-                         s->volumes = eina_list_append(s->volumes, v);
-                    }
+                  DBG("removing is internal %s", v->dbus_path);
+                  ecore_idler_add(_idler_volume_del, v->dbus_path);
+                  return;
                }
+          }
+        else if (!strcmp(key, "DevicePresentationHide"))
+          {
+             Eina_Bool hid;
+             eldbus_message_iter_arguments_get(var, "b", &hid);
+             if (hid)
+               {
+                  DBG("removing is hidden %s", v->dbus_path);
+                  ecore_idler_add(_idler_volume_del, v->dbus_path);
+                  return;
+               }
+          }
+        else if (!strcmp(key, "DeviceIsMediaChangeDetectionInhibited"))
+          {
+             Eina_Bool inibited;
+             eldbus_message_iter_arguments_get(var, "b", &inibited);
+             if (inibited)
+               {
+                  /* skip volumes with volume.ignore set */
+                  DBG("removing is inibited %s", v->dbus_path);
+                  ecore_idler_add(_idler_volume_del, v->dbus_path);
+                  return;
+               }
+          }
+        else if (!strcmp(key, "DeviceIsLuks"))
+          eldbus_message_iter_arguments_get(var, "b", &v->encrypted);
+        else if (!strcmp(key, "IdUuid"))
+          {
+             const char *uuid;
+             if (!eldbus_message_iter_arguments_get(var, "s", &uuid))
+               continue;
+             eina_stringshare_replace(&v->uuid, uuid);
+          }
+        else if (!strcmp(key, "IdLabel"))
+          {
+             const char *label;
+             if (!eldbus_message_iter_arguments_get(var, "s", &label))
+               continue;
+             eina_stringshare_replace(&v->label, label);
+          }
+        else if (!strcmp(key, "DeviceMountPaths"))
+          {
+             Eldbus_Message_Iter *inner_array;
+             const char *path;
+
+             if (!eldbus_message_iter_arguments_get(var, "as", &inner_array))
+               continue;
+
+             while (eldbus_message_iter_get_and_next(inner_array, 's', &path))
+               {
+                  eina_stringshare_replace(&v->mount_point, path);
+                  break;
+               }
+          }
+        else if (!strcmp(key, "IdType"))
+          {
+             const char *type;
+             if (!eldbus_message_iter_arguments_get(var, "s", &type))
+               continue;
+             eina_stringshare_replace(&v->fstype, type);
+          }
+        else if (!strcmp(key, "DeviceSize"))
+          eldbus_message_iter_arguments_get(var, "t", &v->size);
+        else if (!strcmp(key, "DeviceIsMounted"))
+          eldbus_message_iter_arguments_get(var, "b", &v->mounted);
+        else if (!strcmp(key, "DeviceIsLuksCleartext"))
+          eldbus_message_iter_arguments_get(var, "b", &v->unlocked);
+        else if (!strcmp(key, "DeviceIsPartition"))
+          eldbus_message_iter_arguments_get(var, "b", &v->partition);
+        else if (!strcmp(key, "PartitionNumber"))
+          eldbus_message_iter_arguments_get(var, "i", &v->partition_number);
+        else if (!strcmp(key, "PartitionLabel"))
+          {
+             const char *partition_label;
+             if (!eldbus_message_iter_arguments_get(var, "s", &partition_label))
+               continue;
+             eina_stringshare_replace(&v->partition_label, partition_label);
+          }
+        else if (!strcmp(key, "LuksCleartextSlave"))
+          {
+             const char *enc;
+             E_Volume *venc;
+             if (!eldbus_message_iter_arguments_get(var, "o", &enc))
+               continue;
+             eina_stringshare_replace(&v->partition_label, enc);
+             venc = _e_fm_main_udisks_volume_find(enc);
+             if (!venc)
+               continue;
+             eina_stringshare_replace(&v->parent, venc->parent);
+             v->storage = venc->storage;
+             v->storage->volumes = eina_list_append(v->storage->volumes, v);
+          }
+        else if (!strcmp(key, "PartitionSlave"))
+          {
+             char *partition_slave, buf[4096];
+             if (!eldbus_message_iter_arguments_get(var, "o", &partition_slave))
+               continue;
+             if ((!partition_slave) || (strlen(partition_slave) < sizeof("/org/freedesktop/UDisks/devices/")))
+               eina_stringshare_replace(&v->parent, partition_slave);
              else
                {
-                  eina_stringshare_replace(&v->parent, v->udi);
-		                s = e_storage_find(v->udi);
-                  if (s)
-                    {
-                       v->storage = s;
-                       if (!eina_list_data_find_list(s->volumes, v))
-                         s->volumes = eina_list_append(s->volumes, v);
-                    }
-                  else
-                    {
-                       v->storage = _e_fm_main_udisks_storage_add(v->udi); /* disk is both storage and volume */
-                       if (v->storage) v->storage->volumes = eina_list_append(v->storage->volumes, v);
-                    }
+                  snprintf(buf, sizeof(buf), "/dev/%s", partition_slave + sizeof("/org/freedesktop/UDisks/devices/") - 1);
+                  eina_stringshare_replace(&v->parent, buf);
                }
+          }
+
+     }
+   if (!v->udi)
+     {
+        ERR("!udi %s", v->dbus_path);
+        ecore_idler_add(_idler_volume_del, v);
+        return;
+     }
+   if (!v->label) eina_stringshare_replace(&v->label, v->uuid);
+   if (v->parent && v->partition)
+     {
+        s = e_storage_find(v->parent);
+        if (s)
+          {
+             v->storage = s;
+             if (!eina_list_data_find_list(s->volumes, v))
+               s->volumes = eina_list_append(s->volumes, v);
+          }
+     }
+   else
+     {
+        eina_stringshare_replace(&v->parent, v->udi);
+        s = e_storage_find(v->udi);
+        if (s)
+          {
+             v->storage = s;
+             if (!eina_list_data_find_list(s->volumes, v))
+               s->volumes = eina_list_append(s->volumes, v);
+          }
+        else
+          {
+             v->storage = _e_fm_main_udisks_storage_add(
+                                           eina_stringshare_add(v->dbus_path));
+             /* disk is both storage and volume */
+             if (v->storage)
+               v->storage->volumes = eina_list_append(v->storage->volumes, v);
           }
      }
 
    switch (v->optype)
      {
       case E_VOLUME_OP_TYPE_MOUNT:
-        _e_fm_main_udisks_cb_vol_mounted(v, error);
+        _e_fm_main_udisks_cb_vol_mounted(v);
         return;
       case E_VOLUME_OP_TYPE_UNMOUNT:
-        _e_fm_main_udisks_cb_vol_unmounted(v, error);
+        _e_fm_main_udisks_cb_vol_unmounted(v);
         return;
       case E_VOLUME_OP_TYPE_EJECT:
-        _e_fm_main_udisks_cb_vol_unmounted_before_eject(v, NULL, error);
+        _e_fm_main_udisks_cb_vol_unmounted_before_eject(v);
         return;
       default:
         break;
@@ -540,33 +618,38 @@ _e_fm_main_udisks_cb_vol_prop(E_Volume      *v,
    v->validated = EINA_TRUE;
    e_fm_ipc_volume_add(v);
    return;
-
-error:
-   if (v) _e_fm_main_udisks_volume_del(v->udi);
-   return;
 }
 
 static int
 _e_fm_main_udisks_format_error_msg(char     **buf,
                                    E_Volume  *v,
-                                   DBusError *error)
+                                   const char *name,
+                                   const char *message)
 {
-   int size, vu, vm, en;
+   int size, vu, vm = 1, en;
    char *tmp;
 
    vu = strlen(v->udi) + 1;
-   vm = strlen(v->mount_point) + 1;
-   en = strlen(error->name) + 1;
-   size = vu + vm + en + strlen(error->message) + 1;
+   if (v->mount_point) vm = strlen(v->mount_point) + 1;
+   en = strlen(name) + 1;
+   size = vu + vm + en + strlen(message) + 1;
    tmp = *buf = malloc(size);
 
    strcpy(tmp, v->udi);
    tmp += vu;
-   strcpy(tmp, v->mount_point);
-   tmp += vm;
-   strcpy(tmp, error->name);
+   if (v->mount_point)
+     {
+        strcpy(tmp, v->mount_point);
+        tmp += vm;
+     }
+   else
+     {
+        *tmp = 0;
+        tmp += vm;
+     }
+   strcpy(tmp, name);
    tmp += en;
-   strcpy(tmp, error->message);
+   strcpy(tmp, message);
 
    return size;
 }
@@ -574,18 +657,18 @@ _e_fm_main_udisks_format_error_msg(char     **buf,
 static Eina_Bool
 _e_fm_main_udisks_vol_mount_timeout(E_Volume *v)
 {
-   DBusError error;
    char *buf;
    int size;
 
    v->guard = NULL;
-   if (!dbus_pending_call_get_completed(v->op))
-     dbus_pending_call_cancel(v->op);
+
+   if (v->op)
+     eldbus_pending_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
-   error.name = "org.enlightenment.fm2.MountTimeout";
-   error.message = "Unable to mount the volume with specified time-out.";
-   size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_udisks_format_error_msg(&buf, v,
+                       "org.enlightenment.fm2.MountTimeout",
+                       "Unable to mount the volume with specified time-out.");
    ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -594,8 +677,7 @@ _e_fm_main_udisks_vol_mount_timeout(E_Volume *v)
 }
 
 static void
-_e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
-                                 DBusError          *error)
+_e_fm_main_udisks_cb_vol_mounted(E_Volume *v)
 {
    char *buf;
    int size;
@@ -606,16 +688,6 @@ _e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
         v->guard = NULL;
      }
 
-   if (error && dbus_error_is_set(error))
-     {
-        size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_MOUNT_ERROR,
-                              0, 0, 0, buf, size);
-        dbus_error_free(error);
-        free(buf);
-        v->optype = E_VOLUME_OP_TYPE_NONE;
-        return;
-     }
    if (!v->mount_point) return; /* come back later */
 
    v->optype = E_VOLUME_OP_TYPE_NONE;
@@ -635,18 +707,17 @@ _e_fm_main_udisks_cb_vol_mounted(E_Volume               *v,
 static Eina_Bool
 _e_fm_main_udisks_vol_unmount_timeout(E_Volume *v)
 {
-   DBusError error;
    char *buf;
    int size;
 
    v->guard = NULL;
-   if (!dbus_pending_call_get_completed(v->op))
-     dbus_pending_call_cancel(v->op);
+   if (v->op)
+     eldbus_pending_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
-   error.name = "org.enlightenment.fm2.UnmountTimeout";
-   error.message = "Unable to unmount the volume with specified time-out.";
-   size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_udisks_format_error_msg(&buf, v,
+                      "org.enlightenment.fm2.UnmountTimeout",
+                      "Unable to unmount the volume with specified time-out.");
    ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -655,8 +726,7 @@ _e_fm_main_udisks_vol_unmount_timeout(E_Volume *v)
 }
 
 static void
-_e_fm_main_udisks_cb_vol_unmounted(E_Volume               *v,
-                                   DBusError          *error)
+_e_fm_main_udisks_cb_vol_unmounted(E_Volume *v)
 {
    char *buf;
    int size;
@@ -671,15 +741,6 @@ _e_fm_main_udisks_cb_vol_unmounted(E_Volume               *v,
      {
         v->optype = E_VOLUME_OP_TYPE_NONE;
         v->op = NULL;
-     }
-   if (dbus_error_is_set(error))
-     {
-        size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_UNMOUNT_ERROR,
-                              0, 0, 0, buf, size);
-        dbus_error_free(error);
-        free(buf);
-        return;
      }
 
    v->mounted = EINA_FALSE;
@@ -697,18 +758,17 @@ _e_fm_main_udisks_cb_vol_unmounted(E_Volume               *v,
 static Eina_Bool
 _e_fm_main_udisks_vol_eject_timeout(E_Volume *v)
 {
-   DBusError error;
    char *buf;
    int size;
 
    v->guard = NULL;
-   if (!dbus_pending_call_get_completed(v->op))
-     dbus_pending_call_cancel(v->op);
+   if (v->op)
+     eldbus_pending_cancel(v->op);
    v->op = NULL;
    v->optype = E_VOLUME_OP_TYPE_NONE;
-   error.name = "org.enlightenment.fm2.EjectTimeout";
-   error.message = "Unable to eject the media with specified time-out.";
-   size = _e_fm_main_udisks_format_error_msg(&buf, v, &error);
+   size = _e_fm_main_udisks_format_error_msg(&buf, v,
+                         "org.enlightenment.fm2.EjectTimeout",
+                         "Unable to eject the media with specified time-out.");
    ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
                          0, 0, 0, buf, size);
    free(buf);
@@ -716,34 +776,86 @@ _e_fm_main_udisks_vol_eject_timeout(E_Volume *v)
    return ECORE_CALLBACK_CANCEL;
 }
 
+static void
+_volume_task_cb(void *data EINA_UNUSED, const Eldbus_Message *msg EINA_UNUSED,
+                Eldbus_Pending *pending EINA_UNUSED)
+{
+   /**
+    * if eldbus_proxy_send has callback == NULL it will return a NULL
+    * but we need a Eldbus_Pending to be able to cancel it when timeout occurs
+    */
+   /* FIXME: this should not matter. If we don't have a callback, there's no
+    * reason to cancel it... cancelling has no effect other than saying eldbus we
+    * are not interested in the return anymore. I.e.: don't bother to  cancel it
+    */
+}
+
+static Eldbus_Pending *
+_volume_umount(Eldbus_Proxy *proxy)
+{
+   Eldbus_Message *msg;
+   Eldbus_Message_Iter *array, *main_iter;
+
+   msg = eldbus_proxy_method_call_new(proxy, "FilesystemUnmount");
+   main_iter = eldbus_message_iter_get(msg);
+   eldbus_message_iter_arguments_append(main_iter, "as", &array);
+   eldbus_message_iter_container_close(main_iter, array);
+
+   return eldbus_proxy_send(proxy, msg, _volume_task_cb, NULL, -1);
+}
+
+static Eldbus_Pending *
+_volume_eject(Eldbus_Proxy *proxy)
+{
+   Eldbus_Message *msg;
+   Eldbus_Message_Iter *array, *main_iter;
+
+   msg = eldbus_proxy_method_call_new(proxy, "DriveEject");
+   main_iter = eldbus_message_iter_get(msg);
+   eldbus_message_iter_arguments_append(main_iter, "as", &array);
+   eldbus_message_iter_container_close(main_iter, array);
+
+   return eldbus_proxy_send(proxy, msg, _volume_task_cb, NULL, -1);
+}
+
+static Eldbus_Pending *
+_volume_mount(Eldbus_Proxy *proxy, const char *fstype, Eina_List *opt)
+{
+   Eldbus_Message *msg;
+   Eldbus_Message_Iter *array, *main_iter;
+   Eina_List *l;
+   const char *opt_txt;
+
+   msg = eldbus_proxy_method_call_new(proxy, "FilesystemMount");
+   main_iter = eldbus_message_iter_get(msg);
+   eldbus_message_iter_arguments_append(main_iter, "sas", fstype, &array);
+   EINA_LIST_FOREACH(opt, l, opt_txt)
+     eldbus_message_iter_basic_append(array, 's', opt_txt);
+   eldbus_message_iter_container_close(main_iter, array);
+
+   return eldbus_proxy_send(proxy, msg, _volume_task_cb, NULL, -1);
+}
+
 static Eina_Bool
 _e_fm_main_udisks_cb_vol_ejecting_after_unmount(E_Volume *v)
 {
-   v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-   v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->parent/*v->udi*/, NULL);
+   v->guard = ecore_timer_loop_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
+   v->op = _volume_eject(v->storage->proxy);
 
    return ECORE_CALLBACK_CANCEL;
 }
 
 static void
-_e_fm_main_udisks_cb_vol_unmounted_before_eject(E_Volume      *v,
-                                                void      *method_return __UNUSED__,
-                                                DBusError *error)
+_e_fm_main_udisks_cb_vol_unmounted_before_eject(E_Volume      *v)
 {
-   Eina_Bool err;
-
-   err = !!dbus_error_is_set(error);
-   _e_fm_main_udisks_cb_vol_unmounted(v, error);
+   _e_fm_main_udisks_cb_vol_unmounted(v);
 
    // delay is required for all message handlers were executed after unmount
-   if (!err)
-     ecore_timer_add(1.0, (Ecore_Task_Cb)_e_fm_main_udisks_cb_vol_ejecting_after_unmount, v);
+   ecore_timer_loop_add(1.0, (Ecore_Task_Cb)_e_fm_main_udisks_cb_vol_ejecting_after_unmount, v);
 }
 
 static void
-_e_fm_main_udisks_cb_vol_ejected(E_Volume               *v,
-                                 void *method_return __UNUSED__,
-                                 DBusError          *error)
+_e_fm_main_udisks_cb_vol_ejected(E_Volume *v)
 {
    char *buf;
    int size;
@@ -755,16 +867,6 @@ _e_fm_main_udisks_cb_vol_ejected(E_Volume               *v,
      }
 
    v->optype = E_VOLUME_OP_TYPE_NONE;
-   v->op = NULL;
-   if (dbus_error_is_set(error))
-     {
-        size = _e_fm_main_udisks_format_error_msg(&buf, v, error);
-        ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, E_FM_OP_EJECT_ERROR,
-                              0, 0, 0, buf, size);
-        dbus_error_free(error);
-        free(buf);
-        return;
-     }
 
    size = strlen(v->udi) + 1;
    buf = alloca(size);
@@ -776,41 +878,45 @@ _e_fm_main_udisks_cb_vol_ejected(E_Volume               *v,
 }
 
 E_Volume *
-_e_fm_main_udisks_volume_add(const char *udi,
+_e_fm_main_udisks_volume_add(const char *path,
                              Eina_Bool   first_time)
 {
    E_Volume *v;
+   Eldbus_Object *obj;
 
-   if (!udi) return NULL;
-   if (e_volume_find(udi)) return NULL;
+   if (!path) return NULL;
+   if (_volume_find_by_dbus_path(path)) return NULL;
    v = calloc(1, sizeof(E_Volume));
    if (!v) return NULL;
-   INF("VOL+ %s", udi);
+   v->dbus_path = path;
+   INF("VOL+ %s", path);
    v->efm_mode = EFM_MODE_USING_UDISKS_MOUNT;
-   v->udi = eina_stringshare_add(udi);
    v->icon = NULL;
    v->first_time = first_time;
    _e_vols = eina_list_append(_e_vols, v);
-   e_udisks_get_all_properties(_e_fm_main_udisks_conn, v->udi,
-                                      (E_DBus_Callback_Func)_e_fm_main_udisks_cb_vol_prop, v);
-   v->prop_handler = e_dbus_signal_handler_add(_e_fm_main_udisks_conn,
-                                               E_UDISKS_BUS,
-                                               udi,
-                                               E_UDISKS_INTERFACE,
-                                               "Changed",
-                                               (E_DBus_Signal_Cb)_e_fm_main_udisks_cb_prop_modified, v);
+   obj = eldbus_object_get(_e_fm_main_udisks_conn, UDISKS_BUS, path);
+   v->proxy = eldbus_proxy_get(obj, UDISKS_DEVICE_INTERFACE);
+   eldbus_proxy_property_get_all(v->proxy, _e_fm_main_udisks_cb_vol_prop, v);
+   eldbus_proxy_signal_handler_add(v->proxy, "Changed",
+                                  _e_fm_main_udisks_cb_prop_modified, v);
    v->guard = NULL;
 
    return v;
 }
 
 void
-_e_fm_main_udisks_volume_del(const char *udi)
+_e_fm_main_udisks_volume_del(const char *path)
 {
    E_Volume *v;
 
-   v = e_volume_find(udi);
+   v = _volume_find_by_dbus_path(path);
    if (!v) return;
+   _volume_del(v);
+}
+
+static void
+_volume_del(E_Volume *v)
+{
    if (v->guard)
      {
         ecore_timer_del(v->guard);
@@ -829,7 +935,12 @@ _e_fm_main_udisks_volume_del(const char *udi)
    if (v->storage && v->storage->requires_eject) return; /* udisks is stupid about ejectable media, so we have to keep stuff
                                    * around for all eternity instead of deleting it constantly. oh noes.
                                    */
-   if (v->prop_handler) e_dbus_signal_handler_del(_e_fm_main_udisks_conn, v->prop_handler);
+   if (v->proxy)
+     {
+        Eldbus_Object *obj = eldbus_proxy_object_get(v->proxy);
+        eldbus_proxy_unref(v->proxy);
+        eldbus_object_unref(obj);
+     }
    _e_vols = eina_list_remove(_e_vols, v);
    _e_fm_shared_device_volume_free(v);
 }
@@ -849,19 +960,31 @@ _e_fm_main_udisks_volume_find(const char *udi)
    return NULL;
 }
 
+static E_Volume *
+_volume_find_by_dbus_path(const char *path)
+{
+   Eina_List *l;
+   E_Volume *v;
+
+   if (!path) return NULL;
+   EINA_LIST_FOREACH(_e_vols, l, v)
+     if (!strcmp(path, v->dbus_path)) return v;
+   return NULL;
+}
+
 void
 _e_fm_main_udisks_volume_eject(E_Volume *v)
 {
    if (!v || v->guard) return;
    if (v->mounted)
      {
-        v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
-        v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL);
+        v->guard = ecore_timer_loop_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
+        v->op = _volume_umount(v->proxy);
      }
    else
      {
-        v->guard = ecore_timer_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
-        v->op = e_udisks_volume_eject(_e_fm_main_udisks_conn, v->parent/*v->udi*/, NULL);
+        v->guard = ecore_timer_loop_add(E_FM_EJECT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_eject_timeout, v);
+        v->op = _volume_eject(v->storage->proxy);
      }
    v->optype = E_VOLUME_OP_TYPE_EJECT;
 }
@@ -869,12 +992,12 @@ _e_fm_main_udisks_volume_eject(E_Volume *v)
 void
 _e_fm_main_udisks_volume_unmount(E_Volume *v)
 {
-     if (!v || v->guard) return;
-     INF("unmount %s %s", v->udi, v->mount_point);
+   if (!v || v->guard) return;
+   INF("unmount %s %s", v->udi, v->mount_point);
 
-     v->guard = ecore_timer_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
-     v->op = e_udisks_volume_unmount(_e_fm_main_udisks_conn, v->udi, NULL);
-     v->optype = E_VOLUME_OP_TYPE_UNMOUNT;
+   v->guard = ecore_timer_loop_add(E_FM_UNMOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_unmount_timeout, v);
+   v->op = _volume_umount(v->proxy);
+   v->optype = E_VOLUME_OP_TYPE_UNMOUNT;
 }
 
 void
@@ -921,14 +1044,13 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
         opt = eina_list_append(opt, buf2);
      }
 
-   v->guard = ecore_timer_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
+   v->guard = ecore_timer_loop_add(E_FM_MOUNT_TIMEOUT, (Ecore_Task_Cb)_e_fm_main_udisks_vol_mount_timeout, v);
 
    // It was previously noted here that ubuntu 10.04 failed to mount if opt was passed to
    // e_udisks_volume_mount.  The reason at the time was unknown and apparently never found.
    // I theorize that this was due to improper mount options being passed (namely the utf8 options).
    // If this still fails on Ubuntu 10.04 then an actual fix should be found.
-   v->op = e_udisks_volume_mount(_e_fm_main_udisks_conn, v->udi,
-                                        v->fstype, opt);
+   v->op = _volume_mount(v->proxy, v->fstype, opt);
 
    eina_list_free(opt);
    v->optype = E_VOLUME_OP_TYPE_MOUNT;
@@ -937,55 +1059,57 @@ _e_fm_main_udisks_volume_mount(E_Volume *v)
 void
 _e_fm_main_udisks_init(void)
 {
-   DBusMessage *msg;
-
-   e_dbus_init();
-   e_ukit_init();
-   _e_fm_main_udisks_conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   eldbus_init();
+   _e_fm_main_udisks_conn = eldbus_connection_get(ELDBUS_CONNECTION_TYPE_SYSTEM);
    if (!_e_fm_main_udisks_conn) return;
-   if (!_udisks_poll)
-     _udisks_poll = e_dbus_signal_handler_add(_e_fm_main_udisks_conn,
-                                              E_DBUS_FDO_BUS, E_DBUS_FDO_PATH,
-                                              E_DBUS_FDO_INTERFACE,
-                                              "NameOwnerChanged", _e_fm_main_udisks_poll, NULL);
 
-   e_dbus_get_name_owner(_e_fm_main_udisks_conn, E_UDISKS_BUS, _e_fm_main_udisks_test, NULL); /* test for already running udisks */
-   msg = dbus_message_new_method_call(E_UDISKS_BUS, E_UDISKS_PATH, E_UDISKS_BUS, "suuuuuup");
-   e_dbus_method_call_send(_e_fm_main_udisks_conn, msg, NULL, (E_DBus_Callback_Func)_e_fm_main_udisks_test, NULL, -1, NULL); /* test for not running udisks */
-   dbus_message_unref(msg);
+   eldbus_name_start(_e_fm_main_udisks_conn, UDISKS_BUS, 0,
+                    _e_fm_main_udisks_name_start, NULL);
 }
 
 void
 _e_fm_main_udisks_shutdown(void)
 {
+   if (_e_fm_main_udisks_proxy)
+     {
+        Eldbus_Object *obj;
+        obj = eldbus_proxy_object_get(_e_fm_main_udisks_proxy);
+        eldbus_proxy_unref(_e_fm_main_udisks_proxy);
+        eldbus_object_unref(obj);
+     }
    if (_e_fm_main_udisks_conn)
-     e_dbus_connection_close(_e_fm_main_udisks_conn);
-   e_ukit_shutdown();
-   e_dbus_shutdown();
+     {
+        eldbus_connection_unref(_e_fm_main_udisks_conn);
+        eldbus_shutdown();
+     }
 }
 
 E_Storage *
-_e_fm_main_udisks_storage_add(const char *udi)
+_e_fm_main_udisks_storage_add(const char *path)
 {
    E_Storage *s;
+   Eldbus_Object *obj;
 
-   if (!udi) return NULL;
-   if (e_storage_find(udi)) return NULL;
+   if (!path) return NULL;
+   if (_storage_find_by_dbus_path(path)) return NULL;
    s = calloc(1, sizeof(E_Storage));
    if (!s) return NULL;
-   s->udi = eina_stringshare_add(udi);
+
+   DBG("STORAGE+=%s", path);
+   s->dbus_path = path;
    _e_stores = eina_list_append(_e_stores, s);
-   e_udisks_get_all_properties(_e_fm_main_udisks_conn, s->udi,
-                                      (E_DBus_Callback_Func)_e_fm_main_udisks_cb_store_prop, s);
+   obj = eldbus_object_get(_e_fm_main_udisks_conn, UDISKS_BUS, path);
+   s->proxy = eldbus_proxy_get(obj, UDISKS_DEVICE_INTERFACE);
+   eldbus_proxy_property_get_all(s->proxy, _e_fm_main_udisks_cb_store_prop, s);
    return s;
 }
 
 void
-_e_fm_main_udisks_storage_del(const char *udi)
+_e_fm_main_udisks_storage_del(const char *path)
 {
    E_Storage *s;
 
-   s = e_storage_find(udi);
+   s = _storage_find_by_dbus_path(path);
    if (!s) return;
    if (s->validated)
      {
@@ -996,7 +1120,24 @@ _e_fm_main_udisks_storage_del(const char *udi)
                                 0, 0, 0, s->udi, strlen(s->udi) + 1);
      }
    _e_stores = eina_list_remove(_e_stores, s);
+   if (s->proxy)
+     {
+        Eldbus_Object *obj = eldbus_proxy_object_get(s->proxy);
+        eldbus_proxy_unref(s->proxy);
+        eldbus_object_unref(obj);
+     }
    _e_fm_shared_device_storage_free(s);
+}
+
+static E_Storage *
+_storage_find_by_dbus_path(const char *path)
+{
+   Eina_List *l;
+   E_Storage *s;
+
+   EINA_LIST_FOREACH(_e_stores, l, s)
+     if (!strcmp(path, s->dbus_path)) return s;
+   return NULL;
 }
 
 E_Storage *
@@ -1007,6 +1148,7 @@ _e_fm_main_udisks_storage_find(const char *udi)
 
    EINA_LIST_FOREACH(_e_stores, l, s)
      {
+        if (!s->udi) continue;
         if (!strcmp(udi, s->udi)) return s;
      }
    return NULL;

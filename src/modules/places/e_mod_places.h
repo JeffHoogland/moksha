@@ -14,7 +14,7 @@ struct _Volume
 {
    const char *id;
    int perc_backup;
-   
+
    const char *label;
    const char *icon;
    const char *device;
@@ -24,14 +24,15 @@ struct _Volume
    unsigned long long free_space;
    Eina_Bool mounted;
 
-
    const char *bus;
    const char *drive_type;
    const char *model;
    const char *vendor;
    const char *serial;
-   unsigned char removable;
-   unsigned char requires_eject;
+   Eina_Bool removable;
+   Eina_Bool requires_eject;
+   Eina_Bool media_available;
+   Eina_Bool remote;
    Eina_Bool unlocked;
    Eina_Bool encrypted;
 
@@ -43,6 +44,8 @@ struct _Volume
    void (*mount_func)(Volume *vol, Eina_List *opts);
    void (*unmount_func)(Volume *vol, Eina_List *opts);
    void (*eject_func)(Volume *vol, Eina_List *opts);
+   void (*free_func)(Volume *vol);
+   void *backend_data;
 };
 
 void places_init(void);
@@ -63,8 +66,8 @@ void places_fill_box(Evas_Object *box, Eina_Bool horiz);
 void places_empty_box(Evas_Object *box);
 void places_print_volume(Volume *v);
 
-void places_generate_menu(void *data, E_Menu *em);
-void places_augmentation(void *data, E_Menu *em);
+void places_generate_menu(void *data __UNUSED__,E_Menu *em);
+void places_augmentation(void *data __UNUSED__, E_Menu *em);
 
 
 #endif

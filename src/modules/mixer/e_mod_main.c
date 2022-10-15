@@ -4,9 +4,6 @@
 #include "lib/common.h"
 #include "lib/epulse.h"
 #include "e_mod_main.h"
-#ifdef HAVE_ENOTIFY
-#include <E_Notify.h>
-#endif
 
 //~ #define VOLUME_STEP (PA_VOLUME_NORM / BASE_VOLUME_STEP)
 #define VOLUME_STEP (PA_VOLUME_NORM / 100 * 5) // volume step set up to 5%
@@ -99,22 +96,33 @@ struct _Instance
 
 };
 
+static int _notification_id = 0;
+
 static void     _mixer_popup_input_window_create(Instance *inst);
 static void     _mixer_popup_input_window_destroy(Instance *inst);
 static void     _popup_del(Instance *inst);
+static void     _notify_cb(void *data __UNUSED__, unsigned int id);
 
 static Context  *mixer_context = NULL;
+
+static void
+_notify_cb(void *data __UNUSED__, unsigned int id)
+{
+   _notification_id = id;
+}
 
 static void
 _notify(const int val)
 {
    if (val < 0)
      return;
-#ifdef HAVE_ENOTIFY
-   static E_Notification *n;
+
+   //E_Mixer_Module_Context *ctxt;
    char *icon, buf[56];
    int ret;
-   
+   E_Notification_Notify n;
+   memset(&n, 0, sizeof(E_Notification_Notify));
+
    ret = snprintf(buf, (sizeof(buf) - 1), "%s: %d%%", _("New volume"), val);
    if ((ret < 0) || ((unsigned int)ret > sizeof(buf)))
      return;
@@ -132,13 +140,13 @@ _notify(const int val)
      icon = "dialog-warning";
      snprintf(buf, sizeof(buf), "%s", _("Volume limit reached!"));
    }
-   if (n) return;
-   n = e_notification_full_new(_("EPulse"), 0, icon, _("Volume Changed"), buf, 2000);
-   e_notification_replaces_id_set(n, EINA_TRUE);
-   e_notification_send(n, NULL, NULL);
-   e_notification_unref(n);
-   n = NULL;
-#endif
+   n.app_name = _("EPulse");
+   n.replaces_id = _notification_id;
+   n.icon.icon = icon;
+   n.summary = _("Volume changed");
+   n.body = buf;
+   //n.timeout = 2000;
+   e_notification_client_send(&n, _notify_cb, NULL);
 }
 
 static void
@@ -191,9 +199,9 @@ _volume_increase_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
 
    Sink *s = mixer_context->sink_default;
    pa_cvolume v = s->volume;
-   
+
    //volume max limit
-   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) < 153) 
+   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) < 153)
    {
      pa_cvolume_inc(&v, VOLUME_STEP);
      epulse_sink_volume_set(s->index, v);
@@ -212,7 +220,7 @@ _volume_decrease_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
    pa_cvolume_dec(&v, VOLUME_STEP);
 
    epulse_sink_volume_set(s->index, v);
-   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) == 0) 
+   if (PA_VOLUME_TO_INT(pa_cvolume_avg(&mixer_context->sink_default->volume)) == 0)
      _notify(0);
 }
 
@@ -363,9 +371,7 @@ _slider_changed_cb(void *data EINA_UNUSED, Evas_Object *obj)
    pa_volume_t v;
    Sink *s = mixer_context->sink_default;
 
-   //~ val = (int)e_slider_value_get(obj);
-   if (!e_widget_slider_value_int_get(obj, &val)) return;
-
+   e_widget_slider_value_int_get(obj, &val);
    v = INT_TO_PA_VOLUME(val);
 
    pa_cvolume_set(&s->volume, s->volume.channels, v);
@@ -378,9 +384,12 @@ _popup_add_slider(Instance *inst)
    pa_volume_t vol = pa_cvolume_avg(&mixer_context->sink_default->volume);
    int value = PA_VOLUME_TO_INT(vol);
 
-   Evas_Object *slider = e_widget_slider_add(inst->popup->win->evas,  1, 0, "%1.0f", 0, 153, 1.0, 0, NULL, &value, 40);
+
+   Evas_Object *slider = e_widget_slider_add(inst->popup->win->evas, 1, 0, "%2.0f", 0, 153, 1.0, 0, NULL, &value, 40);
+   //evas_object_smart_callback_add(slider, "changed", _slider_changed_cb,  NULL);
    e_widget_on_change_hook_set(slider, _slider_changed_cb, NULL);
 
+   
    return slider;
 }
 
@@ -739,9 +748,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
     char buf[4096];
 
     epulse_module = m;
-#ifdef HAVE_ENOTIFY
-   e_notification_init();
-#endif
+
     EINA_SAFETY_ON_FALSE_RETURN_VAL(epulse_common_init("epulse_mod"),
                                     NULL);
     EINA_SAFETY_ON_FALSE_RETURN_VAL(epulse_init() > 0, NULL);
@@ -797,9 +804,7 @@ _sink_changed_cb(void *data EINA_UNUSED, int type EINA_UNUSED,
 
         E_FREE(mixer_context);
      }
-#ifdef HAVE_ENOTIFY
-   e_notification_shutdown();
-#endif
+
    epulse_common_shutdown();
    epulse_shutdown();
    return 1;
@@ -831,22 +836,22 @@ _mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *eve
    Ecore_Event_Key *ev = event;
    Instance *inst = data;
    const char *keysym;
-   
-   if (ev->window != inst->input.win) 
-     return ECORE_CALLBACK_PASS_ON; 
-   
+
+   if (ev->window != inst->input.win)
+     return ECORE_CALLBACK_PASS_ON;
+
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
       _popup_del(inst);
-   else if (!strcmp(keysym, "m")) 
+   else if (!strcmp(keysym, "m"))
      {
        if (inst->mute)
          _check_changed_cb(NULL, NULL, NULL);
        else
          _check_changed_cb(NULL, NULL, NULL);
      }
-      
-   return ECORE_CALLBACK_PASS_ON;   
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static void
@@ -890,7 +895,7 @@ _mixer_popup_input_window_create(Instance *inst)
    inst->input.wheel =
      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
                              _mixer_popup_input_window_mouse_up_cb, inst);
-   
+
    inst->input.key_down =
      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
                              _mixer_popup_input_window_key_down_cb , inst);

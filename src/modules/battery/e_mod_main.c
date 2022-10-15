@@ -1,8 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#ifdef HAVE_ENOTIFY
-#include "E_Notify.h"
-#endif
 
 /* gadcon requirements */
 static E_Gadcon_Client *_gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style);
@@ -40,6 +37,8 @@ struct _Instance
    Evas_Object     *o_battery;
    Evas_Object     *popup_battery;
    E_Gadcon_Popup  *warning;
+
+   unsigned int     notification_id;
 };
 
 static void      _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, Eina_Bool have_power);
@@ -386,7 +385,7 @@ _battery_config_updated(void)
 #elif defined __OpenBSD__
         ok = _battery_openbsd_start();
 #else
-        ok = _battery_dbus_start();
+        ok = _battery_upower_start();
 #endif
      }
    if (ok) return;
@@ -443,6 +442,14 @@ _battery_warning_popup_destroy(Instance *inst)
 }
 
 static void
+_battery_warning_popup_cb(void *data, unsigned int id)
+{
+   Instance *inst = data;
+
+   inst->notification_id = id;
+}
+
+static void
 _battery_warning_popup(Instance *inst, int t, double percent, int warn)
 {
    Evas *e = NULL;
@@ -462,25 +469,19 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    if (warn)
      {
        #ifdef HAVE_ENOTIFY
-       static E_Notification *notification;
-
-       if (battery_config->desktop_notifications)
-         {
-           if (notification) return;
-           notification = e_notification_full_new
-           (
-              _("Battery"),
-              0,
-              "battery-low",
-              _("Your battery is low!"),
-              _("AC power is recommended."),
-              (battery_config->alert_timeout * 1000)
-           );
-           e_notification_send(notification, NULL, NULL);
-           e_notification_unref(notification);
-           notification = NULL;
-           return;
-         }
+   if (battery_config->desktop_notifications)
+     {
+        E_Notification_Notify n;
+        memset(&n, 0, sizeof(E_Notification_Notify));
+        n.app_name = _("Battery");
+        n.replaces_id = 0;
+        n.icon.icon = "battery-low";
+        n.summary = _("Your battery is low!");
+        n.body = _("AC power is recommended.");
+        n.timeout = battery_config->alert_timeout * 1000;
+        e_notification_client_send(&n, _battery_warning_popup_cb, inst);
+        return;
+     }
        #endif
       }
 
@@ -802,9 +803,7 @@ e_modapi_init(E_Module *m)
 {
    //~ char buf[4096];
 
-#ifdef HAVE_ENOTIFY
-   e_notification_init();
-#endif
+
 
    conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
 #undef T
@@ -916,12 +915,10 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
 #elif defined __OpenBSD__
    _battery_openbsd_stop();
 #else
-   _battery_dbus_stop();
+   _battery_upower_stop();
 #endif
 
-#ifdef HAVE_ENOTIFY
-   e_notification_shutdown();
-#endif
+
 
    free(battery_config);
    battery_config = NULL;

@@ -72,6 +72,16 @@ _e_mod_menu_desktop_add(void *data __UNUSED__, E_Menu *m)
    e_menu_item_label_set(mi, _("Desktop"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop");
    e_menu_item_submenu_set(mi, subm);
+   
+   if ((e_msgbus_data) && (e_msgbus_data->screensaver_inhibits))
+     {
+        subm = e_int_menus_inhibitors_new();
+        dat->inhibitors = subm;
+        mi = e_menu_item_new(m);
+        e_menu_item_label_set(mi, _("Blanking Block"));
+        e_util_menu_item_theme_icon_set(mi, "preferences-screen-normal");
+        e_menu_item_submenu_set(mi, subm);
+     }
    e_object_unref(E_OBJECT(subm));
 
 }

@@ -444,6 +444,9 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
          case EFM_MODE_USING_UDISKS_MOUNT:
            snprintf(buf, sizeof(buf), "%s: UDISKS", _("Mode"));
            break;
+         case EFM_MODE_USING_UDISKS2_MOUNT:
+           snprintf(buf, sizeof(buf), "%s: UDISKS2", _("Mode"));
+           break;
          case EFM_MODE_USING_EEZE_MOUNT:
            snprintf(buf, sizeof(buf), "%s: EEZE", _("Mode"));
            break;

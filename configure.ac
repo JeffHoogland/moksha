@@ -36,16 +36,16 @@ AH_BOTTOM([
 #endif /* EFL_CONFIG_H__ */
 ])
 
-AM_INIT_AUTOMAKE([1.11 dist-bzip2])
+AM_INIT_AUTOMAKE([1.11 dist-bzip2 -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_GNU_SOURCE
-AC_PROG_MKDIR_P
 AC_C_BIGENDIAN
 AC_PROG_CC_C99
 AM_PROG_CC_C_O
 AC_C_CONST
 AC_FUNC_ALLOCA
+AC_PROG_MKDIR_P
 AC_C___ATTRIBUTE__
 
 LT_INIT([disable-static])
@@ -303,7 +303,7 @@ ALL_LINGUAS="bg ca cs da de el eo es fi fr fr_CH he hu it ja ko nb nl pl pt_BR r
 AC_SUBST(ALL_LINGUAS)
 
 m4_ifdef([AM_GNU_GETTEXT_VERSION], [
-AM_GNU_GETTEXT_VERSION([0.19])
+AM_GNU_GETTEXT_VERSION([0.18])
 ])
 
 m4_ifdef([AC_GNU_GETTEXT], [
@@ -390,10 +390,7 @@ if test "x$e_cv_want_device_udev" != "xno";then
     [
       device_backend=eeze
       AC_DEFINE_UNQUOTED([HAVE_EEZE],[1],[enable udev support])
-    ],
-    [device_backend=ehal])
-else
-  device_backend=ehal
+    ])
 fi
 
 AC_MSG_CHECKING([which device backend to use])
@@ -405,26 +402,7 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-hal_mount="ehal >= ${edbus_version}, edbus >= ${edbus_version}"
 udisks_mount="eukit >= ${edbus_version}"
-AC_ARG_ENABLE([mount-hal],
-  AS_HELP_STRING([--enable-mount-hal],[enable hal mounting support @<:@default=enabled@:>@]),
-  [e_cv_want_mount_hal=$enableval],
-  [e_cv_want_mount_hal=yes])
-
-AC_MSG_CHECKING([whether the HAL mounting support is enabled])
-AC_MSG_RESULT([${e_cv_want_mount_hal}])
-
-if test "x$e_cv_want_mount_hal" != "xno";then
-  PKG_CHECK_EXISTS([ehal >= ${edbus_version}],
-    [],[
-      hal_mount=
-      AC_MSG_NOTICE([HAL mounting disabled])
-    ])
-else
-  hal_mount=
-  AC_MSG_NOTICE([HAL mounting disabled])
-fi
 
 AC_ARG_ENABLE([mount-udisks],
   AS_HELP_STRING([--enable-mount-udisks],[enable udisks mounting support @<:@default=enabled@:>@]),
@@ -438,7 +416,7 @@ if test "x$e_cv_want_mount_udisks" != "xno";then
   PKG_CHECK_EXISTS([eukit >= ${edbus_version}],
     [],[
       udisks_mount=
-      AC_MSG_NOTICE([udisks mounting disabled])
+      AC_MSG_ERROR([e_dbus is not installed])
     ])
 else
   udisks_mount=
@@ -491,9 +469,71 @@ AC_SUBST([DBUS_MOUNT_CONFIG])
 AM_CONDITIONAL([HAVE_HAL_MOUNT], [test -n "$hal_mount"])
 AM_CONDITIONAL([HAVE_EEZE_MOUNT], [false])
 test -n "$hal_mount" && AC_DEFINE_UNQUOTED([HAVE_HAL_MOUNT], [1], [enable HAL mounting])
-test -n "$udisks_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
-AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$udisks_mount"])
+test -n "$dbus_mount" && AC_DEFINE_UNQUOTED([HAVE_UDISKS_MOUNT], [1], [enable Udisks mounting])
+AM_CONDITIONAL([HAVE_UDISKS_MOUNT], [test -n "$dbus_mount"])
 AM_CONDITIONAL([HAVE_EEZE_MOUNT], [test -n "$eeze_mount"])
+
+
+
+
+AC_MSG_RESULT([$e_cv_places_backend_e17])
+AC_MSG_CHECKING([enable places e17 backend])
+AC_ARG_ENABLE([places-e17],
+  AS_HELP_STRING([--enable-places-e17],[enable places e17 backend @<:@default=disabled@:>@]),
+    [e_cv_places_backend_e17=$enableval], [e_cv_places_backend_e17=no])
+AC_MSG_RESULT([$e_cv_places_backend_e17])
+ 
+AC_MSG_CHECKING([enable places udisks1 backend])
+AC_ARG_ENABLE([places-udisks1],
+  AS_HELP_STRING([--enable-places-udisks1],[enable places udisks1 backend with eldbus support @<:@default=disabled@:>@]),
+    [e_cv_places_backend_udisks1=$enableval], [e_cv_places_backend_udisks1=no])
+AC_MSG_RESULT([$e_cv_places_backend_udisks1]) 
+ 
+ 
+e_cv_want_mount_udisks2=yes
+if test "x$e_cv_places_backend_e17" = "xyes"; then
+  if test "x$e_cv_places_backend_udisks1" = "xyes"; then
+     AC_MSG_ERROR("Can not specify 2 udisks1 places backends", [255])
+  fi
+  if test -n "$udisks_mount"; then 
+    AC_DEFINE_UNQUOTED([PLACES_HAVE_E17],[1],[enable places e17 backend]) 
+    force_places_backend_e17="yes"
+    e_cv_want_mount_udisks2=no
+  fi
+else
+  if test "x$e_cv_places_backend_udisks1" = "xyes"; then
+    if test -n "$udisks_mount"; then
+      AC_DEFINE_UNQUOTED([PLACES_HAVE_UDISKS1],[1],[enable places udisks1 backend with eldbus support]) 
+       force_places_backend_udisks1="yes"
+       e_cv_want_mount_udisks2=no
+    fi
+  fi
+fi
+
+AC_MSG_CHECKING([enable places udisks2 backend])  
+AC_ARG_ENABLE([places-udisks2],
+  AS_HELP_STRING([--enable-places-udisks2],[enable places udisks2 backend with eldbus support @<:@default=enabled@:>@]),
+    [e_cv_places_backend_udisks2=yes], 
+    [ 
+      if test "x$e_cv_want_mount_udisks2" = "xyes" ; then
+       e_cv_places_backend_udisks2=yes
+      else
+        e_cv_places_backend_udisks2=no
+      fi ])
+AC_MSG_RESULT([$e_cv_places_backend_udisks2]) 
+
+UDISKS2_REQUIRED=2.7.2
+    
+if test "x$e_cv_places_backend_udisks2" = "xyes"; then
+  if test -n "$force_places_backend_e17"  || test -n "$force_places_backend_udisks1"; then
+    AC_MSG_ERROR("Can not specify more than one places backends", [255])
+  fi
+  e_cv_want_mount_udisks2=yes
+
+  if test "x$e_cv_want_mount_udisks2" = "xyes"; then
+    AC_DEFINE([PLACES_HAVE_UDISKS2], 1, [Define to 1 if libudisks2 is available])
+  fi
+fi
 
 # doxygen program for documentation building
 
@@ -543,9 +583,9 @@ ecore-file >= $efl_version \
 ecore-ipc >= $efl_version \
 eet >= $efl_version \
 efreet >= $efl_version \
-edbus >= ${edbus_version} \
+eldbus >= $efl_version \
 eina >= $efl_version"
-efm_requires="$efm_requires $eeze_mount $dbus_mount $hal_mount $udisks_mount"
+efm_requires="$efm_requires $eeze_mount $dbus_mount $udisks_mount"
 
 AC_MSG_WARN([EFM requirements : $efm_requires])
 
@@ -555,7 +595,6 @@ PKG_CHECK_MODULES(E_FM_CMDLINE, [
   eina >= ${efl_version}
   ecore >= ${efl_version}
   ecore-file >= ${efl_version}
-  edbus >= ${edbus_version}
   dbus-1
 ])
 
@@ -613,7 +652,7 @@ PKG_CHECK_MODULES(E, [
   efreet-trash >= ${efl_version}
   eina >= ${efl_version}
   dbus-1
-  edbus >= ${edbus_version}
+  eldbus >= ${efl_version}
   eio >= ${efl_version}
   $hal_mount
   $eeze_mount
@@ -692,8 +731,8 @@ PKG_CHECK_MODULES(E_OPEN, [
 
 AC_E_CHECK_PKG(ECORE_IMF, [ ecore-imf >= ${efl_version} ecore-imf-evas >= ${efl_version} ], [], [:])
 
-e_libs="$E_LIBS $LIBINTL $fnmatch_libs $ECORE_IMF_LIBS $execinfo_libs"
-e_cflags="-DUSE_E_CONFIG_H $E_CFLAGS $ECORE_IMF_CFLAGS"
+e_libs=$E_LIBS" "$LIBINTL" "$fnmatch_libs" "$ECORE_IMF_LIBS" "$execinfo_libs
+e_cflags="-DUSE_E_CONFIG_H "$E_CFLAGS" "$ECORE_IMF_CFLAGS
 e_configflags="-DUSE_E_CONFIG_H"
 
 AC_SUBST(e_libs)
@@ -754,6 +793,40 @@ case "$host_os" in
   ;;
 esac
 
+UDISKS_REQUIRED=1.0.5
+UDISKS2_REQUIRED=2.7.2
+AM_CONDITIONAL(HAVE_PLACES, false)
+define([CHECK_MODULE_PLACES],
+[
+  if test "x$e_cv_places_backend_e17"; then
+       AC_E_CHECK_PKG(PLACES, [ edbus >= 1.7.10 ehal >= 1.7.10 udisks >= $UDISKS_REQUIRED ], [],
+       [
+         PLACES=false
+         AC_MSG_NOTICE([Install libedbus-dev or udisks])])
+      fi
+  
+  if test "x$e_cv_want_mount_udisks2" = "xyes"; then
+    AC_E_CHECK_PKG(PLACES, [ eldbus >= $efl_version udisks2 >= $UDISKS2_REQUIRED ], [],
+    [
+    PLACES=false
+    AC_MSG_NOTICE([Install libudisks2-dev or eldbus-dev or change places options])])
+  else
+    if test "x$e_cv_places_backend_udisks1" = "xyes"; then
+      AC_E_CHECK_PKG(PLACES, [ eldbus >= $efl_version udisks >= $UDISKS_REQUIRED ], [],
+      [
+      PLACES=false
+      AC_MSG_NOTICE([Install libudisks-dev or eldbus-dev or change places options])])
+    else
+      if test "x$e_cv_places_backend_e17"; then
+       AC_E_CHECK_PKG(PLACES, [ edbus >= 1.7.10 ehal >= 1.7.10 udisks >= $UDISKS_REQUIRED ], [],
+       [
+         PLACES=false
+         AC_MSG_NOTICE([Install libedbus-dev or udisks])])
+      fi
+    fi
+  fi
+])
+
 AC_SUBST(BATTERY_LDFLAGS)
 AM_CONDITIONAL([HAVE_OPENBSD], [test "x${have_openbsd}" = "xyes"])
 
@@ -789,7 +862,7 @@ AC_ARG_ENABLE([enotify],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )
 if test "x$e_cv_want_enotify" != "xno" ; then
-  AC_E_CHECK_PKG(ENOTIFY, [ edbus >= ${edbus_version} enotify >= ${edbus_version}], 
+  AC_E_CHECK_PKG(ENOTIFY, [ eldbus >= $efl_version ],
   [
     AC_DEFINE_UNQUOTED([HAVE_ENOTIFY], [1], [enable enotify])
   ], 
@@ -813,7 +886,6 @@ define([CHECK_MODULE_NOTIFICATION],
 ])
 
 AM_CONDITIONAL(HAVE_ALSA, false)
-AM_CONDITIONAL(HAVE_MIXER, false)
 define([CHECK_MODULE_MIXER],
 [
   AC_E_CHECK_PKG(MIXER, [ libpulse-simple libpulse ], [], [MIXER=false])
@@ -919,9 +991,34 @@ AC_E_OPTIONAL_MODULE([xkbswitch], true)
 AC_E_OPTIONAL_MODULE([tiling], true)
 AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
-AC_E_OPTIONAL_MODULE([places], true)
+AC_E_OPTIONAL_MODULE([places], true,[CHECK_MODULE_PLACES])
 AC_E_OPTIONAL_MODULE([classicmenu], true)
 
+SUSPEND=""
+HIBERNATE=""
+case "$host_os" in
+   freebsd*|pcbsd*)
+      SUSPEND="acpiconf -s3"
+      AC_MSG_NOTICE([use suspend method: $SUSPEND])
+      AC_SUBST(SUSPEND)
+      HIBERNATE="acpiconf -s4"
+      AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      AC_SUBST(HIBERNATE)
+      ;;
+   *)
+      AC_PATH_PROGS([SUSPEND], [sleep.sh pm-suspend],[/etc/acpi/sleep.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+      if test "$SUSPEND" = "/etc/acpi/sleep.sh" ; then
+         SUSPEND="/etc/acpi/sleep.sh force"
+         AC_MSG_NOTICE([use suspend method: $SUSPEND])
+      fi
+
+      AC_PATH_PROGS([HIBERNATE], [hibernate.sh pm-hibernate],[/etc/acpi/hibernate.sh], [/etc/acpi:/sbin:/usr/sbin:$PATH])
+      if test "$HIBERNATE" = "/etc/acpi/hibernate.sh" ; then
+         HIBERNATE="/etc/acpi/hibernate.sh force"
+         AC_MSG_NOTICE([use hibernate method: $HIBERNATE])
+      fi
+      ;;
+esac
 HALT="/sbin/shutdown -h now"
 REBOOT="/sbin/shutdown -r now"
 SUSPEND=""
@@ -959,6 +1056,7 @@ AC_SUBST(HALT)
 AC_SUBST(REBOOT)
 AC_SUBST(SUSPEND)
 AC_SUBST(HIBERNATE)
+
 m4_ifdef([v_mic],
    [
     EFL_COMPILER_FLAG([-Wshadow])
@@ -1055,8 +1153,9 @@ txt_strip() {
 }
 
 echo
+echo "Summary:"
+echo "   Enlightenment build profile set to $profile"
 cat << SUMMARY_EOF
-Summary:
  * project.........: $PACKAGE $VERSION
  * prefix..........: $(txt_strip $prefix)
  * CFLAGS..........: $(txt_strip $CFLAGS)
@@ -1066,10 +1165,11 @@ SUMMARY_EOF
 echo
 cat << DEVICE_EOF
 Preferred Backends:
- * device..............: $device_backend
- * hal_mount...........: $e_cv_want_mount_hal
- * udisks_mount........: $e_cv_want_mount_udisks
- * eeze_mount..........: $e_cv_want_mount_eeze
+ * device...............: $device_backend
+ * hal_mount............: $e_cv_want_mount_hal
+ * udisks1_mount........: $e_cv_want_mount_udisks
+ * udisks2_mount........: $e_cv_want_mount_udisks
+ * eeze_mount...........: $e_cv_want_mount_eeze
 DEVICE_EOF
 echo
 
@@ -1089,7 +1189,21 @@ Modules:
  * disabled........: $(txt_strip $UNUSED_MODS)
 MODULES_EOF
 echo
-
+echo "Places Backends":
+if [[ "$UNUSED_MODS"=*"places"* ]]; then
+ echo "  Module disabled"
+ echo
+fi
+if test "x$e_cv_places_backend_e17" = "xyes"; then
+   echo "* E17 backend with edbus and udisks1 (DEPRECIATED)"
+fi   
+if test "x$e_cv_places_backend_udisks1" = "xyes"; then
+   echo "* udisks1 backend with eldbus (DEPRECIATED)"
+fi
+if test "x$e_cv_want_mount_udisks2" = "xyes"; then
+   echo "* udisks2 backend with eldbus"
+fi
+echo
 cat << DOCS_EOF
 Documentation:
  * enabled.........: ${build_doc}
@@ -1107,4 +1221,3 @@ echo
 cat << INSTALL_EOF
 Installation.......: make all install (as root if needed, with 'su' or 'sudo')
 INSTALL_EOF
-echo

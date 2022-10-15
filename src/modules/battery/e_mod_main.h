@@ -4,7 +4,7 @@
 #ifdef HAVE_EEZE
 # include <Eeze.h>
 #else
-# include <E_Hal.h>
+# include <Eldbus.h>
 #endif
 
 typedef struct _Config       Config;
@@ -30,7 +30,7 @@ struct _Config
    /* saved * loaded config values */
    int              poll_interval;
    int              alert;	/* Alert on minutes remaining */
-   int	            alert_p;    /* Alert on percentage remaining */
+   int              alert_p;    /* Alert on percentage remaining */
    int              alert_timeout;  /* Popup dismissal timeout */
    int              suspend_below;  /* Suspend if battery drops below this level */
    int              suspend_method; /* Method used to suspend the machine */
@@ -58,15 +58,6 @@ struct _Config
 #if defined HAVE_EEZE || defined __OpenBSD__
    Eina_Bool            fuzzy;
    int                  fuzzcount;
-#else
-   struct {
-      // FIXME: on bat_conf del dbus_pending_call_cancel(dbus.have);
-      //        then set dbus.have to NULL
-      DBusPendingCall       *have;
-      // FIXME: on bat_conf del e_dbus_signal_handler_del() these
-      E_DBus_Signal_Handler *dev_add;
-      E_DBus_Signal_Handler *dev_del;
-   } dbus;
 #endif
 };
 
@@ -78,9 +69,6 @@ struct _Battery
    const char *udi;
 #if defined HAVE_EEZE || defined __OpenBSD__
    Ecore_Poller *poll;
-#else
-   E_DBus_Signal_Handler *prop_change;
-   Eina_Bool can_charge:1;
 #endif
    Eina_Bool present:1;
    Eina_Bool charging:1;
@@ -108,6 +96,7 @@ struct _Battery
    const char *model;
    const char *vendor;
    Eina_Bool got_prop:1;
+   Eldbus_Proxy *proxy;
 #ifdef __OpenBSD__
    int * mib;
 #endif
@@ -135,10 +124,10 @@ int  _battery_udev_start(void);
 void _battery_udev_stop(void);
 /* end e_mod_udev.c */
 #elif !defined __OpenBSD__
-/* in e_mod_dbus.c */
-int  _battery_dbus_start(void);
-void _battery_dbus_stop(void);
-/* end e_mod_dbus.c */
+/* in e_mod_upower.c */
+int _battery_upower_start(void);
+void _battery_upower_stop(void);
+/* end e_mod_upower.c */
 #else
 /* in e_mod_openbsd.c */
 int _battery_openbsd_start(void);

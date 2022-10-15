@@ -7,6 +7,19 @@
 #define MOD_CONFIG_FILE_VERSION \
    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
+/* Check for dbus messages error */
+#define PLACES_ON_MSG_ERROR_RETURN(msg)                                     \
+   do                                                                       \
+   {                                                                        \
+      const char *err;                                                      \
+      if (eldbus_message_error_get(msg, NULL, &err))                        \
+      {                                                                     \
+         EINA_SAFETY_ERROR(err);                                            \
+         return;                                                            \
+      }                                                                     \
+   }                                                                        \
+   while (0)
+
 typedef struct _Config Config;
 struct _Config 
 {

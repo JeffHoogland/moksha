@@ -1,4 +1,14 @@
-#include "e.h"
+//#include "e.h"
+#ifdef HAVE_CONFIG_H
+# include "config.h"
+#endif
+
+#include <Ecore.h>
+#include <Ecore_Con.h>
+#include <Ecore_File.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #ifdef __FreeBSD__
 # include <sys/ioctl.h>

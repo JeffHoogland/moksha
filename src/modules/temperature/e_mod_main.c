@@ -1,8 +1,5 @@
 #include "e.h"
 #include "e_mod_main.h"
-#ifdef HAVE_ENOTIFY
-#include "E_Notify.h"
-#endif
 
 #if defined(__FreeBSD__) || defined(__DragonFly__)
 #include <sys/types.h>
@@ -69,26 +66,18 @@ _temperature_thread_free(Tempthread *tth)
 static void
 _temperature_alert_notification(Config_Face *inst)
 {
-#ifdef HAVE_ENOTIFY
-   static E_Notification *notification;
    if (inst->show_alert)
      {
-        if (notification) return;
-        notification = e_notification_full_new
-          (
-            _("Temperature"),
-            0,
-            "dialog-warning",
-            _("High CPU temperature!"),
-            _("Check your device or settings!"), 
-            5000
-            );
-        e_notification_send(notification, NULL, NULL);
-        e_notification_unref(notification);
-        notification = NULL;
-        return;
+        E_Notification_Notify n;
+        memset(&n, 0, sizeof(E_Notification_Notify));
+        n.app_name = _("Temperature");
+        n.replaces_id = 0;
+        n.icon.icon = "dialog-warning";
+        n.summary = _("High CPU temperature!!");
+        n.body = _("Check your device or settings!");
+        n.timeout = 5000;
+        e_notification_client_send(&n,  NULL, inst);
      }
-#endif
 }
 
 static void

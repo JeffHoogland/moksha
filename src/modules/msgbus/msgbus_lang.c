@@ -10,46 +10,50 @@ static int _log_dom = -1;
 #define INF(...) EINA_LOG_DOM_INFO(_log_dom, __VA_ARGS__)
 #define ERR(...) EINA_LOG_DOM_ERR(_log_dom, __VA_ARGS__)
 
-static DBusMessage *
-cb_langs(E_DBus_Object *obj __UNUSED__, DBusMessage *message)
+static Eldbus_Message *
+cb_langs(const Eldbus_Service_Interface *iface EINA_UNUSED,
+         const Eldbus_Message *msg)
 {
-   DBusMessage *reply;
-   DBusMessageIter iter;
-   DBusMessageIter arr;
+   Eldbus_Message *reply = eldbus_message_method_return_new(msg);
+   Eldbus_Message_Iter *main_iter, *array;
    const Eina_List *l;
    const char *str;
 
-   reply = dbus_message_new_method_return(message);
-   dbus_message_iter_init_append(reply, &iter);
-   dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
+   if (!reply) return NULL;
+
+   main_iter = eldbus_message_iter_get(reply);
+   eldbus_message_iter_arguments_append(main_iter, "as", &array);
+   if (!array) return reply;
 
    EINA_LIST_FOREACH(e_intl_language_list(), l, str)
      {
-	DBG("language: %s", str);
-	dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &str);
+        DBG("language: %s", str);
+        eldbus_message_iter_basic_append(array, 's', str);
      }
-
-   dbus_message_iter_close_container(&iter, &arr);
-
+   eldbus_message_iter_container_close(main_iter, array);
    return reply;
 }
 
+static const Eldbus_Method methods[] = {
+   { "List", NULL, ELDBUS_ARGS({"as", "langs"}), cb_langs, 0 },
+   { NULL, NULL, NULL, NULL, 0 }
+};
+
+static const Eldbus_Service_Interface_Desc lang = {
+   "org.enlightenment.wm.Language", methods, NULL, NULL, NULL, NULL
+};
+
 void msgbus_lang_init(Eina_Array *ifaces)
 {
-   E_DBus_Interface* iface;
+   Eldbus_Service_Interface *iface;
 
    if (_log_dom == -1)
      {
-	_log_dom = eina_log_domain_register("msgbus_lang", EINA_COLOR_BLUE);
-	if (_log_dom < 0)
-	  EINA_LOG_ERR("could not register msgbus_lang log domain!");
+        _log_dom = eina_log_domain_register("msgbus_lang", EINA_COLOR_BLUE);
+        if (_log_dom < 0)
+          EINA_LOG_ERR("could not register msgbus_lang log domain!");
      }
 
-   iface = e_dbus_interface_new("org.enlightenment.wm.Language");
-   if (iface)
-     {
-	e_dbus_interface_method_add(iface, "List", "", "as", cb_langs);
-	e_msgbus_interface_attach(iface);
-	eina_array_push(ifaces, iface);
-     }
+   iface = e_msgbus_interface_attach(&lang);
+   if (iface) eina_array_push(ifaces, iface);
 }

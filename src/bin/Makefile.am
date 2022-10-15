@@ -97,7 +97,6 @@ e.h \
 e_hints.h \
 e_icon.h \
 e_ilist.h \
-e_inc_terms.h\
 e_import_config_dialog.h \
 e_import_dialog.h \
 e_includes.h \
@@ -128,6 +127,7 @@ e_mouse.h \
 e_moveresize.h \
 e_msgbus.h \
 e_msg.h \
+e_notification.h \
 e_obj_dialog.h \
 e_object.h \
 e_order.h \
@@ -281,6 +281,7 @@ e_mouse.c \
 e_moveresize.c \
 e_msgbus.c \
 e_msg.c \
+e_notification.c \
 e_obj_dialog.c \
 e_object.c \
 e_order.c \

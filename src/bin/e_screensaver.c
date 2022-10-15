@@ -62,6 +62,10 @@ e_screensaver_update(void)
    interval = e_config->screensaver_interval;
    blanking = e_config->screensaver_blanking;
    expose = e_config->screensaver_expose;
+   if (e_msgbus_data)
+     {
+        if (e_msgbus_data->screensaver_inhibits) timeout = 0;
+     }
 
    if (_e_screensaver_timeout != timeout)
      {
@@ -509,4 +513,21 @@ e_screensaver_shutdown(void)
      }
 
    return 1;
+}
+EAPI Eina_Bool
+e_screensaver_on_get(void)
+{
+   return _e_screensaver_on;
+}
+
+EAPI void
+e_screensaver_activate(void)
+{
+   ecore_x_screensaver_activate();
+}
+
+EAPI void
+e_screensaver_deactivate(void)
+{
+   ecore_x_screensaver_reset();
 }

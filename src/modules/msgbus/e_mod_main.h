@@ -15,7 +15,7 @@ void msgbus_config_init(Eina_Array *ifaces);
  *
  * @defgroup Module_Msgbus MsgBus (DBus Remote Control)
  *
- * Allows Moksha to be controlled by DBus IPC (Inter Process
+ * Allows Enlightenment to be controlled by DBus IPC (Inter Process
  * Communication) protocol.
  *
  * @see http://www.freedesktop.org/wiki/Software/dbus

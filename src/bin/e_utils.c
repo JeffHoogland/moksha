@@ -1361,7 +1361,13 @@ e_util_terminal_desktop_get(void)
 {
    const char *terms[] =
      {
-#include "e_inc_terms.h"
+        "terminology.desktop",
+        "lxterminal.desktop",
+        "qterminal.desktop",
+        "xterm.desktop",
+        "rxvt.desktop",
+        "gnome-terminal.desktop",
+        "konsole.desktop",
         NULL
      };
    const char *s;

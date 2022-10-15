@@ -2,7 +2,7 @@
 # include "config.h"
 #endif
 
-#ifdef HAVE_UDISKS_MOUNT
+#ifdef PLACES_HAVE_UDISKS1
 
 #include <e.h>
 #include "e_mod_places.h"

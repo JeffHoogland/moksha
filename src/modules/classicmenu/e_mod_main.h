@@ -20,6 +20,7 @@ struct _Main_Data
    E_Menu *enlightenment;
    E_Menu *config;
    E_Menu *lost_clients;
+   E_Menu *inhibitors;
 };
 
 /********************************************************************/

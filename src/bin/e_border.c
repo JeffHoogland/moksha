@@ -71,9 +71,11 @@ static Eina_Bool _e_border_cb_window_focus_in(void *data,
 static Eina_Bool _e_border_cb_window_focus_out(void *data,
                                                int ev_type,
                                                void *ev);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static Eina_Bool _e_border_cb_client_message(void *data,
                                              int ev_type,
                                              void *ev);
+#endif
 static Eina_Bool _e_border_cb_window_state_request(void *data,
                                                    int ev_type,
                                                    void *ev);
@@ -126,9 +128,11 @@ static Eina_Bool _e_border_cb_grab_replay(void *data,
                                           void *event);
 static void      _e_border_cb_drag_finished(E_Drag *drag,
                                             int dropped);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static Eina_Bool _e_border_cb_desk_window_profile_change(void *data,
                                                          int   ev_type,
                                                          void *ev);
+#endif
 static void      _e_border_eval(E_Border *bd);
 static void      _e_border_eval0(E_Border *bd);
 static void      _e_border_container_layout_hook(E_Container *con);
@@ -319,8 +323,10 @@ e_border_init(void)
                          _e_border_cb_window_focus_in, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_FOCUS_OUT,
                          _e_border_cb_window_focus_out, NULL);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_CLIENT_MESSAGE,
                          _e_border_cb_client_message, NULL);
+#endif
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_STATE_REQUEST,
                          _e_border_cb_window_state_request, NULL);
    E_LIST_HANDLER_APPEND(handlers, ECORE_X_EVENT_WINDOW_MOVE_RESIZE_REQUEST,
@@ -342,8 +348,10 @@ e_border_init(void)
                          _e_border_cb_config_icon_theme, NULL);
    E_LIST_HANDLER_APPEND(handlers, E_EVENT_CONFIG_MODE_CHANGED,
                          _e_border_cb_config_mode, NULL);
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    E_LIST_HANDLER_APPEND(handlers, E_EVENT_DESK_WINDOW_PROFILE_CHANGE,
                          _e_border_cb_desk_window_profile_change, NULL);
+#endif
    if (!borders_hash) borders_hash = eina_hash_string_superfast_new(NULL);
 
    E_EVENT_BORDER_ADD = ecore_event_type_new();
@@ -668,9 +676,11 @@ e_border_new(E_Container *con,
                   video_parent = EINA_TRUE;
                 else if (atoms[i] == ECORE_X_ATOM_E_VIDEO_POSITION)
                   video_position = EINA_TRUE;
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
                 /* loop to check for window profile list atom */
                 else if (atoms[i] == ECORE_X_ATOM_E_WINDOW_PROFILE_SUPPORTED)
                   bd->client.e.fetch.profile = 1;
+#endif
              }
            if (video_position && video_parent)
              {
@@ -943,7 +953,7 @@ e_border_desk_set(E_Border *bd,
    E_OBJECT_CHECK(desk);
    E_OBJECT_TYPE_CHECK(desk, E_DESK_TYPE);
    if (bd->desk == desk) return;
-
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    if ((e_config->use_desktop_window_profile) &&
        (bd->client.e.state.profile.use))
      {
@@ -956,7 +966,7 @@ e_border_desk_set(E_Border *bd,
              return;
           }
      }
-
+#endif
    ecore_x_window_shadow_tree_flush();
    if (bd->fullscreen)
      {
@@ -4881,6 +4891,7 @@ e_border_resize_limit(E_Border *bd,
 static void
 _e_border_free(E_Border *bd)
 {
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    if (bd->client.e.state.profile.use)
      {
         if (bd->client.e.state.profile.available_list)
@@ -4909,6 +4920,7 @@ _e_border_free(E_Border *bd)
         bd->client.e.state.profile.wait_for_done = 0;
         bd->client.e.state.profile.use = 0;
      }
+#endif
    if (bd->client.e.state.video_parent && bd->client.e.state.video_parent_border)
      {
         bd->client.e.state.video_parent_border->client.e.state.video_child =
@@ -5949,6 +5961,7 @@ _e_border_cb_window_property(void *data  __UNUSED__,
         bd->client.netwm.fetch.state = 1;
         bd->changed = 1;
      }
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    else if (e->atom == ECORE_X_ATOM_E_WINDOW_PROFILE_SUPPORTED)
      {
         bd->client.e.fetch.profile = 1;
@@ -5959,6 +5972,7 @@ _e_border_cb_window_property(void *data  __UNUSED__,
         bd->client.e.fetch.profile = 1;
         bd->changed = 1;
      }
+#endif
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -6187,6 +6201,7 @@ _e_border_cb_window_focus_out(void *data  __UNUSED__,
    return ECORE_CALLBACK_PASS_ON;
 }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static Eina_Bool
 _e_border_cb_client_message(void *data  __UNUSED__,
                             int ev_type __UNUSED__,
@@ -6238,7 +6253,7 @@ _e_border_cb_client_message(void *data  __UNUSED__,
 
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#endif
 static Eina_Bool
 _e_border_cb_window_state_request(void *data  __UNUSED__,
                                   int ev_type __UNUSED__,
@@ -7222,6 +7237,7 @@ _e_border_cb_drag_finished(E_Drag *drag,
    drag_border = NULL;
 }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
 static Eina_Bool
 _e_border_cb_desk_window_profile_change(void *data  __UNUSED__,
                                         int ev_type __UNUSED__,
@@ -7241,7 +7257,7 @@ _e_border_cb_desk_window_profile_change(void *data  __UNUSED__,
      }
    return ECORE_CALLBACK_PASS_ON;
 }
-
+#endif
 static Eina_Bool
 _e_border_post_move_resize_job(void *data)
 {
@@ -7336,8 +7352,9 @@ _e_border_eval0(E_Border *bd)
 {
    int change_urgent = 0;
    int rem_change = 0;
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    Eina_Bool need_desk_set = EINA_FALSE;
-
+#endif
    
    if (e_object_is_del(E_OBJECT(bd)))
      {
@@ -7447,10 +7464,13 @@ _e_border_eval0(E_Border *bd)
 
         if (!((bd->client.icccm.name == pname) &&
               (bd->client.icccm.class == pclass)))
-          bd->changes.icon = 1;
+                    {
+             bd->changes.icon = 1;
+             rem_change = 1;
+          }
 
-        if (pname) eina_stringshare_del(pname);
-        if (pclass) eina_stringshare_del(pclass);
+        eina_stringshare_del(pname);
+        eina_stringshare_del(pclass);
         bd->client.icccm.fetch.name_class = 0;
         bd->changes.icon = 1;
         rem_change = 1;
@@ -7467,6 +7487,7 @@ _e_border_eval0(E_Border *bd)
         bd->client.e.fetch.state = 0;
         rem_change = 1;
      }
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    if (bd->client.e.fetch.profile)
      {
         const char **list = NULL;
@@ -7528,7 +7549,7 @@ _e_border_eval0(E_Border *bd)
 
         bd->client.e.fetch.profile = 0;
      }
-
+#endif
    if (bd->changes.prop || bd->client.netwm.fetch.type)
      {
         e_hints_window_type_get(bd);
@@ -8171,6 +8192,7 @@ _e_border_eval0(E_Border *bd)
         bd->client.netwm.update.state = 0;
      }
 
+#if (ECORE_VERSION_MAJOR > 1) || (ECORE_VERSION_MINOR >= 8)
    if ((e_config->use_desktop_window_profile) && (need_desk_set))
      {
         if (!(bd->client.e.state.profile.name) &&
@@ -8219,7 +8241,7 @@ _e_border_eval0(E_Border *bd)
                                                      bd->client.e.state.profile.name);
         bd->client.e.state.profile.wait_for_done = 1;
      }
-
+#endif
    if (bd->new_client)
      {
         E_Event_Border_Add *ev;
@@ -9249,12 +9271,12 @@ _e_border_eval(E_Border *bd)
 
    if (bd->changes.icon)
      {
-        if (bd->desktop && (!bd->new_client)) 
+        if (bd->desktop) 
           {
              efreet_desktop_free(bd->desktop);
              bd->desktop = NULL;
           }
-        if (bd->icon_object)
+        if (bd->icon_object && (!bd->new_client))
           {
              evas_object_del(bd->icon_object);
              bd->icon_object = NULL;

@@ -476,7 +476,7 @@ main(int argc, char **argv)
                   env_set("MTRACK_TRACE_FILE", buf);
                }
              fclose(f);
-             
+
           }
 #endif
         tmps = getenv("XDG_DATA_HOME");
@@ -607,7 +607,7 @@ main(int argc, char **argv)
 #endif
                             /* And call gdb if available */
                             r = 0;
-             /* Check if patch to prevent ptrace to another process is present in the kernel. */
+                /* Check if patch to prevent ptrace to another process is present in the kernel. */
                 {
                    int fd;
                    char c;
@@ -615,8 +615,8 @@ main(int argc, char **argv)
                    fd = open("/proc/sys/kernel/yama/ptrace_scope", O_RDONLY);
                    if (fd != -1)
                  {
-                   if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
-                     bad_kernel = EINA_TRUE;
+                    if (read(fd, &c, sizeof (c)) == sizeof (c) && c != '0')
+                      bad_kernel = EINA_TRUE;
                    close(fd);
                  }
                 }

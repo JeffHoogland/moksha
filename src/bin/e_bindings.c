@@ -175,9 +175,9 @@ e_bindings_edge_reset(void)
 {
    E_Config_Binding_Edge *ebe;
    Eina_List *l;
-   
+
    E_FREE_LIST(edge_bindings, _e_bindings_edge_free);
-   
+
    EINA_LIST_FOREACH(e_config->edge_bindings, l, ebe)
      e_bindings_edge_add(ebe->context, ebe->edge, ebe->modifiers,
                          ebe->any_mod, ebe->action, ebe->params, ebe->delay);
@@ -194,6 +194,7 @@ e_bindings_mouse_reset(void)
    EINA_LIST_FOREACH(e_config->mouse_bindings, l, ebm)
      e_bindings_mouse_add(ebm->context, ebm->button, ebm->modifiers,
                           ebm->any_mod, ebm->action, ebm->params);
+
 }
 
 EAPI void
@@ -429,6 +430,7 @@ e_bindings_key_find(const char *key, E_Binding_Modifier mod, int any_mod)
             (binding->mod == mod) && (binding->any_mod == any_mod))
           return binding;
      }
+
    return NULL;
 }
 

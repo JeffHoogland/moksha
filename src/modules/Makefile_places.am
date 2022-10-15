@@ -15,8 +15,12 @@ places_module_la_SOURCES = places/e_mod_main.h \
 			  places/e_mod_places.c \
 			  places/e_mod_udisks.h \
 			  places/e_mod_udisks.c \
-			  places/e_mod_eeze.h \
-			  places/e_mod_eeze.c
+			  places/backend_udisks2.h \
+			  places/backend_udisks2.c \
+			  places/backend_udisks1.h \
+			  places/backend_udisks1.c \
+			  places/backend_eeze.h \
+			  places/backend_eeze.c
 
 if HAVE_ENOTIFY
 places_module_la_CFLAGS += @ENOTIFY_CFLAGS@

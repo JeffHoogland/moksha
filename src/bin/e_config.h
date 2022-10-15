@@ -1,5 +1,5 @@
 #ifdef E_TYPEDEFS
- 
+
 #define E_CONFIG_LIMIT(v, min, max) {if (v >= max) v = max; else if (v <= min) v = min; }
 
 typedef struct _E_Config                    E_Config;
@@ -131,7 +131,7 @@ struct _E_Config
    double      winlist_pos_align_y; // GUI
    double      winlist_pos_size_w; // GUI
    double      winlist_pos_size_h; // GUI
-   int         winlist_pos_min_w; // GUI 
+   int         winlist_pos_min_w; // GUI
    int         winlist_pos_min_h; // GUI
    int         winlist_pos_max_w; // GUI
    int         winlist_pos_max_h; // GUI
@@ -275,7 +275,7 @@ struct _E_Config
 
    Eina_List                *mime_icons; // GUI
    int                       desk_auto_switch; // GUI;
-   
+
    int                       screen_limits;
 
    int                       thumb_nice;
@@ -362,7 +362,7 @@ struct _E_Config
       double        dim; // GUI
       double        transition; // GUI
       double        timer; // GUI
-      const char   *sysdev; // GUI  
+      const char   *sysdev; // GUI
       unsigned char idle_dim; // GUI
       E_Backlight_Mode mode; /* not saved, display-only */
    } backlight;
@@ -426,7 +426,7 @@ struct _E_Config
       const char *selected_layout; // whatever teh current layout that the user has selected is
       const char *desklock_layout;
    } xkb;
-   
+
    unsigned char exe_always_single_instance;
    int           use_desktop_window_profile; // GUI
 };

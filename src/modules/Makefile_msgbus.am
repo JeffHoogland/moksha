@@ -9,7 +9,6 @@ msgbuspkg_LTLIBRARIES = msgbus/module.la
 
 msgbus_module_la_SOURCES = msgbus/e_mod_main.h \
 			   msgbus/e_mod_main.c \
-			   msgbus/msgbus_audit.c \
 			   msgbus/msgbus_desktop.c \
 			   msgbus/msgbus_lang.c \
 			   msgbus/msgbus_config.c

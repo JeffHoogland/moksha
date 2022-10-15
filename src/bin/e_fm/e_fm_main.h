@@ -13,6 +13,31 @@
 #define ERR(...)            EINA_LOG_DOM_ERR(efm_log_dom, __VA_ARGS__)
 #define CRI(...)            EINA_LOG_DOM_CRIT(efm_log_dom, __VA_ARGS__)
 
+# ifdef E_API
+#  undef E_API
+# endif
+# ifdef WIN32
+#  ifdef BUILDING_DLL
+#   define E_API __declspec(dllexport)
+#  else
+#   define E_API __declspec(dllimport)
+#  endif
+# else
+#  ifdef __GNUC__
+#   if __GNUC__ >= 4
+/* BROKEN in gcc 4 on amd64 */
+#    if 0
+#     pragma GCC visibility push(hidden)
+#    endif
+#    define E_API __attribute__ ((visibility("default")))
+#   else
+#    define E_API
+#   endif
+#  else
+#   define E_API
+#  endif
+# endif
+
 extern Ecore_Ipc_Server *_e_fm_ipc_server;
 extern int efm_log_dom;
 

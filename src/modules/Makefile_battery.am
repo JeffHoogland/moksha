@@ -18,7 +18,7 @@ else
 if HAVE_OPENBSD
 battery_module_la_SOURCES += battery/e_mod_openbsd.c
 else
-battery_module_la_SOURCES += battery/e_mod_dbus.c
+battery_module_la_SOURCES += battery/e_mod_upower.c
 endif
 endif
 

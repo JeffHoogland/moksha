@@ -12,6 +12,7 @@ struct _Main_Data
    E_Menu *enlightenment;
    E_Menu *config;
    E_Menu *lost_clients;
+   E_Menu *inhibitors;
 };
 
 /* local subsystem functions */
@@ -62,6 +63,7 @@ static void         _e_int_menus_desk_item_cb(void *data, E_Menu *m, E_Menu_Item
 static void         _e_int_menus_item_label_set(Efreet_Menu *entry, E_Menu_Item *mi);
 static Efreet_Menu *_e_int_menus_apps_thread_new(E_Menu *m, const char *dir);
 static Eina_Bool    _e_int_menus_efreet_desktop_cache_update(void *d, int type, void *e);
+static void         _e_int_menus_inhibit_cb(void *data, E_Menu *m, E_Menu_Item *mi);
 //static void _e_int_menus_apps_drag_finished(E_Drag *drag, int dropped __UNUSED__);
 #ifdef ENABLE_BODHI
 static void         _e_int_menus_bodhi_about(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
@@ -435,6 +437,48 @@ e_int_menus_lost_clients_new(void)
    return m;
 }
 
+static void
+_e_int_menus_inhibit_cb(void *data, E_Menu *m EINA_UNUSED, E_Menu_Item *mi EINA_UNUSED)
+{
+   uintptr_t cookie = (uintptr_t)data;
+
+   e_msgbus_screensaver_inhibit_remove((unsigned int)cookie);
+}
+
+EAPI E_Menu *
+e_int_menus_inhibitors_new(void)
+{
+   E_Menu *m;
+   E_Menu_Item *mi;
+   Eina_List *l;
+   E_Msgbus_Data_Screensaver_Inhibit *inhibit;
+   char buf[1024];
+
+   m = e_menu_new();
+
+   if (!((e_msgbus_data) && (e_msgbus_data->screensaver_inhibits)))
+     return NULL;
+   EINA_LIST_FOREACH(e_msgbus_data->screensaver_inhibits, l, inhibit)
+     {
+        mi = e_menu_item_new(m);
+        if ((inhibit->application) && (inhibit->reason))
+          snprintf(buf, sizeof(buf), "%s (%s)", inhibit->application, inhibit->reason);
+        else if (inhibit->application)
+          snprintf(buf, sizeof(buf), "%s", inhibit->application);
+        else if (inhibit->reason)
+          snprintf(buf, sizeof(buf), "(%s)", inhibit->reason);
+        else
+          snprintf(buf, sizeof(buf), "???");
+        e_menu_item_label_set(mi, buf);
+        e_menu_item_check_set(mi, 1);
+        e_menu_item_toggle_set(mi, 1);
+        e_menu_item_callback_set(mi, _e_int_menus_inhibit_cb,
+                                 (void *)((uintptr_t)inhibit->cookie));
+     }
+   return m;
+}
+
+
 EAPI E_Int_Menu_Augmentation *
 e_int_menus_menu_augmentation_add_sorted(const char *menu,
                                          const char *sort_key,
@@ -603,6 +647,7 @@ _e_int_menus_main_del_hook(void *obj)
    if (dat->lost_clients) e_object_del(E_OBJECT(dat->lost_clients));
    if (dat->enlightenment) e_object_del(E_OBJECT(dat->enlightenment));
    if (dat->config) e_object_del(E_OBJECT(dat->config));
+   if (dat->inhibitors) e_object_del(E_OBJECT(dat->inhibitors));
    free(dat);
 
    _e_int_menus_augmentation_del(m, _e_int_menus_augmentation_find("main/0"));

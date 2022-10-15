@@ -2,7 +2,8 @@
 # include "config.h"
 #endif
 #include <e.h>
-#include <E_DBus.h>
+// fix me this prob breaks compile e17 backend
+//#include <E_DBus.h>
 #include "e_mod_main.h"
 #include "e_mod_places.h"
 
@@ -219,7 +220,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
       if (!e_theme_edje_object_set(inst->o_icon, "base/theme/modules/places",
                                                  "modules/places/main"))
         edje_object_file_set(inst->o_icon, buf, "icon");
-
       inst->gcc = e_gadcon_client_new(gc, name, id, style, inst->o_icon);
       evas_object_event_callback_add(inst->o_icon, EVAS_CALLBACK_MOUSE_DOWN,
                                      _places_icon_cb_mouse_down, inst);

@@ -20,7 +20,6 @@
 #include <sys/param.h>
 #include <utime.h>
 #include <math.h>
-#include <fnmatch.h>
 #include <limits.h>
 #include <ctype.h>
 #include <time.h>
@@ -32,7 +31,6 @@
 #include <Ecore.h>
 #include <Ecore_Ipc.h>
 #include <Ecore_File.h>
-#include <Evas.h>
 #include <Efreet.h>
 #include <Eet.h>
 
@@ -42,9 +40,6 @@
 #undef E_TYPEDEFS
 #include "e_fm_main.h"
 #include "e_fm_shared_codec.h"
-#define DEF_SYNC_NUM             8
-#define DEF_ROUND_TRIP           0.05
-#define DEF_ROUND_TRIP_TOLERANCE 0.01
 #define DEF_MOD_BACKOFF          0.2
 
 typedef struct _E_Dir          E_Dir;
@@ -61,14 +56,12 @@ struct _E_Dir
    int                 mon_ref;
    E_Dir              *mon_real;
    Eina_List          *fq;
-   Ecore_Idler        *idler;
-   int                 dot_order;
-   int                 sync;
-   double              sync_time;
-   int                 sync_num;
+   Eina_Iterator      *lister_iterator;
+   Ecore_Thread       *lister_thread;
    Eina_List          *recent_mods;
    Ecore_Timer        *recent_clean;
-   unsigned char       cleaning : 1;
+   Eina_Bool           cleaning : 1;
+   Eina_Bool           delete_me : 1;
 };
 
 struct _E_Fop
@@ -118,7 +111,6 @@ Ecore_Ipc_Server *_e_fm_ipc_server = NULL;
 
 static Eina_List *_e_dirs = NULL;
 static Eina_List *_e_fops = NULL;
-static int _e_sync_num = 0;
 
 static Eina_List *_e_fm_ipc_slaves = NULL;
 static Eina_List *_e_fm_tasks = NULL;
@@ -155,11 +147,8 @@ static void        _e_fm_ipc_file_add(E_Dir *ed, const char *path, int listing);
 static void        _e_fm_ipc_file_del(E_Dir *ed, const char *path);
 static void        _e_fm_ipc_file_mod(E_Dir *ed, const char *path);
 static void        _e_fm_ipc_file_mon_dir_del(E_Dir *ed, const char *path);
-static void        _e_fm_ipc_file_mon_list_sync(E_Dir *ed);
 
-static Eina_Bool   _e_fm_ipc_cb_file_mon_list_idler(void *data);
 static Eina_Bool   _e_fm_ipc_cb_fop_trash_idler(void *data);
-static char       *_e_str_list_remove(Eina_List **list, const char *str, int len);
 static void        _e_fm_ipc_reorder(const char *file, const char *dst, const char *relative, int after);
 static void        _e_fm_ipc_dir_del(E_Dir *ed);
 
@@ -175,9 +164,9 @@ _e_fm_ipc_init(void)
    if (!sdir)
      {
         printf("The E_IPC_SOCKET environment variable is not set. This is\n"
-               "exported by Moksha to all processes it launches.\n"
+               "exported by Enlightenment to all processes it launches.\n"
                "This environment variable must be set and must point to\n"
-               "Moksha's IPC socket file (minus port number).\n");
+               "Enlightenment's IPC socket file (minus port number).\n");
         return 0;
      }
    _e_fm_ipc_server = ecore_ipc_server_connect(ECORE_IPC_LOCAL_SYSTEM, sdir, 0, NULL);
@@ -195,7 +184,7 @@ _e_fm_ipc_init(void)
 }
 
 static Eina_Bool
-_e_fm_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_cb_server_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Add *e;
 
@@ -208,7 +197,7 @@ _e_fm_ipc_cb_server_add(void *data __UNUSED__, int type __UNUSED__, void *event)
 }
 
 static Eina_Bool
-_e_fm_ipc_cb_server_del(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+_e_fm_ipc_cb_server_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
 {
    /* quit now */
    ecore_main_loop_quit();
@@ -235,6 +224,86 @@ _e_fm_ipc_monitor_start(int id, const char *path)
    _e_fm_tasks = eina_list_append(_e_fm_tasks, task);
 
    _e_fm_ipc_monitor_start_try(task);
+}
+
+static void
+_e_fm_ipc_cb_list_result(void *data, Ecore_Thread *thread EINA_UNUSED, void *msg_data)
+{
+   E_Dir *ed = data;
+   Eina_List *files = msg_data;
+   const char *s;
+
+   if (!files) _e_fm_ipc_file_add(ed, "", 2);
+   else
+     {
+        EINA_LIST_FREE(files, s)
+          {
+             _e_fm_ipc_file_add(ed, s, 2);
+             eina_stringshare_del(s);
+          }
+     }
+}
+
+static void
+_e_fm_ipc_cb_list(void *data, Ecore_Thread *thread)
+{
+   E_Dir *ed = data;
+   Eina_List *files = NULL;
+   int i, total = 0;
+   Eina_File_Direct_Info *info;
+   Eina_Iterator *it = ed->lister_iterator;
+   char buf[4096];
+   const char *s;
+
+   if (!strcmp(ed->dir, "/")) snprintf(buf, sizeof(buf), "/.order");
+   else snprintf(buf, sizeof(buf), "%s/.order", ed->dir);
+   if (ecore_file_exists(buf))
+     {
+        s = eina_stringshare_add(buf);
+        files = eina_list_append(files, s);
+     }
+   i = 0;
+   EINA_ITERATOR_FOREACH(it, info)
+     {
+        if (!strcmp(info->path + info->name_start, ".order")) continue;
+        if (ecore_thread_check(thread))
+          {
+             EINA_LIST_FREE(files, s) eina_stringshare_del(s);
+             break;
+          }
+        s = eina_stringshare_add(info->path);
+        files = eina_list_append(files, s);
+        total++;
+        i++;
+        if (i >= 16)
+          {
+             i = 0;
+             ecore_thread_feedback(thread, files);
+             files = NULL;
+          }
+     }
+   if (files) ecore_thread_feedback(thread, files);
+   if (total == 0) ecore_thread_feedback(thread, NULL);
+}
+
+static void
+_e_fm_ipc_cb_list_end(void *data, Ecore_Thread *thread EINA_UNUSED)
+{
+   E_Dir *ed = data;
+   ed->lister_thread = NULL;
+   eina_iterator_free(ed->lister_iterator);
+   ed->lister_iterator = NULL;
+   if (ed->delete_me) _e_fm_ipc_dir_del(ed);
+}
+
+static void
+_e_fm_ipc_cb_list_cancel(void *data, Ecore_Thread *thread EINA_UNUSED)
+{
+   E_Dir *ed = data;
+   ed->lister_thread = NULL;
+   eina_iterator_free(ed->lister_iterator);
+   ed->lister_iterator = NULL;
+   if (ed->delete_me) _e_fm_ipc_dir_del(ed);
 }
 
 static void
@@ -267,18 +336,15 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
      }
    else
      {
-        Eina_File_Direct_Info *info;
-        Eina_List *files = NULL;
-        char *dot_order = NULL;
-
         /* create a new dir entry */
         ed = calloc(1, sizeof(E_Dir));
         ed->id = task->id;
         ed->dir = eina_stringshare_add(task->src);
+        ed->lister_iterator = it;
         if (!ped)
           {
              /* if no previous monitoring dir exists - this one
-              * becomes the master monitor enty */
+              * becomes the master monitor entry */
              ed->mon = ecore_file_monitor_add(ed->dir, _e_fm_ipc_cb_file_monitor, ed);
              ed->mon_ref = 1;
           }
@@ -290,94 +356,11 @@ _e_fm_ipc_monitor_start_try(E_Fm_Task *task)
           }
         _e_dirs = eina_list_append(_e_dirs, ed);
 
-        /* read everything except a .order, . and .. */
-        EINA_ITERATOR_FOREACH(it, info)
-          {
-             if (!strcmp(info->path + info->name_start, ".order"))
-               {
-                  dot_order = strdup(info->path);
-                  continue;
-               }
-             files = eina_list_append(files, eina_stringshare_add(info->path + info->name_start));
-          }
-        eina_iterator_free(it);
-
-        /* if there was a .order - we need to parse it */
-        if (dot_order)
-          {
-             Eina_File *f;
-
-             f = eina_file_open(dot_order, EINA_FALSE);
-             if (f)
-               {
-                  Eina_List *f2 = NULL;
-                  char *map;
-
-                  /* This piece of code should really become generic and work like an iterator.
-                   * I plan to add this feature in eina, but that would be for next generation of E,
-                   * not E17.
-                   */
-                  map = eina_file_map_all(f, EINA_FILE_SEQUENTIAL);
-                  if (map)
-                    {
-                       const char *current = map;
-                       const char *found;
-                       size_t length = eina_file_size_get(f);
-
-                       /* inset files in order if the existed in file
-                        * list before */
-                       while ((found = memchr(current, '\n', length)))
-                         {
-                            if (found - current > 1)
-                              {
-                                 char *s = _e_str_list_remove(&files, current, found - current - 1);
-                                 if (s) f2 = eina_list_append(f2, s);
-                              }
-                            length -= found - current - 1;
-                            current = found + 1;
-                         }
-
-                       if (found == NULL && length > 0)
-                         {
-                            char *s = _e_str_list_remove(&files, current, length);
-                            if (s) f2 = eina_list_append(f2, s);
-                         }
-
-                       /* append whats left */
-                       files = eina_list_merge(f2, files);
-
-                       eina_file_map_free(f, map);
-                    }
-
-                  eina_file_close(f);
-               }
-          }
-        ed->fq = files;
-        /* FIXME: if .order file- load it, sort all items int it
-         * that are in files then just append whatever is left in
-         * alphabetical order
-         */
-        /* FIXME: maybe one day we can sort files here and handle
-         * .order file stuff here - but not today
-         */
-        /* note that we had a .order at all */
-        ed->dot_order = dot_order ? EINA_TRUE : EINA_FALSE;
-        if (dot_order)
-          {
-             /* if we did - tell the E about this FIRST - it will
-              * decide what to do if it first sees a .order or not */
-             if (eina_list_count(files) == 1)
-               _e_fm_ipc_file_add(ed, dot_order, 2);
-             else
-               _e_fm_ipc_file_add(ed, dot_order, 1);
-          }
-        /* send empty file - indicate empty dir */
-        if (!files) _e_fm_ipc_file_add(ed, "", 2);
-        /* and in an idler - list files, statting them etc. */
-        ed->idler = ecore_idler_add(_e_fm_ipc_cb_file_mon_list_idler, ed);
-        ed->sync_num = DEF_SYNC_NUM;
-
-        free(dot_order);
+        ed->lister_thread = ecore_thread_feedback_run(_e_fm_ipc_cb_list,
+                                                      _e_fm_ipc_cb_list_result,
+                                                      _e_fm_ipc_cb_list_end,
+                                                      _e_fm_ipc_cb_list_cancel,
+                                                      ed, EINA_TRUE);
      }
 }
 
@@ -496,7 +479,7 @@ _e_fm_ipc_mkdir_try(E_Fm_Task *task)
 }
 
 static void
-_e_fm_ipc_mkdir(int id, const char *src, const char *rel, int rel_to __UNUSED__, int x, int y)
+_e_fm_ipc_mkdir(int id, const char *src, const char *rel, int rel_to EINA_UNUSED, int x, int y)
 {
    E_Fm_Task *task;
 
@@ -551,7 +534,7 @@ _e_fm_ipc_handle_error_response(int id, E_Fm_Op_Type type)
 }
 
 static Eina_Bool
-_e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event)
+_e_fm_ipc_cb_server_data(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
    Ecore_Ipc_Event_Server_Data *e;
 
@@ -691,36 +674,6 @@ _e_fm_ipc_cb_server_data(void *data __UNUSED__, int type __UNUSED__, void *event
       case E_FM_OP_QUIT: /* quit */
         ecore_main_loop_quit();
         break;
-
-      case E_FM_OP_MONITOR_SYNC: /* mon list sync */
-      {
-         Eina_List *l;
-         E_Dir *ed;
-         double sync_time;
-
-         EINA_LIST_FOREACH(_e_dirs, l, ed)
-           {
-              if (ed->fq)
-                {
-                   if (ed->sync == e->response)
-                     {
-                        sync_time = ecore_time_get() - ed->sync_time;
-                        /* try keep round trips to round trip tolerance */
-                        if
-                        (sync_time < (DEF_ROUND_TRIP - DEF_ROUND_TRIP_TOLERANCE))
-                          ed->sync_num += 1;
-                        else if
-                        (sync_time > (DEF_ROUND_TRIP + DEF_ROUND_TRIP_TOLERANCE))
-                          ed->sync_num -= 1;
-                        /* always sync at least 1 file */
-                        if (ed->sync_num < 1) ed->sync_num = 1;
-                        ed->idler = ecore_idler_add(_e_fm_ipc_cb_file_mon_list_idler, ed);
-                        break;
-                     }
-                }
-           }
-      }
-      break;
 
       case E_FM_OP_ABORT: // abort copy/move/delete operation by user
       {
@@ -862,7 +815,7 @@ _e_fm_ipc_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
 }
 
 Eina_Bool
-_e_fm_ipc_slave_data_cb(void *data, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_data_cb(void *data, int type EINA_UNUSED, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -917,7 +870,7 @@ _e_fm_ipc_slave_data_cb(void *data, int type __UNUSED__, void *event)
 }
 
 Eina_Bool
-_e_fm_ipc_slave_error_cb(void *data, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_error_cb(void *data, int type EINA_UNUSED, void *event)
 {
    Ecore_Exe_Event_Data *e = event;
    E_Fm_Slave *slave;
@@ -935,7 +888,7 @@ _e_fm_ipc_slave_error_cb(void *data, int type __UNUSED__, void *event)
 }
 
 Eina_Bool
-_e_fm_ipc_slave_del_cb(void *data, int type __UNUSED__, void *event)
+_e_fm_ipc_slave_del_cb(void *data, int type EINA_UNUSED, void *event)
 {
    Ecore_Exe_Event_Del *e = event;
    E_Fm_Slave *slave;
@@ -957,7 +910,7 @@ _e_fm_ipc_slave_del_cb(void *data, int type __UNUSED__, void *event)
 }
 
 static void
-_e_fm_ipc_cb_file_monitor(void *data __UNUSED__, Ecore_File_Monitor *em __UNUSED__, Ecore_File_Event event, const char *path)
+_e_fm_ipc_cb_file_monitor(void *data EINA_UNUSED, Ecore_File_Monitor *em EINA_UNUSED, Ecore_File_Event event, const char *path)
 {
    E_Dir *ed;
    char *dir, *rp, *drp;
@@ -1061,12 +1014,10 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
    struct stat st;
    char *lnk = NULL, *rlnk = NULL;
    int broken_lnk = 0;
-   int bsz = 0;
-   unsigned char *p, buf
+   Eina_Binbuf *buf;
    /* file add/change format is as follows:
     *
     * stat_info[stat size] + broken_link[1] + path[n]\0 + lnk[n]\0 + rlnk[n]\0 */
-   [sizeof(struct stat) + 1 + 4096 + 4096 + 4096];
 
    /* FIXME: handle BACKOFF */
    if ((!listing) && (op == E_FM_OP_FILE_CHANGE) && (!ed->cleaning)) /* 5 == mod */
@@ -1098,7 +1049,7 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
              ed->recent_mods = eina_list_append(ed->recent_mods, m);
           }
         if ((!ed->recent_clean) && (ed->recent_mods))
-          ed->recent_clean = ecore_timer_add(DEF_MOD_BACKOFF, _e_fm_ipc_cb_recent_clean, ed);
+          ed->recent_clean = ecore_timer_loop_add(DEF_MOD_BACKOFF, _e_fm_ipc_cb_recent_clean, ed);
         if (skip)
           {
 //	     printf("SKIP MOD %s %3.3f\n", path, t_now);
@@ -1127,29 +1078,21 @@ _e_fm_ipc_file_add_mod(E_Dir *ed, const char *path, E_Fm_Op_Type op, int listing
    if (!lnk) lnk = strdup("");
    if (!rlnk) rlnk = strdup("");
 
-   p = buf;
+   buf = eina_binbuf_new();
    /* NOTE: i am NOT converting this data to portable arch/os independent
     * format. i am ASSUMING e_fm_main and e are local and built together
     * and thus this will work. if this ever changes this here needs to
     * change */
-   memcpy(buf, &st, sizeof(struct stat));
-   p += sizeof(struct stat);
+   eina_binbuf_append_length(buf, (void*)&st, sizeof(struct stat));
 
-   p[0] = broken_lnk;
-   p += 1;
+   eina_binbuf_append_char(buf, !!broken_lnk);
+   eina_binbuf_append_length(buf, (void*)path, strlen(path) + 1);
+   eina_binbuf_append_length(buf, (void*)lnk, strlen(lnk) + 1);
+   eina_binbuf_append_length(buf, (void*)rlnk, strlen(rlnk) + 1);
 
-   strcpy((char *)p, path);
-   p += strlen(path) + 1;
-
-   strcpy((char *)p, lnk);
-   p += strlen(lnk) + 1;
-
-   strcpy((char *)p, rlnk);
-   p += strlen(rlnk) + 1;
-
-   bsz = p - buf;
    ecore_ipc_server_send(_e_fm_ipc_server, 6 /*E_IPC_DOMAIN_FM*/, op, 0, ed->id,
-                         listing, buf, bsz);
+                         listing, eina_binbuf_string_get(buf), eina_binbuf_length_get(buf));
+   eina_binbuf_free(buf);
    free(lnk);
    free(rlnk);
 }
@@ -1194,58 +1137,6 @@ _e_fm_ipc_file_mon_dir_del(E_Dir *ed, const char *path)
                          0, ed->id, 0, (void *)path, strlen(path) + 1);
 }
 
-static void
-_e_fm_ipc_file_mon_list_sync(E_Dir *ed)
-{
-   _e_sync_num++;
-   if (_e_sync_num == 0) _e_sync_num = 1;
-   ed->sync = _e_sync_num;
-   ed->sync_time = ecore_time_get();
-   ecore_ipc_server_send(_e_fm_ipc_server,
-                         6 /*E_IPC_DOMAIN_FM*/,
-                         E_FM_OP_MONITOR_SYNC,
-                         0, ed->id, ed->sync, NULL, 0);
-}
-
-static Eina_Bool
-_e_fm_ipc_cb_file_mon_list_idler(void *data)
-{
-   E_Dir *ed;
-   int n = 0;
-   char *file, buf[4096];
-
-   ed = data;
-   /* FIXME: spool off files in idlers and handle sync req's */
-   while (ed->fq)
-     {
-        file = eina_list_data_get(ed->fq);
-        if (!((ed->dot_order) && (!strcmp(file, ".order"))))
-          {
-             if (!strcmp(ed->dir, "/"))
-               snprintf(buf, sizeof(buf), "/%s", file);
-             else
-               snprintf(buf, sizeof(buf), "%s/%s", ed->dir, file);
-             _e_fm_ipc_file_add(ed, buf, 1);
-          }
-        eina_stringshare_del(file);
-        ed->fq = eina_list_remove_list(ed->fq, ed->fq);
-        n++;
-        if (n == ed->sync_num)
-          {
-             _e_fm_ipc_file_mon_list_sync(ed);
-             ed->idler = NULL;
-             if (!ed->fq) _e_fm_ipc_file_add(ed, "", 2);
-             return 0;
-          }
-     }
-   ed->sync_num = DEF_SYNC_NUM;
-   ed->sync = 0;
-   ed->sync_time = 0.0;
-   ed->idler = NULL;
-   if (!ed->fq) _e_fm_ipc_file_add(ed, "", 2);
-   return ECORE_CALLBACK_CANCEL;
-}
-
 static Eina_Bool
 _e_fm_ipc_cb_fop_trash_idler(void *data)
 {
@@ -1264,7 +1155,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
 
    fop = (E_Fop *)data;
    if (!fop) return 0;
-  /* Check that 'home trash' and subsequesnt dirs exists, create if not */
+
+   /* Check that 'home trash' and subsequesnt dirs exists, create if not */
    snprintf(trash_dir, sizeof(trash_dir), "%s/Trash", efreet_data_home_get());
    snprintf(buf, sizeof(buf), "%s/files", trash_dir);
    if (!ecore_file_mkpath(buf)) return 0;
@@ -1316,7 +1208,8 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
      }
    else
      /* Could not create info file. Spec says to put orig file back */
-     rename(dest, fop->src);
+     if (rename(dest, fop->src) < 0)
+       ERR("File could not be put back!");
 
    free(dest);
    eina_stringshare_del(fop->src);
@@ -1324,22 +1217,6 @@ _e_fm_ipc_cb_fop_trash_idler(void *data)
    _e_fops = eina_list_remove(_e_fops, fop);
    free(fop);
    return ECORE_CALLBACK_CANCEL;
-}
-
-static char *
-_e_str_list_remove(Eina_List **list, const char *str, int len)
-{
-   Eina_List *l;
-   char *s;
-
-   EINA_LIST_FOREACH(*list, l, s)
-     if (!strncmp(s, str, len))
-       {
-          *list = eina_list_remove_list(*list, l);
-          return s;
-       }
-
-   return NULL;
 }
 
 static void
@@ -1423,17 +1300,20 @@ _e_fm_ipc_dir_del(E_Dir *ed)
    void *data;
    E_Mod *m;
 
+   if (ed->lister_thread)
+     {
+        ed->delete_me = EINA_TRUE;
+        ecore_thread_cancel(ed->lister_thread);
+        return;
+     }
    eina_stringshare_del(ed->dir);
-   if (ed->idler) ecore_idler_del(ed->idler);
-   if (ed->recent_clean)
-     ecore_timer_del(ed->recent_clean);
+   if (ed->recent_clean) ecore_timer_del(ed->recent_clean);
    EINA_LIST_FREE(ed->recent_mods, m)
      {
         eina_stringshare_del(m->path);
         free(m);
      }
-   EINA_LIST_FREE(ed->fq, data)
-     eina_stringshare_del(data);
+   EINA_LIST_FREE(ed->fq, data) eina_stringshare_del(data);
    free(ed);
 }
 
@@ -1471,12 +1351,12 @@ _e_fm_ipc_prepare_command(E_Fm_Op_Type type, const char *args)
 }
 
 static Eina_Bool
-_e_fm_ipc_timer_cb(void *d __UNUSED__)
+_e_fm_ipc_timer_cb(void *d EINA_UNUSED)
 {
    ecore_ipc_server_send(_e_fm_ipc_server,
                          6 /*E_IPC_DOMAIN_FM*/,
                          E_FM_OP_VOLUME_LIST_DONE,
-                         0, 0, 0, "", 1);   
+                         0, 0, 0, "", 1);
    _init_timer_run = EINA_TRUE;
    return EINA_FALSE;
 }
@@ -1488,9 +1368,9 @@ e_fm_ipc_volume_add(E_Volume *v)
    int msg_size;
 
    if (_init_timer && (!_init_timer_run))
-     ecore_timer_reset(_init_timer);
+     ecore_timer_loop_reset(_init_timer);
    else if ((!_init_timer) && (!_init_timer_run))
-     _init_timer = ecore_timer_add(2.0, _e_fm_ipc_timer_cb, NULL);
+     _init_timer = ecore_timer_loop_add(2.0, _e_fm_ipc_timer_cb, NULL);
 
    msg_data = _e_fm_shared_codec_volume_encode(v, &msg_size);
    if (!msg_data) return;
