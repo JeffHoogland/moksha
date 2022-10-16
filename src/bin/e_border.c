@@ -407,7 +407,7 @@ e_border_new(E_Container *con,
    E_Border *bd, *bd2;
    Ecore_X_Window_Attributes *att;
    unsigned int managed, desk[2];
-   int deskx, desky;
+   int deskx = 0, desky = 0;
 
    bd = E_OBJECT_ALLOC(E_Border, E_BORDER_TYPE, _e_border_free);
    if (!bd) return NULL;
