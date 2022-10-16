@@ -78,7 +78,7 @@ _debian_default(void)
 			 if ((ch = strstr(buffer, "XKBVARIANT=" )))
 				snprintf(cur_variant, MAX_LEN - 1, "%s", (char *) ch + 12);
 		  }
-		  pclose(output); 
+		  fclose(output); 
 	  }
 }
 
