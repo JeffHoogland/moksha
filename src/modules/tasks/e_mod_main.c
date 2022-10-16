@@ -410,12 +410,12 @@ _tasks_refill(Tasks *tasks)
         if (tasks->horizontal)
           {   
              if (w < tasks->config->minw) w = tasks->config->minw;
-             if (tasks->config->icon_only) w = h;
+             if (tasks->config->icon_only) w = tasks->gcc->gadcon->shelf->h;
           }
         else
           {
              if (h < tasks->config->minh) h = tasks->config->minh;
-             if (tasks->config->icon_only) h = w;
+             if (tasks->config->icon_only) h = tasks->gcc->gadcon->shelf->w;
           }
         if (!tasks->gcc->resizable)
           {
