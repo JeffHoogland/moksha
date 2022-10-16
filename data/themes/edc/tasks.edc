@@ -382,6 +382,9 @@ group { name:"e/modules/tasks/item_vert";
             rel2.to: "icon";
             visible: 0;
          }
+         description { state: "iconic" 0.0;
+            inherit: "default" 0.0;
+         }
          description { state: "clicked" 0.0;
             inherit: "default" 0.0;
          }
