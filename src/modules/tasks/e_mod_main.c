@@ -94,7 +94,6 @@ static Eina_Bool    _tasks_cb_event_border_urgent_change(void *data, int type, v
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
-static Ecore_Timer *timer_pop;
 
 Config *tasks_config = NULL;
 
@@ -272,7 +271,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Tasks *tasks;
 
-   timer_pop =  NULL;
    tasks = (Tasks *)gcc->data;
    tasks_config->tasks = eina_list_remove(tasks_config->tasks, tasks);
    _tasks_free(tasks);
