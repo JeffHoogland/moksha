@@ -15,7 +15,7 @@ Dependencies for building under Bodhi:
 
 Must:
   libc libm libX11 libXext evas ecore ecore-evas ecore-file ecore-ipc ecore-con
-  ecore-imf ecore-x edje eet embryo efreet e_dbus eio
+  ecore-imf ecore-x edje eet embryo efreet eldbus eio
   xcb xcb-shape xcb-keysyms
   [png loader in evas, jpeg loader in evas, eet loader in evas, software_x11
   engine in evas, buffer engine in evas]
