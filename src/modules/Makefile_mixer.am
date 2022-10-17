@@ -36,7 +36,6 @@ mixer_lib_libepulse_la_LDFLAGS = -no-undefined -avoid-version
 mixer_lib_libepulse_la_LIBTOOLFLAGS = --tag=disable-static
 
 
-if HAVE_ELEMENTARY
 bin_PROGRAMS = \
 	mixer/bin/epulse
 
@@ -61,7 +60,7 @@ mixer_bin_epulse_CFLAGS +=  \
 	-DPACKAGE_DATA_DIR=\"$(bindatadir)/\" \
 	@ELM_CFLAGS@ \
 	@MIXER_CFLAGS@
-endif
+
 
 mixerpkgdir = $(MDIR)/mixer/$(MODULE_ARCH)
 mixerpkg_LTLIBRARIES = mixer/module.la
