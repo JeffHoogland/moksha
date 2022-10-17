@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-15 12:18-0400\n"
-"PO-Revision-Date: 2022-09-16 08:01+0200\n"
+"PO-Revision-Date: 2022-10-17 09:52+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -54,16 +54,8 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
-"hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
-"><br><br>"
-msgstr ""
-"<title>Copyright &copy; 2022, par l'équipe de développement de Moksha</"
-"><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
-"logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
-"visitez :<br><hilight>http://www.bodhilinux.com</><br><br>"
+msgid "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We hope you enjoy using this software as much as we enjoyed writing it.<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</><br><br>"
+msgstr "<title>Copyright &copy; 2022, par l'équipe de développement de Moksha</><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, visitez :<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -75,14 +67,8 @@ msgstr "Profil : basculement"
 
 #: src/bin/e_actions.c:430
 #, c-format
-msgid ""
-"You are about to kill %s.<br><br>Please keep in mind that all data from this "
-"window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
-"want to kill this window?"
-msgstr ""
-"Vous êtes sur le point de tuer %s.<br><br>Tous les éléments rattachés à "
-"cette fenêtre<br>qui n'ont pas été enregistrés seront perdus !<br><br>Voulez-"
-"vous vraiment tuer cette fenêtre ?"
+msgid "You are about to kill %s.<br><br>Please keep in mind that all data from this window<br>which has not yet been saved will be lost!<br><br>Are you sure you want to kill this window?"
+msgstr "Vous êtes sur le point de tuer %s.<br><br>Tous les éléments rattachés à cette fenêtre<br>qui n'ont pas été enregistrés seront perdus !<br><br>Voulez-vous vraiment tuer cette fenêtre ?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
@@ -846,38 +832,12 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #: src/bin/e_config.c:952
-msgid ""
-"Settings data needed upgrading. Your old settings have<br>been wiped and a "
-"new set of defaults initialized. This<br>will happen regularly during "
-"development, so don't report a<br>bug. This simply means Moksha needs new "
-"settings<br>data by default for usable functionality that your "
-"old<br>settings simply lack. This new set of defaults will fix<br>that by "
-"adding it in. You can re-configure things now to your<br>liking. Sorry for "
-"the hiccup in your settings.<br>"
-msgstr ""
-"Les données de configuration ont dû être mises à jour. Votre "
-"ancienne<br>configuration a été supprimée et de nouveaux paramètres "
-"par<br>défaut sont en place. Cela risque d'arriver en phase "
-"de<br>développement, alors il est inutile de faire un rapport de bogue."
-"<br>Cela signifie simplement que Moksha a besoin<br>de fonctionnalités que "
-"votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
-"reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
+msgid "Settings data needed upgrading. Your old settings have<br>been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means Moksha needs new settings<br>data by default for usable functionality that your old<br>settings simply lack. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your settings.<br>"
+msgstr "Les données de configuration ont dû être mises à jour. Votre ancienne<br>configuration a été supprimée et de nouveaux paramètres par<br>défaut sont en place. Cela risque d'arriver en phase de<br>développement, alors il est inutile de faire un rapport de bogue.<br>Cela signifie simplement que Moksha a besoin<br>de fonctionnalités que votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/bin/e_config.c:969
-msgid ""
-"Your settings are NEWER than Moksha. This is very<br>strange. This should "
-"not happen unless you downgraded<br>Moksha or copied the settings from a "
-"place where<br>a newer version of Moksha was running. This is bad and<br>as "
-"a precaution your settings have been now restored to<br>defaults. Sorry for "
-"the inconvenience.<br>"
-msgstr ""
-"Votre configuration est PLUS RÉCENTE que la version actuelle de Moksha."
-"<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que "
-"vous n'ayez installé une version antérieure<br>ou copié la configuration "
-"depuis une machine sur laquelle<br>une version plus récente de Moksha était "
-"en cours. Ce n'est pas sain<br>et, par mesure de précaution, les valeurs par "
-"défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
-"désagrément.<br>"
+msgid "Your settings are NEWER than Moksha. This is very<br>strange. This should not happen unless you downgraded<br>Moksha or copied the settings from a place where<br>a newer version of Moksha was running. This is bad and<br>as a precaution your settings have been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Votre configuration est PLUS RÉCENTE que la version actuelle de Moksha.<br>C'est vraiment étonnant. Cela ne devrait pas se produire<br>à moins que vous n'ayez installé une version antérieure<br>ou copié la configuration depuis une machine sur laquelle<br>une version plus récente de Moksha était en cours. Ce n'est pas sain<br>et, par mesure de précaution, les valeurs par défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_config.c:1527 src/bin/e_config.c:2152
 msgid "Moksha Settings Write Problems"
@@ -885,13 +845,8 @@ msgstr "Problèmes d'écriture de la configuration de Moksha"
 
 #: src/bin/e_config.c:1530
 #, c-format
-msgid ""
-"Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
-"<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
-msgstr ""
-"Moksha a rencontré une erreur pendant<br>le déplacement de données de "
-"configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
-"abandonnée par sécurité.<br>"
+msgid "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
+msgstr "Moksha a rencontré une erreur pendant<br>le déplacement de données de configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été abandonnée par sécurité.<br>"
 
 #: src/bin/e_config.c:1540 src/bin/e_config.c:2165
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -926,12 +881,8 @@ msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
 #: src/bin/e_config.c:2069
-msgid ""
-"The file is not writable. Perhaps the disk is read-only<br>or you lost "
-"permissions to your files."
-msgstr ""
-"Le fichier n'est pas accessible en écriture. Le disque est peut-"
-"être<br>monté en lecture seule ou les permissions ont été modifiées."
+msgid "The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files."
+msgstr "Le fichier n'est pas accessible en écriture. Le disque est peut-être<br>monté en lecture seule ou les permissions ont été modifiées."
 
 #: src/bin/e_config.c:2073
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
@@ -942,12 +893,8 @@ msgid "This is a generic error."
 msgstr "Erreur générique."
 
 #: src/bin/e_config.c:2081
-msgid ""
-"The settings file is too large.<br>It should be very small (a few hundred KB "
-"at most)."
-msgstr ""
-"Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
-"quelques centaines de ko."
+msgid "The settings file is too large.<br>It should be very small (a few hundred KB at most)."
+msgstr "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser quelques centaines de ko."
 
 #: src/bin/e_config.c:2085
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
@@ -1003,15 +950,8 @@ msgstr "Moksha ne reconnaît pas cette erreur."
 
 #: src/bin/e_config.c:2155
 #, c-format
-msgid ""
-"Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
-"file where the error occurred was:<br>%s<br><br>This file has been deleted "
-"to avoid corrupt data.<br>"
-msgstr ""
-"Une erreur s'est produite au niveau du fichier<br>de configuration dans "
-"lequel Moksha<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé "
-"était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des "
-"données.<br>"
+msgid "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+msgstr "Une erreur s'est produite au niveau du fichier<br>de configuration dans lequel Moksha<br>était en train d'écrire.<br>%s<br><br>Le fichier incriminé était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des données.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:875
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1060,22 +1000,15 @@ msgstr "Erreur : aucun support de PAM"
 
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
-msgstr ""
-"Moksha a été compilé sans le support de PAM,<br>le verrouillage d'écran est "
-"désactivé."
+msgstr "Moksha a été compilé sans le support de PAM,<br>le verrouillage d'écran est désactivé."
 
 #: src/bin/e_desklock.c:303
 msgid "Lock Failed"
 msgstr "Échec du verrouillage"
 
 #: src/bin/e_desklock.c:304
-msgid ""
-"Locking the desktop failed because some application<br>has grabbed either "
-"the keyboard or the mouse or both<br>and their grab is unable to be broken."
-msgstr ""
-"Le verrouillage du bureau a échoué car une application<br>s'est réservée "
-"soit le clavier, la souris, ou les deux<br>et cette réservation n'a pu être "
-"annulée."
+msgid "Locking the desktop failed because some application<br>has grabbed either the keyboard or the mouse or both<br>and their grab is unable to be broken."
+msgstr "Le verrouillage du bureau a échoué car une application<br>s'est réservée soit le clavier, la souris, ou les deux<br>et cette réservation n'a pu être annulée."
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
@@ -1095,28 +1028,16 @@ msgstr "Erreur du système d'authentification"
 
 #: src/bin/e_desklock.c:971
 #, c-format
-msgid ""
-"Authentication via PAM had errors setting up the<br>authentication session. "
-"The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
-"happening. Please report this bug."
-msgstr ""
-"L'authentification via PAM a rencontré une erreur lors de<br>la session "
-"d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette "
-"erreur ne devrait pas se produire.<br>Veuillez signaler ce bogue."
+msgid "Authentication via PAM had errors setting up the<br>authentication session. The error code was <hilight>%i</hilight>.<br>This is bad and should not be happening. Please report this bug."
+msgstr "L'authentification via PAM a rencontré une erreur lors de<br>la session d'authentification. Le code de l'erreur est <hilight>%i</hilight>.<br>Cette erreur ne devrait pas se produire.<br>Veuillez signaler ce bogue."
 
 #: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:184
 msgid "Activate Presentation Mode?"
 msgstr "Activer le mode présentation ?"
 
 #: src/bin/e_desklock.c:1307
-msgid ""
-"You unlocked your desktop too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
-msgstr ""
-"Vous avez déverrouillé votre bureau trop rapidement.<br><br>Voulez-vous "
-"activer le mode de <b>présentation</b> et temporairement désactiver l'écran "
-"de veille, le verrouillage et la gestion de l'énergie ?"
+msgid "You unlocked your desktop too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "Vous avez déverrouillé votre bureau trop rapidement.<br><br>Voulez-vous activer le mode de <b>présentation</b> et temporairement désactiver l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
 #: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:197
 msgid "No, but increase timeout"
@@ -1131,16 +1052,8 @@ msgid "Incomplete Window Properties"
 msgstr "Propriétés de la fenêtre incomplètes"
 
 #: src/bin/e_eap_editor.c:182
-msgid ""
-"The window you are creating an icon for<br>does not contain window name and "
-"class<br>properties. Without these, you will have to<br>use the window title "
-"instead. This will only<br>work if the window title is the same at<br>the "
-"time the window starts up, and does not<br>change."
-msgstr ""
-"La fenêtre pour laquelle vous voulez créer<br>une icône ne possède ni nom ni "
-"classe.<br> Sans ces propriétés, vous devez utiliser le<br>titre de la "
-"fenêtre à la place. Cela ne fonctionnera<br>qu'à condition que le titre de "
-"cette fenêtre<br>reste le même qu'au premier lancement."
+msgid "The window you are creating an icon for<br>does not contain window name and class<br>properties. Without these, you will have to<br>use the window title instead. This will only<br>work if the window title is the same at<br>the time the window starts up, and does not<br>change."
+msgstr "La fenêtre pour laquelle vous voulez créer<br>une icône ne possède ni nom ni classe.<br> Sans ces propriétés, vous devez utiliser le<br>titre de la fenêtre à la place. Cela ne fonctionnera<br>qu'à condition que le titre de cette fenêtre<br>reste le même qu'au premier lancement."
 
 #: src/bin/e_eap_editor.c:235
 msgid "Desktop Entry Editor"
@@ -1283,8 +1196,7 @@ msgstr "Moksha est dans l'incapacité de changer de dossier vers :<br><br>%s"
 #: src/bin/e_exec.c:420
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
-msgstr ""
-"Moksha est dans l'incapacité d'effectuer la restauration vers :<br><br>%s"
+msgstr "Moksha est dans l'incapacité d'effectuer la restauration vers :<br><br>%s"
 
 #: src/bin/e_exec.c:469
 #, c-format
@@ -1297,12 +1209,8 @@ msgstr "Erreur d'exécution de l'application"
 
 #: src/bin/e_exec.c:607
 #, c-format
-msgid ""
-"Moksha was unable to run the application:<br><br>%s<br><br>The application "
-"failed to start."
-msgstr ""
-"Moksha est dans l'incapacité d'exécuter l'application :<br><br>%s<br><br>Son "
-"lancement a échoué."
+msgid "Moksha was unable to run the application:<br><br>%s<br><br>The application failed to start."
+msgstr "Moksha est dans l'incapacité d'exécuter l'application :<br><br>%s<br><br>Son lancement a échoué."
 
 #: src/bin/e_exec.c:714
 msgid "Execution Error"
@@ -1369,11 +1277,8 @@ msgid "%s was interrupted by the signal number %i."
 msgstr "%s a été interrompu par le signal numéro %i."
 
 #: src/bin/e_exec.c:832
-msgid ""
-"***The remaining output has been truncated. Save the output to view.***\n"
-msgstr ""
-"***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout voir."
-"***\n"
+msgid "***The remaining output has been truncated. Save the output to view.***\n"
+msgstr "***Le reste de la sortie a été tronqué. Enregistrez la sortie pour tout voir.***\n"
 
 #: src/bin/e_exec.c:936
 msgid "Error Information"
@@ -1460,8 +1365,7 @@ msgstr "Erreur"
 #: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
-msgstr ""
-"La récente opération de glisser-déplacer demandée pour « %s » a échoué."
+msgstr "La récente opération de glisser-déplacer demandée pour « %s » a échoué."
 
 #: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
@@ -1732,27 +1636,15 @@ msgstr "Voulez-vous vraiment supprimer<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:10899
 #, c-format
-msgid ""
-"Are you sure you want to delete<br><hilight>all</hilight> the %d files "
-"in<br><hilight>%s</hilight>?"
-msgstr ""
-"Voulez-vous vraiment supprimer<br><hilight>%d fichiers</"
-"hilight>dans<br><hilight>%s</hilight> ?"
+msgid "Are you sure you want to delete<br><hilight>all</hilight> the %d files in<br><hilight>%s</hilight>?"
+msgstr "Voulez-vous vraiment supprimer<br><hilight>%d fichiers</hilight>dans<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
-msgid ""
-"Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
-"hilight>?"
-msgid_plural ""
-"Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
-"hilight>?"
-msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
-"%s</hilight> ?"
-msgstr[1] ""
-"Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
-"<br><hilight>%s</hilight> ?"
+msgid "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</hilight>?"
+msgid_plural "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</hilight>?"
+msgstr[0] "Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>%s</hilight> ?"
+msgstr[1] "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -1934,21 +1826,12 @@ msgstr "Le module %s doit prendre en charge %s"
 
 #: src/bin/e_grab_dialog.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
-msgid ""
-"Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
-msgstr ""
-"Composez votre séquence au clavier,<br><br>ou <hilight>Échap</hilight> pour "
-"annuler."
+msgid "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
+msgstr "Composez votre séquence au clavier,<br><br>ou <hilight>Échap</hilight> pour annuler."
 
 #: src/bin/e_grab_dialog.c:5
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,<br> "
-"or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"highlight> to abort."
-msgstr ""
-"Veuillez appuyer sur le modificateur de votre choix et<br>sur un bouton de "
-"votre souris, ou tourner la molette,<br>afin d'assigner un raccourci souris."
-"<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
+msgid "Please hold any modifier you want<br>and press any button on your mouse,<br> or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</highlight> to abort."
+msgstr "Veuillez appuyer sur le modificateur de votre choix et<br>sur un bouton de votre souris, ou tourner la molette,<br>afin d'assigner un raccourci souris.<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
@@ -1959,11 +1842,9 @@ msgid "Key Binding Sequence"
 msgstr "Séquence de raccourci clavier"
 
 #: src/bin/e_hints.c:152
-msgid ""
-"A previous instance of Moksha is still active\n"
+msgid "A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
-msgstr ""
-"Une instance précédente de Moksha est encore\n"
+msgstr "Une instance précédente de Moksha est encore\n"
 "active sur cet écran. Abandon du lancement.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1976,9 +1857,7 @@ msgid "Moksha was unable to import the image<br>due to a copy error."
 msgstr "Moksha n'a pu importer cette image<br>à cause d'une erreur de copie."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
-msgid ""
-"Moksha was unable to import the image.<br><br>Are you sure this is a valid "
-"image?"
+msgid "Moksha was unable to import the image.<br><br>Are you sure this is a valid image?"
 msgstr "Moksha n'a pu importer cette image<br><br>Est-ce un fichier valide ?"
 
 #: src/bin/e_import_dialog.c:163
@@ -2578,45 +2457,16 @@ msgid "Window properties are not a unique match"
 msgstr "Les propriétés de la fenêtre sont partagées"
 
 #: src/bin/e_int_border_remember.c:304
-msgid ""
-"You are trying to ask Moksha to remember to apply<br>properties (such as "
-"size, location, border style etc.) to<br>a window that <hilight>does not "
-"have unique properties</hilight>.<br><br>This means it shares Name/Class, "
-"Transience, Role etc. properties<br>with more than 1 other window on the "
-"screen and remembering<br>properties for this window will apply to all other "
-"windows<br>that match these properties.<br><br>This is just a warning in "
-"case you did not intend this to happen.<br>If you did, simply press "
-"<hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your "
-"settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
-"sure and nothing will be affected."
-msgstr ""
-"Vous demandez à Moksha de mémoriser les<br>propriétés (telles que la taille, "
-"la position,<br>le style de bordure, etc.) d'une fenêtre "
-"sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie "
-"qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, "
-"etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation "
-"des propriétés pour cette fenêtre<br>s'applique à toutes les autres fenêtres "
-"qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement "
-"au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur "
-"<hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres "
-"seront acceptés.<br>Cliquez sur <hilight>Fermer</hilight> en cas de doute,"
-"<br>et rien ne sera modifié."
+msgid "You are trying to ask Moksha to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window that <hilight>does not have unique properties</hilight>.<br><br>This means it shares Name/Class, Transience, Role etc. properties<br>with more than 1 other window on the screen and remembering<br>properties for this window will apply to all other windows<br>that match these properties.<br><br>This is just a warning in case you did not intend this to happen.<br>If you did, simply press <hilight>Apply</hilight> or <hilight>OK</hilight> buttons<br>and your settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not sure and nothing will be affected."
+msgstr "Vous demandez à Moksha de mémoriser les<br>propriétés (telles que la taille, la position,<br>le style de bordure, etc.) d'une fenêtre sans<br><hilight>propriétés distinctives</hilight>.<br><br>Ce qui signifie qu'elle partage son nom et classe,<br>sa relation transitoire, son rôle, etc., avec au<br>moins une autre fenêtre à l'écran et que la<br>mémorisation des propriétés pour cette fenêtre<br>s'applique à toutes les autres fenêtres qui<br>partagent les mêmes propriétés.<br><br>Ceci n'est qu'un avertissement au cas où ce<br>n'était pas ce que vous recherchiez.<br>Cliquez sur <hilight>Appliquer</hilight> ou <hilight>OK</hilight> et<br>vos paramètres seront acceptés.<br>Cliquez sur <hilight>Fermer</hilight> en cas de doute,<br>et rien ne sera modifié."
 
 #: src/bin/e_int_border_remember.c:498
 msgid "No match properties set"
 msgstr "Propriétés exclusives définies"
 
 #: src/bin/e_int_border_remember.c:501
-msgid ""
-"You are trying to ask Moksha to remember to apply<br>properties (such as "
-"size, location, border style etc.) to<br>a window <hilight>without "
-"specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
-"way of remembering this window."
-msgstr ""
-"Vous demandez à Moksha de mémoriser des<br>propriétés (telles que la taille, "
-"la position, le style de bordure, etc.)<br>d'une fenêtre <hilight>sans "
-"spécifier comment le faire</hilight>.<br><br>Vous devez spécifier au moins "
-"une méthode pour<br>mémoriser cette fenêtre."
+msgid "You are trying to ask Moksha to remember to apply<br>properties (such as size, location, border style etc.) to<br>a window <hilight>without specifying how to remember it</hilight>.<br><br>You must specify at least 1 way of remembering this window."
+msgstr "Vous demandez à Moksha de mémoriser des<br>propriétés (telles que la taille, la position, le style de bordure, etc.)<br>d'une fenêtre <hilight>sans spécifier comment le faire</hilight>.<br><br>Vous devez spécifier au moins une méthode pour<br>mémoriser cette fenêtre."
 
 #: src/bin/e_int_border_remember.c:601
 msgid "Nothing"
@@ -2785,14 +2635,8 @@ msgid "Input Method Error"
 msgstr "Erreur du système de saisie"
 
 #: src/bin/e_intl.c:357
-msgid ""
-"Error starting the input method executable<br><br>please make sure that your "
-"input<br>method configuration is correct and<br>that your "
-"configuration's<br>executable is in your PATH<br>"
-msgstr ""
-"Erreur lors du démarrage du système de saisie.<br><br>Vérifiez que la "
-"configuration du système<br>de saisie est correcte et que l'exécutable "
-"est<br>dans votre PATH.<br>"
+msgid "Error starting the input method executable<br><br>please make sure that your input<br>method configuration is correct and<br>that your configuration's<br>executable is in your PATH<br>"
+msgstr "Erreur lors du démarrage du système de saisie.<br><br>Vérifiez que la configuration du système<br>de saisie est correcte et que l'exécutable est<br>dans votre PATH.<br>"
 
 #: src/bin/e_int_menus.c:144 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
@@ -3001,27 +2845,21 @@ msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha ne parvient pas à initialiser EIO !\n"
 
 #: src/bin/e_main.c:381
-msgid ""
-"Moksha cannot set up an exit signal handler.\n"
+msgid "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
-msgstr ""
-"Moksha ne parvient pas à initialiser le gestionnaire de signal de sortie.\n"
+msgstr "Moksha ne parvient pas à initialiser le gestionnaire de signal de sortie.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
 #: src/bin/e_main.c:388
-msgid ""
-"Moksha cannot set up a HUP signal handler.\n"
+msgid "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
-msgstr ""
-"Moksha ne parvient pas à initialiser le gestionnaire de signal HUP.\n"
+msgstr "Moksha ne parvient pas à initialiser le gestionnaire de signal HUP.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
 #: src/bin/e_main.c:395
-msgid ""
-"Moksha cannot set up a USER signal handler.\n"
+msgid "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
-msgstr ""
-"Moksha ne parvient pas à initialiser le gestionnaire de signal UTILISATEUR.\n"
+msgstr "Moksha ne parvient pas à initialiser le gestionnaire de signal UTILISATEUR.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
 #: src/bin/e_main.c:404
@@ -3057,23 +2895,19 @@ msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha ne parvient pas à initialiser Emotion !\n"
 
 #: src/bin/e_main.c:491
-msgid ""
-"Moksha found ecore_evas doesn't support the Software X11\n"
+msgid "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
-msgstr ""
-"Moksha a détecté que ecore_evas ne prend pas en charge\n"
+msgstr "Moksha a détecté que ecore_evas ne prend pas en charge\n"
 "le rendu logiciel X11 de Evas. Vérifiez vos installations\n"
 "de Evas et Ecore, et qu'elles supportent\n"
 "le moteur de rendu logiciel X11."
 
 #: src/bin/e_main.c:499
-msgid ""
-"Moksha found ecore_evas doesn't support the Software Buffer\n"
+msgid "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
-msgstr ""
-"Moksha a détecté que ecore_evas ne prend pas en charge le rendu\n"
+msgstr "Moksha a détecté que ecore_evas ne prend pas en charge le rendu\n"
 "logiciel en mémoire dans Evas. Vérifiez vos installations de\n"
 "Evas et Ecore, et qu'elles supportent le moteur\n"
 "de rendu logiciel en mémoire."
@@ -3087,26 +2921,21 @@ msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha ne parvient pas à initialiser E_Intl !\n"
 
 #: src/bin/e_main.c:531
-msgid ""
-"Moksha cannot initialize its emergency alert system.\n"
+msgid "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système d'alerte d'urgence.\n"
+msgstr "Moksha ne parvient pas à initialiser son système d'alerte d'urgence.\n"
 "Avez-vous défini la variable d'environnement DISPLAY ?"
 
 #: src/bin/e_main.c:550
-msgid ""
-"Moksha cannot create directories in your home directory.\n"
+msgid "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
-msgstr ""
-"Moksha ne peut créer aucun dossier dans votre répertoire personnel.\n"
+msgstr "Moksha ne peut créer aucun dossier dans votre répertoire personnel.\n"
 "Peut-être n'avez-vous pas de répertoire personnel,\n"
 "ou que votre disque dur est plein ?"
 
 #: src/bin/e_main.c:560
 msgid "Moksha cannot set up its file registry system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de registre de fichiers.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de registre de fichiers.\n"
 
 #: src/bin/e_main.c:569
 msgid "Moksha cannot set up its config system.\n"
@@ -3122,19 +2951,16 @@ msgstr "Moksha ne parvient pas à initialiser son environnement.\n"
 
 #: src/bin/e_main.c:634
 msgid "Moksha cannot set up its scale system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de mise à l'échelle.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de mise à l'échelle.\n"
 
 #: src/bin/e_main.c:643
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha ne parvient pas à initialiser son système de pointeurs.\n"
 
 #: src/bin/e_main.c:652
-msgid ""
-"Moksha cannot set up paths for finding files.\n"
+msgid "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
-msgstr ""
-"Moksha ne parvient pas à configurer les chemins de recherche des fichiers.\n"
+msgstr "Moksha ne parvient pas à configurer les chemins de recherche des fichiers.\n"
 "Peut-être êtes-vous à court de mémoire ?"
 
 #: src/bin/e_main.c:669
@@ -3155,16 +2981,13 @@ msgstr "Démarrage du support multilingue"
 
 #: src/bin/e_main.c:721
 msgid "Moksha cannot set up its intl system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système d'internationalisation.\n"
+msgstr "Moksha ne parvient pas à initialiser son système d'internationalisation.\n"
 
 #: src/bin/e_main.c:730
-msgid ""
-"Moksha cannot initialize the FDO desktop system.\n"
+msgid "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
-msgstr ""
-"Moksha ne parvient pas à initialiser le système de menus FDO.\n"
+msgstr "Moksha ne parvient pas à initialiser le système de menus FDO.\n"
 "Peut-être vous manque-t-il certaines permissions sur ~/.cache/efreet\n"
 "ou bien le système est à court de mémoire ou d'espace disque ?"
 
@@ -3173,11 +2996,9 @@ msgid "Setup Screens"
 msgstr "Configuration des écrans"
 
 #: src/bin/e_main.c:759
-msgid ""
-"Moksha set up window management for all the screens on your system\n"
+msgid "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
-msgstr ""
-"Moksha ne peut être initialisé en tant que gestionnaire de fenêtres.\n"
+msgstr "Moksha ne peut être initialisé en tant que gestionnaire de fenêtres.\n"
 "Un autre gestionnaire de fenêtres est-il déjà lancé ?\n"
 
 #: src/bin/e_main.c:767
@@ -3222,8 +3043,7 @@ msgstr "Configuration du verrouillage"
 
 #: src/bin/e_main.c:822
 msgid "Moksha cannot set up its desk locking system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de verrouillage de bureau.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de verrouillage de bureau.\n"
 
 #: src/bin/e_main.c:829
 msgid "Setup Popups"
@@ -3295,8 +3115,7 @@ msgstr "Configuration des périphériques d'entrée"
 
 #: src/bin/e_main.c:932
 msgid "Moksha cannot set up its grab input handling system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de périphériques d'entrée.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de périphériques d'entrée.\n"
 
 #: src/bin/e_main.c:939
 msgid "Setup Modules"
@@ -3320,8 +3139,7 @@ msgstr "Configuration des classes de couleurs"
 
 #: src/bin/e_main.c:965
 msgid "Moksha cannot set up its color class system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de classes de couleurs.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de classes de couleurs.\n"
 
 #: src/bin/e_main.c:972
 msgid "Setup Gadcon"
@@ -3329,8 +3147,7 @@ msgstr "Configuration du contrôle de gadgets"
 
 #: src/bin/e_main.c:976
 msgid "Moksha cannot set up its gadget control system.\n"
-msgstr ""
-"Moksha ne parvient pas à initialiser son système de contrôle de gadgets.\n"
+msgstr "Moksha ne parvient pas à initialiser son système de contrôle de gadgets.\n"
 
 #: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
@@ -3419,8 +3236,7 @@ msgstr "Version : %s\n"
 
 #: src/bin/e_main.c:1313
 #, c-format
-msgid ""
-"Options:\n"
+msgid "Options:\n"
 "\t-display DISPLAY\n"
 "\t\tConnect to display named DISPLAY.\n"
 "\t\tEG: -display :1.0\n"
@@ -3429,11 +3245,9 @@ msgid ""
 "\t\tgiven the geometry. Add as many as you like. They all\n"
 "\t\treplace the real xinerama screens, if any. This can\n"
 "\t\tbe used to simulate xinerama.\n"
-"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tEG: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tUse the configuration profile CONF_PROFILE instead of the user selected "
-"default or just \"default\".\n"
+"\t\tUse the configuration profile CONF_PROFILE instead of the user selected default or just \"default\".\n"
 "\t-good\n"
 "\t\tBe good.\n"
 "\t-evil\n"
@@ -3445,8 +3259,7 @@ msgid ""
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tIf you need this help, you don't need this option.\n"
 "\t-version\n"
-msgstr ""
-"Options :\n"
+msgstr "Options :\n"
 "\t-display DISPLAY\n"
 "\t\t(Pour se connecter à l'affichage nommé DISPLAY)\n"
 "\t\tExemple : -display :1.0\n"
@@ -3455,11 +3268,9 @@ msgstr ""
 "\t\ten précisant la géométrie; vous pouvez en ajouter autant que\n"
 "\t\tvous le désirez; ils remplaceront les écrans xinerama réels, le\n"
 "\t\tcas échéant; on peut se servir de ça pour simuler xinerama)\n"
-"\t\tExemple : -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
-"800x600+800+0\n"
+"\t\tExemple : -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen 800x600+800+0\n"
 "\t-profile PROFIL_CONFIG\n"
-"\t\t(Pour utiliser le profil de configuration PROFIL_CONFIG à la place du "
-"profil par défaut choisi par\n"
+"\t\t(Pour utiliser le profil de configuration PROFIL_CONFIG à la place du profil par défaut choisi par\n"
 "l'utilisateur, ou du simple « default »)\n"
 "\t-good\n"
 "\t\t-Be good.\n"
@@ -3468,23 +3279,19 @@ msgstr ""
 "\t-psychotic\n"
 "\t\tBe psychotic.\n"
 "\t--locked\n"
-"\t\t(Pour démarrer avec le verrouillage du bureau activé, afin que le mot de "
-"passe soit demandé)<ps/>\n"
+"\t\t(Pour démarrer avec le verrouillage du bureau activé, afin que le mot de passe soit demandé)<ps/>\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
-"\t\t(Si vous avez eu besoin d'afficher l'aide, c'est que cette option n'est "
-"pas pour vous)\n"
+"\t\t(Si vous avez eu besoin d'afficher l'aide, c'est que cette option n'est pas pour vous)\n"
 "\t-version\n"
 
 #: src/bin/e_main.c:1367
-msgid ""
-"You are executing enlightenment directly. This is\n"
+msgid "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
 "binary. Use the \"enlightenment_start\" launcher. It\n"
 "will handle setting up environment variables, paths,\n"
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
-msgstr ""
-"Vous tentez, à tort, d'exécuter Enlightenment directement.\n"
+msgstr "Vous tentez, à tort, d'exécuter Enlightenment directement.\n"
 "Veuillez ne pas utiliser l'exécutable « enlightenment » mais\n"
 "plutôt le lanceur « enlightenment_start ». Ce dernier se\n"
 "charge du paramétrage des variables d'environnement,\n"
@@ -3496,61 +3303,37 @@ msgid "Testing Format Support"
 msgstr "Test du support des formats"
 
 #: src/bin/e_main.c:1652
-msgid ""
-"Moksha found Evas can't create a buffer canvas. Please check\n"
+msgid "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut créer un canevas en mémoire.\n"
+msgstr "Moksha a détecté que Evas ne peut créer un canevas en mémoire.\n"
 "Vérifiez que Evas supporte le moteur de rendu logiciel en mémoire.\n"
 
 #: src/bin/e_main.c:1664
-msgid ""
-"Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut charger les fichiers SVG. Vérifiez le "
-"support de SVG dans Evas.\n"
+msgid "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
+msgstr "Moksha a détecté que Evas ne peut charger les fichiers SVG. Vérifiez le support de SVG dans Evas.\n"
 
 #: src/bin/e_main.c:1674
-msgid ""
-"Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
-"support.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut charger les fichiers JPEG. Vérifiez le "
-"support de JPEG dans Evas.\n"
+msgid "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader support.\n"
+msgstr "Moksha a détecté que Evas ne peut charger les fichiers JPEG. Vérifiez le support de JPEG dans Evas.\n"
 
 #: src/bin/e_main.c:1684
-msgid ""
-"Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut charger les fichiers PNG. Vérifiez le "
-"support de PNG dans Evas.\n"
+msgid "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
+msgstr "Moksha a détecté que Evas ne peut charger les fichiers PNG. Vérifiez le support de PNG dans Evas.\n"
 
 #: src/bin/e_main.c:1694
-msgid ""
-"Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut charger les fichiers EET. Vérifiez le "
-"support de EET dans Evas.\n"
+msgid "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
+msgstr "Moksha a détecté que Evas ne peut charger les fichiers EET. Vérifiez le support de EET dans Evas.\n"
 
 #: src/bin/e_main.c:1708
-msgid ""
-"Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
+msgid "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
-msgstr ""
-"Moksha a détecté que Evas ne peut charger la police « Sans ». Vérifiez que "
-"Evas \n"
-"contient le support de fontconfig et que le système prend en charge la "
-"police « Sans ».\n"
+msgstr "Moksha a détecté que Evas ne peut charger la police « Sans ». Vérifiez que Evas \n"
+"contient le support de fontconfig et que le système prend en charge la police « Sans ».\n"
 
 #: src/bin/e_main.c:1927
 #, c-format
-msgid ""
-"Moksha crashed early on start and has<br>been restarted. There was an error "
-"loading the<br>module named: %s. This module has been disabled<br>and will "
-"not be loaded."
-msgstr ""
-"Moksha a planté en phase d'initialisation et<br> a été relancé. Le module %s "
-"qui est à l'origine de<br> l'erreur a été désactivé. Il ne sera pas rechargé."
+msgid "Moksha crashed early on start and has<br>been restarted. There was an error loading the<br>module named: %s. This module has been disabled<br>and will not be loaded."
+msgstr "Moksha a planté en phase d'initialisation et<br> a été relancé. Le module %s qui est à l'origine de<br> l'erreur a été désactivé. Il ne sera pas rechargé."
 
 #: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
@@ -3558,39 +3341,16 @@ msgstr "Moksha a planté en phase d'initialisation et a été relancé."
 
 #: src/bin/e_main.c:1933
 #, c-format
-msgid ""
-"Moksha crashed early on start and has been restarted.<br>There was an error "
-"loading the module named: %s<br><br>This module has been disabled and will "
-"not be loaded."
-msgstr ""
-"Moksha a planté en phase d'initialisation et a été relancé.<br>Le module "
-"nommé %s est à l'origine de l'erreur.<br><br> Ce module a été désactivé et "
-"ne sera pas rechargé."
+msgid "Moksha crashed early on start and has been restarted.<br>There was an error loading the module named: %s<br><br>This module has been disabled and will not be loaded."
+msgstr "Moksha a planté en phase d'initialisation et a été relancé.<br>Le module nommé %s est à l'origine de l'erreur.<br><br> Ce module a été désactivé et ne sera pas rechargé."
 
 #: src/bin/e_main.c:1941
-msgid ""
-"Moksha crashed early on start and has<br>been restarted. All modules have "
-"been disabled<br>and will not be loaded to help remove any "
-"problem<br>modules from your configuration. The module<br>configuration "
-"dialog should let you select your<br>modules again.\n"
-msgstr ""
-"Moksha a planté en phase d'initialisation et a été relancé.<br>Tous les "
-"modules ont été désactivés et ne seront pas chargés pour vous<br>aider à "
-"supprimer les modules problématiques de votre configuration.<ps/>Le dialogue "
-"de configuration des modules vous permettra<ps/>de recharger vos modules.\n"
+msgid "Moksha crashed early on start and has<br>been restarted. All modules have been disabled<br>and will not be loaded to help remove any problem<br>modules from your configuration. The module<br>configuration dialog should let you select your<br>modules again.\n"
+msgstr "Moksha a planté en phase d'initialisation et a été relancé.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<ps/>Le dialogue de configuration des modules vous permettra<ps/>de recharger vos modules.\n"
 
 #: src/bin/e_main.c:1949
-msgid ""
-"Moksha crashed early on start and has been restarted.<br>All modules have "
-"been disabled and will not be loaded to help<br>remove any problem modules "
-"from your configuration.<br><br>The module configuration dialog should let "
-"you select your<br>modules again."
-msgstr ""
-"Moksha a planté en phase d'initialisation et a été relancé.<br>Tous les "
-"modules ont été désactivés et ne seront pas chargés pour vous<br>aider à "
-"supprimer les modules problématiques de votre configuration.<br><br>Le "
-"dialogue de configuration des modules vous permettra<br>de recharger vos "
-"modules."
+msgid "Moksha crashed early on start and has been restarted.<br>All modules have been disabled and will not be loaded to help<br>remove any problem modules from your configuration.<br><br>The module configuration dialog should let you select your<br>modules again."
+msgstr "Moksha a planté en phase d'initialisation et a été relancé.<br>Tous les modules ont été désactivés et ne seront pas chargés pour vous<br>aider à supprimer les modules problématiques de votre configuration.<br><br>Le dialogue de configuration des modules vous permettra<br>de recharger vos modules."
 
 #: src/bin/e_module.c:170
 #, c-format
@@ -3599,12 +3359,8 @@ msgstr "Chargement du module : %s"
 
 #: src/bin/e_module.c:219
 #, c-format
-msgid ""
-"There was an error loading the module named: %s<br>No module named %s could "
-"be found in the<br>module search directories.<br>"
-msgstr ""
-"Erreur de chargement du module %s.<br>Aucun module nommé « %s » n'est "
-"présent dans<br>le chemin de recherche des modules.<br>"
+msgid "There was an error loading the module named: %s<br>No module named %s could be found in the<br>module search directories.<br>"
+msgstr "Erreur de chargement du module %s.<br>Aucun module nommé « %s » n'est présent dans<br>le chemin de recherche des modules.<br>"
 
 #: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
 msgid "Error loading Module"
@@ -3612,12 +3368,8 @@ msgstr "Erreur de chargement du module"
 
 #: src/bin/e_module.c:230 src/bin/e_module.c:247
 #, c-format
-msgid ""
-"There was an error loading the module named: %s<br>The full path to this "
-"module is:<br>%s<br>The error reported was:<br>%s<br>"
-msgstr ""
-"Erreur de chargement du module %s.<br>Le chemin absolu vers le module est "
-"<br>%s<br>L'erreur rapportée est :<br>%s<br>"
+msgid "There was an error loading the module named: %s<br>The full path to this module is:<br>%s<br>The error reported was:<br>%s<br>"
+msgstr "Erreur de chargement du module %s.<br>Le chemin absolu vers le module est <br>%s<br>L'erreur rapportée est :<br>%s<br>"
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions"
@@ -3625,13 +3377,8 @@ msgstr "Le module ne contient pas toutes les fonctions nécessaires"
 
 #: src/bin/e_module.c:267
 #, c-format
-msgid ""
-"Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
-"module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
-msgstr ""
-"Erreur de L'API du module.<br>Erreur d'initialisation du module %s<br>Celui-"
-"ci requiert la version %i de l'API.<br>Or la version de l'API retournée par "
-"Moksha est : %i.<br>"
+msgid "Module API Error<br>Error initializing Module: %s<br>It requires a minimum module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
+msgstr "Erreur de L'API du module.<br>Erreur d'initialisation du module %s<br>Celui-ci requiert la version %i de l'API.<br>Or la version de l'API retournée par Moksha est : %i.<br>"
 
 #: src/bin/e_module.c:272
 #, c-format
@@ -3650,14 +3397,8 @@ msgid "Keep"
 msgstr "Conserver"
 
 #: src/bin/e_module.c:807
-msgid ""
-"The following modules are not standard ones for<br>Moksha and may cause bugs "
-"and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
-"module list is as follows:<br><br>"
-msgstr ""
-"Les modules suivants ne sont pas conformes au standard de<br>Moksha et "
-"peuvent provoquer bogues et plantages.<br>Désactivez-les avant tout rapport "
-"de bogue.<br><br>La liste des modules est la suivante :<br><br>"
+msgid "The following modules are not standard ones for<br>Moksha and may cause bugs and crashes.<br>Please remove them before reporting any bugs.<br><br>The module list is as follows:<br><br>"
+msgstr "Les modules suivants ne sont pas conformes au standard de<br>Moksha et peuvent provoquer bogues et plantages.<br>Désactivez-les avant tout rapport de bogue.<br><br>La liste des modules est la suivante :<br><br>"
 
 #: src/bin/e_module.c:819
 msgid "Unstable module tainting"
@@ -3668,14 +3409,8 @@ msgid "I know"
 msgstr "C'est compris"
 
 #: src/bin/e_screensaver.c:187
-msgid ""
-"You disabled the screensaver too fast.<br><br>Would you like to enable "
-"<b>presentation</b> mode and temporarily disable screen saver, lock and "
-"power saving?"
-msgstr ""
-"Vous avez désactivé l'écran de veille trop rapidement.<br><br>Voulez-vous "
-"activer le mode de <b>présentation</b> et temporairement désactiver l'écran "
-"de veille, le verrouillage et la gestion de l'énergie ?"
+msgid "You disabled the screensaver too fast.<br><br>Would you like to enable <b>presentation</b> mode and temporarily disable screen saver, lock and power saving?"
+msgstr "Vous avez désactivé l'écran de veille trop rapidement.<br><br>Voulez-vous activer le mode de <b>présentation</b> et temporairement désactiver l'écran de veille, le verrouillage et la gestion de l'énergie ?"
 
 #: src/bin/e_shelf.c:67
 msgid "Float"
@@ -3753,13 +3488,8 @@ msgid "Shelf Autohide Error"
 msgstr "Erreur d'auto-masquage du rayon"
 
 #: src/bin/e_shelf.c:894
-msgid ""
-"Shelf autohiding will not work properly<br>with the current configuration; "
-"set your shelf to<br>\"Below Everything\" or disable autohiding."
-msgstr ""
-"L’auto-masquage du rayon ne va pas fonctionner correctement<br>avec la "
-"configuration actuelle ; configurez votre rayon en<br>« En dessous de tout » "
-"ou désactivez l'auto-masquage."
+msgid "Shelf autohiding will not work properly<br>with the current configuration; set your shelf to<br>\"Below Everything\" or disable autohiding."
+msgstr "L’auto-masquage du rayon ne va pas fonctionner correctement<br>avec la configuration actuelle ; configurez votre rayon en<br>« En dessous de tout » ou désactivez l'auto-masquage."
 
 #: src/bin/e_shelf.c:1124
 msgid "Add New Shelf"
@@ -3822,15 +3552,8 @@ msgstr "Vérification du système terminée"
 
 #: src/bin/e_sys.c:440
 #, c-format
-msgid ""
-"Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
-"want to finish the logout<br>anyway without closing these<br>applications "
-"first?<br><br>%s<br>Auto logout in %d seconds."
-msgstr ""
-"La fermeture de la session est trop longue.<br>Certaines applications "
-"refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?<br><br>"
-"%s<br>Fermeture automatique dans %d secondes."
+msgid "Logout is taking too long.<br>Some applications refuse to close.<br>Do you want to finish the logout<br>anyway without closing these<br>applications first?<br><br>%s<br>Auto logout in %d seconds."
+msgstr "La fermeture de la session est trop longue.<br>Certaines applications refusent de se terminer.<br>Voulez-vous forcer la fin de cette session<br>sans attendre la fermeture des applications ?<br><br>%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3861,44 +3584,24 @@ msgid "Moksha is busy with another request"
 msgstr "Moksha est occupé à traiter une autre requête"
 
 #: src/bin/e_sys.c:600
-msgid ""
-"Logging out.<br>You cannot perform other system actions<br>once a logout has "
-"begun."
-msgstr ""
-"Fermeture de session en cours.<br>Vous ne pouvez pas effectuer d'autres "
-"actions système<br>pendant cette phase."
+msgid "Logging out.<br>You cannot perform other system actions<br>once a logout has begun."
+msgstr "Fermeture de session en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:607
-msgid ""
-"Powering off.<br>You cannot do any other system actions<br>once a shutdown "
-"has been started."
-msgstr ""
-"Extinction en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
-"système<br>pendant cette phase."
+msgid "Powering off.<br>You cannot do any other system actions<br>once a shutdown has been started."
+msgstr "Extinction en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:613
-msgid ""
-"Resetting.<br>You cannot do any other system actions<br>once a reboot has "
-"begun."
-msgstr ""
-"Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
-"système<br>pendant cette phase."
+msgid "Resetting.<br>You cannot do any other system actions<br>once a reboot has begun."
+msgstr "Redémarrage en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:619
-msgid ""
-"Suspending.<br>Until suspend is complete you cannot perform<br>any other "
-"system actions."
-msgstr ""
-"Mise en veille en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
-"système<br>pendant cette phase."
+msgid "Suspending.<br>Until suspend is complete you cannot perform<br>any other system actions."
+msgstr "Mise en veille en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:625
-msgid ""
-"Hibernating.<br>You cannot perform any other system actions<br>until this is "
-"complete."
-msgstr ""
-"Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres "
-"actions système<br>pendant cette phase."
+msgid "Hibernating.<br>You cannot perform any other system actions<br>until this is complete."
+msgstr "Mise en hibernation en cours.<br>Vous ne pouvez pas effectuer d'autres actions système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
@@ -3946,8 +3649,7 @@ msgstr "Mise en hibernation"
 
 #: src/bin/e_sys.c:925
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
-msgstr ""
-"Mise en hibernation en cours.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Mise en hibernation en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_theme_about.c:25
 msgid "Select Theme"
@@ -3983,14 +3685,8 @@ msgstr "Avis de mise à jour"
 
 #: src/bin/e_update.c:87
 #, c-format
-msgid ""
-"Your enlightenment version is<br>not the current latest release.<br>The "
-"latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
-"update your system packages<br>to get a new version."
-msgstr ""
-"Votre version d'Enlightenment<br>n'est pas la toute dernière publiée.<br>La "
-"dernière version est :<br><br>%s<br><br>Visitez www.enlightenment.org<br>ou "
-"mettez à jour vos paquets système<br>pour obtenir une nouvelle version."
+msgid "Your enlightenment version is<br>not the current latest release.<br>The latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or update your system packages<br>to get a new version."
+msgstr "Votre version d'Enlightenment<br>n'est pas la toute dernière publiée.<br>La dernière version est :<br><br>%s<br><br>Visitez www.enlightenment.org<br>ou mettez à jour vos paquets système<br>pour obtenir une nouvelle version."
 
 #: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -4003,14 +3699,8 @@ msgid "Cannot exit - immortal windows."
 msgstr "Impossible de quitter : fenêtres immortelles."
 
 #: src/bin/e_utils.c:238
-msgid ""
-"Some windows are left still around with the Lifespan lock enabled. This "
-"means<br>that Moksha will not allow itself to exit until these windows "
-"have<br>been closed or have the lifespan lock removed.<br>"
-msgstr ""
-"Des fenêtres sont toujours présentes car elles ont été verrouillées."
-"<br>Moksha n'autorisera pas la fin de session tant que ces<br>fenêtres "
-"n'auront pas été fermées, ou déverrouillées.<br>"
+msgid "Some windows are left still around with the Lifespan lock enabled. This means<br>that Moksha will not allow itself to exit until these windows have<br>been closed or have the lifespan lock removed.<br>"
+msgstr "Des fenêtres sont toujours présentes car elles ont été verrouillées.<br>Moksha n'autorisera pas la fin de session tant que ces<br>fenêtres n'auront pas été fermées, ou déverrouillées.<br>"
 
 #: src/bin/e_utils.c:781
 #, c-format
@@ -4106,36 +3796,17 @@ msgstr "Erreur lors de la création du dossier"
 
 #: src/bin/e_utils.c:927
 #, c-format
-msgid ""
-"Failed to create directory: %s .<br>Check that you have correct permissions "
-"set."
-msgstr ""
-"Échec de la création du dossier : %s.<br>Vérifiez que les permissions sont "
-"correctes."
+msgid "Failed to create directory: %s .<br>Check that you have correct permissions set."
+msgstr "Échec de la création du dossier : %s.<br>Vérifiez que les permissions sont correctes."
 
 #: src/bin/e_utils.c:935
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
-msgstr ""
-"Échec de la création du dossier : %s.<br>Un fichier du même nom existe déjà."
+msgstr "Échec de la création du dossier : %s.<br>Un fichier du même nom existe déjà."
 
 #: src/bin/e_utils.c:1097
-msgid ""
-"Configuration data needed upgrading. Your old configuration<br>has been "
-"wiped and a new set of defaults initialized. This<br>will happen regularly "
-"during development, so don't report a<br>bug. This means the module needs "
-"new configuration<br>data by default for usable functionality that your "
-"old<br>configuration lacked. This new set of defaults will fix<br>that by "
-"adding it in. You can re-configure things now to your<br>liking. Sorry for "
-"the hiccup in your configuration.<br>"
-msgstr ""
-"La configuration a dû être mise à jour. Votre ancienne configuration<br>a "
-"été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela "
-"risque d'arriver en phase de développement, alors il est inutile<br>de faire "
-"un rapport de bogue. Cela signifie simplement que le module a besoin<br>de "
-"cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez "
-"maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne "
-"occasionnée.<br>"
+msgid "Configuration data needed upgrading. Your old configuration<br>has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration lacked. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the hiccup in your configuration.<br>"
+msgstr "La configuration a dû être mise à jour. Votre ancienne configuration<br>a été supprimée et de nouveaux paramètres par défaut sont en place.<br>Cela risque d'arriver en phase de développement, alors il est inutile<br>de faire un rapport de bogue. Cela signifie simplement que le module a besoin<br>de cette mise à niveau pour être à nouveau fonctionnel.<br>Vous pouvez maintenant tout reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
 #: src/bin/e_utils.c:1106 src/bin/e_utils.c:1130
 #, c-format
@@ -4143,20 +3814,8 @@ msgid "%s Configuration Updated"
 msgstr "Configuration de %s à jour"
 
 #: src/bin/e_utils.c:1119
-msgid ""
-"Your module configuration is NEWER than the module version. This is "
-"very<br>strange. This should not happen unless you downgraded<br>the module "
-"or copied the configuration from a place where<br>a newer version of the "
-"module was running. This is bad and<br>as a precaution your configuration "
-"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
-"Votre configuration du module est PLUS RÉCENTE que la version<br>actuelle du "
-"module. C'est vraiment étonnant. Cela ne devrait<br>pas se produire à moins "
-"que vous n'ayez installé une version<br>antérieure ou copié la configuration "
-"du module depuis une machine sur<br>laquelle une version plus récente était "
-"en cours. Ce n'est<br>pas sain et, par mesure de précaution, les valeurs "
-"par<br>défaut de votre configuration ont été restaurées.<br>Désolé pour le "
-"désagrément.<br>"
+msgid "Your module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Votre configuration du module est PLUS RÉCENTE que la version<br>actuelle du module. C'est vraiment étonnant. Cela ne devrait<br>pas se produire à moins que vous n'ayez installé une version<br>antérieure ou copié la configuration du module depuis une machine sur<br>laquelle une version plus récente était en cours. Ce n'est<br>pas sain et, par mesure de précaution, les valeurs par<br>défaut de votre configuration ont été restaurées.<br>Désolé pour le désagrément.<br>"
 
 #: src/bin/e_utils.c:1213
 #, c-format
@@ -4522,12 +4181,8 @@ msgstr "Paramétrage de l'horloge"
 
 #: src/modules/clock/e_mod_config.c:96
 #, c-format
-msgid ""
-"Click on a calendar day to change the date. <br>Use the mouse wheel to "
-"change the year."
-msgstr ""
-"Cliquez sur un jour du calendrier pour changer la date.<br>Utilisez la "
-"molette de la souris pour changer l'année."
+msgid "Click on a calendar day to change the date. <br>Use the mouse wheel to change the year."
+msgstr "Cliquez sur un jour du calendrier pour changer la date.<br>Utilisez la molette de la souris pour changer l'année."
 
 #: src/modules/clock/e_mod_config.c:98
 msgid "Clock module Information"
@@ -4808,9 +4463,7 @@ msgstr "Ajouter un profil"
 #: src/modules/conf_dialogs/e_int_config_profiles.c:336
 #, c-format
 msgid "You want to delete the \"%s\" profile.<br><br>Are you sure?"
-msgstr ""
-"Vous avez demandé à supprimer le profil « %s ».<br><br>Voulez-vous vraiment "
-"le faire ?"
+msgstr "Vous avez demandé à supprimer le profil « %s ».<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:338
 msgid "Are you sure you want to delete this profile?"
@@ -5188,14 +4841,8 @@ msgid "<None>"
 msgstr "<Aucun>"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:5
-msgid ""
-"Please select an edge,<br>or click <hilight>Close</hilight> to abort."
-"<br><br>You can either specify a delay of this<br> action using the slider, "
-"or make it<br>respond to edge clicks:"
-msgstr ""
-"Choisissez un bord,<br>ou cliquez sur <hilight>Fermer</hilight> pour annuler."
-"<br><br>Vous avez le choix entre spécifier un délai<br>pour cette action en "
-"utilisant le curseur,<br>ou l'activer par un clic :"
+msgid "Please select an edge,<br>or click <hilight>Close</hilight> to abort.<br><br>You can either specify a delay of this<br> action using the slider, or make it<br>respond to edge clicks:"
+msgstr "Choisissez un bord,<br>ou cliquez sur <hilight>Fermer</hilight> pour annuler.<br><br>Vous avez le choix entre spécifier un délai<br>pour cette action en utilisant le curseur,<br>ou l'activer par un clic :"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
@@ -5273,13 +4920,8 @@ msgstr "Erreur de séquence du raccourci souris"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
 #, c-format
-msgid ""
-"The edge binding that you chose is already used by<br><hilight>%s</hilight> "
-"action.<br>Please choose another edge to bind."
-msgstr ""
-"La séquence de raccourci que vous avez choisie est déjà utilisée<br>par "
-"l'action <hilight>%s</hilight>.<br>Choisissez une autre séquence pour le "
-"raccourci des bords."
+msgid "The edge binding that you chose is already used by<br><hilight>%s</hilight> action.<br>Please choose another edge to bind."
+msgstr "La séquence de raccourci que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre séquence pour le raccourci des bords."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
@@ -5352,12 +4994,8 @@ msgstr "Le signal et la source DOIVENT être complétés !"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:585
 #, c-format
-msgid ""
-"The signal and source that you entered are already used by<br><hilight>%s</"
-"hilight> action.<br>"
-msgstr ""
-"Le signal et la source que vous avez choisis sont déjà utilisés par l'action "
-"<br><hilight>%s</hilight>.<br>"
+msgid "The signal and source that you entered are already used by<br><hilight>%s</hilight> action.<br>"
+msgstr "Le signal et la source que vous avez choisis sont déjà utilisés par l'action <br><hilight>%s</hilight>.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5593,17 +5231,12 @@ msgid "Input Method Config Import Error"
 msgstr "Erreur d'importation de la méthode de saisie"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:284
-msgid ""
-"Moksha was unable to import the configuration.<br><br>Are you sure this is "
-"really a valid configuration?"
-msgstr ""
-"Moksha n'a pu importer la configuration.<br><br>Est-ce vraiment une "
-"configuration valide ?"
+msgid "Moksha was unable to import the configuration.<br><br>Are you sure this is really a valid configuration?"
+msgstr "Moksha n'a pu importer la configuration.<br><br>Est-ce vraiment une configuration valide ?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
-msgstr ""
-"Moksha n'a pu importer cette configuration<br>à cause d'une erreur de copie."
+msgstr "Moksha n'a pu importer cette configuration<br>à cause d'une erreur de copie."
 
 #: src/modules/conf_intl/e_int_config_intl.c:604
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -5617,16 +5250,8 @@ msgstr "Paramétrage de la langue pour le verrouillage d'écran"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1000
 #, c-format
-msgid ""
-"You have some extra locale environment<br>variables set that may interfere "
-"with<br>correct display of your chosen language.<br>If you don't want these "
-"affected, use the<br>Environment variable settings to unset them.<br>The "
-"variables that may affect you are<br>as follows:<br>%s"
-msgstr ""
-"Certaines variantes de localisation<br>sont susceptibles de perturber "
-"le<br>rendu de la langue sélectionnée.<br>Pour éviter cela, utilisez "
-"la<br>configuration des Variables<br>d'environnement pour les désactiver."
-"<br>Les variantes problématiques sont :<br>%s"
+msgid "You have some extra locale environment<br>variables set that may interfere with<br>correct display of your chosen language.<br>If you don't want these affected, use the<br>Environment variable settings to unset them.<br>The variables that may affect you are<br>as follows:<br>%s"
+msgstr "Certaines variantes de localisation<br>sont susceptibles de perturber le<br>rendu de la langue sélectionnée.<br>Pour éviter cela, utilisez la<br>configuration des Variables<br>d'environnement pour les désactiver.<br>Les variantes problématiques sont :<br>%s"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1008
 msgid "Possible Locale problems"
@@ -5808,12 +5433,8 @@ msgid "ACPI Binding"
 msgstr "Raccourcis ACPI"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:526
-msgid ""
-"Please trigger the ACPI event you wish to bind to, <br><br>or "
-"<hilight>Escape</hilight> to abort."
-msgstr ""
-"Composez votre séquence au clavier,<br><br>ou <hilight>Échap</hilight> pour "
-"annuler."
+msgid "Please trigger the ACPI event you wish to bind to, <br><br>or <hilight>Escape</hilight> to abort."
+msgstr "Composez votre séquence au clavier,<br><br>ou <hilight>Échap</hilight> pour annuler."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -5835,35 +5456,20 @@ msgstr "Erreur de raccourci clavier"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
-msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
-msgstr ""
-"La séquence de raccourci clavier que vous avez choisie est déjà "
-"utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
-"séquence de raccourci clavier."
+msgid "The binding key sequence, that you choose, is already used by <br><hilight>%s</hilight> action.<br>Please choose another binding key sequence."
+msgstr "La séquence de raccourci clavier que vous avez choisie est déjà utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre séquence de raccourci clavier."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-msgid ""
-"Please hold any modifier you want<br>and press any button on your mouse,"
-"<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
-"hilight> to abort."
-msgstr ""
-"Appuyez sur le modificateur de votre choix et<br>sur un bouton de votre "
-"souris ou<br> ou tournant la molette, afin d'assigner<br>un raccourci souris."
-"<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
+msgid "Please hold any modifier you want<br>and press any button on your mouse,<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</hilight> to abort."
+msgstr "Appuyez sur le modificateur de votre choix et<br>sur un bouton de votre souris ou<br> ou tournant la molette, afin d'assigner<br>un raccourci souris.<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
 msgstr "Paramétrage des raccourcis souris"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:249
-msgid ""
-"Unable to set a mouse wheel binding without modifiers<br>on a window: "
-"conflict with existing edje signal bindings.<br>FIXME!!!"
-msgstr ""
-"Il n'est pas possible de définir un raccourci avec la molette<br>sans "
-"modificateur : il se produirait un signal edje conflictuel.<br>À CORRIGER !"
+msgid "Unable to set a mouse wheel binding without modifiers<br>on a window: conflict with existing edje signal bindings.<br>FIXME!!!"
+msgstr "Il n'est pas possible de définir un raccourci avec la molette<br>sans modificateur : il se produirait un signal edje conflictuel.<br>À CORRIGER !"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -6308,14 +5914,8 @@ msgid "Use ARGB instead of shaped windows"
 msgstr "Utiliser ARGB au lieu des formes"
 
 #: src/modules/conf_performance/e_int_config_engine.c:110
-msgid ""
-"You have chosen to enable ARGB composite support,<br>but your current screen "
-"does not support composite.<br><br>Are you sure you wish to enable ARGB "
-"support?"
-msgstr ""
-"Vous avez choisi d'activer le support composite ARGB<br>mais l'écran actuel "
-"ne le prend pas en charge.<br><br>Voulez-vous vraiment activer le support "
-"ARGB ?"
+msgid "You have chosen to enable ARGB composite support,<br>but your current screen does not support composite.<br><br>Are you sure you wish to enable ARGB support?"
+msgstr "Vous avez choisi d'activer le support composite ARGB<br>mais l'écran actuel ne le prend pas en charge.<br><br>Voulez-vous vraiment activer le support ARGB ?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -7115,8 +6715,7 @@ msgstr "Erreur du fichier de thème"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
-"Les fichiers listés ne semblent pas être des thèmes pour Moksha :<ps/>%s"
+msgstr "Les fichiers listés ne semblent pas être des thèmes pour Moksha :<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
@@ -7150,11 +6749,8 @@ msgid "Theme Import Error"
 msgstr "Erreur lors de l'importation du thème"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:284
-msgid ""
-"Moksha was unable to import the theme.<br><br>Are you sure this is really a "
-"valid theme?"
-msgstr ""
-"Moksha n'a pu importer ce thème.<br><br>Est-ce vraiment un thème valide ?"
+msgid "Moksha was unable to import the theme.<br><br>Are you sure this is really a valid theme?"
+msgstr "Moksha n'a pu importer ce thème.<br><br>Est-ce vraiment un thème valide ?"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
 msgid "Moksha was unable to import the theme<br>due to a copy error."
@@ -7809,50 +7405,28 @@ msgid "Power State Max"
 msgstr "Puissance max."
 
 #: src/modules/cpufreq/e_mod_main.c:514
-msgid ""
-"There was an error trying to set the<ps/>cpu frequency governor via the "
-"module's<ps/>setfreq utility."
-msgstr ""
-"Une erreur s'est produite lors de la tentative<ps/>de modification du "
-"régulateur de fréquence du CPU<ps/>via l'utilitaire setfreq du module."
+msgid "There was an error trying to set the<ps/>cpu frequency governor via the module's<ps/>setfreq utility."
+msgstr "Une erreur s'est produite lors de la tentative<ps/>de modification du régulateur de fréquence du CPU<ps/>via l'utilitaire setfreq du module."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-msgid ""
-"Your kernel does not support setting the<ps/>CPU frequency at all. You may "
-"be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
-"support this feature."
-msgstr ""
-"Le noyau n'est pas capable d'agir sur la fréquence du CPU.<ps/>Il a peut-"
-"être été compilé sans les modules adéquats,<ps/>ou votre CPU ne supporte pas "
-"cette fonctionnalité."
+msgid "Your kernel does not support setting the<ps/>CPU frequency at all. You may be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not support this feature."
+msgstr "Le noyau n'est pas capable d'agir sur la fréquence du CPU.<ps/>Il a peut-être été compilé sans les modules adéquats,<ps/>ou votre CPU ne supporte pas cette fonctionnalité."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-msgid ""
-"There was an error trying to set the<ps/>cpu frequency setting via the "
-"module's<ps/>setfreq utility."
-msgstr ""
-"Une erreur s'est produite lors de la tentative<ps/>de changement de "
-"fréquence du CPU<ps/>via l'utilitaire setfreq du module."
+msgid "There was an error trying to set the<ps/>cpu frequency setting via the module's<ps/>setfreq utility."
+msgstr "Une erreur s'est produite lors de la tentative<ps/>de changement de fréquence du CPU<ps/>via l'utilitaire setfreq du module."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-msgid ""
-"There was an error trying to set the<ps/>cpu power state setting via the "
-"module's<ps/>setfreq utility."
-msgstr ""
-"Une erreur s'est produite lors de la tentative<br>de changement de puissance "
-"du CPU<br>via l'utilitaire setfreq du module."
+msgid "There was an error trying to set the<ps/>cpu power state setting via the module's<ps/>setfreq utility."
+msgstr "Une erreur s'est produite lors de la tentative<br>de changement de puissance du CPU<br>via l'utilitaire setfreq du module."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
 msgid "Cpufreq Error"
 msgstr "Erreur : Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
-msgid ""
-"The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
-"failed)"
-msgstr ""
-"L'utilitaire freqset de Cpufreq est introuvable<ps/>dans le dossier du "
-"module (échec de stat)"
+msgid "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat failed)"
+msgstr "L'utilitaire freqset de Cpufreq est introuvable<ps/>dans le dossier du module (échec de stat)"
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
@@ -7860,15 +7434,8 @@ msgstr "Erreur des permissions de Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
 #, c-format
-msgid ""
-"The freqset binary in the cpufreq module<ps/>is not owned by root or does "
-"not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
-"example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
-msgstr ""
-"L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
-"droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+msgid "The freqset binary in the cpufreq module<ps/>is not owned by root or does not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
+msgstr "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8259,45 +7826,8 @@ msgid "Browse %s"
 msgstr "Parcourir %s"
 
 #: src/modules/everything/evry_view_help.c:67
-msgid ""
-"  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  "
-"Just type a few letters of the thing you are looking for. <br>  Use cursor "
-"<hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  "
-"Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  "
-"<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
-"you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
-msgstr ""
-"  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les "
-"premières lettres de ce que vous recherchez. <br>  Utilisez les touches "
-"<hilight>&lt;Flèche haut / bas&gt;</hilight> pour choisir dans la liste."
-"<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner "
-"une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne "
-"s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
-"<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
-"dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
-"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
-"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
-"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
-"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
-"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
-"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
-"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
-"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
-"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
-"des vignettes"
+msgid "  Ok, here comes the explanation of <hilight>everything</hilight>...<br>  Just type a few letters of the thing you are looking for. <br>  Use cursor <hilight>&lt;up/down&gt;</hilight> to choose from the list of things.<br>  Press  <hilight>&lt;tab&gt;</hilight> to select an action, then press  <hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    <hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
+msgstr "  L'omnipotence selon <hilight>Omni</hilight>...<br>  Tapez juste les premières lettres de ce que vous recherchez. <br>  Utilisez les touches <hilight>&lt;Flèche haut / bas&gt;</hilight> pour choisir dans la liste.<br>  Appuyez sur <hilight>&lt;Tabulation&gt;</hilight> pour sélectionner une action, puis sur  <hilight>&lt;Entrée&gt;</hilight>.<br>  Cette page ne s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>.<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    <hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8837,8 +8367,7 @@ msgstr "La liste des fenêtres ne peut être activée depuis un raccourci de bor
 
 #: src/modules/winlist/e_mod_main.c:215
 msgid "Winlist cannot be activated from a signal binding"
-msgstr ""
-"La liste des fenêtres ne peut être activée depuis un raccourci de signal"
+msgstr "La liste des fenêtres ne peut être activée depuis un raccourci de signal"
 
 #: src/modules/winlist/e_mod_main.c:221
 msgid "Winlist cannot be activated from an ACPI binding"
@@ -8894,12 +8423,8 @@ msgstr "Saisir un nom pour cette nouvelle source :"
 
 #: src/modules/ibar/e_mod_config.c:208
 #, c-format
-msgid ""
-"You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
-"bar source?"
-msgstr ""
-"Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer "
-"cette source ?"
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this bar source?"
+msgstr "Vous avez demandé à supprimer « %s ».<br><br>Voulez-vous vraiment supprimer cette source ?"
 
 #: src/modules/ibar/e_mod_config.c:212
 msgid "Are you sure you want to delete this bar source?"
@@ -9064,14 +8589,8 @@ msgid "Attention"
 msgstr "Attention"
 
 #: src/modules/pager/e_mod_config.c:462
-msgid ""
-"You cannot use the right mouse button in the<br>shelf for this as it is "
-"already taken by internal<br>code for context menus.<br>This button only "
-"works in the popup."
-msgstr ""
-"Vous ne pouvez pas utiliser le bouton droit de la souris<br>dans le rayon "
-"pour cette action car il est déjà utilisé<br>par le code interne, pour les "
-"menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
+msgid "You cannot use the right mouse button in the<br>shelf for this as it is already taken by internal<br>code for context menus.<br>This button only works in the popup."
+msgstr "Vous ne pouvez pas utiliser le bouton droit de la souris<br>dans le rayon pour cette action car il est déjà utilisé<br>par le code interne, pour les menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
 
 #: src/modules/pager/e_mod_main.c:2924
 msgid "Show Pager Popup"
@@ -9199,7 +8718,6 @@ msgid "Temperature"
 msgstr "Température"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "Température du CPU élevée !"
 
@@ -9236,27 +8754,8 @@ msgid "Check for available updates"
 msgstr "Vérifier la disponibilité de mises à jour"
 
 #: src/modules/wizard/page_170.c:33
-msgid ""
-"Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
-"well as available add-ons.<br><br>This is very useful, because it "
-"lets<br>you know about available bug fixes and<br>security fixes when they "
-"happen. As a<br>result, Moksha will connect to<br>enlightenment.org and "
-"transmit some<br>information, much like any web browser<br>might do. No "
-"personal information such as<br>username, password or any personal "
-"files<br>will be transmitted. If you don't like this,<br>please disable this "
-"below. It is highly<br>advised that you do not disable this as it<br>may "
-"leave you vulnerable or having to live<br>with bugs."
-msgstr ""
-"Moksha peut vérifier la présence de nouvelles versions,<br>de mises à jour "
-"de sécurité et de corrections de bogues,<br>ainsi que la disponibilité "
-"d'extensions.<br><br>C'est d'une aide précieuse pour vous tenir informé(e) "
-"des<br>correctifs disponibles dès leur parution. Pour ce faire,<br>Moksha se "
-"connecte à enlightenment.org et échange<ps/>des données comme le ferait "
-"n'importe quel navigateur.<br>Aucune information personnelle telle que le "
-"nom, le mot de<br>passe de l'utilisateur, ou quelque fichier personnel que "
-"ce<br>soit, n'est transmise. Si vous n'en voulez vraiment pas,<br>alors "
-"désactivez la fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous "
-"exposez à des vulnérabilités et à devoir<br>vivre avec des bogues."
+msgid "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as well as available add-ons.<br><br>This is very useful, because it lets<br>you know about available bug fixes and<br>security fixes when they happen. As a<br>result, Moksha will connect to<br>enlightenment.org and transmit some<br>information, much like any web browser<br>might do. No personal information such as<br>username, password or any personal files<br>will be transmitted. If you don't like this,<br>please disable this below. It is highly<br>advised that you do not disable this as it<br>may leave you vulnerable or having to live<br>with bugs."
+msgstr "Moksha peut vérifier la présence de nouvelles versions,<br>de mises à jour de sécurité et de corrections de bogues,<br>ainsi que la disponibilité d'extensions.<br><br>C'est d'une aide précieuse pour vous tenir informé(e) des<br>correctifs disponibles dès leur parution. Pour ce faire,<br>Moksha se connecte à enlightenment.org et échange<ps/>des données comme le ferait n'importe quel navigateur.<br>Aucune information personnelle telle que le nom, le mot de<br>passe de l'utilisateur, ou quelque fichier personnel que ce<br>soit, n'est transmise. Si vous n'en voulez vraiment pas,<br>alors désactivez la fonctionnalité ci-dessous. Mais dans ce<br>cas, vous vous exposez à des vulnérabilités et à devoir<br>vivre avec des bogues."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9268,9 +8767,7 @@ msgstr "Information"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
-msgstr ""
-"Une barre des tâches peut<br>être ajoutée pour montrer<br>applications et "
-"fenêtres ouvertes."
+msgstr "Une barre des tâches peut<br>être ajoutée pour montrer<br>applications et fenêtres ouvertes."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9285,12 +8782,8 @@ msgid "Missing Application"
 msgstr "Application manquante"
 
 #: src/modules/connman/e_mod_main.c:238
-msgid ""
-"This module wants to execute an external application EConnMan that does not "
-"exist.<br>Please install <b>EConnMan</b> application."
-msgstr ""
-"Ce module veut exécuter l'application externe EConnMan, qui n'existe pas."
-"<br>Il faudrait installer l'application <b>EConnMan</b>."
+msgid "This module wants to execute an external application EConnMan that does not exist.<br>Please install <b>EConnMan</b> application."
+msgstr "Ce module veut exécuter l'application externe EConnMan, qui n'existe pas.<br>Il faudrait installer l'application <b>EConnMan</b>."
 
 #: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
@@ -9357,23 +8850,8 @@ msgid "Could not determine command for starting this application!"
 msgstr "Impossible de déterminer la commande qui lance cette application !"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:304
-msgid ""
-"The relaunch option is meant to be used<br>with terminal applications to "
-"create a persistent<br>terminal which reopens when closed, generally "
-"seen<br>in quake-style drop-down terminals.<br>Either the selected "
-"application is not a terminal<br>or the cmdline flag for changing the "
-"terminal's window<br>name is not known. Feel free to submit a bug report if "
-"this<br>is a terminal which can change its window name.<br>Alternatively, "
-"you can add a data.item to"
-msgstr ""
-"L'option « relancer » est conçue pour les applications de terminal "
-"dans<br>le but de créer un terminal persistant qui s'ouvre à nouveau dès sa "
-"fermeture,<br>à l'instar des terminaux déroulants de type Quake.<br>Soit "
-"l'application sélectionnée n'est pas un terminal, soit<br>l'option de la "
-"commande permettant de changer le nom de la fenêtre est inconnue."
-"<br>N'hésitez pas à soumettre un rapport de bogue si le terminal en "
-"question<br>offre bien la possibilité de changer le nom de sa fenêtre.<br>Ou "
-"alors, vous pouvez ajouter un data.item à"
+msgid "The relaunch option is meant to be used<br>with terminal applications to create a persistent<br>terminal which reopens when closed, generally seen<br>in quake-style drop-down terminals.<br>Either the selected application is not a terminal<br>or the cmdline flag for changing the terminal's window<br>name is not known. Feel free to submit a bug report if this<br>is a terminal which can change its window name.<br>Alternatively, you can add a data.item to"
+msgstr "L'option « relancer » est conçue pour les applications de terminal dans<br>le but de créer un terminal persistant qui s'ouvre à nouveau dès sa fermeture,<br>à l'instar des terminaux déroulants de type Quake.<br>Soit l'application sélectionnée n'est pas un terminal, soit<br>l'option de la commande permettant de changer le nom de la fenêtre est inconnue.<br>N'hésitez pas à soumettre un rapport de bogue si le terminal en question<br>offre bien la possibilité de changer le nom de sa fenêtre.<br>Ou alors, vous pouvez ajouter un data.item à"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9403,16 +8881,8 @@ msgstr "Impossible de relancer la boîte de dialogue interne de E !"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:368
 #, c-format
-msgid ""
-"The selected window created with name:<br>%s<br>and class:<br>%s<br>could "
-"not be found in the Quickaccess app database<br>This means that either the "
-"app is unknown to us<br>or it is not intended for use with this option."
-"<br>Please choose an action to take:"
-msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br>est introuvable dans la base de données des<br>applications des accès "
-"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
-"inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
+msgid "The selected window created with name:<br>%s<br>and class:<br>%s<br>could not be found in the Quickaccess app database<br>This means that either the app is unknown to us<br>or it is not intended for use with this option.<br>Please choose an action to take:"
+msgstr "La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>%s<br>est introuvable dans la base de données des<br>applications des accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9467,25 +8937,8 @@ msgid "Add Quickaccess"
 msgstr "Ajouter un accès rapide"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:936
-msgid ""
-"The options found in the Quickaccess menu are as follows:"
-"<br><hilight>Autohide</hilight> - hide the window whenever it loses "
-"focus<br><hilight>Hide Instead of Raise</hilight> - Hide window when "
-"activated without focus<br><hilight>Jump Mode</hilight> - Switch to window's "
-"desk and raise instead of showing/hiding<br><hilight>Relaunch When Closed</"
-"hilight> - Run the entry's command again when its window "
-"exits<br><hilight>Transient</hilight> - Remember only this instance of the "
-"window (not permanent)"
-msgstr ""
-"Le menu des accès rapides fournit les options suivantes :<br><hilight>Auto-"
-"masquage</hilight> — masque la fenêtre lorsqu'elle perd le "
-"focus<br><hilight>Masquer au lieu d'élever</hilight> — masque la fenêtre si "
-"elle est activée sans prendre le focus<br><hilight>Mode saut</hilight> — "
-"bascule vers le bureau de la fenêtre au lieu d'afficher / "
-"masquer<br><hilight>Relancer en cas de fermeture</hilight> — exécute à "
-"nouveau la commande de l'entrée quand la fenêtre se "
-"ferme<br><hilight>Transitoire</hilight> — prend uniquement en compte cette "
-"instance de la fenêtre (temporaire)"
+msgid "The options found in the Quickaccess menu are as follows:<br><hilight>Autohide</hilight> - hide the window whenever it loses focus<br><hilight>Hide Instead of Raise</hilight> - Hide window when activated without focus<br><hilight>Jump Mode</hilight> - Switch to window's desk and raise instead of showing/hiding<br><hilight>Relaunch When Closed</hilight> - Run the entry's command again when its window exits<br><hilight>Transient</hilight> - Remember only this instance of the window (not permanent)"
+msgstr "Le menu des accès rapides fournit les options suivantes :<br><hilight>Auto-masquage</hilight> — masque la fenêtre lorsqu'elle perd le focus<br><hilight>Masquer au lieu d'élever</hilight> — masque la fenêtre si elle est activée sans prendre le focus<br><hilight>Mode saut</hilight> — bascule vers le bureau de la fenêtre au lieu d'afficher / masquer<br><hilight>Relancer en cas de fermeture</hilight> — exécute à nouveau la commande de l'entrée quand la fenêtre se ferme<br><hilight>Transitoire</hilight> — prend uniquement en compte cette instance de la fenêtre (temporaire)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
@@ -9508,24 +8961,15 @@ msgstr "Super ! Activez à nouveau l'entrée de l'accès rapide pour la masquer 
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1016
 msgid "Well done.<br>Now to delete the entry we just made..."
-msgstr ""
-"C'est parfait.<br>Voyons comment supprimer l'entrée que nous venons de "
-"créer..."
+msgstr "C'est parfait.<br>Voyons comment supprimer l'entrée que nous venons de créer..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1032
-msgid ""
-"The demo dialog has been bound to the keys you pressed.<br>Try pressing the "
-"same keys!"
-msgstr ""
-"La boîte de dialogue de démonstration est affectée<br>à la combinaison des "
-"touches que vous<br>avez choisie. <br>Refaites cette combinaison pour voir !"
+msgid "The demo dialog has been bound to the keys you pressed.<br>Try pressing the same keys!"
+msgstr "La boîte de dialogue de démonstration est affectée<br>à la combinaison des touches que vous<br>avez choisie. <br>Refaites cette combinaison pour voir !"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1197
-msgid ""
-"The newly displayed window will activate<br>the Quickaccess binding sequence."
-msgstr ""
-"La fenêtre nouvellement affichée va activer<br>la séquence de raccourci de "
-"l'accès rapide."
+msgid "The newly displayed window will activate<br>the Quickaccess binding sequence."
+msgstr "La fenêtre nouvellement affichée va activer<br>la séquence de raccourci de l'accès rapide."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
@@ -9533,37 +8977,19 @@ msgstr "Démo des accès rapides"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr ""
-"C'est le dialogue de démonstration utilisé pour le tuto des accès rapides"
+msgstr "C'est le dialogue de démonstration utilisé pour le tuto des accès rapides"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
-msgid ""
-"Quickaccess entries can be created from<br>the border menu of any window."
-"<br>Click Continue to see a demonstration."
-msgstr ""
-"Des entrées d'accès rapides peuvent être créées à partir<br>du menu de "
-"bordure de n'importe quelle fenêtre.<br>Cliquez sur « continuer » pour "
-"lancer la démonstration."
+msgid "Quickaccess entries can be created from<br>the border menu of any window.<br>Click Continue to see a demonstration."
+msgstr "Des entrées d'accès rapides peuvent être créées à partir<br>du menu de bordure de n'importe quelle fenêtre.<br>Cliquez sur « continuer » pour lancer la démonstration."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
-msgid ""
-"Quickaccess is a way of binding user-selected<br>windows and applications to "
-"keyboard shortcuts.<br>Once a Quickaccess entry has been created,<br>the "
-"associated window can be returned to immediately<br>on demand by pushing the "
-"keyboard shortcut."
-msgstr ""
-"Accès rapide offre à l'utilisateur la possibilité de lier<br>fenêtres et "
-"applications à des raccourcis clavier.<br>Une fois l'entrée d'accès rapide "
-"créée,<br>on peut revenir à la fenêtre associée instantanément,<br>sur "
-"simple pression des touches du raccourci."
+msgid "Quickaccess is a way of binding user-selected<br>windows and applications to keyboard shortcuts.<br>Once a Quickaccess entry has been created,<br>the associated window can be returned to immediately<br>on demand by pushing the keyboard shortcut."
+msgstr "Accès rapide offre à l'utilisateur la possibilité de lier<br>fenêtres et applications à des raccourcis clavier.<br>Une fois l'entrée d'accès rapide créée,<br>on peut revenir à la fenêtre associée instantanément,<br>sur simple pression des touches du raccourci."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
-msgid ""
-"This appears to be your first time using the Quickaccess module.<br>Would "
-"you like some usage tips?"
-msgstr ""
-"Il semble que ce soit la première fois que vous utilisez le module des accès "
-"rapides.<br>Voulez-vous voir quelques astuces d'utilisation ?"
+msgid "This appears to be your first time using the Quickaccess module.<br>Would you like some usage tips?"
+msgstr "Il semble que ce soit la première fois que vous utilisez le module des accès rapides.<br>Voulez-vous voir quelques astuces d'utilisation ?"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
@@ -9575,9 +9001,7 @@ msgstr "Erreur : Zone de notification"
 
 #: src/modules/systray/e_mod_main.c:535
 msgid "Systray cannot set its background invisible to match its shelf."
-msgstr ""
-"Zone de notification ne peut rendre son arrière-plan invisible pour "
-"correspondre à son rayon."
+msgstr "Zone de notification ne peut rendre son arrière-plan invisible pour correspondre à son rayon."
 
 #: src/modules/systray/e_mod_main.c:941
 msgid "Another systray exists"
@@ -9585,15 +9009,11 @@ msgstr "Il y a déjà une zone de notification"
 
 #: src/modules/systray/e_mod_main.c:942
 msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
-"Il y a déjà une zone de notification active et seule une instance de ce "
-"gadget est autorisée."
+msgstr "Il y a déjà une zone de notification active et seule une instance de ce gadget est autorisée."
 
 #: src/modules/systray/e_mod_main.c:951
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr ""
-"Zone de notification ne peut fonctionner dans un rayon configuré en dessous "
-"de tout."
+msgstr "Zone de notification ne peut fonctionner dans un rayon configuré en dessous de tout."
 
 #: src/modules/systray/e_mod_main.c:1146
 msgid "Systray"
@@ -9616,12 +9036,8 @@ msgid "Error - Folder does not exist"
 msgstr "Erreur : le dossier n'existe pas"
 
 #: src/modules/shot/e_mod_main.c:315
-msgid ""
-"Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
-"Take Screenshot<br><br>Would you like to set up it now?"
-msgstr ""
-"Vous pouvez modifier le dossier dans les paramètres de la capture "
-"d'écran<br><br>Souhaitez-vous le faire maintenant ?"
+msgid "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-Take Screenshot<br><br>Would you like to set up it now?"
+msgstr "Vous pouvez modifier le dossier dans les paramètres de la capture d'écran<br><br>Souhaitez-vous le faire maintenant ?"
 
 #: src/modules/shot/e_mod_main.c:363
 msgid "Error saving screenshot file"
@@ -9637,12 +9053,8 @@ msgid "Error - Unknown format"
 msgstr "Erreur : format inconnu"
 
 #: src/modules/shot/e_mod_main.c:421
-msgid ""
-"File has an unspecified extension.<br>Please use '.jpg' or '.png' "
-"extensions<br>only as other formats are not<br>supported currently."
-msgstr ""
-"L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « ."
-"png »<br>car les autres formats ne sont<br>pas pris en charge."
+msgid "File has an unspecified extension.<br>Please use '.jpg' or '.png' extensions<br>only as other formats are not<br>supported currently."
+msgstr "L'extension du fichier n'est pas spécifiée.<br>Utilisez « .jpg » ou « .png »<br>car les autres formats ne sont<br>pas pris en charge."
 
 #: src/modules/shot/e_mod_main.c:488
 msgid "Select screenshot save location"
@@ -9731,12 +9143,8 @@ msgid "Confirm Share"
 msgstr "Confirmer le partage"
 
 #: src/modules/shot/e_mod_main.c:791
-msgid ""
-"This image will be uploaded<br>to enlightenment.org. It will be publicly "
-"visible."
-msgstr ""
-"Cette image va être téléversée sur enlightenment.org. Elle sera visible par "
-"tous."
+msgid "This image will be uploaded<br>to enlightenment.org. It will be publicly visible."
+msgstr "Cette image va être téléversée sur enlightenment.org. Elle sera visible par tous."
 
 #: src/modules/shot/e_mod_main.c:793
 msgid "Confirm"
@@ -9760,12 +9168,8 @@ msgstr "Partager"
 
 #: src/modules/shot/e_mod_main.c:1215
 #, c-format
-msgid ""
-"Select the screenshot mode... <br>Delay time is set in the Screenshot module "
-"settings<br>The current delay time: <b> %d s</b>"
-msgstr ""
-"Choisissez le mode de capture... <br>Le délai est défini dans les paramètres "
-"du module Capture d'écran.<br>Délai actuel : <b> %d s</b>"
+msgid "Select the screenshot mode... <br>Delay time is set in the Screenshot module settings<br>The current delay time: <b> %d s</b>"
+msgstr "Choisissez le mode de capture... <br>Le délai est défini dans les paramètres du module Capture d'écran.<br>Délai actuel : <b> %d s</b>"
 
 #: src/modules/shot/e_mod_main.c:1224
 msgid "Instant shot"
@@ -9809,7 +9213,6 @@ msgid " Show notifications"
 msgstr " Afficher les notifications"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
 msgstr "Copier dans le presse-papiers"
 
@@ -9900,9 +9303,7 @@ msgstr "Touches rapides"
 
 #: src/modules/tiling/e_mod_config.c:200
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
-msgstr ""
-"Nombre de colonnes utilisées pour le pavage par bureau (0 → pavage "
-"désactivé) :"
+msgstr "Nombre de colonnes utilisées pour le pavage par bureau (0 → pavage désactivé) :"
 
 #: src/modules/tiling/e_mod_config.c:361
 msgid "Tiling Configuration"
@@ -10019,22 +9420,16 @@ msgid "Notification"
 msgstr "Notification"
 
 #: src/modules/notification/e_mod_main.c:109
-#, fuzzy
 msgid "Notification Module"
 msgstr "Module de notification"
 
 #: src/modules/notification/e_mod_main.c:130
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Erreur lors du démarrage du serveur de notifications"
 
 #: src/modules/notification/e_mod_main.c:131
-#, fuzzy
-msgid ""
-"Ensure there's no other module acting as a server and that D-Bus is "
-"correctly installed and running"
-msgstr ""
-"Erreur durant l'initialisation de DBus ! Vérifiez que dbus est correctement "
-"installé et fonctionne."
+msgid "Ensure there's no other module acting as a server and that D-Bus is correctly installed and running"
+msgstr "Assurez-vous qu'aucun autre module ne fait office de serveur et que D-Bus est correctement installé et fonctionne."
 
 #: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:410
@@ -10062,24 +9457,16 @@ msgid "Enter Offline Mode"
 msgstr "Entrée en mode hors-ligne"
 
 #: src/modules/notification/e_mod_main.c:653
-msgid ""
-"Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
-"network will stop polling remote services."
-msgstr ""
-"Moksha est en mode <b>hors-ligne</b>.<br>Dans ce mode, les modules qui "
-"utilisent le réseau n'interrogent plus les services distants."
+msgid "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use network will stop polling remote services."
+msgstr "Moksha est en mode <b>hors-ligne</b>.<br>Dans ce mode, les modules qui utilisent le réseau n'interrogent plus les services distants."
 
 #: src/modules/notification/e_mod_main.c:659
 msgid "Exited Offline Mode"
 msgstr "Sortie du mode hors-ligne"
 
 #: src/modules/notification/e_mod_main.c:660
-msgid ""
-"Now in <b>online</b> mode.<br>Now modules that use network will resume "
-"regular tasks."
-msgstr ""
-"De nouveau <b>en ligne</b>.<br>Les modules qui utilisent le réseau "
-"retrouvent leurs fonctions habituelles."
+msgid "Now in <b>online</b> mode.<br>Now modules that use network will resume regular tasks."
+msgstr "De nouveau <b>en ligne</b>.<br>Les modules qui utilisent le réseau retrouvent leurs fonctions habituelles."
 
 #: src/modules/notification/e_mod_config.c:51
 msgid "Notification Settings"
@@ -10139,7 +9526,6 @@ msgid "Show notification counter"
 msgstr "Afficher le compteur de notifications"
 
 #: src/modules/notification/e_mod_config.c:191
-#, fuzzy
 msgid "Secure Clear"
 msgstr "Suppression sécurisée"
 
@@ -10271,24 +9657,16 @@ msgid "Confirm History Deletion"
 msgstr "Confirmer la suppression de l'historique"
 
 #: src/modules/clipboard/e_mod_main.c:665
-msgid ""
-"You wish to delete the clipboards history.<br><br>Are you sure you want to "
-"delete it?"
-msgstr ""
-"Vous avez demandé à supprimer l'historique des presse-papiers.<br><br>Voulez-"
-"vous vraiment le faire ?"
+msgid "You wish to delete the clipboards history.<br><br>Are you sure you want to delete it?"
+msgstr "Vous avez demandé à supprimer l'historique des presse-papiers.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/modules/clipboard/e_mod_main.c:750
 msgid "Confirm Item Deletion"
 msgstr "Confirmer la suppression de l'élément"
 
 #: src/modules/clipboard/e_mod_main.c:752
-msgid ""
-"You wish to delete the current item.<br><br>Are you sure you want to delete "
-"it?"
-msgstr ""
-"Vous avez demandé à supprimer l'élément actuel.<br><br>Voulez-vous vraiment "
-"le faire ?"
+msgid "You wish to delete the current item.<br><br>Are you sure you want to delete it?"
+msgstr "Vous avez demandé à supprimer l'élément actuel.<br><br>Voulez-vous vraiment le faire ?"
 
 #: src/modules/clipboard/e_mod_main.c:780
 msgid "Clipboard: Edit Item"
@@ -10311,9 +9689,8 @@ msgid "Clear History"
 msgstr "Effacer l'historique"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Extinction de l'écran"
+msgstr "Inhibiteurs d'extinction"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10371,12 +9748,8 @@ msgid "Places Configuration Updated"
 msgstr "Configuration de Raccourcis actualisée"
 
 #: src/modules/places/e_mod_places.c:653
-msgid ""
-"<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
-"file manager in<br>the gadget configuration."
-msgstr ""
-"<b>Impossible d'exécuter EFM.</b><br>Choisissez un gestionnaire de "
-"fichiers<br>personnalisé dans la configuration du gadget."
+msgid "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom file manager in<br>the gadget configuration."
+msgstr "<b>Impossible d'exécuter EFM.</b><br>Choisissez un gestionnaire de fichiers<br>personnalisé dans la configuration du gadget."
 
 #: src/modules/places/e_mod_places.c:726
 #, c-format
@@ -10390,27 +9763,23 @@ msgstr "L'occupation du disque « %s » est de %d %% !"
 
 #: src/modules/places/e_mod_places.c:832
 msgid "b"
-msgstr ""
+msgstr "o"
 
 #: src/modules/places/e_mod_places.c:837
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "Ko"
 
 #: src/modules/places/e_mod_places.c:842
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "Mo"
 
 #: src/modules/places/e_mod_places.c:847
-#, fuzzy
 msgid "GB"
-msgstr "V"
+msgstr "Go"
 
 #: src/modules/places/e_mod_places.c:851
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "To"
 
 #: src/modules/places/e_mod_places.c:887
 msgid "No Name"
@@ -10641,6 +10010,7 @@ msgstr "Son coupé"
 #~ msgstr "Naviguer…"
 
 #~ msgid "Processing %d operation"
+
 #~ msgid_plural "Processing %d operations"
 #~ msgstr[0] "Traitement de %d opération"
 #~ msgstr[1] "Traitement de %d opération(s)"
