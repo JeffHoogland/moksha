@@ -1177,7 +1177,7 @@ ACT_FN_GO(window_push, )
         E_Border_List *bd_list;
         E_Desk *desk_current;
         int hdir, vdir;
-        int x, y, zx, zy, zw, zh;
+        int x, y, zx = 0, zy, zw = 0, zh;
 
         if (strcmp(params, "left") == 0)
           {
@@ -1397,7 +1397,7 @@ ACT_FN_GO(window_desk_move_by, )
    if (sscanf(params, "%d %d", &x, &y) == 2)
      {
         E_Desk *desk;
-        int dx, dy;
+        int dx = 0, dy = 0;
         int to_x = 0, to_y = 0;
 
         e_desk_xy_get(bd->desk, &dx, &dy);
