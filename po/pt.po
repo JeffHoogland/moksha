@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-15 12:18-0400\n"
-"PO-Revision-Date: 2022-09-16 14:09+0100\n"
+"PO-Revision-Date: 2022-10-19 16:08+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -876,8 +876,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1540 src/bin/e_config.c:2165
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -996,9 +997,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações.<br>"
-"%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado "
-"para evitar a danificação dos dados.<br>"
+"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações."
+"<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi "
+"eliminado para evitar a danificação dos dados.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:875
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1731,8 +1732,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -5803,8 +5804,9 @@ msgstr "Erro na associação do teclado"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A combinação da associação do teclado escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Por favor escolha outra combinação."
@@ -8233,11 +8235,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8260,8 +8262,8 @@ msgstr ""
 "os \"plugins\"<br>   <hilight>&lt;ctrl+up/down&gt;</hilight> vai para o "
 "primeiro/último item<br>   <hilight>&lt;ctrl+1&gt;</hilight> alterna os "
 "modos de visualização (sai desta página)<br>    <hilight>&lt;ctrl+2&gt;</"
-"hilight> alterna os modos de visualização em lista<br>   <hilight>&lt;ctrl"
-"+3&gt;</hilight> alterna os modos de visualização em miniaturas"
+"hilight> alterna os modos de visualização em lista<br>   <hilight>&lt;"
+"ctrl+3&gt;</hilight> alterna os modos de visualização em miniaturas"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9161,9 +9163,8 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
-msgstr "Temperatura elevada da CPU!"
+msgstr "Alta temperatura da CPU!!"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
@@ -9758,9 +9759,8 @@ msgid " Show notifications"
 msgstr " Mostrar notificações"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
-msgstr "Copiar para a área de transferência"
+msgstr " Copiar para a área de transferência"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"
@@ -9966,21 +9966,20 @@ msgid "Notification"
 msgstr "Notificações"
 
 #: src/modules/notification/e_mod_main.c:109
-#, fuzzy
 msgid "Notification Module"
-msgstr "Módulo de notificações"
+msgstr "Módulo de notificação"
 
 #: src/modules/notification/e_mod_main.c:130
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Erro ao iniciar o servidor de notificação"
 
 #: src/modules/notification/e_mod_main.c:131
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Erro ao iniciar DBus! Verifique se o DBus está bem instalado e em execução."
+"Certifica-se de que nenhum outro módulo atua como servidor e que o D-Bus "
+"está corretamente instalado e em execução"
 
 #: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:410
@@ -10085,7 +10084,6 @@ msgid "Show notification counter"
 msgstr "Mostrar contador de notificações"
 
 #: src/modules/notification/e_mod_config.c:191
-#, fuzzy
 msgid "Secure Clear"
 msgstr "Eliminação segura"
 
@@ -10256,9 +10254,8 @@ msgid "Clear History"
 msgstr "Limpar histórico"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Escurecer ecrã"
+msgstr "Bloquear o escurecer ecrã"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10335,27 +10332,23 @@ msgstr "Utilização do disco ''%s'' é %d %%!"
 
 #: src/modules/places/e_mod_places.c:832
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:837
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:842
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:847
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:851
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:887
 msgid "No Name"
@@ -10380,7 +10373,7 @@ msgstr "ejetar"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
-msgstr "Controle de volume Efl"
+msgstr "Controlo de volume Efl"
 
 #: src/modules/mixer/bin/main_window.c:125
 msgid "Playback"
@@ -10412,7 +10405,6 @@ msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
 msgstr "Volume alterado"
 
