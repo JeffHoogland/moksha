@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-15 12:18-0400\n"
-"PO-Revision-Date: 2022-10-19 16:08+0100\n"
+"PO-Revision-Date: 2022-10-21 18:17+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Acerca do Moksha"
+msgstr "Sobre o Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
@@ -75,7 +75,7 @@ msgstr ""
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
-msgstr "Tem a certeza que quer terminar esta janela?"
+msgstr "Terminar esta janela?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
@@ -100,7 +100,7 @@ msgstr "Sair"
 
 #: src/bin/e_actions.c:2279
 msgid "Are you sure you want to exit Moksha?"
-msgstr "Tem a certeza que quer sair do Moksha?"
+msgstr "Sair do Moksha?"
 
 #: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
@@ -116,7 +116,7 @@ msgstr "Sair"
 
 #: src/bin/e_actions.c:2373
 msgid "Are you sure you want to logout?"
-msgstr "Tem a certeza que quer sair da sessão?"
+msgstr "Sair da sessão?"
 
 #: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
@@ -124,7 +124,7 @@ msgstr "Desligar"
 
 #: src/bin/e_actions.c:2433
 msgid "Are you sure you want to power off your computer?"
-msgstr "Tem a certeza que quer desligar o computador?"
+msgstr "Desligar o computador?"
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
@@ -132,7 +132,7 @@ msgstr "Reiniciar"
 
 #: src/bin/e_actions.c:2493
 msgid "Are you sure you want to reboot your computer?"
-msgstr "Tem a certeza que quer reiniciar o computador?"
+msgstr "Reiniciar o computador?"
 
 #: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 msgid "Suspend"
@@ -140,7 +140,7 @@ msgstr "Suspender"
 
 #: src/bin/e_actions.c:2558
 msgid "Are you sure you want to suspend your computer?"
-msgstr "Tem a certeza que quer suspender o computador?"
+msgstr "Suspender o computador?"
 
 #: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
@@ -149,7 +149,7 @@ msgstr "Hibernar"
 
 #: src/bin/e_actions.c:2623
 msgid "Are you sure you want to hibernate your computer?"
-msgstr "Tem a certeza que quer hibernar o computador?"
+msgstr "Hibernar o computador?"
 
 #: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
@@ -876,9 +876,8 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
-"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança."
-"<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
+"%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
 
 #: src/bin/e_config.c:1540 src/bin/e_config.c:2165
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -997,9 +996,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações."
-"<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi "
-"eliminado para evitar a danificação dos dados.<br>"
+"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações.<br>"
+"%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado "
+"para evitar a danificação dos dados.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:875
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1732,8 +1731,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
-"<br><hilight>%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
+"%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -2583,10 +2582,10 @@ msgstr ""
 "partilha as propriedades nome<br>classe, transitoriedade... com as diversas "
 "janelas no ecrã e as<br>propriedades desta janela serão aplicáveis a todas "
 "as<br>outras que possuam as mesmas propriedades.<br><br>Isto apenas serve "
-"como aviso caso você não tenha percebido o intuito da operação.<br>Se "
-"percebeu, prima <hilight>Aplicar</hilight> ou <hilight>Aceitar</"
-"hilight><br>e as suas definições serão aceites. Prima <hilight>Cancelar</"
-"hilight> se não tem a certeza."
+"como aviso caso não tenha percebido o intuito da operação.<br>Se percebeu, "
+"prima <hilight>Aplicar</hilight> ou <hilight>Aceitar</hilight><br>e as suas "
+"definições serão aceites. Prima <hilight>Cancelar</hilight> se não tem a "
+"certeza."
 
 #: src/bin/e_int_border_remember.c:498
 msgid "No match properties set"
@@ -3331,11 +3330,11 @@ msgstr "O Moksha não conseguiu configurar os esquemas do teclado!\n"
 
 #: src/bin/e_main.c:1011
 msgid "Setup Bindings"
-msgstr "Configurar ligações"
+msgstr "Configurar combinações"
 
 #: src/bin/e_main.c:1015
 msgid "Moksha cannot set up its bindings system.\n"
-msgstr "O Moksha não conseguiu configurar o sistema de ligações!\n"
+msgstr "O Moksha não conseguiu configurar o sistema de combinações!\n"
 
 #: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
@@ -3549,8 +3548,8 @@ msgid ""
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"O Moksha terminou ao iniciar a sessão<br>e foi reiniciado.Todos os módulos "
-"foram desativados<br>e não serão carregados de modo a que você "
+"O Moksha terminou inesperadamente ao iniciar a sessão<br>e foi reiniciado."
+"Todos os módulos foram desativados<br>e não serão carregados de modo a que "
 "possa<br>corrigir os problemas. O diálogo de configuração<br>dos módulos "
 "deve permitir-lhe escolher<br>os módulos a carregar.\n"
 
@@ -3561,10 +3560,10 @@ msgid ""
 "from your configuration.<br><br>The module configuration dialog should let "
 "you select your<br>modules again."
 msgstr ""
-"O Moksha terminou ao iniciar a sessão e foi reiniciado.<br>Todos os módulos "
-"foram desativados e não serão carregados de<br>modo a que você possa "
-"corrigir os problemas.<br><br>O diálogo de configuração dos módulos deve "
-"permitir-lhe escolher<br>os módulos a carregar."
+"O Moksha terminou inesperadamente ao iniciar a sessão e foi reiniciado."
+"<br>Todos os módulos foram desativados e não serão <br>carregados de modo a "
+"que possa corrigir os problemas.<br><br>O diálogo de configuração dos "
+"módulos deve permitir-lhe<br> escolher os módulos a carregar."
 
 #: src/bin/e_module.c:170
 #, c-format
@@ -4103,7 +4102,7 @@ msgid ""
 "the hiccup in your configuration.<br>"
 msgstr ""
 "As definições precisam de ser atualizadas. As suas definições<br>serão "
-"apagadas e serão iniciados novos valores pré-definidos.<br>Isto irá ocorrer "
+"apagadas e serão iniciados novos valores predefinidos.<br>Isto irá ocorrer "
 "repetidamente durante o<br>desenvolvimento e não deve reportar qualquer erro."
 "<br>Isto significa que o Moksha precisa de dados que as<br>suas antigas "
 "definições não possuem. Este conjunto de valores<br>corrige a situação. Mais "
@@ -4302,7 +4301,7 @@ msgstr "Não montado"
 #: src/bin/e_widget_filepreview.c:832
 #, c-format
 msgid "You"
-msgstr "Você"
+msgstr "Utilizador"
 
 #: src/bin/e_widget_filepreview.c:881
 #, c-format
@@ -4824,7 +4823,7 @@ msgstr "Memorizar tamanho e posição dos diálogos"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:163
 msgid "Default Dialog Mode"
-msgstr "Modo de diálogos"
+msgstr "Modo de diálogo predefinido"
 
 #: src/modules/conf_dialogs/e_mod_main.c:18
 msgid "Dialogs"
@@ -5168,12 +5167,12 @@ msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
-msgstr "Definições de ligações das margens"
+msgstr "Definições de combinações das margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
 #: src/modules/conf_edgebindings/e_mod_main.c:21
 msgid "Edge Bindings"
-msgstr "Ligações das margens"
+msgstr "Combinações das margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
@@ -5194,7 +5193,7 @@ msgstr "Eliminar tudo"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Restore Default Bindings"
-msgstr "Restaurar ligações predefinidas"
+msgstr "Restaurar combinações predefinidas"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
@@ -5316,7 +5315,7 @@ msgstr "Erro na associação de sinais"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 msgid "Signal and Source must NOT be blank!"
-msgstr "O sinal e a fonte não podem estar vazios!"
+msgstr "O sinal e a fonte não podem estar em branco!"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:585
 #, c-format
@@ -5342,11 +5341,11 @@ msgstr "Sinal:"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:804
 #: src/modules/conf_edgebindings/e_mod_main.c:25
 msgid "Signal Bindings"
-msgstr "Ligações dos sinais"
+msgstr "Combinações dos sinais"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:865
 msgid "Signal Bindings Settings"
-msgstr "Definições das ligações de sinais"
+msgstr "Definições das combinações de sinais"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
@@ -5630,7 +5629,7 @@ msgstr "Idioma"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
 #: src/modules/conf_keybindings/e_mod_main.c:367
 msgid "ACPI Bindings"
-msgstr "Ligações ACPI"
+msgstr "Combinações ACPI"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:349
 msgid "AC Adapter Unplugged"
@@ -5789,13 +5788,13 @@ msgstr "Uma tecla"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:106
 msgid "Key Bindings Settings"
-msgstr "Definições das ligações de teclas"
+msgstr "Definições das combinações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:239
 #: src/modules/conf_keybindings/e_mod_main.c:347
 #: src/modules/conf_keybindings/e_mod_main.c:359
 msgid "Key Bindings"
-msgstr "Ligações de teclas"
+msgstr "Combinações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
 msgid "Binding Key Error"
@@ -5804,9 +5803,8 @@ msgstr "Erro na associação do teclado"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "A combinação da associação do teclado escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Por favor escolha outra combinação."
@@ -5823,7 +5821,7 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
-msgstr "Definições das ligações do rato"
+msgstr "Definições das combinações do rato"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:249
 msgid ""
@@ -5840,7 +5838,7 @@ msgstr "Erro na associação do rato"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
 #: src/modules/conf_keybindings/e_mod_main.c:363
 msgid "Mouse Bindings"
-msgstr "Ligações do rato"
+msgstr "Combinações do rato"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:328
 msgid "Action Context"
@@ -6072,7 +6070,7 @@ msgstr "Esta ajuda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
-msgstr "Ligações básicas de teclas do Moksha"
+msgstr "Combinações básicas de teclas do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"
@@ -6080,15 +6078,15 @@ msgstr "Editar"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "Keybindings"
-msgstr "Ligações de teclas"
+msgstr "Combinações de teclas"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
-msgstr "Ver ligações de teclas do Moksha"
+msgstr "Ver combinações de teclas do Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
 msgid "Show bindings"
-msgstr "Mostrar ligações"
+msgstr "Mostrar combinações"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -7423,11 +7421,11 @@ msgstr "Todas as janelas"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:256
 msgid "Only dialogs"
-msgstr "Só diálogos"
+msgstr "Apenas diálogos"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:258
 msgid "Only dialogs with focused parent"
-msgstr "Só diálogos com janela focada"
+msgstr "Apenas diálogos com janela focada"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:268
 msgid "Autoraise"
@@ -7861,19 +7859,19 @@ msgstr "Estado de energia máximo"
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
 msgid "Everything Launcher"
-msgstr "Lançador Everything"
+msgstr "Lançador Omni"
 
 #: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
-msgstr "Mostrar lançador Everything"
+msgstr "Mostrar Omni"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
-msgstr "Definições Everything"
+msgstr "Configuração Omni"
 
 #: src/modules/everything/e_mod_main.c:410
 msgid "Everything Module"
-msgstr "Módulo Everything"
+msgstr "Módulo Omni"
 
 #: src/modules/everything/e_mod_main.c:603
 msgid "Quick Launcher"
@@ -7881,7 +7879,7 @@ msgstr "Lançador rápido"
 
 #: src/modules/everything/evry_config.c:80
 msgid "Everything Settings"
-msgstr "Definições Everything"
+msgstr "Definições Omni"
 
 #: src/modules/everything/evry_config.c:370
 msgid "Available Plugins"
@@ -8045,15 +8043,15 @@ msgstr "Geometria"
 
 #: src/modules/everything/evry_config.c:654
 msgid "Everything Collection"
-msgstr "Coleção Everything"
+msgstr "Coleção Omni"
 
 #: src/modules/everything/evry_gadget.c:169
 msgid "Everything Starter"
-msgstr "Iniciador Everything"
+msgstr "Iniciador Omni"
 
 #: src/modules/everything/evry_gadget.c:587
 msgid "Everything Gadgets"
-msgstr "Gadgets Everything"
+msgstr "Gadgets Omni"
 
 #: src/modules/everything/evry_gadget.c:685
 msgid "Plugin"
@@ -8112,7 +8110,7 @@ msgstr "Executável"
 #: src/modules/everything/evry_plug_apps.c:1363
 #: src/modules/everything/evry_plug_apps.c:1491
 msgid "Everything Applications"
-msgstr "Aplicações Everything"
+msgstr "Aplicações Omni"
 
 #: src/modules/everything/evry_plug_apps.c:1394
 msgid "Commands"
@@ -8130,7 +8128,7 @@ msgstr "Interface sudo"
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
-msgstr "Plugin Everything"
+msgstr "Plugin Omni"
 
 #: src/modules/everything/evry_plug_calc.c:267
 msgid "Calculator"
@@ -8172,7 +8170,7 @@ msgstr "Ficheiros recentes"
 #: src/modules/everything/evry_plug_files.c:1445
 #: src/modules/everything/evry_plug_files.c:1588
 msgid "Everything Files"
-msgstr "Ficheiros Everything"
+msgstr "Ficheiros Omni"
 
 #: src/modules/everything/evry_plug_files.c:1472
 msgid "Show recent files"
@@ -8235,35 +8233,35 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-"  Muito bem, aqui vem uma pequena explicação sobre o <hilight>Everything</"
-"hilight>...<br>  Digite algumas letras do que está a procurar.<br>  Utilize "
+"  Muito bem, aqui vem uma pequena explicação sobre o <hilight>Omni</"
+"hilight>...<br>  Escreva algumas letras do que está a procurar.<br>  Utilize "
 "o cursor <hilight>&lt;cima/baixo&gt;</hilight> para escolher um item da "
-"lista.<br>  Prima  <hilight>&lt;tab&gt;</hilight> para selecionar uma ação e "
-"prima  <hilight>&lt;return&gt;</hilight>.<br> Esta página não será exibida "
-"na próxima vez que utilizar o <hilight>Everything</hilight>.<br><hilight>&lt;"
-"Esc&gt;</hilight> fecha este diálogo<br><hilight>&lt;?&gt;</hilight> mostra "
-"esta página<br><hilight>&lt;return&gt;</hilight> executa uma "
-"ação<br><hilight>&lt;ctrl+return&gt;</hilight> executa uma ação e "
-"continua<br><hilight>&lt;tab&gt;</hilight> alterna entre os seletores<br>    "
-"<hilight>&lt;ctrl+tab&gt;</hilight> conclui a entrada (depende do "
-"plugin)<br>    <hilight>&lt;ctrl+x&gt;</hilight> vai para o plugin que "
-"começa com \"x\"<br><hilight>&lt;ctrl+left/right&gt;</hilight> troca entre "
-"os \"plugins\"<br>   <hilight>&lt;ctrl+up/down&gt;</hilight> vai para o "
-"primeiro/último item<br>   <hilight>&lt;ctrl+1&gt;</hilight> alterna os "
-"modos de visualização (sai desta página)<br>    <hilight>&lt;ctrl+2&gt;</"
-"hilight> alterna os modos de visualização em lista<br>   <hilight>&lt;"
-"ctrl+3&gt;</hilight> alterna os modos de visualização em miniaturas"
+"lista.<br>  Prima  <hilight>&lt;Tab&gt;</hilight> para selecionar uma ação e "
+"prima  <hilight>&lt;Enter&gt;</hilight>.<br> Esta página não será exibida na "
+"próxima vez que executar o <hilight>Omni</hilight>.<br><hilight>&lt;Esc&gt;</"
+"hilight> fecha esta janela<br><hilight>&lt;?&gt;</hilight> mostra esta "
+"página<br><hilight>&lt;Enter&gt;</hilight> executa uma ação<br><hilight>&lt;"
+"Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
+"</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
+"hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
+"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
+"item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
+"visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
+"alterna os modos de visualização em lista<br>   <hilight>&lt;Ctrl+3&gt;</"
+"hilight> alterna os modos de visualização em miniaturas"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8319,32 +8317,32 @@ msgstr "Comando personalizado"
 #: src/modules/fileman/e_fwin.c:3010
 #, c-format
 msgid "Copying is aborted"
-msgstr "A cópia foi cancelada"
+msgstr "Cópia cancelada"
 
 #: src/modules/fileman/e_fwin.c:3014
 #, c-format
 msgid "Moving is aborted"
-msgstr "A movimentação foi cancelada"
+msgstr "Movimentação cancelada"
 
 #: src/modules/fileman/e_fwin.c:3018
 #, c-format
 msgid "Deleting is aborted"
-msgstr "A eliminação foi cancelada"
+msgstr "Eliminação cancelada"
 
 #: src/modules/fileman/e_fwin.c:3022
 #, c-format
 msgid "Secure deletion is aborted"
-msgstr "A eliminação permanente foi cancelada"
+msgstr "A eliminação segura foi cancelada"
 
 #: src/modules/fileman/e_fwin.c:3026
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr "A operação desconhecida foi cancelada"
+msgstr "A operação desconhecida do escravo é cancelada"
 
 #: src/modules/fileman/e_fwin.c:3036
 #, c-format
 msgid "Copy of %s done"
-msgstr "Terminou a cópia de %s"
+msgstr "Cópia de %s concluída"
 
 #: src/modules/fileman/e_fwin.c:3038
 #, c-format
@@ -8354,7 +8352,7 @@ msgstr "A copiar %s (estimativa: %s)"
 #: src/modules/fileman/e_fwin.c:3043
 #, c-format
 msgid "Move of %s done"
-msgstr "Terminou a movimentação de %s"
+msgstr "Movimentação de %s concluída"
 
 #: src/modules/fileman/e_fwin.c:3045
 #, c-format
@@ -8364,7 +8362,7 @@ msgstr "A mover %s (estimativa: %s)"
 #: src/modules/fileman/e_fwin.c:3050
 #, c-format
 msgid "Delete done"
-msgstr "Terminou a eliminação"
+msgstr "Eliminação concluída"
 
 #: src/modules/fileman/e_fwin.c:3052
 #, c-format
@@ -8374,17 +8372,17 @@ msgstr "A eliminar ficheiros..."
 #: src/modules/fileman/e_fwin.c:3057
 #, c-format
 msgid "Secure delete done"
-msgstr "Terminou a eliminação segura"
+msgstr "Eliminação segura concluída"
 
 #: src/modules/fileman/e_fwin.c:3059
 #, c-format
 msgid "Securely deleting files..."
-msgstr "A eliminar ficheiros permanentemente..."
+msgstr "Eliminação segura de ficheiros..."
 
 #: src/modules/fileman/e_fwin.c:3063
 #, c-format
 msgid "Unknown operation from slave %d"
-msgstr "Operação desconhecida de %d"
+msgstr "Operação desconhecida do escravo %d"
 
 #: src/modules/fileman/e_fwin_nav.c:452
 msgid "EFM Navigation"
@@ -8847,7 +8845,7 @@ msgstr "Bloquear movimentação de ícones"
 
 #: src/modules/ibar/e_mod_config.c:159
 msgid "Track launch"
-msgstr "Acompanhar aplicações"
+msgstr "Acompanhar o lançamento"
 
 #: src/modules/ibar/e_mod_config.c:193
 msgid "Create new IBar source"
@@ -9490,7 +9488,7 @@ msgstr "Demonstração"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr "Esta é o diálogo de demonstração do módulo Acesso rápido"
+msgstr "Este é o diálogo de demonstração do módulo Acesso rápido"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
@@ -9538,7 +9536,8 @@ msgstr "Já existe uma bandeja de sistema"
 
 #: src/modules/systray/e_mod_main.c:942
 msgid "There can be only one systray gadget and another one already exists."
-msgstr "Só pode existir uma bandeja de sistema e você já a tem."
+msgstr ""
+"Apenas pode existir uma área de notificação de sistema e uma já existe."
 
 #: src/modules/systray/e_mod_main.c:951
 msgid "Systray cannot work in a shelf that is set to below everything."
@@ -10255,7 +10254,7 @@ msgstr "Limpar histórico"
 
 #: src/modules/classicmenu/e_mod_main.c:81
 msgid "Blanking Block"
-msgstr "Bloquear o escurecer ecrã"
+msgstr "Bloquear escurecimento do ecrã"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
