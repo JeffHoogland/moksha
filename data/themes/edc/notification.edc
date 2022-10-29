@@ -154,7 +154,7 @@ group { name: "e/modules/notification/main";
          multiline: 1;
          description { state: "default" 0.0;
             align: 0.0 0.0;
-            min: 200 20;
+            //~ min: 200 20;
             max: 400 99999;
             rel.to: "base";
             rel1.to_x: "notification.swallow.app_icon";
