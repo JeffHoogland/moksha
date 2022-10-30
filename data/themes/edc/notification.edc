@@ -129,7 +129,7 @@ group { name: "e/modules/notification/main";
          scale: 1;
          description { state: "default" 0.0;
             rel.to: "base";
-            min: 220 80;
+            min: 220 100;
          }
       }
       part { name: "notification.swallow.app_icon"; type: SWALLOW; mouse_events: 0;
@@ -149,9 +149,9 @@ group { name: "e/modules/notification/main";
       }
       part { name: "message"; type: TEXTBLOCK; mouse_events: 0;
          scale: 1;
-         entry_mode: EDITABLE;
-         select_mode: EXPLICIT;
-         multiline: 1;
+         //~ entry_mode: EDITABLE;
+         //~ select_mode: EXPLICIT;
+         //~ multiline: 1;
          description { state: "default" 0.0;
             align: 0.0 0.0;
             //~ min: 200 20;
@@ -169,7 +169,7 @@ group { name: "e/modules/notification/main";
                min: 0 1;
             }
             visible: 0;
-            offscale;
+            fixed: 1 1;
          }
       }
       part { name: "notification.textblock.message"; type: TEXTBLOCK;
