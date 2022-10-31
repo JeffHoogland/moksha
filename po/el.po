@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-10-15 12:18-0400\n"
+"POT-Creation-Date: 2022-10-31 13:08+0100\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -2546,7 +2546,7 @@ msgstr "Αίτηση Θέσης"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:775
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:342
@@ -9958,7 +9958,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Επιλογή τοποθεσίας αποθήκευσης στιγμιοτύπου"
 
-#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:782
+#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
 msgid "Tasks"
 msgstr "Εργασίες"
 

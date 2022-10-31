@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-10-15 12:18-0400\n"
+"POT-Creation-Date: 2022-10-31 13:08+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -2521,7 +2521,7 @@ msgstr "위치 지정 요청"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:775
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:342
@@ -9847,7 +9847,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "스크린샷 저장 위치를 선택하십시오"
 
-#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:782
+#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
 msgid "Tasks"
 msgstr "작업"
 

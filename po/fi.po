@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-10-15 12:18-0400\n"
+"POT-Creation-Date: 2022-10-31 13:08+0100\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -2653,7 +2653,7 @@ msgstr "Vaadi sijaintia"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:775
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:342
@@ -10462,7 +10462,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr ""
 
-#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:782
+#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
 #, fuzzy
 msgid "Tasks"
 msgstr "Tehtäväpalkki"
