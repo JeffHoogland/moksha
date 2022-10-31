@@ -9794,7 +9794,7 @@ msgstr " Показывать уведомления"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "Скопировать в буфер обмена"
+msgstr " Скопировать в буфер обмена"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"

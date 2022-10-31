@@ -9809,7 +9809,7 @@ msgstr " Afficher les notifications"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "Copier dans le presse-papiers"
+msgstr " Copier dans le presse-papiers"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"

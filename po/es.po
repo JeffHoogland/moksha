@@ -9748,7 +9748,7 @@ msgstr " Mostrar notificaciones"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "Copiar al portapapeles"
+msgstr " Copiar al portapapeles"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"

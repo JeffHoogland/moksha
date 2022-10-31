@@ -9885,7 +9885,7 @@ msgstr " Meldungen zeigen"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "In Zwischenablage kopieren"
+msgstr " In Zwischenablage kopieren"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"

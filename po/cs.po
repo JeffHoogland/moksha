@@ -9868,7 +9868,7 @@ msgstr " Zobrazit upozornění"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "Zkopírovat do schránky"
+msgstr " Zkopírovat do schránky"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"

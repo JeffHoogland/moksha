@@ -9782,7 +9782,7 @@ msgstr "Mostrar notificações"
 
 #: src/modules/shot/e_mod_config.c:109
 msgid " Copy to Clipboard"
-msgstr "Copiar para a área de transferência"
+msgstr " Copiar para a área de transferência"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"
