@@ -9793,7 +9793,6 @@ msgid " Show notifications"
 msgstr " Показывать уведомления"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
 msgstr "Скопировать в буфер обмена"
 

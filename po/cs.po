@@ -9863,12 +9863,10 @@ msgid " Screenshot guide (quality/share/save)"
 msgstr ""
 
 #: src/modules/shot/e_mod_config.c:106
-#, fuzzy
 msgid " Show notifications"
-msgstr "Upozornění"
+msgstr " Zobrazit upozornění"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
 msgstr "Zkopírovat do schránky"
 

@@ -9955,7 +9955,6 @@ msgid " Show notifications"
 msgstr "Notification"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
 msgstr "Copia negli appunti"
 
