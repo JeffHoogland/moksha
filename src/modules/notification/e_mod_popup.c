@@ -209,34 +209,7 @@ _notification_theme_cb_find(Popup_Data *popup,
                             const char  *emission __UNUSED__,
                             const char  *source __UNUSED__)
 {
-   Eina_List *l;
-   E_Border *bd;
-
-   if (!popup->app_name) return;
-
-   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
-     {
-        size_t len, test;
-        const char *name;
-
-        len = strlen(popup->app_name);
-        name = bd->client.icccm.name;
-        if (!name) continue;
-        test = eina_strlen_bounded(name, len + 1);
-
-        /* We can't be sure that the app_name really match the application name.
-         * Some plugins put their name instead. But this search gives some good
-         * results.
-         */
-        if (strncasecmp(name, popup->app_name, (test < len) ? test : len))
-          continue;
-
-        e_desk_show(bd->desk);
-        e_border_show(bd);
-        e_border_raise(bd);
-        e_border_focus_set_with_pointer(bd);
-        break;
-     }
+   e_notification_notify_action(popup->notif, "default");
 }
 
 static void
