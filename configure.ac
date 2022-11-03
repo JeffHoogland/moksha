@@ -416,7 +416,7 @@ if test "x$e_cv_want_mount_udisks" != "xno";then
   PKG_CHECK_EXISTS([eukit >= ${edbus_version}],
     [],[
       udisks_mount=
-      AC_MSG_ERROR([e_dbus is not installed])
+      AC_MSG_NOTICE([e_dbus is not installed])
     ])
 else
   udisks_mount=
@@ -798,13 +798,6 @@ UDISKS2_REQUIRED=2.7.2
 AM_CONDITIONAL(HAVE_PLACES, false)
 define([CHECK_MODULE_PLACES],
 [
-  if test "x$e_cv_places_backend_e17"; then
-       AC_E_CHECK_PKG(PLACES, [ edbus >= 1.7.10 ehal >= 1.7.10 udisks >= $UDISKS_REQUIRED ], [],
-       [
-         PLACES=false
-         AC_MSG_NOTICE([Install libedbus-dev or udisks])])
-      fi
-  
   if test "x$e_cv_want_mount_udisks2" = "xyes"; then
     AC_E_CHECK_PKG(PLACES, [ eldbus >= $efl_version udisks2 >= $UDISKS2_REQUIRED ], [],
     [
@@ -835,24 +828,6 @@ define([CHECK_MODULE_TEMPERATURE],
 [
   AC_E_CHECK_PKG(TEMPERATURE, [ ecore >= $efl_version ecore-file >= $efl_version eina >= $efl_version ], [], [TEMPERATURE=false])
 ])
-
-##have_exchange=no
-##AC_ARG_ENABLE(exchange,
-##  AC_HELP_STRING([--disable-exchange], [disable Exchange support @<:@default=detect@:>@]),
-##  [want_exchange=$enableval],
-##  [want_exchange=auto]
-##)
-
-AM_CONDITIONAL(HAVE_EXCHANGE, false)
-##define([CHECK_MODULE_CONF_THEME],
-##[
-##  if test "x$want_exchange" != "xno" ; then
-##    AC_E_CHECK_PKG(EXCHANGE, [exchange], [], [:])
-##  else
-##    AC_MSG_NOTICE([requested to not use exchange library])
-##  fi
-##])
-
 
 have_enotify=no
 AM_CONDITIONAL([HAVE_ENOTIFY], [false])
@@ -914,16 +889,6 @@ define([CHECK_MODULE_MIXER],
 AC_SUBST(SOUND_CFLAGS)
 AC_SUBST(SOUND_LIBS)
 
-AM_CONDITIONAL(HAVE_ECONNMAN, false)
-AM_CONDITIONAL(HAVE_DUMMY, false)
-define([CHECK_MODULE_CONNMAN],
-[
-  AC_E_CHECK_PKG(ECONNMAN, [ edbus >= ${edbus_version} ], [], [CONNMAN=false])
-dnl  AC_E_CHECK_PKG(DUMMY, [ connman >= 1.0 ], [], [CONNMAN=false])
-])
-AC_SUBST(ECONNMAN_CFLAGS)
-AC_SUBST(ECONNMAN_LIBS)
-
 have_wayland_clients=no
 AC_ARG_ENABLE([wayland-clients],
   AS_HELP_STRING([--enable-wayland-clients],[enable wayland clients in composite module @<:@default=disabled@:>@]),
@@ -978,7 +943,6 @@ AC_E_OPTIONAL_MODULE([conf_paths], true)
 AC_E_OPTIONAL_MODULE([conf_interaction], true)
 AC_E_OPTIONAL_MODULE([gadman], true)
 AC_E_OPTIONAL_MODULE([mixer], true, [CHECK_MODULE_MIXER])
-AC_E_OPTIONAL_MODULE([connman], true, [CHECK_MODULE_CONNMAN])
 AC_E_OPTIONAL_MODULE([syscon], true)
 AC_E_OPTIONAL_MODULE([everything], true)
 AC_E_OPTIONAL_MODULE([systray], true)
@@ -1168,7 +1132,7 @@ Preferred Backends:
  * device...............: $device_backend
  * hal_mount............: $e_cv_want_mount_hal
  * udisks1_mount........: $e_cv_want_mount_udisks
- * udisks2_mount........: $e_cv_want_mount_udisks
+ * udisks2_mount........: $e_cv_want_mount_udisks2
  * eeze_mount...........: $e_cv_want_mount_eeze
 DEVICE_EOF
 echo
@@ -1181,7 +1145,7 @@ echo
 
 UNUSED_MODS=""
 for mod in $UNUSED_OPTIONAL_MODULES; do
-  UNUSED_MODS="$UNUSED_MODS${COLOR_HRED}$mod${COLOR_END} "
+  UNUSED_MODS="$UNUSED_MODS$mod "
 done
 
 cat << MODULES_EOF
@@ -1190,7 +1154,7 @@ Modules:
 MODULES_EOF
 echo
 echo "Places Backends":
-if [[ "$UNUSED_MODS"=*"places"* ]]; then
+if [[ "$UNUSED_MODS" == *"places"* ]]; then
  echo "  Module disabled"
  echo
 fi
