@@ -21,7 +21,7 @@ static void             _cb_config_show(void *data __UNUSED__, E_Menu *m, E_Menu
 static unsigned int     _notification_cb_notify(void *data __UNUSED__, E_Notification_Notify *n);
 static void             _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static void             _clear_menu_cb(void);
-static void              _notification_cb_close(void *data __UNUSED__, unsigned int id);
+static void             _notification_cb_close(void *data __UNUSED__, unsigned int id);
 static Eina_Bool        _notification_cb_config_mode_changed(Config *m_cfg, int   type __UNUSED__, void *event __UNUSED__);
 
 /* Utility functions */
@@ -148,7 +148,7 @@ e_modapi_init(E_Module *m)
 
    e_gadcon_provider_register(&_gadcon_class);
    // Should not happen in normal usage but happened during development
-   //   running code at different commits, was NULL later segfaults.
+   // running code at different commits, was NULL later segfaults.
    if (!notification_cfg->blacklist)
       notification_cfg->blacklist = eina_stringshare_add("");
       
