@@ -32,8 +32,8 @@ static Eet_Data_Descriptor *_notif_act_descriptor;
 
 /* Private Funcions */
 Eina_Bool _mkpath_if_not_exists(const char *path);
-Eina_Bool _fuck_data_path(char *path);
-Eina_Bool _fuck_history_path(char *path);
+Eina_Bool _data_path(char *path);
+Eina_Bool _history_path(char *path);
 
 /**
  * @brief Creates path if non-existant
@@ -62,7 +62,7 @@ _mkpath_if_not_exists(const char *path)
  *
  */
 Eina_Bool
-_fuck_data_path(char *path)
+_data_path(char *path)
 {
     EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
     printf("NOTIFY set data path\n");
@@ -101,14 +101,14 @@ _fuck_data_path(char *path)
  *
  */
 Eina_Bool
-_fuck_history_path(char *path)
+_history_path(char *path)
 {   printf("NOTIFY set path: %s\n", "one");
    EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
 
    char temp_str[PATH_MAX] = {0};
    Eina_Bool success = EINA_TRUE;
 
-   if(_fuck_data_path(path)) {
+   if(_data_path(path)) {
        const int len = snprintf(NULL, 0, "%s%s/%s", path, NOTIFICATION_MOD_NAME, HISTORY_NAME) + 1;
        if (len <= PATH_MAX) {
          strncpy(temp_str, path, PATH_MAX-1);
@@ -175,7 +175,7 @@ history_init(void)
 
 	printf("Notify hist init \n");
 	_history_descriptor_init();
-	if (_fuck_history_path(path) &&  ecore_file_exists(path))
+	if (_history_path(path) &&  ecore_file_exists(path))
 	  hist = load_history(path);
 	else
 	  {

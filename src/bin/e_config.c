@@ -961,7 +961,7 @@ e_config_load(void)
         /* config is too new? odd! suspect corruption? */
         else if (e_config->config_version > E_CONFIG_FILE_VERSION)
           {
-             /* your config is too new - what the fuck??? */
+             /* your config is too new - what the hell??? */
              _e_config_free(e_config);
              e_config = NULL;
              reload = 1;

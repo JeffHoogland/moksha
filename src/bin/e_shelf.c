@@ -1848,7 +1848,7 @@ _e_shelf_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNU
 }
 
 static Eina_Bool
-_e_shelf_cb_mouse_move_autohide_fuck_systray(E_Shelf *es)
+_e_shelf_cb_mouse_move_autohide_systray(E_Shelf *es)
 {
    int x, y;
    Ecore_Event_Mouse_Move ev;
@@ -1988,7 +1988,7 @@ _e_shelf_cb_mouse_in(void *data, int type, void *event)
                   if (es->autohide_timer)
                     ecore_timer_reset(es->autohide_timer);
                   else
-                    es->autohide_timer = ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_cb_mouse_move_autohide_fuck_systray, es);
+                    es->autohide_timer = ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_cb_mouse_move_autohide_systray, es);
                }
           }
         if (inside)

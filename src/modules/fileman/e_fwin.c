@@ -849,7 +849,7 @@ _e_fwin_icon_popup(void *data)
    px = (fx + x) - mw - 3;
    /* if it's offscreen, try right of icon */
    if (px < 0) px = (fx + x + w) + 3;
-   /* fuck this, stick it right on the icon */
+   /* f..k this, stick it right on the icon */
    if ((px + mw + 3 > zone->x + zone->w) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_RIGHT)))   
      px = (x + w / 2) - (mw / 2);
    /* give up */
@@ -859,7 +859,7 @@ _e_fwin_icon_popup(void *data)
    py = (fy + y) - mh - 3;
    /* if it's offscreen, try below icon */
    if (py < 0) py = (fy + y + h) + 3;
-   /* fuck this, stick it right on the icon */
+   /* f..k this, stick it right on the icon */
    if ((py + mh + 3 > zone->x + zone->h) && (!e_zone_exists_direction(zone, E_ZONE_EDGE_BOTTOM))) 
      py = (y + h / 2) - (mh / 2);
    /* give up */
