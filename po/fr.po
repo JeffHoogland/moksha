@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
-"PO-Revision-Date: 2022-10-17 09:52+0200\n"
+"PO-Revision-Date: 2022-11-07 09:14+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -915,7 +915,7 @@ msgstr "OK"
 
 #: src/bin/e_config.c:2043
 msgid "Settings Upgraded"
-msgstr "Configuration mise à niveau"
+msgstr "La configuration a été modifiée"
 
 #: src/bin/e_config.c:2061
 msgid "The EET file handle is bad."
@@ -1748,8 +1748,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
-"%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
+"<br><hilight>%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -3783,7 +3783,7 @@ msgstr "Déplacer les gadgets"
 
 #: src/bin/e_shelf.c:2352
 msgid "A shelf with that name and id already exists!"
-msgstr "Un rayon avec ce nom et id existe déjà !"
+msgstr "Un rayon avec ce nom et ID existe déjà !"
 
 #: src/bin/e_shelf.c:2371
 msgid "Rename Shelf"
@@ -3829,8 +3829,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?<br><br>"
-"%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?"
+"<br><br>%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -4040,54 +4040,54 @@ msgstr "%'.1f Tio"
 #: src/bin/e_utils.c:816
 #, c-format
 msgid "In the future"
-msgstr "Dans le futur"
+msgstr "dans le futur"
 
 #: src/bin/e_utils.c:820
 #, c-format
 msgid "In the last minute"
-msgstr "Durant la dernière minute"
+msgstr "durant la dernière minute"
 
 #: src/bin/e_utils.c:824
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
-msgstr[0] "L'année dernière"
-msgstr[1] "Il y a %li ans"
+msgstr[0] "l'année dernière"
+msgstr[1] "il y a %li ans"
 
 #: src/bin/e_utils.c:829
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
-msgstr[0] "Le mois dernier"
-msgstr[1] "Il y a %li mois"
+msgstr[0] "le mois dernier"
+msgstr[1] "il y a %li mois"
 
 #: src/bin/e_utils.c:834
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
-msgstr[0] "La semaine dernière"
-msgstr[1] "Il y a %li semaines"
+msgstr[0] "la semaine dernière"
+msgstr[1] "il y a %li semaines"
 
 #: src/bin/e_utils.c:839
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
-msgstr[0] "Hier"
-msgstr[1] "Il y a %li jours"
+msgstr[0] "hier"
+msgstr[1] "il y a %li jours"
 
 #: src/bin/e_utils.c:844
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
-msgstr[0] "Il y a une heure"
-msgstr[1] "Il y a %li heures"
+msgstr[0] "il y a une heure"
+msgstr[1] "il y a %li heures"
 
 #: src/bin/e_utils.c:849
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
-msgstr[0] "Il y a une minute"
-msgstr[1] "Il y a %li minutes"
+msgstr[0] "il y a une minute"
+msgstr[1] "il y a %li minutes"
 
 #: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
 #: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
@@ -4167,49 +4167,49 @@ msgstr "Jamais"
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
-msgstr[0] "Une seconde"
+msgstr[0] "une seconde"
 msgstr[1] "%li secondes"
 
 #: src/bin/e_utils.c:1221
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
-msgstr[0] "Un an"
+msgstr[0] "un an"
 msgstr[1] "%li ans"
 
 #: src/bin/e_utils.c:1226
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
-msgstr[0] "Un mois"
+msgstr[0] "un mois"
 msgstr[1] "%li mois"
 
 #: src/bin/e_utils.c:1231
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
-msgstr[0] "Une semaine"
+msgstr[0] "une semaine"
 msgstr[1] "%li semaines"
 
 #: src/bin/e_utils.c:1236
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
-msgstr[0] "Un jour"
+msgstr[0] "un jour"
 msgstr[1] "%li jours"
 
 #: src/bin/e_utils.c:1241
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
-msgstr[0] "Une heure"
+msgstr[0] "une heure"
 msgstr[1] "%li heures"
 
 #: src/bin/e_utils.c:1246
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
-msgstr[0] "Une minute"
+msgstr[0] "une minute"
 msgstr[1] "%li minutes"
 
 #: src/bin/e_widget_config_list.c:60
@@ -4318,30 +4318,30 @@ msgstr "Dernière modification :"
 #: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
 #, c-format
 msgid "Read Only"
-msgstr "Lecture seule"
+msgstr "lecture seule"
 
 #: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
 msgid "Read-Write"
-msgstr "Lecture-Écriture"
+msgstr "lecture et écriture"
 
 #: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
 msgid "Unmounted"
-msgstr "Démonté"
+msgstr "non monté"
 
 #: src/bin/e_widget_filepreview.c:832
 #, c-format
 msgid "You"
-msgstr "Vous"
+msgstr "vous"
 
 #: src/bin/e_widget_filepreview.c:881
 #, c-format
 msgid "Protected"
-msgstr "Protégé"
+msgstr "protégé"
 
 #: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
 #, c-format
 msgid "Forbidden"
-msgstr "Interdit"
+msgstr "interdit"
 
 #: src/bin/e_widget_fsel.c:334
 msgid "Add to Favorites"
@@ -5485,7 +5485,7 @@ msgstr "Boutons"
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 #: src/modules/conf_interaction/e_int_config_mouse.c:328
 msgid "Middle mouse button emulation"
-msgstr "Émulation bouton central de la souris"
+msgstr "Émulation du bouton central de la souris"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5836,8 +5836,9 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -5913,7 +5914,7 @@ msgstr "Boutons de la souris"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:807
 msgid "Mouse Wheels"
-msgstr "Molette(s) de la souris"
+msgstr "Molettes de la souris"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1181
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1199
@@ -7867,8 +7868,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8267,11 +8268,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8286,18 +8287,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
-"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
-"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
-"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
-"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
-"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
-"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
-"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
-"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
-"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
-"des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
+"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
+"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
+"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
+"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
+"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
+"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
+"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
+"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
+"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
+"d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9408,9 +9409,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br>est introuvable dans la base de données des<br>applications des accès "
-"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
+"<br>%s<br>est introuvable dans la base de données des<br>applications des "
+"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
