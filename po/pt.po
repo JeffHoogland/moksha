@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
-"PO-Revision-Date: 2022-10-21 18:17+0100\n"
+"PO-Revision-Date: 2022-11-07 06:48+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -6401,7 +6401,7 @@ msgstr "Média"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:360
 #, c-format
 msgid "%.0f s"
-msgstr "%1.0f s"
+msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
 #: src/modules/shot/e_mod_main.c:957
