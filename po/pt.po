@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
-"PO-Revision-Date: 2022-11-07 06:48+0000\n"
+"PO-Revision-Date: 2022-11-10 18:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -60,7 +60,7 @@ msgstr "<title>A equipa</><br><br>"
 
 #: src/bin/e_actions.c:154
 msgid "Profile: Switch"
-msgstr "Seletor de perfis"
+msgstr "Perfil: Trocar"
 
 #: src/bin/e_actions.c:430
 #, c-format
@@ -70,8 +70,8 @@ msgid ""
 "want to kill this window?"
 msgstr ""
 "Está prestes a terminar %s.<br><br>Tenha em conta que todos os dados desta "
-"janela<br>que ainda não tenham sido gravados serão perdidos!<br><br>Tem a "
-"certeza que quer terminar a janela?"
+"janela<br>que ainda não tenham sido gravados serão perdidos!<br><br>Terminar "
+"a janela?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
@@ -205,11 +205,11 @@ msgstr "Alternar modo fixo"
 
 #: src/bin/e_actions.c:3165
 msgid "Sticky Mode Enable"
-msgstr "Ativar fixação"
+msgstr "Ativar modo fixo"
 
 #: src/bin/e_actions.c:3170
 msgid "Always On Top Toggle"
-msgstr "Modo sempre por cima"
+msgstr "Alternar sempre por cima"
 
 #: src/bin/e_actions.c:3174
 msgid "Always On Top Enable"
@@ -221,15 +221,15 @@ msgstr "Desativar sempre por cima"
 
 #: src/bin/e_actions.c:3183
 msgid "Iconic Mode Toggle"
-msgstr "Modo minimizado"
+msgstr "Alternar modo minimizado"
 
 #: src/bin/e_actions.c:3187
 msgid "Iconic Mode Enable"
-msgstr "Ativar minimização"
+msgstr "Ativar modo minimizado"
 
 #: src/bin/e_actions.c:3192
 msgid "Fullscreen Mode Toggle"
-msgstr "Modo de ecrã inteiro"
+msgstr "Alternar modo de ecrã inteiro"
 
 #: src/bin/e_actions.c:3196
 msgid "Fullscreen Mode Enable"
@@ -258,7 +258,7 @@ msgstr "Maximizar à direita"
 
 #: src/bin/e_actions.c:3216
 msgid "Maximize Fullscreen"
-msgstr "Maximizar ecrâ inteiro"
+msgstr "Maximizar ecrã inteiro"
 
 #: src/bin/e_actions.c:3218
 msgid "Maximize Mode \"Smart\""
@@ -922,8 +922,7 @@ msgstr ""
 #: src/bin/e_config.c:2073
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
-"Ficou sem memória ao preparar o ficheiro.<br>Por favor liberte espaço de "
-"memória."
+"Ficou sem memória ao preparar o ficheiro.<br>Liberte espaço de memória."
 
 #: src/bin/e_config.c:2077
 msgid "This is a generic error."
@@ -1064,7 +1063,7 @@ msgstr ""
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
-msgstr "Por favor indique a senha de desbloqueio"
+msgstr "Introduza a palavra-passe de desbloqueio"
 
 #: src/bin/e_desklock.c:928
 msgid "Authenticating..."
@@ -1072,7 +1071,7 @@ msgstr "Autenticação..."
 
 #: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
-msgstr "A senha indicada é inválida. Tente novamente."
+msgstr "A palavra-passe introduzida é inválida. Tente novamente."
 
 #: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
@@ -1087,7 +1086,7 @@ msgid ""
 msgstr ""
 "Ocorreram erros durante a autenticação da sessão via PAM.<br>O código do "
 "erro foi <hilight>%i</hilight>.<br>Isto é mau e não deveria acontecer."
-"<br>Por favor reporte este erro."
+"<br>Reporte este erro."
 
 #: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:184
 msgid "Activate Presentation Mode?"
@@ -1920,7 +1919,7 @@ msgstr "O módulo %s tem que suportar %s"
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
-"Por favor escolha a combinação<br><br>ou <hilight>Escape</hilight> para "
+"Escolha a sequência de teclas<br><br>ou <hilight>Escape</hilight> para "
 "abortar."
 
 #: src/bin/e_grab_dialog.c:5
@@ -1930,7 +1929,7 @@ msgid ""
 "highlight> to abort."
 msgstr ""
 "Prima e mantenha o modificador que quer utilizar<br>e prima qualquer botão "
-"do rato ou<br>mexa na roda para atribuir uma associação.<br>Prima "
+"do rato ou<br>mexa na roda para atribuir uma combinação.<br>Prima "
 "<hilight>Escape</highlight> para abortar."
 
 #: src/bin/e_grab_dialog.c:128
@@ -3048,7 +3047,7 @@ msgid ""
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
 "O Moksha descobriu que o ecore_evas não tem suporte ao\n"
-"processamento X11 no Evas. Por favor verifique a instalação\n"
+"processamento X11 no Evas. Verifique a instalação\n"
 "do Evas e do Ecore e verifique se ambos possuem suporte a X11."
 
 #: src/bin/e_main.c:499
@@ -3058,7 +3057,7 @@ msgid ""
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
 "O Moksha descobriu que o ecore_evas não tem suporte ao\n"
-"\"Software Buffer\" no Evas. Por favor verifique a instalação\n"
+"\"Software Buffer\" no Evas. Verifique a instalação\n"
 "do Evas e do Ecore e verifique se ambos possuem suporte \"Software Buffer\"."
 
 #: src/bin/e_main.c:509
@@ -3445,7 +3444,7 @@ msgstr ""
 "\t\tSeja psicótico.\n"
 "\t-locked\n"
 "\t\tIniciar com bloqueio de área de trabalho para que lhe seja pedida a "
-"senha.\n"
+"palavra-passe.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tSe precisar desta ajuda, não precisa desta opção.\n"
 "\t-version\n"
@@ -3628,7 +3627,7 @@ msgid ""
 "module list is as follows:<br><br>"
 msgstr ""
 "Os módulos indicados não são parte integrante do<br>Moksha e podem causar "
-"erros. Por favor<br>remova-os antes de reportar qualquer erro<br><br>A lista "
+"erros e falhas.<br>Remova-os antes de reportar qualquer erro<br><br>A lista "
 "dos módulos é a seguinte:<br><br>"
 
 #: src/bin/e_module.c:819
@@ -3826,7 +3825,7 @@ msgstr "A sair da sessão"
 
 #: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
-msgstr "A sair da sessão.<br><hilight>Por favor aguarde.</hilight>"
+msgstr "A sair da sessão.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
@@ -3902,7 +3901,7 @@ msgstr "A restaurar"
 
 #: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "A restaurar.<br><hilight>Por favor aguarde.</hilight>"
+msgstr "A restaurar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:867
 msgid "Suspending"
@@ -3910,7 +3909,7 @@ msgstr "A suspender"
 
 #: src/bin/e_sys.c:870
 msgid "Suspending.<br><hilight>Please wait.</hilight>"
-msgstr "A suspender.<br><hilight>Por favor aguarde.</hilight>"
+msgstr "A suspender.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:922
 msgid "Hibernating"
@@ -3918,7 +3917,7 @@ msgstr "A hibernar"
 
 #: src/bin/e_sys.c:925
 msgid "Hibernating.<br><hilight>Please wait.</hilight>"
-msgstr "A hibernar.<br><hilight>Por favor aguarde.</hilight>"
+msgstr "A hibernar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_theme_about.c:25
 msgid "Select Theme"
@@ -5221,15 +5220,15 @@ msgstr "Opções gerais"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:307
 msgid "Allow binding activation with fullscreen windows"
-msgstr "Permitir ativação de associações nas janelas em ecrã inteiro"
+msgstr "Permitir ativação de combinações nas janelas em ecrã inteiro"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
-msgstr "Permitir ativação de associações em vários ecrãs (PERIGOSO)"
+msgstr "Permitir ativação de combinações em vários ecrãs (PERIGOSO)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
 msgid "Edge Binding Sequence"
-msgstr "Combinação de associação das margens"
+msgstr "Sequência Combinação de margens"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
 msgid "Clickable edge"
@@ -5237,7 +5236,7 @@ msgstr "Margem clicável"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1214
 msgid "Edge Binding Error"
-msgstr "Erro na associação da margem"
+msgstr "Erro na combinação da margem"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
 #, c-format
@@ -5245,8 +5244,8 @@ msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
-"A associação da margem escolhida já está a ser<br>utilizada pela "
-"ação<br><hilight>%s</hilight>.<br>Por favor escolha outra margem."
+"A combinação da margem escolhida já está a ser<br>utilizada pela "
+"ação<br><hilight>%s</hilight>.<br>Escolha outra margem."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
@@ -5311,7 +5310,7 @@ msgstr "(clicável)"
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
 msgid "Signal Binding Error"
-msgstr "Erro na associação de sinais"
+msgstr "Erro na combinação de sinais"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 msgid "Signal and Source must NOT be blank!"
@@ -5328,7 +5327,7 @@ msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
-msgstr "Adicionar associação de sinal"
+msgstr "Adicionar combinação de sinal"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:645
 msgid "Source:"
@@ -5779,8 +5778,8 @@ msgid ""
 "Please trigger the ACPI event you wish to bind to, <br><br>or "
 "<hilight>Escape</hilight> to abort."
 msgstr ""
-"Por favor escolha o evento ACPI que pretende associar<br><br>ou "
-"<hilight>Escape</hilight> para cancelar."
+"Escolha o evento ACPI que pretende associar<br><br>ou <hilight>Escape</"
+"hilight> para cancelar."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
@@ -5798,7 +5797,7 @@ msgstr "Combinações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
 msgid "Binding Key Error"
-msgstr "Erro na associação do teclado"
+msgstr "Erro na combinação de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
@@ -5806,8 +5805,8 @@ msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
 "%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
-"A combinação da associação do teclado escolhida já está a ser utilizada pela "
-"ação<br><hilight>%s</hilight>.<br>Por favor escolha outra combinação."
+"A sequência da combinação de teclas escolhida já está a ser utilizada pela "
+"ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5816,7 +5815,7 @@ msgid ""
 "hilight> to abort."
 msgstr ""
 "Prima e mantenha o modificador que quer utilizar<br>e prima qualquer botão "
-"do rato ou<br>mexa na roda para atribuir uma associação.<br>Prima "
+"do rato ou<br>mexa na roda para atribuir uma combinação.<br>Prima "
 "<hilight>Escape</highlight> para abortar."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
@@ -5833,7 +5832,7 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
-msgstr "Erro na associação do rato"
+msgstr "Erro na combinação do rato"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
 #: src/modules/conf_keybindings/e_mod_main.c:363
@@ -6801,11 +6800,11 @@ msgstr "Título do bloqueio"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:73
 msgid "Desklock Password"
-msgstr "Senha do bloqueio"
+msgstr "Palavra-passe do bloqueio"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:74
 msgid "Dialog Error"
-msgstr "Diálogo de erro"
+msgstr "Erro de diálogo"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:75
 msgid "Exebuf Command"
@@ -6902,7 +6901,7 @@ msgstr "Definições do tipo de letra"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:252
 msgid "Tiny"
-msgstr "Mínima"
+msgstr "Minúscula"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:270
 msgid "Big"
@@ -6946,7 +6945,7 @@ msgstr "Tipo de letra"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:679
 msgid "Hinting"
-msgstr "Hinting"
+msgstr "Alisamento"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:682
 msgid "Bytecode"
@@ -6972,7 +6971,7 @@ msgstr "Ativar recursos"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:713
 msgid "Hinting / Fallbacks"
-msgstr "Hinting/Recurso"
+msgstr "Alisamento / Recurso"
 
 #: src/modules/conf_theme/e_int_config_scale.c:132
 msgid "Factor"
@@ -7243,7 +7242,7 @@ msgstr "Títulos"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:43
 #: src/modules/conf_window_manipulation/e_mod_main.c:18
 msgid "Window Display"
-msgstr "Exibição"
+msgstr "Exibição da janela"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:129
 msgid "Border Icon"
@@ -7259,7 +7258,7 @@ msgstr "Definido pela aplicação"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:137
 msgid "Move Geometry"
-msgstr "Ao mover"
+msgstr "Geometria de deslocamento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:138
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:149
@@ -7269,7 +7268,7 @@ msgstr "Exibir informações"
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:141
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:152
 msgid "Follows the window"
-msgstr "Acompanhar janela"
+msgstr "Segue a janela"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:148
 msgid "Resize Geometry"
@@ -7558,7 +7557,7 @@ msgstr "Maximização"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:246
 msgid "Automatically accept changes after:"
-msgstr "Aceitar alterações após:"
+msgstr "Aceitar automaticamente as alterações após:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:251
 msgid "Move by"
@@ -7588,31 +7587,31 @@ msgstr "Ajustar janelas ao ocultar o painel"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:281
 msgid "Follow Move"
-msgstr "Acompanha o movimento"
+msgstr "Segue o movimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:284
 msgid "Follow Resize"
-msgstr "Acompanha o redimensionamento"
+msgstr "Segue o redimensionamento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:287
 msgid "Follow Raise"
-msgstr "Acompanha o aparecimento"
+msgstr "Segue o aparecimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:290
 msgid "Follow Lower"
-msgstr "Acompanha o desaparecimento"
+msgstr "Segue o desaparecimento"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:293
 msgid "Follow Layer"
-msgstr "Acompanha a camada"
+msgstr "Segue a camada"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:296
 msgid "Follow Desktop"
-msgstr "Acompanha a área de trabalho"
+msgstr "Segue a área de trabalho"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:299
 msgid "Follow Iconify"
-msgstr "Acompanha a minimização"
+msgstr "Segue a minimização"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:303
 #: src/modules/quickaccess/e_mod_config.c:312
@@ -7779,7 +7778,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Ocorreu um erro ao tentar definir o<ps/>gestor de frequências do cpu através "
+"Ocorreu um erro ao tentar definir o<ps/>gestor de frequências da cpu através "
 "do<ps/>utilitário setfreq. do módulo."
 
 #: src/modules/cpufreq/e_mod_main.c:540
@@ -7805,7 +7804,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Ocorreu um erro ao tentar definir a<ps/>frequência do cpu através do<ps/"
+"Ocorreu um erro ao tentar definir a<ps/>frequência da cpu através do<ps/"
 ">utilitário setfreq do módulo."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
@@ -7822,7 +7821,7 @@ msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
-msgstr "Erro de permissões do Cpufreq"
+msgstr "Erro de permissões da Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
 #, c-format
@@ -8273,7 +8272,7 @@ msgstr "Outra aplicação..."
 
 #: src/modules/fileman/e_fwin.c:2146
 msgid "Go To Parent Directory"
-msgstr "Ir para o diretório superior"
+msgstr "Ir para o diretório acima"
 
 #: src/modules/fileman/e_fwin.c:2156
 msgid "Clone Window"
@@ -8797,15 +8796,15 @@ msgstr "Erro Winlist"
 
 #: src/modules/winlist/e_mod_main.c:209
 msgid "Winlist cannot be activated from an edge binding"
-msgstr "A lista de janelas não pode ser ativada com uma associação de margem"
+msgstr "A lista de janelas não pode ser ativada com uma combinação de margem"
 
 #: src/modules/winlist/e_mod_main.c:215
 msgid "Winlist cannot be activated from a signal binding"
-msgstr "A lista de janelas não pode ser ativada com uma associação de sinal"
+msgstr "A lista de janelas não pode ser ativada com uma combinação de sinal"
 
 #: src/modules/winlist/e_mod_main.c:221
 msgid "Winlist cannot be activated from an ACPI binding"
-msgstr "A lista de janelas não pode ser ativada com uma associação ACPI"
+msgstr "A lista de janelas não pode ser ativada com uma combinação ACPI"
 
 #: src/modules/winlist/e_winlist.c:171
 msgid "Select a window"
@@ -8968,7 +8967,7 @@ msgstr "%.0f px"
 
 #: src/modules/pager/e_mod_config.c:205
 msgid "Select and Slide button"
-msgstr "Botão Selecionar e deslizar"
+msgstr "Botão Selecionar e Deslizar"
 
 #: src/modules/pager/e_mod_config.c:207 src/modules/pager/e_mod_config.c:215
 #: src/modules/pager/e_mod_config.c:221 src/modules/pager/e_mod_config.c:368
@@ -9174,7 +9173,7 @@ msgstr "Seguinte"
 
 #: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
-msgstr "Por favor aguarde..."
+msgstr "Aguarde..."
 
 #: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
@@ -9213,15 +9212,15 @@ msgstr ""
 "permite-lhe descobrir as<br>diversas correções à medida que são "
 "disponibilizadas<br>. Para o efeito, o Moksha<br>irá efetuar uma ligação ao "
 "enlightenment.org e<br>enviar algumas informações<br>tal como um navegador "
-"web faz.<br>Nenhuma informação pessoal (nome de utilizador,<br>senhas ou "
-"ficheiros) será enviada. Se não quiser<br>ativar a funcionalidade, desative-"
-"a agora.<br>No entanto, recomendamos que<br>mantenha esta opção ativa, pois "
-"se não o fizer<br>poderá ficar vulnerável aos erros que possam existir no "
-"código."
+"web faz.<br>Nenhuma informação pessoal (nome de utilizador,<br>palavras-"
+"passe ou ficheiros) será enviada. Se não quiser<br>ativar a funcionalidade, "
+"desative-a agora.<br>No entanto, recomendamos que<br>mantenha esta opção "
+"ativa, pois se não o fizer<br>poderá ficar vulnerável aos erros que possam "
+"existir no código."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
-msgstr "Ativar procura de atualizações"
+msgstr "Ativar a procura por atualizações"
 
 #: src/modules/wizard/page_180.c:27
 msgid "Information"
@@ -9249,7 +9248,7 @@ msgid ""
 "exist.<br>Please install <b>EConnMan</b> application."
 msgstr ""
 "Este módulo quer executar a aplicação EConnMan que não está "
-"disponível<br>Por favor instale o <b>EConnMan</b>."
+"disponível<br>Instale o <b>EConnMan</b>."
 
 #: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
@@ -9370,7 +9369,7 @@ msgstr ""
 "A janela selecionada e criada com o nome: <br>%s<br>e classe:<br>%s<br>não "
 "foi encontrada na base de dados do acesso rápido.<br>Isto significa que a "
 "aplicação não é reconhecida<br>ou que não deve ser utilizada com esta opção."
-"<br>Por favor escolha uma ação:"
+"<br>Escolha uma ação:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9390,11 +9389,11 @@ msgstr "A entrada de acesso rápida solicitada não existe!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "Keybind Error"
-msgstr "Erro de associação"
+msgstr "Erro de combinação"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "The keybinding you have entered is already in use!"
-msgstr "A associação de teclado introduzida já está a ser utilizada!"
+msgstr "A combinação de teclas introduzida já está a ser utilizada!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:798
 msgid "Hide Instead Of Raise"
@@ -9479,8 +9478,8 @@ msgstr ""
 msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
 msgstr ""
-"A janela exibida irá ativar a combinação<br>de atalho do módulo Acesso "
-"rápido."
+"A janela recém-exibida irá ativar a sequência de combinação<br>do módulo "
+"Acesso rápido."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
@@ -9505,7 +9504,7 @@ msgid ""
 "associated window can be returned to immediately<br>on demand by pushing the "
 "keyboard shortcut."
 msgstr ""
-"O acesso rápido é um método para associar<br>janelas e aplicações aos "
+"O acesso rápido é um método para combinar<br>janelas e aplicações aos "
 "atalhos de teclado.<br>Assim que criar uma entrada de acesso rápido, "
 "a<br>janela ou aplicação pode ser aberta imediatamente através<br>do seu "
 "atalho de teclado."
@@ -9524,15 +9523,17 @@ msgstr "identificador/nome do acesso rápido"
 
 #: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
 msgid "Systray Error"
-msgstr "Erro na bandeja do sistema"
+msgstr "Erro na área de notificação do sistema"
 
 #: src/modules/systray/e_mod_main.c:535
 msgid "Systray cannot set its background invisible to match its shelf."
-msgstr "Não é possível tornar a bandeja invisível para coincidir com o painel."
+msgstr ""
+"Não é possível tornar a área de notificação invisível para coincidir com o "
+"painel."
 
 #: src/modules/systray/e_mod_main.c:941
 msgid "Another systray exists"
-msgstr "Já existe uma bandeja de sistema"
+msgstr "Já existe uma área de notificação do sistema"
 
 #: src/modules/systray/e_mod_main.c:942
 msgid "There can be only one systray gadget and another one already exists."
@@ -9541,11 +9542,12 @@ msgstr ""
 
 #: src/modules/systray/e_mod_main.c:951
 msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr "A bandeja não funciona num painel que esteja por baixo de tudo."
+msgstr ""
+"A área de notificação não funciona num painel que esteja por baixo de tudo."
 
 #: src/modules/systray/e_mod_main.c:1146
 msgid "Systray"
-msgstr "Bandeja do sistema"
+msgstr "Área de notificação do sistema"
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"
@@ -9603,7 +9605,7 @@ msgstr "Gravar"
 #: src/modules/shot/e_mod_main.c:606
 #, c-format
 msgid "Uploaded %s / %s"
-msgstr "Enviados %s/%s"
+msgstr "Enviados %s / %s"
 
 #: src/modules/shot/e_mod_main.c:627
 msgid "Error - Upload Failed"
