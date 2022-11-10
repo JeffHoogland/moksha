@@ -45,13 +45,13 @@ Eina_Bool _history_path(char *path);
 Eina_Bool
 _mkpath_if_not_exists(const char *path)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
 
-    Eina_Bool success = EINA_TRUE;
+   Eina_Bool success = EINA_TRUE;
 
-    if(!ecore_file_exists(path))
-       return ecore_file_mkdir(path);
-    return success;
+   if(!ecore_file_exists(path))
+      return ecore_file_mkdir(path);
+   return success;
 }
 
 /**
@@ -64,30 +64,30 @@ _mkpath_if_not_exists(const char *path)
 Eina_Bool
 _data_path(char *path)
 {
-    EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
-    printf("NOTIFY set data path\n");
-    const char *temp_str = efreet_data_home_get();
-    if (!temp_str)
-       // Should never happen
-       return EINA_FALSE;
-    Eina_Bool success = EINA_TRUE;
-    const int len = snprintf(NULL, 0, "%s", temp_str)
-                              + 1 + (temp_str[strlen(temp_str)-1] != '/');
-    if (temp_str[0] == '/' ) {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
+   printf("NOTIFY set data path\n");
+   const char *temp_str = efreet_data_home_get();
+   if (!temp_str)
+      // Should never happen
+      return EINA_FALSE;
+   Eina_Bool success = EINA_TRUE;
+   const int len = snprintf(NULL, 0, "%s", temp_str)
+                             + 1 + (temp_str[strlen(temp_str)-1] != '/');
+   if (temp_str[0] == '/' ) {
 
-      if (len <= PATH_MAX) {
-        snprintf(path, strlen(temp_str)+1, "%s", temp_str);
-        // Ensure XDG_DATA_HOME terminates in '/'
-        if (path[strlen(path)-1] != '/')
-          strncat(path, "/", PATH_MAX-strlen(path)-1);
-      }
-      else
-        PATH_MAX_ERR;
-    }
-    else
-      PATH_MAX_ERR;
-    printf("NOTIFY %s\n", path);
-    return success;
+     if (len <= PATH_MAX) {
+       snprintf(path, strlen(temp_str)+1, "%s", temp_str);
+       // Ensure XDG_DATA_HOME terminates in '/'
+       if (path[strlen(path)-1] != '/')
+         strncat(path, "/", PATH_MAX-strlen(path)-1);
+     }
+     else
+       PATH_MAX_ERR;
+   }
+   else
+     PATH_MAX_ERR;
+   printf("NOTIFY %s\n", path);
+   return success;
 }
 
 /**
@@ -139,8 +139,6 @@ _history_descriptor_init(void)
    EET_EINA_STREAM_DATA_DESCRIPTOR_CLASS_SET(&eddc, E_Notification_Notify_Action);
    _notif_act_descriptor = eet_data_descriptor_stream_new(&eddc);
 
-
-
    HIST_ADD(version, EET_T_UINT);
    // Popup_Items struct
    HIST_NOTIF_ADD_BASIC(item_date_time, EET_T_STRING);
@@ -170,22 +168,22 @@ _history_descriptor_init(void)
 Hist_eet *
 history_init(void)
 {
-	Hist_eet    *hist = E_NEW(Hist_eet, 1);
-	char path[PATH_MAX] = {0};
+   Hist_eet    *hist = E_NEW(Hist_eet, 1);
+   char path[PATH_MAX] = {0};
 
-	printf("Notify hist init \n");
-	_history_descriptor_init();
-	if (_history_path(path) &&  ecore_file_exists(path))
-	  hist = load_history(path);
-	else
-	  {
-		 hist = E_NEW(Hist_eet, 1);
-		 hist->version = HISTORY_VERSION;
-		 // fixme: hist->path = ??
-      }
-    hist->path=strdup(path);
-	printf("Notify hist init %s\n", hist->path);
-	return hist;
+   printf("Notify hist init \n");
+   _history_descriptor_init();
+   if (_history_path(path) &&  ecore_file_exists(path))
+     hist = load_history(path);
+   else
+     {
+        hist = E_NEW(Hist_eet, 1);
+        hist->version = HISTORY_VERSION;
+         // fixme: hist->path = ??
+     }
+   hist->path=strdup(path);
+   printf("Notify hist init %s\n", hist->path);
+   return hist;
 }
 
 Eina_Stringshare *
@@ -303,7 +301,7 @@ void
 popup_items_free(Popup_Items *items)
 {
    EINA_SAFETY_ON_NULL_RETURN(items);
-   
+
    if (items->actions)
      {
         Eina_List *l;
@@ -362,8 +360,6 @@ end:
    eet_close(ef);
    return hist;
 }
-
-
 
 Eina_Bool
 store_history(const Hist_eet *hist)
