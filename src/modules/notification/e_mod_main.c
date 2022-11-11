@@ -133,8 +133,7 @@ e_modapi_init(E_Module *m)
                              "running"));
         return NULL;
      }
-   notification_cfg->last_config_mode.presentation = e_config->mode.presentation;
-   notification_cfg->last_config_mode.offline = e_config->mode.offline;
+
    notification_cfg->last_config_mode.presentation = e_config->mode.presentation;
    notification_cfg->last_config_mode.offline = e_config->mode.offline;
 
