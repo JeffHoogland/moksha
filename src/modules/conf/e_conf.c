@@ -379,6 +379,8 @@ _e_configure_item_add(E_Configure_Category *cat, const char *label, const char *
    ci->label = eina_stringshare_add(label);
    if (icon_file) ci->icon_file = eina_stringshare_add(icon_file);
    if (icon) ci->icon = eina_stringshare_add(icon);
+   if ((!ci->icon_file) && (!ci->icon))
+     ci->icon = eina_stringshare_add("unknown");
    cat->items = eina_list_append(cat->items, ci);
 }
 
