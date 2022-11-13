@@ -730,8 +730,7 @@ _notification_show_actions(Popup_Items *sel_item, const char *icon)
    n->timeout=-1;
  // FIXME: actions
    if (sel_item->actions)
-     {  E_Notification_Notify_Action *act;
-        E_Notification_Notify_Action *actions;
+     {  E_Notification_Notify_Action *act, *actions;
         Eina_List *l;
         int num = 0;
         EINA_LIST_FOREACH(sel_item->actions, l, act)
