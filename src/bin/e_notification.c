@@ -439,7 +439,7 @@ notify_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Messag
 
              printf("NOT: act=[%s] [%s]\n", txt, txt2);
              num++;
-             actions = realloc(n->actions, (num + 1) * sizeof(E_Notification_Notify));
+             actions = realloc(n->actions, (num + 1) * sizeof(E_Notification_Notify_Action));
              if (actions)
                {
                   n->actions = actions;
