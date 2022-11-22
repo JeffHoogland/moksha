@@ -326,8 +326,6 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    Instance *inst;
    Evas_Event_Mouse_Down *ev;
 
-   notification_cfg->clicked_item = EINA_FALSE;
-
    inst = data;
    ev = event_info;
    if (ev->button == 3)  //right button
@@ -525,7 +523,6 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
    EINA_SAFETY_ON_NULL_RETURN(data);
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
 
-   notification_cfg->clicked_item = EINA_FALSE;
    Instance *inst = data;
 
    if (inst->gcc)
