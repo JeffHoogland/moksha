@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
-"PO-Revision-Date: 2021-06-16 12:10+0200\n"
+"PO-Revision-Date: 2022-11-21 20:30+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: E17-de\n"
 "Language: de\n"
@@ -63,17 +63,16 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Urheberrechte &copy; 2021, durch das Moksha Entwicklungsteam</"
-"><br><br>Wir hoffen, Ihnen macht das Benutzen dieser Software so viel Spaß "
-"wie uns das Schreiben derselben.<br><br>Um uns zu Kontaktieren, bitte "
-"besuchen Sie:<br><hilight>http://www.bodhilinux.com</><br><br>"
+"<title>Urheberrechte &copy; 2022, durch das Moksha Entwicklungsteam</"
+"><br><br>Wir hoffen, ihnen macht das Benutzen dieser Software so viel Spaß, "
+"wie uns das Schreiben.<br><br>Um uns zu Kontaktieren, besuchen Sie:"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -90,18 +89,18 @@ msgid ""
 "window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
 "want to kill this window?"
 msgstr ""
-"Sie sind im Begriff, \"%s\" abrupt zu beenden.<br><br>Bitte beachten Sie, "
-"dass dabei alle ungespeicherten<br>Daten dieses Programms verloren gehen!"
-"<br><br>Sind Sie sicher, dass Sie dieses Programm abrupt beenden möchten?"
+"Sie sind dabei, \"%s\" zu beenden.<br><br>Bitte beachten Sie, dass dabei "
+"alle ungespeicherten<br>Daten dieses Programms verloren gehen!<br><br>Sind "
+"Sie sicher, dass Sie dieses Programm beenden möchten?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
-msgstr "Möchten Sie dieses Fenster wirklich abrupt schliessen?"
+msgstr "Möchten Sie dieses Fenster wirklich schliessen?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
 #: src/bin/e_int_border_menu.c:783
 msgid "Kill"
-msgstr "Schließen erzwingen"
+msgstr "Schliessen erzwingen"
 
 #: src/bin/e_actions.c:447 src/bin/e_actions.c:2283 src/bin/e_actions.c:2377
 #: src/bin/e_actions.c:2437 src/bin/e_actions.c:2497 src/bin/e_actions.c:2562
@@ -141,11 +140,11 @@ msgstr "Möchten Sie sich wirklich abmelden?"
 
 #: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
-msgstr "Ausschalten"
+msgstr "Herunterfahren"
 
 #: src/bin/e_actions.c:2433
 msgid "Are you sure you want to power off your computer?"
-msgstr "Möchten Sie Ihren Computer wirklich ausschalten?"
+msgstr "Möchten Sie Ihren Computer wirklich herunterfahren?"
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
@@ -167,11 +166,11 @@ msgstr ""
 #: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
-msgstr "Ruhezustand"
+msgstr "Energiesparen"
 
 #: src/bin/e_actions.c:2623
 msgid "Are you sure you want to hibernate your computer?"
-msgstr "Wollen Sie Ihren Computer wirklich in den Ruhezustand herunterfahren?"
+msgstr "Wollen Sie Ihren Computer wirklich in den Energiesparmodus versetzen?"
 
 #: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
@@ -202,11 +201,11 @@ msgstr "Fenstermenü"
 #: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
-msgstr "nach oben"
+msgstr "Nach oben"
 
 #: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
 msgid "Lower"
-msgstr "nach unten"
+msgstr "Nach unten"
 
 #: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
 #: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
@@ -223,11 +222,11 @@ msgstr "Fenster: Zustand"
 
 #: src/bin/e_actions.c:3161
 msgid "Sticky Mode Toggle"
-msgstr "Klebrig-Modus-Umschalter"
+msgstr "Anheft-Modus-Umschalter"
 
 #: src/bin/e_actions.c:3165
 msgid "Sticky Mode Enable"
-msgstr "Klebrig-Modus aktivieren"
+msgstr "Anheften aktivieren"
 
 #: src/bin/e_actions.c:3170
 msgid "Always On Top Toggle"
@@ -324,7 +323,7 @@ msgstr "Syntax: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3246
 msgid "Toggle Borderless State"
-msgstr "Rahmenloszustand umschalten"
+msgstr "Borderless umschalten"
 
 #: src/bin/e_actions.c:3251
 msgid "Set Border"
@@ -868,7 +867,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 "Die Einstellungen müssen auf den neusten Stand gebracht werden.<br>Ihre "
-"alten Einstellungen wurde zugunsten neuer Standardeinstellungen entfernt."
+"alten Einstellungen wurden zugunsten neuer Standardeinstellungen entfernt."
 "<br>In der Entwicklungsphase wird dies regelmäßig vorkommen, weshalb Sie "
 "keine<br>Programmfehler melden sollten. Dies ist nötig, um in der alten "
 "Einstellung fehlende<br>Funktionalität nachzurüsten. Sie können diese nun "
@@ -887,7 +886,7 @@ msgstr ""
 "sollte nicht vorkommen; es sei denn, Sie haben eine ältere Version<br>von "
 "Moksha installiert oder eine Einstellungsdatei kopiert,<br>die von einer "
 "neueren Version stammt. Dies könnte zu unvorhergesehenen<br>Effekten führen; "
-"daher werden sicherheitshalber die Standardeinstellungen<br>benutzt. Bitte "
+"daher werden sicherheitshalber die Standardeinstellungen<br>verwendet. Bitte "
 "entschuldigen Sie die Unannehmlichkeiten.<br>"
 
 #: src/bin/e_config.c:1527 src/bin/e_config.c:2152
@@ -942,7 +941,7 @@ msgid ""
 "permissions to your files."
 msgstr ""
 "Die Datei kann nicht beschrieben werden. Vielleicht ist die<br>Platte nur "
-"beschreibbar oder Sie haben die Berechtigungen<br>verloren."
+"beschreibbar oder Sie haben die Berechtigungen<br>für ihre Dateien verloren."
 
 #: src/bin/e_config.c:2073
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
@@ -1014,7 +1013,7 @@ msgstr "Entschlüsseln fehlgeschlagen."
 
 #: src/bin/e_config.c:2133
 msgid "The error is unknown to Moksha."
-msgstr "Dieser Fehler ist Moksha nicht bekannt."
+msgstr "Dieser Fehler ist Moksha unbekannt."
 
 #: src/bin/e_config.c:2155
 #, c-format
@@ -1093,7 +1092,7 @@ msgstr ""
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
-msgstr "Bitte geben Sie Ihr Kennwort zum Entsperren ein"
+msgstr "Bitte geben Sie Ihr Kennwort ein"
 
 #: src/bin/e_desklock.c:928
 msgid "Authenticating..."
@@ -1101,7 +1100,7 @@ msgstr "Authentifiziere..."
 
 #: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
-msgstr "Das eingegebene Passwort ist falsch. Neuer Versuch."
+msgstr "Das eingegebene Passwort ist falsch. Versuchen sie es noch einmal."
 
 #: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
@@ -1293,12 +1292,12 @@ msgstr "Moksha konnte das aktuelle Verzeichnis nicht finden"
 #: src/bin/e_exec.c:409
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
-msgstr "Moksha konnte einen Kindprozess nicht abspalten:<br><br>%s"
+msgstr "Moksha konnte nicht in folgendes Verzeichnis wechseln:<br><br>%s"
 
 #: src/bin/e_exec.c:420
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
-msgstr "Moksha konnte einen Kindprozess nicht abspalten:<br><br>%s"
+msgstr "Moksha konnte im Verzeichnis nicht wiederhergestellt werden:<br><br>%s"
 
 #: src/bin/e_exec.c:469
 #, c-format
@@ -1724,7 +1723,7 @@ msgstr "Quelle Verschieben"
 
 #: src/bin/e_fm.c:10685
 msgid "Ignore this"
-msgstr "Ignorieren"
+msgstr "Ignoriere dieses"
 
 #: src/bin/e_fm.c:10686
 msgid "Ignore all"
@@ -1997,7 +1996,7 @@ msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
 msgstr ""
-"Moksha war nicht im Stande, das Thema zu importieren.<br><br>Sind Sie "
+"Moksha war nicht in der Lage, das Thema zu importieren.<br><br>Sind Sie "
 "sicher, dass dies ein gültiges Thema ist?"
 
 #: src/bin/e_import_dialog.c:163
@@ -2232,11 +2231,11 @@ msgstr "Minimieren"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Mit Tastatur bewegen"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Größe mit Tastatur ändern"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -2355,10 +2354,11 @@ msgid "Iconic"
 msgstr "Minimiert"
 
 # No clue how to translate that...
+# Fixed that :) ~Levin
 #: src/bin/e_int_border_prop.c:216
-#, fuzzy, c-format
+#, c-format
 msgid "Forget/Unmap"
-msgstr "Vergessen/Unmap"
+msgstr "Vergessen/Zuordnung aufheben"
 
 #: src/bin/e_int_border_prop.c:220
 #, c-format
@@ -2860,9 +2860,8 @@ msgid "Restart Moksha"
 msgstr "Moksha neustarten"
 
 #: src/bin/e_int_menus.c:337
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favoriten"
+msgstr "Bevorzugte Anwendungen"
 
 #: src/bin/e_int_menus.c:342 src/bin/e_int_menus.c:798
 msgid "No applications"
@@ -3431,7 +3430,7 @@ msgid "Version: %s\n"
 msgstr "Version: %s\n"
 
 #: src/bin/e_main.c:1313
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3461,7 +3460,7 @@ msgid ""
 msgstr ""
 "Optionen:\n"
 "\t-display DISPLAY\n"
-"\t\tVerbinde zu Anzeige DISPLAY.\n"
+"\t\tVerbinde zur Anzeige DISPLAY.\n"
 "\t\tEG: -display:1.0\n"
 "\t-fake-xinerama-screen WxH+X+Y\n"
 "\t\tFüge einen gefälschten Xinerama-Bildschirm hinzu (anstatt eines echten)\n"
@@ -3474,16 +3473,17 @@ msgstr ""
 "\t-profile CONF_PROFILE\n"
 "\t\tDas Profil CONF_PROFILE anstelle des benutzerdefinierten verwenden oder "
 "einfach \"Standard\".\n"
-"\t-good\n"
+"\t-brav\n"
 "\t\tSei brav.\n"
-"\t-evil\n"
+"\t-böse\n"
 "\t\tSei böse.\n"
-"\t-psychotic\n"
+"\t-psychotisch\n"
 "\t\tSei psychotisch.\n"
-"\t-locked\n"
+"\t-gesperrt\n"
 "\t\tMit aktiver Bildschirmsperre starten, so dass das Passwort eingegeben "
 "werden muss.\n"
-"\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
+"\t-Ich-weiß-wirklich-was-ich-tue-und-akzeptiere-die-volle-Verantwortung-zu-"
+"übernehmen\n"
 "\t\tlfWenn Sie diese Hilfe benötigen, brauchen Sie diese Option definitiv "
 "nicht.\n"
 
@@ -3608,7 +3608,7 @@ msgstr ""
 #: src/bin/e_module.c:170
 #, c-format
 msgid "Loading Module: %s"
-msgstr "Modul laden: %s"
+msgstr "Lade Modul: %s"
 
 #: src/bin/e_module.c:219
 #, c-format
@@ -3834,15 +3834,15 @@ msgid "System Check Done"
 msgstr "Systemüberprüfung abgeschlossen"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "Abmeldevorgang dauert zu lange.<br>Einige Programme können nicht geschlossen "
-"werden.<br>Möchten Sie die Abmeldung abschließen, ohne diese<br>Programme "
-"zuerst zu beenden?<br><br>Automatisches Abmelden in %d Sekunden."
+"werden.<br>Möchten Sie abmelden, ohne diese<br>Programme zuerst zu beenden?"
+"<br><br>%s<br>Automatisches Abmelden in %d Sekunden."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3885,8 +3885,8 @@ msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
-"Schalte ab.<br>Sie können keine anderen Systemaktionen ausführen,<br>sobald "
-"das Herunterfahren begonnen hat."
+"Fahre herunter.<br>Sie können keine anderen Systemaktionen ausführen,"
+"<br>sobald das Herunterfahren begonnen hat."
 
 #: src/bin/e_sys.c:613
 msgid ""
@@ -3901,7 +3901,7 @@ msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
-"Schlafmodus wird vorbereitet.<br>Erst nach dem Aufwachen können<br>weitere "
+"Energieparen wird vorbereitet.<br>Erst nach dem Aufwachen können<br>weitere "
 "Systemaktionen ausgeführt werden."
 
 #: src/bin/e_sys.c:625
@@ -3934,7 +3934,7 @@ msgstr "Versetzen in den Ruhezustand fehlgeschlagen."
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "Ausschalten.<br><hilight>Bitte warten.</hilight>"
+msgstr "Herunterfahren.<br><hilight>Bitte warten.</hilight>"
 
 #: src/bin/e_sys.c:812
 msgid "Resetting"
@@ -4501,7 +4501,7 @@ msgstr "Energieverwaltungs-Zeitsteuerung"
 
 #: src/modules/battery/e_mod_main.c:479 src/modules/battery/e_mod_main.c:521
 msgid "Your battery is low!"
-msgstr "Niedriger Akkustand."
+msgstr "Niedriger Akkustand!"
 
 #: src/modules/battery/e_mod_main.c:480 src/modules/battery/e_mod_main.c:523
 msgid "AC power is recommended."
@@ -4509,7 +4509,7 @@ msgstr "Netzbetrieb empfohlen."
 
 #: src/modules/battery/e_mod_main.c:528
 msgid "Power now: "
-msgstr "Akkustand: "
+msgstr "Aktueller Akkustand: "
 
 #: src/modules/battery/e_mod_main.c:534
 msgid "Remaining time: "
@@ -4728,7 +4728,7 @@ msgstr "E-Mail"
 #: src/modules/conf_applications/e_int_config_defapps.c:313
 #: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1075
 msgid "Trash"
-msgstr "Mülleimer"
+msgstr "Papierkorb"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:314
 msgid "Terminal"
@@ -5500,9 +5500,8 @@ msgstr "Knöpfe"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 #: src/modules/conf_interaction/e_int_config_mouse.c:328
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Mittlere Taste"
+msgstr "Mittlere Maustaste emulieren"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5511,59 +5510,53 @@ msgstr "Maus"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Geräte Extras aktivieren"
 
+# this has to stay in english :(
+# tap and click means the same in german so it would sound very stupid... ~Levin
 #: src/modules/conf_interaction/e_int_config_mouse.c:324
 msgid "Tap to click"
-msgstr ""
+msgstr "Tap to click"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:332
-#, fuzzy
 msgid "Clickpad"
-msgstr "Klicken"
+msgstr "Touchpad"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:336
 msgid "Palm detect"
-msgstr ""
+msgstr "Handrücken erkennen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:342
-#, fuzzy
 msgid "Scrolling"
-msgstr "Polling"
+msgstr "Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:344
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Scrollen animieren"
+msgstr "Natürliches Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:350
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Horizontale Ausrichtung"
+msgstr "Horizontales Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:354
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Scrollen animieren"
+msgstr "Kanten scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:358
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Scrollen animieren"
+msgstr "2 Finger Scrollen "
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:362
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Scrollen animieren"
+msgstr "Kreisförmiges Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:367
-#, fuzzy
 msgid "Touchpad"
-msgstr "Berührungseingabe"
+msgstr "Touchpad"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
-msgstr "Berührungseingabe"
+msgstr "Berührung"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5762,11 +5755,11 @@ msgstr "Vergrößern"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
 msgid "Brightness Down"
-msgstr "Dunkler"
+msgstr "Helligkeit senken"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
 msgid "Brightness Up"
-msgstr "Heller"
+msgstr "Helligkeit erhöhen"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 msgid "Assist"
@@ -5995,193 +5988,159 @@ msgstr "Extra Rad (%d) nach Unten"
 
 #: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
-msgstr ""
+msgstr "Fenster"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr "Fenster duplizieren"
+msgstr "Fenster schliessen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr "Fenster hervorheben"
+msgstr "Fenster maximieren:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr "Icon-Modus-Umschalter"
+msgstr "Icon-Modus-Umschalter:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr "Vollbildmodus umschalten"
+msgstr "Vollbildmodus umschalten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr "Immer Oben umschalten"
+msgstr "Immer Oben umschalten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr "Nächstes Fenster"
+msgstr "Nächstes Fenster:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr "Nach rechts Maximieren"
+msgstr "Nach rechts kacheln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr "Nach rechts Maximieren"
+msgstr "Nach links kacheln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr "Alle Fenster"
+msgstr "Fenster schliessen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr "Fenstermenü"
+msgstr "Fenstermenü:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
-msgstr ""
+msgstr "System"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr "Hier ein Terminal öffnen"
+msgstr "Terminal öffnen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr "Eintrag fixieren"
+msgstr "System sperren:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr "Hauptmenü zeigen"
+msgstr "Hauptmenü zeigen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr "Favoritenmenü zeigen"
+msgstr "Favoritenmenü zeigen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr "Systemeinstellungen"
+msgstr "Systemeinstellungen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
-msgstr ""
+msgstr "Desktop"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Arbeitsfläche zeigen"
+msgstr "Arbeitsfläche zeigen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Zu Arbeitsfläche 0 wechseln"
+msgstr " Zu Arbeitsfläche 0 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Zu Arbeitsfläche 1 wechseln"
+msgstr " Zu Arbeitsfläche 1 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Zu Arbeitsfläche 2 wechseln"
+msgstr " Zu Arbeitsfläche 2 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Zu Arbeitsfläche 3 wechseln"
+msgstr " Zu Arbeitsfläche 3 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Zu Arbeitsfläche 4 wechseln"
+msgstr " Zu Arbeitsfläche 4 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Zu Arbeitsfläche 5 wechseln"
+msgstr " Zu Arbeitsfläche 5 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Zu Arbeitsfläche 6 wechseln"
+msgstr " Zu Arbeitsfläche 6 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Zu Arbeitsfläche 7 wechseln"
+msgstr " Zu Arbeitsfläche 7 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Zu Arbeitsfläche 8 wechseln"
+msgstr " Zu Arbeitsfläche 8 wechseln:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "Verschiedenes"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
-msgstr "Schnellstarter"
+msgstr "Schnellstarter:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr "Bildschirmfoto machen"
+msgstr "Bildschirmfoto machen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr "Moksha neustarten"
+msgstr "Moksha neustarten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr "TerminalBefehl"
+msgstr "Terminal Konsole:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr "...dieser Arbeitsfläche"
+msgstr "diese Hilfe:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Maustastenbelegungen"
+msgstr "Standard Moksha Tastenbelegungen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Edit"
-msgstr "Icon bearbeiten"
+msgstr "Bearbeiten"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
-#, fuzzy
 msgid "Keybindings"
 msgstr "Tastenbelegungen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Zeige Moksha Tastenbelegungen"
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
-#, fuzzy
 msgid "Show bindings"
-msgstr "Einstellungen zeigen"
+msgstr "Zeige Belegungen"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6317,7 +6276,7 @@ msgstr "Schriftarten"
 #: src/modules/conf_theme/e_int_config_theme.c:1414
 #: src/modules/conf_theme/e_mod_main.c:180
 msgid "Themes"
-msgstr "Erscheinungsbild"
+msgstr "Themes"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
@@ -6388,7 +6347,7 @@ msgstr "Leistungseinstellungen"
 
 #: src/modules/conf_performance/e_int_config_performance.c:107
 msgid "Framerate"
-msgstr "Framerate"
+msgstr "Bildschirmaktualisierungsrate"
 
 #: src/modules/conf_performance/e_int_config_performance.c:109
 #, c-format
@@ -6466,7 +6425,7 @@ msgstr "Zeit um Leistungshungrige Aufgaben aufzuschieben"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:140
 msgid "Min"
-msgstr "Min."
+msgstr "Min"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:148
 msgid "Max"
@@ -6572,7 +6531,7 @@ msgstr "Farbe..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
-msgstr "Dieses Hintergrundbild verwenden auf..."
+msgstr "Dieses Hintergrundbild verwenden auf"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:681
 msgid "All Desktops"
@@ -6600,14 +6559,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Diesen Rahmen für zukünftiges Öffnen des Fensters merken"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Rahmenart"
+msgstr "Rahmenboden"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Aktiver Rahmen"
+msgstr "Aktiver Rahmenboden"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -7654,9 +7611,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Fenster oberhalb von Vollbildfenstern zulassen"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Beim Ziehen von Objekten an Bildschirmkante umklappen"
+msgstr "Fenster zum Bildschirmrand ziehen"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -7883,54 +7839,49 @@ msgid "Power State Max"
 msgstr "Ladungszustand Maximum"
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Es gab einen Fehler beim Einstellen der<br>CPU-Frequenz mittels des "
-"moduleigenen<br>Hilfsprogramms \"setfreq\"."
+"Es gab einen Fehler beim Einstellen der<ps/>CPU-Frequenz mittels des "
+"moduleigenen<ps/>Hilfsprogramms \"setfreq\"."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Ihr Kernel unterstützt das Einstellen der<br>CPU-Frequenz nicht. "
-"Möglicherweise fehlen<br>Kernelmodule oder -funktionen, oder Ihre "
-"CPU<br>unterstützt diese Funktion einfach nicht."
+"Ihr Kernel unterstützt das Einstellen der<ps/>CPU-Frequenz nicht. "
+"Möglicherweise fehlen<ps/>Kernelmodule oder -funktionen, oder Ihre CPU<ps/"
+">unterstützt diese Funktion einfach nicht."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Es gab einen Fehler beim Einstellen der<br>CPU-Frequenz mittels des "
-"moduleigenen<br>Hilfsprogramms \"setfreq\"."
+"Es gab einen Fehler beim Einstellen der<ps/>CPU-Frequenz mittels des "
+"moduleigenen<ps/>Hilfsprogramms \"setfreq\"."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Es gab einen Fehler beim Einstellen der<br>CPU-Frequenz mittels des "
-"moduleigenen<br>Hilfsprogramms \"setfreq\"."
+"Es gab einen Fehler beim Einstellen der<ps/>CPU-Frequenz mittels des "
+"moduleigenen<ps/>Hilfsprogramms \"setfreq\"."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
 msgid "Cpufreq Error"
 msgstr "Cpufreq-Fehler"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
-#, fuzzy
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"Die freqset Programmdatei im cpufreq-Modul<br>kann nicht gefunden werden "
+"Die freqset Programmdatei im cpufreq-Modul<ps/>kann nicht gefunden werden "
 "(stat schlug fehl)"
 
 #: src/modules/cpufreq/e_mod_main.c:1474
@@ -7938,15 +7889,16 @@ msgid "Cpufreq Permissions Error"
 msgstr "Cpufreq Rechtefehler"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Die freqset-Programmdatei im cpufreq-Modul<br>hat weder root-Rechte noch "
-"das<br>setuid-Bit gesetzt. Bitte stellen Sie sicher dass<br>das der Fall ist."
-"<br><br>Zum Beispiel:<br><br>sudo chown root %s<br>sudo chmod u+s,a+x %s<br>"
+"Die freqset-Programmdatei im cpufreq-Modul<ps/>hat weder root-Rechte noch "
+"das<ps/>setuid-Bit gesetzt. Bitte stellen Sie sicher dass<ps/>das der Fall "
+"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
+"+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8048,9 +8000,8 @@ msgid "Animate scrolling"
 msgstr "Scrollen animieren"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Zuletzt verwendete  Dateien zeigen"
+msgstr "Zuletzt verwendete Dateien zeigen"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -8078,7 +8029,7 @@ msgstr "Vi-Stil (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:512
 msgid "Single mouse click"
-msgstr "Einziger Mausklick"
+msgstr "Einzelner Mausklick"
 
 #: src/modules/everything/evry_config.c:519
 msgid "No Sorting"
@@ -8197,7 +8148,7 @@ msgstr "Öffnen mit..."
 
 #: src/modules/everything/evry_plug_apps.c:1238
 msgid "Open File..."
-msgstr "Datei öffnen..."
+msgstr "Öffne Datei..."
 
 #: src/modules/everything/evry_plug_apps.c:1252
 msgid "Edit Application Entry"
@@ -8805,7 +8756,7 @@ msgstr "Zur Arbeitsfläche springen"
 
 #: src/modules/winlist/e_int_config_winlist.c:236
 msgid "Move to current desk after switch"
-msgstr ""
+msgstr "Navigiere zu momentanem Arbeitsplatz nach Wechsel"
 
 #: src/modules/winlist/e_int_config_winlist.c:240
 msgid "Selecting"
@@ -9275,9 +9226,8 @@ msgid "Temperature"
 msgstr "Temperaturanzeige"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
-msgstr "Hohe Prozessortemperatur!"
+msgstr "Hohe CPU-Temperatur!!!"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
@@ -9297,7 +9247,7 @@ msgstr "Herzlich Willkommen in Moksha"
 
 #: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr "Warte bitte während wir die Moksha-Einstellungen laden."
+msgstr "Warten Sie bitte, während die Moksha-Einstellungen geladen werden!"
 
 #: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
 msgid "Select one"
@@ -9312,7 +9262,6 @@ msgid "Check for available updates"
 msgstr "Auf vorhandene Aktualisierungen prüfen"
 
 #: src/modules/wizard/page_170.c:33
-#, fuzzy
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -9450,7 +9399,7 @@ msgstr ""
 "Terminalfensters zu ändern ist unbekannt.<br>Sie können einen Fehlerreport "
 "einreichen, sollte dies<br>ein Terminal sein welches seinen Fensternamen "
 "ändern kann.<br>Alternativ können Sie ein data.item zu folgender Datei "
-"hinzufügen:"
+"hinzufügen"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9696,6 +9645,8 @@ msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
+"Ändere Ordner in Bildschirmfotoeinstellungen<br><br>Menu-Einstellungen-Alle-"
+"Erweitert-Bildschrimfoto machen<br><br>Möchtest du es jetzt aufsetzen?"
 
 #: src/modules/shot/e_mod_main.c:363
 msgid "Error saving screenshot file"
@@ -9799,13 +9750,12 @@ msgid "Screenshot is available at this location:"
 msgstr "Bildschirmfoto ist an dieser Stelle verfügbar:"
 
 #: src/modules/shot/e_mod_main.c:766
-#, fuzzy
 msgid "Copy link"
-msgstr "Kopieren"
+msgstr "Link kopieren"
 
 #: src/modules/shot/e_mod_main.c:790
 msgid "Confirm Share"
-msgstr "Veröffentlichung bestätigen"
+msgstr "Teilen bestätigen"
 
 #: src/modules/shot/e_mod_main.c:791
 msgid ""
@@ -9841,6 +9791,8 @@ msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
+"Wähle den Screenshot Modus... <br>Die Verzögerung ist in den Screenshot "
+"Einstellungen eingestellt<br>Momentane Verzögerung: <b> %d s</b>"
 
 #: src/modules/shot/e_mod_main.c:1224
 msgid "Instant shot"
@@ -9912,9 +9864,8 @@ msgid "Info"
 msgstr "Information"
 
 #: src/modules/shot/e_mod_config.c:140
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Wähle Ort zum Speichern des Bildschirmfotos aus"
+msgstr "Alt+PrtSc: Screenshot Fenster aktivieren"
 
 #: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
 msgid "Tasks"
@@ -9925,9 +9876,8 @@ msgid "Tasks Settings"
 msgstr "Aufgabeneinstellungen"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Nur Text anzeigen"
+msgstr "Show item hint"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
@@ -10096,22 +10046,20 @@ msgid "Notification"
 msgstr "Benachrichtigung"
 
 #: src/modules/notification/e_mod_main.c:109
-#, fuzzy
 msgid "Notification Module"
 msgstr "Benachrichtigungsmodul"
 
 #: src/modules/notification/e_mod_main.c:130
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Fehler beim Initialisieren des Benachrichtigungsserver"
 
 #: src/modules/notification/e_mod_main.c:131
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
 "Fehler bei der Initialisierung von D-Bus! Prüfen Sie, ob D-Bus korrekt "
-"installiert ist und auch läuft."
+"installiert ist und läuft"
 
 #: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:410
@@ -10188,9 +10136,8 @@ msgid "%.1f s"
 msgstr "%1.1f s"
 
 #: src/modules/notification/e_mod_config.c:139
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Ausrichtung"
+msgstr "Popup Ausrichtung"
 
 #: src/modules/notification/e_mod_config.c:175
 msgid "Ignore replace ID"
@@ -10217,7 +10164,6 @@ msgid "Show notification counter"
 msgstr "Anzahl der Benachrichtigungen anzeigen"
 
 #: src/modules/notification/e_mod_config.c:191
-#, fuzzy
 msgid "Secure Clear"
 msgstr "Sicher Löschen"
 
@@ -10254,7 +10200,7 @@ msgstr ""
 #: src/modules/notification/e_mod_config.c:228
 #: src/modules/clipboard/e_mod_config.c:266
 msgid "History"
-msgstr "Geschichte"
+msgstr "Verlauf"
 
 #: src/modules/clipboard/e_mod_config.c:191
 msgid "Selection"
@@ -10454,6 +10400,9 @@ msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
+"<b>Enlightenment Dateimanager kann nicht gestartet werden.</b><br>Bitte "
+"wähle einen benutzerdefinierten Dateimanager in<br>den Werkzeug "
+"Konfigurationen."
 
 #: src/modules/places/e_mod_places.c:726
 #, c-format
@@ -10467,27 +10416,23 @@ msgstr "Scheibe ''%s'' Benützung ist %d %%!"
 
 #: src/modules/places/e_mod_places.c:832
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:837
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:842
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:847
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:851
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:887
 msgid "No Name"
@@ -10544,9 +10489,8 @@ msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
-msgstr "Lautstärke geändert"
+msgstr "Lautstärke verändert"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
