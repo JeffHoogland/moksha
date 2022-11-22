@@ -130,7 +130,7 @@ notification_popup_notify(E_Notification_Notify *n,
 
    if (n->replaces_id && (popup = _notification_popup_find(n->replaces_id)))
      {
-        if (!notification_cfg->clicked_item)
+        if (notification_cfg->clicked_item)
           {
             if (popup->notif)
               e_object_del(E_OBJECT(popup->notif));
