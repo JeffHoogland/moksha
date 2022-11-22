@@ -239,7 +239,8 @@ list_add_item(Popup_Data *popup)
    items->urgency = popup->notif->urgency;
    items->x = popup->notif->x;
    items->y = popup->notif->y;
-   items->notif_id = popup->notif->id;
+   items->notif_id = notification_cfg->next_id;
+   items->notif = popup->notif;
 
    if (strstr(popup->notif->icon.icon, "tmp"))
      items->item_icon = eina_stringshare_add("");
@@ -328,6 +329,7 @@ popup_items_free(Popup_Items *items)
    eina_stringshare_del(items->desktop_entry);
    eina_stringshare_del(items->sound_file);
    eina_stringshare_del(items->sound_name);
+   E_FREE(items->notif);
 
    E_FREE(items);
 }

@@ -130,9 +130,11 @@ notification_popup_notify(E_Notification_Notify *n,
 
    if (n->replaces_id && (popup = _notification_popup_find(n->replaces_id)))
      {
-        if (popup->notif)
-          e_object_del(E_OBJECT(popup->notif));
-
+        if (!notification_cfg->clicked_item)
+          {
+            if (popup->notif)
+              e_object_del(E_OBJECT(popup->notif));
+          }
         popup->notif = n;
         popup->id = id;
         _notification_popup_refresh(popup);
@@ -514,7 +516,6 @@ _notification_popup_refresh(Popup_Data *popup)
         if (icon_path && icon_path[0])
           {
              Efreet_Uri *uri = NULL;
-
              if (!strncmp(icon_path, "file://", 7)) icon_path += 7;
 
              /* Grab icon stored in /tmp and copy to notif dir */
@@ -775,8 +776,7 @@ _notification_popup_find(unsigned int id)
    Popup_Data *popup;
    if (!id) return NULL;
    EINA_LIST_FOREACH(notification_cfg->popups, l, popup)
-     if (popup->id == id)
-       return popup;
+     if (popup->id == id) return popup;
    return NULL;
 }
 
@@ -812,15 +812,16 @@ _notification_popdown(Popup_Data                  *popup,
         e_popup_hide(popup->win);
         e_object_del(E_OBJECT(popup->win));
      }
-   if (popup->notif)
+   if (popup->notif && notification_cfg->clicked_item)
      {
         e_notification_notify_close(popup->notif, reason);
         e_object_del(E_OBJECT(popup->notif));
+        popup->notif = NULL;
      }
-   popup->notif = NULL;
-   if (popup->pending) return;
 
-   E_FREE(popup);
+   if (popup->pending) return;
+   if (notification_cfg->clicked_item)
+      E_FREE(popup);
    //FIXME:What does this do
    //e_comp_shape_queue();
 }
@@ -845,5 +846,6 @@ _notification_format_message(Popup_Data *popup)
    edje_object_part_text_set(o, "notification.textblock.message",
                              eina_strbuf_string_get(buf));
    eina_strbuf_free(buf);
-   list_add_item(popup);
+   if (!notification_cfg->clicked_item)
+     list_add_item(popup);
 }

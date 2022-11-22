@@ -132,6 +132,7 @@ struct _Popup_Items
   Eina_Stringshare *item_title;
   Eina_Stringshare *item_body;
   E_Notification_Notify_Urgency urgency;
+  E_Notification_Notify *notif;
   Eina_Stringshare *category;
   Eina_Stringshare *desktop_entry;
   Eina_Stringshare *sound_file;

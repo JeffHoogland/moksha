@@ -537,7 +537,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
 {
    EINA_SAFETY_ON_NULL_RETURN(data);
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
- 
+
+   notification_cfg->clicked_item = EINA_FALSE;
    Instance *inst = data;
 
    if (inst->gcc)
@@ -596,9 +597,9 @@ _notification_notify(E_Notification_Notify *n)
      return 0;
 
    // if (e_desklock_state_get()) return 0;
-
    notification_cfg->next_id++;
    new_id = notification_cfg->next_id;
+
    notification_popup_notify(n, new_id);
 
    return new_id;
@@ -710,43 +711,15 @@ _notification_cb_config_mode_changed(Config *m_cfg,
 // FIXME: for present usage badly named
 
 static void
-_notification_show_actions(Popup_Items *sel_item, const char *icon)
-{  //FIXME can i just use old n?
-   E_Notification_Notify *n = E_NEW(E_Notification_Notify, 1);
+_notification_show_actions(Popup_Items *sel_item, __UNUSED__ const char *icon)
+{  //FIXME actions works only for last notif within one source
+   if (!sel_item->notif) return;
 
-   PRINT("Show actions %p\n", icon);
-   n->app_name = sel_item->item_app;
-   n->replaces_id = sel_item->notif_id;
-   n->icon.icon = icon;
-   n->summary = sel_item->item_title;
-   n->body = sel_item->item_body;
-   n->urgency = sel_item->urgency;
-   n->category = sel_item->category;
-   n->desktop_entry = sel_item->desktop_entry;
-   n->sound_file = sel_item->sound_file;
-   n->sound_name = sel_item->sound_name;
-   n->x = sel_item->x;
-   n->y = sel_item->y;
-   n->timeout=-1;
- // FIXME: actions
-   if (sel_item->actions)
-     {  E_Notification_Notify_Action *act, *actions;
-        Eina_List *l;
-        int num = 0;
-        EINA_LIST_FOREACH(sel_item->actions, l, act)
-        {
-           num++;
-           actions = realloc(n->actions, (num + 1) * sizeof(E_Notification_Notify));
-           if (actions)
-            {
-               n->actions = actions;
-               n->actions[num - 1].action = eina_stringshare_add(act->action);
-               n->actions[num - 1].label = eina_stringshare_add(act->label);
-               n->actions[num].action = NULL;
-               n->actions[num].label = NULL;
-            }
-        }
-     }
+   E_Notification_Notify *n = sel_item->notif;
+
+   n->timeout = -1;
+   n->icon.icon_path = sel_item->item_icon_img;
+   //~ n->replaces_id = sel_item->notif_id;
    _notification_notify(n);
 }
 
