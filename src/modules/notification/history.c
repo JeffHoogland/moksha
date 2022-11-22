@@ -262,35 +262,27 @@ list_add_item(Popup_Data *popup)
              items->actions = eina_list_append(items->actions, act);
           }
      }
-   // part of my debug icon coming from theme stuff
-    // const char *f;
-
     // f = e_theme_edje_file_get("base/theme/modules/notification",  "e/modules/notification/logo");
     // PRINT("%s\n", f);
 
-    /* FIXME: LOGIC is different with new API */
-   // popup->app_icon is evas obj :(
-
+   if (notification_cfg->new_item < notification_cfg->menu_items)
+     notification_cfg->new_item++;
+     
    /* Add item to the menu if less then menu items limit */
-   if (notification_cfg->clicked_item == EINA_FALSE)
+   if (eina_list_count(notification_cfg->hist->history) < notification_cfg->menu_items)
+     notification_cfg->hist->history = eina_list_prepend(notification_cfg->hist->history, items);
+   else
      {
-       if (notification_cfg->new_item < notification_cfg->menu_items)
-         notification_cfg->new_item++;
-       if (eina_list_count(notification_cfg->hist->history) < notification_cfg->menu_items)
-         notification_cfg->hist->history = eina_list_prepend(notification_cfg->hist->history, items);
-       else
-         {
-           file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->hist->history))->item_icon_img;
+       file = ((Popup_Items *) eina_list_last_data_get(notification_cfg->hist->history))->item_icon_img;
 
-           if (ecore_file_exists(file))
-             {
-                if (!ecore_file_remove(file))
-                  printf("Notification: Error during hint file removing!\n");
-             }
-           notification_cfg->hist->history = eina_list_remove_list(notification_cfg->hist->history,
-                                           eina_list_last(notification_cfg->hist->history));
-           notification_cfg->hist->history = eina_list_prepend(notification_cfg->hist->history, items);
+       if (ecore_file_exists(file))
+         {
+            if (!ecore_file_remove(file))
+              printf("Notification: Error during hint file removing!\n");
          }
+       notification_cfg->hist->history = eina_list_remove_list(notification_cfg->hist->history,
+                                         eina_list_last(notification_cfg->hist->history));
+       notification_cfg->hist->history = eina_list_prepend(notification_cfg->hist->history, items);
      }
 
    notification_cfg->clicked_item = EINA_FALSE;
