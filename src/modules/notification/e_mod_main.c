@@ -28,7 +28,7 @@ static Eina_Bool        _notification_cb_config_mode_changed(Config *m_cfg, int 
 
 
 /* Notify Functions */
-static void _notification_show_actions(Popup_Items *sel_item, const char *icon);
+static void _notification_show_actions(Popup_Items *sel_item);
 
 /* Config function protos */
 static Config *_notification_cfg_new(void);
@@ -504,32 +504,19 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    EINA_SAFETY_ON_NULL_RETURN(selected_item);
 
    Popup_Items *sel_item = (Popup_Items *) selected_item;
-   Eina_Stringshare *temp_icon = NULL;
-   int check = 0;
 
    PRINT("MENU ITEM CALL BACK %ld %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
    notification_cfg->clicked_item = EINA_TRUE;
    /* remove the current item from the list */
    notification_cfg->hist->history = eina_list_remove(notification_cfg->hist->history, sel_item);
-   // Fixme: icons are now much more compilcated
-   if (strlen(sel_item->item_icon) > 0)
-     temp_icon = eina_stringshare_add(sel_item->item_icon);
-   else if (sel_item->item_icon_img)
-   {
-     temp_icon = eina_stringshare_add(sel_item->item_icon_img);
-     check = 1;
-   }
 
-   /* show the current item as notification */
    // FIXME: ACTIONS
-   _notification_show_actions(sel_item, temp_icon);
+   _notification_show_actions(sel_item);
 
-   if (check) ecore_file_remove(sel_item->item_icon_img);
+   if (sel_item->item_icon_img)
+       ecore_file_remove(sel_item->item_icon_img);
 
-   if (!notification_cfg->hist->history)
-      notification_cfg->clicked_item = EINA_FALSE;
-
-   eina_stringshare_del(temp_icon);
+   store_history(notification_cfg->hist);
 }
 
 static void
@@ -711,9 +698,13 @@ _notification_cb_config_mode_changed(Config *m_cfg,
 // FIXME: for present usage badly named
 
 static void
-_notification_show_actions(Popup_Items *sel_item, __UNUSED__ const char *icon)
+_notification_show_actions(Popup_Items *sel_item)
 {  //FIXME actions works only for last notif within one source
-   if (!sel_item->notif) return;
+   if (!sel_item->notif)
+     {
+       e_notification_util_send("Warning", "Notification expired!");
+       return;
+     }
 
    E_Notification_Notify *n = sel_item->notif;
 
