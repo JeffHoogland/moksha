@@ -805,7 +805,6 @@ _notification_popdown(Popup_Data                  *popup,
                       E_Notification_Notify_Closed_Reason reason)
 {  // FIXME: Do i need to free mores stuff here ? Check
    E_FREE_FUNC(popup->timer, ecore_timer_del);
-   E_FREE_LIST(popup->mirrors, evas_object_del);
    if (popup->win)
      {
         // Why is this commented out

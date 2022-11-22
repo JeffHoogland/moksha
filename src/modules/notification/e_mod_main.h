@@ -108,7 +108,6 @@ struct _Popup_Data
    unsigned id;
    E_Notification_Notify *notif;
    E_Popup *win;
-   Eina_List *mirrors;
    Evas *e;
    Evas_Object *theme;
    const char  *app_name;
