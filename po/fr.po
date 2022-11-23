@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
-"PO-Revision-Date: 2022-11-07 09:14+0100\n"
+"PO-Revision-Date: 2022-11-23 12:29+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -67,7 +67,7 @@ msgstr ""
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
-msgstr "<title>Notre Équipe</><br><br>"
+msgstr "<title>Notre équipe</><br><br>"
 
 #: src/bin/e_actions.c:154
 msgid "Profile: Switch"
@@ -589,7 +589,7 @@ msgstr "Éclaircir"
 
 #: src/bin/e_actions.c:3437
 msgid "Backlight Set"
-msgstr "Rétroéclairage réglé"
+msgstr "Définir le rétroéclairage"
 
 #: src/bin/e_actions.c:3439
 msgid "Backlight Min"
@@ -707,7 +707,7 @@ msgstr "Application"
 
 #: src/bin/e_actions.c:3535
 msgid "New Instance of Focused App"
-msgstr "Nouvelle instance de l'application sélectionnée"
+msgstr "Nouvelle instance de l'application focalisée"
 
 #: src/bin/e_actions.c:3539
 msgid "Restart"
@@ -4746,11 +4746,11 @@ msgstr "Options X11 basiques"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
 msgid "Load X Resources"
-msgstr "Activer les ressources X (xrdb)"
+msgstr "Activer les ressources de X (xrdb)"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
 msgid "Load X Modifier Map"
-msgstr "Activer les mappages X (xmodmap)"
+msgstr "Activer les mappages de X (xmodmap)"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
 msgid "Major Desktops"
@@ -9735,8 +9735,8 @@ msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
-"Cette image va être téléversée sur enlightenment.org. Elle sera visible par "
-"tous."
+"Cette image va être téléversée sur enlightenment.org.<br>Elle sera visible "
+"par tous."
 
 #: src/modules/shot/e_mod_main.c:793
 msgid "Confirm"
@@ -10180,11 +10180,11 @@ msgstr "Sélection"
 
 #: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
-msgstr " Utiliser copier (Ctrl+C)"
+msgstr " Utiliser Copy (Ctrl+C)"
 
 #: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
-msgstr " Utiliser primaire (sélection)"
+msgstr " Utiliser Primary (sélection)"
 
 #: src/modules/clipboard/e_mod_config.c:200
 msgid " Synchronize Clipboards"
