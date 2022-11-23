@@ -23,14 +23,16 @@
 # Fabian Nowak <timystery@arcor.de>, 2010.
 # Thomas Gstädtner <thomas@gstaedtner.net>, 2009, 2015
 # Pjotr <pjotrvertaalt@gmail.com>, 2021
+# Levin Schmitz <tentacionshope@gmail.com>, 2022
 #
+
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2022-10-31 13:08+0100\n"
 "PO-Revision-Date: 2022-11-21 20:30+0100\n"
-"Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
+"Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
 "Language-Team: E17-de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
