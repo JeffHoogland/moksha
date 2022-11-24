@@ -147,7 +147,6 @@ _history_descriptor_init(void)
    HIST_NOTIF_ADD_BASIC(item_icon_img,  EET_T_STRING);
    HIST_NOTIF_ADD_BASIC(item_title,     EET_T_STRING);
    HIST_NOTIF_ADD_BASIC(item_body,      EET_T_STRING);
-   HIST_NOTIF_ADD_BASIC(item_body,      EET_T_STRING);
    HIST_NOTIF_ADD_BASIC(notif_id,       EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_LIST
      (_notif_sub_descriptor, Popup_Items, "actions", actions, _notif_act_descriptor);
