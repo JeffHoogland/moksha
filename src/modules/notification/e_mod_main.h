@@ -10,7 +10,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      2
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 2
+#define MOD_CONFIG_FILE_GENERATION 3
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 /* Notification history list defines */
