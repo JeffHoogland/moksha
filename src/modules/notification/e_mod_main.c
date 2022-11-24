@@ -97,7 +97,6 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, time_stamp, INT);
    E_CONFIG_VAL(D, T, show_app, INT);
    E_CONFIG_VAL(D, T, show_count, INT);
-   E_CONFIG_VAL(D, T, secure_clear, INT);
    E_CONFIG_VAL(D, T, reverse, INT);
    E_CONFIG_VAL(D, T, menu_items, DOUBLE);
    E_CONFIG_VAL(D, T, item_length, DOUBLE);
@@ -546,8 +545,8 @@ clear_menu(void)
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg->hist);
    if (notification_cfg->hist->history)
      E_FREE_LIST(notification_cfg->hist->history, popup_items_free);
-   if (notification_cfg->secure_clear)
-      store_history(notification_cfg->hist);
+
+   store_history(notification_cfg->hist);
 }
 
 static void

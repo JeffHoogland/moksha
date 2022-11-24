@@ -303,10 +303,6 @@ popup_items_free(Popup_Items *items)
    eina_stringshare_del(items->item_icon_img);
    eina_stringshare_del(items->item_title);
    eina_stringshare_del(items->item_body);
-   //~ eina_stringshare_del(items->category);
-   //~ eina_stringshare_del(items->desktop_entry);
-   //~ eina_stringshare_del(items->sound_file);
-   //~ eina_stringshare_del(items->sound_name);
    E_FREE(items->notif);
 
    E_FREE(items);

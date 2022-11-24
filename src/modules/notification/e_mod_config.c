@@ -17,7 +17,6 @@ struct _E_Config_Dialog_Data
    int show_app;
    int show_count;
    int reverse;
-   int secure_clear;
    double item_length;
    double menu_items;
    double jump_delay;
@@ -87,7 +86,6 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->time_stamp = notification_cfg->time_stamp;
    cfdata->show_app = notification_cfg->show_app;
    cfdata->show_count = notification_cfg->show_count;
-   cfdata->secure_clear = notification_cfg->secure_clear;
    cfdata->reverse = notification_cfg->reverse;
    cfdata->menu_items = notification_cfg->menu_items;
    cfdata->item_length = notification_cfg->item_length;
@@ -187,8 +185,6 @@ _basic_create(E_Config_Dialog      *cfd __UNUSED__,
    ow = e_widget_check_add(evas, _("Show application name"),  &(cfdata->show_app));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Show notification counter"),  &(cfdata->show_count));
-   e_widget_framelist_object_append(of, ow);
-   ow = e_widget_check_add(evas, _("Secure Clear"),  &(cfdata->secure_clear));
    e_widget_framelist_object_append(of, ow);
    ow = e_widget_check_add(evas, _("Reverse order"),  &(cfdata->reverse));
    e_widget_framelist_object_append(of, ow);
@@ -291,7 +287,6 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    notification_cfg->menu_items = cfdata->menu_items;
    notification_cfg->item_length = cfdata->item_length;
    notification_cfg->jump_delay = cfdata->jump_delay;
-   notification_cfg->secure_clear = cfdata->secure_clear;
 
    if (notification_cfg->blacklist)
      eina_stringshare_del(notification_cfg->blacklist);

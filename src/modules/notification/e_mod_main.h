@@ -79,7 +79,6 @@ struct _Config
   int time_stamp;
   int show_app;
   int show_count;
-  int secure_clear;
   int reverse;
   Eina_Bool clicked_item;
   double item_length;
