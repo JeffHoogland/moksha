@@ -148,12 +148,6 @@ _history_descriptor_init(void)
    HIST_NOTIF_ADD_BASIC(item_title,     EET_T_STRING);
    HIST_NOTIF_ADD_BASIC(item_body,      EET_T_STRING);
    HIST_NOTIF_ADD_BASIC(item_body,      EET_T_STRING);
-   HIST_NOTIF_ADD_BASIC(urgency,        EET_T_UINT);
-   HIST_NOTIF_ADD_BASIC(desktop_entry,  EET_T_STRING);
-   HIST_NOTIF_ADD_BASIC(sound_file,     EET_T_STRING);
-   HIST_NOTIF_ADD_BASIC(sound_name,     EET_T_STRING);
-   HIST_NOTIF_ADD_BASIC(x,              EET_T_UINT);
-   HIST_NOTIF_ADD_BASIC(y,              EET_T_UINT);
    HIST_NOTIF_ADD_BASIC(notif_id,       EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_LIST
      (_notif_sub_descriptor, Popup_Items, "actions", actions, _notif_act_descriptor);
@@ -231,14 +225,6 @@ list_add_item(Popup_Data *popup)
    items->item_app = eina_stringshare_add(popup->app_name);
    items->item_title = eina_stringshare_add(popup->notif->summary);
    items->item_body = eina_stringshare_add(popup->notif->body);
-
-   items->category = eina_stringshare_add(popup->notif->category);
-   items->desktop_entry = eina_stringshare_add(popup->notif->desktop_entry);
-   items->sound_file = eina_stringshare_add(popup->notif->sound_file);
-   items->sound_name = eina_stringshare_add(popup->notif->sound_name);
-   items->urgency = popup->notif->urgency;
-   items->x = popup->notif->x;
-   items->y = popup->notif->y;
    items->notif_id = notification_cfg->next_id;
    items->notif = popup->notif;
 
@@ -317,10 +303,10 @@ popup_items_free(Popup_Items *items)
    eina_stringshare_del(items->item_icon_img);
    eina_stringshare_del(items->item_title);
    eina_stringshare_del(items->item_body);
-   eina_stringshare_del(items->category);
-   eina_stringshare_del(items->desktop_entry);
-   eina_stringshare_del(items->sound_file);
-   eina_stringshare_del(items->sound_name);
+   //~ eina_stringshare_del(items->category);
+   //~ eina_stringshare_del(items->desktop_entry);
+   //~ eina_stringshare_del(items->sound_file);
+   //~ eina_stringshare_del(items->sound_name);
    E_FREE(items->notif);
 
    E_FREE(items);
