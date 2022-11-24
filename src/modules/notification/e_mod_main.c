@@ -141,7 +141,7 @@ e_modapi_init(E_Module *m)
          notification_cfg);
    notification_mod = m;
 
-   notification_cfg->clicked_item = EINA_FALSE;
+   notification_cfg->item_click = EINA_FALSE;
    notification_cfg->new_item = 0;
 
    e_gadcon_provider_register(&_gadcon_class);
@@ -503,7 +503,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    Popup_Items *sel_item = (Popup_Items *) selected_item;
 
    PRINT("MENU ITEM CALL BACK %ld %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
-   notification_cfg->clicked_item = EINA_TRUE;
+   notification_cfg->item_click = EINA_TRUE;
    /* remove the current item from the list */
    notification_cfg->hist->history = eina_list_remove(notification_cfg->hist->history, sel_item);
 

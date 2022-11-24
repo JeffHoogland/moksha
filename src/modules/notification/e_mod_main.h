@@ -80,7 +80,7 @@ struct _Config
   int show_app;
   int show_count;
   int reverse;
-  Eina_Bool clicked_item;
+  Eina_Bool item_click;
   double item_length;
   double menu_items;
   double jump_delay;

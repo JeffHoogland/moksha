@@ -130,7 +130,7 @@ notification_popup_notify(E_Notification_Notify *n,
 
    if (n->replaces_id && (popup = _notification_popup_find(n->replaces_id)))
      {
-        if (notification_cfg->clicked_item)
+        if (notification_cfg->item_click)
           {
             if (popup->notif)
               e_object_del(E_OBJECT(popup->notif));
@@ -528,7 +528,7 @@ _notification_popup_refresh(Popup_Data *popup)
                 file = ecore_file_file_get(icon_path);
                 if (*file == '.') file = file + 1;
                 snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(),file);
-                if (!notification_cfg->clicked_item)
+                if (!notification_cfg->item_click)
                   ecore_file_cp(icon_path, dir);
                 popup->app_icon_image = strdup(dir);
              }
@@ -798,7 +798,7 @@ _notification_popup_del(unsigned int                 id,
              break;
           }
      }
-     notification_cfg->clicked_item = EINA_FALSE;
+     notification_cfg->item_click = EINA_FALSE;
 }
 
 static void
@@ -813,7 +813,7 @@ _notification_popdown(Popup_Data                  *popup,
         e_popup_hide(popup->win);
         e_object_del(E_OBJECT(popup->win));
      }
-   if (popup->notif && notification_cfg->clicked_item)
+   if (popup->notif && notification_cfg->item_click)
      {
         e_notification_notify_close(popup->notif, reason);
         e_object_del(E_OBJECT(popup->notif));
@@ -821,7 +821,7 @@ _notification_popdown(Popup_Data                  *popup,
      }
 
    if (popup->pending) return;
-   if (notification_cfg->clicked_item)
+   if (notification_cfg->item_click)
       E_FREE(popup);
    //FIXME:What does this do
    //e_comp_shape_queue();
@@ -847,6 +847,6 @@ _notification_format_message(Popup_Data *popup)
    edje_object_part_text_set(o, "notification.textblock.message",
                              eina_strbuf_string_get(buf));
    eina_strbuf_free(buf);
-   if (!notification_cfg->clicked_item)
+   if (!notification_cfg->item_click)
      list_add_item(popup);
 }
