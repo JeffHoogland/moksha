@@ -7,14 +7,20 @@ static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj);
 static void _e_gadcon_popup_position(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
-static void
-_e_gadcon_popup_del_cb(void *obj)
-{
-   E_Gadcon_Popup *pop;
 
-   pop = e_object_data_get(obj);
-   pop->win = NULL;
-   e_object_del(E_OBJECT(pop));
+static void
+_e_gadcon_popup_del_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   E_Gadcon_Popup *pop = data;
+
+   //~ pop = e_object_data_get(obj);
+   //~ pop->win = NULL;
+   //~ e_object_del(E_OBJECT(pop));
+   evas_object_event_callback_del_full(obj, EVAS_CALLBACK_DEL,
+                                       _e_gadcon_popup_del_cb, pop);
+   evas_object_event_callback_del_full(obj, EVAS_CALLBACK_CHANGED_SIZE_HINTS,
+                                       _e_gadcon_popup_changed_size_hints_cb, pop);
+   pop->content = NULL;
 }
 
 /* externally accessible functions */

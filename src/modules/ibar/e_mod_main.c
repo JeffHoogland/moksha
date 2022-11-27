@@ -1455,8 +1455,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         ic->drag.start = 1;
         ic->drag.dnd = 0;
         ic->mouse_down = 1;
-        E_OBJECT_DEL_SET(ic->menu, NULL);
-        E_FREE_FUNC(ic->menu, e_object_del);
         if (!ic->timer)
           ic->timer = ecore_timer_loop_add(0.35, _ibar_cb_icon_menu_cb, ic);
      }
@@ -1760,7 +1758,7 @@ _ibar_cb_icon_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 
    E_FREE_FUNC(ic->timer, ecore_timer_del);
    if (!ic->drag.start) return;
-
+   _ibar_cb_icon_menu_hide_begin(ic);
    dx = ev->cur.output.x - ic->drag.x;
    dy = ev->cur.output.y - ic->drag.y;
    if (((dx * dx) + (dy * dy)) >
