@@ -1236,6 +1236,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              
              e_theme_edje_object_set(it, "base/theme/modules/ibar",
                                      "e/modules/ibar/menu/item");
+             evas_object_data_set(it, "ibar_icon", ic);
              e_popup_object_add(ic->menu->win, it);
              img = e_border_icon_add(bd, evas_object_evas_get(it));
              evas_object_data_set(img, "ibar_icon", ic);
