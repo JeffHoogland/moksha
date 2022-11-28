@@ -17,7 +17,6 @@ e_int_config_conf_module(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd = NULL;
    E_Config_Dialog_View *v = NULL;
-   char buf[PATH_MAX];
 
    /* is this config dialog already visible ? */
    if (e_config_dialog_find("Conf", "advanced/conf")) return NULL;
@@ -31,7 +30,6 @@ e_int_config_conf_module(E_Container *con, const char *params __UNUSED__)
    v->basic.apply_cfdata = _basic_apply;
    v->basic.check_changed = _basic_check_changed;
 
-   snprintf(buf, sizeof(buf), "%s/e-module-conf.edj", conf->module->dir);
    cfd = e_config_dialog_new(con, _("Configuration Panel"), "Conf",
                              "advanced/conf", "preferences-desktop", 0, v, NULL);
 
