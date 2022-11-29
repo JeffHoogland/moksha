@@ -45,26 +45,24 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2020, Команда разработчиков Moksha.</><br><br>Мы "
+"<title>Copyright &copy; 2022, Команда разработчиков Moksha.</><br><br>Мы "
 "надеемся, что вам так же понравится использовать эту программу, как нам "
 "понравилось её писать.<br><br>Для связи с разработчиками посетите:"
-"<br><hilight>http://www.mokshadesktop.org</><br><br>"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
 msgstr "<title>Команда</><br><br>"
 
 #: src/bin/e_actions.c:154
-#, fuzzy
 msgid "Profile: Switch"
-msgstr "Выбор профиля"
+msgstr "Тема: Переключение"
 
 #: src/bin/e_actions.c:430
 #, c-format
@@ -2203,11 +2201,11 @@ msgstr "Уменьшить"
 
 #: src/bin/e_int_border_menu.c:703
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Перемещать клавишами"
 
 #: src/bin/e_int_border_menu.c:717
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Изменять размер клавишами"
 
 #: src/bin/e_int_border_menu.c:740
 msgid "Skip"
@@ -3794,15 +3792,14 @@ msgid "System Check Done"
 msgstr "Проверка системы закончена"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Выход из сессии занимает слишком много времени. <br>Некоторые приложения "
-"отказываются закрыться. <br>Вы хотите закончить выход, не закрывая эти "
-"<br>приложения?<br><br>Автоматический выход через %d секунд."
+"Выход из сеанса затягивается...<br>Некоторые приложения отказываются "
+"закрыться.<br>Вы всё равно хотите выйти, не закрывая<br>эти приложения?"
+"<br><br>%s<br>Автоматический выход через %d секунд."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5461,9 +5458,8 @@ msgstr "Кнопки"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 #: src/modules/conf_interaction/e_int_config_mouse.c:328
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Средняя кнопка"
+msgstr "Эмуляция средней кнопки мыши"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
 #: src/modules/conf_interaction/e_mod_main.c:24
@@ -5472,55 +5468,47 @@ msgstr "Мышь"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:309
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Задействовать дополнительные возможности"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:324
 msgid "Tap to click"
-msgstr ""
+msgstr "Тап как щелчок"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:332
-#, fuzzy
 msgid "Clickpad"
-msgstr "Щелчок"
+msgstr "Панель с кнопками"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:336
 msgid "Palm detect"
-msgstr ""
+msgstr "Распознавание случайных касаний"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:342
-#, fuzzy
 msgid "Scrolling"
-msgstr "Полинг"
+msgstr "Прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:344
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Анимация прокрутки"
+msgstr "Естественная прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:350
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Горизонтальное выравнивание"
+msgstr "Горизонтальная прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:354
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Анимация прокрутки"
+msgstr "Краевая прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:358
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Анимация прокрутки"
+msgstr "Двухпальцевая прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:362
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Анимация прокрутки"
+msgstr "Круговая прокрутка"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:367
-#, fuzzy
 msgid "Touchpad"
-msgstr "Прикосновения"
+msgstr "Тачпад"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
@@ -5953,15 +5941,15 @@ msgstr "Дополнительное колёсико (%d) вниз"
 
 #: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
-msgstr ""
+msgstr "ОКНА"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 msgid "Close Window:"
-msgstr "Клонировать окно"
+msgstr "Закрыть окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
 msgid "Maximize Window:"
-msgstr "Поднять окно"
+msgstr "Развернуть окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
 msgid "Iconic Mode Toggle:"
@@ -5989,7 +5977,7 @@ msgstr "Верхний левый"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
 msgid "Kill Window:"
-msgstr "Все окна"
+msgstr "Убить окно"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
 msgid "Window Menu:"
@@ -5997,11 +5985,11 @@ msgstr "Меню Окна"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
-msgstr ""
+msgstr "СИСТЕМА"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
 msgid "Open Terminology:"
-msgstr "Открыть терминал здесь"
+msgstr "Открыть терминал:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
 msgid "Lock System:"
@@ -6013,7 +6001,7 @@ msgstr "Показать главное меню"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
 msgid "Show Favorites Menu:"
-msgstr "Показать избранное меню"
+msgstr "Показать меню Избранное"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
 msgid "System Controls:"
@@ -6021,7 +6009,7 @@ msgstr "Управление системой"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
-msgstr ""
+msgstr "РАБОЧИЙ СТОЛ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
@@ -6065,31 +6053,31 @@ msgstr " Перейти на рабочий стол 8"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "ПРОЧЕЕ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid "Quick Launcher:"
-msgstr "Быстрый запуск"
+msgstr "Быстрый запуск:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 msgid "Take Screenshot:"
-msgstr "Сделать снимок экрана"
+msgstr "Сделать снимок экрана:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
 msgid "Restart Moksha:"
-msgstr "Перезапустить Moksha"
+msgstr "Перезапустить Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
 msgid "Terminal console:"
-msgstr "Команда вызова терминала"
+msgstr "Команда вызова терминала:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 msgid "This Help:"
-msgstr "Этот рабочий стол"
+msgstr "Эта помощь:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
-msgstr "Привязки мыши"
+msgstr "Основные привязки клавиш"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"
@@ -6101,11 +6089,11 @@ msgstr "Привязки клавиш"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Показать привязки клавиш"
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
 msgid "Show bindings"
-msgstr "Показать настройки"
+msgstr "Показать привязки"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6524,14 +6512,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Запомнить рамку этого окна на будущее"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Стиль рамки"
+msgstr "Основа рамки"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Активная граница рамки"
+msgstr "Активная основа рамки"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -7571,9 +7557,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Разрешить окна поверх полноэкранного окна"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Переход при перетаскивании объектов мышкой к краям экрана"
+msgstr "Прикреплять окна к краям экрана"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -7959,9 +7944,8 @@ msgid "Animate scrolling"
 msgstr "Анимация прокрутки"
 
 #: src/modules/everything/evry_config.c:476
-#, fuzzy
 msgid "Show recently used items"
-msgstr "Показывать недавние файлы"
+msgstr "Показывать недавно использованные элементы"
 
 #: src/modules/everything/evry_config.c:484
 msgid "Up/Down select next item in icon view"
@@ -7988,9 +7972,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Стиль Vi (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:512
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Показывать при щелчке мышью"
+msgstr "Одним щелчком мыши"
 
 #: src/modules/everything/evry_config.c:519
 msgid "No Sorting"
@@ -8058,9 +8041,8 @@ msgid "Edge Popup Size"
 msgstr "Размер рамки всплывающего окна"
 
 #: src/modules/everything/evry_config.c:609
-#, fuzzy
 msgid "Zoom value"
-msgstr "Отдаление изображения"
+msgstr "Величина масштабирования"
 
 #: src/modules/everything/evry_config.c:617
 #: src/modules/winlist/e_int_config_winlist.c:296
@@ -9191,7 +9173,6 @@ msgid "Temperature"
 msgstr "Температура"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "Высокая температура процессора!"
 
@@ -9706,9 +9687,8 @@ msgid "Screenshot is available at this location:"
 msgstr "Снимок доступен по этому адресу:"
 
 #: src/modules/shot/e_mod_main.c:766
-#, fuzzy
 msgid "Copy link"
-msgstr "Копировать"
+msgstr "Копировать ссылку"
 
 #: src/modules/shot/e_mod_main.c:790
 msgid "Confirm Share"
@@ -9821,9 +9801,8 @@ msgid "Info"
 msgstr "Примечание"
 
 #: src/modules/shot/e_mod_config.c:140
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Выберите место сохранения снимка"
+msgstr "Alt+PrtSc: снимок активного окна"
 
 #: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
 msgid "Tasks"
@@ -9834,9 +9813,8 @@ msgid "Tasks Settings"
 msgstr "Настройки задач"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Показывать только текст"
+msgstr "Показывать всплывающие подсказки"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
@@ -10004,22 +9982,20 @@ msgid "Notification"
 msgstr "Уведомления"
 
 #: src/modules/notification/e_mod_main.c:109
-#, fuzzy
 msgid "Notification Module"
 msgstr "Модуль уведомлений"
 
 #: src/modules/notification/e_mod_main.c:130
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Ошибка инициализации сервера уведомлений"
 
 #: src/modules/notification/e_mod_main.c:131
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Ошибка при инициализации DBus! Пожалуйста проверьте правильно ли dbus "
-"установлен и запущен."
+"Убедитесь, что нет других модулей, работающих в качестве сервера, "
+"и что служба D-Bus правильно установлена и работает."
 
 #: src/modules/notification/e_mod_main.c:423
 #: src/modules/clipboard/e_mod_main.c:410
@@ -10120,14 +10096,12 @@ msgid "Show application name"
 msgstr "Показывать название приложения"
 
 #: src/modules/notification/e_mod_config.c:189
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Показывать уведомления"
+msgstr "Показывать счётчик уведомлений"
 
 #: src/modules/notification/e_mod_config.c:191
-#, fuzzy
 msgid "Secure Clear"
-msgstr "Безопасное удаление"
+msgstr "Безопасная очистка"
 
 #: src/modules/notification/e_mod_config.c:193
 msgid "Reverse order"
@@ -10157,7 +10131,7 @@ msgstr "Задержка анимации гаджета [с]"
 
 #: src/modules/notification/e_mod_config.c:222
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Чёрный список приложений (через запятую)"
 
 #: src/modules/notification/e_mod_config.c:228
 #: src/modules/clipboard/e_mod_config.c:266
@@ -10379,24 +10353,20 @@ msgid "b"
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:837
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "Кб"
 
 #: src/modules/places/e_mod_places.c:842
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "Мб"
 
 #: src/modules/places/e_mod_places.c:847
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "Гб"
 
 #: src/modules/places/e_mod_places.c:851
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "Тб"
 
 #: src/modules/places/e_mod_places.c:887
 msgid "No Name"
@@ -10454,7 +10424,6 @@ msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
 msgstr "Громкость изменена"
 
