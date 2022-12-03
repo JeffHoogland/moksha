@@ -234,7 +234,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    ci = _ibar_config_item_get(id);
    inst->ci = ci;
    if (!ci->dir) ci->dir = eina_stringshare_add("default");
-   b = _ibar_new(gc->o_container, inst);
+   b = _ibar_new(gc->evas, inst);
    gcc = e_gadcon_client_new(gc, name, id, style, b->o_outerbox);
    e_gadcon_client_min_size_set(gcc, 16, 16);
    e_gadcon_client_autoscroll_toggle_disabled_set(gcc, !ci->dont_add_nonorder);
