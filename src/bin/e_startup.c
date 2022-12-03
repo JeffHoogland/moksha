@@ -204,10 +204,7 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
      if (chmod(shfile, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH) < 0)
         fprintf(stderr, "Moksha: chmod failure\n");
      // Let this fail when chmod fails so user is aware of problem
- 
-     // disable shfile execution when e_wizard finishes
-     if (!getenv("E_WIZARD"))
-        e_exec(NULL, NULL, shfile, NULL, NULL);
+     e_exec(NULL, NULL, shfile, NULL, NULL);
 
      // unset E_WIZARD for normal exection of shfile on startup
      e_util_env_set("E_WIZARD", NULL);

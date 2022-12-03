@@ -75,7 +75,7 @@ wizard_page_apply(E_Wizard_Page *pg __UNUSED__)
    // disable restart env so we actually start a whole new session properly
    e_util_env_set("E_RESTART", NULL);
    // disable shfile execution when e_wizard finishes
-   e_util_env_set("E_WIZARD", "1");
+   //e_util_env_set("E_WIZARD", "1");
    // restart e
    e_sys_action_do(E_SYS_RESTART, NULL);
 
