@@ -1803,12 +1803,36 @@ static void
 _ibar_cb_icon_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic;
-   Evas_Coord x, y;
+   int x, y, w, h, cw, chx, len = 0;
+   const char *sig = "e,origin,center";
+   E_Zone *zone;
+   E_Manager *man;
 
    ic = data;
-   evas_object_geometry_get(ic->o_holder, &x, &y, NULL, NULL);
+   evas_object_geometry_get(ic->o_holder, &x, &y, &w, &h);
    evas_object_move(ic->o_holder2, x, y);
-   evas_object_raise(ic->o_holder2);
+   evas_output_size_get(e, &cw, NULL);
+   edje_object_part_geometry_get(ic->o_holder2, "e.text.label", NULL, NULL, &len, NULL);
+   chx = x + (w / 2);
+   man = e_manager_current_get(); 
+   zone = e_util_zone_current_get(man); 
+
+   if ((ic->ibar->inst->orient == E_GADCON_ORIENT_LEFT) ||
+       (ic->ibar->inst->orient == E_GADCON_ORIENT_CORNER_LT) ||
+       (ic->ibar->inst->orient == E_GADCON_ORIENT_CORNER_LB))
+     sig = "e,origin,left";
+   else if ((ic->ibar->inst->orient == E_GADCON_ORIENT_RIGHT) ||
+            (ic->ibar->inst->orient == E_GADCON_ORIENT_CORNER_RT) ||
+            (ic->ibar->inst->orient == E_GADCON_ORIENT_CORNER_RB))
+     sig = "e,origin,right";
+   else
+     {
+        if (chx - (len / 2) < zone->x)
+          sig = "e,origin,left";
+        else if ((chx + (len / 2) > cw) || ((chx + (len / 2) > zone->x + zone->w)))
+          sig = "e,origin,right";
+     }
+   _ibar_icon_signal_emit(ic, sig, "e");
 }
 
 static void
