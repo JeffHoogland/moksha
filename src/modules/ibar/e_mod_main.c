@@ -1311,16 +1311,16 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    ic->ibar->menu_icon = ic;
    
    {
-      Evas_Coord x, y, gx, iw, ih, ox, oy;
+      Evas_Coord x, y, gx, gy, iw, ih, ox, oy;
       evas_object_geometry_get(ic->o_holder, &x, &y, &iw, &ih);
-      e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, NULL, NULL, NULL);
+      e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, NULL);
       x -= ic->menu->win->zone->x;
       y -= ic->menu->win->zone->y;
       ox = ic->menu->win->x, oy = ic->menu->win->y;
       if (e_box_orientation_get(ic->ibar->o_box))
         ox = (x + (iw / 2)) - (w / 2) + gx;
       else
-        oy = (y + (ih / 2)) - (h / 2);
+        oy = (y + (ih / 2)) - (h / 2) + gy;
      
       ox = E_CLAMP(ox, zone->x, zone->x + zone->w - w);
       e_popup_move(ic->menu->win, ox, oy);
