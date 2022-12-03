@@ -229,6 +229,24 @@ e_popup_layer_set(E_Popup *pop, E_Layer layer)
 }
 
 EAPI void
+e_popup_object_add(E_Popup *pop, Evas_Object *obj)
+{
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
+
+   pop->objects = eina_list_append(pop->objects, obj);
+}
+
+EAPI void
+e_popup_object_remove(E_Popup *pop, Evas_Object *obj)
+{
+   E_OBJECT_CHECK(pop);
+   E_OBJECT_TYPE_CHECK(pop, E_POPUP_TYPE);
+
+   pop->objects = eina_list_remove(pop->objects, obj);
+}
+
+EAPI void
 e_popup_idler_before(void)
 {
    Eina_List *l;
@@ -328,8 +346,9 @@ _e_popup_free(E_Popup *pop)
    e_container_shape_hide(pop->shape);
    e_object_del(E_OBJECT(pop->shape));
    e_canvas_del(pop->ecore_evas);
-   ecore_evas_free(pop->ecore_evas);
    e_object_unref(E_OBJECT(pop->zone));
+   E_FREE_LIST(pop->objects, evas_object_del);
+   ecore_evas_free(pop->ecore_evas);
    pop->zone->popups = eina_list_remove(pop->zone->popups, pop);
    _e_popup_list = eina_list_remove(_e_popup_list, pop);
    eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);

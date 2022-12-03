@@ -1,6 +1,7 @@
 ibardir = $(MDIR)/ibar
 ibar_DATA = ibar/e-module-ibar.edj \
-	    ibar/module.desktop
+	    ibar/module.desktop \
+	    ibar/ibar.desktop
 
 EXTRA_DIST += $(ibar_DATA)
 

@@ -200,7 +200,7 @@ struct _E_Gadcon_Client
    struct
    {
       Evas_Coord w, h;
-   } pad, min, aspect;
+   } pad, min, max, aspect;
 
    Ecore_Timer            *scroll_timer;
    Ecore_Timer            *instant_edit_timer;

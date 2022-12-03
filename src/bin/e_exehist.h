@@ -14,6 +14,8 @@ typedef enum _E_Exehist_Sort
 EINTERN int e_exehist_init(void);
 EINTERN int e_exehist_shutdown(void);
 
+EAPI void e_exehist_startup_id_set(int id);
+EAPI int e_exehist_startup_id_get(void);
 EAPI void e_exehist_add(const char *launch_method, const char *exe);
 EAPI void e_exehist_del(const char *exe);
 EAPI void e_exehist_clear(void);
