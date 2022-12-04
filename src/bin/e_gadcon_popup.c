@@ -7,6 +7,7 @@ static void _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj);
 static void _e_gadcon_popup_position(E_Gadcon_Popup *pop);
 static void _e_gadcon_popup_changed_size_hints_cb(void *data, Evas *e, Evas_Object *obj, void *event_info);
 
+
 /* externally accessible functions */
 
 EAPI E_Gadcon_Popup *
@@ -69,10 +70,8 @@ e_gadcon_popup_show(E_Gadcon_Popup *pop)
    E_OBJECT_TYPE_CHECK(pop, E_GADCON_POPUP_TYPE);
 
    if (pop->win->visible) return;
-
-   e_popup_show(pop->win);
-
    _e_gadcon_popup_position(pop);
+   e_popup_show(pop->win);
 }
 
 EAPI void

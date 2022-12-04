@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=iBar
+Comment=iBar dummy desktop
+Terminal=false
+Icon=preferences-system
+Exec=
+Type=Application
+MimeType=inode/directory;
+Categories=Utility;
+Keywords=

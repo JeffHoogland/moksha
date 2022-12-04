@@ -1046,7 +1046,21 @@ e_border_hide(E_Border *bd,
      }
 
    e_container_shape_hide(bd->shape);
-   if (!bd->iconic) e_hints_window_hidden_set(bd);
+   //~ if (!bd->iconic) e_hints_window_hidden_set(bd);
+   
+     /* Don't delete hidden or iconified windows */
+   if (!bd->iconic)
+     {
+        if (bd->internal)
+          e_hints_window_hidden_set(bd);
+        else
+          {
+             if (bd->exe_inst && bd->exe_inst->exe)
+               bd->exe_inst->phony = 0;
+             //~ DELD(bd, 3);
+             e_object_del(E_OBJECT(bd));
+          }
+     }
 
    bd->visible = 0;
    bd->changes.visible = 1;
@@ -5064,7 +5078,8 @@ _e_border_free(E_Border *bd)
      eina_stringshare_del(bd->client.icccm.name);
    if (bd->client.icccm.class)
      {
-        if ((!strcasecmp(bd->client.icccm.class, "vmplayer")) || (!strcasecmp(bd->client.icccm.class, "vmware")))
+        if ((!strcasecmp(bd->client.icccm.class, "vmplayer")) ||
+            (!strcasecmp(bd->client.icccm.class, "vmware")))
           e_bindings_mapping_change_enable(EINA_TRUE);
         eina_stringshare_del(bd->client.icccm.class);
      }
@@ -5147,6 +5162,23 @@ _e_border_del(E_Border *bd)
      focusing = NULL;
 
    focus_next = eina_list_remove(focus_next, bd);
+   
+   if (bd->exe_inst)
+     {
+        if (bd->exe_inst->phony && (eina_list_count(bd->exe_inst->borders) == 1))
+          {
+             if (e_exec_phony_del(bd->exe_inst))
+               bd->exe_inst = NULL;
+          }
+        else
+          {
+             if (!bd->exe_inst->deleted)
+               {
+                  bd->exe_inst->borders = eina_list_remove(bd->exe_inst->borders, bd);
+                  bd->exe_inst = NULL;
+               }
+          }
+     }
 
    if (warp_timer_border == bd)
      {
@@ -8237,10 +8269,11 @@ _e_border_eval0(E_Border *bd)
         {
            char *str = NULL;
 
-           if ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
-               ((bd->client.icccm.client_leader > 0) &&
-                ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str))
-               )
+           if ((!bd->internal) &&
+              ((ecore_x_netwm_startup_id_get(bd->client.win, &str) && (str)) ||
+              ((bd->client.icccm.client_leader > 0) &&
+                ecore_x_netwm_startup_id_get(bd->client.icccm.client_leader, &str) && (str)))
+              )
              {
                 if (!strncmp(str, "E_START|", 8))
                   {
@@ -8273,6 +8306,7 @@ _e_border_eval0(E_Border *bd)
                {
                   E_Zone *zone;
                   E_Desk *desk;
+                  Eina_Bool found;
 
                   inst->used++;
                   zone = e_container_zone_number_get(bd->zone->container,
@@ -8281,7 +8315,20 @@ _e_border_eval0(E_Border *bd)
                   desk = e_desk_at_xy_get(bd->zone, inst->desk_x,
                                           inst->desk_y);
                   if (desk) e_border_desk_set(bd, desk);
-                  e_exec_instance_found(inst);
+                  if (bd->client.netwm.pid != ecore_exe_pid_get(inst->exe))
+                         {
+                            /* most likely what has happened here is that the .desktop launcher
+                             * has spawned a process which then created this border, meaning the
+                             * E_Exec instance will be deleted in a moment, and we will be unable to track it.
+                             * to prevent this, we convert our instance to a phony
+                             */
+                             inst->phony = 1;
+                         }
+                  //~ e_exec_instance_found(inst);
+                  found = !!inst->borders;
+                  e_exec_instance_client_add(inst, bd);
+                  if (!found)
+                    e_exec_instance_found(inst);
                }
 
              if (e_config->window_grouping) // FIXME: We may want to make the border "urgent" so that the user knows it appeared.
@@ -9273,6 +9320,14 @@ _e_border_eval(E_Border *bd)
                bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
                                                                bd->client.icccm.class);
           }
+        if (!bd->desktop && bd->internal)
+          {
+              /* Moksha internal dialogs to give a desktop file */
+              char buf[128];
+              snprintf(buf, sizeof(buf), "%s/enlightenment/modules/ibar/ibar.desktop", 
+                       e_prefix_lib_get());
+              bd->desktop = efreet_desktop_get(buf);
+          }
         if (!bd->desktop)
           {
              /* libreoffice and maybe others match window class
@@ -9291,6 +9346,30 @@ _e_border_eval(E_Border *bd)
                        eina_str_tolower(&s);
                        if (strcmp(s, bd->client.icccm.class))
                          bd->desktop = efreet_util_desktop_exec_find(s);
+                    }
+               }
+          }
+        if (!bd->desktop)
+          {
+              /* an attempt to have a desktop for virtualbox and others.
+                 There is a space char in class name: virtualbox machine */
+             if (bd->client.icccm.class)
+               {
+                  char *check;
+                  check = strstr(bd->client.icccm.class, " ");
+
+                  if (check)
+                    {
+                       char buf[128];
+                       int i = 0;
+                       const char *s;
+
+                       s = bd->client.icccm.class;
+                       for (; *s != ' '; s++, i++);
+
+                       strncpy(buf, bd->client.icccm.class, i);
+                       buf[i] = '\0';
+                       bd->desktop = efreet_util_desktop_exec_find(buf);
                     }
                }
           }
@@ -9344,6 +9423,18 @@ _e_border_eval(E_Border *bd)
         }
         bd->changes.icon = 0;
      }
+
+    if (bd->desktop)
+          {
+             if (!bd->exe_inst)
+               e_exec_phony(bd);
+             if (!bd->exe_inst->desktop)
+               {
+                  efreet_desktop_ref(bd->desktop);
+                  bd->exe_inst->desktop = bd->desktop;
+               }
+          }
+        bd->changes.icon = 0;
 
    bd->new_client = 0;
    bd->changed = 0;
