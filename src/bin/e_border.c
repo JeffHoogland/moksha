@@ -4174,8 +4174,8 @@ e_border_act_close_begin(E_Border *bd)
      {
         bd->delete_requested = 1;
         ecore_x_window_delete_request_send(bd->client.win);
-        if (bd->client.netwm.ping)
-          e_border_ping(bd);
+        //~ if (bd->client.netwm.ping)
+          //~ e_border_ping(bd);
      }
    else if (e_config->kill_if_close_not_possible)
      {
