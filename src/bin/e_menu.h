@@ -28,7 +28,7 @@ struct _E_Menu
 {
    E_Object             e_obj_inherit;
 
-   const char	       *category;
+   const char          *category;
 
    struct {
       char              visible : 1;
@@ -102,7 +102,7 @@ struct _E_Menu_Item
 
    Evas_Object   *event_object;
 
-   Eina_List	 *list_position;
+   Eina_List     *list_position;
 
    int            label_w, label_h;
    int            icon_w, icon_h;

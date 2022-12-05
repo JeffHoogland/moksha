@@ -12,10 +12,10 @@ struct _E_Gadcon_Popup
 {
    E_Object             e_obj_inherit;
 
-   E_Popup	       *win;
+   E_Popup             *win;
    E_Gadcon_Client     *gcc;
-   Evas_Coord		w, h;
-   Evas_Object	       *o_bg;
+   Evas_Coord           w, h;
+   Evas_Object         *o_bg;
 
    Eina_Bool            pinned : 1;
    Eina_Bool            gadcon_lock : 1;
