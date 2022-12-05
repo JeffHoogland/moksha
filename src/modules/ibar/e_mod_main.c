@@ -1322,7 +1322,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
       else
         oy = (y + (ih / 2)) - (h / 2) + gy;
      
-      ox = E_CLAMP(ox, zone->x, zone->x + zone->w - w);
+      ox = E_CLAMP(ox, 0, zone->w - w);
       e_popup_move(ic->menu->win, ox, oy);
    }
    evas_object_pass_events_set(o, 1);
