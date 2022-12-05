@@ -1085,7 +1085,7 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
         evas_object_event_callback_add(bd->border_menu->bg_object, EVAS_CALLBACK_HIDE, _ibar_cb_icon_menu_client_menu_del, ic->ibar);
         return;
      }
-
+   e_desk_show(bd->desk);
    if (bd->iconic)
      {
         e_border_uniconify(bd);
