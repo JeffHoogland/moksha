@@ -313,7 +313,7 @@ EAPI void                    e_gadcon_shelf_set(E_Gadcon *gc, E_Shelf *shelf);
 EAPI E_Shelf                *e_gadcon_shelf_get(E_Gadcon *gc);
 EAPI void                    e_gadcon_toolbar_set(E_Gadcon *gc, E_Toolbar *toolbar);
 EAPI E_Toolbar              *e_gadcon_toolbar_get(E_Gadcon *gc);
-EAPI E_Gadcon_Client      *e_gadcon_client_find(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc);
+EAPI E_Gadcon_Client        *e_gadcon_client_find(E_Gadcon *gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI E_Config_Gadcon_Client *e_gadcon_client_config_new(E_Gadcon *gc, const char *name);
 EAPI void                    e_gadcon_client_config_del(E_Config_Gadcon *cf_gc, E_Config_Gadcon_Client *cf_gcc);
 EAPI E_Gadcon_Client        *e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id, const char *style, Evas_Object *base_obj);
@@ -333,7 +333,7 @@ EAPI void                    e_gadcon_client_resizable_set(E_Gadcon_Client *gcc,
 EAPI int                     e_gadcon_client_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h);
 EAPI int                     e_gadcon_client_viewport_geometry_get(E_Gadcon_Client *gcc, int *x, int *y, int *w, int *h);
 EAPI E_Zone                 *e_gadcon_client_zone_get(E_Gadcon_Client *gcc);
-EAPI E_Menu                *e_gadcon_client_menu_set(E_Gadcon_Client *gcc, E_Menu *m);
+EAPI E_Menu                 *e_gadcon_client_menu_set(E_Gadcon_Client *gcc, E_Menu *m);
 EAPI E_Menu                 *e_gadcon_client_util_menu_items_append(E_Gadcon_Client *gcc, E_Menu *menu_gadget, int flags);
 EAPI void                    e_gadcon_client_util_menu_attach(E_Gadcon_Client *gcc);
 EAPI void                    e_gadcon_locked_set(E_Gadcon *gc, int lock);

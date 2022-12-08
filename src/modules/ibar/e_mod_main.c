@@ -45,21 +45,21 @@ typedef struct
 struct _IBar
 {
    EINA_INLIST;
-   Instance    *inst;
-   Ecore_Job *resize_job;
-   Evas_Object *o_outerbox;
-   Evas_Object *o_box, *o_drop;
-   Evas_Object *o_drop_over, *o_empty;
-   Evas_Object *o_sep;
-   unsigned int not_in_order_count;
-   IBar_Icon   *ic_drop_before;
-   int          drop_before;
-   Eina_Hash    *icon_hash;
-   Eina_Inlist  *icons;
-   IBar_Order  *io;
-   Evas_Coord   dnd_x, dnd_y;
-   IBar_Icon   *menu_icon;
-   Eina_Bool    focused : 1;
+   Instance        *inst;
+   Ecore_Job       *resize_job;
+   Evas_Object     *o_outerbox;
+   Evas_Object     *o_box, *o_drop;
+   Evas_Object     *o_drop_over, *o_empty;
+   Evas_Object     *o_sep;
+   unsigned int     not_in_order_count;
+   IBar_Icon       *ic_drop_before;
+   int              drop_before;
+   Eina_Hash       *icon_hash;
+   Eina_Inlist     *icons;
+   IBar_Order      *io;
+   Evas_Coord       dnd_x, dnd_y;
+   IBar_Icon       *menu_icon;
+   Eina_Bool        focused : 1;
 };
 
 struct _IBar_Icon
