@@ -129,7 +129,8 @@ group { name: "e/modules/notification/main";
          scale: 1;
          description { state: "default" 0.0;
             rel.to: "base";
-            min: 220 100;
+            rel2.offset: -13 -27;
+            min: 220 75;
          }
       }
       part { name: "notification.swallow.app_icon"; type: SWALLOW; mouse_events: 0;
