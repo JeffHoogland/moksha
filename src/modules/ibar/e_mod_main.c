@@ -2585,6 +2585,39 @@ _ibar_cb_bd_prop(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Property *
 }
 
 static Eina_Bool
+_ibar_cb_bd_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *ev)
+{
+   IBar *b;
+   Eina_List *l, *ll;
+   E_Exec_Instance *exe;
+   int client_num = 0;
+
+   if (!ev->border->desktop) return 0; //can't do anything here :(
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+        IBar_Icon *ic;
+
+        ic = eina_hash_find(b->icon_hash, _desktop_name_get(ev->border->desktop));
+        if (ic)
+          {
+             if (ic->not_in_order)
+               {
+                  EINA_LIST_FOREACH(ic->exes, ll, exe)
+                    {
+                       client_num += eina_list_count(exe->borders);
+                    }
+                  if (client_num == 0)
+                    {
+                       _ibar_icon_free(ic);
+                       _ibar_resize_handle(b);
+                    }
+               }
+          }
+     }
+   return 0;
+}
+
+static Eina_Bool
 _ibar_cb_exec_del(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *exe)
 {
    IBar *b;
@@ -2764,6 +2797,8 @@ e_modapi_init(E_Module *m)
                          _ibar_cb_exec_del, NULL);
    E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_PROPERTY,
                          _ibar_cb_bd_prop, NULL);
+   E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_REMOVE,
+                         _ibar_cb_bd_del, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
    ibar_orders = eina_hash_string_superfast_new(NULL);
