@@ -2592,7 +2592,7 @@ _ibar_cb_bd_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *e
    E_Exec_Instance *exe;
    int client_num = 0;
 
-   if (!ev->border->desktop) return 0; //can't do anything here :(
+   if (!ev->border->desktop) return ECORE_CALLBACK_RENEW; //can't do anything here :(
    EINA_LIST_FOREACH(ibars, l, b)
      {
         IBar_Icon *ic;
@@ -2614,7 +2614,7 @@ _ibar_cb_bd_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *e
                }
           }
      }
-   return 0;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
