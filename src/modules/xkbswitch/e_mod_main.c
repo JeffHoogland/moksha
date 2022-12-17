@@ -69,7 +69,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    /* Menus and dialogs */
-   e_configure_registry_category_add("keyboard_and_mouse", 80, _("Input"),
+   e_configure_registry_category_add("keyboard_and_mouse", 40, _("Input"),
                                      NULL, "preferences-behavior");
    e_configure_registry_item_add("keyboard_and_mouse/xkbswitch", 110,
                                  _("Keyboard"), NULL,

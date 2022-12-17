@@ -14,7 +14,7 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-   e_configure_registry_category_add("keyboard_and_mouse", 80, _("Input"), 
+   e_configure_registry_category_add("keyboard_and_mouse", 40, _("Input"),
                                      NULL, "preferences-behavior");
    e_configure_registry_item_add("keyboard_and_mouse/interaction", 40, 
                                  _("Touch"), NULL, 
