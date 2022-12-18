@@ -15,14 +15,6 @@
 # include "backend_eeze.h"
 #endif
 
-#ifdef PLACES_HAVE_E17
-# include "e_mod_udisks.h"
-#endif
-
-#ifdef PLACES_HAVE_UDISKS1
-# include "backend_udisks1.h"
-#endif
-
 #ifdef PLACES_HAVE_UDISKS2
 # include "backend_udisks2.h"
 #endif
@@ -87,12 +79,6 @@ places_init(void)
 #ifdef HAVE_EEZE
    places_eeze_init();
 #endif
-#ifdef PLACES_HAVE_E17
-   places_udisks_init();
-#endif
-#ifdef PLACES_HAVE_UDISKS1
-   places_udisks1_init();
-#endif
 #ifdef PLACES_HAVE_UDISKS2
    places_udisks2_init();
 #endif
@@ -147,12 +133,6 @@ places_shutdown(void)
 #endif
 #ifdef HAVE_EEZE
    places_eeze_shutdown();
-#endif
-#ifdef PLACES_HAVE_E17
-   places_udisks_shutdown();
-#endif
-#ifdef PLACES_HAVE_UDISKS1
-   places_udisks1_shutdown();
 #endif
 #ifdef PLACES_HAVE_UDISKS2
    places_udisks2_shutdown();
