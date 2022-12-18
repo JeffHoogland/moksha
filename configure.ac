@@ -99,8 +99,6 @@ AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
 
 efl_version="1.20.0"
 AC_SUBST(efl_version)
-edbus_version="1.7.10"
-AC_SUBST(edbus_version)
 
 PKG_CHECK_MODULES([EFL], [efl],
 [
@@ -402,27 +400,6 @@ test "x${device_backend}" = "xeeze" || AC_DEFINE_UNQUOTED([HAVE_HAL],[1],[enable
 
 DBUS_MOUNT_CONFIG=1
 dbus_mount="dbus-1"
-udisks_mount="eukit >= ${edbus_version}"
-
-AC_ARG_ENABLE([mount-udisks],
-  AS_HELP_STRING([--enable-mount-udisks],[enable udisks mounting support @<:@default=enabled@:>@]),
-  [e_cv_want_mount_udisks=$enableval],
-  [e_cv_want_mount_udisks=yes])
-
-AC_MSG_CHECKING([whether the UDISKS mounting support is enabled])
-AC_MSG_RESULT([${e_cv_want_mount_udisks}])
-
-if test "x$e_cv_want_mount_udisks" != "xno";then
-  PKG_CHECK_EXISTS([eukit >= ${edbus_version}],
-    [],[
-      udisks_mount=
-      AC_MSG_NOTICE([e_dbus is not installed])
-    ])
-else
-  udisks_mount=
-  AC_MSG_NOTICE([udisks mounting disabled])
-fi
-
 
 if test "x${e_cv_want_mount_udisks}" = "xno" && test "x${e_cv_want_mount_hal}" = "xno" ; then
   DBUS_MOUNT_CONFIG=0
@@ -494,19 +471,6 @@ e_cv_want_mount_udisks2=yes
 if test "x$e_cv_places_backend_e17" = "xyes"; then
   if test "x$e_cv_places_backend_udisks1" = "xyes"; then
      AC_MSG_ERROR("Can not specify 2 udisks1 places backends", [255])
-  fi
-  if test -n "$udisks_mount"; then 
-    AC_DEFINE_UNQUOTED([PLACES_HAVE_E17],[1],[enable places e17 backend]) 
-    force_places_backend_e17="yes"
-    e_cv_want_mount_udisks2=no
-  fi
-else
-  if test "x$e_cv_places_backend_udisks1" = "xyes"; then
-    if test -n "$udisks_mount"; then
-      AC_DEFINE_UNQUOTED([PLACES_HAVE_UDISKS1],[1],[enable places udisks1 backend with eldbus support]) 
-       force_places_backend_udisks1="yes"
-       e_cv_want_mount_udisks2=no
-    fi
   fi
 fi
 
@@ -585,7 +549,7 @@ eet >= $efl_version \
 efreet >= $efl_version \
 eldbus >= $efl_version \
 eina >= $efl_version"
-efm_requires="$efm_requires $eeze_mount $dbus_mount $udisks_mount"
+efm_requires="$efm_requires $eeze_mount $dbus_mount"
 
 PKG_CHECK_MODULES(E_FM, [$efm_requires])
 
@@ -654,7 +618,6 @@ PKG_CHECK_MODULES(E, [
   eio >= ${efl_version}
   $hal_mount
   $eeze_mount
-  $udisks_mount
   $device_backend
 ])
 requirements_e="\
@@ -672,10 +635,9 @@ efreet-mime >= ${efl_version} \
 efreet-trash >= ${efl_version} \
 eina >= ${efl_version} \
 dbus-1 \
-edbus >= ${edbus_version} \
+eldbus >= ${efl_version} \
 eio >= ${efl_version} \
 $hal_mount \
-$udisks_mount \
 $eeze_mount \
 $device_backend"
 
@@ -801,20 +763,6 @@ define([CHECK_MODULE_PLACES],
     [
     PLACES=false
     AC_MSG_NOTICE([Install libudisks2-dev or eldbus-dev or change places options])])
-  else
-    if test "x$e_cv_places_backend_udisks1" = "xyes"; then
-      AC_E_CHECK_PKG(PLACES, [ eldbus >= $efl_version udisks >= $UDISKS_REQUIRED ], [],
-      [
-      PLACES=false
-      AC_MSG_NOTICE([Install libudisks-dev or eldbus-dev or change places options])])
-    else
-      if test "x$e_cv_places_backend_e17"; then
-       AC_E_CHECK_PKG(PLACES, [ edbus >= 1.7.10 ehal >= 1.7.10 udisks >= $UDISKS_REQUIRED ], [],
-       [
-         PLACES=false
-         AC_MSG_NOTICE([Install libedbus-dev or udisks])])
-      fi
-    fi
   fi
 ])
 
@@ -1129,7 +1077,6 @@ cat << DEVICE_EOF
 Preferred Backends:
  * device...............: $device_backend
  * hal_mount............: $e_cv_want_mount_hal
- * udisks1_mount........: $e_cv_want_mount_udisks
  * udisks2_mount........: $e_cv_want_mount_udisks2
  * eeze_mount...........: $e_cv_want_mount_eeze
 DEVICE_EOF
@@ -1155,12 +1102,6 @@ echo "Places Backends":
 if [[ "$UNUSED_MODS" == *"places"* ]]; then
  echo "  Module disabled"
  echo
-fi
-if test "x$e_cv_places_backend_e17" = "xyes"; then
-   echo "* E17 backend with edbus and udisks1 (DEPRECIATED)"
-fi   
-if test "x$e_cv_places_backend_udisks1" = "xyes"; then
-   echo "* udisks1 backend with eldbus (DEPRECIATED)"
 fi
 if test "x$e_cv_want_mount_udisks2" = "xyes"; then
    echo "* udisks2 backend with eldbus"
