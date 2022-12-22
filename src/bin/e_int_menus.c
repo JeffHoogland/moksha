@@ -780,6 +780,7 @@ _e_int_menus_apps_scan(E_Menu *m, Efreet_Menu *menu)
                   E_Menu *subm;
 
                   subm = e_menu_new();
+                  efreet_menu_ref(entry);
                   e_menu_pre_activate_callback_set(subm,
                                                    _e_int_menus_apps_start,
                                                    entry);
@@ -864,11 +865,14 @@ _e_int_menus_apps_thread_new(E_Menu *m, const char *dir)
    else
      _e_int_menus_app_cleaner = ecore_timer_add(300, _e_int_menus_app_cleaner_cb, NULL);
    eina_stringshare_del(dir);  
-   _e_int_menus_apps_scan(m, menu);           
-   e_menu_pre_activate_callback_set(m, NULL, NULL);   
-   e_object_data_set(E_OBJECT(m), menu);   
-   e_object_free_attach_func_set(E_OBJECT(m),        
-				 _e_int_menus_apps_free_hook2);
+   if (m)
+     {
+        _e_int_menus_apps_scan(m, menu);
+        e_menu_pre_activate_callback_set(m, NULL, NULL);
+        e_object_data_set(E_OBJECT(m), menu);
+        e_object_free_attach_func_set(E_OBJECT(m),
+                                      _e_int_menus_apps_free_hook2);
+     }
 
    if (!e_config->menu_apps_show) goto on_end;
 
@@ -904,6 +908,12 @@ _e_int_menus_apps_start(void *data, E_Menu *m)
      ecore_timer_reset(_e_int_menus_app_cleaner);
    eina_stringshare_del(dir);
    _e_int_menus_apps_scan(m, menu);
+   if (m->pre_activate_cb.func == _e_int_menus_apps_start)
+     {
+        efreet_menu_unref(m->pre_activate_cb.data);
+        m->pre_activate_cb.func = NULL;
+        m->pre_activate_cb.data = NULL;
+     }
    e_menu_pre_activate_callback_set(m, NULL, NULL);
    e_object_data_set(E_OBJECT(m), menu);
    e_object_free_attach_func_set(E_OBJECT(m),
