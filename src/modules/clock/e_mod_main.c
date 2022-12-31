@@ -670,14 +670,6 @@ _clock_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED
 }
 
 static void
-_clock_cb_mouse_in(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
-{
-    Instance *inst = data;
-    if (inst->gcc->gadcon->orient != E_GADCON_ORIENT_FLOAT)
-      edje_object_signal_emit(inst->o_clock, "e,state,mouse,in", "e");
-}
-
-static void
 _clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Instance *inst = data;
@@ -768,10 +760,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    evas_object_event_callback_add(inst->o_clock,
                                   EVAS_CALLBACK_MOUSE_DOWN,
                                   _clock_cb_mouse_down,
-                                  inst);
-   evas_object_event_callback_add(inst->o_clock,
-                                  EVAS_CALLBACK_MOUSE_IN,
-                                  _clock_cb_mouse_in,
                                   inst);
    clock_instances = eina_list_append(clock_instances, inst);
 
