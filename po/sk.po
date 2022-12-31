@@ -8850,7 +8850,6 @@ msgid "Icon Labels"
 msgstr "Zobrazovať názov ikony"
 
 #: src/modules/ibar/e_mod_config.c:130
-#, fuzzy
 msgid "Show icon label"
 msgstr "Zobrazovať názov ikony"
 
