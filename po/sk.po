@@ -41,7 +41,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -1291,7 +1290,6 @@ msgstr ""
 "spustení."
 
 #: src/bin/e_exec.c:852
-#, fuzzy
 msgid "Application Execution Error"
 msgstr "Chyba pri spustení aplikácie"
 
@@ -7182,14 +7180,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Povoliť tému ikon pre Mokshu"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Cesty pre Mokshu"
+msgstr "Téma pre Mokshu"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Téma aplikácií"
+msgstr "Téma aplikácií (GTK a Ikony)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8872,16 +8868,15 @@ msgstr "Zamknúť presúvanie ikon"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "Nepridávať položku po spustení"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Track launch"
 msgstr "Sledovať spustenie"
 
 #: src/modules/ibar/e_mod_config.c:159
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Okno pod myšou do popredia (bez kliknutia)"
+msgstr "Ponuka pre ikonu"
 
 #: src/modules/ibar/e_mod_config.c:194
 msgid "Create new IBar source"
@@ -8912,14 +8907,12 @@ msgid "Create new Icon"
 msgstr "Vytvoriť novú ikonu"
 
 #: src/modules/ibar/e_mod_main.c:1526
-#, fuzzy
 msgid "Add to bar"
-msgstr "Pridať do Ibar modulu"
+msgstr "Pridať do iBar sekcie"
 
 #: src/modules/ibar/e_mod_main.c:1532
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Odstrániť zásobník"
+msgstr "Odstrániť z iBar sekcie"
 
 #: src/modules/ibar/e_mod_main.c:1538
 #, c-format
@@ -9213,7 +9206,6 @@ msgid "Temperature"
 msgstr "Teplota"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "Vysoká teplota CPU!"
 
@@ -9972,7 +9964,6 @@ msgid "Notification"
 msgstr "Notifikácia"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Modul notifikácií"
 
@@ -9981,7 +9972,6 @@ msgid "Error during notification server initialization"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:130
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
@@ -10257,9 +10247,8 @@ msgid "Clear History"
 msgstr "Vyčistiť Históriu"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Vypnutie obrazovky"
+msgstr "Vypnutie obrazovky blokované"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10409,9 +10398,8 @@ msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
-msgstr "Hlasitosť zmenená"
+msgstr "Zmena hlasitosti"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
