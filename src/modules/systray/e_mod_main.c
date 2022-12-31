@@ -804,7 +804,7 @@ _systray_cb_window_destroy(void *data, int type __UNUSED__, void *event)
        }
    if (found)
      {
-        //~ _systray_deactivate(inst);
+        _systray_deactivate(inst);
         if (!_systray_activate(inst))
           {
              if (!inst->timer.retry)
