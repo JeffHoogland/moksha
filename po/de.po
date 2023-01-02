@@ -2221,7 +2221,7 @@ msgstr "Zu Favoritenmenü hinzufügen"
 
 #: src/bin/e_int_border_menu.c:636
 msgid "Add to IBar"
-msgstr "Zu IBar hinzufügen"
+msgstr "Zur iBar hinzufügen"
 
 #: src/bin/e_int_border_menu.c:644
 msgid "Create Keyboard Shortcut"
@@ -7210,14 +7210,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Symbolthema für Moksha aktivieren"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Moksha Pfade"
+msgstr "Moksha Thema"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Anwendungsthema"
+msgstr "Programm Thema (GTK & Icons)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8892,17 +8890,14 @@ msgid "Selected source"
 msgstr "Ausgewählte Quelle"
 
 #: src/modules/ibar/e_mod_config.c:120
-#, fuzzy
 msgid "Setup"
-msgstr "DND einrichten"
+msgstr "Einrichten"
 
 #: src/modules/ibar/e_mod_config.c:129
-#, fuzzy
 msgid "Icon Labels"
-msgstr "Zeige Symbolbeschriftung"
+msgstr "Symbolbeschriftung"
 
 #: src/modules/ibar/e_mod_config.c:130
-#, fuzzy
 msgid "Show icon label"
 msgstr "Zeige Symbolbeschriftung"
 
@@ -8920,16 +8915,15 @@ msgstr "Symbolbewegung sperren"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "Keine Elemente zum Start hinzufügen"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Track launch"
 msgstr "Start verfolgen"
 
 #: src/modules/ibar/e_mod_config.c:159
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Fenster automatisch anheben, wenn sich die Maus darüber befindet"
+msgstr "Menü beim herüberfahren mit der Maus zeigen"
 
 #: src/modules/ibar/e_mod_config.c:194
 msgid "Create new IBar source"
@@ -8961,14 +8955,12 @@ msgid "Create new Icon"
 msgstr "Neues Icon erstellen"
 
 #: src/modules/ibar/e_mod_main.c:1526
-#, fuzzy
 msgid "Add to bar"
-msgstr "Zu IBar hinzufügen"
+msgstr "Zu iBar hinzufügen"
 
 #: src/modules/ibar/e_mod_main.c:1532
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Einen Stapel entfernen"
+msgstr "Von iBar entfernen"
 
 #: src/modules/ibar/e_mod_main.c:1538
 #, c-format
