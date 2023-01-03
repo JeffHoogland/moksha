@@ -7149,14 +7149,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Habilitar tema de iconos para Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Rutas de Moksha"
+msgstr "Tema de Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Tema de la aplicación"
+msgstr "Tema de la Aplicación (GTK e iconos)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8848,16 +8846,15 @@ msgstr "Bloquear movimiento de los iconos"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "No añadir elementos en lanzamiento"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Track launch"
 msgstr "Lanzamiento de Track"
 
 #: src/modules/ibar/e_mod_config.c:159
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Elevar las ventanas cuando el ratón esté encima"
+msgstr "Menú al pasar el apuntador"
 
 #: src/modules/ibar/e_mod_config.c:194
 msgid "Create new IBar source"
@@ -8889,14 +8886,12 @@ msgid "Create new Icon"
 msgstr "Crear nuevo icono"
 
 #: src/modules/ibar/e_mod_main.c:1526
-#, fuzzy
 msgid "Add to bar"
-msgstr "Añadir a IBar"
+msgstr "Añadir a la barra"
 
 #: src/modules/ibar/e_mod_main.c:1532
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Eliminar un stack"
+msgstr "Remover de la barra"
 
 #: src/modules/ibar/e_mod_main.c:1538
 #, c-format
