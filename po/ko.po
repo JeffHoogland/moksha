@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-12-31 13:43+0100\n"
+"POT-Creation-Date: 2023-01-04 10:53+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "인라이튼먼트 정보"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
-#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -80,7 +80,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "이 창을 강제 종료 하시겠습니까?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
-#: src/bin/e_int_border_menu.c:783
+#: src/bin/e_int_border_menu.c:784
 msgid "Kill"
 msgstr "강제 종료"
 
@@ -180,12 +180,12 @@ msgstr "메뉴"
 msgid "Window Menu"
 msgstr "창 메뉴"
 
-#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "말아 올림"
 
-#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "아래로"
 
@@ -241,24 +241,24 @@ msgstr "전체 화면 상태 전환"
 msgid "Fullscreen Mode Enable"
 msgstr "전체 화면 상태 활성화"
 
-#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
-#: src/bin/e_int_border_menu.c:678
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:419
+#: src/bin/e_int_border_menu.c:679
 msgid "Maximize"
 msgstr "최대화"
 
-#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "세로로 최대화"
 
-#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "가로로 최대화"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:452
 msgid "Maximize Left"
 msgstr "왼편 최대화"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:463
 msgid "Maximize Right"
 msgstr "오른편 최대화"
 
@@ -1870,7 +1870,7 @@ msgstr "가젯 오류"
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s에서 자동 스크롤 비활성화를 지원하지 않습니다"
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
 msgid "Move to"
 msgstr "이동"
 
@@ -2079,7 +2079,7 @@ msgid "Size"
 msgstr "크기"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2145,92 +2145,92 @@ msgstr "잠금 상태 기억"
 msgid "Window"
 msgstr "창"
 
-#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
+#: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
 msgid "Always on Top"
 msgstr "항상 위"
 
-#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:185 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "고정"
 
-#: src/bin/e_int_border_menu.c:198
+#: src/bin/e_int_border_menu.c:199
 msgid "Shade"
 msgstr "그림자"
 
-#: src/bin/e_int_border_menu.c:212
+#: src/bin/e_int_border_menu.c:213
 msgid "Borderless"
 msgstr "무테두리"
 
-#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:406 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
 msgstr "전체 화면"
 
-#: src/bin/e_int_border_menu.c:473
+#: src/bin/e_int_border_menu.c:474
 msgid "Unmaximize"
 msgstr "최대화 복원"
 
-#: src/bin/e_int_border_menu.c:615
+#: src/bin/e_int_border_menu.c:616
 msgid "Edit Icon"
 msgstr "아이콘 편집"
 
-#: src/bin/e_int_border_menu.c:623
+#: src/bin/e_int_border_menu.c:624
 msgid "Create Icon"
 msgstr "아이콘 만들기"
 
-#: src/bin/e_int_border_menu.c:631
+#: src/bin/e_int_border_menu.c:632
 msgid "Add to Favorites Menu"
 msgstr "즐겨찾기 메뉴에 추가"
 
-#: src/bin/e_int_border_menu.c:636
+#: src/bin/e_int_border_menu.c:637
 msgid "Add to IBar"
 msgstr "IBar에 추가"
 
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_int_border_menu.c:645
 msgid "Create Keyboard Shortcut"
 msgstr "키보드 단축 키 만들기"
 
-#: src/bin/e_int_border_menu.c:690
+#: src/bin/e_int_border_menu.c:691
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "아이콘 표시"
 
-#: src/bin/e_int_border_menu.c:703
+#: src/bin/e_int_border_menu.c:704
 msgid "Move with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:717
+#: src/bin/e_int_border_menu.c:718
 msgid "Resize with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:740
+#: src/bin/e_int_border_menu.c:741
 msgid "Skip"
 msgstr "건너뛰기"
 
-#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:751 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "테두리"
 
-#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "잠금"
 
-#: src/bin/e_int_border_menu.c:770
+#: src/bin/e_int_border_menu.c:771
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "기억"
 
-#: src/bin/e_int_border_menu.c:792
+#: src/bin/e_int_border_menu.c:793
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:966
+#: src/bin/e_int_border_menu.c:967
 #, c-format
 msgid "Screen %d"
 msgstr "%d번 화면"
 
-#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1063 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2239,51 +2239,51 @@ msgstr "%d번 화면"
 msgid "Normal"
 msgstr "보통"
 
-#: src/bin/e_int_border_menu.c:1073
+#: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
 msgstr "항상 아래로"
 
-#: src/bin/e_int_border_menu.c:1117
+#: src/bin/e_int_border_menu.c:1118
 msgid "Pin to Desktop"
 msgstr "바탕 화면에 고정"
 
-#: src/bin/e_int_border_menu.c:1128
+#: src/bin/e_int_border_menu.c:1129
 msgid "Unpin from Desktop"
 msgstr "바탕 화면에서 고정 해제"
 
-#: src/bin/e_int_border_menu.c:1218
+#: src/bin/e_int_border_menu.c:1219
 msgid "Select Border Style"
 msgstr "테두리 모양새 선택"
 
-#: src/bin/e_int_border_menu.c:1230
+#: src/bin/e_int_border_menu.c:1231
 msgid "Use Moksha Default Icon Preference"
 msgstr "인라이튼먼트 기본 아이콘 설정 사용"
 
-#: src/bin/e_int_border_menu.c:1238
+#: src/bin/e_int_border_menu.c:1239
 msgid "Use Application Provided Icon"
 msgstr "프로그램에서 제공하는 아이콘 사용"
 
-#: src/bin/e_int_border_menu.c:1246
+#: src/bin/e_int_border_menu.c:1247
 msgid "Use User Defined Icon"
 msgstr "사용자 정의 아이콘 사용"
 
-#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr "저항 효과"
 
-#: src/bin/e_int_border_menu.c:1316
+#: src/bin/e_int_border_menu.c:1317
 msgid "Window List"
 msgstr "창 목록"
 
-#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
-#: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
-#: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
-#: src/modules/pager/e_mod_main.c:2939 src/modules/pager/e_mod_main.c:2941
+#: src/bin/e_int_border_menu.c:1327 src/modules/pager/e_mod_main.c:269
+#: src/modules/pager/e_mod_main.c:2948 src/modules/pager/e_mod_main.c:2955
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2968
+#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:2972
 msgid "Pager"
 msgstr "페이저"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
+#: src/bin/e_int_border_menu.c:1337 src/modules/wizard/page_180.c:25
 msgid "Taskbar"
 msgstr "작업 표시줄"
 
@@ -2507,7 +2507,7 @@ msgstr "위치 지정 요청"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
 #: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
-#: src/modules/clock/e_mod_main.c:703 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
@@ -2519,7 +2519,7 @@ msgstr "위치 지정 요청"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
+#: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
@@ -4482,8 +4482,8 @@ msgstr ""
 msgid "Clock module Information"
 msgstr "링크 정보"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:811
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "시계"
 
@@ -4568,7 +4568,7 @@ msgstr "%li분"
 msgid "Date set"
 msgstr "날짜"
 
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
 msgstr "달력 전환"
 
@@ -4818,7 +4818,7 @@ msgid "Profiles"
 msgstr "프로파일"
 
 #: src/modules/conf_display/e_int_config_desks.c:50
-#: src/modules/pager/e_mod_main.c:885
+#: src/modules/pager/e_mod_main.c:890
 msgid "Virtual Desktops Settings"
 msgstr "가상 데스크톱 설정"
 
@@ -9114,31 +9114,36 @@ msgstr ""
 "상태 메뉴에 대한 내부 코드때문에 서랍에서<br>오른쪽 마우스 버튼을 사용할 수 "
 "없습니다.<br>이 버튼은 팝업에 대해서만 동작합니다."
 
-#: src/modules/pager/e_mod_main.c:2924
+#: src/modules/pager/e_mod_main.c:902
+#, fuzzy
+msgid "This Desktop Settings"
+msgstr "가상 데스크톱 설정"
+
+#: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
 msgstr "페이저 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2931
+#: src/modules/pager/e_mod_main.c:2962
 msgid "Popup Desk Right"
 msgstr "데스크 오른쪽에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2933
+#: src/modules/pager/e_mod_main.c:2964
 msgid "Popup Desk Left"
 msgstr "데스크 왼쪽에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2935
+#: src/modules/pager/e_mod_main.c:2966
 msgid "Popup Desk Up"
 msgstr "데스크 상단에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2937
+#: src/modules/pager/e_mod_main.c:2968
 msgid "Popup Desk Down"
 msgstr "데스크 하단에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2939
+#: src/modules/pager/e_mod_main.c:2970
 msgid "Popup Desk Next"
 msgstr "다음 데스크에 팝업 표시"
 
-#: src/modules/pager/e_mod_main.c:2941
+#: src/modules/pager/e_mod_main.c:2972
 msgid "Popup Desk Previous"
 msgstr "이전 데스크에 팝업 표시"
 

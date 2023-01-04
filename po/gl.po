@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-12-31 13:43+0100\n"
+"POT-Creation-Date: 2023-01-04 10:53+0100\n"
 "PO-Revision-Date: 2013-09-19 10:28+0000\n"
 "Last-Translator: Miguel Anxo Bouzada <mbouzada@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -27,7 +27,7 @@ msgstr "Sobre Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
-#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -82,7 +82,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "Está seguro de que quere matar esta xanela?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
-#: src/bin/e_int_border_menu.c:783
+#: src/bin/e_int_border_menu.c:784
 msgid "Kill"
 msgstr "Matar"
 
@@ -182,12 +182,12 @@ msgstr "Menú"
 msgid "Window Menu"
 msgstr "Menú da xanela"
 
-#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Subir"
 
-#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "Baixar"
 
@@ -243,24 +243,24 @@ msgstr "Alternar modo pantalla completa"
 msgid "Fullscreen Mode Enable"
 msgstr "Modo pantallla completa habilitado"
 
-#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
-#: src/bin/e_int_border_menu.c:678
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:419
+#: src/bin/e_int_border_menu.c:679
 msgid "Maximize"
 msgstr "Maximizar"
 
-#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "Maximizar verticalmente"
 
-#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "Maximizar horizontalmente"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:452
 msgid "Maximize Left"
 msgstr "Maximizar á esquerda"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:463
 msgid "Maximize Right"
 msgstr "Maximizar á dereita"
 
@@ -1883,7 +1883,7 @@ msgstr "Erro do gadget"
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s non soporta a inhabilitación do desprazamento automático"
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
 msgid "Move to"
 msgstr "Mover a"
 
@@ -2096,7 +2096,7 @@ msgid "Size"
 msgstr "Tamaño"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2162,92 +2162,92 @@ msgstr "Lembrar estes bloqueos"
 msgid "Window"
 msgstr "Xanela"
 
-#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
+#: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
 msgid "Always on Top"
 msgstr "Sempre enriba"
 
-#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:185 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "Persistente"
 
-#: src/bin/e_int_border_menu.c:198
+#: src/bin/e_int_border_menu.c:199
 msgid "Shade"
 msgstr "Sombrear"
 
-#: src/bin/e_int_border_menu.c:212
+#: src/bin/e_int_border_menu.c:213
 msgid "Borderless"
 msgstr "Sen bordos"
 
-#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:406 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
 msgstr "Pantalla completa"
 
-#: src/bin/e_int_border_menu.c:473
+#: src/bin/e_int_border_menu.c:474
 msgid "Unmaximize"
 msgstr "Restaurar xanela"
 
-#: src/bin/e_int_border_menu.c:615
+#: src/bin/e_int_border_menu.c:616
 msgid "Edit Icon"
 msgstr "Editar Icona"
 
-#: src/bin/e_int_border_menu.c:623
+#: src/bin/e_int_border_menu.c:624
 msgid "Create Icon"
 msgstr "Crear Icona"
 
-#: src/bin/e_int_border_menu.c:631
+#: src/bin/e_int_border_menu.c:632
 msgid "Add to Favorites Menu"
 msgstr "Engadir ó Menú de Favoritos"
 
-#: src/bin/e_int_border_menu.c:636
+#: src/bin/e_int_border_menu.c:637
 msgid "Add to IBar"
 msgstr "Engadir ó IBar"
 
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_int_border_menu.c:645
 msgid "Create Keyboard Shortcut"
 msgstr "Crear atallo de teclado"
 
-#: src/bin/e_int_border_menu.c:690
+#: src/bin/e_int_border_menu.c:691
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Iconizar"
 
-#: src/bin/e_int_border_menu.c:703
+#: src/bin/e_int_border_menu.c:704
 msgid "Move with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:717
+#: src/bin/e_int_border_menu.c:718
 msgid "Resize with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:740
+#: src/bin/e_int_border_menu.c:741
 msgid "Skip"
 msgstr "Omitir"
 
-#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:751 src/modules/conf_theme/e_mod_main.c:234
 msgid "Border"
 msgstr "Borde"
 
-#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "Bloqueos"
 
-#: src/bin/e_int_border_menu.c:770
+#: src/bin/e_int_border_menu.c:771
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Lembrar"
 
-#: src/bin/e_int_border_menu.c:792
+#: src/bin/e_int_border_menu.c:793
 msgid "ICCCM/NetWM"
 msgstr "ICCCM/NetWM"
 
-#: src/bin/e_int_border_menu.c:966
+#: src/bin/e_int_border_menu.c:967
 #, c-format
 msgid "Screen %d"
 msgstr "Pantalla %d"
 
-#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1063 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2256,51 +2256,51 @@ msgstr "Pantalla %d"
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:1073
+#: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
 msgstr "Sembre debaixo"
 
-#: src/bin/e_int_border_menu.c:1117
+#: src/bin/e_int_border_menu.c:1118
 msgid "Pin to Desktop"
 msgstr "Fixar ó escritorio"
 
-#: src/bin/e_int_border_menu.c:1128
+#: src/bin/e_int_border_menu.c:1129
 msgid "Unpin from Desktop"
 msgstr "Desfixar do escritorio"
 
-#: src/bin/e_int_border_menu.c:1218
+#: src/bin/e_int_border_menu.c:1219
 msgid "Select Border Style"
 msgstr "Seleccionar un estilo de borde"
 
-#: src/bin/e_int_border_menu.c:1230
+#: src/bin/e_int_border_menu.c:1231
 msgid "Use Moksha Default Icon Preference"
 msgstr "Empregar as preferencias de icona predefinidas de Moksha"
 
-#: src/bin/e_int_border_menu.c:1238
+#: src/bin/e_int_border_menu.c:1239
 msgid "Use Application Provided Icon"
 msgstr "Empregar iconas do aplicativo"
 
-#: src/bin/e_int_border_menu.c:1246
+#: src/bin/e_int_border_menu.c:1247
 msgid "Use User Defined Icon"
 msgstr "Empregar a icona definida polo usuario"
 
-#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
 msgstr "Ofrecer resistencia"
 
-#: src/bin/e_int_border_menu.c:1316
+#: src/bin/e_int_border_menu.c:1317
 msgid "Window List"
 msgstr "Lista de xanelas"
 
-#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
-#: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
-#: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
-#: src/modules/pager/e_mod_main.c:2939 src/modules/pager/e_mod_main.c:2941
+#: src/bin/e_int_border_menu.c:1327 src/modules/pager/e_mod_main.c:269
+#: src/modules/pager/e_mod_main.c:2948 src/modules/pager/e_mod_main.c:2955
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2968
+#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:2972
 msgid "Pager"
 msgstr "Paxinador"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
+#: src/bin/e_int_border_menu.c:1337 src/modules/wizard/page_180.c:25
 msgid "Taskbar"
 msgstr "Barra de tarefas"
 
@@ -2524,7 +2524,7 @@ msgstr "Solicitar posición"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
 #: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
-#: src/modules/clock/e_mod_main.c:703 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
@@ -2536,7 +2536,7 @@ msgstr "Solicitar posición"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
+#: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
@@ -4527,8 +4527,8 @@ msgstr ""
 msgid "Clock module Information"
 msgstr "Información da Ligazón"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:811
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Reloxo"
 
@@ -4612,7 +4612,7 @@ msgstr "Un minuto"
 msgid "Date set"
 msgstr "Data"
 
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
 msgstr "Cambiar calendario"
 
@@ -4861,7 +4861,7 @@ msgid "Profiles"
 msgstr "Perfís"
 
 #: src/modules/conf_display/e_int_config_desks.c:50
-#: src/modules/pager/e_mod_main.c:885
+#: src/modules/pager/e_mod_main.c:890
 msgid "Virtual Desktops Settings"
 msgstr "Preferencias dos escritorios virtuais"
 
@@ -9170,31 +9170,36 @@ msgstr ""
 "obxecto de manipulación<br>polos menús de contexto.<br>Este botón só "
 "funciona nas alertas."
 
-#: src/modules/pager/e_mod_main.c:2924
+#: src/modules/pager/e_mod_main.c:902
+#, fuzzy
+msgid "This Desktop Settings"
+msgstr "Preferencias dos escritorios virtuais"
+
+#: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
 msgstr "Amosar alerta do paxinador"
 
-#: src/modules/pager/e_mod_main.c:2931
+#: src/modules/pager/e_mod_main.c:2962
 msgid "Popup Desk Right"
 msgstr "No escritorio á dereita"
 
-#: src/modules/pager/e_mod_main.c:2933
+#: src/modules/pager/e_mod_main.c:2964
 msgid "Popup Desk Left"
 msgstr "No escritorio á esquerda"
 
-#: src/modules/pager/e_mod_main.c:2935
+#: src/modules/pager/e_mod_main.c:2966
 msgid "Popup Desk Up"
 msgstr "No escritorio arriba"
 
-#: src/modules/pager/e_mod_main.c:2937
+#: src/modules/pager/e_mod_main.c:2968
 msgid "Popup Desk Down"
 msgstr "No escritorio abaixo"
 
-#: src/modules/pager/e_mod_main.c:2939
+#: src/modules/pager/e_mod_main.c:2970
 msgid "Popup Desk Next"
 msgstr "No escritorio seguinte"
 
-#: src/modules/pager/e_mod_main.c:2941
+#: src/modules/pager/e_mod_main.c:2972
 msgid "Popup Desk Previous"
 msgstr "No escritorio anterior"
 

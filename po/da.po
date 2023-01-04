@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2022-12-31 13:43+0100\n"
+"POT-Creation-Date: 2023-01-04 10:53+0100\n"
 "PO-Revision-Date: 2009-12-31 01:44+0000\n"
 "Last-Translator: nanker <Unknown>\n"
 "Language-Team: Danish\n"
@@ -23,7 +23,7 @@ msgstr "Om Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
-#: src/bin/e_int_border_menu.c:228 src/bin/e_int_border_prop.c:81
+#: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
@@ -71,7 +71,7 @@ msgid "Are you sure you want to kill this window?"
 msgstr "Er du sikker på du vil lukke dette vindue?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
-#: src/bin/e_int_border_menu.c:783
+#: src/bin/e_int_border_menu.c:784
 msgid "Kill"
 msgstr "Dræb"
 
@@ -183,12 +183,12 @@ msgstr "Menu"
 msgid "Window Menu"
 msgstr "vindue Menu"
 
-#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1091
+#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Løft"
 
-#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1099
+#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "Sænk"
 
@@ -251,25 +251,25 @@ msgstr "Fullscreen mode Skift"
 msgid "Fullscreen Mode Enable"
 msgstr "Fullscreen mode Skift"
 
-#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:418
-#: src/bin/e_int_border_menu.c:678
+#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:419
+#: src/bin/e_int_border_menu.c:679
 msgid "Maximize"
 msgstr "Maksimér"
 
-#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:429
+#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "Maksimér lodret"
 
-#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:440
+#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "Maksimér vandret"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:451
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:452
 #, fuzzy
 msgid "Maximize Left"
 msgstr "Maksimér"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:462
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:463
 #, fuzzy
 msgid "Maximize Right"
 msgstr "Maksimér"
@@ -2028,7 +2028,7 @@ msgstr "Gadgets manager"
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:160
+#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
 #, fuzzy
 msgid "Move to"
 msgstr "Træk"
@@ -2255,7 +2255,7 @@ msgid "Size"
 msgstr "Størrelse"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
-#: src/bin/e_int_border_menu.c:731 src/bin/e_int_border_prop.c:501
+#: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
 #: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
@@ -2325,101 +2325,101 @@ msgstr "Husk disse låsninger"
 msgid "Window"
 msgstr "Vindue"
 
-#: src/bin/e_int_border_menu.c:169 src/bin/e_int_border_menu.c:1051
+#: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
 #, fuzzy
 msgid "Always on Top"
 msgstr "Altid på toppen"
 
-#: src/bin/e_int_border_menu.c:184 src/bin/e_int_border_prop.c:506
+#: src/bin/e_int_border_menu.c:185 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
 msgstr "Klæbrig"
 
-#: src/bin/e_int_border_menu.c:198
+#: src/bin/e_int_border_menu.c:199
 #, fuzzy
 msgid "Shade"
 msgstr "Oprullet"
 
-#: src/bin/e_int_border_menu.c:212
+#: src/bin/e_int_border_menu.c:213
 #, fuzzy
 msgid "Borderless"
 msgstr "Rammer"
 
-#: src/bin/e_int_border_menu.c:405 src/bin/e_int_border_prop.c:511
+#: src/bin/e_int_border_menu.c:406 src/bin/e_int_border_prop.c:511
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:211
 msgid "Fullscreen"
 msgstr "Fuldskærm"
 
-#: src/bin/e_int_border_menu.c:473
+#: src/bin/e_int_border_menu.c:474
 #, fuzzy
 msgid "Unmaximize"
 msgstr "Unmaximize"
 
-#: src/bin/e_int_border_menu.c:615
+#: src/bin/e_int_border_menu.c:616
 msgid "Edit Icon"
 msgstr "Redigér ikon"
 
-#: src/bin/e_int_border_menu.c:623
+#: src/bin/e_int_border_menu.c:624
 msgid "Create Icon"
 msgstr "Opret ikon"
 
-#: src/bin/e_int_border_menu.c:631
+#: src/bin/e_int_border_menu.c:632
 #, fuzzy
 msgid "Add to Favorites Menu"
 msgstr "Tilføj til favoritter Menu"
 
-#: src/bin/e_int_border_menu.c:636
+#: src/bin/e_int_border_menu.c:637
 #, fuzzy
 msgid "Add to IBar"
 msgstr "Tilføj til Ibar"
 
-#: src/bin/e_int_border_menu.c:644
+#: src/bin/e_int_border_menu.c:645
 #, fuzzy
 msgid "Create Keyboard Shortcut"
 msgstr "Opret Tastaturgenvej"
 
-#: src/bin/e_int_border_menu.c:690
+#: src/bin/e_int_border_menu.c:691
 #: src/modules/everything/evry_plug_windows.c:438
 msgid "Iconify"
 msgstr "Minimér"
 
-#: src/bin/e_int_border_menu.c:703
+#: src/bin/e_int_border_menu.c:704
 msgid "Move with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:717
+#: src/bin/e_int_border_menu.c:718
 msgid "Resize with keyboard"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:740
+#: src/bin/e_int_border_menu.c:741
 #, fuzzy
 msgid "Skip"
 msgstr "Spring"
 
-#: src/bin/e_int_border_menu.c:750 src/modules/conf_theme/e_mod_main.c:234
+#: src/bin/e_int_border_menu.c:751 src/modules/conf_theme/e_mod_main.c:234
 #, fuzzy
 msgid "Border"
 msgstr "border"
 
-#: src/bin/e_int_border_menu.c:762 src/bin/e_int_border_remember.c:605
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
 #: src/bin/e_int_border_remember.c:701
 msgid "Locks"
 msgstr "Låsninger"
 
-#: src/bin/e_int_border_menu.c:770
+#: src/bin/e_int_border_menu.c:771
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:128
 msgid "Remember"
 msgstr "Husk"
 
-#: src/bin/e_int_border_menu.c:792
+#: src/bin/e_int_border_menu.c:793
 msgid "ICCCM/NetWM"
 msgstr ""
 
-#: src/bin/e_int_border_menu.c:966
+#: src/bin/e_int_border_menu.c:967
 #, fuzzy, c-format
 msgid "Screen %d"
 msgstr "Skærm"
 
-#: src/bin/e_int_border_menu.c:1062 src/bin/e_int_border_prop.c:157
+#: src/bin/e_int_border_menu.c:1063 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
 #: src/modules/conf_theme/e_int_config_fonts.c:100
 #: src/modules/conf_theme/e_int_config_fonts.c:264
@@ -2428,60 +2428,60 @@ msgstr "Skærm"
 msgid "Normal"
 msgstr "Normal"
 
-#: src/bin/e_int_border_menu.c:1073
+#: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
 msgstr "Altid nederst"
 
-#: src/bin/e_int_border_menu.c:1117
+#: src/bin/e_int_border_menu.c:1118
 #, fuzzy
 msgid "Pin to Desktop"
 msgstr "Pin til Desktop"
 
-#: src/bin/e_int_border_menu.c:1128
+#: src/bin/e_int_border_menu.c:1129
 #, fuzzy
 msgid "Unpin from Desktop"
 msgstr "Frigør fra Desktop"
 
-#: src/bin/e_int_border_menu.c:1218
+#: src/bin/e_int_border_menu.c:1219
 #, fuzzy
 msgid "Select Border Style"
 msgstr "Vælg Border Style"
 
-#: src/bin/e_int_border_menu.c:1230
+#: src/bin/e_int_border_menu.c:1231
 #, fuzzy
 msgid "Use Moksha Default Icon Preference"
 msgstr "Brug E17 Standard Icon præference"
 
-#: src/bin/e_int_border_menu.c:1238
+#: src/bin/e_int_border_menu.c:1239
 #, fuzzy
 msgid "Use Application Provided Icon"
 msgstr "Anvendelse Ansøgning Forudsat Icon "
 
-#: src/bin/e_int_border_menu.c:1246
+#: src/bin/e_int_border_menu.c:1247
 #, fuzzy
 msgid "Use User Defined Icon"
 msgstr "Brug Brugerdefineret Icon"
 
-#: src/bin/e_int_border_menu.c:1255 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "Modstand"
 
-#: src/bin/e_int_border_menu.c:1316
+#: src/bin/e_int_border_menu.c:1317
 #, fuzzy
 msgid "Window List"
 msgstr "Window List"
 
-#: src/bin/e_int_border_menu.c:1326 src/modules/pager/e_mod_main.c:265
-#: src/modules/pager/e_mod_main.c:2917 src/modules/pager/e_mod_main.c:2924
-#: src/modules/pager/e_mod_main.c:2931 src/modules/pager/e_mod_main.c:2933
-#: src/modules/pager/e_mod_main.c:2935 src/modules/pager/e_mod_main.c:2937
-#: src/modules/pager/e_mod_main.c:2939 src/modules/pager/e_mod_main.c:2941
+#: src/bin/e_int_border_menu.c:1327 src/modules/pager/e_mod_main.c:269
+#: src/modules/pager/e_mod_main.c:2948 src/modules/pager/e_mod_main.c:2955
+#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2968
+#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:2972
 #, fuzzy
 msgid "Pager"
 msgstr "Personsøger"
 
-#: src/bin/e_int_border_menu.c:1336 src/modules/wizard/page_180.c:25
+#: src/bin/e_int_border_menu.c:1337 src/modules/wizard/page_180.c:25
 #, fuzzy
 msgid "Taskbar"
 msgstr "proceslinjen"
@@ -2733,7 +2733,7 @@ msgstr "anmodning Position"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
 #: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
-#: src/modules/clock/e_mod_main.c:703 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:223
@@ -2745,7 +2745,7 @@ msgstr "anmodning Position"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:877 src/modules/temperature/e_mod_main.c:294
+#: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
 #: src/modules/xkbswitch/e_mod_main.c:361
@@ -4877,8 +4877,8 @@ msgstr ""
 msgid "Clock module Information"
 msgstr "Link Information"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:811
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_main.c:988
 #, fuzzy
 msgid "Clock"
 msgstr "Clock"
@@ -4967,7 +4967,7 @@ msgstr ""
 msgid "Date set"
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:1000
+#: src/modules/clock/e_mod_main.c:988
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "Eksekverbar"
@@ -5263,7 +5263,7 @@ msgid "Profiles"
 msgstr "Profiler"
 
 #: src/modules/conf_display/e_int_config_desks.c:50
-#: src/modules/pager/e_mod_main.c:885
+#: src/modules/pager/e_mod_main.c:890
 #, fuzzy
 msgid "Virtual Desktops Settings"
 msgstr "Virtuelle skriveborde Indstillinger"
@@ -10176,37 +10176,42 @@ msgstr ""
 "Du kan ikke bruge højre museknap i<br>hylden for dette, da det allerede er "
 "taget af intern<br>koden for genvejsmenuer.<br>Denne knap virker kun i popup."
 
-#: src/modules/pager/e_mod_main.c:2924
+#: src/modules/pager/e_mod_main.c:902
+#, fuzzy
+msgid "This Desktop Settings"
+msgstr "Virtuelle skriveborde Indstillinger"
+
+#: src/modules/pager/e_mod_main.c:2955
 #, fuzzy
 msgid "Show Pager Popup"
 msgstr "Vis Personsøger Popup"
 
-#: src/modules/pager/e_mod_main.c:2931
+#: src/modules/pager/e_mod_main.c:2962
 #, fuzzy
 msgid "Popup Desk Right"
 msgstr "Popup Desk Højre"
 
-#: src/modules/pager/e_mod_main.c:2933
+#: src/modules/pager/e_mod_main.c:2964
 #, fuzzy
 msgid "Popup Desk Left"
 msgstr "Popup Desk Venstre"
 
-#: src/modules/pager/e_mod_main.c:2935
+#: src/modules/pager/e_mod_main.c:2966
 #, fuzzy
 msgid "Popup Desk Up"
 msgstr "Popup Desk Up"
 
-#: src/modules/pager/e_mod_main.c:2937
+#: src/modules/pager/e_mod_main.c:2968
 #, fuzzy
 msgid "Popup Desk Down"
 msgstr "Popup Desk Down"
 
-#: src/modules/pager/e_mod_main.c:2939
+#: src/modules/pager/e_mod_main.c:2970
 #, fuzzy
 msgid "Popup Desk Next"
 msgstr "Popup Desk Næste"
 
-#: src/modules/pager/e_mod_main.c:2941
+#: src/modules/pager/e_mod_main.c:2972
 #, fuzzy
 msgid "Popup Desk Previous"
 msgstr "Popup Desk Forrige"
