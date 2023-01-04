@@ -9077,9 +9077,8 @@ msgstr ""
 "<br>pre kontextové menu.<br>Toto tlačidlo funguje iba pre upozornenie."
 
 #: src/modules/pager/e_mod_main.c:902
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Nastavenie virtuálnych plôch"
+msgstr "Nastavenie tejto plochy"
 
 #: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
