@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -10614,6 +10614,18 @@ msgstr "αποπροσάρτηση"
 msgid "eject"
 msgstr "εξαγωγή"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Αποτυχία Αποκρυπτογράφησης."
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Άγνωστο όνομα"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -11809,9 +11821,6 @@ msgstr "Η ένταση άλλαξε"
 
 #~ msgid "disconnect"
 #~ msgstr "αποσύνδεση"
-
-#~ msgid "Unknown Name"
-#~ msgstr "Άγνωστο όνομα"
 
 #~ msgid "No error"
 #~ msgstr "Χωρίς σφάλμα"

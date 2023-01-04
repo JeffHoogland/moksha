@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -10387,6 +10387,18 @@ msgstr "ayır"
 #: src/modules/places/e_mod_places.c:914
 msgid "eject"
 msgstr "çıkart"
+
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Şifre açılması işleminde hata."
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Bilinmiyor"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"

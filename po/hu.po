@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -11103,6 +11103,18 @@ msgstr "leválasztás"
 msgid "eject"
 msgstr "kiadás"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Felfüggesztés nem sikerült."
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Ismeretlen érték"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12200,10 +12212,6 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 #~ msgid "disconnect"
 #~ msgstr "húzza"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Ismeretlen érték"
 
 #, fuzzy
 #~ msgid "No error"

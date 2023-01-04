@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2009-11-06 10:39+0000\n"
 "Last-Translator: Viktor Kojouharov <Unknown>\n"
 "Language-Team: English <en@li.org>\n"
@@ -11287,6 +11287,18 @@ msgstr "демонтираме"
 msgid "eject"
 msgstr "изхвърлям"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Описание: не е зададено"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Непознат дял"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12202,10 +12214,6 @@ msgstr "Смяна на разделителна способност"
 #, fuzzy
 #~ msgid "disconnect"
 #~ msgstr "изключете"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Непознат дял"
 
 #, fuzzy
 #~ msgid "No error"

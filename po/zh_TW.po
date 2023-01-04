@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2015-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
@@ -10278,6 +10278,18 @@ msgstr "卸載"
 #, fuzzy
 msgid "eject"
 msgstr "退出"
+
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "解碼失敗。"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "未知"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"

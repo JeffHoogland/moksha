@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -11160,6 +11160,18 @@ msgstr "Irrota"
 msgid "eject"
 msgstr "Poista"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Valmiustilaan siirtyminen epäonnistui."
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Tuntematon tilavuus"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12233,10 +12245,6 @@ msgstr "Tarkkuuden vaihto"
 #, fuzzy
 #~ msgid "disconnect"
 #~ msgstr "katkaista"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Tuntematon tilavuus"
 
 #, fuzzy
 #~ msgid "No error"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2010-05-09 22:20+0100\n"
 "Last-Translator: Audun Gangsto <feitingen@gmail.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -11411,6 +11411,18 @@ msgstr "Avmonter"
 msgid "eject"
 msgstr "Løs Ut"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Beskrivelse: Utilgjengelig"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Ukjent"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12314,10 +12326,6 @@ msgstr "Endre oppløsning"
 
 #~ msgid "disconnect"
 #~ msgstr "frakoble"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Ukjent"
 
 #, fuzzy
 #~ msgid "No error"

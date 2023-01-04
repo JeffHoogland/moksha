@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -10419,6 +10419,18 @@ msgstr "отключить"
 msgid "eject"
 msgstr "извлечь"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Сбой операции Ofono"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Неизвестный оператор"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr "Efl громкость"
@@ -11835,9 +11847,6 @@ msgstr "Звук выкл."
 #~ "Не удалось выполнить удаленную операцию:<br>%s<br>Ошибка Сервера <hilight>"
 #~ "%s:</hilight>·%s"
 
-#~ msgid "Ofono Operation Failed"
-#~ msgstr "Сбой операции Ofono"
-
 #~ msgid "Could not execute local operation:<br>%s"
 #~ msgstr "Не удалось выполнить локальную операцию:<br>%s"
 
@@ -11861,9 +11870,6 @@ msgstr "Звук выкл."
 
 #~ msgid "Modem powered off"
 #~ msgstr "Модем выключен"
-
-#~ msgid "Unknown operator"
-#~ msgstr "Неизвестный оператор"
 
 #~ msgid "Wallpaper 2"
 #~ msgstr "Обои 2"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2009-11-09 18:07+0000\n"
 "Last-Translator: Miro Glavić <glavicmiro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -11139,6 +11139,18 @@ msgstr "demontiraj"
 msgid "eject"
 msgstr "izbaci"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Suspendiranje nije uspjelo"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Nepoznata Jačina"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12238,10 +12250,6 @@ msgstr "Promjena razlučivosti"
 #, fuzzy
 #~ msgid "disconnect"
 #~ msgstr "odvojiti"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "Nepoznata Jačina"
 
 #, fuzzy
 #~ msgid "No error"

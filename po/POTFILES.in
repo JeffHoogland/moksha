@@ -299,6 +299,8 @@ src/modules/places/e_mod_config.c
 src/modules/places/e_mod_main.c
 src/modules/places/e_mod_main.h
 src/modules/places/e_mod_places.c
+src/modules/places/backend_udisks1.c
+src/modules/places/backend_udisks2.c
 src/modules/mixer/bin/main.c
 src/modules/mixer/bin/main_window.c
 src/modules/mixer/bin/main_window.h

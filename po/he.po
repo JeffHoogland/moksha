@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -11428,6 +11428,18 @@ msgstr "נתק"
 msgid "eject"
 msgstr "לפלוט"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "תיאור: לא זמין"
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "נפח לא ידוע"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr ""
@@ -12448,10 +12460,6 @@ msgstr "נפח השתנה"
 #, fuzzy
 #~ msgid "disconnect"
 #~ msgstr "לנתק"
-
-#, fuzzy
-#~ msgid "Unknown Name"
-#~ msgstr "נפח לא ידוע"
 
 #, fuzzy
 #~ msgid "No error"

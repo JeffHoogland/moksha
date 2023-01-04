@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 10:53+0100\n"
+"POT-Creation-Date: 2023-01-04 17:15+0100\n"
 "PO-Revision-Date: 2023-01-01 22:16+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -10393,6 +10393,18 @@ msgstr "desmontar"
 msgid "eject"
 msgstr "ejetar"
 
+#: src/modules/places/backend_udisks1.c:347
+#: src/modules/places/backend_udisks2.c:576
+#, fuzzy
+msgid "Operation failed"
+msgstr "Falha ao descodificar."
+
+#: src/modules/places/backend_udisks1.c:348
+#: src/modules/places/backend_udisks2.c:577
+#, fuzzy
+msgid "Unknown error"
+msgstr "Nome desconhecido"
+
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr "Controlo de volume Efl"
@@ -11615,9 +11627,6 @@ msgstr "Volume mudo"
 
 #~ msgid "disconnect"
 #~ msgstr "desligar"
-
-#~ msgid "Unknown Name"
-#~ msgstr "Nome desconhecido"
 
 #~ msgid "No error"
 #~ msgstr "Sem erros"
