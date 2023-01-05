@@ -12,14 +12,14 @@
 # rustyBSD <rustyBSD@gmx.fr>, 2015.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
-# similar <similar@orange.fr>, 2020, 2021, 2022.
+# similar <similar@orange.fr>, 2020, 2021, 2022, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-01-04 17:15+0100\n"
-"PO-Revision-Date: 2022-12-31 18:06+0100\n"
+"PO-Revision-Date: 2023-01-05 07:41+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -1749,8 +1749,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
-"%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
+"<br><hilight>%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -3830,8 +3830,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?<br><br>"
-"%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?"
+"<br><br>%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5836,8 +5836,9 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -7871,8 +7872,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8271,11 +8272,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8290,18 +8291,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
-"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
-"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
-"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
-"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
-"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
-"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
-"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
-"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
-"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
-"des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
+"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
+"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
+"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
+"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
+"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
+"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
+"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
+"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
+"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
+"d'affichage des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -9098,9 +9099,8 @@ msgstr ""
 "menus contextuels.<br>Ce bouton fonctionne uniquement dans le pop-up."
 
 #: src/modules/pager/e_mod_main.c:902
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Paramétrage des bureaux virtuels"
+msgstr "Paramétrage pour ce bureau"
 
 #: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
@@ -9397,7 +9397,7 @@ msgstr ""
 "commande permettant de changer le nom de la fenêtre est inconnue."
 "<br>N'hésitez pas à soumettre un rapport de bogue si le terminal en "
 "question<br>offre bien la possibilité de changer le nom de sa fenêtre.<br>Ou "
-"alors, vous pouvez ajouter un data.item à"
+"alors, vous pouvez ajouter un data.item (élément de donnée) à"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9433,9 +9433,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
-"%s<br>est introuvable dans la base de données des<br>applications des accès "
-"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
+"<br>%s<br>est introuvable dans la base de données des<br>applications des "
+"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
@@ -10446,15 +10446,13 @@ msgstr "éjecter"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Échec du déchiffrement."
+msgstr "Échec de l'opération"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Inconnu"
+msgstr "Erreur inconnue"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
