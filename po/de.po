@@ -9127,9 +9127,8 @@ msgstr ""
 "funktioniert nur im Popup."
 
 #: src/modules/pager/e_mod_main.c:902
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Arbeitsflächeneinstellungen"
+msgstr "Diese Desktop Einstellungen"
 
 #: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
@@ -10481,15 +10480,13 @@ msgstr "Auswerfen"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Entschlüsseln fehlgeschlagen."
+msgstr "Ausführung fehlgeschlagen"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Unbekannt"
+msgstr "Unbekannter Fehler"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
