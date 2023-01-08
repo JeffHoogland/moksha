@@ -698,7 +698,7 @@ _notification_show_actions(Popup_Items *sel_item)
 {  //FIXME actions works only for last notif within one source
    if (!sel_item->notif)
      {
-       e_notification_util_send("Warning", "Notification expired!");
+       e_notification_util_send(_("Warning"), _("Notification expired!"));
        return;
      }
 
