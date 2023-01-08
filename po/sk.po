@@ -10029,9 +10029,8 @@ msgstr ""
 "bežné úlohy"
 
 #: src/modules/notification/e_mod_main.c:701
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Notifikácia"
+msgstr "Platnosť notifikácie vypršala!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
