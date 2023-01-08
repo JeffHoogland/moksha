@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2021-11-29 11:59+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -1692,7 +1692,8 @@ msgstr "Nee op alles"
 msgid "Yes to all"
 msgstr "Ja op alles"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Waarschuwing"
 
@@ -10112,6 +10113,11 @@ msgid ""
 msgstr ""
 "Thans in <b>internet</b>modus. <br>Nu zullen modules die het netwerk "
 "gebruiken weer hun normale taken oppakken."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Melding"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

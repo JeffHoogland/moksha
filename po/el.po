@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -1699,7 +1699,8 @@ msgstr "Όχι σε ολα"
 msgid "Yes to all"
 msgstr "Ναι σε όλα"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10235,6 +10236,11 @@ msgstr ""
 "Τώρα σε Κατάσταση <b>σύνδεσης</b>.<br>Τώρα τα αρθρώματα που χρησιμοποιούν το "
 "δίκτυο θα συνεχίσουν κανονικά τις εργασίες."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Κουτί Ειδοποίησης"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "Ρυθμίσεις Ειδοποιήσεων"
@@ -11564,9 +11570,6 @@ msgstr "Η ένταση άλλαξε"
 
 #~ msgid "Minimum Height"
 #~ msgstr "Ελάχιστο Ύψος"
-
-#~ msgid "Notification Box"
-#~ msgstr "Κουτί Ειδοποίησης"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Ρύθμιση Ειδοποιήσεων"

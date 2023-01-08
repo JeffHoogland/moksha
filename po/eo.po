@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -1687,7 +1687,8 @@ msgstr "Ne por ĉiuj"
 msgid "Yes to all"
 msgstr "Jes por ĉiuj"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Averto"
 
@@ -10083,6 +10084,11 @@ msgid ""
 msgstr ""
 "Nun en <b>senreta</b> reĝimo.<br>Nun moduloj kiuj uzas reton daŭrigos "
 "ordinarajn taskojn."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Sciigo"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

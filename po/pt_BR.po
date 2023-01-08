@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2022-06-12 18:38-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1678,7 +1678,8 @@ msgstr "Não para todos"
 msgid "Yes to all"
 msgstr "Sim para todos"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Aviso"
 
@@ -10082,6 +10083,11 @@ msgstr ""
 "Entrou agora no modo <b>\"online\"</b>. Os módulos que utilizam a rede irão "
 "retomar os serviços."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Caixa de notificação"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "Configurações das notificações"
@@ -11479,9 +11485,6 @@ msgstr "Volume no mudo"
 
 #~ msgid "Minimum Height"
 #~ msgstr "Altura mínima"
-
-#~ msgid "Notification Box"
-#~ msgstr "Caixa de notificação"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Configuração da caixa de notificação"

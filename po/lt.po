@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2013-09-10 23:39+0000\n"
 "Last-Translator: Mantas Kriaučiūnas <mantas@akl.lt>\n"
 "Language-Team: Lithuanian Translation team\n"
@@ -1656,7 +1656,8 @@ msgstr "Visiems ne"
 msgid "Yes to all"
 msgstr "Visiems taip"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -9981,6 +9982,11 @@ msgid ""
 msgstr ""
 "Dirbama <b>prisijungus</b>.<br>Besijungiantys prie tinklo moduliai tęs "
 "įprastų užduočių vykdymą."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Pranešimas"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

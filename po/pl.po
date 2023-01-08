@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -1774,7 +1774,8 @@ msgstr "Nie dla wszystkich"
 msgid "Yes to all"
 msgstr "Tak dla wszystkich"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10816,6 +10817,11 @@ msgstr ""
 "Teraz w trybie <b>online</b>.<br>Moduły które używają sieci powrócą do "
 "swoich normalnych zadań."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Okno powiadomień"
+
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
 msgid "Notification Settings"
@@ -11991,9 +11997,6 @@ msgstr "Zmiana rozdzielczości"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Minimalna Wysokość"
-
-#~ msgid "Notification Box"
-#~ msgstr "Okno powiadomień"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Konfiguracja okna notyfikacji"

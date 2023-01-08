@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -1760,7 +1760,8 @@ msgstr "Ні для всього"
 msgid "Yes to all"
 msgstr "Так для всього"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10759,6 +10760,11 @@ msgstr ""
 "Зараз ви покинули <b>автономний</b> режим.<br>Тепер модулі, котрі "
 "використовували мережу відновлять свою роботу."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Сповіщення"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "Налаштування сповіщень"
@@ -11954,9 +11960,6 @@ msgstr "Зміна роздільної здатності"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Мінімальна висота"
-
-#~ msgid "Notification Box"
-#~ msgstr "Сповіщення"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Налаштування"

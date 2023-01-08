@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2015-12-21 20:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1684,7 +1684,8 @@ msgstr "Ne na všechno"
 msgid "Yes to all"
 msgstr "Ano na všechno"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Upozornění"
 
@@ -10176,6 +10177,11 @@ msgstr ""
 "Nyní v režimu <b>online</b>.<br>Moduly používající síť nyní znovu spustí "
 "běžné úlohy."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Upozorňování"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "Nastavení upozorňování"
@@ -11557,9 +11563,6 @@ msgstr "Změněna hlasitost"
 
 #~ msgid "Minimum Height"
 #~ msgstr "Minimální výška"
-
-#~ msgid "Notification Box"
-#~ msgstr "Upozorňování"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Nastavení modulu Upozorňování"

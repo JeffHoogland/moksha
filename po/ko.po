@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -1680,7 +1680,8 @@ msgstr "전부 아니요"
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "경고"
 
@@ -10120,6 +10121,11 @@ msgid ""
 msgstr ""
 "이제 <b>온라인</b> 모드입니다.<br>이제 네트워크를 사용하는 모듈의 작업을 재개"
 "할 것입니다."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "알림"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

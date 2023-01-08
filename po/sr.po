@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -1689,7 +1689,8 @@ msgstr "Не за све"
 msgid "Yes to all"
 msgstr "Да за све"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Упозорење"
 
@@ -10190,6 +10191,11 @@ msgid ""
 msgstr ""
 "Сада сам у стању <b>на мрежи</b>. Јединице<br>које користе мрежу ће "
 "наставити са редовним задацима."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Обавештења"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

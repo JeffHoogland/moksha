@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -1751,7 +1751,8 @@ msgstr "すべて拒否"
 msgid "Yes to all"
 msgstr "すべて了承"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "警告"
 
@@ -10640,6 +10641,11 @@ msgid ""
 "regular tasks."
 msgstr ""
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "通知ボックス"
+
 #
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
@@ -11883,9 +11889,6 @@ msgstr "解像度の変更"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "最小高"
-
-#~ msgid "Notification Box"
-#~ msgstr "通知ボックス"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "通知ボックス設定"

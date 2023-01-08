@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trunk.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2011-03-28 12:04+0100\n"
 "Last-Translator: Renato Rener <renato.rener@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -1746,7 +1746,8 @@ msgstr "Ne za vse"
 msgid "Yes to all"
 msgstr "Da za vse"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10576,6 +10577,11 @@ msgstr ""
 "Zdaj ste v·<b>povezanem</b>·načinu.<br>Moduli, ki uporabljajo omrežje, bodo "
 "zdaj ponovno začeli svoja redna opravila."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Obvestilna škatla"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "Nastavitve modula Obvestila"
@@ -11801,9 +11807,6 @@ msgstr "Sprememba ločljivosti"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Najmanjša višina"
-
-#~ msgid "Notification Box"
-#~ msgstr "Obvestilna škatla"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Nastavitev Obvestilne škatle"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -1757,7 +1757,8 @@ msgstr "לא להכול"
 msgid "Yes to all"
 msgstr "כן להכול"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 #, fuzzy
 msgid "Warning"
 msgstr "אזהרה"
@@ -11040,6 +11041,11 @@ msgstr ""
 "כעת במצב <b>מחובר</b>.<br>כעת המודולים המשתמשים ברשת יוכלו להמשיך במשימותיהם "
 "הרגילות."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "תיבת הדיווחים"
+
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
 msgid "Notification Settings"
@@ -12213,9 +12219,6 @@ msgstr "נפח השתנה"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "הגודל המזערי"
-
-#~ msgid "Notification Box"
-#~ msgstr "תיבת הדיווחים"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "הגדרות תיבת ההתרעות"

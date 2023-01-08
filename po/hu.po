@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -1763,7 +1763,8 @@ msgstr "Nem, ne mindet"
 msgid "Yes to all"
 msgstr "Igen, mindet"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10726,6 +10727,11 @@ msgstr ""
 "Most <b>online<b> módban van.<br>A hálózatot használó modulok ismét "
 "szabályosan működnek."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Figyelmeztető doboz"
+
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
 msgid "Notification Settings"
@@ -11935,9 +11941,6 @@ msgstr "Felbontás módosítása"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Minimum magasság"
-
-#~ msgid "Notification Box"
-#~ msgstr "Figyelmeztető doboz"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Figyelmeztető doboz beállításai"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -1679,7 +1679,8 @@ msgstr "لا للكل"
 msgid "Yes to all"
 msgstr "نعم للكل"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10182,6 +10183,11 @@ msgstr ""
 "أنت اﻵن في نمط<b>في الشبكة</b> .<br>كما أن الوحدات التي تستخدم الشبكة ستكمل "
 "مهامها اﻹعتيادية."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "صندوق التنبيه"
+
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
 msgstr "إعدادات التنبيه"
@@ -13106,9 +13112,6 @@ msgstr "حرّك ﻷعلى"
 
 #~ msgid "Minimum Height"
 #~ msgstr "أقل ارتفاع"
-
-#~ msgid "Notification Box"
-#~ msgstr "صندوق التنبيه"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "إعدادات صندوق التنبيه"

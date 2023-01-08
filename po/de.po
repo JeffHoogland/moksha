@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2022-11-21 20:30+0100\n"
 "Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
 "Language-Team: E17-de\n"
@@ -1710,7 +1710,8 @@ msgstr "Nein für alle"
 msgid "Yes to all"
 msgstr "Ja für alle"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Warnung"
 
@@ -10132,6 +10133,11 @@ msgid ""
 msgstr ""
 "Zurück im <b>Online</b>-Modus.<br>Die Module fahren mit ihren "
 "netzwerkbezogenen Aufgaben fort."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Benachrichtigung"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"

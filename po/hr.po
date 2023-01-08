@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-11-09 18:07+0000\n"
 "Last-Translator: Miro Glavić <glavicmiro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -1767,7 +1767,8 @@ msgstr "Ne za sve"
 msgid "Yes to all"
 msgstr "Da za sve"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10762,6 +10763,11 @@ msgstr ""
 "Sada u <b>priključenom</b> modu.<br>Sada će moduli koji koriste mrežu "
 "nastaviti sa regularnim zadacima."
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Kutija za Obavijesti"
+
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
 msgid "Notification Settings"
@@ -11971,9 +11977,6 @@ msgstr "Promjena razlučivosti"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Minimalna Visina"
-
-#~ msgid "Notification Box"
-#~ msgstr "Kutija za Obavijesti"
 
 #~ msgid "Notification Box Configuration"
 #~ msgstr "Konfiguracija Kutije za Obavijesti"

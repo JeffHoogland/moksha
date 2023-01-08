@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -1768,7 +1768,8 @@ msgstr "Ei kaikkiin"
 msgid "Yes to all"
 msgstr "Kyllä kaikkiin"
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Varoitus"
 
@@ -10765,6 +10766,14 @@ msgid ""
 "regular tasks."
 msgstr ""
 
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr ""
+"#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
+"#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
+"Huomautus"
+
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
 msgid "Notification Settings"
@@ -11970,13 +11979,6 @@ msgstr "Tarkkuuden vaihto"
 #, fuzzy
 #~ msgid "Minimum Height"
 #~ msgstr "Minimikorkeus"
-
-#, fuzzy
-#~ msgid "Notification Box"
-#~ msgstr ""
-#~ "#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
-#~ "#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
-#~ "Huomautus"
 
 #, fuzzy
 #~ msgid "Notification Box Configuration"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-04 17:15+0100\n"
+"POT-Creation-Date: 2023-01-08 14:46+0100\n"
 "PO-Revision-Date: 2009-10-21 20:00+0000\n"
 "Last-Translator: Gunleif Joensen <Unknown>\n"
 "Language-Team: Faroese <fo@li.org>\n"
@@ -1663,7 +1663,8 @@ msgstr ""
 msgid "Yes to all"
 msgstr ""
 
-#: src/bin/e_fm.c:10523 src/modules/places/e_mod_places.c:632
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr ""
 
@@ -10015,6 +10016,11 @@ msgid ""
 msgstr ""
 "Nú í <b>álijnu</b> standi.<br>Nú vilja mótular, ið nýta netið, taka upp "
 "aftur sínar vanligu koyringar."
+
+#: src/modules/notification/e_mod_main.c:701
+#, fuzzy
+msgid "Notification expired!"
+msgstr "Frásøgn"
 
 #: src/modules/notification/e_mod_config.c:50
 #, fuzzy
