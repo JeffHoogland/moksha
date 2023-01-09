@@ -10135,9 +10135,8 @@ msgstr ""
 "netzwerkbezogenen Aufgaben fort."
 
 #: src/modules/notification/e_mod_main.c:701
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Benachrichtigung"
+msgstr "Benachrichtigung abgelaufen!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
