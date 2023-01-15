@@ -479,7 +479,7 @@ _fill_styles(E_Config_Dialog_Data *cfdata, Evas_Object *obj)
         e_livethumb_thumb_set(thumb, ow);
         e_widget_ilist_append(obj, thumb, style, NULL, NULL, style);
         if (!strcmp(cfdata->style, style))
-	  e_widget_ilist_selected_set(obj, n);
+        e_widget_ilist_selected_set(obj, n);
         n++;
      }
 

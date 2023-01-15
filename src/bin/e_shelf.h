@@ -65,10 +65,10 @@ EAPI extern int E_EVENT_SHELF_RENAME;
 EAPI extern int E_EVENT_SHELF_ADD;
 EAPI extern int E_EVENT_SHELF_DEL;
 
-EINTERN int              e_shelf_init(void);
-EINTERN int              e_shelf_shutdown(void);
+EINTERN int           e_shelf_init(void);
+EINTERN int           e_shelf_shutdown(void);
 EAPI void             e_shelf_config_update(void);
-EAPI E_Entry_Dialog *e_shelf_new_dialog(E_Zone *zone);
+EAPI E_Entry_Dialog  *e_shelf_new_dialog(E_Zone *zone);
 EAPI Eina_List       *e_shelf_list(void);
 EAPI Eina_List       *e_shelf_list_all(void); // includes dummy shelves
 EAPI E_Shelf         *e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E_Layer layer, int id);
@@ -95,6 +95,6 @@ EAPI E_Shelf         *e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es);
 EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 EAPI void             e_shelf_rename_dialog(E_Shelf *es);
 EAPI void             e_shelf_autohide_set(E_Shelf *es, int autohide_type);
-EAPI Eina_Bool       e_shelf_desk_visible(E_Shelf *es, E_Desk *desk);
+EAPI Eina_Bool        e_shelf_desk_visible(E_Shelf *es, E_Desk *desk);
 #endif
 #endif
