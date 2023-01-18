@@ -128,6 +128,7 @@ group { name: "e/widgets/syscon/item/button";
             rel1.offset: -1 0;
             rel2.offset: 0 1;
             fill.smooth: 0;
+            min: 130 0;
          }
          description { state: "clicked" 0.0;
             inherit: "default" 0.0;
