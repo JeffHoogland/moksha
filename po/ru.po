@@ -7162,14 +7162,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Использовать тему значков для Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Пути Moksha"
+msgstr "Тема Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Тема приложений"
+msgstr "Тема приложений (GTK & значки)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8865,16 +8863,15 @@ msgstr "Запретить сдвиг значков"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "Не добавлять элементы при запуске"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Track launch"
 msgstr "Отслеживать запуск"
 
 #: src/modules/ibar/e_mod_config.c:159
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Поднимать окна при наведении указателя"
+msgstr "Меню при наведении указателя"
 
 #: src/modules/ibar/e_mod_config.c:194
 msgid "Create new IBar source"
@@ -8906,14 +8903,12 @@ msgid "Create new Icon"
 msgstr "Создать новый значок"
 
 #: src/modules/ibar/e_mod_main.c:1526
-#, fuzzy
 msgid "Add to bar"
 msgstr "Добавить в IBar"
 
 #: src/modules/ibar/e_mod_main.c:1532
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Удалить стек"
+msgstr "Удалить из IBar"
 
 #: src/modules/ibar/e_mod_main.c:1538
 #, c-format
