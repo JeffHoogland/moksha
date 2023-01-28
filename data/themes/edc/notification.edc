@@ -23,9 +23,9 @@ group { name: "e/modules/notification/logo";
           effect: OUTLINE_SOFT_SHADOW;
           description 
           {
-            rel1.to: "base";
+            //~ rel1.to: "base";
             rel2.to: "base";
-            rel2.offset: 0 1;
+            rel2.offset: 0 3;
             state: "default" 0.0;
             color: 255 255 255 255;
             color3: 0 0 0 32;
