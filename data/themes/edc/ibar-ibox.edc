@@ -545,11 +545,10 @@ group { name: "e/modules/ibox/icon_overlay";
          effect: SHADOW BOTTOM;
          scale: 1;
          desc { color: 0 0 0 0;
-            rel1.relative: 1 0;
-            rel2.relative: 0 1;
             text {
                source: "e.text.label";
                text_source: "e.text.label";
+               min: 1 1;
             }
             link.base: "e,origin,center" "e";
             link.transition: SINUSOIDAL 0.1 CURRENT;
@@ -570,7 +569,9 @@ group { name: "e/modules/ibox/icon_overlay";
          scale: 1;
          description { state: "default" 0.0;
             rel1.relative: 0.0 1.0;
-            rel2.relative: 1.0 1.0;
+            fixed: 0 1;
+            rel1.to_x: "spacer";
+            rel2.to_x: "spacer";
             color: 255 255 255 0;
             color3: 0 0 0 0;
             color_class: "module_label";
