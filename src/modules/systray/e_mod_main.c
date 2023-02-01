@@ -203,7 +203,7 @@ _systray_size_apply_do(Instance *inst)
    else
      space = e_scale;
 
-   edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
+   edje_object_size_min_calc(inst->ui.gadget, &mw, &mh, 128, 128);
    evas_object_geometry_get(o, &x, &y, &w, &h);
 
    /* check if theme contains expand button */
@@ -211,7 +211,7 @@ _systray_size_apply_do(Instance *inst)
 
    if (!butt || !is_arrow)
      {
-       e_gadcon_client_min_size_set(inst->gcc, mw * icon_num * space,
+       e_gadcon_client_min_size_set(inst->gcc, mw + icon_num * space,
                                                mh + icon_num * space);
        ecore_x_window_move_resize(inst->win.base, x, y, w, h);
        e_config->systray_on_demand = 1;
