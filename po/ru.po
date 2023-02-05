@@ -129,7 +129,7 @@ msgstr "Действительно хотите выключить компью�
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
 msgid "Reboot"
-msgstr "Перезагрузить"
+msgstr "Перезагрузка"
 
 #: src/bin/e_actions.c:2493
 msgid "Are you sure you want to reboot your computer?"
@@ -137,7 +137,7 @@ msgstr "Действительно хотите перезагрузить ко�
 
 #: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
 msgid "Suspend"
-msgstr "Ждущий режим"
+msgstr "Ожидание"
 
 #: src/bin/e_actions.c:2558
 msgid "Are you sure you want to suspend your computer?"
@@ -146,7 +146,7 @@ msgstr "Действительно хотите перевести систем�
 #: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
-msgstr "Спящий режим"
+msgstr "Сон"
 
 #: src/bin/e_actions.c:2623
 msgid "Are you sure you want to hibernate your computer?"
@@ -756,7 +756,7 @@ msgstr "Система"
 
 #: src/bin/e_actions.c:3574
 msgid "Log Out"
-msgstr "Завершить сессию"
+msgstr "Выход"
 
 #: src/bin/e_actions.c:3578
 msgid "Power Off Now"
@@ -764,7 +764,7 @@ msgstr "Выключить немедленно"
 
 #: src/bin/e_actions.c:3582
 msgid "Power Off"
-msgstr "Выключить"
+msgstr "Выключение"
 
 #: src/bin/e_actions.c:3590
 msgid "Suspend Now"
@@ -776,7 +776,7 @@ msgstr "Перевести в спящий режим немедленно"
 
 #: src/bin/e_actions.c:3610
 msgid "Lock"
-msgstr "Заблокировать"
+msgstr "Блокировка"
 
 #: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1438
 msgid "Cleanup Windows"
@@ -2785,7 +2785,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:144 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
-msgstr "Главное"
+msgstr "Основных"
 
 #: src/bin/e_int_menus.c:167
 #: src/modules/conf_applications/e_int_config_apps.c:74
@@ -9114,11 +9114,11 @@ msgstr "Управление системой"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
-msgstr "Вторичный"
+msgstr "Дополнительных"
 
 #: src/modules/syscon/e_int_config_syscon.c:156
 msgid "Extra"
-msgstr "Дополнительный"
+msgstr "Прочих"
 
 #: src/modules/syscon/e_int_config_syscon.c:161
 msgid "Icon Sizes"
@@ -10498,11 +10498,11 @@ msgstr "Звук выкл."
 #~ msgid "Adjacent Label"
 #~ msgstr "Рядом расположенная надпись"
 
-#~ msgid "Syscon Settings"
-#~ msgstr "Настройки Syscon"
+msgid "Syscon Settings"
+msgstr "Настройки управления системой"
 
-#~ msgid "Syscon"
-#~ msgstr "Управление системой"
+msgid "Syscon"
+msgstr "Управление системой"
 
 #~ msgid "Secure Clear"
 #~ msgstr "Безопасная очистка"
