@@ -284,3 +284,54 @@ group { name: "e/widgets/syscon/item/button";
       }
    }
 }
+
+group { name: "e/modules/syscon/button";
+   images.image: "icon_system-shutdown.png" COMP;
+   parts {
+      part { name: "base";
+         description { state: "default" 0.0;
+            image.normal: "icon_system-shutdown.png";
+            rel1.relative: 0.05 0.05;
+            rel2.relative: 0.95 0.95;
+            aspect: 1.0 1.0; aspect_preference: BOTH;
+            color_class: "module_symbol";
+         }
+         description { state: "hilight" 0.0;
+            inherit: "default" 0.0;
+            color_class: "close-btn-pressed";
+         }
+         description { state: "clicked" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.15 0.15;
+            rel2.relative: 0.85 0.85;
+            color_class: "close-btn-pressed";
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "mouse,down,1"; source: "base";
+         action: STATE_SET "clicked" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,up,1"; source: "base";
+         action: STATE_SET "hilight" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,in"; source: "base";
+         action: STATE_SET "hilight" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,out"; source: "base";
+         action: STATE_SET "default" 0.0;
+         target: "base";
+      }
+      program {
+         signal: "mouse,clicked,1*"; source: "base";
+         action: SIGNAL_EMIT "e,action,shutdown,show" "";
+      }
+   }
+}
