@@ -18,6 +18,22 @@ group { name: "e/shelf/default/base";
    images.image: "holes_vert.png" COMP;
    images.image: "holes_horiz.png" COMP;
    images.image: "shine.png" COMP;
+
+   script {
+      public message(Msg_Type:type, id, ...) {
+         new val = getarg(2);
+         if ((type == MSG_INT_SET) && (id == 0)) {
+            custom_state(PART:"e.swallow.content", "default", 0.0);
+         }
+         if ((type == MSG_INT_SET) && (id == 1)) {
+            custom_state(PART:"e.swallow.content", "vert", 0.0);
+         }
+         set_state_val(PART:"e.swallow.content", STATE_REL1_OFFSET, val, val);
+         set_state_val(PART:"e.swallow.content", STATE_REL2_OFFSET, 0 - val, 0 - val);
+         set_state(PART:"e.swallow.content", "custom", 0.0);
+      }
+   }
+
    parts {
       part { name: "bg"; mouse_events: 0;
          description { state: "default" 0.0;

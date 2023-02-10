@@ -320,6 +320,7 @@ group "E_Config" struct {
             value "fit_size" uchar: 0;
             value "style" string: "default";
             value "size" int: 32;
+            value "icons" int: 3;
             value "overlap" int: 0;
             value "autohide" int: 0;
             value "autohide_show_action" int: 0;
@@ -1928,7 +1929,7 @@ group "E_Config" struct {
             value "priority" int: -1000;
         }
     }
-    value "config_version" int: 1000017;
+    value "config_version" int: 1000018;
     value "show_splash" int: 1;
     value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
     value "desktop_default_name" string: "%i-%i";

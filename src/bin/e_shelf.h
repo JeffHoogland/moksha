@@ -26,6 +26,7 @@ struct _E_Shelf
    const char          *style;
    E_Config_Shelf      *cfg;
    int                  size;
+   int                  icons;
    E_Config_Dialog     *config_dialog;
    E_Entry_Dialog      *rename_dialog;
    E_Menu              *menu;
@@ -39,6 +40,7 @@ struct _E_Shelf
    Ecore_Timer         *instant_timer;
    Ecore_Timer         *autohide_timer;
    Ecore_Timer         *module_init_end_timer;
+   Ecore_Timer         *icons_offset;
    Eina_List           *handlers;
    Ecore_Event_Handler *autohide;
    unsigned char        fit_along   : 1;
@@ -96,5 +98,6 @@ EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 EAPI void             e_shelf_rename_dialog(E_Shelf *es);
 EAPI void             e_shelf_autohide_set(E_Shelf *es, int autohide_type);
 EAPI Eina_Bool        e_shelf_desk_visible(E_Shelf *es, E_Desk *desk);
+EAPI  void            e_shelf_conf_update(E_Shelf *es);
 #endif
 #endif

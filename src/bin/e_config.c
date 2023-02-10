@@ -152,6 +152,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, fit_size, UCHAR);
    E_CONFIG_VAL(D, T, style, STR);
    E_CONFIG_VAL(D, T, size, INT);
+   E_CONFIG_VAL(D, T, icons, INT);
    E_CONFIG_VAL(D, T, overlap, INT);
    E_CONFIG_VAL(D, T, autohide, INT);
    E_CONFIG_VAL(D, T, autohide_show_action, INT);

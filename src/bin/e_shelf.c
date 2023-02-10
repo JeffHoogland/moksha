@@ -33,11 +33,12 @@ static const char  *_e_shelf_orient_icon_name_get(E_Shelf *s);
 static void         _e_shelf_bindings_add(E_Shelf *es);
 static void         _e_shelf_bindings_del(E_Shelf *es);
 static Eina_Bool    _e_shelf_on_current_desk(E_Shelf *es, E_Event_Zone_Edge *ev);
-static void         _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
-static void         _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_shelf_cb_dummy_del(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
+static void          _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object *obj, void *event_info);
 static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
 static void         _e_shelf_event_rename_end_cb(void *data, E_Event_Shelf *ev);
+
 
 static Eina_List *shelves = NULL;
 static Eina_List *dummies = NULL;
@@ -320,7 +321,6 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E
    es->locked = 0;
 
    es->hide_origin = -1;
-
    {
       E_Event_Shelf *ev;
 
@@ -1061,6 +1061,56 @@ e_shelf_autohide_set(E_Shelf *es, int autohide_type)
 */
 }
 
+static Eina_Bool
+_e_shelf_delay_populate(E_Shelf *es)
+{
+   e_gadcon_unpopulate(es->gadcon);
+   e_gadcon_populate(es->gadcon);
+   return EINA_FALSE;
+}
+
+EAPI void
+e_shelf_send_offset(E_Shelf *es)
+{
+   Edje_Message_Int_Set *msg;
+
+   msg = alloca(sizeof(Edje_Message_Int_Set) + (1 * sizeof(int)));
+   msg->count = 1;
+   msg->val[0] = (int)round(((es->cfg->size * (5 - es->cfg->icons)) / 10));
+
+   if (msg->val[0] < 0) msg->val[0] = 0;
+   //~ else if (msg->val[0] > 5) msg->val[0] = 5;
+
+   switch (es->gadcon->orient)
+    {
+      case E_GADCON_ORIENT_FLOAT:
+      case E_GADCON_ORIENT_HORIZ:
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+        edje_object_message_send(es->o_base, EDJE_MESSAGE_INT_SET, 0, msg);
+        break;
+
+      case E_GADCON_ORIENT_VERT:
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_CORNER_RT:
+      case E_GADCON_ORIENT_CORNER_LB:
+      case E_GADCON_ORIENT_CORNER_RB:
+        edje_object_message_send(es->o_base, EDJE_MESSAGE_INT_SET, 1, msg);
+        break;
+
+      default:
+        break;
+     }
+
+   ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_delay_populate, es);
+}
+
 EAPI E_Shelf *
 e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
 {
@@ -1081,6 +1131,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    e_shelf_orient(es, cf_es->orient);
    e_shelf_position_calc(es);
    e_shelf_populate(es);
+   e_shelf_send_offset(es);
 
    if (cf_es->desk_show_mode)
      {
@@ -1164,6 +1215,7 @@ _e_shelf_new_dialog_ok(void *data, char *text)
    cfg->fit_size = 0;
    cfg->style = eina_stringshare_add("default");
    cfg->size = 40;
+   cfg->icons = 3;
    cfg->overlap = 0;
    cfg->autohide = 0;
    e_config->shelves = eina_list_append(e_config->shelves, cfg);
@@ -2403,6 +2455,7 @@ _e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
              es = e_shelf_config_new(zone, cf_es);
              es->config_dialog = cfd;
              e_zone_border_geometry_refresh(zone);
+             e_gadcon_unpopulate(es->gadcon);
              return;
           }
         orient++;

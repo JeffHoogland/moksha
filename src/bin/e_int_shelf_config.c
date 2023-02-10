@@ -10,12 +10,13 @@ struct _E_Config_Dialog_Data
 
    int layer, overlap;
    int orient, fit_along;
-   int size;
+   int size, icons;
    const char *style;
    int autohide, autohide_show_action;
    double hide_timeout, hide_duration;
    int desk_show_mode;
    Eina_List *handlers;
+   Eina_List *icons_sizes;
 };
 
 /* local function prototypes */
@@ -100,6 +101,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 
    /* size */
    cfdata->size = cfdata->escfg->size;
+   cfdata->icons = cfdata->escfg->icons;
 
    /* style */
    if (cfdata->escfg->style)
@@ -126,6 +128,7 @@ _basic_check_changed(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfd
    CHECK(orient);
    CHECK(fit_along);
    CHECK(size);
+   CHECK(icons);
    CHECK(style);
    CHECK(autohide);
    CHECK(autohide_show_action);
@@ -225,6 +228,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 256, 4, 0,
                             NULL, &(cfdata->size), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
+   ow = e_widget_slider_add(evas, 1, 0, _("Icons size (%2.0f/5)"), 1, 5, 1, 0,
+                            NULL, &(cfdata->icons), 100);
+   e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_check_add(evas, _("Shrink to Content Width"),
                            &(cfdata->fit_along));
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
@@ -322,6 +328,14 @@ _basic_apply(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      {
         cfdata->escfg->size = cfdata->size;
         cfdata->es->size = cfdata->size;
+        recreate = 1;
+        geom_refresh = 1;
+     }
+
+   if (cfdata->escfg->icons != cfdata->icons)
+     {
+        cfdata->escfg->icons = cfdata->icons;
+        cfdata->es->icons = cfdata->icons;
         recreate = 1;
         geom_refresh = 1;
      }

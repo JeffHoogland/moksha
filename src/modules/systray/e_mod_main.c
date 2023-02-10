@@ -203,7 +203,7 @@ _systray_size_apply_do(Instance *inst)
    else
      space = e_scale;
 
-   edje_object_size_min_calc(inst->ui.gadget, &mw, &mh);
+   edje_object_size_min_restricted_calc(inst->ui.gadget, &mw, &mh, 48, 48);
    evas_object_geometry_get(o, &x, &y, &w, &h);
 
    /* check if theme contains expand button */
