@@ -2924,9 +2924,8 @@ msgid "Height (%3.0f pixels)"
 msgstr "Altura (%3.0f píxeles)"
 
 #: src/bin/e_int_shelf_config.c:231
-#, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Tamaño de icono (%d)"
+msgstr "Tamaño de iconos (%d)"
 
 #: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
