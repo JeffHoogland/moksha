@@ -8829,9 +8829,8 @@ msgid "Setup"
 msgstr "Configurar"
 
 #: src/modules/ibar/e_mod_config.c:129
-#, fuzzy
 msgid "Icon Labels"
-msgstr "Mostrar etiqueta del icono"
+msgstr "Etiquetas de icono"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Show icon label"
