@@ -2951,9 +2951,8 @@ msgid "Height (%3.0f pixels)"
 msgstr "Höhe (%3.0f Pixel)"
 
 #: src/bin/e_int_shelf_config.c:231
-#, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Icon-Größe (%d)"
+msgstr "Symbolgröße (%d)"
 
 #: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
@@ -8901,7 +8900,7 @@ msgstr "Einrichten"
 
 #: src/modules/ibar/e_mod_config.c:129
 msgid "Icon Labels"
-msgstr "Symbolbeschriftung"
+msgstr "Symbolbeschriftungen"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Show icon label"
