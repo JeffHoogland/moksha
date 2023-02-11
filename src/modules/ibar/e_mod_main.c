@@ -1207,14 +1207,15 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 static int
 _ibar_gadcon_gap_calc(IBar_Icon *ic)
 {
+   E_Shelf *es;
    int x, y, w, h, gap_x, gap_y;
 
    e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &x, &y, &w, &h);
 
-   if (!ic->ibar->inst->gcc->gadcon->shelf) return 0;
+   if (!(es = ic->ibar->inst->gcc->gadcon->shelf)) return 0;
 
-   gap_x  = ic->ibar->inst->gcc->gadcon->shelf->w - w;
-   gap_y  = ic->ibar->inst->gcc->gadcon->shelf->h - h;
+   gap_x  = es->w - w;
+   gap_y  = es->h - h;
 
    switch (ic->ibar->inst->orient) {
       case E_GADCON_ORIENT_TOP:
