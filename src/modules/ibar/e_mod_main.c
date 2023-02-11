@@ -1209,10 +1209,10 @@ _ibar_gadcon_gap_calc(IBar_Icon *ic)
 {
    E_Shelf *es;
    int x, y, w, h, gap_x, gap_y;
-
-   e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &x, &y, &w, &h);
-
+   
    if (!(es = ic->ibar->inst->gcc->gadcon->shelf)) return 0;
+   
+   e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &x, &y, &w, &h);
 
    gap_x  = es->w - w;
    gap_y  = es->h - h;
