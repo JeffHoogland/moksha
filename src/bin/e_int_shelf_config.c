@@ -228,7 +228,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, _("Height (%3.0f pixels)"), 4, 256, 4, 0,
                             NULL, &(cfdata->size), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
-   ow = e_widget_slider_add(evas, 1, 0, _("Icons size (%2.0f/5)"), 1, 5, 1, 0,
+   ow = e_widget_slider_add(evas, 1, 0, _("Icon Size (%2.0f/5)"), 1, 5, 1, 0,
                             NULL, &(cfdata->icons), 100);
    e_widget_list_object_append(ol, ow, 1, 1, 0.5);
    ow = e_widget_check_add(evas, _("Shrink to Content Width"),
