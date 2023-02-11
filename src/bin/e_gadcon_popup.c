@@ -165,7 +165,8 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
 static void
 _e_gadcon_popup_position(E_Gadcon_Popup *pop)
 {
-   Evas_Coord gx = 0, gy = 0, gw, gh, zw, zh, zx, zy, px, py;
+   Evas_Coord gx = 0, gy = 0, gw, gh, zw, zh, zx, zy, px, py, gap_x, gap_y;
+   E_Shelf *es;
 
    /* Popup positioning */
    e_gadcon_client_geometry_get(pop->gcc, &gx, &gy, &gw, &gh);
@@ -173,6 +174,15 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
    zy = pop->win->zone->y;
    zw = pop->win->zone->w;
    zh = pop->win->zone->h;
+
+   if ((es = pop->gcc->gadcon->shelf))
+     {
+       gap_x = (es->w - gw) / 2;
+       gap_y = (es->h - gh) / 2;
+     }
+   else
+     gap_x = gap_y = 0;
+
    switch (pop->gcc->gadcon->orient)
      {
       case E_GADCON_ORIENT_CORNER_RT:
@@ -182,7 +192,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
         py = gy;
         if (py + pop->h >= (zy + zh))
           py = gy + gh - pop->h;
-        px = MIN(zx + zw - gw - pop->w - 3, px);
+        px = MIN(zx + zw - gw - pop->w - 3, px - gap_x - 5);
         break;
 
       case E_GADCON_ORIENT_LEFT:
@@ -192,7 +202,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
         py = gy;
         if (py + pop->h >= (zy + zh))
           py = gy + gh - pop->h;
-        px = MIN(zx + zw - gw - pop->w + 3, px);
+        px = MIN(zx + zw - gw - pop->w + 3, px + gap_x + 5);
         break;
 
       case E_GADCON_ORIENT_TOP:
@@ -204,7 +214,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
-        py = MIN(zy + zh - gh - pop->h + 3, py);
+        py = MIN(zy + zh - gh - pop->h + 3, py + gap_y + 5);
         break;
 
       case E_GADCON_ORIENT_BOTTOM:
@@ -216,7 +226,7 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
-        py = MIN(zy + zh - gh - pop->h - 3, py);
+        py = MIN(zy + zh - gh - pop->h - 3, py - gap_y - 5);
         break;
 
       case E_GADCON_ORIENT_FLOAT:

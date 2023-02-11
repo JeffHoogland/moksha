@@ -1204,49 +1204,6 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
 }
 
-static int
-_ibar_gadcon_gap_calc(IBar_Icon *ic)
-{
-   E_Shelf *es;
-   int x, y, w, h, gap_x, gap_y;
-   
-   if (!(es = ic->ibar->inst->gcc->gadcon->shelf)) return 0;
-   
-   e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &x, &y, &w, &h);
-
-   gap_x  = es->w - w;
-   gap_y  = es->h - h;
-
-   switch (ic->ibar->inst->orient) {
-      case E_GADCON_ORIENT_TOP:
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_TR:
-         return gap_y;
-        break;
-      case E_GADCON_ORIENT_BOTTOM:
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_BR:
-         return - gap_y;
-        break;
-
-      case E_GADCON_ORIENT_LEFT:
-      case E_GADCON_ORIENT_CORNER_LT:
-      case E_GADCON_ORIENT_CORNER_LB:
-         return gap_x;
-        break;
-
-      case E_GADCON_ORIENT_RIGHT:
-      case E_GADCON_ORIENT_CORNER_RT:
-      case E_GADCON_ORIENT_CORNER_RB:
-         return - gap_x;
-        break;
-
-      default:
-        break;
-    }
-   return 0;
-}
-
 static void
 _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
 {
@@ -1359,8 +1316,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
       e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, NULL);
       x -= ic->menu->win->zone->x;
       y -= ic->menu->win->zone->y;
-      ox = ic->menu->win->x + _ibar_gadcon_gap_calc(ic);
-      oy = ic->menu->win->y + _ibar_gadcon_gap_calc(ic);
+      ox = ic->menu->win->x, oy = ic->menu->win->y;
 
       if (e_box_orientation_get(ic->ibar->o_box))
         ox = (x + (iw / 2)) - (w / 2) + gx;
