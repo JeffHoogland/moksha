@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-08 14:46+0100\n"
+"POT-Creation-Date: 2023-02-11 16:42+0100\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -339,7 +339,7 @@ msgstr "Мења стање причвршћености прозора"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -843,7 +843,7 @@ msgstr "Изаберите"
 msgid "Cancel"
 msgstr "Откажи"
 
-#: src/bin/e_config.c:952
+#: src/bin/e_config.c:953
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -861,7 +861,7 @@ msgstr ""
 "задатих поставки ће то<br>поправити њиховим додавањем. Сада можете подесити "
 "ствари по својој<br>вољи. Извините због зачкољица у вашим поставкама.<br>"
 
-#: src/bin/e_config.c:969
+#: src/bin/e_config.c:970
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -875,11 +875,11 @@ msgstr ""
 "предострожност, ваше поставке су враћене на задате<br>вредности. Извините "
 "због непријатности.<br>"
 
-#: src/bin/e_config.c:1527 src/bin/e_config.c:2152
+#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
 msgid "Moksha Settings Write Problems"
 msgstr "Потешкоће писања поставки Просвећења"
 
-#: src/bin/e_config.c:1530
+#: src/bin/e_config.c:1531
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -888,7 +888,7 @@ msgstr ""
 "Дошло је до грешке приликом премештања датотека поставки Просвећења<br>из:"
 "<br>%s<br><br>у<br>%s<br><br>Остатак уписа је отказан због безбедности.<br>"
 
-#: src/bin/e_config.c:1540 src/bin/e_config.c:2165
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -908,19 +908,19 @@ msgstr ""
 msgid "OK"
 msgstr "У реду"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "Поставке су надограђене"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2062
 msgid "The EET file handle is bad."
 msgstr "Руковање ЕЕТ датотекама је лоше."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2066
 msgid "The file data is empty."
 msgstr "Датотека података је празна."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -928,17 +928,17 @@ msgstr ""
 "Ова датотека није уписива. Можда је диск само за читање,<br>или сте изгубили "
 "овлашћења над датотекама."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2074
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Док сам вршио припрему за упис, остало је мало простора у меморији."
 "<br>Молим, ослободите простор у меморији."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2078
 msgid "This is a generic error."
 msgstr "Ово је општа грешка."
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -946,59 +946,59 @@ msgstr ""
 "Датотека поставки је превише велика.<br>Требала би бити врло мала (неколико "
 "стотина KB највише)."
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2086
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Имате улазно/излазне грешке на диску.<br>Можда га требате заменити?"
 
-#: src/bin/e_config.c:2089
+#: src/bin/e_config.c:2090
 msgid "You ran out of space while writing the file."
 msgstr "Остали сте без простора на диску приликом уписа датотеке."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 msgid "The file was closed while writing."
 msgstr "Датотека је затворена за време писања."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Мапирање меморије (mmap) датотеке није успело."
 
-#: src/bin/e_config.c:2101
+#: src/bin/e_config.c:2102
 msgid "X509 Encoding failed."
 msgstr "X509 шифровање није успело."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
 msgid "Signature failed."
 msgstr "Потписивање није успело."
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2110
 msgid "The signature was invalid."
 msgstr "Није исправан потпис."
 
-#: src/bin/e_config.c:2113
+#: src/bin/e_config.c:2114
 msgid "Not signed."
 msgstr "Није потписано."
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2118
 msgid "Feature not implemented."
 msgstr "Није још подржано."
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2122
 msgid "PRNG was not seeded."
 msgstr "Није посејан псеудо насумични број ПРНГ."
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2126
 msgid "Encryption failed."
 msgstr "Није успело шифровање."
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2130
 msgid "Decryption failed."
 msgstr "Дешифровање није успело."
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2134
 msgid "The error is unknown to Moksha."
 msgstr "Просвећење не препознаје грешку."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2156
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1448,7 +1448,7 @@ msgstr "Нисам успео да избацим уређај"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2352
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
 msgid "Error"
 msgstr "Грешка"
 
@@ -1508,7 +1508,7 @@ msgstr "Радње..."
 msgid "Link"
 msgstr "Веза"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2480
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1529,7 +1529,7 @@ msgid "Eject"
 msgstr "Избаци"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1519
+#: src/modules/ibar/e_mod_main.c:1563
 msgid "Properties"
 msgstr "Особине"
 
@@ -1781,7 +1781,7 @@ msgstr "Уклоњиви уређаји"
 msgid "Cannot change permissions: %s"
 msgstr "Нисам успео да променим дозволе: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2372
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -2083,12 +2083,12 @@ msgid "Prevent Changes In:"
 msgstr "Спречи измене у:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
 msgid "Position"
 msgstr "Положај"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2097,7 +2097,7 @@ msgstr "Величина"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Гомилање"
@@ -2522,7 +2522,7 @@ msgstr "Захтевај положај"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2534,7 +2534,7 @@ msgstr "Захтевај положај"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -2893,7 +2893,7 @@ msgstr "Изгубљени прозори"
 msgid "Untitled window"
 msgstr "Неименовани прозор"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -2907,81 +2907,86 @@ msgstr "Додај полицу"
 msgid "Delete a Shelf"
 msgstr "Избриши полицу"
 
-#: src/bin/e_int_shelf_config.c:46
+#: src/bin/e_int_shelf_config.c:47
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Поставке полице"
 
-#: src/bin/e_int_shelf_config.c:169
+#: src/bin/e_int_shelf_config.c:172
 msgid "Above Everything"
 msgstr "Изнад свега"
 
-#: src/bin/e_int_shelf_config.c:171
+#: src/bin/e_int_shelf_config.c:174
 msgid "Below Windows"
 msgstr "Испод прозора"
 
-#: src/bin/e_int_shelf_config.c:173
+#: src/bin/e_int_shelf_config.c:176
 msgid "Below Everything"
 msgstr "Испод свега"
 
-#: src/bin/e_int_shelf_config.c:175
+#: src/bin/e_int_shelf_config.c:178
 msgid "Allow windows to overlap the shelf"
 msgstr "Дозволи прозорима да прекривају полицу"
 
-#: src/bin/e_int_shelf_config.c:225
+#: src/bin/e_int_shelf_config.c:228
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Висина (%3.0f тачака)"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:231
+#, fuzzy, c-format
+msgid "Icons size (%2.0f/5)"
+msgstr "Величина иконице (%d)"
+
+#: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
 msgstr "Умањи на ширину садржаја"
 
-#: src/bin/e_int_shelf_config.c:239
+#: src/bin/e_int_shelf_config.c:245
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Начин"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:251
 msgid "Auto-hide the shelf"
 msgstr "Самостално скривај полицу"
 
-#: src/bin/e_int_shelf_config.c:250
+#: src/bin/e_int_shelf_config.c:256
 msgid "Show on mouse in"
 msgstr "Прикажи миша у"
 
-#: src/bin/e_int_shelf_config.c:254
+#: src/bin/e_int_shelf_config.c:260
 msgid "Show on mouse click"
 msgstr "Прикажи на клик миша"
 
-#: src/bin/e_int_shelf_config.c:259
+#: src/bin/e_int_shelf_config.c:265
 msgid "Hide timeout"
 msgstr "Време истека скривања"
 
-#: src/bin/e_int_shelf_config.c:263
+#: src/bin/e_int_shelf_config.c:269
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунди"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:275
 msgid "Hide duration"
 msgstr "Трајање скривања"
 
-#: src/bin/e_int_shelf_config.c:273
+#: src/bin/e_int_shelf_config.c:279
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f секунди"
 
-#: src/bin/e_int_shelf_config.c:278
+#: src/bin/e_int_shelf_config.c:284
 msgid "Auto Hide"
 msgstr "Самостално скривање"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:290
 msgid "Show on all Desktops"
 msgstr "Прикажи на свим радним просторима"
 
-#: src/bin/e_int_shelf_config.c:286
+#: src/bin/e_int_shelf_config.c:292
 msgid "Show on specified Desktops"
 msgstr "Прикажи на одређеној радној површи"
 
@@ -3673,73 +3678,73 @@ msgstr ""
 "омогућите начин рада <b>излагање</b>, и привремено онемогућите чувара "
 "екрана, закључавање и чување снаге?"
 
-#: src/bin/e_shelf.c:67
+#: src/bin/e_shelf.c:68
 msgid "Float"
 msgstr "Покретно"
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Водоравно"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Усправно"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 msgid "Left"
 msgstr "Лево"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Right"
 msgstr "Десно"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Top"
 msgstr "Врх"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Bottom"
 msgstr "дно"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Top-left Corner"
 msgstr "горњи леви угао"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-right Corner"
 msgstr "горњи десни угао"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Bottom-left Corner"
 msgstr "доњи леви угао"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-right Corner"
 msgstr "доњи десни угао"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Left-top Corner"
 msgstr "леви горњи угао"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Right-top Corner"
 msgstr "десни горњи угао"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Left-bottom Corner"
 msgstr "леви доњи угао"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Right-bottom Corner"
 msgstr "десни доњи угао"
 
-#: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1123
+#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
 #, c-format
 msgid "Shelf #%d"
 msgstr "Полица #%d"
@@ -3757,48 +3762,48 @@ msgstr ""
 "поставите своју полицу на<br>„Испод свега“ или онемогућите самостално "
 "скривање."
 
-#: src/bin/e_shelf.c:1124
+#: src/bin/e_shelf.c:1175
 msgid "Add New Shelf"
 msgstr "Додај нову полицу"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 msgid "Shelf Error"
 msgstr "Грешка полице"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 msgid "A shelf with that name already exists!"
 msgstr "Полица са тим именом већ постоји!"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2497
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
 msgid "Stop Moving Gadgets"
 msgstr "Заустави померање справица"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2499
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
 msgid "Begin Moving Gadgets"
 msgstr "Почни померање справица"
 
-#: src/bin/e_shelf.c:2352
+#: src/bin/e_shelf.c:2404
 msgid "A shelf with that name and id already exists!"
 msgstr "Полица са тим именом и ЛБ већ постоји!"
 
-#: src/bin/e_shelf.c:2371
+#: src/bin/e_shelf.c:2423
 msgid "Rename Shelf"
 msgstr "Преименуј полицу"
 
-#: src/bin/e_shelf.c:2446 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1506
+#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
 msgid "Contents"
 msgstr "Садржаји"
 
-#: src/bin/e_shelf.c:2456
+#: src/bin/e_shelf.c:2509
 msgid "Orientation"
 msgstr "Усмерење"
 
-#: src/bin/e_shelf.c:2465 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Сам сакриј"
 
-#: src/bin/e_shelf.c:2472 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Освежи"
 
@@ -8997,30 +9002,30 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Да ли сте сигурни да желите избрисати овај извор траке?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
 msgid "IBar"
 msgstr "Tрака"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1495
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
 msgid "Create new Icon"
 msgstr "Прави нову икону"
 
-#: src/modules/ibar/e_mod_main.c:1526
+#: src/modules/ibar/e_mod_main.c:1570
 #, fuzzy
 msgid "Add to bar"
 msgstr "Додај у Tраку"
 
-#: src/modules/ibar/e_mod_main.c:1532
+#: src/modules/ibar/e_mod_main.c:1576
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Уклони стог"
 
-#: src/modules/ibar/e_mod_main.c:1538
+#: src/modules/ibar/e_mod_main.c:1582
 #, c-format
 msgid "Icon %s"
 msgstr "Икона %s"
 
-#: src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:2854
 msgid "Focus IBar"
 msgstr "Узми Tраку у жижу"
 

@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-08 14:46+0100\n"
+"POT-Creation-Date: 2023-02-11 16:42+0100\n"
 "PO-Revision-Date: 2023-01-09 21:54+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -342,7 +342,7 @@ msgstr "(Dés)Activer l'épinglage"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -845,7 +845,7 @@ msgstr "Sélectionner"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:952
+#: src/bin/e_config.c:953
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -863,7 +863,7 @@ msgstr ""
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:969
+#: src/bin/e_config.c:970
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -879,11 +879,11 @@ msgstr ""
 "défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
-#: src/bin/e_config.c:1527 src/bin/e_config.c:2152
+#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Moksha"
 
-#: src/bin/e_config.c:1530
+#: src/bin/e_config.c:1531
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -893,7 +893,7 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1540 src/bin/e_config.c:2165
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -913,19 +913,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "La configuration a été modifiée"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2062
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2066
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -933,15 +933,15 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2074
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Libérez de la mémoire."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2078
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -949,59 +949,59 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2086
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2089
+#: src/bin/e_config.c:2090
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé(e) à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2101
+#: src/bin/e_config.c:2102
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2110
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2113
+#: src/bin/e_config.c:2114
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2118
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2122
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2126
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2130
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2134
 msgid "The error is unknown to Moksha."
 msgstr "Moksha ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2156
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1454,7 +1454,7 @@ msgstr "Impossible d'éjecter le périphérique"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2352
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
 msgid "Error"
 msgstr "Erreur"
 
@@ -1515,7 +1515,7 @@ msgstr "Actions…"
 msgid "Link"
 msgstr "Lien"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2480
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1536,7 +1536,7 @@ msgid "Eject"
 msgstr "Éjecter"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1519
+#: src/modules/ibar/e_mod_main.c:1563
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -1750,8 +1750,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
-"<br><hilight>%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
+"%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -1785,7 +1785,7 @@ msgstr "Périphérique amovible"
 msgid "Cannot change permissions: %s"
 msgstr "Impossible de changer les permissions : %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2372
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -2084,12 +2084,12 @@ msgid "Prevent Changes In:"
 msgstr "Empêcher les changements de :"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
 msgid "Position"
 msgstr "Position"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2098,7 +2098,7 @@ msgstr "Taille"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Empilement"
@@ -2523,7 +2523,7 @@ msgstr "Demande de position"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2535,7 +2535,7 @@ msgstr "Demande de position"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -2890,7 +2890,7 @@ msgstr "F. orphelines"
 msgid "Untitled window"
 msgstr "Fenêtre sans titre"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -2904,81 +2904,86 @@ msgstr "Ajouter un rayon"
 msgid "Delete a Shelf"
 msgstr "Supprimer un rayon"
 
-#: src/bin/e_int_shelf_config.c:46
+#: src/bin/e_int_shelf_config.c:47
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Paramètres du rayon (Shelf)"
 
-#: src/bin/e_int_shelf_config.c:169
+#: src/bin/e_int_shelf_config.c:172
 msgid "Above Everything"
 msgstr "Au-dessus de tout"
 
-#: src/bin/e_int_shelf_config.c:171
+#: src/bin/e_int_shelf_config.c:174
 msgid "Below Windows"
 msgstr "Sous les fenêtres"
 
-#: src/bin/e_int_shelf_config.c:173
+#: src/bin/e_int_shelf_config.c:176
 msgid "Below Everything"
 msgstr "En dessous de tout"
 
-#: src/bin/e_int_shelf_config.c:175
+#: src/bin/e_int_shelf_config.c:178
 msgid "Allow windows to overlap the shelf"
 msgstr "Autoriser les fenêtres à recouvrir le rayon"
 
-#: src/bin/e_int_shelf_config.c:225
+#: src/bin/e_int_shelf_config.c:228
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Hauteur (%3.0f pixels)"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:231
+#, fuzzy, c-format
+msgid "Icons size (%2.0f/5)"
+msgstr "Taille de l'icône (%d)"
+
+#: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
 msgstr "Réduire à la largeur du contenu"
 
-#: src/bin/e_int_shelf_config.c:239
+#: src/bin/e_int_shelf_config.c:245
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Style"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:251
 msgid "Auto-hide the shelf"
 msgstr "Auto-masquage du rayon"
 
-#: src/bin/e_int_shelf_config.c:250
+#: src/bin/e_int_shelf_config.c:256
 msgid "Show on mouse in"
 msgstr "Afficher au passage de la souris"
 
-#: src/bin/e_int_shelf_config.c:254
+#: src/bin/e_int_shelf_config.c:260
 msgid "Show on mouse click"
 msgstr "Afficher avec un clic de souris"
 
-#: src/bin/e_int_shelf_config.c:259
+#: src/bin/e_int_shelf_config.c:265
 msgid "Hide timeout"
 msgstr "Délai avant masquage"
 
-#: src/bin/e_int_shelf_config.c:263
+#: src/bin/e_int_shelf_config.c:269
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f secondes"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:275
 msgid "Hide duration"
 msgstr "Vitesse du masquage"
 
-#: src/bin/e_int_shelf_config.c:273
+#: src/bin/e_int_shelf_config.c:279
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f secondes"
 
-#: src/bin/e_int_shelf_config.c:278
+#: src/bin/e_int_shelf_config.c:284
 msgid "Auto Hide"
 msgstr "Masquage automatique"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:290
 msgid "Show on all Desktops"
 msgstr "Afficher sur tous les bureaux"
 
-#: src/bin/e_int_shelf_config.c:286
+#: src/bin/e_int_shelf_config.c:292
 msgid "Show on specified Desktops"
 msgstr "Afficher sur les bureaux spécifiés"
 
@@ -3679,73 +3684,73 @@ msgstr ""
 "activer le mode de <b>présentation</b> et temporairement désactiver l'écran "
 "de veille, le verrouillage et la gestion de l'énergie ?"
 
-#: src/bin/e_shelf.c:67
+#: src/bin/e_shelf.c:68
 msgid "Float"
 msgstr "Flottant"
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horizontal(e)"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertical(e)"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 msgid "Left"
 msgstr "À gauche"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Right"
 msgstr "À droite"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Top"
 msgstr "En haut"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Bottom"
 msgstr "En bas"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Top-left Corner"
 msgstr "Coin supérieur gauche"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-right Corner"
 msgstr "Coin supérieur droit"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Bottom-left Corner"
 msgstr "Coin inférieur gauche"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-right Corner"
 msgstr "Coin inférieur droit"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Left-top Corner"
 msgstr "Coin sup. gauche vertical"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Right-top Corner"
 msgstr "Coin sup. droit vertical"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Left-bottom Corner"
 msgstr "Coin inf. gauche vertical"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Right-bottom Corner"
 msgstr "Coin inf. droit vertical"
 
-#: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1123
+#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
 #, c-format
 msgid "Shelf #%d"
 msgstr "Rayon n°%d"
@@ -3763,48 +3768,48 @@ msgstr ""
 "configuration actuelle ; configurez votre rayon en<br>« En dessous de tout » "
 "ou désactivez l'auto-masquage."
 
-#: src/bin/e_shelf.c:1124
+#: src/bin/e_shelf.c:1175
 msgid "Add New Shelf"
 msgstr "Ajouter un rayon"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 msgid "Shelf Error"
 msgstr "Erreur de rayon"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 msgid "A shelf with that name already exists!"
 msgstr "Il existe déjà un rayon avec ce nom !"
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2497
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
 msgid "Stop Moving Gadgets"
 msgstr "Figer les gadgets"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2499
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
 msgid "Begin Moving Gadgets"
 msgstr "Déplacer les gadgets"
 
-#: src/bin/e_shelf.c:2352
+#: src/bin/e_shelf.c:2404
 msgid "A shelf with that name and id already exists!"
 msgstr "Un rayon avec ce nom et ID existe déjà !"
 
-#: src/bin/e_shelf.c:2371
+#: src/bin/e_shelf.c:2423
 msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
-#: src/bin/e_shelf.c:2446 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1506
+#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/bin/e_shelf.c:2456
+#: src/bin/e_shelf.c:2509
 msgid "Orientation"
 msgstr "Orientation"
 
-#: src/bin/e_shelf.c:2465 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Masquer automatiquement"
 
-#: src/bin/e_shelf.c:2472 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Rafraîchir"
 
@@ -3831,8 +3836,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?"
-"<br><br>%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?<br><br>"
+"%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5837,9 +5842,8 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -7873,8 +7877,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
-"u+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
+"+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8273,11 +8277,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8292,18 +8296,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
-"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
-"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
+"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
+"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
+"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
+"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
+"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
+"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
+"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
+"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
+"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
+"des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8919,28 +8923,28 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Voulez-vous vraiment supprimer cette source ?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1495
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
 msgid "Create new Icon"
 msgstr "Créer une nouvelle icône"
 
-#: src/modules/ibar/e_mod_main.c:1526
+#: src/modules/ibar/e_mod_main.c:1570
 msgid "Add to bar"
 msgstr "Ajouter à la barre"
 
-#: src/modules/ibar/e_mod_main.c:1532
+#: src/modules/ibar/e_mod_main.c:1576
 msgid "Remove from bar"
 msgstr "Retirer de la barre"
 
-#: src/modules/ibar/e_mod_main.c:1538
+#: src/modules/ibar/e_mod_main.c:1582
 #, c-format
 msgid "Icon %s"
 msgstr "Icône %s"
 
-#: src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:2854
 msgid "Focus IBar"
 msgstr "Focaliser l'IBar"
 
@@ -9434,9 +9438,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
-"<br>%s<br>est introuvable dans la base de données des<br>applications des "
-"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
+"%s<br>est introuvable dans la base de données des<br>applications des accès "
+"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379

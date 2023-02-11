@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-01-08 14:46+0100\n"
+"POT-Creation-Date: 2023-02-11 16:42+0100\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -351,7 +351,7 @@ msgstr "位置固定状態反転"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:293
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -882,7 +882,7 @@ msgstr "選択"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_config.c:952
+#: src/bin/e_config.c:953
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -899,7 +899,7 @@ msgstr ""
 "ルト設定<br>を追加すれば更新されます. これで好きなように設定できます.ちょっと"
 "面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:969
+#: src/bin/e_config.c:970
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -912,11 +912,11 @@ msgstr ""
 "定をコピーしない限りあり得ません.<br>これではまずいので, 念のためデフォルトの"
 "設定に置き換えました.<br>ご不便をおかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1527 src/bin/e_config.c:2152
+#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha の設定書込時の問題"
 
-#: src/bin/e_config.c:1530
+#: src/bin/e_config.c:1531
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -925,7 +925,7 @@ msgstr ""
 "%s から %s へ設定ファイルの移動中にエラーが起きました.<br>安全のため書き出し"
 "はここで強制終了しました."
 
-#: src/bin/e_config.c:1540 src/bin/e_config.c:2165
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -945,19 +945,19 @@ msgstr ""
 msgid "OK"
 msgstr "了解"
 
-#: src/bin/e_config.c:2043
+#: src/bin/e_config.c:2044
 msgid "Settings Upgraded"
 msgstr "設定が更新されました"
 
-#: src/bin/e_config.c:2061
+#: src/bin/e_config.c:2062
 msgid "The EET file handle is bad."
 msgstr "EETファイルハンドルがおかしいです"
 
-#: src/bin/e_config.c:2065
+#: src/bin/e_config.c:2066
 msgid "The file data is empty."
 msgstr "ファイルデータが空です"
 
-#: src/bin/e_config.c:2069
+#: src/bin/e_config.c:2070
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -965,78 +965,78 @@ msgstr ""
 "このファイルには書き込めません.<br>ディスクが読み出し専用になっているか書き込"
 "み権限がありません"
 
-#: src/bin/e_config.c:2073
+#: src/bin/e_config.c:2074
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "書き出し準備中のメモリ不足になりました. メモリ解放してください."
 
-#: src/bin/e_config.c:2077
+#: src/bin/e_config.c:2078
 #, fuzzy
 msgid "This is a generic error."
 msgstr "これは一般的なエラーです。"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2082
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "設定ファイルが大きすぎます.<br>ずっと小さいはずです (せいぜい数百KB程度)"
 
-#: src/bin/e_config.c:2085
+#: src/bin/e_config.c:2086
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "ディスクの入出力エラーです. 交換した方がいいかも."
 
-#: src/bin/e_config.c:2089
+#: src/bin/e_config.c:2090
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "ファイル書き出し中にスペースが不足しました"
 
-#: src/bin/e_config.c:2093
+#: src/bin/e_config.c:2094
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "書き出し中にファイルがクローズされました"
 
-#: src/bin/e_config.c:2097
+#: src/bin/e_config.c:2098
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "ファイルのメモリマップ (mmap) が失敗しました"
 
-#: src/bin/e_config.c:2101
+#: src/bin/e_config.c:2102
 msgid "X509 Encoding failed."
 msgstr "X509エンコーディングが失敗しました"
 
-#: src/bin/e_config.c:2105
+#: src/bin/e_config.c:2106
 msgid "Signature failed."
 msgstr "署名に失敗しました"
 
-#: src/bin/e_config.c:2109
+#: src/bin/e_config.c:2110
 msgid "The signature was invalid."
 msgstr "署名が不正です"
 
-#: src/bin/e_config.c:2113
+#: src/bin/e_config.c:2114
 msgid "Not signed."
 msgstr "署名がありません"
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2118
 msgid "Feature not implemented."
 msgstr "機能が未実装です"
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2122
 msgid "PRNG was not seeded."
 msgstr "PRNGの種がありません"
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2126
 msgid "Encryption failed."
 msgstr "暗号化が失敗しました"
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2130
 #, fuzzy
 msgid "Decryption failed."
 msgstr "復号化が失敗しました"
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2134
 msgid "The error is unknown to Moksha."
 msgstr "未知のエラーです"
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2156
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1493,7 +1493,7 @@ msgstr "デバイスをイジェクトできません"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2352
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
 msgid "Error"
 msgstr "エラー"
 
@@ -1558,7 +1558,7 @@ msgstr "アクション"
 msgid "Link"
 msgstr "リンク"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2480
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1579,7 +1579,7 @@ msgid "Eject"
 msgstr "イジェクト"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1519
+#: src/modules/ibar/e_mod_main.c:1563
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -1842,7 +1842,7 @@ msgstr "着脱可能媒体"
 msgid "Cannot change permissions: %s"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1125 src/bin/e_shelf.c:2372
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -2164,12 +2164,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:220
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
 msgid "Position"
 msgstr "位置"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2178,7 +2178,7 @@ msgstr "サイズ"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "積み重ね順"
@@ -2631,7 +2631,7 @@ msgstr "要求の位置"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2451 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2643,7 +2643,7 @@ msgstr "要求の位置"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1512
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -3006,7 +3006,7 @@ msgstr "迷子なウィンドウ"
 msgid "Untitled window"
 msgstr "他のウィンドウ"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1638
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
@@ -3022,81 +3022,86 @@ msgstr "シェルフを追加する"
 msgid "Delete a Shelf"
 msgstr "シェルフを削除する"
 
-#: src/bin/e_int_shelf_config.c:46
+#: src/bin/e_int_shelf_config.c:47
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "シェルフの設定"
 
-#: src/bin/e_int_shelf_config.c:169
+#: src/bin/e_int_shelf_config.c:172
 msgid "Above Everything"
 msgstr "常に一番上"
 
-#: src/bin/e_int_shelf_config.c:171
+#: src/bin/e_int_shelf_config.c:174
 msgid "Below Windows"
 msgstr "ウィンドウの下"
 
-#: src/bin/e_int_shelf_config.c:173
+#: src/bin/e_int_shelf_config.c:176
 msgid "Below Everything"
 msgstr "常に一番下"
 
-#: src/bin/e_int_shelf_config.c:175
+#: src/bin/e_int_shelf_config.c:178
 msgid "Allow windows to overlap the shelf"
 msgstr "ウィンドウがこのシェルフと重なることを許可する"
 
-#: src/bin/e_int_shelf_config.c:225
+#: src/bin/e_int_shelf_config.c:228
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "高さ (%3.0f px)"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:231
+#, fuzzy, c-format
+msgid "Icons size (%2.0f/5)"
+msgstr "アイコンサイズ (%d)"
+
+#: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
 msgstr "中身の幅まで縮小する"
 
-#: src/bin/e_int_shelf_config.c:239
+#: src/bin/e_int_shelf_config.c:245
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "スタイル"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:251
 msgid "Auto-hide the shelf"
 msgstr "シェルフを自動的に隠す"
 
-#: src/bin/e_int_shelf_config.c:250
+#: src/bin/e_int_shelf_config.c:256
 msgid "Show on mouse in"
 msgstr "マウスが乗ったら出す"
 
-#: src/bin/e_int_shelf_config.c:254
+#: src/bin/e_int_shelf_config.c:260
 msgid "Show on mouse click"
 msgstr "マウスをクリックしたら出す"
 
-#: src/bin/e_int_shelf_config.c:259
+#: src/bin/e_int_shelf_config.c:265
 msgid "Hide timeout"
 msgstr "指定時間後に隠蔽開始"
 
-#: src/bin/e_int_shelf_config.c:263
+#: src/bin/e_int_shelf_config.c:269
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f 秒"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:275
 msgid "Hide duration"
 msgstr "隠蔽に要する時間"
 
-#: src/bin/e_int_shelf_config.c:273
+#: src/bin/e_int_shelf_config.c:279
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f 秒"
 
-#: src/bin/e_int_shelf_config.c:278
+#: src/bin/e_int_shelf_config.c:284
 msgid "Auto Hide"
 msgstr "自動隠蔽"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:290
 msgid "Show on all Desktops"
 msgstr "全デスクトップに表示する"
 
-#: src/bin/e_int_shelf_config.c:286
+#: src/bin/e_int_shelf_config.c:292
 msgid "Show on specified Desktops"
 msgstr "指定のデスクトップに表示する"
 
@@ -3844,82 +3849,82 @@ msgstr ""
 "</b>を有功にして,<br>スクリーンセーバー, ロック, 省電力機能を一時的に無効にし"
 "ますか？"
 
-#: src/bin/e_shelf.c:67
+#: src/bin/e_shelf.c:68
 msgid "Float"
 msgstr ""
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "横に広げる"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "縦に広げる"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #, fuzzy
 msgid "Left"
 msgstr "左:"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 #, fuzzy
 msgid "Right"
 msgstr "右:"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Top"
 msgstr "上中央(横)"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 #, fuzzy
 msgid "Bottom"
 msgstr "左下(横)"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 #, fuzzy
 msgid "Top-left Corner"
 msgstr "ポップアップサイズ"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 #, fuzzy
 msgid "Top-right Corner"
 msgstr "ポップアップサイズ"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 #, fuzzy
 msgid "Bottom-left Corner"
 msgstr "左下(横)"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 #, fuzzy
 msgid "Bottom-right Corner"
 msgstr "右下(横)"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 #, fuzzy
 msgid "Left-top Corner"
 msgstr "ポップアップサイズ"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 #, fuzzy
 msgid "Right-top Corner"
 msgstr "ポップアップサイズ"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Left-bottom Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Right-bottom Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:268 src/bin/e_shelf.c:1123
+#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
 #, fuzzy, c-format
 msgid "Shelf #%d"
 msgstr "シェルフ #"
@@ -3934,55 +3939,55 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 
-#: src/bin/e_shelf.c:1124
+#: src/bin/e_shelf.c:1175
 #, fuzzy
 msgid "Add New Shelf"
 msgstr "シェルフを追加する"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 #, fuzzy
 msgid "Shelf Error"
 msgstr "シェルフ #"
 
-#: src/bin/e_shelf.c:1145
+#: src/bin/e_shelf.c:1196
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1659 src/bin/e_shelf.c:2497
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "ガジェットの位置と大きさの変更を終了する"
 
-#: src/bin/e_shelf.c:1661 src/bin/e_shelf.c:2499
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "ガジェットの位置と大きさの変更を始める"
 
-#: src/bin/e_shelf.c:2352
+#: src/bin/e_shelf.c:2404
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2371
+#: src/bin/e_shelf.c:2423
 #, fuzzy
 msgid "Rename Shelf"
 msgstr "ファイル名を変更する"
 
-#: src/bin/e_shelf.c:2446 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1506
+#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
 msgid "Contents"
 msgstr "中身"
 
-#: src/bin/e_shelf.c:2456
+#: src/bin/e_shelf.c:2509
 #, fuzzy
 msgid "Orientation"
 msgstr "プレゼンテーション"
 
-#: src/bin/e_shelf.c:2465 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "自動隠蔽"
 
-#: src/bin/e_shelf.c:2472 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "更新"
 
@@ -9409,30 +9414,30 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "この IBar を本当に削除しますか."
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1495
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
 msgid "Create new Icon"
 msgstr "新しいアイコンを作る"
 
-#: src/modules/ibar/e_mod_main.c:1526
+#: src/modules/ibar/e_mod_main.c:1570
 #, fuzzy
 msgid "Add to bar"
 msgstr "IBar に追加する"
 
-#: src/modules/ibar/e_mod_main.c:1532
+#: src/modules/ibar/e_mod_main.c:1576
 #, fuzzy
 msgid "Remove from bar"
 msgstr "ガジェットを削除する"
 
-#: src/modules/ibar/e_mod_main.c:1538
+#: src/modules/ibar/e_mod_main.c:1582
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "アイコン"
 
-#: src/modules/ibar/e_mod_main.c:2810
+#: src/modules/ibar/e_mod_main.c:2854
 #, fuzzy
 msgid "Focus IBar"
 msgstr "フォーカス"
