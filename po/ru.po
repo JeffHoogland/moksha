@@ -2918,9 +2918,8 @@ msgid "Height (%3.0f pixels)"
 msgstr "Высота (%3.0f пикс.)"
 
 #: src/bin/e_int_shelf_config.c:231
-#, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Размер значка (%d)"
+msgstr "Размер значков (%2.0f/5)"
 
 #: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
@@ -8846,9 +8845,8 @@ msgid "Setup"
 msgstr "Настроить"
 
 #: src/modules/ibar/e_mod_config.c:129
-#, fuzzy
 msgid "Icon Labels"
-msgstr "Показывать метку значка"
+msgstr "Метки значков"
 
 #: src/modules/ibar/e_mod_config.c:130
 msgid "Show icon label"
@@ -9080,9 +9078,8 @@ msgstr ""
 "работает только для всплывающих окон"
 
 #: src/modules/pager/e_mod_main.c:902
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Настройки виртуальных столов"
+msgstr "Настройки этого стола"
 
 #: src/modules/pager/e_mod_main.c:2955
 msgid "Show Pager Popup"
@@ -9113,9 +9110,8 @@ msgid "Popup Desk Previous"
 msgstr "Перенестись на пред. стол"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Управление системой"
+msgstr "Настройки управления системой"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -10077,9 +10073,8 @@ msgstr ""
 "продолжат работу."
 
 #: src/modules/notification/e_mod_main.c:701
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Область уведомлений"
+msgstr "Уведомление устарело!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10427,15 +10422,13 @@ msgstr "извлечь"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Сбой операции Ofono"
+msgstr "Сбой операции"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Неизвестный оператор"
+msgstr "Неизвестная ошибка"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
