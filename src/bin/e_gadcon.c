@@ -1264,6 +1264,7 @@ e_gadcon_client_edit_end(E_Gadcon_Client *gcc)
         if (client->o_control) return;
      }
    gcc->gadcon->editing = 0;
+   e_config_save_queue();
 }
 
 EAPI void
