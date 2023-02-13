@@ -289,11 +289,16 @@ group { name: "e/modules/pager/desk";
       }
    }
    programs {
-      program {
+      program { name: "sel";
          signal: "e,state,selected"; source: "e";
          action: STATE_SET "active" 0.0;
          transition: BOUNCE 0.4 0.5 4;
          target: "glow";
+      }
+       program {
+         signal: "e,state,unselected"; source: "e";
+         action: ACTION_STOP;
+         target: "sel";
       }
       program {
          signal: "e,state,unselected"; source: "e";
