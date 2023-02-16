@@ -286,11 +286,11 @@ group { name: "e/widgets/syscon/item/button";
 }
 
 group { name: "e/modules/syscon/button";
-   images.image: "icon_system-shutdown.png" COMP;
+   images.image: "system-shutdown.png" COMP;
    parts {
       part { name: "base";
          description { state: "default" 0.0;
-            image.normal: "icon_system-shutdown.png";
+            image.normal: "system-shutdown.png";
             rel1.relative: 0.05 0.05;
             rel2.relative: 0.95 0.95;
             aspect: 1.0 1.0; aspect_preference: BOTH;
