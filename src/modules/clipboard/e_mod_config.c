@@ -276,6 +276,7 @@ config_clipboard_module(E_Container *con, const char *params __UNUSED__)
 {
   E_Config_Dialog *cfd;
   E_Config_Dialog_View *v;
+  char buf[128];
 
   if(e_config_dialog_find("Clipboard", "extensions/clipboard")) return NULL;
 
@@ -288,9 +289,14 @@ config_clipboard_module(E_Container *con, const char *params __UNUSED__)
   v->basic.apply_cfdata = _basic_apply_data;
   v->basic.check_changed = _basic_check_changed;
 
+  if (efreet_icon_find(e_config->icon_theme, "clipboard", 48))
+    strcpy(buf, "clipboard");
+  else
+    strcpy(buf, "edit-paste");
+
   cfd = e_config_dialog_new(con, _("Clipboard Settings"),
             "Clipboard", "extensions/clipboard",
-             "edit-paste", 0, v, NULL);
+             buf, 0, v, NULL);
   clip_cfg->config_dialog = cfd;
   return cfd;
 }
