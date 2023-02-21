@@ -270,8 +270,6 @@ e_exec_phony(E_Border *bd)
         return NULL;
      }
    inst->used = 1;
-   bd->exe_inst = inst;
-   inst->borders = eina_list_append(inst->borders, bd);
    if (bd->zone) inst->screen = bd->zone->num;
    if (bd->desk)
      {
@@ -284,6 +282,7 @@ e_exec_phony(E_Border *bd)
    else eina_hash_add(e_exec_instances, inst->key, lnew);
    inst->ref++;
    ecore_event_add(E_EVENT_EXEC_NEW, inst, _e_exec_cb_exec_new_free, inst);
+   e_exec_instance_client_add(inst, bd);
    return inst;
 }
 
@@ -682,11 +681,9 @@ static void
 _e_exec_cb_exec_new_free(void *data, void *ev __UNUSED__)
 {
    E_Exec_Instance *inst = data;
-   E_Border *bd = data;
 
    inst->ref--;
    _e_exec_instance_free(inst);
-   e_object_unref(E_OBJECT(bd));
 }
 
 static void
