@@ -227,6 +227,18 @@ e_exec_phony(E_Border *bd)
    E_Exec_Instance *inst;
    Eina_List *l, *lnew;
 
+   if (bd->desktop)
+     {
+        /* try grouping with previous phony exec */
+        l = eina_hash_find(e_exec_instances, bd->desktop->orig_path ?: bd->desktop->name);
+        EINA_LIST_FOREACH(l, lnew, inst)
+          if (inst && inst->phony)
+            {
+               e_exec_instance_client_add(inst, bd);
+               return inst;
+            }
+     }
+
    inst = E_NEW(E_Exec_Instance, 1);
    inst->ref = 1;
    inst->phony = 1;
@@ -667,16 +679,18 @@ _e_exec_instance_free(E_Exec_Instance *inst)
  */
 
 static void
-_e_exec_cb_exec_new_free(void *data, void *ev EINA_UNUSED)
+_e_exec_cb_exec_new_free(void *data, void *ev __UNUSED__)
 {
    E_Exec_Instance *inst = data;
+   E_Border *bd = data;
 
    inst->ref--;
    _e_exec_instance_free(inst);
+   e_object_unref(E_OBJECT(bd));
 }
 
 static void
-_e_exec_cb_exec_del_free(void *data, void *ev EINA_UNUSED)
+_e_exec_cb_exec_del_free(void *data, void *ev __UNUSED__)
 {
    E_Exec_Instance *inst = data;
    E_Border *bd;
@@ -803,14 +817,22 @@ _e_exec_startup_id_pid_find(const Eina_Hash *hash __UNUSED__, const void *key __
    search = data;
    EINA_LIST_FOREACH(value, l, inst)
      {
+        pid_t exe_pid;
+
+        exe_pid = 0;
+        if (inst->exe)
+          {
+             exe_pid = ecore_exe_pid_get(inst->exe);
+             if (exe_pid <= 0) inst->exe = NULL;
+          }
         if (((search->desktop) &&
              (search->desktop == inst->desktop)) ||
 
             ((search->startup_id > 0) &&
              (search->startup_id == inst->startup_id)) ||
 
-            ((inst->exe) && (search->pid > 1) &&
-             (search->pid == ecore_exe_pid_get(inst->exe))))
+            ((inst->exe) && (search->pid > 1) && (!inst->phony) &&
+             (search->pid == exe_pid)))
           {
              search->inst = inst;
              return EINA_FALSE;
