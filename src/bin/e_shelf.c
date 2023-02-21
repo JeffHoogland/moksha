@@ -1130,8 +1130,8 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    e_shelf_autohide_set(es, cf_es->autohide + (cf_es->autohide * cf_es->autohide_show_action));
    e_shelf_orient(es, cf_es->orient);
    e_shelf_position_calc(es);
-   e_shelf_populate(es);
    e_shelf_send_offset(es);
+   e_shelf_populate(es);
 
    if (cf_es->desk_show_mode)
      {
