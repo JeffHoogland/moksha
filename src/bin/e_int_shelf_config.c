@@ -16,7 +16,6 @@ struct _E_Config_Dialog_Data
    double hide_timeout, hide_duration;
    int desk_show_mode;
    Eina_List *handlers;
-   Eina_List *icons_sizes;
 };
 
 /* local function prototypes */
