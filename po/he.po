@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-11 16:42+0100\n"
+"POT-Creation-Date: 2023-02-22 21:26+0100\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -912,7 +912,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1295,38 +1295,38 @@ msgstr "הדבק"
 msgid "Select All"
 msgstr "בחר הכול"
 
-#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
-#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
+#: src/bin/e_exec.c:573 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "שגיאת הפעלה"
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:495
 #, fuzzy
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha לא הצליחה להתפצל לתהליך צאצא:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:503
 #, fuzzy, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha לא הצליחה להתפצל לתהליך צאצא:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:514
 #, fuzzy, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha לא הצליחה להתפצל לתהליך צאצא:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:563
+#: src/bin/e_exec.c:574
 #, fuzzy, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha לא הצליחה להתפצל לתהליך צאצא:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:740
+#: src/bin/e_exec.c:751
 msgid "Application run error"
 msgstr "שגיאה בהפעלת היישום"
 
-#: src/bin/e_exec.c:742
+#: src/bin/e_exec.c:753
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1334,106 +1334,106 @@ msgid ""
 msgstr ""
 "Moksha לא הצליחה להפעיל את היישום:<br><br>%s<br><br>הפעלת היישום נכשלה."
 
-#: src/bin/e_exec.c:852
+#: src/bin/e_exec.c:871
 msgid "Application Execution Error"
 msgstr "שגיאה בהפעלת היישום"
 
-#: src/bin/e_exec.c:865 src/bin/e_exec.c:867
+#: src/bin/e_exec.c:884 src/bin/e_exec.c:886
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "פעולת %s נעצרה באופן בלתי צפוי."
 
-#: src/bin/e_exec.c:873
+#: src/bin/e_exec.c:892
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "נתקבל קוד היציאה %i מ־%s."
 
-#: src/bin/e_exec.c:881
+#: src/bin/e_exec.c:900
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות הפרעה."
 
-#: src/bin/e_exec.c:884
+#: src/bin/e_exec.c:903
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות יציאה."
 
-#: src/bin/e_exec.c:888
+#: src/bin/e_exec.c:907
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות ביטול."
 
-#: src/bin/e_exec.c:891
+#: src/bin/e_exec.c:910
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "התרחשה הפרעה ליישום %s על ידי שגיאת נקודת ציפה."
 
-#: src/bin/e_exec.c:895
+#: src/bin/e_exec.c:914
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות חיסול ללא־פסק."
 
-#: src/bin/e_exec.c:899
+#: src/bin/e_exec.c:918
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "התרחשה הפרעה ליישום %s על ידי כשל קיטוע."
 
-#: src/bin/e_exec.c:903
+#: src/bin/e_exec.c:922
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "התרחשה הפרעה ליישום %s על ידי מחרוזת קטועה."
 
-#: src/bin/e_exec.c:906
+#: src/bin/e_exec.c:925
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות חיסול."
 
-#: src/bin/e_exec.c:910
+#: src/bin/e_exec.c:929
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "התרחשה הפרעה ליישום %s על ידי שגיאת אפיק."
 
-#: src/bin/e_exec.c:913
+#: src/bin/e_exec.c:932
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "התרחשה הפרעה ליישום %s על ידי אות מספר %i."
 
-#: src/bin/e_exec.c:969
+#: src/bin/e_exec.c:988
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***שאר הפלט נקטע. שמור את הפלט כדי להציג את השאר.****\n"
 
-#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1106 src/bin/e_exec.c:1113
+#: src/bin/e_exec.c:1047 src/bin/e_exec.c:1125 src/bin/e_exec.c:1132
 msgid "Error Logs"
 msgstr "יומני שגיאות"
 
-#: src/bin/e_exec.c:1034 src/bin/e_exec.c:1114
+#: src/bin/e_exec.c:1053 src/bin/e_exec.c:1133
 msgid "There was no error message."
 msgstr "אין הודעת שגיאה"
 
-#: src/bin/e_exec.c:1038 src/bin/e_exec.c:1121
+#: src/bin/e_exec.c:1057 src/bin/e_exec.c:1140
 msgid "Save This Message"
 msgstr "שמור הודעה זו"
 
-#: src/bin/e_exec.c:1043 src/bin/e_exec.c:1046 src/bin/e_exec.c:1126
-#: src/bin/e_exec.c:1129
+#: src/bin/e_exec.c:1062 src/bin/e_exec.c:1065 src/bin/e_exec.c:1145
+#: src/bin/e_exec.c:1148
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "יומן שגיאות זה יישמר כ־%s/%s.log"
 
-#: src/bin/e_exec.c:1072
+#: src/bin/e_exec.c:1091
 msgid "Error Information"
 msgstr "נתוני השגיאה"
 
-#: src/bin/e_exec.c:1080
+#: src/bin/e_exec.c:1099
 msgid "Error Signal Information"
 msgstr "נתוני אות השגיאה"
 
-#: src/bin/e_exec.c:1090 src/bin/e_exec.c:1097
+#: src/bin/e_exec.c:1109 src/bin/e_exec.c:1116
 msgid "Output Data"
 msgstr "נתוני הפלט"
 
-#: src/bin/e_exec.c:1098
+#: src/bin/e_exec.c:1117
 msgid "There was no output."
 msgstr "אין פלט."
 
@@ -1580,7 +1580,7 @@ msgid "Eject"
 msgstr "לפלוט"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1563
+#: src/modules/ibar/e_mod_main.c:1520
 msgid "Properties"
 msgstr "מאפיינים"
 
@@ -1951,39 +1951,39 @@ msgstr ""
 msgid "Select an Image"
 msgstr "בחר תמונה"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 #, fuzzy
 msgid "Gadget error"
 msgstr "גאדג'טים Manager"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr ""
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
+#: src/bin/e_gadcon.c:1683 src/bin/e_int_border_menu.c:161
 #, fuzzy
 msgid "Move to"
 msgstr "העברת טקסט"
 
-#: src/bin/e_gadcon.c:1754
+#: src/bin/e_gadcon.c:1755
 msgid "Automatically scroll contents"
 msgstr "גלול את התוכן אוטומטית"
 
-#: src/bin/e_gadcon.c:1767 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "פשוט"
 
-#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "צמצום"
 
-#: src/bin/e_gadcon.c:1793 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "מראה"
 
-#: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1993,16 +1993,16 @@ msgstr "מראה"
 msgid "Remove"
 msgstr "הסר"
 
-#: src/bin/e_gadcon.c:2447
+#: src/bin/e_gadcon.c:2448
 #, fuzzy
 msgid "Stop moving"
 msgstr "להפסיק לנוע"
 
-#: src/bin/e_gadcon.c:3098
+#: src/bin/e_gadcon.c:3099
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3100
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr ""
@@ -2644,7 +2644,7 @@ msgstr "בקשת מיקום"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -3939,7 +3939,7 @@ msgid "Rename Shelf"
 msgstr "שנה את שם הקובץ"
 
 #: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 #, fuzzy
 msgid "Contents"
 msgstr "הערה"
@@ -9789,32 +9789,32 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "האם אתה בטוח שברצונך למחוק זאת מקור בר."
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
 #, fuzzy
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
 #, fuzzy
 msgid "Create new Icon"
 msgstr "ליצור אייקון חדש"
 
-#: src/modules/ibar/e_mod_main.c:1570
+#: src/modules/ibar/e_mod_main.c:1527
 #, fuzzy
 msgid "Add to bar"
 msgstr "הוסף IBar"
 
-#: src/modules/ibar/e_mod_main.c:1576
+#: src/modules/ibar/e_mod_main.c:1533
 #, fuzzy
 msgid "Remove from bar"
 msgstr "הסרת יישומון"
 
-#: src/modules/ibar/e_mod_main.c:1582
+#: src/modules/ibar/e_mod_main.c:1539
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "סמלים"
 
-#: src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:2811
 #, fuzzy
 msgid "Focus IBar"
 msgstr "להתמקד"
@@ -11231,7 +11231,7 @@ msgstr "זכור את הסדר"
 msgid " Items in History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:291
+#: src/modules/clipboard/e_mod_config.c:297
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "IBar הגדרות"

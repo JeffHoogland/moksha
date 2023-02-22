@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-11 16:42+0100\n"
+"POT-Creation-Date: 2023-02-22 21:26+0100\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -885,7 +885,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1247,145 +1247,145 @@ msgstr "الصق"
 msgid "Select All"
 msgstr "اختر الكل"
 
-#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
-#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
+#: src/bin/e_exec.c:573 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "خلل في التشغيل"
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:495
 msgid "Moksha was unable to get current directory"
 msgstr "عجز E17ِ عن الحصول على المجلد الحالي"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:503
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "لا يستطيع E17ِ التغيير إلى المجلد:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:514
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "لا يستطيع E17ِ اﻹستعادة إلى المجلد:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:563
+#: src/bin/e_exec.c:574
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "لم يستطع E17ِ إنشاء تفرع من عملية الطفل :<br><br>%s<br>"
 
-#: src/bin/e_exec.c:740
+#: src/bin/e_exec.c:751
 msgid "Application run error"
 msgstr "خلل في تشغيل البرنامج"
 
-#: src/bin/e_exec.c:742
+#: src/bin/e_exec.c:753
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
 "failed to start."
 msgstr "لا يستطيع E17ِ تشغيل البرنامج:<br><br>%s<br><br>فشل البرنامج في البدء."
 
-#: src/bin/e_exec.c:852
+#: src/bin/e_exec.c:871
 msgid "Application Execution Error"
 msgstr "فشل تنفيذ البرنامج"
 
-#: src/bin/e_exec.c:865 src/bin/e_exec.c:867
+#: src/bin/e_exec.c:884 src/bin/e_exec.c:886
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "عفوا .... و لكن %s توقف عن التشغيل بشكل غير متوقع."
 
-#: src/bin/e_exec.c:873
+#: src/bin/e_exec.c:892
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "تشفير خروج لـ %i عاد من %s."
 
-#: src/bin/e_exec.c:881
+#: src/bin/e_exec.c:900
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بواسطة إشارة مقاطعة."
 
-#: src/bin/e_exec.c:884
+#: src/bin/e_exec.c:903
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بواسطة إشارة خروج"
 
-#: src/bin/e_exec.c:888
+#: src/bin/e_exec.c:907
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بواسطة إشارة إحباط"
 
-#: src/bin/e_exec.c:891
+#: src/bin/e_exec.c:910
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr ""
 "عفوا .... و لكن %s تمت مقاطعته بواسطة خطأ النقطة العائمة (floating point)."
 
-#: src/bin/e_exec.c:895
+#: src/bin/e_exec.c:914
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بواسطة إشارة قتل."
 
-#: src/bin/e_exec.c:899
+#: src/bin/e_exec.c:918
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr ""
 "عفوا .... و لكن %s تمت مقاطعته بواسطة خطأ في الترقيم (segmentation fault)."
 
-#: src/bin/e_exec.c:903
+#: src/bin/e_exec.c:922
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بسبب أنبوب مكسور (broken pipe)."
 
-#: src/bin/e_exec.c:906
+#: src/bin/e_exec.c:925
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بسبب إشارة إنهاء"
 
-#: src/bin/e_exec.c:910
+#: src/bin/e_exec.c:929
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بسبب خطأ في المسار"
 
-#: src/bin/e_exec.c:913
+#: src/bin/e_exec.c:932
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "عفوا .... و لكن %s تمت مقاطعته بواسطة اﻹشارة رقم %i."
 
-#: src/bin/e_exec.c:969
+#: src/bin/e_exec.c:988
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***المخرجات المتبقية قد تم اقتطاعها. احفظ المخرجات ﻷجل عرض.***\n"
 
-#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1106 src/bin/e_exec.c:1113
+#: src/bin/e_exec.c:1047 src/bin/e_exec.c:1125 src/bin/e_exec.c:1132
 msgid "Error Logs"
 msgstr "خلل في السجلات"
 
-#: src/bin/e_exec.c:1034 src/bin/e_exec.c:1114
+#: src/bin/e_exec.c:1053 src/bin/e_exec.c:1133
 msgid "There was no error message."
 msgstr "لا توجد رسالة خطأ"
 
-#: src/bin/e_exec.c:1038 src/bin/e_exec.c:1121
+#: src/bin/e_exec.c:1057 src/bin/e_exec.c:1140
 msgid "Save This Message"
 msgstr "احفظ هذه الرسالة"
 
-#: src/bin/e_exec.c:1043 src/bin/e_exec.c:1046 src/bin/e_exec.c:1126
-#: src/bin/e_exec.c:1129
+#: src/bin/e_exec.c:1062 src/bin/e_exec.c:1065 src/bin/e_exec.c:1145
+#: src/bin/e_exec.c:1148
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "سيُحفظ سجل الخطأ هذا باسم %s/%s.log"
 
-#: src/bin/e_exec.c:1072
+#: src/bin/e_exec.c:1091
 msgid "Error Information"
 msgstr "معلومات الخطأ"
 
-#: src/bin/e_exec.c:1080
+#: src/bin/e_exec.c:1099
 msgid "Error Signal Information"
 msgstr "معلومات خلل إشارة"
 
-#: src/bin/e_exec.c:1090 src/bin/e_exec.c:1097
+#: src/bin/e_exec.c:1109 src/bin/e_exec.c:1116
 msgid "Output Data"
 msgstr "بيانات المخرجات"
 
-#: src/bin/e_exec.c:1098
+#: src/bin/e_exec.c:1117
 msgid "There was no output."
 msgstr "لا يوجد مُخرج."
 
@@ -1519,7 +1519,7 @@ msgid "Eject"
 msgstr "اخرج"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1563
+#: src/modules/ibar/e_mod_main.c:1520
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1871,37 +1871,37 @@ msgstr "هذا الرابط غير صالح."
 msgid "Select an Image"
 msgstr "اختر صورة"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 msgid "Gadget error"
 msgstr "خطأ في اﻷداء"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s  لا تدعم تعطيل اللف التلقائي"
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
+#: src/bin/e_gadcon.c:1683 src/bin/e_int_border_menu.c:161
 msgid "Move to"
 msgstr "انقل إلى"
 
-#: src/bin/e_gadcon.c:1754
+#: src/bin/e_gadcon.c:1755
 msgid "Automatically scroll contents"
 msgstr "لف المحتويات في لفافة تلقائياً"
 
-#: src/bin/e_gadcon.c:1767 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "بارز"
 
-#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "داخلي"
 
-#: src/bin/e_gadcon.c:1793 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "المظهر"
 
-#: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1911,15 +1911,15 @@ msgstr "المظهر"
 msgid "Remove"
 msgstr "أزل"
 
-#: src/bin/e_gadcon.c:2447
+#: src/bin/e_gadcon.c:2448
 msgid "Stop moving"
 msgstr "توقف عن الحركة"
 
-#: src/bin/e_gadcon.c:3098
+#: src/bin/e_gadcon.c:3099
 msgid "Insufficent gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3100
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "الوحدة %s تحتاج لدعم %s"
@@ -2524,7 +2524,7 @@ msgstr "أطلب الموضع"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -3737,7 +3737,7 @@ msgid "Rename Shelf"
 msgstr "أعد تسمية الرف"
 
 #: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "المحتويات"
 
@@ -9008,30 +9008,30 @@ msgstr "لقد قمت بطلب محو  \"%s\".<br><br>هل تريد تأكيد �
 msgid "Are you sure you want to delete this bar source?"
 msgstr "هل تريد تأكيد مسح مصدر هذا الشريط؟"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
 msgid "IBar"
 msgstr "شريط التشغيل السريع (( IBar )) "
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
 msgid "Create new Icon"
 msgstr "إنشاء أيقونة جديدة"
 
-#: src/modules/ibar/e_mod_main.c:1570
+#: src/modules/ibar/e_mod_main.c:1527
 #, fuzzy
 msgid "Add to bar"
 msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
-#: src/modules/ibar/e_mod_main.c:1576
+#: src/modules/ibar/e_mod_main.c:1533
 #, fuzzy
 msgid "Remove from bar"
 msgstr "أزل التكدس"
 
-#: src/modules/ibar/e_mod_main.c:1582
+#: src/modules/ibar/e_mod_main.c:1539
 #, c-format
 msgid "Icon %s"
 msgstr "أيقونة %s"
 
-#: src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:2811
 msgid "Focus IBar"
 msgstr "Focus IBar"
 
@@ -10372,7 +10372,7 @@ msgstr "تذكر الترتيب"
 msgid " Items in History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:291
+#: src/modules/clipboard/e_mod_config.c:297
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "ضبط لوحة المفاتيح"

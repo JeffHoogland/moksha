@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-11 16:42+0100\n"
+"POT-Creation-Date: 2023-02-22 21:26+0100\n"
 "PO-Revision-Date: 2015-12-21 20:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -887,7 +887,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:749
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1255,37 +1255,37 @@ msgstr "Vložit"
 msgid "Select All"
 msgstr "Vybrat vše"
 
-#: src/bin/e_exec.c:483 src/bin/e_exec.c:491 src/bin/e_exec.c:502
-#: src/bin/e_exec.c:562 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
+#: src/bin/e_exec.c:573 src/bin/e_utils.c:183
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Chyba při běhu"
 
-#: src/bin/e_exec.c:484
+#: src/bin/e_exec.c:495
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha nemohl získat aktuální adresář"
 
-#: src/bin/e_exec.c:492
+#: src/bin/e_exec.c:503
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha nemohl změnit adresář:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:514
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha nemohl obnovit do adresáře:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:563
+#: src/bin/e_exec.c:574
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha nemohl vytvořit proces potomka:<br><br>%s"
 
-#: src/bin/e_exec.c:740
+#: src/bin/e_exec.c:751
 msgid "Application run error"
 msgstr "Chyba za běhu aplikace"
 
-#: src/bin/e_exec.c:742
+#: src/bin/e_exec.c:753
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1294,106 +1294,106 @@ msgstr ""
 "Moksha nedokázal spustit aplikaci:<br><br>%s<br><br>Aplikace selhala při "
 "startu."
 
-#: src/bin/e_exec.c:852
+#: src/bin/e_exec.c:871
 msgid "Application Execution Error"
 msgstr "Chyba při spouštění aplikace"
 
-#: src/bin/e_exec.c:865 src/bin/e_exec.c:867
+#: src/bin/e_exec.c:884 src/bin/e_exec.c:886
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "Proces %s se neočekávaně skončil."
 
-#: src/bin/e_exec.c:873
+#: src/bin/e_exec.c:892
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Návratová hodnota %i byla vrácena z %s."
 
-#: src/bin/e_exec.c:881
+#: src/bin/e_exec.c:900
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s byl přerušen signálem interrupt."
 
-#: src/bin/e_exec.c:884
+#: src/bin/e_exec.c:903
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s byl přerušen signálem quit."
 
-#: src/bin/e_exec.c:888
+#: src/bin/e_exec.c:907
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s byl přerušen signálem abort."
 
-#: src/bin/e_exec.c:891
+#: src/bin/e_exec.c:910
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s byl přerušen Floating point chybou."
 
-#: src/bin/e_exec.c:895
+#: src/bin/e_exec.c:914
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s byl přerušen nepřerušitelným kill signálem."
 
-#: src/bin/e_exec.c:899
+#: src/bin/e_exec.c:918
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s byl přerušen chybou při segmentaci."
 
-#: src/bin/e_exec.c:903
+#: src/bin/e_exec.c:922
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s byl přerušen chybou roury."
 
-#: src/bin/e_exec.c:906
+#: src/bin/e_exec.c:925
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s byl přerušen ukončovacím signálem."
 
-#: src/bin/e_exec.c:910
+#: src/bin/e_exec.c:929
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s byl přerušen chybou sběrnice."
 
-#: src/bin/e_exec.c:913
+#: src/bin/e_exec.c:932
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s byl přerušen signálem číslo %i."
 
-#: src/bin/e_exec.c:969
+#: src/bin/e_exec.c:988
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Zbývající výstup byl zkrácen. Uložte výstup.***\n"
 
-#: src/bin/e_exec.c:1028 src/bin/e_exec.c:1106 src/bin/e_exec.c:1113
+#: src/bin/e_exec.c:1047 src/bin/e_exec.c:1125 src/bin/e_exec.c:1132
 msgid "Error Logs"
 msgstr "Chybové záznamy"
 
-#: src/bin/e_exec.c:1034 src/bin/e_exec.c:1114
+#: src/bin/e_exec.c:1053 src/bin/e_exec.c:1133
 msgid "There was no error message."
 msgstr "Nebyla zaznamenána žádná chybová zpráva."
 
-#: src/bin/e_exec.c:1038 src/bin/e_exec.c:1121
+#: src/bin/e_exec.c:1057 src/bin/e_exec.c:1140
 msgid "Save This Message"
 msgstr "Uložit tuto zprávu"
 
-#: src/bin/e_exec.c:1043 src/bin/e_exec.c:1046 src/bin/e_exec.c:1126
-#: src/bin/e_exec.c:1129
+#: src/bin/e_exec.c:1062 src/bin/e_exec.c:1065 src/bin/e_exec.c:1145
+#: src/bin/e_exec.c:1148
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Chybový záznam byl uložen jako %s/%s.log"
 
-#: src/bin/e_exec.c:1072
+#: src/bin/e_exec.c:1091
 msgid "Error Information"
 msgstr "Chybová informace"
 
-#: src/bin/e_exec.c:1080
+#: src/bin/e_exec.c:1099
 msgid "Error Signal Information"
 msgstr "Informace o chybovém signálu"
 
-#: src/bin/e_exec.c:1090 src/bin/e_exec.c:1097
+#: src/bin/e_exec.c:1109 src/bin/e_exec.c:1116
 msgid "Output Data"
 msgstr "Výstupní data"
 
-#: src/bin/e_exec.c:1098
+#: src/bin/e_exec.c:1117
 msgid "There was no output."
 msgstr "Nebyl zaznamenán žádný výstup."
 
@@ -1524,7 +1524,7 @@ msgid "Eject"
 msgstr "Vysunout"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1563
+#: src/modules/ibar/e_mod_main.c:1520
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1869,37 +1869,37 @@ msgstr "Tento odkaz je rozbitý."
 msgid "Select an Image"
 msgstr "Vybrat obrázek"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 msgid "Gadget error"
 msgstr "Chyba gadgetu"
 
-#: src/bin/e_gadcon.c:1408
+#: src/bin/e_gadcon.c:1409
 #, c-format
 msgid "%s does not support disabling autoscrolling"
 msgstr "%s nepodporuje vypnutí automatického rolování"
 
-#: src/bin/e_gadcon.c:1682 src/bin/e_int_border_menu.c:161
+#: src/bin/e_gadcon.c:1683 src/bin/e_int_border_menu.c:161
 msgid "Move to"
 msgstr "Přesunout na"
 
-#: src/bin/e_gadcon.c:1754
+#: src/bin/e_gadcon.c:1755
 msgid "Automatically scroll contents"
 msgstr "Automaticky skorolovat obsah"
 
-#: src/bin/e_gadcon.c:1767 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1002
 msgid "Plain"
 msgstr "Plochý"
 
-#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Vnořený"
 
-#: src/bin/e_gadcon.c:1793 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Vzhled"
 
-#: src/bin/e_gadcon.c:1805 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1909,15 +1909,15 @@ msgstr "Vzhled"
 msgid "Remove"
 msgstr "Odebrat"
 
-#: src/bin/e_gadcon.c:2447
+#: src/bin/e_gadcon.c:2448
 msgid "Stop moving"
 msgstr "Zastavit přesun"
 
-#: src/bin/e_gadcon.c:3098
+#: src/bin/e_gadcon.c:3099
 msgid "Insufficent gadcon support"
 msgstr "Nedostatečná podpora gadget containeru"
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3100
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "Modul %s potřebuje podporovat %s"
@@ -2524,7 +2524,7 @@ msgstr "Získat pozici"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1556
+#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
@@ -2927,9 +2927,9 @@ msgid "Height (%3.0f pixels)"
 msgstr "Výška (%3.0f pixelů)"
 
 #: src/bin/e_int_shelf_config.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Velikost ikon (%d)"
+msgstr "Velikost ikon (%2.0f/5)"
 
 #: src/bin/e_int_shelf_config.c:234
 msgid "Shrink to Content Width"
@@ -3775,7 +3775,7 @@ msgid "Rename Shelf"
 msgstr "Přejmenovat panel"
 
 #: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1550
+#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Obsah"
 
@@ -8994,30 +8994,30 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Jste si jistí, že chcete vymazat tento zdroj pro iBar?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
 msgid "Create new Icon"
 msgstr "Vytvořit novou ikonu"
 
-#: src/modules/ibar/e_mod_main.c:1570
+#: src/modules/ibar/e_mod_main.c:1527
 #, fuzzy
 msgid "Add to bar"
 msgstr "Přidat do iBaru"
 
-#: src/modules/ibar/e_mod_main.c:1576
+#: src/modules/ibar/e_mod_main.c:1533
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Odstranit zásobník"
 
-#: src/modules/ibar/e_mod_main.c:1582
+#: src/modules/ibar/e_mod_main.c:1539
 #, c-format
 msgid "Icon %s"
 msgstr "Ikona %s"
 
-#: src/modules/ibar/e_mod_main.c:2854
+#: src/modules/ibar/e_mod_main.c:2811
 msgid "Focus IBar"
 msgstr "Aktivace iBaru"
 
@@ -10366,7 +10366,7 @@ msgstr "Zapamatovat řazení"
 msgid " Items in History"
 msgstr ""
 
-#: src/modules/clipboard/e_mod_config.c:291
+#: src/modules/clipboard/e_mod_config.c:297
 #, fuzzy
 msgid "Clipboard Settings"
 msgstr "Nastavení klávesnice"
