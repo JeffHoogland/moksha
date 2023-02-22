@@ -1046,21 +1046,20 @@ e_border_hide(E_Border *bd,
      }
 
    e_container_shape_hide(bd->shape);
-   if (!bd->iconic) e_hints_window_hidden_set(bd);
+   //~ if (!bd->iconic) e_hints_window_hidden_set(bd);
    
      /* Don't delete hidden or iconified windows */
-   //~ if (!bd->iconic)
-     //~ {
-        //~ if (bd->internal)
-          //~ e_hints_window_hidden_set(bd);
-        //~ else
-          //~ {
-             //~ if (bd->exe_inst && bd->exe_inst->exe)
-               //~ bd->exe_inst->phony = 0;
-             //~ DELD(bd, 3);
-             //~ e_object_del(E_OBJECT(bd));
-          //~ }
-     //~ }
+   if (!bd->iconic)
+     {
+        if (bd->internal)
+          e_hints_window_hidden_set(bd);
+        else
+          {
+             if (bd->exe_inst && bd->exe_inst->exe)
+               bd->exe_inst->phony = 0;
+             e_object_del(E_OBJECT(bd));
+          }
+     }
 
    bd->visible = 0;
    bd->changes.visible = 1;
