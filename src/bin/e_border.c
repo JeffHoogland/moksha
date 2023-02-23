@@ -1057,7 +1057,7 @@ e_border_hide(E_Border *bd,
           {
              if (bd->exe_inst && bd->exe_inst->exe)
                bd->exe_inst->phony = 0;
-             e_object_del(E_OBJECT(bd));
+             //~ e_object_del(E_OBJECT(bd));
           }
      }
 
