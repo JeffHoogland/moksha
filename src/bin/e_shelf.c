@@ -1107,7 +1107,6 @@ e_shelf_send_offset(E_Shelf *es)
       default:
         break;
      }
-
    ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_delay_populate, es);
 }
 
@@ -1215,7 +1214,7 @@ _e_shelf_new_dialog_ok(void *data, char *text)
    cfg->fit_size = 0;
    cfg->style = eina_stringshare_add("default");
    cfg->size = 40;
-   cfg->icons = 3;
+   cfg->icons = 5;
    cfg->overlap = 0;
    cfg->autohide = 0;
    e_config->shelves = eina_list_append(e_config->shelves, cfg);

@@ -172,7 +172,7 @@ _systray_size_apply_do(Instance *inst)
 {
    const Evas_Object *o, *butt;
    Evas_Coord x, y, w, h, mw = 1, mh = 1;
-   int icon_num, is_arrow = 1;
+   int icon_num, is_arrow = 1, icons_size;
    double space;
 
    if (getenv("MOKSHA_SYSTRAY_ARROW"))
@@ -203,7 +203,8 @@ _systray_size_apply_do(Instance *inst)
    else
      space = e_scale;
 
-   edje_object_size_min_restricted_calc(inst->ui.gadget, &mw, &mh, 48, 48);
+   icons_size = inst->gcc->gadcon->shelf->cfg->size + inst->gcc->gadcon->shelf->cfg->icons * 10;
+   edje_object_size_min_restricted_calc(inst->ui.gadget, &mw, &mh, icons_size, icons_size);
    evas_object_geometry_get(o, &x, &y, &w, &h);
 
    /* check if theme contains expand button */

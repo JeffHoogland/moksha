@@ -1082,6 +1082,19 @@ while (!e_config)
                e_config->touch_extras = 0;
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(19)
+            {
+               Eina_List *l;
+               E_Config_Shelf *cf_es;
+
+               CONFIG_VERSION_UPDATE_INFO(19);
+               e_config->max_top_edge = 1;
+
+               EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
+                  cf_es->icons = 5;
+
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
