@@ -43,7 +43,6 @@ static void         _e_shelf_event_rename_end_cb(void *data, E_Event_Shelf *ev);
 static Eina_List *shelves = NULL;
 static Eina_List *dummies = NULL;
 static Eina_Hash *winid_shelves = NULL;
-static Eina_Bool orient_change_from_menu;
 
 static int orientations[] =
 {
@@ -1109,12 +1108,7 @@ e_shelf_send_offset(E_Shelf *es)
         break;
      }
 
-   if (orient_change_from_menu)
      ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_delay_populate, es);
-   else
-     _e_shelf_delay_populate(es);
-
-   orient_change_from_menu = EINA_FALSE;
 }
 
 EAPI E_Shelf *
@@ -2458,7 +2452,6 @@ _e_shelf_cb_menu_orient(void *data, E_Menu *m, E_Menu_Item *mi)
              es->config_dialog = NULL;
              e_gadcon_unpopulate(es->gadcon);
              e_object_del(E_OBJECT(es));
-             orient_change_from_menu = EINA_TRUE;
              es = e_shelf_config_new(zone, cf_es);
              es->config_dialog = cfd;
              e_zone_border_geometry_refresh(zone);
