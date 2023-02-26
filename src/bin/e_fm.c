@@ -1973,8 +1973,8 @@ _e_fm2_icon_thumb_edje_get(Evas *evas, const E_Fm2_Icon *ic, Evas_Smart_Cb cb, v
    const char **itr = NULL, *group = NULL;
    const char *known_groups[] = {
       NULL,
-      "e/desktop/background",
       "icon",
+      "e/desktop/background",
       "e/init/splash",
       /* XXX TODO: add more? example 'screenshot', 'preview' */
       NULL
