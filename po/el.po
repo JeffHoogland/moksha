@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -50,7 +50,7 @@ msgstr "Moksha"
 #: src/bin/e_about.c:28
 #, fuzzy
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -343,7 +343,7 @@ msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -882,11 +882,11 @@ msgstr ""
 "ρυθμίσεις σας έχουν επανέλθει<br>στις προεπιλεγμένες. Συγγνώμη για την "
 "αναστάτωση.<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Προβλήματα εγγραφής ρυθμίσεων του Moksha"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -896,7 +896,7 @@ msgstr ""
 "%s<br><br>σε:<br>%s<br><br>Η υπόλοιπη εγγραφή έχει ματαιώθηκε για ασφάλεια."
 "<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -916,19 +916,19 @@ msgstr ""
 msgid "OK"
 msgstr "Εντάξει"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Οι Ρυθμίσεις Αναβαθμίστηκαν"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 msgid "The EET file handle is bad."
 msgstr "Κατεστραμμένη διαχείριση αρχείου EET."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 msgid "The file data is empty."
 msgstr "Τα δεδομένα του αρχείου είναι κενά."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -936,17 +936,17 @@ msgstr ""
 "Το αρχείο δεν είναι εγγράψιμο. Ίσως ο δίσκος είναι μόνο για ανάγνωση<br>ή "
 "έχετε χάσει τα δικαιώματα στα αρχεία σας."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Εξαντλήθηκε η μνήμη κατά την προετοιμασία της εγγραφής.<br>Παρακαλώ "
 "ελευθερώστε την μνήμη."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 msgid "This is a generic error."
 msgstr "Αυτό είναι ένα γενικό σφάλμα."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -954,59 +954,59 @@ msgstr ""
 "Το αρχείο ρυθμίσεων είναι πολύ μεγάλο.<br>Θα πρέπει να είναι πολύ μικρό (το "
 "πολύ μερικές εκατοντάδες KB)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Έχετε I/O σφάλματα στον δίσκο.<br>Μήπως χρειάζεται αντικατάσταση;"
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 msgid "You ran out of space while writing the file."
 msgstr "Εξάντληση χώρου στον δίσκο κατά την εγγραφή του αρχείου."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 msgid "The file was closed while writing."
 msgstr "Το αρχείο έκλεισε κατά την εγγραφή."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Αποτυχία αντιστοίχησης μνήμης (mmap) του αρχείου."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
 msgstr "Αποτυχία Κωδικοποίησης X509."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 msgid "Signature failed."
 msgstr "Αποτυχία υπογραφής."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 msgid "The signature was invalid."
 msgstr "Μη έγκυρη υπογραφή."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Μη υπογεγραμμένο."
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 msgid "Feature not implemented."
 msgstr "Το χαρακτηριστικό δεν υλοποιήθηκε."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 msgid "PRNG was not seeded."
 msgstr "Το PRNG δεν μοιράστηκε."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 msgid "Encryption failed."
 msgstr "Αποτυχία Κρυπτογράφησης."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 msgid "Decryption failed."
 msgstr "Αποτυχία Αποκρυπτογράφησης."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 msgid "The error is unknown to Moksha."
 msgstr "Άγνωστο σφάλμα στο Moksha."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1518,7 +1518,7 @@ msgstr "Ενέργειες..."
 msgid "Link"
 msgstr "Σύνδεσμος"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2090,12 +2090,12 @@ msgid "Prevent Changes In:"
 msgstr "Αποτροπή Αλλαγών Στο:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Θέση"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2104,7 +2104,7 @@ msgstr "Μέγεθος"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Στοίβαγμα"
@@ -2531,7 +2531,7 @@ msgstr "Αίτηση Θέσης"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2762,27 +2762,27 @@ msgstr "Δεν έχουν επιλεγεί αρθρώματα."
 msgid "More than one module selected."
 msgstr "Περισσότερα από ένα αρθρώματα είναι επιλεγμένα."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Αφαίρεση Συστατικού"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 msgid "Loaded Gadgets"
 msgstr "Φορτωμένα Συστατικά"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Προσθήκη Συστατικού"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Διαθέσιμα Συστατικά"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Περιεχόμενα Ραφιού"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Περιεχόμενα Γραμμής Εργαλείων"
 
@@ -2921,86 +2921,86 @@ msgstr "Προσθήκη Ραφιού"
 msgid "Delete a Shelf"
 msgstr "Διαγραφή Ραφιού"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Ρυθμίσεις ραφιού"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Πάνω από όλα"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Κάτω από τα παράθυρα"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Κάτω από όλα"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Να επιτρέπεται στα παράθυρα να καλύπτουν το ράφι"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Ύψος (%3.0f pixels)"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Μέγεθος Εικονιδίου (%d)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
 msgstr "Συρρίκνωση στο Μέγεθος Περιεχομένου"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Στυλ"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Αυτόματη απόκρυψη ραφιού"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Εμφάνιση κατά την είσοδο του ποντικιού"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Εμφάνιση με το κλικ του ποντικιού"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Χρονικό όριο απόκρυψης"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f δευτερόλεπτα"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Διάρκεια απόκρυψης"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f δευτερόλεπτα"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Αυτόματη Απόκρυψη"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Εμφάνιση σε όλες τις Επιφάνειες Εργασίας"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Εμφάνιση σε επιλεγμένες Επιφάνειες Εργασίας"
 
@@ -3799,11 +3799,11 @@ msgstr "Σφάλμα Ραφιού"
 msgid "A shelf with that name already exists!"
 msgstr "Υπάρχει ήδη ένα ράφι με αυτό το όνομα!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 msgid "Stop Moving Gadgets"
 msgstr "Διακοπή Μετακίνησης Συστατικών"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 msgid "Begin Moving Gadgets"
 msgstr "Έναρξη Μετακίνησης Συστατικών"
 
@@ -3815,20 +3815,20 @@ msgstr "Υπάρχει ήδη το ράφι με αυτό το όνομα και
 msgid "Rename Shelf"
 msgstr "Μετονομασία Ραφιού"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Περιεχόμενα"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 msgid "Orientation"
 msgstr "Προσανατολισμός"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Αυτόματη Απόκρυψη"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Ανανέωση"
 
@@ -9717,31 +9717,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 msgid "Systray Error"
 msgstr "Σφάλμα Πλαισίου Συστήματος"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Υπάρχει άλλο πλαίσιο συστήματος"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Μπορεί να υπάρχει μόνο ένα πλαίσιο συστήματος και έχετε ένα ήδη."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Το πλαίσιο συστήματος δεν μπορεί να λειτουργήσει σε ένα ράφι που ορίστηκε "
 "κάτω από όλα."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Πλαίσιο συστήματος"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Υπάρχει άλλο πλαίσιο συστήματος"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Μπορεί να υπάρχει μόνο ένα πλαίσιο συστήματος και έχετε ένα ήδη."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 #, fuzzy

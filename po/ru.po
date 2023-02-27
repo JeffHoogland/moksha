@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -46,12 +46,12 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2022, Команда разработчиков Moksha.</><br><br>Мы "
+"<title>Copyright &copy; 2023, Команда разработчиков Moksha.</><br><br>Мы "
 "надеемся, что вам так же понравится использовать эту программу, как нам "
 "понравилось её писать.<br><br>Для связи с разработчиками посетите:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
@@ -332,7 +332,7 @@ msgstr "Переключить режим прикрепления"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -866,11 +866,11 @@ msgstr ""
 "Moksha.<br>Это неправильно, и поэтому ваша конфигурация была сброшена<br>на "
 "стандартную. Извините за неудобство.<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Проблемы сохранения параметров Moksha"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -879,7 +879,7 @@ msgstr ""
 "Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
 "%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -899,19 +899,19 @@ msgstr ""
 msgid "OK"
 msgstr "ОК"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Параметры обновлены"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 msgid "The EET file handle is bad."
 msgstr "Повреждённый указатель ЕЕТ файла."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 msgid "The file data is empty."
 msgstr "Файл данных пуст."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -919,16 +919,16 @@ msgstr ""
 "Не получилось записать файл. Возможно диск защищён от записи,<br>либо у вас "
 "нет прав на файлы."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Кончилась память при подготовке к записи.<br>Пожалуйста освободите память."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 msgid "This is a generic error."
 msgstr "Это стандартная ошибка."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -936,59 +936,59 @@ msgstr ""
 "Файл настроек слишком большой.<br>Он должен быть гораздо меньше<br>(максимум "
 "несколько сотен КБ)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "На диске замечены ошибки ввода-вывода.<br>Возможно стоит его заменить?"
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 msgid "You ran out of space while writing the file."
 msgstr "Закончилось место во время записи файла."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 msgid "The file was closed while writing."
 msgstr "Файл был закрыт во время записи."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Отображение файла в память (mmap) не удалось."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
 msgstr "Кодирование X509 не удалось."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 msgid "Signature failed."
 msgstr "Подпись ошибочна."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 msgid "The signature was invalid."
 msgstr "Подпись недействительна."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Не подписано."
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 msgid "Feature not implemented."
 msgstr "Функция не реализована"
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 msgid "PRNG was not seeded."
 msgstr "Не удалось задать начальное значение для ГПСЧ."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 msgid "Encryption failed."
 msgstr "Шифрование не удалось."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 msgid "Decryption failed."
 msgstr "Расшифровка не удалось."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 msgid "The error is unknown to Moksha."
 msgstr "Эта ошибка не известна Moksha."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1497,7 +1497,7 @@ msgstr "Действия..."
 msgid "Link"
 msgstr "Ссылка"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2072,12 +2072,12 @@ msgid "Prevent Changes In:"
 msgstr "Предотвратить изменения в:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Позиция"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2086,7 +2086,7 @@ msgstr "Размер"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Уровень"
@@ -2511,7 +2511,7 @@ msgstr "Запрос позиции"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2737,27 +2737,27 @@ msgstr "Не выбран ни один модуль."
 msgid "More than one module selected."
 msgstr "Выбрано более одного модуля."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Убрать гаджет"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 msgid "Loaded Gadgets"
 msgstr "Загруженные гаджеты"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Добавить гаджет"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Доступные гаджеты"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Содержимое полки"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Содержимое панели инструментов"
 
@@ -2891,86 +2891,86 @@ msgstr "Добавить полку"
 msgid "Delete a Shelf"
 msgstr "Удалить полку"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Настройки полки"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Над всем"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Под окнами"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Под всем"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Позволять окнам перекрывать полку"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Высота (%3.0f пикс.)"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Размер значков (%2.0f/5)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
 msgstr "Ужимать под размер содержимого"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Стиль"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Скрывать полку автоматически"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Показывать при подведении мыши"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Показывать при щелчке мышью"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Скрывать через"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f секунд"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Продолжительность скрытия"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f секунд"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Автоскрытие"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Показывать на всех столах"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Показывать на указанных столах"
 
@@ -3751,11 +3751,11 @@ msgstr "Ошибка полки"
 msgid "A shelf with that name already exists!"
 msgstr "Полка с этим именем уже существует!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 msgid "Stop Moving Gadgets"
 msgstr "Закончить перемещение гаджетов"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 msgid "Begin Moving Gadgets"
 msgstr "Начать перемещение гаджетов"
 
@@ -3767,20 +3767,20 @@ msgstr "Полка с этим именем и id уже существует!"
 msgid "Rename Shelf"
 msgstr "Переименовать полку"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Содержимое"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 msgid "Orientation"
 msgstr "Расположение"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Автоскрытие"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -9569,29 +9569,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "имя/идентификатор Быстрого доступа"
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 msgid "Systray Error"
 msgstr "Ошибка системного лотка"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Системный лоток не может установить невидимый фон так же, как у полки."
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Системный лоток уже существует"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Возможно существование только одного системного лотка, он уже есть."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Системный лоток не работает в полке расположенной \"под всем\"."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Системный лоток"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Системный лоток уже существует"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Возможно существование только одного системного лотка, он уже есть."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"

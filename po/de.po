@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2022-11-21 20:30+0100\n"
 "Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
 "Language-Team: E17-de\n"
@@ -65,12 +65,12 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Urheberrechte &copy; 2022, durch das Moksha Entwicklungsteam</"
+"<title>Urheberrechte &copy; 2023, durch das Moksha Entwicklungsteam</"
 "><br><br>Wir hoffen, ihnen macht das Benutzen dieser Software so viel Spaß, "
 "wie uns das Schreiben.<br><br>Um uns zu Kontaktieren, besuchen Sie:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
@@ -353,7 +353,7 @@ msgstr "Befestigungszustand umschalten"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -890,11 +890,11 @@ msgstr ""
 "daher werden sicherheitshalber die Standardeinstellungen<br>verwendet. Bitte "
 "entschuldigen Sie die Unannehmlichkeiten.<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Schreibprobleme bei den Moksha-Einstellungen"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -904,7 +904,7 @@ msgstr ""
 "%s<br>verschieben.<br>Sicherheitshalber wurde der Schreibvorgang abgebrochen."
 "<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -924,19 +924,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Einstellungen wurden aktualisiert"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 msgid "The EET file handle is bad."
 msgstr "Der Dateihandle für EET ist kaputt."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 msgid "The file data is empty."
 msgstr "Die Dateidaten sind leer."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -944,17 +944,17 @@ msgstr ""
 "Die Datei kann nicht beschrieben werden. Vielleicht ist die<br>Platte nur "
 "beschreibbar oder Sie haben die Berechtigungen<br>für ihre Dateien verloren."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Kein freier Speicher mehr beim Vorbereiten<br>des Schreibvorgangs. Bitte "
 "geben Sie zusätzlichen<br>Speicher frei."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 msgid "This is a generic error."
 msgstr "Dies ist ein allgemeiner Fehler."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -962,61 +962,61 @@ msgstr ""
 "Die Einstellungsdatei ist zu groß.<br>Sie sollte eigentlich sehr klein "
 "sein<br>(höchstens einige Hundert KB)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "Es gibt Lese-/Schreib-Fehler mit Ihrer Platte.<br>Vielleicht muss sie "
 "ersetzt werden?"
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 msgid "You ran out of space while writing the file."
 msgstr "Ihr Speicherplatz ging während des Schreibens der Datei zur Neige."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 msgid "The file was closed while writing."
 msgstr "Die Datei wurde geschlossen, während sie geschrieben wurde."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memory-Mapping der Datei ist fehlgeschlagen."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
 msgstr "X509-Kodierung ist fehlgeschlagen."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 msgid "Signature failed."
 msgstr "Signatur fehlgeschlagen."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 msgid "The signature was invalid."
 msgstr "Die Signatur ist ungültig."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Nicht signiert."
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 msgid "Feature not implemented."
 msgstr "Feature nicht implementiert."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 msgid "PRNG was not seeded."
 msgstr "Die Pseudoufallszahlen-Erzeugung wurde nicht mit einer Saat versehen."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 msgid "Encryption failed."
 msgstr "Verschlüsseln fehlgeschlagen."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 msgid "Decryption failed."
 msgstr "Entschlüsseln fehlgeschlagen."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 msgid "The error is unknown to Moksha."
 msgstr "Dieser Fehler ist Moksha unbekannt."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1529,7 +1529,7 @@ msgstr "Aktionen..."
 msgid "Link"
 msgstr "Verknüpfung"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2104,12 +2104,12 @@ msgid "Prevent Changes In:"
 msgstr "Verhindere Veränderungen in:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Position"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2118,7 +2118,7 @@ msgstr "Größe"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Ablage"
@@ -2545,7 +2545,7 @@ msgstr "Position anfordern"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2770,27 +2770,27 @@ msgstr "Keine Module ausgewählt."
 msgid "More than one module selected."
 msgstr "Mehr als ein Modul ist ausgewählt."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Helfer entfernen"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 msgid "Loaded Gadgets"
 msgstr "Geladene Helfer"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Helfer hinzufügen"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Verfügbare Helfer"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Modulablageninhalte"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Werkzeugleisteninhalte"
 
@@ -2924,86 +2924,86 @@ msgstr "Modulablage hinzufügen"
 msgid "Delete a Shelf"
 msgstr "Modulablage entfernen"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Modulablageneinstellungen"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Über allem"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Unter Fenstern"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Unter allem"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Fenstern erlauben, diese Modulablage zu überlappen"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Höhe (%3.0f Pixel)"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Symbolgröße (%2.0f/5)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
 msgstr "Auf Größe des Inhalts schrumpfen"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Stil"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Modulablage automatisch verstecken"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Bei Mausberührung zeigen"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Bei Mausklick zeigen"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Zeit bis zum Ausblenden"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f Sekunden"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Ausblenddauer"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f Sekunden"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Automatisches Verstecken"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Auf allen Arbeitsflächen anzeigen"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Auf bestimmten Arbeitsflächen anzeigen"
 
@@ -3795,11 +3795,11 @@ msgstr "Ablagenfehler"
 msgid "A shelf with that name already exists!"
 msgstr "Eine Ablage mit diesem Namen existiert bereits!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 msgid "Stop Moving Gadgets"
 msgstr "Verschieben von Helfern beenden"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 msgid "Begin Moving Gadgets"
 msgstr "Verschieben von Helfern starten"
 
@@ -3811,20 +3811,20 @@ msgstr "Eine Ablage mit diesem Namen und dieser ID existiert bereits!"
 msgid "Rename Shelf"
 msgstr "Ablabe umbenennen"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Inhalte"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 msgid "Orientation"
 msgstr "Ausrichtung"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Auto-Verstecken"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Aktualisieren"
 
@@ -9629,33 +9629,33 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "Schnellzugriffsname/-identifikator"
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 msgid "Systray Error"
 msgstr "Infobereich Fehler"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Systray kann seinen Hintergrund nicht auf transparent setzen um mit der "
 "Modulablage übereinzustimmen."
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Es existiert bereits eine andere Systemleiste"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Es kann nur eine Systemleiste geben. Eine solche existiert bereits."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Der Infobereich funktioniert nicht in einer Ablage die auf \"Unter Allem\" "
 "eingestellt ist."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Systemleiste"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Es existiert bereits eine andere Systemleiste"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Es kann nur eine Systemleiste geben. Eine solche existiert bereits."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"

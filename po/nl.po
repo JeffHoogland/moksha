@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2021-11-29 11:59+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -44,14 +44,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Auteursrecht &copy; 2021, door de ontwikkelaarsploeg van Moksha.</"
+"<title>Auteursrecht &copy; 2023, door de ontwikkelaarsploeg van Moksha.</"
 "><br><br>We hopen dat u net zoveel plezier zult beleven aan het gebruiken "
 "van deze programmatuur, als wij aan het maken ervan.<br><br>Om contact op te "
 "nemen kunt u deze webstek bezoeken: <br><hilight>http://www.bodhilinux.com</"
@@ -334,7 +333,7 @@ msgstr "Vastgezette status omschakelen"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -871,11 +870,11 @@ msgstr ""
 "instellingen nu teruggezet naar de<br>standaarden. Excuses voor het ongemak."
 "<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha-instellingen schrijfproblemen"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -885,7 +884,7 @@ msgstr ""
 "instellingenbestanden<br>van:<br>%s<br><br>naar:<br>%s<br><br>De rest van "
 "het schrijven is afgebroken voor uw veiligheid.<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -905,19 +904,19 @@ msgstr ""
 msgid "OK"
 msgstr "Oké"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Instellingen opgewaardeerd"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 msgid "The EET file handle is bad."
 msgstr "De EET-bestandsafhandelaar is slecht."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 msgid "The file data is empty."
 msgstr "Het gegevensbestand is leeg."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -925,17 +924,17 @@ msgstr ""
 "Het bestand is niet schrijfbaar. Wellicht is de schijf alleen-lezen<br>of u "
 "bent de rechten op uw bestanden kwijt."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Geheugen raakte op tijdens het voorbereiden van het schrijven.<br>Maak "
 "alstublieft geheugen vrij."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 msgid "This is a generic error."
 msgstr "Dit is een algemene fout."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -943,60 +942,60 @@ msgstr ""
 "Het instellingenbestand is te groot.<br>Het zou heel klein moeten zijn "
 "(hooguit een paar honderd KB)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "U heeft I/O-fouten op uw schijf.<br>Misschien is hij aan vervanging toe?"
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 msgid "You ran out of space while writing the file."
 msgstr "U kwam schijfruimte tekort terwijl het bestand geschreven werd."
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 msgid "The file was closed while writing."
 msgstr "Het bestand werd gesloten tijdens het schrijven."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Geheugentoewijzing (mmap) van bestand mislukte."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
 msgstr "X509-codering mislukt."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 msgid "Signature failed."
 msgstr "Handtekening is mislukt."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 msgid "The signature was invalid."
 msgstr "De handtekening was ongeldig."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Niet ondertekend."
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 msgid "Feature not implemented."
 msgstr "Functie niet ingebouwd."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 msgid "PRNG was not seeded."
 msgstr "PRNG was niet uitgezaaid."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 msgid "Encryption failed."
 msgstr "Versleuteling is mislukt."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 msgid "Decryption failed."
 msgstr "Ontsleuteling is mislukt."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 msgid "The error is unknown to Moksha."
 msgstr "De fout is onbekend voor Moksha."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1511,7 +1510,7 @@ msgstr "Acties..."
 msgid "Link"
 msgstr "Koppelen"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2084,12 +2083,12 @@ msgid "Prevent Changes In:"
 msgstr "Voorkom veranderingen in:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Positie"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2098,7 +2097,7 @@ msgstr "Grootte"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Stapeling"
@@ -2523,7 +2522,7 @@ msgstr "Verzoek positie"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2750,27 +2749,27 @@ msgstr "Geen modules geselecteerd."
 msgid "More than one module selected."
 msgstr "Meer dan één module geselecteerd."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Verwijder mini"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 msgid "Loaded Gadgets"
 msgstr "Geladen mini's"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Voeg mini toe"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Beschikbare mini's"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Plankinhoud"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Werkbalkinhoud"
 
@@ -2905,86 +2904,86 @@ msgstr "Voeg een plank toe"
 msgid "Delete a Shelf"
 msgstr "Verwijder een plank"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Plankinstellingen"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Boven alles"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Onder vensters"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Onder alles"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Sta toe dat vensters de plank overlappen"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Hoogte (%3.0f beeldpunten)"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Pictogramgrootte (%d)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
 msgstr "Krimp naar breedte van inhoud"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Stijl"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Plank automatisch verbergen"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Toon bij muis in"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Toon bij muisklik"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Verlooptijd verbergen"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f seconden"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Verbergduur"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f seconden"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Automatisch verbergen"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Toon op alle werkbladen"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Toon op gespecificeerde werkbladen"
 
@@ -3768,11 +3767,11 @@ msgstr "Plankfout"
 msgid "A shelf with that name already exists!"
 msgstr "Er bestaat al een plank met die naam."
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 msgid "Stop Moving Gadgets"
 msgstr "Stop verplaatsen van mini's"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 msgid "Begin Moving Gadgets"
 msgstr "Begin met verplaatsen van mini's"
 
@@ -3784,20 +3783,20 @@ msgstr "Er bestaat al een plank met die naam en dat ID."
 msgid "Rename Shelf"
 msgstr "Plank hernoemen"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Inhoud"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 msgid "Orientation"
 msgstr "Oriëntatie"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Automatisch verbergen"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Verversen"
 
@@ -9611,32 +9610,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "naam snelle toegang/identificator"
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 msgid "Systray Error"
 msgstr "Systeemvakfout"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Systray kan zijn achtergrond niet op onzichtbaar instellen wegens zijn plank."
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Een ander systeemvak bestaat reeds"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Er kan maar één systeemvakmini zijn en er bestaat er al een."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systeemvak kan niet werken op een plank die is ingesteld om beneden alles te "
 "zitten."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Systeemvak"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Een ander systeemvak bestaat reeds"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Er kan maar één systeemvakmini zijn en er bestaat er al een."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"

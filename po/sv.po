@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -41,7 +41,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -352,7 +352,7 @@ msgstr "Toggle Pinnat där"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -910,18 +910,18 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -941,21 +941,21 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Inställningar uppdaterade"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "EET filhandtag är dåligt."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Filen data är tom."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -964,17 +964,17 @@ msgstr ""
 "Filen är inte skrivbar. Kanske skivan är skrivskyddad<br>eller om du "
 "förlorat behörighet till dina filer."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Minne sprang ut medan du förbereder skriva.<br>Frigör minne."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Detta är en generisk fel."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -983,71 +983,71 @@ msgstr ""
 "Inställningsfilen är för stor.<br>Det bör vara mycket liten (några hundra KB "
 "som mest)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Du sprang ut ur rummet medan du skriver filen"
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Ärendet avslutades på den medan du skriver."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memory -mapping (mmap) för filen misslyckades."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Kodning misslyckats."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 #, fuzzy
 msgid "Signature failed."
 msgstr "Signatur misslyckades."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Signaturen var ogiltigt."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 #, fuzzy
 msgid "Not signed."
 msgstr "(Inga fönster)"
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Har inte genomförts."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG inte ympades."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Kryptering misslyckades."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Beskrivning: Otillgänglig"
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Välkommen till Moksha"
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1580,7 +1580,7 @@ msgstr "Händelse"
 msgid "Link"
 msgstr "Länk"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2203,12 +2203,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Position"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2217,7 +2217,7 @@ msgstr "Storlek"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Stapla"
@@ -2669,7 +2669,7 @@ msgstr "Begär position"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2914,28 +2914,28 @@ msgstr "Inga moduler valda."
 msgid "More than one module selected."
 msgstr "Mer än en modul valts."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Ta bort"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 #, fuzzy
 msgid "Loaded Gadgets"
 msgstr "Lägg till"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Lägg till"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Tillgängliga moduler"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Panelens innehåll"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 #, fuzzy
 msgid "Toolbar Contents"
 msgstr "Verktygsfältsinnehåll"
@@ -3083,94 +3083,94 @@ msgstr "Lägg till en Uppställning"
 msgid "Delete a Shelf"
 msgstr "Ta bort en Uppställning"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Panelinställningar"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Alltid överst"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Under fönster"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Alltid nederst"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 #, fuzzy
 msgid "Allow windows to overlap the shelf"
 msgstr "Låt fönstren att överlappa hyllan"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, fuzzy, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "%3.0f pixlar"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Ikonstorlek (%d)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 #, fuzzy
 msgid "Shrink to Content Width"
 msgstr "Krympa till innehållets bredd"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 #, fuzzy
 msgid "Style"
 msgstr "Tema"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 #, fuzzy
 msgid "Auto-hide the shelf"
 msgstr "Auto- dölja hyllan"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 #, fuzzy
 msgid "Show on mouse in"
 msgstr "Visa på mus."
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 #, fuzzy
 msgid "Show on mouse click"
 msgstr "Visa på musklick"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 #, fuzzy
 msgid "Hide timeout"
 msgstr "Göm timeout"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
 msgstr "%.1f seconds"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 #, fuzzy
 msgid "Hide duration"
 msgstr "dölja varaktighet"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr ""
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Dölj automatiskt"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Visa på alla skrivbord"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Visa på valda skrivbord"
 
@@ -3994,12 +3994,12 @@ msgstr "Fel"
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "Sluta flytta/ändra storlek på moduler"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Flytta/ändra storlek på moduler"
@@ -4013,23 +4013,23 @@ msgstr ""
 msgid "Rename Shelf"
 msgstr "Byt namn"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 #, fuzzy
 msgid "Contents"
 msgstr "Kommentar"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 #, fuzzy
 msgid "Orientation"
 msgstr "Interaktion"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "Dölj automatiskt"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -10452,36 +10452,36 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 #, fuzzy
 msgid "Systray Error"
 msgstr "System"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:941
-#, fuzzy
-msgid "Another systray exists"
-msgstr "En annan systray existerar"
-
-#: src/modules/systray/e_mod_main.c:942
-#, fuzzy
-msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
-"Det kan bara finnas en systray gadget och en annan som redan existerar."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray kan inte fungera i en hylla som är inställd till en nivå under allt."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 #, fuzzy
 msgid "Systray"
 msgstr "System"
+
+#: src/modules/systray/e_mod_main.c:1163
+#, fuzzy
+msgid "Another systray exists"
+msgstr "En annan systray existerar"
+
+#: src/modules/systray/e_mod_main.c:1164
+#, fuzzy
+msgid "There can be only one systray gadget and another one already exists."
+msgstr ""
+"Det kan bara finnas en systray gadget och en annan som redan existerar."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 #, fuzzy

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -44,7 +44,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -348,7 +348,7 @@ msgstr "Rögzített állapotra vált"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -908,11 +908,11 @@ msgstr ""
 "nem túl jó, és figyelmez-<br>tetésként a beállítások visszaálltak az "
 "alapértelmezésre.<br>A galibákért elnézést kérünk!<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha konfiguráció írási problémák"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -922,7 +922,7 @@ msgstr ""
 "nagyon szokatlan.<br><br>A fájl, ahol a hiba keletkezett:<br>%s<br><br> A "
 "fájl törölve lett.<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -942,21 +942,21 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Beállítások frissítve"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "Az EET fájlleíróba rossz."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 #, fuzzy
 msgid "The file data is empty."
 msgstr "A fájl adatai üres."
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -965,18 +965,18 @@ msgstr ""
 "A fájl nem írható. Talán a lemez csak olvasható<br>vagy elveszett "
 "engedélyeket a fájlokat."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Memória elfogyott , miközben készül az írás.<br>szabadítson fel memóriát."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Ez egy általános hiba."
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -985,71 +985,71 @@ msgstr ""
 "A beállítások fájl túl nagy.<br>Meg kell nagyon kicsi (néhány száz KB "
 "legfeljebb)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Ha elfogyott a hely a fájl írása közben"
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "A fájl -én zárult , hogy írás közben."
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memory -mapping (mmap) a fájl nem sikerült."
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 kódolás nem sikerült."
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 #, fuzzy
 msgid "Signature failed."
 msgstr "Hibernálás nem sikerült."
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Az aláírás érvénytelen."
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 #, fuzzy
 msgid "Not signed."
 msgstr "(Nincsenek ablakok)"
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Szolgáltatás nem hajtották végre."
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG nem a maggal."
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Felfüggesztés nem sikerült."
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Felfüggesztés nem sikerült."
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Üdvözlünk az Mokshaben"
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1568,7 +1568,7 @@ msgstr "Művelet"
 msgid "Link"
 msgstr "Link"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2176,12 +2176,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Pozíció"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2190,7 +2190,7 @@ msgstr "Méret"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Halomba rakás"
@@ -2632,7 +2632,7 @@ msgstr "Hely kérés"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2865,28 +2865,28 @@ msgstr "Nincs kiválasztott modul."
 msgid "More than one module selected."
 msgstr "Több mint egy kiválasztott modul."
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Modul eltávolítása"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 #, fuzzy
 msgid "Loaded Gadgets"
 msgstr "Modul hozzáadása"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Modul hozzáadása"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Elérhető modulok"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Polc elemei"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Eszköztár elemei"
 
@@ -3029,64 +3029,64 @@ msgstr "Polc hozzáadása"
 msgid "Delete a Shelf"
 msgstr "Polc törlése"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Polc beállítások"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Minden felett"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Ablakok alatt"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Minden alatt"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Az ablakok eltakarhatják a polcot"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, fuzzy, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "%3.0f pixel"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Ikonméret (%d)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 #, fuzzy
 msgid "Shrink to Content Width"
 msgstr "Shrink to Content szélesség"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Stílus"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Polc automatikus elrejtése"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Mutasd ha az egér rajta van"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Mutasd egér kattintásra"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Elrejtés ennyi idő után"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, fuzzy, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -3095,25 +3095,25 @@ msgstr ""
 "#-#-#-#-#  hu.po (hu)  #-#-#-#-#\n"
 "%.1f másodperc"
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Elrejtés időtartama"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f másodperc"
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Automatikus elrejtés"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Mutasd minden asztalon"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Mutrasd a kiválasztott asztalon"
 
@@ -3931,12 +3931,12 @@ msgstr "Polc #"
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "Elemek mozgatásának/átméretezésének leállítása"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Elemek mozgatása/átméretezése"
@@ -3950,23 +3950,23 @@ msgstr ""
 msgid "Rename Shelf"
 msgstr "Fájl átnevezése"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 #, fuzzy
 msgid "Contents"
 msgstr "Megjegyzés"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 #, fuzzy
 msgid "Orientation"
 msgstr "Bemutató"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "Automatikus elrejtés"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Frissítés"
 
@@ -10179,31 +10179,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 #, fuzzy
 msgid "Systray Error"
 msgstr "Rendszertálca"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Egy másik rendszertálca már létezik"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Itt csak egy rendszertálca modul lehet, de már egy létezik."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray nem tud dolgozni egy polc , ami alá be mindent."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Rendszertálca"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Egy másik rendszertálca már létezik"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Itt csak egy rendszertálca modul lehet, de már egy létezik."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 #, fuzzy

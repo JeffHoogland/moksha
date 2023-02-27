@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trunk.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-22 21:26+0100\n"
+"POT-Creation-Date: 2023-02-27 16:27+0100\n"
 "PO-Revision-Date: 2011-03-28 12:04+0100\n"
 "Last-Translator: Renato Rener <renato.rener@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -45,7 +45,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2022, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -347,7 +347,7 @@ msgstr "Pripeto"
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
 #: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:299
+#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -904,11 +904,11 @@ msgstr ""
 "zato smo vaše nastavitve<br>ponovno nastavili na privzete vrednosti. "
 "Prosimo, sprejmite naše<br>opravičilo za vse neprijetnosti.<br>"
 
-#: src/bin/e_config.c:1528 src/bin/e_config.c:2153
+#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
 msgstr "Težave zapisovanja Moksha nastavitev"
 
-#: src/bin/e_config.c:1531
+#: src/bin/e_config.c:1544
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -918,7 +918,7 @@ msgstr ""
 "%s<br><br>v:<br>%s<br><br>Zaradi varnosti je bilo nadaljevanje pisanja "
 "opuščeno.<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -938,19 +938,19 @@ msgstr ""
 msgid "OK"
 msgstr "V Redu"
 
-#: src/bin/e_config.c:2044
+#: src/bin/e_config.c:2057
 msgid "Settings Upgraded"
 msgstr "Nastavitve posodobljene"
 
-#: src/bin/e_config.c:2062
+#: src/bin/e_config.c:2075
 msgid "The EET file handle is bad."
 msgstr "Oprimek·datoteke·EET je slab."
 
-#: src/bin/e_config.c:2066
+#: src/bin/e_config.c:2079
 msgid "The file data is empty."
 msgstr "Prazna vsebina datoteke"
 
-#: src/bin/e_config.c:2070
+#: src/bin/e_config.c:2083
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -958,17 +958,17 @@ msgstr ""
 "Datoteka ni zapisljiva. Disk je morda le za branje<br>ali pa ste izgubili "
 "dovoljenja za vaše datoteke."
 
-#: src/bin/e_config.c:2074
+#: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Med pripravo na zapisovanje je zmanjkalo spomina.<br>Prosimo, sprostite "
 "nekaj spomina."
 
-#: src/bin/e_config.c:2078
+#: src/bin/e_config.c:2091
 msgid "This is a generic error."
 msgstr "Tole je splošna napaka!"
 
-#: src/bin/e_config.c:2082
+#: src/bin/e_config.c:2095
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -976,62 +976,62 @@ msgstr ""
 "Nastavitvena datoteka je prevelika.<br>Morala bi biti zelo majhna (največ "
 "nekaj sto KB)."
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Na disku imate I/O napake.<br>Morda potrebuje zamenjavo?"
 
-#: src/bin/e_config.c:2090
+#: src/bin/e_config.c:2103
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Med zapisovanjem datoteke vam je zmanjkalo prostora"
 
-#: src/bin/e_config.c:2094
+#: src/bin/e_config.c:2107
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Datoteka je bila zaprta med zapisovanjem"
 
-#: src/bin/e_config.c:2098
+#: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Spodletela pomnilniška preslikava (mmap)·datoteke "
 
-#: src/bin/e_config.c:2102
+#: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
 msgstr "Spodletelo kodiranje X509"
 
-#: src/bin/e_config.c:2106
+#: src/bin/e_config.c:2119
 msgid "Signature failed."
 msgstr "Podpisovanje spodletelo"
 
-#: src/bin/e_config.c:2110
+#: src/bin/e_config.c:2123
 msgid "The signature was invalid."
 msgstr "Neveljaven podpis"
 
-#: src/bin/e_config.c:2114
+#: src/bin/e_config.c:2127
 msgid "Not signed."
 msgstr "Ni podpisano"
 
-#: src/bin/e_config.c:2118
+#: src/bin/e_config.c:2131
 msgid "Feature not implemented."
 msgstr "Funkcija ni vgrajena"
 
-#: src/bin/e_config.c:2122
+#: src/bin/e_config.c:2135
 msgid "PRNG was not seeded."
 msgstr "PRNG ni bil sejan"
 
-#: src/bin/e_config.c:2126
+#: src/bin/e_config.c:2139
 msgid "Encryption failed."
 msgstr "Šifriranje spodletelo"
 
-#: src/bin/e_config.c:2130
+#: src/bin/e_config.c:2143
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Razšifriranje spodletelo"
 
-#: src/bin/e_config.c:2134
+#: src/bin/e_config.c:2147
 msgid "The error is unknown to Moksha."
 msgstr "Moksha te napake ne prepozna"
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1553,7 +1553,7 @@ msgstr "Dejanja"
 msgid "Link"
 msgstr "Bližnjica"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2533
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -2164,12 +2164,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:223
+#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Položaj"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:237
+#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:230
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2178,7 +2178,7 @@ msgstr "Velikost"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:181
+#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Obnašanje"
@@ -2612,7 +2612,7 @@ msgstr "Zahtevaj položaj"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2504 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2838,28 +2838,28 @@ msgstr "Noben modul ni izbran"
 msgid "More than one module selected."
 msgstr "Več kot en modul izbran"
 
-#: src/bin/e_int_gadcon_config.c:699 src/bin/e_int_gadcon_config.c:757
+#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
 msgid "Remove Gadget"
 msgstr "Odstrani gadget"
 
-#: src/bin/e_int_gadcon_config.c:704
+#: src/bin/e_int_gadcon_config.c:705
 #, fuzzy
 msgid "Loaded Gadgets"
 msgstr "Dodaj gadget"
 
-#: src/bin/e_int_gadcon_config.c:719 src/bin/e_int_gadcon_config.c:752
+#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
 msgid "Add Gadget"
 msgstr "Dodaj gadget"
 
-#: src/bin/e_int_gadcon_config.c:724
+#: src/bin/e_int_gadcon_config.c:725
 msgid "Available Gadgets"
 msgstr "Gadgeti na voljo"
 
-#: src/bin/e_int_gadcon_config.c:786
+#: src/bin/e_int_gadcon_config.c:787
 msgid "Shelf Contents"
 msgstr "Vsebina police"
 
-#: src/bin/e_int_gadcon_config.c:792
+#: src/bin/e_int_gadcon_config.c:793
 msgid "Toolbar Contents"
 msgstr "Vsebina Orodne vrstice"
 
@@ -3002,63 +3002,63 @@ msgstr "Dodaj polico"
 msgid "Delete a Shelf"
 msgstr "Izbriši polico"
 
-#: src/bin/e_int_shelf_config.c:47
+#: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
 msgid "Shelf Settings"
 msgstr "Nastavitev Police"
 
-#: src/bin/e_int_shelf_config.c:172
+#: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
 msgstr "Nad vsem"
 
-#: src/bin/e_int_shelf_config.c:174
+#: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
 msgstr "Pod okni"
 
-#: src/bin/e_int_shelf_config.c:176
+#: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
 msgstr "Pod vsem"
 
-#: src/bin/e_int_shelf_config.c:178
+#: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
 msgstr "Dovoli oknom prekrivanje police"
 
-#: src/bin/e_int_shelf_config.c:228
+#: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
 msgstr "Višina (%3.0f pik.)"
 
-#: src/bin/e_int_shelf_config.c:231
+#: src/bin/e_int_shelf_config.c:230
 #, fuzzy, c-format
 msgid "Icons size (%2.0f/5)"
 msgstr "Velikost ikone (%d)"
 
-#: src/bin/e_int_shelf_config.c:234
+#: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
 msgstr "Skrči na širino vsebine"
 
-#: src/bin/e_int_shelf_config.c:245
+#: src/bin/e_int_shelf_config.c:244
 #: src/modules/conf_theme/e_int_config_fonts.c:652
 msgid "Style"
 msgstr "Slog"
 
-#: src/bin/e_int_shelf_config.c:251
+#: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
 msgstr "Samodejno skrivanje police"
 
-#: src/bin/e_int_shelf_config.c:256
+#: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
 msgstr "Prikaz ob prehodu z miško"
 
-#: src/bin/e_int_shelf_config.c:260
+#: src/bin/e_int_shelf_config.c:259
 msgid "Show on mouse click"
 msgstr "Prikaz ob kliku z miško"
 
-#: src/bin/e_int_shelf_config.c:265
+#: src/bin/e_int_shelf_config.c:264
 msgid "Hide timeout"
 msgstr "Časovna zakasnitev skritja"
 
-#: src/bin/e_int_shelf_config.c:269
+#: src/bin/e_int_shelf_config.c:268
 #, fuzzy, c-format
 msgid "%.1f seconds"
 msgstr ""
@@ -3067,25 +3067,25 @@ msgstr ""
 "#-#-#-#-#  sl.po (trunk.HEAD)  #-#-#-#-#\n"
 "%.1f·sek."
 
-#: src/bin/e_int_shelf_config.c:275
+#: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
 msgstr "Trajanje skritja"
 
-#: src/bin/e_int_shelf_config.c:279
+#: src/bin/e_int_shelf_config.c:278
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
 #, c-format
 msgid "%.2f seconds"
 msgstr "%2f sek."
 
-#: src/bin/e_int_shelf_config.c:284
+#: src/bin/e_int_shelf_config.c:283
 msgid "Auto Hide"
 msgstr "Samodejno skrivanje"
 
-#: src/bin/e_int_shelf_config.c:290
+#: src/bin/e_int_shelf_config.c:289
 msgid "Show on all Desktops"
 msgstr "Prikaži na vseh namizjih"
 
-#: src/bin/e_int_shelf_config.c:292
+#: src/bin/e_int_shelf_config.c:291
 msgid "Show on specified Desktops"
 msgstr "Prikaži na določenih namizjih"
 
@@ -3927,12 +3927,12 @@ msgstr "Polica št."
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2550
+#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "Ustavi Premikanje/Spreminjanje velikosti gadgetov"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2552
+#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "Začni Premikanje/Spreminjanje velikosti gadgetov"
@@ -3946,22 +3946,22 @@ msgstr ""
 msgid "Rename Shelf"
 msgstr "Preimenuj datoteko"
 
-#: src/bin/e_shelf.c:2499 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
 #: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
 msgid "Contents"
 msgstr "Vsebina"
 
-#: src/bin/e_shelf.c:2509
+#: src/bin/e_shelf.c:2508
 #, fuzzy
 msgid "Orientation"
 msgstr "Predstavitveni način"
 
-#: src/bin/e_shelf.c:2518 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "Samodejno skrivanje"
 
-#: src/bin/e_shelf.c:2525 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Izberi osveževanje"
 
@@ -10029,31 +10029,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:534 src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
 #, fuzzy
 msgid "Systray Error"
 msgstr "Sistemska vrstica"
 
-#: src/modules/systray/e_mod_main.c:535
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:941
-msgid "Another systray exists"
-msgstr "Obstaja že ena sistemska vrstica"
-
-#: src/modules/systray/e_mod_main.c:942
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Obstaja lahko le ena sistemska vrstica in ena že obstaja."
-
-#: src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:945
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray ne more delovati v polici , ki je nastavljen na manj vse."
 
-#: src/modules/systray/e_mod_main.c:1146
+#: src/modules/systray/e_mod_main.c:1140
 msgid "Systray"
 msgstr "Sistemska vrstica"
+
+#: src/modules/systray/e_mod_main.c:1163
+msgid "Another systray exists"
+msgstr "Obstaja že ena sistemska vrstica"
+
+#: src/modules/systray/e_mod_main.c:1164
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Obstaja lahko le ena sistemska vrstica in ena že obstaja."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 #, fuzzy
