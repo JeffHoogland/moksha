@@ -1160,7 +1160,16 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 static const char *
 _gc_id_new(const E_Gadcon_Client_Class *client_class __UNUSED__)
 {
-   return _name;
+   if (!instance)
+      return _name;
+   else
+     {
+       e_util_dialog_internal
+       (_("Another systray exists"),
+        _("There can be only one systray gadget and "
+           "another one already exists."));
+       return NULL;
+     }
 }
 
 static const E_Gadcon_Client_Class _gc_class =

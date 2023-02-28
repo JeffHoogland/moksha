@@ -419,7 +419,10 @@ _cb_add_advanced(void *data, void *data2 __UNUSED__)
    CFGadget *gad;
 
    if (!(cfdata = data)) return;
-   cf_gcc = e_gadcon_client_config_new(cfdata->gc, e_widget_ilist_selected_value_get(cfdata->class_list));
+   //~ cf_gcc = e_gadcon_client_config_new(cfdata->gc, e_widget_ilist_selected_value_get(cfdata->class_list));
+
+   if (!(cf_gcc = e_gadcon_client_config_new(cfdata->gc,
+         e_widget_ilist_selected_value_get(cfdata->class_list)))) return;
 
    gad = E_NEW(CFGadget, 1);
    gad->name = eina_stringshare_add(cf_gcc->name);
