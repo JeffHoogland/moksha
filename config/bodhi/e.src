@@ -1931,7 +1931,7 @@ group "E_Config" struct {
     }
     value "config_version" int: 1000019;
     value "show_splash" int: 1;
-    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
+    value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaGreen.edj";
     value "desktop_default_name" string: "%i-%i";
     value "desktop_default_window_profile" string: "standard";
     value "menus_scroll_speed" double: 1000.0;
