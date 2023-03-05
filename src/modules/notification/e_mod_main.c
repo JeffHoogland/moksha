@@ -366,6 +366,8 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
         E_Menu_Item *mi;
         inst->menu = e_menu_new();
+        e_menu_title_set(inst->menu, _("Notification"));
+        
         Eina_List *l = NULL;
 
         if (notification_cfg->hist->history)

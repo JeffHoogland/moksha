@@ -350,6 +350,7 @@ _menu_fill(Instance *inst, Eina_Bool mouse_event)
   unsigned dir = E_GADCON_ORIENT_VERT;
 
   inst->menu = e_menu_new();
+  e_menu_title_set(inst->menu, _("Clipboard"));
   
   //~ if (!mouse_event){
     //~ e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
