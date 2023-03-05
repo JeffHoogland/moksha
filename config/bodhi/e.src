@@ -1691,7 +1691,7 @@ group "E_Config" struct {
     group "themes" list {
         group "E_Config_Theme" struct {
             value "category" string: "theme";
-            value "file" string: "/usr/share/enlightenment/data/themes/MokshaArcGreen.edj";
+            value "file" string: "/usr/share/enlightenment/data/themes/MokshaGreen.edj";
         }
     }
     group "bad_modules" list {
@@ -2092,7 +2092,7 @@ group "E_Config" struct {
     value "desk_flip_wrap" int: 1;
     value "fullscreen_flip" int: 1;
     value "multiscreen_flip" int: 0;
-    value "icon_theme" string: "MokshaArcGreen";
+    value "icon_theme" string: "MokshaGreen";
     value "icon_theme_overrides" uchar: 1;
     value "desk_flip_animate_mode" int: 0;
     value "desk_flip_animate_interpolation" int: 0;
@@ -2168,7 +2168,7 @@ group "E_Config" struct {
     value "xsettings.match_icons_if_possible" uchar: 1;
     value "xsettings.xft_antialias" int: 0;
     value "xsettings.xft_hinting" int: 0;
-    value "xsettings.net_theme_name" string: "MokshaArcGreen";
+    value "xsettings.net_theme_name" string: "MokshaGreen";
     value "update.check" uchar: 0;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 1;
