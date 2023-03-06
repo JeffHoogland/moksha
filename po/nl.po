@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-27 16:27+0100\n"
+"POT-Creation-Date: 2023-03-06 16:07+0100\n"
 "PO-Revision-Date: 2021-11-29 11:59+0100\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch\n"
@@ -1237,8 +1237,8 @@ msgstr "Kies een uitvoerbaar bestand"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:214
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Delete"
 msgstr "Wissen"
 
@@ -1691,7 +1691,7 @@ msgstr "Nee op alles"
 msgid "Yes to all"
 msgstr "Ja op alles"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Waarschuwing"
@@ -2542,9 +2542,9 @@ msgstr "Verzoek positie"
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:450
+#: src/modules/notification/e_mod_main.c:452
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:441 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -2749,27 +2749,27 @@ msgstr "Geen modules geselecteerd."
 msgid "More than one module selected."
 msgstr "Meer dan één module geselecteerd."
 
-#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
+#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
 msgid "Remove Gadget"
 msgstr "Verwijder mini"
 
-#: src/bin/e_int_gadcon_config.c:705
+#: src/bin/e_int_gadcon_config.c:707
 msgid "Loaded Gadgets"
 msgstr "Geladen mini's"
 
-#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
+#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
 msgid "Add Gadget"
 msgstr "Voeg mini toe"
 
-#: src/bin/e_int_gadcon_config.c:725
+#: src/bin/e_int_gadcon_config.c:727
 msgid "Available Gadgets"
 msgstr "Beschikbare mini's"
 
-#: src/bin/e_int_gadcon_config.c:787
+#: src/bin/e_int_gadcon_config.c:789
 msgid "Shelf Contents"
 msgstr "Plankinhoud"
 
-#: src/bin/e_int_gadcon_config.c:793
+#: src/bin/e_int_gadcon_config.c:795
 msgid "Toolbar Contents"
 msgstr "Werkbalkinhoud"
 
@@ -3639,8 +3639,8 @@ msgstr "Welke actie wilt u ondernemen voor deze module?<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Keep"
 msgstr "Behouden"
 
@@ -5754,7 +5754,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:437
+#: src/modules/notification/e_mod_main.c:439
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -7155,8 +7155,8 @@ msgid "Assign"
 msgstr "Toewijzen"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:427
-#: src/modules/clipboard/e_mod_main.c:428
+#: src/modules/notification/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Wissen"
 
@@ -9610,32 +9610,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "naam snelle toegang/identificator"
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
+#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
 msgid "Systray Error"
 msgstr "Systeemvakfout"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:536
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Systray kan zijn achtergrond niet op onzichtbaar instellen wegens zijn plank."
 
-#: src/modules/systray/e_mod_main.c:945
+#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+msgid "Another systray exists"
+msgstr "Een ander systeemvak bestaat reeds"
+
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+msgid "There can be only one systray gadget and another one already exists."
+msgstr "Er kan maar één systeemvakmini zijn en er bestaat er al een."
+
+#: src/modules/systray/e_mod_main.c:952
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systeemvak kan niet werken op een plank die is ingesteld om beneden alles te "
 "zitten."
 
-#: src/modules/systray/e_mod_main.c:1140
+#: src/modules/systray/e_mod_main.c:1147
 msgid "Systray"
 msgstr "Systeemvak"
-
-#: src/modules/systray/e_mod_main.c:1163
-msgid "Another systray exists"
-msgstr "Een ander systeemvak bestaat reeds"
-
-#: src/modules/systray/e_mod_main.c:1164
-msgid "There can be only one systray gadget and another one already exists."
-msgstr "Er kan maar één systeemvakmini zijn en er bestaat er al een."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"
@@ -10051,6 +10051,7 @@ msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:273
+#: src/modules/notification/e_mod_main.c:369
 msgid "Notification"
 msgstr "Melding"
 
@@ -10072,32 +10073,32 @@ msgstr ""
 "Fout tijdens DBus-initialisatie! Controleer a.u.b. of DBus correct "
 "geïnstalleerd is en draait."
 
-#: src/modules/notification/e_mod_main.c:419
-#: src/modules/clipboard/e_mod_main.c:410
+#: src/modules/notification/e_mod_main.c:421
+#: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Leeg"
 
-#: src/modules/notification/e_mod_main.c:615
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Presentatiemodus activeren"
 
-#: src/modules/notification/e_mod_main.c:616
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha is in <b>presentatie</b>modus."
 
-#: src/modules/notification/e_mod_main.c:620
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Presentatiemodus beëindigd"
 
-#: src/modules/notification/e_mod_main.c:621
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Presentatiemodus is voorbij."
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Internetloze modus activeren"
 
-#: src/modules/notification/e_mod_main.c:636
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10106,11 +10107,11 @@ msgstr ""
 "zullen modules die het netwerk gebruiken stoppen met het gebruiken van "
 "diensten op afstand."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Internetloze modus beëindigd"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10118,7 +10119,7 @@ msgstr ""
 "Thans in <b>internet</b>modus. <br>Nu zullen modules die het netwerk "
 "gebruiken weer hun normale taken oppakken."
 
-#: src/modules/notification/e_mod_main.c:701
+#: src/modules/notification/e_mod_main.c:703
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Melding"
@@ -10249,9 +10250,10 @@ msgid " Trim Newlines"
 msgstr " Snoei regeleinden weg"
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:921
+#: src/modules/clipboard/e_mod_main.c:353
 #: src/modules/clipboard/e_mod_main.c:922
 #: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
 msgid "Clipboard"
 msgstr "Klembord"
 
@@ -10287,47 +10289,47 @@ msgstr " Elementen in geschiedenis"
 msgid "Clipboard Settings"
 msgstr "Klembordinstellingen"
 
-#: src/modules/clipboard/e_mod_main.c:383
+#: src/modules/clipboard/e_mod_main.c:384
 msgid "Lock item"
 msgstr "Element vergrendelen"
 
-#: src/modules/clipboard/e_mod_main.c:394
+#: src/modules/clipboard/e_mod_main.c:395
 msgid "Edit item"
 msgstr "Element bewerken"
 
-#: src/modules/clipboard/e_mod_main.c:401
+#: src/modules/clipboard/e_mod_main.c:402
 msgid "Delete item"
 msgstr "Element verwijderen"
 
-#: src/modules/clipboard/e_mod_main.c:418
+#: src/modules/clipboard/e_mod_main.c:419
 msgid "Ignore history"
 msgstr "Geschiedenis negeren"
 
-#: src/modules/clipboard/e_mod_main.c:663
+#: src/modules/clipboard/e_mod_main.c:664
 msgid "Confirm History Deletion"
 msgstr "Bevestig verwijdering van geschiedenis"
 
-#: src/modules/clipboard/e_mod_main.c:665
+#: src/modules/clipboard/e_mod_main.c:666
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "U wilt de klembordgeschiedenis wissen.<br><br>Weet u het zeker?"
 
-#: src/modules/clipboard/e_mod_main.c:750
+#: src/modules/clipboard/e_mod_main.c:751
 msgid "Confirm Item Deletion"
 msgstr "Bevestig verwijdering van element"
 
-#: src/modules/clipboard/e_mod_main.c:752
+#: src/modules/clipboard/e_mod_main.c:753
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "U wilt het huidige element wissen.<br><br>Weet u het zeker?"
 
-#: src/modules/clipboard/e_mod_main.c:780
+#: src/modules/clipboard/e_mod_main.c:781
 msgid "Clipboard: Edit Item"
 msgstr "Klembord: Element bewerken"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
 msgstr "Bewerk de inhoud van het element:"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-27 16:27+0100\n"
+"POT-Creation-Date: 2023-03-06 16:07+0100\n"
 "PO-Revision-Date: 2023-02-12 20:44+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -1227,8 +1227,8 @@ msgstr "Escolha o executável"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:214
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Delete"
 msgstr "Eliminar"
 
@@ -1678,7 +1678,7 @@ msgstr "Não a tudo"
 msgid "Yes to all"
 msgstr "Sim a tudo"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Aviso"
@@ -2528,9 +2528,9 @@ msgstr "Solicita posição"
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:450
+#: src/modules/notification/e_mod_main.c:452
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:441 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Definições"
 
@@ -2734,27 +2734,27 @@ msgstr "Nenhum módulo selecionado."
 msgid "More than one module selected."
 msgstr "Mais do que um módulo selecionado."
 
-#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
+#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
 msgid "Remove Gadget"
 msgstr "Remover gadget"
 
-#: src/bin/e_int_gadcon_config.c:705
+#: src/bin/e_int_gadcon_config.c:707
 msgid "Loaded Gadgets"
 msgstr "Gadgets carregados"
 
-#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
+#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
 msgid "Add Gadget"
 msgstr "Adicionar gadget"
 
-#: src/bin/e_int_gadcon_config.c:725
+#: src/bin/e_int_gadcon_config.c:727
 msgid "Available Gadgets"
 msgstr "Gadgets disponíveis"
 
-#: src/bin/e_int_gadcon_config.c:787
+#: src/bin/e_int_gadcon_config.c:789
 msgid "Shelf Contents"
 msgstr "Conteúdo do painel"
 
-#: src/bin/e_int_gadcon_config.c:793
+#: src/bin/e_int_gadcon_config.c:795
 msgid "Toolbar Contents"
 msgstr "Conteúdo da barra de ferramentas"
 
@@ -3622,8 +3622,8 @@ msgstr "Qual a ação que deve ser efetuada com este módulo?<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Keep"
 msgstr "Manter"
 
@@ -5725,7 +5725,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:437
+#: src/modules/notification/e_mod_main.c:439
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -7101,8 +7101,8 @@ msgid "Assign"
 msgstr "Atribuir"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:427
-#: src/modules/clipboard/e_mod_main.c:428
+#: src/modules/notification/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Limpar"
 
@@ -9551,33 +9551,33 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "identificador/nome do acesso rápido"
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
+#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
 msgid "Systray Error"
 msgstr "Erro na área de notificação do sistema"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:536
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Não é possível tornar a área de notificação invisível para coincidir com o "
 "painel."
 
-#: src/modules/systray/e_mod_main.c:945
+#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+msgid "Another systray exists"
+msgstr "Já existe uma área de notificação do sistema"
+
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+msgid "There can be only one systray gadget and another one already exists."
+msgstr ""
+"Apenas pode existir uma área de notificação de sistema e uma já existe."
+
+#: src/modules/systray/e_mod_main.c:952
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "A área de notificação não funciona num painel que esteja por baixo de tudo."
 
-#: src/modules/systray/e_mod_main.c:1140
+#: src/modules/systray/e_mod_main.c:1147
 msgid "Systray"
 msgstr "Área de notificação do sistema"
-
-#: src/modules/systray/e_mod_main.c:1163
-msgid "Another systray exists"
-msgstr "Já existe uma área de notificação do sistema"
-
-#: src/modules/systray/e_mod_main.c:1164
-msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
-"Apenas pode existir uma área de notificação de sistema e uma já existe."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"
@@ -9993,6 +9993,7 @@ msgstr "Variante"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:273
+#: src/modules/notification/e_mod_main.c:369
 msgid "Notification"
 msgstr "Notificações"
 
@@ -10012,32 +10013,32 @@ msgstr ""
 "Certifica-se de que nenhum outro módulo atua como servidor e que o D-Bus "
 "está corretamente instalado e em execução"
 
-#: src/modules/notification/e_mod_main.c:419
-#: src/modules/clipboard/e_mod_main.c:410
+#: src/modules/notification/e_mod_main.c:421
+#: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Vazio"
 
-#: src/modules/notification/e_mod_main.c:615
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Entrar no modo de demonstração"
 
-#: src/modules/notification/e_mod_main.c:616
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "O Moksha está em modo de <b>apresentação</b>."
 
-#: src/modules/notification/e_mod_main.c:620
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Saiu do modo de demonstração"
 
-#: src/modules/notification/e_mod_main.c:621
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Terminou o modo de apresentação."
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Entrar no modo offline"
 
-#: src/modules/notification/e_mod_main.c:636
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10045,11 +10046,11 @@ msgstr ""
 "O Moksha está no modo <b>offline</b>.<br>Neste modo, os módulos que utilizem "
 "a rede irão parar de analisar os serviços remotos."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Saiu do modo offline"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10057,7 +10058,7 @@ msgstr ""
 "Terminou o modo <b>offline</b>.<br>Os módulos que utilizam a rede irão "
 "retomar os serviços."
 
-#: src/modules/notification/e_mod_main.c:701
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "A notificação expirou!"
 
@@ -10187,9 +10188,10 @@ msgid " Trim Newlines"
 msgstr " Arrumar quebras de linha"
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:921
+#: src/modules/clipboard/e_mod_main.c:353
 #: src/modules/clipboard/e_mod_main.c:922
 #: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
 msgid "Clipboard"
 msgstr "Área de transferência"
 
@@ -10225,27 +10227,27 @@ msgstr " Itens no histórico"
 msgid "Clipboard Settings"
 msgstr "Definições da área de transferência"
 
-#: src/modules/clipboard/e_mod_main.c:383
+#: src/modules/clipboard/e_mod_main.c:384
 msgid "Lock item"
 msgstr "Bloquear item"
 
-#: src/modules/clipboard/e_mod_main.c:394
+#: src/modules/clipboard/e_mod_main.c:395
 msgid "Edit item"
 msgstr "Editar item"
 
-#: src/modules/clipboard/e_mod_main.c:401
+#: src/modules/clipboard/e_mod_main.c:402
 msgid "Delete item"
 msgstr "Eliminar item"
 
-#: src/modules/clipboard/e_mod_main.c:418
+#: src/modules/clipboard/e_mod_main.c:419
 msgid "Ignore history"
 msgstr "Ignorar histórico"
 
-#: src/modules/clipboard/e_mod_main.c:663
+#: src/modules/clipboard/e_mod_main.c:664
 msgid "Confirm History Deletion"
 msgstr "Confirmar para eliminar histórico"
 
-#: src/modules/clipboard/e_mod_main.c:665
+#: src/modules/clipboard/e_mod_main.c:666
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
@@ -10253,22 +10255,22 @@ msgstr ""
 "Solicitou a eliminação do histórico da área de transferência.<br><br>Tem a "
 "certeza que o quer fazer?"
 
-#: src/modules/clipboard/e_mod_main.c:750
+#: src/modules/clipboard/e_mod_main.c:751
 msgid "Confirm Item Deletion"
 msgstr "Confirmar eliminação do item"
 
-#: src/modules/clipboard/e_mod_main.c:752
+#: src/modules/clipboard/e_mod_main.c:753
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
 "Solicitou a eliminação do item atual.<br><br>Tem a certeza que o quer fazer?"
 
-#: src/modules/clipboard/e_mod_main.c:780
+#: src/modules/clipboard/e_mod_main.c:781
 msgid "Clipboard: Edit Item"
 msgstr "Área de transferência: Editar item"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
 msgstr "Editar o conteúdo do item:"
 

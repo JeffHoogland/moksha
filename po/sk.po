@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-27 16:27+0100\n"
+"POT-Creation-Date: 2023-03-06 16:07+0100\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -1229,8 +1229,8 @@ msgstr "Vybrať spustiteľný súbor"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:214
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Delete"
 msgstr "Zmazať"
 
@@ -1681,7 +1681,7 @@ msgstr "Nie pre všetko"
 msgid "Yes to all"
 msgstr "Áno na všetko"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Upozornenia"
@@ -2527,9 +2527,9 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:450
+#: src/modules/notification/e_mod_main.c:452
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:441 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -2736,27 +2736,27 @@ msgstr "Žiadne moduly vybrané."
 msgid "More than one module selected."
 msgstr "Viac ako jeden modul vybraný."
 
-#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
+#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
 msgid "Remove Gadget"
 msgstr "Odstrániť widget"
 
-#: src/bin/e_int_gadcon_config.c:705
+#: src/bin/e_int_gadcon_config.c:707
 msgid "Loaded Gadgets"
 msgstr "Zapnuté widgety"
 
-#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
+#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
 msgid "Add Gadget"
 msgstr "Pridať widget"
 
-#: src/bin/e_int_gadcon_config.c:725
+#: src/bin/e_int_gadcon_config.c:727
 msgid "Available Gadgets"
 msgstr "Dostupné widgety"
 
-#: src/bin/e_int_gadcon_config.c:787
+#: src/bin/e_int_gadcon_config.c:789
 msgid "Shelf Contents"
 msgstr "Obsah lišty"
 
-#: src/bin/e_int_gadcon_config.c:793
+#: src/bin/e_int_gadcon_config.c:795
 msgid "Toolbar Contents"
 msgstr "Obsah panelu"
 
@@ -3630,8 +3630,8 @@ msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Keep"
 msgstr "Ponechať"
 
@@ -5744,7 +5744,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:437
+#: src/modules/notification/e_mod_main.c:439
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -7128,8 +7128,8 @@ msgid "Assign"
 msgstr "Priradiť"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:427
-#: src/modules/clipboard/e_mod_main.c:428
+#: src/modules/notification/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Vyčistiť"
 
@@ -9533,29 +9533,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
+#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
 msgid "Systray Error"
 msgstr "Chyba Systray"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:536
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Systray nemôže nastaviť svoje pozadie na neviditeľné"
 
-#: src/modules/systray/e_mod_main.c:945
-msgid "Systray cannot work in a shelf that is set to below everything."
-msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým."
-
-#: src/modules/systray/e_mod_main.c:1140
-msgid "Systray"
-msgstr "Systray"
-
-#: src/modules/systray/e_mod_main.c:1163
+#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
 msgid "Another systray exists"
 msgstr "Ďalší systray existuje"
 
-#: src/modules/systray/e_mod_main.c:1164
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Tu môže byť len jeden widget systray a ďalší už existuje."
+
+#: src/modules/systray/e_mod_main.c:952
+msgid "Systray cannot work in a shelf that is set to below everything."
+msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým."
+
+#: src/modules/systray/e_mod_main.c:1147
+msgid "Systray"
+msgstr "Systray"
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 msgid "Screenshot"
@@ -9967,6 +9967,7 @@ msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:273
+#: src/modules/notification/e_mod_main.c:369
 msgid "Notification"
 msgstr "Notifikácia"
 
@@ -9986,32 +9987,32 @@ msgstr ""
 "Chyba počas inicializácie DBus! Skontrolujte prosím, či je dbus správne "
 "nainštalovaný a beží."
 
-#: src/modules/notification/e_mod_main.c:419
-#: src/modules/clipboard/e_mod_main.c:410
+#: src/modules/notification/e_mod_main.c:421
+#: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Prázdne"
 
-#: src/modules/notification/e_mod_main.c:615
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Vstup do režimu Prezentácie"
 
-#: src/modules/notification/e_mod_main.c:616
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha je v režime <br>prezentácie<br>"
 
-#: src/modules/notification/e_mod_main.c:620
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Ukončenie režimu prezentácie "
 
-#: src/modules/notification/e_mod_main.c:621
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Režim prezentácie je ukončený"
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Vstup do offline režimu"
 
-#: src/modules/notification/e_mod_main.c:636
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10019,11 +10020,11 @@ msgstr ""
 "Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
 "moduly ktoré využívajú vzdialené služby."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Ukončenie offline režimu"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10031,7 +10032,7 @@ msgstr ""
 "Teraz v <b>online</b> režime.<br>Moduly používajúce sieť teraz znovu spustia "
 "bežné úlohy"
 
-#: src/modules/notification/e_mod_main.c:701
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "Platnosť notifikácie vypršala!"
 
@@ -10161,9 +10162,10 @@ msgid " Trim Newlines"
 msgstr " Zruš znak konca riadku"
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:921
+#: src/modules/clipboard/e_mod_main.c:353
 #: src/modules/clipboard/e_mod_main.c:922
 #: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
 msgid "Clipboard"
 msgstr "Správca schránky"
 
@@ -10199,37 +10201,37 @@ msgstr " Položiek v histórii"
 msgid "Clipboard Settings"
 msgstr "Nastavenie Správcu schránky"
 
-#: src/modules/clipboard/e_mod_main.c:383
+#: src/modules/clipboard/e_mod_main.c:384
 msgid "Lock item"
 msgstr "Zamknúť"
 
-#: src/modules/clipboard/e_mod_main.c:394
+#: src/modules/clipboard/e_mod_main.c:395
 msgid "Edit item"
 msgstr "Editovať"
 
-#: src/modules/clipboard/e_mod_main.c:401
+#: src/modules/clipboard/e_mod_main.c:402
 msgid "Delete item"
 msgstr "Vymazať"
 
-#: src/modules/clipboard/e_mod_main.c:418
+#: src/modules/clipboard/e_mod_main.c:419
 msgid "Ignore history"
 msgstr "Ignorovať históriu"
 
-#: src/modules/clipboard/e_mod_main.c:663
+#: src/modules/clipboard/e_mod_main.c:664
 msgid "Confirm History Deletion"
 msgstr "Potvrdiť zmazanie histórie"
 
-#: src/modules/clipboard/e_mod_main.c:665
+#: src/modules/clipboard/e_mod_main.c:666
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "Požadujete zmazanie histórie.<br><br>Ste si istý, že ju chcete zmazať?"
 
-#: src/modules/clipboard/e_mod_main.c:750
+#: src/modules/clipboard/e_mod_main.c:751
 msgid "Confirm Item Deletion"
 msgstr "Potvrdiť zmazanie položky"
 
-#: src/modules/clipboard/e_mod_main.c:752
+#: src/modules/clipboard/e_mod_main.c:753
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
@@ -10237,11 +10239,11 @@ msgstr ""
 "Požadujete zmazanie aktuálnej položky.<br><br>Ste si istý, že ju chcete "
 "zmazať?"
 
-#: src/modules/clipboard/e_mod_main.c:780
+#: src/modules/clipboard/e_mod_main.c:781
 msgid "Clipboard: Edit Item"
 msgstr "Manažér schránky: Editácia položky"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
 msgstr "Editovať aktuálnu položku"
 

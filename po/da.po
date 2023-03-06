@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-02-27 16:27+0100\n"
+"POT-Creation-Date: 2023-03-06 16:07+0100\n"
 "PO-Revision-Date: 2009-12-31 01:44+0000\n"
 "Last-Translator: nanker <Unknown>\n"
 "Language-Team: Danish\n"
@@ -1331,8 +1331,8 @@ msgstr "Vælg en kørbar fil"
 #: src/modules/ibar/e_mod_config.c:118 src/modules/ibar/e_mod_config.c:214
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Delete"
 msgstr "Slet"
 
@@ -1821,7 +1821,7 @@ msgstr "Nej til alt"
 msgid "Yes to all"
 msgstr "Ja til alt"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:701
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:632
 msgid "Warning"
 msgstr "Advarsel"
@@ -2752,9 +2752,9 @@ msgstr "anmodning Position"
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:450
+#: src/modules/notification/e_mod_main.c:452
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:441 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 #, fuzzy
 msgid "Settings"
 msgstr "Indstillinger"
@@ -2983,32 +2983,32 @@ msgstr "Ingen moduler valgt."
 msgid "More than one module selected."
 msgstr "Mere end et modul vælges."
 
-#: src/bin/e_int_gadcon_config.c:700 src/bin/e_int_gadcon_config.c:758
+#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
 #, fuzzy
 msgid "Remove Gadget"
 msgstr "Fjern gadget"
 
-#: src/bin/e_int_gadcon_config.c:705
+#: src/bin/e_int_gadcon_config.c:707
 #, fuzzy
 msgid "Loaded Gadgets"
 msgstr "Tilføj gadget"
 
-#: src/bin/e_int_gadcon_config.c:720 src/bin/e_int_gadcon_config.c:753
+#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
 #, fuzzy
 msgid "Add Gadget"
 msgstr "Tilføj gadget"
 
-#: src/bin/e_int_gadcon_config.c:725
+#: src/bin/e_int_gadcon_config.c:727
 #, fuzzy
 msgid "Available Gadgets"
 msgstr "tilgængelige Gadgets"
 
-#: src/bin/e_int_gadcon_config.c:787
+#: src/bin/e_int_gadcon_config.c:789
 #, fuzzy
 msgid "Shelf Contents"
 msgstr "hylde Indhold"
 
-#: src/bin/e_int_gadcon_config.c:793
+#: src/bin/e_int_gadcon_config.c:795
 #, fuzzy
 msgid "Toolbar Contents"
 msgstr "Toolbar Indhold"
@@ -3929,8 +3929,8 @@ msgstr "Vil du gerne unloade dette modul?<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:668
-#: src/modules/clipboard/e_mod_main.c:755
+#: src/modules/ibar/e_mod_config.c:214 src/modules/clipboard/e_mod_main.c:669
+#: src/modules/clipboard/e_mod_main.c:756
 msgid "Keep"
 msgstr ""
 
@@ -6282,7 +6282,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:437
+#: src/modules/notification/e_mod_main.c:439
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 #, fuzzy
@@ -7898,8 +7898,8 @@ msgid "Assign"
 msgstr "Tildel"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:427
-#: src/modules/clipboard/e_mod_main.c:428
+#: src/modules/notification/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Ryd"
 
@@ -10663,36 +10663,36 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:944
+#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
 #, fuzzy
 msgid "Systray Error"
 msgstr "Systray Fejl"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:536
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:945
+#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#, fuzzy
+msgid "Another systray exists"
+msgstr "En anden systray eksisterer"
+
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#, fuzzy
+msgid "There can be only one systray gadget and another one already exists."
+msgstr ""
+"Der kan kun være én systray gadget og en anden der allerede eksisterer."
+
+#: src/modules/systray/e_mod_main.c:952
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Systray kan ikke arbejde på en hylde , der er indstillet til under alt."
 
-#: src/modules/systray/e_mod_main.c:1140
+#: src/modules/systray/e_mod_main.c:1147
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"
-
-#: src/modules/systray/e_mod_main.c:1163
-#, fuzzy
-msgid "Another systray exists"
-msgstr "En anden systray eksisterer"
-
-#: src/modules/systray/e_mod_main.c:1164
-#, fuzzy
-msgid "There can be only one systray gadget and another one already exists."
-msgstr ""
-"Der kan kun være én systray gadget og en anden der allerede eksisterer."
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
 #, fuzzy
@@ -11156,6 +11156,7 @@ msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:273
+#: src/modules/notification/e_mod_main.c:369
 #, fuzzy
 msgid "Notification"
 msgstr "Rotation"
@@ -11175,53 +11176,53 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:419
-#: src/modules/clipboard/e_mod_main.c:410
+#: src/modules/notification/e_mod_main.c:421
+#: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:615
+#: src/modules/notification/e_mod_main.c:617
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Præsentation tilstand"
 
-#: src/modules/notification/e_mod_main.c:616
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:620
+#: src/modules/notification/e_mod_main.c:622
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Præsentation tilstand"
 
-#: src/modules/notification/e_mod_main.c:621
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Præsentation tilstand Toggle"
 
-#: src/modules/notification/e_mod_main.c:635
+#: src/modules/notification/e_mod_main.c:637
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "Offlinetilstand"
 
-#: src/modules/notification/e_mod_main.c:636
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:644
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "Offlinetilstand"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:701
+#: src/modules/notification/e_mod_main.c:703
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Rotation"
@@ -11369,9 +11370,10 @@ msgid " Trim Newlines"
 msgstr ""
 
 #: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:921
+#: src/modules/clipboard/e_mod_main.c:353
 #: src/modules/clipboard/e_mod_main.c:922
 #: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
 msgid "Clipboard"
 msgstr ""
 
@@ -11413,32 +11415,32 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "Ibar Indstillinger"
 
-#: src/modules/clipboard/e_mod_main.c:383
+#: src/modules/clipboard/e_mod_main.c:384
 #, fuzzy
 msgid "Lock item"
 msgstr "Lås mislykkedes"
 
-#: src/modules/clipboard/e_mod_main.c:394
+#: src/modules/clipboard/e_mod_main.c:395
 #, fuzzy
 msgid "Edit item"
 msgstr "Redigér ikon"
 
-#: src/modules/clipboard/e_mod_main.c:401
+#: src/modules/clipboard/e_mod_main.c:402
 #, fuzzy
 msgid "Delete item"
 msgstr "Slet gjort"
 
-#: src/modules/clipboard/e_mod_main.c:418
+#: src/modules/clipboard/e_mod_main.c:419
 #, fuzzy
 msgid "Ignore history"
 msgstr "Ignorér dette"
 
-#: src/modules/clipboard/e_mod_main.c:663
+#: src/modules/clipboard/e_mod_main.c:664
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "Bekræft sletning"
 
-#: src/modules/clipboard/e_mod_main.c:665
+#: src/modules/clipboard/e_mod_main.c:666
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
@@ -11447,12 +11449,12 @@ msgstr ""
 "Du anmodes om at slette denne hylde.<br><br>Er du sikker på du vil slette "
 "det."
 
-#: src/modules/clipboard/e_mod_main.c:750
+#: src/modules/clipboard/e_mod_main.c:751
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "Bekræft sletning"
 
-#: src/modules/clipboard/e_mod_main.c:752
+#: src/modules/clipboard/e_mod_main.c:753
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
@@ -11461,12 +11463,12 @@ msgstr ""
 "Du anmodes om at slette denne hylde.<br><br>Er du sikker på du vil slette "
 "det."
 
-#: src/modules/clipboard/e_mod_main.c:780
+#: src/modules/clipboard/e_mod_main.c:781
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "Ibar Indstillinger"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
 msgstr ""
 
