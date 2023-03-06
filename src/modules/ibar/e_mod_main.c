@@ -1073,15 +1073,14 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
    IBar_Icon *ic;
    E_Border *bd = data;
    Evas_Event_Mouse_Up *ev = event_info;
-   int gy;
+   int gx, gy;
    
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
    if (ev->button == 3)
      {
-        e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon,
-                                          NULL, &gy, NULL, NULL); 
-        e_int_border_menu_show(bd, ev->canvas.x, gy, 0, ev->timestamp);
+        e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &gx, &gy, NULL, NULL);
+        e_int_border_menu_show(bd, gx, gy, 0, ev->timestamp);
         evas_object_event_callback_add(bd->border_menu->bg_object, EVAS_CALLBACK_HIDE, _ibar_cb_icon_menu_client_menu_del, ic->ibar);
         return;
      }
