@@ -470,7 +470,7 @@ _tasks_refill_all(void)
      {
         _tasks_refill(tasks);
      }
-    _tasks_autoresize(NULL);
+     ecore_timer_add(0.01, _tasks_autoresize, NULL);
 }
 
 static void
