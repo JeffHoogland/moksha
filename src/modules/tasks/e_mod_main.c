@@ -69,6 +69,7 @@ static void         _tasks_item_fill(Tasks_Item *item);
 static void         _tasks_item_free(Tasks_Item *item);
 static void         _tasks_item_signal_emit(Tasks_Item *item, char *sig, char *src);
 
+
 static Config_Item *_tasks_config_item_get(const char *id);
 
 static void         _tasks_cb_menu_configure(void *data, E_Menu *m, E_Menu_Item *mi);
@@ -91,6 +92,7 @@ static Eina_Bool    _tasks_cb_event_border_property(void *data, int type, void *
 static Eina_Bool    _tasks_cb_event_desk_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_systray_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_urgent_change(void *data, int type, void *event);
+static Eina_Bool    _tasks_autoresize(void *data __UNUSED__);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -386,7 +388,7 @@ _tasks_refill(Tasks *tasks)
    Eina_List *l;
    E_Border *border;
    Tasks_Item *item;
-   Evas_Coord w, h, tw, th, gw, gh;
+   Evas_Coord w, h, tw, th;
 
    while (tasks->items)
      {
@@ -421,14 +423,12 @@ _tasks_refill(Tasks *tasks)
           {
              if (tasks->horizontal)
              {
-               e_gadcon_client_min_size_set(tasks->gcc,
+                if (tasks->config->autoresize)
+                  evas_object_hide(tasks->gcc->o_base);
+
+                e_gadcon_client_min_size_set(tasks->gcc,
                                             w * eina_list_count(tasks->items),
                                             h);
-               if (tasks->config->autoresize)
-               {
-                 evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
-                 e_gadcon_client_min_size_set(tasks->gcc, gw - 2, gh);
-               }
              }
              else
                e_gadcon_client_min_size_set(tasks->gcc,
@@ -438,6 +438,26 @@ _tasks_refill(Tasks *tasks)
      }
    else
      e_gadcon_client_min_size_set(tasks->gcc, 0, 0);
+}
+
+static Eina_Bool
+_tasks_autoresize(void *data __UNUSED__)
+{
+   const Eina_List *l;
+   Tasks *tasks;
+   int gw, gh;
+
+     EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
+       {
+          if (tasks->config->autoresize)
+          {
+            evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
+            e_gadcon_client_min_size_set(tasks->gcc, gw - 2, gh);
+            evas_object_show(tasks->gcc->o_base);
+            return EINA_FALSE;
+          }
+       }
+    return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -450,6 +470,7 @@ _tasks_refill_all(void)
      {
         _tasks_refill(tasks);
      }
+    _tasks_autoresize(NULL);
 }
 
 static void
@@ -736,6 +757,8 @@ _tasks_config_updated(Config_Item *config)
      {
         if (tasks->config == config) _tasks_refill(tasks);
      }
+
+   ecore_timer_add(0.5, _tasks_autoresize, NULL);
 }
 
 static void
