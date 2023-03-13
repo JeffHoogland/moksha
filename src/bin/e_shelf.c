@@ -22,6 +22,7 @@ static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
 //static void         _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static void         _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
+static void         _e_shelf_cb_menu_refresh(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
 static Eina_Bool    _e_shelf_cb_hide_animator_timer(void *data);
 static Eina_Bool    _e_shelf_cb_hide_urgent_timer(void *data);
@@ -1061,14 +1062,6 @@ e_shelf_autohide_set(E_Shelf *es, int autohide_type)
 */
 }
 
-static Eina_Bool
-_e_shelf_delay_populate(E_Shelf *es)
-{
-   e_gadcon_unpopulate(es->gadcon);
-   e_gadcon_populate(es->gadcon);
-   return EINA_FALSE;
-}
-
 EAPI void
 e_shelf_send_offset(E_Shelf *es)
 {
@@ -1107,8 +1100,6 @@ e_shelf_send_offset(E_Shelf *es)
       default:
         break;
      }
-
-     ecore_timer_add(0.5, (Ecore_Task_Cb)_e_shelf_delay_populate, es);
 }
 
 EAPI E_Shelf *
@@ -1159,7 +1150,11 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
          * the E_EVENT_GADCON_POPULATE handler
          */
         if ((es->gadcon->populated_classes && es->gadcon->clients) || (!es->gadcon->cf->clients))
-          if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
+          if (e_shelf_desk_visible(es, NULL))
+            {
+               e_shelf_show(es);
+              _e_shelf_cb_menu_refresh(es, NULL, NULL);
+            }
      }
 
    e_shelf_toggle(es, 0);
