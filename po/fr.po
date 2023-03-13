@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-03-06 16:07+0100\n"
-"PO-Revision-Date: 2023-03-06 16:57+0100\n"
+"PO-Revision-Date: 2023-03-12 16:28+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -3154,7 +3154,7 @@ msgstr "Moksha ne parvient pas à initialiser son système de thèmes.\n"
 
 #: src/bin/e_main.c:702
 msgid "Moksha cannot set up its init screen.\n"
-msgstr "Moksha ne parvient pas à initialiser son écran d'initialisation.\n"
+msgstr "Moksha ne parvient pas à configurer son écran d'initialisation.\n"
 
 #: src/bin/e_main.c:717
 msgid "Starting International Support"
@@ -3623,7 +3623,7 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Erreur de chargement du module %s.<br>Le chemin absolu vers le module est "
+"Erreur de chargement du module %s.<br>Le chemin absolu vers le module est :"
 "<br>%s<br>L'erreur rapportée est :<br>%s<br>"
 
 #: src/bin/e_module.c:252
@@ -3664,7 +3664,7 @@ msgid ""
 msgstr ""
 "Les modules suivants ne sont pas conformes au standard de<br>Moksha et "
 "peuvent provoquer bogues et plantages.<br>Désactivez-les avant tout rapport "
-"de bogue.<br><br>La liste des modules est la suivante :<br><br>"
+"de bogue.<br><br>Module(s) instable(s) :<br><br>"
 
 #: src/bin/e_module.c:819
 msgid "Unstable module tainting"
@@ -3778,7 +3778,7 @@ msgstr "Erreur de rayon"
 
 #: src/bin/e_shelf.c:1196
 msgid "A shelf with that name already exists!"
-msgstr "Il existe déjà un rayon avec ce nom !"
+msgstr "Il existe déjà un rayon de ce nom !"
 
 #: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
 msgid "Stop Moving Gadgets"
@@ -5857,7 +5857,7 @@ msgid ""
 "hilight> to abort."
 msgstr ""
 "Appuyez sur le modificateur de votre choix et<br>sur un bouton de votre "
-"souris ou<br> ou tournant la molette, afin d'assigner<br>un raccourci souris."
+"souris ou<br> en tournant la molette, afin d'assigner<br>un raccourci souris."
 "<br>Appuyez sur <hilight>Échap</hilight> pour annuler."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
@@ -6360,7 +6360,7 @@ msgstr "Taille du tampon des polices"
 #: src/modules/conf_performance/e_int_config_performance.c:134
 #, c-format
 msgid "%1.1f MiB"
-msgstr "%1.1f Mo"
+msgstr "%1.1f Mio"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
@@ -6370,7 +6370,7 @@ msgstr "Taille du tampon des images"
 #: src/modules/fileman/e_mod_config.c:418
 #, c-format
 msgid "%1.0f MiB"
-msgstr "%1.0f Mo"
+msgstr "%1.0f Mio"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Caches"
@@ -6378,7 +6378,7 @@ msgstr "Tampons"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
 msgid "Number of Edje files to cache"
-msgstr "Nombre de fichiers EDJ à mettre en tampon"
+msgstr "Nombre de fichiers EDJ à mettre en cache"
 
 #: src/modules/conf_performance/e_int_config_performance.c:150
 #, c-format
@@ -6387,7 +6387,7 @@ msgstr "%1.0f fichiers"
 
 #: src/modules/conf_performance/e_int_config_performance.c:154
 msgid "Number of Edje collections to cache"
-msgstr "Nombre de collections EDJ à mettre en tampon"
+msgstr "Nombre de collections EDJ à mettre en cache"
 
 #: src/modules/conf_performance/e_int_config_performance.c:156
 #, c-format
@@ -6632,7 +6632,7 @@ msgstr "Fond de base de la boîte de dialogue"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:98
 msgid "Shelf Background Base"
-msgstr "Arrière-plan de base du rayon"
+msgstr "Fond de base du rayon"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:99
 msgid "File Manager Background Base"
@@ -6711,11 +6711,11 @@ msgstr "Fond de base de l'en-tête de liste impair"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:122
 msgid "Radio Text"
-msgstr "Texte de bouton radio"
+msgstr "Texte du bouton radio"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:123
 msgid "Radio Text Disabled"
-msgstr "Texte de bouton radio désactivé"
+msgstr "Texte du bouton radio désactivé"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:124
 msgid "Slider Text"
@@ -7739,23 +7739,23 @@ msgstr "Cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:196 src/modules/cpufreq/e_mod_config.c:93
 msgid "Fast (4 ticks)"
-msgstr "Rapide (4 tics)"
+msgstr "Rapide [4 tics]"
 
 #: src/modules/cpufreq/e_mod_main.c:203 src/modules/cpufreq/e_mod_config.c:95
 msgid "Medium (8 ticks)"
-msgstr "Moyenne (8 tics)"
+msgstr "Moyen(ne) [8 tics]"
 
 #: src/modules/cpufreq/e_mod_main.c:210 src/modules/cpufreq/e_mod_config.c:97
 msgid "Normal (32 ticks)"
-msgstr "Normale (32 tics)"
+msgstr "Normal(e) [32 tics]"
 
 #: src/modules/cpufreq/e_mod_main.c:217 src/modules/cpufreq/e_mod_config.c:99
 msgid "Slow (64 ticks)"
-msgstr "Lente (64 tics)"
+msgstr "Lent(e) [64 tics]"
 
 #: src/modules/cpufreq/e_mod_main.c:224 src/modules/cpufreq/e_mod_config.c:101
 msgid "Very Slow (256 ticks)"
-msgstr "Très lente (256 tics)"
+msgstr "Très lent(e) [256 tics]"
 
 #: src/modules/cpufreq/e_mod_main.c:240
 msgid "Manual"
@@ -7763,7 +7763,7 @@ msgstr "Manuel"
 
 #: src/modules/cpufreq/e_mod_main.c:244 src/modules/cpufreq/e_mod_main.c:280
 msgid "Lower Power Automatic"
-msgstr "Mode de plus faible puissance"
+msgstr "Basse puissance automatique"
 
 #: src/modules/cpufreq/e_mod_main.c:246 src/modules/cpufreq/e_mod_main.c:282
 msgid "Automatic Interactive"
@@ -7801,11 +7801,11 @@ msgstr "Périodicité des mises à jour"
 
 #: src/modules/cpufreq/e_mod_main.c:395
 msgid "Set CPU Power Policy"
-msgstr "Profil énergétique du CPU"
+msgstr "Définir le profil énergétique du CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:402
 msgid "Set CPU Speed"
-msgstr "Déterminer la fréquence du CPU"
+msgstr "Définir la fréquence du CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:408
 msgid "Powersaving behavior"
@@ -7891,7 +7891,7 @@ msgstr "Paramètres de contrôle de la fréquence du processeur"
 
 #: src/modules/cpufreq/e_mod_config.c:91
 msgid "Update poll interval"
-msgstr "Fréquence de l'actualisation"
+msgstr "Intervalle d'actualisation"
 
 #: src/modules/cpufreq/e_mod_config.c:107
 msgid "Minimum Power State"
@@ -8332,7 +8332,7 @@ msgstr "Copier le chemin"
 
 #: src/modules/fileman/e_fwin.c:2178
 msgid "Run"
-msgstr "Executer"
+msgstr "Exécuter"
 
 #: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2579
 msgid "Open"
@@ -8450,7 +8450,7 @@ msgstr "Icône du fichier"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:136
 msgid "Basic Info"
-msgstr "Info basique"
+msgstr "Info de base"
 
 #: src/modules/fileman/e_int_config_mime_edit.c:137
 msgid "Mime:"
@@ -9996,19 +9996,19 @@ msgstr "Focaliser une fenêtre en particulier"
 
 #: src/modules/tiling/e_mod_tiling.c:4258
 msgid "Send to upper right corner"
-msgstr "Déplacer vers coin supérieur droit"
+msgstr "Déplacer vers le coin supérieur droit"
 
 #: src/modules/tiling/e_mod_tiling.c:4261
 msgid "Send to upper left corner"
-msgstr "Déplacer vers coin supérieur gauche"
+msgstr "Déplacer vers le coin supérieur gauche"
 
 #: src/modules/tiling/e_mod_tiling.c:4264
 msgid "Send to lower right corner"
-msgstr "Déplacer vers coin inférieur droit"
+msgstr "Déplacer vers le coin inférieur droit"
 
 #: src/modules/tiling/e_mod_tiling.c:4267
 msgid "Send to lower left corner"
-msgstr "Déplacer vers coin inférieur gauche"
+msgstr "Déplacer vers le coin inférieur gauche"
 
 #: src/modules/xkbswitch/e_mod_config.c:73
 msgid "Keyboard Settings"
