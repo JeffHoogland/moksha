@@ -1077,13 +1077,17 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
    IBar_Icon *ic;
    E_Border *bd = data;
    Evas_Event_Mouse_Up *ev = event_info;
+   E_Manager *man;
+   E_Container *con;
    int gx, gy;
    
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
    if (ev->button == 3)
      {
-        e_gadcon_client_geometry_get(ic->ibar->inst->gcc, &gx, &gy, NULL, NULL);
+        man = e_manager_current_get();
+        con = e_container_current_get(man);
+        ecore_x_pointer_xy_get(con->win, &gx, &gy);
         e_int_border_menu_show(bd, gx, gy, 0, ev->timestamp);
         evas_object_event_callback_add(bd->border_menu->bg_object, EVAS_CALLBACK_HIDE, _ibar_cb_icon_menu_client_menu_del, ic->ibar);
         return;
