@@ -22,7 +22,6 @@ static Eina_Bool    _e_shelf_cb_mouse_in(void *data, int type, void *event);
 //static void         _e_shelf_cb_mouse_out2(E_Shelf *es, Evas *e, Evas_Object *obj, Evas_Event_Mouse_Out *ev);
 static int          _e_shelf_cb_id_sort(const void *data1, const void *data2);
 static void         _e_shelf_cb_menu_rename(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
-static void         _e_shelf_cb_menu_refresh(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__);
 static Eina_Bool    _e_shelf_cb_hide_animator(void *data);
 static Eina_Bool    _e_shelf_cb_hide_animator_timer(void *data);
 static Eina_Bool    _e_shelf_cb_hide_urgent_timer(void *data);
@@ -39,6 +38,7 @@ static void         _e_shelf_cb_dummy_moveresize(E_Shelf *, Evas *e, Evas_Object
 static Eina_Bool    _e_shelf_gadcon_populate_handler_cb(void *, int, void *);
 static Eina_Bool    _e_shelf_module_init_end_handler_cb(void *, int, void *);
 static void         _e_shelf_event_rename_end_cb(void *data, E_Event_Shelf *ev);
+static Eina_Bool    _e_shelf_delay_populate(void *data);
 
 
 static Eina_List *shelves = NULL;
@@ -328,6 +328,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E
       ev = E_NEW(E_Event_Shelf, 1);
       ev->shelf = es;
       ecore_event_add(E_EVENT_SHELF_ADD, ev, NULL, NULL);
+      es->icons_offset = ecore_timer_add(0.5, _e_shelf_delay_populate, es);
    }
 
    return es;
@@ -1062,6 +1063,16 @@ e_shelf_autohide_set(E_Shelf *es, int autohide_type)
 */
 }
 
+static Eina_Bool
+_e_shelf_delay_populate(void *data)
+{
+   E_Shelf *es = data;
+
+   e_gadcon_unpopulate(es->gadcon);
+   e_gadcon_populate(es->gadcon);
+   return EINA_FALSE;
+}
+
 EAPI void
 e_shelf_send_offset(E_Shelf *es)
 {
@@ -1150,11 +1161,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
          * the E_EVENT_GADCON_POPULATE handler
          */
         if ((es->gadcon->populated_classes && es->gadcon->clients) || (!es->gadcon->cf->clients))
-          if (e_shelf_desk_visible(es, NULL))
-            {
-               e_shelf_show(es);
-              _e_shelf_cb_menu_refresh(es, NULL, NULL);
-            }
+          if (e_shelf_desk_visible(es, NULL)) e_shelf_show(es);
      }
 
    e_shelf_toggle(es, 0);
@@ -1300,6 +1307,11 @@ _e_shelf_free(E_Shelf *es)
      {
         ecore_timer_del(es->instant_timer);
         es->instant_timer = NULL;
+     }
+   if (es->icons_offset)
+     {
+        ecore_timer_del(es->icons_offset);
+        es->icons_offset = NULL;
      }
 
    if (es->menu)
