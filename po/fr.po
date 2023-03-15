@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-03-06 16:07+0100\n"
-"PO-Revision-Date: 2023-03-12 16:28+0100\n"
+"PO-Revision-Date: 2023-03-15 11:25+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -10194,7 +10194,7 @@ msgstr "Éléments dans l'historique"
 
 #: src/modules/notification/e_mod_config.c:210
 msgid "Gadget animation delay [s]"
-msgstr "Délai animation du gadget [s]"
+msgstr "Délai de l'animation du gadget [s]"
 
 #: src/modules/notification/e_mod_config.c:218
 msgid "Apps blacklist (app1,app2,app3...)"
@@ -10236,7 +10236,7 @@ msgstr " Supprimer les espaces blancs"
 
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
-msgstr "  Supprimer les nouvelles lignes"
+msgstr " Supprimer les sauts de lignes"
 
 #: src/modules/clipboard/e_mod_config.c:219
 #: src/modules/clipboard/e_mod_main.c:353
