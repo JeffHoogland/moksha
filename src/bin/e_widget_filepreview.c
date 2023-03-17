@@ -68,12 +68,12 @@ static void _e_wid_fprev_preview_fm(E_Widget_Data *wd);
 static void
 _e_wid_fprev_preview_update(void *data, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Widget_Data *wd;
+   E_Widget_Data *wd = data;
    Evas_Object *o;
    char buf[256];
    int iw = 0, ih = 0;
 
-   wd = data;
+   if (!wd->o_preview_extra) return;
    if (evas_object_image_extension_can_load_get(wd->path))
      {
         o = evas_object_image_add(evas_object_evas_get(obj));
@@ -409,7 +409,8 @@ _e_wid_fprev_preview_video_widgets(E_Widget_Data *wd)
    e_widget_on_change_hook_set(o, _e_wid_fprev_preview_video_change, em);
    WIDROW(_("Length:"), o_preview_extra, o_preview_extra_entry, 40);
    WIDROW(_("Size:"), o_preview_size, o_preview_size_entry, 40);
-   WIDROW(_("Resolution:"), o_preview_resolution, o_preview_resolution_entry, 40);
+   if (!audio_artwork)
+     WIDROW(_("Resolution:"), o_preview_resolution, o_preview_resolution_entry, 40);
    /* FIXME: other infos? */
 
    e_widget_list_object_append(wd->o_preview_list,
