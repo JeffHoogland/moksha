@@ -137,13 +137,58 @@ _e_wid_fprev_img_update(E_Widget_Data *wd, const char *path, const char *key)
 {
    if (!path) return;
    if (wd->is_dir || wd->is_txt) return;
+   evas_object_smart_callback_del_full(wd->o_preview_preview, "preview_update", _e_wid_fprev_preview_update, wd);
    if (eina_str_has_extension(path, ".gif"))
      {
         e_widget_preview_file_set(wd->o_preview_preview, path, key);
         _e_wid_fprev_preview_update(wd, wd->o_preview_preview, NULL);
      }
+   else if (eina_str_has_extension(path, ".edj"))
+     {
+        if (key)
+          e_widget_preview_edje_set(wd->o_preview_preview, path, key);
+        else
+          {
+             Eina_List *l;
+             Eina_Stringshare *str;
+             Eina_Bool set = EINA_FALSE;
+
+             l = edje_file_collection_list(path);
+             if (eina_list_count(l) < 2)
+               {
+                  e_widget_preview_thumb_set(wd->o_preview_preview, path, eina_list_data_get(l), wd->w, wd->h);
+                  set = EINA_TRUE;
+                  edje_file_collection_list_free(l), l = NULL;
+               }
+             EINA_LIST_FREE(l, str)
+               {
+                  Eina_Bool use = EINA_FALSE;
+
+                  if (!strcmp(str, "icon")) use = EINA_TRUE;
+                  else if (!strcmp(str, "e/desktop/background")) use = EINA_TRUE;
+                  else if (!strcmp(str, "e/init/splash")) use = EINA_TRUE;
+
+                  if (use)
+                    {
+                       e_widget_preview_thumb_set(wd->o_preview_preview, path, str, wd->w, wd->h);
+                       set = EINA_TRUE;
+                       break;
+                    }
+                  eina_stringshare_del(str);
+               }
+             if (!set)
+               {
+                  e_widget_preview_edje_set(wd->o_preview_preview, path, NULL);
+                  _e_wid_fprev_preview_update(wd, wd->o_preview_preview, NULL);
+               }
+             if (l) edje_file_collection_list_free(l);
+          }
+     }
    else
-     e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
+     {
+        e_widget_preview_thumb_set(wd->o_preview_preview, path, key, wd->w, wd->h);
+        evas_object_smart_callback_add(wd->o_preview_preview, "preview_update", _e_wid_fprev_preview_update, wd);
+     }
 }
 
 static void
