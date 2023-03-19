@@ -716,8 +716,9 @@ _notification_show_actions(Popup_Items *sel_item)
 // Should be in a history.c file
 
 static Eina_Bool
-_notif_delay_stop_cb(Instance *inst)
+_notif_delay_stop_cb(void *data)
 {
+   Instance *inst = data;
    edje_object_signal_emit(inst->o_notif, "stop", "");
    return EINA_FALSE;
 }
@@ -740,17 +741,11 @@ gadget_text(int number)
    if (notification_cfg->mute)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", "X");
 
-   if (notification_cfg->jump_timer)
-   { //FIXME: You are trying to destroy a timer which seems dead already.
-     //ecore_timer_del(notification_cfg->jump_timer);
-     notification_cfg->jump_timer = NULL;
-   }
-
    if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0))
    {
      edje_object_signal_emit(inst->o_notif, "blink", "");
      notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay,
-                                   (Ecore_Task_Cb)_notif_delay_stop_cb, inst);
+                                   _notif_delay_stop_cb, inst);
    }
    else
      edje_object_signal_emit(inst->o_notif, "stop", "");
