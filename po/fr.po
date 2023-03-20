@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-03-06 16:07+0100\n"
-"PO-Revision-Date: 2023-03-15 11:25+0100\n"
+"PO-Revision-Date: 2023-03-20 07:38+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -4745,7 +4745,7 @@ msgstr "Exécution"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:94
 msgid "Only launch single instances"
-msgstr "Ne lancer que des instances uniques"
+msgstr "Instance unique pour les applications"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
 msgid "X11 Basics"
@@ -6481,7 +6481,7 @@ msgstr "Restaurer au démarrage"
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
 #, c-format
 msgid "Configured Shelves: Display %d"
-msgstr "Rayons configurés : écran %d"
+msgstr "Rayon(s) configuré(s) : écran %d"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:390
 #, c-format
