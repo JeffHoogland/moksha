@@ -8325,7 +8325,7 @@ _e_border_eval0(E_Border *bd)
                          }
                   //~ e_exec_instance_found(inst);
                   found = !!inst->borders;
-                  e_exec_instance_client_add(inst, bd);
+                  //~ e_exec_instance_client_add(inst, bd);
                   if (!found)
                     e_exec_instance_found(inst);
                }
