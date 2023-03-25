@@ -394,7 +394,7 @@ _systray_icon_add(Instance *inst, const Ecore_X_Window win)
    if ((w < 16) && (sz > 16))
      w = h = sz - 5;
 
-   w = h = e_util_icon_size_normalize(w - 1);
+   w = h = e_util_icon_size_normalize(w - 5);
    if (w > sz - 5)
      w = h = e_util_icon_size_normalize(sz - 5);
 
