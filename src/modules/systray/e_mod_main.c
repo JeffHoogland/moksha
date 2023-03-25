@@ -29,8 +29,8 @@
 #define XEMBED_FOCUS_FIRST                1
 #define XEMBED_FOCUS_LAST                 2
 
-#define SYSTRAY_MIN_W 16
-#define SYSTRAY_MIN_H 8
+//~ #define SYSTRAY_MIN_W 16
+//~ #define SYSTRAY_MIN_H 8
 
 static const char _Name[] = "Systray";
 static const char _name[] = "systray";
@@ -186,7 +186,7 @@ _systray_size_apply_do(Instance *inst)
    edje_object_message_signal_process(inst->ui.gadget);
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
    if (!o) return;
-   evas_object_size_hint_min_get(o, &w, &h);
+   //~ evas_object_size_hint_min_get(o, &w, &h);
 
    if (w < 1) w = 1;
    if (h < 1) h = 1;
@@ -394,7 +394,7 @@ _systray_icon_add(Instance *inst, const Ecore_X_Window win)
    if ((w < 16) && (sz > 16))
      w = h = sz - 5;
 
-   w = h = e_util_icon_size_normalize(w);
+   w = h = e_util_icon_size_normalize(w - 1);
    if (w > sz - 5)
      w = h = e_util_icon_size_normalize(sz - 5);
 
