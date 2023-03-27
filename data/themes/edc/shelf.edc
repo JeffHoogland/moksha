@@ -1,5 +1,4 @@
 group { name: "e/shelf/default/base";
-   alias: "e/shelf/alternate/base";
    data {
       /* this tells e the shelf is shaped, not rectangular */
 //      item: "shaped" "1";
@@ -138,6 +137,48 @@ group { name: "e/shelf/default/base";
       ORIENT_SATE("right_top", "vert")
       ORIENT_SATE("right_bottom", "vert")
 #undef ORIENT_SATE
+   }
+}
+
+group { name: "e/shelf/alternate/base";
+    inherit: "e/shelf/default/base";
+  parts {
+      part { name: "dots_start"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.offset: 0 0;
+            rel2.relative: 0.0 1.0;
+            rel2.offset: 0 0;
+            FIXED_SIZE(0, 0)
+            visible: 0;
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.offset: 0 0;
+            rel2.relative: 1.0 0.0;
+            rel2.offset: 0 0;
+            FIXED_SIZE(0, 0)
+            visible: 0;
+         }
+      }
+      part { name: "dots_end"; mouse_events: 0;
+         description { state: "default" 0.0;
+            image.normal: "holes_vert.png";
+            rel1.relative: 1.0 0.0;
+            rel1.offset:  0 0;
+            rel2.offset:  0 0;
+            FIXED_SIZE(0, 0)
+            visible: 0;
+         }
+         description { state: "vert" 0.0;
+            image.normal: "holes_horiz.png";
+            rel1.relative: 0.0 1.0;
+            rel1.offset:  0  0;
+            rel2.offset:  0  0;
+            FIXED_SIZE(0, 0)
+            visible: 0;
+         }
+      }
    }
 }
 
