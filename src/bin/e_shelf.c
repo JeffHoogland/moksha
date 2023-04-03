@@ -1073,7 +1073,7 @@ _e_shelf_delay_populate(void *data)
    return EINA_FALSE;
 }
 
-EAPI void
+static void
 e_shelf_send_offset(E_Shelf *es)
 {
    Edje_Message_Int_Set *msg;
