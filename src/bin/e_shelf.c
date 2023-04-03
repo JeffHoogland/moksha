@@ -1386,6 +1386,8 @@ _e_shelf_gadcon_size_request(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord 
    nw = es->w;
    nh = es->h;
    ww = hh = 0;
+   w = MAX(w, 16);
+   h = MAX(h, 16);
    evas_object_geometry_get(gc->o_container, NULL, NULL, &ww, &hh);
    switch (gc->orient)
      {
