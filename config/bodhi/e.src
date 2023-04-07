@@ -2007,9 +2007,9 @@ group "E_Config" struct {
     value "transition_desk" string: "vswipe";
     value "transition_change" string: "crossfade";
     value "remember_internal_windows" int: 3;
-    value "move_info_follows" int: 0;
+    value "move_info_follows" int: 1;
     value "resize_info_follows" int: 1;
-    value "move_info_visible" int: 1;
+    value "move_info_visible" int: 0;
     value "resize_info_visible" int: 1;
     value "focus_last_focused_per_desktop" int: 1;
     value "focus_revert_on_hide_or_close" int: 1;
