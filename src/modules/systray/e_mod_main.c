@@ -182,11 +182,11 @@ _systray_size_apply_do(Instance *inst)
      edje_object_signal_emit(inst->ui.gadget, "e,arrow,show,*", _sig_source);
    else
      edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
-
    edje_object_message_signal_process(inst->ui.gadget);
+   
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
    if (!o) return;
-   //~ evas_object_size_hint_min_get(o, &w, &h);
+   //~ evas_object_size_hint_min_get(o, &w, &h); 
 
    if (w < 1) w = 1;
    if (h < 1) h = 1;
@@ -194,7 +194,11 @@ _systray_size_apply_do(Instance *inst)
    icon_num = eina_list_count(inst->icons);
 
    if (icon_num == 0)
-     ecore_x_window_hide(inst->win.base);
+     {
+	   e_gadcon_client_min_size_set(inst->gcc, 0 , 0);
+       ecore_x_window_hide(inst->win.base);
+       return;
+     }
    else
      ecore_x_window_show(inst->win.base);
 
