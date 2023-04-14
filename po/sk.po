@@ -2914,7 +2914,7 @@ msgstr "Povoliť prekrytie okna lištou"
 #: src/bin/e_int_shelf_config.c:227
 #, c-format
 msgid "Height (%3.0f pixels)"
-msgstr "%3.0f pixelov"
+msgstr "Veľkosť lišty %3.0f px"
 
 #: src/bin/e_int_shelf_config.c:230
 #, c-format
