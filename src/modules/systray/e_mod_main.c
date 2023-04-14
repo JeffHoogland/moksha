@@ -194,11 +194,7 @@ _systray_size_apply_do(Instance *inst)
    icon_num = eina_list_count(inst->icons);
 
    if (icon_num == 0)
-     {
-	   e_gadcon_client_min_size_set(inst->gcc, 0 , 0);
-       ecore_x_window_hide(inst->win.base);
-       return;
-     }
+     ecore_x_window_hide(inst->win.base);
    else
      ecore_x_window_show(inst->win.base);
 
