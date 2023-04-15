@@ -55,8 +55,6 @@ static E_Module *systray_mod = NULL;
 EINTERN Instance *instance = NULL; /* only one systray ever possible */
 static char tmpbuf[4096]; /* general purpose buffer, just use immediately */
 
-static void   _systray_size_apply_do(Instance *inst);
-
 static Eina_Bool
 _is_horiz(Instance *inst)
 {
@@ -152,22 +150,6 @@ _systray_menu_new(Instance *inst, Evas_Event_Mouse_Down *ev)
 }
 
 static void
-_systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
-{
-   Instance *inst = data;
-   Evas_Event_Mouse_Down *ev = event;
-
-   if (ev->button == 1)
-     {
-        e_config->systray_on_demand = !e_config->systray_on_demand;
-       _systray_size_apply_do(inst);
-        ecore_event_add(E_EVENT_SYSTRAY_CHANGED, NULL, NULL, NULL);
-     }
-   if (ev->button == 3)
-     _systray_menu_new(inst, ev);
-}
-
-static void
 _systray_size_apply_do(Instance *inst)
 {
    const Evas_Object *o, *butt;
@@ -228,9 +210,25 @@ _systray_size_apply_do(Instance *inst)
      }
    else
      {
-       e_gadcon_client_min_size_set(inst->gcc, 15 , 15);
+       e_gadcon_client_min_size_set(inst->gcc, 15, 15);
        ecore_x_window_move_resize(inst->win.base, x, y, 0, 0);
      }
+}
+
+static void
+_systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+{
+   Instance *inst = data;
+   Evas_Event_Mouse_Down *ev = event;
+
+   if (ev->button == 1)
+     {
+        e_config->systray_on_demand = !e_config->systray_on_demand;
+       _systray_size_apply_do(inst);
+        ecore_event_add(E_EVENT_SYSTRAY_CHANGED, NULL, NULL, NULL);
+     }
+   if (ev->button == 3)
+     _systray_menu_new(inst, ev);
 }
 
 static void
