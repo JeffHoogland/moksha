@@ -1080,7 +1080,7 @@ e_shelf_send_offset(E_Shelf *es)
 
    msg = alloca(sizeof(Edje_Message_Int_Set) + (1 * sizeof(int)));
    msg->count = 1;
-   msg->val[0] = (int)round(((es->cfg->size * (5 - es->cfg->icons)) / 10));
+   msg->val[0] = (int)round(((es->cfg->size * (5 - es->cfg->icons)) / 12));
 
    if (msg->val[0] < 0) msg->val[0] = 0;
    //~ else if (msg->val[0] > 5) msg->val[0] = 5;
