@@ -9,7 +9,7 @@ static void         _iconified_changed(void *data, Evas_Object *obj);
 static void         _warp_changed(void *data, Evas_Object *obj __UNUSED__);
 static void         _scroll_animate_changed(void *data, Evas_Object *obj);
 static void         _width_limits_changed(void *data, Evas_Object *obj __UNUSED__);
-static void         _height_limits_changed(void *data, Evas_Object *obj __UNUSED__);
+//~ static void         _height_limits_changed(void *data, Evas_Object *obj __UNUSED__);
 
 struct _E_Config_Dialog_Data
 {
@@ -280,6 +280,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                             &(cfdata->max_w), 100);
    e_widget_on_change_hook_set(ob, _width_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   /*
    ob = e_widget_label_add(evas, _("Minimum height"));
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
    ob = e_widget_slider_add(evas, 1, 0, _("%4.0f"), 0, 4000, 10, 0, NULL,
@@ -293,6 +294,7 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                             &(cfdata->max_h), 100);
    e_widget_on_change_hook_set(ob, _height_limits_changed, cfdata);
    e_widget_list_object_append(ol, ob, 1, 0, 0.0);
+   */
    e_widget_toolbook_page_append(otb, NULL, _("Geometry"), ol,
                                  0, 0, 1, 0, 0.5, 0.0);
 
@@ -397,7 +399,7 @@ _width_limits_changed(void *data, Evas_Object *obj __UNUSED__)
      e_widget_slider_value_int_set(cfdata->gui.min_w, cfdata->max_w);
 }
 
-static void
+/*static void
 _height_limits_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
@@ -405,4 +407,4 @@ _height_limits_changed(void *data, Evas_Object *obj __UNUSED__)
    if (cfdata->min_h > cfdata->max_h)
      e_widget_slider_value_int_set(cfdata->gui.min_h, cfdata->max_h);
 }
-
+*/

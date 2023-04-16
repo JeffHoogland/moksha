@@ -931,10 +931,8 @@ _e_winlist_size_adjust(void)
    x = (double)(zone->w - w) * e_config->winlist_pos_align_x;
 
    h = mh;
-   if (h > e_config->winlist_pos_max_h) h = e_config->winlist_pos_max_h;
-   else if (h < e_config->winlist_pos_min_h)
-     h = e_config->winlist_pos_min_h;
    if (h > zone->h) h = zone->h;
+
    y = (double)(zone->h - h) * e_config->winlist_pos_align_y;
 
    evas_object_resize(_bg_object, w, h);
