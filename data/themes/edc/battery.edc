@@ -208,35 +208,40 @@ group { name: "e/modules/battery/main";
       part { name: "e.text.reading"; type: TEXT; mouse_events: 0;
          scale: 1;
          clip_to: "info_clip";
+         effect: SOFT_OUTLINE;
          description { state: "default" 0.0;
             align: 0.5 0.0;
             rel1.to: "bg";
-            rel1.offset: 0 -2;
+            rel1.offset: 0 -4;
             rel2.relative: 1.0 0.0;
             rel2.to_x: "bg";
             rel2.to_y: "pwr";
+            rel2.offset: -1 2;
             color: 255 255 255 255;
             color_class: "module_label";
             text { font: "Sans"; size: 6;
-               min: 0 1;
-               text_class: "module_small";
+                 min: 0 1;
+                 ellipsis: -1;
+                 text_class: "module_small";
             }
          }
       }
       part { name: "e.text.time"; type: TEXT; mouse_events: 0;
          scale: 1;
          clip_to: "info_clip";
+         effect: SOFT_OUTLINE;
          description { state: "default" 0.0;
             align: 0.5 1.0;
             rel1.relative: 0.0 1.0;
             rel1.to_x: "bg";
             rel1.to_y: "pwr";
-            rel2.offset: -1 1;
+            rel2.offset: -1 5;
             rel2.to: "bg";
             color: 255 255 255 255;
             color_class: "module_label";
             text { font: "Sans"; size: 6;
                min: 0 1;
+               ellipsis: -1;
                text_class: "module_small";
             }
          }
@@ -338,7 +343,7 @@ group { name: "e/modules/battery/popup";
             step: 5 5;
          }
       }
-       part { name: "pwr1";
+       part { name: "pwr1"; nomouse;
          clip_to: "pulse_clip";
          description { state: "default" 0.0;
             rel1.to: "pwr";
@@ -357,7 +362,7 @@ group { name: "e/modules/battery/popup";
             visible: 1;
          }
       }
-      part { name: "pwr2";
+      part { name: "pwr2"; nomouse;
          clip_to: "pulse_clip";
          description { state: "default" 0.0;
             rel1.to: "pwr";
