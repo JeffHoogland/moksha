@@ -67,6 +67,12 @@ group { name: "e/modules/systray/main";
             }
          }
       }
+      part { name: "fake_sys";
+         description { state: "default" 0.0;
+             rel.to: "e.size";
+             image.normal: "vgrad_med.png";
+         }
+      }
    }
    programs {
       program {
