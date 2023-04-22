@@ -71,6 +71,7 @@ _create_dialog(E_Gadcon *gc, const char *title, E_Gadcon_Site site)
      e_config_dialog_new(con, title, "E", "_gadcon_config_dialog",
                          "preferences-desktop-shelf", 0, v, gc);
    if (site) gc->config_dialog->cfdata->site = site;
+   e_dialog_resizable_set(gc->config_dialog->dia, 1);
    e_win_centered_set(gc->config_dialog->dia->win, EINA_TRUE);
 }
 
