@@ -21,14 +21,12 @@ group { name: "e/shelf/default/base";
    script {
       public message(Msg_Type:type, id, ...) {
          new val = getarg(2);
-         if ((type == MSG_INT_SET) && (id == 0)) {
+         if ((type == MSG_INT_SET) && (id == 0))
             custom_state(PART:"e.swallow.content", "default", 0.0);
-         }
-         if ((type == MSG_INT_SET) && (id == 1)) {
+         if ((type == MSG_INT_SET) && (id == 1))
             custom_state(PART:"e.swallow.content", "vert", 0.0);
-         }
          set_state_val(PART:"e.swallow.content", STATE_REL1_OFFSET, val, val);
-         set_state_val(PART:"e.swallow.content", STATE_REL2_OFFSET, 0 - val, 0 - val);
+         set_state_val(PART:"e.swallow.content", STATE_REL2_OFFSET, -val, -val);
          set_state(PART:"e.swallow.content", "custom", 0.0);
       }
    }
