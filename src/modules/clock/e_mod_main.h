@@ -30,7 +30,7 @@ struct _Config_Item
       int start; // 0->6 0 == sun, 6 == sat
    } week;
   struct {
-      double hour, minute;
+      double hour, minute, sec;
    } timeset;
    int digital_clock;
    int digital_24h;

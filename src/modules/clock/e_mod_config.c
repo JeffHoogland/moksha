@@ -1,11 +1,13 @@
 #include "e.h"
 #include "e_mod_main.h"
+#include <Elementary.h>
 
 struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
    char *custom_dat;
-   double hour, minute, hour_tmp, minute_tmp;
+   double hour, minute, sec;
+   Evas_Object *ck, *win;
 };
 
 /* Protos */
@@ -17,6 +19,7 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
                                           E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
+static void         _clock_time_set(E_Config_Dialog_Data *cfdata);
 
 static E_Dialog *show_info_dia = NULL;
 
@@ -57,10 +60,6 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    else
      cfdata->custom_dat = strdup("");
 
-   //sliders obtain the current time
-   cfdata->hour_tmp = cfdata->hour = ci->timeset.hour;
-   cfdata->minute_tmp = cfdata->minute = ci->timeset.minute;
-
    return cfdata;
 }
 
@@ -78,6 +77,70 @@ _show_info_del(void *data)
 {
    if (show_info_dia == data)
      show_info_dia = NULL;
+}
+
+static void
+_bt_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
+                 void *event_info __UNUSED__)
+{  
+   int hrs, mins, secs;
+   E_Config_Dialog_Data *cfdata = data;
+   
+   elm_clock_time_get(cfdata->ck, &hrs, &mins, &secs);
+   cfdata->hour = (double) hrs;
+   cfdata->minute = (double) mins;
+   cfdata->sec = (double) secs;
+   _clock_time_set(cfdata);
+   
+   evas_object_del(cfdata->win);
+   cfdata->win = NULL;
+}
+
+static void
+_close_cb(void *data, Evas *e __UNUSED__, 
+          Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata = data;
+   evas_object_del(cfdata->win);
+   cfdata->win = NULL;
+}
+
+static void
+show_time_cb(void *data, void *data2 __UNUSED__)
+{
+   Evas_Object *win, *bx, *ck, *bt;
+   E_Config_Dialog_Data *cfdata = data;
+   
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   
+   if (cfdata->win) return;
+
+   win = elm_win_util_standard_add("clock", _("Time set"));
+   cfdata->win = win;
+   elm_win_autodel_set(win, EINA_TRUE);
+   evas_object_event_callback_add(win, EVAS_CALLBACK_FREE, _close_cb, cfdata);
+   evas_object_resize(win, 280, 100);
+
+   bx = elm_box_add(win);
+   evas_object_size_hint_weight_set(bx, 100, 100);
+   elm_win_resize_object_add(win, bx);
+   evas_object_show(bx);
+   
+   ck = elm_clock_add(win);
+   elm_clock_show_seconds_set(ck, EINA_TRUE);
+   elm_clock_edit_set(ck, EINA_TRUE);
+   evas_object_size_hint_min_set(ck, 80 *e_scale, 40 *e_scale);
+   elm_box_pack_end(bx, ck);
+   evas_object_show(ck);
+   
+   bt = elm_button_add(win);
+   elm_object_text_set(bt, _("Set"));
+   cfdata->ck = ck;
+   evas_object_event_callback_add(bt, EVAS_CALLBACK_MOUSE_DOWN, _bt_apply, cfdata);
+   elm_box_pack_end(bx, bt);
+   evas_object_show(bt);
+
+   evas_object_show(win);
 }
 
 static void
@@ -121,7 +184,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
         tm.tm_wday = i;
         strftime(daynames[i], sizeof(daynames[i]), "%A", &tm);
      }
-  
+
    tab = e_widget_table_add(evas, 0);
 
    of = e_widget_frametable_add(evas, _("Clock"), 0);
@@ -205,18 +268,9 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_table_object_append(tab, of, 2, 0, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Time set"), 0);
-
-   ob = e_widget_label_add(evas, _("Hours"));
+   
+   ob = e_widget_button_add(evas, " Time set ", "configure", show_time_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 23, 1.0, 0,
-                            &(cfdata->hour), NULL, 40);
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_label_add(evas, _("Minutes"));
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_slider_add(evas, 1, 0, "%2.0f", 0, 59, 1.0, 0,
-                            &(cfdata->minute), NULL, 40);
-   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 1, 0, 0);
-
    e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Date set"), 0);
@@ -230,7 +284,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 }
 
 static void
- clock_time_set(E_Config_Dialog_Data *cfdata)
+_clock_time_set(E_Config_Dialog_Data *cfdata)
 {
    char pkexec_cmd[PATH_MAX];
    const char *cmd_sudo;
@@ -239,7 +293,7 @@ static void
 
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
-   snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:00", cmd_sudo, command, cfdata->hour, cfdata->minute);
+   snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:%0.0f", cmd_sudo, command, cfdata->hour, cfdata->minute, cfdata->sec);
    e_util_exe_safe_run(buf, NULL);
    eina_stringshare_del(cmd_sudo);
 }
@@ -261,10 +315,6 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
    
-   //~ if ((ci->timeset.hour != cfdata->hour) || (ci->timeset.minute != cfdata->minute))
-   if ((cfdata->hour_tmp != cfdata->hour) || (cfdata->minute_tmp != cfdata->minute))
-     clock_time_set(cfdata);
-
    return 1;
 }
 
