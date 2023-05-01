@@ -543,7 +543,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
      }
 }
 
-/* Called when the the "selection_notify" event is emitted */
+/* Called when the "selection_notify" event is emitted */
 static Eina_Bool
 _e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event)
 {

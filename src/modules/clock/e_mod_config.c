@@ -219,7 +219,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_frametable_object_append(of, ob, 0, 4, 1, 1, 1, 1, 0, 0);
    ob = e_widget_radio_add(evas, _("Strftime"), 5, rg);
    e_widget_frametable_object_append(of, ob, 0, 5, 1, 1, 1, 1, 0, 0);
-   ob = e_widget_entry_add(evas, &(cfdata->custom_dat), NULL, NULL,NULL);
+   ob = e_widget_entry_add(evas, &(cfdata->custom_dat), NULL, NULL, NULL);
    e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 0, 0); 
 
    e_widget_table_object_append(tab, of, 0, 1, 1, 1, 1, 1, 1, 1);
