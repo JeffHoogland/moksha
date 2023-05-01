@@ -129,7 +129,7 @@ show_time_cb(void *data, void *data2 __UNUSED__)
    ck = elm_clock_add(win);
    elm_clock_show_seconds_set(ck, EINA_TRUE);
    elm_clock_edit_set(ck, EINA_TRUE);
-   evas_object_size_hint_min_set(ck, 80 *e_scale, 40 *e_scale);
+   evas_object_size_hint_min_set(ck, 80 * e_scale, 40 * e_scale);
    elm_box_pack_end(bx, ck);
    evas_object_show(ck);
    
@@ -269,13 +269,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 
    of = e_widget_frametable_add(evas, _("Time set"), 0);
    
-   ob = e_widget_button_add(evas, " Time set ", "configure", show_time_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, "Set...", "configure", show_time_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Date set"), 0);
 
-   ob = e_widget_button_add(evas, " Info... ", "dialog-information", show_info_cb, NULL, NULL);
+   ob = e_widget_button_add(evas, "Info... ", "dialog-information", show_info_cb, NULL, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
   
    e_widget_table_object_append(tab, of, 3, 1, 1, 1, 1, 1, 1, 1);
