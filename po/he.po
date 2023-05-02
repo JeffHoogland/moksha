@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"POT-Creation-Date: 2023-05-02 16:45+0200\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -918,7 +918,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:102
+#: src/modules/clock/e_mod_config.c:165
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -1488,7 +1488,7 @@ msgstr "אין אפשרות להוציא את המכשיר"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2413
 msgid "Error"
 msgstr "שגיאה"
 
@@ -1556,7 +1556,7 @@ msgstr "יישומים"
 msgid "Link"
 msgstr "קשר"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2541
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1580,7 +1580,7 @@ msgid "Eject"
 msgstr "לפלוט"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1520
+#: src/modules/ibar/e_mod_main.c:1527
 msgid "Properties"
 msgstr "מאפיינים"
 
@@ -1848,7 +1848,7 @@ msgstr "התקן נתיק"
 msgid "Cannot change permissions: %s"
 msgstr ""
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1861,8 +1861,8 @@ msgstr "שם:"
 msgid "Location:"
 msgstr "רוטציה"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
-#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
+#: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
 msgid "Size:"
 msgstr "גודל:"
 
@@ -2414,7 +2414,7 @@ msgstr "שורת המשימות"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
 msgstr ""
@@ -2494,8 +2494,8 @@ msgstr ""
 msgid "Static"
 msgstr "מצב"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:147
-#: src/modules/clock/e_mod_config.c:190
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
+#: src/modules/clock/e_mod_config.c:253
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2632,7 +2632,7 @@ msgstr "בקשת מיקום"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2644,11 +2644,11 @@ msgstr "בקשת מיקום"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
+#: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:796
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2860,28 +2860,28 @@ msgstr "מודולים לא נבחרו."
 msgid "More than one module selected."
 msgstr "מודול אחד או יותר שנבחרו."
 
-#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
+#: src/bin/e_int_gadcon_config.c:703 src/bin/e_int_gadcon_config.c:761
 msgid "Remove Gadget"
 msgstr "הסרת יישומון"
 
-#: src/bin/e_int_gadcon_config.c:707
+#: src/bin/e_int_gadcon_config.c:708
 #, fuzzy
 msgid "Loaded Gadgets"
 msgstr "הוסף יישומון"
 
-#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
+#: src/bin/e_int_gadcon_config.c:723 src/bin/e_int_gadcon_config.c:756
 msgid "Add Gadget"
 msgstr "הוסף יישומון"
 
-#: src/bin/e_int_gadcon_config.c:727
+#: src/bin/e_int_gadcon_config.c:728
 msgid "Available Gadgets"
 msgstr "יישומונים זמינים"
 
-#: src/bin/e_int_gadcon_config.c:789
+#: src/bin/e_int_gadcon_config.c:790
 msgid "Shelf Contents"
 msgstr "תכני המדף"
 
-#: src/bin/e_int_gadcon_config.c:795
+#: src/bin/e_int_gadcon_config.c:796
 msgid "Toolbar Contents"
 msgstr "תכני סרגל הכלים"
 
@@ -3009,7 +3009,7 @@ msgstr "חלונות שאבדו"
 msgid "Untitled window"
 msgstr "לסגור את החלון"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
@@ -3815,11 +3815,11 @@ msgid ""
 "power saving?"
 msgstr ""
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 msgid "Float"
 msgstr ""
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
@@ -3827,7 +3827,7 @@ msgstr ""
 msgid "Horizontal"
 msgstr "מאוזן"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
@@ -3835,126 +3835,126 @@ msgstr "מאוזן"
 msgid "Vertical"
 msgstr "אנכי"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 #, fuzzy
 msgid "Left"
 msgstr "עזבו;"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 #, fuzzy
 msgid "Right"
 msgstr "נכון;"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 #, fuzzy
 msgid "Top"
 msgstr "הצג את סרגל הכלים"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Bottom"
 msgstr ""
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 #, fuzzy
 msgid "Top-left Corner"
 msgstr "קופץ גודל"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 #, fuzzy
 msgid "Top-right Corner"
 msgstr "קופץ גודל"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 #, fuzzy
 msgid "Left-top Corner"
 msgstr "קופץ גודל"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 #, fuzzy
 msgid "Right-top Corner"
 msgstr "קופץ גודל"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:82
+#: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
 msgstr ""
 
-#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
+#: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, fuzzy, c-format
 msgid "Shelf #%d"
 msgstr "מדף מס'"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
 msgstr ""
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 
-#: src/bin/e_shelf.c:1175
+#: src/bin/e_shelf.c:1177
 #, fuzzy
 msgid "Add New Shelf"
 msgstr "הוסף מדף"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 #, fuzzy
 msgid "Shelf Error"
 msgstr "מדף מס'"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "A shelf with that name already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
+#: src/bin/e_shelf.c:1720 src/bin/e_shelf.c:2558
 #, fuzzy
 msgid "Stop Moving Gadgets"
 msgstr "הפסקת הזזה/שינוי גודל לפריטים"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
+#: src/bin/e_shelf.c:1722 src/bin/e_shelf.c:2560
 #, fuzzy
 msgid "Begin Moving Gadgets"
 msgstr "התחלת הזזה/שינוי גודל לפריטים"
 
-#: src/bin/e_shelf.c:2404
+#: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
 msgstr ""
 
-#: src/bin/e_shelf.c:2423
+#: src/bin/e_shelf.c:2432
 #, fuzzy
 msgid "Rename Shelf"
 msgstr "שנה את שם הקובץ"
 
-#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
+#: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:453 src/modules/ibar/e_mod_main.c:1514
 #, fuzzy
 msgid "Contents"
 msgstr "הערה"
 
-#: src/bin/e_shelf.c:2508
+#: src/bin/e_shelf.c:2517
 #, fuzzy
 msgid "Orientation"
 msgstr "הצגה"
 
-#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2526 src/modules/quickaccess/e_mod_quickaccess.c:792
 #, fuzzy
 msgid "Autohide"
 msgstr "הסתר אוטומטית"
 
-#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
 #, fuzzy
 msgid "Refresh"
 msgstr "לרענן"
@@ -4240,9 +4240,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "לפני %li דקות"
 msgstr[1] "לפני %li דקות"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
-#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
-#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
+#: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4416,82 +4416,82 @@ msgstr ""
 msgid "Alpha"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
-#: src/bin/e_widget_filepreview.c:543
+#: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:523
 #, fuzzy
 msgid "Resolution:"
 msgstr "פעולה מעוכבת"
 
-#: src/bin/e_widget_filepreview.c:104
+#: src/bin/e_widget_filepreview.c:94
 #, fuzzy
 msgid "Mime-type:"
 msgstr "טיפוסי MIME"
 
-#: src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:419
+#: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:486
+#: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:488
+#: src/bin/e_widget_filepreview.c:473
 msgid "Reserved:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:489
+#: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
 msgstr ""
 
-#: src/bin/e_widget_filepreview.c:491
+#: src/bin/e_widget_filepreview.c:476
 #, fuzzy
 msgid "Type:"
 msgstr "סוג:"
 
-#: src/bin/e_widget_filepreview.c:546
+#: src/bin/e_widget_filepreview.c:526
 msgid "Owner:"
 msgstr "בעלים:"
 
-#: src/bin/e_widget_filepreview.c:547
+#: src/bin/e_widget_filepreview.c:527
 msgid "Permissions:"
 msgstr "הרשאות:"
 
-#: src/bin/e_widget_filepreview.c:548
+#: src/bin/e_widget_filepreview.c:528
 #, fuzzy
 msgid "Modified:"
 msgstr "שונה לאחרונה:"
 
-#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
-#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
+#: src/bin/e_widget_filepreview.c:666 src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
 msgstr "לקריאה בלבד"
 
-#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
+#: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
 msgstr "קריאה־כתיבה"
 
-#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
+#: src/bin/e_widget_filepreview.c:671 src/bin/e_widget_filepreview.c:682
 #, fuzzy
 msgid "Unmounted"
 msgstr "נתק"
 
-#: src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:781
 #, c-format
 msgid "You"
 msgstr "אתה"
 
-#: src/bin/e_widget_filepreview.c:881
+#: src/bin/e_widget_filepreview.c:830
 #, c-format
 msgid "Protected"
 msgstr "מוגן"
 
-#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
+#: src/bin/e_widget_filepreview.c:839 src/bin/e_widget_filepreview.c:848
 #, c-format
 msgid "Forbidden"
 msgstr "אסור"
@@ -4689,112 +4689,117 @@ msgstr "שגיאה"
 msgid "Battery Meter"
 msgstr "מד הסוללה"
 
-#: src/modules/clock/e_mod_config.c:40
+#: src/modules/clock/e_mod_config.c:43
 #, fuzzy
 msgid "Clock Settings"
 msgstr "מקדו את הגדרות"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+#, fuzzy
+msgid "Time set"
+msgstr "טיימרים"
+
+#: src/modules/clock/e_mod_config.c:137
+#: src/modules/conf_display/e_int_config_desk.c:194
+#: src/modules/fileman/e_int_config_mime.c:184
+#, fuzzy
+msgid "Set"
+msgstr "לקבוע"
+
+#: src/modules/clock/e_mod_config.c:159
 #, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:161
 #, fuzzy
 msgid "Clock module Information"
 msgstr "נתוני הקישור"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "שעון"
 
-#: src/modules/clock/e_mod_config.c:130
+#: src/modules/clock/e_mod_config.c:193
 #, fuzzy
 msgid "Analog"
 msgstr "דיאלוגים"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:195
 #, fuzzy
 msgid "Digital"
 msgstr "שעון דיגיטלי"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:197
 #, fuzzy
 msgid "Seconds"
 msgstr "%.1f שניות"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:200
 msgid "12 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:202
 msgid "24 h"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:144
+#: src/modules/clock/e_mod_config.c:207
 msgid "Date"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:212
 msgid "Full"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:214
 msgid "Numbers"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:216
 #, fuzzy
 msgid "Date Only"
 msgstr "לקריאה בלבד"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:218
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:220
 #, fuzzy
 msgid "Strftime"
 msgstr "את הזמן"
 
-#: src/modules/clock/e_mod_config.c:164
+#: src/modules/clock/e_mod_config.c:227
 msgid "Week"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:178
+#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
 #: src/modules/start/e_mod_main.c:168
 #, fuzzy
 msgid "Start"
 msgstr "להפעיל"
 
-#: src/modules/clock/e_mod_config.c:177
+#: src/modules/clock/e_mod_config.c:240
 msgid "Weekend"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:187
+#: src/modules/clock/e_mod_config.c:250
 msgid "Days"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:207
-#, fuzzy
-msgid "Time set"
-msgstr "טיימרים"
+#: src/modules/clock/e_mod_config.c:272
+msgid "Set..."
+msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
-#, fuzzy
-msgid "Hours"
-msgstr "לפני %li שעות"
-
-#: src/modules/clock/e_mod_config.c:214
-#, fuzzy
-msgid "Minutes"
-msgstr "לפני %li דקות"
-
-#: src/modules/clock/e_mod_config.c:222
+#: src/modules/clock/e_mod_config.c:276
 msgid "Date set"
+msgstr ""
+
+#: src/modules/clock/e_mod_config.c:278
+msgid "Info... "
 msgstr ""
 
 #: src/modules/clock/e_mod_main.c:988
@@ -5209,12 +5214,6 @@ msgstr "פרופיל"
 #, fuzzy
 msgid "Desktop Wallpaper"
 msgstr "טפט"
-
-#: src/modules/conf_display/e_int_config_desk.c:194
-#: src/modules/fileman/e_int_config_mime.c:184
-#, fuzzy
-msgid "Set"
-msgstr "לקבוע"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 #, fuzzy
@@ -8818,8 +8817,8 @@ msgstr "קופץ ישר"
 #: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
-#: src/modules/winlist/e_int_config_winlist.c:302
-#: src/modules/winlist/e_int_config_winlist.c:307
+#: src/modules/winlist/e_int_config_winlist.c:304
+#: src/modules/winlist/e_int_config_winlist.c:309
 #, c-format
 msgid "%1.2f"
 msgstr ""
@@ -8835,7 +8834,7 @@ msgid "Zoom value"
 msgstr "התנתק"
 
 #: src/modules/everything/evry_config.c:617
-#: src/modules/winlist/e_int_config_winlist.c:296
+#: src/modules/winlist/e_int_config_winlist.c:298
 #, fuzzy
 msgid "Geometry"
 msgstr "נסה שוב"
@@ -9602,8 +9601,6 @@ msgstr "הגודל המזערי"
 
 #: src/modules/winlist/e_int_config_winlist.c:272
 #: src/modules/winlist/e_int_config_winlist.c:279
-#: src/modules/winlist/e_int_config_winlist.c:285
-#: src/modules/winlist/e_int_config_winlist.c:292
 #, c-format
 msgid "%4.0f"
 msgstr ""
@@ -9613,27 +9610,17 @@ msgstr ""
 msgid "Maximum width"
 msgstr "הגודל המירבי"
 
-#: src/modules/winlist/e_int_config_winlist.c:283
-#, fuzzy
-msgid "Minimum height"
-msgstr "הגודל המזערי"
-
-#: src/modules/winlist/e_int_config_winlist.c:290
-#, fuzzy
-msgid "Maximum height"
-msgstr "הגודל המירבי"
-
-#: src/modules/winlist/e_int_config_winlist.c:300
+#: src/modules/winlist/e_int_config_winlist.c:302
 #, fuzzy
 msgid "Horizontal alignment"
 msgstr "יישור אופקי"
 
-#: src/modules/winlist/e_int_config_winlist.c:305
+#: src/modules/winlist/e_int_config_winlist.c:307
 #, fuzzy
 msgid "Vertical alignment"
 msgstr "יישור אנכי"
 
-#: src/modules/winlist/e_int_config_winlist.c:310
+#: src/modules/winlist/e_int_config_winlist.c:312
 #, fuzzy
 msgid "Alignment"
 msgstr "Moksha"
@@ -9789,32 +9776,32 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "האם אתה בטוח שברצונך למחוק זאת מקור בר."
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:326 src/modules/ibar/e_mod_main.c:2818
 #, fuzzy
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
+#: src/modules/ibar/e_mod_main.c:442 src/modules/ibar/e_mod_main.c:1503
 #, fuzzy
 msgid "Create new Icon"
 msgstr "ליצור אייקון חדש"
 
-#: src/modules/ibar/e_mod_main.c:1527
+#: src/modules/ibar/e_mod_main.c:1534
 #, fuzzy
 msgid "Add to bar"
 msgstr "הוסף IBar"
 
-#: src/modules/ibar/e_mod_main.c:1533
+#: src/modules/ibar/e_mod_main.c:1540
 #, fuzzy
 msgid "Remove from bar"
 msgstr "הסרת יישומון"
 
-#: src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:1546
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "סמלים"
 
-#: src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:2818
 #, fuzzy
 msgid "Focus IBar"
 msgstr "להתמקד"
@@ -10491,31 +10478,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 #, fuzzy
 msgid "Systray Error"
 msgstr "Systray שגיאה"
 
-#: src/modules/systray/e_mod_main.c:536
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Systray עוד קיים"
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "לא יכול להיות רק 1 גאדג 'ט Systray ואחד אחר כבר קיים."
 
-#: src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:950
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray לא יכול לעבוד המדףהמוגדר להלן הכל."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1145
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"
@@ -10779,7 +10766,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr ""
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:803
 #, fuzzy
 msgid "Tasks"
 msgstr "שורת המשימות"
@@ -11518,6 +11505,22 @@ msgstr "נפח השתנה"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "נפח השתנה"
+
+#, fuzzy
+#~ msgid "Hours"
+#~ msgstr "לפני %li שעות"
+
+#, fuzzy
+#~ msgid "Minutes"
+#~ msgstr "לפני %li דקות"
+
+#, fuzzy
+#~ msgid "Minimum height"
+#~ msgstr "הגודל המזערי"
+
+#, fuzzy
+#~ msgid "Maximum height"
+#~ msgstr "הגודל המירבי"
 
 #, fuzzy
 #~ msgid "Execution Error"

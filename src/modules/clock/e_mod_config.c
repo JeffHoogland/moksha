@@ -269,13 +269,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 
    of = e_widget_frametable_add(evas, _("Time set"), 0);
    
-   ob = e_widget_button_add(evas, "Set...", "configure", show_time_cb, cfdata, NULL);
+   ob = e_widget_button_add(evas, _("Set..."), "configure", show_time_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Date set"), 0);
 
-   ob = e_widget_button_add(evas, "Info... ", "dialog-information", show_info_cb, NULL, NULL);
+   ob = e_widget_button_add(evas, _("Info... "), "dialog-information", show_info_cb, NULL, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
   
    e_widget_table_object_append(tab, of, 3, 1, 1, 1, 1, 1, 1, 1);

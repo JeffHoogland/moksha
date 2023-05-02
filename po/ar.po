@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"POT-Creation-Date: 2023-05-02 16:45+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -891,7 +891,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:102
+#: src/modules/clock/e_mod_config.c:165
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -1438,7 +1438,7 @@ msgstr "لا يمكن إخراج الجهاز"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2413
 msgid "Error"
 msgstr "خلل"
 
@@ -1498,7 +1498,7 @@ msgstr "اﻹجراءات....."
 msgid "Link"
 msgstr "ارتباط"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2541
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1519,7 +1519,7 @@ msgid "Eject"
 msgstr "اخرج"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1520
+#: src/modules/ibar/e_mod_main.c:1527
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -1775,7 +1775,7 @@ msgstr "جهاز قابل للازالة"
 msgid "Cannot change permissions: %s"
 msgstr "لا يمكن تغيير الصلاحيات : %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1786,8 +1786,8 @@ msgstr "اﻹسم:"
 msgid "Location:"
 msgstr "الموقع :"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
-#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
+#: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
 msgid "Size:"
 msgstr "الحجم:"
 
@@ -2296,7 +2296,7 @@ msgstr "شريط المهام"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
 msgstr "%i×%i"
@@ -2376,8 +2376,8 @@ msgstr "الجنوب الشرقي"
 msgid "Static"
 msgstr "ثابت"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:147
-#: src/modules/clock/e_mod_config.c:190
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
+#: src/modules/clock/e_mod_config.c:253
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2512,7 +2512,7 @@ msgstr "أطلب الموضع"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2524,11 +2524,11 @@ msgstr "أطلب الموضع"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
+#: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:796
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2736,27 +2736,27 @@ msgstr "لم يتم إختيار أي وحدات"
 msgid "More than one module selected."
 msgstr "تم إختيار أكثر من وحدة واحدة"
 
-#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
+#: src/bin/e_int_gadcon_config.c:703 src/bin/e_int_gadcon_config.c:761
 msgid "Remove Gadget"
 msgstr "إزالة أداة"
 
-#: src/bin/e_int_gadcon_config.c:707
+#: src/bin/e_int_gadcon_config.c:708
 msgid "Loaded Gadgets"
 msgstr "أدوات محمَّلَة"
 
-#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
+#: src/bin/e_int_gadcon_config.c:723 src/bin/e_int_gadcon_config.c:756
 msgid "Add Gadget"
 msgstr "إضافة أداة"
 
-#: src/bin/e_int_gadcon_config.c:727
+#: src/bin/e_int_gadcon_config.c:728
 msgid "Available Gadgets"
 msgstr "اﻷدوات المتاحة"
 
-#: src/bin/e_int_gadcon_config.c:789
+#: src/bin/e_int_gadcon_config.c:790
 msgid "Shelf Contents"
 msgstr "محتويات الرف"
 
-#: src/bin/e_int_gadcon_config.c:795
+#: src/bin/e_int_gadcon_config.c:796
 msgid "Toolbar Contents"
 msgstr "محتويات شريط اﻷدوات"
 
@@ -2881,7 +2881,7 @@ msgstr "النوافذ المفقودة"
 msgid "Untitled window"
 msgstr "نافذة غير معنونة"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -3625,82 +3625,82 @@ msgstr ""
 "لقد عطلت حافظة الشاشة بشكل سريع جدا.<br><br>هل تريد تفعيل وضع <b>العرض</b> و "
 "تعطيل قفل حافظة الشاشة أو  حفظِ الطاقة مؤقتا؟"
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 msgid "Float"
 msgstr "يطفو"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "أفقي"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "عمودي"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Left"
 msgstr "يسار"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Right"
 msgstr "يمين"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Top"
 msgstr "أعلى"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Bottom"
 msgstr "أسفل"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-left Corner"
 msgstr "الركن العلوي اﻷيسر"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Top-right Corner"
 msgstr "الركن العلوي الايمن"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
 msgstr "الركن السفلي اﻷيسر"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
 msgstr "الركن السفلي اﻷيمن"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Left-top Corner"
 msgstr "الركن اﻷيسر العلوي"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Right-top Corner"
 msgstr "الركن اﻷيمن العلوي"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
 msgstr "الركن اﻷيسر السفلي"
 
-#: src/bin/e_shelf.c:82
+#: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
 msgstr "الركن اﻷيمن السفلي"
 
-#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
+#: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, c-format
 msgid "Shelf #%d"
 msgstr "الرف #%d"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
 msgstr "خطأ في وظيفة اﻹخفاء التلقائي للرف"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
@@ -3708,48 +3708,48 @@ msgstr ""
 "لربما لن يعمل اﻹخفاء التلقائي للرف<br>في ظل وجود اﻹعدادات الحالية; لذا اضبط "
 "الرف للوضع<br>\"أسفل كل شيء\" أو عطِّل اﻹخفاء التلقائي."
 
-#: src/bin/e_shelf.c:1175
+#: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
 msgstr "أضف رفًّا جديدا"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "Shelf Error"
 msgstr "خطأ بالرف"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "A shelf with that name already exists!"
 msgstr "هنالك رف بنفس اﻹسم"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
+#: src/bin/e_shelf.c:1720 src/bin/e_shelf.c:2558
 msgid "Stop Moving Gadgets"
 msgstr "أوقف تحريك اﻷدوات"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
+#: src/bin/e_shelf.c:1722 src/bin/e_shelf.c:2560
 msgid "Begin Moving Gadgets"
 msgstr "إبدأ تحريك اﻷدوات"
 
-#: src/bin/e_shelf.c:2404
+#: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
 msgstr "هنالك رف بنفس اﻹسم و المعرف"
 
-#: src/bin/e_shelf.c:2423
+#: src/bin/e_shelf.c:2432
 msgid "Rename Shelf"
 msgstr "أعد تسمية الرف"
 
-#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
+#: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:453 src/modules/ibar/e_mod_main.c:1514
 msgid "Contents"
 msgstr "المحتويات"
 
-#: src/bin/e_shelf.c:2508
+#: src/bin/e_shelf.c:2517
 msgid "Orientation"
 msgstr "توجيه"
 
-#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2526 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "إخفاء تلقائي"
 
-#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "تحديث"
 
@@ -4053,9 +4053,9 @@ msgstr[3] "الدقائق %li الماضية"
 msgstr[4] "الدقائق %li الماضية"
 msgstr[5] "الدقائق %li الماضية"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
-#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
-#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
+#: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4254,78 +4254,78 @@ msgstr "V"
 msgid "Alpha"
 msgstr "أولية"
 
-#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
-#: src/bin/e_widget_filepreview.c:543
+#: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:523
 msgid "Resolution:"
 msgstr "الدقة:"
 
-#: src/bin/e_widget_filepreview.c:104
+#: src/bin/e_widget_filepreview.c:94
 #, fuzzy
 msgid "Mime-type:"
 msgstr "أنواع الملفات"
 
-#: src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:419
+#: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
 msgstr "طول :"
 
-#: src/bin/e_widget_filepreview.c:486
+#: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
 msgstr "مستخدم :"
 
-#: src/bin/e_widget_filepreview.c:488
+#: src/bin/e_widget_filepreview.c:473
 msgid "Reserved:"
 msgstr "محجوز :"
 
-#: src/bin/e_widget_filepreview.c:489
+#: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
 msgstr "حالة التوصيل :"
 
-#: src/bin/e_widget_filepreview.c:491
+#: src/bin/e_widget_filepreview.c:476
 msgid "Type:"
 msgstr "نوع:"
 
-#: src/bin/e_widget_filepreview.c:546
+#: src/bin/e_widget_filepreview.c:526
 msgid "Owner:"
 msgstr "المالك:"
 
-#: src/bin/e_widget_filepreview.c:547
+#: src/bin/e_widget_filepreview.c:527
 msgid "Permissions:"
 msgstr "الصلاحيات:"
 
-#: src/bin/e_widget_filepreview.c:548
+#: src/bin/e_widget_filepreview.c:528
 msgid "Modified:"
 msgstr "عدل:"
 
-#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
-#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
+#: src/bin/e_widget_filepreview.c:666 src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
 msgstr "للقراءة فقط"
 
-#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
+#: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
 msgstr "قراءة-كتابة"
 
-#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
+#: src/bin/e_widget_filepreview.c:671 src/bin/e_widget_filepreview.c:682
 msgid "Unmounted"
 msgstr "مفصول"
 
-#: src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:781
 #, c-format
 msgid "You"
 msgstr "أنت"
 
-#: src/bin/e_widget_filepreview.c:881
+#: src/bin/e_widget_filepreview.c:830
 #, c-format
 msgid "Protected"
 msgstr "محمي"
 
-#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
+#: src/bin/e_widget_filepreview.c:839 src/bin/e_widget_filepreview.c:848
 #, c-format
 msgid "Forbidden"
 msgstr "ممنوع"
@@ -4504,108 +4504,112 @@ msgstr "خطأ"
 msgid "Battery Meter"
 msgstr "مقياس البطارية"
 
-#: src/modules/clock/e_mod_config.c:40
+#: src/modules/clock/e_mod_config.c:43
 msgid "Clock Settings"
 msgstr "أعدادات الساعة"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+#, fuzzy
+msgid "Time set"
+msgstr "المؤقتات"
+
+#: src/modules/clock/e_mod_config.c:137
+#: src/modules/conf_display/e_int_config_desk.c:194
+#: src/modules/fileman/e_int_config_mime.c:184
+msgid "Set"
+msgstr "ضبط"
+
+#: src/modules/clock/e_mod_config.c:159
 #, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:161
 #, fuzzy
 msgid "Clock module Information"
 msgstr "معلومات اﻹرتباط"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "الساعة"
 
-#: src/modules/clock/e_mod_config.c:130
+#: src/modules/clock/e_mod_config.c:193
 msgid "Analog"
 msgstr "ساعة عادية (محورية)"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:195
 msgid "Digital"
 msgstr "ساعة رقمية"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:197
 msgid "Seconds"
 msgstr "ثانية/ثوان"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:200
 msgid "12 h"
 msgstr "١٢ س"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:202
 msgid "24 h"
 msgstr "٢٤ س"
 
-#: src/modules/clock/e_mod_config.c:144
+#: src/modules/clock/e_mod_config.c:207
 msgid "Date"
 msgstr "تاريخ"
 
-#: src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:212
 msgid "Full"
 msgstr "كامل"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:214
 msgid "Numbers"
 msgstr "أرقام"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:216
 msgid "Date Only"
 msgstr "تاريخ فقط"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:218
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:220
 #, fuzzy
 msgid "Strftime"
 msgstr "وقت اﻹطفاء"
 
-#: src/modules/clock/e_mod_config.c:164
+#: src/modules/clock/e_mod_config.c:227
 msgid "Week"
 msgstr "اسبوع"
 
-#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:178
+#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "إبدأ"
 
-#: src/modules/clock/e_mod_config.c:177
+#: src/modules/clock/e_mod_config.c:240
 msgid "Weekend"
 msgstr "نهاية الأسبوع"
 
-#: src/modules/clock/e_mod_config.c:187
+#: src/modules/clock/e_mod_config.c:250
 msgid "Days"
 msgstr "أيام"
 
-#: src/modules/clock/e_mod_config.c:207
-#, fuzzy
-msgid "Time set"
-msgstr "المؤقتات"
+#: src/modules/clock/e_mod_config.c:272
+msgid "Set..."
+msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
-#, fuzzy
-msgid "Hours"
-msgstr "2 ساعة"
-
-#: src/modules/clock/e_mod_config.c:214
-#, fuzzy
-msgid "Minutes"
-msgstr "5 دقائق"
-
-#: src/modules/clock/e_mod_config.c:222
+#: src/modules/clock/e_mod_config.c:276
 #, fuzzy
 msgid "Date set"
 msgstr "تاريخ"
+
+#: src/modules/clock/e_mod_config.c:278
+msgid "Info... "
+msgstr ""
 
 #: src/modules/clock/e_mod_main.c:988
 #, fuzzy
@@ -4959,11 +4963,6 @@ msgstr "اسم الحساب :"
 #: src/modules/conf_display/e_int_config_desk.c:188
 msgid "Desktop Wallpaper"
 msgstr "خلفية سطح المكتب"
-
-#: src/modules/conf_display/e_int_config_desk.c:194
-#: src/modules/fileman/e_int_config_mime.c:184
-msgid "Set"
-msgstr "ضبط"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 msgid "Select a Background..."
@@ -8143,8 +8142,8 @@ msgstr "محاذاة المنبثقة"
 #: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
-#: src/modules/winlist/e_int_config_winlist.c:302
-#: src/modules/winlist/e_int_config_winlist.c:307
+#: src/modules/winlist/e_int_config_winlist.c:304
+#: src/modules/winlist/e_int_config_winlist.c:309
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -8159,7 +8158,7 @@ msgid "Zoom value"
 msgstr "بعِّد"
 
 #: src/modules/everything/evry_config.c:617
-#: src/modules/winlist/e_int_config_winlist.c:296
+#: src/modules/winlist/e_int_config_winlist.c:298
 msgid "Geometry"
 msgstr "هندسة"
 
@@ -8848,8 +8847,6 @@ msgstr "أدنى عرض"
 
 #: src/modules/winlist/e_int_config_winlist.c:272
 #: src/modules/winlist/e_int_config_winlist.c:279
-#: src/modules/winlist/e_int_config_winlist.c:285
-#: src/modules/winlist/e_int_config_winlist.c:292
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
@@ -8858,23 +8855,15 @@ msgstr "%4.0f"
 msgid "Maximum width"
 msgstr "أقصى عرض"
 
-#: src/modules/winlist/e_int_config_winlist.c:283
-msgid "Minimum height"
-msgstr "أدنى طول"
-
-#: src/modules/winlist/e_int_config_winlist.c:290
-msgid "Maximum height"
-msgstr "أقصى طول"
-
-#: src/modules/winlist/e_int_config_winlist.c:300
+#: src/modules/winlist/e_int_config_winlist.c:302
 msgid "Horizontal alignment"
 msgstr "محاذاة أفقية"
 
-#: src/modules/winlist/e_int_config_winlist.c:305
+#: src/modules/winlist/e_int_config_winlist.c:307
 msgid "Vertical alignment"
 msgstr "محاذاة عمودية"
 
-#: src/modules/winlist/e_int_config_winlist.c:310
+#: src/modules/winlist/e_int_config_winlist.c:312
 msgid "Alignment"
 msgstr "محاذاة"
 
@@ -9008,30 +8997,30 @@ msgstr "لقد قمت بطلب محو  \"%s\".<br><br>هل تريد تأكيد �
 msgid "Are you sure you want to delete this bar source?"
 msgstr "هل تريد تأكيد مسح مصدر هذا الشريط؟"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:326 src/modules/ibar/e_mod_main.c:2818
 msgid "IBar"
 msgstr "شريط التشغيل السريع (( IBar )) "
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
+#: src/modules/ibar/e_mod_main.c:442 src/modules/ibar/e_mod_main.c:1503
 msgid "Create new Icon"
 msgstr "إنشاء أيقونة جديدة"
 
-#: src/modules/ibar/e_mod_main.c:1527
+#: src/modules/ibar/e_mod_main.c:1534
 #, fuzzy
 msgid "Add to bar"
 msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
-#: src/modules/ibar/e_mod_main.c:1533
+#: src/modules/ibar/e_mod_main.c:1540
 #, fuzzy
 msgid "Remove from bar"
 msgstr "أزل التكدس"
 
-#: src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:1546
 #, c-format
 msgid "Icon %s"
 msgstr "أيقونة %s"
 
-#: src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:2818
 msgid "Focus IBar"
 msgstr "Focus IBar"
 
@@ -9672,27 +9661,27 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "وصول سريع المعرِّف/اﻻسم"
 
-#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "خطأ بحاشية النظام"
 
-#: src/modules/systray/e_mod_main.c:536
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "لا يمكن لحاشية النظام مطابقة الرف المتواجدة عيه في شفافيته."
 
-#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
 msgstr "هناك حاشية نظام أخرى متواجدة"
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "لا يمكن تواجد أكثر من أداة حاشية نظام واحدة وهي موجودة بالفعل"
 
-#: src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "حاشية النظام لا يمكنها العمل في رف ضُبِط على أن يكون اسفل كل شيء"
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1145
 msgid "Systray"
 msgstr "حاشية النظام"
 
@@ -9944,7 +9933,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "حدد مكان حفظ صورة الشاشة"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:803
 msgid "Tasks"
 msgstr "المهام"
 
@@ -10646,6 +10635,20 @@ msgstr "تغيّر الحجم"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "حرّك ﻷعلى"
+
+#, fuzzy
+#~ msgid "Hours"
+#~ msgstr "2 ساعة"
+
+#, fuzzy
+#~ msgid "Minutes"
+#~ msgstr "5 دقائق"
+
+#~ msgid "Minimum height"
+#~ msgstr "أدنى طول"
+
+#~ msgid "Maximum height"
+#~ msgstr "أقصى طول"
 
 #, fuzzy
 #~ msgid "Execution Error"

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"POT-Creation-Date: 2023-05-02 16:45+0200\n"
 "PO-Revision-Date: 2022-11-21 20:30+0100\n"
 "Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
 "Language-Team: E17-de\n"
@@ -912,7 +912,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:102
+#: src/modules/clock/e_mod_config.c:165
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -1469,7 +1469,7 @@ msgstr "Gerät kann nicht ausgeworfen werden"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2413
 msgid "Error"
 msgstr "Fehler"
 
@@ -1529,7 +1529,7 @@ msgstr "Aktionen..."
 msgid "Link"
 msgstr "Verknüpfung"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2541
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1550,7 +1550,7 @@ msgid "Eject"
 msgstr "Auswerfen"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1520
+#: src/modules/ibar/e_mod_main.c:1527
 msgid "Properties"
 msgstr "Eigenschaften"
 
@@ -1800,7 +1800,7 @@ msgstr "Entfernbare Geräte"
 msgid "Cannot change permissions: %s"
 msgstr "Kann Berechtigungen nicht ändern: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1811,8 +1811,8 @@ msgstr "Name:"
 msgid "Location:"
 msgstr "Ort:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
-#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
+#: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
 msgid "Size:"
 msgstr "Größe:"
 
@@ -2327,7 +2327,7 @@ msgstr "Fensterleiste"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
 msgstr "%i×%i"
@@ -2409,8 +2409,8 @@ msgstr "Südosten"
 msgid "Static"
 msgstr "Statisch"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:147
-#: src/modules/clock/e_mod_config.c:190
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
+#: src/modules/clock/e_mod_config.c:253
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2545,7 +2545,7 @@ msgstr "Position anfordern"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2557,11 +2557,11 @@ msgstr "Position anfordern"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
+#: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:796
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2770,27 +2770,27 @@ msgstr "Keine Module ausgewählt."
 msgid "More than one module selected."
 msgstr "Mehr als ein Modul ist ausgewählt."
 
-#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
+#: src/bin/e_int_gadcon_config.c:703 src/bin/e_int_gadcon_config.c:761
 msgid "Remove Gadget"
 msgstr "Helfer entfernen"
 
-#: src/bin/e_int_gadcon_config.c:707
+#: src/bin/e_int_gadcon_config.c:708
 msgid "Loaded Gadgets"
 msgstr "Geladene Helfer"
 
-#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
+#: src/bin/e_int_gadcon_config.c:723 src/bin/e_int_gadcon_config.c:756
 msgid "Add Gadget"
 msgstr "Helfer hinzufügen"
 
-#: src/bin/e_int_gadcon_config.c:727
+#: src/bin/e_int_gadcon_config.c:728
 msgid "Available Gadgets"
 msgstr "Verfügbare Helfer"
 
-#: src/bin/e_int_gadcon_config.c:789
+#: src/bin/e_int_gadcon_config.c:790
 msgid "Shelf Contents"
 msgstr "Modulablageninhalte"
 
-#: src/bin/e_int_gadcon_config.c:795
+#: src/bin/e_int_gadcon_config.c:796
 msgid "Toolbar Contents"
 msgstr "Werkzeugleisteninhalte"
 
@@ -2910,7 +2910,7 @@ msgstr "Verlorene Fenster"
 msgid "Untitled window"
 msgstr "Titelloses Fenster"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -3699,82 +3699,82 @@ msgstr ""
 "und -sperre sowie Stromsparen deaktivieren?"
 
 # Float would translate to 'schwimmen', but in this case 'schweben' (hover) is more common in German.
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 msgid "Float"
 msgstr "Schweben"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertikal"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Left"
 msgstr "Links"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Right"
 msgstr "Rechts"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Top"
 msgstr "Oben"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Bottom"
 msgstr "Unten"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-left Corner"
 msgstr "Ecke oben-links"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Top-right Corner"
 msgstr "Ecke oben-rechts"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
 msgstr "Ecke unten-links"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
 msgstr "Ecke unten-rechts"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Left-top Corner"
 msgstr "Ecke links-oben"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Right-top Corner"
 msgstr "Ecke rechts-oben"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
 msgstr "Ecke links-unten"
 
-#: src/bin/e_shelf.c:82
+#: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
 msgstr "Ecke rechts-unten"
 
-#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
+#: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, c-format
 msgid "Shelf #%d"
 msgstr "Regal #%d"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
 msgstr "Fehler beim automatischen Verstecken der Modulablage"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
@@ -3783,48 +3783,48 @@ msgstr ""
 "nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter Allem"
 "\"<br>oder deaktivieren Sie Auto-Verstecken."
 
-#: src/bin/e_shelf.c:1175
+#: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
 msgstr "Neue Modulablage hinzufügen"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "Shelf Error"
 msgstr "Ablagenfehler"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "A shelf with that name already exists!"
 msgstr "Eine Ablage mit diesem Namen existiert bereits!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
+#: src/bin/e_shelf.c:1720 src/bin/e_shelf.c:2558
 msgid "Stop Moving Gadgets"
 msgstr "Verschieben von Helfern beenden"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
+#: src/bin/e_shelf.c:1722 src/bin/e_shelf.c:2560
 msgid "Begin Moving Gadgets"
 msgstr "Verschieben von Helfern starten"
 
-#: src/bin/e_shelf.c:2404
+#: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
 msgstr "Eine Ablage mit diesem Namen und dieser ID existiert bereits!"
 
-#: src/bin/e_shelf.c:2423
+#: src/bin/e_shelf.c:2432
 msgid "Rename Shelf"
 msgstr "Ablabe umbenennen"
 
-#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
+#: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:453 src/modules/ibar/e_mod_main.c:1514
 msgid "Contents"
 msgstr "Inhalte"
 
-#: src/bin/e_shelf.c:2508
+#: src/bin/e_shelf.c:2517
 msgid "Orientation"
 msgstr "Ausrichtung"
 
-#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2526 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Auto-Verstecken"
 
-#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Aktualisieren"
 
@@ -4111,9 +4111,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "Vor einer Minute"
 msgstr[1] "Vor %li Minuten"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
-#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
-#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
+#: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4293,77 +4293,77 @@ msgstr "V"
 msgid "Alpha"
 msgstr "Alpha"
 
-#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
-#: src/bin/e_widget_filepreview.c:543
+#: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:523
 msgid "Resolution:"
 msgstr "Auflösung:"
 
-#: src/bin/e_widget_filepreview.c:104
+#: src/bin/e_widget_filepreview.c:94
 msgid "Mime-type:"
 msgstr "Mime-Typ:"
 
-#: src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:419
+#: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
 msgstr "Länge:"
 
-#: src/bin/e_widget_filepreview.c:486
+#: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
 msgstr "Benutzt:"
 
-#: src/bin/e_widget_filepreview.c:488
+#: src/bin/e_widget_filepreview.c:473
 msgid "Reserved:"
 msgstr "Reserviert:"
 
-#: src/bin/e_widget_filepreview.c:489
+#: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
 msgstr "Einhänge-Status:"
 
-#: src/bin/e_widget_filepreview.c:491
+#: src/bin/e_widget_filepreview.c:476
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/bin/e_widget_filepreview.c:546
+#: src/bin/e_widget_filepreview.c:526
 msgid "Owner:"
 msgstr "Besitzer:"
 
-#: src/bin/e_widget_filepreview.c:547
+#: src/bin/e_widget_filepreview.c:527
 msgid "Permissions:"
 msgstr "Berechtigungen:"
 
-#: src/bin/e_widget_filepreview.c:548
+#: src/bin/e_widget_filepreview.c:528
 msgid "Modified:"
 msgstr "Geändert:"
 
-#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
-#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
+#: src/bin/e_widget_filepreview.c:666 src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
 msgstr "Nur lesen"
 
-#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
+#: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
 msgstr "Lesen-Schreiben"
 
-#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
+#: src/bin/e_widget_filepreview.c:671 src/bin/e_widget_filepreview.c:682
 msgid "Unmounted"
 msgstr "Ausgehängt"
 
-#: src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:781
 #, c-format
 msgid "You"
 msgstr "Sie"
 
-#: src/bin/e_widget_filepreview.c:881
+#: src/bin/e_widget_filepreview.c:830
 #, c-format
 msgid "Protected"
 msgstr "Geschützt"
 
-#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
+#: src/bin/e_widget_filepreview.c:839 src/bin/e_widget_filepreview.c:848
 #, c-format
 msgid "Forbidden"
 msgstr "Verboten"
@@ -4541,11 +4541,21 @@ msgstr "FEHLER"
 msgid "Battery Meter"
 msgstr "Akkuzustand"
 
-#: src/modules/clock/e_mod_config.c:40
+#: src/modules/clock/e_mod_config.c:43
 msgid "Clock Settings"
 msgstr "Uhr-Einstellungen"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+msgid "Time set"
+msgstr "Uhrzeit einstellen"
+
+#: src/modules/clock/e_mod_config.c:137
+#: src/modules/conf_display/e_int_config_desk.c:194
+#: src/modules/fileman/e_int_config_mime.c:184
+msgid "Set"
+msgstr "Einstellen"
+
+#: src/modules/clock/e_mod_config.c:159
 #, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
@@ -4554,91 +4564,88 @@ msgstr ""
 "Klicken Sie zur Änderung des Datums auf einen Kalendertag. <br>Benutzen Sie "
 "das Mausrad um das Jahr zu ändern."
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:161
 msgid "Clock module Information"
 msgstr "Information Datumseinstellung"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Uhr"
 
-#: src/modules/clock/e_mod_config.c:130
+#: src/modules/clock/e_mod_config.c:193
 msgid "Analog"
 msgstr "Analog"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:195
 msgid "Digital"
 msgstr "Digital"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:197
 msgid "Seconds"
 msgstr "Sekunden"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:200
 msgid "12 h"
 msgstr "12 h"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:202
 msgid "24 h"
 msgstr "24 h"
 
-#: src/modules/clock/e_mod_config.c:144
+#: src/modules/clock/e_mod_config.c:207
 msgid "Date"
 msgstr "Datum"
 
-#: src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:212
 msgid "Full"
 msgstr "Vollständig"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:214
 msgid "Numbers"
 msgstr "Zahlen"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:216
 msgid "Date Only"
 msgstr "Nur Datum"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:218
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:220
 msgid "Strftime"
 msgstr "Strftime"
 
-#: src/modules/clock/e_mod_config.c:164
+#: src/modules/clock/e_mod_config.c:227
 msgid "Week"
 msgstr "Woche"
 
-#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:178
+#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Start"
 
-#: src/modules/clock/e_mod_config.c:177
+#: src/modules/clock/e_mod_config.c:240
 msgid "Weekend"
 msgstr "Wochenende"
 
-#: src/modules/clock/e_mod_config.c:187
+#: src/modules/clock/e_mod_config.c:250
 msgid "Days"
 msgstr "Tage"
 
-#: src/modules/clock/e_mod_config.c:207
-msgid "Time set"
-msgstr "Uhrzeit einstellen"
+#: src/modules/clock/e_mod_config.c:272
+msgid "Set..."
+msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
-msgid "Hours"
-msgstr "Stunden"
-
-#: src/modules/clock/e_mod_config.c:214
-msgid "Minutes"
-msgstr "Minuten"
-
-#: src/modules/clock/e_mod_config.c:222
+#: src/modules/clock/e_mod_config.c:276
 msgid "Date set"
 msgstr "Datum einstellen"
+
+#: src/modules/clock/e_mod_config.c:278
+#, fuzzy
+msgid "Info... "
+msgstr "Information"
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
@@ -4991,11 +4998,6 @@ msgstr "Profilnamen:"
 #: src/modules/conf_display/e_int_config_desk.c:188
 msgid "Desktop Wallpaper"
 msgstr "Arbeitsflächenhintergrundbild"
-
-#: src/modules/conf_display/e_int_config_desk.c:194
-#: src/modules/fileman/e_int_config_mime.c:184
-msgid "Set"
-msgstr "Einstellen"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 msgid "Select a Background..."
@@ -8098,8 +8100,8 @@ msgstr "Popup-Ausrichtung"
 #: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
-#: src/modules/winlist/e_int_config_winlist.c:302
-#: src/modules/winlist/e_int_config_winlist.c:307
+#: src/modules/winlist/e_int_config_winlist.c:304
+#: src/modules/winlist/e_int_config_winlist.c:309
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -8113,7 +8115,7 @@ msgid "Zoom value"
 msgstr "Vergrößerungsstufe"
 
 #: src/modules/everything/evry_config.c:617
-#: src/modules/winlist/e_int_config_winlist.c:296
+#: src/modules/winlist/e_int_config_winlist.c:298
 msgid "Geometry"
 msgstr "Fenster-Geometrie"
 
@@ -8792,8 +8794,6 @@ msgstr "Minimale Breite"
 
 #: src/modules/winlist/e_int_config_winlist.c:272
 #: src/modules/winlist/e_int_config_winlist.c:279
-#: src/modules/winlist/e_int_config_winlist.c:285
-#: src/modules/winlist/e_int_config_winlist.c:292
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
@@ -8802,23 +8802,15 @@ msgstr "%4.0f"
 msgid "Maximum width"
 msgstr "Maximale Breite"
 
-#: src/modules/winlist/e_int_config_winlist.c:283
-msgid "Minimum height"
-msgstr "Minimale Höhe"
-
-#: src/modules/winlist/e_int_config_winlist.c:290
-msgid "Maximum height"
-msgstr "Maximale Höhe"
-
-#: src/modules/winlist/e_int_config_winlist.c:300
+#: src/modules/winlist/e_int_config_winlist.c:302
 msgid "Horizontal alignment"
 msgstr "Horizontale Ausrichtung"
 
-#: src/modules/winlist/e_int_config_winlist.c:305
+#: src/modules/winlist/e_int_config_winlist.c:307
 msgid "Vertical alignment"
 msgstr "Vertikale Ausrichtung"
 
-#: src/modules/winlist/e_int_config_winlist.c:310
+#: src/modules/winlist/e_int_config_winlist.c:312
 msgid "Alignment"
 msgstr "Ausrichtung"
 
@@ -8952,28 +8944,28 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Sind Sie sicher, dass Sie diese IBar-Quelle löschen möchten?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:326 src/modules/ibar/e_mod_main.c:2818
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
+#: src/modules/ibar/e_mod_main.c:442 src/modules/ibar/e_mod_main.c:1503
 msgid "Create new Icon"
 msgstr "Neues Icon erstellen"
 
-#: src/modules/ibar/e_mod_main.c:1527
+#: src/modules/ibar/e_mod_main.c:1534
 msgid "Add to bar"
 msgstr "Zu iBar hinzufügen"
 
-#: src/modules/ibar/e_mod_main.c:1533
+#: src/modules/ibar/e_mod_main.c:1540
 msgid "Remove from bar"
 msgstr "Von iBar entfernen"
 
-#: src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:1546
 #, c-format
 msgid "Icon %s"
 msgstr "Symbol %s"
 
-#: src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:2818
 msgid "Focus IBar"
 msgstr "IBar fokussieren"
 
@@ -9629,31 +9621,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "Schnellzugriffsname/-identifikator"
 
-#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "Infobereich Fehler"
 
-#: src/modules/systray/e_mod_main.c:536
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Systray kann seinen Hintergrund nicht auf transparent setzen um mit der "
 "Modulablage übereinzustimmen."
 
-#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
 msgstr "Es existiert bereits eine andere Systemleiste"
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Es kann nur eine Systemleiste geben. Eine solche existiert bereits."
 
-#: src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "Der Infobereich funktioniert nicht in einer Ablage die auf \"Unter Allem\" "
 "eingestellt ist."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1145
 msgid "Systray"
 msgstr "Systemleiste"
 
@@ -9900,7 +9892,7 @@ msgstr "Information"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+PrtSc: Screenshot Fenster aktivieren"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:803
 msgid "Tasks"
 msgstr "Prozesse"
 
@@ -10556,6 +10548,18 @@ msgstr "Lautstärke vergrössern"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Lautstärke dämpfen"
+
+#~ msgid "Hours"
+#~ msgstr "Stunden"
+
+#~ msgid "Minutes"
+#~ msgstr "Minuten"
+
+#~ msgid "Minimum height"
+#~ msgstr "Minimale Höhe"
+
+#~ msgid "Maximum height"
+#~ msgstr "Maximale Höhe"
 
 #~ msgid "Execution Error"
 #~ msgstr "Ausführungsfehler"

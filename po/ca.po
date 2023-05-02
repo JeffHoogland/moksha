@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"POT-Creation-Date: 2023-05-02 16:45+0200\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
@@ -895,7 +895,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:102
+#: src/modules/clock/e_mod_config.c:165
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -1448,7 +1448,7 @@ msgstr "No es pot expulsar el dispositiu"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2413
 msgid "Error"
 msgstr "Error"
 
@@ -1508,7 +1508,7 @@ msgstr "Accions..."
 msgid "Link"
 msgstr "Enllaça"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2541
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1529,7 +1529,7 @@ msgid "Eject"
 msgstr "Expulsa"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1520
+#: src/modules/ibar/e_mod_main.c:1527
 msgid "Properties"
 msgstr "Propietats"
 
@@ -1778,7 +1778,7 @@ msgstr "Dispositiu extraïble"
 msgid "Cannot change permissions: %s"
 msgstr "No es poden canviar permisos: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1789,8 +1789,8 @@ msgstr "Nom:"
 msgid "Location:"
 msgstr "Lloc:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
-#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
+#: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
 msgid "Size:"
 msgstr "Mida:"
 
@@ -2303,7 +2303,7 @@ msgstr "Barra de tasques"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
 msgstr "%i×%i"
@@ -2383,8 +2383,8 @@ msgstr "Sud-est"
 msgid "Static"
 msgstr "Estàtic"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:147
-#: src/modules/clock/e_mod_config.c:190
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
+#: src/modules/clock/e_mod_config.c:253
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2519,7 +2519,7 @@ msgstr "Demana posició"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2531,11 +2531,11 @@ msgstr "Demana posició"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
+#: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:796
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2743,27 +2743,27 @@ msgstr "No hi ha mòduls seleccionats."
 msgid "More than one module selected."
 msgstr "Més d'un mòdul seleccionat."
 
-#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
+#: src/bin/e_int_gadcon_config.c:703 src/bin/e_int_gadcon_config.c:761
 msgid "Remove Gadget"
 msgstr "Elimina giny"
 
-#: src/bin/e_int_gadcon_config.c:707
+#: src/bin/e_int_gadcon_config.c:708
 msgid "Loaded Gadgets"
 msgstr "Ginys carregats"
 
-#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
+#: src/bin/e_int_gadcon_config.c:723 src/bin/e_int_gadcon_config.c:756
 msgid "Add Gadget"
 msgstr "Afegeix giny"
 
-#: src/bin/e_int_gadcon_config.c:727
+#: src/bin/e_int_gadcon_config.c:728
 msgid "Available Gadgets"
 msgstr "Ginys disponibles"
 
-#: src/bin/e_int_gadcon_config.c:789
+#: src/bin/e_int_gadcon_config.c:790
 msgid "Shelf Contents"
 msgstr "Continguts del tauler"
 
-#: src/bin/e_int_gadcon_config.c:795
+#: src/bin/e_int_gadcon_config.c:796
 msgid "Toolbar Contents"
 msgstr "Continguts barra d'eines"
 
@@ -2885,7 +2885,7 @@ msgstr "Finestres perdudes"
 msgid "Untitled window"
 msgstr "Finestres sense títol"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -3669,82 +3669,82 @@ msgstr ""
 "activar el mode <b>presentació</b> i desactivar temporalment l'estalvi de "
 "pantalla, bloqueig i estalvi d'energia?"
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 msgid "Float"
 msgstr "Flota"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Horitzontal"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Vertical"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Left"
 msgstr "Esquerra"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Right"
 msgstr "Dreta"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Top"
 msgstr "Amunt"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Bottom"
 msgstr "Avall"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-left Corner"
 msgstr "Cantonada superior esquerra"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Top-right Corner"
 msgstr "Cantonada superior dreta"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
 msgstr "Cantonada inferior esquerra"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
 msgstr "Cantonada inferior dreta"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Left-top Corner"
 msgstr "Cantonada superior esquerra"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Right-top Corner"
 msgstr "Cantonada superior dreta"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
 msgstr "Cantonada inferior esquerra"
 
-#: src/bin/e_shelf.c:82
+#: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
 msgstr "Cantonada inferior dreta"
 
-#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
+#: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, c-format
 msgid "Shelf #%d"
 msgstr "Tauler número %d"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
 msgstr "Error en amagar el tauler"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
@@ -3753,48 +3753,48 @@ msgstr ""
 "configuració: Poseu el tauler<br>\"Darrera de tot\" o desactiveu Amaga "
 "automàticament."
 
-#: src/bin/e_shelf.c:1175
+#: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
 msgstr "Afegeix nou tauler"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "Shelf Error"
 msgstr "Error del tauler"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "A shelf with that name already exists!"
 msgstr "Ja existeix un tauler amb aquest nom!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
+#: src/bin/e_shelf.c:1720 src/bin/e_shelf.c:2558
 msgid "Stop Moving Gadgets"
 msgstr "Finalitza moure ginys"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
+#: src/bin/e_shelf.c:1722 src/bin/e_shelf.c:2560
 msgid "Begin Moving Gadgets"
 msgstr "Moure ginys"
 
-#: src/bin/e_shelf.c:2404
+#: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
 msgstr "Ja existeix un tauler amb aquest nom i aquest id!"
 
-#: src/bin/e_shelf.c:2423
+#: src/bin/e_shelf.c:2432
 msgid "Rename Shelf"
 msgstr "Canvia nom tauler"
 
-#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
+#: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:453 src/modules/ibar/e_mod_main.c:1514
 msgid "Contents"
 msgstr "Continguts"
 
-#: src/bin/e_shelf.c:2508
+#: src/bin/e_shelf.c:2517
 msgid "Orientation"
 msgstr "Orientació"
 
-#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2526 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Amaga automàticament"
 
-#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Refresca"
 
@@ -4080,9 +4080,9 @@ msgid_plural "%li Minutes ago"
 msgstr[0] "Fa un minut"
 msgstr[1] "Fa %li minuts"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
-#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
-#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
+#: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4258,77 +4258,77 @@ msgstr "V"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
-#: src/bin/e_widget_filepreview.c:543
+#: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:523
 msgid "Resolution:"
 msgstr "Resolució:"
 
-#: src/bin/e_widget_filepreview.c:104
+#: src/bin/e_widget_filepreview.c:94
 msgid "Mime-type:"
 msgstr "Tipus-mime:"
 
-#: src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:419
+#: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
 msgstr "Longitud:"
 
-#: src/bin/e_widget_filepreview.c:486
+#: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
 msgstr "Utilitzat:"
 
-#: src/bin/e_widget_filepreview.c:488
+#: src/bin/e_widget_filepreview.c:473
 msgid "Reserved:"
 msgstr "Reservat:"
 
-#: src/bin/e_widget_filepreview.c:489
+#: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
 msgstr "Estat muntatge:"
 
-#: src/bin/e_widget_filepreview.c:491
+#: src/bin/e_widget_filepreview.c:476
 msgid "Type:"
 msgstr "Tipus:"
 
-#: src/bin/e_widget_filepreview.c:546
+#: src/bin/e_widget_filepreview.c:526
 msgid "Owner:"
 msgstr "Propietari:"
 
-#: src/bin/e_widget_filepreview.c:547
+#: src/bin/e_widget_filepreview.c:527
 msgid "Permissions:"
 msgstr "Permisos:"
 
-#: src/bin/e_widget_filepreview.c:548
+#: src/bin/e_widget_filepreview.c:528
 msgid "Modified:"
 msgstr "Modificat:"
 
-#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
-#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
+#: src/bin/e_widget_filepreview.c:666 src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
 msgstr "Només lectura"
 
-#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
+#: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
 msgstr "Lectura-Escriptura"
 
-#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
+#: src/bin/e_widget_filepreview.c:671 src/bin/e_widget_filepreview.c:682
 msgid "Unmounted"
 msgstr "Desmuntat"
 
-#: src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:781
 #, c-format
 msgid "You"
 msgstr "Vós"
 
-#: src/bin/e_widget_filepreview.c:881
+#: src/bin/e_widget_filepreview.c:830
 #, c-format
 msgid "Protected"
 msgstr "Protegit"
 
-#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
+#: src/bin/e_widget_filepreview.c:839 src/bin/e_widget_filepreview.c:848
 #, c-format
 msgid "Forbidden"
 msgstr "Prohibit"
@@ -4507,106 +4507,112 @@ msgstr "ERROR"
 msgid "Battery Meter"
 msgstr "Mesurador bateria"
 
-#: src/modules/clock/e_mod_config.c:40
+#: src/modules/clock/e_mod_config.c:43
 msgid "Clock Settings"
 msgstr "Preferències rellotge"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+#, fuzzy
+msgid "Time set"
+msgstr "Temporitzadors"
+
+#: src/modules/clock/e_mod_config.c:137
+#: src/modules/conf_display/e_int_config_desk.c:194
+#: src/modules/fileman/e_int_config_mime.c:184
+msgid "Set"
+msgstr "Configura"
+
+#: src/modules/clock/e_mod_config.c:159
 #, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:161
 #, fuzzy
 msgid "Clock module Information"
 msgstr "Informació de l'enllaç"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Rellotge"
 
-#: src/modules/clock/e_mod_config.c:130
+#: src/modules/clock/e_mod_config.c:193
 msgid "Analog"
 msgstr "Analògic"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:195
 msgid "Digital"
 msgstr "Digital"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:197
 msgid "Seconds"
 msgstr "Segons"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:200
 msgid "12 h"
 msgstr "12 h"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:202
 msgid "24 h"
 msgstr "24 h"
 
-#: src/modules/clock/e_mod_config.c:144
+#: src/modules/clock/e_mod_config.c:207
 msgid "Date"
 msgstr "Data"
 
-#: src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:212
 msgid "Full"
 msgstr "Sencera"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:214
 msgid "Numbers"
 msgstr "Números"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:216
 msgid "Date Only"
 msgstr "Només data"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:218
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:220
 msgid "Strftime"
 msgstr "Strftime"
 
-#: src/modules/clock/e_mod_config.c:164
+#: src/modules/clock/e_mod_config.c:227
 msgid "Week"
 msgstr "Setmana"
 
-#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:178
+#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Inici"
 
-#: src/modules/clock/e_mod_config.c:177
+#: src/modules/clock/e_mod_config.c:240
 msgid "Weekend"
 msgstr "Cap de setmana"
 
-#: src/modules/clock/e_mod_config.c:187
+#: src/modules/clock/e_mod_config.c:250
 msgid "Days"
 msgstr "Dies"
 
-#: src/modules/clock/e_mod_config.c:207
-#, fuzzy
-msgid "Time set"
-msgstr "Temporitzadors"
-
-#: src/modules/clock/e_mod_config.c:209
-msgid "Hours"
+#: src/modules/clock/e_mod_config.c:272
+msgid "Set..."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:214
-#, fuzzy
-msgid "Minutes"
-msgstr "Un minut"
-
-#: src/modules/clock/e_mod_config.c:222
+#: src/modules/clock/e_mod_config.c:276
 #, fuzzy
 msgid "Date set"
 msgstr "Data"
+
+#: src/modules/clock/e_mod_config.c:278
+#, fuzzy
+msgid "Info... "
+msgstr "Informació"
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
@@ -4959,11 +4965,6 @@ msgstr "Nom del perfil:"
 #: src/modules/conf_display/e_int_config_desk.c:188
 msgid "Desktop Wallpaper"
 msgstr "Paper de fons de l'escriptori"
-
-#: src/modules/conf_display/e_int_config_desk.c:194
-#: src/modules/fileman/e_int_config_mime.c:184
-msgid "Set"
-msgstr "Configura"
 
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 msgid "Select a Background..."
@@ -8102,8 +8103,8 @@ msgstr "Finestra emergent: Alineació"
 #: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
-#: src/modules/winlist/e_int_config_winlist.c:302
-#: src/modules/winlist/e_int_config_winlist.c:307
+#: src/modules/winlist/e_int_config_winlist.c:304
+#: src/modules/winlist/e_int_config_winlist.c:309
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -8118,7 +8119,7 @@ msgid "Zoom value"
 msgstr "Disminueix zoom"
 
 #: src/modules/everything/evry_config.c:617
-#: src/modules/winlist/e_int_config_winlist.c:296
+#: src/modules/winlist/e_int_config_winlist.c:298
 msgid "Geometry"
 msgstr "Geometria"
 
@@ -8797,8 +8798,6 @@ msgstr "Amplada mínima"
 
 #: src/modules/winlist/e_int_config_winlist.c:272
 #: src/modules/winlist/e_int_config_winlist.c:279
-#: src/modules/winlist/e_int_config_winlist.c:285
-#: src/modules/winlist/e_int_config_winlist.c:292
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
@@ -8807,23 +8806,15 @@ msgstr "%4.0f"
 msgid "Maximum width"
 msgstr "Amplada màxima"
 
-#: src/modules/winlist/e_int_config_winlist.c:283
-msgid "Minimum height"
-msgstr "Alçada mínima"
-
-#: src/modules/winlist/e_int_config_winlist.c:290
-msgid "Maximum height"
-msgstr "Alçada màxima"
-
-#: src/modules/winlist/e_int_config_winlist.c:300
+#: src/modules/winlist/e_int_config_winlist.c:302
 msgid "Horizontal alignment"
 msgstr "Alineament horitzontal"
 
-#: src/modules/winlist/e_int_config_winlist.c:305
+#: src/modules/winlist/e_int_config_winlist.c:307
 msgid "Vertical alignment"
 msgstr "Alineament vertical"
 
-#: src/modules/winlist/e_int_config_winlist.c:310
+#: src/modules/winlist/e_int_config_winlist.c:312
 msgid "Alignment"
 msgstr "Alineament"
 
@@ -8958,28 +8949,28 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Està segur que vol eliminar l'orígen d'aquesta barra?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:326 src/modules/ibar/e_mod_main.c:2818
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
+#: src/modules/ibar/e_mod_main.c:442 src/modules/ibar/e_mod_main.c:1503
 msgid "Create new Icon"
 msgstr "Crea nova icona"
 
-#: src/modules/ibar/e_mod_main.c:1527
+#: src/modules/ibar/e_mod_main.c:1534
 msgid "Add to bar"
 msgstr "Afegeix a la barra"
 
-#: src/modules/ibar/e_mod_main.c:1533
+#: src/modules/ibar/e_mod_main.c:1540
 msgid "Remove from bar"
 msgstr "Elimina de la barra"
 
-#: src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:1546
 #, c-format
 msgid "Icon %s"
 msgstr "Icona %s"
 
-#: src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:2818
 msgid "Focus IBar"
 msgstr "Enfoca IBar"
 
@@ -9632,32 +9623,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "nom/identificador d'accés ràpid"
 
-#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "Error en la safata del sistema"
 
-#: src/modules/systray/e_mod_main.c:536
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "La safata del sistema no pot configurar el seu fons invisible per coincidir "
 "amb el seu tauler."
 
-#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
 msgstr "Ja existeix una altra safata del sistema"
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Només hi pot haver un giny de la safata del sistema i n'existeix un altre."
 
-#: src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "La safata d'entrada no pot treballar en un tauler que està configurat per "
 "estar a sota de tot."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1145
 msgid "Systray"
 msgstr "Safata del sistema"
 
@@ -9907,7 +9898,7 @@ msgstr "Informació"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Seleccioneu la ubicació on guardar la captura"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:803
 msgid "Tasks"
 msgstr "Tasques"
 
@@ -10584,6 +10575,16 @@ msgstr "Volum augmentat"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Volum silenciat"
+
+#, fuzzy
+#~ msgid "Minutes"
+#~ msgstr "Un minut"
+
+#~ msgid "Minimum height"
+#~ msgstr "Alçada mínima"
+
+#~ msgid "Maximum height"
+#~ msgstr "Alçada màxima"
 
 #~ msgid "Execution Error"
 #~ msgstr "Error d'execució"
