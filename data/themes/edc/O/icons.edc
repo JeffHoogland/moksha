@@ -171,6 +171,19 @@
    ICON("modules-core","logo_white_128.png",64)
    ICON("modules-mobile","icon_globe.png",64)
    ICON("modules-settings","icon_config.png",64)
+   //Standard menu category icons
+   ICON("applications-accessories","applications-accessories.png",64)
+   ICON("applications-development","applications-development.png",64)
+   ICON("applications-games","applications-games.png",64)
+   ICON("applications-graphics","applications-graphics.png",64)
+   ICON("applications-internet","applications-internet.png",64)
+   ICON("applications-multimedia","applications-multimedia.png",64)
+   ICON("applications-office","applications-office.png",64)
+   ICON("applications-other","applications-other.png",64)
+   ICON("applications-science","applications-science.png",64)
+   ICON("applications-system","applications-system.png",64)
+   ICON("applications-utilities","applications-utilities.png",64)
+   ICON("preferences-other","preferences-other.png",64)
    //Standard Emblem Icons
    ICON("emblem-symbolic-link","icon_dummy.png",64)                // EFMBUTTON("symlink")
    //Standard Place Icons
