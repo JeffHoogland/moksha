@@ -35,6 +35,8 @@
     * 3. Try to follow the naming convention
     */
    //Standard Action Icons
+   ICON("help-faq","help_faq.png",64)                              // "enlightenment/help_faq"
+   ICON("preferences-modes","icon_modes.png",64)                   // "enlightenment/presentation"
    ICON("list-add","icon_add.png",64)                              // "widget/add"
    ICON("list-remove","icon_del.png",64)                           // "widget/del"
    ICON("go-up","icon_up_arrow.png",64)                            // "widget/up_arrow" "widget/up_dir"
