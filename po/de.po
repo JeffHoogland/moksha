@@ -29,9 +29,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2023-05-02 16:45+0200\n"
 "PO-Revision-Date: 2022-11-21 20:30+0100\n"
 "Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
+=======
+"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"PO-Revision-Date: 2023-05-01 19:42+0200\n"
+"Last-Translator: Christian Becker <xpistianbecker@gmail.com>\n"
+>>>>>>> 7bc302238 (DE Translations updated/ reviewed A-L)
 "Language-Team: E17-de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -743,7 +749,7 @@ msgstr "Offlinemodus-Umschalter"
 
 #: src/bin/e_actions.c:3561 src/bin/e_actions.c:3565 src/bin/e_actions.c:3569
 msgid "Moksha : Module"
-msgstr "Moksha : Module"
+msgstr "Moksha : Modul"
 
 #: src/bin/e_actions.c:3562
 msgid "Enable the named module"
@@ -978,7 +984,7 @@ msgstr "Die Datei wurde geschlossen, während sie geschrieben wurde."
 
 #: src/bin/e_config.c:2111
 msgid "Memory-mapping (mmap) of the file failed."
-msgstr "Memory-Mapping der Datei ist fehlgeschlagen."
+msgstr "Memory-Mapping (mmap) der Datei ist fehlgeschlagen."
 
 #: src/bin/e_config.c:2115
 msgid "X509 Encoding failed."
@@ -1134,11 +1140,11 @@ msgstr ""
 
 #: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:197
 msgid "No, but increase timeout"
-msgstr "Nein, stattdessen Verzögerung erhöhen"
+msgstr "Nein, aber Verzögerung erhöhen"
 
 #: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:199
 msgid "No, and stop asking"
-msgstr "Nein, nicht mehr nachfragen"
+msgstr "Nein, und nicht mehr nachfragen"
 
 #: src/bin/e_eap_editor.c:181
 msgid "Incomplete Window Properties"
@@ -2000,8 +2006,8 @@ msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
 msgstr ""
-"Moksha war nicht in der Lage, das Thema zu importieren.<br><br>Sind Sie "
-"sicher, dass dies ein gültiges Thema ist?"
+"Moksha war nicht in der Lage, das Bild zu importieren.<br><br>Sind Sie "
+"sicher, dass dies ein gültiges Bild ist?"
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
@@ -2307,7 +2313,7 @@ msgstr "Benutzerspezifisches Icon verwenden"
 
 #: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
 msgid "Offer Resistance"
-msgstr "Widerstand anbieten"
+msgstr "Widerstand leisten"
 
 #: src/bin/e_int_border_menu.c:1317
 msgid "Window List"
@@ -2709,7 +2715,7 @@ msgstr "Anwendung oder Name (.desktop)"
 
 #: src/bin/e_int_border_remember.c:745
 msgid "Match only one window"
-msgstr "Nur auf ein Fenster zutreffend"
+msgstr "Versuche mit nur einem Fenster übereinzustimmen"
 
 #: src/bin/e_int_border_remember.c:749
 msgid "Always focus on start"
@@ -2818,7 +2824,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:144 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
-msgstr "Hauptmenü"
+msgstr "Haupt"
 
 #: src/bin/e_int_menus.c:167
 #: src/modules/conf_applications/e_int_config_apps.c:74
@@ -3101,8 +3107,13 @@ msgid ""
 msgstr ""
 "Moksha entdeckte, dass ecore_evas das Softwarebuffer-\n"
 "Rendering in Evas nicht unterstützt. Bitte überprüfen Sie Ihre Evas-\n"
+<<<<<<< HEAD
 "und Ecore-Installation sowie deren Unterstützung von X11-\n"
 "Softwarebuffer-Rendering"
+=======
+"und Ecore-Installation und stellen Sie sicher, dass sie Softwarebuffer-\n"
+"Rendering unterstützen."
+>>>>>>> 7bc302238 (DE Translations updated/ reviewed A-L)
 
 #: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
@@ -3230,7 +3241,7 @@ msgstr "Bildschirmschoner einrichten"
 
 #: src/bin/e_main.c:800
 msgid "Moksha cannot configure the X screensaver.\n"
-msgstr "Moksha kann den Dateimanager nicht initialisieren.\n"
+msgstr "Moksha kann den X-Bildschirmschoner nicht konfigurieren.\n"
 
 #: src/bin/e_main.c:807
 msgid "Setup DPMS"
@@ -3238,7 +3249,7 @@ msgstr "DPMS einrichten"
 
 #: src/bin/e_main.c:811
 msgid "Moksha cannot configure the DPMS settings.\n"
-msgstr "Moksha kann die DPMS-Einstellungen nicht initialisieren.\n"
+msgstr "Moksha kann die DPMS-Einstellungen nicht konfigurieren.\n"
 
 #: src/bin/e_main.c:818
 msgid "Setup Desklock"
@@ -3366,7 +3377,7 @@ msgstr "Mauseinstellungen"
 
 #: src/bin/e_main.c:998
 msgid "Moksha cannot configure the mouse settings.\n"
-msgstr "Moksha kann die Mauseinstellungen nicht initialisieren.\n"
+msgstr "Moksha kann die Mauseinstellungen nicht konfigurieren.\n"
 
 #: src/bin/e_main.c:1005
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
@@ -3528,8 +3539,8 @@ msgstr ""
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
-"Moksha stellte fest, dass Evas keine PNG-Dateien laden kann.\n"
-"Bitte überprüfen Sie Evas auf PNG-Loader-Unterstützung.\n"
+"Moksha stellte fest, dass Evas keine SVG-Dateien laden kann.\n"
+"Bitte überprüfen Sie Evas auf SVG-Loader-Unterstützung.\n"
 
 #: src/bin/e_main.c:1674
 msgid ""
@@ -3651,8 +3662,9 @@ msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
-"Fehler beim Initialisieren des Moduls %s.<br>Es wird mindestens Modul-API %i "
-"benötigt.<br>Die Moksha bekannte Modul-API ist %i.<br>"
+"Modul-API-Fehler<br>Fehler beim Initialisieren des Moduls %s.<br>Es wird "
+"mindestens Modul-API-Version %i benötigt.<br>Die von Moksha angezeigte Modul-"
+"API ist %i.<br>"
 
 #: src/bin/e_module.c:272
 #, c-format
@@ -3997,7 +4009,7 @@ msgstr "Nerve mich später"
 
 #: src/bin/e_update.c:80
 msgid "Never tell me"
-msgstr "Niewieder anzeigen"
+msgstr "Nie benachrichtigen"
 
 #: src/bin/e_update.c:83
 msgid "Update Notice"
@@ -6167,7 +6179,7 @@ msgstr "Persönlich Standard"
 
 #: src/modules/conf_menus/e_int_config_menus.c:259
 msgid "Main Menu"
-msgstr "Hauptmenü zeigen"
+msgstr "Hauptmenü"
 
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:247
@@ -6301,7 +6313,7 @@ msgstr "Hintergründe"
 
 #: src/modules/conf_paths/e_int_config_paths.c:84
 msgid "Messages"
-msgstr "Nachrichten"
+msgstr "Benachrichtigungen"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 msgid "Moksha Paths"
@@ -6612,15 +6624,15 @@ msgstr "Menütitel aktiv"
 #: src/modules/conf_theme/e_int_config_color_classes.c:88
 #: src/modules/conf_theme/e_int_config_fonts.c:60
 msgid "Menu Item"
-msgstr "Menügegenstand"
+msgstr "Menüeintrag"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:89
 msgid "Menu Item Active"
-msgstr "Menügegenstand aktiv"
+msgstr "Menüeintrag aktiv"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:90
 msgid "Menu Item Disabled"
-msgstr "Menügegenstand deaktiviert"
+msgstr "Menüeintrag deaktiviert"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:91
 #: src/modules/conf_theme/e_int_config_fonts.c:65
@@ -7459,7 +7471,7 @@ msgstr "Fenster unter dem Mauszeiger aktivieren"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:221
 msgid "Most recent Window under the Mouse"
-msgstr "Neuestes Fenster unter dem Mauszeiger aktivieren"
+msgstr "Neuestes Fenster unter dem Mauszeiger"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:224
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:269
@@ -7928,11 +7940,11 @@ msgstr "Intervall zwischen Aktualisierungen"
 
 #: src/modules/cpufreq/e_mod_config.c:107
 msgid "Minimum Power State"
-msgstr "Minimum Ladungszustand"
+msgstr "Minimaler Ladezustand"
 
 #: src/modules/cpufreq/e_mod_config.c:113
 msgid "Maximum Power State"
-msgstr "Maximum Ladungszustand"
+msgstr "Maximaler Ladungszustand"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
@@ -8631,7 +8643,7 @@ msgstr "Dateimanager"
 
 #: src/modules/fileman/e_mod_main.c:61
 msgid "Navigate"
-msgstr "Navigiere"
+msgstr "Navigieren"
 
 #: src/modules/fileman/e_mod_main.c:284
 msgid "Fileman"
@@ -8639,7 +8651,7 @@ msgstr "Dateiverwalter"
 
 #: src/modules/fileman/e_mod_menu.c:241
 msgid "No listable items"
-msgstr "Keine darstellbaren Objekte"
+msgstr "Keine aufzulistbaren Objekte"
 
 #: src/modules/fileman/e_mod_menu.c:320
 msgid "GTK Bookmarks"
@@ -8901,7 +8913,7 @@ msgstr "Zeige Symbolbeschriftung"
 
 #: src/modules/ibar/e_mod_config.c:150
 msgid "Misc"
-msgstr "Sonstiges"
+msgstr "Verschiedenes"
 
 #: src/modules/ibar/e_mod_config.c:151
 msgid "Icon focus flash"
@@ -9305,8 +9317,8 @@ msgstr ""
 "Daten übertragen, so wie es ein Web-Browser tut.<br><b>Keine</b> "
 "persönlichen Daten wie Benutzername, Passwort<br>oder persönliche Dateien "
 "werden übermittelt.<br>Wenn Sie das nicht wünschen, bitte deaktivieren Sie "
-"dies unterhalb.<br>Es ist sehr zu empfehlen dies nicht zu tun,<br>da Sie "
-"sonst nicht über Verwundbarkeiten oder Fehler<br>informiert werden."
+"dies unterhalb.<br>Es ist sehr zu empfehlen dies nicht zu tun,<br>da sonst "
+"Verwundbarkeiten oder Fehler<br>nicht behoben werden."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9995,19 +10007,19 @@ msgstr "Fenster verschieben"
 
 #: src/modules/tiling/e_mod_tiling.c:4238
 msgid "Move window to the left"
-msgstr "Verschiebe Fenster nach links"
+msgstr "Fenster nach links verschieben"
 
 #: src/modules/tiling/e_mod_tiling.c:4241
 msgid "Move window to the right"
-msgstr "Verschiebe Fenster nach rechts"
+msgstr "Fenster nach rechts verschieben"
 
 #: src/modules/tiling/e_mod_tiling.c:4244
 msgid "Move window up"
-msgstr "Verschiebe Fenster nach oben"
+msgstr "Fenster nach oben verschieben"
 
 #: src/modules/tiling/e_mod_tiling.c:4247
 msgid "Move window down"
-msgstr "Verschiebe Fenster nach unten"
+msgstr "Fenster nach unten verschieben"
 
 #: src/modules/tiling/e_mod_tiling.c:4251
 msgid "Adjust transitions"
@@ -10098,7 +10110,7 @@ msgstr "Wechsle in den Präsentationsmodus"
 
 #: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr "Moksha ist in den <b>Präsentationsmodus</b>."
+msgstr "Moksha ist im <b>Präsentationsmodus</b>."
 
 #: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
@@ -10118,7 +10130,7 @@ msgid ""
 "network will stop polling remote services."
 msgstr ""
 "Moksha befindet sich im <b>Offline</b>-Modus.<br>Im Offlinemodus werden "
-"keine Module entfernte Netzwerkdienste kontaktieren."
+"Module keine entfernten Netzwerkdienste kontaktieren."
 
 #: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
