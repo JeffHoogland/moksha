@@ -42,10 +42,12 @@ group { name: "e/modules/systray/main";
          description { state: "default" 0.0;
             rel1.offset: 10 0;
             rel2.offset: -10 -1;
+            visible: 0;
          }
          description { state: "vertical" 0.0;
             rel1.offset: 1 8;
             rel2.offset: -1 -8;
+            visible: 0;
          }
       }
       part { name: "e.box"; type: BOX;
@@ -65,12 +67,6 @@ group { name: "e/modules/systray/main";
                layout: "vertical";
                padding: 0 2;
             }
-         }
-      }
-      part { name: "fake_sys";
-         description { state: "default" 0.0;
-             rel.to: "e.size";
-             image.normal: "vgrad_med.png";
          }
       }
    }
