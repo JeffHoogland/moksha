@@ -29,22 +29,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
-"PO-Revision-Date: 2022-11-21 20:30+0100\n"
-"Last-Translator: Levin Schmitz <tentacionshope@gmail.com>\n"
-=======
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
-"PO-Revision-Date: 2023-05-01 19:42+0200\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Christian Becker <xpistianbecker@gmail.com>\n"
->>>>>>> 7bc302238 (DE Translations updated/ reviewed A-L)
-"Language-Team: E17-de\n"
-"Language: de\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 2.3\n"
+"Language: de\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -385,7 +379,7 @@ msgstr "Zu unterer Arbeitsfläche wechseln"
 
 #: src/bin/e_actions.c:3276
 msgid "Flip Desktop By..."
-msgstr "Arbeitsfläche um ... wechseln"
+msgstr "Arbeitsfläche um ... wechseln."
 
 #: src/bin/e_actions.c:3282
 msgid "Flip To Previous Desktop"
@@ -401,11 +395,11 @@ msgstr "Modulablage zeigen"
 
 #: src/bin/e_actions.c:3298
 msgid "Flip Desktop To..."
-msgstr "Zu Arbeitsfläche ... wechseln"
+msgstr "Zu Arbeitsfläche ... wechseln."
 
 #: src/bin/e_actions.c:3304
 msgid "Flip Desktop Linearly..."
-msgstr "Linear zu Arbeitsfläche wechseln um ... "
+msgstr "Linear zu Arbeitsfläche ... wechseln um."
 
 #: src/bin/e_actions.c:3310
 msgid "Switch To Desktop 0"
@@ -457,7 +451,7 @@ msgstr "Zu Arbeitsfläche 11 wechseln"
 
 #: src/bin/e_actions.c:3334
 msgid "Switch To Desktop..."
-msgstr "Zu Arbeitsfläche ... schalten"
+msgstr "Zu Arbeitsfläche ... schalten."
 
 #: src/bin/e_actions.c:3340
 msgid "Flip Desktop Left (All Screens)"
@@ -489,7 +483,7 @@ msgstr "Arbeitsfläche linear nach ... klappen (alle Bildschirme)"
 
 #: src/bin/e_actions.c:3366
 msgid "Flip Desktop In Direction..."
-msgstr "Arbeitsfläche in Richtung ... klappen"
+msgstr "Arbeitsfläche in Richtung ... wechseln"
 
 #: src/bin/e_actions.c:3371
 msgid "Switch To Desktop 0 (All Screens)"
@@ -906,9 +900,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha konnte die Konfigurationsdateien nicht von<br>%s<br>nach<br>"
-"%s<br>verschieben.<br>Sicherheitshalber wurde der Schreibvorgang abgebrochen."
-"<br>"
+"Moksha konnte die Konfigurationsdateien nicht "
+"von<br>%s<br>nach<br>%s<br>verschieben.<br>Sicherheitshalber wurde der "
+"Schreibvorgang abgebrochen.<br>"
 
 #: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1759,8 +1753,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in <br><hilight>"
-"%s</hilight> löschen?"
+"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in "
+"<br><hilight>%s</hilight> löschen?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -3107,13 +3101,8 @@ msgid ""
 msgstr ""
 "Moksha entdeckte, dass ecore_evas das Softwarebuffer-\n"
 "Rendering in Evas nicht unterstützt. Bitte überprüfen Sie Ihre Evas-\n"
-<<<<<<< HEAD
-"und Ecore-Installation sowie deren Unterstützung von X11-\n"
-"Softwarebuffer-Rendering"
-=======
-"und Ecore-Installation und stellen Sie sicher, dass sie Softwarebuffer-\n"
+"und Ecore-Installation und stellen Sie sicher, dass sie Sofware-Buffer-"
 "Rendering unterstützen."
->>>>>>> 7bc302238 (DE Translations updated/ reviewed A-L)
 
 #: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
@@ -3654,7 +3643,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions"
-msgstr "Das Modul enthält nicht alle benötigten Funktionen."
+msgstr "Das Modul enthält nicht alle benötigten Funktionen"
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3792,8 +3781,8 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "Auto-Verstecken der Modulablage wird mit der<br>aktuellen Konfiguration "
-"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter Allem"
-"\"<br>oder deaktivieren Sie Auto-Verstecken."
+"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter "
+"Allem\"<br>oder deaktivieren Sie Auto-Verstecken."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -3935,7 +3924,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:631 src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
-msgstr "Upps, das sollte nicht passieren."
+msgstr "Upps, das sollte nicht passieren"
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -4022,9 +4011,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"Ihre Moksha version ist nicht aktuell.<br>Die aktuelle version ist:<br><br>"
-"%s<br><br>Bitte besuchen Sie www.enlightenment.org<br>oder aktualisieren Sie "
-"Ihre Systempakete<br>um eine neue Verison zu erhalten."
+"Ihre Moksha version ist nicht aktuell.<br>Die aktuelle version ist:"
+"<br><br>%s<br><br>Bitte besuchen Sie www.enlightenment.org<br>oder "
+"aktualisieren Sie Ihre Systempakete<br>um eine neue Verison zu erhalten."
 
 #: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -5566,7 +5555,7 @@ msgstr "Kanten scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:358
 msgid "2 finger scrolling"
-msgstr "2 Finger Scrollen "
+msgstr "2 Finger Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:362
 msgid "Circular scrolling"
@@ -5879,8 +5868,9 @@ msgstr "Tastenbelegungsfehler"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Die gewählte Tastenbelegungsabfolge wird bereits von der <br><hilight>%s</"
 "hilight>-Aktion verwendet.<br>Bitte wählen Sie eine andere Abfolge."
@@ -6082,7 +6072,7 @@ msgstr "Desktop"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
-msgstr "Arbeitsfläche zeigen:"
+msgstr " Arbeitsfläche zeigen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
 msgid " Switch to Desktop 0:"
@@ -6142,7 +6132,7 @@ msgstr "Terminal Konsole:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 msgid "This Help:"
-msgstr "diese Hilfe:"
+msgstr "Diese Hilfe:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -7923,8 +7913,8 @@ msgid ""
 msgstr ""
 "Die freqset-Programmdatei im cpufreq-Modul<ps/>hat weder root-Rechte noch "
 "das<ps/>setuid-Bit gesetzt. Bitte stellen Sie sicher dass<ps/>das der Fall "
-"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
-"+x %s<ps/>"
+"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
+"a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8323,11 +8313,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8345,8 +8335,8 @@ msgstr ""
 "<hilight>STRG+Enter</hilight>führt die Aktion aus und macht "
 "weiter<br><hilight>Tab</hilight> schaltet zwischen Auswählern "
 "um<br><hilight>STRG+Tab</hilight> zeigt die vollständige Eingabe (hängt vom "
-"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit \"x"
-"\"<br><hilight>STRG+links/rechts</hilight> geht durch die "
+"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit "
+"\"x\"<br><hilight>STRG+links/rechts</hilight> geht durch die "
 "Plugins<br><hilight>STRG+hoch/runter</hilight> geht zum ersten/letzten "
 "Eintrag<br><hilight>STRG+1</hilight> schaltet zwischen den Ansichten "
 "(verlässt diese Seite ;)<br><hilight>STRG+2</hilight>schaltet die "
@@ -9554,7 +9544,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
-msgstr "Du hast es selbst gelöscht, du Schlingel!<br>Super!"
+msgstr "Sie haben es selbst gelöscht, Sie Schlingel!<br>Super!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
 #: src/modules/quickaccess/e_mod_quickaccess.c:1018
@@ -9682,8 +9672,8 @@ msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
-"Ändere Ordner in Bildschirmfotoeinstellungen<br><br>Menu-Einstellungen-Alle-"
-"Erweitert-Bildschrimfoto machen<br><br>Möchtest du es jetzt aufsetzen?"
+"Ordner in Bildschirmfotoeinstellungen ändern<br><br>Menu-Einstellungen-Alle-"
+"Erweitert-Bildschirmfoto machen<br><br>Möchten Sie dies jetzt einrichten?"
 
 #: src/modules/shot/e_mod_main.c:363
 msgid "Error saving screenshot file"
