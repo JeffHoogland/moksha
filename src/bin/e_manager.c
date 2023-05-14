@@ -756,7 +756,7 @@ _e_manager_cb_key_down(void *data, int ev_type __UNUSED__, void *ev)
 
    if (e->event_window != man->root) return ECORE_CALLBACK_PASS_ON;
    if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
-   if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
+   if (e_bindings_key_down_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), e))
      return ECORE_CALLBACK_DONE;
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -772,7 +772,7 @@ _e_manager_cb_key_up(void *data, int ev_type __UNUSED__, void *ev)
 
    if (e->event_window != man->root) return ECORE_CALLBACK_PASS_ON;
    if (e->root_window != man->root) man = _e_manager_get_for_root(e->root_window);
-   if (e_bindings_key_up_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), ev))
+   if (e_bindings_key_up_event_handle(E_BINDING_CONTEXT_MANAGER, E_OBJECT(man), e))
      return ECORE_CALLBACK_DONE;
    return ECORE_CALLBACK_PASS_ON;
 }
