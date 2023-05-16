@@ -488,7 +488,7 @@ static const char *_e_fm2_mime_app_desktop = NULL;
 static const char *_e_fm2_mime_app_edje = NULL;
 static const char *_e_fm2_mime_text_uri_list = NULL;
 static const char *_e_fm2_xds = NULL;
-static const char *_e_fm2_e_border = NULL;
+//~ static const char *_e_fm2_e_border = NULL;
 static const char *_e_fm2_e_desktop = NULL;
 
 static Eina_List *_e_fm_handlers = NULL;
@@ -497,7 +497,7 @@ static const char **_e_fm2_dnd_types[] =
 {
    &_e_fm2_mime_text_uri_list,
    &_e_fm2_xds,
-   &_e_fm2_e_border,
+   //~ &_e_fm2_e_border,
    &_e_fm2_e_desktop,
    NULL
 };
@@ -828,7 +828,7 @@ e_fm2_init(void)
    _e_fm2_mime_app_edje = eina_stringshare_add("application/x-extension-edj");
    _e_fm2_mime_text_uri_list = eina_stringshare_add("text/uri-list");
    _e_fm2_xds = eina_stringshare_add("XdndDirectSave0");
-   _e_fm2_e_border = eina_stringshare_add("enlightenment/border");
+   //~ _e_fm2_e_border = eina_stringshare_add("enlightenment/border");
    _e_fm2_e_desktop = eina_stringshare_add("enlightenment/desktop");
 
    _e_fm2_favorites_thread = ecore_thread_run(_e_fm2_favorites_thread_cb,
@@ -856,7 +856,7 @@ e_fm2_shutdown(void)
    eina_stringshare_replace(&_e_fm2_mime_app_edje, NULL);
    eina_stringshare_replace(&_e_fm2_mime_text_uri_list, NULL);
    eina_stringshare_replace(&_e_fm2_xds, NULL);
-   eina_stringshare_replace(&_e_fm2_e_border, NULL);
+   //~ eina_stringshare_replace(&_e_fm2_e_border, NULL);
    eina_stringshare_replace(&_e_fm2_e_desktop, NULL);
 
    E_FREE_LIST(_e_fm_handlers, ecore_event_handler_del);
@@ -6741,17 +6741,17 @@ _e_fm2_cb_dnd_selection_notify(void *data, const char *type, void *event)
 
    if (!_e_fm2_dnd_type_implemented(type)) return;
 
-   if (!strcmp(type, "enlightenment/border"))
-     {
-        Efreet_Desktop *app = NULL;
-        E_Border *bd;
-        bd = ev->data;
-        app = bd->desktop;
-        if (!app) return;
-        fp = app->orig_path;
-        fsel = eina_list_append(fsel, fp);
-     }
-   else if (!strcmp(type, "enlightenment/desktop"))
+   //~ if (!strcmp(type, "enlightenment/border"))
+     //~ {
+        //~ Efreet_Desktop *app = NULL;
+        //~ E_Border *bd;
+        //~ bd = ev->data;
+        //~ app = bd->desktop;
+        //~ if (!app) return;
+        //~ fp = app->orig_path;
+        //~ fsel = eina_list_append(fsel, fp);
+     //~ }
+   if (!strcmp(type, "enlightenment/desktop"))
      {
         Efreet_Desktop *app = NULL;
         app = ev->data;
