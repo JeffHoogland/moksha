@@ -75,9 +75,10 @@ group { name: "e/modules/clock/digital";
             set_state(parts[i], "custom", 0.0);
          }
          if (mul == 4)
-      set_min_size(tot * mul, 16);
+            set_min_size(tot * mul, 16);
          else
-      set_min_size(tot * mul * 1.5, 16);
+            set_min_size(tot * mul * 1.5, 16);
+
          set_max_size(tot * 8 * mul, 128);
          emit("e,state,sizing,changed", "");
       }
@@ -356,7 +357,7 @@ group { name: "e/modules/clock/digital";
    ELEMC(_NAME"-7", _TO, "7", _CLIP) \
    ELEMC(_NAME"-8", _TO, "8", _CLIP) \
    ELEMC(_NAME"-9", _TO, "9", _CLIP)
-      
+
 #define TAG(_NAME, _TO, _CLIP) \
    part { name: _NAME; \
       clip_to: _CLIP; \
@@ -389,7 +390,7 @@ group { name: "e/modules/clock/digital";
          color: 255 255 255 128; \
       } \
    }
-      
+
       //~ BASE ("ha", "h0-0", "digit_na.png")
       //~ BASE ("hb", "h1-0", "digit_na.png")
       //~ BASE ("ma", "m0-0", "digit_na.png")
@@ -442,7 +443,7 @@ group { name: "e/modules/clock/digital";
              text.ellipsis: -1;
           }
        }
-                       
+
        part { name: "event"; type: RECT;
           description { state: "default" 0.0;
              color: 0 0 0 0;
@@ -577,22 +578,22 @@ group { name: "e/modules/clock/main";
    max: 160 160;
    script {
       public do_seconds, tick_timer;
-      
+
          public clock_cb(val) {
             new year, month, day, yearday, weekday, hour, minute;
             new Float:second;
             new v, dosec, tim;
-            
+
             date(year, month, day, yearday, weekday, hour, minute, second);
             dosec = get_int(do_seconds);
             if (dosec) {
                v = round(second);
                tim = timer(1.0 - (second - v), "clock_cb", 1);
-               
+
                custom_state(PART:"seconds", "default", 0.0);
                set_state_val(PART:"seconds", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
                set_state(PART:"seconds", "custom", 0.0);
-               
+
                custom_state(PART:"seconds-sh", "default", 0.0);
                set_state_val(PART:"seconds-sh", STATE_MAP_ROT_Z, (v * 360.0) / 60.0);
                set_state(PART:"seconds-sh", "custom", 0.0);
@@ -601,25 +602,25 @@ group { name: "e/modules/clock/main";
                tim = timer(60.0 - (second), "clock_cb", 1);
             }
             set_int(tick_timer, tim);
-            
+
             custom_state(PART:"minutes", "default", 0.0);
             set_state_val(PART:"minutes", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
             set_state(PART:"minutes", "custom", 0.0);
-            
+
             custom_state(PART:"minutes-sh", "default", 0.0);
             set_state_val(PART:"minutes-sh", STATE_MAP_ROT_Z, (float(minute) * 360.0) / 60.0);
             set_state(PART:"minutes-sh", "custom", 0.0);
-            
+
             custom_state(PART:"hours", "default", 0.0);
             set_state_val(PART:"hours", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
             set_state(PART:"hours", "custom", 0.0);
-            
+
             custom_state(PART:"hours-sh", "default", 0.0);
             set_state_val(PART:"hours-sh", STATE_MAP_ROT_Z, ((float(hour) + (float(minute) / 60.0)) * 360.0) / 12.0);
             set_state(PART:"hours-sh", "custom", 0.0);
          }
    }
-   parts {   
+   parts {
       //~ part { name: "event"; type: RECT;
          //~ description { state: "default" 0.0;
             //~ color: 0 0 0 0;
@@ -962,7 +963,6 @@ group { name: "e/modules/clock/calendar/day";
             evalstate();
          }
       }
-      
       program {
          signal: "e,state,today"; source: "e";
          script {
@@ -979,7 +979,6 @@ group { name: "e/modules/clock/calendar/day";
             evalstate();
          }
       }
-      
       program {
          signal: "e,state,hidden"; source: "e";
          script {
@@ -1138,7 +1137,6 @@ group { name: "e/modules/clock/calendar";
             fill.smooth: 0;
          }
       }
-      
       part { name: "e.table.daynames"; type: TABLE;
          description { state: "default" 0.0;
             fixed: 0 1;
@@ -1167,7 +1165,7 @@ item { \
    align: -1.0 -1.0; \
 }
                D(0) D(1) D(2) D(3) D(4) D(5) D(6) D(7)
-#undef D                 
+#undef D
             }
          }
       }
