@@ -628,7 +628,7 @@ _e_sys_current_action(void)
         break;
 
       default:
-        e_dialog_text_set(dia, _("EEK! This should not happen"));
+        e_dialog_text_set(dia, _("EEK! This should not happen."));
         break;
      }
    e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);

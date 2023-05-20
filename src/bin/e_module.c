@@ -249,7 +249,7 @@ e_module_new(const char *name)
                    "%s<br>"
                    "The error reported was:<br>"
                    "%s<br>"),
-                 name, buf, _("Module does not contain all needed functions"));
+                 name, buf, _("Module does not contain all needed functions."));
         _e_module_dialog_disable_show(_("Error loading Module"), body, m);
         m->api = NULL;
         m->func.init = NULL;
