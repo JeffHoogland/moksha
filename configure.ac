@@ -136,7 +136,7 @@ AC_SUBST(fnmatch_libs)
 
 have_pam=no
 AC_ARG_ENABLE(pam,
-  AC_HELP_STRING([--enable-pam], [enable PAM support @<:@default=detect@:>@]),
+  AS_HELP_STRING([--enable-pam], [enable PAM support @<:@default=detect@:>@]),
   [want_pam=$enableval],
   [want_pam=auto]
 )
@@ -205,7 +205,7 @@ AC_SUBST(PACKAGE_SYSCONF_DIR)
 ## Simple X11 build/link
 
 AC_ARG_ENABLE(simple-x11,
-  AC_HELP_STRING([--enable-simple-x11], [enable simple x11 linking]),
+  AS_HELP_STRING([--enable-simple-x11], [enable simple x11 linking]),
   [ want_evas_simple_x11=$enableval ]
 )
     
@@ -645,7 +645,7 @@ $device_backend"
 want_elementary=auto
 have_elementary=no
 AC_ARG_ENABLE(elementary,
-  AC_HELP_STRING([--enable-elementary], [enable Elementary support @<:@default=detect@:>@]),
+  AS_HELP_STRING([--enable-elementary], [enable Elementary support @<:@default=detect@:>@]),
   [want_elementary=$enableval],
   [want_elementary=auto]
 )
@@ -665,7 +665,7 @@ AM_CONDITIONAL([HAVE_ELEMENTARY], [test "x${want_elementary}" = "xyes"])
 want_emotion=auto
 have_emotion=no
 AC_ARG_ENABLE(emotion,
-  AC_HELP_STRING([--enable-emotion], [enable emotion support @<:@default=detect@:>@]),
+  AS_HELP_STRING([--enable-emotion], [enable emotion support @<:@default=detect@:>@]),
   [want_emotion=$enableval],
   [want_emotion=auto]
 )
@@ -778,7 +778,7 @@ define([CHECK_MODULE_TEMPERATURE],
 have_enotify=no
 AM_CONDITIONAL([HAVE_ENOTIFY], [false])
 AC_ARG_ENABLE([enotify],
-  AC_HELP_STRING([--disable-enotify], [disable Enotify support @<:@default=detect@:>@]),
+  AS_HELP_STRING([--disable-enotify], [disable Enotify support @<:@default=detect@:>@]),
   [e_cv_want_enotify=$enableval],
   AC_CACHE_VAL([e_cv_want_enotify], [e_cv_want_enotify=yes])
 )

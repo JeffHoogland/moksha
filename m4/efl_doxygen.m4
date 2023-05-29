@@ -15,7 +15,7 @@ dnl
 dnl Disable the build of the documentation
 dnl
 AC_ARG_ENABLE([doc],
-   [AC_HELP_STRING(
+   [AS_HELP_STRING(
        [--disable-doc],
        [Disable documentation build @<:@default=enabled@:>@])],
    [
@@ -37,7 +37,7 @@ dnl Specify the file name, without path
    efl_doxygen="doxygen"
 
    AC_ARG_WITH([doxygen],
-      [AC_HELP_STRING(
+      [AS_HELP_STRING(
           [--with-doxygen=FILE],
           [doxygen program to use @<:@default=doxygen@:>@])],
 
