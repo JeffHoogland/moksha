@@ -398,7 +398,7 @@ _e_xkb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
              char buf[4096];
 
              mi = e_menu_item_new(inst->lmenu);
-
+             e_menu_title_set(inst->lmenu, _("Keyboard"));
              e_menu_item_label_set(mi, _("Settings"));
              e_util_menu_item_theme_icon_set(mi, "preferences-system");
              e_menu_item_callback_set(mi, _e_xkb_cb_menu_configure, NULL);
