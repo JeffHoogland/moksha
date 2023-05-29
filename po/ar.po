@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -3570,7 +3570,8 @@ msgstr ""
 "هو:<br>%s<br>الخطأ المبلغ عنه هو:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "لا تحتوي الوحدة على كل الوظائف المعتمد عليها"
 
 #: src/bin/e_module.c:267
@@ -3841,8 +3842,9 @@ msgid ""
 msgstr ""
 "جاري اﻹسبات.<br>لا يمكنك إجراء أي عملية في النظام<br>قبل اكتتمال هذه العملية."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "معذرة! هذا لا يجب أن يحدث"
 
 #: src/bin/e_sys.c:656
@@ -3860,6 +3862,10 @@ msgstr "فشل التعليق."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "فشل التنويم."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "معذرة! هذا لا يجب أن يحدث"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -7673,6 +7679,7 @@ msgstr "حجم بواسطة:"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "لوحة المفاتيح"
 

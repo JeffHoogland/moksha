@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -3958,7 +3958,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 #, fuzzy
-msgid "Module does not contain all needed functions"
+msgid "Module does not contain all needed functions."
 msgstr "Modul tidak mengandungi semua fungsi yang diperlukan"
 
 #: src/bin/e_module.c:267
@@ -4254,9 +4254,9 @@ msgstr ""
 "Hibernating.<br>Anda tidak boleh melaksanakan apa-apa tindakan "
 "sistem<br>lain sehingga ini adalah lengkap."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
+#: src/bin/e_sys.c:631
 #, fuzzy
-msgid "EEK! This should not happen"
+msgid "EEK! This should not happen."
 msgstr "Eek. Ini tidak sepatutnya berlaku"
 
 #: src/bin/e_sys.c:656
@@ -4278,6 +4278,11 @@ msgstr "Menggantung gagal."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Hibernate gagal."
+
+#: src/bin/e_sys.c:672
+#, fuzzy
+msgid "EEK! This should not happen"
+msgstr "Eek. Ini tidak sepatutnya berlaku"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8548,6 +8553,7 @@ msgstr "Saiz semula oleh"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "keyboard"

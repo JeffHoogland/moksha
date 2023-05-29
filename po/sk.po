@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -3607,7 +3607,8 @@ msgstr ""
 "%s<br>Došlo k chybe:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Modul neobsahuje všetky potrebné funkcie"
 
 #: src/bin/e_module.c:267
@@ -3883,8 +3884,9 @@ msgstr ""
 "Prechod do režimu uspania.<br>nemožno vykonávať žiadne ďalšie operácie "
 "systému<br>nakoľko proces už začal"
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "EEK! K tomu nemalo dôjsť"
 
 #: src/bin/e_sys.c:656
@@ -3902,6 +3904,10 @@ msgstr "Úsporný režim zlyhal."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Uspanie zlyhalo"
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "EEK! K tomu nemalo dôjsť"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -4522,6 +4528,7 @@ msgid "Set"
 msgstr "Nastaviť"
 
 #: src/modules/clock/e_mod_config.c:159
+#, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
 "change the year."
@@ -7608,6 +7615,7 @@ msgstr "Zmeniť veľkosť"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "Klávesnica"
 

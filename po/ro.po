@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-11-25 12:09+0000\n"
 "Last-Translator: Lucian Adrian Grijincu <lucian.grijincu@gmail.com>\n"
 "Language-Team: Romanian <ro@li.org>\n"
@@ -3838,7 +3838,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 #, fuzzy
-msgid "Module does not contain all needed functions"
+msgid "Module does not contain all needed functions."
 msgstr "Modulul nu conţine toate funcţiile necesare"
 
 #: src/bin/e_module.c:267
@@ -4134,9 +4134,9 @@ msgstr ""
 "Hibernare.<br>Nu puteţi efectua orice alt sistem de acţiuni de până "
 "la<br>acest lucru este complet."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
+#: src/bin/e_sys.c:631
 #, fuzzy
-msgid "EEK! This should not happen"
+msgid "EEK! This should not happen."
 msgstr "EEK. Acest lucru nu ar trebui să se întâmple"
 
 #: src/bin/e_sys.c:656
@@ -4158,6 +4158,11 @@ msgstr "Suspendare a eşuat."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Hibernate nu a reuşit."
+
+#: src/bin/e_sys.c:672
+#, fuzzy
+msgid "EEK! This should not happen"
+msgstr "EEK. Acest lucru nu ar trebui să se întâmple"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8429,6 +8434,7 @@ msgstr "Redimensionează"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "tastatură"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trunk.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2011-03-28 12:04+0100\n"
 "Last-Translator: Renato Rener <renato.rener@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -3769,7 +3769,8 @@ msgstr ""
 "%s<br>Sporočena napaka je:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Modul ne vsebuje vseh potrebnih funkcij."
 
 #: src/bin/e_module.c:267
@@ -4057,8 +4058,9 @@ msgstr ""
 "Zimsko spanje.<br>Ne, ne moreš opravljati vse druge<br>sistema tožb , dokler "
 "je to popolna."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Ups! To se ne bi smelo zgoditi"
 
 #: src/bin/e_sys.c:656
@@ -4076,6 +4078,10 @@ msgstr "Zaustavitev spodletela"
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Spanje spodletelo"
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Ups! To se ne bi smelo zgoditi"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -7993,6 +7999,7 @@ msgstr "Spremeni velikost za"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "Tipkovnica"
 

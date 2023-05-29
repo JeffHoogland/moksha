@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -3763,7 +3763,8 @@ msgstr ""
 "%s<br>השגיאה שדווחה הינה:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "המודול אינו מכיל את כל הפונקציות הנחוצות"
 
 #: src/bin/e_module.c:267
@@ -4048,8 +4049,9 @@ msgid ""
 "complete."
 msgstr "שנת החורף.<br>אתה לא יכול לבצע כל פעולה אחרת<br>המערכת עד זה הושלמה."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "לעזאזל! זה לא אמור לקרות"
 
 #: src/bin/e_sys.c:656
@@ -4071,6 +4073,10 @@ msgstr "להשעות נכשל."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "שינה נכשל."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "לעזאזל! זה לא אמור לקרות"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8282,6 +8288,7 @@ msgstr "שנה גודל"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "קיצורי מקשים"

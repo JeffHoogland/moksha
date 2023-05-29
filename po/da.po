@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-12-31 01:44+0000\n"
 "Last-Translator: nanker <Unknown>\n"
 "Language-Team: Danish\n"
@@ -3905,7 +3905,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 #, fuzzy
-msgid "Module does not contain all needed functions"
+msgid "Module does not contain all needed functions."
 msgstr "Modul ikke indeholder alle de nødvendige funktioner"
 
 #: src/bin/e_module.c:267
@@ -4202,9 +4202,9 @@ msgstr ""
 "Dvale.<br>Du kan ikke udføre noget andet system handlinger<br>indtil denne "
 "er afsluttet."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
+#: src/bin/e_sys.c:631
 #, fuzzy
-msgid "EEK! This should not happen"
+msgid "EEK! This should not happen."
 msgstr "EEK. Dette bør ikke ske"
 
 #: src/bin/e_sys.c:656
@@ -4226,6 +4226,11 @@ msgstr "Suspend mislykkedes."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Dvale mislykkedes."
+
+#: src/bin/e_sys.c:672
+#, fuzzy
+msgid "EEK! This should not happen"
+msgstr "EEK. Dette bør ikke ske"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8463,6 +8468,7 @@ msgstr "Skift størrelse"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "tastatur"

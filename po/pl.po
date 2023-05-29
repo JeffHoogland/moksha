@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -3791,7 +3791,8 @@ msgstr ""
 "%s<br>Zgłoszony błąd to:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Moduł nie zawiera wszystkich potrzebnych funkcji"
 
 #: src/bin/e_module.c:267
@@ -4088,8 +4089,9 @@ msgstr ""
 "Hibernacją.<br>nie można wykonywać żadnych innych<br>akcje systemu , dopóki "
 "to jest kompletna."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "EEK! To się nie powinno zdarzyć"
 
 #: src/bin/e_sys.c:656
@@ -4108,6 +4110,10 @@ msgstr "Zawiesić się nie powiodła."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Hibernacja nieudana."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "EEK! To się nie powinno zdarzyć"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8133,6 +8139,7 @@ msgstr "Opis Zmiany Rozmiaru"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "Skrót klawiszowy"

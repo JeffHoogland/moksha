@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -3597,7 +3597,8 @@ msgstr ""
 "니다.<br>오류 보고서는 다음과 같습니다:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "모듈이 필요로 하는 기능을 포함하고 있지 않습니다."
 
 #: src/bin/e_module.c:267
@@ -3874,8 +3875,9 @@ msgstr ""
 "최대 절전모드 진입중입니다.<br>최대 절전모드 진입이 완료되기 전까지는<br>다"
 "른 시스템 동작을 수행할 수 없습니다."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "으잌! 있어서는 안될 일이 생겼습니다"
 
 #: src/bin/e_sys.c:656
@@ -3893,6 +3895,10 @@ msgstr "대기 모드 진입에 실패했습니다."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "최대 절전 모드 진입에 실패했습니다."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "으잌! 있어서는 안될 일이 생겼습니다"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -7621,6 +7627,7 @@ msgstr "크기 바꾸기"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "키보드"
 

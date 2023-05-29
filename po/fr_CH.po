@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -3895,7 +3895,8 @@ msgstr ""
 "module est :<br>%s<br>L'erreur retournée est :<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Le module ne contient pas toutes les fonctions nécessaires"
 
 #: src/bin/e_module.c:267
@@ -4190,8 +4191,9 @@ msgstr ""
 "Moksha est en train de mettre votre système en hibernation.<br>Vous ne "
 "pouvez effectuer d'autres actions systèmes<br>tant que ce n'est pas terminée."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Saperlipopette, ça devrait pas arriver"
 
 #: src/bin/e_sys.c:656
@@ -4212,6 +4214,10 @@ msgstr "Délai avant hibernation"
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "L'hibernation de votre système a échoué."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Saperlipopette, ça devrait pas arriver"
 
 #: src/bin/e_sys.c:768
 #, fuzzy
@@ -8246,6 +8252,7 @@ msgstr "Changer la taille (resize)"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "Clavier & Souris"

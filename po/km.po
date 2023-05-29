@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-09-03 09:15+0000\n"
 "Last-Translator: Chanrithy Thim <Unknown>\n"
 "Language-Team: Khmer <km@li.org>\n"
@@ -3479,7 +3479,7 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+msgid "Module does not contain all needed functions."
 msgstr ""
 
 #: src/bin/e_module.c:267
@@ -3736,8 +3736,8 @@ msgid ""
 "complete."
 msgstr ""
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+msgid "EEK! This should not happen."
 msgstr ""
 
 #: src/bin/e_sys.c:656
@@ -3754,6 +3754,10 @@ msgstr ""
 
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
+msgstr ""
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
 msgstr ""
 
 #: src/bin/e_sys.c:768
@@ -7492,6 +7496,7 @@ msgstr "ផ្លាស់ប្ដូរ​ទំហំ"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr ""
 

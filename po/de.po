@@ -29,15 +29,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Christian Becker (xpistian) <xpistianbecker@gmail.com>\n"
 "Language-Team: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3.1\n"
 
 #: src/bin/e_about.c:18
@@ -900,9 +900,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha konnte die Konfigurationsdateien nicht "
-"von<br>%s<br>nach<br>%s<br>verschieben.<br>Sicherheitshalber wurde der "
-"Schreibvorgang abgebrochen.<br>"
+"Moksha konnte die Konfigurationsdateien nicht von<br>%s<br>nach<br>"
+"%s<br>verschieben.<br>Sicherheitshalber wurde der Schreibvorgang abgebrochen."
+"<br>"
 
 #: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1752,8 +1752,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in "
-"<br><hilight>%s</hilight> löschen?"
+"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in <br><hilight>"
+"%s</hilight> löschen?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -3640,7 +3640,8 @@ msgstr ""
 "Modul ist:<br>%s<br>Der gemeldete Fehler lautet:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Das Modul enthält nicht alle benötigten Funktionen"
 
 #: src/bin/e_module.c:267
@@ -3779,8 +3780,8 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "Auto-Verstecken der Modulablage wird mit der<br>aktuellen Konfiguration "
-"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter "
-"Allem\"<br>oder deaktivieren Sie Auto-Verstecken."
+"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter Allem"
+"\"<br>oder deaktivieren Sie Auto-Verstecken."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -3920,8 +3921,9 @@ msgstr ""
 "Das System wird in den Ruhezustand versetz.<br>Sie können keine weiteren "
 "Systemaktionen<br>durchführen, bis dies abgeschlossen ist."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Upps! Das sollte nicht passieren"
 
 #: src/bin/e_sys.c:656
@@ -3939,6 +3941,10 @@ msgstr "Versetzen in Bereitschaftsmodus fehlgeschlagen."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Versetzen in den Ruhezustand fehlgeschlagen."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Upps! Das sollte nicht passieren"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -5867,9 +5873,8 @@ msgstr "Tastenbelegungsfehler"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Die gewählte Tastenbelegungsabfolge wird bereits von der <br><hilight>%s</"
 "hilight>-Aktion verwendet.<br>Bitte wählen Sie eine andere Abfolge."
@@ -7648,6 +7653,7 @@ msgstr "Größe ändern um"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "Tastatur"
 
@@ -7912,8 +7918,8 @@ msgid ""
 msgstr ""
 "Die freqset-Programmdatei im cpufreq-Modul<ps/>hat weder root-Rechte noch "
 "das<ps/>setuid-Bit gesetzt. Bitte stellen Sie sicher, dass<ps/>dies der Fall "
-"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
-"a+x %s<ps/>"
+"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
+"+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8312,11 +8318,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8334,8 +8340,8 @@ msgstr ""
 "<hilight>STRG+Enter</hilight>führt die Aktion aus und macht "
 "weiter<br><hilight>Tab</hilight> schaltet zwischen Auswählern "
 "um<br><hilight>STRG+Tab</hilight> zeigt die vollständige Eingabe (hängt vom "
-"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit "
-"\"x\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
+"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit \"x"
+"\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
 "durch<br><hilight>STRG+hoch/runter</hilight> geht zum ersten/letzten "
 "Eintrag<br><hilight>STRG+1</hilight> schaltet zwischen den Ansichten um "
 "(verlässt diese Seite ;)<br><hilight>STRG+2</hilight>schaltet die "

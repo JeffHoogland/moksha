@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -3961,7 +3961,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 #, fuzzy
-msgid "Module does not contain all needed functions"
+msgid "Module does not contain all needed functions."
 msgstr "Moodul ei sisalda kõiki vajalikke funktsioone"
 
 #: src/bin/e_module.c:267
@@ -4257,9 +4257,9 @@ msgstr ""
 "Talveuneks.<br>Sa ei saa teha ühegi teise süsteemi tegevuse<br>kuni see on "
 "lõpule viidud."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
+#: src/bin/e_sys.c:631
 #, fuzzy
-msgid "EEK! This should not happen"
+msgid "EEK! This should not happen."
 msgstr "EEK! See ei tohiks juhtuda"
 
 #: src/bin/e_sys.c:656
@@ -4281,6 +4281,11 @@ msgstr "Peatada ei suutnud."
 #, fuzzy
 msgid "Hibernate failed."
 msgstr "Hibernate ebaõnnestus."
+
+#: src/bin/e_sys.c:672
+#, fuzzy
+msgid "EEK! This should not happen"
+msgstr "EEK! See ei tohiks juhtuda"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8549,6 +8554,7 @@ msgstr "resize"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "klaviatuur"

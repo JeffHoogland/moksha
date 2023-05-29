@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2022-06-12 18:38-0300\n"
 "Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -3600,7 +3600,8 @@ msgstr ""
 "%s<br>O erro reportado foi:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "O módulo não contém as funções necessárias"
 
 #: src/bin/e_module.c:267
@@ -3879,8 +3880,9 @@ msgstr ""
 "Hibernando.<br>Você não pode executar quaisquer outras ações após iniciar o "
 "processo."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Eita! Isto não devia acontecer"
 
 #: src/bin/e_sys.c:656
@@ -3898,6 +3900,10 @@ msgstr "Falha ao suspender."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Falha ao hibernar."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Eita! Isto não devia acontecer"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -7605,6 +7611,7 @@ msgstr "Redimensionar por"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "Teclado"
 

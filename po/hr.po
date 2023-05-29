@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-11-09 18:07+0000\n"
 "Last-Translator: Miro Glavić <glavicmiro@gmail.com>\n"
 "Language-Team: Croatian <hr@li.org>\n"
@@ -3799,7 +3799,8 @@ msgstr ""
 "<br>%s<br>Prijavljena greška je:<br>%s.<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Modul ne sadrži sve neophodne funkcije"
 
 #: src/bin/e_module.c:267
@@ -4090,8 +4091,9 @@ msgstr ""
 "Hibernacije.<br>ne možete izvesti bilo koji drugi sustav radnje<br>dok se to "
 "ne završi."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "EEK! Ovo se nije trebalo dogoditi."
 
 #: src/bin/e_sys.c:656
@@ -4109,6 +4111,10 @@ msgstr "Suspendiranje nije uspjelo"
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Hiberniranje nije uspjelo"
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "EEK! Ovo se nije trebalo dogoditi."
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8095,6 +8101,7 @@ msgstr "Promijeni veličinu za:"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "Tipkovnička Prečica"

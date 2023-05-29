@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e.HEAD\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2009-12-13 21:16+0000\n"
 "Last-Translator: Sergio Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <translation@linux.org.ua>\n"
@@ -3793,7 +3793,8 @@ msgstr ""
 "модуля:<br>%s<br>Повідомлення про помилку було:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Модуль не містить всіх необхідних функцій"
 
 #: src/bin/e_module.c:267
@@ -4083,8 +4084,9 @@ msgstr ""
 "Сплячки.<br>Ви не можете виконувати будь-які інші дії системи<br>до "
 "завершення цього."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Отакої! Такого не може бути!"
 
 #: src/bin/e_sys.c:656
@@ -4102,6 +4104,10 @@ msgstr "Помилка під час переходу в режим очікув
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Помилка під час переходу в режим сну."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Отакої! Такого не може бути!"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -8086,6 +8092,7 @@ msgstr "Змінити розмір на:"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 #, fuzzy
 msgid "Keyboard"
 msgstr "Комбінація Клавіш"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-02 16:45+0200\n"
+"POT-Creation-Date: 2023-05-29 16:43+0200\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -3555,7 +3555,8 @@ msgstr ""
 "%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "模块没包括所有必需的功能"
 
 #: src/bin/e_module.c:267
@@ -3817,8 +3818,9 @@ msgid ""
 "complete."
 msgstr "休眠。<br>在它完成之前，<br>您将不能进行其他系统操作。"
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "哎呀！不会吧！"
 
 #: src/bin/e_sys.c:656
@@ -3836,6 +3838,10 @@ msgstr "挂起系统失败。"
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "休眠系统失败。"
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "哎呀！不会吧！"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -7568,6 +7574,7 @@ msgstr "改变大小，按照"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "键盘"
 
