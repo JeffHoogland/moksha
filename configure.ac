@@ -978,7 +978,7 @@ SUID_LDFLAGS=-pie
 AC_SUBST([SUID_CFLAGS])
 AC_SUBST([SUID_LDFLAGS])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 enlightenment.spec
 enlightenment.pc
@@ -1055,6 +1055,7 @@ config/default/Makefile
 config/bodhi/Makefile
 $po_makefile_in
 ])
+AC_OUTPUT
 
 # report
 txt_strip() {
