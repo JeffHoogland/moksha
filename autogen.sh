@@ -1,7 +1,7 @@
 #!/bin/sh
 
 rm -rf autom4te.cache
-rm -f aclocal.m4 ltmain.sh config.cache
+rm -f aclocal.m4 config.cache
 
 autoreconf --force --install || exit 1
 
