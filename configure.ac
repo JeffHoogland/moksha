@@ -87,14 +87,15 @@ case "$host_os" in
    *)
       ;;
 esac
-AC_TRY_COMPILE([
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #define _GNU_SOURCE 1
 #include <unistd.h>
-    ],[
+    ]], [[
 extern char **environ;
-    ],[
+    ]])],[
 AC_DEFINE(HAVE_ENVIRON, 1, [Have environ var])
-    ])
+    ],[])
+
 
 efl_version="1.20.0"
 AC_SUBST(efl_version)
