@@ -322,23 +322,26 @@ _load_mimes(E_Config_Dialog_Data *cfdata, char *file)
              pp = p;
              while (!isblank(*p) && (*p != 0) && (*p != '\n'))
                p++;
-             strncpy(ext, pp, (p - pp));
-             ext[p - pp] = 0;
-             config_mime = _find_mime(cfdata, mimetype);
-             if (!config_mime)
+             if (p > pp)
                {
-                  config_mime = E_NEW(Config_Mime, 1);
-                  if (config_mime)
+                  strncpy(ext, pp, (p - pp));
+                  ext[p - pp] = 0;
+                  config_mime = _find_mime(cfdata, mimetype);
+                  if (!config_mime)
                     {
-                       config_mime->mime = eina_stringshare_add(mimetype);
-                       if (!config_mime->mime)
-                         free(config_mime);
-                       else
+                       config_mime = E_NEW(Config_Mime, 1);
+                       if (config_mime)
                          {
-                            config_glob = E_NEW(Config_Glob, 1);
-                            config_glob->name = eina_stringshare_add(ext);
-                            config_mime->globs = eina_list_append(config_mime->globs, config_glob);
-                            cfdata->mimes = eina_list_append(cfdata->mimes, config_mime);
+                            config_mime->mime = eina_stringshare_add(mimetype);
+                            if (!config_mime->mime)
+                              free(config_mime);
+                            else
+                              {
+                                 config_glob = E_NEW(Config_Glob, 1);
+                                 config_glob->name = eina_stringshare_add(ext);
+                                 config_mime->globs = eina_list_append(config_mime->globs, config_glob);
+                                 cfdata->mimes = eina_list_append(cfdata->mimes, config_mime);
+                              }
                          }
                     }
                }
