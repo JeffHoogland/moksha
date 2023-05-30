@@ -89,6 +89,7 @@ case "$host_os" in
    *)
       ;;
 esac
+
 AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 #define _GNU_SOURCE 1
 #include <unistd.h>
