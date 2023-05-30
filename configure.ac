@@ -40,10 +40,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_USE_SYSTEM_EXTENSIONS
 m4_version_prereq(2.70, [AC_PROG_CC], [m4_warn([obsolete],
-[m4_warn([obsolete],
-[AC_PROG_CC_C99 is obsolete; use AC_PROG_CC
-])dnl
-AC_REQUIRE(AC_PROG_CC) is obsolete; use AC_PROG_CC])dnl
+[AC_PROG_CC_C99 is obsolete; use AC_PROG_CC])dnl
 AC_REQUIRE(AC_PROG_CC)])
 AC_C_BIGENDIAN
 AM_PROG_CC_C_O
