@@ -1,10 +1,10 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 libdir=@libdir@
-datadir=@datadir@
+datarootdir=@datarootdir@
 includedir=@includedir@/@PACKAGE@
 modules=@libdir@/@PACKAGE@/modules
-pkgdatadir=@datadir@/enlightenment/data
+pkgdatadir=@datarootdir@/enlightenment/data
 themes=${pkgdatadir}/themes
 backgrounds=${pkgdatadir}/backgrounds
 config_apps=@prefix@/share/@PACKAGE@/config-apps
