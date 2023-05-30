@@ -19,8 +19,8 @@ m4_define([lt_age], v_min)
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 ##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##--##
 
-AC_INIT([enlightenment], [v_ver], [moksha@bodhilinux.com])
-AC_PREREQ([2.52])
+AC_INIT([enlightenment],[v_ver],[moksha@bodhilinux.com])
+AC_PREREQ([2.71])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_BUILD
@@ -40,7 +40,10 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_USE_SYSTEM_EXTENSIONS
 m4_version_prereq(2.70, [AC_PROG_CC], [m4_warn([obsolete],
-[AC_PROG_CC_C99 is obsolete; use AC_PROG_CC])dnl
+[m4_warn([obsolete],
+[AC_PROG_CC_C99 is obsolete; use AC_PROG_CC
+])dnl
+AC_REQUIRE(AC_PROG_CC) is obsolete; use AC_PROG_CC])dnl
 AC_REQUIRE(AC_PROG_CC)])
 AC_C_BIGENDIAN
 AM_PROG_CC_C_O
