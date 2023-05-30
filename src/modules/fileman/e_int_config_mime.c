@@ -165,7 +165,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    Evas_Object *ob;
 
    e_dialog_resizable_set(cfd->dia, 1);
-   
+
    o = e_widget_list_add(evas, 1, 1);
    of = e_widget_framelist_add(evas, _("Categories"), 0);
    ol = e_widget_ilist_add(evas, 16, 16, &(cfdata->cur_type));
