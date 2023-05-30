@@ -6,6 +6,7 @@ Installing Moksha
 
 Requirements:
 -------------
+Autoconf version 2.71  is now required.
 
 Dependencies for building under Bodhi:
   doxygen pkg-config libglib2.0-dev libssl-dev libpng12-dev libharfbuzz-dev
@@ -23,6 +24,6 @@ Must:
 You can also use the configure --prefix option to put Moksha in a separate tree
 of its own (recommended) like:
 
-  ./configure --prefix=/usr/local/moksha
+  ./autogen.sh --prefix=/usr/local/moksha
 
 You will, as usual, need to add the subsequent bin dir to your $PATH etc.
