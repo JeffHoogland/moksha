@@ -80,4 +80,17 @@ void places_menu_augmentation(void);
 extern Config *places_conf;
 extern Eina_List *instances;
 
+/**
+ * @addtogroup Optional_Gadgets
+ * @{
+ *
+ * @defgroup Module_Places Places
+ *
+ * Manage the volumes device attached to the system.
+ *
+ * Controls mounting and umounting of drives.
+ * 
+ * @}
+ */
+
 #endif
