@@ -86,9 +86,9 @@ extern Eina_List *instances;
  *
  * @defgroup Module_Places Places
  *
- * Manage the volumes device attached to the system.
+ * Manage the volume devices attached to the system.
  *
- * Controls mounting and umounting of drives.
+ * Controls mounting and umounting of drives and ejection of media devices.
  * 
  * @}
  */
