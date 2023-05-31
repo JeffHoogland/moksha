@@ -81,7 +81,7 @@ extern Config *places_conf;
 extern Eina_List *instances;
 
 /**
- * @addtogroup Optional_Gadgets
+ * @ingroup Optional_Gadgets Optional_Devices Optional_Control
  * @{
  *
  * @defgroup Module_Places Places
