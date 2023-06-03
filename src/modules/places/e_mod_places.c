@@ -690,6 +690,8 @@ _places_freespace_thread_done(void *data, Ecore_Thread *thread __UNUSED__)
         vol = places_volume_by_id_get(td->id);
         if (vol)
           {
+             // skip check if cdrom
+             if (strstr(vol->device, "/dev/scd") || strstr(vol->device, "/dev/sr")) return;
              // redraw only if size or free_space has changed more than 1Mb
              if ((labs((long long)td->free_space - (long long)vol->free_space) > 1024 * 1024) ||
                  (labs((long long)td->size - (long long)vol->size) > 1024 * 1024))
@@ -699,7 +701,7 @@ _places_freespace_thread_done(void *data, Ecore_Thread *thread __UNUSED__)
 
                    percent = 100 - (((long double)vol->free_space / (long double)vol->size) * 100);
                    if ((places_conf->alert_p > 0) && (percent > places_conf->alert_p)
-                                                  &&  (percent > vol->perc_backup))
+                                                  && (percent > vol->perc_backup))
                      {
                         // FIXME: has to support old API for config option
                         E_Notification_Notify n;
