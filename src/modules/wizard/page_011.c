@@ -67,19 +67,19 @@ _debian_default(void)
    // Respect Debian defaults
    if ((output = fopen("/etc/default/keyboard","r")))
       {
-		  while (fgets(buffer, MAX_LEN - 1, output))
-		  {
-			 // Remove trailing newline and trailing quote
-			 buffer[strcspn(buffer, "\n")] = 0;
-			 if (strlen(buffer) > 0)
-				buffer[strlen(buffer) - 1 ] = 0;
-			 if ((ch = strstr( buffer, "XKBLAYOUT=" )))
-				snprintf(cur_layout, MAX_LEN - 1, "%s", (char *) ch + 11);
-			 if ((ch = strstr(buffer, "XKBVARIANT=" )))
-				snprintf(cur_variant, MAX_LEN - 1, "%s", (char *) ch + 12);
-		  }
-		  fclose(output); 
-	  }
+          while (fgets(buffer, MAX_LEN - 1, output))
+          {
+             // Remove trailing newline and trailing quote
+             buffer[strcspn(buffer, "\n")] = 0;
+             if (strlen(buffer) > 0)
+                buffer[strlen(buffer) - 1 ] = 0;
+             if ((ch = strstr( buffer, "XKBLAYOUT=" )))
+                snprintf(cur_layout, MAX_LEN - 1, "%s", (char *) ch + 11);
+             if ((ch = strstr(buffer, "XKBVARIANT=" )))
+                snprintf(cur_variant, MAX_LEN - 1, "%s", (char *) ch + 12);
+          }
+          fclose(output);
+      }
 }
 
 int
@@ -132,7 +132,7 @@ implement_layout(void)
              break;
           }
      }
- 
+
    if (!found)
      {
         nl = E_NEW(E_Config_XKB_Layout, 1);
@@ -169,7 +169,6 @@ wizard_page_show(E_Wizard_Page *pg)
    Eina_List *l;
    int i, sel = -1;
 
-   
    o = e_widget_list_add(pg->evas, 1, 0);
    if (ecore_file_exists("/etc/bodhi/iso"))
       e_wizard_title_set(_("Keyboard"));
@@ -214,15 +213,15 @@ wizard_page_show(E_Wizard_Page *pg)
    e_wizard_page_show(o);
 
    /* On an installed system we do not want to show this wizard
-    *	 except on systems not following debian standards.
+    *    except on systems not following debian standards.
     *    But Bodhi wants this displayed for users running the ISO
     */
    if (! ecore_file_exists("/etc/bodhi/iso") &&
         ecore_file_exists("/etc/default/keyboard"))
-      {    
-		  layout = cur_layout;
-		  implement_layout();
-		  return 0;
+      {
+          layout = cur_layout;
+          implement_layout();
+          return 0;
       }
       
    return 1; /* 1 == show ui, and wait for user, 0 == just continue */
