@@ -16,6 +16,7 @@ struct _E_Intl_Pair
 const E_Intl_Pair basic_language_predefined_pairs[] =
 {
    {"ar_AE.UTF-8", "ara_flag.png", "العربية"},
+   {"be_BY.UTF-8", "by_flag.png", "Беларуская"},
    {"bg_BG.UTF-8", "bg_flag.png", "Български"},
    {"ca_ES.UTF-8", "cat_flag.png", "Català"},
    {"cs_CZ.UTF-8", "cz_flag.png", "Čeština"},
