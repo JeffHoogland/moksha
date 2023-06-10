@@ -309,24 +309,24 @@ _save_to(const char *file)
    if (screen == -1)
      {
         if (!evas_object_image_save(o_img, file, NULL, opts))
-        {
-          e_confirm_dialog_show(_("Error - Folder does not exist"),
-                          "application-exit",
-                          _("Change folder in Take Screenshot settings<br>"
-                          "<br>"
-                          "Menu-Settings-All-Advanced-Take Screenshot<br>"
-                          "<br>"
-                          "Would you like to set up it now?"),
-                          _("Yes"), _("Cancel"),
-                          _cb_dialog_yes, NULL, NULL, NULL,
-                          _cb_dialog_cancel, NULL);
-        }
+          {
+            e_confirm_dialog_show(_("Error - Folder does not exist"),
+                            "application-exit",
+                            _("Change folder in Take Screenshot settings<br>"
+                            "<br>"
+                            "Menu-Settings-All-Advanced-Take Screenshot<br>"
+                            "<br>"
+                            "Would you like to set up it now?"),
+                            _("Yes"), _("Cancel"),
+                            _cb_dialog_yes, NULL, NULL, NULL,
+                            _cb_dialog_cancel, NULL);
+          }
         else
-        {
-           if (shot_conf->notify)
+          {
+            if (shot_conf->notify)
               timer = ecore_timer_add(1.2, _notify_saved_cb, NULL);
-	    }
-   }
+          }
+     }
    else
      {
         Evas_Object *o;
@@ -1339,7 +1339,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, path, STR); /* our var from header */
    E_CONFIG_VAL(D, T, view_enable, INT); /* our var from header */
    E_CONFIG_VAL(D, T, notify, INT); /* our var from header */
-    E_CONFIG_VAL(D, T, clipboard, INT); /* our var from header */
+   E_CONFIG_VAL(D, T, clipboard, INT); /* our var from header */
    E_CONFIG_VAL(D, T, full_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, mode_dialog, INT); /* our var from header */
    E_CONFIG_VAL(D, T, delay, DOUBLE); /* our var from header */
