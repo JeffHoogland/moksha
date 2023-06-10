@@ -281,7 +281,6 @@ _screen_change_cb(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *even
      }
 }
 
-
 static void
 _cb_dialog_yes(void *data __UNUSED__)
 {
@@ -332,8 +331,6 @@ _save_to(const char *file)
         Evas_Object *o;
         Eina_List *l;
         E_Zone *z = NULL;
-
-
 
         EINA_LIST_FOREACH(scon->zones, l, z)
           {
@@ -1104,7 +1101,6 @@ _shot(E_Zone *zone, Eina_Bool instant)
        timer = ecore_timer_add(1.0, _shot_no_delay, zone);
 }
 
-
 static void
 _e_mod_menu_border_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
@@ -1288,9 +1284,6 @@ EAPI E_Module_Api e_modapi =
 EAPI void *
 e_modapi_init(E_Module *m)
 {
-
-
-
    if (!ecore_con_url_init())
      {
         e_util_dialog_show(_("Shot Error"),
