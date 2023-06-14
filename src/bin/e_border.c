@@ -6986,7 +6986,7 @@ static Eina_Bool
 window_snap_do(E_Border *bd)
 {
   if (e_config->max_top_edge && ((e_config->maximize_policy &
-  E_MAXIMIZE_TYPE) == E_MAXIMIZE_SMART))
+      E_MAXIMIZE_TYPE) == E_MAXIMIZE_SMART))
     {
       E_Maximize max = 0;
       int zx, zy, zw, zh;
