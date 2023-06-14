@@ -39,7 +39,7 @@ group { name: "e/widgets/border/default/border";
          description { state: "shaded" 0.0;
             inherit: "default" 0.0;
             rel2.relative: 1.0 1.0;
-            rel2.offset: -1 -1;
+            rel2.offset: -2 -1;
             rel2.to_y: "bottom";
          }
          description { state: "max" 0.0;
