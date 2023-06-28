@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-03-06 16:07+0100\n"
+"POT-Creation-Date: 2023-06-28 11:46-0400\n"
 "PO-Revision-Date: 2023-03-18 13:18+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -29,7 +29,7 @@ msgstr "Аб асяроддзі Moksha"
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2581 src/modules/shot/e_mod_main.c:1227
+#: src/modules/fileman/e_fwin.c:2581 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
 msgstr "Закрыць"
 
@@ -49,9 +49,9 @@ msgid ""
 "><br><br>"
 msgstr ""
 "<title>Copyright &copy; 2023, каманда распрацоўшчыкаў Moksha</><br><br>Мы "
-"спадзяемся, што вам так спадабаецца карыстацца гэтай праграмай, як нам падабаецца яе пісаць."
-"<br><br>Каб звязацца з намі, калі ласка, наведайце вэб-сайт:<br><hilight>http://www.bodhilinux.com</"
-"><br><br>"
+"спадзяемся, што вам так спадабаецца карыстацца гэтай праграмай, як нам "
+"падабаецца яе пісаць.<br><br>Каб звязацца з намі, калі ласка, наведайце вэб-"
+"сайт:<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -68,8 +68,8 @@ msgid ""
 "window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
 "want to kill this window?"
 msgstr ""
-"Вы збіраецеся знішчыць %s.<br><br>Калі ласка, майце на ўвазе, што усе не захаваныя даныя "
-"гэтага акна<br>будуць страчаны!<br><br>Вы ўсё роўна жадаеце "
+"Вы збіраецеся знішчыць %s.<br><br>Калі ласка, майце на ўвазе, што усе не "
+"захаваныя даныя гэтага акна<br>будуць страчаны!<br><br>Вы ўсё роўна жадаеце "
 "знішчыць гэта акно?"
 
 #: src/bin/e_actions.c:442
@@ -105,7 +105,7 @@ msgstr "Вы сапраўды жадаеце выйсці з Moksha?"
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10519
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:320
+#: src/modules/shot/e_mod_main.c:319
 msgid "Yes"
 msgstr "Так"
 
@@ -154,7 +154,7 @@ msgstr "Вы сапраўды жадаеце адправіць ваш камп'
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
 #: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
 #: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
-#: src/modules/shot/e_mod_main.c:1316
+#: src/modules/shot/e_mod_main.c:1309
 msgid "Window : Actions"
 msgstr "Акно : Дзеянні"
 
@@ -334,7 +334,7 @@ msgstr "Пераключыць замацаваны стан"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1046
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
 msgid "Desktop"
 msgstr "Працоўны стол"
 
@@ -539,7 +539,7 @@ msgstr "Перайсці да акна... або запусціць..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:974 src/modules/shot/e_mod_main.c:1308
+#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
 msgid "Screen"
 msgstr "Экран"
 
@@ -827,9 +827,9 @@ msgstr "Выбраць"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:320 src/modules/shot/e_mod_main.c:504
-#: src/modules/shot/e_mod_main.c:767 src/modules/shot/e_mod_main.c:793
-#: src/modules/shot/e_mod_main.c:1033 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
+#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Скасаваць"
 
@@ -843,11 +843,11 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your settings.<br>"
 msgstr ""
-"Канфігурацыя запатрабавала аднаўлення. Вашы папярэднія налады былі сцёрты,<br>"
-"і новыя перадвызначыныя налады усталяваны. Гэтак можа збывацца пад час<br>"
-"распрацоўкі, і у гэтым выпадку не трэба рапартаваць аб памылцы. Проста Moksha<br>"
-"запатрабаваў адноўлены фармат канфігурацыі. Цяпер можна зноў усё наладзіць.<br>"
-"Прыносім прабачэнні за дастаўленыя нязручнасці."
+"Канфігурацыя запатрабавала аднаўлення. Вашы папярэднія налады былі сцёрты,"
+"<br>і новыя перадвызначыныя налады усталяваны. Гэтак можа збывацца пад "
+"час<br>распрацоўкі, і у гэтым выпадку не трэба рапартаваць аб памылцы. "
+"Проста Moksha<br>запатрабаваў адноўлены фармат канфігурацыі. Цяпер можна "
+"зноў усё наладзіць.<br>Прыносім прабачэнні за дастаўленыя нязручнасці."
 
 #: src/bin/e_config.c:970
 msgid ""
@@ -857,10 +857,11 @@ msgid ""
 "a precaution your settings have been now restored to<br>defaults. Sorry for "
 "the inconvenience.<br>"
 msgstr ""
-"Ваша канфігурацыя БОЛЬШ НОВАЯ, чым версія Moksha. Гэта вельмі дзіўна і так<br>"
-"не павінна адбывацца, калі толькі вы не ўсталявалі папярэднюю версію Moksha<br>"
-"або перанеслі налады з новай версіі Moksha. Гэта няправільна, і таму замест вашых<br>"
-"былі усталяваны перадвызначыныя налады. Выбачайце за нязручнасці.<br>"
+"Ваша канфігурацыя БОЛЬШ НОВАЯ, чым версія Moksha. Гэта вельмі дзіўна і "
+"так<br>не павінна адбывацца, калі толькі вы не ўсталявалі папярэднюю версію "
+"Moksha<br>або перанеслі налады з новай версіі Moksha. Гэта няправільна, і "
+"таму замест вашых<br>былі усталяваны перадвызначыныя налады. Выбачайце за "
+"нязручнасці.<br>"
 
 #: src/bin/e_config.c:1541 src/bin/e_config.c:2166
 msgid "Moksha Settings Write Problems"
@@ -872,8 +873,8 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha знайшоў памылку пры перамяшчэнні файлаў з наладамі<br>з:<br>%s<br><br>да:"
-"<br>%s<br><br>Запіс быў перапынены ў мэтах бяспекі.<br>"
+"Moksha знайшоў памылку пры перамяшчэнні файлаў з наладамі<br>з:"
+"<br>%s<br><br>да:<br>%s<br><br>Запіс быў перапынены ў мэтах бяспекі.<br>"
 
 #: src/bin/e_config.c:1554 src/bin/e_config.c:2179
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -883,7 +884,7 @@ msgstr ""
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:102
+#: src/modules/clock/e_mod_config.c:165
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -912,12 +913,13 @@ msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
-"Файл недаступны для запісу. Магчыма дыск толькі для чытання<br>"
-"або вы страцілі дазвол на доступ да вашых файлаў."
+"Файл недаступны для запісу. Магчыма дыск толькі для чытання<br>або вы "
+"страцілі дазвол на доступ да вашых файлаў."
 
 #: src/bin/e_config.c:2087
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
-msgstr "Скончылася памяць пры падрыхтоўцы да запісу.<br>Калі ласка, вызваліце памяць."
+msgstr ""
+"Скончылася памяць пры падрыхтоўцы да запісу.<br>Калі ласка, вызваліце памяць."
 
 #: src/bin/e_config.c:2091
 msgid "This is a generic error."
@@ -928,11 +930,13 @@ msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
-"Файл з наладамі занадта вялікі.<br>Ён павінны быць вельмі малы (не больш за некалькі соцень КБ)."
+"Файл з наладамі занадта вялікі.<br>Ён павінны быць вельмі малы (не больш за "
+"некалькі соцень КБ)."
 
 #: src/bin/e_config.c:2099
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
-msgstr "На дыску заўважаны памылкі ўводу/вываду.<br>Магчыма трэба яго замяніць?"
+msgstr ""
+"На дыску заўважаны памылкі ўводу/вываду.<br>Магчыма трэба яго замяніць?"
 
 #: src/bin/e_config.c:2103
 msgid "You ran out of space while writing the file."
@@ -989,9 +993,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Пры запісе сваёй канфігурацыі Moksha вызначыў памылку.<br>%s<br><br>"
-"Памылка здарылася на файле:<br>%s<br><br>Гэты файл быў выдалены, "
-"каб пазбавіцца ад страты даных.<br>"
+"Пры запісе сваёй канфігурацыі Moksha вызначыў памылку.<br>%s<br><br>Памылка "
+"здарылася на файле:<br>%s<br><br>Гэты файл быў выдалены, каб пазбавіцца ад "
+"страты даных.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:875
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1040,7 +1044,8 @@ msgstr "Памылка - няма падтрымкі PAM"
 
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
-msgstr "Падтрымка PAM не была ўбудавана ў Moksha, таму<br>блакіраванне адключана."
+msgstr ""
+"Падтрымка PAM не была ўбудавана ў Moksha, таму<br>блакіраванне адключана."
 
 #: src/bin/e_desklock.c:303
 msgid "Lock Failed"
@@ -1051,8 +1056,8 @@ msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr ""
-"Блакіраваць працоўны стол не ўдалося, таму што некаторыя праграмы<br>"
-"захапілі ці клавіятуру, ці мыш, і іх немагчыма вызваліць."
+"Блакіраваць працоўны стол не ўдалося, таму што некаторыя "
+"праграмы<br>захапілі ці клавіятуру, ці мыш, і іх немагчыма вызваліць."
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
@@ -1077,9 +1082,9 @@ msgid ""
 "The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
 "happening. Please report this bug."
 msgstr ""
-"Не ўдалося наладзіць праверку сапраўднасці за дапамогай PAM.<br>"
-"Атрыманы код памылкі: <hilight>%i</hilight>.<br>Гэтага не павінна было здарыцца.<br>"
-"Калі ласка, праінфармуйце распрацоўшчыкаў пра гэту памылку."
+"Не ўдалося наладзіць праверку сапраўднасці за дапамогай PAM.<br>Атрыманы код "
+"памылкі: <hilight>%i</hilight>.<br>Гэтага не павінна было здарыцца.<br>Калі "
+"ласка, праінфармуйце распрацоўшчыкаў пра гэту памылку."
 
 #: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:184
 msgid "Activate Presentation Mode?"
@@ -1091,8 +1096,8 @@ msgid ""
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
-"Вы занадта хутка разблакавалі ваш працоўны стол.<br><br>Жадаеце ўключыць рэжым "
-"<b>прэзентацыі</b> і часова адключыць захавальнік экрана, блакіроўку і "
+"Вы занадта хутка разблакавалі ваш працоўны стол.<br><br>Жадаеце ўключыць "
+"рэжым <b>прэзентацыі</b> і часова адключыць захавальнік экрана, блакіроўку і "
 "энергазберажэнне?"
 
 #: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:197
@@ -1114,10 +1119,10 @@ msgid ""
 "instead. This will only<br>work if the window title is the same at<br>the "
 "time the window starts up, and does not<br>change."
 msgstr ""
-"Акно, для якога вы ствараеце значок, не мае назвы аккна і класа.<br>"
-"Без гэтага будзе выкарыстоўвацца загаловак акна. Але гэта будзе працаваць<br>"
-"толькі ў тым выпадку, калі загаловак акна будзе такім, як на момант запуска,<br>"
-"і не будзе змяняцца."
+"Акно, для якога вы ствараеце значок, не мае назвы аккна і класа.<br>Без "
+"гэтага будзе выкарыстоўвацца загаловак акна. Але гэта будзе "
+"працаваць<br>толькі ў тым выпадку, калі загаловак акна будзе такім, як на "
+"момант запуска,<br>і не будзе змяняцца."
 
 #: src/bin/e_eap_editor.c:235
 msgid "Desktop Entry Editor"
@@ -1277,8 +1282,8 @@ msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
 "failed to start."
 msgstr ""
-"Moksha не здолеў запусціць праграму:<br><br>%s<br><br>Праграма "
-"не запусцілась."
+"Moksha не здолеў запусціць праграму:<br><br>%s<br><br>Праграма не "
+"запусцілась."
 
 #: src/bin/e_exec.c:871
 msgid "Application Execution Error"
@@ -1429,7 +1434,7 @@ msgstr "Не ўдалося вынуць прыладу"
 #: src/bin/e_fm.c:9730 src/bin/e_fm.c:9735 src/bin/e_fm.c:10366
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10372 src/bin/e_fm.c:10399
 #: src/bin/e_fm.c:10403 src/bin/e_fm.c:10406 src/bin/e_fm.c:10464
-#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2404
+#: src/bin/e_fm.c:10689 src/bin/e_fm_prop.c:254 src/bin/e_shelf.c:2413
 msgid "Error"
 msgstr "Памылка"
 
@@ -1489,7 +1494,7 @@ msgstr "Дзеянні..."
 msgid "Link"
 msgstr "Спасылка"
 
-#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2532
+#: src/bin/e_fm.c:9206 src/bin/e_fm.c:10518 src/bin/e_shelf.c:2541
 #: src/modules/conf_shelves/e_int_config_shelf.c:142
 #: src/modules/quickaccess/e_mod_config.c:226
 #: src/modules/quickaccess/e_mod_config.c:274
@@ -1510,7 +1515,7 @@ msgid "Eject"
 msgstr "Вынуць"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1520
+#: src/modules/ibar/e_mod_main.c:1527
 msgid "Properties"
 msgstr "Уласцівасці"
 
@@ -1723,9 +1728,15 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
-msgstr[0] "Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраны файл у<br><hilight>%s</hilight>?"
-msgstr[1] "Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраных файла ў<br><hilight>%s</hilight>?"
-msgstr[2] "Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраных файлаў у<br><hilight>%s</hilight>?"
+msgstr[0] ""
+"Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраны файл у<br><hilight>%s</"
+"hilight>?"
+msgstr[1] ""
+"Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраных файла ў<br><hilight>%s</"
+"hilight>?"
+msgstr[2] ""
+"Вы ўпэўнены, што жадаеце выдаліць<br>%d выбраных файлаў у<br><hilight>%s</"
+"hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -1756,7 +1767,7 @@ msgstr "Здымная прылада"
 msgid "Cannot change permissions: %s"
 msgstr "Немагчыма змяніць дазволы: %s"
 
-#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1176 src/bin/e_shelf.c:2424
+#: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
 #: src/modules/conf_display/e_int_config_desk.c:176
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:152
@@ -1767,8 +1778,8 @@ msgstr "Імя:"
 msgid "Location:"
 msgstr "Размяшчэнне:"
 
-#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:420
-#: src/bin/e_widget_filepreview.c:487 src/bin/e_widget_filepreview.c:544
+#: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
+#: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
 msgid "Size:"
 msgstr "Памер:"
 
@@ -1910,7 +1921,8 @@ msgstr "Модуль %s патрабуе падтрымкі %s"
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
-"Калі ласка, націсніце паслядоўнасць клавіш,<br><br>або <hilight>Escape</hilight> каб спыніць."
+"Калі ласка, націсніце паслядоўнасць клавіш,<br><br>або <hilight>Escape</"
+"hilight> каб спыніць."
 
 #: src/bin/e_grab_dialog.c:5
 msgid ""
@@ -1918,9 +1930,9 @@ msgid ""
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
-"Калі ласка, трымайце клавішу-мадыфікатар, які вы жадаеце,<br>і націсніце любую кнопку мышы,<br> "
-"або пакруціце кола, для прывязкі мышы.<br>Націсніце <hilight>Escape</"
-"highlight> каб спыніць."
+"Калі ласка, трымайце клавішу-мадыфікатар, які вы жадаеце,<br>і націсніце "
+"любую кнопку мышы,<br> або пакруціце кола, для прывязкі мышы.<br>Націсніце "
+"<hilight>Escape</highlight> каб спыніць."
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
@@ -2279,7 +2291,7 @@ msgstr "Панэль задач"
 
 #: src/bin/e_int_border_prop.c:110 src/bin/e_int_border_prop.c:117
 #: src/bin/e_int_border_prop.c:124 src/bin/e_moveresize.c:98
-#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:97
+#: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
 msgstr "%ix%i"
@@ -2359,8 +2371,8 @@ msgstr "Пауднёвы ўсход"
 msgid "Static"
 msgstr "Нерухомы"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:147
-#: src/modules/clock/e_mod_config.c:190
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
+#: src/modules/clock/e_mod_config.c:253
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2495,7 +2507,7 @@ msgstr "Запыт пазіцыі"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
-#: src/bin/e_shelf.c:2503 src/modules/backlight/e_mod_main.c:309
+#: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
@@ -2507,11 +2519,11 @@ msgstr "Запыт пазіцыі"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:455 src/modules/ibar/e_mod_main.c:1513
+#: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:773
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:797
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2564,15 +2576,16 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"Вы жадаеце каб Moksha запомніў і ўжыў уласцівасці<br>(такія як "
-"памер, размяшчэнне, стыль мяжы і інш.) да<br>акна, якое <hilight>не мае "
-"унікальных ўласцівасцяў</hilight>.<br><br>Гэта адзначае, што яно падзяляе Імя/Клас, "
+"Вы жадаеце каб Moksha запомніў і ўжыў уласцівасці<br>(такія як памер, "
+"размяшчэнне, стыль мяжы і інш.) да<br>акна, якое <hilight>не мае унікальных "
+"ўласцівасцяў</hilight>.<br><br>Гэта адзначае, што яно падзяляе Імя/Клас, "
 "Скарацечнасць, Ролю і інш. уласцівасці<br>з больш чым 1 іншае акно на экране "
-"і запамінанне<br>уласцівасцяў для гэтага акна прывядзе да ўжывання іх для ўсіх "
-"іншых акон<br>з такімі самымі ўласцівасцямі.<br><br>Гэта проста папярэджанне, "
-"калі вы не жадаеце, каб гэта здарылася.<br>Калі жадаеце, проста націсніце кнопку "
-"<hilight>Ўжыць</hilight> або <hilight>Добра</hilight>,<br> і вашы налады будуць прыняты."
-"Націсніце <hilight>Скасаваць</hilight>, калі вы не ўпэўнены,і нічога не адбудзецца."
+"і запамінанне<br>уласцівасцяў для гэтага акна прывядзе да ўжывання іх для "
+"ўсіх іншых акон<br>з такімі самымі ўласцівасцямі.<br><br>Гэта проста "
+"папярэджанне, калі вы не жадаеце, каб гэта здарылася.<br>Калі жадаеце, "
+"проста націсніце кнопку <hilight>Ўжыць</hilight> або <hilight>Добра</"
+"hilight>,<br> і вашы налады будуць прыняты.Націсніце <hilight>Скасаваць</"
+"hilight>, калі вы не ўпэўнены,і нічога не адбудзецца."
 
 #: src/bin/e_int_border_remember.c:498
 msgid "No match properties set"
@@ -2585,10 +2598,10 @@ msgid ""
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"Вы жадаеце, каб Moksha запомніў ужыванне<br>уласцівасцяў (такіх як "
-"памер, размяшчэнне, стыль мяжы і інш.) да<br>акна <hilight>без указання, "
-"як іх запомніць</hilight>.<br><br>Вы павінны указаць як менш 1 "
-"шлях запамінання гэтага акна."
+"Вы жадаеце, каб Moksha запомніў ужыванне<br>уласцівасцяў (такіх як памер, "
+"размяшчэнне, стыль мяжы і інш.) да<br>акна <hilight>без указання, як іх "
+"запомніць</hilight>.<br><br>Вы павінны указаць як менш 1 шлях запамінання "
+"гэтага акна."
 
 #: src/bin/e_int_border_remember.c:601
 msgid "Nothing"
@@ -2605,7 +2618,7 @@ msgstr "Памер, пазіцыю і блакіроўкі"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:978
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
 msgid "All"
 msgstr "Усё"
 
@@ -2720,27 +2733,27 @@ msgstr "Няма выбраных модуляў."
 msgid "More than one module selected."
 msgstr "Выбраны больш за адзін модуль."
 
-#: src/bin/e_int_gadcon_config.c:702 src/bin/e_int_gadcon_config.c:760
+#: src/bin/e_int_gadcon_config.c:703 src/bin/e_int_gadcon_config.c:761
 msgid "Remove Gadget"
 msgstr "Выдаліць гаджэт"
 
-#: src/bin/e_int_gadcon_config.c:707
+#: src/bin/e_int_gadcon_config.c:708
 msgid "Loaded Gadgets"
 msgstr "Загружаныя гаджэты"
 
-#: src/bin/e_int_gadcon_config.c:722 src/bin/e_int_gadcon_config.c:755
+#: src/bin/e_int_gadcon_config.c:723 src/bin/e_int_gadcon_config.c:756
 msgid "Add Gadget"
 msgstr "Дадаць гаджэт"
 
-#: src/bin/e_int_gadcon_config.c:727
+#: src/bin/e_int_gadcon_config.c:728
 msgid "Available Gadgets"
 msgstr "Даступныя гаджэты"
 
-#: src/bin/e_int_gadcon_config.c:789
+#: src/bin/e_int_gadcon_config.c:790
 msgid "Shelf Contents"
 msgstr "Змест паліцы"
 
-#: src/bin/e_int_gadcon_config.c:795
+#: src/bin/e_int_gadcon_config.c:796
 msgid "Toolbar Contents"
 msgstr "Змест панэлі інструментаў"
 
@@ -2762,8 +2775,8 @@ msgid ""
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 msgstr ""
-"Памылка ў час запуска метада ўводу.<br><br>Калі ласка, пераканайцеся, што<br>"
-"канфігурацыя метада ўводу правільная і што<br>заданы выканальны файл "
+"Памылка ў час запуска метада ўводу.<br><br>Калі ласка, пераканайцеся, "
+"што<br>канфігурацыя метада ўводу правільная і што<br>заданы выканальны файл "
 "прысутнічае ў PATH<br>"
 
 #: src/bin/e_int_menus.c:144 src/modules/syscon/e_int_config_syscon.c:146
@@ -2860,7 +2873,7 @@ msgstr "Страчаныя вокны"
 msgid "Untitled window"
 msgstr "Вокны без загалоўкаў"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1690
+#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
@@ -3051,7 +3064,8 @@ msgid ""
 msgstr ""
 "Moksha вызначыў, што ecore_evas не падтрымлівае маляванне з дапамогай\n"
 "Software Buffer у Evas. Калі ласка, праверце вашу ўсталёўку Evas ды\n"
-"Ecore і праверце, што яны падтрымліваюць падсістэму малявання Software Buffer."
+"Ecore і праверце, што яны падтрымліваюць падсістэму малявання Software "
+"Buffer."
 
 #: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
@@ -3425,8 +3439,8 @@ msgstr ""
 "\t\tНАПРЫКЛАД: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
 "800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tВыкарыстоўваць профіль канфігурацыі CONF_PROFILE замест абранага карыстальнікам "
-"ці проста \"default\".\n"
+"\t\tВыкарыстоўваць профіль канфігурацыі CONF_PROFILE замест абранага "
+"карыстальнікам ці проста \"default\".\n"
 "\t-good\n"
 "\t\tБудзь добры.\n"
 "\t-evil\n"
@@ -3470,33 +3484,39 @@ msgstr ""
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
-"Moksha вызначыў, што Evas не можа загружаць файлы SVG. Праверце, што Evas падтрымлівае загрузку SVG.\n"
+"Moksha вызначыў, што Evas не можа загружаць файлы SVG. Праверце, што Evas "
+"падтрымлівае загрузку SVG.\n"
 
 #: src/bin/e_main.c:1674
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"Moksha вызначыў, што Evas не можа загружаць файлы JPEG. Праверце, што Evas падтрымлівае "
-"загрузку JPEG.\n"
+"Moksha вызначыў, што Evas не можа загружаць файлы JPEG. Праверце, што Evas "
+"падтрымлівае загрузку JPEG.\n"
 
 #: src/bin/e_main.c:1684
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
-"Moksha вызначыў, што Evas не можа загружаць файлы PNG. Праверце, што Evas падтрымлівае загрузку PNG.\n"
+"Moksha вызначыў, што Evas не можа загружаць файлы PNG. Праверце, што Evas "
+"падтрымлівае загрузку PNG.\n"
 
 #: src/bin/e_main.c:1694
+#, fuzzy
 msgid ""
-"Moksha вызначыў, што Evas не можа загружаць файлы EET. Праверце, што Evas падтрымлівае загрузку EET.\n"
+"Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
+"Moksha вызначыў, што Evas не можа загружаць файлы JPEG. Праверце, што Evas "
+"падтрымлівае загрузку JPEG.\n"
 
 #: src/bin/e_main.c:1708
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"Moksha вызначыў, што Evas не здольны загрузіць шрыфт 'Sans'. Праверце, што Evas падтрымлівае fontconfig\n"
+"Moksha вызначыў, што Evas не здольны загрузіць шрыфт 'Sans'. Праверце, што "
+"Evas падтрымлівае fontconfig\n"
 "і сістэма fontconfig вызначае шрыфт 'Sans'.\n"
 
 #: src/bin/e_main.c:1927
@@ -3507,7 +3527,8 @@ msgid ""
 "not be loaded."
 msgstr ""
 "Moksha разбурыўся на старце і быў перазапушчаны.<br> Здарылася памылка "
-"загрузкі модуля<br>з назвай: %s. Гэты модуль быў адключаны<br>і не будзе загружацца."
+"загрузкі модуля<br>з назвай: %s. Гэты модуль быў адключаны<br>і не будзе "
+"загружацца."
 
 #: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
@@ -3531,10 +3552,10 @@ msgid ""
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"Moksha разбурыўся на старце і быў перазапушчаны.<br>Усе модулі "
-"былі адключаны<br>і не будуць загружацца, каб пазбегнуць праблем<br>"
-"з модулямі ў вашай канфігурацыі. Дыялог канфігурацыі<br>модуляў "
-"дазволіць вам уключыць модулі ізноў.\n"
+"Moksha разбурыўся на старце і быў перазапушчаны.<br>Усе модулі былі "
+"адключаны<br>і не будуць загружацца, каб пазбегнуць праблем<br>з модулямі ў "
+"вашай канфігурацыі. Дыялог канфігурацыі<br>модуляў дазволіць вам уключыць "
+"модулі ізноў.\n"
 
 #: src/bin/e_main.c:1949
 msgid ""
@@ -3543,10 +3564,10 @@ msgid ""
 "from your configuration.<br><br>The module configuration dialog should let "
 "you select your<br>modules again."
 msgstr ""
-"Moksha разбурыўся на старце і быў перазапушчаны.<br>Усе модулі "
-"былі адключаны і не будуць загружацца, каб пазбегнуць<br>праблем "
-"з модулямі ў вашай канфігурацыі.<br><br>Дыялог канфігурацыі модуляў "
-"дазволіць вам выбраць вашы<br>модулі ізноў."
+"Moksha разбурыўся на старце і быў перазапушчаны.<br>Усе модулі былі "
+"адключаны і не будуць загружацца, каб пазбегнуць<br>праблем з модулямі ў "
+"вашай канфігурацыі.<br><br>Дыялог канфігурацыі модуляў дазволіць вам выбраць "
+"вашы<br>модулі ізноў."
 
 #: src/bin/e_module.c:170
 #, c-format
@@ -3559,8 +3580,8 @@ msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
 "be found in the<br>module search directories.<br>"
 msgstr ""
-"Здарылася памылка загрузкі модуля з назвай: %s<br>Модуль з назвай %s не ўдалося "
-"адшукаць у каталогах па пуцях пошуку модуляў.<br>"
+"Здарылася памылка загрузкі модуля з назвай: %s<br>Модуль з назвай %s не "
+"ўдалося адшукаць у каталогах па пуцях пошуку модуляў.<br>"
 
 #: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
 msgid "Error loading Module"
@@ -3576,7 +3597,8 @@ msgstr ""
 "модуля:<br>%s<br>Паведамленне аб памылцы:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-msgid "Module does not contain all needed functions"
+#, fuzzy
+msgid "Module does not contain all needed functions."
 msgstr "Модуль не змяшчае усіх патрэбных функцый"
 
 #: src/bin/e_module.c:267
@@ -3585,8 +3607,8 @@ msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
-"Памылка API модуля<br>Памылка ініцыялізацыі модуля: %s<br>Патрабуецца як менш "
-"API модуля версіі: %i.<br>Аб'яўленая Moksha версія API модуля: %i.<br>"
+"Памылка API модуля<br>Памылка ініцыялізацыі модуля: %s<br>Патрабуецца як "
+"менш API модуля версіі: %i.<br>Аб'яўленая Moksha версія API модуля: %i.<br>"
 
 #: src/bin/e_module.c:272
 #, c-format
@@ -3610,9 +3632,9 @@ msgid ""
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
-"Наступныя модулі на з'яўляюцца стандартнымі для<br>Moksha і здольныя выклікаць памылкі "
-"і разбурэнні.<br>Калі ласка, выдаліце іх перад тым як рапартаваць аб памылках.<br><br>"
-"Спіс гэтых модуляў наступны:<br><br>"
+"Наступныя модулі на з'яўляюцца стандартнымі для<br>Moksha і здольныя "
+"выклікаць памылкі і разбурэнні.<br>Калі ласка, выдаліце іх перад тым як "
+"рапартаваць аб памылках.<br><br>Спіс гэтых модуляў наступны:<br><br>"
 
 #: src/bin/e_module.c:819
 msgid "Unstable module tainting"
@@ -3628,135 +3650,136 @@ msgid ""
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
-"Вы адключылі захавальнік экрана вельмі хутка.<br><br>Можа вы жадаеце ўключыць "
-"рэжым <b>прэзентацыі</b> і часова адключыць захавальнік экрана, блакіроўку ды "
-"энергазберажэнне?"
+"Вы адключылі захавальнік экрана вельмі хутка.<br><br>Можа вы жадаеце "
+"ўключыць рэжым <b>прэзентацыі</b> і часова адключыць захавальнік экрана, "
+"блакіроўку ды энергазберажэнне?"
 
-#: src/bin/e_shelf.c:68
+#: src/bin/e_shelf.c:69
 msgid "Float"
 msgstr "Плаваючы"
 
-#: src/bin/e_shelf.c:69
+#: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:582
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Гарызантальна"
 
-#: src/bin/e_shelf.c:70
+#: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:575
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Вертыкальна"
 
-#: src/bin/e_shelf.c:71
+#: src/bin/e_shelf.c:72
 msgid "Left"
 msgstr "Злева"
 
-#: src/bin/e_shelf.c:72
+#: src/bin/e_shelf.c:73
 msgid "Right"
 msgstr "Зправа"
 
-#: src/bin/e_shelf.c:73
+#: src/bin/e_shelf.c:74
 msgid "Top"
 msgstr "Зверху"
 
-#: src/bin/e_shelf.c:74
+#: src/bin/e_shelf.c:75
 msgid "Bottom"
 msgstr "Знізу"
 
-#: src/bin/e_shelf.c:75
+#: src/bin/e_shelf.c:76
 msgid "Top-left Corner"
 msgstr "Верхні левы кут"
 
-#: src/bin/e_shelf.c:76
+#: src/bin/e_shelf.c:77
 msgid "Top-right Corner"
 msgstr "Верхні правы кут"
 
-#: src/bin/e_shelf.c:77
+#: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
 msgstr "Ніжні левы кут"
 
-#: src/bin/e_shelf.c:78
+#: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
 msgstr "Ніжні правы кут"
 
-#: src/bin/e_shelf.c:79
+#: src/bin/e_shelf.c:80
 msgid "Left-top Corner"
 msgstr "Левы верхні кут"
 
-#: src/bin/e_shelf.c:80
+#: src/bin/e_shelf.c:81
 msgid "Right-top Corner"
 msgstr "Правы верхні кут"
 
-#: src/bin/e_shelf.c:81
+#: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
 msgstr "Левы ніжні кут"
 
-#: src/bin/e_shelf.c:82
+#: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
 msgstr "Правы ніжні кут"
 
-#: src/bin/e_shelf.c:269 src/bin/e_shelf.c:1174
+#: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, c-format
 msgid "Shelf #%d"
 msgstr "Паліца #%d"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
 msgstr "Памылка аўтаматычнага хавання паліцы"
 
-#: src/bin/e_shelf.c:894
+#: src/bin/e_shelf.c:896
 msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
-"Аўтаматычнае хаванне паліцы не будзе працаваць належным чынам<br>з бягучай канфігурацыяй; "
-"Наладзьце вашу паліцу як<br>\"Ніжэй за ўсё\" або адключыце аутаматычнае хаванне."
+"Аўтаматычнае хаванне паліцы не будзе працаваць належным чынам<br>з бягучай "
+"канфігурацыяй; Наладзьце вашу паліцу як<br>\"Ніжэй за ўсё\" або адключыце "
+"аутаматычнае хаванне."
 
-#: src/bin/e_shelf.c:1175
+#: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
 msgstr "Дадаць новую паліцу"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "Shelf Error"
 msgstr "Памылка паліцы"
 
-#: src/bin/e_shelf.c:1196
+#: src/bin/e_shelf.c:1198
 msgid "A shelf with that name already exists!"
 msgstr "Паліца з такой назвай ужо існуе!"
 
-#: src/bin/e_shelf.c:1711 src/bin/e_shelf.c:2549
+#: src/bin/e_shelf.c:1720 src/bin/e_shelf.c:2558
 msgid "Stop Moving Gadgets"
 msgstr "Скончыць перамяшчэнне гаджэтаў"
 
-#: src/bin/e_shelf.c:1713 src/bin/e_shelf.c:2551
+#: src/bin/e_shelf.c:1722 src/bin/e_shelf.c:2560
 msgid "Begin Moving Gadgets"
 msgstr "Пачаць перамяшчэнне гаджэтаў"
 
-#: src/bin/e_shelf.c:2404
+#: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
 msgstr "Паліца з такой назвай і id ужо існуе!"
 
-#: src/bin/e_shelf.c:2423
+#: src/bin/e_shelf.c:2432
 msgid "Rename Shelf"
 msgstr "Перайменаваць паліцу"
 
-#: src/bin/e_shelf.c:2498 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:449 src/modules/ibar/e_mod_main.c:1507
+#: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
+#: src/modules/ibar/e_mod_main.c:453 src/modules/ibar/e_mod_main.c:1514
 msgid "Contents"
 msgstr "Змест"
 
-#: src/bin/e_shelf.c:2508
+#: src/bin/e_shelf.c:2517
 msgid "Orientation"
 msgstr "Арыентацыя"
 
-#: src/bin/e_shelf.c:2517 src/modules/quickaccess/e_mod_quickaccess.c:792
+#: src/bin/e_shelf.c:2526 src/modules/quickaccess/e_mod_quickaccess.c:792
 msgid "Autohide"
 msgstr "Аутаматычнае хаванне"
 
-#: src/bin/e_shelf.c:2524 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
 msgid "Refresh"
 msgstr "Абнавіць"
 
@@ -3781,9 +3804,10 @@ msgid ""
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Выхад доўжыцца занадта шмат часу.<br>Некаторыя праграмы адмаўляюцца закрывацца.<br>Вы "
-"жадаеце ажыццявіць выхад<br>у любым выпадку нават без папярэдняга закрыцця тых<br>праграм?"
-"<br><br>%s<br>Аўтаматычны выхад праз %d секунд."
+"Выхад доўжыцца занадта шмат часу.<br>Некаторыя праграмы адмаўляюцца "
+"закрывацца.<br>Вы жадаеце ажыццявіць выхад<br>у любым выпадку нават без "
+"папярэдняга закрыцця тых<br>праграм?<br><br>%s<br>Аўтаматычны выхад праз %d "
+"секунд."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3818,43 +3842,44 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"Ажыццяўляецца выхад.<br>Вам нельга выконваць іншыя сістэмныя дзеянні<br>з пачаткам "
-"выхаду."
+"Ажыццяўляецца выхад.<br>Вам нельга выконваць іншыя сістэмныя дзеянні<br>з "
+"пачаткам выхаду."
 
 #: src/bin/e_sys.c:607
 msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
-"Выконваецца выключэнне.<br>Вам нельга выконваць іншыя сістэмныя дзеянні<br>з пачаткам "
-"выключэння."
+"Выконваецца выключэнне.<br>Вам нельга выконваць іншыя сістэмныя дзеянні<br>з "
+"пачаткам выключэння."
 
 #: src/bin/e_sys.c:613
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr ""
-"Выконваецца перазагрузка.<br>Вам нельга выконваць іншыя сістэмныя дзеянні<br>з пачаткам "
-"перазагрузкі."
+"Выконваецца перазагрузка.<br>Вам нельга выконваць іншыя сістэмныя "
+"дзеянні<br>з пачаткам перазагрузкі."
 
 #: src/bin/e_sys.c:619
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
 msgstr ""
-"Выконваецца прыпыненне.<br>Пакуль прыпыненне не будзе завершана, вам нельга<br>выконваць "
-"іншыя сістэмныя дзеянні."
+"Выконваецца прыпыненне.<br>Пакуль прыпыненне не будзе завершана, вам "
+"нельга<br>выконваць іншыя сістэмныя дзеянні."
 
 #: src/bin/e_sys.c:625
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
 msgstr ""
-"Ідзе адпраўленне ў спячку.<br>Вам нельга выконваць іншыя сістэмные дзеянні<br>пакуль працэс "
-"не будзе завершаны."
+"Ідзе адпраўленне ў спячку.<br>Вам нельга выконваць іншыя сістэмные "
+"дзеянні<br>пакуль працэс не будзе завершаны."
 
-#: src/bin/e_sys.c:631 src/bin/e_sys.c:672
-msgid "EEK! This should not happen"
+#: src/bin/e_sys.c:631
+#, fuzzy
+msgid "EEK! This should not happen."
 msgstr "Ой! Гэта не павінна было здарыцца"
 
 #: src/bin/e_sys.c:656
@@ -3872,6 +3897,10 @@ msgstr "Не ўдалося прыпыніць."
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
 msgstr "Не ўдалося адправіць у спячку."
+
+#: src/bin/e_sys.c:672
+msgid "EEK! This should not happen"
+msgstr "Ой! Гэта не павінна было здарыцца"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -3940,9 +3969,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"Ваша версія enlightenment<br>не з'яўляецца апошнім бягучым выпускам.<br>"
-"Апошняя версія:<br><br>%s<br><br>Калі ласка, наведайце www.enlightenment.org<br>або "
-"абнавіце пакеты вашай сістэмы<br>каб атрымаць новую версію."
+"Ваша версія enlightenment<br>не з'яўляецца апошнім бягучым выпускам."
+"<br>Апошняя версія:<br><br>%s<br><br>Калі ласка, наведайце www.enlightenment."
+"org<br>або абнавіце пакеты вашай сістэмы<br>каб атрымаць новую версію."
 
 #: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -3961,8 +3990,8 @@ msgid ""
 "have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "Некаторыя вокны засталіся з уключанай блакіроўкай ад закрыцця. Гэта "
-"адзначае<br>што Moksha не пазволіць сабе выйсці пакуль гэтыя вокны "
-"не будуць<br>закрытыя або не будзе выключана блакіроўка.<br>"
+"адзначае<br>што Moksha не пазволіць сабе выйсці пакуль гэтыя вокны не "
+"будуць<br>закрытыя або не будзе выключана блакіроўка.<br>"
 
 #: src/bin/e_utils.c:781
 #, c-format
@@ -4047,9 +4076,9 @@ msgstr[0] "%li хвіліна таму"
 msgstr[1] "%li хвіліны таму"
 msgstr[2] "%li хвілін таму"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:707
-#: src/bin/e_widget_filepreview.c:708 src/bin/e_widget_filepreview.c:709
-#: src/bin/e_widget_filepreview.c:739 src/bin/e_widget_filepreview.c:750
+#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
+#: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
@@ -4067,7 +4096,8 @@ msgstr "Памылка стварэння каталога"
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
-msgstr "Не здолеў стварыць каталог: %s .<br>Праверце, ці маеце вы неабходны дазвол."
+msgstr ""
+"Не здолеў стварыць каталог: %s .<br>Праверце, ці маеце вы неабходны дазвол."
 
 #: src/bin/e_utils.c:935
 #, c-format
@@ -4084,9 +4114,9 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your configuration.<br>"
 msgstr ""
-"Канфігурацыю трэба было абнавіць. Ваша старая канфігурацыя<br>была сцёрта "
-"і новыя перадвызначыныя налады былі ўсталяваны. Гэтак<br>будзе адбывацца "
-"у час распрацоўкі рэгулярна, рапартаваць аб памылцы непатрэбна.<br> Модуль "
+"Канфігурацыю трэба было абнавіць. Ваша старая канфігурацыя<br>была сцёрта і "
+"новыя перадвызначыныя налады былі ўсталяваны. Гэтак<br>будзе адбывацца у час "
+"распрацоўкі рэгулярна, рапартаваць аб памылцы непатрэбна.<br> Модуль "
 "запатрабаваў новыя канфігурацыйныя<br>перадвызначыныя даныя, каб запрацавала "
 "новая<br>функцыянальнасць. Цяпер вы можаце наладзіць модуль, як жадаеце. "
 "Выбачайце за нязручнасці!<br>"
@@ -4105,10 +4135,11 @@ msgid ""
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
 "Канфігурацыя вашага модуля БОЛЬШ НОВАЯ, чым версія модуля. Гэта вельмі "
-"<br>дзіўна. Гэтак не павінна было адбыцца, калі толькі вы не ўсталявалі<br>"
-"папярэднюю версію модуля ці скапіявалі канфігурацыю адтуль,<br>дзе выконваецца "
-"новая версія модуля. Гэта дрэнна,<br>і таму налады канфігурацыі былі памяняны "
-"на перадвызначыныя.<br>Выбачайце за нязручнасці!<br>"
+"<br>дзіўна. Гэтак не павінна было адбыцца, калі толькі вы не "
+"ўсталявалі<br>папярэднюю версію модуля ці скапіявалі канфігурацыю адтуль,"
+"<br>дзе выконваецца новая версія модуля. Гэта дрэнна,<br>і таму налады "
+"канфігурацыі былі памяняны на перадвызначыныя.<br>Выбачайце за нязручнасці!"
+"<br>"
 
 #: src/bin/e_utils.c:1213
 #, c-format
@@ -4227,77 +4258,77 @@ msgstr "V"
 msgid "Alpha"
 msgstr "Альфа"
 
-#: src/bin/e_widget_filepreview.c:96 src/bin/e_widget_filepreview.c:421
-#: src/bin/e_widget_filepreview.c:543
+#: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:523
 msgid "Resolution:"
 msgstr "Раздзяляльнасць:"
 
-#: src/bin/e_widget_filepreview.c:104
+#: src/bin/e_widget_filepreview.c:94
 msgid "Mime-type:"
 msgstr "Тып Mime:"
 
-#: src/bin/e_widget_filepreview.c:413
+#: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
 msgstr "%3.1f%%"
 
-#: src/bin/e_widget_filepreview.c:419
+#: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
 msgstr "Даўжыня"
 
-#: src/bin/e_widget_filepreview.c:486
+#: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
 msgstr "Выкарыставана:"
 
-#: src/bin/e_widget_filepreview.c:488
+#: src/bin/e_widget_filepreview.c:473
 msgid "Reserved:"
 msgstr "Зарэзервавана:"
 
-#: src/bin/e_widget_filepreview.c:489
+#: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
 msgstr "Стан падключэння:"
 
-#: src/bin/e_widget_filepreview.c:491
+#: src/bin/e_widget_filepreview.c:476
 msgid "Type:"
 msgstr "Тып:"
 
-#: src/bin/e_widget_filepreview.c:546
+#: src/bin/e_widget_filepreview.c:526
 msgid "Owner:"
 msgstr "Уладальнік:"
 
-#: src/bin/e_widget_filepreview.c:547
+#: src/bin/e_widget_filepreview.c:527
 msgid "Permissions:"
 msgstr "Дазволы:"
 
-#: src/bin/e_widget_filepreview.c:548
+#: src/bin/e_widget_filepreview.c:528
 msgid "Modified:"
 msgstr "Мадыфікаваны:"
 
-#: src/bin/e_widget_filepreview.c:694 src/bin/e_widget_filepreview.c:883
-#: src/bin/e_widget_filepreview.c:892 src/bin/e_widget_filepreview.c:901
+#: src/bin/e_widget_filepreview.c:666 src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
 msgstr "Толькі для чытання"
 
-#: src/bin/e_widget_filepreview.c:696 src/bin/e_widget_filepreview.c:908
+#: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
 msgstr "Толькі для запісу"
 
-#: src/bin/e_widget_filepreview.c:699 src/bin/e_widget_filepreview.c:710
+#: src/bin/e_widget_filepreview.c:671 src/bin/e_widget_filepreview.c:682
 msgid "Unmounted"
 msgstr "Не падключаны"
 
-#: src/bin/e_widget_filepreview.c:832
+#: src/bin/e_widget_filepreview.c:781
 #, c-format
 msgid "You"
 msgstr "Вы"
 
-#: src/bin/e_widget_filepreview.c:881
+#: src/bin/e_widget_filepreview.c:830
 #, c-format
 msgid "Protected"
 msgstr "Абаронена"
 
-#: src/bin/e_widget_filepreview.c:890 src/bin/e_widget_filepreview.c:899
+#: src/bin/e_widget_filepreview.c:839 src/bin/e_widget_filepreview.c:848
 #, c-format
 msgid "Forbidden"
 msgstr "Забаронена"
@@ -4475,11 +4506,21 @@ msgstr "ПАМЫЛКА"
 msgid "Battery Meter"
 msgstr "Індыкатар батарэі"
 
-#: src/modules/clock/e_mod_config.c:40
+#: src/modules/clock/e_mod_config.c:43
 msgid "Clock Settings"
 msgstr "Налады гадзінніка"
 
-#: src/modules/clock/e_mod_config.c:96
+#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+msgid "Time set"
+msgstr "Наладз. час"
+
+#: src/modules/clock/e_mod_config.c:137
+#: src/modules/conf_display/e_int_config_desk.c:194
+#: src/modules/fileman/e_int_config_mime.c:184
+msgid "Set"
+msgstr "Задаць"
+
+#: src/modules/clock/e_mod_config.c:159
 #, c-format
 msgid ""
 "Click on a calendar day to change the date. <br>Use the mouse wheel to "
@@ -4488,91 +4529,88 @@ msgstr ""
 "Націсніце на дні ў календары каб змяніць дату. <br>Карыстайце кола мышы каб "
 "змяніць год."
 
-#: src/modules/clock/e_mod_config.c:98
+#: src/modules/clock/e_mod_config.c:161
 msgid "Clock module Information"
 msgstr "Інфармацыя модуля Гадзіннік"
 
-#: src/modules/clock/e_mod_config.c:127 src/modules/clock/e_mod_main.c:799
+#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
 #: src/modules/clock/e_mod_main.c:988
 msgid "Clock"
 msgstr "Гадзіннік"
 
-#: src/modules/clock/e_mod_config.c:130
+#: src/modules/clock/e_mod_config.c:193
 msgid "Analog"
 msgstr "Стрэлкавы"
 
-#: src/modules/clock/e_mod_config.c:132
+#: src/modules/clock/e_mod_config.c:195
 msgid "Digital"
 msgstr "Цыфравы"
 
-#: src/modules/clock/e_mod_config.c:134
+#: src/modules/clock/e_mod_config.c:197
 msgid "Seconds"
 msgstr "Секунды"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:200
 msgid "12 h"
 msgstr "12 г"
 
-#: src/modules/clock/e_mod_config.c:139
+#: src/modules/clock/e_mod_config.c:202
 msgid "24 h"
 msgstr "24 г"
 
-#: src/modules/clock/e_mod_config.c:144
+#: src/modules/clock/e_mod_config.c:207
 msgid "Date"
 msgstr "Дата"
 
-#: src/modules/clock/e_mod_config.c:149
+#: src/modules/clock/e_mod_config.c:212
 msgid "Full"
 msgstr "Цалкам"
 
-#: src/modules/clock/e_mod_config.c:151
+#: src/modules/clock/e_mod_config.c:214
 msgid "Numbers"
 msgstr "Цыфрамі"
 
-#: src/modules/clock/e_mod_config.c:153
+#: src/modules/clock/e_mod_config.c:216
 msgid "Date Only"
 msgstr "Толькі дата"
 
-#: src/modules/clock/e_mod_config.c:155
+#: src/modules/clock/e_mod_config.c:218
 msgid "ISO 8601"
 msgstr "ISO 8601"
 
-#: src/modules/clock/e_mod_config.c:157
+#: src/modules/clock/e_mod_config.c:220
 msgid "Strftime"
 msgstr "Strftime"
 
-#: src/modules/clock/e_mod_config.c:164
+#: src/modules/clock/e_mod_config.c:227
 msgid "Week"
 msgstr "Тыдзень"
 
-#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:178
+#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Пачатак"
 
-#: src/modules/clock/e_mod_config.c:177
+#: src/modules/clock/e_mod_config.c:240
 msgid "Weekend"
 msgstr "Выходныя"
 
-#: src/modules/clock/e_mod_config.c:187
+#: src/modules/clock/e_mod_config.c:250
 msgid "Days"
 msgstr "Колькасць дзён"
 
-#: src/modules/clock/e_mod_config.c:207
-msgid "Time set"
-msgstr "Наладз. час"
+#: src/modules/clock/e_mod_config.c:272
+msgid "Set..."
+msgstr ""
 
-#: src/modules/clock/e_mod_config.c:209
-msgid "Hours"
-msgstr "Гадзіны"
-
-#: src/modules/clock/e_mod_config.c:214
-msgid "Minutes"
-msgstr "Хвіліны"
-
-#: src/modules/clock/e_mod_config.c:222
+#: src/modules/clock/e_mod_config.c:276
 msgid "Date set"
 msgstr "Наладз. дату"
+
+#: src/modules/clock/e_mod_config.c:278
+#, fuzzy
+msgid "Info... "
+msgstr "Заўвага"
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
@@ -4669,7 +4707,7 @@ msgid "E-Mail"
 msgstr "Пошта"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1055
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
 msgid "Trash"
 msgstr "Сметніца"
 
@@ -4926,11 +4964,6 @@ msgstr "Імя профілю:"
 msgid "Desktop Wallpaper"
 msgstr "Шпалера працоўнага стала"
 
-#: src/modules/conf_display/e_int_config_desk.c:194
-#: src/modules/fileman/e_int_config_mime.c:184
-msgid "Set"
-msgstr "Задаць"
-
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:41
 msgid "Select a Background..."
 msgstr "Выбраць фон..."
@@ -5150,9 +5183,9 @@ msgid ""
 "<br><br>You can either specify a delay of this<br> action using the slider, "
 "or make it<br>respond to edge clicks:"
 msgstr ""
-"Калі ласка, выберыце край<br>або націсніце <hilight>Закрыць</hilight> каб перапыніць."
-"<br><br>Вы можаце або задаць затрымку гэтага<br>дзеяння з дапамогай паўзунка, "
-"або зрабіць, каб<br>ён адгукаўся на націскі па мяжы:"
+"Калі ласка, выберыце край<br>або націсніце <hilight>Закрыць</hilight> каб "
+"перапыніць.<br><br>Вы можаце або задаць затрымку гэтага<br>дзеяння з "
+"дапамогай паўзунка, або зрабіць, каб<br>ён адгукаўся на націскі па мяжы:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
@@ -5234,8 +5267,8 @@ msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
-"Прызначэнне да краю, якое вы выбралі, ужо выкарыстоўваецца<br>дзеяннем <hilight>%s</hilight>"
-"<br>Калі ласка, выберыце іншы край для прызначэння."
+"Прызначэнне да краю, якое вы выбралі, ужо выкарыстоўваецца<br>дзеяннем "
+"<hilight>%s</hilight><br>Калі ласка, выберыце іншы край для прызначэння."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
@@ -5312,8 +5345,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"Сігнал ды крыніца, якія вы ўвялі, ўжо выкарыстоўваюцца<br>дзеяннем <hilight>%s</"
-"hilight>.<br>"
+"Сігнал ды крыніца, якія вы ўвялі, ўжо выкарыстоўваюцца<br>дзеяннем "
+"<hilight>%s</hilight>.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5577,11 +5610,10 @@ msgid ""
 "affected, use the<br>Environment variable settings to unset them.<br>The "
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
-"У вас заданы некаторыя дадатковыя пераменныя асяроддзя,<br>"
-"якія датычацца лакалі i здольныя усплываць на паказ выбранай вамі мовы.<br>"
-"Калі вы не жадаеце гэтага, адмяніце іх з дапамогай налады<br>"
-"Пераменныя асяроддзя. Гаворка ідзе пра такія пераменныя,<br>"
-"як:<br>%s"
+"У вас заданы некаторыя дадатковыя пераменныя асяроддзя,<br>якія датычацца "
+"лакалі i здольныя усплываць на паказ выбранай вамі мовы.<br>Калі вы не "
+"жадаеце гэтага, адмяніце іх з дапамогай налады<br>Пераменныя асяроддзя. "
+"Гаворка ідзе пра такія пераменныя,<br>як:<br>%s"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1008
 msgid "Possible Locale problems"
@@ -5595,7 +5627,7 @@ msgstr "Выбар мовы"
 #: src/modules/conf_intl/e_int_config_intl.c:1124
 #: src/modules/conf_intl/e_int_config_intl.c:1573
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:196
+#: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "Перадвызначыныя"
 
@@ -5609,7 +5641,7 @@ msgstr "Выбраная лакаль"
 msgid "Locale"
 msgstr "Лакаль"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:188
 msgid "Language"
 msgstr "Мова"
 
@@ -5795,9 +5827,8 @@ msgid ""
 "<br><hilight>%s</hilight> action.<br>Please choose another binding key "
 "sequence."
 msgstr ""
-"Паслядоўнасць клавіш, якую вы выбралі, ужо выкарыстоўваецца з<br>"
-"дзеяннем <hilight>%s</hilight>.<br>Калі ласка, выберыце іншую паслядоўнасць "
-"клавіш."
+"Паслядоўнасць клавіш, якую вы выбралі, ужо выкарыстоўваецца з<br>дзеяннем "
+"<hilight>%s</hilight>.<br>Калі ласка, выберыце іншую паслядоўнасць клавіш."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5806,8 +5837,8 @@ msgid ""
 "hilight> to abort."
 msgstr ""
 "Трымайце мадыфікатар, які вы жадаеце,<br>і націсніце кнопку мышы ці,"
-"<br>пакруціце кола, каб прызначыць да гэтага дзеяння.<br>Націсніце <hilight>Escape</"
-"hilight>, каб скінуць."
+"<br>пакруціце кола, каб прызначыць да гэтага дзеяння.<br>Націсніце "
+"<hilight>Escape</hilight>, каб скінуць."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:109
 msgid "Mouse Bindings Settings"
@@ -6270,7 +6301,8 @@ msgid ""
 "support?"
 msgstr ""
 "Вы паспрабуеце ўключыць падтрымку кампазіцыі ARGB,<br>але ваш бягучы экран "
-"не падтрымлівае кампазіцыю.<br><br>Вы па-ранейшаму жадаеце ўключыць падтрымку ARGB?"
+"не падтрымлівае кампазіцыю.<br><br>Вы па-ранейшаму жадаеце ўключыць "
+"падтрымку ARGB?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -6375,13 +6407,13 @@ msgid "e.g. Saving to disk"
 msgstr "напр. Захаванне на дыск"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:961
+#: src/modules/shot/e_mod_main.c:958
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Нізкі"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:959
+#: src/modules/shot/e_mod_main.c:956
 msgid "Medium"
 msgstr "Сярэдні"
 
@@ -6393,7 +6425,7 @@ msgid "%.0f s"
 msgstr "%.0f с"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:957
+#: src/modules/shot/e_mod_main.c:954
 msgid "High"
 msgstr "Высокі"
 
@@ -7109,7 +7141,8 @@ msgid ""
 "Moksha was unable to import the theme.<br><br>Are you sure this is really a "
 "valid theme?"
 msgstr ""
-"Moksha не здолеў імпартаваць тэму.<br><br>Вы ўпэўнены, што гэта сапраўды тэма? "
+"Moksha не здолеў імпартаваць тэму.<br><br>Вы ўпэўнены, што гэта сапраўды "
+"тэма? "
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
 msgid "Moksha was unable to import the theme<br>due to a copy error."
@@ -7562,8 +7595,9 @@ msgid "Resize by"
 msgstr "Змянення памеру на"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
-#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
+#: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
 msgstr "Клавіятура"
 
@@ -7772,8 +7806,8 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"У час наладкі дапаможніка частаты CPU<ps/>пры дапамозе утыліты setfreq гэтага "
-"модулю<ps/>здарылася памылка."
+"У час наладкі дапаможніка частаты CPU<ps/>пры дапамозе утыліты setfreq "
+"гэтага модулю<ps/>здарылася памылка."
 
 #: src/modules/cpufreq/e_mod_main.c:540
 msgid ""
@@ -7781,8 +7815,8 @@ msgid ""
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Ваша ядро навогул не падтрымлівае наладку<ps/>частаты CPU. Магчыма вы  "
-"не ўсталявалі<ps/> модулі ядра, або ваш працэсар <ps/>проста не мае гэткай "
+"Ваша ядро навогул не падтрымлівае наладку<ps/>частаты CPU. Магчыма вы  не "
+"ўсталявалі<ps/> модулі ядра, або ваш працэсар <ps/>проста не мае гэткай "
 "мажлівасці."
 
 #: src/modules/cpufreq/e_mod_main.c:566
@@ -7790,8 +7824,8 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Здарылася памылка пры наладцы <ps/>частаты CPU з дапамогай "
-"утыліты setfreq<ps/>гэтага модуля."
+"Здарылася памылка пры наладцы <ps/>частаты CPU з дапамогай утыліты "
+"setfreq<ps/>гэтага модуля."
 
 #: src/modules/cpufreq/e_mod_main.c:594
 msgid ""
@@ -7824,8 +7858,8 @@ msgid ""
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Уладальнікам праграмы freqset модуля cpufreq <ps/>не з'яўляецца root або "
-"яна не мае заданага<ps/>біта setuid. Калі ласка, паправьце гэта.<ps/> Напрыклад:"
+"Уладальнікам праграмы freqset модуля cpufreq <ps/>не з'яўляецца root або яна "
+"не мае заданага<ps/>біта setuid. Калі ласка, паправьце гэта.<ps/> Напрыклад:"
 "<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
@@ -8014,8 +8048,8 @@ msgstr "Выроўванне ўсплываючага акна"
 #: src/modules/everything/evry_config.c:584
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
-#: src/modules/winlist/e_int_config_winlist.c:302
-#: src/modules/winlist/e_int_config_winlist.c:307
+#: src/modules/winlist/e_int_config_winlist.c:304
+#: src/modules/winlist/e_int_config_winlist.c:309
 #, c-format
 msgid "%1.2f"
 msgstr "%1.2f"
@@ -8029,7 +8063,7 @@ msgid "Zoom value"
 msgstr "Маштаб"
 
 #: src/modules/everything/evry_config.c:617
-#: src/modules/winlist/e_int_config_winlist.c:296
+#: src/modules/winlist/e_int_config_winlist.c:298
 msgid "Geometry"
 msgstr "Геаметрыя"
 
@@ -8237,23 +8271,24 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-"  Добра, тут тлумачыцца <hilight>Усё</hilight>...<br>  "
-"Проста набярыце на клавіятуры некалькі літараў пра тое, што вы шукаеце. <br> Выкарыстоўвайце "
+"  Добра, тут тлумачыцца <hilight>Усё</hilight>...<br>  Проста набярыце на "
+"клавіятуры некалькі літараў пра тое, што вы шукаеце. <br> Выкарыстоўвайце "
 "клавішы <hilight>&lt;Ўверх/Уніз&gt;</hilight> каб выбраць з спісу.<br>  "
-"Націсніце  <hilight>&lt;tab&gt;</hilight> каб выбраць дзеянне, потым націсніце  "
-"<hilight>&lt;return&gt;</hilight>.<br> Гэты тэкст не будзе паказвацца наступным разам, "
-"калі вы запусціце <hilight>Усё</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
-"закрыць гэты дыялог<br>    <hilight>&lt;?&gt;</hilight> паказаць гэты тэкст<br>    "
-"<hilight>&lt;return&gt;</hilight> выканаць дзеянне<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> выканаць дзеянне ды прадоўжыць<br>    <hilight>&lt;tab&gt;"
-"</hilight> переключацца паміж селектарамі<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> дапоўніць увод (залежыць ад убудовы)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> скокнуць да ўбудовы, якая пачынаецца на 'x'<br>    <hilight>&lt;ctrl+улева/"
-"управа&gt;</hilight> абыходзіць убудовы<br>    <hilight>&lt;ctrl+уверх/"
-"уніз&gt;</hilight> да першага/апошняга элемента<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> пераключаць рэжымы выгляду (закрыць гэты тэкст ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> пераключаць рэжымы выгляду спіса<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"пераключаць рэжымы выгляду мініяцюр"
+"Націсніце  <hilight>&lt;tab&gt;</hilight> каб выбраць дзеянне, потым "
+"націсніце  <hilight>&lt;return&gt;</hilight>.<br> Гэты тэкст не будзе "
+"паказвацца наступным разам, калі вы запусціце <hilight>Усё</hilight>.<br>    "
+"<hilight>&lt;Esc&gt;</hilight> закрыць гэты дыялог<br>    <hilight>&lt;?&gt;"
+"</hilight> паказаць гэты тэкст<br>    <hilight>&lt;return&gt;</hilight> "
+"выканаць дзеянне<br>    <hilight>&lt;ctrl+return&gt;</hilight> выканаць "
+"дзеянне ды прадоўжыць<br>    <hilight>&lt;tab&gt;</hilight> переключацца "
+"паміж селектарамі<br>    <hilight>&lt;ctrl+tab&gt;</hilight> дапоўніць увод "
+"(залежыць ад убудовы)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> скокнуць да "
+"ўбудовы, якая пачынаецца на 'x'<br>    <hilight>&lt;ctrl+улева/управа&gt;</"
+"hilight> абыходзіць убудовы<br>    <hilight>&lt;ctrl+уверх/уніз&gt;</"
+"hilight> да першага/апошняга элемента<br>    <hilight>&lt;ctrl+1&gt;</"
+"hilight> пераключаць рэжымы выгляду (закрыць гэты тэкст ;)<br>    "
+"<hilight>&lt;ctrl+2&gt;</hilight> пераключаць рэжымы выгляду спіса<br>    "
+"<hilight>&lt;ctrl+3&gt;</hilight> пераключаць рэжымы выгляду мініяцюр"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8335,7 +8370,7 @@ msgstr "Невядомае дзеянне ад залежнага спынена
 #: src/modules/fileman/e_fwin.c:3036
 #, c-format
 msgid "Copy of %s done"
-msgstr "Капіяванне %d скончана"
+msgstr "Капіяванне %s скончана"
 
 #: src/modules/fileman/e_fwin.c:3038
 #, c-format
@@ -8565,7 +8600,7 @@ msgid "Current Directory"
 msgstr "Бягучы каталог"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1037
+#: src/modules/places/e_mod_places.c:1039
 msgid "Home"
 msgstr "Хатні каталог"
 
@@ -8709,8 +8744,6 @@ msgstr "Найменшая шырыня"
 
 #: src/modules/winlist/e_int_config_winlist.c:272
 #: src/modules/winlist/e_int_config_winlist.c:279
-#: src/modules/winlist/e_int_config_winlist.c:285
-#: src/modules/winlist/e_int_config_winlist.c:292
 #, c-format
 msgid "%4.0f"
 msgstr "%4.0f"
@@ -8719,23 +8752,15 @@ msgstr "%4.0f"
 msgid "Maximum width"
 msgstr "Найбольшая шырыня"
 
-#: src/modules/winlist/e_int_config_winlist.c:283
-msgid "Minimum height"
-msgstr "Найменьшая вышыня"
-
-#: src/modules/winlist/e_int_config_winlist.c:290
-msgid "Maximum height"
-msgstr "Найбольшая вышыня"
-
-#: src/modules/winlist/e_int_config_winlist.c:300
+#: src/modules/winlist/e_int_config_winlist.c:302
 msgid "Horizontal alignment"
 msgstr "Гарызантальнае выыраўноўванне"
 
-#: src/modules/winlist/e_int_config_winlist.c:305
+#: src/modules/winlist/e_int_config_winlist.c:307
 msgid "Vertical alignment"
 msgstr "Вертыкальнае выраўноўванне"
 
-#: src/modules/winlist/e_int_config_winlist.c:310
+#: src/modules/winlist/e_int_config_winlist.c:312
 msgid "Alignment"
 msgstr "Выраўноўванне"
 
@@ -8869,28 +8894,28 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Вы ўпэўнены, што жадаеце выдаліць гэту крыніцу панэлі?"
 
-#: src/modules/ibar/e_mod_main.c:322 src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:326 src/modules/ibar/e_mod_main.c:2818
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:438 src/modules/ibar/e_mod_main.c:1496
+#: src/modules/ibar/e_mod_main.c:442 src/modules/ibar/e_mod_main.c:1503
 msgid "Create new Icon"
 msgstr "Стварыць новы значок"
 
-#: src/modules/ibar/e_mod_main.c:1527
+#: src/modules/ibar/e_mod_main.c:1534
 msgid "Add to bar"
 msgstr "Дадаць на панэль"
 
-#: src/modules/ibar/e_mod_main.c:1533
+#: src/modules/ibar/e_mod_main.c:1540
 msgid "Remove from bar"
 msgstr "Выдаліць з панэлі"
 
-#: src/modules/ibar/e_mod_main.c:1539
+#: src/modules/ibar/e_mod_main.c:1546
 #, c-format
 msgid "Icon %s"
 msgstr "Значок %s"
 
-#: src/modules/ibar/e_mod_main.c:2811
+#: src/modules/ibar/e_mod_main.c:2818
 msgid "Focus IBar"
 msgstr "Факусаванне IBar"
 
@@ -9045,9 +9070,9 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"Вы не можаце выкарыстоўваць правую кнопку мышы<br> на паліцы для гэтага, таму "
-"што яна патрэбна, каб<br>працавалі кантэкстныя меню.<br>Гэта кнопка працуе "
-"толькі ў усплываючых вокнах."
+"Вы не можаце выкарыстоўваць правую кнопку мышы<br> на паліцы для гэтага, "
+"таму што яна патрэбна, каб<br>працавалі кантэкстныя меню.<br>Гэта кнопка "
+"працуе толькі ў усплываючых вокнах."
 
 #: src/modules/pager/e_mod_main.c:902
 msgid "This Desktop Settings"
@@ -9198,7 +9223,7 @@ msgstr "Запрашаем у Moksha"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Калі ласка, чакайце, пакуль Moksha загрузіць налады!"
 
-#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:189 src/modules/wizard/page_011.c:175
 msgid "Select one"
 msgstr "Выберыце адно"
 
@@ -9222,15 +9247,16 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"Moksha здольны правяраць наяўнасць<br>новых версій, абнаўленняў і выпраўленняў,<br> "
-"а таксама даступных дадаткаў.<br><br>Гэта вельмі зручна, таму што дазваляе "
-"вам<br>сваечасова пазнаваць пра выпраўленні небяспечных памылак,<br> "
-"калі яны здараюцца.<br>Пры гэтым Moksha далучаецца да<br>enlightenment.org і "
-"адправляе некаторуя<br>звесткі, як гэта робіць большасць вэб-браўзераў.<br> Ніякая "
-"асабістай інфармацыі, такой як<br>імя карыстальніка, пароль або асабістыя файлы, "
-"<br>не перадаецца. Калі вам гэта не падабаецца,<br>калі ласка, адключыце "
-"гэта ніжэй. Але адключаць<br>гэту функцыю небяспечна, таму што тады вы можаце<br>"
-"выкарыстоўваць небяспечную ды нестабільную сістэму."
+"Moksha здольны правяраць наяўнасць<br>новых версій, абнаўленняў і "
+"выпраўленняў,<br> а таксама даступных дадаткаў.<br><br>Гэта вельмі зручна, "
+"таму што дазваляе вам<br>сваечасова пазнаваць пра выпраўленні небяспечных "
+"памылак,<br> калі яны здараюцца.<br>Пры гэтым Moksha далучаецца "
+"да<br>enlightenment.org і адправляе некаторуя<br>звесткі, як гэта робіць "
+"большасць вэб-браўзераў.<br> Ніякая асабістай інфармацыі, такой як<br>імя "
+"карыстальніка, пароль або асабістыя файлы, <br>не перадаецца. Калі вам гэта "
+"не падабаецца,<br>калі ласка, адключыце гэта ніжэй. Але адключаць<br>гэту "
+"функцыю небяспечна, таму што тады вы можаце<br>выкарыстоўваць небяспечную ды "
+"нестабільную сістэму."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9242,7 +9268,8 @@ msgstr "Інфармацыя"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
-msgstr "Для адлюстравання адкрытых вокнаў<br>ды праграм можна дадаць панэль задач."
+msgstr ""
+"Для адлюстравання адкрытых вокнаў<br>ды праграм можна дадаць панэль задач."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9261,8 +9288,8 @@ msgid ""
 "This module wants to execute an external application EConnMan that does not "
 "exist.<br>Please install <b>EConnMan</b> application."
 msgstr ""
-"Гэты модуль жадае выканаць знешнюю праграму EConnMan, якая не існуе.<br>"
-"Калі ласка, усталюйце праграму <b>EConnMan</b>."
+"Гэты модуль жадае выканаць знешнюю праграму EConnMan, якая не існуе.<br>Калі "
+"ласка, усталюйце праграму <b>EConnMan</b>."
 
 #: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
@@ -9338,13 +9365,13 @@ msgid ""
 "this<br>is a terminal which can change its window name.<br>Alternatively, "
 "you can add a data.item to"
 msgstr ""
-"Маецца на ўвазе, што параметр перазапуску<br>будзе выкарыстоўвацца з праграмамі "
-"тэрміналаў, каб стварыць пастаянны<br>тэрмінал, які пераадкрываецца пры закрыцці, як "
-"паводзяць<br>сябе усплываючыя тэрміналы ў гульні Quake.<br>Або выбраная праграма "
-"не з'яўляецца тэрміналам,<br>або невядомы параметр каманднага радку каб змяняць "
-"назву акна тэрмінала.<br>Калі ласка, паведаміце пра памылку, калі гэты тэрмінал "
-"<br>здольны змяняць назву свайго акна.<br>У іншым выпадку, вы можаце "
-"дадаць data.item да"
+"Маецца на ўвазе, што параметр перазапуску<br>будзе выкарыстоўвацца з "
+"праграмамі тэрміналаў, каб стварыць пастаянны<br>тэрмінал, які "
+"пераадкрываецца пры закрыцці, як паводзяць<br>сябе усплываючыя тэрміналы ў "
+"гульні Quake.<br>Або выбраная праграма не з'яўляецца тэрміналам,<br>або "
+"невядомы параметр каманднага радку каб змяняць назву акна тэрмінала.<br>Калі "
+"ласка, паведаміце пра памылку, калі гэты тэрмінал <br>здольны змяняць назву "
+"свайго акна.<br>У іншым выпадку, вы можаце дадаць data.item да"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9380,10 +9407,10 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"Выбранае акно, створанае з назвай:<br>%s<br>і класам:<br>%s<br>, не знойдзена "
-"у базе даных праграм Хуткага доступу.<br>Гэта значыць, што "
-"або праграма нам невядома,<br>або яна не належыць для выкарыстоўвання з гэтым"
-"<br>параметрам. Калі ласка, выберыце, што зрабіць:"
+"Выбранае акно, створанае з назвай:<br>%s<br>і класам:<br>%s<br>, не "
+"знойдзена у базе даных праграм Хуткага доступу.<br>Гэта значыць, што або "
+"праграма нам невядома,<br>або яна не належыць для выкарыстоўвання з "
+"гэтым<br>параметрам. Калі ласка, выберыце, што зрабіць:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9448,14 +9475,14 @@ msgid ""
 "exits<br><hilight>Transient</hilight> - Remember only this instance of the "
 "window (not permanent)"
 msgstr ""
-"Параметры меню Хуткага доступу азначаюць наступнае:"
-"<br><hilight>Аўтаматычнае хаванне</hilight> - хаваць акно, калі яно страчвае фокус "
-"<br><hilight>Схаваць замест падымання</hilight> - хаваць акно, калі яно актывуецца "
-"без фокуса<br><hilight>Рэжым скокаў</hilight> - пераключацца да стала "
-"акна і падымаць замест паказвання/хавання<br><hilight>Перазапусціць, калі закрыта</"
-"hilight> - выканаць каманду запісу ізноў, калі яго акно існуе "
-"<br><hilight>Часова</hilight> - запомніць толькі гэты вобраз акна "
-"(не пастаянна)"
+"Параметры меню Хуткага доступу азначаюць наступнае:<br><hilight>Аўтаматычнае "
+"хаванне</hilight> - хаваць акно, калі яно страчвае фокус "
+"<br><hilight>Схаваць замест падымання</hilight> - хаваць акно, калі яно "
+"актывуецца без фокуса<br><hilight>Рэжым скокаў</hilight> - пераключацца да "
+"стала акна і падымаць замест паказвання/хавання<br><hilight>Перазапусціць, "
+"калі закрыта</hilight> - выканаць каманду запісу ізноў, калі яго акно існуе "
+"<br><hilight>Часова</hilight> - запомніць толькі гэты вобраз акна (не "
+"пастаянна)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
@@ -9485,8 +9512,8 @@ msgid ""
 "The demo dialog has been bound to the keys you pressed.<br>Try pressing the "
 "same keys!"
 msgstr ""
-"Да клавіш, якія вы націснулі, быў прызначаны дэманстрацыйны дыялог.<br>Паспрабуйце націснуць "
-"гэтыя клавішы!"
+"Да клавіш, якія вы націснулі, быў прызначаны дэманстрацыйны дыялог."
+"<br>Паспрабуйце націснуць гэтыя клавішы!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1197
 msgid ""
@@ -9517,47 +9544,49 @@ msgid ""
 "keyboard shortcut."
 msgstr ""
 "Хуткі доступ - гэта шлях прызначэння выбраных вокнаў ды праграм<br>да "
-"спалучэнняў клавіш.<br>Як толькі запіс Хуткага доступа будзе створаны,<br>"
-"прызначынае акно можна імгненна выклікаць,<br> націснуўшы "
-"спалучэнне клавіш."
+"спалучэнняў клавіш.<br>Як толькі запіс Хуткага доступа будзе створаны,"
+"<br>прызначынае акно можна імгненна выклікаць,<br> націснуўшы спалучэнне "
+"клавіш."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
 "This appears to be your first time using the Quickaccess module.<br>Would "
 "you like some usage tips?"
 msgstr ""
-"Гэта з'явілася, таму што вы ўпершыню выкарысталі модуль Хуткі доступ.<br>Жадаеце "
-"пабачыць некаторыя парады?"
+"Гэта з'явілася, таму што вы ўпершыню выкарысталі модуль Хуткі доступ."
+"<br>Жадаеце пабачыць некаторыя парады?"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
 msgstr "назва/ідэнтыфікатар Хуткага доступу"
 
-#: src/modules/systray/e_mod_main.c:535 src/modules/systray/e_mod_main.c:951
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "Памылка Сістэмнага латка"
 
-#: src/modules/systray/e_mod_main.c:536
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
-msgstr "Сістэмны латок не можа зрабіць свой фон празрыстым, кам адпавядаць яго паліцы."
+msgstr ""
+"Сістэмны латок не можа зрабіць свой фон празрыстым, кам адпавядаць яго "
+"паліцы."
 
-#: src/modules/systray/e_mod_main.c:942 src/modules/systray/e_mod_main.c:1168
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
 msgstr "Існуе іншы Сістэмны латок"
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Толькі адзіны гаджэт Сістэмнага латка можа існаваць, і ён ужо існуе."
 
-#: src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Сістэмны латок не працуе на паліцы, якая задана як \"пад усім\"."
 
-#: src/modules/systray/e_mod_main.c:1147
+#: src/modules/systray/e_mod_main.c:1145
 msgid "Systray"
 msgstr "Сістэмны латок"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
 msgid "Screenshot"
 msgstr "Здымак экрана"
 
@@ -9569,126 +9598,127 @@ msgstr "Зрабіць здымак экрана ў: "
 msgid "Screenshot stored in"
 msgstr "Здымак экрана захаваны ў"
 
-#: src/modules/shot/e_mod_main.c:313
+#: src/modules/shot/e_mod_main.c:312
 msgid "Error - Folder does not exist"
 msgstr "Памылка - Папка не існуе"
 
-#: src/modules/shot/e_mod_main.c:315
+#: src/modules/shot/e_mod_main.c:314
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
-"Змяніце папку ў наладах Зрабіць здымак экрана<br><br>Меню-Налады-Усе-Дадатковыя-"
-"Зрабіць здымак экрана<br><br>Жадаеце зрабіць гэта зараз?"
+"Змяніце папку ў наладах Зрабіць здымак экрана<br><br>Меню-Налады-Усе-"
+"Дадатковыя-Зрабіць здымак экрана<br><br>Жадаеце зрабіць гэта зараз?"
 
-#: src/modules/shot/e_mod_main.c:363
+#: src/modules/shot/e_mod_main.c:360
 msgid "Error saving screenshot file"
 msgstr "Памылка захавання здымка экрана ў файл"
 
-#: src/modules/shot/e_mod_main.c:364
+#: src/modules/shot/e_mod_main.c:361
 #, c-format
 msgid "Path: %s"
 msgstr "Шлях: %s"
 
-#: src/modules/shot/e_mod_main.c:420
+#: src/modules/shot/e_mod_main.c:417
 msgid "Error - Unknown format"
 msgstr "Памылка - невядомы фармат"
 
-#: src/modules/shot/e_mod_main.c:421
+#: src/modules/shot/e_mod_main.c:418
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
-"Файл мае нявызначанае пашырэнне.<br>Калі ласка, выкарыстоўвайце толькі<br>"
-"пашырэнні '.jpg' або '.png', таму што іншыя фарматы зараз<br>не падтрымліваюцца."
+"Файл мае нявызначанае пашырэнне.<br>Калі ласка, выкарыстоўвайце "
+"толькі<br>пашырэнні '.jpg' або '.png', таму што іншыя фарматы зараз<br>не "
+"падтрымліваюцца."
 
-#: src/modules/shot/e_mod_main.c:488
+#: src/modules/shot/e_mod_main.c:485
 msgid "Select screenshot save location"
 msgstr "Выберыце, куды захаваць здымак экрана"
 
-#: src/modules/shot/e_mod_main.c:502 src/modules/shot/e_mod_main.c:1029
+#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
 msgid "Save"
 msgstr "Захаваць"
 
-#: src/modules/shot/e_mod_main.c:606
+#: src/modules/shot/e_mod_main.c:603
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Запампавана %s / %s"
 
-#: src/modules/shot/e_mod_main.c:627
+#: src/modules/shot/e_mod_main.c:624
 msgid "Error - Upload Failed"
 msgstr "Памылка - не ўдалося запампаваць"
 
-#: src/modules/shot/e_mod_main.c:628
+#: src/modules/shot/e_mod_main.c:625
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Не ўдалося запампаваць з кодам стану:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:677
+#: src/modules/shot/e_mod_main.c:674
 msgid "Error - Can't create file"
 msgstr "Памылка - Немагчыма стварыць файл"
 
-#: src/modules/shot/e_mod_main.c:678
+#: src/modules/shot/e_mod_main.c:675
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Немагчыма стварыць часовы файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:696
+#: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't open file"
 msgstr "Памылка - немагчыма адкрыць файл"
 
-#: src/modules/shot/e_mod_main.c:697
+#: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Немагчыма адкрыць часовы файл '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:705
+#: src/modules/shot/e_mod_main.c:702
 msgid "Error - Bad size"
 msgstr "Памылка - дрэнны памер"
 
-#: src/modules/shot/e_mod_main.c:706
+#: src/modules/shot/e_mod_main.c:703
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Немагчыма атрымаць памер файла '%s'"
 
-#: src/modules/shot/e_mod_main.c:716
+#: src/modules/shot/e_mod_main.c:713
 msgid "Error - Can't allocate memory"
 msgstr "Памылка - немагчыма вылучыць памяць"
 
-#: src/modules/shot/e_mod_main.c:717
+#: src/modules/shot/e_mod_main.c:714
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Немагчыма вылучыць памяць відарысу: %s"
 
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:721
 msgid "Error - Can't read picture"
 msgstr "Памылка - немагчыма чытаць відарыс"
 
-#: src/modules/shot/e_mod_main.c:725
+#: src/modules/shot/e_mod_main.c:722
 msgid "Cannot read picture"
 msgstr "Немагчыма чытаць відарыс"
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:744
 msgid "Uploading screenshot"
 msgstr "Запампоўванне здымка экрана"
 
-#: src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:749
 msgid "Uploading ..."
 msgstr "Запампоўванне ..."
 
-#: src/modules/shot/e_mod_main.c:757
+#: src/modules/shot/e_mod_main.c:754
 msgid "Screenshot is available at this location:"
 msgstr "Здымак экрана даступны ў гэтым месцы:"
 
-#: src/modules/shot/e_mod_main.c:766
+#: src/modules/shot/e_mod_main.c:763
 msgid "Copy link"
 msgstr "Капіяваць спасылку"
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:787
 msgid "Confirm Share"
 msgstr "Згадзіцца з публікаваннем"
 
-#: src/modules/shot/e_mod_main.c:791
+#: src/modules/shot/e_mod_main.c:788
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9696,27 +9726,27 @@ msgstr ""
 "Гэты відарыс будзе запампаваны <br>ў enlightenment.org. Усе змогуць яго "
 "пабачыць."
 
-#: src/modules/shot/e_mod_main.c:793
+#: src/modules/shot/e_mod_main.c:790
 msgid "Confirm"
 msgstr "Згадзіцца"
 
-#: src/modules/shot/e_mod_main.c:894
+#: src/modules/shot/e_mod_main.c:891
 msgid "Where to put Screenshot..."
 msgstr "Куды памясціць здымак экрана..."
 
-#: src/modules/shot/e_mod_main.c:946
+#: src/modules/shot/e_mod_main.c:943
 msgid "Quality"
 msgstr "Якасць"
 
-#: src/modules/shot/e_mod_main.c:955
+#: src/modules/shot/e_mod_main.c:952
 msgid "Perfect"
 msgstr "Выдатна"
 
-#: src/modules/shot/e_mod_main.c:1031
+#: src/modules/shot/e_mod_main.c:1028
 msgid "Share"
 msgstr "Апублікаваць"
 
-#: src/modules/shot/e_mod_main.c:1215
+#: src/modules/shot/e_mod_main.c:1211
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9725,32 +9755,32 @@ msgstr ""
 "Выберыце рэжым здымка экрана... <br>Затрымка задана ў наладах модуля Здымак "
 "экрана<br>Бягучая затрымка: <b> %d с</b>"
 
-#: src/modules/shot/e_mod_main.c:1224
+#: src/modules/shot/e_mod_main.c:1220
 msgid "Instant shot"
 msgstr "Імгненны здымак"
 
-#: src/modules/shot/e_mod_main.c:1225
+#: src/modules/shot/e_mod_main.c:1221
 msgid "Delayed shot"
 msgstr "Здымак з затрымкай"
 
-#: src/modules/shot/e_mod_main.c:1265 src/modules/shot/e_mod_main.c:1316
+#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
 msgid "Take Shot"
 msgstr "Зрабіць здымак"
 
-#: src/modules/shot/e_mod_main.c:1276 src/modules/shot/e_mod_main.c:1308
-#: src/modules/shot/e_mod_main.c:1320
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
 msgid "Take Screenshot"
 msgstr "Зрабіць здымак экрана"
 
-#: src/modules/shot/e_mod_main.c:1296
+#: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr "Памылка здымку"
 
-#: src/modules/shot/e_mod_main.c:1297
+#: src/modules/shot/e_mod_main.c:1290
 msgid "Cannot initialize network"
 msgstr "Немагчыма ініцыялізаваць сетку"
 
-#: src/modules/shot/e_mod_main.c:1326 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
 msgid "Screenshot Settings"
 msgstr "Налады здымка экрана"
 
@@ -9798,7 +9828,7 @@ msgstr "Заўвага"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+PrtSc: здымак актыўнага акна"
 
-#: src/modules/tasks/e_mod_main.c:329 src/modules/tasks/e_mod_main.c:780
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:804
 msgid "Tasks"
 msgstr "Заданні"
 
@@ -9987,8 +10017,8 @@ msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Пераканайцеся, што ніякія іншыя модулі не дзейнічаюць у якасці сервера ды D-Bus "
-"правільна ініцыялізаваны і выконваецца"
+"Пераканайцеся, што ніякія іншыя модулі не дзейнічаюць у якасці сервера ды D-"
+"Bus правільна ініцыялізаваны і выконваецца"
 
 #: src/modules/notification/e_mod_main.c:421
 #: src/modules/clipboard/e_mod_main.c:411
@@ -10020,8 +10050,8 @@ msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
-"Moksha у <b>пазасеткавым</b> рэжыме.<br>У гэтым рэжыме модулі, якія выкарыстоўваюць "
-"сетку, перастануць узаемадзейнічаць з аддаленнымі сэрвісамі."
+"Moksha у <b>пазасеткавым</b> рэжыме.<br>У гэтым рэжыме модулі, якія "
+"выкарыстоўваюць сетку, перастануць узаемадзейнічаць з аддаленнымі сэрвісамі."
 
 #: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
@@ -10229,8 +10259,8 @@ msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr ""
-"Вы выдаляеце гісторыю буфера абмену.<br><br>Вы ўпэўнены, што "
-"жадаеце выдаліць яе?"
+"Вы выдаляеце гісторыю буфера абмену.<br><br>Вы ўпэўнены, што жадаеце "
+"выдаліць яе?"
 
 #: src/modules/clipboard/e_mod_main.c:751
 msgid "Confirm Item Deletion"
@@ -10241,8 +10271,7 @@ msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Вы выдаляеце бягучы элемент.<br><br>Вы ўпэўнены, што "
-"жадаеце выдаліць яго?"
+"Вы выдаляеце бягучы элемент.<br><br>Вы ўпэўнены, што жадаеце выдаліць яго?"
 
 #: src/modules/clipboard/e_mod_main.c:781
 msgid "Clipboard: Edit Item"
@@ -10296,18 +10325,18 @@ msgstr "Карыстальніцкі файлавы менеджар"
 msgid "Show in menu"
 msgstr "Паказваць у меню"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:863
-#: src/modules/places/e_mod_places.c:1064
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
+#: src/modules/places/e_mod_places.c:1066
 msgid "Filesystem"
 msgstr "Файлавая сістэма"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1073
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
 msgid "Temp"
 msgstr "Часовыя"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
 #: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:710 src/modules/places/e_mod_places.c:1131
+#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
 msgid "Places"
 msgstr "Месцы"
 
@@ -10331,54 +10360,54 @@ msgstr ""
 "<b>Немагчыма выканаць файлавы менеджар Enlightenment.</b><br>Калі ласка, "
 "выберыце іншы файлавы менеджар<br>у канфігурацыі гаджэта."
 
-#: src/modules/places/e_mod_places.c:706
+#: src/modules/places/e_mod_places.c:708
 #, c-format
 msgid "Places warning!"
 msgstr "Месцы папярэджваюць!"
 
-#: src/modules/places/e_mod_places.c:707
+#: src/modules/places/e_mod_places.c:709
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr "Дыск ''%s'' запоўнены на %d %%!"
 
-#: src/modules/places/e_mod_places.c:812
+#: src/modules/places/e_mod_places.c:814
 msgid "b"
 msgstr "б"
 
-#: src/modules/places/e_mod_places.c:817
+#: src/modules/places/e_mod_places.c:819
 msgid "KB"
 msgstr "КБ"
 
-#: src/modules/places/e_mod_places.c:822
+#: src/modules/places/e_mod_places.c:824
 msgid "MB"
 msgstr "МБ"
 
-#: src/modules/places/e_mod_places.c:827
+#: src/modules/places/e_mod_places.c:829
 msgid "GB"
 msgstr "ГБ"
 
-#: src/modules/places/e_mod_places.c:831
+#: src/modules/places/e_mod_places.c:833
 msgid "TB"
 msgstr "ТБ"
 
-#: src/modules/places/e_mod_places.c:867
+#: src/modules/places/e_mod_places.c:869
 msgid "No Name"
 msgstr "Без назвы"
 
-#: src/modules/places/e_mod_places.c:874
+#: src/modules/places/e_mod_places.c:876
 msgid "free of"
 msgstr "свабодна на"
 
-#: src/modules/places/e_mod_places.c:880
+#: src/modules/places/e_mod_places.c:882
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s не падключаны"
 
-#: src/modules/places/e_mod_places.c:908
+#: src/modules/places/e_mod_places.c:910
 msgid "unmount"
 msgstr "адключыць"
 
-#: src/modules/places/e_mod_places.c:914
+#: src/modules/places/e_mod_places.c:916
 msgid "eject"
 msgstr "выняць"
 
@@ -10448,3 +10477,15 @@ msgstr "Гучнасць павялічана"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Гук адключаны"
+
+#~ msgid "Hours"
+#~ msgstr "Гадзіны"
+
+#~ msgid "Minutes"
+#~ msgstr "Хвіліны"
+
+#~ msgid "Minimum height"
+#~ msgstr "Найменьшая вышыня"
+
+#~ msgid "Maximum height"
+#~ msgstr "Найбольшая вышыня"
