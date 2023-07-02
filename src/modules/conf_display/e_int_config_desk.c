@@ -13,7 +13,7 @@ struct _E_Config_Dialog_Data
    int                  zone_num;
    int                  desk_x;
    int                  desk_y;
-   Eina_Stringshare  *bg;
+   Eina_Stringshare    *bg;
    char                *name;
    char                *profile;
 

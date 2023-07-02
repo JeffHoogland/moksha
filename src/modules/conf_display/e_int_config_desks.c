@@ -48,8 +48,8 @@ e_int_config_desks(E_Container *con, const char *params __UNUSED__)
    v->advanced.check_changed = NULL;
    /* create config diaolg for NULL object/data */
    cfd = e_config_dialog_new(con, _("Virtual Desktops Settings"),
-			     "E", "screen/virtual_desktops",
-			     "preferences-desktop", 0, v, NULL);
+                 "E", "screen/virtual_desktops",
+                 "preferences-desktop", 0, v, NULL);
    return cfd;
 }
 
@@ -129,18 +129,18 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
      EINA_LIST_FOREACH(man->containers, ll, con)
        EINA_LIST_FOREACH(con->zones, lll, zone)
          {
-	    int x, y;
+           int x, y;
 
-	    e_zone_desk_count_get(zone, &x, &y);
-	    if ((x != cfdata->x) || (y != cfdata->y))
-	      return 1;
-	 }
+           e_zone_desk_count_get(zone, &x, &y);
+           if ((x != cfdata->x) || (y != cfdata->y))
+             return 1;
+         }
 
    return ((e_config->desk_flip_animate_mode != cfdata->flip_mode) ||
-	   (e_config->desk_flip_animate_interpolation != cfdata->flip_interp) ||
-	   (!EINA_DBL_EQ(e_config->desk_flip_animate_time, cfdata->flip_speed)) ||
-	   (e_config->edge_flip_dragging != cfdata->edge_flip_dragging) ||
-	   (e_config->desk_flip_wrap != cfdata->flip_wrap) ||
+       (e_config->desk_flip_animate_interpolation != cfdata->flip_interp) ||
+       (!EINA_DBL_EQ(e_config->desk_flip_animate_time, cfdata->flip_speed)) ||
+       (e_config->edge_flip_dragging != cfdata->edge_flip_dragging) ||
+       (e_config->desk_flip_wrap != cfdata->flip_wrap) ||
        (e_config->use_desktop_window_profile != cfdata->use_desktop_window_profile)
     );
 }
