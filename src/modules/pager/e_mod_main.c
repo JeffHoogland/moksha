@@ -393,12 +393,11 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
 
    e = evas_object_evas_get(pd->pager->o_table);
 
-   if (!pd->o_bg)
+   /* Solution with livethumb does not respect animated wallpapers! Patches accepted */
+   /* if (!pd->o_bg)
      {
         pd->o_bg = e_livethumb_add(e);
         e_livethumb_vsize_set(pd->o_bg, pd->desk->zone->w / 16, pd->desk->zone->h / 16);
-//        edje_extern_object_aspect_set(pd->o_bg, EDJE_ASPECT_CONTROL_NEITHER,
-//                                      pd->desk->zone->w / 16, pd->desk->zone->h / 16);
         edje_object_part_swallow(pd->o_desk, "e.background", pd->o_bg);
      }
 
@@ -407,6 +406,18 @@ _pager_desk_livethumb_setup(Pager_Desk *pd)
    bgfile = e_bg_file_get(pd->desk->zone->container->num, pd->desk->zone->num, pd->desk->x, pd->desk->y);
    edje_object_file_set(o, bgfile, "e/desktop/background");
    e_livethumb_thumb_set(pd->o_bg, o);
+   eina_stringshare_del(bgfile); */
+
+   if (!pd->o_bg)
+     {
+        pd->o_bg = e_widget_preview_add(e, pd->desk->zone->w / 32, pd->desk->zone->h / 32);
+        edje_object_part_swallow(pd->o_desk, "e.background", pd->o_bg);
+     }
+
+   o = e_widget_preview_evas_get(pd->o_bg);
+   if (!o) o = edje_object_add(e_widget_preview_evas_get(pd->o_bg));
+   bgfile = e_bg_file_get(pd->desk->zone->container->num, pd->desk->zone->num, pd->desk->x, pd->desk->y);
+   e_widget_preview_edje_set(pd->o_bg, bgfile, "e/desktop/background");
    eina_stringshare_del(bgfile);
 }
 
