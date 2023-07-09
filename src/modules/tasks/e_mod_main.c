@@ -447,16 +447,17 @@ _tasks_autoresize(void *data __UNUSED__)
    Tasks *tasks;
    int gw, gh;
 
-     EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
-       {
-          if (tasks->config->autoresize)
-          {
-            evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
-            e_gadcon_client_min_size_set(tasks->gcc, gw - 10, gh);
-            evas_object_show(tasks->gcc->o_base);
-          }
-       }
-    return ECORE_CALLBACK_CANCEL;
+   EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
+     {
+       if (tasks->config->autoresize)
+         {
+           evas_object_geometry_get(tasks->gcc->o_frame, NULL, NULL, &gw, &gh);
+           e_gadcon_client_min_size_set(tasks->gcc, gw - 10, gh);
+           evas_object_show(tasks->gcc->o_base);
+         }
+     }
+
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
