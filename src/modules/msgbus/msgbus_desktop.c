@@ -112,7 +112,6 @@ cb_desktop_bgadd(const Eldbus_Service_Interface *iface EINA_UNUSED,
    e_bg_add(container, zone, desk_x, desk_y, path);
    e_bg_update();
    e_config_save_queue();
-   e_config_save_queue();
    return reply;
 }
 
@@ -181,8 +180,8 @@ static const Eldbus_Method desktop_methods[] = {
 };
 
 static const Eldbus_Method background_methods[] = {
-   { "Add", ELDBUS_ARGS({"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}, {"s", "path"}), NULL, cb_desktop_bgadd, 0 },
-   { "Del", ELDBUS_ARGS({"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}), NULL, cb_desktop_bgdel, 0 },
+   { "Add", ELDBUS_ARGS({"i", "container"}, {"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}, {"s", "path"}), NULL, cb_desktop_bgadd, 0 },
+   { "Del", ELDBUS_ARGS({"i", "container"}, {"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}), NULL, cb_desktop_bgdel, 0 },
    { "List", ELDBUS_ARGS({"a(iiis)", "array_of_bg"}), NULL, cb_desktop_bglist, 0 },
    { NULL, NULL, NULL, NULL, 0 }
 };
