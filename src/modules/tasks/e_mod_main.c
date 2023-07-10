@@ -480,6 +480,7 @@ _tasks_refill_border(E_Border *border)
    const Eina_List *l;
    Tasks *tasks;
    Eina_Bool found = EINA_FALSE;
+   Eina_Bool skip = EINA_FALSE;
 
    EINA_LIST_FOREACH(tasks_config->tasks, l, tasks)
      {
@@ -494,8 +495,10 @@ _tasks_refill_border(E_Border *border)
                   break;
                }
           }
+        if (_tasks_item_check_add(tasks, border))
+          skip = EINA_TRUE;
      }
-   if (!found) _tasks_refill_all();
+   if (!found && !skip) _tasks_refill_all();
 }
 
 static void
