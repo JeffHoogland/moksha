@@ -1664,18 +1664,6 @@ e_util_exe_safe_run(const char *cmd, void *data)
    return ecore_exe_pipe_run(cmd, flags, data);
 }
 
-EAPI void
-e_util_open_bodhi_landing(void)
-{
-   E_Zone *zone;
-   char buff[PATH_MAX];
-
-   snprintf(buff, sizeof(buff), "enlightenment_open "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/landing.html");
-   zone = e_util_zone_current_get(e_manager_current_get());
-   e_exec(zone, NULL, buff, NULL, NULL);
-}
-
 /* e_open has always given us problems here which I have been blaming on efreet.
  *    
  *    x-www-browser is the safest bet if the browser used sets that
