@@ -16,6 +16,7 @@ Name[lt]=Meniu nustatymai
 Name[ms]=Tetapan Menu
 Name[pl]=Ustawienia Menu
 Name[pt]=Definições do menu
+Name=[pt_BR]=Configurações de menu
 Name[ru]=Настройки меню
 Name[sr]=Поставке изборника
 Name[tr]=Menü Ayarları
@@ -33,6 +34,7 @@ Comment[it]=Configura il comportamento dei menù.
 Comment[lt]=Keičia meniu elgseną.
 Comment[ms]=Konfigur kelakuan menu.
 Comment[pt]=Configura o comportamento do menu.
+Comment[pt_BR]=Configura o comportamento do menu.
 Comment[ru]=Конфигурация настроек меню.
 Comment[sr]=Подешава понашање изборника.
 Comment[tr]=Menü davranışını yapılandırır.

@@ -5,6 +5,7 @@ Name[ca]=Menú clàssic
 Name[fi]=Perinteinen valikko
 Name[fr]=Menu classique
 Name[pt]=Menu Clássico
+Name[pt_BR]Menu Clássico
 Name[ru]=Классическое меню
 Name[sk]=Rozšírená ponuka
 Name[es]=Menú clásico
@@ -15,6 +16,7 @@ Comment[ca]= Un mòdul de Moksha per a restaurar l'Escriptori d'E17 i els menús
 Comment[fi]=Moksha-moduuli jolla voit palauttaa e17:n työpöytä ja ikkunat-valikot Mokshan päävalikkoon.
 Comment[fr]=Un module Moksha pour restaurer les menus Bureau et Fenêtres d'E17 dans le menu principal de Moksha.
 Comment[pt]=Um módulo do Moksha para restaurar o menu do ambiente gráfico e janelas do E17 no menu principal do Moksha.
+Comment[pt_BR]=Módulo Moksha para restaurar a área de trabalho e os menus das janelas do e17 para o menu principal do Moksha.
 Comment[ru]=Модуль для включения в меню Moksha пунктов управления рабочим столом и окнами из e17.
 Comment[sk]=Moksha modul pre rozšírenie hlavnej ponuky o plochu a okná: pôvodné menu desktopu E17.  
 Comment[es]=Un módulo de Moksha para restaurar el Escritorio de E17 y los menús de ventanas al menú principal de Moksha.
