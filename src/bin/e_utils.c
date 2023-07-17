@@ -1694,22 +1694,12 @@ e_util_open_quick_start(void)
    E_Zone *zone;
    char buff[PATH_MAX];
 
-   if (ecore_file_app_installed("x-www-browser"))
-     snprintf(buff, sizeof(buff), "x-www-browser "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
-   else
-     if (ecore_file_app_installed("gnome-www-browser"))
-        snprintf(buff, sizeof(buff), "gnome-www-browser "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
-     else
-        if (ecore_file_app_installed("exo-open"))
-          snprintf(buff, sizeof(buff), "exo-open --launch WebBrowser "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
-        else
-          snprintf(buff, sizeof(buff), "enlightenment_open "
-            "file:///usr/share/bodhi/quickstart/quickstartEN/index.html");
-   zone = e_util_zone_current_get(e_manager_current_get());
-   e_exec(zone, NULL, buff, NULL, NULL);
+   if (ecore_file_app_installed("bodhi-help"))
+   {
+      snprintf(buff, sizeof(buff), "bodhi-help");
+      zone = e_util_zone_current_get(e_manager_current_get());
+      e_exec(zone, NULL, buff, NULL, NULL);
+    }
 }
 
 EAPI void
