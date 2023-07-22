@@ -975,7 +975,7 @@ group { name: "e/widgets/border/pixel/border";
          }
          description { state: "max" 0.0;
             inherit: "default" 0.0;
-           max: 99999 0;
+            max: 99999 0;
          }
       }
       part { name: "left"; type: RECT;
