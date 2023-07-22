@@ -943,6 +943,10 @@ group { name: "e/widgets/border/pixel/border";
             rel1.offset: 1 1;
             rel2.offset: -2 -2;
          }
+         description { state: "max" 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: 0 0;
+         }
       }
       part { name: "top"; type: RECT;
          description { state: "default" 0.0;
@@ -953,6 +957,10 @@ group { name: "e/widgets/border/pixel/border";
          description { state: "focused" 0.0;
             inherit: "default" 0.0;
             color: 51 153 255 255;
+         }
+         description { state: "max" 0.0;
+            inherit: "default" 0.0;
+            max: 99999 0;
          }
       }
       part { name: "bottom"; type: RECT;
@@ -965,6 +973,10 @@ group { name: "e/widgets/border/pixel/border";
             inherit: "default" 0.0;
             color: 51 153 255 255;
          }
+         description { state: "max" 0.0;
+            inherit: "default" 0.0;
+           max: 99999 0;
+         }
       }
       part { name: "left"; type: RECT;
          description { state: "default" 0.0;
@@ -976,6 +988,10 @@ group { name: "e/widgets/border/pixel/border";
             inherit: "default" 0.0;
             color: 51 153 255 255;
          }
+         description { state: "max" 0.0;
+            inherit: "default" 0.0;
+            max: 0 99999;
+         }
       }
       part { name: "right"; type: RECT;
          description { state: "default" 0.0;
@@ -986,6 +1002,10 @@ group { name: "e/widgets/border/pixel/border";
          description { state: "focused" 0.0;
             inherit: "default" 0.0;
             color: 51 153 255 255;
+         }
+         description { state: "max" 0.0;
+            inherit: "default" 0.0;
+            max: 0 99999;
          }
       }
       part { name: "e.event.resize.tl"; type: RECT;
@@ -1051,6 +1071,7 @@ group { name: "e/widgets/border/pixel/border";
    }
    programs {
       program {
+         name:   "focused";
          signal: "e,state,focused"; source: "e";
          action: STATE_SET "focused" 0.0;
          target: "top";
@@ -1059,12 +1080,28 @@ group { name: "e/widgets/border/pixel/border";
          target: "right";
       }
       program {
+         name:   "unfocused";
          signal: "e,state,unfocused"; source: "e";
          action: STATE_SET "default" 0.0;
          target: "top";
          target: "bottom";
          target: "left";
          target: "right";
+      }
+     program {
+         signal: "e,action,maximize*"; source: "e";
+         action: STATE_SET "max" 0.0;
+         target: "e.swallow.client";
+         target: "top";
+         target: "bottom";
+         target: "left";
+         target: "right";
+      }
+      program {
+         signal: "e,action,unmaximize*"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.swallow.client";
+         after: "focused";
       }
    }
 }
