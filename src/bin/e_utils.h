@@ -78,7 +78,6 @@ e_util_container_current_get(void)
    return e_container_current_get(e_manager_current_get());
 }
 // Bodhi additions
-EAPI void e_util_open_bodhi_landing(void);
 EAPI void e_util_open_quick_start(void);
 EAPI void e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type);
 #ifdef HAVE_ELEMENTARY

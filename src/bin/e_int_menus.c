@@ -220,7 +220,8 @@ e_int_menus_main_new(void)
 #ifdef ENABLE_BODHI
    mi = e_menu_item_new(subm);
    e_menu_item_label_set(mi, _("About Bodhi Linux"));
-   e_util_menu_item_theme_icon_set(mi, "bodhi");
+   if (!e_util_menu_item_theme_icon_set(mi, "bodhi"))
+     e_util_menu_item_theme_icon_set(mi, "help-about");
    e_menu_item_callback_set(mi, _e_int_menus_bodhi_about, NULL);
 #endif
 
