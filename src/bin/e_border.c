@@ -450,7 +450,7 @@ e_border_new(E_Container *con,
    att = &bd->client.initial_attributes;
    if ((!ecore_x_window_attributes_get(win, att)) || (att->input_only))
      {
-        //	printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
+        // printf("##- ATTR FETCH FAILED/INPUT ONLY FOR 0x%x - ABORT MANAGE\n", win);
         e_canvas_del(bd->bg_ecore_evas);
         ecore_evas_free(bd->bg_ecore_evas);
         ecore_x_window_free(bd->client.shell_win);
@@ -1128,7 +1128,7 @@ send_event:
         ev = E_NEW(E_Event_Border_Hide, 1);
         ev->border = bd;
         e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
+// e_object_breadcrumb_add(E_OBJECT(bd), "border_hide_event");
         ecore_event_add(E_EVENT_BORDER_HIDE, ev, _e_border_event_border_hide_free, NULL);
      }
 }
@@ -2059,7 +2059,7 @@ e_border_stack_below(E_Border *bd,
         Eina_List *l, *l_prev;
         Eina_List *list = _e_border_sub_borders_new(bd);
 
-		EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
+        EINA_LIST_REVERSE_FOREACH_SAFE(list, l, l_prev, child)
           {
              /* Don't stack iconic transients. If the user wants these shown,
               * thats another option.
@@ -2521,7 +2521,7 @@ e_border_shade(E_Border *bd,
         /* The resize is added in the animator when animation complete */
         /* For non-animated, we add it immediately with the new size */
         e_object_ref(E_OBJECT(bd));
-        //	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+        //      e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
         ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 
@@ -2653,7 +2653,7 @@ e_border_unshade(E_Border *bd,
         /* The resize is added in the animator when animation complete */
         /* For non-animated, we add it immediately with the new size */
         e_object_ref(E_OBJECT(bd));
-        //	     e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+        //      e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
         ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
      }
 
@@ -3678,7 +3678,7 @@ _e_border_show(E_Border *bd)
      {
         _e_border_shape_input_rectangle_set(bd);
         // not anymore
-        //	ecore_x_composite_window_events_enable(bd->win);
+        // ecore_x_composite_window_events_enable(bd->win);
         ecore_x_window_ignore_set(bd->win, EINA_FALSE);
      }
 
@@ -5235,7 +5235,7 @@ _e_border_del(E_Border *bd)
                                 bd->x + bd->client_inset.l,
                                 bd->y + bd->client_inset.t);
         ecore_x_window_save_set_del(bd->client.win);
-//	bd->client.win = 0;
+//  bd->client.win = 0;
      }
    bd->already_unparented = 1;
 
@@ -5320,7 +5320,7 @@ _e_border_cb_window_show_request(void *data  __UNUSED__,
    else
      {
         /* FIXME: make border "urgent" for a bit - it wants attention */
-/*	e_border_show(bd); */
+        /* e_border_show(bd); */
         if (!bd->lock_client_stacking)
           e_border_raise(bd);
      }
@@ -7579,9 +7579,9 @@ _e_border_eval0(E_Border *bd)
                   bd->client.netwm.update.state = 1;
                }
           }
-		else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
+        else if (bd->client.netwm.type == ECORE_X_WINDOW_TYPE_DESKTOP)
           {
-			 bd->focus_policy_override = E_FOCUS_CLICK;
+             bd->focus_policy_override = E_FOCUS_CLICK;
              e_focus_setup(bd);
              if (!bd->client.netwm.state.skip_pager)
                {
@@ -7694,8 +7694,8 @@ _e_border_eval0(E_Border *bd)
         if (bd->client.icccm.max_h > 32767) bd->client.icccm.max_h = 32767;
         if (bd->client.icccm.base_w > 32767) bd->client.icccm.base_w = 32767;
         if (bd->client.icccm.base_h > 32767) bd->client.icccm.base_h = 32767;
-        //	if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
-        //	if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
+        // if (bd->client.icccm.step_w < 1) bd->client.icccm.step_w = 1;
+        // if (bd->client.icccm.step_h < 1) bd->client.icccm.step_h = 1;
         // if doing a resize, fix it up
         if (bd->resize_mode != RESIZE_NONE)
           {
@@ -8259,7 +8259,7 @@ _e_border_eval0(E_Border *bd)
         ev = E_NEW(E_Event_Border_Add, 1);
         ev->border = bd;
         e_object_ref(E_OBJECT(bd));
-        //	e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
+        // e_object_breadcrumb_add(E_OBJECT(bd), "border_add_event");
         ecore_event_add(E_EVENT_BORDER_ADD, ev, _e_border_event_border_add_free, NULL);
 
         if ((!bd->lock_border) || (!bd->client.border.name))
@@ -8580,8 +8580,8 @@ _e_border_eval0(E_Border *bd)
                   if (bd->hung)
                     edje_object_signal_emit(bd->bg_object, "e,state,hung", "e");
                   // FIXME: in eval -do differently
-                  //	     edje_object_message_signal_process(bd->bg_object);
-                  //	     e_border_frame_recalc(bd);
+                  //      edje_object_message_signal_process(bd->bg_object);
+                  //      e_border_frame_recalc(bd);
 
                   evas_object_move(bd->bg_object, 0, 0);
                   evas_object_resize(bd->bg_object, bd->w, bd->h);
@@ -9165,7 +9165,7 @@ _e_border_eval(E_Border *bd)
           }
         else
           ecore_x_window_shape_mask_set(bd->win, 0);
-        //	bd->need_shape_export = 1;
+        // bd->need_shape_export = 1;
         bd->need_shape_merge = 0;
      }
 
@@ -9416,7 +9416,7 @@ _e_border_eval(E_Border *bd)
            ev = E_NEW(E_Event_Border_Icon_Change, 1);
            ev->border = bd;
            e_object_ref(E_OBJECT(bd));
-           //	     e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
+           //      e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
            ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
                            _e_border_event_border_icon_change_free, NULL);
         }
@@ -9756,7 +9756,7 @@ _e_border_shade_animator(void *data)
         ev = E_NEW(E_Event_Border_Resize, 1);
         ev->border = bd;
         e_object_ref(E_OBJECT(bd));
-//	e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
+// e_object_breadcrumb_add(E_OBJECT(bd), "border_resize_event");
         ecore_event_add(E_EVENT_BORDER_RESIZE, ev, _e_border_event_border_resize_free, NULL);
         return ECORE_CALLBACK_CANCEL;
      }
@@ -9916,11 +9916,11 @@ _e_border_event_border_stack_free(void *data __UNUSED__,
    E_Event_Border_Stack *e;
 
    e = ev;
-//   e_object_breadcrumb_del(E_OBJECT(e->border), "border_raise_event");
+// e_object_breadcrumb_del(E_OBJECT(e->border), "border_raise_event");
    e_object_unref(E_OBJECT(e->border));
    if (e->stack)
      {
-//	e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
+// e_object_breadcrumb_del(E_OBJECT(e->above), "border_raise_event.above");
         e_object_unref(E_OBJECT(e->stack));
      }
    E_FREE(e);
