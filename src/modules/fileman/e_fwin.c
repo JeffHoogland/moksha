@@ -2389,6 +2389,10 @@ _e_fwin_open(E_Fwin_Page *page, E_Fm2_Icon_Info *ici, Eina_Bool force, int *need
           {
              if (new_fwin)
                {
+                  /*********************************************
+                   * Prevent EFM from opening symlinks.        *
+                   * We want opening by the user's default FM. *
+                  *********************************************/
                   if (page->fwin->win)
                     //~ fwin = _e_fwin_new(page->fwin->win->container, NULL, ici->real_link);
                      e_custom_fm_open(e_util_zone_current_get (e_manager_current_get ()), ici->real_link, "");
