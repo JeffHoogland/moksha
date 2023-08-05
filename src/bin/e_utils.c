@@ -1696,7 +1696,7 @@ e_util_open_quick_start(void)
 
    if (ecore_file_app_installed("bodhi-help"))
    {
-      snprintf(buff, sizeof(buff), "bodhi-help");
+      snprintf(buff, sizeof(buff), "bodhi-help -i");
       zone = e_util_zone_current_get(e_manager_current_get());
       e_exec(zone, NULL, buff, NULL, NULL);
     }
