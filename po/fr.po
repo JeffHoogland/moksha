@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-05-29 16:43+0200\n"
-"PO-Revision-Date: 2023-05-31 09:33+0200\n"
+"PO-Revision-Date: 2023-08-09 08:42+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -27,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -368,7 +368,7 @@ msgstr "Basculer vers le bureau du dessous"
 
 #: src/bin/e_actions.c:3276
 msgid "Flip Desktop By..."
-msgstr "Se déplacer de … bureaux"
+msgstr "Se déplacer de… bureaux"
 
 #: src/bin/e_actions.c:3282
 msgid "Flip To Previous Desktop"
@@ -384,11 +384,11 @@ msgstr "Afficher le rayon"
 
 #: src/bin/e_actions.c:3298
 msgid "Flip Desktop To..."
-msgstr "Aller au bureau …"
+msgstr "Aller au bureau…"
 
 #: src/bin/e_actions.c:3304
 msgid "Flip Desktop Linearly..."
-msgstr "Se déplacer linéairement de … bureaux"
+msgstr "Se déplacer linéairement de… bureaux"
 
 #: src/bin/e_actions.c:3310
 msgid "Switch To Desktop 0"
@@ -460,19 +460,19 @@ msgstr "Basculer vers le bureau du dessous (tous les écrans)"
 
 #: src/bin/e_actions.c:3348
 msgid "Flip Desktop By... (All Screens)"
-msgstr "Se déplacer de … bureaux (tous les écrans)"
+msgstr "Se déplacer de… bureaux (tous les écrans)"
 
 #: src/bin/e_actions.c:3354
 msgid "Flip Desktop To... (All Screens)"
-msgstr "Aller au bureau … (tous les écrans)"
+msgstr "Aller au bureau… (tous les écrans)"
 
 #: src/bin/e_actions.c:3360
 msgid "Flip Desktop Linearly... (All Screens)"
-msgstr "Se déplacer linéairement de … bureaux (tous les écrans)"
+msgstr "Se déplacer linéairement de… bureaux (tous les écrans)"
 
 #: src/bin/e_actions.c:3366
 msgid "Flip Desktop In Direction..."
-msgstr "Basculer le bureau en direction de …"
+msgstr "Basculer le bureau en direction de…"
 
 #: src/bin/e_actions.c:3371
 msgid "Switch To Desktop 0 (All Screens)"
@@ -637,7 +637,7 @@ msgstr "Déplacer vers…"
 
 #: src/bin/e_actions.c:3482
 msgid "Drag Icon..."
-msgstr "Glisser l'icône …"
+msgstr "Glisser l'icône…"
 
 #: src/bin/e_actions.c:3487 src/bin/e_actions.c:3489 src/bin/e_actions.c:3491
 #: src/bin/e_actions.c:3497 src/bin/e_actions.c:3503 src/bin/e_actions.c:3505
@@ -654,11 +654,11 @@ msgstr "Vers le bureau précédent"
 
 #: src/bin/e_actions.c:3491
 msgid "By Desktop #..."
-msgstr "Déplacer de … bureaux"
+msgstr "Déplacer de… bureaux"
 
 #: src/bin/e_actions.c:3497
 msgid "To Desktop..."
-msgstr "Vers le bureau …"
+msgstr "Vers le bureau…"
 
 #: src/bin/e_actions.c:3503
 msgid "To Next Screen"
@@ -686,7 +686,7 @@ msgstr "Afficher la liste des fenêtres"
 
 #: src/bin/e_actions.c:3518
 msgid "Show Menu..."
-msgstr "Afficher le menu …"
+msgstr "Afficher le menu…"
 
 #: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
 #: src/modules/conf/e_mod_main.c:273
@@ -1461,8 +1461,7 @@ msgstr "Erreur"
 #: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
-msgstr ""
-"La récente opération de glisser-déplacer demandée pour « %s » a échoué."
+msgstr "La requête de glisser-déposer pour « %s » a échoué."
 
 #: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
@@ -1643,7 +1642,7 @@ msgstr "Paramètres des icônes de fichiers"
 
 #: src/bin/e_fm.c:9935 src/bin/e_fm.c:10151
 msgid "Set background..."
-msgstr "Définir le fond d'écran …"
+msgstr "Définir le fond d'écran…"
 
 #: src/bin/e_fm.c:9943
 msgid "Clear background"
@@ -3929,7 +3928,7 @@ msgstr "La mise en hibernation a échoué."
 
 #: src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
-msgstr "ARGH ! ça ne devrait pas se produire…"
+msgstr "ARGH ! ça ne devrait pas se produire"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -5040,7 +5039,7 @@ msgstr "Afficher sur l'écran actuel"
 
 #: src/modules/conf_display/e_int_config_desklock.c:294
 msgid "Show on screen #:"
-msgstr "Afficher sur l'écran ..."
+msgstr "Afficher sur l'écran..."
 
 #: src/modules/conf_display/e_int_config_desklock.c:304
 msgid "Login Box"
@@ -9320,7 +9319,7 @@ msgstr ""
 
 #: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
-msgstr "Wi-Fi Actif"
+msgstr "Wi-Fi actif"
 
 #: src/modules/quickaccess/e_mod_config.c:226
 msgid "Enter a unique name for this entry"
@@ -9635,7 +9634,7 @@ msgstr "Capture dans : "
 
 #: src/modules/shot/e_mod_main.c:117
 msgid "Screenshot stored in"
-msgstr "Capture stockée dans"
+msgstr "enregistrée dans"
 
 #: src/modules/shot/e_mod_main.c:313
 msgid "Error - Folder does not exist"
