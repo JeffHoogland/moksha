@@ -363,7 +363,7 @@ group { name: "e/modules/clock/digital";
       clip_to: _CLIP; \
       description { state: "default" 0.0; \
          rel1.to: _TO; rel2.to: _TO; \
-         aspect: (48/31) (48/31); aspect_preference: BOTH; \
+         aspect: (48/48) (48/48); aspect_preference: BOTH; \
          image.normal: "digit_am.png"; \
       } \
       description { state: "active" 0.0; \
