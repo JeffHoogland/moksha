@@ -19,7 +19,7 @@
 #define DBG(...)
 #endif
 
-static Eina_Bool     _evry_cb_desklock(Evry_Window *win, int type __UNUSED__, E_Event_Desklock *ev);
+static Eina_Bool      _evry_cb_desklock(Evry_Window *win, int type __UNUSED__, E_Event_Desklock *ev);
 static void           _evry_matches_update(Evry_Selector *sel, int async);
 static void           _evry_plugin_action(Evry_Selector *sel, int finished);
 static void           _evry_plugin_select(Evry_State *s, Evry_Plugin *p);
@@ -1972,7 +1972,7 @@ _evry_cb_key_down(void *data, int type __UNUSED__, void *event)
         E_Config_Binding_Key *binding;
         E_Binding_Modifier mod;
 
-	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
+    EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
           {
              if (binding->action && strcmp(binding->action, "everything")) continue;
 
