@@ -1,17 +1,17 @@
 #ifndef EVRY_TYPES_H
 #define EVRY_TYPES_H
 
-typedef struct _Evry_Plugin		Evry_Plugin;
-typedef struct _Plugin_Config		Plugin_Config;
-typedef struct _Evry_Item		Evry_Item;
-typedef struct _Evry_Item_App		Evry_Item_App;
-typedef struct _Evry_Item_File		Evry_Item_File;
-typedef struct _Evry_Action		Evry_Action;
-typedef struct _History_Item		History_Item;
-typedef struct _History_Entry		History_Entry;
-typedef struct _History_Types		History_Types;
-typedef struct _Evry_State	        Evry_State;
-typedef struct _Evry_View	        Evry_View;
+typedef struct _Evry_Plugin         Evry_Plugin;
+typedef struct _Plugin_Config       Plugin_Config;
+typedef struct _Evry_Item           Evry_Item;
+typedef struct _Evry_Item_App       Evry_Item_App;
+typedef struct _Evry_Item_File      Evry_Item_File;
+typedef struct _Evry_Action         Evry_Action;
+typedef struct _History_Item        History_Item;
+typedef struct _History_Entry       History_Entry;
+typedef struct _History_Types       History_Types;
+typedef struct _Evry_State          Evry_State;
+typedef struct _Evry_View           Evry_View;
 
 typedef unsigned int Evry_Type;
 
