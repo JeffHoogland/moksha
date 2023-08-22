@@ -13,11 +13,11 @@
 #define SLIDE_LEFT   1
 #define SLIDE_RIGHT -1
 
-typedef struct _History		Evry_History;
-typedef struct _Config		Evry_Config;
-typedef struct _Evry_Selector	Evry_Selector;
-typedef struct _Tab_View	Tab_View;
-typedef struct _Evry_Window	Evry_Window;
+typedef struct _History         Evry_History;
+typedef struct _Config          Evry_Config;
+typedef struct _Evry_Selector   Evry_Selector;
+typedef struct _Tab_View        Tab_View;
+typedef struct _Evry_Window     Evry_Window;
 typedef struct _Gadget_Config   Gadget_Config;
 
 struct _Evry_Window
