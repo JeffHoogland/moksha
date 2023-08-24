@@ -50,6 +50,7 @@ struct _E_Config_Dialog_Data
    int         scroll_animate;
    int         launch_hist;
    int         single_click;
+   int         fuzzy_search;
    double      scroll_speed;
 
    int         view_mode;
@@ -103,6 +104,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    C(scroll_animate);
    C(launch_hist);
    C(single_click);
+   C(fuzzy_search);
    C(scroll_speed);
 #undef C
 
@@ -154,6 +156,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
    C(scroll_animate);
    C(launch_hist);
    C(single_click);
+   C(fuzzy_search);
    C(scroll_speed);
 #undef C
    e_config->evry_launch_hist = cfdata->launch_hist;
@@ -500,6 +503,12 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    e_widget_disabled_set(ob, 1);
    e_widget_framelist_object_append(of, ob);
 #endif
+   of = e_widget_framelist_add(e, _("Search Mode"), 0);
+   ob = e_widget_check_add(e, _("Fuzzy mode"),
+                           &(cfdata->fuzzy_search));
+   e_widget_framelist_object_append(of, ob);
+   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);   
+   
    of = e_widget_framelist_add(e, _("Quick Navigation"), 0);
    rg = e_widget_radio_group_new(&cfdata->quick_nav);
    ob = e_widget_radio_add(e, _("Off"), 0, rg);
@@ -512,7 +521,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_check_add(e, _("Single mouse click"),
                            &(cfdata->single_click));
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(o, of, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(o, of, 0, 2, 1, 1, 1, 0, 1, 0);
 
    of = e_widget_framelist_add(e, _("Sorting"), 0);
    rg = e_widget_radio_group_new(&cfdata->history_sort_mode);
@@ -528,7 +537,7 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *e, E_Config_Dialog
    ob = e_widget_radio_add(e, _("Last used"), 2, rg);
    e_widget_radio_toggle_set(ob, (cfdata->history_sort_mode == 2));
    e_widget_framelist_object_append(of, ob);
-   e_widget_table_object_append(o, of, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(o, of, 0, 3, 1, 1, 1, 0, 1, 0);
 
    e_widget_toolbook_page_append(otb, NULL, _("General Settings"),
                                  o, 1, 0, 1, 0, 0.5, 0.0);

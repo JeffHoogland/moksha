@@ -388,6 +388,7 @@ _config_init()
    E_CONFIG_VAL(D, T, scroll_animate, INT);
    E_CONFIG_VAL(D, T, launch_hist, INT);
    E_CONFIG_VAL(D, T, single_click, INT);
+   E_CONFIG_VAL(D, T, fuzzy_search, INT);
    E_CONFIG_VAL(D, T, scroll_speed, DOUBLE);
    E_CONFIG_VAL(D, T, hide_input, INT);
    E_CONFIG_VAL(D, T, hide_list, INT);
@@ -424,6 +425,7 @@ _config_init()
         evry_conf->scroll_animate = 1;
         evry_conf->launch_hist = 1;
         evry_conf->single_click = 0;
+        evry_conf->fuzzy_search = 0;
         evry_conf->scroll_speed = 10.0;
         evry_conf->hide_input = 0;
         evry_conf->hide_list = 0;

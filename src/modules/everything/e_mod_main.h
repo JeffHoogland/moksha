@@ -172,6 +172,7 @@ struct _Config
   int scroll_animate;
   int launch_hist;
   int single_click;
+  int fuzzy_search;
   double scroll_speed;
 
   int hide_input;
