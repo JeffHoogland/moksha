@@ -312,4 +312,6 @@ group "Config" struct {
     value "cycle_mode" int: 0;
     value "history_sort_mode" int: 0;
     value "first_run" uchar: 1;
+    value "single_click" int: 0;
+    value "fuzzy_search" int: 0;
 }
