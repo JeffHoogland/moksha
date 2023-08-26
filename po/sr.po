@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-05-29 16:43+0200\n"
+"POT-Creation-Date: 2023-08-26 23:29+0200\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -32,7 +32,7 @@ msgstr "О Просвећењу"
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2581 src/modules/shot/e_mod_main.c:1227
+#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
 msgstr "Затвори"
 
@@ -99,7 +99,7 @@ msgstr "Не"
 msgid "Action Params Syntax Error"
 msgstr "Одреднице радње"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:268
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:269
 msgid "Exit"
 msgstr "Напусти"
 
@@ -111,7 +111,7 @@ msgstr "Да ли сте сигурни да сада желите да напу
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10519
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:320
+#: src/modules/shot/e_mod_main.c:319
 msgid "Yes"
 msgstr "Да"
 
@@ -160,7 +160,7 @@ msgstr "Да ли сте сигурни да желите замрзнути с�
 #: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
 #: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
 #: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
-#: src/modules/shot/e_mod_main.c:1316
+#: src/modules/shot/e_mod_main.c:1309
 msgid "Window : Actions"
 msgstr "Прозор : радње"
 
@@ -343,7 +343,7 @@ msgstr "Мења стање причвршћености прозора"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1046
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
 msgid "Desktop"
 msgstr "Радна површ"
 
@@ -548,7 +548,7 @@ msgstr "Скочи на прозор... или покрени..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:974 src/modules/shot/e_mod_main.c:1308
+#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
 msgid "Screen"
 msgstr "Екран"
 
@@ -785,7 +785,7 @@ msgstr "Замрзни сада"
 msgid "Lock"
 msgstr "Закључај"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1438
+#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Очисти прозоре"
 
@@ -837,9 +837,9 @@ msgstr "Изаберите"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:320 src/modules/shot/e_mod_main.c:504
-#: src/modules/shot/e_mod_main.c:767 src/modules/shot/e_mod_main.c:793
-#: src/modules/shot/e_mod_main.c:1033 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
+#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
 msgid "Cancel"
 msgstr "Откажи"
 
@@ -1188,7 +1188,7 @@ msgstr "Датотека радне површи"
 #: src/bin/e_int_border_prop.c:502 src/modules/access/e_mod_config.c:68
 #: src/modules/conf_applications/e_int_config_defapps.c:358
 #: src/modules/conf_performance/e_int_config_performance.c:122
-#: src/modules/everything/evry_config.c:384
+#: src/modules/everything/evry_config.c:387
 #: src/modules/everything/evry_plug_files.c:1465
 #: src/modules/pager/e_mod_config.c:129 src/modules/pager/e_mod_config.c:226
 #: src/modules/tiling/e_mod_config.c:180
@@ -1487,7 +1487,7 @@ msgid "View Mode"
 msgstr "Начин приказа"
 
 #: src/bin/e_fm.c:8846 src/bin/e_fm.c:9006
-#: src/modules/everything/evry_config.c:517
+#: src/modules/everything/evry_config.c:526
 #: src/modules/fileman/e_mod_config.c:394
 msgid "Sorting"
 msgstr "Редослед"
@@ -1553,13 +1553,13 @@ msgstr "Мрежа икона"
 msgid "Custom Icons"
 msgstr "Прилагођене иконе"
 
-#: src/bin/e_fm.c:9528 src/modules/everything/evry_config.c:436
-#: src/modules/everything/evry_config.c:466
+#: src/bin/e_fm.c:9528 src/modules/everything/evry_config.c:439
+#: src/modules/everything/evry_config.c:469
 #: src/modules/fileman/e_mod_config.c:329
 msgid "List"
 msgstr "Списак"
 
-#: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:464
+#: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:467
 msgid "Default View"
 msgstr "Подразумевани приказ"
 
@@ -1849,7 +1849,7 @@ msgstr "Остали:"
 msgid "Preview"
 msgstr "Преглед"
 
-#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:432
+#: src/bin/e_fm_prop.c:527 src/modules/everything/evry_config.c:435
 msgid "Default"
 msgstr "Подразумевано"
 
@@ -2293,10 +2293,10 @@ msgid "Window List"
 msgstr "Списак прозора"
 
 #: src/bin/e_int_border_menu.c:1327 src/modules/pager/e_mod_main.c:269
-#: src/modules/pager/e_mod_main.c:2948 src/modules/pager/e_mod_main.c:2955
-#: src/modules/pager/e_mod_main.c:2962 src/modules/pager/e_mod_main.c:2964
-#: src/modules/pager/e_mod_main.c:2966 src/modules/pager/e_mod_main.c:2968
-#: src/modules/pager/e_mod_main.c:2970 src/modules/pager/e_mod_main.c:2972
+#: src/modules/pager/e_mod_main.c:2959 src/modules/pager/e_mod_main.c:2966
+#: src/modules/pager/e_mod_main.c:2973 src/modules/pager/e_mod_main.c:2975
+#: src/modules/pager/e_mod_main.c:2977 src/modules/pager/e_mod_main.c:2979
+#: src/modules/pager/e_mod_main.c:2981 src/modules/pager/e_mod_main.c:2983
 msgid "Pager"
 msgstr "Страничник"
 
@@ -2521,7 +2521,7 @@ msgid "Request Position"
 msgstr "Захтевај положај"
 
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
-#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:287
+#: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
 #: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
@@ -2536,9 +2536,9 @@ msgstr "Захтевај положај"
 #: src/modules/everything/evry_plug_settings.c:183
 #: src/modules/ibar/e_mod_main.c:459 src/modules/ibar/e_mod_main.c:1520
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:882 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1226
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:796
+#: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:800
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -2633,7 +2633,7 @@ msgstr "Величина, положај и закључавања"
 #: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:978
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
 msgid "All"
 msgstr "Све"
 
@@ -2831,48 +2831,48 @@ msgstr "Још помоћи"
 msgid "About Bodhi Linux"
 msgstr ""
 
-#: src/bin/e_int_menus.c:242
+#: src/bin/e_int_menus.c:243
 #, fuzzy
 msgid "About Moksha Desktop"
 msgstr "О Просвећењу"
 
-#: src/bin/e_int_menus.c:248 src/bin/e_theme_about.c:21
+#: src/bin/e_int_menus.c:249 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "О теми"
 
-#: src/bin/e_int_menus.c:262
+#: src/bin/e_int_menus.c:263
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Добродошли у Просвећење"
 
-#: src/bin/e_int_menus.c:337
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Омиљено"
 
-#: src/bin/e_int_menus.c:342 src/bin/e_int_menus.c:799
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Нема програма"
 
-#: src/bin/e_int_menus.c:361
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "нестварна"
 
-#: src/bin/e_int_menus.c:368 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Полице"
 
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Прикажи/сакриј све прозоре"
 
-#: src/bin/e_int_menus.c:1026
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Постави нестварне радне површи"
 
-#: src/bin/e_int_menus.c:1396
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2881,29 +2881,29 @@ msgstr "Постави нестварне радне површи"
 msgid "Windows"
 msgstr "Прозори"
 
-#: src/bin/e_int_menus.c:1402 src/bin/e_int_menus.c:1598
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Без прозора"
 
-#: src/bin/e_int_menus.c:1451
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Изгубљени прозори"
 
-#: src/bin/e_int_menus.c:1511 src/bin/e_int_menus.c:1611
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Неименовани прозор"
 
-#: src/bin/e_int_menus.c:1718 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Полица %s"
 
-#: src/bin/e_int_menus.c:1786
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Додај полицу"
 
-#: src/bin/e_int_menus.c:1793
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Избриши полицу"
 
@@ -3685,14 +3685,14 @@ msgstr "Покретно"
 
 #: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
-#: src/modules/everything/evry_config.c:582
+#: src/modules/everything/evry_config.c:591
 #: src/modules/gadman/e_mod_gadman.c:1030
 msgid "Horizontal"
 msgstr "Водоравно"
 
 #: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
-#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:584
 #: src/modules/gadman/e_mod_gadman.c:1038
 msgid "Vertical"
 msgstr "Усправно"
@@ -4734,7 +4734,7 @@ msgid "E-Mail"
 msgstr "Електронска пошта"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1055
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
 msgid "Trash"
 msgstr "Смеће"
 
@@ -4845,7 +4845,7 @@ msgstr "Поставке прозорчића за потврду"
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:109
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
-#: src/modules/everything/evry_config.c:533 src/modules/ibox/e_mod_config.c:97
+#: src/modules/everything/evry_config.c:542 src/modules/ibox/e_mod_config.c:97
 msgid "General Settings"
 msgstr "Опште поставке"
 
@@ -4888,7 +4888,7 @@ msgid "Profiles"
 msgstr "Профили"
 
 #: src/modules/conf_display/e_int_config_desks.c:50
-#: src/modules/pager/e_mod_main.c:890
+#: src/modules/pager/e_mod_main.c:901
 msgid "Virtual Desktops Settings"
 msgstr "Поставке нестварних радних површи"
 
@@ -4904,12 +4904,12 @@ msgstr "Кликните за промену позадине"
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
 #: src/modules/conf_interaction/e_int_config_mouse.c:281
-#: src/modules/everything/evry_config.c:411
-#: src/modules/everything/evry_config.c:561
-#: src/modules/everything/evry_config.c:568
-#: src/modules/everything/evry_config.c:594
-#: src/modules/everything/evry_config.c:601
-#: src/modules/everything/evry_config.c:611
+#: src/modules/everything/evry_config.c:414
+#: src/modules/everything/evry_config.c:570
+#: src/modules/everything/evry_config.c:577
+#: src/modules/everything/evry_config.c:603
+#: src/modules/everything/evry_config.c:610
+#: src/modules/everything/evry_config.c:620
 #: src/modules/fileman/e_mod_config.c:335
 #: src/modules/syscon/e_int_config_syscon.c:148
 #: src/modules/syscon/e_int_config_syscon.c:153
@@ -4945,7 +4945,7 @@ msgid "Desktops"
 msgstr "Радне површи"
 
 #: src/modules/conf_display/e_int_config_desks.c:203
-#: src/modules/everything/evry_config.c:505
+#: src/modules/everything/evry_config.c:514
 msgid "Off"
 msgstr "Искључи"
 
@@ -4955,7 +4955,7 @@ msgstr "Клизно окно"
 
 #: src/modules/conf_display/e_int_config_desks.c:209
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:409
-#: src/modules/everything/evry_config.c:608
+#: src/modules/everything/evry_config.c:617
 msgid "Zoom"
 msgstr "Увећање"
 
@@ -5629,17 +5629,17 @@ msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr ""
 "Просвећење није успело да увезе поставке<br>због грешке при умножавању."
 
-#: src/modules/conf_intl/e_int_config_intl.c:604
+#: src/modules/conf_intl/e_int_config_intl.c:605
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Језичке поставке"
 
-#: src/modules/conf_intl/e_int_config_intl.c:629
+#: src/modules/conf_intl/e_int_config_intl.c:630
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "Језичке поставке часовника"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1000
+#: src/modules/conf_intl/e_int_config_intl.c:1001
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5652,33 +5652,33 @@ msgstr ""
 "желите ову појаву, користите<br>поставке променљиве окружења да их поништите."
 "<br>Променљиве које вам могу сметати су<br>следеће:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1008
+#: src/modules/conf_intl/e_int_config_intl.c:1009
 msgid "Possible Locale problems"
 msgstr "Могући проблеми локализације"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1093
-#: src/modules/conf_intl/e_int_config_intl.c:1185
+#: src/modules/conf_intl/e_int_config_intl.c:1094
+#: src/modules/conf_intl/e_int_config_intl.c:1186
 msgid "Language Selector"
 msgstr "Изабирач језика"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1124
-#: src/modules/conf_intl/e_int_config_intl.c:1573
+#: src/modules/conf_intl/e_int_config_intl.c:1125
+#: src/modules/conf_intl/e_int_config_intl.c:1574
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:196
+#: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "Подразумеване вредности система"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1159
-#: src/modules/conf_intl/e_int_config_intl.c:1236
+#: src/modules/conf_intl/e_int_config_intl.c:1160
+#: src/modules/conf_intl/e_int_config_intl.c:1237
 msgid "Locale Selected"
 msgstr "Локализација је изабрана"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1160
-#: src/modules/conf_intl/e_int_config_intl.c:1237
+#: src/modules/conf_intl/e_int_config_intl.c:1161
+#: src/modules/conf_intl/e_int_config_intl.c:1238
 msgid "Locale"
 msgstr "Локализација"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:187
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:188
 msgid "Language"
 msgstr "Језик"
 
@@ -6328,8 +6328,8 @@ msgstr "Теме"
 
 #: src/modules/conf_paths/e_int_config_paths.c:78
 #: src/modules/conf_theme/e_int_config_xsettings.c:571
-#: src/modules/everything/evry_config.c:444
-#: src/modules/everything/evry_config.c:470
+#: src/modules/everything/evry_config.c:447
+#: src/modules/everything/evry_config.c:473
 msgid "Icons"
 msgstr "Иконе"
 
@@ -6488,13 +6488,13 @@ msgid "e.g. Saving to disk"
 msgstr "нпр. чување на диску"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:961
+#: src/modules/shot/e_mod_main.c:958
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "низак"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:959
+#: src/modules/shot/e_mod_main.c:956
 msgid "Medium"
 msgstr "осредњи"
 
@@ -6506,7 +6506,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:957
+#: src/modules/shot/e_mod_main.c:954
 msgid "High"
 msgstr "висок"
 
@@ -7682,7 +7682,7 @@ msgid "Resize by"
 msgstr "Промени величину за"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
-#: src/modules/wizard/page_011.c:175 src/modules/xkbswitch/e_mod_main.c:75
+#: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
 #: src/modules/xkbswitch/e_mod_main.c:401
 msgid "Keyboard"
@@ -7994,160 +7994,170 @@ msgstr "Прикажи покретач свега"
 msgid "Everything Configuration"
 msgstr "Поставке свега"
 
-#: src/modules/everything/e_mod_main.c:410
+#: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Јединица свега"
 
-#: src/modules/everything/e_mod_main.c:603
+#: src/modules/everything/e_mod_main.c:605
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "Покретач"
 
-#: src/modules/everything/evry_config.c:80
+#: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
 msgstr "Поставке свега"
 
-#: src/modules/everything/evry_config.c:370
+#: src/modules/everything/evry_config.c:373
 msgid "Available Plugins"
 msgstr "Доступни прикључци"
 
-#: src/modules/everything/evry_config.c:376
+#: src/modules/everything/evry_config.c:379
 msgid "Move Up"
 msgstr "Помери навише"
 
-#: src/modules/everything/evry_config.c:379
+#: src/modules/everything/evry_config.c:382
 msgid "Move Down"
 msgstr "Помери ниже"
 
-#: src/modules/everything/evry_config.c:385
+#: src/modules/everything/evry_config.c:388
 #: src/modules/connman/e_mod_main.c:323
 msgid "Configure"
 msgstr "Подеси"
 
-#: src/modules/everything/evry_config.c:391
+#: src/modules/everything/evry_config.c:394
 msgid "Enabled"
 msgstr "Омогућен"
 
-#: src/modules/everything/evry_config.c:397
+#: src/modules/everything/evry_config.c:400
 msgid "Show in \"All\""
 msgstr "Прикажи у „Све“"
 
-#: src/modules/everything/evry_config.c:403
+#: src/modules/everything/evry_config.c:406
 msgid "Show in top-level"
 msgstr "Прикажи на вршном слоју"
 
-#: src/modules/everything/evry_config.c:409
+#: src/modules/everything/evry_config.c:412
 msgid "Minimum characters for search"
 msgstr "Најмањи број знакова за претрагу"
 
-#: src/modules/everything/evry_config.c:418
+#: src/modules/everything/evry_config.c:421
 msgid "Plugin Trigger"
 msgstr "Прикључак окидач"
 
-#: src/modules/everything/evry_config.c:423
+#: src/modules/everything/evry_config.c:426
 msgid "Search only when triggered"
 msgstr "Претражуј само кад је окинуто"
 
-#: src/modules/everything/evry_config.c:430
+#: src/modules/everything/evry_config.c:433
 msgid "Plugin View"
 msgstr "Преглед прикључака"
 
-#: src/modules/everything/evry_config.c:440
-#: src/modules/everything/evry_config.c:468
+#: src/modules/everything/evry_config.c:443
+#: src/modules/everything/evry_config.c:471
 msgid "Detailed"
 msgstr "приказ појединости"
 
-#: src/modules/everything/evry_config.c:473
+#: src/modules/everything/evry_config.c:476
 msgid "Animate scrolling"
 msgstr "Анимирај премицање"
 
-#: src/modules/everything/evry_config.c:476
+#: src/modules/everything/evry_config.c:479
 #, fuzzy
 msgid "Show recently used items"
 msgstr "Прикажи скорашње датотеке"
 
-#: src/modules/everything/evry_config.c:484
+#: src/modules/everything/evry_config.c:487
 msgid "Up/Down select next item in icon view"
 msgstr "Горе/доле означи следећу ставку у умањеном приказу"
 
-#: src/modules/everything/evry_config.c:493
+#: src/modules/everything/evry_config.c:496
 msgid "Hide input when inactive"
 msgstr "Сакриј унос кад није покренут"
 
-#: src/modules/everything/evry_config.c:498
+#: src/modules/everything/evry_config.c:501
 msgid "Hide list"
 msgstr "Сакриј списак"
 
-#: src/modules/everything/evry_config.c:503
+#: src/modules/everything/evry_config.c:506
+#, fuzzy
+msgid "Search Mode"
+msgstr "Основни начин"
+
+#: src/modules/everything/evry_config.c:507
+#, fuzzy
+msgid "Fuzzy mode"
+msgstr "Нејасан начин"
+
+#: src/modules/everything/evry_config.c:512
 msgid "Quick Navigation"
 msgstr "Брзо управљање"
 
-#: src/modules/everything/evry_config.c:507
+#: src/modules/everything/evry_config.c:516
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
 msgstr "Емакс начин (МЕЊА+ н,п,ф,б,м,и)"
 
-#: src/modules/everything/evry_config.c:509
+#: src/modules/everything/evry_config.c:518
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Ви начин (МЕЊА + х,ј,к,л,н.п,м,и)"
 
-#: src/modules/everything/evry_config.c:512
+#: src/modules/everything/evry_config.c:521
 #, fuzzy
 msgid "Single mouse click"
 msgstr "Прикажи на клик миша"
 
-#: src/modules/everything/evry_config.c:519
+#: src/modules/everything/evry_config.c:528
 msgid "No Sorting"
 msgstr "Без разврставања"
 
-#: src/modules/everything/evry_config.c:522
+#: src/modules/everything/evry_config.c:531
 msgid "By usage"
 msgstr "По коришћењу"
 
-#: src/modules/everything/evry_config.c:525
+#: src/modules/everything/evry_config.c:534
 msgid "Most used"
 msgstr "Највише коришћени"
 
-#: src/modules/everything/evry_config.c:528
+#: src/modules/everything/evry_config.c:537
 msgid "Last used"
 msgstr "Последње коришћени"
 
-#: src/modules/everything/evry_config.c:540
+#: src/modules/everything/evry_config.c:549
 msgid "Subject Plugins"
 msgstr "Прикључци вршиоца радње"
 
-#: src/modules/everything/evry_config.c:544
+#: src/modules/everything/evry_config.c:553
 msgid "Action Plugins"
 msgstr "Прикључци радње"
 
-#: src/modules/everything/evry_config.c:548
+#: src/modules/everything/evry_config.c:557
 msgid "Object Plugins"
 msgstr "Прикључци примаоца радње"
 
-#: src/modules/everything/evry_config.c:551
-#: src/modules/everything/evry_config.c:759
+#: src/modules/everything/evry_config.c:560
+#: src/modules/everything/evry_config.c:768
 msgid "Plugins"
 msgstr "Прикључци"
 
-#: src/modules/everything/evry_config.c:558
+#: src/modules/everything/evry_config.c:567
 msgid "Popup Size"
 msgstr "Величина искакања"
 
-#: src/modules/everything/evry_config.c:559
-#: src/modules/everything/evry_config.c:592
+#: src/modules/everything/evry_config.c:568
+#: src/modules/everything/evry_config.c:601
 msgid "Popup Width"
 msgstr "Ширина искакања"
 
-#: src/modules/everything/evry_config.c:566
-#: src/modules/everything/evry_config.c:599
+#: src/modules/everything/evry_config.c:575
+#: src/modules/everything/evry_config.c:608
 msgid "Popup Height"
 msgstr "Висина искакања"
 
-#: src/modules/everything/evry_config.c:574
+#: src/modules/everything/evry_config.c:583
 msgid "Popup Align"
 msgstr "Поравнање искакања"
 
-#: src/modules/everything/evry_config.c:577
-#: src/modules/everything/evry_config.c:584
+#: src/modules/everything/evry_config.c:586
+#: src/modules/everything/evry_config.c:593
 #: src/modules/winlist/e_int_config_winlist.c:248
 #: src/modules/winlist/e_int_config_winlist.c:261
 #: src/modules/winlist/e_int_config_winlist.c:304
@@ -8156,21 +8166,21 @@ msgstr "Поравнање искакања"
 msgid "%1.2f"
 msgstr "%1.2f"
 
-#: src/modules/everything/evry_config.c:591
+#: src/modules/everything/evry_config.c:600
 msgid "Edge Popup Size"
 msgstr "Величина ивица искакања"
 
-#: src/modules/everything/evry_config.c:609
+#: src/modules/everything/evry_config.c:618
 #, fuzzy
 msgid "Zoom value"
 msgstr "Удаљи"
 
-#: src/modules/everything/evry_config.c:617
+#: src/modules/everything/evry_config.c:626
 #: src/modules/winlist/e_int_config_winlist.c:298
 msgid "Geometry"
 msgstr "Геометрија"
 
-#: src/modules/everything/evry_config.c:654
+#: src/modules/everything/evry_config.c:663
 msgid "Everything Collection"
 msgstr "Збирка свега"
 
@@ -8208,7 +8218,7 @@ msgstr "Егзебаф"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
-#: src/modules/fileman/e_fwin.c:2192 src/modules/fileman/e_fwin.c:2578
+#: src/modules/fileman/e_fwin.c:2192 src/modules/fileman/e_fwin.c:2584
 msgid "Open with..."
 msgstr "Отвори са..."
 
@@ -8416,11 +8426,11 @@ msgstr "Умножи путању"
 msgid "Run"
 msgstr "Покрени"
 
-#: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2579
+#: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2585
 msgid "Open"
 msgstr "Отвори"
 
-#: src/modules/fileman/e_fwin.c:2608 src/modules/fileman/e_fwin.c:2633
+#: src/modules/fileman/e_fwin.c:2614 src/modules/fileman/e_fwin.c:2639
 #, c-format
 msgid "%d file"
 msgid_plural "%d files"
@@ -8428,88 +8438,88 @@ msgstr[0] "%d датотека"
 msgstr[1] "%d датотеке"
 msgstr[2] "%d датотека"
 
-#: src/modules/fileman/e_fwin.c:2651
+#: src/modules/fileman/e_fwin.c:2657
 msgid "Known Applications"
 msgstr "Познати Програми"
 
-#: src/modules/fileman/e_fwin.c:2661
+#: src/modules/fileman/e_fwin.c:2667
 msgid "Suggested Applications"
 msgstr "Предложени програми"
 
-#: src/modules/fileman/e_fwin.c:2696
+#: src/modules/fileman/e_fwin.c:2702
 msgid "All Applications"
 msgstr "Сви програми"
 
-#: src/modules/fileman/e_fwin.c:2719
+#: src/modules/fileman/e_fwin.c:2725
 msgid "Custom Command"
 msgstr "Прилагођена наредба"
 
-#: src/modules/fileman/e_fwin.c:3010
+#: src/modules/fileman/e_fwin.c:3016
 #, c-format
 msgid "Copying is aborted"
 msgstr "Умножавање је опозвано"
 
-#: src/modules/fileman/e_fwin.c:3014
+#: src/modules/fileman/e_fwin.c:3020
 #, c-format
 msgid "Moving is aborted"
 msgstr "Премештање је опозвано"
 
-#: src/modules/fileman/e_fwin.c:3018
+#: src/modules/fileman/e_fwin.c:3024
 #, c-format
 msgid "Deleting is aborted"
 msgstr "Брисање је опозвано"
 
-#: src/modules/fileman/e_fwin.c:3022
+#: src/modules/fileman/e_fwin.c:3028
 #, c-format
 msgid "Secure deletion is aborted"
 msgstr "Безбедно брисање је опозвано"
 
-#: src/modules/fileman/e_fwin.c:3026
+#: src/modules/fileman/e_fwin.c:3032
 #, c-format
 msgid "Unknown operation from slave is aborted"
 msgstr "Непозната радња потчињеног је отказана"
 
-#: src/modules/fileman/e_fwin.c:3036
+#: src/modules/fileman/e_fwin.c:3042
 #, c-format
 msgid "Copy of %s done"
 msgstr "Умножавање %s је завршено"
 
-#: src/modules/fileman/e_fwin.c:3038
+#: src/modules/fileman/e_fwin.c:3044
 #, c-format
 msgid "Copying %s (eta: %s)"
 msgstr "Умножавам %s (преостаје: %s)"
 
-#: src/modules/fileman/e_fwin.c:3043
+#: src/modules/fileman/e_fwin.c:3049
 #, c-format
 msgid "Move of %s done"
 msgstr "Премештање %s је завршено"
 
-#: src/modules/fileman/e_fwin.c:3045
+#: src/modules/fileman/e_fwin.c:3051
 #, c-format
 msgid "Moving %s (eta: %s)"
 msgstr "Moving %s (преостаје: %s)"
 
-#: src/modules/fileman/e_fwin.c:3050
+#: src/modules/fileman/e_fwin.c:3056
 #, c-format
 msgid "Delete done"
 msgstr "Брисање завршено"
 
-#: src/modules/fileman/e_fwin.c:3052
+#: src/modules/fileman/e_fwin.c:3058
 #, c-format
 msgid "Deleting files..."
 msgstr "Бришем датотеке..."
 
-#: src/modules/fileman/e_fwin.c:3057
+#: src/modules/fileman/e_fwin.c:3063
 #, c-format
 msgid "Secure delete done"
 msgstr "Безбедно брисање урађено"
 
-#: src/modules/fileman/e_fwin.c:3059
+#: src/modules/fileman/e_fwin.c:3065
 #, c-format
 msgid "Securely deleting files..."
 msgstr "Безбедно брисање датотека..."
 
-#: src/modules/fileman/e_fwin.c:3063
+#: src/modules/fileman/e_fwin.c:3069
 #, c-format
 msgid "Unknown operation from slave %d"
 msgstr "Непозната радња потчињеног %d"
@@ -8703,7 +8713,7 @@ msgid "Current Directory"
 msgstr "Садашња фасцикла"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1037
+#: src/modules/places/e_mod_places.c:1039
 msgid "Home"
 msgstr "Лична фасцикла"
 
@@ -9181,36 +9191,36 @@ msgstr ""
 "унутрашњом<br>шифром за приручне изборнике.<br>Ово дугме само ради у "
 "искачућим прозорима."
 
-#: src/modules/pager/e_mod_main.c:902
+#: src/modules/pager/e_mod_main.c:913
 #, fuzzy
 msgid "This Desktop Settings"
 msgstr "Поставке нестварних радних површи"
 
-#: src/modules/pager/e_mod_main.c:2955
+#: src/modules/pager/e_mod_main.c:2966
 msgid "Show Pager Popup"
 msgstr "Прикажи искакање страничника"
 
-#: src/modules/pager/e_mod_main.c:2962
+#: src/modules/pager/e_mod_main.c:2973
 msgid "Popup Desk Right"
 msgstr "Скочи на радну површ десно"
 
-#: src/modules/pager/e_mod_main.c:2964
+#: src/modules/pager/e_mod_main.c:2975
 msgid "Popup Desk Left"
 msgstr "Скочи на радну површ лево"
 
-#: src/modules/pager/e_mod_main.c:2966
+#: src/modules/pager/e_mod_main.c:2977
 msgid "Popup Desk Up"
 msgstr "Скочи на радну површ изнад"
 
-#: src/modules/pager/e_mod_main.c:2968
+#: src/modules/pager/e_mod_main.c:2979
 msgid "Popup Desk Down"
 msgstr "Скочи на радну површ доле"
 
-#: src/modules/pager/e_mod_main.c:2970
+#: src/modules/pager/e_mod_main.c:2981
 msgid "Popup Desk Next"
 msgstr "Скочи на следећу радну површ"
 
-#: src/modules/pager/e_mod_main.c:2972
+#: src/modules/pager/e_mod_main.c:2983
 msgid "Popup Desk Previous"
 msgstr "скочи на претходну радну површ"
 
@@ -9335,7 +9345,7 @@ msgstr "Добродошли у Просвећење"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr ""
 
-#: src/modules/wizard/page_010.c:188 src/modules/wizard/page_011.c:176
+#: src/modules/wizard/page_010.c:189 src/modules/wizard/page_011.c:175
 msgid "Select one"
 msgstr "Изаберите једну"
 
@@ -9700,7 +9710,7 @@ msgstr ""
 msgid "Systray"
 msgstr "Системска касета"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1218
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
 #, fuzzy
 msgid "Screenshot"
 msgstr "Направи снимак екрана"
@@ -9715,30 +9725,30 @@ msgstr "Направи снимак екрана"
 msgid "Screenshot stored in"
 msgstr "Направи снимак екрана"
 
-#: src/modules/shot/e_mod_main.c:313
+#: src/modules/shot/e_mod_main.c:312
 msgid "Error - Folder does not exist"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:315
+#: src/modules/shot/e_mod_main.c:314
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:363
+#: src/modules/shot/e_mod_main.c:360
 msgid "Error saving screenshot file"
 msgstr "Грешка при чувању датотеке снимка екрана"
 
-#: src/modules/shot/e_mod_main.c:364
+#: src/modules/shot/e_mod_main.c:361
 #, c-format
 msgid "Path: %s"
 msgstr "Путања: %s"
 
-#: src/modules/shot/e_mod_main.c:420
+#: src/modules/shot/e_mod_main.c:417
 msgid "Error - Unknown format"
 msgstr "Грешка - непознати облик"
 
-#: src/modules/shot/e_mod_main.c:421
+#: src/modules/shot/e_mod_main.c:418
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9746,154 +9756,154 @@ msgstr ""
 "Датотека нема одговарајући наставак.<br>Молим, користите само „.jpg“ или „."
 "png“ наставке<br>јер остали облици тренутно<br>нису подржани."
 
-#: src/modules/shot/e_mod_main.c:488
+#: src/modules/shot/e_mod_main.c:485
 msgid "Select screenshot save location"
 msgstr "Подесите одредиште за чување снимака"
 
-#: src/modules/shot/e_mod_main.c:502 src/modules/shot/e_mod_main.c:1029
+#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
 msgid "Save"
 msgstr "Сачувај"
 
-#: src/modules/shot/e_mod_main.c:606
+#: src/modules/shot/e_mod_main.c:603
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Отпремљено %s / %s"
 
-#: src/modules/shot/e_mod_main.c:627
+#: src/modules/shot/e_mod_main.c:624
 msgid "Error - Upload Failed"
 msgstr "Грешка - отпремање није успело"
 
-#: src/modules/shot/e_mod_main.c:628
+#: src/modules/shot/e_mod_main.c:625
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Отпремање није успело уз шифру стања:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:677
+#: src/modules/shot/e_mod_main.c:674
 msgid "Error - Can't create file"
 msgstr "Грешка - Нисам успео да направим датотеку"
 
-#: src/modules/shot/e_mod_main.c:678
+#: src/modules/shot/e_mod_main.c:675
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Нисам успео да направим привремену датотеку „%s“: %s"
 
-#: src/modules/shot/e_mod_main.c:696
+#: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't open file"
 msgstr "Грешка - нисам успео да отворим датотеку"
 
-#: src/modules/shot/e_mod_main.c:697
+#: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Нисам успео да отворим привремену датотеку „%s„ : %s"
 
-#: src/modules/shot/e_mod_main.c:705
+#: src/modules/shot/e_mod_main.c:702
 msgid "Error - Bad size"
 msgstr "Грешка - лоша величина"
 
-#: src/modules/shot/e_mod_main.c:706
+#: src/modules/shot/e_mod_main.c:703
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Нисам успео да добавим величину датотеке „%s“"
 
-#: src/modules/shot/e_mod_main.c:716
+#: src/modules/shot/e_mod_main.c:713
 msgid "Error - Can't allocate memory"
 msgstr "Грешка - нисам успео да обезбедим меморију"
 
-#: src/modules/shot/e_mod_main.c:717
+#: src/modules/shot/e_mod_main.c:714
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Нисам успео доделити меморију слици: %s"
 
-#: src/modules/shot/e_mod_main.c:724
+#: src/modules/shot/e_mod_main.c:721
 msgid "Error - Can't read picture"
 msgstr "Грешка - Нисам успео да прочитам слику"
 
-#: src/modules/shot/e_mod_main.c:725
+#: src/modules/shot/e_mod_main.c:722
 msgid "Cannot read picture"
 msgstr "Нисам успео да прочитам слику"
 
-#: src/modules/shot/e_mod_main.c:747
+#: src/modules/shot/e_mod_main.c:744
 msgid "Uploading screenshot"
 msgstr "Отпремање снимка"
 
-#: src/modules/shot/e_mod_main.c:752
+#: src/modules/shot/e_mod_main.c:749
 msgid "Uploading ..."
 msgstr "Отпремам ..."
 
-#: src/modules/shot/e_mod_main.c:757
+#: src/modules/shot/e_mod_main.c:754
 msgid "Screenshot is available at this location:"
 msgstr "Снима екрана је доступан на овом месту:"
 
-#: src/modules/shot/e_mod_main.c:766
+#: src/modules/shot/e_mod_main.c:763
 #, fuzzy
 msgid "Copy link"
 msgstr "Умножи"
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:787
 msgid "Confirm Share"
 msgstr "Потврди дељење"
 
-#: src/modules/shot/e_mod_main.c:791
+#: src/modules/shot/e_mod_main.c:788
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 "Ова слика ће бити отпремљена<br>на enlightenment.org. Биће јавно видљива."
 
-#: src/modules/shot/e_mod_main.c:793
+#: src/modules/shot/e_mod_main.c:790
 msgid "Confirm"
 msgstr "Потврди"
 
-#: src/modules/shot/e_mod_main.c:894
+#: src/modules/shot/e_mod_main.c:891
 msgid "Where to put Screenshot..."
 msgstr "Где сместити слике екрана..."
 
-#: src/modules/shot/e_mod_main.c:946
+#: src/modules/shot/e_mod_main.c:943
 msgid "Quality"
 msgstr "Квалитет"
 
-#: src/modules/shot/e_mod_main.c:955
+#: src/modules/shot/e_mod_main.c:952
 msgid "Perfect"
 msgstr "савршен"
 
-#: src/modules/shot/e_mod_main.c:1031
+#: src/modules/shot/e_mod_main.c:1028
 msgid "Share"
 msgstr "Дели"
 
-#: src/modules/shot/e_mod_main.c:1215
+#: src/modules/shot/e_mod_main.c:1211
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1224
+#: src/modules/shot/e_mod_main.c:1220
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1225
+#: src/modules/shot/e_mod_main.c:1221
 #, fuzzy
 msgid "Delayed shot"
 msgstr "Одложене радње"
 
-#: src/modules/shot/e_mod_main.c:1265 src/modules/shot/e_mod_main.c:1316
+#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
 msgid "Take Shot"
 msgstr "Направи снимак"
 
-#: src/modules/shot/e_mod_main.c:1276 src/modules/shot/e_mod_main.c:1308
-#: src/modules/shot/e_mod_main.c:1320
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
 msgid "Take Screenshot"
 msgstr "Направи снимак екрана"
 
-#: src/modules/shot/e_mod_main.c:1296
+#: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr "Грешка снимка"
 
-#: src/modules/shot/e_mod_main.c:1297
+#: src/modules/shot/e_mod_main.c:1290
 msgid "Cannot initialize network"
 msgstr "Нисам успео да покренем мрежу"
 
-#: src/modules/shot/e_mod_main.c:1326 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Поставке закључавања екрана"
@@ -9949,7 +9959,7 @@ msgid "Alt+PrtSc: screenshot active window"
 msgstr "Подесите одредиште за чување снимака"
 
 # Процеси?
-#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:803
+#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:807
 msgid "Tasks"
 msgstr "Задаци"
 
@@ -10497,19 +10507,19 @@ msgstr "Подесите управника датотекама"
 msgid "Show in menu"
 msgstr "Прикажи у изборницима"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:863
-#: src/modules/places/e_mod_places.c:1064
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
+#: src/modules/places/e_mod_places.c:1066
 #, fuzzy
 msgid "Filesystem"
 msgstr "Датотеке"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1073
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
 msgid "Temp"
 msgstr ""
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
 #: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:710 src/modules/places/e_mod_places.c:1131
+#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
 #, fuzzy
 msgid "Places"
 msgstr "Смештај"
@@ -10534,60 +10544,60 @@ msgid ""
 "file manager in<br>the gadget configuration."
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:706
+#: src/modules/places/e_mod_places.c:708
 #, fuzzy, c-format
 msgid "Places warning!"
 msgstr "Поставке страничника"
 
-#: src/modules/places/e_mod_places.c:707
+#: src/modules/places/e_mod_places.c:709
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:812
+#: src/modules/places/e_mod_places.c:814
 msgid "b"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:817
+#: src/modules/places/e_mod_places.c:819
 #, fuzzy
 msgid "KB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:822
+#: src/modules/places/e_mod_places.c:824
 #, fuzzy
 msgid "MB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:827
+#: src/modules/places/e_mod_places.c:829
 #, fuzzy
 msgid "GB"
 msgstr "G"
 
-#: src/modules/places/e_mod_places.c:831
+#: src/modules/places/e_mod_places.c:833
 #, fuzzy
 msgid "TB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:867
+#: src/modules/places/e_mod_places.c:869
 #, fuzzy
 msgid "No Name"
 msgstr "Назив иконе"
 
-#: src/modules/places/e_mod_places.c:874
+#: src/modules/places/e_mod_places.c:876
 msgid "free of"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:880
+#: src/modules/places/e_mod_places.c:882
 #, c-format
 msgid "%s Not Mounted"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:908
+#: src/modules/places/e_mod_places.c:910
 #, fuzzy
 msgid "unmount"
 msgstr "Откачи"
 
-#: src/modules/places/e_mod_places.c:914
+#: src/modules/places/e_mod_places.c:916
 #, fuzzy
 msgid "eject"
 msgstr "Избаци"
