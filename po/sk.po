@@ -7994,12 +7994,10 @@ msgid "Hide list"
 msgstr "Skryť zoznam"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Základný režim"
+msgstr "Režim Vyhľadávania"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Fuzzy Režim"
 
