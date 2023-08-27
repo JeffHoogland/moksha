@@ -4698,7 +4698,7 @@ msgstr "Vlastný spúšťač aplikácií"
 #: src/modules/conf_applications/e_int_config_defapps.c:304
 #: src/modules/conf_applications/e_mod_main.c:53
 msgid "Default Applications"
-msgstr "Východzie aplikácie"
+msgstr "Predvolené aplikácie"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:297
 msgid "Custom Browser Command"
@@ -9142,11 +9142,11 @@ msgstr "Veľkosť ikon"
 
 #: src/modules/syscon/e_int_config_syscon.c:165
 msgid "Do default action after timeout"
-msgstr "Vykonať východziu operáciu s časovým odstupom"
+msgstr "Vykonať predvolenú operáciu s časovým odstupom"
 
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
-msgstr "Východzia operácia"
+msgstr "Predvolená operácia"
 
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
 msgid "System Controls"
