@@ -7966,14 +7966,12 @@ msgid "Hide list"
 msgstr "Lista de ocultación"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Modo básico"
+msgstr "Modo de búsqueda"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
-msgstr "Modo Difuso"
+msgstr "Modo difuso"
 
 #: src/modules/everything/evry_config.c:512
 msgid "Quick Navigation"
