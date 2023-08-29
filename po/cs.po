@@ -8065,12 +8065,10 @@ msgid "Hide list"
 msgstr "Skrýt seznam"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Základní režim"
+msgstr "Režim vyhledávání"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Fuzzy režim"
 
