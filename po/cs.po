@@ -8085,9 +8085,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Styl Vi (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:521
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Zobrazit při kliknutí myší"
+msgstr "Použít jednoduché kliknutí myší"
 
 #: src/modules/everything/evry_config.c:528
 msgid "No Sorting"
