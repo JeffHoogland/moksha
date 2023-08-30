@@ -3598,7 +3598,6 @@ msgstr ""
 "<br>%s<br>Сообщение об ошибке:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Модуль не содержит всех требуемых функций"
 
@@ -3879,7 +3878,6 @@ msgstr ""
 "это<br>не завершится."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "Блиииин! Этого не должно случаться"
 
@@ -4608,9 +4606,8 @@ msgid "Date set"
 msgstr "Уст. дату"
 
 #: src/modules/clock/e_mod_config.c:278
-#, fuzzy
 msgid "Info... "
-msgstr "Примечание"
+msgstr "Инфо... "
 
 #: src/modules/clock/e_mod_main.c:988
 msgid "Toggle calendar"
@@ -7980,12 +7977,10 @@ msgid "Hide list"
 msgstr "Скрывать список"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Базовый режим"
+msgstr "Режим поиска"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Нечёткий режим"
 
