@@ -2785,7 +2785,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:144 src/modules/syscon/e_int_config_syscon.c:146
 msgid "Main"
-msgstr "Основных"
+msgstr "Главное"
 
 #: src/bin/e_int_menus.c:167
 #: src/modules/conf_applications/e_int_config_apps.c:74
