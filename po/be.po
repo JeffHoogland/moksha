@@ -7977,12 +7977,10 @@ msgid "Hide list"
 msgstr "Схаваць спіс"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Базавы рэжым"
+msgstr "Рэжым пошуку"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Невыразны рэжым"
 
