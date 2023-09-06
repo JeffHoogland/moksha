@@ -6,6 +6,7 @@
 # poczciwy <Unknown>, 2010.
 # Mariusz 'mariom' Kozakowski <11mariom@gmail.com>, 2010.
 # Enlik <poczta-sn@gazeta.pl>, 2010.
+# qrxnz <send@qrxnz.dev>
 #
 msgid ""
 msgstr ""
@@ -1777,7 +1778,7 @@ msgstr "Tak dla wszystkich"
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:632
 msgid "Warning"
-msgstr ""
+msgstr "Ostrzeżenie"
 
 #: src/bin/e_fm.c:10526
 #, c-format
@@ -4146,7 +4147,7 @@ msgstr "Hibernowanie.<br><hilight>Przoszę czekać.</hilight>"
 #: src/bin/e_theme_about.c:25
 #, fuzzy
 msgid "Select Theme"
-msgstr "Wybierz wystój..."
+msgstr "Wybierz wystrój..."
 
 #: src/bin/e_theme.c:37
 msgid "Set As Theme"
@@ -6807,7 +6808,7 @@ msgstr "maksymalny"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:157
 msgid "Level"
-msgstr ""
+msgstr "Poziom"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:166
 msgid "e.g. Saving to disk"
@@ -8943,7 +8944,7 @@ msgstr "Ścieżki E"
 
 #: src/modules/fileman/e_fwin.c:2178
 msgid "Run"
-msgstr ""
+msgstr "Uruchom"
 
 #: src/modules/fileman/e_fwin.c:2185 src/modules/fileman/e_fwin.c:2585
 msgid "Open"
@@ -9162,7 +9163,7 @@ msgstr "Pokaż ikon urządzeń na pulpicie"
 
 #: src/modules/fileman/e_mod_config.c:416
 msgid "Max File Size For Thumbnailing"
-msgstr ""
+msgstr "Maksymalny Rozmiar Pliku dla Miniatury"
 
 #: src/modules/fileman/e_mod_config.c:422
 #, fuzzy
@@ -10987,7 +10988,7 @@ msgstr "Skopiuj do schowka"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
-msgstr ""
+msgstr " Historia Schowka"
 
 #: src/modules/clipboard/e_mod_config.c:228
 #, fuzzy
