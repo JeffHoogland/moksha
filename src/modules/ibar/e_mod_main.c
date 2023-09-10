@@ -948,6 +948,22 @@ _ibar_icon_empty(IBar_Icon *ic)
 static void
 _ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src)
 {
+   Eina_List *l;
+   E_Exec_Instance *exe;
+   char buf[24];
+
+   if (!ic->exes)
+     edje_object_part_text_set(ic->o_holder, "e.text.label", "");
+
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+   {
+     if (eina_list_count(exe->borders) > 0)
+      {
+        sprintf(buf, "%d", eina_list_count(exe->borders));
+        edje_object_part_text_set(ic->o_holder, "e.text.label", buf);
+      }
+   }
+
    if (ic->o_holder)
      edje_object_signal_emit(ic->o_holder, sig, src);
    if (ic->o_icon && e_icon_edje_get(ic->o_icon))
@@ -2593,7 +2609,7 @@ _ibar_cb_bd_prop(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Property *
 }
 
 static Eina_Bool
-_ibar_cb_bd_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *ev)
+_ibar_cb_bd_add_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *ev)
 {
    IBar *b;
    Eina_List *l, *ll;
@@ -2608,6 +2624,11 @@ _ibar_cb_bd_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *e
         ic = eina_hash_find(b->icon_hash, _desktop_name_get(ev->border->desktop));
         if (ic)
           {
+             if (!ic->exes)
+               _ibar_icon_signal_emit(ic, "e,state,off", "e");
+             else
+               _ibar_icon_signal_emit(ic, "e,state,on", "e");
+
              if (ic->not_in_order)
                {
                   EINA_LIST_FOREACH(ic->exes, ll, exe)
@@ -2683,7 +2704,7 @@ _ibar_cb_exec_new_client(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *
           {
              if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
              ic->starting = EINA_FALSE;
-             if (!ic->exes) _ibar_icon_signal_emit(ic, "e,state,on", "e");
+             _ibar_icon_signal_emit(ic, "e,state,on", "e");
              if (skip) continue;
              if (!eina_list_data_find(ic->exes, exe))
                ic->exes = eina_list_append(ic->exes, exe);
@@ -2806,7 +2827,9 @@ e_modapi_init(E_Module *m)
    E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_PROPERTY,
                          _ibar_cb_bd_prop, NULL);
    E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_REMOVE,
-                         _ibar_cb_bd_del, NULL);
+                         _ibar_cb_bd_add_del, NULL);
+   E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_ADD,
+                         _ibar_cb_bd_add_del, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
    ibar_orders = eina_hash_string_superfast_new(NULL);
