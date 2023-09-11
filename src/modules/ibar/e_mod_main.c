@@ -1473,6 +1473,8 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 {
    Evas_Event_Mouse_Down *ev;
    IBar_Icon *ic;
+   Eina_List *l;
+   E_Exec_Instance *exe;
 
    ev = event_info;
    ic = data;
@@ -1486,12 +1488,23 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         if (!ic->timer)
           ic->timer = ecore_timer_loop_add(0.35, _ibar_cb_icon_menu_cb, ic);
      }
-   else if (ev->button == 2)
+   else if (ev->button == 2)  //show all instance's borders
      {
         E_FREE_FUNC(ic->show_timer, ecore_timer_del);
         E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
         E_FREE_FUNC(ic->timer, ecore_timer_del);
-        _ibar_icon_menu_show(ic, EINA_TRUE);
+
+        EINA_LIST_FOREACH(ic->exes, l, exe)
+          {
+            Eina_List *ll;
+            E_Border *bd;
+
+            EINA_LIST_FOREACH(exe->borders, ll, bd)
+              {
+                e_border_activate(bd, 1);
+              }
+          }
+        //~ _ibar_icon_menu_show(ic, EINA_TRUE);
      }
    else if (ev->button == 3)
      {
