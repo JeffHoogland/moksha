@@ -24,6 +24,7 @@ struct _Config_Item
    int lock_move;
    int dont_add_nonorder;
    int focus_flash;
+   int control;
    unsigned char dont_track_launch;
    unsigned char dont_icon_menu_mouseover;
 };

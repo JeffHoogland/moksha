@@ -108,6 +108,7 @@ static IBar_Icon   *_ibar_icon_notinorder_new(IBar *b, E_Exec_Instance *exe);
 static void         _ibar_icon_free(IBar_Icon *ic);
 static void         _ibar_icon_fill(IBar_Icon *ic);
 static void         _ibar_icon_empty(IBar_Icon *ic);
+static void         _ibar_icon_go(IBar_Icon *ic, Eina_Bool keep_going);
 static void         _ibar_sep_create(IBar *b);
 static void         _ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src);
 static void         _ibar_cb_app_change(void *data, E_Order *eo);
@@ -1469,12 +1470,43 @@ _ibar_cb_icon_menu_cb_void(void *data)
 }
 
 static void
+_ibar_mouse_left_click(void *data) 
+{
+   IBar_Icon *ic = data;
+   
+   if (!ic->drag.dnd) _ibar_icon_go(ic, EINA_FALSE);
+   ic->drag.start = 0;
+   ic->drag.dnd = 0;
+   ic->mouse_down = 0;
+   E_FREE_FUNC(ic->timer, ecore_timer_del);
+}
+
+static void
+_ibar_mouse_middle_click(void *data)
+{
+   IBar_Icon *ic = data;
+   E_Exec_Instance *exe;
+   Eina_List *l;
+  
+   E_FREE_FUNC(ic->show_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->timer, ecore_timer_del);
+
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+     {
+        Eina_List *ll;
+        E_Border *bd;
+
+        EINA_LIST_FOREACH(exe->borders, ll, bd)
+          e_border_activate(bd, 1);
+     }
+}
+
+static void
 _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    IBar_Icon *ic;
-   Eina_List *l;
-   E_Exec_Instance *exe;
 
    ev = event_info;
    ic = data;
@@ -1488,22 +1520,12 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
         if (!ic->timer)
           ic->timer = ecore_timer_loop_add(0.35, _ibar_cb_icon_menu_cb, ic);
      }
-   else if (ev->button == 2)  //show all instance's borders
+   else if (ev->button == 2)
      {
-        E_FREE_FUNC(ic->show_timer, ecore_timer_del);
-        E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
-        E_FREE_FUNC(ic->timer, ecore_timer_del);
-
-        EINA_LIST_FOREACH(ic->exes, l, exe)
-          {
-            Eina_List *ll;
-            E_Border *bd;
-
-            EINA_LIST_FOREACH(exe->borders, ll, bd)
-              {
-                e_border_activate(bd, 1);
-              }
-          }
+        if (ic->ibar->inst->ci->control)
+          _ibar_mouse_middle_click(ic);
+        else
+          _ibar_mouse_left_click(ic);
         //~ _ibar_icon_menu_show(ic, EINA_TRUE);
      }
    else if (ev->button == 3)
@@ -1780,11 +1802,15 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
 
    if ((ev->button == 1) && (ic->mouse_down == 1))
      {
-        if (!ic->drag.dnd) _ibar_icon_go(ic, EINA_FALSE);
-        ic->drag.start = 0;
-        ic->drag.dnd = 0;
-        ic->mouse_down = 0;
-        E_FREE_FUNC(ic->timer, ecore_timer_del);
+       if (ic->ibar->inst->ci->control)
+         {
+           _ibar_mouse_left_click(ic);
+         }
+       else
+         {
+           _ibar_mouse_middle_click(ic);
+           ic->drag.start = 0;
+         }
      }
 }
 
@@ -2793,6 +2819,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, eap_label, INT);
    E_CONFIG_VAL(D, T, lock_move, INT);
    E_CONFIG_VAL(D, T, focus_flash, INT);
+   E_CONFIG_VAL(D, T, control, INT);
    E_CONFIG_VAL(D, T, dont_add_nonorder, INT);
    E_CONFIG_VAL(D, T, dont_track_launch, UCHAR);
    E_CONFIG_VAL(D, T, dont_icon_menu_mouseover, UCHAR);
@@ -2821,6 +2848,7 @@ e_modapi_init(E_Module *m)
         ci->dont_add_nonorder = 0;
         ci->dont_track_launch = 0;
         ci->focus_flash = 1;
+        ci->control = 1;
         ci->dont_icon_menu_mouseover = 0;
         ibar_config->items = eina_list_append(ibar_config->items, ci);
      }
