@@ -150,8 +150,6 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Misc"), 0);
-   ob = e_widget_check_add(evas, _("Moksha style control"), &(cfdata->control));
-   e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Icon focus flash"), &(cfdata->focus_flash));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Lock icon move"), &(cfdata->lock_move));
@@ -161,6 +159,8 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    ob = e_widget_check_add(evas, _("Track launch"), &(cfdata->track_launch));
    e_widget_framelist_object_append(of, ob);
    ob = e_widget_check_add(evas, _("Menu on mouse over"), &(cfdata->icon_menu_mouseover));
+   e_widget_framelist_object_append(of, ob);
+   ob = e_widget_check_add(evas, _("Moksha style control"), &(cfdata->control));
    e_widget_framelist_object_append(of, ob);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
