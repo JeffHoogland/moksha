@@ -8868,9 +8868,8 @@ msgid "Menu on mouse over"
 msgstr "Menú al pasar el apuntador"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Módulo %s de Moksha"
+msgstr "Control de estilo de Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
