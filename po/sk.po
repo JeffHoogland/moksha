@@ -8887,9 +8887,8 @@ msgid "Menu on mouse over"
 msgstr "Ponuka pre ikonu"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Moksha %s Modul"
+msgstr "Ovládanie štýlom Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
