@@ -52,7 +52,6 @@ typedef struct _Config_Item Config_Item;
 struct _Config_Item 
 {
    const char *id;
-
    int switch2;
 };
 

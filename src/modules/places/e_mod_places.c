@@ -218,7 +218,7 @@ places_volume_del(Volume *v)
 
         evas_object_del(o);
      }
-   if (v->id)         eina_stringshare_del(v->id);
+   if (v->id)          eina_stringshare_del(v->id);
    if (v->label)       eina_stringshare_del(v->label);
    if (v->icon)        eina_stringshare_del(v->icon);
    if (v->mount_point) eina_stringshare_del(v->mount_point);
@@ -279,6 +279,23 @@ places_update_all_gadgets(void)
    volumes = eina_list_sort(volumes, 0, _places_volume_sort_cb);
    EINA_LIST_FOREACH(instances, l, inst)
      places_fill_box(inst->o_main, inst->horiz);
+}
+
+static void
+_places_popup_del(Instance *inst)
+{
+   if (inst->popup)
+     e_object_del(E_OBJECT(inst->popup));
+}
+
+void
+places_box_hide(void)
+{
+   Eina_List *l;
+   Instance *inst;
+
+   EINA_LIST_FOREACH(instances, l, inst)
+     _places_popup_del(inst);
 }
 
 void
@@ -927,7 +944,10 @@ _places_icon_activated_cb(void *data, Evas_Object *o __UNUSED__, const char *emi
    Volume *vol = data;
 
    if (vol->mounted)
-     places_run_fm(vol->mount_point);
+     {
+        places_run_fm(vol->mount_point);
+        places_box_hide();
+     }
    else if (vol->mount_func)
      {
         vol->force_open = EINA_TRUE;
