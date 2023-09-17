@@ -251,17 +251,16 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
   
    e_widget_toolbook_page_append(otb, NULL, _("Places"), o, 1, 0, 1, 0,
                                  0.5, 0.0);
-                                 
+
   //second toolbook page
    o = e_widget_list_add(evas, 0, 0);
 
-   
    of = e_widget_framelist_add(evas, _("Alert"), 0);
    e_widget_framelist_content_align_set(of, 0.0, 0.0);
 
    ow = e_widget_check_add(evas, _("Show full disk alert"),
                            &(cfdata->show_alert));
-   e_widget_on_change_hook_set(ow, _cb_show_alert_changed, cfdata);                           
+   e_widget_on_change_hook_set(ow, _cb_show_alert_changed, cfdata);
    e_widget_framelist_object_append(of, ow);    
    ow = e_widget_label_add(evas, _("Capacity limit:"));
    e_widget_framelist_object_append(of, ow);  
@@ -278,14 +277,12 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
    ow = e_widget_slider_add(evas, 1, 0, _("%1.0f s"), 1, 300, 1, 0, 
                             NULL, &(cfdata->alert_timeout), 100);
    cfdata->ui.alert_timeout = ow;
-   e_widget_framelist_object_append(of, ow);                           
-   e_widget_list_object_append(o, of, 1, 1, 0.5);    
+   e_widget_framelist_object_append(of, ow);
+   e_widget_list_object_append(o, of, 1, 1, 0.5);
    
-   _cb_show_alert_changed(cfdata, NULL);                     
-                                 
+   _cb_show_alert_changed(cfdata, NULL);
    e_widget_toolbook_page_append(otb, NULL, _("Alert"), o, 1, 0, 1, 0,
-                                 0.5, 0.0);                                 
-                                 
+                                 0.5, 0.0);
    e_widget_toolbook_page_show(otb, 0);
    return otb;
 }
