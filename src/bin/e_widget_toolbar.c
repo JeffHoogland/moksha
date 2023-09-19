@@ -154,18 +154,19 @@ e_widget_toolbar_item_append(Evas_Object *obj, Evas_Object *icon, const char *la
      }
    else
      edje_object_signal_emit(o, "e,icon,disabled", "e");
+
    edje_object_message_signal_process(o);
    edje_object_part_text_set(o, "e.text.label", label);
    edje_object_size_min_calc(o, &mw, &mh);
    e_widget_sub_object_add(obj, o);
    e_box_pack_end(wd->o_box, o);
    e_box_pack_options_set(o,
-			  1, 1, /* fill */
-			  0, 0, /* expand */
-			  0.5, 0.5, /* align */
-			  mw, mh, /* min */
-			  9999, 9999 /* max */
-			  );
+              1, 1, /* fill */
+              0, 0, /* expand */
+              0.5, 0.5, /* align */
+              mw, mh, /* min */
+              9999, 9999 /* max */
+              );
    evas_object_show(o);
    e_box_size_min_get(wd->o_box, &mw, &mh);
    evas_object_resize(wd->o_box, mw, mh);
@@ -189,10 +190,10 @@ e_widget_toolbar_item_remove(Evas_Object *obj, int num)
    it = eina_list_nth(wd->items, num);
    if (it)
      {
-	evas_object_del(it->o_base);
-	if (it->o_icon) evas_object_del(it->o_icon);
-	wd->items = eina_list_remove(wd->items, it);
-	E_FREE(it);
+       evas_object_del(it->o_base);
+       if (it->o_icon) evas_object_del(it->o_icon);
+       wd->items = eina_list_remove(wd->items, it);
+       E_FREE(it);
      }
 }
 
@@ -216,7 +217,7 @@ e_widget_toolbar_item_select(Evas_Object *obj, int num)
           {
              if (it->selected) _item_unselect(it);
           }
-	i++;
+        i++;
      }
 }
 
@@ -231,17 +232,17 @@ e_widget_toolbar_item_label_set(Evas_Object *obj, int num, const char *label)
    it = eina_list_nth(wd->items, num);
    if (it)
      {
-	int mw, mh;
+       int mw, mh;
 
-	edje_object_part_text_set(it->o_base, "e.text.label", label);
-	edje_object_size_min_calc(it->o_base, &mw, &mh);
-	e_box_pack_options_set(it->o_base,
-			       1, 1, /* fill */
-			       0, 0, /* expand */
-			       0.5, 0.5, /* align */
-			       mw, mh, /* min */
-			       9999, 9999 /* max */
-			       );
+       edje_object_part_text_set(it->o_base, "e.text.label", label);
+       edje_object_size_min_calc(it->o_base, &mw, &mh);
+       e_box_pack_options_set(it->o_base,
+                   1, 1, /* fill */
+                   0, 0, /* expand */
+                   0.5, 0.5, /* align */
+                   mw, mh, /* min */
+                   9999, 9999 /* max */
+                   );
      }
 }
 
@@ -275,17 +276,17 @@ e_widget_toolbar_focus_steal_set(Evas_Object *obj, Eina_Bool steal)
    if (wd->focus_steal == steal) return;
    if (steal)
      {
-	evas_object_event_callback_add(e_scrollframe_edje_object_get(wd->o_base),
-				       EVAS_CALLBACK_MOUSE_DOWN,
-				       _e_wid_focus_steal, obj);
-	wd->focus_steal = EINA_TRUE;
+       evas_object_event_callback_add(e_scrollframe_edje_object_get(wd->o_base),
+                       EVAS_CALLBACK_MOUSE_DOWN,
+                       _e_wid_focus_steal, obj);
+       wd->focus_steal = EINA_TRUE;
      }
    else
      {
-	evas_object_event_callback_del(e_scrollframe_edje_object_get(wd->o_base),
-				       EVAS_CALLBACK_MOUSE_DOWN,
-				       _e_wid_focus_steal);
-	wd->focus_steal = EINA_FALSE;
+       evas_object_event_callback_del(e_scrollframe_edje_object_get(wd->o_base),
+                       EVAS_CALLBACK_MOUSE_DOWN,
+                       _e_wid_focus_steal);
+       wd->focus_steal = EINA_FALSE;
      }
 }
 
@@ -397,8 +398,8 @@ _e_wid_signal_prev(void *data, Evas_Object *obj __UNUSED__, const char *emission
      }
    if ((it) && (it2) && (it != it2))
      {
-	_item_unselect(it);
-	_item_select(it2);
+       _item_unselect(it);
+       _item_select(it2);
      }
 }
 
@@ -422,8 +423,8 @@ _e_wid_signal_next(void *data, Evas_Object *obj __UNUSED__, const char *emission
      }
    if ((it) && (it2) && (it != it2))
      {
-	_item_unselect(it);
-	_item_select(it2);
+       _item_unselect(it);
+       _item_select(it2);
      }
 }
 
@@ -469,11 +470,11 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
    if ((!strcmp(ev->key, "Up")) || (!strcmp(ev->key, "KP_Up")) ||
        (!strcmp(ev->key, "Left")) || (!strcmp(ev->key, "KP_Left")))
      {
-	EINA_LIST_FOREACH(wd->items, l, it)
+       EINA_LIST_FOREACH(wd->items, l, it)
           {
              if (it->selected)
                {
-		  l2 = eina_list_prev(l);
+                  l2 = eina_list_prev(l);
                   if (l2) it2 = eina_list_data_get(l2);
                   break;
                }
@@ -484,11 +485,11 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
             (!strcmp(ev->key, "Right")) ||
             (!strcmp(ev->key, "KP_Right")))
      {
-	EINA_LIST_FOREACH(wd->items, l, it)
+       EINA_LIST_FOREACH(wd->items, l, it)
           {
              if (it->selected)
                {
-		  l2 = eina_list_next(l);
+                  l2 = eina_list_next(l);
                   if (l2) it2 = eina_list_data_get(l2);
                   break;
                }
@@ -497,30 +498,30 @@ _e_wid_cb_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED_
    else if ((!strcmp(ev->key, "Home")) ||
             (!strcmp(ev->key, "KP_Home")))
      {
-	EINA_LIST_FOREACH(wd->items, l, it)
-	  {
-	     if (it->selected)
-	       {
-		  it2 = eina_list_data_get(wd->items);
-		  break;
-	       }
-	  }
+        EINA_LIST_FOREACH(wd->items, l, it)
+          {
+             if (it->selected)
+               {
+              it2 = eina_list_data_get(wd->items);
+              break;
+               }
+          }
      }
    else if ((!strcmp(ev->key, "End")) || (!strcmp(ev->key, "KP_End")))
      {
         EINA_LIST_FOREACH(wd->items, l, it)
           {
-	     if (it->selected)
-	       {
-		  it2 = eina_list_last_data_get(wd->items);
-		  break;
-	       }
+             if (it->selected)
+               {
+                 it2 = eina_list_last_data_get(wd->items);
+                 break;
+               }
           }
      }
    if ((it) && (it2) && (it != it2))
      {
-	_item_unselect(it);
-	_item_select(it2);
+       _item_unselect(it);
+       _item_select(it2);
      }
 }
 
