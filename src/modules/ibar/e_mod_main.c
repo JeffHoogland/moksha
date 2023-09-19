@@ -2799,6 +2799,45 @@ _ibar_cb_exec_new(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *exe)
    return ECORE_CALLBACK_RENEW;
 }
 
+void
+_ibar_config_new(void)
+{
+   Config_Item *ci;
+
+   ibar_config = E_NEW(Config, 1);
+
+   ci = E_NEW(Config_Item, 1);
+   ci->id = eina_stringshare_add("ibar.1");
+   ci->dir = eina_stringshare_add("default");
+   ci->show_label = 1;
+   ci->eap_label = 0;
+   ci->lock_move = 0;
+   ci->dont_add_nonorder = 0;
+   ci->dont_track_launch = 0;
+   ci->focus_flash = 1;
+   ci->control = 1;
+   ci->dont_icon_menu_mouseover = 0;
+   ibar_config->items = eina_list_append(ibar_config->items, ci);
+
+   ibar_config->version = MOD_CONFIG_FILE_VERSION;
+}
+
+void
+_ibar_config_free(void)
+{
+   Config_Item *ci;
+
+   EINA_LIST_FREE(ibar_config->items, ci)
+     {
+        eina_stringshare_del(ci->id);
+        eina_stringshare_del(ci->dir);
+        free(ci);
+     }
+
+   ibar_config->module = NULL;
+   E_FREE(ibar_config);
+}
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -2823,35 +2862,28 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, dont_add_nonorder, INT);
    E_CONFIG_VAL(D, T, dont_track_launch, UCHAR);
    E_CONFIG_VAL(D, T, dont_icon_menu_mouseover, UCHAR);
-   
+
    conf_edd = E_CONFIG_DD_NEW("IBar_Config", Config);
 #undef T
 #undef D
 #define T Config
 #define D conf_edd
    E_CONFIG_LIST(D, T, items, conf_item_edd);
+   E_CONFIG_VAL(D, T, version, INT);
 
    ibar_config = e_config_domain_load("module.ibar", conf_edd);
 
-   if (!ibar_config)
+   if (ibar_config)
      {
-        Config_Item *ci;
-
-        ibar_config = E_NEW(Config, 1);
-
-        ci = E_NEW(Config_Item, 1);
-        ci->id = eina_stringshare_add("ibar.1");
-        ci->dir = eina_stringshare_add("default");
-        ci->show_label = 1;
-        ci->eap_label = 0;
-        ci->lock_move = 0;
-        ci->dont_add_nonorder = 0;
-        ci->dont_track_launch = 0;
-        ci->focus_flash = 1;
-        ci->control = 1;
-        ci->dont_icon_menu_mouseover = 0;
-        ibar_config->items = eina_list_append(ibar_config->items, ci);
+        if (!e_util_module_config_check(_("IBar"), ibar_config->version,
+                                               MOD_CONFIG_FILE_VERSION))
+          {
+             _ibar_config_free();
+             ibar_config = NULL;
+          }
      }
+
+   if (!ibar_config) _ibar_config_new();
 
    ibar_config->module = m;
 

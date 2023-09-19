@@ -25,4 +25,5 @@ group "IBar_Config" struct {
             value "control" int: 1;
        }
    }
+   value "version" int: 1000000;
 }

@@ -1,11 +1,18 @@
 #ifndef E_MOD_MAIN_H
 #define E_MOD_MAIN_H
 
+/* Increment for Major Changes */
+#define MOD_CONFIG_FILE_EPOCH      1
+/* Increment for Minor Changes (ie: user doesn't need a new config) */
+#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
+
 typedef struct _Config      Config;
 typedef struct _Config_Item Config_Item;
 
 struct _Config
 {
+   unsigned int     version;
    /* saved * loaded config values */
    Eina_List       *items;
    /* just config state */
