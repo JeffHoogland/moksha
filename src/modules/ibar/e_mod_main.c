@@ -1523,7 +1523,10 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    else if (ev->button == 2)
      {
         if (ic->ibar->inst->ci->control)
-          _ibar_mouse_middle_click(ic);
+          {
+            if (ic->exes)
+              _ibar_mouse_middle_click(ic);
+          }
         else
           _ibar_mouse_left_click(ic);
         //~ _ibar_icon_menu_show(ic, EINA_TRUE);
@@ -1803,13 +1806,16 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
    if ((ev->button == 1) && (ic->mouse_down == 1))
      {
        if (ic->ibar->inst->ci->control)
-         {
-           _ibar_mouse_left_click(ic);
-         }
+         _ibar_mouse_left_click(ic);
        else
          {
-           _ibar_mouse_middle_click(ic);
-           ic->drag.start = 0;
+            if (ic->exes)
+              {
+                _ibar_mouse_middle_click(ic);
+                ic->drag.start = 0;
+              }
+            else
+              _ibar_mouse_left_click(ic);
          }
      }
 }
