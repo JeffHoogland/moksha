@@ -1809,7 +1809,8 @@ _ibar_cb_icon_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
          _ibar_mouse_left_click(ic);
        else
          {
-            if (ic->exes)
+            if (ic->exes && !evas_key_modifier_is_set(ev->modifiers, "Shift")
+                         && !evas_key_modifier_is_set(ev->modifiers, "Control"))
               {
                 _ibar_mouse_middle_click(ic);
                 ic->drag.start = 0;
