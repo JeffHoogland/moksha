@@ -970,6 +970,7 @@ void
 _places_header_activated_cb(void *data __UNUSED__, Evas_Object *o __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    places_run_fm(e_user_homedir_get());
+   places_box_hide();
 }
 
 /* E17 menu augmentation */
