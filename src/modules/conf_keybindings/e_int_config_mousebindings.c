@@ -1226,17 +1226,17 @@ _helper_wheel_name_get(E_Config_Binding_Wheel *bw)
    switch (bw->direction)
      {
       case 0:
-	 if (bw->z < 0) 
-	   name = strdup(_("Mouse Wheel Up"));
-	 else
-	   name = strdup(_("Mouse Wheel Down"));
-	 break;
+        if (bw->z < 0) 
+          name = strdup(_("Mouse Wheel Up"));
+        else
+          name = strdup(_("Mouse Wheel Down"));
+        break;
       default:
-	 if (bw->z < 0) 
-	   snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Up"), bw->direction);
-	 else
-	   snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Down"), bw->direction);
-	 name = strdup(buf);
+        if (bw->z < 0) 
+          snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Up"), bw->direction);
+        else
+          snprintf(buf, sizeof(buf), _("Extra Wheel (%d) Down"), bw->direction);
+        name = strdup(buf);
      }
    return name;
 }
