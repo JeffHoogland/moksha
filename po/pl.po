@@ -558,7 +558,7 @@ msgstr "Skocz do biurka"
 
 #: src/bin/e_actions.c:3405
 msgid "Jump to window... or start..."
-msgstr ""
+msgstr "Skocz do biurka... lub wystartuj..."
 
 #: src/bin/e_actions.c:3412 src/bin/e_actions.c:3414 src/bin/e_actions.c:3416
 #: src/bin/e_actions.c:3422 src/bin/e_actions.c:3424 src/bin/e_actions.c:3426
@@ -740,7 +740,7 @@ msgstr "Aplikacja"
 
 #: src/bin/e_actions.c:3535
 msgid "New Instance of Focused App"
-msgstr ""
+msgstr "Otwórz Aplikację"
 
 #: src/bin/e_actions.c:3539
 msgid "Restart"
@@ -774,7 +774,7 @@ msgstr "Moduł Randr dla Moksha"
 
 #: src/bin/e_actions.c:3566
 msgid "Disable the named module"
-msgstr ""
+msgstr "Wyłącz moduł"
 
 #: src/bin/e_actions.c:3570
 #, fuzzy
@@ -855,7 +855,7 @@ msgstr "Utwórz skrót klawiaturowy"
 
 #: src/bin/e_actions.c:3637
 msgid "Previous keyboard layout"
-msgstr ""
+msgstr "Poprzedni układ klawiatury"
 
 #: src/bin/e_bg.c:22
 msgid "Set As Background"
@@ -1534,7 +1534,7 @@ msgstr "Pokaż Rozszerzenie ikon"
 
 #: src/bin/e_fm.c:8783 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
-msgstr ""
+msgstr "Sortuj Po Czasie Modyfikacji"
 
 #: src/bin/e_fm.c:8789 src/modules/fileman/e_mod_config.c:378
 #, fuzzy
@@ -1569,7 +1569,7 @@ msgstr "Odśwież widok"
 
 #: src/bin/e_fm.c:8875 src/bin/e_fm.c:9036
 msgid "New..."
-msgstr ""
+msgstr "Nowy..."
 
 #: src/bin/e_fm.c:8895 src/bin/e_fm.c:9057 src/bin/e_fm.c:9088
 #, fuzzy
@@ -1849,7 +1849,7 @@ msgstr ""
 #: src/bin/e_fm_device.c:79
 #, c-format
 msgid "Flash Card—%s"
-msgstr ""
+msgstr "Karta Pamięci"
 
 #: src/bin/e_fm_device.c:81
 #, c-format
@@ -1863,7 +1863,7 @@ msgstr "Urządzenie usuwalne"
 #: src/bin/e_fm_prop.c:255
 #, c-format
 msgid "Cannot change permissions: %s"
-msgstr ""
+msgstr "Nie można zmienić uprawnień"
 
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
@@ -1915,7 +1915,7 @@ msgstr "gotowy"
 
 #: src/bin/e_fm_prop.c:453 src/bin/e_fm_prop.c:462 src/bin/e_fm_prop.c:471
 msgid "write"
-msgstr ""
+msgstr "zapisz"
 
 #: src/bin/e_fm_prop.c:455 src/bin/e_fm_prop.c:464 src/bin/e_fm_prop.c:473
 msgid "execute"
@@ -1961,7 +1961,7 @@ msgstr "Informacje odnośnika"
 
 #: src/bin/e_fm_prop.c:558
 msgid "This link is broken."
-msgstr ""
+msgstr "Ten link jest zepsuty"
 
 #: src/bin/e_fm_prop.c:613
 msgid "Select an Image"
