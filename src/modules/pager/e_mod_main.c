@@ -2257,7 +2257,7 @@ _pager_desk_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    ev = event_info;
    pd = data;
    if (!pd) return;
-   if ((!pd->pager->popup) && (ev->button == 3)) return;
+   if ((!pd->pager->popup) && ((ev->button == 2) || (ev->button == 3))) return;
    if (ev->button == (int)pager_config->btn_desk)
      {
         evas_object_geometry_get(pd->o_desk, &ox, &oy, NULL, NULL);
