@@ -132,8 +132,8 @@ struct _E_Gadcon
    E_Gadcon_Location *location;
 
    E_Drop_Handler    *drop_handler;
-   E_Gadcon_Client *drag_gcc, *new_gcc;
-   E_Gadcon_DND_Cb dnd_enter_cb, dnd_leave_cb, dnd_move_cb, dnd_drop_cb;
+   E_Gadcon_Client   *drag_gcc, *new_gcc;
+   E_Gadcon_DND_Cb    dnd_enter_cb, dnd_leave_cb, dnd_move_cb, dnd_drop_cb;
 
    E_Config_Gadcon   *cf;
 
@@ -287,7 +287,7 @@ EAPI void                    e_gadcon_custom_populate_request(E_Gadcon *gc);
 EAPI void                    e_gadcon_swallowed_min_size_set(E_Gadcon *gc, Evas_Coord w, Evas_Coord h);
 EAPI void                    e_gadcon_min_size_request_callback_set(E_Gadcon *gc, void (*func)(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
 EAPI void                    e_gadcon_size_request_callback_set(E_Gadcon *gc, void (*func)(void *data, E_Gadcon *gc, Evas_Coord w, Evas_Coord h), void *data);
-EAPI void e_gadcon_frame_request_callback_set(E_Gadcon * gc, Evas_Object * (*func)(void *data, E_Gadcon_Client * gcc, const char *style), void *data);
+EAPI void                    e_gadcon_frame_request_callback_set(E_Gadcon * gc, Evas_Object * (*func)(void *data, E_Gadcon_Client * gcc, const char *style), void *data);
 EAPI void                    e_gadcon_populate_callback_set(E_Gadcon *gc, void (*func)(void *data, E_Gadcon *gc, const E_Gadcon_Client_Class *cc), void *data);
 EAPI void                    e_gadcon_layout_policy_set(E_Gadcon *gc, E_Gadcon_Layout_Policy layout_policy);
 EAPI Eina_Bool               e_gadcon_populate(E_Gadcon *gc);

@@ -47,15 +47,15 @@ typedef enum
 
 struct _Manager
 {
-   Eina_List   *gadcons[GADMAN_LAYER_COUNT];
-   E_Gadcon    *gc_top;
+   Eina_List         *gadcons[GADMAN_LAYER_COUNT];
+   E_Gadcon          *gc_top;
    E_Gadcon_Location *location[GADMAN_LAYER_COUNT];
-   Eina_List   *gadgets[GADMAN_LAYER_COUNT];
-   Ecore_Timer *gadman_reset_timer;
-   Evas_Object *movers[GADMAN_LAYER_COUNT];
-   Evas_Object *full_bg;
-   const char  *icon_name;
-   E_Gadcon_Client *drag_gcc[GADMAN_LAYER_COUNT];
+   Eina_List         *gadgets[GADMAN_LAYER_COUNT];
+   Ecore_Timer       *gadman_reset_timer;
+   Evas_Object       *movers[GADMAN_LAYER_COUNT];
+   Evas_Object       *full_bg;
+   const char        *icon_name;
+   E_Gadcon_Client   *drag_gcc[GADMAN_LAYER_COUNT];
 
    Eina_List *drag_handlers;
 
@@ -70,11 +70,11 @@ struct _Manager
 
    Evas_Coord  width, height;
    
-   E_Module                *module;
-   E_Config_Dialog         *config_dialog;
-   E_Int_Menu_Augmentation *maug;
+   E_Module                 *module;
+   E_Config_Dialog          *config_dialog;
+   E_Int_Menu_Augmentation  *maug;
    E_Menu_Category_Callback *mcat;
-   E_Action                *action;
+   E_Action                 *action;
 
    E_Config_DD    *conf_edd;
    Config         *conf;

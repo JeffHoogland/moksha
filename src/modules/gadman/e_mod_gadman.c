@@ -1,12 +1,12 @@
 #include "e_mod_gadman.h"
 
 /* local protos */
-static Eina_Bool _e_gadman_reset_timer(void *d);
+static Eina_Bool        _e_gadman_reset_timer(void *d);
 static void             _attach_menu(void *data, E_Gadcon_Client *gcc, E_Menu *menu);
 static void             _save_widget_position(E_Gadcon_Client *gcc);
 static void             _apply_widget_position(E_Gadcon_Client *gcc);
 static E_Gadcon_Client *_gadman_gadget_add(const E_Gadcon_Client_Class *cc, Gadman_Layer_Type layer, E_Config_Gadcon_Client *src_cf);
-static Eina_Bool _gadman_module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
+static Eina_Bool        _gadman_module_init_end_cb(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__);
 static Evas_Object     *_create_mover(E_Gadcon *gc);
 static Evas_Object     *_get_mover(E_Gadcon_Client *gcc);
 static E_Gadcon        *_gadman_gadcon_new(const char *name, Gadman_Layer_Type layer, E_Zone *zone, E_Gadcon_Location *loc);
@@ -33,7 +33,7 @@ static void             on_menu_delete(void *data, E_Menu *m, E_Menu_Item *mi);
 static void             on_menu_edit(void *data, E_Menu *m, E_Menu_Item *mi);
 static void             on_menu_add(void *data, E_Menu *m, E_Menu_Item *mi);
 
-static Eina_Bool       _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev);
+static Eina_Bool        _gadman_module_cb(void *d __UNUSED__, int type __UNUSED__, E_Event_Module_Update *ev);
 static int              _e_gadman_client_add(void *data __UNUSED__, E_Gadcon_Client *, const E_Gadcon_Client_Class *cc);
 static void             _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc);
 
