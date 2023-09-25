@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-13 18:16+0200\n"
+"POT-Creation-Date: 2023-09-25 06:18-0400\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -361,7 +361,7 @@ msgstr "Przełącz Przypięty państwo"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1069
 msgid "Desktop"
 msgstr "Pulpit"
 
@@ -1601,7 +1601,7 @@ msgid "Eject"
 msgstr "Wysuń"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1578
+#: src/modules/ibar/e_mod_main.c:1581
 msgid "Properties"
 msgstr "Ustawienia"
 
@@ -1776,7 +1776,7 @@ msgid "Yes to all"
 msgstr "Tak dla wszystkich"
 
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
-#: src/modules/places/e_mod_places.c:632
+#: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
@@ -1849,7 +1849,7 @@ msgstr ""
 #: src/bin/e_fm_device.c:79
 #, c-format
 msgid "Flash Card—%s"
-msgstr "Karta Pamięci"
+msgstr "Karta Pamięci-%s"
 
 #: src/bin/e_fm_device.c:81
 #, c-format
@@ -1863,7 +1863,7 @@ msgstr "Urządzenie usuwalne"
 #: src/bin/e_fm_prop.c:255
 #, c-format
 msgid "Cannot change permissions: %s"
-msgstr "Nie można zmienić uprawnień"
+msgstr "Nie można zmienić uprawnień: %s"
 
 #: src/bin/e_fm_prop.c:390 src/bin/e_shelf.c:1178 src/bin/e_shelf.c:2433
 #: src/modules/conf_dialogs/e_int_config_profiles.c:316
@@ -2658,7 +2658,7 @@ msgstr "Zarządaj pozycji"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
@@ -3788,8 +3788,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Podczas ładowania modułu %s wystąpił błąd.<br>Pełna ścieżka do modułu to:<br>"
-"%s<br>Zgłoszony błąd to:<br>%s<br>"
+"Podczas ładowania modułu %s wystąpił błąd.<br>Pełna ścieżka do modułu to:"
+"<br>%s<br>Zgłoszony błąd to:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -3975,7 +3975,7 @@ msgid "Rename Shelf"
 msgstr "Zmień nazwę pliku"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1565
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
 #, fuzzy
 msgid "Contents"
 msgstr "Komentarz"
@@ -4609,7 +4609,7 @@ msgid "Shutdown when below:"
 msgstr "Wyłącz po niżej;"
 
 #: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
 msgstr ""
@@ -4634,20 +4634,20 @@ msgstr "Alarm gdy na:"
 msgid "%1.0f min"
 msgstr ""
 
-#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:273
+#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 #, fuzzy
 msgid "Auto dismiss in..."
 msgstr "Auto odwołać w. .."
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#: src/modules/places/e_mod_config.c:278
+#: src/modules/places/e_mod_config.c:277
 #, fuzzy, c-format
 msgid "%1.0f s"
 msgstr "%1.0f fps"
 
-#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:259
-#: src/modules/places/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
+#: src/modules/places/e_mod_config.c:284
 #, fuzzy
 msgid "Alert"
 msgstr "Sygnał"
@@ -4945,7 +4945,7 @@ msgid "E-Mail"
 msgstr ""
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
 msgid "Trash"
 msgstr "Kosz"
 
@@ -6171,8 +6171,9 @@ msgstr "Błąd przypisania kombinacji"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Wybrana kombinacja klawiszy jest już używana przez akcję <br><hilight>%s</"
 "hilight>. Proszę wybrać inną kombinację klawiszy."
@@ -8906,11 +8907,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -9251,7 +9252,7 @@ msgid "Current Directory"
 msgstr "Nowy katalog"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1039
+#: src/modules/places/e_mod_places.c:1060
 msgid "Home"
 msgstr "Katalog domowy"
 
@@ -9591,31 +9592,32 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Czy na pewno chcesz skasować to źródło paska?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1554
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Utwórz nową ikonę"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1588
 #, fuzzy
 msgid "Add to bar"
 msgstr "Dodaj do IBar"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1594
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Usuń gadżet"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1600
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Ikony"
 
-#: src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:2921
 #, fuzzy
 msgid "Focus IBar"
 msgstr "Fokus"
@@ -11131,27 +11133,27 @@ msgstr "Używaj własnego manadżera plików"
 msgid "Show in menu"
 msgstr "Pokazuj w menu"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
-#: src/modules/places/e_mod_places.c:1066
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:1087
 msgid "Filesystem"
 msgstr "System plików."
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
 msgstr ""
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "Miejsca"
 
-#: src/modules/places/e_mod_config.c:262
+#: src/modules/places/e_mod_config.c:261
 #, fuzzy
 msgid "Show full disk alert"
 msgstr "Pokaż pełną ścieżkę"
 
-#: src/modules/places/e_mod_config.c:266
+#: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
 msgstr ""
 
@@ -11160,65 +11162,65 @@ msgstr ""
 msgid "Places Configuration Updated"
 msgstr "Konfiguracja miejsc"
 
-#: src/modules/places/e_mod_places.c:633
+#: src/modules/places/e_mod_places.c:650
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:708
+#: src/modules/places/e_mod_places.c:725
 #, fuzzy, c-format
 msgid "Places warning!"
 msgstr "Konfiguracja miejsc"
 
-#: src/modules/places/e_mod_places.c:709
+#: src/modules/places/e_mod_places.c:726
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:814
+#: src/modules/places/e_mod_places.c:831
 msgid "b"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:819
+#: src/modules/places/e_mod_places.c:836
 #, fuzzy
 msgid "KB"
 msgstr "przez"
 
-#: src/modules/places/e_mod_places.c:824
+#: src/modules/places/e_mod_places.c:841
 #, fuzzy
 msgid "MB"
 msgstr "przez"
 
-#: src/modules/places/e_mod_places.c:829
+#: src/modules/places/e_mod_places.c:846
 #, fuzzy
 msgid "GB"
 msgstr "przez"
 
-#: src/modules/places/e_mod_places.c:833
+#: src/modules/places/e_mod_places.c:850
 #, fuzzy
 msgid "TB"
 msgstr "przez"
 
-#: src/modules/places/e_mod_places.c:869
+#: src/modules/places/e_mod_places.c:886
 #, fuzzy
 msgid "No Name"
 msgstr "Bez nazwy"
 
-#: src/modules/places/e_mod_places.c:876
+#: src/modules/places/e_mod_places.c:893
 msgid "free of"
 msgstr "wolne z"
 
-#: src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:899
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s nie jest zamontowane"
 
-#: src/modules/places/e_mod_places.c:910
+#: src/modules/places/e_mod_places.c:927
 msgid "unmount"
 msgstr "odmontuj"
 
-#: src/modules/places/e_mod_places.c:916
+#: src/modules/places/e_mod_places.c:933
 msgid "eject"
 msgstr "wysuń"
 
