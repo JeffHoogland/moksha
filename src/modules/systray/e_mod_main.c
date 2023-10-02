@@ -216,7 +216,7 @@ _systray_size_apply_do(Instance *inst)
 }
 
 static void
-_systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
+_systray_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
