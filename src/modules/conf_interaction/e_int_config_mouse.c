@@ -57,7 +57,7 @@ e_int_config_mouse(E_Container *con, const char *params __UNUSED__)
    v->basic.create_widgets = _basic_create_widgets;
    v->basic.check_changed = _basic_check_changed;
 
-   cfd = e_config_dialog_new(con, _("Mouse Settings"), "E",
+   cfd = e_config_dialog_new(con, _("Mouse and Touchpad Settings"), "E",
                              "keyboard_and_mouse/mouse_settings",
                              "preferences-desktop-mouse", 0, v, NULL);
    return cfd;

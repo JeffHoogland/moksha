@@ -21,7 +21,7 @@ e_modapi_init(E_Module *m)
                                  "preferences-interaction", 
                                  e_int_config_interaction);
    e_configure_registry_item_add("keyboard_and_mouse/mouse_settings", 50,
-                                 _("Mouse"), NULL,
+                                 _("Mouse and Touchpad"), NULL,
                                  "preferences-desktop-mouse",
                                  e_int_config_mouse);
    conf_module = m;
