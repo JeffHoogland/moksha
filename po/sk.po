@@ -5431,9 +5431,8 @@ msgid "%1.2f s"
 msgstr "%1.2f sek"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Nastavenia myši"
+msgstr "Nastavenia myši a touchpadu"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
 msgid "Show Cursor"
@@ -5542,9 +5541,8 @@ msgid "Touch"
 msgstr "Dotyk"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Nastevenie tlačidiel myši"
+msgstr "Nastavenia myši a touchpadu"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
