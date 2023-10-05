@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-13 18:16+0200\n"
+"POT-Creation-Date: 2023-10-05 17:00+0200\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
 "Language: ca\n"
@@ -341,7 +341,7 @@ msgstr "Alterna: enganxa a l'Escriptori"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1069
 msgid "Desktop"
 msgstr "Escriptori"
 
@@ -1529,7 +1529,7 @@ msgid "Eject"
 msgstr "Expulsa"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1578
+#: src/modules/ibar/e_mod_main.c:1581
 msgid "Properties"
 msgstr "Propietats"
 
@@ -1690,7 +1690,7 @@ msgid "Yes to all"
 msgstr "Sí a tot"
 
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
-#: src/modules/places/e_mod_places.c:632
+#: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Alerta"
 
@@ -2531,7 +2531,7 @@ msgstr "Demana posició"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
@@ -3783,7 +3783,7 @@ msgid "Rename Shelf"
 msgstr "Canvia nom tauler"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1565
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
 msgid "Contents"
 msgstr "Continguts"
 
@@ -4402,7 +4402,7 @@ msgid "Shutdown when below:"
 msgstr "Apaga quan estigui per sota de:"
 
 #: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
@@ -4424,19 +4424,19 @@ msgstr "Alerta quan:"
 msgid "%1.0f min"
 msgstr "%1.0f min"
 
-#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:273
+#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 msgid "Auto dismiss in..."
 msgstr "Descarta automàticament en..."
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#: src/modules/places/e_mod_config.c:278
+#: src/modules/places/e_mod_config.c:277
 #, c-format
 msgid "%1.0f s"
 msgstr "%1.0f s"
 
-#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:259
-#: src/modules/places/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
+#: src/modules/places/e_mod_config.c:284
 msgid "Alert"
 msgstr "Avisa"
 
@@ -4715,7 +4715,7 @@ msgid "E-Mail"
 msgstr "Correu electrònic"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
 msgid "Trash"
 msgstr "Deixalla"
 
@@ -5428,7 +5428,8 @@ msgid "%1.2f s"
 msgstr "%1.2f s"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-msgid "Mouse Settings"
+#, fuzzy
+msgid "Mouse and Touchpad Settings"
 msgstr "Preferències ratolí"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
@@ -5487,7 +5488,6 @@ msgid "Middle mouse button emulation"
 msgstr "Botó central"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
-#: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "Ratolí"
 
@@ -5546,6 +5546,11 @@ msgstr "Tàctil"
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
 msgstr "Tàctil"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#, fuzzy
+msgid "Mouse and Touchpad"
+msgstr "Mà del ratolí (Esquerra/Dreta)"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -8671,7 +8676,7 @@ msgid "Current Directory"
 msgstr "Directori actual"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1039
+#: src/modules/places/e_mod_places.c:1060
 msgid "Home"
 msgstr "Inici"
 
@@ -8971,28 +8976,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Està segur que vol eliminar l'orígen d'aquesta barra?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1554
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
 msgid "Create new Icon"
 msgstr "Crea nova icona"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1588
 msgid "Add to bar"
 msgstr "Afegeix a la barra"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1594
 msgid "Remove from bar"
 msgstr "Elimina de la barra"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1600
 #, c-format
 msgid "Icon %s"
 msgstr "Icona %s"
 
-#: src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "Focus IBar"
 msgstr "Enfoca IBar"
 
@@ -10437,26 +10443,26 @@ msgstr "Utilitza el managador de fitxers predeterminat"
 msgid "Show in menu"
 msgstr "Mostra en el menú"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
-#: src/modules/places/e_mod_places.c:1066
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:1087
 msgid "Filesystem"
 msgstr "Sistema de fitxers"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
 msgstr "Temporal"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "LLocs"
 
-#: src/modules/places/e_mod_config.c:262
+#: src/modules/places/e_mod_config.c:261
 msgid "Show full disk alert"
 msgstr "Mostra alerta de disc"
 
-#: src/modules/places/e_mod_config.c:266
+#: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
 msgstr "Límit de capacitat:"
 
@@ -10464,7 +10470,7 @@ msgstr "Límit de capacitat:"
 msgid "Places Configuration Updated"
 msgstr "S'ha posat al dia la configuració de llocs"
 
-#: src/modules/places/e_mod_places.c:633
+#: src/modules/places/e_mod_places.c:650
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -10472,58 +10478,58 @@ msgstr ""
 "<b>No es pot executar el gestor de fitxers de Maksha.</b><br>Escolliu, s.u."
 "p., un gestor de fitxers<br>en la configuració de ginys."
 
-#: src/modules/places/e_mod_places.c:708
+#: src/modules/places/e_mod_places.c:725
 #, c-format
 msgid "Places warning!"
 msgstr "Alerta de llocs!"
 
-#: src/modules/places/e_mod_places.c:709
+#: src/modules/places/e_mod_places.c:726
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr "L'ús del disc \"%s\" és %d %%!"
 
-#: src/modules/places/e_mod_places.c:814
+#: src/modules/places/e_mod_places.c:831
 msgid "b"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:819
+#: src/modules/places/e_mod_places.c:836
 #, fuzzy
 msgid "KB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:824
+#: src/modules/places/e_mod_places.c:841
 #, fuzzy
 msgid "MB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:829
+#: src/modules/places/e_mod_places.c:846
 #, fuzzy
 msgid "GB"
 msgstr "G"
 
-#: src/modules/places/e_mod_places.c:833
+#: src/modules/places/e_mod_places.c:850
 #, fuzzy
 msgid "TB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:869
+#: src/modules/places/e_mod_places.c:886
 msgid "No Name"
 msgstr "Sense Nom"
 
-#: src/modules/places/e_mod_places.c:876
+#: src/modules/places/e_mod_places.c:893
 msgid "free of"
 msgstr "lliure de"
 
-#: src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:899
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s No Montada"
 
-#: src/modules/places/e_mod_places.c:910
+#: src/modules/places/e_mod_places.c:927
 msgid "unmount"
 msgstr "desmonta"
 
-#: src/modules/places/e_mod_places.c:916
+#: src/modules/places/e_mod_places.c:933
 msgid "eject"
 msgstr "extreu"
 

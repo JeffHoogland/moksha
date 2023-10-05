@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-13 18:16+0200\n"
+"POT-Creation-Date: 2023-10-05 17:00+0200\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -342,7 +342,7 @@ msgstr "切换粘附状态"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1069
 msgid "Desktop"
 msgstr "桌面"
 
@@ -1503,7 +1503,7 @@ msgid "Eject"
 msgstr "弹出"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1578
+#: src/modules/ibar/e_mod_main.c:1581
 msgid "Properties"
 msgstr "属性"
 
@@ -1664,7 +1664,7 @@ msgid "Yes to all"
 msgstr "全部选是"
 
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
-#: src/modules/places/e_mod_places.c:632
+#: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "警告"
 
@@ -2494,7 +2494,7 @@ msgstr "请求位置"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
@@ -3719,7 +3719,7 @@ msgid "Rename Shelf"
 msgstr "重命名书架"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1565
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
 msgid "Contents"
 msgstr "内容"
 
@@ -4320,7 +4320,7 @@ msgid "Shutdown when below:"
 msgstr "关机，当电量低于:"
 
 #: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
@@ -4342,19 +4342,19 @@ msgstr "以下情况报警："
 msgid "%1.0f min"
 msgstr "%1.0f 分钟"
 
-#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:273
+#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 msgid "Auto dismiss in..."
 msgstr "自动解除..."
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#: src/modules/places/e_mod_config.c:278
+#: src/modules/places/e_mod_config.c:277
 #, c-format
 msgid "%1.0f s"
 msgstr "%1.0f 秒"
 
-#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:259
-#: src/modules/places/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
+#: src/modules/places/e_mod_config.c:284
 msgid "Alert"
 msgstr "警告"
 
@@ -4632,7 +4632,7 @@ msgid "E-Mail"
 msgstr "电子邮件"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
 msgid "Trash"
 msgstr "回收站"
 
@@ -5343,7 +5343,8 @@ msgid "%1.2f s"
 msgstr "%1.2f 秒"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-msgid "Mouse Settings"
+#, fuzzy
+msgid "Mouse and Touchpad Settings"
 msgstr "鼠标设置"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
@@ -5402,7 +5403,6 @@ msgid "Middle mouse button emulation"
 msgstr "中键"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
-#: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "鼠标"
 
@@ -5461,6 +5461,11 @@ msgstr "触摸屏"
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
 msgstr "触摸屏"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#, fuzzy
+msgid "Mouse and Touchpad"
+msgstr "鼠标手"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -8592,7 +8597,7 @@ msgid "Current Directory"
 msgstr "当前目录"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1039
+#: src/modules/places/e_mod_places.c:1060
 msgid "Home"
 msgstr "主目录"
 
@@ -8891,30 +8896,31 @@ msgstr "您正在删除 %s。<br><br>确定删除它吗？"
 msgid "Are you sure you want to delete this bar source?"
 msgstr "确定要删除这个 bar 吗？"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1554
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
 msgid "Create new Icon"
 msgstr "创建新图标"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1588
 #, fuzzy
 msgid "Add to bar"
 msgstr "添加到 IBar"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1594
 #, fuzzy
 msgid "Remove from bar"
 msgstr "移除堆叠"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1600
 #, c-format
 msgid "Icon %s"
 msgstr "图标 %s"
 
-#: src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "Focus IBar"
 msgstr "聚焦 IBar"
 
@@ -10336,27 +10342,27 @@ msgstr "使用常规文件管理器"
 msgid "Show in menu"
 msgstr "在菜单中显示"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
-#: src/modules/places/e_mod_places.c:1066
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:1087
 msgid "Filesystem"
 msgstr "文件系统"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
 msgstr "临时文件"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "位置"
 
-#: src/modules/places/e_mod_config.c:262
+#: src/modules/places/e_mod_config.c:261
 #, fuzzy
 msgid "Show full disk alert"
 msgstr "显示低电量警报"
 
-#: src/modules/places/e_mod_config.c:266
+#: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
 msgstr ""
 
@@ -10364,7 +10370,7 @@ msgstr ""
 msgid "Places Configuration Updated"
 msgstr "已更新 Places 配置"
 
-#: src/modules/places/e_mod_places.c:633
+#: src/modules/places/e_mod_places.c:650
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -10372,58 +10378,58 @@ msgstr ""
 "<b>无法运行 Enlightenment 文件管理器。</b><b>请在配置中选择一个自定义的文件管"
 "理器。"
 
-#: src/modules/places/e_mod_places.c:708
+#: src/modules/places/e_mod_places.c:725
 #, fuzzy, c-format
 msgid "Places warning!"
 msgstr "Places 设置"
 
-#: src/modules/places/e_mod_places.c:709
+#: src/modules/places/e_mod_places.c:726
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:814
+#: src/modules/places/e_mod_places.c:831
 msgid "b"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:819
+#: src/modules/places/e_mod_places.c:836
 #, fuzzy
 msgid "KB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:824
+#: src/modules/places/e_mod_places.c:841
 #, fuzzy
 msgid "MB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:829
+#: src/modules/places/e_mod_places.c:846
 #, fuzzy
 msgid "GB"
 msgstr "G"
 
-#: src/modules/places/e_mod_places.c:833
+#: src/modules/places/e_mod_places.c:850
 #, fuzzy
 msgid "TB"
 msgstr "B"
 
-#: src/modules/places/e_mod_places.c:869
+#: src/modules/places/e_mod_places.c:886
 msgid "No Name"
 msgstr "无名称"
 
-#: src/modules/places/e_mod_places.c:876
+#: src/modules/places/e_mod_places.c:893
 msgid "free of"
 msgstr "空闲，总计"
 
-#: src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:899
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s 未挂载"
 
-#: src/modules/places/e_mod_places.c:910
+#: src/modules/places/e_mod_places.c:927
 msgid "unmount"
 msgstr "卸载"
 
-#: src/modules/places/e_mod_places.c:916
+#: src/modules/places/e_mod_places.c:933
 msgid "eject"
 msgstr "弹出"
 

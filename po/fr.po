@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-13 18:16+0200\n"
+"POT-Creation-Date: 2023-10-05 17:00+0200\n"
 "PO-Revision-Date: 2023-09-15 08:50+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -346,7 +346,7 @@ msgstr "(Dés)Activer l'épinglage"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1069
 msgid "Desktop"
 msgstr "Bureau"
 
@@ -1535,7 +1535,7 @@ msgid "Eject"
 msgstr "Éjecter"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1578
+#: src/modules/ibar/e_mod_main.c:1581
 msgid "Properties"
 msgstr "Propriétés"
 
@@ -1696,7 +1696,7 @@ msgid "Yes to all"
 msgstr "Oui pour tout"
 
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
-#: src/modules/places/e_mod_places.c:632
+#: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -1749,8 +1749,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :"
-"<br><hilight>%s</hilight> ?"
+"Voulez-vous vraiment supprimer<br>%d fichier sélectionné dans :<br><hilight>"
+"%s</hilight> ?"
 msgstr[1] ""
 "Voulez-vous vraiment supprimer<br>les %d fichiers sélectionnés dans :"
 "<br><hilight>%s</hilight> ?"
@@ -2534,7 +2534,7 @@ msgstr "Demande de position"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
@@ -3796,7 +3796,7 @@ msgid "Rename Shelf"
 msgstr "Renommer le rayon"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1565
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
 msgid "Contents"
 msgstr "Contenu"
 
@@ -3835,8 +3835,8 @@ msgid ""
 msgstr ""
 "La fermeture de la session est trop longue.<br>Certaines applications "
 "refusent de se terminer.<br>Voulez-vous forcer la fin de cette "
-"session<br>sans attendre la fermeture des applications ?"
-"<br><br>%s<br>Fermeture automatique dans %d secondes."
+"session<br>sans attendre la fermeture des applications ?<br><br>"
+"%s<br>Fermeture automatique dans %d secondes."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -4416,7 +4416,7 @@ msgid "Shutdown when below:"
 msgstr "Arrêt en dessous de :"
 
 #: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
 msgstr "%1.0f %%"
@@ -4438,19 +4438,19 @@ msgstr "Alerte quand le niveau est à :"
 msgid "%1.0f min"
 msgstr "%1.0f min"
 
-#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:273
+#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 msgid "Auto dismiss in..."
 msgstr "Éliminer automatiquement dans…"
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#: src/modules/places/e_mod_config.c:278
+#: src/modules/places/e_mod_config.c:277
 #, c-format
 msgid "%1.0f s"
 msgstr "%1.0f s"
 
-#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:259
-#: src/modules/places/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
+#: src/modules/places/e_mod_config.c:284
 msgid "Alert"
 msgstr "Alerte"
 
@@ -4726,7 +4726,7 @@ msgid "E-Mail"
 msgstr "Courriel"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
 msgid "Trash"
 msgstr "Corbeille"
 
@@ -5440,7 +5440,8 @@ msgid "%1.2f s"
 msgstr "%1.2f s"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-msgid "Mouse Settings"
+#, fuzzy
+msgid "Mouse and Touchpad Settings"
 msgstr "Paramétrage de la souris"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
@@ -5498,7 +5499,6 @@ msgid "Middle mouse button emulation"
 msgstr "Émulation du bouton central de la souris"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
-#: src/modules/conf_interaction/e_mod_main.c:24
 msgid "Mouse"
 msgstr "Souris"
 
@@ -5549,6 +5549,11 @@ msgstr "Pavé tactile"
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
 msgstr "Interface tactile"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#, fuzzy
+msgid "Mouse and Touchpad"
+msgstr "Latéralité"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5846,9 +5851,8 @@ msgstr "Erreur de raccourci clavier"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La séquence de raccourci clavier que vous avez choisie est déjà "
 "utilisée<br>par l'action <hilight>%s</hilight>.<br>Choisissez une autre "
@@ -7883,8 +7887,8 @@ msgid ""
 msgstr ""
 "L'utilitaire freqset du module Cpufreq n'appartient pas<ps/>à root ou les "
 "droits setuid ne lui sont pas accordés.<ps/>Vous pouvez utiliser ces "
-"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
-"u+s,a+x %s<ps/>"
+"commandes pour rectifier cela :<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
+"+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8291,11 +8295,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8310,18 +8314,18 @@ msgstr ""
 "s'affichera pas lors de la prochaine utilisation d'<hilight>Omni</hilight>."
 "<br>    <hilight>&lt;Échap&gt;</hilight> ferme cette boîte de "
 "dialogue<br>    <hilight>&lt;?&gt;</hilight> affiche cette page<br>    "
-"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;"
-"Ctrl+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
-"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;"
-"Ctrl+Tabulation&gt;</hilight> détail des entrées (ça dépend du "
-"greffon)<br>    <hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon "
-"commençant par la lettre « ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / "
-"droite&gt;</hilight> circule parmi les greffons<br>    <hilight>&lt;"
-"ctrl+Flèche haut / bas&gt;</hilight> va au premier / dernier élément<br>    "
-"<hilight>&lt;Ctrl+1&gt;</hilight> commute le mode d'affichage (quitter cette "
-"page ;)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage "
-"de la liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode "
-"d'affichage des vignettes"
+"<hilight>&lt;Entrée&gt;</hilight> exécute une action<br>    <hilight>&lt;Ctrl"
+"+Entrée&gt;</hilight> exécute une action et continue<br>    <hilight>&lt;"
+"tab&gt;</hilight> passe d'un sélecteur à l'autre<br>    <hilight>&lt;Ctrl"
+"+Tabulation&gt;</hilight> détail des entrées (ça dépend du greffon)<br>    "
+"<hilight>&lt;Ctrl+« x »&gt;</hilight> va au greffon commençant par la lettre "
+"« ... »<br>    <hilight>&lt;Ctrl+Flèche gauche / droite&gt;</hilight> "
+"circule parmi les greffons<br>    <hilight>&lt;ctrl+Flèche haut / bas&gt;</"
+"hilight> va au premier / dernier élément<br>    <hilight>&lt;Ctrl+1&gt;</"
+"hilight> commute le mode d'affichage (quitter cette page ;)<br>    "
+"<hilight>&lt;Ctrl+2&gt;</hilight> commute le mode d'affichage de la "
+"liste<br>    <hilight>&lt;Ctrl+3&gt;</hilight> commute le mode d'affichage "
+"des vignettes"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8632,7 +8636,7 @@ msgid "Current Directory"
 msgstr "Dossier courant"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1039
+#: src/modules/places/e_mod_places.c:1060
 msgid "Home"
 msgstr "Dossier personnel"
 
@@ -8931,28 +8935,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Voulez-vous vraiment supprimer cette source ?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1554
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
 msgid "Create new Icon"
 msgstr "Créer une nouvelle icône"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1588
 msgid "Add to bar"
 msgstr "Ajouter à la barre"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1594
 msgid "Remove from bar"
 msgstr "Retirer de la barre"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1600
 #, c-format
 msgid "Icon %s"
 msgstr "Icône %s"
 
-#: src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "Focus IBar"
 msgstr "Focaliser l'IBar"
 
@@ -9446,9 +9451,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :"
-"<br>%s<br>est introuvable dans la base de données des<br>applications des "
-"accès rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
+"La fenêtre sélectionnée créée avec le nom :<br>%s<br>et la classe :<br>"
+"%s<br>est introuvable dans la base de données des<br>applications des accès "
+"rapides.<br>Cela signifie que l'application est soit inconnue,<br>soit "
 "inutilisable dans ce cas de figure<br>Choisissez une action à appliquer :"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
@@ -10377,26 +10382,26 @@ msgstr "Utiliser un gestionnaire de fichiers personnalisé"
 msgid "Show in menu"
 msgstr "Afficher dans le menu"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
-#: src/modules/places/e_mod_places.c:1066
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:1087
 msgid "Filesystem"
 msgstr "Racine"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
 msgstr "Temporaires"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "Raccourcis"
 
-#: src/modules/places/e_mod_config.c:262
+#: src/modules/places/e_mod_config.c:261
 msgid "Show full disk alert"
 msgstr "Afficher une alerte de disque plein"
 
-#: src/modules/places/e_mod_config.c:266
+#: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
 msgstr "Limite de capacité :"
 
@@ -10404,7 +10409,7 @@ msgstr "Limite de capacité :"
 msgid "Places Configuration Updated"
 msgstr "Configuration de Raccourcis actualisée"
 
-#: src/modules/places/e_mod_places.c:633
+#: src/modules/places/e_mod_places.c:650
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
@@ -10412,54 +10417,54 @@ msgstr ""
 "<b>Impossible d'exécuter EFM.</b><br>Choisissez un gestionnaire de "
 "fichiers<br>personnalisé dans la configuration du gadget."
 
-#: src/modules/places/e_mod_places.c:708
+#: src/modules/places/e_mod_places.c:725
 #, c-format
 msgid "Places warning!"
 msgstr "Avertissement de Raccourcis !"
 
-#: src/modules/places/e_mod_places.c:709
+#: src/modules/places/e_mod_places.c:726
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr "L'occupation du disque « %s » est de %d %% !"
 
-#: src/modules/places/e_mod_places.c:814
+#: src/modules/places/e_mod_places.c:831
 msgid "b"
 msgstr "o"
 
-#: src/modules/places/e_mod_places.c:819
+#: src/modules/places/e_mod_places.c:836
 msgid "KB"
 msgstr "Ko"
 
-#: src/modules/places/e_mod_places.c:824
+#: src/modules/places/e_mod_places.c:841
 msgid "MB"
 msgstr "Mo"
 
-#: src/modules/places/e_mod_places.c:829
+#: src/modules/places/e_mod_places.c:846
 msgid "GB"
 msgstr "Go"
 
-#: src/modules/places/e_mod_places.c:833
+#: src/modules/places/e_mod_places.c:850
 msgid "TB"
 msgstr "To"
 
-#: src/modules/places/e_mod_places.c:869
+#: src/modules/places/e_mod_places.c:886
 msgid "No Name"
 msgstr "Sans nom"
 
-#: src/modules/places/e_mod_places.c:876
+#: src/modules/places/e_mod_places.c:893
 msgid "free of"
 msgstr "de libre sur"
 
-#: src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:899
 #, c-format
 msgid "%s Not Mounted"
 msgstr "%s Non monté"
 
-#: src/modules/places/e_mod_places.c:910
+#: src/modules/places/e_mod_places.c:927
 msgid "unmount"
 msgstr "démonter"
 
-#: src/modules/places/e_mod_places.c:916
+#: src/modules/places/e_mod_places.c:933
 msgid "eject"
 msgstr "éjecter"
 

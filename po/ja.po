@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-13 18:16+0200\n"
+"POT-Creation-Date: 2023-10-05 17:00+0200\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -355,7 +355,7 @@ msgstr "位置固定状態反転"
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
-#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1048
+#: src/modules/places/e_mod_config.c:235 src/modules/places/e_mod_places.c:1069
 msgid "Desktop"
 msgstr "デスクトップ"
 
@@ -1579,7 +1579,7 @@ msgid "Eject"
 msgstr "イジェクト"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1578
+#: src/modules/ibar/e_mod_main.c:1581
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -1752,7 +1752,7 @@ msgid "Yes to all"
 msgstr "すべて了承"
 
 #: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
-#: src/modules/places/e_mod_places.c:632
+#: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "警告"
 
@@ -2643,7 +2643,7 @@ msgstr "要求の位置"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
@@ -3974,7 +3974,7 @@ msgid "Rename Shelf"
 msgstr "ファイル名を変更する"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1565
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
 msgid "Contents"
 msgstr "中身"
 
@@ -4602,7 +4602,7 @@ msgid "Shutdown when below:"
 msgstr "シャットダウン時に以下;"
 
 #: src/modules/battery/e_mod_config.c:251
-#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:269
+#: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
 msgstr ""
@@ -4624,19 +4624,19 @@ msgstr "警告を出す残容量"
 msgid "%1.0f min"
 msgstr "%1.0f 分"
 
-#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:273
+#: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 msgid "Auto dismiss in..."
 msgstr "指定時間後自動解除"
 
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
-#: src/modules/places/e_mod_config.c:278
+#: src/modules/places/e_mod_config.c:277
 #, fuzzy, c-format
 msgid "%1.0f s"
 msgstr "%1.0f 秒"
 
-#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:259
-#: src/modules/places/e_mod_config.c:286
+#: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
+#: src/modules/places/e_mod_config.c:284
 msgid "Alert"
 msgstr "警告"
 
@@ -4934,7 +4934,7 @@ msgid "E-Mail"
 msgstr ""
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
-#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1057
+#: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
 msgid "Trash"
 msgstr ""
 
@@ -5700,7 +5700,8 @@ msgid "%1.2f s"
 msgstr "%1.2f 秒"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-msgid "Mouse Settings"
+#, fuzzy
+msgid "Mouse and Touchpad Settings"
 msgstr "マウスの設定"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
@@ -5762,7 +5763,6 @@ msgid "Middle mouse button emulation"
 msgstr "中ボタン"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
-#: src/modules/conf_interaction/e_mod_main.c:24
 #, fuzzy
 msgid "Mouse"
 msgstr "使用頻度"
@@ -5823,6 +5823,11 @@ msgstr "ランチャーに追加"
 #, fuzzy
 msgid "Touch"
 msgstr "ランチャーに追加"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#, fuzzy
+msgid "Mouse and Touchpad"
+msgstr "左右ボタン入れ換え"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -9105,7 +9110,7 @@ msgid "Current Directory"
 msgstr "新しいディレクトリ"
 
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
-#: src/modules/places/e_mod_places.c:1039
+#: src/modules/places/e_mod_places.c:1060
 msgid "Home"
 msgstr "ホーム"
 
@@ -9424,30 +9429,31 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "この IBar を本当に削除しますか."
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
+#: src/modules/ibar/e_mod_main.c:2921
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1554
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
 msgid "Create new Icon"
 msgstr "新しいアイコンを作る"
 
-#: src/modules/ibar/e_mod_main.c:1585
+#: src/modules/ibar/e_mod_main.c:1588
 #, fuzzy
 msgid "Add to bar"
 msgstr "IBar に追加する"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1594
 #, fuzzy
 msgid "Remove from bar"
 msgstr "ガジェットを削除する"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1600
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "アイコン"
 
-#: src/modules/ibar/e_mod_main.c:2882
+#: src/modules/ibar/e_mod_main.c:2921
 #, fuzzy
 msgid "Focus IBar"
 msgstr "フォーカス"
@@ -10966,29 +10972,29 @@ msgstr "ファイルマネージャ"
 msgid "Show in menu"
 msgstr "メニューに表示する"
 
-#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:865
-#: src/modules/places/e_mod_places.c:1066
+#: src/modules/places/e_mod_config.c:241 src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:1087
 #, fuzzy
 msgid "Filesystem"
 msgstr "ファイル"
 
-#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1075
+#: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
 msgstr ""
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:343
-#: src/modules/places/e_mod_places.c:712 src/modules/places/e_mod_places.c:1133
+#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 #, fuzzy
 msgid "Places"
 msgstr "配置"
 
-#: src/modules/places/e_mod_config.c:262
+#: src/modules/places/e_mod_config.c:261
 #, fuzzy
 msgid "Show full disk alert"
 msgstr "完全パス名を表示する"
 
-#: src/modules/places/e_mod_config.c:266
+#: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
 msgstr ""
 
@@ -10997,66 +11003,66 @@ msgstr ""
 msgid "Places Configuration Updated"
 msgstr "%s 設定を更新しました"
 
-#: src/modules/places/e_mod_places.c:633
+#: src/modules/places/e_mod_places.c:650
 msgid ""
 "<b>Cannot run the Enlightenment FileManager.</b><br>Please choose a custom "
 "file manager in<br>the gadget configuration."
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:708
+#: src/modules/places/e_mod_places.c:725
 #, fuzzy, c-format
 msgid "Places warning!"
 msgstr "ページャー設定"
 
-#: src/modules/places/e_mod_places.c:709
+#: src/modules/places/e_mod_places.c:726
 #, c-format
 msgid "Disk ''%s'' usage is %d %%!"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:814
+#: src/modules/places/e_mod_places.c:831
 msgid "b"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:819
+#: src/modules/places/e_mod_places.c:836
 #, fuzzy
 msgid "KB"
 msgstr "によって"
 
-#: src/modules/places/e_mod_places.c:824
+#: src/modules/places/e_mod_places.c:841
 #, fuzzy
 msgid "MB"
 msgstr "によって"
 
-#: src/modules/places/e_mod_places.c:829
+#: src/modules/places/e_mod_places.c:846
 #, fuzzy
 msgid "GB"
 msgstr "ガ語"
 
-#: src/modules/places/e_mod_places.c:833
+#: src/modules/places/e_mod_places.c:850
 #, fuzzy
 msgid "TB"
 msgstr "によって"
 
-#: src/modules/places/e_mod_places.c:869
+#: src/modules/places/e_mod_places.c:886
 #, fuzzy
 msgid "No Name"
 msgstr "名前無し"
 
-#: src/modules/places/e_mod_places.c:876
+#: src/modules/places/e_mod_places.c:893
 msgid "free of"
 msgstr ""
 
-#: src/modules/places/e_mod_places.c:882
+#: src/modules/places/e_mod_places.c:899
 #, fuzzy, c-format
 msgid "%s Not Mounted"
 msgstr "接続されていません"
 
-#: src/modules/places/e_mod_places.c:910
+#: src/modules/places/e_mod_places.c:927
 #, fuzzy
 msgid "unmount"
 msgstr "アンマウント"
 
-#: src/modules/places/e_mod_places.c:916
+#: src/modules/places/e_mod_places.c:933
 #, fuzzy
 msgid "eject"
 msgstr "イジェクト"

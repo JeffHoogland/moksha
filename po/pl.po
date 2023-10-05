@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-09-25 06:18-0400\n"
+"POT-Creation-Date: 2023-10-05 17:00+0200\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -3788,8 +3788,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Podczas ładowania modułu %s wystąpił błąd.<br>Pełna ścieżka do modułu to:"
-"<br>%s<br>Zgłoszony błąd to:<br>%s<br>"
+"Podczas ładowania modułu %s wystąpił błąd.<br>Pełna ścieżka do modułu to:<br>"
+"%s<br>Zgłoszony błąd to:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -5723,7 +5723,8 @@ msgid "%1.2f s"
 msgstr "%1.2f"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:60
-msgid "Mouse Settings"
+#, fuzzy
+msgid "Mouse and Touchpad Settings"
 msgstr "Opcje myszki"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:225
@@ -5787,7 +5788,6 @@ msgid "Middle mouse button emulation"
 msgstr "Opcje myszki"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:302
-#: src/modules/conf_interaction/e_mod_main.c:24
 #, fuzzy
 msgid "Mouse"
 msgstr "Przesuń"
@@ -5848,6 +5848,11 @@ msgstr "Do programu uruchamiającego"
 #, fuzzy
 msgid "Touch"
 msgstr "Do programu uruchamiającego"
+
+#: src/modules/conf_interaction/e_mod_main.c:24
+#, fuzzy
+msgid "Mouse and Touchpad"
+msgstr "Ręcznie mysz"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -6171,9 +6176,8 @@ msgstr "Błąd przypisania kombinacji"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Wybrana kombinacja klawiszy jest już używana przez akcję <br><hilight>%s</"
 "hilight>. Proszę wybrać inną kombinację klawiszy."
@@ -8907,11 +8911,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
