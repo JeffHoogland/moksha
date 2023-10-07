@@ -486,7 +486,7 @@ main(int argc, char *argv[])
      ECORE_GETOPT_VALUE_NONE
    };
    int args;
-   char **cmds;
+   char **cmds = NULL;
 
    args = ecore_getopt_parse(&options, values, argc, argv);
    if (args < 0)
