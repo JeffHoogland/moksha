@@ -210,7 +210,7 @@ static void      _e_border_shape_input_rectangle_set(E_Border *bd);
 static void      _e_border_show(E_Border *bd);
 static void      _e_border_hide(E_Border *bd);
 
-static void       _e_border_move_lost_window_to_center(E_Border *bd);
+static void      _e_border_move_lost_window_to_center(E_Border *bd);
 static void      _e_border_reset_lost_window(E_Border *bd);
 static Eina_Bool _e_border_pointer_warp_to_center_timer(void *data);
 
