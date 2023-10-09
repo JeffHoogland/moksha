@@ -8,75 +8,65 @@ group { name: "e/modules/notification/logo";
             max: 48 48;
             aspect: 1.0 1.0;
          }
-         description { state: "higher" 0.0;
+         description { state: "move_down" 0.0;
              inherit: "default" 0.0;
              rel1.relative: 0.2 0.15;
              rel2.relative: 0.8 1.15;
          }
       }
-      part 
-          {
-          name: "e.text.counter";
-          mouse_events: 0;
-          scale: 1;
-          type: TEXT;
-          effect: OUTLINE_SOFT_SHADOW;
-          description 
-          {
-            //~ rel1.to: "base";
+      part { name: "e.text.counter"; mouse_events: 0;
+         type: TEXT;
+         scale: 1;
+         effect: OUTLINE_SOFT_SHADOW;
+         description { state: "default" 0.0;
             rel2.to: "base";
-            rel2.offset: 0 3;
+            rel2.offset: 0 2;
             state: "default" 0.0;
             color: 255 255 255 255;
             color3: 0 0 0 32;
-            color_class: "module_label";
             visible: 1;
-            text 
-            {
-                text: "";
+            offscale;
+            text {
+               text: "";
                 font: "Sans:style=Bold";
-                size: 9;
+                size: 8;
                 min: 1 1;
                 align: 1.0 1.0;
                 ellipsis: -1;
-             }
             }
-          }
+         }
+      }
    }
-   programs {  
-    program
-          {
-           signal: "stop";
-           source: "";
-           action: STATE_SET "default" 0.0;
-           target: "base";
-          }
-    program
-          {
-           signal: "blink";
-           source: "";
-           action: STATE_SET "default" 0.0;
-           after: "big";
-           target: "base";
-          }
-    program
-          {
-           name: "normal";
-           action: STATE_SET "default" 0.0;
-           target: "base";
-           after: "big";
-           transition: DECELERATE 0.3;
-          }
-    program
-          {
-           name: "big";
-           action: STATE_SET "higher" 0.0;
-           target: "base";
-           after: "normal";
-           transition: ACCELERATE 0.1;
-          } 
-    }
-} 
+   programs {
+     program {
+        signal: "stop";
+        source: "";
+        action: STATE_SET "default" 0.0;
+        target: "base";
+     }
+     program {
+        signal: "blink";
+        source: "";
+        action: STATE_SET "default" 0.0;
+        after: "down";
+        target: "base";
+     }
+     program {
+        name: "normal";
+        action: STATE_SET "default" 0.0;
+        target: "base";
+        after: "down";
+        transition: DECELERATE 0.3;
+     }
+     program {
+        name: "down";
+        action: STATE_SET "move_down" 0.0;
+        target: "base";
+        after: "normal";
+        transition: ACCELERATE 0.1;
+     }
+   }
+}
 
 group { name: "e/modules/notification/main";
    images.image: "darken_rounded_square.png" COMP;
