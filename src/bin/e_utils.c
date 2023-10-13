@@ -1843,7 +1843,6 @@ e_util_set_bodhi_elm_config()
 {
    elm_config_audio_mute_set(EDJE_CHANNEL_INPUT, EINA_TRUE);
    e_util_elm_icon_set();
-   elm_theme_set(NULL, "MokshaArcGreen");
    elm_config_all_flush();
 }
 #endif
