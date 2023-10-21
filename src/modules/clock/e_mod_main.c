@@ -484,9 +484,6 @@ _clock_popup_new(Instance *inst)
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o,
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
-   //~ o = e_widget_check_add(evas, _("Always on Top"), &inst->cfg->always_on_top);
-   //~ e_widget_table_object_align_append(inst->o_table, o,
-                                      //~ 0, 1, 1, 1, 0, 0, 0, 0, 0.5, 0.0);
 
    o = e_widget_button_add(evas, _("Settings"), "preferences-system",
                            _clock_settings_cb, inst, NULL);
