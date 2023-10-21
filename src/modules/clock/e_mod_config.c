@@ -7,7 +7,8 @@ struct _E_Config_Dialog_Data
    Config_Item cfg;
    char *custom_dat;
    double hour, minute, sec;
-   Evas_Object *ck, *win;
+   int year, month, day;
+   Evas_Object *ck, *win, *win2, *cal;
 };
 
 /* Protos */
@@ -20,8 +21,8 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
 static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
 static void         _clock_time_set(E_Config_Dialog_Data *cfdata);
+static void         _clock_date_set(E_Config_Dialog_Data *cfdata);
 
-static E_Dialog *show_info_dia = NULL;
 
 void
 e_int_config_clock_module(E_Container *con, Config_Item *ci)
@@ -73,25 +74,37 @@ _free_data(E_Config_Dialog *cfd  __UNUSED__,
 }
 
 static void
-_show_info_del(void *data)
+_bt_date_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
+                 void *event_info __UNUSED__)
 {
-   if (show_info_dia == data)
-     show_info_dia = NULL;
+   E_Config_Dialog_Data *cfdata = data;
+   struct tm sel_time;
+
+   if (!elm_calendar_selected_time_get(cfdata->cal, &sel_time))
+     return;
+
+   cfdata->year = sel_time.tm_year + 1900;
+   cfdata->month = sel_time.tm_mon + 1;
+   cfdata->day = sel_time.tm_mday;
+   _clock_date_set(cfdata);
+
+   evas_object_del(cfdata->win2);
+   cfdata->win2 = NULL;
 }
 
 static void
-_bt_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
+_bt_time_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
                  void *event_info __UNUSED__)
 {  
    int hrs, mins, secs;
    E_Config_Dialog_Data *cfdata = data;
-   
+
    elm_clock_time_get(cfdata->ck, &hrs, &mins, &secs);
    cfdata->hour = (double) hrs;
    cfdata->minute = (double) mins;
    cfdata->sec = (double) secs;
    _clock_time_set(cfdata);
-   
+
    evas_object_del(cfdata->win);
    cfdata->win = NULL;
 }
@@ -101,8 +114,58 @@ _close_cb(void *data, Evas *e __UNUSED__,
           Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
-   evas_object_del(cfdata->win);
-   cfdata->win = NULL;
+
+   if (cfdata->win)
+     {
+       evas_object_del(cfdata->win);
+       cfdata->win = NULL;
+     }
+   if (cfdata->win2)
+     {
+       evas_object_del(cfdata->win2);
+       cfdata->win2 = NULL;
+     }
+}
+
+static void
+show_date_cb(void *data, void *data2 __UNUSED__)
+{
+   Evas_Object *win, *bx, *cal, *bt;
+   struct tm selected_time;
+   time_t current_time;
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (cfdata->win2) return;
+
+   win = elm_win_util_standard_add("calendar", _("Date set"));
+   elm_win_autodel_set(win, EINA_TRUE);
+   elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
+   evas_object_event_callback_add(win, EVAS_CALLBACK_FREE, _close_cb, cfdata);
+   cfdata->win2 = win;
+
+   bx = elm_box_add(win);
+   evas_object_size_hint_weight_set(bx, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_win_resize_object_add(win, bx);
+   evas_object_show(bx);
+
+   cal = elm_calendar_add(win);
+   evas_object_size_hint_weight_set(cal, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   evas_object_size_hint_align_set(cal, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_min_set(cal, 200 * e_scale, 140 * e_scale);
+   current_time = time(NULL);
+   localtime_r(&current_time, &selected_time);
+   elm_calendar_selected_time_set(cal, &selected_time);
+   evas_object_show(cal);
+   elm_box_pack_end(bx, cal);
+   cfdata->cal = cal;
+
+   bt = elm_button_add(win);
+   elm_object_text_set(bt, _("Set"));
+   evas_object_event_callback_add(bt, EVAS_CALLBACK_MOUSE_DOWN, _bt_date_apply, cfdata);
+   elm_box_pack_end(bx, bt);
+   evas_object_show(bt);
+
+   evas_object_show(win);
 }
 
 static void
@@ -136,35 +199,11 @@ show_time_cb(void *data, void *data2 __UNUSED__)
    bt = elm_button_add(win);
    elm_object_text_set(bt, _("Set"));
    cfdata->ck = ck;
-   evas_object_event_callback_add(bt, EVAS_CALLBACK_MOUSE_DOWN, _bt_apply, cfdata);
+   evas_object_event_callback_add(bt, EVAS_CALLBACK_MOUSE_DOWN, _bt_time_apply, cfdata);
    elm_box_pack_end(bx, bt);
    evas_object_show(bt);
 
    evas_object_show(win);
-}
-
-static void
-show_info_cb() 
-{
-   E_Dialog *dia;
-   E_Manager *man;
-   E_Container *con;
-   char buf[512];
-  
-   if (show_info_dia) return;
-   if (!(man = e_manager_current_get())) return;
-   if (!(con = e_container_current_get(man))) return;
-   if (!(dia = e_dialog_new(con, "E", "_clock_info"))) return;
-  
-   snprintf(buf, sizeof(buf), _("Click on a calendar day to change the date. <br>"
-                                "Use the mouse wheel to change the year."));
-   e_dialog_title_set(dia, _("Clock module Information"));
-   e_dialog_icon_set(dia, "dialog-information", 64);
-   e_dialog_text_set(dia, buf);
-   e_object_del_attach_func_set(E_OBJECT(dia), _show_info_del);
-   e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
-   e_dialog_show(dia);
-   show_info_dia = dia;
 }
 
 static Evas_Object *
@@ -275,12 +314,26 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 
    of = e_widget_frametable_add(evas, _("Date set"), 0);
 
-   ob = e_widget_button_add(evas, _("Info... "), "dialog-information", show_info_cb, NULL, NULL);
+   ob = e_widget_button_add(evas, _("Set... "), "configure", show_date_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
-  
    e_widget_table_object_append(tab, of, 3, 1, 1, 1, 1, 1, 1, 1);
 
    return tab;
+}
+
+static void
+_clock_date_set(E_Config_Dialog_Data *cfdata)
+{
+   char pkexec_cmd[PATH_MAX];
+   const char *cmd_sudo;
+   char buf[4096];
+   char command[64] = "date +%Y%m%d -s";
+
+   snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
+   cmd_sudo = eina_stringshare_add(pkexec_cmd);
+   snprintf(buf, sizeof(buf), "%s %s %i%i%i", cmd_sudo, command, cfdata->year, cfdata->month, cfdata->day);
+   e_util_exe_safe_run(buf, NULL);
+   eina_stringshare_del(cmd_sudo);
 }
 
 static void

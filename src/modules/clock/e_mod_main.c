@@ -29,6 +29,9 @@ struct _Instance
    Eina_Bool        dayvalids[7][6];
    Eina_Bool        daytoday[7][6];
    Config_Item     *cfg;
+   Ecore_X_Window   input_win;
+   Ecore_Event_Handler *hand_mouse_down;
+   Ecore_Event_Handler *hand_key_down;
 };
 
 /* gadcon requirements */
@@ -360,6 +363,7 @@ _clock_settings_cb(void *d1, void *d2 __UNUSED__)
 {
    Instance *inst = d1;
    e_int_config_clock_module(inst->popup->win->zone->container, inst->cfg);
+   _clock_popup_free(inst);
    //~ e_object_del(E_OBJECT(inst->popup));
    //~ inst->popup = NULL;
    //~ inst->o_popclock = NULL;
@@ -389,6 +393,72 @@ _popclock_del_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *info __
      {
         inst->o_popclock = NULL;
      }
+}
+
+static Eina_Bool
+_clock_input_win_mouse_down_cb(void *data, int type __UNUSED__, void *event)
+{
+   Ecore_Event_Mouse_Button *ev = event;
+   Instance *inst = data;
+
+   if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
+   _clock_popup_free(inst);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static Eina_Bool
+_clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
+{
+   Ecore_Event_Key *ev = event;
+   Instance *inst = data;
+   const char *keysym;
+
+   if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
+
+   keysym = ev->key;
+   if (!strcmp(keysym, "Escape"))
+      _clock_popup_free(inst);
+   return ECORE_CALLBACK_PASS_ON;
+}
+
+static void
+_clock_input_win_del(Instance *inst)
+{
+   if (!inst->input_win) return;
+   e_grabinput_release(0, inst->input_win);
+   ecore_x_window_free(inst->input_win);
+   inst->input_win = 0;
+   ecore_event_handler_del(inst->hand_mouse_down);
+   inst->hand_mouse_down = NULL;
+   ecore_event_handler_del(inst->hand_key_down);
+   inst->hand_key_down = NULL;
+}
+
+static void
+_clock_input_win_new(Instance *inst)
+{
+   Ecore_X_Window_Configure_Mask mask;
+   Ecore_X_Window w, popup_w;
+   E_Manager *man;
+
+   man = inst->gcc->gadcon->zone->container->manager;
+
+   w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
+   mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
+           ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING);
+   popup_w = inst->popup->win->evas_win;
+   ecore_x_window_configure(w, mask, 0, 0, 0, 0, 0, popup_w,
+                            ECORE_X_WINDOW_STACK_BELOW);
+   ecore_x_window_show(w);
+
+   inst->hand_mouse_down =
+      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
+                              _clock_input_win_mouse_down_cb, inst);
+   inst->hand_key_down =
+      ecore_event_handler_add(ECORE_EVENT_KEY_DOWN,
+                              _clock_input_win_key_down_cb, inst);
+   inst->input_win = w;
+   e_grabinput_get(0, 0, inst->input_win);
 }
 
 static void
@@ -441,6 +511,9 @@ _clock_popup_new(Instance *inst)
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o,
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
+   //~ o = e_widget_check_add(evas, _("Always on Top"), &inst->cfg->always_on_top);
+   //~ e_widget_table_object_align_append(inst->o_table, o,
+                                      //~ 0, 1, 1, 1, 0, 0, 0, 0, 0.5, 0.0);
 
    o = e_widget_button_add(evas, _("Settings"), "preferences-system",
                            _clock_settings_cb, inst, NULL);
@@ -475,6 +548,7 @@ _clock_popup_new(Instance *inst)
 
    E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_DESK_AFTER_SHOW, _clock_popup_desk_change, inst);
    E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_BORDER_FULLSCREEN, _clock_popup_fullscreen_change, inst);
+   _clock_input_win_new(inst);
 }
 
 static void
@@ -648,9 +722,14 @@ static void
 _clock_popup_free(Instance *inst)
 {
    if (!inst->popup) return;
-   if (inst->popup) e_object_del(E_OBJECT(inst->popup));
+   if (inst->popup)
+     {
+       _clock_input_win_del(inst);
+       e_object_del(E_OBJECT(inst->popup));
+       inst->popup = NULL;
+     }
+
    E_FREE_LIST(inst->handlers, ecore_event_handler_del);
-   inst->popup = NULL;
    inst->o_popclock = NULL;
 }
 
