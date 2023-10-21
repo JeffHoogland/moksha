@@ -37,6 +37,7 @@ struct _Config_Item
    int show_seconds;
    int show_date;
    Eina_Bool changed;
+   int always_on_top;
 };
 
 void e_int_config_clock_module(E_Container *con, Config_Item *ci);

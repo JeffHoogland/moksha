@@ -17,19 +17,19 @@ struct _Instance
    E_Gadcon_Popup  *popup;
    Eina_List *handlers;
 
-   int              madj;
+   int                  madj;
 
-   char             year[8];
-   char             month[64];
-   char             month_dec[6];
-   int              weeks[53];
-   const char      *daynames[7];
-   unsigned char    daynums[7][6];
-   Eina_Bool        dayweekends[7][6];
-   Eina_Bool        dayvalids[7][6];
-   Eina_Bool        daytoday[7][6];
-   Config_Item     *cfg;
-   Ecore_X_Window   input_win;
+   char                 year[8];
+   char                 month[64];
+   char                 month_dec[6];
+   int                  weeks[53];
+   const char          *daynames[7];
+   unsigned char        daynums[7][6];
+   Eina_Bool            dayweekends[7][6];
+   Eina_Bool            dayvalids[7][6];
+   Eina_Bool            daytoday[7][6];
+   Config_Item         *cfg;
+   Ecore_X_Window       input_win;
    Ecore_Event_Handler *hand_mouse_down;
    Ecore_Event_Handler *hand_key_down;
 };
@@ -43,6 +43,7 @@ static Evas_Object     *_gc_icon(const E_Gadcon_Client_Class *client_class, Evas
 static const char      *_gc_id_new(const E_Gadcon_Client_Class *client_class);
 static Config_Item     *_conf_item_get(const char *id);
 static void             _clock_popup_free(Instance *inst);
+static void             _clock_popup_new(Instance *inst);
 
 static Eio_Monitor *clock_tz_monitor = NULL;
 static Eio_Monitor *clock_tz2_monitor = NULL;
@@ -435,6 +436,16 @@ _clock_input_win_new(Instance *inst)
 }
 
 static void
+_check_cb_change(void *data, Evas_Object *obj __UNUSED__)
+{
+   Instance *inst = data;
+
+   if (!inst) return;
+   _clock_popup_free(inst);
+   _clock_popup_new(inst);
+}
+
+static void
 _clock_popup_new(Instance *inst)
 {
    Evas *evas;
@@ -485,6 +496,11 @@ _clock_popup_new(Instance *inst)
    e_widget_table_object_align_append(inst->o_table, o,
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
 
+   o = e_widget_check_add(evas, _("Always on Top"), &inst->cfg->always_on_top);
+   e_widget_on_change_hook_set(o, _check_cb_change, inst);
+   e_widget_table_object_align_append(inst->o_table, o,
+                                      0, 1, 1, 1, 0, 0, 0, 0, 0.5, 0.0);
+
    o = e_widget_button_add(evas, _("Settings"), "preferences-system",
                            _clock_settings_cb, inst, NULL);
    e_widget_table_object_align_append(inst->o_table, o,
@@ -518,7 +534,8 @@ _clock_popup_new(Instance *inst)
 
    E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_DESK_AFTER_SHOW, _clock_popup_desk_change, inst);
    E_LIST_HANDLER_APPEND(inst->handlers, E_EVENT_BORDER_FULLSCREEN, _clock_popup_fullscreen_change, inst);
-   _clock_input_win_new(inst);
+   if (!inst->cfg->always_on_top)
+     _clock_input_win_new(inst);
 }
 
 static void
@@ -607,7 +624,7 @@ e_int_clock_instances_redo(Eina_Bool all)
      {
         Evas_Object *o = inst->o_clock;
 
-         if ((!all) && (!inst->cfg->changed)) continue;
+        if ((!all) && (!inst->cfg->changed)) continue;
         _todaystr_eval(inst, todaystr, sizeof(todaystr) - 1);
         if (inst->cfg->digital_clock)
           e_theme_edje_object_set(o, "base/theme/modules/clock",
