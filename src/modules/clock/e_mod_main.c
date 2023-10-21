@@ -238,29 +238,6 @@ _time_eval(Instance *inst)
 }
 
 static void
-_clock_date_set_cb(void *data, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
-{
-   Instance *inst = data;
-   char pkexec_cmd[PATH_MAX];
-   const char *cmd_sudo;
-   char date[512];
-   char buf[4096];
-   char command[64] = "date +%Y%m%d -s";
-
-   snprintf(date, 512, "%s%s%02d", inst->year, inst->month_dec,
-                atoi(edje_object_part_text_get(obj, "e.text.label")));
-   snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
-   cmd_sudo = eina_stringshare_add(pkexec_cmd);
-   snprintf(buf, sizeof(buf), "%s %s %s", cmd_sudo, command, date);
-   if (clock_config->config_dialog)
-   {
-     e_util_exe_safe_run(buf, NULL);
-    _clock_popup_free(inst);
-   }
-   eina_stringshare_del(cmd_sudo);
-}
-
-static void
 _clock_month_update(Instance *inst)
 {
    Evas_Object *od, *oi, *ow;
@@ -303,12 +280,8 @@ _clock_month_update(Instance *inst)
              if (inst->daytoday[x][y])
                edje_object_signal_emit(od, "e,state,today", "e");
              else
-             {
                edje_object_signal_emit(od, "e,state,someday", "e");
-               //callback for each day RECT to set up date
-               edje_object_signal_callback_add(od, "e,action,date,get", "*",
-                                     _clock_date_set_cb, inst);
-             }
+
              edje_object_message_signal_process(od);
 
           }
