@@ -10,6 +10,7 @@ group "Config" struct {
             value "digital_24h" int: 0;
             value "show_seconds" int: 0;
             value "show_date" int: 0;
+            value "always_on_top" int: 0;
         }
     }
 }

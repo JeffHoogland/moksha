@@ -491,7 +491,7 @@ _clock_popup_new(Instance *inst)
 
    edje_object_part_text_set(oi, "e.text.today", todaystr);
 
-   o = e_widget_image_add_from_object(evas, oi, 128, 128);
+   o = e_widget_image_add_from_object(evas, oi, 112, 112);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o,
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
@@ -904,6 +904,7 @@ _conf_item_get(const char *id)
    ci->digital_24h = 0;
    ci->show_seconds = 0;
    ci->show_date = 0;
+   ci->always_on_top = 0;
 
    clock_config->items = eina_list_append(clock_config->items, ci);
    e_config_save_queue();
@@ -1030,6 +1031,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, digital_24h, INT);
    E_CONFIG_VAL(D, T, show_seconds, INT);
    E_CONFIG_VAL(D, T, show_date, INT);
+   E_CONFIG_VAL(D, T, always_on_top, INT);
 
    conf_edd = E_CONFIG_DD_NEW("Config", Config);
 #undef T
