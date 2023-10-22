@@ -2,6 +2,9 @@
 #include "e_mod_main.h"
 #include <Elementary.h>
 
+#define TIME_STRING_SET "date +%T -s"
+#define DATE_STRING_SET "date +%Y%m%d -s"
+
 struct _E_Config_Dialog_Data
 {
    Config_Item cfg;
@@ -20,8 +23,8 @@ static Evas_Object *_basic_create_widgets(E_Config_Dialog *cfd,
                                           E_Config_Dialog_Data *cfdata);
 static int          _basic_apply_data(E_Config_Dialog *cfd,
                                       E_Config_Dialog_Data *cfdata);
-static void         _clock_time_set(E_Config_Dialog_Data *cfdata);
-static void         _clock_date_set(E_Config_Dialog_Data *cfdata);
+static void         _clock_date_time_set(E_Config_Dialog_Data *cfdata,
+                                         Eina_Bool data);
 
 
 void
@@ -86,7 +89,7 @@ _bt_date_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    cfdata->year = sel_time.tm_year + 1900;
    cfdata->month = sel_time.tm_mon + 1;
    cfdata->day = sel_time.tm_mday;
-   _clock_date_set(cfdata);
+   _clock_date_time_set(cfdata, EINA_TRUE);
 
    evas_object_del(cfdata->win2);
    cfdata->win2 = NULL;
@@ -103,7 +106,7 @@ _bt_time_apply(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    cfdata->hour = (double) hrs;
    cfdata->minute = (double) mins;
    cfdata->sec = (double) secs;
-   _clock_time_set(cfdata);
+   _clock_date_time_set(cfdata, EINA_FALSE);
 
    evas_object_del(cfdata->win);
    cfdata->win = NULL;
@@ -322,31 +325,20 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
 }
 
 static void
-_clock_date_set(E_Config_Dialog_Data *cfdata)
+_clock_date_time_set(E_Config_Dialog_Data *cfdata, Eina_Bool date)
 {
    char pkexec_cmd[PATH_MAX];
    const char *cmd_sudo;
    char buf[4096];
-   char command[64] = "date +%Y%m%d -s";
 
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
-   snprintf(buf, sizeof(buf), "%s %s %i%i%i", cmd_sudo, command, cfdata->year, cfdata->month, cfdata->day);
-   e_util_exe_safe_run(buf, NULL);
-   eina_stringshare_del(cmd_sudo);
-}
-
-static void
-_clock_time_set(E_Config_Dialog_Data *cfdata)
-{
-   char pkexec_cmd[PATH_MAX];
-   const char *cmd_sudo;
-   char buf[4096];
-   char command[64] = "date +%T -s";
-
-   snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
-   cmd_sudo = eina_stringshare_add(pkexec_cmd);
-   snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:%0.0f", cmd_sudo, command, cfdata->hour, cfdata->minute, cfdata->sec);
+   if (date)
+     snprintf(buf, sizeof(buf), "%s %s %i%i%i", cmd_sudo,
+              DATE_STRING_SET, cfdata->year, cfdata->month, cfdata->day);
+   else
+     snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:%0.0f", cmd_sudo,
+              TIME_STRING_SET, cfdata->hour, cfdata->minute, cfdata->sec);
    e_util_exe_safe_run(buf, NULL);
    eina_stringshare_del(cmd_sudo);
 }
