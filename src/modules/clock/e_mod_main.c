@@ -441,8 +441,10 @@ _check_cb_change(void *data, Evas_Object *obj __UNUSED__)
    Instance *inst = data;
 
    if (!inst) return;
-   _clock_popup_free(inst);
-   _clock_popup_new(inst);
+   if (!inst->cfg->always_on_top)
+     _clock_input_win_new(inst);
+   else
+     _clock_input_win_del(inst);
 }
 
 static void
