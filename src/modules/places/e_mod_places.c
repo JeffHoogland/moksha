@@ -710,8 +710,8 @@ _places_freespace_thread_done(void *data, Ecore_Thread *thread __UNUSED__)
              // skip check if cdrom
              if (strstr(vol->device, "/dev/scd") || strstr(vol->device, "/dev/sr")) return;
              // redraw only if size or free_space has changed more than 1Mb
-             if ((labs((long long)td->free_space - (long long)vol->free_space) > 1024 * 1024) ||
-                 (labs((long long)td->size - (long long)vol->size) > 1024 * 1024))
+             if ((llabs((long long)td->free_space - (long long)vol->free_space) > 1024 * 1024) ||
+                 (llabs((long long)td->size - (long long)vol->size) > 1024 * 1024))
                {
                   vol->size = td->size;
                   vol->free_space = td->free_space;
