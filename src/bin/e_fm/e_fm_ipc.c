@@ -791,6 +791,7 @@ _e_fm_ipc_slave_get(int id)
 static int
 _e_fm_ipc_slave_send(E_Fm_Slave *slave, E_Fm_Op_Type type, void *data, int size)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(data, EINA_FALSE);
    char *sdata;
    int ssize;
    int magic = E_FM_OP_MAGIC;
