@@ -893,7 +893,7 @@ _e_desklock_check_auth(void)
      {
 #endif
         if ((e_config->desklock_personal_passwd) &&
-            (!strcmp((!edd->passwd[0] == '\0') ? "" : edd->passwd,
+            (!strcmp(edd->passwd,
                      !e_config->desklock_personal_passwd ? "" :
                      e_config->desklock_personal_passwd)))
           {
