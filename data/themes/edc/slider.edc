@@ -5,6 +5,7 @@ group { name: "e/widgets/slider_horizontal";
    images.image: "horiz_glow_run.png" COMP;
    images.image: "knob_round_small_normal.png" COMP;
    images.image: "knob_round_small_selected.png" COMP;
+   images.image: "win_glow.png" COMP;
    parts {
       part { name: "bg"; type: RECT;
          scale: 1;
@@ -34,6 +35,21 @@ group { name: "e/widgets/slider_horizontal";
             inherit: "default" 0.0;
             image.normal: "slider_run_base_light_horiz.png";
          }
+      }
+      part { name: "focus";
+         description { state: "default" 0.0;
+            rel1.offset: -10 0;
+            rel2.offset:  10 0;
+            color: 255 255 255 128;
+            image.normal: "win_glow.png";
+            image.border: 9 9 9 9;
+            visible: 0;
+            offscale;
+       }
+       description { state: "focused" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+        }
       }
       part { name: "glow"; mouse_events: 0;
          description { state: "default" 0.0;
@@ -222,6 +238,18 @@ group { name: "e/widgets/slider_horizontal";
          target: "clip1";
          target: "clip2";
       }
+      program {
+         name: "focus_in";
+         signal: "e,state,focused"; source: "e";
+         action: STATE_SET "focused" 0.0;
+         target: "focus";
+      }
+      program {
+         name: "focus_out";
+         signal: "e,state,unfocused"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "focus";
+      }
    }
 }
 
@@ -261,6 +289,21 @@ group { name: "e/widgets/slider_vertical";
             inherit: "default" 0.0;
             image.normal: "slider_run_base_light_vert.png";
          }
+      }
+      part { name: "focus";
+         description { state: "default" 0.0;
+            rel1.offset: -10 0;
+            rel2.offset:  10 0;
+            color: 255 255 255 128;
+            image.normal: "win_glow.png";
+            image.border: 9 9 9 9;
+            visible: 0;
+            offscale;
+       }
+       description { state: "focused" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+        }
       }
       part { name: "glow"; mouse_events: 0;
          description { state: "default" 0.0;
@@ -448,6 +491,18 @@ group { name: "e/widgets/slider_vertical";
          target: "base";
          target: "clip1";
          target: "clip2";
+      }
+      program {
+         name: "focus_in";
+         signal: "e,state,focused"; source: "e";
+         action: STATE_SET "focused" 0.0;
+         target: "focus";
+      }
+      program {
+         name: "focus_out";
+         signal: "e,state,unfocused"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "focus";
       }
    }
 }

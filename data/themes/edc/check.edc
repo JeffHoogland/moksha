@@ -2,6 +2,8 @@ group { name: "e/widgets/check";
    images.image: "inset_shadow_tiny.png" COMP;
    images.image: "bevel_in.png" COMP;
    images.image: "sym_check_alum.png" COMP;
+   images.image: "win_glow.png" COMP;
+
    parts {
       part { name: "base"; type: RECT;
          description { state: "default" 0.0;
@@ -26,6 +28,21 @@ group { name: "e/widgets/check";
             inherit: "default" 0.0;
             visible: 0;
          }
+      }
+      part { name: "focus";
+         description { state: "default" 0.0;
+            rel1.offset: -10 0;
+            rel2.offset:   5 0;
+            color: 255 255 255 128;
+            image.normal: "win_glow.png";
+            image.border: 9 9 9 9;
+            visible: 0;
+            offscale;
+       }
+       description { state: "focused" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+        }
       }
       part { name: "inset"; mouse_events: 0;
          description { state: "default" 0.0;
@@ -132,6 +149,18 @@ group { name: "e/widgets/check";
          target: "clip";
          target: "e.text.label";
          target: "event";
+      }
+      program {
+         name: "focus_in";
+         signal: "e,state,focused"; source: "e";
+         action: STATE_SET "focused" 0.0;
+         target: "focus";
+      }
+      program {
+         name: "focus_out";
+         signal: "e,state,unfocused"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "focus";
       }
    }
 }
