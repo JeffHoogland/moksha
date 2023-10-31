@@ -56,7 +56,7 @@ static void
 _backlight_gadget_update(Instance *inst)
 {
    Edje_Message_Float msg;
-   
+
    msg.val = inst->val;
    if (msg.val < 0.0) msg.val = 0.0;
    else if (msg.val > 1.0) msg.val = 1.0;
@@ -81,7 +81,7 @@ _backlight_input_win_mouse_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    Instance *inst = data;
-   
+
    if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
    _backlight_popup_free(inst);
    return ECORE_CALLBACK_PASS_ON;
@@ -93,9 +93,9 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
    Ecore_Event_Key *ev = event;
    Instance *inst = data;
    const char *keysym;
-   
+
    if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
-   
+
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
       _backlight_popup_free(inst);
@@ -157,7 +157,7 @@ _backlight_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
         E_Config_Binding_Key *binding;
         E_Binding_Modifier mod;
 
-	EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
+   EINA_LIST_FOREACH(e_config->key_bindings, l, binding)
           {
              if (binding->action && strcmp(binding->action, "backlight")) continue;
              
@@ -189,9 +189,9 @@ _backlight_input_win_new(Instance *inst)
    Ecore_X_Window_Configure_Mask mask;
    Ecore_X_Window w, popup_w;
    E_Manager *man;
-   
+
    man = inst->gcc->gadcon->zone->container->manager;
-   
+
    w = ecore_x_window_input_new(man->root, 0, 0, man->w, man->h);
    mask = (ECORE_X_WINDOW_CONFIGURE_MASK_STACK_MODE |
            ECORE_X_WINDOW_CONFIGURE_MASK_SIBLING);
@@ -199,7 +199,7 @@ _backlight_input_win_new(Instance *inst)
    ecore_x_window_configure(w, mask, 0, 0, 0, 0, 0, popup_w,
                             ECORE_X_WINDOW_STACK_BELOW);
    ecore_x_window_show(w);
-   
+
    inst->hand_mouse_down =
       ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
                               _backlight_input_win_mouse_down_cb, inst);
@@ -232,17 +232,17 @@ _backlight_popup_new(Instance *inst)
 {
    Evas *evas;
    Evas_Object *o;
-   
+
    if (inst->popup) return;
 
    e_backlight_update();
    e_backlight_mode_set(inst->gcc->gadcon->zone, E_BACKLIGHT_MODE_NORMAL);
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
    _backlight_gadget_update(inst);
-   
+
    inst->popup = e_gadcon_popup_new(inst->gcc);
    evas = inst->popup->win->evas;
-   
+
    inst->o_table = e_widget_table_add(evas, 0);
 
    o = e_widget_slider_add(evas, 0, 0, NULL, 0.05, 1.0, 0.05, 0, &(inst->val), NULL, 100);
@@ -250,7 +250,7 @@ _backlight_popup_new(Instance *inst)
    inst->o_slider = o;
    e_widget_table_object_align_append(inst->o_table, o, 
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
-   
+
    o = e_widget_button_add(evas, NULL, "preferences-system",
                            _backlight_settings_cb, inst, NULL);
    e_widget_table_object_align_append(inst->o_table, o, 
@@ -288,7 +288,7 @@ _backlight_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __U
 {
    Instance *inst = data;
    Evas_Event_Mouse_Down *ev = event;
-   
+
    if (ev->button == 1)
      {
         if (inst->popup) _backlight_popup_free(inst);
@@ -355,24 +355,24 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-   
+
    inst = E_NEW(Instance, 1);
 
    o = edje_object_add(gc->evas);
    e_theme_edje_object_set(o, "base/theme/modules/backlight",
                            "e/modules/backlight/main");
    evas_object_show(o);
-   
+
    gcc = e_gadcon_client_new(gc, name, id, style, o);
    gcc->data = inst;
-   
+
    inst->gcc = gcc;
    inst->o_backlight = o;
 
    e_backlight_update();
    inst->val = e_backlight_level_get(inst->gcc->gadcon->zone);
    _backlight_gadget_update(inst);
-   
+
    evas_object_event_callback_add(inst->o_backlight, 
                                   EVAS_CALLBACK_MOUSE_DOWN,
                                   _backlight_cb_mouse_down,
@@ -381,7 +381,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   EVAS_CALLBACK_MOUSE_WHEEL,
                                   _backlight_cb_mouse_wheel,
                                   inst);
-   
+
    backlight_instances = eina_list_append(backlight_instances, inst);
    return gcc;
 }
@@ -390,7 +390,7 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
-   
+
    inst = gcc->data;
    _backlight_input_win_del(inst);
    _backlight_popup_free(inst);
@@ -404,7 +404,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient __UNUSED__)
 {
    Instance *inst;
    Evas_Coord mw, mh;
-   
+
    inst = gcc->data;
    mw = 0, mh = 0;
    edje_object_size_min_get(inst->o_backlight, &mw, &mh);
@@ -427,10 +427,10 @@ _gc_icon(const E_Gadcon_Client_Class *client_class __UNUSED__, Evas *evas)
 {
    Evas_Object *o;
    char buf[4096];
-   
+
    o = edje_object_add(evas);
    snprintf(buf, sizeof(buf), "%s/e-module-backlight.edj",
-	    e_module_dir_get(backlight_module));
+            e_module_dir_get(backlight_module));
    edje_object_file_set(o, buf, "icon");
    return o;
 }
@@ -451,7 +451,7 @@ _e_mod_action_cb(E_Object *obj __UNUSED__,
 {
    Eina_List *l;
    Instance *inst;
-   
+
    EINA_LIST_FOREACH(backlight_instances, l, inst)
      {
         if (inst->popup) _backlight_popup_free(inst);
