@@ -72,7 +72,8 @@ struct _E_Config_Dialog_Data
       const char    *binding, *action, *cur;
       char          *params;
       int            cur_act, add;
-      Eina_Bool     changed :1;
+      int            allow_super;
+      Eina_Bool      changed :1;
 
       E_Grab_Dialog *eg;
    } locals;
@@ -127,6 +128,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->locals.cur = NULL;
    cfdata->binding.key = NULL;
    cfdata->locals.eg = NULL;
+   cfdata->locals.allow_super = 0;
 
    EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
      {
@@ -241,23 +243,25 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    cfdata->gui.o_binding_list = ob;
    e_widget_size_min_set(ob, 200, 200);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
+   ob = e_widget_check_add(evas, _("Allow Super Key"), &(cfdata->locals.allow_super));
+   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Add"), "list-add", _add_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete"), "list-remove", _delete_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_del = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 1, 1, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Modify"), NULL, _modify_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_mod = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 3, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Delete All"), "edit-clear", _delete_all_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_del_all = ob;
    e_widget_disabled_set(ob, 1);
-   e_widget_frametable_object_append(of, ob, 1, 2, 1, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 1, 3, 1, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Restore Default Bindings"), "enlightenment", _restore_key_binding_defaults_cb, cfdata, NULL);
-   e_widget_frametable_object_append(of, ob, 0, 3, 2, 1, 1, 0, 1, 0);
+   e_widget_frametable_object_append(of, ob, 0, 4, 2, 1, 1, 0, 1, 0);
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    ot = e_widget_table_add(evas, 0);
@@ -633,6 +637,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "d",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "desk_deskshow_toggle", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "o",
+                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+                    "touchpad_toggle", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F1",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
                     "screen_send_to", "0");
@@ -645,9 +652,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F4",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
                     "screen_send_to", "3");
-   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "o",
-                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
-                    "touchpad_toggle", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "Super_L",
+                    0, 0,
+                    "everything", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "XF86AudioLowerVolume",
                     0, 0,
                     "volume_decrease", NULL);
@@ -1045,7 +1052,6 @@ _grab_key_down_cb(void *data,
 
    ev = event;
    cfdata = data;
-
    if ((ev->keyname) && (ev->key) && (ev->compose))
      printf("'%s' '%s' '%s'\n", ev->key, ev->key, ev->compose);
    else if ((ev->keyname) && (ev->key))
@@ -1055,7 +1061,8 @@ _grab_key_down_cb(void *data,
    if (!e_util_strcmp(ev->key, "Control_L") || !e_util_strcmp(ev->key, "Control_R") ||
        !e_util_strcmp(ev->key, "Shift_L") || !e_util_strcmp(ev->key, "Shift_R") ||
        !e_util_strcmp(ev->key, "Alt_L") || !e_util_strcmp(ev->key, "Alt_R") ||
-       !e_util_strcmp(ev->key, "Super_L") || !e_util_strcmp(ev->key, "Super_R"))
+       ((!e_util_strcmp(ev->key, "Super_L") || !e_util_strcmp(ev->key, "Super_R")) &&
+       (!cfdata->locals.allow_super)))
      {
         /* Do nothing */
      }

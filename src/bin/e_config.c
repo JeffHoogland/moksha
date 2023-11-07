@@ -1099,17 +1099,22 @@ while (!e_config)
           CONFIG_VERSION_CHECK(20)
             {
                CONFIG_VERSION_UPDATE_INFO(20);
-               E_Config_Binding_Key *bi;
-               
+               E_Config_Binding_Key *bi, *bi2;
+
                bi = E_NEW(E_Config_Binding_Key, 1);
                bi->context = E_BINDING_CONTEXT_ANY;
-               bi->key = eina_stringshare_add("o");
+               bi->key = "o";
                bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-               bi->action = eina_stringshare_add("touchpad_toggle");
+               bi->action = "touchpad_toggle";
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
                
-               eina_stringshare_del(bi->key);
-               eina_stringshare_del(bi->action);
+               bi2 = E_NEW(E_Config_Binding_Key, 1); 
+               bi2->context = E_BINDING_CONTEXT_ANY;
+               bi2->key = "Super_L";
+               bi2->modifiers = 0;
+               bi2->action = "everything";
+               e_config->key_bindings = eina_list_append(e_config->key_bindings, bi2);
+
                e_config->touch_off = 0;
                e_config_save_queue();
             }
