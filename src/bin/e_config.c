@@ -1103,11 +1103,13 @@ while (!e_config)
                
                bi = E_NEW(E_Config_Binding_Key, 1);
                bi->context = E_BINDING_CONTEXT_ANY;
-               bi->key = "o"; 
+               bi->key = eina_stringshare_add("o");
                bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
                bi->action = eina_stringshare_add("touchpad_toggle");
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
-
+               
+               eina_stringshare_del(bi->key);
+               eina_stringshare_del(bi->action);
                e_config->touch_off = 0;
                e_config_save_queue();
             }
