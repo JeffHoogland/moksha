@@ -554,6 +554,16 @@ devices_apply(Eina_Bool force)
 EAPI int
 e_mouse_update(void)
 {
+    if (e_config->touch_off)
+      {
+        e_config->touch_extras = 1;
+      }
+    else
+      {
+        e_config->touch_extras = 0;
+        devices_apply(EINA_TRUE);
+      }
+
     if (e_config->touch_extras) devices_apply(EINA_TRUE);
     generic_apply();
     return 1;
