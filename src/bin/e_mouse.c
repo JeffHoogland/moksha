@@ -232,6 +232,21 @@ _handle_dev_prop(int dev_slot, const char *dev, const char *prop, Device_Flags d
           }
         free(val);
      }
+   else if (!strcmp(prop, "Synaptics Off"))
+     {
+        // 1 bool
+        unsigned char *val = ecore_x_input_device_property_get
+          (dev_slot, prop, &num, &fmt, &size);
+        if ((val) && (size == 8) && (num == 1) &&
+            (e_config->touch_off) != (val[0]))
+          {
+             val[0] = e_config->touch_off;
+             printf("DEV: change [%s] [%s] -> %i\n", dev, prop, val[0]);
+             ecore_x_input_device_property_set
+               (dev_slot, prop, val, num, fmt, size);
+          }
+        free(val);
+     }
    else if (!strcmp(prop, "Synaptics ClickPad"))
      {
         // 1 bool

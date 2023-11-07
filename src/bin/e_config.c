@@ -665,6 +665,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, touch_scrolling_circular, UCHAR);
    E_CONFIG_VAL(D, T, touch_scrolling_horiz, UCHAR);
    E_CONFIG_VAL(D, T, touch_palm_detect, UCHAR);
+   E_CONFIG_VAL(D, T, touch_off, UCHAR);
 
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
@@ -1093,6 +1094,12 @@ while (!e_config)
                EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
                   cf_es->icons = 5;
 
+               e_config_save_queue();
+            }
+          CONFIG_VERSION_CHECK(20)
+            {
+               CONFIG_VERSION_UPDATE_INFO(20);
+               e_config->touch_off = 0;
                e_config_save_queue();
             }
      }

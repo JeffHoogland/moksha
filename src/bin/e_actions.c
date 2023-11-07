@@ -3029,6 +3029,12 @@ ACT_FN_GO(backlight_adjust, )
    e_config_save_queue();
 }
 
+ACT_FN_GO(touchpad_toggle, __UNUSED__)
+{
+   e_config->touch_off = !e_config->touch_off;
+   e_mouse_update();
+}
+
 ACT_FN_GO(kbd_layout, )
 {
    unsigned int x;
@@ -3622,6 +3628,12 @@ e_actions_init(void)
    ACT_GO_MOUSE(delayed_action);
    ACT_END_KEY(delayed_action);
    ACT_END_MOUSE(delayed_action);
+
+   /* touchpad */
+   ACT_GO(touchpad_toggle);
+   e_action_predef_name_set(N_("Touchpad"),
+                            N_("Touchpad on/off"), "touchpad_toggle",
+                            NULL, NULL, 1);
 
    /* xkb */
    ACT_GO(kbd_layout);

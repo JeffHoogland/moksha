@@ -364,6 +364,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_framelist_object_append(of, oc);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Info"), 0);
+   oc = e_widget_label_add(evas, _("Touchpad on/off (Ctrl Shift o)"));
+   e_widget_framelist_object_append(of, oc);
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
    e_widget_toolbook_page_append(otb, NULL, _("Touchpad"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
