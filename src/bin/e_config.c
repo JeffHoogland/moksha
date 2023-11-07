@@ -1099,6 +1099,15 @@ while (!e_config)
           CONFIG_VERSION_CHECK(20)
             {
                CONFIG_VERSION_UPDATE_INFO(20);
+               E_Config_Binding_Key *bi;
+               
+               bi = E_NEW(E_Config_Binding_Key, 1);
+               bi->context = E_BINDING_CONTEXT_ANY;
+               bi->key = "o"; 
+               bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+               bi->action = eina_stringshare_add("touchpad_toggle");
+               e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
+
                e_config->touch_off = 0;
                e_config_save_queue();
             }
