@@ -1103,18 +1103,19 @@ while (!e_config)
 
                bi = E_NEW(E_Config_Binding_Key, 1);
                bi->context = E_BINDING_CONTEXT_ANY;
-               bi->key = "o";
+               bi->key = eina_stringshare_add("o");
                bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
-               bi->action = "touchpad_toggle";
+               bi->action = eina_stringshare_add("touchpad_toggle");
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
                
                bi2 = E_NEW(E_Config_Binding_Key, 1); 
                bi2->context = E_BINDING_CONTEXT_ANY;
-               bi2->key = "Super_L";
+               bi2->key = eina_stringshare_add("Super_L");
                bi2->modifiers = 0;
-               bi2->action = "everything";
+               bi2->action = eina_stringshare_add("everything");
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi2);
-
+               
+               // touchpad on/off var
                e_config->touch_off = 0;
                e_config_save_queue();
             }
