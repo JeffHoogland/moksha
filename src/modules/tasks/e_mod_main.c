@@ -46,6 +46,7 @@ struct _Tasks_Item
    E_Border    *border; // The border this item points to
    Evas_Object *o_item; // The edje theme object
    Evas_Object *o_icon; // The icon
+   Evas_Object *o_drop; // Neighbour position
    Eina_Bool skip_taskbar : 1;
    Evas_Object *win;
    E_Popup     *popup;
@@ -955,6 +956,82 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 }
 
 static void
+_item_next(void *data)
+{
+   Tasks_Item *it, *item = data;
+   Eina_List *l, *nddata;
+   unsigned int n = 0;
+
+   EINA_LIST_FOREACH(item->tasks->items, l, it)
+     {
+       if (eina_list_count(item->tasks->items) == n + 1)
+         return;
+       if (it == item)
+         {
+           e_box_unpack(it->o_item);
+           break;
+         }
+       n++;
+     }
+
+   item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n);
+   e_box_pack_after(item->tasks->o_items, item->o_item, item->o_drop);
+   e_box_pack_options_set(item->o_item,
+                          1, 1, /* fill */
+                          1, 1, /* expand */
+                          0.5, 0.5, /* align */
+                          1, 1, /* min */
+                          99999, 99999
+                          );
+
+   // next item switch with the current one
+   l = eina_list_nth_list(item->tasks->items, n);
+   nddata = eina_list_data_get(eina_list_next(l));
+
+   eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
+   eina_list_data_set(l, nddata);
+}
+
+static void
+_item_prev(void *data)
+{
+   Tasks_Item *it, *item = data;
+   Eina_List *l, *nddata;
+   unsigned int n = 0;
+
+   EINA_LIST_FOREACH(item->tasks->items, l, it)
+     {
+       if (it == item)
+         {
+           if (n > 0)
+             {
+               e_box_unpack(it->o_item);
+               break;
+             }
+           else return;
+         }
+       n++;
+     }
+
+   item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n - 1);
+   e_box_pack_before(item->tasks->o_items, item->o_item, item->o_drop);
+   e_box_pack_options_set(item->o_item,
+                          1, 1, /* fill */
+                          1, 1, /* expand */
+                          0.5, 0.5, /* align */
+                          1, 1, /* min */
+                          99999, 99999
+                          );
+
+   // prev item switch with the current one
+   l = eina_list_nth_list(item->tasks->items, n);
+   nddata = eina_list_data_get(eina_list_prev(l));
+
+   eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
+   eina_list_data_set(l, nddata);
+}
+
+static void
 _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
@@ -975,17 +1052,19 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Control"))
           {
-             if (item->border->maximized)
-               e_border_unmaximize(item->border, e_config->maximize_policy);
-             else
-               e_border_maximize(item->border, e_config->maximize_policy);
+             //~ if (item->border->maximized)
+               //~ e_border_unmaximize(item->border, e_config->maximize_policy);
+             //~ else
+               //~ e_border_maximize(item->border, e_config->maximize_policy);
+            _item_next(item);
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
           {
-             if (item->border->shaded)
-               e_border_unshade(item->border, item->border->shade.dir);
-             else
-               e_border_shade(item->border, item->border->shade.dir);
+             //~ if (item->border->shaded)
+               //~ e_border_unshade(item->border, item->border->shade.dir);
+             //~ else
+               //~ e_border_shade(item->border, item->border->shade.dir);
+            _item_prev(item);
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Super"))
           {
