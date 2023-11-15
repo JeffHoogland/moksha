@@ -956,6 +956,33 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 }
 
 static void
+_cursor_place(void *data, int dir)
+{
+   Tasks_Item *item;
+   Evas_Coord x, y, w, h, px, py;
+   E_Container *con;
+   int dir_x, dir_y;
+
+   item = data;
+   dir_x = dir_y = 0;
+
+   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   con = e_container_current_get(e_manager_current_get());
+   ecore_x_pointer_xy_get(con->win, &px, &py);
+
+   if (dir)
+     {
+       dir_x = -2 * w;
+       dir_y = -2 * h;
+     }
+
+   if (item->tasks->horizontal)
+     ecore_x_pointer_warp(con->win, px + w + dir_x, py);
+   else
+     ecore_x_pointer_warp(con->win, px, py + h + dir_y);
+}
+
+static void
 _item_next(void *data)
 {
    Tasks_Item *it, *item = data;
@@ -990,6 +1017,7 @@ _item_next(void *data)
 
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
+   _cursor_place(item, 0);
 }
 
 static void
@@ -1029,6 +1057,7 @@ _item_prev(void *data)
 
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
+   _cursor_place(item, 1);
 }
 
 static void
