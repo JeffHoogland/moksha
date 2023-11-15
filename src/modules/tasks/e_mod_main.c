@@ -959,27 +959,27 @@ static void
 _cursor_place(void *data, int dir)
 {
    Tasks_Item *item;
-   Evas_Coord x, y, w, h, px, py;
+   Evas_Coord w, h, px, py;
    E_Container *con;
-   int dir_x, dir_y;
+   int shift_x, shift_y;
 
    item = data;
-   dir_x = dir_y = 0;
+   shift_x = shift_y = 0;
 
-   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   evas_object_geometry_get(item->o_item, NULL, NULL, &w, &h);
    con = e_container_current_get(e_manager_current_get());
    ecore_x_pointer_xy_get(con->win, &px, &py);
 
    if (dir)
      {
-       dir_x = -2 * w;
-       dir_y = -2 * h;
+       shift_x = -2 * w;
+       shift_y = -2 * h;
      }
 
    if (item->tasks->horizontal)
-     ecore_x_pointer_warp(con->win, px + w + dir_x, py);
+     ecore_x_pointer_warp(con->win, px + w + shift_x, py);
    else
-     ecore_x_pointer_warp(con->win, px, py + h + dir_y);
+     ecore_x_pointer_warp(con->win, px, py + h + shift_y);
 }
 
 static void
