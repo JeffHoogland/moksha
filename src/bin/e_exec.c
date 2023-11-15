@@ -506,7 +506,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                desktop->path);
              return NULL;
           }
-        exe = ecore_exe_run(exec, inst);
+        exe = e_util_exe_safe_run(exec, inst);
         if (chdir(buf))
           {
              e_util_dialog_show
@@ -538,17 +538,17 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
                             eina_strbuf_append(sb, tdesktop->exec);
                             eina_strbuf_append(sb, " -e ");
                             eina_strbuf_append_escaped(sb, exec);
-                            exe = ecore_exe_run(eina_strbuf_string_get(sb),
-                                                inst);
+                            exe = e_util_exe_safe_run
+                              (eina_strbuf_string_get(sb), inst);
                             eina_strbuf_free(sb);
                          }
                     }
                   else
-                    exe = ecore_exe_run(exec, inst);
+                    exe = e_util_exe_safe_run(exec, inst);
                   efreet_desktop_free(tdesktop);
                }
              else
-               exe = ecore_exe_run(exec, inst);
+               exe = e_util_exe_safe_run(exec, inst);
           }
         else if (desktop && desktop->url)
           {
@@ -559,11 +559,11 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
              snprintf(sb, size, "%s/enlightenment_open ", e_prefix_bin_get());
              len = strlen(sb);
              sb = e_util_string_append_quoted(sb, &size, &len, desktop->url);
-             exe = ecore_exe_run(sb, inst);
+             exe = e_util_exe_safe_run(sb, inst);
              free(sb);
           }
         else
-          exe = ecore_exe_run(exec, inst);
+          exe = e_util_exe_safe_run(exec, inst);
      }
 
    if (penv_display)
