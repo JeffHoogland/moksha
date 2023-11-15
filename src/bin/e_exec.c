@@ -553,10 +553,11 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         else if (desktop && desktop->url)
           {
              char *sb;
-             size_t size = 4096, len = sizeof(E_BINDIR "/enlightenment_open ") - 1;
+             size_t size = 65536, len;
 
              sb = malloc(size);
-             memcpy(sb, E_BINDIR "/enlightenment_open ", len);
+             snprintf(sb, size, "%s/enlightenment_open ", e_prefix_bin_get());
+             len = strlen(sb);
              sb = e_util_string_append_quoted(sb, &size, &len, desktop->url);
              exe = ecore_exe_run(sb, inst);
              free(sb);
