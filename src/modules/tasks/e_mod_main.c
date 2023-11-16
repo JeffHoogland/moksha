@@ -50,6 +50,11 @@ struct _Tasks_Item
    Eina_Bool skip_taskbar : 1;
    Evas_Object *win;
    E_Popup     *popup;
+   struct
+   {
+      unsigned char start :1;
+      int           x, y;
+   } drag;
 };
 
 static Tasks       *_tasks_new(Evas *evas, E_Zone *zone, const char *id);
@@ -79,6 +84,7 @@ static void         _tasks_cb_item_mouse_up(void *data, Evas *e, Evas_Object *ob
 static void         _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
+static void         _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 
 static Eina_Bool    _tasks_cb_event_border_add(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_remove(void *data, int type, void *event);
@@ -576,6 +582,8 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
                                   _tasks_cb_item_mouse_wheel, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_IN,
                                   _tasks_cb_item_mouse_in, item);
+   evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_MOVE,
+                                  _tasks_cb_item_mouse_move, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_OUT,
                                   _tasks_cb_item_mouse_out, item);
    evas_object_show(item->o_item);
@@ -783,6 +791,12 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 
    item = (Tasks_Item *)data;
    ev = event_info;
+   if (ev->button == 1)
+     {
+       item->drag.x = ev->output.x;
+       item->drag.y = ev->output.y;
+       item->drag.start = 1;
+     }
    if (ev->button == 3)
      {
         E_Menu *m;
@@ -956,38 +970,14 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 }
 
 static void
-_cursor_place(void *data, int dir)
+_item_next(void *data, void *event_info)
 {
-   Tasks_Item *item;
-   Evas_Coord w, h, px, py;
-   E_Container *con;
-   int shift_x, shift_y;
-
-   item = data;
-   shift_x = shift_y = 0;
-
-   evas_object_geometry_get(item->o_item, NULL, NULL, &w, &h);
-   con = e_container_current_get(e_manager_current_get());
-   ecore_x_pointer_xy_get(con->win, &px, &py);
-
-   if (dir)
-     {
-       shift_x = -2 * w;
-       shift_y = -2 * h;
-     }
-
-   if (item->tasks->horizontal)
-     ecore_x_pointer_warp(con->win, px + w + shift_x, py);
-   else
-     ecore_x_pointer_warp(con->win, px, py + h + shift_y);
-}
-
-static void
-_item_next(void *data)
-{
+   Evas_Event_Mouse_Down *ev;
    Tasks_Item *it, *item = data;
    Eina_List *l, *nddata;
    unsigned int n = 0;
+
+   ev = event_info;
 
    EINA_LIST_FOREACH(item->tasks->items, l, it)
      {
@@ -1017,12 +1007,14 @@ _item_next(void *data)
 
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
-   _cursor_place(item, 0);
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
 }
 
 static void
-_item_prev(void *data)
+_item_prev(void *data, void *event_info)
 {
+   Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
    Eina_List *l, *nddata;
    unsigned int n = 0;
@@ -1057,7 +1049,48 @@ _item_prev(void *data)
 
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
-   _cursor_place(item, 1);
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
+}
+
+static void
+_tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   Tasks_Item *item;
+
+   ev = event_info;
+   item = data;
+   if (item->drag.start)
+     {
+        int dx, dy;
+
+        dx = ev->cur.output.x - item->drag.x;
+        dy = ev->cur.output.y - item->drag.y;
+        if (((dx * dx) + (dy * dy)) >
+            (e_config->drag_resist * e_config->drag_resist))
+          {
+             Evas_Coord x, y, w, h;
+
+             evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+             //~ evas_object_move(item->o_icon, ev->cur.output.x, y + h/2);
+             //~ evas_object_raise(item->o_icon);
+             if (item->tasks->horizontal)
+               {
+                 if (ev->cur.output.x > item->drag.x + w)
+                   _item_next(item, ev);
+                 if (ev->cur.output.x < item->drag.x - w)
+                  _item_prev(item, ev);
+               }
+             else
+               {
+                if (ev->cur.output.y > item->drag.y + h)
+                   _item_next(item, ev);
+                if (ev->cur.output.y < item->drag.y - h)
+                  _item_prev(item, ev);
+               }
+          }
+     }
 }
 
 static void
@@ -1070,6 +1103,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    item = data;
    if (ev->button == 1)
      {
+        item->drag.start = 0;
         if (!item->border->sticky && item->tasks->config->show_all)
           e_desk_show(item->border->desk);
         if (evas_key_modifier_is_set(ev->modifiers, "Alt"))
@@ -1081,19 +1115,17 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Control"))
           {
-             //~ if (item->border->maximized)
-               //~ e_border_unmaximize(item->border, e_config->maximize_policy);
-             //~ else
-               //~ e_border_maximize(item->border, e_config->maximize_policy);
-            _item_next(item);
+             if (item->border->maximized)
+               e_border_unmaximize(item->border, e_config->maximize_policy);
+             else
+               e_border_maximize(item->border, e_config->maximize_policy);
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Shift"))
           {
-             //~ if (item->border->shaded)
-               //~ e_border_unshade(item->border, item->border->shade.dir);
-             //~ else
-               //~ e_border_shade(item->border, item->border->shade.dir);
-            _item_prev(item);
+             if (item->border->shaded)
+               e_border_unshade(item->border, item->border->shade.dir);
+             else
+               e_border_shade(item->border, item->border->shade.dir);
           }
         else if (evas_key_modifier_is_set(ev->modifiers, "Super"))
           {
