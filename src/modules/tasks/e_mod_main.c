@@ -1046,13 +1046,13 @@ _item_prev(void *data, void *event_info)
    e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
                           99999, 99999);
 
-   // previous item switch with the current one in tasks row
+   // previous item switch with the current one in tasks list
    l = eina_list_nth_list(item->tasks->items, n);
    nddata = eina_list_data_get(eina_list_prev(l));
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
 
-   // previous item switch with the current one in borders row
+   // previous item switch with the current one in borders list
    l = eina_list_nth_list(tasks_config->borders, n);
    bd = eina_list_data_get(eina_list_prev(l));
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
@@ -1069,33 +1069,28 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    item = data;
    if (item->drag.start)
      {
-        int dx, dy;
+       int dx, dy;
 
-        dx = ev->cur.output.x - item->drag.x;
-        dy = ev->cur.output.y - item->drag.y;
-        if (((dx * dx) + (dy * dy)) >
-            (e_config->drag_resist * e_config->drag_resist))
-          {
-             Evas_Coord x, y, w, h;
-             item->drag.dnd = 1;
-             evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
-             //~ evas_object_move(item->o_item, ev->cur.output.x, y);
-             //~ evas_object_raise(item->o_item);
-             if (item->tasks->horizontal)
-               {
-                 if (ev->cur.output.x > x + w)
-                   _item_next(item, ev);
-                 if (ev->cur.output.x < x)
-                   _item_prev(item, ev);
-               }
-             else
-               {
-                 if (ev->cur.output.y > y + h)
-                   _item_next(item, ev);
-                 if (ev->cur.output.y < y)
-                   _item_prev(item, ev);
-               }
-          }
+       dx = ev->cur.output.x - item->drag.x;
+       dy = ev->cur.output.y - item->drag.y;
+       if (((dx * dx) + (dy * dy)) >
+           (e_config->drag_resist * e_config->drag_resist))
+         {
+           Evas_Coord x, y, w, h;
+           item->drag.dnd = 1;
+           evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+
+           if (item->tasks->horizontal)
+             {
+               if (ev->cur.output.x > x + w) _item_next(item, ev);
+               if (ev->cur.output.x < x) _item_prev(item, ev);
+             }
+           else
+             {
+               if (ev->cur.output.y > y + h) _item_next(item, ev);
+               if (ev->cur.output.y < y) _item_prev(item, ev);
+             }
+         }
      }
 }
 
@@ -1159,7 +1154,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
                     }
                }
           }
-          item->drag.dnd = 0;
+        item->drag.dnd = 0;
      }
    else if (ev->button == 2)
      {
