@@ -998,13 +998,8 @@ _item_next(void *data, void *event_info)
    // next item switch with the current one in box list
    item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n);
    e_box_pack_after(item->tasks->o_items, item->o_item, item->o_drop);
-   e_box_pack_options_set(item->o_item,
-                          1, 1, /* fill */
-                          1, 1, /* expand */
-                          0.5, 0.5, /* align */
-                          1, 1, /* min */
-                          99999, 99999
-                          );
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
+                          99999, 99999);
 
    // next item switch with the current one in tasks list
    l = eina_list_nth_list(item->tasks->items, n);
@@ -1048,13 +1043,8 @@ _item_prev(void *data, void *event_info)
    // previous item switch with the current one in box list
    item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n - 1);
    e_box_pack_before(item->tasks->o_items, item->o_item, item->o_drop);
-   e_box_pack_options_set(item->o_item,
-                          1, 1, /* fill */
-                          1, 1, /* expand */
-                          0.5, 0.5, /* align */
-                          1, 1, /* min */
-                          99999, 99999
-                          );
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
+                          99999, 99999);
 
    // previous item switch with the current one in tasks row
    l = eina_list_nth_list(item->tasks->items, n);
