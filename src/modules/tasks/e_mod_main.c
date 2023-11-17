@@ -53,6 +53,7 @@ struct _Tasks_Item
    struct
    {
       unsigned char start :1;
+      unsigned char dnd :1;
       int           x, y;
    } drag;
 };
@@ -796,6 +797,7 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
        item->drag.x = ev->output.x;
        item->drag.y = ev->output.y;
        item->drag.start = 1;
+       item->drag.dnd = 0;
      }
    if (ev->button == 3)
      {
@@ -1071,7 +1073,7 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
             (e_config->drag_resist * e_config->drag_resist))
           {
              Evas_Coord x, y, w, h;
-
+             item->drag.dnd = 1;
              evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
              //~ evas_object_move(item->o_icon, ev->cur.output.x, y + h/2);
              //~ evas_object_raise(item->o_icon);
@@ -1104,6 +1106,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    if (ev->button == 1)
      {
         item->drag.start = 0;
+        
         if (!item->border->sticky && item->tasks->config->show_all)
           e_desk_show(item->border->desk);
         if (evas_key_modifier_is_set(ev->modifiers, "Alt"))
@@ -1133,13 +1136,14 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
           }
         else
           {
+             if (item->drag.dnd) return;
              if (item->border->iconic)
                {
                   e_border_uniconify(item->border);
                   e_border_focus_set(item->border, 1, 1);
                }
              else
-               {
+               { 
                   if (item->border->focused)
                     {
                        e_border_iconify(item->border);
@@ -1151,6 +1155,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
                     }
                }
           }
+          item->drag.dnd = 0;
      }
    else if (ev->button == 2)
      {
