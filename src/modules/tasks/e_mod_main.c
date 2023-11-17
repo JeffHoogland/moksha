@@ -1075,20 +1075,20 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              Evas_Coord x, y, w, h;
              item->drag.dnd = 1;
              evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
-             //~ evas_object_move(item->o_icon, ev->cur.output.x, y + h/2);
+             //~ evas_object_move(item->o_icon2, ev->cur.output.x, y + h/2);
              //~ evas_object_raise(item->o_icon);
              if (item->tasks->horizontal)
                {
-                 if (ev->cur.output.x > item->drag.x + w)
+                 if (ev->cur.output.x > x + w)
                    _item_next(item, ev);
-                 if (ev->cur.output.x < item->drag.x - w)
+                 if (ev->cur.output.x < x)
                    _item_prev(item, ev);
                }
              else
                {
-                 if (ev->cur.output.y > item->drag.y + h)
+                 if (ev->cur.output.y > y + h)
                    _item_next(item, ev);
-                 if (ev->cur.output.y < item->drag.y - h)
+                 if (ev->cur.output.y < y)
                    _item_prev(item, ev);
                }
           }
