@@ -974,13 +974,14 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 static void
 _item_next(void *data, void *event_info)
 {
-   Evas_Event_Mouse_Down *ev;
+   Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
    E_Border *bd;
    Eina_List *l, *nddata;
    unsigned int n = 0;
 
-   ev = event_info;
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
 
    EINA_LIST_FOREACH(item->tasks->items, l, it)
      {
@@ -1016,9 +1017,6 @@ _item_next(void *data, void *event_info)
    bd = eina_list_data_get(eina_list_next(l));
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
    eina_list_data_set(l, bd);
-
-   item->drag.x = ev->output.x;
-   item->drag.y = ev->output.y;
 }
 
 static void
@@ -1029,6 +1027,9 @@ _item_prev(void *data, void *event_info)
    Eina_List *l, *nddata;
    E_Border *bd;
    unsigned int n = 0;
+
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
 
    EINA_LIST_FOREACH(item->tasks->items, l, it)
      {
@@ -1066,9 +1067,6 @@ _item_prev(void *data, void *event_info)
    bd = eina_list_data_get(eina_list_prev(l));
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, bd);
-
-   item->drag.x = ev->output.x;
-   item->drag.y = ev->output.y;
 }
 
 static void
