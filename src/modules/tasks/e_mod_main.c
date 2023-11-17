@@ -403,7 +403,7 @@ _tasks_refill(Tasks *tasks)
         item = tasks->items->data;
         _tasks_item_remove(item);
      }
-   EINA_LIST_FOREACH(tasks_config->borders, l, border) 
+   EINA_LIST_FOREACH(tasks_config->borders, l, border)
      {
         _tasks_item_check_add(tasks, border);
      }
@@ -976,6 +976,7 @@ _item_next(void *data, void *event_info)
 {
    Evas_Event_Mouse_Down *ev;
    Tasks_Item *it, *item = data;
+   E_Border *bd;
    Eina_List *l, *nddata;
    unsigned int n = 0;
 
@@ -993,6 +994,7 @@ _item_next(void *data, void *event_info)
        n++;
      }
 
+   // next item switch with the current one in box list
    item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n);
    e_box_pack_after(item->tasks->o_items, item->o_item, item->o_drop);
    e_box_pack_options_set(item->o_item,
@@ -1003,12 +1005,18 @@ _item_next(void *data, void *event_info)
                           99999, 99999
                           );
 
-   // next item switch with the current one
+   // next item switch with the current one in tasks list
    l = eina_list_nth_list(item->tasks->items, n);
    nddata = eina_list_data_get(eina_list_next(l));
-
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
+
+   // next item switch with the current one in borders list
+   l = eina_list_nth_list(tasks_config->borders, n);
+   bd = eina_list_data_get(eina_list_next(l));
+   eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
+   eina_list_data_set(l, bd);
+
    item->drag.x = ev->output.x;
    item->drag.y = ev->output.y;
 }
@@ -1019,6 +1027,7 @@ _item_prev(void *data, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
    Eina_List *l, *nddata;
+   E_Border *bd;
    unsigned int n = 0;
 
    EINA_LIST_FOREACH(item->tasks->items, l, it)
@@ -1035,6 +1044,7 @@ _item_prev(void *data, void *event_info)
        n++;
      }
 
+   // previous item switch with the current one in box list
    item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n - 1);
    e_box_pack_before(item->tasks->o_items, item->o_item, item->o_drop);
    e_box_pack_options_set(item->o_item,
@@ -1045,12 +1055,18 @@ _item_prev(void *data, void *event_info)
                           99999, 99999
                           );
 
-   // prev item switch with the current one
+   // previous item switch with the current one in tasks row
    l = eina_list_nth_list(item->tasks->items, n);
    nddata = eina_list_data_get(eina_list_prev(l));
-
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, nddata);
+
+   // previous item switch with the current one in borders row
+   l = eina_list_nth_list(tasks_config->borders, n);
+   bd = eina_list_data_get(eina_list_prev(l));
+   eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
+   eina_list_data_set(l, bd);
+
    item->drag.x = ev->output.x;
    item->drag.y = ev->output.y;
 }
@@ -1075,8 +1091,8 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
              Evas_Coord x, y, w, h;
              item->drag.dnd = 1;
              evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
-             //~ evas_object_move(item->o_icon2, ev->cur.output.x, y + h/2);
-             //~ evas_object_raise(item->o_icon);
+             //~ evas_object_move(item->o_item, ev->cur.output.x, y);
+             //~ evas_object_raise(item->o_item);
              if (item->tasks->horizontal)
                {
                  if (ev->cur.output.x > x + w)
