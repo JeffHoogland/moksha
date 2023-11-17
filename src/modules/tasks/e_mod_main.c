@@ -1080,14 +1080,14 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
                  if (ev->cur.output.x > item->drag.x + w)
                    _item_next(item, ev);
                  if (ev->cur.output.x < item->drag.x - w)
-                  _item_prev(item, ev);
+                   _item_prev(item, ev);
                }
              else
                {
-                if (ev->cur.output.y > item->drag.y + h)
+                 if (ev->cur.output.y > item->drag.y + h)
                    _item_next(item, ev);
-                if (ev->cur.output.y < item->drag.y - h)
-                  _item_prev(item, ev);
+                 if (ev->cur.output.y < item->drag.y - h)
+                   _item_prev(item, ev);
                }
           }
      }
