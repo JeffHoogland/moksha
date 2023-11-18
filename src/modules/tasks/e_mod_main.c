@@ -33,6 +33,7 @@ typedef struct _Tasks_Item Tasks_Item;
 struct _Tasks
 {
    E_Gadcon_Client *gcc; // The gadcon client
+   E_Pointer       *pointer;
    Evas_Object     *o_items; // Table of items
    Eina_List       *items; // List of items
    E_Zone          *zone; // Current Zone
@@ -268,7 +269,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    /* evas_object_geometry_get(o, &x, &y, &w, &h); */
 
    tasks_config->tasks = eina_list_append(tasks_config->tasks, tasks);
-
+   tasks->pointer = e_pointer_window_new(gcc->gadcon->dnd_win, 0);
    e_gadcon_client_autoscroll_toggle_disabled_set(gcc, 1);
    // Fill on initial config
    _tasks_config_updated(tasks->config);
@@ -1020,9 +1021,9 @@ _item_prev(void *data, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
    Eina_List *l, *nddata;
-   unsigned int n = 0;
    Evas_Object *o;
    E_Border *bd;
+   unsigned int n = 0;
 
    item->drag.x = ev->output.x;
    item->drag.y = ev->output.y;
@@ -1068,29 +1069,28 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 
    ev = event_info;
    item = data;
+
    if (item->drag.start)
      {
-       int dx, dy;
+       Evas_Coord x, y, w, h;
 
-       dx = ev->cur.output.x - item->drag.x;
-       dy = ev->cur.output.y - item->drag.y;
-       if (((dx * dx) + (dy * dy)) >
-           (e_config->drag_resist * e_config->drag_resist))
+       item->drag.dnd = 1;
+       e_pointer_type_push(item->tasks->pointer, item, "move");
+       evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+
+       if (item->tasks->horizontal)
          {
-           Evas_Coord x, y, w, h;
-           item->drag.dnd = 1;
-           evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
-
-           if (item->tasks->horizontal)
-             {
-               if (ev->cur.output.x > x + w) _item_next(item, ev);
-               if (ev->cur.output.x < x) _item_prev(item, ev);
-             }
-           else
-             {
-               if (ev->cur.output.y > y + h) _item_next(item, ev);
-               if (ev->cur.output.y < y) _item_prev(item, ev);
-             }
+           if (ev->cur.output.x > x + w)
+             _item_next(item, ev);
+           if (ev->cur.output.x < x)
+             _item_prev(item, ev);
+         }
+       else
+         {
+           if (ev->cur.output.y > y + h)
+             _item_next(item, ev);
+           if (ev->cur.output.y < y)
+             _item_prev(item, ev);
          }
      }
 }
@@ -1106,6 +1106,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    if (ev->button == 1)
      {
         item->drag.start = 0;
+        e_pointer_type_push(item->tasks->pointer, item, "default");
         
         if (!item->border->sticky && item->tasks->config->show_all)
           e_desk_show(item->border->desk);
