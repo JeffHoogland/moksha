@@ -1070,6 +1070,8 @@ _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
    ev = event_info;
    item = data;
 
+   if (eina_list_count(item->tasks->items) <= 1) return;
+
    if (item->drag.start)
      {
        Evas_Coord x, y, w, h;
