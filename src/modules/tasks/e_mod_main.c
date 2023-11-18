@@ -46,8 +46,7 @@ struct _Tasks_Item
    E_Border    *border; // The border this item points to
    Evas_Object *o_item; // The edje theme object
    Evas_Object *o_icon; // The icon
-   Evas_Object *o_drop; // Neighbour position
-   Eina_Bool skip_taskbar : 1;
+   Eina_Bool    skip_taskbar : 1;
    Evas_Object *win;
    E_Popup     *popup;
    struct
@@ -976,9 +975,10 @@ _item_next(void *data, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
-   E_Border *bd;
    Eina_List *l, *nddata;
    unsigned int n = 0;
+   Evas_Object *o;
+   E_Border *bd;
 
    item->drag.x = ev->output.x;
    item->drag.y = ev->output.y;
@@ -996,8 +996,8 @@ _item_next(void *data, void *event_info)
      }
 
    // next item switch with the current one in box list
-   item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n);
-   e_box_pack_after(item->tasks->o_items, item->o_item, item->o_drop);
+   o = e_box_pack_object_nth(item->tasks->o_items, n);
+   e_box_pack_after(item->tasks->o_items, item->o_item, o);
    e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
                           99999, 99999);
 
@@ -1020,8 +1020,9 @@ _item_prev(void *data, void *event_info)
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
    Eina_List *l, *nddata;
-   E_Border *bd;
    unsigned int n = 0;
+   Evas_Object *o;
+   E_Border *bd;
 
    item->drag.x = ev->output.x;
    item->drag.y = ev->output.y;
@@ -1041,8 +1042,8 @@ _item_prev(void *data, void *event_info)
      }
 
    // previous item switch with the current one in box list
-   item->o_drop = e_box_pack_object_nth(item->tasks->o_items, n - 1);
-   e_box_pack_before(item->tasks->o_items, item->o_item, item->o_drop);
+   o = e_box_pack_object_nth(item->tasks->o_items, n - 1);
+   e_box_pack_before(item->tasks->o_items, item->o_item, o);
    e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
                           99999, 99999);
 
