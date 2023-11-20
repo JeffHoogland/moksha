@@ -243,8 +243,8 @@ _basic_create_widgets(E_Config_Dialog *cfd,
    cfdata->gui.o_binding_list = ob;
    e_widget_size_min_set(ob, 200, 200);
    e_widget_frametable_object_append(of, ob, 0, 0, 2, 1, 1, 1, 1, 1);
-   ob = e_widget_check_add(evas, _("Allow Super Key"), &(cfdata->locals.allow_super));
-   e_widget_frametable_object_append(of, ob, 0, 1, 1, 1, 1, 0, 1, 0);
+   ob = e_widget_check_add(evas, _("Single Super Key allowed"), &(cfdata->locals.allow_super));
+   e_widget_frametable_object_append(of, ob, 0, 1, 2, 1, 1, 0, 1, 0);
    ob = e_widget_button_add(evas, _("Add"), "list-add", _add_key_binding_cb, cfdata, NULL);
    cfdata->gui.o_add = ob;
    e_widget_frametable_object_append(of, ob, 0, 2, 1, 1, 1, 0, 1, 0);
