@@ -17,12 +17,12 @@ struct _E_Pointer_Stack
 static Eina_List *_e_pointers = NULL;
 static Eina_List *handlers = NULL;
 
-static void _e_pointer_canvas_add(E_Pointer *p);
-static void _e_pointer_canvas_del(E_Pointer *p);
-static void _e_pointer_cb_move(void        *data,
-                               Evas        *e __UNUSED__,
-                               Evas_Object *obj __UNUSED__,
-                               void        *event_info);
+static void      _e_pointer_canvas_add(E_Pointer *p);
+static void      _e_pointer_canvas_del(E_Pointer *p);
+static void      _e_pointer_cb_move(void        *data,
+                                    Evas        *e __UNUSED__,
+                                    Evas_Object *obj __UNUSED__,
+                                    void        *event_info);
 static void      _e_pointer_free(E_Pointer *p);
 static void      _e_pointer_stack_free(E_Pointer_Stack *elem);
 static void      _e_pointer_type_set(E_Pointer  *p,
