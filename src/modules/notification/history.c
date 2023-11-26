@@ -189,6 +189,7 @@ get_time(const char *delimiter)
    Eina_Stringshare *ret=NULL;
    time(&rawtime);
    timeinfo = localtime( &rawtime );
+
    // FIXME: use eina_convert stuff
    if (timeinfo->tm_hour < 10)
      snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour);
@@ -196,7 +197,9 @@ get_time(const char *delimiter)
      snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour);
 
    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s%s%02d%s%02d", timeinfo->tm_year + 1900,
-            timeinfo->tm_mon, timeinfo->tm_mday, hour, delimiter, timeinfo->tm_min, delimiter, timeinfo->tm_sec);
+            timeinfo->tm_mon + 1, timeinfo->tm_mday, hour, delimiter, timeinfo->tm_min, 
+            delimiter, timeinfo->tm_sec);
+
    ret = eina_stringshare_add(buf);
    printf("NOTIFY get time %p %s\n", ret, ret);
    return ret;
