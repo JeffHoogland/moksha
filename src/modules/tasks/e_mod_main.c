@@ -976,7 +976,7 @@ _item_next(void *data, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
-   Eina_List *l, *nddata;
+   Eina_List *l;
    unsigned int n = 0;
    Evas_Object *o;
    E_Border *bd;
@@ -999,14 +999,14 @@ _item_next(void *data, void *event_info)
    // next item switch with the current one in box list
    o = e_box_pack_object_nth(item->tasks->o_items, n);
    e_box_pack_after(item->tasks->o_items, item->o_item, o);
-   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
-                          99999, 99999);
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5,
+                                        1, 1, 99999, 99999);
 
    // next item switch with the current one in tasks list
    l = eina_list_nth_list(item->tasks->items, n);
-   nddata = eina_list_data_get(eina_list_next(l));
+   it = eina_list_data_get(eina_list_next(l));
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
-   eina_list_data_set(l, nddata);
+   eina_list_data_set(l, it);
 
    // next item switch with the current one in borders list
    l = eina_list_nth_list(tasks_config->borders, n);
@@ -1020,7 +1020,7 @@ _item_prev(void *data, void *event_info)
 {
    Evas_Event_Mouse_Down *ev = event_info;
    Tasks_Item *it, *item = data;
-   Eina_List *l, *nddata;
+   Eina_List *l;
    Evas_Object *o;
    E_Border *bd;
    unsigned int n = 0;
@@ -1045,14 +1045,14 @@ _item_prev(void *data, void *event_info)
    // previous item switch with the current one in box list
    o = e_box_pack_object_nth(item->tasks->o_items, n - 1);
    e_box_pack_before(item->tasks->o_items, item->o_item, o);
-   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5, 1, 1,
-                          99999, 99999);
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5,
+                                        1, 1, 99999, 99999);
 
    // previous item switch with the current one in tasks list
    l = eina_list_nth_list(item->tasks->items, n);
-   nddata = eina_list_data_get(eina_list_prev(l));
+   it = eina_list_data_get(eina_list_prev(l));
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
-   eina_list_data_set(l, nddata);
+   eina_list_data_set(l, it);
 
    // previous item switch with the current one in borders list
    l = eina_list_nth_list(tasks_config->borders, n);
