@@ -47,7 +47,6 @@ EAPI int E_EVENT_MANAGER_KEYS_GRAB = -1;
 static Eina_List *managers = NULL;
 static Eina_Hash *frame_extents = NULL;
 static Ecore_Timer *timer_post_screensaver_lock = NULL;
-static Eina_Bool key_down_end = 0;
 
 /* externally accessible functions */
 EINTERN int
