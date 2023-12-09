@@ -802,9 +802,6 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    //~ char buf[4096];
-
-
-
    conf_edd = E_CONFIG_DD_NEW("Battery_Config", Config);
 #undef T
 #undef D
@@ -895,7 +892,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         ecore_exe_free(battery_config->batget_exe);
         battery_config->batget_exe = NULL;
      }
-
    if (battery_config->batget_data_handler)
      {
         ecore_event_handler_del(battery_config->batget_data_handler);
@@ -906,7 +902,6 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
         ecore_event_handler_del(battery_config->batget_del_handler);
         battery_config->batget_del_handler = NULL;
      }
-
    if (battery_config->config_dialog)
      e_object_del(E_OBJECT(battery_config->config_dialog));
 
