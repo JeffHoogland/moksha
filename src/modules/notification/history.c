@@ -197,7 +197,7 @@ get_time(const char *delimiter)
      snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour);
 
    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s%s%02d%s%02d", timeinfo->tm_year + 1900,
-            timeinfo->tm_mon + 1, timeinfo->tm_mday, hour, delimiter, timeinfo->tm_min, 
+            timeinfo->tm_mon + 1, timeinfo->tm_mday, hour, delimiter, timeinfo->tm_min,
             delimiter, timeinfo->tm_sec);
 
    ret = eina_stringshare_add(buf);
