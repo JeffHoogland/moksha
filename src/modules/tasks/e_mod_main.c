@@ -33,6 +33,7 @@ typedef struct _Tasks_Item Tasks_Item;
 struct _Tasks
 {
    E_Gadcon_Client *gcc; // The gadcon client
+   E_Pointer       *pointer;
    Evas_Object     *o_items; // Table of items
    Eina_List       *items; // List of items
    E_Zone          *zone; // Current Zone
@@ -46,9 +47,15 @@ struct _Tasks_Item
    E_Border    *border; // The border this item points to
    Evas_Object *o_item; // The edje theme object
    Evas_Object *o_icon; // The icon
-   Eina_Bool skip_taskbar : 1;
+   Eina_Bool    skip_taskbar : 1;
    Evas_Object *win;
    E_Popup     *popup;
+   struct
+   {
+      unsigned char start :1;
+      unsigned char dnd :1;
+      int           x, y;
+   } drag;
 };
 
 static Tasks       *_tasks_new(Evas *evas, E_Zone *zone, const char *id);
@@ -78,6 +85,7 @@ static void         _tasks_cb_item_mouse_up(void *data, Evas *e, Evas_Object *ob
 static void         _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
+static void         _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 
 static Eina_Bool    _tasks_cb_event_border_add(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_remove(void *data, int type, void *event);
@@ -261,7 +269,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    /* evas_object_geometry_get(o, &x, &y, &w, &h); */
 
    tasks_config->tasks = eina_list_append(tasks_config->tasks, tasks);
-
+   tasks->pointer = e_pointer_window_new(gcc->gadcon->dnd_win, 0);
    e_gadcon_client_autoscroll_toggle_disabled_set(gcc, 1);
    // Fill on initial config
    _tasks_config_updated(tasks->config);
@@ -395,7 +403,7 @@ _tasks_refill(Tasks *tasks)
         item = tasks->items->data;
         _tasks_item_remove(item);
      }
-   EINA_LIST_FOREACH(tasks_config->borders, l, border) 
+   EINA_LIST_FOREACH(tasks_config->borders, l, border)
      {
         _tasks_item_check_add(tasks, border);
      }
@@ -575,6 +583,8 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
                                   _tasks_cb_item_mouse_wheel, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_IN,
                                   _tasks_cb_item_mouse_in, item);
+   evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_MOVE,
+                                  _tasks_cb_item_mouse_move, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_OUT,
                                   _tasks_cb_item_mouse_out, item);
    evas_object_show(item->o_item);
@@ -782,6 +792,13 @@ _tasks_cb_item_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
 
    item = (Tasks_Item *)data;
    ev = event_info;
+   if (ev->button == 1)
+     {
+       item->drag.x = ev->output.x;
+       item->drag.y = ev->output.y;
+       item->drag.start = 1;
+       item->drag.dnd = 0;
+     }
    if (ev->button == 3)
      {
         E_Menu *m;
@@ -955,6 +972,132 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
 }
 
 static void
+_item_next(void *data, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   Tasks_Item *it, *item = data;
+   Eina_List *l;
+   unsigned int n = 0;
+   Evas_Object *o;
+   E_Border *bd;
+
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
+
+   EINA_LIST_FOREACH(item->tasks->items, l, it)
+     {
+       if (eina_list_count(item->tasks->items) == n + 1)
+         return;
+       if (it == item)
+         {
+           e_box_unpack(it->o_item);
+           break;
+         }
+       n++;
+     }
+
+   // next item switch with the current one in box list
+   o = e_box_pack_object_nth(item->tasks->o_items, n);
+   e_box_pack_after(item->tasks->o_items, item->o_item, o);
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5,
+                                        1, 1, 99999, 99999);
+
+   // next item switch with the current one in tasks list
+   l = eina_list_nth_list(item->tasks->items, n);
+   it = eina_list_data_get(eina_list_next(l));
+   eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
+   eina_list_data_set(l, it);
+
+   // next item switch with the current one in borders list
+   l = eina_list_nth_list(tasks_config->borders, n);
+   bd = eina_list_data_get(eina_list_next(l));
+   eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
+   eina_list_data_set(l, bd);
+}
+
+static void
+_item_prev(void *data, void *event_info)
+{
+   Evas_Event_Mouse_Down *ev = event_info;
+   Tasks_Item *it, *item = data;
+   Eina_List *l;
+   Evas_Object *o;
+   E_Border *bd;
+   unsigned int n = 0;
+
+   item->drag.x = ev->output.x;
+   item->drag.y = ev->output.y;
+
+   EINA_LIST_FOREACH(item->tasks->items, l, it)
+     {
+       if (it == item)
+         {
+           if (n > 0)
+             {
+               e_box_unpack(it->o_item);
+               break;
+             }
+           else return;
+         }
+       n++;
+     }
+
+   // previous item switch with the current one in box list
+   o = e_box_pack_object_nth(item->tasks->o_items, n - 1);
+   e_box_pack_before(item->tasks->o_items, item->o_item, o);
+   e_box_pack_options_set(item->o_item, 1, 1, 1, 1, 0.5, 0.5,
+                                        1, 1, 99999, 99999);
+
+   // previous item switch with the current one in tasks list
+   l = eina_list_nth_list(item->tasks->items, n);
+   it = eina_list_data_get(eina_list_prev(l));
+   eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
+   eina_list_data_set(l, it);
+
+   // previous item switch with the current one in borders list
+   l = eina_list_nth_list(tasks_config->borders, n);
+   bd = eina_list_data_get(eina_list_prev(l));
+   eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
+   eina_list_data_set(l, bd);
+}
+
+static void
+_tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
+{
+   Evas_Event_Mouse_Move *ev;
+   Tasks_Item *item;
+
+   ev = event_info;
+   item = data;
+
+   if (eina_list_count(item->tasks->items) <= 1) return;
+
+   if (item->drag.start)
+     {
+       Evas_Coord x, y, w, h;
+
+       item->drag.dnd = 1;
+       e_pointer_type_push(item->tasks->pointer, item, "move");
+       evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+
+       if (item->tasks->horizontal)
+         {
+           if (ev->cur.output.x > x + w)
+             _item_next(item, ev);
+           if (ev->cur.output.x < x)
+             _item_prev(item, ev);
+         }
+       else
+         {
+           if (ev->cur.output.y > y + h)
+             _item_next(item, ev);
+           if (ev->cur.output.y < y)
+             _item_prev(item, ev);
+         }
+     }
+}
+
+static void
 _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info)
 {
    Evas_Event_Mouse_Up *ev;
@@ -964,6 +1107,9 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    item = data;
    if (ev->button == 1)
      {
+        item->drag.start = 0;
+        e_pointer_type_push(item->tasks->pointer, item, "default");
+        
         if (!item->border->sticky && item->tasks->config->show_all)
           e_desk_show(item->border->desk);
         if (evas_key_modifier_is_set(ev->modifiers, "Alt"))
@@ -993,13 +1139,14 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
           }
         else
           {
+             if (item->drag.dnd) return;
              if (item->border->iconic)
                {
                   e_border_uniconify(item->border);
                   e_border_focus_set(item->border, 1, 1);
                }
              else
-               {
+               { 
                   if (item->border->focused)
                     {
                        e_border_iconify(item->border);
@@ -1011,6 +1158,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
                     }
                }
           }
+        item->drag.dnd = 0;
      }
    else if (ev->button == 2)
      {

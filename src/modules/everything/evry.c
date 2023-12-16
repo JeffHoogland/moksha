@@ -65,6 +65,7 @@ static void           _evry_item_desel(Evry_State *s);
 static void           _evry_item_sel(Evry_State *s, Evry_Item *it);
 
 static Eina_Bool      _evry_cb_key_down(void *data, int type, void *event);
+static Eina_Bool      _evry_cb_key_up(void *data, int type, void *event);
 static Eina_Bool      _evry_cb_selection_notify(void *data, int type, void *event);
 static Eina_Bool      _evry_cb_mouse(void *data, int type, void *event);
 
@@ -205,8 +206,10 @@ evry_show(E_Zone *zone, E_Zone_Edge edge, const char *params, Eina_Bool popup)
 
    E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_KEY_DOWN, _evry_cb_key_down, win);
 
+   E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_KEY_UP, _evry_cb_key_up, win);
+
    E_LIST_HANDLER_APPEND(win->handlers, ECORE_X_EVENT_SELECTION_NOTIFY, _evry_cb_selection_notify, win);
-         
+
    E_LIST_HANDLER_APPEND(win->handlers, EVRY_EVENT_ITEM_CHANGED, _evry_cb_item_changed, win);
 
    E_LIST_HANDLER_APPEND(win->handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN, _evry_cb_mouse, win);
@@ -1926,6 +1929,24 @@ _evry_cheat_history(Evry_State *s, int promote, int delete)
      s->view->update(s->view);
 
    return 1;
+}
+
+static Eina_Bool
+_evry_cb_key_up(void *data, int type __UNUSED__, void *event)
+{
+   Ecore_Event_Key *ev = event;
+   Evry_Window *win = data;
+
+   if (ev->event_window != win->ewin->evas_win)
+     return ECORE_CALLBACK_PASS_ON;
+
+   if (!strcmp(ev->key, "Super_L") && !key_down_end)
+     {
+        evry_hide(win, 0);
+        return ECORE_CALLBACK_PASS_ON;
+     }
+
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool

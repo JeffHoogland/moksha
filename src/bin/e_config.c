@@ -665,6 +665,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, touch_scrolling_circular, UCHAR);
    E_CONFIG_VAL(D, T, touch_scrolling_horiz, UCHAR);
    E_CONFIG_VAL(D, T, touch_palm_detect, UCHAR);
+   E_CONFIG_VAL(D, T, touch_off, UCHAR);
 
    E_CONFIG_VAL(D, T, border_raise_on_mouse_action, INT);
    E_CONFIG_VAL(D, T, border_raise_on_focus, INT);
@@ -1093,6 +1094,29 @@ while (!e_config)
                EINA_LIST_FOREACH(e_config->shelves, l, cf_es)
                   cf_es->icons = 5;
 
+               e_config_save_queue();
+            }
+          CONFIG_VERSION_CHECK(20)
+            {
+               CONFIG_VERSION_UPDATE_INFO(20);
+               E_Config_Binding_Key *bi, *bi2;
+
+               bi = E_NEW(E_Config_Binding_Key, 1);
+               bi->context = E_BINDING_CONTEXT_ANY;
+               bi->key = eina_stringshare_add("o");
+               bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+               bi->action = eina_stringshare_add("touchpad_toggle");
+               e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
+               
+               bi2 = E_NEW(E_Config_Binding_Key, 1); 
+               bi2->context = E_BINDING_CONTEXT_ANY;
+               bi2->key = eina_stringshare_add("Super_L");
+               bi2->modifiers = 0;
+               bi2->action = eina_stringshare_add("everything");
+               e_config->key_bindings = eina_list_append(e_config->key_bindings, bi2);
+               
+               // touchpad on/off var
+               e_config->touch_off = 0;
                e_config_save_queue();
             }
      }

@@ -15,6 +15,7 @@
 }
 
 extern EAPI int E_EVENT_SYSTRAY_CHANGED;
+extern EAPI int key_down_end;
 
 EINTERN int       e_systray_init(void);
 EAPI void         e_util_wakeup(void);

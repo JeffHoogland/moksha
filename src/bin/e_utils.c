@@ -12,6 +12,7 @@ EAPI E_Path *path_modules = NULL;
 EAPI E_Path *path_backgrounds = NULL;
 EAPI E_Path *path_messages = NULL;
 EAPI int E_EVENT_SYSTRAY_CHANGED = 0;
+EAPI int key_down_end = 0;
 
 /* local subsystem functions */
 static Eina_Bool    _e_util_cb_delayed_del(void *data);

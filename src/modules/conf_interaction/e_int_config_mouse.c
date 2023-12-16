@@ -1,5 +1,7 @@
 #include "e.h"
 
+#define TEXT_NONE_ACTION_KEY    _("<None>")
+
 static void *_create_data(E_Config_Dialog *cfd);
 static void _free_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
 static int _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata);
@@ -209,6 +211,68 @@ _touch_cb_change(void *data, Evas_Object *obj __UNUSED__)
    cfdata->mouse_natural_scroll = cfdata->touch_natural_scroll;
 }
 
+static const char *
+_key_binding_get(const char *action)
+{
+   Eina_List *l = NULL;
+   E_Config_Binding_Key *bi;
+   Eina_Strbuf *b;
+   char mod[PATH_MAX];
+   char *ret;
+
+   b = eina_strbuf_new();
+
+   EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
+     {
+       if (!bi) return NULL;
+
+       bi->key = eina_stringshare_add(bi->key);
+       bi->action = eina_stringshare_add(bi->action);
+
+       if (!e_util_strcmp(bi->action, action))
+         {
+           switch (bi->modifiers)
+             {
+                case 0:
+                       sprintf(mod, "%s", bi->key);
+                       break;
+                case 1:
+                       sprintf(mod, "SHIFT %s", bi->key);
+                       break;
+                case 2:
+                       sprintf(mod, "CTRL %s", bi->key);
+                       break;
+                case 3:
+                       sprintf(mod, "CTRL SHIFT %s", bi->key);
+                       break;
+                case 4:
+                       sprintf(mod, "ALT %s", bi->key);
+                       break;
+                case 5:
+                       sprintf(mod, "ALT SHIFT %s", bi->key);
+                       break;
+                case 6:
+                       sprintf(mod, "CTRL ALT %s", bi->key);
+                       break;
+                case 8:
+                       sprintf(mod, "WIN %s", bi->key);
+                       break;
+             }
+
+          if (eina_strbuf_length_get(b) > 0)
+            eina_strbuf_append(b, "; ");
+          eina_strbuf_append(b, mod);
+          eina_stringshare_del(bi->action);
+        }
+    }
+
+   ret = eina_strbuf_string_steal(b);
+   eina_strbuf_free(b);
+   if (ret[0]) return ret;
+   free(ret);
+   return strdup(TEXT_NONE_ACTION_KEY);
+}
+
 static Evas_Object *
 _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
@@ -364,6 +428,13 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_framelist_object_append(of, oc);
 
    e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
+   of = e_widget_framelist_add(evas, _("Touchpad on/off"), 0);
+   oc = e_widget_label_add(evas, _key_binding_get("touchpad_toggle"));
+   e_widget_framelist_object_append(of, oc);
+
+   e_widget_list_object_append(ol, of, 1, 0, 0.5);
+
    e_widget_toolbook_page_append(otb, NULL, _("Touchpad"), ol,
                                  1, 0, 1, 0, 0.5, 0.0);
 
