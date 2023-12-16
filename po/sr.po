@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-10-05 17:00+0200\n"
+"POT-Creation-Date: 2023-12-16 22:19+0100\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "О Просвећењу"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3151
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -36,9 +36,9 @@ msgstr "О Просвећењу"
 msgid "Close"
 msgstr "Затвори"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3539 src/bin/e_actions.c:3543
-#: src/bin/e_actions.c:3547 src/bin/e_main.c:710
-#: src/modules/conf_interaction/e_int_config_mouse.c:248
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3545 src/bin/e_actions.c:3549
+#: src/bin/e_actions.c:3553 src/bin/e_main.c:710
+#: src/modules/conf_interaction/e_int_config_mouse.c:312
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
 msgid "Moksha"
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "Да ли сте сигурни да желите да убијете овај прозор?"
 
-#: src/bin/e_actions.c:445 src/bin/e_actions.c:3156
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
 msgid "Kill"
 msgstr "Убиј"
@@ -99,7 +99,7 @@ msgstr "Не"
 msgid "Action Params Syntax Error"
 msgstr "Одреднице радње"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3543 src/bin/e_int_menus.c:269
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
 msgid "Exit"
 msgstr "Напусти"
 
@@ -131,7 +131,7 @@ msgstr "Искључи"
 msgid "Are you sure you want to power off your computer?"
 msgstr "Да ли сте сигурни да желите да искључите рачунар?"
 
-#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3586
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3592
 msgid "Reboot"
 msgstr "Поново покрени"
 
@@ -139,7 +139,7 @@ msgstr "Поново покрени"
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Да ли сте сигурни да желите поново покренути рачунар?"
 
-#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3594
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3600
 msgid "Suspend"
 msgstr "Обустави"
 
@@ -147,7 +147,7 @@ msgstr "Обустави"
 msgid "Are you sure you want to suspend your computer?"
 msgstr "Да ли сте сигурни да желите да обуставите рачунар?"
 
-#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3598
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3604
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "Замрзни"
@@ -156,190 +156,190 @@ msgstr "Замрзни"
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Да ли сте сигурни да желите замрзнути систем?"
 
-#: src/bin/e_actions.c:3111 src/bin/e_actions.c:3122 src/bin/e_actions.c:3141
-#: src/bin/e_actions.c:3146 src/bin/e_actions.c:3151 src/bin/e_actions.c:3156
-#: src/bin/e_actions.c:3455 src/bin/e_actions.c:3459 src/bin/e_actions.c:3464
-#: src/bin/e_actions.c:3470 src/bin/e_actions.c:3476 src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3128 src/bin/e_actions.c:3147
+#: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
+#: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
+#: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
 #: src/modules/shot/e_mod_main.c:1309
 msgid "Window : Actions"
 msgstr "Прозор : радње"
 
-#: src/bin/e_actions.c:3111 src/bin/e_fm.c:11653
+#: src/bin/e_actions.c:3117 src/bin/e_fm.c:11653
 msgid "Move"
 msgstr "Премести"
 
-#: src/bin/e_actions.c:3122
+#: src/bin/e_actions.c:3128
 msgid "Resize"
 msgstr "Промени величину"
 
-#: src/bin/e_actions.c:3133 src/bin/e_actions.c:3510 src/bin/e_actions.c:3512
-#: src/bin/e_actions.c:3514 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3139 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3520 src/bin/e_actions.c:3522 src/bin/e_actions.c:3524
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "Изборник"
 
-#: src/bin/e_actions.c:3133
+#: src/bin/e_actions.c:3139
 msgid "Window Menu"
 msgstr "Изборник прозора"
 
-#: src/bin/e_actions.c:3141 src/bin/e_int_border_menu.c:1092
+#: src/bin/e_actions.c:3147 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Издигни"
 
-#: src/bin/e_actions.c:3146 src/bin/e_int_border_menu.c:1100
+#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "Спусти"
 
-#: src/bin/e_actions.c:3161 src/bin/e_actions.c:3165 src/bin/e_actions.c:3170
-#: src/bin/e_actions.c:3174 src/bin/e_actions.c:3178 src/bin/e_actions.c:3183
-#: src/bin/e_actions.c:3187 src/bin/e_actions.c:3192 src/bin/e_actions.c:3196
-#: src/bin/e_actions.c:3202 src/bin/e_actions.c:3204 src/bin/e_actions.c:3207
-#: src/bin/e_actions.c:3210 src/bin/e_actions.c:3213 src/bin/e_actions.c:3216
-#: src/bin/e_actions.c:3218 src/bin/e_actions.c:3220 src/bin/e_actions.c:3222
-#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
-#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3241
-#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3251 src/bin/e_actions.c:3257
-#: src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3167 src/bin/e_actions.c:3171 src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3180 src/bin/e_actions.c:3184 src/bin/e_actions.c:3189
+#: src/bin/e_actions.c:3193 src/bin/e_actions.c:3198 src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3208 src/bin/e_actions.c:3210 src/bin/e_actions.c:3213
+#: src/bin/e_actions.c:3216 src/bin/e_actions.c:3219 src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3224 src/bin/e_actions.c:3226 src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3239
+#: src/bin/e_actions.c:3241 src/bin/e_actions.c:3243 src/bin/e_actions.c:3247
+#: src/bin/e_actions.c:3252 src/bin/e_actions.c:3257 src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3269
 msgid "Window : State"
 msgstr "Прозор : стање"
 
-#: src/bin/e_actions.c:3161
+#: src/bin/e_actions.c:3167
 msgid "Sticky Mode Toggle"
 msgstr "Мења стање лепљивости прозора"
 
-#: src/bin/e_actions.c:3165
+#: src/bin/e_actions.c:3171
 msgid "Sticky Mode Enable"
 msgstr "Омогући лепљивост"
 
-#: src/bin/e_actions.c:3170
+#: src/bin/e_actions.c:3176
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Увек на врху"
 
-#: src/bin/e_actions.c:3174
+#: src/bin/e_actions.c:3180
 #, fuzzy
 msgid "Always On Top Enable"
 msgstr "Увек на врху"
 
-#: src/bin/e_actions.c:3178
+#: src/bin/e_actions.c:3184
 #, fuzzy
 msgid "Always On Top Disable"
 msgstr "Увек на врху"
 
-#: src/bin/e_actions.c:3183
+#: src/bin/e_actions.c:3189
 msgid "Iconic Mode Toggle"
 msgstr "Мења стање умањености"
 
-#: src/bin/e_actions.c:3187
+#: src/bin/e_actions.c:3193
 msgid "Iconic Mode Enable"
 msgstr "Омогући стање умањености"
 
-#: src/bin/e_actions.c:3192
+#: src/bin/e_actions.c:3198
 msgid "Fullscreen Mode Toggle"
 msgstr "Преко целог екрана"
 
-#: src/bin/e_actions.c:3196
+#: src/bin/e_actions.c:3202
 msgid "Fullscreen Mode Enable"
 msgstr "Омогући приказ преко целог екрана"
 
-#: src/bin/e_actions.c:3202 src/bin/e_int_border_menu.c:419
+#: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
 msgid "Maximize"
 msgstr "Увећај"
 
-#: src/bin/e_actions.c:3204 src/bin/e_int_border_menu.c:430
+#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "Увећај усправно"
 
-#: src/bin/e_actions.c:3207 src/bin/e_int_border_menu.c:441
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "Увећај водоравно"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:452
+#: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
 msgid "Maximize Left"
 msgstr "Увећај лево"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:463
+#: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
 msgid "Maximize Right"
 msgstr "Увећај десно"
 
-#: src/bin/e_actions.c:3216
+#: src/bin/e_actions.c:3222
 msgid "Maximize Fullscreen"
 msgstr "Увећај преко целог екрана"
 
-#: src/bin/e_actions.c:3218
+#: src/bin/e_actions.c:3224
 msgid "Maximize Mode \"Smart\""
 msgstr "„Паметно“ увећавање"
 
-#: src/bin/e_actions.c:3220
+#: src/bin/e_actions.c:3226
 msgid "Maximize Mode \"Expand\""
 msgstr "„Прошири“ увећање"
 
-#: src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3228
 msgid "Maximize Mode \"Fill\""
 msgstr "„Попуни“ увећање"
 
-#: src/bin/e_actions.c:3229
+#: src/bin/e_actions.c:3235
 msgid "Shade Up Mode Toggle"
 msgstr "Мења стање смотавања навише"
 
-#: src/bin/e_actions.c:3231
+#: src/bin/e_actions.c:3237
 msgid "Shade Down Mode Toggle"
 msgstr "Мења стање смотавања наниже"
 
-#: src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3239
 msgid "Shade Left Mode Toggle"
 msgstr "Мења стање смотавања лево"
 
-#: src/bin/e_actions.c:3235
+#: src/bin/e_actions.c:3241
 msgid "Shade Right Mode Toggle"
 msgstr "Мења стање смотавања десно"
 
-#: src/bin/e_actions.c:3237
+#: src/bin/e_actions.c:3243
 msgid "Shade Mode Toggle"
 msgstr "Мења стање смотавања"
 
-#: src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3247
 msgid "Set Shaded State"
 msgstr "Постави стање смотавања"
 
-#: src/bin/e_actions.c:3242
+#: src/bin/e_actions.c:3248
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr "ниска: „(0|1) (up|down|left|right)“"
 
-#: src/bin/e_actions.c:3246
+#: src/bin/e_actions.c:3252
 msgid "Toggle Borderless State"
 msgstr "Мења стање приказа без оквира"
 
-#: src/bin/e_actions.c:3251
+#: src/bin/e_actions.c:3257
 msgid "Set Border"
 msgstr "Постави оквир"
 
-#: src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3263
 msgid "Cycle between Borders"
 msgstr "Кружи између оквира"
 
-#: src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3269
 msgid "Toggle Pinned State"
 msgstr "Мења стање причвршћености прозора"
 
-#: src/bin/e_actions.c:3268 src/bin/e_actions.c:3270 src/bin/e_actions.c:3272
-#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3282
-#: src/bin/e_actions.c:3287 src/bin/e_actions.c:3293 src/bin/e_actions.c:3298
-#: src/bin/e_actions.c:3304 src/bin/e_actions.c:3310 src/bin/e_actions.c:3312
-#: src/bin/e_actions.c:3314 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3280 src/bin/e_actions.c:3282 src/bin/e_actions.c:3288
+#: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3304
+#: src/bin/e_actions.c:3310 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
 #: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
 #: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
-#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3340
-#: src/bin/e_actions.c:3342 src/bin/e_actions.c:3344 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3354 src/bin/e_actions.c:3360
-#: src/bin/e_actions.c:3366 src/bin/e_actions.c:3371 src/bin/e_actions.c:3373
-#: src/bin/e_actions.c:3375 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3336
+#: src/bin/e_actions.c:3338 src/bin/e_actions.c:3340 src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3350 src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3354 src/bin/e_actions.c:3360 src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3372 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
 #: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
 #: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
-#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3610
-#: src/bin/e_actions.c:3615 src/bin/e_int_shelf_config.c:298
+#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3397
+#: src/bin/e_actions.c:3399 src/bin/e_actions.c:3401 src/bin/e_actions.c:3616
+#: src/bin/e_actions.c:3621 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -347,183 +347,183 @@ msgstr "Мења стање причвршћености прозора"
 msgid "Desktop"
 msgstr "Радна површ"
 
-#: src/bin/e_actions.c:3268
+#: src/bin/e_actions.c:3274
 msgid "Flip Desktop Left"
 msgstr "Пребаци на радну радну површ лево"
 
-#: src/bin/e_actions.c:3270
+#: src/bin/e_actions.c:3276
 msgid "Flip Desktop Right"
 msgstr "Пребаци на радну површ десно"
 
-#: src/bin/e_actions.c:3272
+#: src/bin/e_actions.c:3278
 msgid "Flip Desktop Up"
 msgstr "Пребаци на радну површ горе"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3280
 msgid "Flip Desktop Down"
 msgstr "Пребаци на радну површ доле"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3282
 msgid "Flip Desktop By..."
 msgstr "Пребаци на радну површ за..."
 
-#: src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3288
 msgid "Flip To Previous Desktop"
 msgstr "Пребаци на претходну радну површ"
 
-#: src/bin/e_actions.c:3287
+#: src/bin/e_actions.c:3293
 msgid "Show The Desktop"
 msgstr "Приказује радну површ"
 
-#: src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3299
 msgid "Show The Shelf"
 msgstr "Приказује полицу"
 
-#: src/bin/e_actions.c:3298
+#: src/bin/e_actions.c:3304
 msgid "Flip Desktop To..."
 msgstr "Пребаци радни простор на..."
 
-#: src/bin/e_actions.c:3304
+#: src/bin/e_actions.c:3310
 msgid "Flip Desktop Linearly..."
 msgstr "Премешта редно радну површ..."
 
-#: src/bin/e_actions.c:3310
+#: src/bin/e_actions.c:3316
 msgid "Switch To Desktop 0"
 msgstr "Пређи на радну површ 0"
 
-#: src/bin/e_actions.c:3312
+#: src/bin/e_actions.c:3318
 msgid "Switch To Desktop 1"
 msgstr "Пређи на радну површ 1"
 
-#: src/bin/e_actions.c:3314
+#: src/bin/e_actions.c:3320
 msgid "Switch To Desktop 2"
 msgstr "Пређи на радну површ 2"
 
-#: src/bin/e_actions.c:3316
+#: src/bin/e_actions.c:3322
 msgid "Switch To Desktop 3"
 msgstr "Пређи на радну површ 3"
 
-#: src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3324
 msgid "Switch To Desktop 4"
 msgstr "Пређи на радну површ 4"
 
-#: src/bin/e_actions.c:3320
+#: src/bin/e_actions.c:3326
 msgid "Switch To Desktop 5"
 msgstr "Пређи на радну површ 5"
 
-#: src/bin/e_actions.c:3322
+#: src/bin/e_actions.c:3328
 msgid "Switch To Desktop 6"
 msgstr "Пређи на радну површ 6"
 
-#: src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3330
 msgid "Switch To Desktop 7"
 msgstr "Пређи на радну површ 7"
 
-#: src/bin/e_actions.c:3326
+#: src/bin/e_actions.c:3332
 msgid "Switch To Desktop 8"
 msgstr "Пређи на радну површ 8"
 
-#: src/bin/e_actions.c:3328
+#: src/bin/e_actions.c:3334
 msgid "Switch To Desktop 9"
 msgstr "Пређи на радну површ 9"
 
-#: src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3336
 msgid "Switch To Desktop 10"
 msgstr "Пређи на радну површ 10"
 
-#: src/bin/e_actions.c:3332
+#: src/bin/e_actions.c:3338
 msgid "Switch To Desktop 11"
 msgstr "Пређи на радну површ 11"
 
-#: src/bin/e_actions.c:3334
+#: src/bin/e_actions.c:3340
 msgid "Switch To Desktop..."
 msgstr "Пређи на радну површ..."
 
-#: src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3346
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Пребаци на радну површ лево (свих екрана)"
 
-#: src/bin/e_actions.c:3342
+#: src/bin/e_actions.c:3348
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Пребаци на радну површ десно (свих екрана)"
 
-#: src/bin/e_actions.c:3344
+#: src/bin/e_actions.c:3350
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Пребаци на радну површ горе (свих екрана)"
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3352
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Пребаци на радну површ доле (свих екрана)"
 
-#: src/bin/e_actions.c:3348
+#: src/bin/e_actions.c:3354
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Пребаци радну површ за... (свих екрана)"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3360
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Пребаци радну површ на... (свих екрана)"
 
-#: src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3366
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Пребаци на радну површ редно... (сви екрани)"
 
-#: src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3372
 msgid "Flip Desktop In Direction..."
 msgstr "Пребаци радну површ у правцу..."
 
-#: src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3377
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Пређи на радну површ 0 (сви екрани)"
 
-#: src/bin/e_actions.c:3373
+#: src/bin/e_actions.c:3379
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Пређи на радну површ 1 (сви екрани)"
 
-#: src/bin/e_actions.c:3375
+#: src/bin/e_actions.c:3381
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Пређи на радну површ 2 (сви екрани)"
 
-#: src/bin/e_actions.c:3377
+#: src/bin/e_actions.c:3383
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Пређи на радну површ 3 (сви екрани)"
 
-#: src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3385
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Пређи на радну површ 4 (сви екрани)"
 
-#: src/bin/e_actions.c:3381
+#: src/bin/e_actions.c:3387
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Пређи на радну површ 5 (сви екрани)"
 
-#: src/bin/e_actions.c:3383
+#: src/bin/e_actions.c:3389
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Пређи на простор 6 (сви екрани)"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3391
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Пређи на простор 7 (сви екрани)"
 
-#: src/bin/e_actions.c:3387
+#: src/bin/e_actions.c:3393
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Пређи на простор 8 (сви екрани)"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3395
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Пређи на простор 9 (сви екрани)"
 
-#: src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3397
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Пређи на простор 10 (сви екрани)"
 
-#: src/bin/e_actions.c:3393
+#: src/bin/e_actions.c:3399
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Пређи на простор 11 (сви екрани)"
 
-#: src/bin/e_actions.c:3395
+#: src/bin/e_actions.c:3401
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Пређи на простор 12 (сви екрани)"
 
-#: src/bin/e_actions.c:3401 src/bin/e_actions.c:3405
+#: src/bin/e_actions.c:3407 src/bin/e_actions.c:3411
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -532,19 +532,19 @@ msgstr "Пређи на простор 12 (сви екрани)"
 msgid "Window : List"
 msgstr "Прозор : списак"
 
-#: src/bin/e_actions.c:3401
+#: src/bin/e_actions.c:3407
 msgid "Jump to window..."
 msgstr "Скочи на прозор..."
 
-#: src/bin/e_actions.c:3405
+#: src/bin/e_actions.c:3411
 msgid "Jump to window... or start..."
 msgstr "Скочи на прозор... или покрени..."
 
-#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3414 src/bin/e_actions.c:3416
-#: src/bin/e_actions.c:3422 src/bin/e_actions.c:3424 src/bin/e_actions.c:3426
-#: src/bin/e_actions.c:3431 src/bin/e_actions.c:3434 src/bin/e_actions.c:3437
-#: src/bin/e_actions.c:3439 src/bin/e_actions.c:3441 src/bin/e_actions.c:3443
-#: src/bin/e_actions.c:3446 src/bin/e_actions.c:3448 src/bin/e_actions.c:3450
+#: src/bin/e_actions.c:3418 src/bin/e_actions.c:3420 src/bin/e_actions.c:3422
+#: src/bin/e_actions.c:3428 src/bin/e_actions.c:3430 src/bin/e_actions.c:3432
+#: src/bin/e_actions.c:3437 src/bin/e_actions.c:3440 src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3445 src/bin/e_actions.c:3447 src/bin/e_actions.c:3449
+#: src/bin/e_actions.c:3452 src/bin/e_actions.c:3454 src/bin/e_actions.c:3456
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
@@ -552,199 +552,199 @@ msgstr "Скочи на прозор... или покрени..."
 msgid "Screen"
 msgstr "Екран"
 
-#: src/bin/e_actions.c:3412
+#: src/bin/e_actions.c:3418
 msgid "Send Mouse To Screen 0"
 msgstr "Пошаљи миша на екран 0"
 
-#: src/bin/e_actions.c:3414
+#: src/bin/e_actions.c:3420
 msgid "Send Mouse To Screen 1"
 msgstr "Пошаљи миша на екран 1"
 
-#: src/bin/e_actions.c:3416
+#: src/bin/e_actions.c:3422
 msgid "Send Mouse To Screen..."
 msgstr "Покажи миша на екран..."
 
-#: src/bin/e_actions.c:3422
+#: src/bin/e_actions.c:3428
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Пошаљи миша на 1 екран унапред"
 
-#: src/bin/e_actions.c:3424
+#: src/bin/e_actions.c:3430
 msgid "Send Mouse Back 1 Screen"
 msgstr "Пошаљи миша на 1 екран уназад"
 
-#: src/bin/e_actions.c:3426
+#: src/bin/e_actions.c:3432
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Шаље миша на претходни/следећи екран..."
 
-#: src/bin/e_actions.c:3431
+#: src/bin/e_actions.c:3437
 msgid "Dim"
 msgstr "Затамни"
 
-#: src/bin/e_actions.c:3434
+#: src/bin/e_actions.c:3440
 msgid "Undim"
 msgstr "Искључи затамњење"
 
-#: src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3443
 msgid "Backlight Set"
 msgstr "Постави позадинско осветљење"
 
-#: src/bin/e_actions.c:3439
+#: src/bin/e_actions.c:3445
 msgid "Backlight Min"
 msgstr "Најмање позадинско осветљење"
 
-#: src/bin/e_actions.c:3441
+#: src/bin/e_actions.c:3447
 msgid "Backlight Mid"
 msgstr "Средње позадинско осветљење"
 
-#: src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3449
 msgid "Backlight Max"
 msgstr "Највише позадинско осветљење"
 
-#: src/bin/e_actions.c:3446
+#: src/bin/e_actions.c:3452
 msgid "Backlight Adjust"
 msgstr "Подеси позадинско осветљење"
 
-#: src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3454
 msgid "Backlight Up"
 msgstr "Појачај позадинско осветљење"
 
-#: src/bin/e_actions.c:3450
+#: src/bin/e_actions.c:3456
 msgid "Backlight Down"
 msgstr "Смањи позадинско осветљење"
 
-#: src/bin/e_actions.c:3455
+#: src/bin/e_actions.c:3461
 msgid "Move To Center"
 msgstr "Смести у средину"
 
-#: src/bin/e_actions.c:3459
+#: src/bin/e_actions.c:3465
 msgid "Move To Coordinates..."
 msgstr "Помери у положај..."
 
-#: src/bin/e_actions.c:3464
+#: src/bin/e_actions.c:3470
 msgid "Move By Coordinate Offset..."
 msgstr "Помери за померај положаја..."
 
-#: src/bin/e_actions.c:3470
+#: src/bin/e_actions.c:3476
 msgid "Resize By..."
 msgstr "Промени величину за..."
 
-#: src/bin/e_actions.c:3476
+#: src/bin/e_actions.c:3482
 msgid "Push in Direction..."
 msgstr "Помери у правцу..."
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3488
 msgid "Drag Icon..."
 msgstr "Вуци икону..."
 
-#: src/bin/e_actions.c:3487 src/bin/e_actions.c:3489 src/bin/e_actions.c:3491
-#: src/bin/e_actions.c:3497 src/bin/e_actions.c:3503 src/bin/e_actions.c:3505
+#: src/bin/e_actions.c:3493 src/bin/e_actions.c:3495 src/bin/e_actions.c:3497
+#: src/bin/e_actions.c:3503 src/bin/e_actions.c:3509 src/bin/e_actions.c:3511
 msgid "Window : Moving"
 msgstr "Прозор : померање"
 
-#: src/bin/e_actions.c:3487
+#: src/bin/e_actions.c:3493
 msgid "To Next Desktop"
 msgstr "На следећу радну површ"
 
-#: src/bin/e_actions.c:3489
+#: src/bin/e_actions.c:3495
 msgid "To Previous Desktop"
 msgstr "На претходну радну површ"
 
-#: src/bin/e_actions.c:3491
+#: src/bin/e_actions.c:3497
 msgid "By Desktop #..."
 msgstr "За радну површ #..."
 
-#: src/bin/e_actions.c:3497
+#: src/bin/e_actions.c:3503
 msgid "To Desktop..."
 msgstr "На радну површ..."
 
-#: src/bin/e_actions.c:3503
+#: src/bin/e_actions.c:3509
 msgid "To Next Screen"
 msgstr "На следећи екран"
 
-#: src/bin/e_actions.c:3505
+#: src/bin/e_actions.c:3511
 msgid "To Previous Screen"
 msgstr "На претходни екран"
 
-#: src/bin/e_actions.c:3510
+#: src/bin/e_actions.c:3516
 msgid "Show Main Menu"
 msgstr "Прикажи главни изборник"
 
-#: src/bin/e_actions.c:3512
+#: src/bin/e_actions.c:3518
 msgid "Show Favorites Menu"
 msgstr "Прикажи омиљени изборник"
 
-#: src/bin/e_actions.c:3514
+#: src/bin/e_actions.c:3520
 msgid "Show All Applications Menu"
 msgstr "Прикажи изборник свих програма"
 
-#: src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:3522
 msgid "Show Clients Menu"
 msgstr "Приказује изборник клијента"
 
-#: src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3524
 msgid "Show Menu..."
 msgstr "Приказује изборник..."
 
-#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3530 src/bin/e_actions.c:3535
+#: src/bin/e_actions.c:3531 src/bin/e_actions.c:3536 src/bin/e_actions.c:3541
 #: src/modules/conf/e_mod_main.c:273
 #: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Покрени"
 
-#: src/bin/e_actions.c:3525 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3531 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "Наредба"
 
-#: src/bin/e_actions.c:3530 src/bin/e_eap_editor.c:699
+#: src/bin/e_actions.c:3536 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Програм"
 
-#: src/bin/e_actions.c:3535
+#: src/bin/e_actions.c:3541
 msgid "New Instance of Focused App"
 msgstr "Нови примерак програма у жижи"
 
-#: src/bin/e_actions.c:3539
+#: src/bin/e_actions.c:3545
 msgid "Restart"
 msgstr "Поново покрени"
 
-#: src/bin/e_actions.c:3547
+#: src/bin/e_actions.c:3553
 msgid "Exit Now"
 msgstr "Изађи сада"
 
-#: src/bin/e_actions.c:3551 src/bin/e_actions.c:3556
+#: src/bin/e_actions.c:3557 src/bin/e_actions.c:3562
 msgid "Moksha : Mode"
 msgstr "Просвећење : начин"
 
-#: src/bin/e_actions.c:3552
+#: src/bin/e_actions.c:3558
 msgid "Presentation Mode Toggle"
 msgstr "Прекидач начина рада излагања"
 
-#: src/bin/e_actions.c:3557
+#: src/bin/e_actions.c:3563
 msgid "Offline Mode Toggle"
 msgstr "Прекидач рада ван мреже"
 
-#: src/bin/e_actions.c:3561 src/bin/e_actions.c:3565 src/bin/e_actions.c:3569
+#: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
 msgid "Moksha : Module"
 msgstr "Просвећење : јединица"
 
-#: src/bin/e_actions.c:3562
+#: src/bin/e_actions.c:3568
 msgid "Enable the named module"
 msgstr "Омогући именовану јединицу"
 
-#: src/bin/e_actions.c:3566
+#: src/bin/e_actions.c:3572
 msgid "Disable the named module"
 msgstr "Онемогући именовану јединицу"
 
-#: src/bin/e_actions.c:3570
+#: src/bin/e_actions.c:3576
 msgid "Toggle the named module"
 msgstr "Мења стање именоване јединице"
 
-#: src/bin/e_actions.c:3574 src/bin/e_actions.c:3578 src/bin/e_actions.c:3582
-#: src/bin/e_actions.c:3586 src/bin/e_actions.c:3590 src/bin/e_actions.c:3594
-#: src/bin/e_actions.c:3598 src/bin/e_actions.c:3602 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3580 src/bin/e_actions.c:3584 src/bin/e_actions.c:3588
+#: src/bin/e_actions.c:3592 src/bin/e_actions.c:3596 src/bin/e_actions.c:3600
+#: src/bin/e_actions.c:3604 src/bin/e_actions.c:3608 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -761,56 +761,68 @@ msgstr "Мења стање именоване јединице"
 msgid "System"
 msgstr "Систем"
 
-#: src/bin/e_actions.c:3574
+#: src/bin/e_actions.c:3580
 msgid "Log Out"
 msgstr "Одјава"
 
-#: src/bin/e_actions.c:3578
+#: src/bin/e_actions.c:3584
 msgid "Power Off Now"
 msgstr "Искључи сада"
 
-#: src/bin/e_actions.c:3582
+#: src/bin/e_actions.c:3588
 msgid "Power Off"
 msgstr "Искључи"
 
-#: src/bin/e_actions.c:3590
+#: src/bin/e_actions.c:3596
 msgid "Suspend Now"
 msgstr "Обустави сада"
 
-#: src/bin/e_actions.c:3602
+#: src/bin/e_actions.c:3608
 msgid "Hibernate Now"
 msgstr "Замрзни сада"
 
-#: src/bin/e_actions.c:3610
+#: src/bin/e_actions.c:3616
 msgid "Lock"
 msgstr "Закључај"
 
-#: src/bin/e_actions.c:3615 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Очисти прозоре"
 
 # сродно, прегледај прво
-#: src/bin/e_actions.c:3620
+#: src/bin/e_actions.c:3626
 msgid "Generic : Actions"
 msgstr "Опште : радње"
 
-#: src/bin/e_actions.c:3620
+#: src/bin/e_actions.c:3626
 msgid "Delayed Action"
 msgstr "Одложене радње"
 
-#: src/bin/e_actions.c:3628 src/bin/e_actions.c:3632 src/bin/e_actions.c:3636
+#: src/bin/e_actions.c:3634
+#: src/modules/conf_interaction/e_int_config_mouse.c:438
+#, fuzzy
+msgid "Touchpad"
+msgstr "Додир"
+
+#: src/bin/e_actions.c:3635
+#: src/modules/conf_interaction/e_int_config_mouse.c:432
+#, fuzzy
+msgid "Touchpad on/off"
+msgstr "Додир"
+
+#: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
 msgstr "Распореди тастатуре"
 
-#: src/bin/e_actions.c:3629
+#: src/bin/e_actions.c:3641
 msgid "Use keyboard layout"
 msgstr "Користи распоред тастатуре"
 
-#: src/bin/e_actions.c:3633
+#: src/bin/e_actions.c:3645
 msgid "Next keyboard layout"
 msgstr "Наредни распоред тастатуре"
 
-#: src/bin/e_actions.c:3637
+#: src/bin/e_actions.c:3649
 msgid "Previous keyboard layout"
 msgstr "Претходни распоред тастатуре"
 
@@ -843,7 +855,7 @@ msgstr "Изаберите"
 msgid "Cancel"
 msgstr "Откажи"
 
-#: src/bin/e_config.c:953
+#: src/bin/e_config.c:954
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -861,7 +873,7 @@ msgstr ""
 "задатих поставки ће то<br>поправити њиховим додавањем. Сада можете подесити "
 "ствари по својој<br>вољи. Извините због зачкољица у вашим поставкама.<br>"
 
-#: src/bin/e_config.c:970
+#: src/bin/e_config.c:971
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -875,11 +887,11 @@ msgstr ""
 "предострожност, ваше поставке су враћене на задате<br>вредности. Извините "
 "због непријатности.<br>"
 
-#: src/bin/e_config.c:1541 src/bin/e_config.c:2166
+#: src/bin/e_config.c:1565 src/bin/e_config.c:2190
 msgid "Moksha Settings Write Problems"
 msgstr "Потешкоће писања поставки Просвећења"
 
-#: src/bin/e_config.c:1544
+#: src/bin/e_config.c:1568
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -888,15 +900,14 @@ msgstr ""
 "Дошло је до грешке приликом премештања датотека поставки Просвећења<br>из:"
 "<br>%s<br><br>у<br>%s<br><br>Остатак уписа је отказан због безбедности.<br>"
 
-#: src/bin/e_config.c:1554 src/bin/e_config.c:2179
+#: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
-#: src/bin/e_update.c:76 src/bin/e_utils.c:598
-#: src/modules/clock/e_mod_config.c:165
+#: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
 #: src/modules/conf_keybindings/e_mod_main.c:328
@@ -908,19 +919,19 @@ msgstr ""
 msgid "OK"
 msgstr "У реду"
 
-#: src/bin/e_config.c:2057
+#: src/bin/e_config.c:2081
 msgid "Settings Upgraded"
 msgstr "Поставке су надограђене"
 
-#: src/bin/e_config.c:2075
+#: src/bin/e_config.c:2099
 msgid "The EET file handle is bad."
 msgstr "Руковање ЕЕТ датотекама је лоше."
 
-#: src/bin/e_config.c:2079
+#: src/bin/e_config.c:2103
 msgid "The file data is empty."
 msgstr "Датотека података је празна."
 
-#: src/bin/e_config.c:2083
+#: src/bin/e_config.c:2107
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -928,17 +939,17 @@ msgstr ""
 "Ова датотека није уписива. Можда је диск само за читање,<br>или сте изгубили "
 "овлашћења над датотекама."
 
-#: src/bin/e_config.c:2087
+#: src/bin/e_config.c:2111
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Док сам вршио припрему за упис, остало је мало простора у меморији."
 "<br>Молим, ослободите простор у меморији."
 
-#: src/bin/e_config.c:2091
+#: src/bin/e_config.c:2115
 msgid "This is a generic error."
 msgstr "Ово је општа грешка."
 
-#: src/bin/e_config.c:2095
+#: src/bin/e_config.c:2119
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -946,59 +957,59 @@ msgstr ""
 "Датотека поставки је превише велика.<br>Требала би бити врло мала (неколико "
 "стотина KB највише)."
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2123
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Имате улазно/излазне грешке на диску.<br>Можда га требате заменити?"
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2127
 msgid "You ran out of space while writing the file."
 msgstr "Остали сте без простора на диску приликом уписа датотеке."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2131
 msgid "The file was closed while writing."
 msgstr "Датотека је затворена за време писања."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2135
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Мапирање меморије (mmap) датотеке није успело."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2139
 msgid "X509 Encoding failed."
 msgstr "X509 шифровање није успело."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2143
 msgid "Signature failed."
 msgstr "Потписивање није успело."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2147
 msgid "The signature was invalid."
 msgstr "Није исправан потпис."
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2151
 msgid "Not signed."
 msgstr "Није потписано."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2155
 msgid "Feature not implemented."
 msgstr "Није још подржано."
 
-#: src/bin/e_config.c:2135
+#: src/bin/e_config.c:2159
 msgid "PRNG was not seeded."
 msgstr "Није посејан псеудо насумични број ПРНГ."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2163
 msgid "Encryption failed."
 msgstr "Није успело шифровање."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2167
 msgid "Decryption failed."
 msgstr "Дешифровање није успело."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2171
 msgid "The error is unknown to Moksha."
 msgstr "Просвећење не препознаје грешку."
 
-#: src/bin/e_config.c:2169
+#: src/bin/e_config.c:2193
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1009,7 +1020,7 @@ msgstr ""
 "%s<br><br>Датотека због које се јавила грешка је:<br>%s<br><br>Ова датотека "
 "је избрисана да би се спречио упис неисправних података.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:875
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1230,7 +1241,7 @@ msgstr "Изаберите извршну датотеку"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:247
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:296
 #: src/modules/conf_paths/e_int_config_env.c:343
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
@@ -1261,7 +1272,7 @@ msgid "Select All"
 msgstr "Означи све"
 
 #: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:573 src/bin/e_utils.c:183
+#: src/bin/e_exec.c:573 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -2089,7 +2100,7 @@ msgstr "Положај"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
 #: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
-#: src/modules/conf_interaction/e_int_config_mouse.c:230
+#: src/modules/conf_interaction/e_int_config_mouse.c:294
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
 msgid "Size"
@@ -2163,6 +2174,7 @@ msgid "Window"
 msgstr "Прозор"
 
 #: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
+#: src/modules/clock/e_mod_main.c:501
 msgid "Always on Top"
 msgstr "Увек на врху"
 
@@ -2386,8 +2398,8 @@ msgstr "Југоисточни"
 msgid "Static"
 msgstr "Статично"
 
-#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:210
-#: src/modules/clock/e_mod_config.c:253
+#: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:252
+#: src/modules/clock/e_mod_config.c:295
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:362
 #: src/modules/conf_performance/e_int_config_powermanagement.c:196
 #: src/modules/conf_theme/e_int_config_fonts.c:690
@@ -2523,12 +2535,12 @@ msgstr "Захтевај положај"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:445
-#: src/modules/clock/e_mod_main.c:695 src/modules/conf/e_conf.c:143
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:506
+#: src/modules/clock/e_mod_main.c:763 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
-#: src/modules/conf_interaction/e_int_config_mouse.c:223
-#: src/modules/conf_interaction/e_int_config_mouse.c:307
+#: src/modules/conf_interaction/e_int_config_mouse.c:287
+#: src/modules/conf_interaction/e_int_config_mouse.c:371
 #: src/modules/conf_shelves/e_int_config_shelf.c:149
 #: src/modules/cpufreq/e_mod_main.c:447
 #: src/modules/everything/evry_gadget.c:511
@@ -2538,7 +2550,7 @@ msgstr "Захтевај положај"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:800
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
 #: src/modules/xkbswitch/e_mod_main.c:361
 #: src/modules/xkbswitch/e_mod_main.c:402
 #: src/modules/notification/e_mod_main.c:338
@@ -3997,17 +4009,17 @@ msgstr ""
 "издање је:<br><br>%s<br><br>Молим, посетите www.enlightenment.org,<br>или "
 "надоградите пакете система<br> да би добавили ново издање."
 
-#: src/bin/e_utils.c:184 src/modules/conf_intl/e_int_config_imc.c:262
+#: src/bin/e_utils.c:185 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
 msgstr "Просвећење није успело да раздели потпроцес:<br><br>%s<br>"
 
-#: src/bin/e_utils.c:237
+#: src/bin/e_utils.c:238
 msgid "Cannot exit - immortal windows."
 msgstr "Не могу изаћи - бесмртни прозори."
 
-#: src/bin/e_utils.c:238
+#: src/bin/e_utils.c:239
 msgid ""
 "Some windows are left still around with the Lifespan lock enabled. This "
 "means<br>that Moksha will not allow itself to exit until these windows "
@@ -4017,42 +4029,42 @@ msgstr ""
 "значи <br>да Просвећење неће дозволити себи да изађе док ови прозори не "
 "буду<br>затворени или им се откључа животни век.<br>"
 
-#: src/bin/e_utils.c:781
+#: src/bin/e_utils.c:782
 #, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f bytes"
 
-#: src/bin/e_utils.c:785
+#: src/bin/e_utils.c:786
 #, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KiB"
 
-#: src/bin/e_utils.c:789
+#: src/bin/e_utils.c:790
 #, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f MiB"
 
-#: src/bin/e_utils.c:793
+#: src/bin/e_utils.c:794
 #, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GiB"
 
-#: src/bin/e_utils.c:797
+#: src/bin/e_utils.c:798
 #, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f TiB"
 
-#: src/bin/e_utils.c:816
+#: src/bin/e_utils.c:817
 #, c-format
 msgid "In the future"
 msgstr "У будућности"
 
-#: src/bin/e_utils.c:820
+#: src/bin/e_utils.c:821
 #, c-format
 msgid "In the last minute"
 msgstr "Последњег минута"
 
-#: src/bin/e_utils.c:824
+#: src/bin/e_utils.c:825
 #, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
@@ -4060,7 +4072,7 @@ msgstr[0] "Пре %li године"
 msgstr[1] "Пре %li године"
 msgstr[2] "Пре %li година"
 
-#: src/bin/e_utils.c:829
+#: src/bin/e_utils.c:830
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
@@ -4068,7 +4080,7 @@ msgstr[0] "Пре %li месеца"
 msgstr[1] "Пре %li месеца"
 msgstr[2] "Пре %li месеци"
 
-#: src/bin/e_utils.c:834
+#: src/bin/e_utils.c:835
 #, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
@@ -4076,7 +4088,7 @@ msgstr[0] "Пре %li седмице"
 msgstr[1] "Пре %li седмице"
 msgstr[2] "Пре %li седмица"
 
-#: src/bin/e_utils.c:839
+#: src/bin/e_utils.c:840
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
@@ -4084,7 +4096,7 @@ msgstr[0] "Пре %li дана"
 msgstr[1] "Пре %li дана"
 msgstr[2] "Пре %li дана"
 
-#: src/bin/e_utils.c:844
+#: src/bin/e_utils.c:845
 #, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
@@ -4092,7 +4104,7 @@ msgstr[0] "Пре %li сата"
 msgstr[1] "Пре %li сата"
 msgstr[2] "Пре %li сати"
 
-#: src/bin/e_utils.c:849
+#: src/bin/e_utils.c:850
 #, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
@@ -4100,22 +4112,22 @@ msgstr[0] "Пре %li минута"
 msgstr[1] "Пре %li минута"
 msgstr[2] "Пре %li минута"
 
-#: src/bin/e_utils.c:856 src/bin/e_widget_filepreview.c:679
+#: src/bin/e_utils.c:857 src/bin/e_widget_filepreview.c:679
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
 #: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1179
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
 msgid "Unknown"
 msgstr "Непознато"
 
-#: src/bin/e_utils.c:927 src/bin/e_utils.c:935
+#: src/bin/e_utils.c:928 src/bin/e_utils.c:936
 msgid "Error creating directory"
 msgstr "Грешка при стварању фасцикле"
 
-#: src/bin/e_utils.c:927
+#: src/bin/e_utils.c:928
 #, c-format
 msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
@@ -4124,13 +4136,13 @@ msgstr ""
 "Нисам успео да направим фасциклу:  %s .<br>Проверите да ли имате правилно "
 "постављена овлашћења."
 
-#: src/bin/e_utils.c:935
+#: src/bin/e_utils.c:936
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 "Нисам успео да направим фасциклу: %s .<br>Датотека са тим именом већ постоји."
 
-#: src/bin/e_utils.c:1097
+#: src/bin/e_utils.c:1098
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4148,12 +4160,12 @@ msgstr ""
 "задатих поставки ће то<br>поправити њиховим додавањем. Сада можете подесити "
 "ствари по својој<br>вољи. Извините због зачкољица у вашим поставкама.<br>"
 
-#: src/bin/e_utils.c:1106 src/bin/e_utils.c:1130
+#: src/bin/e_utils.c:1107 src/bin/e_utils.c:1131
 #, c-format
 msgid "%s Configuration Updated"
 msgstr "%s поставки је освежено"
 
-#: src/bin/e_utils.c:1119
+#: src/bin/e_utils.c:1120
 msgid ""
 "Your module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
@@ -4167,12 +4179,12 @@ msgstr ""
 "и,<br>као предострожност, ваше поставке су враћене на<br>почетне вредности. "
 "Извините због непријатности.<br>"
 
-#: src/bin/e_utils.c:1213
+#: src/bin/e_utils.c:1214
 #, c-format
 msgid "Never"
 msgstr "Никад"
 
-#: src/bin/e_utils.c:1217
+#: src/bin/e_utils.c:1218
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
@@ -4180,7 +4192,7 @@ msgstr[0] "%li сакунда"
 msgstr[1] "%li секунде"
 msgstr[2] "%li секунди"
 
-#: src/bin/e_utils.c:1221
+#: src/bin/e_utils.c:1222
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
@@ -4188,7 +4200,7 @@ msgstr[0] "%li година"
 msgstr[1] "%li године"
 msgstr[2] "%li година"
 
-#: src/bin/e_utils.c:1226
+#: src/bin/e_utils.c:1227
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
@@ -4196,7 +4208,7 @@ msgstr[0] "%li месец"
 msgstr[1] "%li месеца"
 msgstr[2] "%li месеци"
 
-#: src/bin/e_utils.c:1231
+#: src/bin/e_utils.c:1232
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
@@ -4204,7 +4216,7 @@ msgstr[0] "%li седмица"
 msgstr[1] "%li седмице"
 msgstr[2] "%li седмица"
 
-#: src/bin/e_utils.c:1236
+#: src/bin/e_utils.c:1237
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
@@ -4212,7 +4224,7 @@ msgstr[0] "%li дан"
 msgstr[1] "%li дана"
 msgstr[2] "%li дана"
 
-#: src/bin/e_utils.c:1241
+#: src/bin/e_utils.c:1242
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
@@ -4220,7 +4232,7 @@ msgstr[0] "%li сат"
 msgstr[1] "%li сата"
 msgstr[2] "%li сати"
 
-#: src/bin/e_utils.c:1246
+#: src/bin/e_utils.c:1247
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
@@ -4236,7 +4248,7 @@ msgstr[2] "%li минута"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:244
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:248
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
@@ -4529,117 +4541,105 @@ msgstr "Нема података"
 msgid "ERROR"
 msgstr "ГРЕШКА"
 
-#: src/modules/battery/e_mod_main.c:877
+#: src/modules/battery/e_mod_main.c:874
 msgid "Battery Meter"
 msgstr "Мерач батерије"
 
-#: src/modules/clock/e_mod_config.c:43
+#: src/modules/clock/e_mod_config.c:47
 msgid "Clock Settings"
 msgstr "Поставке часовника"
 
-#: src/modules/clock/e_mod_config.c:118 src/modules/clock/e_mod_config.c:270
+#: src/modules/clock/e_mod_config.c:143 src/modules/clock/e_mod_config.c:318
 #, fuzzy
-msgid "Time set"
-msgstr "Мерачи времена"
+msgid "Date set"
+msgstr "Датум"
 
-#: src/modules/clock/e_mod_config.c:137
+#: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:203
 #: src/modules/conf_display/e_int_config_desk.c:194
 #: src/modules/fileman/e_int_config_mime.c:184
 msgid "Set"
 msgstr "Постави"
 
-#: src/modules/clock/e_mod_config.c:159
-#, c-format
-msgid ""
-"Click on a calendar day to change the date. <br>Use the mouse wheel to "
-"change the year."
-msgstr ""
-
-#: src/modules/clock/e_mod_config.c:161
+#: src/modules/clock/e_mod_config.c:184 src/modules/clock/e_mod_config.c:312
 #, fuzzy
-msgid "Clock module Information"
-msgstr "Подаци о вези"
+msgid "Time set"
+msgstr "Мерачи времена"
 
-#: src/modules/clock/e_mod_config.c:190 src/modules/clock/e_mod_main.c:799
-#: src/modules/clock/e_mod_main.c:988
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:867
+#: src/modules/clock/e_mod_main.c:1058
 msgid "Clock"
 msgstr "Часовник"
 
-#: src/modules/clock/e_mod_config.c:193
+#: src/modules/clock/e_mod_config.c:235
 msgid "Analog"
 msgstr "Аналогни"
 
-#: src/modules/clock/e_mod_config.c:195
+#: src/modules/clock/e_mod_config.c:237
 msgid "Digital"
 msgstr "Бројчани"
 
-#: src/modules/clock/e_mod_config.c:197
+#: src/modules/clock/e_mod_config.c:239
 msgid "Seconds"
 msgstr "Секунде"
 
-#: src/modules/clock/e_mod_config.c:200
+#: src/modules/clock/e_mod_config.c:242
 msgid "12 h"
 msgstr "12-о часовни"
 
-#: src/modules/clock/e_mod_config.c:202
+#: src/modules/clock/e_mod_config.c:244
 msgid "24 h"
 msgstr "24-ро часовни"
 
-#: src/modules/clock/e_mod_config.c:207
+#: src/modules/clock/e_mod_config.c:249
 msgid "Date"
 msgstr "Датум"
 
-#: src/modules/clock/e_mod_config.c:212
+#: src/modules/clock/e_mod_config.c:254
 msgid "Full"
 msgstr "Потпуно"
 
-#: src/modules/clock/e_mod_config.c:214
+#: src/modules/clock/e_mod_config.c:256
 msgid "Numbers"
 msgstr "Бројеви"
 
-#: src/modules/clock/e_mod_config.c:216
+#: src/modules/clock/e_mod_config.c:258
 msgid "Date Only"
 msgstr "Само датум"
 
-#: src/modules/clock/e_mod_config.c:218
+#: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:220
+#: src/modules/clock/e_mod_config.c:262
 msgid "Strftime"
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:227
+#: src/modules/clock/e_mod_config.c:269
 msgid "Week"
 msgstr "Седмица"
 
-#: src/modules/clock/e_mod_config.c:229 src/modules/clock/e_mod_config.c:241
+#: src/modules/clock/e_mod_config.c:271 src/modules/clock/e_mod_config.c:283
 #: src/modules/start/e_mod_main.c:168
 msgid "Start"
 msgstr "Почетак"
 
-#: src/modules/clock/e_mod_config.c:240
+#: src/modules/clock/e_mod_config.c:282
 msgid "Weekend"
 msgstr "Крај седмице"
 
-#: src/modules/clock/e_mod_config.c:250
+#: src/modules/clock/e_mod_config.c:292
 msgid "Days"
 msgstr "Дани"
 
-#: src/modules/clock/e_mod_config.c:272
+#: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
 msgstr ""
 
-#: src/modules/clock/e_mod_config.c:276
-#, fuzzy
-msgid "Date set"
-msgstr "Датум"
-
-#: src/modules/clock/e_mod_config.c:278
-msgid "Info... "
+#: src/modules/clock/e_mod_config.c:320
+msgid "Set... "
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:988
+#: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
 msgstr "Прекидач календара"
 
@@ -4903,7 +4903,7 @@ msgstr "Кликните за промену позадине"
 #: src/modules/conf_display/e_int_config_desks.c:170
 #: src/modules/conf_display/e_int_config_desks.c:175
 #: src/modules/conf_display/e_int_config_desklock.c:300
-#: src/modules/conf_interaction/e_int_config_mouse.c:281
+#: src/modules/conf_interaction/e_int_config_mouse.c:345
 #: src/modules/everything/evry_config.c:414
 #: src/modules/everything/evry_config.c:570
 #: src/modules/everything/evry_config.c:577
@@ -5196,6 +5196,7 @@ msgstr "Радни сто"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:4
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:11
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:3
+#: src/modules/conf_interaction/e_int_config_mouse.c:3
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
@@ -5224,7 +5225,7 @@ msgid "Edge Bindings"
 msgstr "Пречице ивица"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:251
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:300
 #: src/modules/conf_paths/e_int_config_env.c:340
 msgid "Modify"
@@ -5232,14 +5233,14 @@ msgstr "Измените"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:255
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:304
 msgid "Delete All"
 msgstr "Обриши све"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:259
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:263
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Restore Default Bindings"
 msgstr "Врати задате пречице"
@@ -5247,7 +5248,7 @@ msgstr "Врати задате пречице"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:264
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:268
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:314
 msgid "Action"
 msgstr "Радња"
@@ -5259,7 +5260,7 @@ msgstr "Дугме миша"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:271
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:275
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:321
 msgid "Action Params"
 msgstr "Одреднице радње"
@@ -5298,22 +5299,22 @@ msgstr ""
 "hilight>.<br>Молим, изаберите другу ивицу за пречицу."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1314
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
 msgid "CTRL"
 msgstr "КТРЛ"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1319
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1329
 msgid "ALT"
 msgstr "МЕЊА"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1325
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1335
 msgid "SHIFT"
 msgstr "ПОМАК"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1331
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1341
 msgid "WIN"
 msgstr "СУПЕР"
 
@@ -5420,7 +5421,7 @@ msgid "Threshold for a thumb drag"
 msgstr "Задршка премицања мишем"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:106
-#: src/modules/conf_interaction/e_int_config_mouse.c:234
+#: src/modules/conf_interaction/e_int_config_mouse.c:298
 #, c-format
 msgid "%1.0f pixels"
 msgstr "%1.0f тачака"
@@ -5444,121 +5445,116 @@ msgstr "Трење успоравања"
 msgid "%1.2f s"
 msgstr "%1.2f s"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:60
+#: src/modules/conf_interaction/e_int_config_mouse.c:62
 #, fuzzy
 msgid "Mouse and Touchpad Settings"
 msgstr "Поставке миша"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:225
+#: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
 msgstr "Прикажи показивач"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:241
+#: src/modules/conf_interaction/e_int_config_mouse.c:305
 #: src/modules/conf_theme/e_mod_main.c:171
 #: src/modules/conf_theme/e_mod_main.c:271
 msgid "Theme"
 msgstr "Тема"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:243
+#: src/modules/conf_interaction/e_int_config_mouse.c:307
 msgid "X"
 msgstr "Икс"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:253
+#: src/modules/conf_interaction/e_int_config_mouse.c:317
 msgid "Idle effects"
 msgstr "Дејства мироваања"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:259
+#: src/modules/conf_interaction/e_int_config_mouse.c:323
 msgid "Cursor"
 msgstr "Показивач"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:266
+#: src/modules/conf_interaction/e_int_config_mouse.c:330
 msgid "Mouse Hand"
 msgstr "Рука миша"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:274
-#: src/modules/conf_interaction/e_int_config_mouse.c:314
+#: src/modules/conf_interaction/e_int_config_mouse.c:338
+#: src/modules/conf_interaction/e_int_config_mouse.c:378
 msgid "Acceleration"
 msgstr "Убрзање"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:275
-#: src/modules/conf_interaction/e_int_config_mouse.c:316
+#: src/modules/conf_interaction/e_int_config_mouse.c:339
+#: src/modules/conf_interaction/e_int_config_mouse.c:380
 #: src/modules/fileman/e_mod_config.c:480
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
 msgstr "%1.1f"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:279
+#: src/modules/conf_interaction/e_int_config_mouse.c:343
 msgid "Threshold"
 msgstr "Праг"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:287
-#: src/modules/conf_interaction/e_int_config_mouse.c:322
+#: src/modules/conf_interaction/e_int_config_mouse.c:351
+#: src/modules/conf_interaction/e_int_config_mouse.c:386
 #: src/modules/conf_theme/e_int_config_fonts.c:85
 msgid "Buttons"
 msgstr "Дугмад"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:289
-#: src/modules/conf_interaction/e_int_config_mouse.c:328
+#: src/modules/conf_interaction/e_int_config_mouse.c:353
+#: src/modules/conf_interaction/e_int_config_mouse.c:392
 #, fuzzy
 msgid "Middle mouse button emulation"
 msgstr "Средње дугме"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:302
+#: src/modules/conf_interaction/e_int_config_mouse.c:366
 msgid "Mouse"
 msgstr "Миш"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:309
+#: src/modules/conf_interaction/e_int_config_mouse.c:373
 msgid "Enable Devices Extras"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:324
+#: src/modules/conf_interaction/e_int_config_mouse.c:388
 msgid "Tap to click"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:332
+#: src/modules/conf_interaction/e_int_config_mouse.c:396
 #, fuzzy
 msgid "Clickpad"
 msgstr "кликом"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:336
+#: src/modules/conf_interaction/e_int_config_mouse.c:400
 msgid "Palm detect"
 msgstr ""
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:342
+#: src/modules/conf_interaction/e_int_config_mouse.c:406
 #, fuzzy
 msgid "Scrolling"
 msgstr "Извлачење"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:344
+#: src/modules/conf_interaction/e_int_config_mouse.c:408
 #, fuzzy
 msgid "Natural scrolling"
 msgstr "Анимирај премицање"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:350
+#: src/modules/conf_interaction/e_int_config_mouse.c:414
 #, fuzzy
 msgid "Horizontal scrolling"
 msgstr "Водоравно поравнање"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:354
+#: src/modules/conf_interaction/e_int_config_mouse.c:418
 #, fuzzy
 msgid "Edge scrolling"
 msgstr "Анимирај премицање"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:358
+#: src/modules/conf_interaction/e_int_config_mouse.c:422
 #, fuzzy
 msgid "2 finger scrolling"
 msgstr "Анимирај премицање"
 
-#: src/modules/conf_interaction/e_int_config_mouse.c:362
+#: src/modules/conf_interaction/e_int_config_mouse.c:426
 #, fuzzy
 msgid "Circular scrolling"
 msgstr "Анимирај премицање"
-
-#: src/modules/conf_interaction/e_int_config_mouse.c:367
-#, fuzzy
-msgid "Touchpad"
-msgstr "Додир"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
@@ -5857,21 +5853,25 @@ msgstr ""
 msgid "Single key"
 msgstr "Један тастер"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:106
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:107
 msgid "Key Bindings Settings"
 msgstr "Поставке пречице тастера"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:239
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:241
 #: src/modules/conf_keybindings/e_mod_main.c:347
 #: src/modules/conf_keybindings/e_mod_main.c:359
 msgid "Key Bindings"
 msgstr "Пречице тастатуре"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1174
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:246
+msgid "Single Super Key allowed"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
 msgstr "Грешка тастера пречице"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1175
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
@@ -9019,8 +9019,8 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Да ли сте сигурни да желите избрисати овај извор траке?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2885
-#: src/modules/ibar/e_mod_main.c:2921
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2887
+#: src/modules/ibar/e_mod_main.c:2923
 msgid "IBar"
 msgstr "Tрака"
 
@@ -9043,7 +9043,7 @@ msgstr "Уклони стог"
 msgid "Icon %s"
 msgstr "Икона %s"
 
-#: src/modules/ibar/e_mod_main.c:2921
+#: src/modules/ibar/e_mod_main.c:2923
 msgid "Focus IBar"
 msgstr "Узми Tраку у жижу"
 
@@ -9970,7 +9970,7 @@ msgid "Alt+PrtSc: screenshot active window"
 msgstr "Подесите одредиште за чување снимака"
 
 # Процеси?
-#: src/modules/tasks/e_mod_main.c:331 src/modules/tasks/e_mod_main.c:807
+#: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
 msgid "Tasks"
 msgstr "Задаци"
 
@@ -10689,6 +10689,10 @@ msgstr "Гласноћа је промењена"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Гласноћа је промењена"
+
+#, fuzzy
+#~ msgid "Clock module Information"
+#~ msgstr "Подаци о вези"
 
 #, fuzzy
 #~ msgid "Minutes"
