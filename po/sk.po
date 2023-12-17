@@ -5830,7 +5830,7 @@ msgstr "Klávesové skratky"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Použiť samostatný kláves Win"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
