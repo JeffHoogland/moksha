@@ -796,9 +796,8 @@ msgstr "Touchpad"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Touchpad"
+msgstr "Touchpad ligado/desligado"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -5809,7 +5808,7 @@ msgstr "Associações do teclado"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Toque só na tecla Super permitido"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
