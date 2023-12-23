@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2023-12-16 22:19+0100\n"
-"PO-Revision-Date: 2023-10-10 12:42+0100\n"
+"PO-Revision-Date: 2023-12-23 21:42+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -796,9 +796,8 @@ msgstr "Painel tátil"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Painel tátil"
+msgstr "Ligar/desligar painel tátil"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -887,8 +886,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1005,9 +1005,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações.<br>"
-"%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado "
-"para evitar a danificação dos dados.<br>"
+"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações."
+"<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi "
+"eliminado para evitar a danificação dos dados.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1324,7 +1324,7 @@ msgstr "%s foi interrompido por um sinal de saída."
 #: src/bin/e_exec.c:907
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr "%s foi interrompido por um sinal de cancelamento."
+msgstr "%s foi interrompido por um sinal de abortar."
 
 #: src/bin/e_exec.c:910
 #, c-format
@@ -1742,8 +1742,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -1958,7 +1958,7 @@ msgid ""
 "on this screen. Aborting startup.\n"
 msgstr ""
 "Já existe uma instância Moksha ativa neste ecrã.\n"
-"A cancelar arranque...\n"
+"Abortar o arranque...\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
 #: src/bin/e_import_config_dialog.c:352 src/bin/e_import_config_dialog.c:362
@@ -4596,9 +4596,8 @@ msgid "Set..."
 msgstr "Definir..."
 
 #: src/modules/clock/e_mod_config.c:320
-#, fuzzy
 msgid "Set... "
-msgstr "Definir..."
+msgstr "Definir… "
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5173,7 +5172,7 @@ msgid ""
 "or make it<br>respond to edge clicks:"
 msgstr ""
 "Selecione uma margem<br>ou clique em <hilight>Fechar</hilight> para abortar."
-"<br><br>Pode também especificar<br>um atrasopara esta ação utilizando<br>o "
+"<br><br>Pode também especificar<br>um atraso para esta ação utilizando<br>o "
 "cursor ou fazê-lo responder aos cliques nas margens:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
@@ -5789,11 +5788,11 @@ msgid ""
 "<hilight>Escape</hilight> to abort."
 msgstr ""
 "Escolha o evento ACPI que pretende associar<br><br>ou <hilight>Escape</"
-"hilight> para cancelar."
+"hilight> para abortar."
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:8
 msgid "Single key"
-msgstr "Uma tecla"
+msgstr "Tecla única"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:107
 msgid "Key Bindings Settings"
@@ -5807,7 +5806,7 @@ msgstr "Combinações de teclas"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Toque único na tecla Super permitido"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
@@ -5816,8 +5815,9 @@ msgstr "Erro na combinação de teclas"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da combinação de teclas escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
@@ -8259,11 +8259,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8281,8 +8281,8 @@ msgstr ""
 "Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
 "</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
 "hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
-"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
-"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;"
+"Ctrl+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
 "<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
 "item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
 "visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
@@ -8343,27 +8343,27 @@ msgstr "Comando personalizado"
 #: src/modules/fileman/e_fwin.c:3016
 #, c-format
 msgid "Copying is aborted"
-msgstr "Cópia cancelada"
+msgstr "Cópia abortada"
 
 #: src/modules/fileman/e_fwin.c:3020
 #, c-format
 msgid "Moving is aborted"
-msgstr "Movimentação cancelada"
+msgstr "Movimentação abortada"
 
 #: src/modules/fileman/e_fwin.c:3024
 #, c-format
 msgid "Deleting is aborted"
-msgstr "Eliminação cancelada"
+msgstr "Eliminação abortada"
 
 #: src/modules/fileman/e_fwin.c:3028
 #, c-format
 msgid "Secure deletion is aborted"
-msgstr "A eliminação segura foi cancelada"
+msgstr "A eliminação segura foi abortada"
 
 #: src/modules/fileman/e_fwin.c:3032
 #, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr "A operação desconhecida do escravo é cancelada"
+msgstr "A operação desconhecida do escravo é abortada"
 
 #: src/modules/fileman/e_fwin.c:3042
 #, c-format
