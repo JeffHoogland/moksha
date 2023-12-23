@@ -862,93 +862,93 @@ _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UN
 static void
 _tasks_adjacent_label_popup(void *data)
 {
-  Tasks_Item *item;
-  E_Zone *zone;
-  int height, gap;
-  const char *title;
-  Evas_Coord x, y, w, h, gx, gy, gh, pw;
-  Evas_Coord px = 0, py = 0;
-  unsigned int max_len = 50;
+   Tasks_Item *item;
+   E_Zone *zone;
+   int height, gap;
+   const char *title;
+   Evas_Coord x, y, w, h, gx, gy, gh, pw;
+   Evas_Coord px = 0, py = 0;
+   unsigned int max_len = 50;
 
-  item = data;
-  zone = item->tasks->gcc->gadcon->zone;
-  item->popup = e_popup_new(zone, 0, 0, 0, 0);
-  item->win = edje_object_add(item->popup->evas);
-  Eina_Bool theme_check = e_theme_edje_object_set(item->win,
-                           "base/theme/modules/ibar",
-                           "e/modules/ibar/adjacent_label");
+   item = data;
+   zone = item->tasks->gcc->gadcon->zone;
+   item->popup = e_popup_new(zone, 0, 0, 0, 0);
+   item->win = edje_object_add(item->popup->evas);
+   Eina_Bool theme_check = e_theme_edje_object_set(item->win,
+                            "base/theme/modules/ibar",
+                            "e/modules/ibar/adjacent_label");
 
-  if (!theme_check) _tasks_adjacent_popup_destroy(item);
-  e_popup_edje_bg_object_set(item->popup, item->win);
-  evas_object_show(item->win);
+   if (!theme_check) _tasks_adjacent_popup_destroy(item);
+   e_popup_edje_bg_object_set(item->popup, item->win);
+   evas_object_show(item->win);
 
-  e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, NULL, &gh);
-  evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, NULL, &gh);
+   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
 
-  title = e_border_name_get(item->border);
+   title = e_border_name_get(item->border);
 
-  if (strlen(title) > max_len)
+   if (strlen(title) > max_len)
      {
-        char *abbv;
-        const char *left, *right;
+       char *abbv;
+       const char *left, *right;
 
-        abbv = E_NEW(char, E_CLIENTLIST_MAX_CAPTION_LEN + 4);
-        left = title;
-        right = title + (strlen(title) - (max_len / 2));
+       abbv = E_NEW(char, E_CLIENTLIST_MAX_CAPTION_LEN + 4);
+       left = title;
+       right = title + (strlen(title) - (max_len / 2));
 
-        strncpy(abbv, left, max_len / 2);
-        strncat(abbv, "...", 4);
-        strncat(abbv, right, max_len / 2);
-        edje_object_part_text_set(item->win, "e.text.label", abbv);
-        E_FREE(abbv);
-      }
-  else
+       strncpy(abbv, left, max_len / 2);
+       strncat(abbv, "...", 4);
+       strncat(abbv, right, max_len / 2);
+       edje_object_part_text_set(item->win, "e.text.label", abbv);
+       E_FREE(abbv);
+     }
+   else
      edje_object_part_text_set(item->win, "e.text.label", title);
 
-  edje_object_calc_force(item->win);
-  edje_object_size_min_calc(item->win, &pw, NULL);
-  height = 20 * e_scale;
-  gap =  3 * e_scale;
+   edje_object_calc_force(item->win);
+   edje_object_size_min_calc(item->win, &pw, NULL);
+   height = 20 * e_scale;
+   gap =  3 * e_scale;
 
-  switch (item->tasks->gcc->gadcon->orient)
-  {
-    case E_GADCON_ORIENT_FLOAT:
+   switch (item->tasks->gcc->gadcon->orient)
+    {
+      case E_GADCON_ORIENT_FLOAT:
         px = x - zone->x + w / 2 - pw / 2;
         py = zone->y + y - height - gap;
-      break;
-    case E_GADCON_ORIENT_LEFT:
-    case E_GADCON_ORIENT_CORNER_LT:
-    case E_GADCON_ORIENT_CORNER_LB:
+       break;
+      case E_GADCON_ORIENT_LEFT:
+      case E_GADCON_ORIENT_CORNER_LT:
+      case E_GADCON_ORIENT_CORNER_LB:
         px = x + w + gap;
         py = zone->y + gy + y + h / 6;
-      break;
-    case E_GADCON_ORIENT_RIGHT:
-    case E_GADCON_ORIENT_CORNER_RT:
-    case E_GADCON_ORIENT_CORNER_RB:
+       break;
+      case E_GADCON_ORIENT_RIGHT:
+      case E_GADCON_ORIENT_CORNER_RT:
+      case E_GADCON_ORIENT_CORNER_RB:
         px = gx - zone->x + x - pw - gap;
         py = zone->y + gy + y + h / 6;
-      break;
-    case E_GADCON_ORIENT_BOTTOM:
-    case E_GADCON_ORIENT_CORNER_BL:
-    case E_GADCON_ORIENT_CORNER_BR:
+       break;
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
         px = gx - zone->x + x + (w - pw) / 2;
         py = gy - zone->y - height - gap;
-      break;
-    case E_GADCON_ORIENT_TOP:
-    case E_GADCON_ORIENT_CORNER_TL:
-    case E_GADCON_ORIENT_CORNER_TR:
+       break;
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
         px = gx + zone->x + x + (w - pw) / 2;
         py = zone->y + gh + gap;
-      break;
-    default:
-     break;
+       break;
+      default:
+       break;
   }
 
-  px = E_CLAMP(px, zone->x, zone->x + zone->w - pw);
-  e_popup_move(item->popup, px, py);
-  evas_object_resize(item->win, pw, height);
-  e_popup_resize(item->popup, pw, height);
-  e_popup_show(item->popup);
+   px = E_CLAMP(px, zone->x, zone->x + zone->w - pw);
+   e_popup_move(item->popup, px, py);
+   evas_object_resize(item->win, pw, height);
+   e_popup_resize(item->popup, pw, height);
+   e_popup_show(item->popup);
 }
 
 static void
