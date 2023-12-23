@@ -967,8 +967,7 @@ _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
    Tasks_Item *item;
 
    item = data;
-   if (item->tasks->config->show_label)
-     _tasks_adjacent_popup_destroy(item);
+   _tasks_adjacent_popup_destroy(item);
 }
 
 static void
@@ -996,6 +995,8 @@ _item_next(void *data, void *event_info)
        n++;
      }
 
+   _tasks_adjacent_popup_destroy(item);
+
    // next item switch with the current one in box list
    o = e_box_pack_object_nth(item->tasks->o_items, n);
    e_box_pack_after(item->tasks->o_items, item->o_item, o);
@@ -1013,6 +1014,9 @@ _item_next(void *data, void *event_info)
    bd = eina_list_data_get(eina_list_next(l));
    eina_list_data_set(eina_list_next(l), eina_list_data_get(l));
    eina_list_data_set(l, bd);
+
+   if (item->tasks->config->show_label)
+     _tasks_adjacent_label_popup(item);
 }
 
 static void
@@ -1042,6 +1046,8 @@ _item_prev(void *data, void *event_info)
        n++;
      }
 
+   _tasks_adjacent_popup_destroy(item);
+
    // previous item switch with the current one in box list
    o = e_box_pack_object_nth(item->tasks->o_items, n - 1);
    e_box_pack_before(item->tasks->o_items, item->o_item, o);
@@ -1059,6 +1065,9 @@ _item_prev(void *data, void *event_info)
    bd = eina_list_data_get(eina_list_prev(l));
    eina_list_data_set(eina_list_prev(l), eina_list_data_get(l));
    eina_list_data_set(l, bd);
+
+   if (item->tasks->config->show_label)
+     _tasks_adjacent_label_popup(item);
 }
 
 static void
@@ -1109,7 +1118,7 @@ _tasks_cb_item_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
      {
         item->drag.start = 0;
         e_pointer_type_push(item->tasks->pointer, item, "default");
-        
+
         if (!item->border->sticky && item->tasks->config->show_all)
           e_desk_show(item->border->desk);
         if (evas_key_modifier_is_set(ev->modifiers, "Alt"))
