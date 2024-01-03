@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-12-16 22:19+0100\n"
+"POT-Creation-Date: 2024-01-03 11:30+0100\n"
 "PO-Revision-Date: 2009-11-06 10:39+0000\n"
 "Last-Translator: Viktor Kojouharov <Unknown>\n"
 "Language-Team: English <en@li.org>\n"
@@ -43,7 +43,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -842,7 +842,7 @@ msgstr "Режим \"Hibernate\""
 msgid "Lock"
 msgstr "Заключи"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
 msgid "Cleanup Windows"
 msgstr "Изчистване на прозорци"
 
@@ -951,7 +951,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1339,7 +1339,7 @@ msgid "Select All"
 msgstr "Избиране на всичко"
 
 #: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:573 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1360,16 +1360,16 @@ msgstr "Moksha не е могъл да създаде отделен дъщер�
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha не е могъл да създаде отделен дъщерен процес:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:574
+#: src/bin/e_exec.c:575
 #, fuzzy, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha не е могъл да създаде отделен дъщерен процес:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:751
+#: src/bin/e_exec.c:752
 msgid "Application run error"
 msgstr "Грешка при изпълнение"
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:754
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1378,106 +1378,106 @@ msgstr ""
 "Moksha·не успя да пусне програмата:<br><br>%s<br><br>Програмата не успя да "
 "се стартира."
 
-#: src/bin/e_exec.c:871
+#: src/bin/e_exec.c:872
 msgid "Application Execution Error"
 msgstr "Грешка при стартиране на програмата"
 
-#: src/bin/e_exec.c:884 src/bin/e_exec.c:886
+#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s е спряла неочаквано"
 
-#: src/bin/e_exec.c:892
+#: src/bin/e_exec.c:893
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Изходен код %i е върнат от·%s."
 
-#: src/bin/e_exec.c:900
+#: src/bin/e_exec.c:901
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s е прекъсната от сигнал Interrupt."
 
-#: src/bin/e_exec.c:903
+#: src/bin/e_exec.c:904
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s е прекъсната от сигнал Quit."
 
-#: src/bin/e_exec.c:907
+#: src/bin/e_exec.c:908
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s е прекъсната от сигнал Abort."
 
-#: src/bin/e_exec.c:910
+#: src/bin/e_exec.c:911
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s е прекъсната от Floating Point грешка."
 
-#: src/bin/e_exec.c:914
+#: src/bin/e_exec.c:915
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s е прекъсната от сигнал Uninterruptable Kill."
 
-#: src/bin/e_exec.c:918
+#: src/bin/e_exec.c:919
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s е прекъсната от сигнал Segmentation Fault."
 
-#: src/bin/e_exec.c:922
+#: src/bin/e_exec.c:923
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s е прекъсната от сигнал Broken Pipe."
 
-#: src/bin/e_exec.c:925
+#: src/bin/e_exec.c:926
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s е прекъсната от сигнал Termination."
 
-#: src/bin/e_exec.c:929
+#: src/bin/e_exec.c:930
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s е прекъсната от грешка на шината."
 
-#: src/bin/e_exec.c:932
+#: src/bin/e_exec.c:933
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s е прекъсната от сигнал с номер %i."
 
-#: src/bin/e_exec.c:988
+#: src/bin/e_exec.c:989
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Остатъкът от резултата е скрит. Запазете го за да го видите***\n"
 
-#: src/bin/e_exec.c:1047 src/bin/e_exec.c:1125 src/bin/e_exec.c:1132
+#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
 msgid "Error Logs"
 msgstr "Дневник с грешки"
 
-#: src/bin/e_exec.c:1053 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
 msgid "There was no error message."
 msgstr "Няма съобщение с грешки"
 
-#: src/bin/e_exec.c:1057 src/bin/e_exec.c:1140
+#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
 msgid "Save This Message"
 msgstr "Запазване на това съобщение"
 
-#: src/bin/e_exec.c:1062 src/bin/e_exec.c:1065 src/bin/e_exec.c:1145
-#: src/bin/e_exec.c:1148
+#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
+#: src/bin/e_exec.c:1149
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Тези грешки ще бъдат записани като %s/%s.log"
 
-#: src/bin/e_exec.c:1091
+#: src/bin/e_exec.c:1092
 msgid "Error Information"
 msgstr "Информация за грешката"
 
-#: src/bin/e_exec.c:1099
+#: src/bin/e_exec.c:1100
 msgid "Error Signal Information"
 msgstr "Информация за сигналната грешка"
 
-#: src/bin/e_exec.c:1109 src/bin/e_exec.c:1116
+#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
 msgid "Output Data"
 msgstr "Резултат"
 
-#: src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1118
 msgid "There was no output."
 msgstr "Няма резултат"
 
@@ -3008,36 +3008,45 @@ msgstr "За Тема"
 msgid "Restart Moksha"
 msgstr "За Moksha"
 
-#: src/bin/e_int_menus.c:338
+#: src/bin/e_int_menus.c:344
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Любими"
 
-#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
+#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
 #, fuzzy
 msgid "No applications"
 msgstr "(Няма програми)"
 
-#: src/bin/e_int_menus.c:362
+#: src/bin/e_int_menus.c:358
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Тапет"
+
+#: src/bin/e_int_menus.c:377
 msgid "Virtual"
 msgstr "Виртуални"
 
-#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Рафтове"
 
-#: src/bin/e_int_menus.c:378
+#: src/bin/e_int_menus.c:393
 msgid "Show/Hide All Windows"
 msgstr "Показване/скриване на всички прозорци"
 
-#: src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:1042
 #, fuzzy
 msgid "Set Virtual Desktops"
 msgstr "Задайте виртуални десктопи"
 
-#: src/bin/e_int_menus.c:1397
+#: src/bin/e_int_menus.c:1412
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3046,32 +3055,32 @@ msgstr "Задайте виртуални десктопи"
 msgid "Windows"
 msgstr "Прозорци"
 
-#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
+#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
 #, fuzzy
 msgid "No windows"
 msgstr "(Няма прозорци)"
 
-#: src/bin/e_int_menus.c:1452
+#: src/bin/e_int_menus.c:1467
 msgid "Lost Windows"
 msgstr "Изгубени прозорци"
 
-#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
+#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
 #, fuzzy
 msgid "Untitled window"
 msgstr "Вътрешни прозорци"
 
-#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Рафт №"
 
-#: src/bin/e_int_menus.c:1787
+#: src/bin/e_int_menus.c:1802
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "Добавяне на рафт"
 
-#: src/bin/e_int_menus.c:1794
+#: src/bin/e_int_menus.c:1809
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Изтриване на рафт"
@@ -5383,14 +5392,6 @@ msgstr "Тапет от темата"
 #, fuzzy
 msgid "Current Wallpaper"
 msgstr "Тапет на полето"
-
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Тапет"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"

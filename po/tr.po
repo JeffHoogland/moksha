@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2023-12-16 22:19+0100\n"
+"POT-Creation-Date: 2024-01-03 11:30+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -45,7 +45,7 @@ msgstr "Moksha"
 
 #: src/bin/e_about.c:28
 msgid ""
-"<title>Copyright &copy; 2023, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
@@ -779,7 +779,7 @@ msgstr "Şimdi uykuya geçir"
 msgid "Lock"
 msgstr "Kilitle"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
 msgid "Cleanup Windows"
 msgstr "Pencereleri Temizle"
 
@@ -894,7 +894,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:760
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -1251,7 +1251,7 @@ msgid "Select All"
 msgstr "Tümünü Seç"
 
 #: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:573 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
@@ -1271,16 +1271,16 @@ msgstr "Moksha dizini değiştiremedi:<br><br>%s"
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:574
+#: src/bin/e_exec.c:575
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha bir çocuk süreç üretemedi:<br><br>%s"
 
-#: src/bin/e_exec.c:751
+#: src/bin/e_exec.c:752
 msgid "Application run error"
 msgstr "Uygulama Yürütme Hatası"
 
-#: src/bin/e_exec.c:753
+#: src/bin/e_exec.c:754
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1288,106 +1288,106 @@ msgid ""
 msgstr ""
 "Moksha uygulamayı çalıştıramadı:<br><br>%s<br><br>Uygulama çalıştırılamadı."
 
-#: src/bin/e_exec.c:871
+#: src/bin/e_exec.c:872
 msgid "Application Execution Error"
 msgstr "Uygulama Çalıştırma Hatası"
 
-#: src/bin/e_exec.c:884 src/bin/e_exec.c:886
+#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s beklenmedik şekilde çalışmayı durdurdu."
 
-#: src/bin/e_exec.c:892
+#: src/bin/e_exec.c:893
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%2$s 'den %1$i çıkış kodu geldi."
 
-#: src/bin/e_exec.c:900
+#: src/bin/e_exec.c:901
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s Kesme Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:903
+#: src/bin/e_exec.c:904
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s Çık Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:907
+#: src/bin/e_exec.c:908
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s Durdur Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:910
+#: src/bin/e_exec.c:911
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s Ondalıklı Sayı Hatası ile durduruldu."
 
-#: src/bin/e_exec.c:914
+#: src/bin/e_exec.c:915
 #, c-format
 msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s Durdurulamaz Sonlandırma Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:918
+#: src/bin/e_exec.c:919
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s Bölümleme Hatası tarafından durduruldu."
 
-#: src/bin/e_exec.c:922
+#: src/bin/e_exec.c:923
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s Hatalı İletici tarafından durduruldu."
 
-#: src/bin/e_exec.c:925
+#: src/bin/e_exec.c:926
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s Bitirme Sinyali tarafından durduruldu."
 
-#: src/bin/e_exec.c:929
+#: src/bin/e_exec.c:930
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s veri yolu Hatası tarafından durduruldu."
 
-#: src/bin/e_exec.c:932
+#: src/bin/e_exec.c:933
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s %i sinyal numarası tarafından durduruldu."
 
-#: src/bin/e_exec.c:988
+#: src/bin/e_exec.c:989
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Kalan çıktı kesilmiş. Çıktıyı görünüme kaydet.***\n"
 
-#: src/bin/e_exec.c:1047 src/bin/e_exec.c:1125 src/bin/e_exec.c:1132
+#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
 msgid "Error Logs"
 msgstr "Hata Kayıtları"
 
-#: src/bin/e_exec.c:1053 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
 msgid "There was no error message."
 msgstr "Hata mesajı yoktu"
 
-#: src/bin/e_exec.c:1057 src/bin/e_exec.c:1140
+#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
 msgid "Save This Message"
 msgstr "Mesajı Kaydet"
 
-#: src/bin/e_exec.c:1062 src/bin/e_exec.c:1065 src/bin/e_exec.c:1145
-#: src/bin/e_exec.c:1148
+#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
+#: src/bin/e_exec.c:1149
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Bu hata kaydı %s/%s.log olarak kaydedildi."
 
-#: src/bin/e_exec.c:1091
+#: src/bin/e_exec.c:1092
 msgid "Error Information"
 msgstr "Hata Bilgisi"
 
-#: src/bin/e_exec.c:1099
+#: src/bin/e_exec.c:1100
 msgid "Error Signal Information"
 msgstr "Hata Sinyali Bilgisi"
 
-#: src/bin/e_exec.c:1109 src/bin/e_exec.c:1116
+#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
 msgid "Output Data"
 msgstr "Veri Çıktısı"
 
-#: src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1118
 msgid "There was no output."
 msgstr "Çıktı yok."
 
@@ -2825,34 +2825,43 @@ msgstr "Tema Hakkında"
 msgid "Restart Moksha"
 msgstr "Moksha'a Hoş Geldiniz"
 
-#: src/bin/e_int_menus.c:338
+#: src/bin/e_int_menus.c:344
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Beğenilenler"
 
-#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
+#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
 msgid "No applications"
 msgstr "Uygulama Yok"
 
-#: src/bin/e_int_menus.c:362
+#: src/bin/e_int_menus.c:358
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Duvar Kağıdı"
+
+#: src/bin/e_int_menus.c:377
 msgid "Virtual"
 msgstr "Sanal"
 
-#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Raflar"
 
-#: src/bin/e_int_menus.c:378
+#: src/bin/e_int_menus.c:393
 msgid "Show/Hide All Windows"
 msgstr "Tüm Pencereleri Göster/Gizle"
 
-#: src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:1042
 msgid "Set Virtual Desktops"
 msgstr "Sanal Masaüstlerini Ayarla"
 
-#: src/bin/e_int_menus.c:1397
+#: src/bin/e_int_menus.c:1412
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2861,29 +2870,29 @@ msgstr "Sanal Masaüstlerini Ayarla"
 msgid "Windows"
 msgstr "Pencereler"
 
-#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
+#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
 msgid "No windows"
 msgstr "Pencere yok"
 
-#: src/bin/e_int_menus.c:1452
+#: src/bin/e_int_menus.c:1467
 msgid "Lost Windows"
 msgstr "Kayıp Pencereler"
 
-#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
+#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
 msgid "Untitled window"
 msgstr "İsimsiz pencere"
 
-#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Raf %s"
 
-#: src/bin/e_int_menus.c:1787
+#: src/bin/e_int_menus.c:1802
 msgid "Add a Shelf"
 msgstr "Bir Raf ekle"
 
-#: src/bin/e_int_menus.c:1794
+#: src/bin/e_int_menus.c:1809
 msgid "Delete a Shelf"
 msgstr "Rafı Sil"
 
@@ -4988,14 +4997,6 @@ msgstr "Tema Duvar Kağıdı"
 #: src/modules/conf_display/e_int_config_desklock.c:360
 msgid "Current Wallpaper"
 msgstr "Mevcut Duvar kağıdı"
-
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Duvar Kağıdı"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
