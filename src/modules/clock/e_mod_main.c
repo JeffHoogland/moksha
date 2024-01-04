@@ -493,7 +493,7 @@ _clock_popup_new(Instance *inst)
 
    edje_object_part_text_set(oi, "e.text.today", todaystr);
 
-   o = e_widget_image_add_from_object(evas, oi, 112, 112);
+   o = e_widget_image_add_from_object(evas, oi, 112, 85 * e_scale);
    evas_object_show(oi);
    e_widget_table_object_align_append(inst->o_table, o,
                                       0, 0, 1, 1, 0, 0, 0, 0, 0.5, 0.5);
