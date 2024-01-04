@@ -165,6 +165,18 @@ AC_CHECK_HEADERS([malloc.h])
 dnl     defines HAVE_MALLOC_TRIM if malloc_trim is available
 AC_CHECK_FUNCS([malloc_trim])
 
+# Check the size of void pointer to determine 32-bit or 64-bit
+AC_CHECK_SIZEOF([void *])
+
+# Set ARCH based on the size of void pointer
+case "$ac_cv_sizeof_void_p" in
+  4)
+    AC_DEFINE([LEGACY_ARCH], 1, "Have 32-bit architecture")
+    ;;
+  *)
+    ;;
+esac
+
 MODULE_ARCH="$host_os-$host_cpu"
 AC_SUBST(MODULE_ARCH)
 AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
