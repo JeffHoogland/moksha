@@ -1204,9 +1204,7 @@ on_frame_click(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
    gcc = data;
 
    if (ev->button == 2)
-     {
-        gadman_gadget_edit_start(gcc);
-     }
+     gadman_gadget_edit_start(gcc);
 
    if (ev->button == 5)
      {

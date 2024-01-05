@@ -3161,14 +3161,14 @@ _e_gadcon_client_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj 
                               cy + ev->output.y, 1, 1,
                               E_MENU_POP_DIRECTION_AUTO, ev->timestamp);
      }
-   else if (ev->button == 2)
-     {
-        if (gcc->instant_edit_timer)
-          ecore_timer_del(gcc->instant_edit_timer);
-        gcc->instant_edit_timer = NULL;
-        e_gadcon_client_edit_begin(gcc);
-        _e_gadcon_client_move_start(gcc);
-     }
+   //~ else if (ev->button == 2)
+     //~ {
+        //~ if (gcc->instant_edit_timer)
+          //~ ecore_timer_del(gcc->instant_edit_timer);
+        //~ gcc->instant_edit_timer = NULL;
+        //~ e_gadcon_client_edit_begin(gcc);
+        //~ _e_gadcon_client_move_start(gcc);
+     //~ }
    else if (ev->button == 1)
      {
         if ((!gcc->o_control) && (gcc->gadcon->instant_edit))
