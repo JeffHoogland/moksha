@@ -1,28 +1,28 @@
-# Czech translation for Moksha.
-#
+# Czech translation
 # This file is put in the public domain.
 # quaker66@gmail.com
+#
 # Vít Pelčák <vit@pelcak.org>, 2011.
 # Tomáš Čech <sleep_walker@suse.cz>, 2015.
-#
+# Štefan Uram <thewaiter@centrum.sk>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2024-01-03 11:30+0100\n"
-"PO-Revision-Date: 2015-12-21 20:27+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2024-01-07 20:58+0100\n"
+"Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "O Mokshau"
+msgstr "O desktopu Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
@@ -211,19 +211,16 @@ msgid "Sticky Mode Enable"
 msgstr "Zapnout lepkavý režim"
 
 #: src/bin/e_actions.c:3176
-#, fuzzy
 msgid "Always On Top Toggle"
-msgstr "Vždy navrchu"
+msgstr "Přepnout okno Vždy navrchu"
 
 #: src/bin/e_actions.c:3180
-#, fuzzy
 msgid "Always On Top Enable"
-msgstr "Vždy navrchu"
+msgstr "Povolit Vždy navrchu"
 
 #: src/bin/e_actions.c:3184
-#, fuzzy
 msgid "Always On Top Disable"
-msgstr "Vždy navrchu"
+msgstr "Zakázat Vždy navrchu"
 
 #: src/bin/e_actions.c:3189
 msgid "Iconic Mode Toggle"
@@ -797,15 +794,13 @@ msgstr "Zpožděná akce"
 
 #: src/bin/e_actions.c:3634
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
-#, fuzzy
 msgid "Touchpad"
-msgstr "Dotek"
+msgstr ""
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Dotek"
+msgstr "Touchpad zap/vyp"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -2823,37 +2818,32 @@ msgid "Applications"
 msgstr "Aplikace"
 
 #: src/bin/e_int_menus.c:210
-#, fuzzy
 msgid "About Operating System"
-msgstr "Chyba systému autentizace"
+msgstr "O Operačním Systému"
 
 #: src/bin/e_int_menus.c:216
-#, fuzzy
 msgid "Help"
-msgstr "Více nápovědy"
+msgstr "Nápověda"
 
 #: src/bin/e_int_menus.c:222
 msgid "About Bodhi Linux"
-msgstr ""
+msgstr "O Bodhi Linuxu"
 
 #: src/bin/e_int_menus.c:243
-#, fuzzy
 msgid "About Moksha Desktop"
-msgstr "O Mokshau"
+msgstr "O Desktopu Moksha"
 
 #: src/bin/e_int_menus.c:249 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "O motivu"
 
 #: src/bin/e_int_menus.c:263
-#, fuzzy
 msgid "Restart Moksha"
-msgstr "Vítejte v Mokshau"
+msgstr "Restart desktopu Moksha"
 
 #: src/bin/e_int_menus.c:344
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Oblíbené"
+msgstr "Oblíbené Aplikace"
 
 #: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
 msgid "No applications"
@@ -3037,7 +3027,7 @@ msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Mokshau se nepodařilo nastavit obsluhu signálu HUP.\n"
+"Desktopu Moksha se nepodařilo nastavit obsluhu signálu HUP.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:395
@@ -3045,40 +3035,40 @@ msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Mokshau se nepodařilo nastavit obsluhu signálu USER.\n"
+"Desktopu Moksha se nepodařilo nastavit obsluhu signálu USER.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_File!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_File!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_File!\n"
 
 #: src/bin/e_main.c:413
 msgid "Moksha cannot initialize Ecore_Con!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_Con!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_Con!\n"
 
 #: src/bin/e_main.c:422
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_Ipc!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:433
 msgid "Moksha cannot initialize Ecore_X!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_X!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_X!\n"
 
 #: src/bin/e_main.c:445
 msgid "Moksha cannot initialize Ecore_IMF!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_IMF!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_IMF!\n"
 
 #: src/bin/e_main.c:455
 msgid "Moksha cannot initialize Ecore_Evas!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore_Evas!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore_Evas!\n"
 
 #: src/bin/e_main.c:465
 msgid "Moksha cannot initialize Elementary!\n"
-msgstr "Mokshau se nepodařilo inicializovat Elementary!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Elementary!\n"
 
 #: src/bin/e_main.c:476
 msgid "Moksha cannot initialize Emotion!\n"
-msgstr "Mokshau se nepodařilo inicializovat Emotion!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Emotion!\n"
 
 #: src/bin/e_main.c:491
 msgid ""
@@ -3102,18 +3092,18 @@ msgstr ""
 
 #: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
-msgstr "Mokshau se nepodařilo inicializovat Edje!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Edje!\n"
 
 #: src/bin/e_main.c:521
 msgid "Moksha cannot initialize E_Intl!\n"
-msgstr "Mokshau se nepodařilo inicializovat E_intl!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat E_intl!\n"
 
 #: src/bin/e_main.c:531
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Mokshau se nepodařilo spustit jeho pohotovostní varovný systém.\n"
+"Desktopu Moksha se nepodařilo spustit jeho pohotovostní varovný systém.\n"
 "Máte nastavenou proměnnou DISPLAY?"
 
 #: src/bin/e_main.c:550
@@ -3126,19 +3116,19 @@ msgstr ""
 
 #: src/bin/e_main.c:560
 msgid "Moksha cannot set up its file registry system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém registrů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém registrů.\n"
 
 #: src/bin/e_main.c:569
 msgid "Moksha cannot set up its config system.\n"
-msgstr "Mokshau se nepodařilo spustit systém nastavení.\n"
+msgstr "Desktopu Moksha se nepodařilo spustit systém nastavení.\n"
 
 #: src/bin/e_main.c:609
 msgid "Moksha cannot initialize E_Xinerama!\n"
-msgstr "Mokshau se nepodařilo inicializovat E_Xinerama!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat E_Xinerama!\n"
 
 #: src/bin/e_main.c:618
 msgid "Moksha cannot set up its environment.\n"
-msgstr "Mokshau se nepodařilo nastavit prostředí.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit prostředí.\n"
 
 #: src/bin/e_main.c:634
 msgid "Moksha cannot set up its scale system.\n"
@@ -3146,27 +3136,27 @@ msgstr "Moksha nemohl nastavit systém škálování.\n"
 
 #: src/bin/e_main.c:643
 msgid "Moksha cannot set up its pointer system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém ukazatele.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém ukazatele.\n"
 
 #: src/bin/e_main.c:652
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Mokshau se nepodařilo nastavit cesty k vyhledávání souborů.\n"
+"Desktopu Moksha se nepodařilo nastavit cesty k vyhledávání souborů.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:669
 msgid "Moksha cannot set up its font system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém fontů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém fontů.\n"
 
 #: src/bin/e_main.c:686
 msgid "Moksha cannot set up its theme system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém motivů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém motivů.\n"
 
 #: src/bin/e_main.c:702
 msgid "Moksha cannot set up its init screen.\n"
-msgstr "Mokshau se nepodařilo nastavit úvodní obrazovku.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit úvodní obrazovku.\n"
 
 #: src/bin/e_main.c:717
 msgid "Starting International Support"
@@ -3174,7 +3164,7 @@ msgstr "Nastavuji mezinárodní podporu"
 
 #: src/bin/e_main.c:721
 msgid "Moksha cannot set up its intl system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém lokalizace.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém lokalizace.\n"
 
 #: src/bin/e_main.c:730
 msgid ""
@@ -3182,7 +3172,7 @@ msgid ""
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Mokshau se nepodařilo inicializovat systém plochy FDO.\n"
+"Desktopu Moksha se nepodařilo inicializovat systém plochy FDO.\n"
 "Možná nemáte oprávnění k ~/.cache/efreet nebo\n"
 "vám došla paměť či místo na disku?"
 
@@ -3216,7 +3206,7 @@ msgstr "Nastavuji režimy úspory energie"
 
 #: src/bin/e_main.c:789
 msgid "Moksha cannot set up its powersave modes.\n"
-msgstr "Mokshau se nepodařilo nastavit režimy správy napájení.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit režimy správy napájení.\n"
 
 #: src/bin/e_main.c:796
 msgid "Setup Screensaver"
@@ -3224,7 +3214,7 @@ msgstr "Nastavuji spořič"
 
 #: src/bin/e_main.c:800
 msgid "Moksha cannot configure the X screensaver.\n"
-msgstr "Mokshau se nepodařilo nastavit spořič obrazovky pro X.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit spořič obrazovky pro X.\n"
 
 #: src/bin/e_main.c:807
 msgid "Setup DPMS"
@@ -3232,7 +3222,7 @@ msgstr "Nastavuji DPMS"
 
 #: src/bin/e_main.c:811
 msgid "Moksha cannot configure the DPMS settings.\n"
-msgstr "Mokshau se nepodařilo nastavit volby DPMS.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit volby DPMS.\n"
 
 #: src/bin/e_main.c:818
 msgid "Setup Desklock"
@@ -3240,7 +3230,7 @@ msgstr "Nastavuji zámek obrazovky"
 
 #: src/bin/e_main.c:822
 msgid "Moksha cannot set up its desk locking system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém zamykání plochy.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém zamykání plochy.\n"
 
 # zbavit se 'popupu'
 #: src/bin/e_main.c:829
@@ -3249,7 +3239,7 @@ msgstr "Nastavuji pop-upy"
 
 #: src/bin/e_main.c:833
 msgid "Moksha cannot set up its popup system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém pop-upů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém pop-upů.\n"
 
 #: src/bin/e_main.c:845
 msgid "Setup Message Bus"
@@ -3265,7 +3255,7 @@ msgstr "Nastavuji systémové ovládací prvky"
 
 #: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
-msgstr "Mokshau se nepodařilo inicializovat System Command systém.\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat System Command systém.\n"
 
 #: src/bin/e_main.c:869
 msgid "Setup Actions"
@@ -3273,7 +3263,7 @@ msgstr "Nastavuji akce"
 
 #: src/bin/e_main.c:873
 msgid "Moksha cannot set up its actions system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém akcí.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém akcí.\n"
 
 #: src/bin/e_main.c:880
 msgid "Setup Execution System"
@@ -3281,7 +3271,7 @@ msgstr "Nastavuji spouštěcí systém"
 
 #: src/bin/e_main.c:884
 msgid "Moksha cannot set up its exec system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém exec.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém exec.\n"
 
 #: src/bin/e_main.c:895
 msgid "Setup Filemanager"
@@ -3289,7 +3279,7 @@ msgstr "Nastavuji správce souborů"
 
 #: src/bin/e_main.c:899
 msgid "Moksha cannot initialize the File manager.\n"
-msgstr "Mokshau se nepodařilo inicializovat souborový manažer.\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat souborový manažer.\n"
 
 #: src/bin/e_main.c:906
 msgid "Setup Message System"
@@ -3297,7 +3287,7 @@ msgstr "Nastavuji systém zpráv"
 
 #: src/bin/e_main.c:910
 msgid "Moksha cannot set up its msg system.\n"
-msgstr "Mokshau se nepodařilo nastavit msg systém.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit msg systém.\n"
 
 #: src/bin/e_main.c:917
 msgid "Setup DND"
@@ -3305,7 +3295,7 @@ msgstr "Nastavuji DND"
 
 #: src/bin/e_main.c:921
 msgid "Moksha cannot set up its dnd system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém dnd.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém dnd.\n"
 
 #: src/bin/e_main.c:928
 msgid "Setup Grab Input Handling"
@@ -3313,7 +3303,7 @@ msgstr "Nastavit obsluhu zachytávání vstupu"
 
 #: src/bin/e_main.c:932
 msgid "Moksha cannot set up its grab input handling system.\n"
-msgstr "Mokshau se nepodařilo nastavit obsluhu zachytávání vstupu.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit obsluhu zachytávání vstupu.\n"
 
 #: src/bin/e_main.c:939
 msgid "Setup Modules"
@@ -3321,7 +3311,7 @@ msgstr "Nastavuji moduly"
 
 #: src/bin/e_main.c:943 src/bin/e_main.c:1128
 msgid "Moksha cannot set up its module system.\n"
-msgstr "Mokshau se nepodařilo spustit svůj systém modulů.\n"
+msgstr "Desktopu Moksha se nepodařilo spustit svůj systém modulů.\n"
 
 #: src/bin/e_main.c:950
 msgid "Setup Remembers"
@@ -3329,7 +3319,7 @@ msgstr "Nastavuji systém zapamatovaného nastavení"
 
 #: src/bin/e_main.c:954
 msgid "Moksha cannot setup remember settings.\n"
-msgstr "Mokshau se nepodařilo nastavit systém zapamatovaného nastavení.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém zapamatovaného nastavení.\n"
 
 #: src/bin/e_main.c:961
 msgid "Setup Color Classes"
@@ -3337,7 +3327,7 @@ msgstr "Nastavuji třídy barev"
 
 #: src/bin/e_main.c:965
 msgid "Moksha cannot set up its color class system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém tříd barev.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém tříd barev.\n"
 
 #: src/bin/e_main.c:972
 msgid "Setup Gadcon"
@@ -3345,7 +3335,7 @@ msgstr "Nastavuji gadget container"
 
 #: src/bin/e_main.c:976
 msgid "Moksha cannot set up its gadget control system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém ovládání gadgetů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém ovládání gadgetů.\n"
 
 #: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
@@ -3353,7 +3343,7 @@ msgstr "Nastavuji pozadí plochy"
 
 #: src/bin/e_main.c:987
 msgid "Moksha cannot set up its desktop background system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém pozadí plochy.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém pozadí plochy.\n"
 
 #: src/bin/e_main.c:994
 msgid "Setup Mouse"
@@ -3373,7 +3363,7 @@ msgstr "Nastavuji vazby na akce"
 
 #: src/bin/e_main.c:1015
 msgid "Moksha cannot set up its bindings system.\n"
-msgstr "Mokshau nemohl spustit systém vazeb na akce.\n"
+msgstr "Desktop Moksha nemohl spustit systém vazeb na akce.\n"
 
 #: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
@@ -3381,19 +3371,19 @@ msgstr "Nastavuji náhledy"
 
 #: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
-msgstr "Mokshau nemohl spustit systém náhledů.\n"
+msgstr "Desktop Moksha nemohl spustit systém náhledů.\n"
 
 #: src/bin/e_main.c:1035
 msgid "Moksha cannot initialize the Icon Cache system.\n"
-msgstr "Mokshau nemohl spustit systém cache ikon.\n"
+msgstr "Desktop Moksha nemohl spustit systém cache ikon.\n"
 
 #: src/bin/e_main.c:1044
 msgid "Moksha cannot initialize the XSettings system.\n"
-msgstr "Mokshau se nepodařilo nastavit XSettings.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit XSettings.\n"
 
 #: src/bin/e_main.c:1054
 msgid "Moksha cannot initialize the Update system.\n"
-msgstr "Mokshau nemohl inicializovat systém aktualizace.\n"
+msgstr "Desktop Moksha nemohl inicializovat systém aktualizace.\n"
 
 #: src/bin/e_main.c:1063
 msgid "Setup Desktop Environment"
@@ -3401,7 +3391,7 @@ msgstr "Nastavuji pracovní prostředí"
 
 #: src/bin/e_main.c:1067
 msgid "Moksha cannot initialize its desktop environment.\n"
-msgstr "Mokshau se nepodařilo nastavit pracovní prostředí.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit pracovní prostředí.\n"
 
 #: src/bin/e_main.c:1074
 msgid "Setup File Ordering"
@@ -3409,7 +3399,7 @@ msgstr "Nastavuji řazení souborů"
 
 #: src/bin/e_main.c:1078
 msgid "Moksha cannot set up its order file system.\n"
-msgstr "Mokshau se nepodařilo nastavit systém řazení souborů.\n"
+msgstr "Desktopu Moksha se nepodařilo nastavit systém řazení souborů.\n"
 
 #: src/bin/e_main.c:1093
 msgid "Load Modules"
@@ -3627,9 +3617,8 @@ msgstr ""
 "%s<br>Nahlášená chyba je:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
-msgstr "Modul neobsahuje všechny nutné funkce"
+msgstr "Modul neobsahuje všechny potřebné funkce"
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3638,7 +3627,7 @@ msgid ""
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
 "Chyba v API modulů.<br>Chyba nahrávání modulu: %s<br>Je zapotřebí API modul "
-"s verzí minimálně %i.<br>API modul v Mokshau má verzi %i.<br>"
+"s verzí minimálně %i.<br>API modul v desktopu Moksha má verzi %i.<br>"
 
 #: src/bin/e_module.c:272
 #, c-format
@@ -3662,7 +3651,7 @@ msgid ""
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
-"Následující moduly nejsou standardní moduly<br>Mokshau a mohou způsobit "
+"Následující moduly nejsou standardní moduly<br>desktopu Moksha a mohou způsobit "
 "chyby a pády.<br>Prosím, odstraňte je před hlášením jakýchkoli chyb."
 "<br><br>Seznam nestandardních modulů:<br><br>"
 
@@ -3935,7 +3924,7 @@ msgstr "Vypínám.<br><hilight>Prosím čekejte.</hilight>"
 
 #: src/bin/e_sys.c:812
 msgid "Resetting"
-msgstr "Restartuji."
+msgstr "Restartuji"
 
 #: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
@@ -4508,17 +4497,16 @@ msgid "AC power is recommended."
 msgstr "Je doporučeno napájení ze sítě."
 
 #: src/modules/battery/e_mod_main.c:528
-#, fuzzy
 msgid "Power now: "
-msgstr "Vypnout"
+msgstr "Vypnout teď: "
 
 #: src/modules/battery/e_mod_main.c:534
 msgid "Remaining time: "
-msgstr ""
+msgstr "Zbývající čas: "
 
 #: src/modules/battery/e_mod_main.c:535
 msgid "hr"
-msgstr ""
+msgstr "hod"
 
 #: src/modules/battery/e_mod_main.c:645
 msgid "N/A"
@@ -4538,9 +4526,8 @@ msgid "Clock Settings"
 msgstr "Nastavení hodin"
 
 #: src/modules/clock/e_mod_config.c:143 src/modules/clock/e_mod_config.c:318
-#, fuzzy
 msgid "Date set"
-msgstr "Datum"
+msgstr "Nastav Datum"
 
 #: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:203
 #: src/modules/conf_display/e_int_config_desk.c:194
@@ -4549,9 +4536,8 @@ msgid "Set"
 msgstr "Nastavit"
 
 #: src/modules/clock/e_mod_config.c:184 src/modules/clock/e_mod_config.c:312
-#, fuzzy
 msgid "Time set"
-msgstr "Časovače"
+msgstr "Nastav Čas"
 
 #: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:867
 #: src/modules/clock/e_mod_main.c:1058
@@ -4599,9 +4585,8 @@ msgid "ISO 8601"
 msgstr ""
 
 #: src/modules/clock/e_mod_config.c:262
-#, fuzzy
 msgid "Strftime"
-msgstr "Doba, po které se počítač vypne"
+msgstr ""
 
 #: src/modules/clock/e_mod_config.c:269
 msgid "Week"
@@ -5430,9 +5415,8 @@ msgid "%1.2f s"
 msgstr "%1.2f sek"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Nastavení myši"
+msgstr "Nastavení myši a touchpadu"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -5485,9 +5469,8 @@ msgstr "Tlačítka"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:353
 #: src/modules/conf_interaction/e_int_config_mouse.c:392
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Prostřední tlačítko"
+msgstr "ProEmulace středního tlačítka"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:366
 msgid "Mouse"
@@ -5495,59 +5478,51 @@ msgstr "Myš"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:373
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Povolit Extra funkce"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:388
 msgid "Tap to click"
-msgstr ""
+msgstr "Poklepat pro klik"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:396
-#, fuzzy
 msgid "Clickpad"
-msgstr "Kliknutí"
+msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:400
 msgid "Palm detect"
-msgstr ""
+msgstr "Detekce dlaně"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:406
-#, fuzzy
 msgid "Scrolling"
-msgstr "Dotazování"
+msgstr "Skrolování"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:408
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Animovat rolování"
+msgstr "Přirozené skrolování"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:414
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Vodorovné zarovnání"
+msgstr "Vodorovné skrolování"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:418
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Animovat rolování"
+msgstr "Skrolování od stran"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:422
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Animovat rolování"
+msgstr "Skrolování dvěma prsty"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:426
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Animovat rolování"
+msgstr "Skrolování kroužením"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
 msgstr "Dotek"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Ruka myši"
+msgstr "Myš a Touchpas"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5768,24 +5743,20 @@ msgid "Mute"
 msgstr "Ztlumit"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Změněna hlasitost"
+msgstr "Hlasitost"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
-#, fuzzy
 msgid "Brightness"
-msgstr "Zvýšit úroveň podsvícení"
+msgstr "Podsvícení"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "Posunout dolů"
+msgstr "Snížit hlasitost"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
-#, fuzzy
 msgid "Volume Up"
-msgstr "Změněna hlasitost"
+msgstr "Zvýšit hlasitost"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
@@ -5796,7 +5767,6 @@ msgid "Tablet Off"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
-#, fuzzy
 msgid "Screenlock"
 msgstr "Zamčení obrazovky"
 
@@ -5992,165 +5962,136 @@ msgid "WINDOWS"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr "Klonovat okno"
+msgstr "Zavřít okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr "Přenést okno do popředí"
+msgstr "Maximalizovat okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr "Přepnout ikonický režim"
+msgstr "Minimalizovat ono:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr "Přepnout fullscreen režim"
+msgstr "Přepnout okna na celou obrazovku:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr "Vždy navrchu"
+msgstr "Přepnout okno Vždy navrchu"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr "Další okno"
+msgstr "Další okno:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr "Pravý:"
+msgstr "Umístit Okno doprava:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr "Vlevo nahoře"
+msgstr "Umístit okno doleva:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr "Všechna okna"
+msgstr "Ukončit proces okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr "Nabídka okna"
+msgstr "Nabídka okna:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
-msgstr ""
+msgstr "SYSTÉM"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr "Otevřít zde terminál"
+msgstr "Otevřít terminál:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr "Uzamčení selhalo"
+msgstr "Uzamknout systém:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr "Zobrazit hlavní nabídku"
+msgstr "Zobrazit hlavní nabídku:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr "Zobrazit nabídku oblíbených"
+msgstr "Zobrazit nabídku oblíbených aplikací:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr "Systémové ovládací prvky"
+msgstr "Systémové ovládací prvky:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Zobrazit plochu"
+msgstr " Zobrazit plochu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Přejít na plochu 0"
+msgstr " Přejít na plochu 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Přejít na plochu 1"
+msgstr " Přejít na plochu 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Přejít na plochu 2"
+msgstr " Přejít na plochu 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Přejít na plochu 3"
+msgstr " Přejít na plochu 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Přejít na plochu 4"
+msgstr " Přejít na plochu 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Přejít na plochu 5"
+msgstr " Přejít na plochu 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Přejít na plochu 6"
+msgstr " Přejít na plochu 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Přejít na plochu 7"
+msgstr " Přejít na plochu 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Přejít na plochu 8"
+msgstr " Přejít na plochu 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "RŮZNÉ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
-msgstr "Spouštěč"
+msgstr "Spouštěč:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr "Sejmi snímek obrazovky"
+msgstr "Sejmi snímek obrazovky:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr "Vítejte v Mokshau"
+msgstr "Restart desktopu Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr "Příkaz terminálu"
+msgstr "Konsole terminálu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
 msgid "This Help:"
-msgstr "Tato nápověda"
+msgstr "Tato nápověda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -6166,12 +6107,11 @@ msgstr "Klávesové zkratky"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Zobrazit zkratky desktopu Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
-#, fuzzy
 msgid "Show bindings"
-msgstr "Nastavení panelu"
+msgstr "Zobrazit zkratky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6244,12 +6184,11 @@ msgstr "Automaticky rolovat"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr " Nezobrazovat ikony v nabídce"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid " Smart Menu Orientation"
-msgstr "Orientace"
+msgstr " Chytrá Orientace nabídky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6261,7 +6200,6 @@ msgid "%5.0f pixels/s"
 msgstr "%5.0f pixelů/sek"
 
 #: src/modules/conf_menus/e_int_config_menus.c:312
-#, fuzzy
 msgid "Fast Mouse Move Threshold"
 msgstr "Práh při rychlém posunu myší"
 
@@ -6328,7 +6266,7 @@ msgstr "Zprávy"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 msgid "Moksha Paths"
-msgstr "Cesty Mokshau"
+msgstr "Cesty desktopu Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -6560,9 +6498,8 @@ msgstr "Obrázek..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Barvy"
+msgstr "Barva..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -7227,7 +7164,7 @@ msgstr "Nastavení motivu aplikací"
 #: src/modules/conf_theme/e_int_config_xsettings.c:515
 #: src/modules/conf_theme/e_int_config_xsettings.c:559
 msgid "Match Moksha theme if possible"
-msgstr "Pokud možno, volit téma odpovídající Mokshau"
+msgstr "Pokud možno, volit téma odpovídající desktopu Moksha"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:524
 msgid "Enable X Application Settings"
@@ -7246,14 +7183,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Povolit motiv ikon pro Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Cesty Mokshau"
+msgstr "Motiv desktopu Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Motiv aplikací"
+msgstr "Motiv aplikací (GTK & Ikony)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -7261,7 +7196,7 @@ msgstr "Okraje"
 
 #: src/modules/conf_theme/e_mod_main.c:260
 msgid "Scaling"
-msgstr "Škálování"
+msgstr "Nastavení DPI"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:36
 msgid "Window List Menu Settings"
@@ -7644,7 +7579,6 @@ msgid "Both"
 msgstr "Oba"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:230
-#, fuzzy
 msgid "Manipulation"
 msgstr "Manipulace s okny"
 
@@ -7657,9 +7591,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Povolit okna nad oknem jež je přes celou plochu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Překlopit, když je kurzor na kraji obrazovky"
+msgstr "Přilepit okno k okraji obrazovky"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -7769,7 +7702,7 @@ msgstr "Paměť oken"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:134
 msgid "Remember internal dialogs"
-msgstr "Zapamatovat si interní okna Mokshau"
+msgstr "Zapamatovat si interní okna desktopu Moksha"
 
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:137
 msgid "Remember file manager windows"
@@ -7950,19 +7883,16 @@ msgstr ""
 "chown root %s<br>sudo chmod u+s,a+x %s<br>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
-#, fuzzy
 msgid "CPU Frequency"
-msgstr "Důležitost"
+msgstr "Frekvence CPU"
 
 #: src/modules/cpufreq/e_mod_config.c:38
-#, fuzzy
 msgid "Cpu Frequency Control Settings"
-msgstr "Nastavení kurzoru"
+msgstr "Nastavení Kontroly CPU"
 
 #: src/modules/cpufreq/e_mod_config.c:91
-#, fuzzy
 msgid "Update poll interval"
-msgstr "Interval vyprázdnění cache"
+msgstr "Interval sledování"
 
 #: src/modules/cpufreq/e_mod_config.c:107
 #, fuzzy
@@ -7992,7 +7922,6 @@ msgid "Everything Module"
 msgstr "Modul Everything"
 
 #: src/modules/everything/e_mod_main.c:605
-#, fuzzy
 msgid "Quick Launcher"
 msgstr "Spouštěč"
 
@@ -8055,7 +7984,6 @@ msgid "Animate scrolling"
 msgstr "Animovat rolování"
 
 #: src/modules/everything/evry_config.c:479
-#, fuzzy
 msgid "Show recently used items"
 msgstr "Zobrazit nedávné soubory"
 
@@ -8161,9 +8089,8 @@ msgid "Edge Popup Size"
 msgstr "Velikost okraje pop-upu"
 
 #: src/modules/everything/evry_config.c:618
-#, fuzzy
 msgid "Zoom value"
-msgstr "Oddálit"
+msgstr "Hodnota přiblížení"
 
 #: src/modules/everything/evry_config.c:626
 #: src/modules/winlist/e_int_config_winlist.c:298
@@ -8281,9 +8208,8 @@ msgid "Move to Trash"
 msgstr "Přesunout do koše"
 
 #: src/modules/everything/evry_plug_files.c:1319
-#, fuzzy
 msgid "Open Directory"
-msgstr "Nový adresář"
+msgstr "Otevřít adresář"
 
 #: src/modules/everything/evry_plug_files.c:1323
 msgid "Sort by Date"
@@ -8630,9 +8556,8 @@ msgid "Spring Delay"
 msgstr "Spring zpoždění"
 
 #: src/modules/fileman/e_mod_config.c:428
-#, fuzzy
 msgid "Custom FM to open dirs"
-msgstr "Vlastní barvy"
+msgstr "Vlastní FM pro otevření adresářů"
 
 #: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -8689,9 +8614,8 @@ msgid "Navigate"
 msgstr "Navigovat"
 
 #: src/modules/fileman/e_mod_main.c:284
-#, fuzzy
 msgid "Fileman"
-msgstr "Správce souborů"
+msgstr "Správce souborů Fileman"
 
 #: src/modules/fileman/e_mod_menu.c:241
 msgid "No listable items"
@@ -8949,7 +8873,6 @@ msgid "Setup"
 msgstr "Nastavení"
 
 #: src/modules/ibar/e_mod_config.c:131
-#, fuzzy
 msgid "Icon Labels"
 msgstr "Zobrazit popisek ikony"
 
@@ -8978,9 +8901,8 @@ msgid "Track launch"
 msgstr "Sledovat spuštění"
 
 #: src/modules/ibar/e_mod_config.c:161
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Automaticky posunout okno pod kurzorem do popředí"
+msgstr "Nabídka pod kurzorem"
 
 #: src/modules/ibar/e_mod_config.c:163
 #, fuzzy
@@ -9018,14 +8940,12 @@ msgid "Create new Icon"
 msgstr "Vytvořit novou ikonu"
 
 #: src/modules/ibar/e_mod_main.c:1588
-#, fuzzy
 msgid "Add to bar"
 msgstr "Přidat do iBaru"
 
 #: src/modules/ibar/e_mod_main.c:1594
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Odstranit zásobník"
+msgstr "Odstranit z iBaru"
 
 #: src/modules/ibar/e_mod_main.c:1600
 #, c-format
@@ -9192,9 +9112,8 @@ msgstr ""
 "ve vyskakovacím okně."
 
 #: src/modules/pager/e_mod_main.c:913
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Nastavení virtuálních ploch"
+msgstr "Nastavení virtuální plochy"
 
 #: src/modules/pager/e_mod_main.c:2966
 msgid "Show Pager Popup"
@@ -9225,9 +9144,8 @@ msgid "Popup Desk Previous"
 msgstr "Pop-up na předchozí ploše"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Systémové ovládací prvky"
+msgstr "Nastavení Systémových ovládacích prvků"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -9254,9 +9172,8 @@ msgid "System Controls"
 msgstr "Systémové ovládací prvky"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
-#, fuzzy
 msgid "Show Menu"
-msgstr "Zobrazit nabídku..."
+msgstr "Zobrazit nabídku"
 
 #: src/modules/temperature/e_mod_config.c:98
 msgid "Temperature Settings"
@@ -9283,9 +9200,8 @@ msgid "Check Interval"
 msgstr "Doba mezi aktualizacemi"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Nastavení teploty"
+msgstr "Upozornění na vysokou teplotu"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -9321,13 +9237,12 @@ msgid "Temperature"
 msgstr "Teplota"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
-msgstr "Horní mez teploty"
+msgstr "Horní mez teploty CPU"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Zkontrolujte své zařízení nebo nastavení!"
 
 #: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
@@ -9339,7 +9254,7 @@ msgstr "Prosím, čekejte..."
 
 #: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
-msgstr "Vítejte v Mokshau"
+msgstr "Vítejte v desktopu Moksha"
 
 #: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
@@ -9519,7 +9434,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:350
 msgid "Cannot set relaunch for internal E dialog!"
-msgstr "Nemohu nastavit opětovné spuštění pro vnitřní dialog Mokshau!"
+msgstr "Nemohu nastavit opětovné spuštění pro vnitřní dialog desktopu Moksha!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:368
 #, fuzzy, c-format
@@ -9707,19 +9622,16 @@ msgid "Systray"
 msgstr "Upozorňovací oblast"
 
 #: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
-#, fuzzy
 msgid "Screenshot"
 msgstr "Sejmi snímek obrazovky"
 
 #: src/modules/shot/e_mod_main.c:102
-#, fuzzy
 msgid "Screenshot in: "
-msgstr "Sejmi snímek obrazovky"
+msgstr "Snímek obrazovky za: "
 
 #: src/modules/shot/e_mod_main.c:117
-#, fuzzy
 msgid "Screenshot stored in"
-msgstr "Sejmi snímek obrazovky"
+msgstr "Snímek uložen v"
 
 #: src/modules/shot/e_mod_main.c:312
 msgid "Error - Folder does not exist"
@@ -9831,9 +9743,8 @@ msgid "Screenshot is available at this location:"
 msgstr "Snímek obrazovky je dostupný zde:"
 
 #: src/modules/shot/e_mod_main.c:763
-#, fuzzy
 msgid "Copy link"
-msgstr "Kopírovat"
+msgstr "Kopírovat link"
 
 #: src/modules/shot/e_mod_main.c:787
 msgid "Confirm Share"
@@ -9878,9 +9789,8 @@ msgid "Instant shot"
 msgstr ""
 
 #: src/modules/shot/e_mod_main.c:1221
-#, fuzzy
 msgid "Delayed shot"
-msgstr "Zpožděná akce"
+msgstr "Zpožděný snímek obzrazovky"
 
 #: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
 msgid "Take Shot"
@@ -9900,18 +9810,16 @@ msgid "Cannot initialize network"
 msgstr "Nemohu inicializovat síť"
 
 #: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
-#, fuzzy
 msgid "Screenshot Settings"
-msgstr "Nastavení uzamčení obrazovky"
+msgstr "Nastavení snímku obrazovky"
 
 #: src/modules/shot/e_mod_config.c:100
-#, fuzzy
 msgid " Show the screenshot mode dialog"
-msgstr "Zobrazit na všech obrazovkách"
+msgstr " Zobrazit režím snímání obrazovky"
 
 #: src/modules/shot/e_mod_config.c:103
 msgid " Screenshot guide (quality/share/save)"
-msgstr ""
+msgstr " Průvodce snímkem obrazovky"
 
 #: src/modules/shot/e_mod_config.c:106
 msgid " Show notifications"
@@ -9923,49 +9831,43 @@ msgstr " Zkopírovat do schránky"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"
-msgstr ""
+msgstr " Otevrít snímek v aplikaci"
 
 #: src/modules/shot/e_mod_config.c:115
-#, fuzzy
 msgid "Application for opening:"
-msgstr "Vlastnosti aplikace"
+msgstr "Aplikace pro otevřní snímku:"
 
 #: src/modules/shot/e_mod_config.c:121
-#, fuzzy
 msgid "Folder for saving screenshots:"
-msgstr "Chyba ukládání snímku obrazovky"
+msgstr "Adresář pro uložení snímku:"
 
 #: src/modules/shot/e_mod_config.c:127
-#, fuzzy
 msgid "Delay time [s]"
-msgstr "Zpoždění uspání"
+msgstr "Zpoždění [s]"
 
 #: src/modules/shot/e_mod_config.c:132
 msgid "Image quality [50-90 = jpg, 100 = png]"
-msgstr ""
+msgstr "Kvalita snímku [50-90 = jpg, 100 = png]"
 
 #: src/modules/shot/e_mod_config.c:139
 msgid "Info"
-msgstr ""
+msgstr "Informace"
 
 #: src/modules/shot/e_mod_config.c:140
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Vybrat umístění pro uložení snímku obrazovky"
+msgstr "Alt+PrtSc: snímek aktivního okna"
 
 #: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
 msgid "Tasks"
 msgstr "Úlohy"
 
 #: src/modules/tasks/e_mod_config.c:36
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Nastavení plochy"
+msgstr "Nastavení úkolů"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Zobrazit pouze text"
+msgstr "Zobrazit popisek okna"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
@@ -9985,7 +9887,6 @@ msgid "%1.0f px"
 msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:110
-#, fuzzy
 msgid "Shrink to fit"
 msgstr "Zúžit na šířku obsahu"
 
@@ -10022,9 +9923,8 @@ msgid "Tiling Configuration"
 msgstr "Nastavení dlaždicování"
 
 #: src/modules/tiling/e_mod_tiling.c:4098
-#, fuzzy
 msgid "Floating"
-msgstr "Plovoucí"
+msgstr "Plovoucí režim"
 
 #: src/modules/tiling/e_mod_tiling.c:4150
 #: src/modules/tiling/e_mod_tiling.c:4212
@@ -10134,7 +10034,6 @@ msgid "Notification"
 msgstr "Upozornění"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Modul upozornění"
 
@@ -10161,18 +10060,16 @@ msgid "Enter Presentation Mode"
 msgstr "Vstup do prezentačního režimu"
 
 #: src/modules/notification/e_mod_main.c:618
-#, fuzzy
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr "Nabídnout vstup do prezentačního módu"
+msgstr "Moksha je v prezentačním módu."
 
 #: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Opuštěn prezentační režim"
 
 #: src/modules/notification/e_mod_main.c:623
-#, fuzzy
 msgid "Presentation mode is over."
-msgstr "Přepnout režim prezentace"
+msgstr "Režim prezentace ukončen"
 
 #: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
@@ -10199,9 +10096,8 @@ msgstr ""
 "běžné úlohy."
 
 #: src/modules/notification/e_mod_main.c:703
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Upozorňování"
+msgstr "Platnost oznámení vypršela!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10246,40 +10142,33 @@ msgid "Use multiple monitor geometry"
 msgstr "Použít geometrii více monitorů"
 
 #: src/modules/notification/e_mod_config.c:182
-#, fuzzy
 msgid "History Settings"
-msgstr "Jiná nastavení"
+msgstr "Nastavení historie upozornění"
 
 #: src/modules/notification/e_mod_config.c:183
-#, fuzzy
 msgid "Time stamp"
-msgstr "Časovače"
+msgstr "Čas vzniku upozornění"
 
 #: src/modules/notification/e_mod_config.c:185
-#, fuzzy
 msgid "Show application name"
-msgstr "Vyberte nabídku aplikací"
+msgstr "Zobrazit jméno aplikace"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Show notification counter"
-msgstr "Upozornění"
+msgstr "Zobrazit počítadlo upozornění"
 
 #: src/modules/notification/e_mod_config.c:189
-#, fuzzy
 msgid "Reverse order"
-msgstr "Zapamatovat řazení"
+msgstr "Opačné pořadí"
 
 #: src/modules/notification/e_mod_config.c:193
 #: src/modules/clipboard/e_mod_config.c:245
-#, fuzzy
 msgid "Labels"
-msgstr "Nápis"
+msgstr "Popisky"
 
 #: src/modules/notification/e_mod_config.c:194
-#, fuzzy
 msgid "Labels length"
-msgstr "Text názvu"
+msgstr "Délka názvu"
 
 #: src/modules/notification/e_mod_config.c:201
 #: src/modules/clipboard/e_mod_config.c:256
@@ -10288,177 +10177,151 @@ msgstr "Položky"
 
 #: src/modules/notification/e_mod_config.c:202
 msgid "Items in history"
-msgstr ""
+msgstr "Položek v historii"
 
 #: src/modules/notification/e_mod_config.c:210
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Zpoždění animace gadgetu [s]"
 
 #: src/modules/notification/e_mod_config.c:218
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Zakázané aplikace (ap1,ap2,ap3...)"
 
 #: src/modules/notification/e_mod_config.c:224
 #: src/modules/clipboard/e_mod_config.c:266
-#, fuzzy
 msgid "History"
-msgstr "Adresář"
+msgstr "Historie"
 
 #: src/modules/clipboard/e_mod_config.c:191
-#, fuzzy
 msgid "Selection"
 msgstr "Výběr"
 
 #: src/modules/clipboard/e_mod_config.c:192
 msgid " Use Copy (Ctrl-C)"
-msgstr ""
+msgstr " Použít Copy (Ctrl-C)"
 
 #: src/modules/clipboard/e_mod_config.c:195
 msgid " Use Primary (Selection)"
-msgstr ""
+msgstr " Použít primary (Selection)"
 
 #: src/modules/clipboard/e_mod_config.c:200
-#, fuzzy
 msgid " Synchronize Clipboards"
-msgstr "Zkopírovat do schránky"
+msgstr " Synchronizovat schránky"
 
 #: src/modules/clipboard/e_mod_config.c:208
-#, fuzzy
 msgid "Content"
 msgstr "Obsah"
 
 #: src/modules/clipboard/e_mod_config.c:209
 #: src/modules/clipboard/e_mod_config.c:246
-#, fuzzy
 msgid " Ignore Whitespace"
-msgstr "Ignorovat"
+msgstr " Ignorovat bílé znaky"
 
 #: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
-msgstr ""
+msgstr " Odstranit bílé znaky"
 
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
-msgstr ""
+msgstr " Odstranit znaky řádků"
 
 #: src/modules/clipboard/e_mod_config.c:219
 #: src/modules/clipboard/e_mod_main.c:353
 #: src/modules/clipboard/e_mod_main.c:922
 #: src/modules/clipboard/e_mod_main.c:923
 #: src/modules/clipboard/e_mod_main.c:924
-#, fuzzy
 msgid "Clipboard"
-msgstr "Zkopírovat do schránky"
+msgstr "Schránka"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
-msgstr ""
+msgstr " Uložit historii"
 
 #: src/modules/clipboard/e_mod_config.c:228
-#, fuzzy
 msgid " Confirm before Clearing"
-msgstr "Odsouhlasit smazání panelu"
+msgstr " Odsouhlasit smazání položek"
 
 #: src/modules/clipboard/e_mod_config.c:230
-#, fuzzy
 msgid " Save every Selection"
-msgstr "Bezpečné smazání"
+msgstr " Uložit každý výběr"
 
 #: src/modules/clipboard/e_mod_config.c:234
-#, fuzzy
 msgid " Timer"
-msgstr "Časovače"
+msgstr " Časovač"
 
 #: src/modules/clipboard/e_mod_config.c:249
-#, fuzzy
 msgid " Label Length"
-msgstr "Text názvu"
+msgstr " Délka položky"
 
 #: src/modules/clipboard/e_mod_config.c:257
-#, fuzzy
 msgid " Reverse Order"
-msgstr "Zapamatovat řazení"
+msgstr " Obrácené pořadí"
 
 #: src/modules/clipboard/e_mod_config.c:260
 msgid " Items in History"
-msgstr ""
+msgstr " Položek v historii"
 
 #: src/modules/clipboard/e_mod_config.c:297
-#, fuzzy
 msgid "Clipboard Settings"
-msgstr "Nastavení klávesnice"
+msgstr "Nastavení schránky"
 
 #: src/modules/clipboard/e_mod_main.c:384
-#, fuzzy
 msgid "Lock item"
-msgstr "Uzamčení selhalo"
+msgstr "Uzamčení položky"
 
 #: src/modules/clipboard/e_mod_main.c:395
-#, fuzzy
 msgid "Edit item"
-msgstr "%d položka"
+msgstr "Editace položky"
 
 #: src/modules/clipboard/e_mod_main.c:402
-#, fuzzy
 msgid "Delete item"
-msgstr "Odstranit klávesu"
+msgstr "Odstranit položku"
 
 #: src/modules/clipboard/e_mod_main.c:419
-#, fuzzy
 msgid "Ignore history"
-msgstr "Ignorovat upozornění"
+msgstr "Ignorovat zápis do historie"
 
 #: src/modules/clipboard/e_mod_main.c:664
-#, fuzzy
 msgid "Confirm History Deletion"
-msgstr "Odsouhlasit smazání panelu"
+msgstr "Odsouhlasit smazání historie"
 
 #: src/modules/clipboard/e_mod_main.c:666
-#, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr ""
-"Požádali jste o smazáni tohoto panelu.<br><br>Opravdu chcete smazat tento "
-"panel?"
+"Požádali jste o smazáni historie schránky.<br><br>Opravdu ji chcete smazat?"
 
 #: src/modules/clipboard/e_mod_main.c:751
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Odsouhlasit smazání panelu"
+msgstr "Odsouhlasit smazání položky"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Požádali jste o smazáni tohoto panelu.<br><br>Opravdu chcete smazat tento "
-"panel?"
+"Požádali jste o smazáni polžky historie.<br><br>Opravdu ji chcete smazat?"
 
 #: src/modules/clipboard/e_mod_main.c:781
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Nastavení klávesnice"
+msgstr "Schránka: Editace položky"
 
 #: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Editace položky:"
 
 #: src/modules/clipboard/e_mod_main.h:10
-#, fuzzy
 msgid "Show History"
-msgstr "Zobrazit kurzor"
+msgstr "Zobrazit historii"
 
 #: src/modules/clipboard/e_mod_main.h:11
-#, fuzzy
 msgid "Show Settings"
-msgstr "Nastavení panelu"
+msgstr "Zobrazit nastavení"
 
 #: src/modules/clipboard/e_mod_main.h:12
-#, fuzzy
 msgid "Clear History"
-msgstr "Zrušit překrytí..."
+msgstr "Smazat historii"
 
 #: src/modules/classicmenu/e_mod_main.c:81
 #, fuzzy
@@ -10509,9 +10372,8 @@ msgid "Places"
 msgstr "Místa"
 
 #: src/modules/places/e_mod_config.c:261
-#, fuzzy
 msgid "Show full disk alert"
-msgstr "Zobrazit plnou cestu"
+msgstr "Zobrazení upozornění na zaplněný disk"
 
 #: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
@@ -10542,24 +10404,20 @@ msgid "b"
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr ""
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr ""
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr ""
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr ""
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10584,15 +10442,13 @@ msgstr "vysunout"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Dešifrování selhalo."
+msgstr "Operace selhala"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Neznámý název"
+msgstr "Neznámá chyba"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
@@ -10603,35 +10459,31 @@ msgid "Playback"
 msgstr "Přehrávání"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
-msgstr "Výstup"
+msgstr "Výstupy"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
-msgstr "Vstup"
+msgstr "Vstupy"
 
 #: src/modules/mixer/bin/playbacks_view.c:306
 #: src/modules/mixer/bin/sinks_view.c:264
 msgid "Unmute"
-msgstr ""
+msgstr "Zrušit ztlumení"
 
 #: src/modules/mixer/e_mod_main.c:126
 msgid "New volume"
 msgstr "Nová hlasitost"
 
 #: src/modules/mixer/e_mod_main.c:141
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Změněna hlasitost"
+msgstr "Limit hlasitosti dosažen!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
 msgstr "Změněna hlasitost"
 
@@ -10644,19 +10496,16 @@ msgid "Decrease Volume"
 msgstr "Snížit hlasitost"
 
 #: src/modules/mixer/e_mod_main.c:264
-#, fuzzy
 msgid "Mute volume"
 msgstr "Vypnout zvuk"
 
 #: src/modules/mixer/e_mod_main.c:277
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Změněna hlasitost"
+msgstr "Změněna zvýšena"
 
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Změněna hlasitost"
+msgstr "ZVypnout zvuk"
 
 #, fuzzy
 #~ msgid "Clock module Information"
