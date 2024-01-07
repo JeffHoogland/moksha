@@ -23,7 +23,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "عن E17ِ"
+msgstr "عن Mokshaِ"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
@@ -42,7 +42,7 @@ msgstr "إغلاق"
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
 msgid "Moksha"
-msgstr "سطح المكتب E17ِ"
+msgstr "سطح المكتب Mokshaِ"
 
 #: src/bin/e_about.c:28
 #, fuzzy
@@ -52,7 +52,7 @@ msgid ""
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>حقوق الطبع و النسخ; ٢٠٠٠-٢٠١٢, لفريق تطوير E17ِ</><br><br>نتمنى أن "
+"<title>حقوق الطبع و النسخ; ٢٠٠٠-٢٠١٢, لفريق تطوير Mokshaِ</><br><br>نتمنى أن "
 "تسعد و تستمتع بهذا البرنامج بقدر ما استمتعنا به أثناء برمجته<br><br>و "
 "للإتصال بنا زر:<br><hilight>http://www.enlightenment.org</><br><br>"
 
@@ -103,7 +103,7 @@ msgstr "اخرج"
 
 #: src/bin/e_actions.c:2279
 msgid "Are you sure you want to exit Moksha?"
-msgstr "أتريد بالفعل الخروج من E17ِ ؟"
+msgstr "أتريد بالفعل الخروج من Mokshaِ ؟"
 
 #: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
@@ -715,7 +715,7 @@ msgstr "اخرج اﻵن"
 
 #: src/bin/e_actions.c:3557 src/bin/e_actions.c:3562
 msgid "Moksha : Mode"
-msgstr "E17ِ : النمط"
+msgstr "Mokshaِ : النمط"
 
 #: src/bin/e_actions.c:3558
 msgid "Presentation Mode Toggle"
@@ -727,7 +727,7 @@ msgstr "التحول لوضع دون اتصال"
 
 #: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
 msgid "Moksha : Module"
-msgstr "E17ِ : الوحدات"
+msgstr "Mokshaِ : الوحدات"
 
 #: src/bin/e_actions.c:3568
 msgid "Enable the named module"
@@ -865,7 +865,7 @@ msgid ""
 msgstr ""
 "إعدادات الضبط تحتاج للترقية. إعداداتك القديمة <br>قد أُزيلت ، و واحدة أخرى "
 "جديدة و افتراضية قد هيئت. <br>سيحدث هذا بانتظام أثناء التطوير ، لذا لا تبلغ "
-"بوجود<br>علة. هذا يعني بكل بساطة أن E17ِ يحتاج لبيانات إعدادات جديدة "
+"بوجود<br>علة. هذا يعني بكل بساطة أن Mokshaِ يحتاج لبيانات إعدادات جديدة "
 "<br>إفتراضيا لتحصل على أداء أفضل<br>كانت إعداداتك القديمة تفتقر لتوفيره .  "
 "هذه اﻹعدادات الجديدة ستصلح <br>ذلك عبر إضافتها فيها. يمكنك اﻵن إعادة إعداد "
 "اﻷشياء حسب<br>رغبتك. نأسف ﻹزعاجك.. <br>"
@@ -878,14 +878,14 @@ msgid ""
 "a precaution your settings have been now restored to<br>defaults. Sorry for "
 "the inconvenience.<br>"
 msgstr ""
-"إعداداتك أحدث من إصدار E17ِ. هذا غريب<br>جدا. لا يجب لهذا أن يحدث إلا إذا "
+"إعداداتك أحدث من إصدار Mokshaِ. هذا غريب<br>جدا. لا يجب لهذا أن يحدث إلا إذا "
 "خفضت<br>إصدارته أو نسختَ اﻹعدادات من مكان آخر<br>يحتوي نسخة جديدة منه تعمل "
 "عليه. هذا سيء<br>و كإجراء إحترازي فإن إعداداتك ستعاد إلى<br>اﻹفتراضيات. نأسف "
 "ﻹزعاجك.<br>"
 
 #: src/bin/e_config.c:1565 src/bin/e_config.c:2190
 msgid "Moksha Settings Write Problems"
-msgstr "خلل في كتابة أعدادات E17ِ"
+msgstr "خلل في كتابة أعدادات Mokshaِ"
 
 #: src/bin/e_config.c:1568
 #, c-format
@@ -893,7 +893,7 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"حصل E17ِ على خطأ أثناء نقل ملفات اﻹعداد<br>من :<br>%s<br><br>إلى :"
+"حصل Mokshaِ على خطأ أثناء نقل ملفات اﻹعداد<br>من :<br>%s<br><br>إلى :"
 "<br>%s<br><br>بقية الكتابة أُلغيت ﻷجل سلامة الملفات<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
@@ -1001,7 +1001,7 @@ msgstr "فشل فك التشفير."
 
 #: src/bin/e_config.c:2171
 msgid "The error is unknown to Moksha."
-msgstr "الخطأ مجهول لدى E17ِ"
+msgstr "الخطأ مجهول لدى Mokshaِ"
 
 #: src/bin/e_config.c:2193
 #, c-format
@@ -1010,7 +1010,7 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"حصل E17ِ على خطأ أثناء كتابة <br>ملف إعداداته<br>%s<br>الملف الذي حدث فيه "
+"حصل Mokshaِ على خطأ أثناء كتابة <br>ملف إعداداته<br>%s<br>الملف الذي حدث فيه "
 "الخلل :<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
@@ -1060,7 +1060,7 @@ msgstr "خلل - لا يوجد دعم بام(PAM)"
 
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
-msgstr "لا يوجد دعم بام(PAM) في E17ِ, لذا<br>قفل القرص غير معطل."
+msgstr "لا يوجد دعم بام(PAM) في Mokshaِ, لذا<br>قفل القرص غير معطل."
 
 #: src/bin/e_desklock.c:303
 msgid "Lock Failed"
@@ -1268,22 +1268,22 @@ msgstr "خلل في التشغيل"
 
 #: src/bin/e_exec.c:495
 msgid "Moksha was unable to get current directory"
-msgstr "عجز E17ِ عن الحصول على المجلد الحالي"
+msgstr "عجز Mokshaِ عن الحصول على المجلد الحالي"
 
 #: src/bin/e_exec.c:503
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
-msgstr "لا يستطيع E17ِ التغيير إلى المجلد:<br><br>%s<br>"
+msgstr "لا يستطيع Mokshaِ التغيير إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:514
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
-msgstr "لا يستطيع E17ِ اﻹستعادة إلى المجلد:<br><br>%s<br>"
+msgstr "لا يستطيع Mokshaِ اﻹستعادة إلى المجلد:<br><br>%s<br>"
 
 #: src/bin/e_exec.c:575
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
-msgstr "لم يستطع E17ِ إنشاء تفرع من عملية الطفل :<br><br>%s<br>"
+msgstr "لم يستطع Mokshaِ إنشاء تفرع من عملية الطفل :<br><br>%s<br>"
 
 #: src/bin/e_exec.c:752
 msgid "Application run error"
@@ -1294,7 +1294,7 @@ msgstr "خلل في تشغيل البرنامج"
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
 "failed to start."
-msgstr "لا يستطيع E17ِ تشغيل البرنامج:<br><br>%s<br><br>فشل البرنامج في البدء."
+msgstr "لا يستطيع Mokshaِ تشغيل البرنامج:<br><br>%s<br><br>فشل البرنامج في البدء."
 
 #: src/bin/e_exec.c:872
 msgid "Application Execution Error"
@@ -1965,7 +1965,7 @@ msgid ""
 "A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"هنالك نموذج من E17ِ لايزال قيد التفعيل\n"
+"هنالك نموذج من Mokshaِ لايزال قيد التفعيل\n"
 "على هذه الشاشة. أحبط بدء التشغيل.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -1975,13 +1975,13 @@ msgstr "حلل في الاستيراد"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
 msgid "Moksha was unable to import the image<br>due to a copy error."
-msgstr "لا يستطيع E17ِ استيراد الصورة<br>جراء خلل في النسخ."
+msgstr "لا يستطيع Mokshaِ استيراد الصورة<br>جراء خلل في النسخ."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
-msgstr "لا يستطيع E17ِ استيراد الصورة.<br><br>هل تأكدت من صحة هذه الصورة ؟"
+msgstr "لا يستطيع Mokshaِ استيراد الصورة.<br><br>هل تأكدت من صحة هذه الصورة ؟"
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
@@ -1999,7 +1999,7 @@ msgstr "خلل في استيراد الصورة"
 #: src/bin/e_import_config_dialog.c:296
 #: src/modules/conf_theme/e_int_config_wallpaper.c:1145
 msgid "Moksha was unable to import the picture<br>due to conversion errors."
-msgstr "عجز E17ِ عن إستيراد الصورة<br>لسبب أخطاء التحويل"
+msgstr "عجز Mokshaِ عن إستيراد الصورة<br>لسبب أخطاء التحويل"
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
@@ -2276,7 +2276,7 @@ msgstr "اختر أسلوب الحدود"
 
 #: src/bin/e_int_border_menu.c:1231
 msgid "Use Moksha Default Icon Preference"
-msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـE17ِ"
+msgstr "استخدم تفضيلات اﻷيقونات اﻹفتراضية لـMokshaِ"
 
 #: src/bin/e_int_border_menu.c:1239
 msgid "Use Application Provided Icon"
@@ -2594,7 +2594,7 @@ msgid ""
 "settings will be accepted. Press <hilight>Cancel</hilight> if you<br>are not "
 "sure and nothing will be affected."
 msgstr ""
-"لقد طلبت من E17ِ أن لا ينسَ تطبيق<br>الخصائص (كمثل الحجم ، الموقع ، حدود ، "
+"لقد طلبت من Mokshaِ أن لا ينسَ تطبيق<br>الخصائص (كمثل الحجم ، الموقع ، حدود ، "
 "مظهر .... ) على<br>النافذة التي <hilight>لا تملك خصائص مميزة</hilight>."
 "<br><br>هذا يعني أنها ستشارك خصائص اﻹسم / الصنف ، التنقل ، الوظيفة ..... "
 "<br>مع أكثر من نافذة واحدة على الشاشة وعدم نسيان <br>أن خصائص هذه النافذة "
@@ -2615,7 +2615,7 @@ msgid ""
 "specifying how to remember it</hilight>.<br><br>You must specify at least 1 "
 "way of remembering this window."
 msgstr ""
-"لقد طلبتَ من E17ِ أن لا ينسَ تطبيق<br>الخصائص (كمثل الحجم ، الموقع ، الحدود ، "
+"لقد طلبتَ من Mokshaِ أن لا ينسَ تطبيق<br>الخصائص (كمثل الحجم ، الموقع ، الحدود ، "
 "المظهر ....) على<br>نافذة <hilight>دون تحديد أي طريقة لكيفية تذكرها</"
 "hilight>.<br><br>يجب عليك على اﻷقل تحديد طريقة واحدة لكيفية ذلك لهذه النافذة."
 
@@ -2835,7 +2835,7 @@ msgstr ""
 #: src/bin/e_int_menus.c:243
 #, fuzzy
 msgid "About Moksha Desktop"
-msgstr "عن E17ِ"
+msgstr "عن Mokshaِ"
 
 #: src/bin/e_int_menus.c:249 src/bin/e_theme_about.c:21
 msgid "About Theme"
@@ -2844,7 +2844,7 @@ msgstr "عن السمة"
 #: src/bin/e_int_menus.c:263
 #, fuzzy
 msgid "Restart Moksha"
-msgstr "مرحبا بك في E17ِ"
+msgstr "مرحبا بك في Mokshaِ"
 
 #: src/bin/e_int_menus.c:338
 #, fuzzy
@@ -2993,30 +2993,30 @@ msgstr "أظهر في أسطح مكتب محددة"
 
 #: src/bin/e_main.c:291
 msgid "Moksha cannot initialize Eina!\n"
-msgstr "لا يستطيع E17ِ بدء Eina!\n"
+msgstr "لا يستطيع Mokshaِ بدء Eina!\n"
 
 #: src/bin/e_main.c:297
 msgid "Moksha could not create a logging domain!\n"
-msgstr "لا يستطيع E17ِ ضبط نظام معالجة أنتزاع المدخلات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام معالجة أنتزاع المدخلات.\n"
 
 #: src/bin/e_main.c:346
 msgid "Moksha cannot initialize Eet!\n"
-msgstr "لا يستطيع E17ِ بدء Eet!\n"
+msgstr "لا يستطيع Mokshaِ بدء Eet!\n"
 
 #: src/bin/e_main.c:355
 msgid "Moksha cannot initialize Ecore!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore!\n"
 
 #: src/bin/e_main.c:369
 msgid "Moksha cannot initialize EIO!\n"
-msgstr "لا يستطيع E17ِ بدء EIO!\n"
+msgstr "لا يستطيع Mokshaِ بدء EIO!\n"
 
 #: src/bin/e_main.c:381
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"لا يستطيع E17ِ ضبط معالج إشارة الخروج.\n"
+"لا يستطيع Mokshaِ ضبط معالج إشارة الخروج.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:388
@@ -3024,7 +3024,7 @@ msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"لا يستطيع E17ِ ضبط معالج إشارة HUP.\n"
+"لا يستطيع Mokshaِ ضبط معالج إشارة HUP.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:395
@@ -3032,40 +3032,40 @@ msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"لا يستطيع E17ِ ضبط معالج إشارة المستخدم.\n"
+"لا يستطيع Mokshaِ ضبط معالج إشارة المستخدم.\n"
 "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_File!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_File!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_File!\n"
 
 #: src/bin/e_main.c:413
 msgid "Moksha cannot initialize Ecore_Con!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_Con!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_Con!\n"
 
 #: src/bin/e_main.c:422
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_Ipc!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:433
 msgid "Moksha cannot initialize Ecore_X!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_X!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_X!\n"
 
 #: src/bin/e_main.c:445
 msgid "Moksha cannot initialize Ecore_IMF!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_IMF!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_IMF!\n"
 
 #: src/bin/e_main.c:455
 msgid "Moksha cannot initialize Ecore_Evas!\n"
-msgstr "لا يستطيع E17ِ بدء Ecore_Evas!\n"
+msgstr "لا يستطيع Mokshaِ بدء Ecore_Evas!\n"
 
 #: src/bin/e_main.c:465
 msgid "Moksha cannot initialize Elementary!\n"
-msgstr "لا يستطيع E17ِ بدء Elementary!\n"
+msgstr "لا يستطيع Mokshaِ بدء Elementary!\n"
 
 #: src/bin/e_main.c:476
 msgid "Moksha cannot initialize Emotion!\n"
-msgstr "لا يستطيع E17ِ بدء Emotion!\n"
+msgstr "لا يستطيع Mokshaِ بدء Emotion!\n"
 
 #: src/bin/e_main.c:491
 msgid ""
@@ -3073,7 +3073,7 @@ msgid ""
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software X11 rendering engine."
 msgstr ""
-"عثر E17ِ على أن ecore_evas لا تدعم أداء برمجية تصيير  X11\n"
+"عثر Mokshaِ على أن ecore_evas لا تدعم أداء برمجية تصيير  X11\n"
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
 "و تفقد دعمهما ﻷداء محرك برمجية تصيير X11 ."
 
@@ -3083,24 +3083,24 @@ msgid ""
 "rendering in Evas. Please check your installation of Evas and\n"
 "Ecore and check they support the Software Buffer rendering engine."
 msgstr ""
-"عثر E17ِ على أن ecore_evas لا تدعم أداء برمجية تصيير  الصوان\n"
+"عثر Mokshaِ على أن ecore_evas لا تدعم أداء برمجية تصيير  الصوان\n"
 "في Evas. رجاء تفقد تثبيت Evas و Ecore \n"
 "و تفقد دعمهما ﻷداء محرك برمجية تصيير الصوان ."
 
 #: src/bin/e_main.c:509
 msgid "Moksha cannot initialize Edje!\n"
-msgstr "لا يستطيع E17ِ بدء Edje! \n"
+msgstr "لا يستطيع Mokshaِ بدء Edje! \n"
 
 #: src/bin/e_main.c:521
 msgid "Moksha cannot initialize E_Intl!\n"
-msgstr "لا يستطيع E17ِ بدء E_Intl!.\n"
+msgstr "لا يستطيع Mokshaِ بدء E_Intl!.\n"
 
 #: src/bin/e_main.c:531
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"لا يستطيع E17ِ بدء نظام تنبيه الطوارئ.\n"
+"لا يستطيع Mokshaِ بدء نظام تنبيه الطوارئ.\n"
 "هل قمت بضبط متغير العرض؟"
 
 #: src/bin/e_main.c:550
@@ -3108,52 +3108,52 @@ msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
-"لا يستطيع E17ِ إنشاء مسارات في مسار المنزل \n"
+"لا يستطيع Mokshaِ إنشاء مسارات في مسار المنزل \n"
 "ربما ﻷنك لا تملك مسار منزل أو أن القرص ممتلئ"
 
 #: src/bin/e_main.c:560
 msgid "Moksha cannot set up its file registry system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام تسجيل ملفاته.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام تسجيل ملفاته.\n"
 
 #: src/bin/e_main.c:569
 msgid "Moksha cannot set up its config system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام اﻹعداد.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام اﻹعداد.\n"
 
 #: src/bin/e_main.c:609
 msgid "Moksha cannot initialize E_Xinerama!\n"
-msgstr "لا يستطيع E17ِ بدء E_Xinerama!.\n"
+msgstr "لا يستطيع Mokshaِ بدء E_Xinerama!.\n"
 
 #: src/bin/e_main.c:618
 msgid "Moksha cannot set up its environment.\n"
-msgstr "لا يستطيع E17ِ ضبط بيئته.\n"
+msgstr "لا يستطيع Mokshaِ ضبط بيئته.\n"
 
 #: src/bin/e_main.c:634
 msgid "Moksha cannot set up its scale system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام التحجيم.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام التحجيم.\n"
 
 #: src/bin/e_main.c:643
 msgid "Moksha cannot set up its pointer system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام المؤشر.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام المؤشر.\n"
 
 #: src/bin/e_main.c:652
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"لا يستطيع E17ِ ضبط مسارات للملفات التي عثر عليها.\n"
+"لا يستطيع Mokshaِ ضبط مسارات للملفات التي عثر عليها.\n"
 "ربما ﻷنك لا تيملك المقدار الكافي من الذاكرة؟"
 
 #: src/bin/e_main.c:669
 msgid "Moksha cannot set up its font system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام الخطوط.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام الخطوط.\n"
 
 #: src/bin/e_main.c:686
 msgid "Moksha cannot set up its theme system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام السمات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام السمات.\n"
 
 #: src/bin/e_main.c:702
 msgid "Moksha cannot set up its init screen.\n"
-msgstr "لا يستطيع E17ِ ضبط شاشة init.\n"
+msgstr "لا يستطيع Mokshaِ ضبط شاشة init.\n"
 
 #: src/bin/e_main.c:717
 msgid "Starting International Support"
@@ -3161,7 +3161,7 @@ msgstr "جاري بدء الدعم الدولي"
 
 #: src/bin/e_main.c:721
 msgid "Moksha cannot set up its intl system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام intl.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام intl.\n"
 
 #: src/bin/e_main.c:730
 msgid ""
@@ -3169,7 +3169,7 @@ msgid ""
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"لا يستطيع E17ِ بدء نظام سطح مكتب FDO.\n"
+"لا يستطيع Mokshaِ بدء نظام سطح مكتب FDO.\n"
 "ربما ﻷنك  تفتقر للأذونات على ~/.cache/efreet أو \n"
 "لا تملك المقدار الكافي من الذاكرة أو مساحة القرص"
 
@@ -3182,7 +3182,7 @@ msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
 msgstr ""
-"فشل E17ِ في ضبط إدارة النافذة لكل الشاشات التي على نظامك\n"
+"فشل Mokshaِ في ضبط إدارة النافذة لكل الشاشات التي على نظامك\n"
 "ربما ﻷن هنالك مدير نافذة آخر لا يزال قيد التشغيل؟\n"
 
 #: src/bin/e_main.c:767
@@ -3195,7 +3195,7 @@ msgstr "ضبط اﻷضواء الخلفية"
 
 #: src/bin/e_main.c:778
 msgid "Moksha cannot configure the backlight.\n"
-msgstr "لا يستطيع E17ِ إعداد اﻹضاءة الخلفية.\n"
+msgstr "لا يستطيع Mokshaِ إعداد اﻹضاءة الخلفية.\n"
 
 #: src/bin/e_main.c:785
 msgid "Setup Powersave Modes"
@@ -3203,7 +3203,7 @@ msgstr "اضبط أوضاع حفظ الطاقة"
 
 #: src/bin/e_main.c:789
 msgid "Moksha cannot set up its powersave modes.\n"
-msgstr "لا يستطيع E17ِ ضبط أوضاع حفظ الطاقة.\n"
+msgstr "لا يستطيع Mokshaِ ضبط أوضاع حفظ الطاقة.\n"
 
 #: src/bin/e_main.c:796
 msgid "Setup Screensaver"
@@ -3211,7 +3211,7 @@ msgstr "ضبط حافظة الشاشة"
 
 #: src/bin/e_main.c:800
 msgid "Moksha cannot configure the X screensaver.\n"
-msgstr "لا يستطيع E17ِ إعداد حافظة الشاشة إكس.\n"
+msgstr "لا يستطيع Mokshaِ إعداد حافظة الشاشة إكس.\n"
 
 #: src/bin/e_main.c:807
 msgid "Setup DPMS"
@@ -3219,7 +3219,7 @@ msgstr "ضبط DPMS"
 
 #: src/bin/e_main.c:811
 msgid "Moksha cannot configure the DPMS settings.\n"
-msgstr "لا يستطيع E17ِ إعداد إعدادات DPMS .\n"
+msgstr "لا يستطيع Mokshaِ إعداد إعدادات DPMS .\n"
 
 #: src/bin/e_main.c:818
 msgid "Setup Desklock"
@@ -3227,7 +3227,7 @@ msgstr "اضبط قفل سطح المكتب"
 
 #: src/bin/e_main.c:822
 msgid "Moksha cannot set up its desk locking system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام قفل سطح المكتب.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام قفل سطح المكتب.\n"
 
 #: src/bin/e_main.c:829
 msgid "Setup Popups"
@@ -3235,7 +3235,7 @@ msgstr "ضبط النوافذ المنبثقة"
 
 #: src/bin/e_main.c:833
 msgid "Moksha cannot set up its popup system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام المنبثقات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام المنبثقات.\n"
 
 #: src/bin/e_main.c:845
 msgid "Setup Message Bus"
@@ -3251,7 +3251,7 @@ msgstr "ضبط متحكمات النظام"
 
 #: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
-msgstr "لا يستطيع E17ِ بدء نظام أوامر النظام \n"
+msgstr "لا يستطيع Mokshaِ بدء نظام أوامر النظام \n"
 
 #: src/bin/e_main.c:869
 msgid "Setup Actions"
@@ -3259,7 +3259,7 @@ msgstr "إجراءات الضبظ"
 
 #: src/bin/e_main.c:873
 msgid "Moksha cannot set up its actions system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام إﻹجراءات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام إﻹجراءات.\n"
 
 #: src/bin/e_main.c:880
 msgid "Setup Execution System"
@@ -3267,7 +3267,7 @@ msgstr "ضبط نظام اﻹعدام"
 
 #: src/bin/e_main.c:884
 msgid "Moksha cannot set up its exec system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام exec.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام exec.\n"
 
 #: src/bin/e_main.c:895
 msgid "Setup Filemanager"
@@ -3275,7 +3275,7 @@ msgstr "اضبط مدير الملفات"
 
 #: src/bin/e_main.c:899
 msgid "Moksha cannot initialize the File manager.\n"
-msgstr "لا يستطيع E17ِ بدء مدير الملفات.\n"
+msgstr "لا يستطيع Mokshaِ بدء مدير الملفات.\n"
 
 #: src/bin/e_main.c:906
 msgid "Setup Message System"
@@ -3283,7 +3283,7 @@ msgstr "ضبط نظام الرسائل"
 
 #: src/bin/e_main.c:910
 msgid "Moksha cannot set up its msg system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام msg.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام msg.\n"
 
 #: src/bin/e_main.c:917
 msgid "Setup DND"
@@ -3291,7 +3291,7 @@ msgstr "اضبط DND "
 
 #: src/bin/e_main.c:921
 msgid "Moksha cannot set up its dnd system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام dnd.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام dnd.\n"
 
 #: src/bin/e_main.c:928
 msgid "Setup Grab Input Handling"
@@ -3299,7 +3299,7 @@ msgstr "اضبط معالجة مدخلة المنزوعات"
 
 #: src/bin/e_main.c:932
 msgid "Moksha cannot set up its grab input handling system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام معالجة مدخلات المنزوعات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام معالجة مدخلات المنزوعات.\n"
 
 #: src/bin/e_main.c:939
 msgid "Setup Modules"
@@ -3307,7 +3307,7 @@ msgstr "ضبط الوحدات"
 
 #: src/bin/e_main.c:943 src/bin/e_main.c:1128
 msgid "Moksha cannot set up its module system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام الوحدات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام الوحدات.\n"
 
 #: src/bin/e_main.c:950
 msgid "Setup Remembers"
@@ -3315,7 +3315,7 @@ msgstr "اضبط المتذكرين"
 
 #: src/bin/e_main.c:954
 msgid "Moksha cannot setup remember settings.\n"
-msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
+msgstr "لا يستطيع Mokshaِ ضبط إعدادات المتذكر.\n"
 
 #: src/bin/e_main.c:961
 msgid "Setup Color Classes"
@@ -3323,7 +3323,7 @@ msgstr "ضبط أصناف اﻷلوان"
 
 #: src/bin/e_main.c:965
 msgid "Moksha cannot set up its color class system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام صنف اﻷلوان.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام صنف اﻷلوان.\n"
 
 #: src/bin/e_main.c:972
 msgid "Setup Gadcon"
@@ -3331,7 +3331,7 @@ msgstr "ضبط Gadcon"
 
 #: src/bin/e_main.c:976
 msgid "Moksha cannot set up its gadget control system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام تحكم أدواته.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام تحكم أدواته.\n"
 
 #: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
@@ -3339,7 +3339,7 @@ msgstr "ضبط الخلفية"
 
 #: src/bin/e_main.c:987
 msgid "Moksha cannot set up its desktop background system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام خلفية سطح المكتب.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام خلفية سطح المكتب.\n"
 
 #: src/bin/e_main.c:994
 msgid "Setup Mouse"
@@ -3347,11 +3347,11 @@ msgstr "ضبط الفأرة"
 
 #: src/bin/e_main.c:998
 msgid "Moksha cannot configure the mouse settings.\n"
-msgstr "لا يستطيع E17ِ إعداد خيارات ضبط الفأرة.\n"
+msgstr "لا يستطيع Mokshaِ إعداد خيارات ضبط الفأرة.\n"
 
 #: src/bin/e_main.c:1005
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
-msgstr "لا يستطيع E17ِ ضبط مخططات لوحة مفاتيح XKB .\n"
+msgstr "لا يستطيع Mokshaِ ضبط مخططات لوحة مفاتيح XKB .\n"
 
 #: src/bin/e_main.c:1011
 msgid "Setup Bindings"
@@ -3359,7 +3359,7 @@ msgstr "ضبط اﻷغلفة"
 
 #: src/bin/e_main.c:1015
 msgid "Moksha cannot set up its bindings system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام اﻹرتباطات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام اﻹرتباطات.\n"
 
 #: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
@@ -3367,19 +3367,19 @@ msgstr "ضبط مصغر الصور"
 
 #: src/bin/e_main.c:1026
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
-msgstr "لا يستطيع E17ِ بدء نظام المصغرات\n"
+msgstr "لا يستطيع Mokshaِ بدء نظام المصغرات\n"
 
 #: src/bin/e_main.c:1035
 msgid "Moksha cannot initialize the Icon Cache system.\n"
-msgstr "لا يستطيع E17ِ بدء نظام الذاكرة المخبئية اﻷيقوني \n"
+msgstr "لا يستطيع Mokshaِ بدء نظام الذاكرة المخبئية اﻷيقوني \n"
 
 #: src/bin/e_main.c:1044
 msgid "Moksha cannot initialize the XSettings system.\n"
-msgstr "لا يستطيع E17ِ بدء نظام إعدادات X\n"
+msgstr "لا يستطيع Mokshaِ بدء نظام إعدادات X\n"
 
 #: src/bin/e_main.c:1054
 msgid "Moksha cannot initialize the Update system.\n"
-msgstr "لا يستطيع E17ِ بدء نظام التحديثات \n"
+msgstr "لا يستطيع Mokshaِ بدء نظام التحديثات \n"
 
 #: src/bin/e_main.c:1063
 msgid "Setup Desktop Environment"
@@ -3387,7 +3387,7 @@ msgstr "اضبط بيئة سطح المكتب"
 
 #: src/bin/e_main.c:1067
 msgid "Moksha cannot initialize its desktop environment.\n"
-msgstr "لا يستطيع E17ِ بدء بيئة سطح المكتب.\n"
+msgstr "لا يستطيع Mokshaِ بدء بيئة سطح المكتب.\n"
 
 #: src/bin/e_main.c:1074
 msgid "Setup File Ordering"
@@ -3395,7 +3395,7 @@ msgstr "ضبط ترتيب الملفات"
 
 #: src/bin/e_main.c:1078
 msgid "Moksha cannot set up its order file system.\n"
-msgstr "لا يستطيع E17ِ ضبط نظام ترتيب الملفات.\n"
+msgstr "لا يستطيع Mokshaِ ضبط نظام ترتيب الملفات.\n"
 
 #: src/bin/e_main.c:1093
 msgid "Load Modules"
@@ -3457,12 +3457,12 @@ msgid ""
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
 msgstr ""
-"أنت اﻵن تشغل ملف E17ِ التنفيذي مباشرة. و هذا اﻷمر سيء\n"
+"أنت اﻵن تشغل ملف Mokshaِ التنفيذي مباشرة. و هذا اﻷمر سيء\n"
 "لذا رجاء لا تستخدم ملف \"enlightenment\"\n"
 "الثنائي . استخدم المُطلق \"enlightenment_start\" عوضا عنه. ﻷنه\n"
 "سيتعامل مع متغيرات البيئة ، المسارات ، paths,\n"
 "و إطلاق أي خدمة أخرى يعول عليها و غيرها من الخدمات اﻷخرى.\n"
-"و كل هذا سيحدث حتى قبل بدء E17ِ تشغيل نفسه.\n"
+"و كل هذا سيحدث حتى قبل بدء Mokshaِ تشغيل نفسه.\n"
 
 #: src/bin/e_main.c:1648
 msgid "Testing Format Support"
@@ -3473,39 +3473,39 @@ msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
 msgstr ""
-"وجد E17ِ أن Evas لا يستطيع إنشاء رقعة الصوان. رجاء تفقد\n"
+"وجد Mokshaِ أن Evas لا يستطيع إنشاء رقعة الصوان. رجاء تفقد\n"
 "هل لدى Evas دعم لمحرك الصوان.\n"
 
 #: src/bin/e_main.c:1664
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
-msgstr "وجد E17ِ أن Evas لا يستطيع  تحميل ملفاتSVG. تفقّد دعم Evas لمحمّل SVG .\n"
+msgstr "وجد Mokshaِ أن Evas لا يستطيع  تحميل ملفاتSVG. تفقّد دعم Evas لمحمّل SVG .\n"
 
 #: src/bin/e_main.c:1674
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"وجد E17ِ أن Evas لا يستطيع  تحميل ملفات JPEG. تفقّد دعم Evas لمحمّل JPEG .\n"
+"وجد Mokshaِ أن Evas لا يستطيع  تحميل ملفات JPEG. تفقّد دعم Evas لمحمّل JPEG .\n"
 
 #: src/bin/e_main.c:1684
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
-"وجد E17ِ أن Evas لا يستطيع  تحميل ملفات PNG. تفقّد دعم Evas لمحمّل PNG .\n"
+"وجد Mokshaِ أن Evas لا يستطيع  تحميل ملفات PNG. تفقّد دعم Evas لمحمّل PNG .\n"
 
 #: src/bin/e_main.c:1694
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
-"وجد E17ِ أن Evas لا يستطيع  تحميل ملفات EET.تفقّد دعم Evas لمحمِّل  EET .\n"
+"وجد Mokshaِ أن Evas لا يستطيع  تحميل ملفات EET.تفقّد دعم Evas لمحمِّل  EET .\n"
 
 #: src/bin/e_main.c:1708
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
 msgstr ""
-"وجد E17ِ أن Evas لا يستطيع  تحميل الخط 'Sans'. تفقّد هل يملك Evas دعم إعدادات "
+"وجد Mokshaِ أن Evas لا يستطيع  تحميل الخط 'Sans'. تفقّد هل يملك Evas دعم إعدادات "
 "الخط\n"
 "و تعرف نظام إعدادات الخط لخط 'Sans' .\n"
 
@@ -3516,12 +3516,12 @@ msgid ""
 "loading the<br>module named: %s. This module has been disabled<br>and will "
 "not be loaded."
 msgstr ""
-"تحطم E17ِ للتو عند التشغيل و قد <br>أُعيد تشغيله. كان هنالك تحميل "
+"تحطم Mokshaِ للتو عند التشغيل و قد <br>أُعيد تشغيله. كان هنالك تحميل "
 "خاطئ<br>لوحدة مسماة بـ : %s. هذه الوحدة قد تم تعطيلها<br>و لن يتم تحميلها."
 
 #: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
-msgstr "تحطم E17ِ للتو عند التشغيل و تم إعادة تشغيله "
+msgstr "تحطم Mokshaِ للتو عند التشغيل و تم إعادة تشغيله "
 
 #: src/bin/e_main.c:1933
 #, c-format
@@ -3530,7 +3530,7 @@ msgid ""
 "loading the module named: %s<br><br>This module has been disabled and will "
 "not be loaded."
 msgstr ""
-"تحطم E17ِ للتو عند التشغيل و أُعيد تشغيله.<br>كان هناك تحميل خاطئ لوحدة مسماة "
+"تحطم Mokshaِ للتو عند التشغيل و أُعيد تشغيله.<br>كان هناك تحميل خاطئ لوحدة مسماة "
 "بـ : %s<br><br> هذه الوحدة قد تم تعطيلها و لن يتم تحميلها."
 
 #: src/bin/e_main.c:1941
@@ -3540,7 +3540,7 @@ msgid ""
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"تحطم E17ِ للتو عند التشغيل<br>و أُعيد تشغيله. كل الوحدات قد تم تعطيلها<br>و لن "
+"تحطم Mokshaِ للتو عند التشغيل<br>و أُعيد تشغيله. كل الوحدات قد تم تعطيلها<br>و لن "
 "يتم تحميلها  ﻷجل المساعدة في إزالة أي مشكلة<br>وحدات من إعداداتك. حوارات "
 "إعداد الوحدة<br>ستدعك تختار<br>وحداتك مجددا.\n"
 
@@ -3551,7 +3551,7 @@ msgid ""
 "from your configuration.<br><br>The module configuration dialog should let "
 "you select your<br>modules again."
 msgstr ""
-"تحطم E17ِ للتو عند التشغيل و تم إعادة تشغيله.<br> كل الوحدات قد تم تعطيلها و "
+"تحطم Mokshaِ للتو عند التشغيل و تم إعادة تشغيله.<br> كل الوحدات قد تم تعطيلها و "
 "لن يتم تحميلها ﻷجل المساعدة<br> في إزالة أي مشكلة وحدات من إعداداتك."
 "<br><br>حوارات إعداد الوحدة ستدعك تختار<br>وحداتك مجددا.."
 
@@ -3594,7 +3594,7 @@ msgid ""
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
 "خطأ بوحدة API <br>خطأ بتهيئة الوحدة: %s<br>حيث أنها تتطلب أقل إصدار لوحدة "
-"API من: %i.<br>الوحدة API التي تعمل بواسطة E17 هي: %i.<br>"
+"API من: %i.<br>الوحدة API التي تعمل بواسطة Moksha هي: %i.<br>"
 
 #: src/bin/e_module.c:272
 #, c-format
@@ -3618,7 +3618,7 @@ msgid ""
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
-"الوحدات التالية ليست قياسية لـ<br>E17ِ  و لربما ستسبب عللا و  تحطمات.<br>لذا "
+"الوحدات التالية ليست قياسية لـ<br>Mokshaِ  و لربما ستسبب عللا و  تحطمات.<br>لذا "
 "رجاء أزلها قبل اﻹبلاغ عن أي علة.<br><br>و الوحدات هي :<br><br>"
 
 #: src/bin/e_module.c:819
@@ -3818,7 +3818,7 @@ msgstr "جاري تسجيل الخروج.<br><hilight>يرجى اﻹنتظار.<
 
 #: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
-msgstr "E17ِ مشغول بطلب آخر"
+msgstr "Mokshaِ مشغول بطلب آخر"
 
 #: src/bin/e_sys.c:600
 msgid ""
@@ -3947,7 +3947,7 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"إصدارة E17ِ لديك<br>ليست بالإصدارة الأخيرة .<br>و الإصدارة الأخيرة هي :"
+"إصدارة Mokshaِ لديك<br>ليست بالإصدارة الأخيرة .<br>و الإصدارة الأخيرة هي :"
 "<br><br>%s<br><br>رجاء قم بزيارة www.enlightenment.org<br>أو حدث جزم نظامك "
 "إذا كان مطوريه موفرين لك ذلك<br>و ذلك ﻷجل أن تحصل على اﻹصدارة النهائية"
 
@@ -3955,7 +3955,7 @@ msgstr ""
 #: src/modules/conf_intl/e_int_config_imc.c:511
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s<br>"
-msgstr "لا يستطيع E17ِ إنشاء عمليات فرعية:<br><br>%s<br>"
+msgstr "لا يستطيع Mokshaِ إنشاء عمليات فرعية:<br><br>%s<br>"
 
 #: src/bin/e_utils.c:238
 msgid "Cannot exit - immortal windows."
@@ -3968,7 +3968,7 @@ msgid ""
 "have<br>been closed or have the lifespan lock removed.<br>"
 msgstr ""
 "بعض النوافذ تركت و لازالت ممكنة مع قفل حفظ عمر البطارية. و هذا يعني  <br>أن "
-"E17ِ سيمنع نفسه من الخروج حتى يتم إغلاق<br>هذه النوافذ أو يتم إزالة قفل حفظ "
+"Mokshaِ سيمنع نفسه من الخروج حتى يتم إغلاق<br>هذه النوافذ أو يتم إزالة قفل حفظ "
 "عمر البطارية .<br>"
 
 #: src/bin/e_utils.c:782
@@ -5606,11 +5606,11 @@ msgstr "خطأ إستيراد إعدادات طريقة اﻹدخال"
 msgid ""
 "Moksha was unable to import the configuration.<br><br>Are you sure this is "
 "really a valid configuration?"
-msgstr "لا يستطيع E17ِ استيراد اﻹعداد.<br><br>أمتأكد أنت من أن اﻹعداد صالح ؟"
+msgstr "لا يستطيع Mokshaِ استيراد اﻹعداد.<br><br>أمتأكد أنت من أن اﻹعداد صالح ؟"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
-msgstr "لا يستطيع E17ِ إستيراد اﻹعداد<br>نتيجة لخطأ في النسخ."
+msgstr "لا يستطيع Mokshaِ إستيراد اﻹعداد<br>نتيجة لخطأ في النسخ."
 
 #: src/modules/conf_intl/e_int_config_intl.c:605
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -6143,7 +6143,7 @@ msgstr "صوِّر لشاشة"
 #: src/modules/conf_keybindings/e_mod_main.c:295
 #, fuzzy
 msgid "Restart Moksha:"
-msgstr "مرحبا بك في E17ِ"
+msgstr "مرحبا بك في Mokshaِ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
 #, fuzzy
@@ -6186,7 +6186,7 @@ msgstr "إعدادات القائمة"
 
 #: src/modules/conf_menus/e_int_config_menus.c:176
 msgid "Moksha Default"
-msgstr "افتراضيات E17ِ"
+msgstr "افتراضيات Mokshaِ"
 
 #: src/modules/conf_menus/e_int_config_menus.c:184
 msgid "Personal Default"
@@ -6335,7 +6335,7 @@ msgstr "الرسائل"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
 msgid "Moksha Paths"
-msgstr "مسارات E17ِ"
+msgstr "مسارات Mokshaِ"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -7225,11 +7225,11 @@ msgstr "حلل في استيراد السمة"
 msgid ""
 "Moksha was unable to import the theme.<br><br>Are you sure this is really a "
 "valid theme?"
-msgstr "لا يستطيع E17ِ استيراد السمة.<br><br>هل تأكدت من صحة هذه السمة ؟"
+msgstr "لا يستطيع Mokshaِ استيراد السمة.<br><br>هل تأكدت من صحة هذه السمة ؟"
 
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
 msgid "Moksha was unable to import the theme<br>due to a copy error."
-msgstr "لا يستطيع E17ِ استيراد السمة<br>جراء خلل في النسخ."
+msgstr "لا يستطيع Mokshaِ استيراد السمة<br>جراء خلل في النسخ."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:68
 msgid "Application Theme Settings"
@@ -7238,7 +7238,7 @@ msgstr "ضبط سمة التطبيق"
 #: src/modules/conf_theme/e_int_config_xsettings.c:515
 #: src/modules/conf_theme/e_int_config_xsettings.c:559
 msgid "Match Moksha theme if possible"
-msgstr "طابق سمة E17ِ إن أمكن"
+msgstr "طابق سمة Mokshaِ إن أمكن"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:524
 msgid "Enable X Application Settings"
@@ -7254,12 +7254,12 @@ msgstr "مكِّن سمة أيقونات التطبيقات"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:567
 msgid "Enable icon theme for Moksha"
-msgstr "مكِّن سمة أيقونات E17ِ"
+msgstr "مكِّن سمة أيقونات Mokshaِ"
 
 #: src/modules/conf_theme/e_mod_main.c:242
 #, fuzzy
 msgid "Moksha Theme"
-msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
+msgstr "لا يستطيع Mokshaِ ضبط إعدادات المتذكر.\n"
 
 #: src/modules/conf_theme/e_mod_main.c:245
 #, fuzzy
@@ -9356,7 +9356,7 @@ msgstr "رجاء انتظر..."
 
 #: src/modules/wizard/e_wizard.c:329
 msgid "Welcome to Moksha"
-msgstr "مرحبا بك في E17ِ"
+msgstr "مرحبا بك في Mokshaِ"
 
 #: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
@@ -9386,10 +9386,10 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"بإمكان E17ِ التفقد و البحث عن<br>إصدارات, تحديثات, أمن و<br>إصلاح علل, طالما "
+"بإمكان Mokshaِ التفقد و البحث عن<br>إصدارات, تحديثات, أمن و<br>إصلاح علل, طالما "
 "كانت اﻹضافات متوفرة.<br><br>هذا مفيد جدا, لأنه يبقيك على<br>إطلاع على "
 "مستجدات التحديثات<br> و الامن و إصلاح العلل. <br>و كناتج لهذا, سيتصل "
-"E17ِ<br>بـمصدره و ينقل <br>و يرسل بعض النتائج كأي<br>متصفح آخر للشبكة "
+"Mokshaِ<br>بـمصدره و ينقل <br>و يرسل بعض النتائج كأي<br>متصفح آخر للشبكة "
 "العنكبوتية. دون ذكر للمعلومات الشخصية<br>كاسم مستخدم أو كلمة مرور أو ملفات "
 "شخصية<br>. إذا كان لا يعجبك هذا اﻷمر <br>فعطله باﻷسفل. لكن تنبه<br>بأن سطح "
 "مكتبك سيكون عند تعطيل هذا الخيار<br>عرضة<br>للمشاكل التقنية."
@@ -10193,7 +10193,7 @@ msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
-"E17ِ في نمط <b>خارج الشبكة</b>اﻵن.<br>أثناء وضع خارج الشبكة فإن الوحدات التي "
+"Mokshaِ في نمط <b>خارج الشبكة</b>اﻵن.<br>أثناء وضع خارج الشبكة فإن الوحدات التي "
 "تستخدم الشبكة ستوقف خدمات اﻹستطلاع عن بعد."
 
 #: src/modules/notification/e_mod_main.c:649
@@ -10763,8 +10763,8 @@ msgstr "حرّك ﻷعلى"
 #~ msgid " No Menu Scroll (Experimental)"
 #~ msgstr "سرعة لف القائمة"
 
-#~ msgid "%s is probably not an E17 theme!"
-#~ msgstr "الملف %s على اﻷغلب ليس بملف سمة لـ E17 !"
+#~ msgid "%s is probably not an Moksha theme!"
+#~ msgstr "الملف %s على اﻷغلب ليس بملف سمة لـ Moksha !"
 
 #, fuzzy
 #~ msgid "Clipboards"
@@ -10856,7 +10856,7 @@ msgstr "حرّك ﻷعلى"
 #~ msgstr "لوحة سريعة"
 
 #~ msgid "Moksha cannot initialize E_Randr!\n"
-#~ msgstr "لا يستطيع E17ِ بدء E_Randr!.\n"
+#~ msgstr "لا يستطيع Mokshaِ بدء E_Randr!.\n"
 
 #~ msgid "Run Everything"
 #~ msgstr "تشغيل"
@@ -11246,7 +11246,7 @@ msgstr "حرّك ﻷعلى"
 #~ "screen saver, lock and power saving will be disabled so you are not "
 #~ "interrupted."
 #~ msgstr ""
-#~ "E17ِ في نمط <b>العرض</b> اﻵن.<br>أثناء نمط العرض ، خدمات حافظة الشاشة من "
+#~ "Mokshaِ في نمط <b>العرض</b> اﻵن.<br>أثناء نمط العرض ، خدمات حافظة الشاشة من "
 #~ "قفل و حفظ الطاقة سيتم تعطيلها لضمان عدم مقاطعتك."
 
 #~ msgid ""
@@ -11288,11 +11288,11 @@ msgstr "حرّك ﻷعلى"
 
 #, fuzzy
 #~ msgid "Moksha cannot set up its toolbars.\n"
-#~ msgstr "لا يستطيع E17ِ ضبط نظام intl.\n"
+#~ msgstr "لا يستطيع Mokshaِ ضبط نظام intl.\n"
 
 #, fuzzy
 #~ msgid "Moksha cannot setup compositing.\n"
-#~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
+#~ msgstr "لا يستطيع Mokshaِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
 #~ msgid "EFM Toolbar"
@@ -12483,7 +12483,7 @@ msgstr "حرّك ﻷعلى"
 
 #, fuzzy
 #~ msgid "Moksha default applications"
-#~ msgstr "افتراضيات E17ِ"
+#~ msgstr "افتراضيات Mokshaِ"
 
 #, fuzzy
 #~ msgid "Key binding settings"
@@ -12511,7 +12511,7 @@ msgstr "حرّك ﻷعلى"
 
 #, fuzzy
 #~ msgid "Moksha profile settings"
-#~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
+#~ msgstr "لا يستطيع Mokshaِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
 #~ msgid "Language settings"
@@ -12547,7 +12547,7 @@ msgstr "حرّك ﻷعلى"
 
 #, fuzzy
 #~ msgid "Moksha color settings"
-#~ msgstr "لا يستطيع E17ِ ضبط إعدادات المتذكر.\n"
+#~ msgstr "لا يستطيع Mokshaِ ضبط إعدادات المتذكر.\n"
 
 #, fuzzy
 #~ msgid "color"
@@ -12555,7 +12555,7 @@ msgstr "حرّك ﻷعلى"
 
 #, fuzzy
 #~ msgid "Moksha font settings"
-#~ msgstr "مسارات E17ِ"
+#~ msgstr "مسارات Mokshaِ"
 
 #, fuzzy
 #~ msgid "Window remember settings"
@@ -13022,7 +13022,7 @@ msgstr "حرّك ﻷعلى"
 #~ msgstr "وحدة تحكم النظام"
 
 #~ msgid "You requested to exit Moksha.<br><br>Are you sure you want to exit?"
-#~ msgstr "لقد طلبت الخروج من E17ِ.<br><br>هل أنت متأكد؟"
+#~ msgstr "لقد طلبت الخروج من Mokshaِ.<br><br>هل أنت متأكد؟"
 
 #~ msgid "You are about to log out.<br><br>Are you sure you want to do this?"
 #~ msgstr "أنت على وشك تسجيل الخروج.<br><br>هل أنت متأكد من أنك تريد فعل ذلك؟"
@@ -13456,7 +13456,7 @@ msgstr "حرّك ﻷعلى"
 #~ "( يجب أن تكون قابلة للقراءة و قابلة للكتابة\n"
 #~ "بواسطة المالك ، و لا أحد غيره )\n"
 #~ "أو أنك لا تملكها . رجاء تفقد:\n"
-#~ "%s/E17ِ-%s\n"
+#~ "%s/Mokshaِ-%s\n"
 
 #~ msgid "%'.0f MB"
 #~ msgstr "%'.0f م.ب."
@@ -13558,12 +13558,12 @@ msgstr "حرّك ﻷعلى"
 #~ msgstr "خلل في استيراد الخلفية"
 
 #~ msgid "Moksha was unable to import the wallpaper<br>due to a copy error."
-#~ msgstr "لا يستطيع E17ِ استيراد الخلفية<br>بسبب خلل في النسخ."
+#~ msgstr "لا يستطيع Mokshaِ استيراد الخلفية<br>بسبب خلل في النسخ."
 
 #~ msgid ""
 #~ "Moksha was unable to import the wallpaper.<br><br>Are you sure this is a "
 #~ "valid wallpaper?"
-#~ msgstr "لا يستطيع E17ِ استيراد الخلفية<br><br>هل تأكدت من صحة الخلفية ؟"
+#~ msgstr "لا يستطيع Mokshaِ استيراد الخلفية<br><br>هل تأكدت من صحة الخلفية ؟"
 
 #~ msgid "Cursor Settings"
 #~ msgstr "خيارات المؤشر"
@@ -13700,7 +13700,7 @@ msgstr "حرّك ﻷعلى"
 #~ "could not be<br>deterimined.<br><br>The file where the error occurred was:"
 #~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "حدث خطأ أثناء <br>حفظ إعدادات E17ِ إلى القرص. الخطأ لا يمكن <br>حسابه. "
+#~ "حدث خطأ أثناء <br>حفظ إعدادات Mokshaِ إلى القرص. الخطأ لا يمكن <br>حسابه. "
 #~ "<br><br> الملف حيث حدث الخطأ هو:<br>%s<br><br> هذا الملف قد تم مسحه "
 #~ "لتفادي البيانات المدمرة و العالقة.<br>"
 
@@ -13711,7 +13711,7 @@ msgstr "حرّك ﻷعلى"
 #~ "<br><br>The file where the error occurred was:<br>%s<br><br>This file has "
 #~ "been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "ملفات إعدادات E17ِ كبيرة جدا<br>لملفات النظام التي يجب أن تحفظ فيها."
+#~ "ملفات إعدادات Mokshaِ كبيرة جدا<br>لملفات النظام التي يجب أن تحفظ فيها."
 #~ "<br>هذا الخطأ غريب جدا حيث يجب أن يكون الملف<br>صغير جدا.رجاء إفحص "
 #~ "اﻹعدادات<br>لمسار المنزل لديك.<br><br>الملف الذي حدث به الخطأ هو:"
 #~ "<br>%s<br><br>هذا الملف قد تم حذفه لتفادي البيانات المدمرة و العالقة"
@@ -13732,7 +13732,7 @@ msgstr "حرّك ﻷعلى"
 #~ "over your quota limit.<br><br>The file where the error occurred was:"
 #~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ كتابة ملف إعداداته<br>حيث أنه لم يعد هناك مساحة لكتابة "
+#~ "لا يستطيع Mokshaِ كتابة ملف إعداداته<br>حيث أنه لم يعد هناك مساحة لكتابة "
 #~ "الملف.<br>يبدو أنك إستنفذت المساحة المتبقية في القرص أو أنك <br>تعديت "
 #~ "المساحة المخصصة لك.<br><br>الملف المتسبب في الخطأ هو:<br>%s<br><br>هذا "
 #~ "الملف قد تم مسحه لتجنب  البيانات المدمرة و العالقة.<br>"
@@ -13753,35 +13753,35 @@ msgstr "حرّك ﻷعلى"
 #~ "Moksha cannot Initialize Ecore!\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ بدء Ecore!\n"
+#~ "لا يستطيع Mokshaِ بدء Ecore!\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
 #~ "Moksha cannot initialize the File system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "لاسيتطيع E17ِ بدء نظام الملف.\n"
+#~ "لاسيتطيع Mokshaِ بدء نظام الملف.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
 #~ "Moksha cannot initialize its X connection.\n"
 #~ "Have you set your DISPLAY variable?"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ بدء نظام اتصال إكس .\n"
+#~ "لا يستطيع Mokshaِ بدء نظام اتصال إكس .\n"
 #~ "هل قمت بتحديد متغير العرض أي شاشة العرض ؟ "
 
 #~ msgid ""
 #~ "Moksha cannot initialize the connections system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ بدء نظام اﻹتصالات.\n"
+#~ "لا يستطيع Mokshaِ بدء نظام اﻹتصالات.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة ؟"
 
 #~ msgid ""
 #~ "Moksha cannot initialize the IPC system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ بدء نظام IPC  .\n"
+#~ "لا يستطيع Mokshaِ بدء نظام IPC  .\n"
 #~ "ربما ﻷنك لاتملك المقدار الكافي من الذاكرة؟"
 
 #, fuzzy
@@ -13789,21 +13789,21 @@ msgstr "حرّك ﻷعلى"
 #~ "Moksha cannot setup xinerama wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "لا يستطيع E17ِ إعداد التفاف  xinerama.\n"
+#~ "لا يستطيع Mokshaِ إعداد التفاف  xinerama.\n"
 #~ " يجب عدم حدوث هذا."
 
 #~ msgid ""
 #~ "Moksha cannot setup randr wrapping.\n"
 #~ "This should not happen."
 #~ msgstr ""
-#~ "لا يستطيع E17ِ إعداد تغليف الرف.\n"
+#~ "لا يستطيع Mokshaِ إعداد تغليف الرف.\n"
 #~ "يجب أن لا يحدث هذا."
 
 #~ msgid ""
 #~ "Moksha cannot initialize the Evas system.\n"
 #~ "Perhaps you are out of memory?"
 #~ msgstr ""
-#~ "لا يستطيع E17ِ بدء نظام Evas.\n"
+#~ "لا يستطيع Mokshaِ بدء نظام Evas.\n"
 #~ "ربما ﻷنك لا تملك المقدار الكافي من الذاكرة؟"
 
 #~ msgid ""
@@ -13820,7 +13820,7 @@ msgstr "حرّك ﻷعلى"
 #~ msgstr "اضبط FM "
 
 #~ msgid "Moksha cannot set up its shelf system."
-#~ msgstr "لا يستطيع E17ِ ضبط نظام الدروج"
+#~ msgstr "لا يستطيع Mokshaِ ضبط نظام الدروج"
 
 #~ msgid "New Application"
 #~ msgstr "تطبيق جديد"
