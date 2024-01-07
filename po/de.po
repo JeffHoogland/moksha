@@ -30,8 +30,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Christian Becker (xpistian) <xpistianbecker@gmail.com>\n"
 "Language-Team: \n"
@@ -802,7 +802,7 @@ msgstr "Jetzt in den Ruhezustand wechseln"
 msgid "Lock"
 msgstr "Sperren"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Fenster aufräumen"
 
@@ -913,9 +913,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha konnte die Konfigurationsdateien nicht von<br>%s<br>nach<br>"
-"%s<br>verschieben.<br>Sicherheitshalber wurde der Schreibvorgang abgebrochen."
-"<br>"
+"Moksha konnte die Konfigurationsdateien nicht "
+"von<br>%s<br>nach<br>%s<br>verschieben.<br>Sicherheitshalber wurde der "
+"Schreibvorgang abgebrochen.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1721,7 +1721,7 @@ msgstr "Nein für alle"
 msgid "Yes to all"
 msgstr "Ja für alle"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Warnung"
@@ -1764,8 +1764,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in <br><hilight>"
-"%s</hilight> löschen?"
+"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in "
+"<br><hilight>%s</hilight> löschen?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -2875,42 +2875,33 @@ msgstr "Über dieses Thema"
 msgid "Restart Moksha"
 msgstr "Moksha neustarten"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 msgid "Favorite Apps"
 msgstr "Bevorzugte Anwendungen"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Keine Anwendungen"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Hintergrundbild"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Virtuelle Arbeitsflächen"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Modulablagen"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Alle Fenster anzeigen/verstecken"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Virtuelle Arbeitsflächen einstellen"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2919,29 +2910,29 @@ msgstr "Virtuelle Arbeitsflächen einstellen"
 msgid "Windows"
 msgstr "Fenster"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Keine Fenster"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Verlorene Fenster"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Titelloses Fenster"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Modulablage %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Modulablage hinzufügen"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Modulablage entfernen"
 
@@ -3802,8 +3793,8 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "Auto-Verstecken der Modulablage wird mit der<br>aktuellen Konfiguration "
-"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter Allem"
-"\"<br>oder deaktivieren Sie Auto-Verstecken."
+"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter "
+"Allem\"<br>oder deaktivieren Sie Auto-Verstecken."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -5123,6 +5114,14 @@ msgstr "Themenhintergrundbild"
 msgid "Current Wallpaper"
 msgstr "Aktuelles Hintergrundbild"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Hintergrundbild"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Bildschirmschonereinstellungen"
@@ -5881,8 +5880,9 @@ msgstr "Tastenbelegungsfehler"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Die gewählte Tastenbelegungsabfolge wird bereits von der <br><hilight>%s</"
 "hilight>-Aktion verwendet.<br>Bitte wählen Sie eine andere Abfolge."
@@ -7926,8 +7926,8 @@ msgid ""
 msgstr ""
 "Die freqset-Programmdatei im cpufreq-Modul<ps/>hat weder root-Rechte noch "
 "das<ps/>setuid-Bit gesetzt. Bitte stellen Sie sicher, dass<ps/>dies der Fall "
-"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
-"+x %s<ps/>"
+"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
+"a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8336,11 +8336,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8358,8 +8358,8 @@ msgstr ""
 "<hilight>STRG+Enter</hilight>führt die Aktion aus und macht "
 "weiter<br><hilight>Tab</hilight> schaltet zwischen Auswählern "
 "um<br><hilight>STRG+Tab</hilight> zeigt die vollständige Eingabe (hängt vom "
-"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit \"x"
-"\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
+"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit "
+"\"x\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
 "durch<br><hilight>STRG+hoch/runter</hilight> geht zum ersten/letzten "
 "Eintrag<br><hilight>STRG+1</hilight> schaltet zwischen den Ansichten um "
 "(verlässt diese Seite ;)<br><hilight>STRG+2</hilight>schaltet die "
@@ -10123,27 +10123,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Leeren"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "In den Präsentationsmodus wechseln"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha ist im <b>Präsentationsmodus</b>."
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Präsentationsmodus wurde verlassen"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "Präsentationsmodus beendet."
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "In den Offlinemodus wechseln"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10151,11 +10151,11 @@ msgstr ""
 "Moksha befindet sich im <b>Offline</b>-Modus.<br>Im Offlinemodus werden "
 "Module keine entfernten Netzwerkdienste kontaktieren."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Offlinemodus verlassen"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10163,7 +10163,7 @@ msgstr ""
 "Zurück im <b>Online</b>-Modus.<br>Die Module fahren mit ihren "
 "netzwerkbezogenen Aufgaben fort."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 msgid "Notification expired!"
 msgstr "Benachrichtigung abgelaufen!"
 

@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -787,7 +787,7 @@ msgstr "立即休眠"
 msgid "Lock"
 msgstr "锁定"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "重新排列窗口"
 
@@ -1676,7 +1676,7 @@ msgstr "全部选否"
 msgid "Yes to all"
 msgstr "全部选是"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "警告"
@@ -2814,43 +2814,34 @@ msgstr "关于主题"
 msgid "Restart Moksha"
 msgstr "欢迎光临Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "收藏夹"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "无应用程序"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "壁纸"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "虚拟"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "书架"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "显示/隐藏所有窗口"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "设定虚拟桌面"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2859,29 +2850,29 @@ msgstr "设定虚拟桌面"
 msgid "Windows"
 msgstr "窗口"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "无窗口"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "丢失的窗口"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "未命名的窗口"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "书架 #"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "添加书架"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "删除书架"
 
@@ -3574,8 +3565,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"载入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>"
-"%s<br>"
+"载入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下："
+"<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -5009,6 +5000,14 @@ msgstr "主题壁纸"
 msgid "Current Wallpaper"
 msgstr "当前壁纸"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "壁纸"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "屏幕保护程序设置"
@@ -5767,8 +5766,9 @@ msgstr "绑定按键错误"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "您选择的按键绑定序列，<br>已经被<hilight>%s</hilight>动作使用。<br>请选择其他"
 "按键绑定序列。"
@@ -8262,11 +8262,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8280,13 +8280,13 @@ msgstr ""
 "<br>按 <hilight>&lt;Esc&gt;</hilight> 关闭这个对话框，<br>按 <hilight>&lt;?"
 "&gt;</hilight> 显示此页，<br>按 <hilight>&lt;回车键&gt;</hilight> 运行动作，"
 "<br>按<hilight>&lt;ctrl+return&gt;</hilight> 运行动作并继续，<br>  按  "
-"<hilight>&lt;tab&gt;</hilight> 在选择器之间切换。<br>   按 <hilight>&lt;ctrl"
-"+tab&gt;</hilight> 完成输入(依赖于插件)<br>   按 <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> 跳至以“x”开头的插件，<br>   按 <hilight>&lt;ctrl+左/右方向键&gt;</"
-"hilight> 在插件之间循环，<br>   按 <hilight>&lt;ctrl+上/下方向键&gt;</"
-"hilight> 跳至项目的开头/结尾<br>   按 <hilight>&lt;ctrl+1&gt;</hilight> 切换"
-"查看模式(退出此页)<br>   按 <hilight>&lt;ctrl+2&gt;</hilight> 切换列表显示模"
-"式<br> 按 <hilight>&lt;ctrl+3&gt;</hilight> 切换缩略图查看模式"
+"<hilight>&lt;tab&gt;</hilight> 在选择器之间切换。<br>   按 <hilight>&lt;"
+"ctrl+tab&gt;</hilight> 完成输入(依赖于插件)<br>   按 <hilight>&lt;"
+"ctrl+'x'&gt;</hilight> 跳至以“x”开头的插件，<br>   按 <hilight>&lt;ctrl+左/右"
+"方向键&gt;</hilight> 在插件之间循环，<br>   按 <hilight>&lt;ctrl+上/下方向键"
+"&gt;</hilight> 跳至项目的开头/结尾<br>   按 <hilight>&lt;ctrl+1&gt;</"
+"hilight> 切换查看模式(退出此页)<br>   按 <hilight>&lt;ctrl+2&gt;</hilight> 切"
+"换列表显示模式<br> 按 <hilight>&lt;ctrl+3&gt;</hilight> 切换缩略图查看模式"
 
 #: src/modules/everything/evry_view_tabs.c:93
 #, fuzzy
@@ -10014,28 +10014,28 @@ msgstr "DBus 初始化出错！请检查 dbug 是否已经安装正确并已运�
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "进入演示模式"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "离开演示模式"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "锁定演示模式"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "进入脱机模式"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10043,17 +10043,17 @@ msgstr ""
 "Moksha 处于<b>脱机</b>模式。<br>在脱机模式下，使用网络的模块将不会查询远程服"
 "务。。"
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "成功离开脱机模式"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr "现在处于<b>在线</b>模式。<br>从现在起程序恢复与网络的接连。"
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "通知"

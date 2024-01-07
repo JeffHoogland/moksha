@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2023-03-18 13:18+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -776,7 +776,7 @@ msgstr "Адправіць у спячку зараз"
 msgid "Lock"
 msgstr "Блакіраванне"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Прыбраць вокны"
 
@@ -884,8 +884,8 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha знайшоў памылку пры перамяшчэнні файлаў з наладамі<br>з:<br>"
-"%s<br><br>да:<br>%s<br><br>Запіс быў перапынены ў мэтах бяспекі.<br>"
+"Moksha знайшоў памылку пры перамяшчэнні файлаў з наладамі<br>з:"
+"<br>%s<br><br>да:<br>%s<br><br>Запіс быў перапынены ў мэтах бяспекі.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1685,7 +1685,7 @@ msgstr "Не на ўсё"
 msgid "Yes to all"
 msgstr "Так на ўсё"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Папярэджанне"
@@ -2837,42 +2837,33 @@ msgstr "Аб тэме"
 msgid "Restart Moksha"
 msgstr "Перазапусціць Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 msgid "Favorite Apps"
 msgstr "Абраныя праграмы"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Няма праграм"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Шпалера"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Віртуальныя"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Паліцы"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Паказаць/схаваць усе вокны"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Наладка віртуальных працоўных сталоў"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2881,29 +2872,29 @@ msgstr "Наладка віртуальных працоўных сталоў"
 msgid "Windows"
 msgstr "Вокны"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Няма вокнаў"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Страчаныя вокны"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Вокны без загалоўкаў"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Паліца %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Дадаць паліцу"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Выдаліць паліцу"
 
@@ -5079,6 +5070,14 @@ msgstr "Шпалера з тэмы"
 msgid "Current Wallpaper"
 msgstr "Бягучая шпалера"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Шпалера"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Налады захавальніка экрану"
@@ -5344,8 +5343,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"Сігнал ды крыніца, якія вы ўвялі, ўжо выкарыстоўваюцца<br>дзеяннем <hilight>"
-"%s</hilight>.<br>"
+"Сігнал ды крыніца, якія вы ўвялі, ўжо выкарыстоўваюцца<br>дзеяннем "
+"<hilight>%s</hilight>.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5827,8 +5826,9 @@ msgstr "Памылка прызначэння клавішы"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Паслядоўнасць клавіш, якую вы выбралі, ужо выкарыстоўваецца з<br>дзеяннем "
 "<hilight>%s</hilight>.<br>Калі ласка, выберыце іншую паслядоўнасць клавіш."
@@ -8271,11 +8271,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -10042,27 +10042,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Пуста"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Уваход у рэжым прэзентацыі"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha у рэжыме <b>прэзентацыі</b>."
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Зыход з рэжыму прэзентацыі"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "Рэжым прэзентацыі скончыўся."
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Уваход у пазасеткавы рэжым"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10070,11 +10070,11 @@ msgstr ""
 "Moksha у <b>пазасеткавым</b> рэжыме.<br>У гэтым рэжыме модулі, якія "
 "выкарыстоўваюць сетку, перастануць узаемадзейнічаць з аддаленнымі сэрвісамі."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Зыход з пазасеткавага рэжыма"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10082,7 +10082,7 @@ msgstr ""
 "Зараз у рэжыме <b>у сетцы</b>.<br>Зараз модулі, якія выкарыстоўваюць сетку, "
 "ізноў запрацуюць, як звычайна."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 msgid "Notification expired!"
 msgstr "Паведамленне састарэла!"
 

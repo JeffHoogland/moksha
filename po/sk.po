@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -776,7 +776,7 @@ msgstr "Režim spánku"
 msgid "Lock"
 msgstr "Zamknúť"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Usporiadať okná"
 
@@ -886,9 +886,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:<br>"
-"%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z bezpečnostných "
-"dôvodov.<br>"
+"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:"
+"<br>%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z "
+"bezpečnostných dôvodov.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1006,8 +1006,9 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 "Súbor, kam Moksha zapisoval svoje nastavenia<br>bol neočakávane zatvorený. "
-"To je veľmi nezvyčajné.<br><br>Súbor, kde sa chyba vyskytla:<br>"
-"%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov.<br>"
+"To je veľmi nezvyčajné.<br><br>Súbor, kde sa chyba vyskytla:"
+"<br>%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov."
+"<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1691,7 +1692,7 @@ msgstr "Nie pre všetko"
 msgid "Yes to all"
 msgstr "Áno na všetko"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Upozornenia"
@@ -2840,42 +2841,33 @@ msgstr "O Téme"
 msgid "Restart Moksha"
 msgstr "Reštart Moksha desktopu"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 msgid "Favorite Apps"
 msgstr "Obľúbené"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Žiadne aplikácie"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Tapeta"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Virtuálny"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Lišty"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Ukázať/Schovať všetky okná"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Nastaviť virtuálne plochy"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2884,29 +2876,29 @@ msgstr "Nastaviť virtuálne plochy"
 msgid "Windows"
 msgstr "Okná"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Žiadne okná"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Stratené okná"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Okno bez názvu"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Lišta %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Pridať lištu"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Odstránniť lištu"
 
@@ -3623,8 +3615,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>"
-"%s<br>Došlo k chybe:<br>%s<br>"
+"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:"
+"<br>%s<br>Došlo k chybe:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -5098,6 +5090,14 @@ msgstr "Obrázok témy"
 msgid "Current Wallpaper"
 msgstr "Aktuálna tapeta"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Tapeta"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Nastavenia šetriča obrazovky"
@@ -5841,8 +5841,9 @@ msgstr "Chyba pri priraďovaní skratky"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>%s</hilight>."
 "<br> Zvoľte iné priradenie."
@@ -8293,11 +8294,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -10006,27 +10007,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Prázdne"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Vstup do režimu Prezentácie"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha je v režime <br>prezentácie<br>"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Ukončenie režimu prezentácie "
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "Režim prezentácie je ukončený"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Vstup do offline režimu"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10034,11 +10035,11 @@ msgstr ""
 "Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
 "moduly ktoré využívajú vzdialené služby."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Ukončenie offline režimu"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10046,7 +10047,7 @@ msgstr ""
 "Teraz v <b>online</b> režime.<br>Moduly používajúce sieť teraz znovu spustia "
 "bežné úlohy"
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 msgid "Notification expired!"
 msgstr "Platnosť notifikácie vypršala!"
 

@@ -22,7 +22,7 @@ XGETTEXT_OPTIONS = --keyword=_ --keyword=d_:1 --keyword=P_:1,2 \
 # or entity, or to disclaim their copyright.  The empty string stands for
 # the public domain; in this case the translators are expected to disclaim
 # their copyright.
-COPYRIGHT_HOLDER = Enlightenment development team
+COPYRIGHT_HOLDER = Bodhi Linux
 
 # This is the email address or URL to which the translators shall report
 # bugs in the untranslated strings:
@@ -38,7 +38,7 @@ COPYRIGHT_HOLDER = Enlightenment development team
 # It can be your email address, or a mailing list address where translators
 # can write to without being subscribed, or the URL of a web page through
 # which the translators can contact you.
-MSGID_BUGS_ADDRESS = enlightenment-devel@lists.sourceforge.net
+MSGID_BUGS_ADDRESS = moksha@bodhilinux.com
 
 # This is the list of locale categories, beyond LC_MESSAGES, for which the
 # message catalogs shall be used.  It is usually empty.

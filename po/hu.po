@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2009-10-24 09:18+0000\n"
 "Last-Translator: lisovszki <lisovszki@gmail.com>\n"
 "Language-Team: Hungarian <pclinuxos-i18n@googlegroups.com>\n"
@@ -815,7 +815,7 @@ msgstr "Hibernálás"
 msgid "Lock"
 msgstr "Lezárás"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Ablakok tisztogatása"
 
@@ -1773,7 +1773,7 @@ msgstr "Nem, ne mindet"
 msgid "Yes to all"
 msgstr "Igen, mindet"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr ""
@@ -1816,8 +1816,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:<br><hilight>"
-"%s</hilight>?"
+"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:"
+"<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm.c:10909
 #, fuzzy, c-format
@@ -1828,11 +1828,11 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:<br><hilight>"
-"%s</hilight>?"
+"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
-"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:<br><hilight>"
-"%s</hilight>?"
+"Biztosan törölni akarod<br> a %d kiválasztott fájlokat innen:"
+"<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2973,44 +2973,35 @@ msgstr "A témáról"
 msgid "Restart Moksha"
 msgstr "Üdvözlünk az Mokshaben"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Kedvencek"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 #, fuzzy
 msgid "No applications"
 msgstr "(Nincs alkalmazás)"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Háttérkép"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Virtuális"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Polcok"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Összes ablak mutatása/elrejtése"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Virtuális asztalok beállítása"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3019,32 +3010,32 @@ msgstr "Virtuális asztalok beállítása"
 msgid "Windows"
 msgstr "Ablakok"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 #, fuzzy
 msgid "No windows"
 msgstr "(Nincsenek ablakok)"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Elveszett ablakok"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 #, fuzzy
 msgid "Untitled window"
 msgstr "Belső ablakok"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Polc #"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "Polc hozzáadása"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Polc törlése"
@@ -5329,6 +5320,14 @@ msgstr "Téma háttérkép"
 msgid "Current Wallpaper"
 msgstr "Munkaasztal háttérképe"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Háttérkép"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Képernyővédő beállítások"
@@ -6138,8 +6137,9 @@ msgstr "Billentyűkombináció hiba"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Ez a kombináció már használatban van a <br><hilight>%s</hilight> folyamat "
 "által.<br>Kérlek adj meg egy másik billenytûkombinációt."
@@ -8850,11 +8850,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -10706,29 +10706,29 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Belépés a bemutató módba"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Javaslat a bemutató módba való belépéshez"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Kilépve a bemutató módból"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Bemutató mód"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Belépés kapcsolat nélküli módba"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10736,11 +10736,11 @@ msgstr ""
 "Az Moksha <b>kapcsolat nélküli<b> módban fut.<br>Ez alatt azok a modulok, "
 "amelyek a netet használják, le lesznek állítva."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Kilépve a kapcsolat nélküli módból."
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10748,7 +10748,7 @@ msgstr ""
 "Most <b>online<b> módban van.<br>A hálózatot használó modulok ismét "
 "szabályosan működnek."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Figyelmeztető doboz"
@@ -12798,8 +12798,8 @@ msgstr "Felbontás módosítása"
 #~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Hiba történt az Moksha <br>beállításainak a lemezre mentése közben. A "
-#~ "hiba nem hozható helyre<br>.<br><br>A fájl ahol a hiba keletkezett:<br>"
-#~ "%s<br> A fájl törlésre kerül.<br>"
+#~ "hiba nem hozható helyre<br>.<br><br>A fájl ahol a hiba keletkezett:"
+#~ "<br>%s<br> A fájl törlésre kerül.<br>"
 
 #~ msgid ""
 #~ "Moksha's settings files are too big<br>for the file system they are being "
@@ -12811,8 +12811,8 @@ msgstr "Felbontás módosítása"
 #~ "Az Moksha konfigurációs fájlja túl nagy ahhoz a <br>fájlrendszerhez "
 #~ "képest, ahová mentve lett.<br>. Ez a hiba nagyon furcsa, mert a fájloknak "
 #~ "<br> sokkal kissebnek kell lennie. Kérlek ellenőrizd a <br> home "
-#~ "könyvtárad beállításait. <br><br>A fájl, ahol a hiba keletkezett: <br>"
-#~ "%s<br><br>A fájl törölve lett.<br>"
+#~ "könyvtárad beállításait. <br><br>A fájl, ahol a hiba keletkezett: "
+#~ "<br>%s<br><br>A fájl törölve lett.<br>"
 
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for Moksha. "
@@ -12828,8 +12828,8 @@ msgstr "Felbontás módosítása"
 #~ msgid ""
 #~ "Moksha cannot write its settings file<br>because it ran out of space to "
 #~ "write the file.<br>You have either run out of disk space or have<br>gone "
-#~ "over your quota limit.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ "over your quota limit.<br><br>The file where the error occurred was:"
+#~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Nem tudom elmenteni a konfigurációs fájlt, <br>mert nincs elég hely hozzá."
 #~ "<br> Vagy nincs elég hely a lemezeden, vagy <br>nincs jogosultásgod írni "

@@ -13,8 +13,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2021-11-27 15:08-0600\n"
 "Last-Translator: Alejandro Díaz <escuelaslinux@gmail.com>\n"
 "Language-Team: Spanish <>\n"
@@ -783,7 +783,7 @@ msgstr "Hibernar ahora"
 msgid "Lock"
 msgstr "Bloquear"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Limpiar ventanas"
 
@@ -894,8 +894,8 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Ha habido un error mientras se movían archivos de configuración de: %s a <br>"
-"%s<br>Se ha cancelado la operación por seguridad.<br>"
+"Ha habido un error mientras se movían archivos de configuración de: %s a "
+"<br>%s<br>Se ha cancelado la operación por seguridad.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1698,7 +1698,7 @@ msgstr "No a todos"
 msgid "Yes to all"
 msgstr "Sí a todos"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Aviso"
@@ -2846,42 +2846,33 @@ msgstr "Acerca del tema"
 msgid "Restart Moksha"
 msgstr "Reiniciar Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 msgid "Favorite Apps"
 msgstr "Aplicaciones favoritas"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "(Sin aplicaciones)"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Fondo de pantalla"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Virtual"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Paneles"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Mostrar/Ocultar todas las ventanas"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Asignar escritorios virtuales"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2890,29 +2881,29 @@ msgstr "Asignar escritorios virtuales"
 msgid "Windows"
 msgstr "Ventanas"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Ninguna ventana"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Ventanas perdidas"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Ventana sin nombre"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Panel %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Agregar un panel"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Eliminar un panel"
 
@@ -5072,6 +5063,14 @@ msgstr "Tema del fondo de pantalla"
 msgid "Current Wallpaper"
 msgstr "Fondo de pantalla actual"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Fondo de pantalla"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Opciones de salvapantallas"
@@ -5259,8 +5258,8 @@ msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
-"La combinación de teclas que eligió ya se está usando para la acción<hilight>"
-"%s</hilight>.<br>Por favor, elija otra combinación de teclas."
+"La combinación de teclas que eligió ya se está usando para la "
+"acción<hilight>%s</hilight>.<br>Por favor, elija otra combinación de teclas."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
@@ -5814,8 +5813,9 @@ msgstr "Error de atajo de teclado"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La combinación de teclas que eligió, ya está siendo usada para <br>la acción "
 "<hilight>%s</hilight>. <br>Elija otra combinación de teclas para el atajo."
@@ -8257,11 +8257,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8275,17 +8275,17 @@ msgstr ""
 "</hilight>.<br> Esta página no volverá a aparecer la próxima vez que ejecute "
 "<hilight>TODO</hilight>.<br>    <hilight>&lt;ESC&gt;</hilight> para cerrar "
 "esta ventana<br>    <hilight>&lt;?&gt;</hilight> muestra esta ventana<br>    "
-"<hilight>&lt;ENTER&gt;</hilight> ejecutar acción<br>    <hilight>&lt;CONTROL"
-"+ENTER&gt;</hilight> ejecutar acción y continuar<br>    <hilight>&lt;TAB&gt;"
-"</hilight> activar/desactivar selectores<br>    <hilight>&lt;CONTROL+TAB&gt;"
-"</hilight> completar entrada (depende del plugin)<br>    <hilight>&lt;CONTROL"
-"+'x''&gt;</hilight> ir ar plugin que empieza por 'x'<br>    <hilight>&lt;"
-"CONTROL+izquiera/derecha&gt;</hilight> cambiar entre losplugins<br>    "
-"<hilight>&lt;CONTROL+arriba/debajo&gt;</hilight> ir al primer/último<br>    "
-"<hilight>&lt;CONTROL+1&gt;</hilight> cambiar vista (sale de está "
-"ventana ;)<br>    <hilight>&lt;CONTROL+2&gt;</hilight> cambiar modos de "
-"vista<br>    <hilight>&lt;CONTROL+3&gt;</hilight> cambiar modos de vista de "
-"miniaturas"
+"<hilight>&lt;ENTER&gt;</hilight> ejecutar acción<br>    <hilight>&lt;"
+"CONTROL+ENTER&gt;</hilight> ejecutar acción y continuar<br>    <hilight>&lt;"
+"TAB&gt;</hilight> activar/desactivar selectores<br>    <hilight>&lt;"
+"CONTROL+TAB&gt;</hilight> completar entrada (depende del plugin)<br>    "
+"<hilight>&lt;CONTROL+'x''&gt;</hilight> ir ar plugin que empieza por "
+"'x'<br>    <hilight>&lt;CONTROL+izquiera/derecha&gt;</hilight> cambiar entre "
+"losplugins<br>    <hilight>&lt;CONTROL+arriba/debajo&gt;</hilight> ir al "
+"primer/último<br>    <hilight>&lt;CONTROL+1&gt;</hilight> cambiar vista "
+"(sale de está ventana ;)<br>    <hilight>&lt;CONTROL+2&gt;</hilight> cambiar "
+"modos de vista<br>    <hilight>&lt;CONTROL+3&gt;</hilight> cambiar modos de "
+"vista de miniaturas"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -10021,27 +10021,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Vacío"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Entrar en modo presentación"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha está en modo <b>presentación</b>."
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Salió del modo presentación"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "Modo Presentación ha finalizado."
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Entrar en modo desconectado"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10049,11 +10049,11 @@ msgstr ""
 "Moksha está en modo <b>desconectado</b>.<br/>Los módulos que usen la red no "
 "responderán a servicios remotos."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Salió del modo desconectado"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10061,7 +10061,7 @@ msgstr ""
 "Ahora está en modo <b>conectado</b>.<br>Los módulos que usen la red "
 "continuarán con sus tareas normales."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Notificación"

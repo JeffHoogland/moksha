@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -816,7 +816,7 @@ msgstr "עבור למצב שינה"
 msgid "Lock"
 msgstr "נעל"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "ניקוי החלונות"
 
@@ -1769,7 +1769,7 @@ msgstr "לא להכול"
 msgid "Yes to all"
 msgstr "כן להכול"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 #, fuzzy
 msgid "Warning"
@@ -2393,7 +2393,7 @@ msgstr "בחר בסגנון המסגרת"
 #: src/bin/e_int_border_menu.c:1231
 #, fuzzy
 msgid "Use Moksha Default Icon Preference"
-msgstr "השתמש בהעדפת הסמל כברירת המחדל של E17"
+msgstr "השתמש בהעדפת הסמל כברירת המחדל של Moksha"
 
 #: src/bin/e_int_border_menu.c:1239
 #, fuzzy
@@ -2970,46 +2970,36 @@ msgstr "אודות ערכות הנושא"
 msgid "Restart Moksha"
 msgstr "אודות Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "המועדפים"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 #, fuzzy
 msgid "No applications"
 msgstr "(אין יישומים)"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-#, fuzzy
-msgid "Wallpaper"
-msgstr "טפט"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "וירטואלי"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "מדפים"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "הצגת/הסתרת כל החלונות"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 #, fuzzy
 msgid "Set Virtual Desktops"
 msgstr "להגדיר שולחנות עבודה וירטואליים"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3018,32 +3008,32 @@ msgstr "להגדיר שולחנות עבודה וירטואליים"
 msgid "Windows"
 msgstr "חלונות"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 #, fuzzy
 msgid "No windows"
 msgstr "(אין חלונות)"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "חלונות שאבדו"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 #, fuzzy
 msgid "Untitled window"
 msgstr "לסגור את החלון"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "מדף מס'"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "הוסף מדף"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "מחק מדף"
@@ -3782,8 +3772,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"ארעה שגיאה בטעינת מודול בשם: %s<br>הנתיב המלא למודול זה הינו:<br>"
-"%s<br>השגיאה שדווחה הינה:<br>%s<br>"
+"ארעה שגיאה בטעינת מודול בשם: %s<br>הנתיב המלא למודול זה הינו:"
+"<br>%s<br>השגיאה שדווחה הינה:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -5362,6 +5352,15 @@ msgstr "נושא טפט"
 msgid "Current Wallpaper"
 msgstr "הגדרת רקע שולחן העבודה"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+#, fuzzy
+msgid "Wallpaper"
+msgstr "טפט"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 #, fuzzy
 msgid "Screen Saver Settings"
@@ -6210,8 +6209,9 @@ msgstr "שגיאה מפתח מחייב"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
@@ -9089,11 +9089,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -11022,28 +11022,28 @@ msgstr "שגיאה במהלך הפעלת DBus! אנא בדוק האם dbus פע�
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "כניסה למצב מצגת"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "מצב המצגת נפסק"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "החלפת מצב הצגה"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "כניסה למצב ניתוק"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -11051,11 +11051,11 @@ msgstr ""
 "Enlightement במצב <b>ניתוק</b>.<br>במצב זה המודולים המשתמשים ברשת יפסיקו "
 "לתשאל שירותים למרחוק."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "מצב הניתוק הופסק"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -11063,7 +11063,7 @@ msgstr ""
 "כעת במצב <b>מחובר</b>.<br>כעת המודולים המשתמשים ברשת יוכלו להמשיך במשימותיהם "
 "הרגילות."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "תיבת הדיווחים"

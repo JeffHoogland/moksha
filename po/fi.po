@@ -1,5 +1,5 @@
 # Finnish translation for Moksha.
-# 
+#
 # This file is put in the public domain.
 # Jani Väyrynen <janivayrynen@gmail.com>, 2008.
 # Jussi Aalto <jta_lnx@dnainternet.net>, 2009.
@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2009-12-31 07:00+0000\n"
 "Last-Translator: Jussi Aalto <jta_lnx@dnainternet.net>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -815,7 +815,7 @@ msgstr "Lepotila"
 msgid "Lock"
 msgstr "Lukitse"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Siivoa ikkunat"
 
@@ -931,8 +931,9 @@ msgid ""
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 "Mokshain asetustiedosto<br>suljettiin juuri kun sitä oltiin kirjoittamassa. "
-"Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>"
-"%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
+"Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe ilmeni, oli:"
+"<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi."
+"<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1067,8 +1068,9 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 "Mokshain asetustiedosto<br>suljettiin juuri kun sitä oltiin kirjoittamassa. "
-"Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe ilmeni, oli:<br>"
-"%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi.<br>"
+"Tämä on hyvin epätavallista.<br><br>Tiedosto, jossa virhe ilmeni, oli:"
+"<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi."
+"<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1781,7 +1783,7 @@ msgstr "Ei kaikkiin"
 msgid "Yes to all"
 msgstr "Kyllä kaikkiin"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Varoitus"
@@ -2985,44 +2987,35 @@ msgstr "Tietoja teemasta"
 msgid "Restart Moksha"
 msgstr "Tervetuloa Mokshaiin"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Suosikit"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 #, fuzzy
 msgid "No applications"
 msgstr "(Ei sovelluksia)"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Taustakuva"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Virtuaali:"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Hyllyt"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Näytä/Piilota kaikki ikkunat"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Määritä virtuaalityöpöydät"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -3031,32 +3024,32 @@ msgstr "Määritä virtuaalityöpöydät"
 msgid "Windows"
 msgstr "Ikkunat"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 #, fuzzy
 msgid "No windows"
 msgstr "(Ei ikkunoita)"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Kadonneet ikkunat"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 #, fuzzy
 msgid "Untitled window"
 msgstr "Sisäiset ikkunat"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "Hylly #"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 #, fuzzy
 msgid "Add a Shelf"
 msgstr "Lisää hylly"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 #, fuzzy
 msgid "Delete a Shelf"
 msgstr "Poista hylly"
@@ -3747,8 +3740,8 @@ msgid ""
 msgstr ""
 "Moksha havaitsi että Evas ei pysty lataamaan \"Sans\"-fonttia. Tarkista että "
 "Evas\n"
-"sisältää fontconfig-tuen ja että järjestelmän fontconfig määrittelee \"Sans"
-"\"-fontin.\n"
+"sisältää fontconfig-tuen ja että järjestelmän fontconfig määrittelee "
+"\"Sans\"-fontin.\n"
 
 #: src/bin/e_main.c:1927
 #, c-format
@@ -5356,6 +5349,14 @@ msgstr "Teeman taustakuva"
 msgid "Current Wallpaper"
 msgstr "Työpöydän taustakuva"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Taustakuva"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Näytönsäästäjän asetukset"
@@ -6167,8 +6168,9 @@ msgstr "Näppäimistötoiminnon virhe"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Valitsemasi näppäinyhdistelmä on jo toiminnon<br><hilight>%s</hilight> "
 "käytössä.<br>Valitse jokin toinen näppäinyhdistelmä, kiitos."
@@ -8885,11 +8887,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -10740,16 +10742,16 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Esitystilaan siirtyminen"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Ehdota esitystilaan siirtymistä"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr ""
@@ -10757,12 +10759,12 @@ msgstr ""
 "Esitystilaan siirtyminen\n"
 "#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Esitystilaan vaihto"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr ""
@@ -10770,13 +10772,13 @@ msgstr ""
 "Offline-tila\n"
 "#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr ""
@@ -10784,13 +10786,13 @@ msgstr ""
 "Offline-tila\n"
 "#-#-#-#-#  fi.po (Moksha (e17) CVS)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr ""
@@ -11782,12 +11784,12 @@ msgstr "Tarkkuuden vaihto"
 #~ "will be restored in %d seconds."
 #~ msgstr[0] ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d @ %d Hz palautetaan %d sekunnin kuluttua."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d @ %d Hz palautetaan %d sekunnin kuluttua."
 #~ msgstr[1] ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d @ %d Hz palautetaan %d sekunnin kuluttua."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d @ %d Hz palautetaan %d sekunnin kuluttua."
 
 #, fuzzy
 #~ msgid ""
@@ -11800,12 +11802,12 @@ msgstr "Tarkkuuden vaihto"
 #~ "restored in %d seconds."
 #~ msgstr[0] ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d palautetaan %d sekunnin kuluttua."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d palautetaan %d sekunnin kuluttua."
 #~ msgstr[1] ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d palautetaan %d sekunnin kuluttua."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d palautetaan %d sekunnin kuluttua."
 
 #, fuzzy
 #~ msgid ""
@@ -11814,8 +11816,8 @@ msgstr "Tarkkuuden vaihto"
 #~ "will be restored <hilight>IMMEDIATELY</hilight>."
 #~ msgstr ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d @ %d Hz palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d @ %d Hz palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
 
 #, fuzzy
 #~ msgid ""
@@ -11824,8 +11826,8 @@ msgstr "Tarkkuuden vaihto"
 #~ "restored <hilight>IMMEDIATELY</hilight>."
 #~ msgstr ""
 #~ "Näyttääkö tämä hyvältä? Jos näyttää, paina <hilight>Tallenna</hilight>, "
-#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi tarkkuus<br>%dx"
-#~ "%d palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
+#~ "muussa tapauksessa Palauta.<br>Jos et paina nappia, aiempi "
+#~ "tarkkuus<br>%dx%d palautetaan <hilight>VÄLITTÖMÄSTI</hilight>."
 
 #~ msgid "Resolution change"
 #~ msgstr "Tarkkuuden vaihto"
@@ -12830,9 +12832,9 @@ msgstr "Tarkkuuden vaihto"
 #~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Tallennettaessa Mokshain asetuksia levylle<br> ilmeni virhe. Virhettä ei "
-#~ "voitu<br>tunnistaa.<br><br>Tiedosto, jossa virhe ilmeni,oli:<br>"
-#~ "%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan välttämiseksi."
-#~ "<br>"
+#~ "voitu<br>tunnistaa.<br><br>Tiedosto, jossa virhe ilmeni,oli:"
+#~ "<br>%s<br><br>Tämä tiedosto on poistettu korruptoituneen datan "
+#~ "välttämiseksi.<br>"
 
 #~ msgid ""
 #~ "Moksha's settings files are too big<br>for the file system they are being "
@@ -12861,8 +12863,8 @@ msgstr "Tarkkuuden vaihto"
 #~ msgid ""
 #~ "Moksha cannot write its settings file<br>because it ran out of space to "
 #~ "write the file.<br>You have either run out of disk space or have<br>gone "
-#~ "over your quota limit.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ "over your quota limit.<br><br>The file where the error occurred was:"
+#~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Moksha ei voi tallentaa asetustiedostoaan,<br>koska levyllä ei ole "
 #~ "tarpeeksi tilaa tiedoston kirjoittamiseen.<br>Levytila on joko lopussa "

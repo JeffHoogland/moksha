@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
+"POT-Creation-Date: 2024-01-07 16:09-0500\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -779,7 +779,7 @@ msgstr "Перевести в спящий режим немедленно"
 msgid "Lock"
 msgstr "Блокировка"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Расчистить окна"
 
@@ -888,8 +888,8 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
-"%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
+"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:"
+"<br>%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1006,9 +1006,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле.<br>"
-"%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был удалён "
-"для предотвращения повреждения данных. <br>"
+"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле."
+"<br>%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был "
+"удалён для предотвращения повреждения данных. <br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1689,7 +1689,7 @@ msgstr "Нет для всего"
 msgid "Yes to all"
 msgstr "Да для всего"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Предупреждение"
@@ -2842,42 +2842,33 @@ msgstr "О теме"
 msgid "Restart Moksha"
 msgstr "Перезапустить Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 msgid "Favorite Apps"
 msgstr "Избранное"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Нет приложений"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Обои"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Виртуальные"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Полки"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Показать/скрыть все окна"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Настройка виртуальных рабочих столов"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2886,29 +2877,29 @@ msgstr "Настройка виртуальных рабочих столов"
 msgid "Windows"
 msgstr "Окна"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Нет окон"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Потерянные окна"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Окно без заголовка"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Полка (%s)"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Добавить полку"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Удалить полку"
 
@@ -5078,6 +5069,14 @@ msgstr "Обои из темы"
 msgid "Current Wallpaper"
 msgstr "Текущие обои"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Обои"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Настройки хранителя экрана"
@@ -5828,8 +5827,9 @@ msgstr "Ошибка привязки клавиши"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Выбраная вами последовательность уже используется привязкой<br><hilight>%s</"
 "hilight>.<br>Пожалуйста, выберите другую последовательность."
@@ -7864,8 +7864,8 @@ msgid ""
 msgstr ""
 "Файл программы freqset в каталоге модуля<ps/>Частота ЦПУ не принадлежит "
 "пользователю<ps/>root или для неё не установлен бит setuid.<ps/>Пожалуйста, "
-"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
-"+x %s<ps/>"
+"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
+"a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8273,11 +8273,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8291,12 +8291,12 @@ msgstr ""
 "ввод&gt;</hilight>.<br> Эта страничка не покажется при следующем запуске "
 "<hilight>Всё</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> закрыть этот "
 "диалог<br>    <hilight>&lt;?&gt;</hilight> показать эту страницу<br>    "
-"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;ctrl"
-"+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
-"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;ctrl"
-"+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    <hilight>&lt;"
-"ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с 'x'<br>    "
-"<hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
+"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;"
+"ctrl+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
+"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;"
+"ctrl+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    "
+"<hilight>&lt;ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с "
+"'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
 "плагинам<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> перейти к первому/"
 "последнему элементу<br>    <hilight>&lt;ctrl+1&gt;</hilight> переключение "
 "режимов просмотра<br>    <hilight>&lt;ctrl+2&gt;</hilight> переключение "
@@ -10050,27 +10050,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Пусто"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Переход в режим презентации"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha в режиме <b>презентации</b>."
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Режим Презентации отключен"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "Режим презентации завершён."
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Включить автономный режим работы"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10078,11 +10078,11 @@ msgstr ""
 "Включен <b>автономный</b> режим работы.<br>В этом режиме модули, "
 "использующие сеть, прекратят её использование."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Выключить автономный режим"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10090,7 +10090,7 @@ msgstr ""
 "Режим <b>подключения к сети</b> активен. Модули, использующие сеть, "
 "продолжат работу."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 msgid "Notification expired!"
 msgstr "Уведомление устарело!"
 
@@ -11884,8 +11884,8 @@ msgstr "Звук выкл."
 #~ "Could not execute remote operation:<br>%s<br>Server Error <hilight>%s:</"
 #~ "hilight> %s"
 #~ msgstr ""
-#~ "Не удалось выполнить удаленную операцию:<br>%s<br>Ошибка Сервера <hilight>"
-#~ "%s:</hilight>·%s"
+#~ "Не удалось выполнить удаленную операцию:<br>%s<br>Ошибка Сервера "
+#~ "<hilight>%s:</hilight>·%s"
 
 #~ msgid "Could not execute local operation:<br>%s"
 #~ msgstr "Не удалось выполнить локальную операцию:<br>%s"
@@ -12146,8 +12146,8 @@ msgstr "Звук выкл."
 #~ "Файлы параметров Moksha слишком велики<br>для файловой системы, в которую "
 #~ "они сохраняются.<br>Эта ошибка очень подозрительна, так как<br>файлы "
 #~ "должны быть очень небольшими. Пожалуйста,<br>проверьте настройки "
-#~ "домашнего<br><br>каталога. Файл, в котором возникла ошибка:<br>"
-#~ "%s<br><br>Файл был удалён для предотвращения повреждения данных.<br>"
+#~ "домашнего<br><br>каталога. Файл, в котором возникла ошибка:"
+#~ "<br>%s<br><br>Файл был удалён для предотвращения повреждения данных.<br>"
 
 #~ msgid ""
 #~ "An output error occurred when writing the settings<br>files for Moksha. "
@@ -12163,8 +12163,8 @@ msgstr "Звук выкл."
 #~ msgid ""
 #~ "Moksha cannot write its settings file<br>because it ran out of space to "
 #~ "write the file.<br>You have either run out of disk space or have<br>gone "
-#~ "over your quota limit.<br><br>The file where the error occurred was:<br>"
-#~ "%s<br><br>This file has been deleted to avoid corrupt data.<br>"
+#~ "over your quota limit.<br><br>The file where the error occurred was:"
+#~ "<br>%s<br><br>This file has been deleted to avoid corrupt data.<br>"
 #~ msgstr ""
 #~ "Moksha не может записать файл настроек<br>из-за недостатка места на "
 #~ "диске. Это либо физический<br>недостаток места, либо вы исчерпали свою "
