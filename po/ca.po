@@ -10,9 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"POT-Creation-Date: 2024-01-07 12:14-0500\n"
 "PO-Revision-Date: 2020-03-06 21:43+0100\n"
 "Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
+"Language-Team: Català <enlightenment-devel@lists.sourceforge.net>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -783,7 +784,7 @@ msgstr "Hiberna ara"
 msgid "Lock"
 msgstr "Bloqueja"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Organitza finestres"
 
@@ -1700,7 +1701,7 @@ msgstr "No a tot"
 msgid "Yes to all"
 msgstr "Sí a tot"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Alerta"
@@ -1754,11 +1755,11 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d a<br><hilight>"
-"%s</hilight>?"
+"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d "
+"a<br><hilight>%s</hilight>?"
 msgstr[1] ""
-"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d a<br><hilight>"
-"%s</hilight>?"
+"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d "
+"a<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2849,43 +2850,34 @@ msgstr "Quant al tema"
 msgid "Restart Moksha"
 msgstr "Tornar a engegar Moksha"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Favorits"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Sense aplicacions"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Fons de pantalla"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Escriptoris virtuals"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Taulers"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Mostra/Amaga totes les finestres"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Configura escriptoris virtuals"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2894,29 +2886,29 @@ msgstr "Configura escriptoris virtuals"
 msgid "Windows"
 msgstr "Finestres"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Sense finestres"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Finestres perdudes"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "Finestres sense títol"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Tauler %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Afegeix un tauler"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Elimina un tauler"
 
@@ -5089,6 +5081,14 @@ msgstr "Tema del fons de pantalla"
 msgid "Current Wallpaper"
 msgstr "Fons de pantalla actual"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Fons de pantalla"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Opcions d'estalvi de pantalla"
@@ -5848,8 +5848,9 @@ msgstr "Error de drecera de teclat"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La seqüència de drecera de tecles, que heu escollit, està essent utilitzada "
 "per l'acció<br><hilight>%s</hilight>. Si us plau escolliu una altra "
@@ -8337,11 +8338,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8358,8 +8359,8 @@ msgstr ""
 "aquesta pàgina<br>    <hilight>&lt;ENTER&gt;</hilight> executa "
 "acció<br><hilight>&lt;CTRL+ENTER&gt;</hilight> executa acció i continua<br> "
 "<hilight>&lt;TAB&gt;</hilight> canvia selecció<br><hilight>&lt;CRTL+TAB&gt;</"
-"hilight> completa entrada  (depèn de connector)<br>    <hilight>&lt;CTRL"
-"+'x'&gt;</hilight> salta al connector que comença per 'x'<br>    "
+"hilight> completa entrada  (depèn de connector)<br>    <hilight>&lt;"
+"CTRL+'x'&gt;</hilight> salta al connector que comença per 'x'<br>    "
 "<hilight>&lt;CRTL+esquerra</right&gt;</hilight> Desplaça a través de "
 "connectors<br>    <hilight>&lt;CTRL+amunt/avall&gt;</hilight> va al primer/"
 "últim element<br>    <hilight>&lt;CTRL+1&gt;</hilight> canvia mode vista "
@@ -10129,27 +10130,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Buit"
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Entra al mode presentació"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha està en mode de <b>presentació</b>."
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "S'ha sortit del mode presentació"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
 msgstr "S'acaba la mode de presentació."
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Entra mode desconnectat"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10157,11 +10158,11 @@ msgstr ""
 "Moksha és en mode <b>desconnectat</b>.<br>Mentre estigui desconnectat els "
 "mòduls que utilitzen la xarxa aturaran els serveis de sondeig remot."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "S'ha sortit del mode desconnectat"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10169,7 +10170,7 @@ msgstr ""
 "Ara s'utilitza el mode <b>connectat<br>Els mòduls que utilitzen la xarxa "
 "restabliran les seves tasques."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Notificacions"
