@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"POT-Creation-Date: 2024-01-07 12:14-0500\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -779,7 +779,7 @@ msgstr "Şimdi uykuya geçir"
 msgid "Lock"
 msgstr "Kilitle"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Pencereleri Temizle"
 
@@ -889,8 +889,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha ayar dosyalarını taşırken bir hata ile karşılaştı<br>şuradan:<br>"
-"%s<br><br>şuraya:<br>%s<br><br>Kalan işlemler güvenlik için iptal edildi.<br>"
+"Moksha ayar dosyalarını taşırken bir hata ile karşılaştı<br>şuradan:"
+"<br>%s<br><br>şuraya:<br>%s<br><br>Kalan işlemler güvenlik için iptal edildi."
+"<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1677,7 +1678,7 @@ msgstr "Tümüne hayır"
 msgid "Yes to all"
 msgstr "Tümüne evet"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr ""
@@ -2825,43 +2826,34 @@ msgstr "Tema Hakkında"
 msgid "Restart Moksha"
 msgstr "Moksha'a Hoş Geldiniz"
 
-#: src/bin/e_int_menus.c:344
+#: src/bin/e_int_menus.c:338
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "Beğenilenler"
 
-#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
+#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
 msgstr "Uygulama Yok"
 
-#: src/bin/e_int_menus.c:358
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Duvar Kağıdı"
-
-#: src/bin/e_int_menus.c:377
+#: src/bin/e_int_menus.c:362
 msgid "Virtual"
 msgstr "Sanal"
 
-#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Raflar"
 
-#: src/bin/e_int_menus.c:393
+#: src/bin/e_int_menus.c:378
 msgid "Show/Hide All Windows"
 msgstr "Tüm Pencereleri Göster/Gizle"
 
-#: src/bin/e_int_menus.c:1042
+#: src/bin/e_int_menus.c:1027
 msgid "Set Virtual Desktops"
 msgstr "Sanal Masaüstlerini Ayarla"
 
-#: src/bin/e_int_menus.c:1412
+#: src/bin/e_int_menus.c:1397
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2870,29 +2862,29 @@ msgstr "Sanal Masaüstlerini Ayarla"
 msgid "Windows"
 msgstr "Pencereler"
 
-#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
+#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
 msgid "No windows"
 msgstr "Pencere yok"
 
-#: src/bin/e_int_menus.c:1467
+#: src/bin/e_int_menus.c:1452
 msgid "Lost Windows"
 msgstr "Kayıp Pencereler"
 
-#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
+#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
 msgid "Untitled window"
 msgstr "İsimsiz pencere"
 
-#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Raf %s"
 
-#: src/bin/e_int_menus.c:1802
+#: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
 msgstr "Bir Raf ekle"
 
-#: src/bin/e_int_menus.c:1809
+#: src/bin/e_int_menus.c:1794
 msgid "Delete a Shelf"
 msgstr "Rafı Sil"
 
@@ -4998,6 +4990,14 @@ msgstr "Tema Duvar Kağıdı"
 msgid "Current Wallpaper"
 msgstr "Mevcut Duvar kağıdı"
 
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Duvar Kağıdı"
+
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
 msgstr "Ekran Koruyucu Ayarları"
@@ -5752,8 +5752,9 @@ msgstr "Kısayol Tuşu Hatası"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Girdiğiniz kısayol tuşu dizisi, <hilight>%s</hilight> eylemi "
 "için<br>kullanılıyor. Lütfen farklı bir kısayol tuşu dizisi girin."
@@ -8240,11 +8241,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -9238,16 +9239,6 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
-"well as available add-ons.<br><br>This is very useful, because it "
-"lets<br>you know about available bug fixes and<br>security fixes when they "
-"happen. As a<br>result, Moksha will connect to<br>enlightenment.org and "
-"transmit some<br>information, much like any web browser<br>might do. No "
-"personal information such as<br>username, password or any personal "
-"files<br>will be transmitted. If you don't like this,<br>please disable this "
-"below. It is highly<br>advised that you do not disable this as it<br>may "
-"leave you vulnerable or having to live<br>with bugs.\r\n"
-"\r\n"
 "Moksha yeni sürümleri, <br>güncellemeleri, güvenlik güncellemelerini, "
 "<br>hata düzeltmelerini ve hazır eklentileri denetleyebilir. <br><br>Bu çok "
 "kullanışlıdır, çünkü hata ve güvenlik düzeltmeleri <br>hazır olduğunda "
@@ -10000,28 +9991,28 @@ msgstr ""
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:617
+#: src/modules/notification/e_mod_main.c:622
 msgid "Enter Presentation Mode"
 msgstr "Sunum Kipine Gir"
 
-#: src/modules/notification/e_mod_main.c:618
+#: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
 msgstr "Sunum Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Sunum Kipini Aç/Kapa"
 
-#: src/modules/notification/e_mod_main.c:637
+#: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
 msgstr "Çevrimdışı Moduna Gir"
 
-#: src/modules/notification/e_mod_main.c:638
+#: src/modules/notification/e_mod_main.c:643
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10029,11 +10020,11 @@ msgstr ""
 "Enlightment <b>çevrimdışı</b> modunda.<br>Çevrimdışı modu sırasında, ağı "
 "kullanan modüller dış servislerden veri almayı durduracak."
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:649
 msgid "Exited Offline Mode"
 msgstr "Çevrimdışı Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:645
+#: src/modules/notification/e_mod_main.c:650
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10041,7 +10032,7 @@ msgstr ""
 "Şimdi <b>çevrimiçi</b> modunda.<br>Ağı kullanan modüller şimdi normal "
 "görevlerine devam edecek."
 
-#: src/modules/notification/e_mod_main.c:703
+#: src/modules/notification/e_mod_main.c:708
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Bildirim"
