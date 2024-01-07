@@ -1,8 +1,8 @@
+# Turkish translation for Moksha. 
+#
 # This file is put in the public domain.
-#
-# This translator was created/edited with the Elive translation tool
-#
 # H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>, 2009, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"

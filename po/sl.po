@@ -1,5 +1,6 @@
-# translation of trunk.HEAD.po to Slovenian
+# Slovenian translation for Moksha. 
 #
+# This file is put in the public domain. 
 # r1to <renato.rener@gmail.com>, 2011.
 msgid ""
 msgstr ""

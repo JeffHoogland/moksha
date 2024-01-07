@@ -1,6 +1,6 @@
-# Belarusian translations for enlightenment package.
-# Copyright (C) 2023 Enlightenment development team
-# This file is distributed under the same license as the enlightenment package.
+# Belarusian translations for Moksha.
+#
+# This file is put in the public domain. 
 # R0bur <robursw@gmail.com>, 2023.
 #
 msgid ""

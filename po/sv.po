@@ -1,4 +1,5 @@
 # Swedish translation of Moksha.
+#
 # This file is put in the public domain.
 # Anders Trobäck <enlightenment@troback.com>, 2006.
 # Daniel Nylander <yeager@ubuntu.com>, 2009.

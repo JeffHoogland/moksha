@@ -1,7 +1,9 @@
-# Moksha (e17) CVS, Finnish translation
+# Finnish translation for Moksha.
+# 
 # This file is put in the public domain.
 # Jani Väyrynen <janivayrynen@gmail.com>, 2008.
 # Jussi Aalto <jta_lnx@dnainternet.net>, 2009.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha (e17) CVS\n"

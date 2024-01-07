@@ -1,8 +1,10 @@
-# Brazilian portuguese translation of e17
+# Brazilian portuguese translation of Moksha.
+#
 # This file is public domain.
 # Rodrigo -MDK- Oliveira <mdkcore@gmail.com>, 2007, 2008, 2009.
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
 # Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com> 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"

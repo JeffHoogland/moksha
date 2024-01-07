@@ -1,4 +1,5 @@
-# Moksha 0.17 Simplified Chinese Translation
+# Simplified Chinese translation for Moksha.
+#  
 # This file is put in the public domain.
 # Emfox Zhou <emfox@zju.edu.cn>, 2005.
 # gao stone <gaoghy@gmail.com>, 2008.
@@ -8,6 +9,7 @@
 # squeeze <squeeze@189.cn>, 2015.
 # Yunqiang Su <wzssyqa@gmail.com>, 2015.
 # Aron Xu <happyaron.xu@gmail.com>, 2008, 2009, 2010, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"

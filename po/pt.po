@@ -1,4 +1,5 @@
-# Portuguese translation of Moksha desktop
+# Portuguese translation of Moksha.
+#
 # This file is public domain.
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.

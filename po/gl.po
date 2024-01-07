@@ -1,6 +1,6 @@
-# Galician translation of e17
-# Copyright (C) 2015 Moksha development team
-# This file is distributed under the same license as the e17 package.
+# Galician translation of Moksha.
+#
+# This file is put in the public domain. 
 # Aníbal Garrido <khany@member.trisquel.info>, 2015, 2013.
 #
 msgid ""

@@ -1,8 +1,8 @@
-# Lithuanian translation for enlightenment
-# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# This file is distributed under the same license as the enlightenment package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# Lithuanian translation for Moksha.
+#
+# This file is put in the public domain.
 # Vaidotas <joshas@freemail.lt>, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"

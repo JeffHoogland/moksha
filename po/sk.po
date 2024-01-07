@@ -1,4 +1,5 @@
-# Slovak translations for Moksha desktop
+# Slovak translations for Moksha.
+#
 # This file is put in public domain.
 #
 msgid ""

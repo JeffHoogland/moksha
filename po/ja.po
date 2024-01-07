@@ -1,7 +1,8 @@
-# This is the Japanese locale definition for Moksha DR 17
+# Japanese translation for Moksha.  
+#
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#   David Stevenson <david.35472@gmail.com>
+# David Stevenson <david.35472@gmail.com>
 #
 msgid ""
 msgstr ""

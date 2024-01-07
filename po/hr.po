@@ -1,5 +1,6 @@
-# Croatian translation for enlightenment
-# This file is distributed under the same license as the enlightenment package.
+# Croatian translation for Moksha.
+#
+# This file is put in the public domain..
 # Miro Glavic <glavicmiro@gmail.com>, 2009.
 #
 msgid ""

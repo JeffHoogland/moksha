@@ -1,9 +1,10 @@
-# Czech translation
+# Czech translation for Moksha.
+#
 # This file is put in the public domain.
 # quaker66@gmail.com
-#
 # Vít Pelčák <vit@pelcak.org>, 2011.
 # Tomáš Čech <sleep_walker@suse.cz>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"

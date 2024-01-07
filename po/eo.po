@@ -1,12 +1,11 @@
-# translation of e17-071209.po to
-# translation of e17-070917.po to
-# translation of e17-070910.po to
-# translation of eo.po to
-# This file is put in the public domain.
+# Esperanto translation for Moksha.
 #
+# This file is put in the public domain.
+# 
 # Olivier M <olivierweb@nospam.ifrance.com>, 2006-2007.
 # Olivier <eliovir@nospam.gmail.com>, 2009, 2010.
 # Eliovir <eliovir@gmail.com>, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"

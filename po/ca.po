@@ -1,4 +1,5 @@
 # Catalan translation for Moksha.
+#
 # This file is put in the public domain.
 # Marc Furtià i Puig <marcfurtia@gmail.com>, 2007-2013.
 # Pau Bosch i Crespo <paubcrespo@hotmail.com>, 2007.

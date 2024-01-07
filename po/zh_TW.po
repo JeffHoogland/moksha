@@ -1,4 +1,5 @@
-# Moksha 0.17 Tranditional Chinese Translation
+# Tranditional Chinese translation for Moksha.
+#
 # This file is put in the public domain.
 # Sam Xu <joepasscheng@gmail.com>, 2005.
 # John Lee <john_lee@openmoko.com>, 2007.

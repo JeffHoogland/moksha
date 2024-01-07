@@ -1,7 +1,6 @@
-# translation of hu.po to Hungarian
-# Copyright (C) 2008-2009 Moksha development team
-# This file is distributed under the same license as the PACKAGE package.
+# Hungarian translation for Moksha.  
 #
+# This file is put in the public domain. 
 # Lisovszki Sándor <lisovszki@gmail.com>, 2008-2009.
 #
 msgid ""

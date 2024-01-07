@@ -1,9 +1,10 @@
 # Dutch translation of Moksha.
-# This file is distributed under the same license as the Moksha package.
 #
+# This file is put in the public domain. 
 # Niels Abspoel <niels.abspoel@wanadoo.nl>, 2005.
 # Heimen Stoffels <vistausss@gmail.com>, 2011.
 # Pjotr <pjotrvertaalt@gmail.com>, 2020-2021.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: nl\n"

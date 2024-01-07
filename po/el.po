@@ -1,5 +1,5 @@
-# translation of el.po to Ελληνικά
-# Greek translation for Moksha17.
+# Greek translation for Moksha.
+#
 # This file is put in the public domain.
 # 
 # Geo Kou <ragecryx@yahoo.gr>, 2008.

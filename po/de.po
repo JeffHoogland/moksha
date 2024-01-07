@@ -1,3 +1,7 @@
+# German translation for Moksha.
+#
+# This file is put in the public domain.
+#
 # NOTE: Translation partly done by Dutch native speaker (Pjotr); German native speakers, please correct my mistakes!
 # check configuration = einstellung instead of konfiguration
 # setup = einrichten
@@ -17,8 +21,6 @@
 # Check Buttons = Kontrollknöpfe
 # custom = benutzerdefiniert; nicht: eigenständig, eigener
 #
-# Moksha German translation.
-# This file is put in the public domain.
 # vandango <vandango@toenda.com>, 2005, 2005/07/10
 # Fabian Nowak <timystery@arcor.de>, 2010.
 # Thomas Gstädtner <thomas@gstaedtner.net>, 2009, 2015

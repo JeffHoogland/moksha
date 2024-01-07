@@ -1,4 +1,5 @@
 # Russian translation of Moksha.
+#
 # This file is put in the public domain.
 # Denis Klykvin <nikon@altlinux.ru>, 2005.
 # Koptev Oleg <koptev.oleg@gmail.com>, 2009.

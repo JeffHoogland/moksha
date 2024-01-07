@@ -1,6 +1,6 @@
-# Malay translation for enlightenment
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
-# This file is distributed under the same license as the enlightenment package.
+# Malay translation for Moksha.
+#
+# This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""

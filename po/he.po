@@ -1,5 +1,6 @@
-# Hebrew translation for enlightenment
-# This file is distributed under the same license as the enlightenment package.
+# Hebrew translation for Moksha.
+#
+# This file is put in the public domain.
 # Yaron <sh.yaron@gmail.com>, 2008-2009.
 #
 msgid ""

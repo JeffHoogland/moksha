@@ -1,4 +1,5 @@
-# Danish translation for Moksha (E17).
+# Danish translation for Moksha.
+#
 # This file is put in the public domain.
 # Martin Geisler <mgeisler@mgeisler.net>, 2005.
 #

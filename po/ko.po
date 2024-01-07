@@ -1,6 +1,6 @@
-# Moksha Korean Translation file.
-# Copyright (C) 2007 Moksha development team
-# This file is distributed under the same license as the Moksha package.
+# Korean translation for Moksha.
+#
+# This file is put in the public domain. 
 # Michael Kim <lavnrose@gmail.com>, 2007.
 # Jihoon Kim <jihoon48.kim@samsung.com>, 2011-2015.
 # Daniel Juyung Seo <seojuyung2@gmail.com>, 2011-2015

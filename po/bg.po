@@ -1,5 +1,5 @@
-# vim: set keymap=bulgarian-phonetic:
-# English translation of Moksha.
+# Bulgarian translation of Moksha.
+#
 # This file is put in the public domain.
 # Viktor Kojouharov <vkojouharov@abv.bg>, 2006.
 #
