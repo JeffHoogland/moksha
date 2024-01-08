@@ -296,6 +296,7 @@ group { name: "e/modules/ibar/menu/item";
    images.image: "mini_box_glow.png" COMP;
    parts {
       part { name: "base";
+         scale: 1;
          description { state: "default";
             rel1.offset: -6 -6;
             rel2.offset: 5 5;
@@ -332,13 +333,14 @@ group { name: "e/modules/ibar/menu/item";
          }
       }
       part { name: "icon"; type: SPACER;
+         scale: 1;
          description { state: "default";
             rel1.offset: 2 2;
             rel2.offset: 2 -3;
             align: 0.0 0.5;
             aspect: 1.0 1.0; aspect_preference: BOTH;
-            min: 32 32;
-            max: 32 32;
+            min: 20 20;
+            max: 20 20;
          }
       }
       //~ part { name: "shadow"; mouse_events: 0;
