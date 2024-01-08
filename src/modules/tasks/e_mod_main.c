@@ -957,7 +957,7 @@ _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    Tasks_Item *item;
 
    item = data;
-   if (item->tasks->config->show_label)
+   if (item->tasks->config->show_label && !item->tasks->gcc->gadcon->shelf->hide_animator)
      _tasks_adjacent_label_popup(item);
 }
 
