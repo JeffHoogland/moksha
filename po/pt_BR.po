@@ -4,21 +4,22 @@
 # Rodrigo -MDK- Oliveira <mdkcore@gmail.com>, 2007, 2008, 2009.
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
 # Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com> 2015.
+# Samuel Pecci <srpecci@yahoo.com> 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-07 16:09-0500\n"
-"PO-Revision-Date: 2022-06-12 18:38-0300\n"
-"Last-Translator: Vinícius dos Santos Oliveira <vini.ipsmaker@gmail.com>\n"
+"PO-Revision-Date: 2024-01-10 19:58-0300\n"
+"Last-Translator: Samuel Pecci <srpecci@yahoo.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Bookmarks: -1,782,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: src/bin/e_about.c:18
@@ -3613,9 +3614,8 @@ msgstr ""
 "<br>%s<br>O erro reportado foi:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
-msgstr "O módulo não contém as funções necessárias"
+msgstr "O módulo não contém todas as funções necessárias"
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3894,9 +3894,8 @@ msgstr ""
 "processo."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
-msgstr "Eita! Isto não devia acontecer"
+msgstr "Eita! Isto não devia acontecer."
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -4597,11 +4596,11 @@ msgstr "Dias"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Definir..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Definir..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5473,7 +5472,7 @@ msgstr "Mouse"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:373
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Habilitar recursos adicionais de dispositivos"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:388
 msgid "Tap to click"
@@ -5955,52 +5954,42 @@ msgid "WINDOWS"
 msgstr "JANELAS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
 msgstr "Fechar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
 msgstr "Maximizar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
 msgstr "Alternar modo ícone:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
 msgstr "Alternar modo tela cheia:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
 msgstr "Modo sempre à frente:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
 msgstr "Janela seguinte:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
 msgstr "Empilhar à direita:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
 msgstr "Empilhar à esquerda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
 msgstr "Forçar terminar janela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
 msgstr "Menu da janela:"
 
@@ -6009,27 +5998,22 @@ msgid "SYSTEM"
 msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr "Abrir Terminology aqui:"
+msgstr "Abrir Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
 msgstr "Bloquear sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
 msgstr "Mostrar menu principal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
 msgstr "Mostrar menu de favoritos:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
 msgstr "Controles do sistema:"
 
@@ -6082,27 +6066,22 @@ msgid "MISCELLANEOUS"
 msgstr "MISCELÂNEA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
 msgstr "Iniciador rápido:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
 msgstr "Capturar tela:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
 msgstr "Reiniciar o Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
 msgstr "Console do terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
 msgstr "Esta ajuda:"
 
@@ -7190,14 +7169,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Ativar tema de ícones para o Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Caminhos do Moksha"
+msgstr "Tema do Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Tema das aplicações"
+msgstr "Tema das aplicações (GTK & Ícones)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -7996,12 +7973,10 @@ msgid "Hide list"
 msgstr "Ocultar lista"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Modo básico"
+msgstr "Modo de busca"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Modo difuso"
 
@@ -8889,21 +8864,19 @@ msgstr "Bloquear movimentação de ícones"
 
 #: src/modules/ibar/e_mod_config.c:157
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "Não adicionar itens ao abrir"
 
 #: src/modules/ibar/e_mod_config.c:159
 msgid "Track launch"
 msgstr "Acompanhar execução de aplicações"
 
 #: src/modules/ibar/e_mod_config.c:161
-#, fuzzy
 msgid "Menu on mouse over"
 msgstr "Trazer janelas para frente ao passar com o mouse"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Módulo %s do Moksha"
+msgstr "Controle de estilo do Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
@@ -8936,14 +8909,12 @@ msgid "Create new Icon"
 msgstr "Criar novo ícone"
 
 #: src/modules/ibar/e_mod_main.c:1588
-#, fuzzy
 msgid "Add to bar"
 msgstr "Adicionar à IBar"
 
 #: src/modules/ibar/e_mod_main.c:1594
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Remover uma pilha"
+msgstr "Remover da IBar"
 
 #: src/modules/ibar/e_mod_main.c:1600
 #, c-format
@@ -9110,9 +9081,8 @@ msgstr ""
 "alertas."
 
 #: src/modules/pager/e_mod_main.c:913
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Definições das áreas de trabalho virtuais"
+msgstr "Definições desta Área de Trabalho"
 
 #: src/modules/pager/e_mod_main.c:2966
 msgid "Show Pager Popup"
@@ -9143,9 +9113,8 @@ msgid "Popup Desk Previous"
 msgstr "Na área de trabalho anterior"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Controles do sistema"
+msgstr "Configurações de controles do sistema"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -9237,7 +9206,6 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "Temperatura da CPU elevada!"
 
@@ -10045,22 +10013,20 @@ msgid "Notification"
 msgstr "Notificações"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Módulo de notificações"
 
 #: src/modules/notification/e_mod_main.c:129
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Erro durante inicialização do servidor de notificações"
 
 #: src/modules/notification/e_mod_main.c:130
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Erro ao iniciar DBus! Verifique se o DBus está instalado corretamente e em "
-"execução."
+"Certifique-se que não há outro módulo funcionando como servidor e que o DBus "
+"está instalado corretamente e em execução."
 
 #: src/modules/notification/e_mod_main.c:421
 #: src/modules/clipboard/e_mod_main.c:411
@@ -10108,9 +10074,8 @@ msgstr ""
 "retomar os serviços."
 
 #: src/modules/notification/e_mod_main.c:708
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Caixa de notificação"
+msgstr "Notificação expirada!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10336,9 +10301,8 @@ msgid "Clear History"
 msgstr "Limpar histórico"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Escurecimento de tela"
+msgstr "Bloco de apagamento"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10416,27 +10380,23 @@ msgstr "Utilização do disco ''%s'' é %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
-msgstr "B (azul)"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
-msgstr "B (azul)"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
-msgstr "G (verde)"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
-msgstr "B (azul)"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10461,15 +10421,13 @@ msgstr "ejetar"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Falha ao desencriptar."
+msgstr "Operação falhou"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Nome desconhecido"
+msgstr "Erro desconhecido"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
@@ -10505,7 +10463,6 @@ msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
 msgstr "Volume alterado"
 
