@@ -912,7 +912,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
                    cfdata->exec);
         else if (cfdata->event.exit_signal == SIGKILL)
           snprintf(buf, sizeof(buf),
-                   _("%s was interrupted by an Uninterruptable Kill Signal."),
+                   _("%s was interrupted by an Uninterruptible Kill Signal."),
                    cfdata->exec);
         else if (cfdata->event.exit_signal == SIGSEGV)
           snprintf(buf, sizeof(buf),
