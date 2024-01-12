@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Christian Becker (xpistian) <xpistianbecker@gmail.com>\n"
 "Language-Team: \n"
@@ -1366,7 +1366,7 @@ msgstr "%s wurde durch einen Fließkommafehler unterbrochen."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s wurde durch ein ununterbrechbares Kill-Signal unterbrochen."
 
 #: src/bin/e_exec.c:919
@@ -1952,7 +1952,7 @@ msgid "Stop moving"
 msgstr "Verschieben beenden"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Unzureichende Gadcon-Unterstützung"
 
 #: src/bin/e_gadcon.c:3100

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2009-10-21 20:00+0000\n"
 "Last-Translator: Gunleif Joensen <Unknown>\n"
 "Language-Team: Faroese <fo@li.org>\n"
@@ -1312,7 +1312,7 @@ msgstr ""
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr ""
 
 #: src/bin/e_exec.c:919
@@ -1900,7 +1900,7 @@ msgid "Stop moving"
 msgstr ""
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr ""
 
 #: src/bin/e_gadcon.c:3100

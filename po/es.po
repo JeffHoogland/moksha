@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2021-11-27 15:08-0600\n"
 "Last-Translator: Alejandro Díaz <escuelaslinux@gmail.com>\n"
 "Language-Team: Spanish <>\n"
@@ -1343,7 +1343,7 @@ msgstr "%s fue interrumpido por un error de coma flotante."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s fue interrumpido por una señal de matar ininterrumpible."
 
 #: src/bin/e_exec.c:919
@@ -1928,7 +1928,7 @@ msgid "Stop moving"
 msgstr "Parar de mover"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Sopiorte gadcon insuficiente"
 
 #: src/bin/e_gadcon.c:3100

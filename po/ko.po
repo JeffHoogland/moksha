@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -1338,7 +1338,7 @@ msgstr "부동소수점 오류가 %s 프로그램을 중단했습니다."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "중단할 수 없는 강제 종료 시그널이 %s 프로그램을 중단했습니다."
 
 #: src/bin/e_exec.c:919
@@ -1918,7 +1918,7 @@ msgid "Stop moving"
 msgstr "이동 중지"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "부족한 Gadcon 지원"
 
 #: src/bin/e_gadcon.c:3100

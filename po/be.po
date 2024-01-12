@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2023-03-18 13:18+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -1331,7 +1331,7 @@ msgstr "%s быў перапынены памылкай Floating Point Error."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s быў перапынены сігналам безумоўнага знішчэння."
 
 #: src/bin/e_exec.c:919
@@ -1918,7 +1918,7 @@ msgid "Stop moving"
 msgstr "Спыніць перамяшчэнне"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Недастатковая падтрымка gadcon"
 
 #: src/bin/e_gadcon.c:3100

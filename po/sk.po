@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2009-08-07 11:08+0000\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -1336,7 +1336,7 @@ msgstr "%s prerušila chyba pohyblivej desatinnej čiarky."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s prerušil signál Uninterruptable Kill."
 
 #: src/bin/e_exec.c:919
@@ -1917,7 +1917,7 @@ msgid "Stop moving"
 msgstr "Ukončiť presúvanie"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Nedostatočná podpora Gadcon"
 
 #: src/bin/e_gadcon.c:3100

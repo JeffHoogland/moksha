@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2013-01-22 20:49+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -1335,7 +1335,7 @@ msgstr "%s было прервано ошибкой плавающей точк�
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s было прервано сигналом Uninterruptable Kill."
 
 #: src/bin/e_exec.c:919
@@ -1922,7 +1922,7 @@ msgid "Stop moving"
 msgstr "Закончить сдвиг"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Недостаточная поддержка gadcon"
 
 #: src/bin/e_gadcon.c:3100

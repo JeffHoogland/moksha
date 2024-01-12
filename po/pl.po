@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
 "Language-Team: \n"
@@ -1414,8 +1414,8 @@ msgstr "%s został przerwany przez błąd w obliczeniach zmiennoprzecinkowych."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
-msgstr ""
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
+msgstr "%s został zakończony przez sygnał przerwania."
 
 #: src/bin/e_exec.c:919
 #, c-format
@@ -2028,7 +2028,7 @@ msgid "Stop moving"
 msgstr "Zakończ edycję"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr ""
 
 #: src/bin/e_gadcon.c:3100

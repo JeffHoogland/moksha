@@ -30,7 +30,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2007-06-04 11:27+0100\n"
 "Last-Translator: Antoine Giniès <aginies.cooker@gmail.com>\n"
 "Language-Team: Moksha i18n French <enlightenment-intl@lists.sourceforge."
@@ -1436,7 +1436,7 @@ msgstr "%s a été interrompu par une erreur de virgule flottante."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s a été interrompu avec SIGKILL."
 
 #: src/bin/e_exec.c:919
@@ -2068,7 +2068,7 @@ msgid "Stop moving"
 msgstr "Arrêter l'édition"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr ""
 
 #: src/bin/e_gadcon.c:3100

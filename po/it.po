@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 19:48-0500\n"
 "PO-Revision-Date: 2013-07-02 19:26+0200\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
@@ -1347,7 +1347,7 @@ msgstr "%s è stato fermato da un errore di virgola mobile"
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s è stato fermato da un segnale di uccisione ininterrompibile"
 
 #: src/bin/e_exec.c:919
@@ -1931,7 +1931,7 @@ msgid "Stop moving"
 msgstr "Ferma spostamento"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Supporto gadcon insufficiente"
 
 #: src/bin/e_gadcon.c:3100
