@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-07 16:09-0500\n"
+"POT-Creation-Date: 2024-01-11 18:26-0500\n"
 "PO-Revision-Date: 2024-01-10 19:58-0300\n"
 "Last-Translator: Samuel Pecci <srpecci@yahoo.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -1337,7 +1337,7 @@ msgstr "%s foi interrompido por um erro de ponto flutuante."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptable Kill Signal."
+msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s foi interrompido por um sinal de término ininterruptível."
 
 #: src/bin/e_exec.c:919
@@ -1921,7 +1921,7 @@ msgid "Stop moving"
 msgstr "Parar de mover"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficent gadcon support"
+msgid "Insufficient gadcon support"
 msgstr "Suporte a gadcon insuficiente"
 
 #: src/bin/e_gadcon.c:3100
