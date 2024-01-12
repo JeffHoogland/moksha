@@ -3616,7 +3616,6 @@ msgstr ""
 "%s"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "El módulo no contiene todas las funciones necesarias"
 
@@ -3897,7 +3896,6 @@ msgstr ""
 "está hibernando el equipo."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "UPS! Esto no debería suceder"
 
@@ -9108,9 +9106,8 @@ msgid "Popup Desk Previous"
 msgstr "Emerger pantalla anterior"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Controles del Sistema"
+msgstr "Configuración de controles del sistema"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -9202,7 +9199,6 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "¡Alta temperatura del CPU!"
 
@@ -9999,7 +9995,6 @@ msgid "Notification"
 msgstr "Notificación"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Módulo de notificación"
 
@@ -10062,9 +10057,8 @@ msgstr ""
 "continuarán con sus tareas normales."
 
 #: src/modules/notification/e_mod_main.c:708
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Notificación"
+msgstr "¡La notificación expiró!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10370,28 +10364,29 @@ msgid "Disk ''%s'' usage is %d %%!"
 msgstr "El uso del disco ''%s'' es de %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
+#, fuzzy
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
 #, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
 #, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
 #, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
 #, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
