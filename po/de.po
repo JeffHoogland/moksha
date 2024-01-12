@@ -3653,7 +3653,6 @@ msgstr ""
 "Modul ist:<br>%s<br>Der gemeldete Fehler lautet:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Das Modul enthält nicht alle benötigten Funktionen"
 
@@ -3935,7 +3934,6 @@ msgstr ""
 "Systemaktionen<br>durchführen, bis dies abgeschlossen ist."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "Upps! Das sollte nicht passieren"
 
@@ -4649,7 +4647,6 @@ msgid "Set..."
 msgstr "Einstellen..."
 
 #: src/modules/clock/e_mod_config.c:320
-#, fuzzy
 msgid "Set... "
 msgstr "Einstellen..."
 
@@ -8951,7 +8948,7 @@ msgstr "Menü beim herüberfahren mit der Maus zeigen"
 #: src/modules/ibar/e_mod_config.c:163
 #, fuzzy
 msgid "Moksha style control"
-msgstr "Moksha-Modul %s"
+msgstr "Steuerung im Moksha-Stil"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
