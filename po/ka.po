@@ -3286,7 +3286,7 @@ msgstr "ბილიკის ინიციალიზაცია"
 
 #: src/bin/e_main.c:858
 msgid "Setup System Controls"
-msgstr "გზების ინიციალიზაცია"
+msgstr "სისტემის კონტროლი ინიციალიზაცია"
 
 #
 #: src/bin/e_main.c:862
