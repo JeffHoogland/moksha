@@ -5818,7 +5818,7 @@ msgstr "Klávesové zkratky"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Použít samostatnou klávesu Win"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
@@ -5835,7 +5835,6 @@ msgstr ""
 "hilight> akcí.<br>Prosím vyberte si jinou zkratku."
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -5960,7 +5959,7 @@ msgstr "Extra kolečko (%d) dolů"
 
 #: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
-msgstr ""
+msgstr "OKNA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
 msgid "Close Window:"
@@ -6028,7 +6027,7 @@ msgstr "Systémové ovládací prvky:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
-msgstr ""
+msgstr "PLOCHA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
@@ -6189,7 +6188,7 @@ msgstr " Nezobrazovat ikony v nabídce"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
-msgstr " Chytrá Orientace nabídky"
+msgstr " Inteligentní Orientace nabídky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
