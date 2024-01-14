@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-11 19:48-0500\n"
+"POT-Creation-Date: 2024-01-14 06:23-0500\n"
 "PO-Revision-Date: 2023-03-18 13:18+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -10494,29 +10494,3 @@ msgstr "Гучнасць павялічана"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Гук адключаны"
-
-#~ msgid ""
-#~ "Click on a calendar day to change the date. <br>Use the mouse wheel to "
-#~ "change the year."
-#~ msgstr ""
-#~ "Націсніце на дні ў календары каб змяніць дату. <br>Карыстайце кола мышы "
-#~ "каб змяніць год."
-
-#~ msgid "Clock module Information"
-#~ msgstr "Інфармацыя модуля Гадзіннік"
-
-#, fuzzy
-#~ msgid "Info... "
-#~ msgstr "Заўвага"
-
-#~ msgid "Hours"
-#~ msgstr "Гадзіны"
-
-#~ msgid "Minutes"
-#~ msgstr "Хвіліны"
-
-#~ msgid "Minimum height"
-#~ msgstr "Найменьшая вышыня"
-
-#~ msgid "Maximum height"
-#~ msgstr "Найбольшая вышыня"

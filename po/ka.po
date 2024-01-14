@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-13 06:19-0500\n"
+"POT-Creation-Date: 2024-01-14 06:23-0500\n"
 "PO-Revision-Date: 2024-01-12 18:20-0500\n"
 "Last-Translator: translate.google.com <moksha@bodhilinux.com>\n"
 "Language-Team: \n"
@@ -1348,7 +1348,7 @@ msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s შეფერხდა მცურავი წერტილის შეცდომით."
 
 #: src/bin/e_exec.c:915
-#, fuzzy, c-format
+#, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s შეწყდა უწყვეტი მკვლელობის სიგნალით."
 

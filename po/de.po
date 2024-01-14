@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-11 19:48-0500\n"
+"POT-Creation-Date: 2024-01-14 06:23-0500\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Christian Becker (xpistian) <xpistianbecker@gmail.com>\n"
 "Language-Team: \n"
@@ -10574,96 +10574,3 @@ msgstr "Lautstärke vergrössern"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Lautstärke dämpfen"
-
-#~ msgid ""
-#~ "Click on a calendar day to change the date. <br>Use the mouse wheel to "
-#~ "change the year."
-#~ msgstr ""
-#~ "Klicken Sie zur Änderung des Datums auf einen Kalendertag. <br>Benutzen "
-#~ "Sie das Mausrad um das Jahr zu ändern."
-
-#~ msgid "Clock module Information"
-#~ msgstr "Information zum Uhrmodul"
-
-#~ msgid "Info... "
-#~ msgstr "Information... "
-
-#~ msgid "Hours"
-#~ msgstr "Stunden"
-
-#~ msgid "Minutes"
-#~ msgstr "Minuten"
-
-#~ msgid "Minimum height"
-#~ msgstr "Minimale Höhe"
-
-#~ msgid "Maximum height"
-#~ msgstr "Maximale Höhe"
-
-#~ msgid "Execution Error"
-#~ msgstr "Ausführungsfehler"
-
-#~ msgid "Overlapping Label"
-#~ msgstr "Überlappende Beschriftung"
-
-#~ msgid "Adjacent Label"
-#~ msgstr "Beschriftung neben Symbol"
-
-#~ msgid "Syscon Settings"
-#~ msgstr "Syscon-Einstellungen"
-
-#~ msgid "Syscon"
-#~ msgstr "Syscon"
-
-#~ msgid "Secure Clear"
-#~ msgstr "Sicher Löschen"
-
-#~ msgid "Are you sure you want to delete this shelf?"
-#~ msgstr "Möchten Sie diese Modulablage wirklich entfernen?"
-
-#~ msgid ""
-#~ "You requested to delete this shelf.<br><br>Are you sure you want to "
-#~ "delete it?"
-#~ msgstr "Sie wollen diese Modulablage entfernen.<br><br>Sind Sie sicher?"
-
-#~ msgid "Error During DBus Init!"
-#~ msgstr "Fehler bei der Initialisierung von D-Bus!"
-
-#~ msgid "Mouse Acceleration"
-#~ msgstr "Mausbeschleunigung"
-
-#~ msgid "No focused window frame if possible"
-#~ msgstr "Kein fokussierter Fensterrahmen wenn möglich"
-
-#~ msgid "App blacklist (use a delimiter)"
-#~ msgstr "Programme blockieren (Bei Auflistung Trennzeichen verwenden)"
-
-#~ msgid "for window screenshot!"
-#~ msgstr "für Bildschirmfoto von Fenster."
-
-#~ msgid "Hide"
-#~ msgstr "Verstecken"
-
-#~ msgid "Popup Corner"
-#~ msgstr "Bildschirmecke für Popup"
-
-#~ msgid "Top left"
-#~ msgstr "Oben-links"
-
-#~ msgid "Top right"
-#~ msgstr "Oben-rechts"
-
-#~ msgid "Bottom left"
-#~ msgstr "Unten links"
-
-#~ msgid "Bottom right"
-#~ msgstr "Unten rechts"
-
-#~ msgid "Time calculating..."
-#~ msgstr "Verbleibende Zeit wird berechnet..."
-
-#~ msgid "Adding missing App files"
-#~ msgstr "Füge Fehlende Anwendungsdateien hinzu"
-
-#~ msgid "Select preferred size"
-#~ msgstr "Wählen Sie die bevorzugte Größe"
