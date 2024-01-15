@@ -164,6 +164,9 @@ _systray_size_apply_do(Instance *inst)
      edje_object_signal_emit(inst->ui.gadget, "e,arrow,show,*", _sig_source);
    else
      edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
+     
+   if (inst->gcc->gadcon->shelf && (!e_util_strcmp(inst->gcc->gadcon->shelf->style, "invisible")))
+     edje_object_signal_emit(inst->ui.gadget, "e,arrow,hide", _sig_source);
    edje_object_message_signal_process(inst->ui.gadget);
    
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
