@@ -7,15 +7,14 @@
 # DiegoJ <diegojromerolopez@gmail.com>, 2009.
 # Aníbal Garrido <khany@member.trisquel.info>, 2015.
 # Adrián Arévalo Tirado <adri58@gmail.com>, 2015.
-# Robert Wiley <ylee@bodhilinux.com>, 2020
 # Alejandro Díaz <escuelaslinux@gmail.com>. 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2021-11-27 15:08-0600\n"
+"POT-Creation-Date: 2024-01-14 09:06-0500\n"
+"PO-Revision-Date: 2024-01-15 01:03-0500\n"
 "Last-Translator: Alejandro Díaz <escuelaslinux@gmail.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -23,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -4594,11 +4593,11 @@ msgstr "Días"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Configurar..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Configurar..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -6513,14 +6512,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Recordar este borde para esta ventana la próxima vez que aparezca"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Estilo del borde"
+msgstr "Base del borde"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Marco del borde activo"
+msgstr "Base activa del borde"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -10000,16 +9997,15 @@ msgstr "Módulo de notificación"
 
 #: src/modules/notification/e_mod_main.c:129
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Error durante el inicio del servidor de notificaciones"
 
 #: src/modules/notification/e_mod_main.c:130
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"¡Error durante la carga de DBUS! Verifique que DBUS esté correctamente "
-"instalado y ejecutándose."
+"Asegúrese de que no exista otro módulo actuando como servidor, y que D-Bus "
+"esté instalado y ejecutándose correctamente"
 
 #: src/modules/notification/e_mod_main.c:421
 #: src/modules/clipboard/e_mod_main.c:411
@@ -10085,7 +10081,7 @@ msgid "Force timeout for all notifications"
 msgstr "Forzar tiempo de espera para todas las notificaciones"
 
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
 msgstr "%1.1f s"
 
@@ -10285,9 +10281,8 @@ msgid "Clear History"
 msgstr "Eliminar Historial"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Apagado de pantalla"
+msgstr "Bloquear reposo de pantalla"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10364,27 +10359,22 @@ msgid "Disk ''%s'' usage is %d %%!"
 msgstr "El uso del disco ''%s'' es de %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
-#, fuzzy
 msgid "b"
 msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
 msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
 msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
 msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
 msgstr "TB"
 
