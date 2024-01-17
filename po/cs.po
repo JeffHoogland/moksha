@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-11 19:48-0500\n"
-"PO-Revision-Date: 2024-01-07 20:58+0100\n"
+"PO-Revision-Date: 2024-01-17 20:18+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -380,7 +380,7 @@ msgstr "Překlopit plochu na..."
 
 #: src/bin/e_actions.c:3310
 msgid "Flip Desktop Linearly..."
-msgstr "Překlopit plochu lineárně"
+msgstr "Překlopit plochu lineárně..."
 
 #: src/bin/e_actions.c:3316
 msgid "Switch To Desktop 0"
@@ -795,7 +795,7 @@ msgstr "Zpožděná akce"
 #: src/bin/e_actions.c:3634
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
 msgid "Touchpad"
-msgstr ""
+msgstr "Touchpad"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
@@ -1006,8 +1006,8 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Mokshau selhalo zapisování<br>jeho konfiguračního souboru."
-"<br>%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
+"Mokshau selhalo zapisování<br>jeho konfiguračního souboru.<br>"
+"%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
 "smazán, aby nedošlo k porušení dat.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
@@ -1575,7 +1575,7 @@ msgstr "Nemohu vytvořit adresář!"
 
 #: src/bin/e_fm.c:9600
 msgid "Could not create a file!"
-msgstr "Nemohu vytvořit soubor"
+msgstr "Nemohu vytvořit soubor!"
 
 #: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
 #: src/modules/conf_paths/e_int_config_paths.c:206
@@ -1641,7 +1641,7 @@ msgstr "Nastavit pozadí..."
 
 #: src/bin/e_fm.c:9943
 msgid "Clear background"
-msgstr "Zrušit pozadí..."
+msgstr "Zrušit pozadí"
 
 #: src/bin/e_fm.c:9950 src/bin/e_fm.c:10179
 msgid "Set overlay..."
@@ -1649,7 +1649,7 @@ msgstr "Nastavit překrytí..."
 
 #: src/bin/e_fm.c:9956
 msgid "Clear overlay"
-msgstr "Zrušit překrytí..."
+msgstr "Zrušit překrytí"
 
 #: src/bin/e_fm.c:10273 src/bin/e_fm.c:10614
 #, c-format
@@ -1732,8 +1732,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:"
-"<br><hilight>%s</hilight> ?"
+"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:<br><hilight>"
+"%s</hilight> ?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -1998,7 +1998,7 @@ msgstr "Moksha nemohl importovat obrázek<br>kvůli chybě při konverzi."
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
-msgstr "Nastavení importu"
+msgstr "Nastavení importu..."
 
 #: src/bin/e_import_config_dialog.c:491
 msgid "Fill and Stretch Options"
@@ -2060,7 +2060,7 @@ msgstr "Zabránit oknům v samostatném pohybu"
 
 #: src/bin/e_int_border_locks.c:287
 msgid "Prevent this window from being changed by me"
-msgstr "Chránit okno od změn uživatelem."
+msgstr "Chránit okno od změn uživatelem"
 
 #: src/bin/e_int_border_locks.c:289
 msgid "Prevent this window from being closed"
@@ -2211,11 +2211,11 @@ msgstr "Ikonifikovat"
 
 #: src/bin/e_int_border_menu.c:704
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Přesouvat klávesnicí"
 
 #: src/bin/e_int_border_menu.c:718
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Změnit velikost klávesnicí"
 
 #: src/bin/e_int_border_menu.c:741
 msgid "Skip"
@@ -2890,9 +2890,9 @@ msgstr "Nepojmenovaná okna"
 
 #: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Shelf %s"
-msgstr "Panel #"
+msgstr "Panel %s"
 
 #: src/bin/e_int_menus.c:1787
 msgid "Add a Shelf"
@@ -3410,9 +3410,9 @@ msgid "Almost Done"
 msgstr "Téměř dokončeno"
 
 #: src/bin/e_main.c:1303
-#, fuzzy, c-format
+#, c-format
 msgid "Version: %s\n"
-msgstr "Oprávnění"
+msgstr "Verze: %s\n"
 
 #: src/bin/e_main.c:1313
 #, fuzzy, c-format
@@ -3605,12 +3605,12 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:"
-"<br>%s<br>Nahlášená chyba je:<br>%s<br>"
+"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:<br>"
+"%s<br>Nahlášená chyba je:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions."
-msgstr "Modul neobsahuje všechny potřebné funkce"
+msgstr "Modul neobsahuje všechny potřebné funkce."
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3689,7 +3689,7 @@ msgstr "Vlevo"
 
 #: src/bin/e_shelf.c:73
 msgid "Right"
-msgstr "Vpravo:"
+msgstr "Vpravo"
 
 #: src/bin/e_shelf.c:74
 msgid "Top"
@@ -3732,9 +3732,9 @@ msgid "Right-bottom Corner"
 msgstr "Pravý dolní roh"
 
 #: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
-#, fuzzy, c-format
+#, c-format
 msgid "Shelf #%d"
-msgstr "Panel #"
+msgstr "Panel #%d"
 
 #: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
@@ -3795,9 +3795,9 @@ msgid "Refresh"
 msgstr "Obnovovací frekvence"
 
 #: src/bin/e_startup.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Spouštění"
+msgstr "Spouštění %s"
 
 #: src/bin/e_sys.c:297
 msgid "Checking System Permissions"
@@ -3809,7 +3809,7 @@ msgid "System Check Done"
 msgstr "Kontrola systému dokončena"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -3817,7 +3817,7 @@ msgid ""
 msgstr ""
 "Odhlašování trvá příliš dlouho.<br>Některé aplikace se odmítají zavřít.<br> "
 "Přejete si dokončit odhlášení <br>i bez předchozího zavření "
-"těchto<br>aplikací?<br><br>Automatické odhlášení za %d sekund."
+"těchto<br>aplikací %s<br><br>Automatické odhlášení za %d sekund."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3886,9 +3886,8 @@ msgstr ""
 "nedokončí."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
-msgstr "EEK! Toto by se nemělo stát"
+msgstr "EEK! Toto by se nemělo stát."
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -3967,9 +3966,8 @@ msgid "Never tell me"
 msgstr ""
 
 #: src/bin/e_update.c:83
-#, fuzzy
 msgid "Update Notice"
-msgstr "Aktualizace"
+msgstr "Povolit kontrolu aktualizací"
 
 #: src/bin/e_update.c:87
 #, c-format
@@ -4095,7 +4093,7 @@ msgstr "Neznámý"
 
 #: src/bin/e_utils.c:928 src/bin/e_utils.c:936
 msgid "Error creating directory"
-msgstr "Chyba při vytváření adresáře!"
+msgstr "Chyba při vytváření adresáře"
 
 #: src/bin/e_utils.c:928
 #, c-format
@@ -4154,60 +4152,60 @@ msgid "Never"
 msgstr "Nikdy"
 
 #: src/bin/e_utils.c:1218
-#, fuzzy, c-format
+#, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
-msgstr[0] "%.1f sekund"
-msgstr[1] "%.1f sekund"
-msgstr[2] "%.1f sekund"
+msgstr[0] "Sekunda"
+msgstr[1] "%li Sekundy"
+msgstr[2] "%li Sekund"
 
 #: src/bin/e_utils.c:1222
 #, fuzzy, c-format
 msgid "One year"
 msgid_plural "%li Years"
-msgstr[0] "Jeden rok"
-msgstr[1] "Jeden rok"
-msgstr[2] "Jeden rok"
+msgstr[0] "Rok"
+msgstr[1] "%li Roky"
+msgstr[2] "%li Let"
 
 #: src/bin/e_utils.c:1227
-#, fuzzy, c-format
+#, c-format
 msgid "One month"
 msgid_plural "%li Months"
-msgstr[0] "Jeden měsíc"
-msgstr[1] "Jeden měsíc"
-msgstr[2] "Jeden měsíc"
+msgstr[0] "Měsíc"
+msgstr[1] "%li Měsíce"
+msgstr[2] "%li Měsíců"
 
 #: src/bin/e_utils.c:1232
-#, fuzzy, c-format
+#, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
-msgstr[0] "Jeden týden"
-msgstr[1] "Jeden týden"
-msgstr[2] "Jeden týden"
+msgstr[0] "Týden"
+msgstr[1] "%li Týdny"
+msgstr[2] "%li Týdnů"
 
 #: src/bin/e_utils.c:1237
-#, fuzzy, c-format
+#, c-format
 msgid "One day"
 msgid_plural "%li Days"
-msgstr[0] "Jeden den"
-msgstr[1] "Jeden den"
-msgstr[2] "Jeden den"
+msgstr[0] "Den"
+msgstr[1] "%li Dny"
+msgstr[2] "%li Dní"
 
 #: src/bin/e_utils.c:1242
-#, fuzzy, c-format
+#, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] "Hodina"
-msgstr[1] "Hodina"
-msgstr[2] "Hodina"
+msgstr[1] "%li Hodiny"
+msgstr[2] "%li Hodin"
 
 #: src/bin/e_utils.c:1247
-#, fuzzy, c-format
+#, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
 msgstr[0] "Minuta"
-msgstr[1] "Minuta"
-msgstr[2] "Minuta"
+msgstr[1] "%li Minuty"
+msgstr[2] "%li Minut"
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:313
@@ -4396,7 +4394,7 @@ msgstr "Uspat při:"
 
 #: src/modules/battery/e_mod_config.c:245
 msgid "Hibernate when below:"
-msgstr "Hibernovat při;"
+msgstr "Hibernovat při:"
 
 #: src/modules/battery/e_mod_config.c:248
 msgid "Shutdown when below:"
@@ -4574,11 +4572,11 @@ msgstr "Jen datum"
 
 #: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
-msgstr ""
+msgstr "ISO 8601"
 
 #: src/modules/clock/e_mod_config.c:262
 msgid "Strftime"
-msgstr ""
+msgstr "Strftime"
 
 #: src/modules/clock/e_mod_config.c:269
 msgid "Week"
@@ -4599,11 +4597,11 @@ msgstr "Dny"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Nastavit..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Nastavit... "
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -4764,7 +4762,7 @@ msgstr "Vytvořit spouštěč aplikací"
 
 #: src/modules/conf_applications/e_mod_main.c:62
 msgid "IBar Other"
-msgstr "iBar ostatní"
+msgstr "IBar ostatní"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:53
 msgid "Profile Selector"
@@ -5776,19 +5774,16 @@ msgid "Battery Button"
 msgstr "Vypínač počítače"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:416
-#, fuzzy
 msgid "Tablet Disabled"
-msgstr "Neaktivní text checkbuttonu"
+msgstr "Tablet Nepovolen"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:417
-#, fuzzy
 msgid "Tablet Enabled"
-msgstr "Povoleno"
+msgstr "Tablet Povolen"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:418
-#, fuzzy
 msgid "Tablet"
-msgstr "Povolit"
+msgstr "Tablet"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:523
 msgid "ACPI Binding"
@@ -5827,9 +5822,8 @@ msgstr "Chyba klávesové zkratky"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Klávesová zkratka, kterou jste zadali, je již použita <br><hilight>%s</"
 "hilight> akcí.<br>Prosím vyberte si jinou zkratku."
@@ -5979,7 +5973,7 @@ msgstr "Přepnout okna na celou obrazovku:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
 msgid "Always On Top Toggle:"
-msgstr "Přepnout okno Vždy navrchu"
+msgstr "Přepnout okno Vždy navrchu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
 msgid "Next Window:"
@@ -6454,19 +6448,17 @@ msgid "Screen Setup"
 msgstr "Nastavení obrazovky"
 
 #: src/modules/conf_randr/e_int_config_randr.c:128
-#, fuzzy
 msgid "Primary Output"
-msgstr "Výstup"
+msgstr "Primární Výstup"
 
 #: src/modules/conf_randr/e_int_config_randr.c:146
-#, fuzzy
 msgid "Restore On Startup"
-msgstr "Uzamknout při spuštění"
+msgstr "Obnovit při spuštění"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "Configured Shelves: Display %d"
-msgstr "Nastavené panely: obrazovka"
+msgstr "Nastavené panely: Display %d"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:390
 #, c-format
@@ -6531,14 +6523,12 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Zapamatovat si okraj u tohoto okna pro příště"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
 msgstr "Styl okrajů"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Aktivní rám okna"
+msgstr "Aktivní titulek okraje okna"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -7118,7 +7108,7 @@ msgstr ""
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
-msgstr "Importovat..."
+msgstr " Importovat..."
 
 #: src/modules/conf_theme/e_int_config_theme.c:1405
 msgid "Theme Categories"
@@ -7532,7 +7522,6 @@ msgid "Focus last focused window on lost focus"
 msgstr "Přepnout zpět na naposled aktivované okno při ztrátě zaměření"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:330
-#, fuzzy
 msgid "Slide pointer to a new window which is focused"
 msgstr "Posunout kurzor do nově aktivovaného okna"
 
@@ -7895,14 +7884,12 @@ msgid "Update poll interval"
 msgstr "Interval sledování"
 
 #: src/modules/cpufreq/e_mod_config.c:107
-#, fuzzy
 msgid "Minimum Power State"
-msgstr "Vypínač počítače"
+msgstr "Minimální rychlost"
 
 #: src/modules/cpufreq/e_mod_config.c:113
-#, fuzzy
 msgid "Maximum Power State"
-msgstr "Vypínač počítače"
+msgstr "Maximální rychlost"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
@@ -8290,11 +8277,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8307,8 +8294,8 @@ msgstr ""
 "tab&bt;</highlight> pro výběr akce, pak stiskněte <highlight>&lt;return&gt;</"
 "highlight>.<br>    <highlight>&lt;Esc&gt;</highlight> zavře tento "
 "dialog<br>    <highlight>&lt;?&gt;</highlight>zobrazí tuto nápovědu<br>    "
-"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;"
-"ctrl+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
+"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;ctrl"
+"+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
 "<highlight>&lt;ctrl+tab&gt;</highlight> doplní vstup (závisí na "
 "pluginu)<br>    <highlight>&lt;ctrl+'x'&gt;</ highlight> přejde na plugin "
 "začínající na 'x'<br>    <highlight>&lt;ctrl+doleva/ doprava&gt;</highlight> "
@@ -8905,9 +8892,8 @@ msgid "Menu on mouse over"
 msgstr "Nabídka pod kurzorem"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Moksha %s modul"
+msgstr "Styl ovládání Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
@@ -9238,7 +9224,7 @@ msgstr "Teplota"
 
 #: src/modules/temperature/e_mod_main.c:76
 msgid "High CPU temperature!!"
-msgstr "Horní mez teploty CPU"
+msgstr "Horní mez teploty CPU!!"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
@@ -9305,7 +9291,8 @@ msgstr "Informace"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
-msgstr "Je možné přidat Seznam úloh, aby ukazoval otevřená okna a aplikace "
+msgstr ""
+"Je možné přidat Seznam úkolú<br>pro zobrazení otevřených oken a aplikací."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9763,7 +9750,7 @@ msgstr "Potvrdit"
 
 #: src/modules/shot/e_mod_main.c:891
 msgid "Where to put Screenshot..."
-msgstr "Kam umístit snímek obrazovky"
+msgstr "Kam umístit snímek obrazovky..."
 
 #: src/modules/shot/e_mod_main.c:943
 msgid "Quality"
@@ -10069,7 +10056,7 @@ msgstr "Opuštěn prezentační režim"
 
 #: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
-msgstr "Režim prezentace ukončen"
+msgstr "Režim prezentace ukončen."
 
 #: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
@@ -10124,14 +10111,13 @@ msgid "Force timeout for all notifications"
 msgstr "Vynutit časový limit pro všechna upozornění"
 
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f sek"
+msgstr "%.1f sek"
 
 #: src/modules/notification/e_mod_config.c:137
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Orientace"
+msgstr "Orientace Oznámení"
 
 #: src/modules/notification/e_mod_config.c:173
 msgid "Ignore replace ID"
