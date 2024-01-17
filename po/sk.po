@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2009-08-07 11:08+0000\n"
+"PO-Revision-Date: 2024-01-17 19:53+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
 "Language: sk\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-11-10 07:12+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/bin/e_about.c:18
@@ -296,7 +296,7 @@ msgstr "Zapnúť zrolovanie okna"
 
 #: src/bin/e_actions.c:3248
 msgid "syntax: \"(0|1) (up|down|left|right)\""
-msgstr ""
+msgstr "syntax: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3252
 msgid "Toggle Borderless State"
@@ -427,7 +427,7 @@ msgstr "Prepnúť na plochu 11"
 
 #: src/bin/e_actions.c:3340
 msgid "Switch To Desktop..."
-msgstr "Prepnúť na plochu 12"
+msgstr "Prepnúť na plochu 12..."
 
 #: src/bin/e_actions.c:3346
 msgid "Flip Desktop Left (All Screens)"
@@ -790,7 +790,7 @@ msgstr "Odložená operácia"
 #: src/bin/e_actions.c:3634
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
 msgid "Touchpad"
-msgstr ""
+msgstr "Touchpad"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
@@ -885,9 +885,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:"
-"<br>%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z "
-"bezpečnostných dôvodov.<br>"
+"Moksha narazila na chybu počas presunu konfiguračných súborov<br>z:<br>"
+"%s<br><br>do:<br>%s<br><br>Ďalšie zapisovanie bolo zrušené z bezpečnostných "
+"dôvodov.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -950,7 +950,7 @@ msgstr ""
 
 #: src/bin/e_config.c:2127
 msgid "You ran out of space while writing the file."
-msgstr "Vyčerpaný priestor pri zápise do súboru"
+msgstr "Vyčerpaný priestor pri zápise do súboru."
 
 #: src/bin/e_config.c:2131
 msgid "The file was closed while writing."
@@ -966,7 +966,7 @@ msgstr "X509 Kódovanie zlyhalo."
 
 #: src/bin/e_config.c:2143
 msgid "Signature failed."
-msgstr "Podpisovanie zlyhalo"
+msgstr "Podpisovanie zlyhalo."
 
 #: src/bin/e_config.c:2147
 msgid "The signature was invalid."
@@ -974,7 +974,7 @@ msgstr "Podpis bol neplatný."
 
 #: src/bin/e_config.c:2151
 msgid "Not signed."
-msgstr "Nie je podpísané"
+msgstr "Nie je podpísané."
 
 #: src/bin/e_config.c:2155
 msgid "Feature not implemented."
@@ -995,19 +995,18 @@ msgstr "Dešifrovanie zlyhalo."
 
 #: src/bin/e_config.c:2171
 msgid "The error is unknown to Moksha."
-msgstr "Neznáma chyba v dektope Moksha"
+msgstr "Neznáma chyba v desktope Moksha."
 
 #: src/bin/e_config.c:2193
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Súbor, kam Moksha zapisoval svoje nastavenia<br>bol neočakávane zatvorený. "
-"To je veľmi nezvyčajné.<br><br>Súbor, kde sa chyba vyskytla:"
-"<br>%s<br><br>Tento súbor bol zmazaný, aby sa<br>zabránilo poškodeniu údajov."
-"<br>"
+"Moksha narazila na chybu zápisu<br>do konfiguračného súboru.<br>"
+"%s<br><br>Súbor, kde sa chyba vyskytla:<br>%s<br><br>Tento súbor bol "
+"zmazaný, aby sa<br>zabránilo poškodeniu údajov.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1537,7 +1536,7 @@ msgstr "Vlastnosti"
 
 #: src/bin/e_fm.c:9258
 msgid "Application Properties"
-msgstr "Vlastnosti aplikácie "
+msgstr "Vlastnosti aplikácie"
 
 #: src/bin/e_fm.c:9266 src/bin/e_fm_prop.c:115
 msgid "File Properties"
@@ -1572,11 +1571,11 @@ msgstr "Veľkosť ikony (%d)"
 
 #: src/bin/e_fm.c:9585
 msgid "Could not create a directory!"
-msgstr "Nie je možné vytvoriť priečinok"
+msgstr "Nie je možné vytvoriť priečinok!"
 
 #: src/bin/e_fm.c:9600
 msgid "Could not create a file!"
-msgstr "Nie je možné vytvoriť súbor"
+msgstr "Nie je možné vytvoriť súbor!"
 
 #: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
 #: src/modules/conf_paths/e_int_config_paths.c:206
@@ -1594,7 +1593,7 @@ msgstr "Už vytváram nový súbor pre tento priečinok!"
 #: src/bin/e_fm.c:9714 src/bin/e_fm.c:9735
 #, c-format
 msgid "%s can't be written to!"
-msgstr "%s nemôže byť zapísaný"
+msgstr "%s nemôže byť zapísaný!"
 
 #: src/bin/e_fm.c:9754
 msgid "Directory"
@@ -1650,7 +1649,7 @@ msgstr "Nastaviť prekrývanie..."
 
 #: src/bin/e_fm.c:9956
 msgid "Clear overlay"
-msgstr "Zrušiť prekrývanie..."
+msgstr "Zrušiť prekrývanie"
 
 #: src/bin/e_fm.c:10273 src/bin/e_fm.c:10614
 #, c-format
@@ -1745,16 +1744,17 @@ msgid_plural ""
 "hilight>?"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_fm_device.c:60
 #, c-format
 msgid "%s %s—%s"
-msgstr ""
+msgstr "%s %s—%s"
 
 #: src/bin/e_fm_device.c:67 src/bin/e_fm_device.c:74
 #, c-format
 msgid "%s—%s"
-msgstr ""
+msgstr "%s—%s"
 
 #: src/bin/e_fm_device.c:79
 #, c-format
@@ -1784,7 +1784,7 @@ msgstr "Názov:"
 
 #: src/bin/e_fm_prop.c:397
 msgid "Location:"
-msgstr "Umiestnenie"
+msgstr "Umiestnenie:"
 
 #: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
 #: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
@@ -1793,7 +1793,7 @@ msgstr "Veľkosť:"
 
 #: src/bin/e_fm_prop.c:411
 msgid "Occupied blocks on disk:"
-msgstr "Veľkosť blokov na disku"
+msgstr "Veľkosť blokov na disku:"
 
 #: src/bin/e_fm_prop.c:418
 msgid "Last Accessed:"
@@ -1865,7 +1865,7 @@ msgstr "Linka informácie"
 
 #: src/bin/e_fm_prop.c:558
 msgid "This link is broken."
-msgstr "Tento link je nefunkčný"
+msgstr "Tento link je nefunkčný."
 
 #: src/bin/e_fm_prop.c:613
 msgid "Select an Image"
@@ -1978,7 +1978,7 @@ msgstr ""
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
-msgstr "Vybrať obrázok"
+msgstr "Vybrať obrázok..."
 
 #: src/bin/e_import_dialog.c:195
 msgid "Use"
@@ -1997,7 +1997,7 @@ msgstr ""
 
 #: src/bin/e_import_config_dialog.c:459
 msgid "Import Settings..."
-msgstr "Nastavenie importu"
+msgstr "Nastavenie importu..."
 
 #: src/bin/e_import_config_dialog.c:491
 msgid "Fill and Stretch Options"
@@ -2305,22 +2305,22 @@ msgstr "Zoznam úloh"
 #: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
-msgstr ""
+msgstr "%i×%i"
 
 #: src/bin/e_int_border_prop.c:131
 #, c-format
 msgid "%i,%i"
-msgstr ""
+msgstr "%i,%i"
 
 #: src/bin/e_int_border_prop.c:140
 #, c-format
 msgid "%1.3f"
-msgstr ""
+msgstr "%1.3f"
 
 #: src/bin/e_int_border_prop.c:143
 #, c-format
 msgid "%1.3f–%1.3f"
-msgstr ""
+msgstr "%1.3f–%1.3f"
 
 #: src/bin/e_int_border_prop.c:153 src/bin/e_int_border_prop.c:175
 #, c-format
@@ -2960,7 +2960,7 @@ msgstr "Skryť timeout"
 #: src/bin/e_int_shelf_config.c:268
 #, c-format
 msgid "%.1f seconds"
-msgstr "%.1f sek."
+msgstr "%.1f sek"
 
 #: src/bin/e_int_shelf_config.c:274
 msgid "Hide duration"
@@ -3010,7 +3010,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Moksha nemôže nastaviť handler signálu exit.\n"
-"Možno máte nedostatok pamäte."
+"Možno máte nedostatok pamäte?"
 
 #: src/bin/e_main.c:388
 msgid ""
@@ -3018,7 +3018,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Moksha nemôže nastaviť handler signálu HUP.\n"
-"Možno máte nedostatok pamäte."
+"Možno máte nedostatok pamäte?"
 
 #: src/bin/e_main.c:395
 msgid ""
@@ -3103,7 +3103,7 @@ msgid ""
 "Perhaps you have no home directory or the disk is full?"
 msgstr ""
 "Moksha nemôže vytvoriť adresáre vo Vašom domovskom adresári.\n"
-"Možno nemáte domovský adresár alebo je disk plný."
+"Možno nemáte domovský adresár alebo je disk plný?"
 
 #: src/bin/e_main.c:560
 msgid "Moksha cannot set up its file registry system.\n"
@@ -3135,7 +3135,7 @@ msgid ""
 "Perhaps you are out of memory?"
 msgstr ""
 "Moksha nemôže nastaviť cesty pre vyhľadávanie súborov.\n"
-"Možno máte nedostatok pamäte."
+"Možno máte nedostatok pamäte?"
 
 #: src/bin/e_main.c:669
 msgid "Moksha cannot set up its font system.\n"
@@ -3601,12 +3601,12 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:"
-"<br>%s<br>Došlo k chybe:<br>%s<br>"
+"Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>"
+"%s<br>Došlo k chybe:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions."
-msgstr "Modul neobsahuje všetky potrebné funkcie"
+msgstr "Modul neobsahuje všetky potrebné funkcie."
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3641,13 +3641,12 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_module.c:819
-#, fuzzy
 msgid "Unstable module tainting"
-msgstr "Bytecode Vyhladzovanie"
+msgstr "Chyba pri nahrávaní modulu"
 
 #: src/bin/e_module.c:823
 msgid "I know"
-msgstr "Beriem na vedomie"
+msgstr "I know"
 
 #: src/bin/e_screensaver.c:187
 msgid ""
@@ -3765,7 +3764,7 @@ msgstr "Začať presúvanie widgetov"
 
 #: src/bin/e_shelf.c:2413
 msgid "A shelf with that name and id already exists!"
-msgstr "Lišta s takým menom a ID už existuje"
+msgstr "Lišta s takým menom a ID už existuje!"
 
 #: src/bin/e_shelf.c:2432
 msgid "Rename Shelf"
@@ -3809,9 +3808,9 @@ msgid ""
 "want to finish the logout<br>anyway without closing these<br>applications "
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
-"Odhlasovanie trvá príliš dloho.<br>Niektoré aplikácie odmietajú byť "
+"Odhlasovanie trvá príliš dlho.<br>Niektoré aplikácie odmietajú byť "
 "zatvorené<br>Prajete si dokončiť odhlasovanie<br>bez ohľadu na tieto "
-"<br>aplikácie ?<br><br>Automatické odhlásenie za %d sekúnd."
+"<br>aplikácie %s<br><br>Automatické odhlásenie za %d sekúnd."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3855,7 +3854,7 @@ msgid ""
 "has been started."
 msgstr ""
 "Vypínanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už "
-"začal"
+"začal."
 
 #: src/bin/e_sys.c:613
 msgid ""
@@ -3863,7 +3862,7 @@ msgid ""
 "begun."
 msgstr ""
 "Resetovanie.<br>Nemôžete vykonávať iné operácie systému<br>nakoľko proces už "
-"začal"
+"začal."
 
 #: src/bin/e_sys.c:619
 msgid ""
@@ -3871,7 +3870,7 @@ msgid ""
 "system actions."
 msgstr ""
 "Prechod do úsporného režimu.<br>Nemôžete vykonávať iné operácie "
-"systému<br>nakoľko proces už začal"
+"systému<br>nakoľko proces už začal."
 
 #: src/bin/e_sys.c:625
 msgid ""
@@ -3879,11 +3878,11 @@ msgid ""
 "complete."
 msgstr ""
 "Prechod do režimu uspania.<br>nemožno vykonávať žiadne ďalšie operácie "
-"systému<br>nakoľko proces už začal"
+"systému<br>nakoľko proces už začal."
 
 #: src/bin/e_sys.c:631
 msgid "EEK! This should not happen."
-msgstr "EEK! K tomu nemalo dôjsť"
+msgstr "EEK! K tomu nemalo dôjsť."
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -3899,7 +3898,7 @@ msgstr "Úsporný režim zlyhal."
 
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
-msgstr "Uspanie zlyhalo"
+msgstr "Uspanie zlyhalo."
 
 #: src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
@@ -4097,12 +4096,13 @@ msgid ""
 "Failed to create directory: %s .<br>Check that you have correct permissions "
 "set."
 msgstr ""
-"Zlyhanie vytvorenia priečinku: %s .<br>Skontrolujte správnosť privilégií"
+"Zlyhanie vytvorenia priečinku: %s .<br>Skontrolujte správnosť privilégií."
 
 #: src/bin/e_utils.c:936
 #, c-format
 msgid "Failed to create directory: %s .<br>A file of that name already exists."
-msgstr "Zlyhanie vytvorenia priečinku: %s .<br>Súbor s týmto menom už existuje"
+msgstr ""
+"Zlyhanie vytvorenia priečinku: %s .<br>Súbor s týmto menom už existuje."
 
 #: src/bin/e_utils.c:1098
 msgid ""
@@ -4151,7 +4151,7 @@ msgstr "Nikdy"
 #, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
-msgstr[0] "sekunda"
+msgstr[0] "Sekunda"
 msgstr[1] "%li sekundy"
 msgstr[2] "%li sekúnd"
 
@@ -4159,7 +4159,7 @@ msgstr[2] "%li sekúnd"
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
-msgstr[0] "rok"
+msgstr[0] "Rok"
 msgstr[1] "%li roky"
 msgstr[2] "%li rokov"
 
@@ -4167,7 +4167,7 @@ msgstr[2] "%li rokov"
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
-msgstr[0] "mesiac"
+msgstr[0] "Mesiac"
 msgstr[1] "%li mesiace"
 msgstr[2] "%li mesiacov"
 
@@ -4175,7 +4175,7 @@ msgstr[2] "%li mesiacov"
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
-msgstr[0] "týždeň"
+msgstr[0] "Týždeň"
 msgstr[1] "%li týždne"
 msgstr[2] "%li týždňov"
 
@@ -4183,7 +4183,7 @@ msgstr[2] "%li týždňov"
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
-msgstr[0] "deň"
+msgstr[0] "Deň"
 msgstr[1] "%li dni"
 msgstr[2] "%li dní"
 
@@ -4191,7 +4191,7 @@ msgstr[2] "%li dní"
 #, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
-msgstr[0] "hodina"
+msgstr[0] "Hodina"
 msgstr[1] "%li hodiny"
 msgstr[2] "%li hodín"
 
@@ -4199,7 +4199,7 @@ msgstr[2] "%li hodín"
 #, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
-msgstr[0] "minúta"
+msgstr[0] "Minúta"
 msgstr[1] "%li minúty"
 msgstr[2] "%li minút"
 
@@ -4233,49 +4233,49 @@ msgstr "Dole"
 
 #: src/bin/e_widget_csel.c:195
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src/bin/e_widget_csel.c:195
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: src/bin/e_widget_csel.c:195
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: src/bin/e_widget_csel.c:195
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: src/bin/e_widget_csel.c:195
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src/bin/e_widget_csel.c:195
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: src/bin/e_widget_csel.c:275
 msgid "Alpha"
-msgstr ""
+msgstr "Priehľadnosť"
 
 #: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
 #: src/bin/e_widget_filepreview.c:523
 msgid "Resolution:"
-msgstr "Rozlíšenie"
+msgstr "Rozlíšenie:"
 
 #: src/bin/e_widget_filepreview.c:94
 msgid "Mime-type:"
-msgstr "Typy MIME"
+msgstr "Typy MIME:"
 
 #: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
-msgstr ""
+msgstr "%3.1f%%"
 
 #: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
-msgstr "Dĺžka"
+msgstr "Dĺžka:"
 
 #: src/bin/e_widget_filepreview.c:471
 msgid "Used:"
@@ -4287,7 +4287,7 @@ msgstr "Rezervované:"
 
 #: src/bin/e_widget_filepreview.c:474
 msgid "Mount status:"
-msgstr "Stav pripojenia"
+msgstr "Stav pripojenia:"
 
 #: src/bin/e_widget_filepreview.c:476
 msgid "Type:"
@@ -4370,7 +4370,7 @@ msgstr "Upozorniť keď bude batéria takmer vybitá"
 
 #: src/modules/battery/e_mod_config.c:138
 msgid "Use desktop notifications for alert"
-msgstr "Zobraziť upozornenie na ploche."
+msgstr "Zobraziť upozornenie na ploche"
 
 #: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
@@ -4394,7 +4394,7 @@ msgstr "Režim spánku , ak je menej ako:"
 
 #: src/modules/battery/e_mod_config.c:248
 msgid "Shutdown when below:"
-msgstr "Vypnutie, keď ak je menej ako;"
+msgstr "Vypnutie, keď ak je menej ako:"
 
 #: src/modules/battery/e_mod_config.c:251
 #: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
@@ -4545,11 +4545,11 @@ msgstr "Sekundy"
 
 #: src/modules/clock/e_mod_config.c:242
 msgid "12 h"
-msgstr ""
+msgstr "12 h"
 
 #: src/modules/clock/e_mod_config.c:244
 msgid "24 h"
-msgstr ""
+msgstr "24 h"
 
 #: src/modules/clock/e_mod_config.c:249
 msgid "Date"
@@ -4569,11 +4569,11 @@ msgstr "Len dátum"
 
 #: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
-msgstr ""
+msgstr "ISO 8601"
 
 #: src/modules/clock/e_mod_config.c:262
 msgid "Strftime"
-msgstr ""
+msgstr "Strftime"
 
 #: src/modules/clock/e_mod_config.c:269
 msgid "Week"
@@ -4594,11 +4594,11 @@ msgstr "Dni"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr "Nastaviť"
+msgstr "Nastaviť..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr "Nastaviť..."
+msgstr "Nastaviť... "
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -4710,7 +4710,7 @@ msgstr "Vybrané aplikácie"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:335
 msgid "Types"
-msgstr "Typy:"
+msgstr "Typy"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:38
 #: src/modules/conf_applications/e_mod_main.c:57
@@ -4946,7 +4946,7 @@ msgstr "Názov plochy"
 
 #: src/modules/conf_display/e_int_config_desk.c:182
 msgid "Profile Name:"
-msgstr "Názov Profilu"
+msgstr "Názov Profilu:"
 
 #: src/modules/conf_display/e_int_config_desk.c:188
 msgid "Desktop Wallpaper"
@@ -4990,7 +4990,7 @@ msgstr "Použiť vlastný príkaz uzamknutia"
 
 #: src/modules/conf_display/e_int_config_desklock.c:236
 msgid "Locking"
-msgstr "Uzamyká sa..."
+msgstr "Uzamyká sa"
 
 #: src/modules/conf_display/e_int_config_desklock.c:278
 msgid "Keyboard Layout"
@@ -5014,7 +5014,7 @@ msgstr "Prihlasovací box"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
 msgid "Lock after X screensaver activates"
-msgstr "Uzamknutie po aktivácii šetriča obrazovky."
+msgstr "Uzamknutie po aktivácii šetriča obrazovky"
 
 #: src/modules/conf_display/e_int_config_desklock.c:315
 #: src/modules/conf_display/e_int_config_desklock.c:340
@@ -5573,7 +5573,7 @@ msgstr ""
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
-msgstr "Moksha nevie importovať konfiguráciu<br>z dôvodu chyby pri kopírovaní"
+msgstr "Moksha nevie importovať konfiguráciu<br>z dôvodu chyby pri kopírovaní."
 
 #: src/modules/conf_intl/e_int_config_intl.c:605
 #: src/modules/conf_intl/e_mod_main.c:20
@@ -5807,9 +5807,8 @@ msgstr "Chyba pri priraďovaní skratky"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>%s</hilight>."
 "<br> Zvoľte iné priradenie."
@@ -6005,7 +6004,7 @@ msgstr "Systémové menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
-msgstr ""
+msgstr "PLOCHA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
 msgid " Show the Desktop:"
@@ -6162,7 +6161,7 @@ msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr " Nezobrazovať Ikony v ponuke "
+msgstr " Nezobrazovať Ikony v ponuke"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 msgid " Smart Menu Orientation"
@@ -6743,7 +6742,7 @@ msgstr "Objekt:"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:565
 msgid "Outline:"
-msgstr "Obrys"
+msgstr "Obrys:"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:571
 msgid "Shadow:"
@@ -7191,7 +7190,7 @@ msgstr "Oddeliť skupiny podľa"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:114
 msgid "Using separator bars"
-msgstr "Použiť oddeľovače "
+msgstr "Použiť oddeľovače"
 
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:117
 msgid "Using menus"
@@ -7265,7 +7264,7 @@ msgstr "Použi užívateľom definovanú ikonu"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:133
 msgid "Application provided"
-msgstr "Definované aplikáciou "
+msgstr "Definované aplikáciou"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:137
 msgid "Move Geometry"
@@ -7443,7 +7442,7 @@ msgstr "Automatické do popredia"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:272
 msgid "Delay before raising:"
-msgstr "Oneskorenie pre okno do popredia"
+msgstr "Oneskorenie pre okno do popredia:"
 
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:282
 msgid "Raise Window"
@@ -7645,7 +7644,7 @@ msgstr "Ukončiť proces namiesto klienta"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:99
 msgid "Kill timeout:"
-msgstr "Oneskorenie ukončenia procesu"
+msgstr "Oneskorenie ukončenia procesu:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:105
 msgid "Ping clients"
@@ -7855,14 +7854,12 @@ msgid "Update poll interval"
 msgstr "Interval obnovy"
 
 #: src/modules/cpufreq/e_mod_config.c:107
-#, fuzzy
 msgid "Minimum Power State"
-msgstr "Tlačidlo Zapnúť PC"
+msgstr "Minimálna rýchlosť"
 
 #: src/modules/cpufreq/e_mod_config.c:113
-#, fuzzy
 msgid "Maximum Power State"
-msgstr "Tlačidlo Zapnúť PC"
+msgstr "Maximálna rýchlosť"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
@@ -7949,7 +7946,7 @@ msgstr "Zobrazenie nedávnych položiek"
 
 #: src/modules/everything/evry_config.c:487
 msgid "Up/Down select next item in icon view"
-msgstr "Posun po položkách v zobrazení ikon (Výber Hore/Dole) "
+msgstr "Posun po položkách v zobrazení ikon (Výber Hore/Dole)"
 
 #: src/modules/everything/evry_config.c:496
 msgid "Hide input when inactive"
@@ -8063,14 +8060,12 @@ msgid "Everything Collection"
 msgstr "Reštart aplikácií"
 
 #: src/modules/everything/evry_gadget.c:169
-#, fuzzy
 msgid "Everything Starter"
-msgstr "Nastavenia terminálu"
+msgstr "Rýchly prístup (Štart)"
 
 #: src/modules/everything/evry_gadget.c:587
-#, fuzzy
 msgid "Everything Gadgets"
-msgstr "Všetko"
+msgstr "Moduly Rýchleho prístupu"
 
 #: src/modules/everything/evry_gadget.c:685
 msgid "Plugin"
@@ -8190,9 +8185,8 @@ msgstr "Premenovať súbory"
 
 #: src/modules/everything/evry_plug_files.c:1445
 #: src/modules/everything/evry_plug_files.c:1588
-#, fuzzy
 msgid "Everything Files"
-msgstr "Všetko"
+msgstr "Rýchly prístup (Súbory)"
 
 #: src/modules/everything/evry_plug_files.c:1472
 msgid "Show recent files"
@@ -8255,11 +8249,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8340,9 +8334,9 @@ msgid "Secure deletion is aborted"
 msgstr "Bezpečné odstránenie je zrušené"
 
 #: src/modules/fileman/e_fwin.c:3032
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown operation from slave is aborted"
-msgstr "Neznámy prevádzka od otroka je prerušené"
+msgstr "Neznáma operácia je prerušená"
 
 #: src/modules/fileman/e_fwin.c:3042
 #, c-format
@@ -8860,7 +8854,7 @@ msgstr "Vytvoriť nový zdroj Ibar"
 
 #: src/modules/ibar/e_mod_config.c:200
 msgid "Enter a name for this new source:"
-msgstr "Pridať názov pre tento nový zdroj"
+msgstr "Pridať názov pre tento nový zdroj:"
 
 #: src/modules/ibar/e_mod_config.c:214
 #, c-format
@@ -8868,7 +8862,7 @@ msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
 "bar source?"
 msgstr ""
-"Požadujete vymazať \"%s\".<br><br>Ste si istý, že chcete vymazať tento zdroj"
+"Požadujete vymazať \"%s\".<br><br>Ste si istý, že chcete vymazať tento zdroj?"
 
 #: src/modules/ibar/e_mod_config.c:218
 msgid "Are you sure you want to delete this bar source?"
@@ -9201,7 +9195,7 @@ msgstr "Vitajte v Moksha desktop"
 
 #: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr "Moment, nahráva sa nastavenie desktopu Moksha"
+msgstr "Moment, nahráva sa nastavenie desktopu Moksha!"
 
 #: src/modules/wizard/page_010.c:189 src/modules/wizard/page_011.c:175
 msgid "Select one"
@@ -9238,7 +9232,7 @@ msgstr "Informácie"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
-msgstr "Panel Úloh môže byť pridaný<br>za účelom otvárania okien a aplikácií"
+msgstr "Panel Úloh môže byť pridaný<br>za účelom otvárania okien a aplikácií."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9392,7 +9386,7 @@ msgstr "Chyba skratky kláves"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "The keybinding you have entered is already in use!"
-msgstr "Klávesová skratka už existuje"
+msgstr "Zadaná klávesová skratka už existuje!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:798
 msgid "Hide Instead Of Raise"
@@ -9412,7 +9406,7 @@ msgstr "S prechodom"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:828
 msgid "Remove Quickaccess"
-msgstr "Odstrániť rýchly prístup"
+msgstr "Odstrániť Rýchly prístup"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:856
 msgid "Quickaccess..."
@@ -9420,7 +9414,7 @@ msgstr "Rýchly prístup..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:862
 msgid "Add Quickaccess"
-msgstr "Pridať rýchly prístup"
+msgstr "Pridať Rýchly prístup"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:936
 msgid ""
@@ -9443,7 +9437,7 @@ msgstr ""
 #: src/modules/quickaccess/e_mod_quickaccess.c:1230
 #: src/modules/quickaccess/e_mod_quickaccess.c:1253
 msgid "Stop"
-msgstr ""
+msgstr "Zastaviť"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:994
 msgid "Great! Activate the Quickaccess entry again to show it!"
@@ -9470,7 +9464,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
-msgstr ""
+msgstr "Prezentácia Rýchleho prístupu"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
@@ -9506,7 +9500,7 @@ msgstr "Chyba Systray"
 
 #: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
-msgstr "Systray nemôže nastaviť svoje pozadie na neviditeľné"
+msgstr "Systray nemôže nastaviť svoje pozadie na transparentnom štýle lišty."
 
 #: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
@@ -9578,7 +9572,7 @@ msgstr "Uložiť"
 #: src/modules/shot/e_mod_main.c:603
 #, c-format
 msgid "Uploaded %s / %s"
-msgstr ""
+msgstr "Nahrané %s / %s"
 
 #: src/modules/shot/e_mod_main.c:624
 msgid "Error - Upload Failed"
@@ -9658,7 +9652,7 @@ msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
-"Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti "
+"Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti."
 
 #: src/modules/shot/e_mod_main.c:790
 msgid "Confirm"
@@ -9666,7 +9660,7 @@ msgstr "Potvrdiť"
 
 #: src/modules/shot/e_mod_main.c:891
 msgid "Where to put Screenshot..."
-msgstr "Kam uložiť snímku"
+msgstr "Kam uložiť snímku..."
 
 #: src/modules/shot/e_mod_main.c:943
 msgid "Quality"
@@ -9944,7 +9938,7 @@ msgstr "Modul notifikácií"
 
 #: src/modules/notification/e_mod_main.c:129
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Chyba počas inicializácie servera notifikácií"
 
 #: src/modules/notification/e_mod_main.c:130
 msgid ""
@@ -9952,7 +9946,7 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 "Chyba počas inicializácie DBus! Skontrolujte prosím, či je dbus správne "
-"nainštalovaný a beží."
+"nainštalovaný a beží"
 
 #: src/modules/notification/e_mod_main.c:421
 #: src/modules/clipboard/e_mod_main.c:411
@@ -9965,15 +9959,15 @@ msgstr "Vstup do režimu Prezentácie"
 
 #: src/modules/notification/e_mod_main.c:623
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr "Moksha je v režime <br>prezentácie<br>"
+msgstr "Moksha je v režime <br>prezentácie<br>."
 
 #: src/modules/notification/e_mod_main.c:627
 msgid "Exited Presentation Mode"
-msgstr "Ukončenie režimu prezentácie "
+msgstr "Ukončenie režimu prezentácie"
 
 #: src/modules/notification/e_mod_main.c:628
 msgid "Presentation mode is over."
-msgstr "Režim prezentácie je ukončený"
+msgstr "Režim prezentácie je ukončený."
 
 #: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
@@ -9996,8 +9990,8 @@ msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
-"Teraz v <b>online</b> režime.<br>Moduly používajúce sieť teraz znovu spustia "
-"bežné úlohy"
+"Teraz v <b>online</b> režime.<br>Moduly používajúce sieť znovu spustia bežné "
+"úlohy."
 
 #: src/modules/notification/e_mod_main.c:708
 msgid "Notification expired!"
@@ -10013,7 +10007,7 @@ msgstr "Urgencia"
 
 #: src/modules/notification/e_mod_config.c:109
 msgid "Levels of urgency to display:"
-msgstr "Zobraziť úrovne urgencií"
+msgstr "Zobraziť úrovne urgencií:"
 
 #: src/modules/notification/e_mod_config.c:115
 msgid "Critical"
@@ -10058,11 +10052,11 @@ msgstr "Zobraziť názov aplikácie"
 
 #: src/modules/notification/e_mod_config.c:187
 msgid "Show notification counter"
-msgstr " Zobraziť počítadlo notifikácií"
+msgstr "Zobraziť počítadlo notifikácií"
 
 #: src/modules/notification/e_mod_config.c:189
 msgid "Reverse order"
-msgstr " Opačné poradie"
+msgstr "Opačné poradie"
 
 #: src/modules/notification/e_mod_config.c:193
 #: src/modules/clipboard/e_mod_config.c:245
@@ -10212,7 +10206,7 @@ msgstr "Manažér schránky: Editácia položky"
 
 #: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
-msgstr "Editovať aktuálnu položku"
+msgstr "Editovať aktuálnu položku:"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10279,7 +10273,7 @@ msgstr "Zobraziť výstrahu plného disku"
 
 #: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
-msgstr "Limit kapacity disku"
+msgstr "Limit kapacity disku:"
 
 #: src/modules/places/e_mod_main.c:417
 msgid "Places Configuration Updated"
@@ -10305,23 +10299,23 @@ msgstr "Disk ''%s'' je zaplnený na %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10347,7 +10341,7 @@ msgstr "vysunúť"
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
 msgid "Operation failed"
-msgstr "Operácia zlyhala."
+msgstr "Operácia zlyhala"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
