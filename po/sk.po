@@ -89,9 +89,8 @@ msgid "No"
 msgstr "Nie"
 
 #: src/bin/e_actions.c:2160
-#, fuzzy
 msgid "Action Params Syntax Error"
-msgstr "Akčné params"
+msgstr "Syntaktická chyba parametrov akcie"
 
 #: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
 msgid "Exit"
@@ -3022,13 +3021,12 @@ msgstr ""
 "Možno máte nedostatok pamäte."
 
 #: src/bin/e_main.c:395
-#, fuzzy
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
 "Moksha nemôže nastaviť handler signálu HUP.\n"
-"Možno máte nedostatok pamäte."
+"Možno máte nedostatok pamäte?"
 
 #: src/bin/e_main.c:404
 msgid "Moksha cannot initialize Ecore_File!\n"
@@ -3108,33 +3106,28 @@ msgstr ""
 "Možno nemáte domovský adresár alebo je disk plný."
 
 #: src/bin/e_main.c:560
-#, fuzzy
 msgid "Moksha cannot set up its file registry system.\n"
-msgstr "Moksha nemôže nastaviť svoj súbor systému databázy Registry."
+msgstr "Moksha nemôže nastaviť svoj súbor registra systému.\n"
 
 #: src/bin/e_main.c:569
-#, fuzzy
 msgid "Moksha cannot set up its config system.\n"
-msgstr "Moksha nemôže spustiť systém nastavení."
+msgstr "Moksha nemôže nastaviť svoj konfiguračný sysstém.\n"
 
 #: src/bin/e_main.c:609
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha nemôže inicializovať E_Xinerama!\n"
 
 #: src/bin/e_main.c:618
-#, fuzzy
 msgid "Moksha cannot set up its environment.\n"
-msgstr "Moksha nemôže spustiť systém tém."
+msgstr "Moksha nemôže nastaviť svoje prostredie.\n"
 
 #: src/bin/e_main.c:634
-#, fuzzy
 msgid "Moksha cannot set up its scale system.\n"
-msgstr "Moksha nemôže nastaviť rozsah systému."
+msgstr "Moksha nemôže nastaviť rozsah systému.\n"
 
 #: src/bin/e_main.c:643
-#, fuzzy
 msgid "Moksha cannot set up its pointer system.\n"
-msgstr "Moksha nemôže nastaviť ukazovateľ systému."
+msgstr "Moksha nemôže nastaviť ukazovateľ systému.\n"
 
 #: src/bin/e_main.c:652
 msgid ""
@@ -3153,28 +3146,26 @@ msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha nemôže spustiť systém tém.\n"
 
 #: src/bin/e_main.c:702
-#, fuzzy
 msgid "Moksha cannot set up its init screen.\n"
-msgstr "Moksha nemôže spustiť intl systém."
+msgstr "Moksha nemôže nastaviť inicializačnú obrazovku.\n"
 
 #: src/bin/e_main.c:717
 msgid "Starting International Support"
 msgstr "Spúšťam medzinárodnú podporu"
 
 #: src/bin/e_main.c:721
-#, fuzzy
 msgid "Moksha cannot set up its intl system.\n"
-msgstr "Moksha nemôže spustiť intl systém."
+msgstr "Moksha nemôže nastaviť systém jazykov.\n"
 
 #: src/bin/e_main.c:730
-#, fuzzy
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Moksha nemôže inicializovať FDO plochu systému.\n"
-"Asi nedostatok pamäte?"
+"Moksha nemôže inicializovať FDO desktopový systému.\n"
+"Možno kvôli absencii povolení v ~/.cache/efreet\n"
+"prípadne nedostatok pamäte?"
 
 #: src/bin/e_main.c:755
 msgid "Setup Screens"
@@ -3237,14 +3228,12 @@ msgid "Setup Popups"
 msgstr "Nastaviť vyskakovacie okná"
 
 #: src/bin/e_main.c:833
-#, fuzzy
 msgid "Moksha cannot set up its popup system.\n"
-msgstr "Moksha nemôže spustiť popup systém.\n"
+msgstr "Moksha nemôže nastaviť popup systém.\n"
 
 #: src/bin/e_main.c:845
-#, fuzzy
 msgid "Setup Message Bus"
-msgstr "Nastavenia správy Bus"
+msgstr "Nastavenia Message Bus"
 
 #: src/bin/e_main.c:852
 msgid "Setup Paths"
@@ -3303,11 +3292,8 @@ msgid "Setup Grab Input Handling"
 msgstr "Nastaviť zachytenie vstupnej manipulácie"
 
 #: src/bin/e_main.c:932
-#, fuzzy
 msgid "Moksha cannot set up its grab input handling system.\n"
-msgstr ""
-"Moksha nemôže spustiť systém na spracovanie zachyteného\n"
-"vstupu."
+msgstr "Moksha nemôže nastaviť systém na spracovanie vstupu.\n"
 
 #: src/bin/e_main.c:939
 msgid "Setup Modules"
@@ -3619,7 +3605,6 @@ msgstr ""
 "<br>%s<br>Došlo k chybe:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Modul neobsahuje všetky potrebné funkcie"
 
@@ -3818,7 +3803,7 @@ msgid "System Check Done"
 msgstr "Kontrola systému skončená"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -3897,7 +3882,6 @@ msgstr ""
 "systému<br>nakoľko proces už začal"
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "EEK! K tomu nemalo dôjsť"
 
@@ -3978,9 +3962,8 @@ msgid "Never tell me"
 msgstr "Nikdy sa nepýtať"
 
 #: src/bin/e_update.c:83
-#, fuzzy
 msgid "Update Notice"
-msgstr "Stav"
+msgstr "Upozorniť na aktualizáciu"
 
 #: src/bin/e_update.c:87
 #, c-format
@@ -4614,9 +4597,8 @@ msgid "Set..."
 msgstr "Nastaviť"
 
 #: src/modules/clock/e_mod_config.c:320
-#, fuzzy
 msgid "Set... "
-msgstr "Nastaviť"
+msgstr "Nastaviť..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -4744,33 +4726,28 @@ msgid "Only launch single instances"
 msgstr "Spustiť len jednu inštaciu"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
-#, fuzzy
 msgid "X11 Basics"
-msgstr "Základné"
+msgstr "Základy X11"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:100
-#, fuzzy
 msgid "Load X Resources"
-msgstr "Spustiť moduly"
+msgstr "Nahrať zdroje X"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:103
-#, fuzzy
 msgid "Load X Modifier Map"
-msgstr "Posledná úprava:"
+msgstr "Nahrať X Modifier Map"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:108
 msgid "Major Desktops"
 msgstr "Hlavné plochy"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:109
-#, fuzzy
 msgid "Start GNOME services on login"
-msgstr "Spustiť tento program pri prihlásení"
+msgstr "Spustiť GNOME služby po prihlásení"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:112
-#, fuzzy
 msgid "Start KDE services on login"
-msgstr "Spustiť tento program pri prihlásení"
+msgstr "Spustiť KDE služby po prihlásení"
 
 #: src/modules/conf_applications/e_mod_main.c:18
 msgid "Apps"
@@ -4830,13 +4807,8 @@ msgstr "Nastavenie dialógov"
 #: src/modules/conf_performance/e_int_config_engine.c:86
 #: src/modules/conf_theme/e_int_config_fonts.c:675
 #: src/modules/everything/evry_config.c:542 src/modules/ibox/e_mod_config.c:97
-#, fuzzy
 msgid "General Settings"
-msgstr ""
-"#-#-#-#-#  sk.po (e HEAD)  #-#-#-#-#\n"
-"Hlavné Nastavenia\n"
-"#-#-#-#-#  sk.po (e HEAD)  #-#-#-#-#\n"
-"Všeobecné nastavenia"
+msgstr "Hlavné Nastavenia"
 
 #: src/modules/conf_dialogs/e_int_config_dialogs.c:111
 msgid "Disable Confirmation Dialogs"
@@ -5041,9 +5013,8 @@ msgid "Login Box"
 msgstr "Prihlasovací box"
 
 #: src/modules/conf_display/e_int_config_desklock.c:309
-#, fuzzy
 msgid "Lock after X screensaver activates"
-msgstr "Uzamknutie po šetriča obrazovky aktivuje."
+msgstr "Uzamknutie po aktivácii šetriča obrazovky."
 
 #: src/modules/conf_display/e_int_config_desklock.c:315
 #: src/modules/conf_display/e_int_config_desklock.c:340
@@ -5412,9 +5383,8 @@ msgid "%1.0f pixels"
 msgstr "%1.0f pixelov"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:111
-#, fuzzy
 msgid "Threshold for applying drag momentum"
-msgstr "Prahová hodnota pre použitie drag impulz"
+msgstr "Prahová hodnota posunu"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:114
 #, c-format
@@ -5737,9 +5707,8 @@ msgid "Brightness Up"
 msgstr "Zvýšiť podsvietenie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
-#, fuzzy
 msgid "Assist"
-msgstr "Priradiť"
+msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
 msgid "S1"
@@ -5790,19 +5759,16 @@ msgid "Battery Button"
 msgstr "Tlačidlo Zapnúť PC"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:416
-#, fuzzy
 msgid "Tablet Disabled"
-msgstr "Zakázaná kontrola textu"
+msgstr "Tablet zakázať"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:417
-#, fuzzy
 msgid "Tablet Enabled"
-msgstr "Povolený"
+msgstr "Tablet povoliť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:418
-#, fuzzy
 msgid "Tablet"
-msgstr "Povoliť"
+msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:523
 msgid "ACPI Binding"
@@ -6294,9 +6260,8 @@ msgid "Environment Variables"
 msgstr "Premenné prostredia"
 
 #: src/modules/conf_paths/e_int_config_env.c:332
-#, fuzzy
 msgid "Unset"
-msgstr "Zabudovaný"
+msgstr "Nenastaviť"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
@@ -6365,7 +6330,7 @@ msgstr "Veľkost vyrovnávacej pamäte obrázkov"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
 #: src/modules/fileman/e_mod_config.c:418
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f MiB"
 msgstr "%1.0f MB"
 
@@ -6383,9 +6348,8 @@ msgid "%1.0f files"
 msgstr "%1.0f súborov"
 
 #: src/modules/conf_performance/e_int_config_performance.c:154
-#, fuzzy
 msgid "Number of Edje collections to cache"
-msgstr "Počet Edje zbierok do medzipamäte"
+msgstr "Počet Edje kolekcií do medzipamäte"
 
 #: src/modules/conf_performance/e_int_config_performance.c:156
 #, c-format
@@ -6393,9 +6357,8 @@ msgid "%1.0f collections"
 msgstr "%1.0f kolekcií"
 
 #: src/modules/conf_performance/e_int_config_performance.c:159
-#, fuzzy
 msgid "Edje Cache"
-msgstr "Zrušiť"
+msgstr "Edje medzipamäť"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:41
 msgid "Power Management Settings"
@@ -6545,18 +6508,16 @@ msgid "Remember this Border for this window next time it appears"
 msgstr "Zapamätať si okraj okna do budúcnosti"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
-msgstr "Štýl okrajov"
+msgstr "Štýl okna"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
 msgstr "Aktívny rám okna"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
-msgstr "Názov okraja"
+msgstr "Názov okna"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:81
 msgid "Border Title Active"
@@ -6564,7 +6525,7 @@ msgstr "Názov okna aktívny"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:82
 msgid "Border Frame"
-msgstr "Rám okraja"
+msgstr "Rám okna"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:83
 msgid "Border Frame Active"
@@ -8514,9 +8475,8 @@ msgid "Sidebar"
 msgstr "Postranná lišta"
 
 #: src/modules/fileman/e_mod_config.c:397
-#, fuzzy
 msgid "Open Dirs In Place"
-msgstr "Otvoriť Priečinky"
+msgstr "Otvoriť Adresáre"
 
 #: src/modules/fileman/e_mod_config.c:400
 msgid "Use Single Click"
@@ -8539,9 +8499,8 @@ msgid "Max File Size For Thumbnailing"
 msgstr "Max. Veľkosť Súboru pre Vytvorenie Náhľadu"
 
 #: src/modules/fileman/e_mod_config.c:422
-#, fuzzy
 msgid "Spring Delay"
-msgstr "Pozastaviť čas"
+msgstr "Čas oneskorenia"
 
 #: src/modules/fileman/e_mod_config.c:428
 msgid "Custom FM to open dirs"
@@ -9104,39 +9063,32 @@ msgid "Show Pager Popup"
 msgstr "Zobraziť upozornenie správcu plôch"
 
 #: src/modules/pager/e_mod_main.c:2973
-#, fuzzy
 msgid "Popup Desk Right"
-msgstr "Popup recepcii Právo"
+msgstr "Popup Plochy Vpravo"
 
 #: src/modules/pager/e_mod_main.c:2975
-#, fuzzy
 msgid "Popup Desk Left"
-msgstr "Popup stôl ľavica"
+msgstr "Popup Plochy Vľavo"
 
 #: src/modules/pager/e_mod_main.c:2977
-#, fuzzy
 msgid "Popup Desk Up"
-msgstr "Popup recepcii Up"
+msgstr "Popup Plochy Hore"
 
 #: src/modules/pager/e_mod_main.c:2979
-#, fuzzy
 msgid "Popup Desk Down"
-msgstr "Popup recepcii dole"
+msgstr "Popup Plochy Dole"
 
 #: src/modules/pager/e_mod_main.c:2981
-#, fuzzy
 msgid "Popup Desk Next"
-msgstr "Popup recepcii Ďalšia"
+msgstr "Popup Ďalšej Plochy"
 
 #: src/modules/pager/e_mod_main.c:2983
-#, fuzzy
 msgid "Popup Desk Previous"
-msgstr "Popup recepcii Predchádzajúci"
+msgstr "Popup Predchádzajúcej Plochy"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Nastavenie systému"
+msgstr "Nastavenie Ovládania systému"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -10076,9 +10028,9 @@ msgid "Force timeout for all notifications"
 msgstr "Vnútiť časový limit pre všetky notifikácie"
 
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f sek"
+msgstr "%.1f sek"
 
 #: src/modules/notification/e_mod_config.c:137
 msgid "Popup Orientation"
