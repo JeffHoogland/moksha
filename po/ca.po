@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2020-03-06 21:43+0100\n"
-"Last-Translator: Alan Ward Koeck <alanwardubuntu a github.com>\n"
+"POT-Creation-Date: 2024-01-17 16:38-0500\n"
+"PO-Revision-Date: 2024-01-17 16:56-0500\n"
+"Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Català <enlightenment-devel@lists.sourceforge.net>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2014-06-29 05:59+0000\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Bookmarks: -1,-1,1139,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: src/bin/e_about.c:18
@@ -48,14 +48,13 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Copyright &copy; 2021, per Moksha Development Team</><br><br>Esperem "
+"<title>Copyright &copy; 2024, per Moksha Development Team</><br><br>Esperem "
 "que vostè gaudeixi tant utilitzant aquest programari com nosaltres hem "
 "gaudit de fer-lo.<br><br>Per contactar amb nosaltres visiteu:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
@@ -65,9 +64,8 @@ msgid "<title>The Team</><br><br>"
 msgstr "<title>L'Equip</title><br>"
 
 #: src/bin/e_actions.c:154
-#, fuzzy
 msgid "Profile: Switch"
-msgstr "Selector de perfil"
+msgstr "Perfil: interruptor"
 
 #: src/bin/e_actions.c:430
 #, c-format
@@ -799,15 +797,13 @@ msgstr "Acció postergada"
 
 #: src/bin/e_actions.c:3634
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
-#, fuzzy
 msgid "Touchpad"
-msgstr "Tàctil"
+msgstr "Coixinet tàctil"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Tàctil"
+msgstr "Encès/apagat del Coixinet tàctil"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -2225,11 +2221,11 @@ msgstr "Minimitza"
 
 #: src/bin/e_int_border_menu.c:704
 msgid "Move with keyboard"
-msgstr ""
+msgstr "Mou-te amb el teclat"
 
 #: src/bin/e_int_border_menu.c:718
 msgid "Resize with keyboard"
-msgstr ""
+msgstr "Redimensionar amb el teclat"
 
 #: src/bin/e_int_border_menu.c:741
 msgid "Skip"
@@ -2847,14 +2843,12 @@ msgid "About Theme"
 msgstr "Quant al tema"
 
 #: src/bin/e_int_menus.c:263
-#, fuzzy
 msgid "Restart Moksha"
 msgstr "Tornar a engegar Moksha"
 
 #: src/bin/e_int_menus.c:338
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Favorits"
+msgstr "Aplicacions Favorits"
 
 #: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
 msgid "No applications"
@@ -2939,10 +2933,11 @@ msgstr "Permet a les finestres superposar-se al tauler"
 msgid "Height (%3.0f pixels)"
 msgstr "Alçada (%3.0f píxels)"
 
+# c-format
 #: src/bin/e_int_shelf_config.c:230
-#, fuzzy, c-format
+#, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Mida d'icona (%d)"
+msgstr "Mida d'icona (%2.0f/5)"
 
 #: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
@@ -3627,9 +3622,8 @@ msgstr ""
 "<br>%s<br>L'error reportat ha estat:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
-msgstr "El mòdul no conté totes les funcions necessàries"
+msgstr "El mòdul no conté totes les funcions necessàries."
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3827,8 +3821,9 @@ msgstr "Verificació permisos sistema"
 msgid "System Check Done"
 msgstr "Comprovació del sistema finalitzada"
 
+# c-format
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -3836,8 +3831,8 @@ msgid ""
 msgstr ""
 "S'està trigant molt de temps en tancar la sessió. <br>Algunes aplicacions no "
 "es tanquen.<br>Voleu tancar la sessió<br>sense tancar "
-"aquestes<br>aplicacions primer?<br><br>Es tancarà la sessió automàticament "
-"en %d segons."
+"aquestes<br>aplicacions primer?<br><br>%s<br>Es tancarà la sessió "
+"automàticament en %d segons."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3908,7 +3903,6 @@ msgstr ""
 "cap<br>altra acció de sistema."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "LLAMPS I TRONS! Això no hauria de passar"
 
@@ -4502,17 +4496,16 @@ msgid "AC power is recommended."
 msgstr "Es recomana connectar al corrent elèctric."
 
 #: src/modules/battery/e_mod_main.c:528
-#, fuzzy
 msgid "Power now: "
-msgstr "Apaga"
+msgstr "Potencia ara: "
 
 #: src/modules/battery/e_mod_main.c:534
 msgid "Remaining time: "
-msgstr ""
+msgstr "Temps restant: "
 
 #: src/modules/battery/e_mod_main.c:535
 msgid "hr"
-msgstr ""
+msgstr "h"
 
 #: src/modules/battery/e_mod_main.c:645
 msgid "N/A"
@@ -4532,9 +4525,8 @@ msgid "Clock Settings"
 msgstr "Preferències rellotge"
 
 #: src/modules/clock/e_mod_config.c:143 src/modules/clock/e_mod_config.c:318
-#, fuzzy
 msgid "Date set"
-msgstr "Data"
+msgstr "Ajust Data"
 
 #: src/modules/clock/e_mod_config.c:166 src/modules/clock/e_mod_config.c:203
 #: src/modules/conf_display/e_int_config_desk.c:194
@@ -4543,9 +4535,8 @@ msgid "Set"
 msgstr "Configura"
 
 #: src/modules/clock/e_mod_config.c:184 src/modules/clock/e_mod_config.c:312
-#, fuzzy
 msgid "Time set"
-msgstr "Temporitzadors"
+msgstr "Ajust de temps"
 
 #: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:867
 #: src/modules/clock/e_mod_main.c:1058
@@ -4615,11 +4606,11 @@ msgstr "Dies"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Configura..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Configura..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5430,9 +5421,8 @@ msgid "%1.2f s"
 msgstr "%1.2f s"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Preferències ratolí"
+msgstr "Preferències del ratolí i del panell tàctil"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -5485,9 +5475,8 @@ msgstr "Botons"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:353
 #: src/modules/conf_interaction/e_int_config_mouse.c:392
-#, fuzzy
 msgid "Middle mouse button emulation"
-msgstr "Botó central"
+msgstr "Emulació del botó mitjà del ratolí"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:366
 msgid "Mouse"
@@ -5495,59 +5484,51 @@ msgstr "Ratolí"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:373
 msgid "Enable Devices Extras"
-msgstr ""
+msgstr "Activa els extres de dispositius"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:388
 msgid "Tap to click"
-msgstr ""
+msgstr "Toqueu per fer clic"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:396
-#, fuzzy
 msgid "Clickpad"
-msgstr "Clic"
+msgstr "Tauler de clic"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:400
 msgid "Palm detect"
-msgstr ""
+msgstr "Detecció de palma"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:406
-#, fuzzy
 msgid "Scrolling"
-msgstr "Comprova"
+msgstr "Desplaçant"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:408
-#, fuzzy
 msgid "Natural scrolling"
-msgstr "Anima desplaçament"
+msgstr "Desplaçament natural"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:414
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Alineament horitzontal"
+msgstr "Desplaçament horitzontal"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:418
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Anima desplaçament"
+msgstr "Desplaçament de vora"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:422
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Anima desplaçament"
+msgstr "Desplaçament de 2 dits"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:426
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Anima desplaçament"
+msgstr "Desplaçament circular"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
 msgstr "Tàctil"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Mà del ratolí (Esquerra/Dreta)"
+msgstr "Ratolí i panell tàctil"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5840,7 +5821,7 @@ msgstr "Dreceres teclat"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Clau WIN única permesa"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
@@ -5982,192 +5963,159 @@ msgstr "Roda extra (%d) avall"
 
 #: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
-msgstr ""
+msgstr "FINESTRES"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr "Clona finestra"
+msgstr "Tanca la finestra:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr "Eleva finestra"
+msgstr "Maximitza Finestra:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr "Alterna mode minimitzat"
+msgstr "Alterna mode minimitzat:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr "Alterna mode pantalla completa"
+msgstr "Alterna mode pantalla completa:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr "Alterna sempre al damunt"
+msgstr "Alterna sempre al damunt:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr "Finestra següent"
+msgstr "Finestra següent:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr "Dreta:"
+msgstr "Maximitzar a la dreta:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr "Superior esquerra"
+msgstr "Maximizar a la izquierda:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr "Totes les finestres"
+msgstr "Totes les finestres:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr "Menú de finestra"
+msgstr "Menú de finestra:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
-msgstr ""
+msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr "Obre un terminal aquí"
+msgstr "Obre Terminology:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr "Errada en el bloqueig"
+msgstr "Bloqueig sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr "Mostra el menú principal"
+msgstr "Mostra menú principal"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr "Mostra el menú preferits"
+msgstr "Mostra el menú preferits:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr "Controls sistema"
+msgstr "Controls sistema:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
-msgstr ""
+msgstr "ESCRIPTORI"
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
 msgid " Show the Desktop:"
-msgstr "Mostra l'escriptori"
+msgstr "Mostra l'escriptori:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Canvia a escriptori 0"
+msgstr "Canvia a escriptori 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Canvia a escriptori 1"
+msgstr "Canvia a escriptori 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Canvia a escriptori 2"
+msgstr "Canvia a escriptori 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Canvia a escriptori 3"
+msgstr "Canvia a escriptori 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Canvia a escriptori 4"
+msgstr "Canvia a escriptori 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Canvia a escriptori 5"
+msgstr "Canvia a escriptori 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Canvia a escriptori 6"
+msgstr "Canvia a escriptori 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Canvia a escriptori 7"
+msgstr "Canvia a escriptori 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Canvia a escriptori 8"
+msgstr "Canvia a escriptori 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
-msgstr ""
+msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
-msgstr "Executa"
+msgstr "Executa:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr "Captura pantalla"
+msgstr "Captura pantalla:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr "Tornar a engegar Moksha"
+msgstr "Tornar a engegar Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr "Comanda de terminal"
+msgstr "Comanda de terminal:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr "Aquest escriptori"
+msgstr "Aquesta Ajut"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
 msgid "Basic Moksha Key Bindings"
-msgstr "Dreceres ratolí"
+msgstr "Dreceres de tecles Moksha bàsiques"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
 msgid "Edit"
 msgstr "Edita"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
-#, fuzzy
 msgid "Keybindings"
 msgstr "Dreceres teclat"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 msgid "View Moksha Keybindings"
-msgstr ""
+msgstr "Veure dreceres de tecles Moksha"
 
 #: src/modules/conf_keybindings/e_mod_main.c:380
-#, fuzzy
 msgid "Show bindings"
-msgstr "Mostra configuració"
+msgstr "Mostra dreceres"
 
 #: src/modules/conf_menus/e_int_config_menus.c:38
 #: src/modules/conf_menus/e_mod_main.c:18
@@ -6239,7 +6187,6 @@ msgid "Autoscroll"
 msgstr "Autodesplaçament"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid " Disable Icons in Menus"
 msgstr "Desactiva icones en els menús"
 
@@ -6588,12 +6535,10 @@ msgstr ""
 "Recorda la vora d'aquesta finestra la propera vegada que torni a aparèixer"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
 msgstr "Estil de vora"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
 msgstr "Marc de vora activa"
 
@@ -7238,14 +7183,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Activa tema d'icones per Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Rutes Moksha"
+msgstr "Tema Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Tema aplicacions"
+msgstr "Tema de l'aplicació (GTK i icones)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -7641,9 +7584,8 @@ msgid "Allow windows above fullscreen window"
 msgstr "Permet finestres per sobre de finestra a pantalla completa"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
-#, fuzzy
 msgid "Snap windows to the screen edge"
-msgstr "Canvia quan s'arrosseguin objectes a la cantonada de la pantalla"
+msgstr "Ajusta les finestres a la vora de la pantalla"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:241
 msgid "Maximization"
@@ -8029,7 +7971,6 @@ msgid "Animate scrolling"
 msgstr "Anima desplaçament"
 
 #: src/modules/everything/evry_config.c:479
-#, fuzzy
 msgid "Show recently used items"
 msgstr "Mostra fitxers recents"
 
@@ -8046,12 +7987,10 @@ msgid "Hide list"
 msgstr "Oculta llista"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Mode bàsic"
+msgstr "Mode cerca"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Mode borrós"
 
@@ -8068,9 +8007,8 @@ msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Estil Vi (ALT + h,j,k,l,n,p,m,i)"
 
 #: src/modules/everything/evry_config.c:521
-#, fuzzy
 msgid "Single mouse click"
-msgstr "Mostra quan es cliqui el ratolí"
+msgstr "Un sol clic del ratolí"
 
 #: src/modules/everything/evry_config.c:528
 msgid "No Sorting"
@@ -8138,9 +8076,8 @@ msgid "Edge Popup Size"
 msgstr "Finestra emergent: Mida vora"
 
 #: src/modules/everything/evry_config.c:618
-#, fuzzy
 msgid "Zoom value"
-msgstr "Disminueix zoom"
+msgstr "Valor de zoom"
 
 #: src/modules/everything/evry_config.c:626
 #: src/modules/winlist/e_int_config_winlist.c:298
@@ -8920,9 +8857,8 @@ msgid "Setup"
 msgstr "Preferències"
 
 #: src/modules/ibar/e_mod_config.c:131
-#, fuzzy
 msgid "Icon Labels"
-msgstr "Mostra etiqueta d'icona"
+msgstr "Etiquetes d'icones"
 
 #: src/modules/ibar/e_mod_config.c:132
 msgid "Show icon label"
@@ -8934,7 +8870,7 @@ msgstr "Divers"
 
 #: src/modules/ibar/e_mod_config.c:153
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Animació d'icona en focalitzar-lo"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Lock icon move"
@@ -8953,9 +8889,8 @@ msgid "Menu on mouse over"
 msgstr "Menú quan el ratolí estigui damunt"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Mòdul %s d'Moksha"
+msgstr "Control d'estil Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
@@ -9160,9 +9095,8 @@ msgstr ""
 "funciona en la finestra emergent."
 
 #: src/modules/pager/e_mod_main.c:913
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Preferències d'escriptoris virtuals"
+msgstr "Aquesta configuració de l'escriptori"
 
 #: src/modules/pager/e_mod_main.c:2966
 msgid "Show Pager Popup"
@@ -9249,9 +9183,8 @@ msgid "Check Interval"
 msgstr "Interval de comprovació"
 
 #: src/modules/temperature/e_mod_config.c:283
-#, fuzzy
 msgid "High temperature notification"
-msgstr "Temperatura alta"
+msgstr "Notificació d'alta temperatura"
 
 #: src/modules/temperature/e_mod_config.c:287
 msgid "High Temperature"
@@ -9287,13 +9220,12 @@ msgid "Temperature"
 msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
-msgstr "Temperatura alta"
+msgstr "Alta temperatura de CPU!!"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
-msgstr ""
+msgstr "Comproveu el vostre dispositiu o la configuració!"
 
 #: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
@@ -9653,32 +9585,32 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "nom/identificador d'accés ràpid"
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 msgid "Systray Error"
 msgstr "Error en la safata del sistema"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "La safata del sistema no pot configurar el seu fons invisible per coincidir "
 "amb el seu tauler."
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 msgid "Another systray exists"
 msgstr "Ja existeix una altra safata del sistema"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Només hi pot haver un giny de la safata del sistema i n'existeix un altre."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "La safata d'entrada no pot treballar en un tauler que està configurat per "
 "estar a sota de tot."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 msgid "Systray"
 msgstr "Safata del sistema"
 
@@ -9807,9 +9739,8 @@ msgid "Screenshot is available at this location:"
 msgstr "La captura de pantalla és a:"
 
 #: src/modules/shot/e_mod_main.c:763
-#, fuzzy
 msgid "Copy link"
-msgstr "Copia"
+msgstr "Copia enllaç"
 
 #: src/modules/shot/e_mod_main.c:787
 msgid "Confirm Share"
@@ -9895,7 +9826,6 @@ msgid " Show notifications"
 msgstr " Mostra les notificacions"
 
 #: src/modules/shot/e_mod_config.c:109
-#, fuzzy
 msgid " Copy to Clipboard"
 msgstr "Copia al porta-retalls"
 
@@ -9924,23 +9854,20 @@ msgid "Info"
 msgstr "Informació"
 
 #: src/modules/shot/e_mod_config.c:140
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Seleccioneu la ubicació on guardar la captura"
+msgstr "Alt+PrtSc: captura de pantalla de la finestra activa"
 
 #: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
 msgid "Tasks"
 msgstr "Tasques"
 
 #: src/modules/tasks/e_mod_config.c:36
-#, fuzzy
 msgid "Tasks Settings"
-msgstr "Preferències d'escriptori"
+msgstr "Preferències de tasques"
 
 #: src/modules/tasks/e_mod_config.c:94
-#, fuzzy
 msgid "Show item hint"
-msgstr "Mostra només text"
+msgstr "Mostra el suggeriment d'element"
 
 #: src/modules/tasks/e_mod_config.c:97
 msgid "Show icon only"
@@ -9960,7 +9887,6 @@ msgid "%1.0f px"
 msgstr "%1.0f píx"
 
 #: src/modules/tasks/e_mod_config.c:110
-#, fuzzy
 msgid "Shrink to fit"
 msgstr "Ajusta a l'amplada del contingut"
 
@@ -10110,7 +10036,6 @@ msgid "Notification"
 msgstr "Notificacions"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Mòdul notificacions"
 
@@ -10172,9 +10097,8 @@ msgstr ""
 "restabliran les seves tasques."
 
 #: src/modules/notification/e_mod_main.c:708
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Notificacions"
+msgstr "Notificació caducada!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10200,15 +10124,15 @@ msgstr "Temps d'espera per defecte"
 msgid "Force timeout for all notifications"
 msgstr "Força temps d'espera per a totes les notificacions"
 
+# c-format
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f s"
+msgstr "%.1f s"
 
 #: src/modules/notification/e_mod_config.c:137
-#, fuzzy
 msgid "Popup Orientation"
-msgstr "Orientació"
+msgstr "Orientació de la finestra emergent"
 
 #: src/modules/notification/e_mod_config.c:173
 msgid "Ignore replace ID"
@@ -10219,29 +10143,24 @@ msgid "Use multiple monitor geometry"
 msgstr "Utilitza geometria per a monitors múltiples"
 
 #: src/modules/notification/e_mod_config.c:182
-#, fuzzy
 msgid "History Settings"
-msgstr "Preferències safata del sistema"
+msgstr "Configuració de l'historial"
 
 #: src/modules/notification/e_mod_config.c:183
-#, fuzzy
 msgid "Time stamp"
-msgstr "Temporitzadors"
+msgstr "Marca de temps"
 
 #: src/modules/notification/e_mod_config.c:185
-#, fuzzy
 msgid "Show application name"
-msgstr "Mostra totes les aplicacions"
+msgstr "Mostra nom de l'aplicació"
 
 #: src/modules/notification/e_mod_config.c:187
-#, fuzzy
 msgid "Show notification counter"
-msgstr " Mostra les notificacions"
+msgstr "Mostra el comptador de notificacions"
 
 #: src/modules/notification/e_mod_config.c:189
-#, fuzzy
 msgid "Reverse order"
-msgstr " Ordre invers"
+msgstr "Ordre invers"
 
 #: src/modules/notification/e_mod_config.c:193
 #: src/modules/clipboard/e_mod_config.c:245
@@ -10249,27 +10168,25 @@ msgid "Labels"
 msgstr "Etiquetes"
 
 #: src/modules/notification/e_mod_config.c:194
-#, fuzzy
 msgid "Labels length"
-msgstr " Llargada d'etiqueta"
+msgstr "Llargada d'etiqueta"
 
 #: src/modules/notification/e_mod_config.c:201
 #: src/modules/clipboard/e_mod_config.c:256
 msgid "Items"
-msgstr "Ítems"
+msgstr "Elements"
 
 #: src/modules/notification/e_mod_config.c:202
-#, fuzzy
 msgid "Items in history"
 msgstr " Ítems en l'històric"
 
 #: src/modules/notification/e_mod_config.c:210
 msgid "Gadget animation delay [s]"
-msgstr ""
+msgstr "Retard de l'animació del gadget [s]"
 
 #: src/modules/notification/e_mod_config.c:218
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Llista negra d'aplicacions (app1, app2, app3...)"
 
 #: src/modules/notification/e_mod_config.c:224
 #: src/modules/clipboard/e_mod_config.c:266
@@ -10350,24 +10267,20 @@ msgid "Clipboard Settings"
 msgstr "Preferències portaretalls"
 
 #: src/modules/clipboard/e_mod_main.c:384
-#, fuzzy
 msgid "Lock item"
-msgstr "Errada en el bloqueig"
+msgstr "Bloqueja l'element"
 
 #: src/modules/clipboard/e_mod_main.c:395
-#, fuzzy
 msgid "Edit item"
-msgstr "%d element"
+msgstr "Edita l'element"
 
 #: src/modules/clipboard/e_mod_main.c:402
-#, fuzzy
 msgid "Delete item"
-msgstr "Eliminació realitzada"
+msgstr "Suprimeix l'element"
 
 #: src/modules/clipboard/e_mod_main.c:419
-#, fuzzy
 msgid "Ignore history"
-msgstr "Ignora suggeriment"
+msgstr "Ignorar la història"
 
 #: src/modules/clipboard/e_mod_main.c:664
 msgid "Confirm History Deletion"
@@ -10380,25 +10293,22 @@ msgid ""
 msgstr "S'ha demanat eliminar aquest històric.<br><br>N'esteu segur?"
 
 #: src/modules/clipboard/e_mod_main.c:751
-#, fuzzy
 msgid "Confirm Item Deletion"
-msgstr "Confirmeu eliminació tauler"
+msgstr "Confirmeu l'eliminació de l'element"
 
 #: src/modules/clipboard/e_mod_main.c:753
-#, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "S'ha demanat eliminar aquest històric.<br><br>N'esteu segur?"
 
 #: src/modules/clipboard/e_mod_main.c:781
-#, fuzzy
 msgid "Clipboard: Edit Item"
-msgstr "Preferències portaretalls"
+msgstr "Portapapeles: Editar Elemento"
 
 #: src/modules/clipboard/e_mod_main.c:782
 msgid "Edit the item content:"
-msgstr ""
+msgstr "Editeu el contingut de l'element:"
 
 #: src/modules/clipboard/e_mod_main.h:10
 msgid "Show History"
@@ -10413,9 +10323,8 @@ msgid "Clear History"
 msgstr "Suprimeix històric"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Aturada pantalla"
+msgstr "Bloquejar repòs de pantalla"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10492,27 +10401,23 @@ msgstr "L'ús del disc \"%s\" és %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
 msgstr "B"
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10537,15 +10442,13 @@ msgstr "extreu"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Ha fallat el desxifrat."
+msgstr "L'operació ha fallat."
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Desconegut"
+msgstr "Error Desconegut"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
@@ -10573,16 +10476,14 @@ msgid "New volume"
 msgstr "Nou volum"
 
 #: src/modules/mixer/e_mod_main.c:141
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Volum canviat"
+msgstr "S'ha arribat al límit de volum!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
 msgstr "Volum canviat"
 
