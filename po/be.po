@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2023-03-18 13:18+0300\n"
+"PO-Revision-Date: 2024-01-18 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
 "Language: be\n"
@@ -795,9 +795,8 @@ msgstr "Сэнсарная пляцоўка"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Сэнсарная пляцоўка"
+msgstr "Сэнсарную пляцоўку ўкл/адкл "
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -3514,12 +3513,11 @@ msgstr ""
 "падтрымлівае загрузку PNG.\n"
 
 #: src/bin/e_main.c:1694
-#, fuzzy
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
-"Moksha вызначыў, што Evas не можа загружаць файлы JPEG. Праверце, што Evas "
-"падтрымлівае загрузку JPEG.\n"
+"Moksha вызначыў, што Evas не можа загружаць файлы EET. Праверце, што Evas "
+"падтрымлівае загрузку EET.\n"
 
 #: src/bin/e_main.c:1708
 msgid ""
@@ -3608,9 +3606,8 @@ msgstr ""
 "модуля:<br>%s<br>Паведамленне аб памылцы:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
-msgstr "Модуль не змяшчае усіх патрэбных функцый"
+msgstr "Модуль не змяшчае ўсіх патрэбных функцый."
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3889,7 +3886,6 @@ msgstr ""
 "дзеянні<br>пакуль працэс не будзе завершаны."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "Ой! Гэта не павінна было здарыцца"
 
@@ -4447,7 +4443,7 @@ msgstr "Папярэджанне"
 
 #: src/modules/battery/e_mod_config.c:292
 msgid "Auto Detect"
-msgstr ""
+msgstr "Аўтавызначэнне"
 
 #: src/modules/battery/e_mod_config.c:295
 #: src/modules/conf_applications/e_mod_main.c:60
@@ -4603,11 +4599,11 @@ msgstr "Колькасць дзён"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Задаць..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Задаць... "
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5416,9 +5412,8 @@ msgid "%1.2f s"
 msgstr "%1.2f с"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Налады мышы"
+msgstr "Налады мышы і Сэнсарнай пляцоўкі"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -5523,9 +5518,8 @@ msgid "Touch"
 msgstr "Дотык"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Праўша/Ляўшун"
+msgstr "Мыш і Сэнсарная пляцоўка"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5728,7 +5722,7 @@ msgstr "Павелічэнне яркасці"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 msgid "Assist"
-msgstr "Дапамога"
+msgstr "Assist"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
 msgid "S1"
@@ -5817,7 +5811,7 @@ msgstr "Прызначэнні клавіш"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Адзіночная клавіша Super дазволена"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
@@ -8885,9 +8879,8 @@ msgid "Menu on mouse over"
 msgstr "Меню пры навядзенні мышы"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Модуль %s Moksha"
+msgstr "Кіраванне ў стылі Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
