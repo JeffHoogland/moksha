@@ -5,6 +5,7 @@ Name[ca]=Epulse
 Name[de]=Epulse
 Name[fi]=Epulse
 Name[ka]=Epulse
+Name[it]=Epulse
 Name[ms]=Epulse
 Name[tr]=Epulse
 Comment=A module to control audio volume and streams.
