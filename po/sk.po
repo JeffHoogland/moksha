@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: e HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2024-01-17 19:53+0100\n"
+"PO-Revision-Date: 2024-01-18 19:40+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
 "Language: sk\n"
@@ -620,7 +620,7 @@ msgstr "Zmena Veľkosti O..."
 
 #: src/bin/e_actions.c:3482
 msgid "Push in Direction..."
-msgstr "Posunúť v smere ..."
+msgstr "Posunúť v smere..."
 
 #: src/bin/e_actions.c:3488
 msgid "Drag Icon..."
@@ -694,7 +694,7 @@ msgstr "Aplikácia"
 
 #: src/bin/e_actions.c:3541
 msgid "New Instance of Focused App"
-msgstr ""
+msgstr "Nová inštancia aktívnej aplikácie"
 
 #: src/bin/e_actions.c:3545
 msgid "Restart"
@@ -946,7 +946,7 @@ msgstr ""
 
 #: src/bin/e_config.c:2123
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
-msgstr ""
+msgstr "Máte V/V chyby na disku.<br>Nepotrebujete ho vymeniť?"
 
 #: src/bin/e_config.c:2127
 msgid "You ran out of space while writing the file."
@@ -981,7 +981,6 @@ msgid "Feature not implemented."
 msgstr "Funkcia nie je implementovaná."
 
 #: src/bin/e_config.c:2159
-#, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG nebol nasadený."
 
@@ -1456,7 +1455,7 @@ msgstr "Chyba"
 #: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
-msgstr ""
+msgstr "Nedávna DND operácia požadovaná pre '%s' zlyhala."
 
 #: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
@@ -1759,7 +1758,7 @@ msgstr "%s—%s"
 #: src/bin/e_fm_device.c:79
 #, c-format
 msgid "Flash Card—%s"
-msgstr ""
+msgstr "Pamäťová karta—%s"
 
 #: src/bin/e_fm_device.c:81
 #, c-format
@@ -3640,6 +3639,9 @@ msgid ""
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
+"Nasledujúce moduly nie sú štandardné moduly<br>Moksha a môžu spôsobiť chyby "
+"a pády.<br>Prosím, odstráňte ich pred hlásením akýchkoľvek chýb."
+"<br><br>Zoznam neštandardných modulov:<br><br>"
 
 #: src/bin/e_module.c:819
 msgid "Unstable module tainting"
@@ -3972,6 +3974,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
+"Vaša verzia Enlightenment<br>nie je aktuálna.<br>Posledná verzia je:<br><br>"
+"%s<br><br>Prosím navštívte www.enlightenment.org<br>alebo aktualizujte Vaše "
+"systémové balíčky<br>a nainštalujte novú verziu."
 
 #: src/bin/e_utils.c:185 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -4006,17 +4011,17 @@ msgstr "%'.0f KB"
 #: src/bin/e_utils.c:790
 #, c-format
 msgid "%'.1f MiB"
-msgstr "%'.0f MB"
+msgstr "%'.1f MB"
 
 #: src/bin/e_utils.c:794
 #, c-format
 msgid "%'.1f GiB"
-msgstr "%'.0f GB"
+msgstr "%'.1f GB"
 
 #: src/bin/e_utils.c:798
 #, c-format
 msgid "%'.1f TiB"
-msgstr "%'.0f TB"
+msgstr "%'.1f TB"
 
 #: src/bin/e_utils.c:817
 #, c-format
@@ -4693,7 +4698,7 @@ msgstr "Prehliadač"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
 #: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
@@ -5173,6 +5178,9 @@ msgid ""
 "<br><br>You can either specify a delay of this<br> action using the slider, "
 "or make it<br>respond to edge clicks:"
 msgstr ""
+"Vyberte, prosím, okraj<br>alebo kliknite na <hilight>Zavrieť</hilight> pre "
+"zrušenie.<br><br>Môžete tiež vybrať oneskorenie<br> činnosti použitím "
+"posuvníka alebo ho nechať<br>reagovať na kliknutia na okraji:"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
 msgid "Edge Bindings Settings"
@@ -5324,7 +5332,7 @@ msgstr "Chyba Väzby okrajov"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 msgid "Signal and Source must NOT be blank!"
-msgstr ""
+msgstr "Signál a zdroj NESMÚ byť prázdne!"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:585
 #, c-format
@@ -5332,6 +5340,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
+"Signál a zdroj, ktorý ste vybrali už má nastavenú väzbu<br><hilight>%s</"
+"hilight> na akciu.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5594,6 +5604,10 @@ msgid ""
 "affected, use the<br>Environment variable settings to unset them.<br>The "
 "variables that may affect you are<br>as follows:<br>%s"
 msgstr ""
+"Máte nastavené niektoré dodatočné premenné<br>prostredia, ktoré môžu "
+"ovplyvniť správne zobrazenie Vášho vybraného jazyka.<br>Pokiaľ sa tomu "
+"chcete vyhnúť použite<br>Nastavenie premenných prostredia pre ich "
+"deaktiváciu.<br>Premenné, ktoré môžu ovplyvniť zobrazenie sú:<br>%s"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1009
 msgid "Possible Locale problems"
@@ -5685,7 +5699,7 @@ msgstr "Teplotné čido"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:375
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:377
 msgid "Wifi"
@@ -5709,15 +5723,15 @@ msgstr "Zvýšiť podsvietenie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 msgid "Assist"
-msgstr ""
+msgstr "Assist"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
 msgid "S1"
-msgstr ""
+msgstr "S1"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:393
 msgid "Vaio"
-msgstr ""
+msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:439
@@ -5744,11 +5758,11 @@ msgstr "Zvýšiť hlasitosť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
-msgstr ""
+msgstr "Tablet zapnúť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:407
 msgid "Tablet Off"
-msgstr ""
+msgstr "Tablet vypnúť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
 msgid "Screenlock"
@@ -5769,7 +5783,7 @@ msgstr "Tablet povoliť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:418
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:523
 msgid "ACPI Binding"
@@ -5833,6 +5847,8 @@ msgid ""
 "Unable to set a mouse wheel binding without modifiers<br>on a window: "
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
+"Nemôžem nastaviť väzbu na koliesko myši bez modifikátora<br> na okno: "
+"konflikt medzi existujúcími väzbami signálov Edje.<br>FIXME!!!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -6194,7 +6210,7 @@ msgstr "Časový limit pre uchopenie"
 #: src/modules/conf_menus/e_int_config_menus.c:319
 #, c-format
 msgid "%2.2f s"
-msgstr "%1.2f sek"
+msgstr "%2.2f sek"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
@@ -6322,7 +6338,7 @@ msgstr "Veľkosť vyrovnávecej pamäte písma"
 #: src/modules/conf_performance/e_int_config_performance.c:134
 #, c-format
 msgid "%1.1f MiB"
-msgstr "%1.0f MB"
+msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
@@ -6386,7 +6402,7 @@ msgstr "Úroveň"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:166
 msgid "e.g. Saving to disk"
-msgstr "napr. uloženie na disk"
+msgstr "napr. Uloženie na disk"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
 #: src/modules/shot/e_mod_main.c:958
@@ -6404,7 +6420,7 @@ msgstr "Stredná"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:360
 #, c-format
 msgid "%.0f s"
-msgstr "%1.0f sek"
+msgstr "%.0f sek"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
 #: src/modules/shot/e_mod_main.c:954
@@ -7829,6 +7845,8 @@ msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
+"Nie je možné vyhľadať program freqset v adresári<ps/>modulu cpufreq (zlyhal "
+"stat)\""
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
@@ -8056,9 +8074,8 @@ msgid "Geometry"
 msgstr "Geometria Okna"
 
 #: src/modules/everything/evry_config.c:663
-#, fuzzy
 msgid "Everything Collection"
-msgstr "Reštart aplikácií"
+msgstr "Rýchly prístup - Kolekcia"
 
 #: src/modules/everything/evry_gadget.c:169
 msgid "Everything Starter"
@@ -8066,7 +8083,7 @@ msgstr "Rýchly prístup (Štart)"
 
 #: src/modules/everything/evry_gadget.c:587
 msgid "Everything Gadgets"
-msgstr "Moduly Rýchleho prístupu"
+msgstr "Rýchly prístup - Moduly"
 
 #: src/modules/everything/evry_gadget.c:685
 msgid "Plugin"
@@ -8125,9 +8142,8 @@ msgstr "Príkaz"
 
 #: src/modules/everything/evry_plug_apps.c:1363
 #: src/modules/everything/evry_plug_apps.c:1491
-#, fuzzy
 msgid "Everything Applications"
-msgstr "Reštart aplikácií"
+msgstr "Rýchly prístup - Aplikácie"
 
 #: src/modules/everything/evry_plug_apps.c:1394
 msgid "Commands"
@@ -8541,7 +8557,7 @@ msgstr "Veľkosť plávajúcej nápovedy"
 #: src/modules/notification/e_mod_config.c:212
 #, c-format
 msgid "%2.0f"
-msgstr ""
+msgstr "%2.0f"
 
 #: src/modules/fileman/e_mod_config.c:490
 msgid "Tooltips"
@@ -8889,7 +8905,7 @@ msgstr "Odstrániť z iBar sekcie"
 #: src/modules/ibar/e_mod_main.c:1600
 #, c-format
 msgid "Icon %s"
-msgstr "Ikony %s"
+msgstr "Ikon %s"
 
 #: src/modules/ibar/e_mod_main.c:2923
 msgid "Focus IBar"
@@ -9159,7 +9175,7 @@ msgstr "%1.0f F"
 #: src/modules/temperature/e_mod_config.c:376
 #, c-format
 msgid "%1.0f C"
-msgstr "%1.0f °C"
+msgstr "%1.0f C"
 
 #: src/modules/temperature/e_mod_config.c:299
 msgid "Low Temperature"
@@ -9252,10 +9268,12 @@ msgid ""
 "This module wants to execute an external application EConnMan that does not "
 "exist.<br>Please install <b>EConnMan</b> application."
 msgstr ""
+"Tento modul sa snaží o vykonanie externej aplikácie EConnMan, ktorá "
+"neexistuje.<br>Prosím nainštalujte <b>aplikáciu </b>EConnMan."
 
 #: src/modules/connman/e_mod_main.c:315
 msgid "Wifi On"
-msgstr "Wifi Zapnúť"
+msgstr "Zapnúť Wifi"
 
 #: src/modules/quickaccess/e_mod_config.c:226
 msgid "Enter a unique name for this entry"
@@ -9431,7 +9449,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
-msgstr ""
+msgstr "Zmazal si si to sám, ty uličník!<br>Len tak ďalej!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
 #: src/modules/quickaccess/e_mod_quickaccess.c:1018
@@ -9450,7 +9468,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1016
 msgid "Well done.<br>Now to delete the entry we just made..."
-msgstr ""
+msgstr "Výborne.<br>Teraz vymaž čo si zadal..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1032
 msgid ""
@@ -10380,7 +10398,7 @@ msgstr "Maximálna hlasitosť!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
-msgstr ""
+msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
 msgid "Volume changed"
