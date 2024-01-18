@@ -6,14 +6,15 @@
 # Aron Xu <Unknown>, 2010.
 # Danny Moshnakov <dm@agent.co.il>, 2010, 2015.
 # Igor Murzov <e-mail@date.by>, 2015, 2013
+# R0bur <robursw@gmail.com>, 2023
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-14 06:23-0500\n"
-"PO-Revision-Date: 2013-01-22 20:49+0400\n"
-"Last-Translator: Igor Murzov <e-mail@date.by>\n"
+"PO-Revision-Date: 2024-01-17 20:00+0300\n"
+"Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -798,9 +799,8 @@ msgstr "Тачпад"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Тачпад"
+msgstr "Тачпад вкл/выкл"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -4577,7 +4577,7 @@ msgstr "Только дата"
 
 #: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
-msgstr ""
+msgstr "ISO 8601"
 
 #: src/modules/clock/e_mod_config.c:262
 msgid "Strftime"
@@ -4602,11 +4602,11 @@ msgstr "Количество дней"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Установить..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Установить..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5416,9 +5416,8 @@ msgid "%1.2f s"
 msgstr "%1.2f с"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Настройки мыши"
+msgstr "Настройки мыши и тачпада"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -5523,9 +5522,8 @@ msgid "Touch"
 msgstr "Прикосновения"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Левша/Правша"
+msgstr "Мышь и тачпад"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5727,9 +5725,8 @@ msgid "Brightness Up"
 msgstr "Увеличение подсветки"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
-#, fuzzy
 msgid "Assist"
-msgstr "Назначить"
+msgstr "Assist"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:391
 msgid "S1"
@@ -5737,7 +5734,7 @@ msgstr "S1"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:393
 msgid "Vaio"
-msgstr ""
+msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
 #: src/modules/notification/e_mod_main.c:439
@@ -5818,7 +5815,7 @@ msgstr "Привязки клавиш"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:246
 msgid "Single Super Key allowed"
-msgstr ""
+msgstr "Одиночная клавиша Super разрешена"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
 msgid "Binding Key Error"
@@ -8114,7 +8111,7 @@ msgstr "Не загружены плагины"
 
 #: src/modules/everything/evry_plug_apps.c:1210
 msgid "Exebuf"
-msgstr ""
+msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
@@ -8888,9 +8885,8 @@ msgid "Menu on mouse over"
 msgstr "Меню при наведении указателя"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Модуль %s для Moksha"
+msgstr "Управление в стиле Moksha"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
@@ -10320,9 +10316,8 @@ msgid "Clear History"
 msgstr "Очистить историю"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Гашение"
+msgstr "Блокирует гашение"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
@@ -10399,7 +10394,7 @@ msgstr "На диске ''%s'' занято %d %%!"
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "Б"
 
 #: src/modules/places/e_mod_places.c:836
 msgid "KB"
@@ -10480,7 +10475,7 @@ msgstr "Громкость на пределе!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
-msgstr ""
+msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
 msgid "Volume changed"
