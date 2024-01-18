@@ -3413,7 +3413,7 @@ msgid "Version: %s\n"
 msgstr "Verzia: %s\n"
 
 #: src/bin/e_main.c:1313
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3452,7 +3452,7 @@ msgstr ""
 "\t\tPoužiteľné k simulácii xineramy.\n"
 "\t\tnapr: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
 "800x600+800+0\n"
-"\t-profile PROFIL\n"
+"\t-profile CONF_PROFILE\n"
 "\t\tPoužiť profil PROFIL miesto použivatelského predvoleného alebo "
 "jednoducho \"predvoleného\".\n"
 "\t-good\n"
@@ -3465,6 +3465,7 @@ msgstr ""
 "\t\tspustiť zo zamknutou obrazovkou, takže bude vyžadované heslo.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tAk potrebujete túto nápovedu, nepotrebujete túto možnosť.\n"
+"\t-version\n"
 
 #: src/bin/e_main.c:1367
 msgid ""
