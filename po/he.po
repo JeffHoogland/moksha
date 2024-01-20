@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-14 06:23-0500\n"
+"POT-Creation-Date: 2024-01-20 08:58-0500\n"
 "PO-Revision-Date: 2009-09-11 09:15+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -10507,31 +10507,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 #, fuzzy
 msgid "Systray Error"
 msgstr "Systray שגיאה"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Systray עוד קיים"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "לא יכול להיות רק 1 גאדג 'ט Systray ואחד אחר כבר קיים."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray לא יכול לעבוד המדףהמוגדר להלן הכל."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"

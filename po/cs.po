@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-11 19:48-0500\n"
+"POT-Creation-Date: 2024-01-20 08:58-0500\n"
 "PO-Revision-Date: 2024-01-17 20:18+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -1006,8 +1006,8 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Mokshau selhalo zapisování<br>jeho konfiguračního souboru.<br>"
-"%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
+"Mokshau selhalo zapisování<br>jeho konfiguračního souboru."
+"<br>%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
 "smazán, aby nedošlo k porušení dat.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
@@ -1732,8 +1732,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:<br><hilight>"
-"%s</hilight> ?"
+"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:"
+"<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -3605,8 +3605,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:<br>"
-"%s<br>Nahlášená chyba je:<br>%s<br>"
+"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:"
+"<br>%s<br>Nahlášená chyba je:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions."
@@ -5822,8 +5822,9 @@ msgstr "Chyba klávesové zkratky"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Klávesová zkratka, kterou jste zadali, je již použita <br><hilight>%s</"
 "hilight> akcí.<br>Prosím vyberte si jinou zkratku."
@@ -8277,11 +8278,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8294,8 +8295,8 @@ msgstr ""
 "tab&bt;</highlight> pro výběr akce, pak stiskněte <highlight>&lt;return&gt;</"
 "highlight>.<br>    <highlight>&lt;Esc&gt;</highlight> zavře tento "
 "dialog<br>    <highlight>&lt;?&gt;</highlight>zobrazí tuto nápovědu<br>    "
-"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;ctrl"
-"+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
+"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;"
+"ctrl+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
 "<highlight>&lt;ctrl+tab&gt;</highlight> doplní vstup (závisí na "
 "pluginu)<br>    <highlight>&lt;ctrl+'x'&gt;</ highlight> přejde na plugin "
 "začínající na 'x'<br>    <highlight>&lt;ctrl+doleva/ doprava&gt;</highlight> "
@@ -9582,29 +9583,29 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "jméno/identifikátor rychlého přístupu"
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 msgid "Systray Error"
 msgstr "Chyba upozorňovací oblasti"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Upozorňovací oblast nemohla nastavit neviditelné pozadí, aby odpovídalo "
 "panelu."
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 msgid "Another systray exists"
 msgstr "Jiná upozorňovací oblast již existuje"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Jen jeden gadget upozorňovací oblasti může běžet a již běží."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray nemůže pracovat v panelu, který je nastaven, aby byl pod vším."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 msgid "Systray"
 msgstr "Upozorňovací oblast"
 

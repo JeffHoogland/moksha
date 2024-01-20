@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-14 06:23-0500\n"
+"POT-Creation-Date: 2024-01-20 08:58-0500\n"
 "PO-Revision-Date: 2010-05-09 22:20+0100\n"
 "Last-Translator: Audun Gangsto <feitingen@gmail.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -10486,31 +10486,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 #, fuzzy
 msgid "Systray Error"
 msgstr "Systray Feil"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 #, fuzzy
 msgid "Another systray exists"
 msgstr "En annen Systray eksisterer"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Det kan bare være en Systray gadget og en annen allerede eksisterer."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray kan ikke arbeide i en hylle som er satt til under alt."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 #, fuzzy
 msgid "Systray"
 msgstr "Systray"

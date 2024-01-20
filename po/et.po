@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-14 06:23-0500\n"
+"POT-Creation-Date: 2024-01-20 08:58-0500\n"
 "PO-Revision-Date: 2010-01-07 07:56+0000\n"
 "Last-Translator: René Pärts <Unknown>\n"
 "Language-Team: Estonian <et@li.org>\n"
@@ -10774,31 +10774,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 #, fuzzy
 msgid "Systray Error"
 msgstr "salve viga"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 #, fuzzy
 msgid "Another systray exists"
 msgstr "Teine salve olemas"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 #, fuzzy
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Ei saa olla ainult ühe salve vidin ja teine ​​juba olemas."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 #, fuzzy
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Salve ei saa töötadariiul , mis on määratud allpool kõike."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 #, fuzzy
 msgid "Systray"
 msgstr "salve"
