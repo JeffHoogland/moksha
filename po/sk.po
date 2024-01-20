@@ -5823,7 +5823,8 @@ msgstr "Chyba pri priraďovaní skratky"
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>%s</hilight>."
 "<br> Zvoľte iné priradenie."
@@ -8107,7 +8108,7 @@ msgstr "Žiadne spustené doplnky"
 
 #: src/modules/everything/evry_plug_apps.c:1210
 msgid "Exebuf"
-msgstr ""
+msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
@@ -9301,13 +9302,13 @@ msgstr "Skryť ak je strata fokusu"
 
 #: src/modules/quickaccess/e_mod_config.c:564
 msgid "Quickaccess Settings"
-msgstr "Nastavenia rýchleho prístupu"
+msgstr "Nastavenia Rýchle spustenie"
 
 #: src/modules/quickaccess/e_mod_main.c:37
 #: src/modules/quickaccess/e_mod_main.c:47
 #: src/modules/quickaccess/e_mod_quickaccess.c:7
 msgid "Quickaccess"
-msgstr "Rýchly prístup"
+msgstr "Rýchle spustenie"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:8
 msgid "Toggle Visibility"
@@ -9315,11 +9316,11 @@ msgstr "Prepnúť viditeľnosť"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:9
 msgid "Add Quickaccess For Current Window"
-msgstr "Pridať rýchly prístup pre aktuálne okno"
+msgstr "Pridať rýchly spustenie pre aktuálne okno"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:10
 msgid "Remove Quickaccess From Current Window"
-msgstr "Odobrať rýchly prístup z aktuálneho okna"
+msgstr "Odobrať rýchly spustenie z aktuálneho okna"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:265
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
@@ -9328,7 +9329,7 @@ msgstr "Odobrať rýchly prístup z aktuálneho okna"
 #: src/modules/quickaccess/e_mod_quickaccess.c:392
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "Quickaccess Error"
-msgstr "Chyba rýchleho prístupu"
+msgstr "Chyba rýchleho spustenie"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:265
 #: src/modules/quickaccess/e_mod_quickaccess.c:392
@@ -9362,7 +9363,7 @@ msgstr "Napríklad ako:"
 #: src/modules/quickaccess/e_mod_quickaccess.c:1247
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Quickaccess Help"
-msgstr "Pomoc s rýchlym prístupom"
+msgstr "Pomoc s rýchlym spustením"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
 msgid "Cannot set relaunch for window without name and class!"
@@ -9397,7 +9398,7 @@ msgstr "Viac informácií"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "The requested Quickaccess entry does not exist!"
-msgstr "Požadovaná položka rýchleho prístupu neexistuje!"
+msgstr "Požadovaná položka rýchleho spustenia neexistuje!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "Keybind Error"
@@ -9425,15 +9426,15 @@ msgstr "S prechodom"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:828
 msgid "Remove Quickaccess"
-msgstr "Odstrániť Rýchly prístup"
+msgstr "Odstrániť Rýchle spustenie"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:856
 msgid "Quickaccess..."
-msgstr "Rýchly prístup..."
+msgstr "Rýchle spustenie..."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:862
 msgid "Add Quickaccess"
-msgstr "Pridať Rýchly prístup"
+msgstr "Pridať rýchle spustenie"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:936
 msgid ""
@@ -9483,7 +9484,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
-msgstr "Prezentácia Rýchleho prístupu"
+msgstr "Prezentácia Rýchleho spustenia"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
@@ -9511,7 +9512,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
-msgstr ""
+msgstr "rýchleho spustenia meno/identifikátor"
 
 #: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
@@ -9579,6 +9580,8 @@ msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
+"Súbor má nešpecifikovanú príponu.<br>Používajte iba prípony '.jpg' alebo '."
+"png',<br>pretože iné formáty nie sú v<br>súčasnosti podporova."
 
 #: src/modules/shot/e_mod_main.c:485
 msgid "Select screenshot save location"
