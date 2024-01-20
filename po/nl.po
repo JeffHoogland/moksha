@@ -794,15 +794,13 @@ msgstr "Uitgestelde actie"
 
 #: src/bin/e_actions.c:3634
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
-#, fuzzy
 msgid "Touchpad"
-msgstr "Aanraken"
+msgstr "Aanraakveld"
 
 #: src/bin/e_actions.c:3635
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Aanraken"
+msgstr "Aanraakveld aan/uit"
 
 #: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
 msgid "Keyboard Layouts"
@@ -1313,7 +1311,6 @@ msgstr ""
 "toepassing kon niet starten."
 
 #: src/bin/e_exec.c:872
-#, fuzzy
 msgid "Application Execution Error"
 msgstr "Toepassings-uitvoerfout"
 
@@ -2944,9 +2941,9 @@ msgid "Height (%3.0f pixels)"
 msgstr "Hoogte (%3.0f beeldpunten)"
 
 #: src/bin/e_int_shelf_config.c:230
-#, fuzzy, c-format
+#, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Pictogramgrootte (%d)"
+msgstr "Pictogrammen grootte (%2.0f/5)"
 
 #: src/bin/e_int_shelf_config.c:233
 msgid "Shrink to Content Width"
@@ -3628,7 +3625,6 @@ msgstr ""
 "%s<br>De gemelde fout was:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Module bevat niet alle benodigde functies"
 
@@ -3909,7 +3905,6 @@ msgstr ""
 "uitvoeren<br> totdat dit is voltooid."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "Ai! Dit zou niet moeten gebeuren"
 
@@ -4614,11 +4609,11 @@ msgstr "Dagen"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
-msgstr ""
+msgstr "Instellen..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr ""
+msgstr "Instellen..."
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5500,43 +5495,36 @@ msgid "Tap to click"
 msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:396
-#, fuzzy
 msgid "Clickpad"
-msgstr "Klikken"
+msgstr "Klikveld"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:400
 msgid "Palm detect"
 msgstr ""
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:406
-#, fuzzy
 msgid "Scrolling"
-msgstr "Peilen"
+msgstr "Schuiven"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:408
-#, fuzzy
 msgid "Natural scrolling"
 msgstr "Animeer schuiven"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:414
-#, fuzzy
 msgid "Horizontal scrolling"
-msgstr "Horizontale uitlijning"
+msgstr "Horizontaal schuiven"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:418
-#, fuzzy
 msgid "Edge scrolling"
-msgstr "Animeer schuiven"
+msgstr "Randschuiven"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:422
-#, fuzzy
 msgid "2 finger scrolling"
-msgstr "Animeer schuiven"
+msgstr "Schuiven met twee vingers"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:426
-#, fuzzy
 msgid "Circular scrolling"
-msgstr "Animeer schuiven"
+msgstr "Rondgaand schuiven"
 
 #: src/modules/conf_interaction/e_mod_main.c:20
 msgid "Touch"
@@ -5985,83 +5973,68 @@ msgid "WINDOWS"
 msgstr "VENSTERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
 msgid "Close Window:"
-msgstr " Venster sluiten:"
+msgstr "Venster sluiten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
 msgid "Maximize Window:"
-msgstr " Venster maximaliseren:"
+msgstr "Venster maximaliseren:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
 msgid "Iconic Mode Toggle:"
-msgstr " Pictogrammodus omschakelen:"
+msgstr "Pictogrammodus omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
 msgid "Fullscreen Mode Toggle:"
-msgstr " Volledig-scherm-modus omschakelen:"
+msgstr "Volledig-scherm-modus omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
 msgid "Always On Top Toggle:"
-msgstr " Altijd op voorgrond omschakelen:"
+msgstr "Altijd op voorgrond omschakelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
 msgid "Next Window:"
-msgstr " Volgende venster:"
+msgstr "Volgende venster:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
 msgid "Tile Right:"
-msgstr " Rechts tegelen:"
+msgstr "Rechts tegelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
 msgid "Tile Left:"
-msgstr " Links tegelen:"
+msgstr "Links tegelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
 msgid "Kill Window:"
-msgstr " Venster geforceerd afsluiten:"
+msgstr "Venster geforceerd afsluiten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
 msgid "Window Menu:"
-msgstr " Venstermenu:"
+msgstr "Venstermenu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:183
 msgid "SYSTEM"
 msgstr "SYSTEEM"
 
 #: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
 msgid "Open Terminology:"
-msgstr " Terminology openen:"
+msgstr "Terminology openen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
 msgid "Lock System:"
-msgstr " Systeem vergrendelen:"
+msgstr "Systeem vergrendelen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr " Hoofdmenu weergeven:"
+msgstr "Hoofdmenu weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr " Favorietenmenu weergeven:"
+msgstr "Favorietenmenu weergeven:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr " Systeemtoetsen:"
+msgstr "Systeeminstellingen:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -6112,29 +6085,24 @@ msgid "MISCELLANEOUS"
 msgstr "DIVERS"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
 msgid "Quick Launcher:"
-msgstr " Snelstarter:"
+msgstr "Snelstarter:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
 msgid "Take Screenshot:"
-msgstr " Schermafdruk maken:"
+msgstr "Schermafdruk maken:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr " Moksha herstarten:"
+msgstr "Moksha herstarten:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr " Terminalvenster:"
+msgstr "Terminalvenster:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr " Deze hulptekst:"
+msgstr "Deze hulp:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 msgid "Basic Moksha Key Bindings"
@@ -6575,14 +6543,12 @@ msgstr ""
 "verschijnt"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:78
-#, fuzzy
 msgid "Border Base"
 msgstr "Randstijl"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:79
-#, fuzzy
 msgid "Border Base Active"
-msgstr "Actieve randomlijsting"
+msgstr "Randstijl actief"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:80
 msgid "Border Title"
@@ -7224,14 +7190,12 @@ msgid "Enable icon theme for Moksha"
 msgstr "Pictogramthema voor Moksha inschakelen"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Mokshapaden"
+msgstr "Moksha-thema"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Toepassingenthema"
+msgstr "Applicatiethema (GTK en pictogrammen)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8033,12 +7997,10 @@ msgid "Hide list"
 msgstr "Verberg lijst"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Basismodus"
+msgstr "Zoekmodus"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Wazige modus"
 
@@ -8897,9 +8859,8 @@ msgid "Setup"
 msgstr "Instelling"
 
 #: src/modules/ibar/e_mod_config.c:131
-#, fuzzy
 msgid "Icon Labels"
-msgstr "Toon pictogrametiketten"
+msgstr "Pictogrametiketten"
 
 #: src/modules/ibar/e_mod_config.c:132
 msgid "Show icon label"
@@ -8926,14 +8887,12 @@ msgid "Track launch"
 msgstr "Startproces volgen"
 
 #: src/modules/ibar/e_mod_config.c:161
-#, fuzzy
 msgid "Menu on mouse over"
-msgstr "Verhef vensters als muispijl erover gaat"
+msgstr "Menu wanneer de muisaanwijzer eroverheen gaat"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
-msgstr "Moksha %s -module"
+msgstr "Moksha-stijlcontrole"
 
 #: src/modules/ibar/e_mod_config.c:199
 msgid "Create new IBar source"
@@ -8966,14 +8925,12 @@ msgid "Create new Icon"
 msgstr "Creëer nieuw pictogram"
 
 #: src/modules/ibar/e_mod_main.c:1588
-#, fuzzy
 msgid "Add to bar"
-msgstr "Voeg toe aan IBar"
+msgstr "Voeg toe aan balk"
 
 #: src/modules/ibar/e_mod_main.c:1594
-#, fuzzy
 msgid "Remove from bar"
-msgstr "Verwijder een stapel"
+msgstr "Verwijder uit balk"
 
 #: src/modules/ibar/e_mod_main.c:1600
 #, c-format
@@ -9140,9 +9097,8 @@ msgstr ""
 "knop werkt alleen in het opduikvenster."
 
 #: src/modules/pager/e_mod_main.c:913
-#, fuzzy
 msgid "This Desktop Settings"
-msgstr "Virtuele werkbladinstellingen"
+msgstr ""
 
 #: src/modules/pager/e_mod_main.c:2966
 msgid "Show Pager Popup"
@@ -9173,9 +9129,8 @@ msgid "Popup Desk Previous"
 msgstr "Opduikvenster vorige werkblad"
 
 #: src/modules/syscon/e_int_config_syscon.c:43
-#, fuzzy
 msgid "System Controls Settings"
-msgstr "Systeeminstellingen"
+msgstr "Systeembedieningsinstellingen"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
 msgid "Secondary"
@@ -9267,7 +9222,6 @@ msgid "Temperature"
 msgstr "Temperatuur"
 
 #: src/modules/temperature/e_mod_main.c:76
-#, fuzzy
 msgid "High CPU temperature!!"
 msgstr "Hoge CPU-temperatuur!"
 
@@ -9893,9 +9847,8 @@ msgid "Info"
 msgstr "Info"
 
 #: src/modules/shot/e_mod_config.c:140
-#, fuzzy
 msgid "Alt+PrtSc: screenshot active window"
-msgstr "Kies locatie voor opslaan van schermafdruk"
+msgstr ""
 
 #: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
 msgid "Tasks"
@@ -10076,13 +10029,12 @@ msgid "Notification"
 msgstr "Melding"
 
 #: src/modules/notification/e_mod_main.c:108
-#, fuzzy
 msgid "Notification Module"
 msgstr "Meldingsmodule"
 
 #: src/modules/notification/e_mod_main.c:129
 msgid "Error during notification server initialization"
-msgstr ""
+msgstr "Fout tijdens initialisatie van de meldingsserver"
 
 #: src/modules/notification/e_mod_main.c:130
 #, fuzzy
@@ -10140,9 +10092,8 @@ msgstr ""
 "gebruiken weer hun normale taken oppakken."
 
 #: src/modules/notification/e_mod_main.c:708
-#, fuzzy
 msgid "Notification expired!"
-msgstr "Melding"
+msgstr "Melding verlopen!"
 
 #: src/modules/notification/e_mod_config.c:50
 msgid "Notification Settings"
@@ -10229,7 +10180,7 @@ msgstr "Animatievertraging [s] voor mini"
 
 #: src/modules/notification/e_mod_config.c:218
 msgid "Apps blacklist (app1,app2,app3...)"
-msgstr ""
+msgstr "Zwarte lijst met applicaties (app1,app2,app3...)"
 
 #: src/modules/notification/e_mod_config.c:224
 #: src/modules/clipboard/e_mod_config.c:266
@@ -10445,27 +10396,23 @@ msgstr "Gebruik van schijf '%s' is %d %%."
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
-msgstr "B"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
-msgstr "B"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
-msgstr "G"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
-msgstr "B"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10490,15 +10437,13 @@ msgstr "uitwerpen"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Ontsleuteling is mislukt."
+msgstr "Operatie mislukt."
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Onbekend"
+msgstr "Onbekende fout"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
@@ -10534,9 +10479,8 @@ msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
-msgstr "Volume is veranderd"
+msgstr "Volume veranderd"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
