@@ -1741,9 +1741,9 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Ste si istí, že chcete odstrániť<br>%d vybraný súbor v<br><hilight>%s</hilight>?"
+msgstr[1] "Ste si istí, že chcete odstrániť<br> %d vybrané súbory v<br><hilight>%s</hilight>?"
+msgstr[2] "Ste si istí, že chcete odstrániť<br>%d vybraných súborov v<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -3475,6 +3475,12 @@ msgid ""
 "and launching any other required services etc.\n"
 "before enlightenment itself begins running.\n"
 msgstr ""
+"Vykonávate priamo Moksha. Toto je\n"
+"zlý. Prosím, nevykonávajte 'enlightenment'\n"
+"binárne. Použite spúšťač 'enlightenment_start'. to\n"
+"zvládne nastavenie premenných prostredia, ciest,\n"
+"a spustenie akýchkoľvek ďalších požadovaných služieb atď.\n"
+"predtým, než začne bežať samotná Moksha.\n"
 
 #: src/bin/e_main.c:1648
 msgid "Testing Format Support"
@@ -3537,6 +3543,9 @@ msgid ""
 "loading the<br>module named: %s. This module has been disabled<br>and will "
 "not be loaded."
 msgstr ""
+"Moksha sa zrútila predčasne na začiatku a<br>bola reštartovaná. "
+"Pri načítavaní<br>modulu s názvom: %s sa vyskytla chyba. "
+"Tento modul bol zakázaný<br>a nebude načítaný."
 
 #: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
@@ -5769,9 +5778,8 @@ msgid "Screenlock"
 msgstr "Uzamykanie obrazovky"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:413
-#, fuzzy
 msgid "Battery Button"
-msgstr "Tlačidlo Zapnúť PC"
+msgstr "Tlačidlo Batérie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:416
 msgid "Tablet Disabled"
@@ -6731,19 +6739,19 @@ msgid "Color class: %s"
 msgstr "Farba tried: %s"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "Selected %u mixed colors classes"
-msgstr "Nastavenie triedy farieb"
+msgstr "Vybratých %u tried zmiešaných farieb"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "Selected %u unset colors classes"
-msgstr "Nastavenie triedy farieb"
+msgstr "Vybratých %u zrušilo nastavenie tried farieb"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:286
-#, fuzzy, c-format
+#, c-format
 msgid "Selected %u uniform colors classes"
-msgstr "Nastavenie triedy farieb"
+msgstr "Vybraných %u jednotných tried farieb"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:290
 #: src/modules/conf_theme/e_int_config_color_classes.c:550
@@ -7859,6 +7867,9 @@ msgid ""
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
+"Binárny súbor frekvencií v module cpufreq<ps/> nevlastní root alebo "
+"nemá nastavený bit <ps/>setuid. Uistite sa, že ide o tento prípad <ps/>. "
+"Napríklad:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8602,7 +8613,7 @@ msgstr "Pozadie"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Hover (Key Toggle)"
-msgstr ""
+msgstr "Umiestnite kurzor myši na prvok (Conmutador de Tecla)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8708,7 +8719,7 @@ msgstr "Prepnúť na plochu"
 
 #: src/modules/winlist/e_int_config_winlist.c:236
 msgid "Move to current desk after switch"
-msgstr ""
+msgstr "Presun na aktuálnu plochu po prepnutí"
 
 #: src/modules/winlist/e_int_config_winlist.c:240
 msgid "Selecting"
