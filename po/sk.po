@@ -7749,9 +7749,8 @@ msgid "Lower Power Automatic"
 msgstr "Automaticky znižovať spotrebu"
 
 #: src/modules/cpufreq/e_mod_main.c:246 src/modules/cpufreq/e_mod_main.c:282
-#, fuzzy
 msgid "Automatic Interactive"
-msgstr "Automatické vyhladzovanie"
+msgstr "Automatická Interaktívna"
 
 #: src/modules/cpufreq/e_mod_main.c:248 src/modules/cpufreq/e_mod_main.c:284
 msgid "Minimum Speed"
@@ -7797,11 +7796,11 @@ msgstr "Režim šetrenia energiou"
 
 #: src/modules/cpufreq/e_mod_main.c:414
 msgid "Power State Min"
-msgstr ""
+msgstr "Stav Minimálneho Výkonu"
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
-msgstr ""
+msgstr "Stav Maximálneho Výkonu"
 
 #: src/modules/cpufreq/e_mod_main.c:514
 msgid ""
@@ -9346,6 +9345,13 @@ msgid ""
 "this<br>is a terminal which can change its window name.<br>Alternatively, "
 "you can add a data.item to"
 msgstr ""
+"Možnosť opätovného spustenia je určená na použitie<br>s terminálovými aplikáciami "
+"na vytvorenie trvalého<br>terminálu, ktorý sa po zatvorení znova otvorí, čo sa "
+"zvyčajne vyskytuje<br>v rozbaľovacích termináloch v štýle zemetrasenia.<br>"
+"Buď vybratá aplikácia nie je terminál<br>alebo nie je známy príznak príkazového "
+"riadka na zmenu<br>názvu okna terminálu. Neváhajte a odošlite hlásenie o chybe, "
+"ak<br>je to terminál, ktorý môže zmeniť názov okna.<br>Prípadne "
+"môžete pridať data.item do"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9383,6 +9389,10 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
+"Vybraté okno vytvorené s názvom:<br>%s<br>a triedou:<br>%s<br>nebolo "
+"možné nájsť v databáze aplikácie Rýchle spustenie<br>"
+"To znamená, že buď aplikáciu nepoznáme<br>alebo nie je určená na použitie s touto možnosťou."
+"<br>Vyberte akciu, ktorú chcete vykonať:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9447,6 +9457,12 @@ msgid ""
 "exits<br><hilight>Transient</hilight> - Remember only this instance of the "
 "window (not permanent)"
 msgstr ""
+"Možnosti, ktoré nájdete v ponuke Rýchle spustenie, sú nasledovné:"
+"<br><hilight>Automaticky skryť</hilight> – skryje okno vždy, keď stratí zameranie"
+"<br><hilight>Skryť namiesto zdvihnutia</hilight> – pri aktivácii bez zamerania skryje okno"
+"<br><highlight>Režim skoku</highlight> – Prepnite na pracovnú plochu Okná a namiesto zobrazenia/skrytia zdvihnite"
+"<br><hilight>Znovu spustiť po zatvorení</hilight> – Po zatvorení okna položky znova spustite príkaz"
+"<br><hilight>Prechodné</hilight> – Zapamätať si iba túto inštanciu okna (nie natrvalo)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
@@ -9461,11 +9477,11 @@ msgstr "Zastaviť"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:994
 msgid "Great! Activate the Quickaccess entry again to show it!"
-msgstr ""
+msgstr "Skvelé! Znova aktivujte položku Rýchle spustenie, aby sa zobrazila!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:996
 msgid "Great! Activate the Quickaccess entry again to hide it!"
-msgstr ""
+msgstr "Skvelé! Znova aktivujte položku Rýchle spustenie, aby ste ju skryli!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1016
 msgid "Well done.<br>Now to delete the entry we just made..."
@@ -9476,11 +9492,13 @@ msgid ""
 "The demo dialog has been bound to the keys you pressed.<br>Try pressing the "
 "same keys!"
 msgstr ""
+"Dialógové okno ukážky bolo viazané na stlačené klávesy.<br>Skús stlačiť rovnaké klávesy!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1197
 msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
 msgstr ""
+"Novo zobrazené okno aktivuje<br>sekvenciu viazania rýchleho spustenia."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
@@ -9488,13 +9506,15 @@ msgstr "Prezentácia Rýchleho spustenia"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
-msgstr ""
+msgstr "Toto je ukážkové dialógové okno používané v návode na rýchle spustenie"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1227
 msgid ""
 "Quickaccess entries can be created from<br>the border menu of any window."
 "<br>Click Continue to see a demonstration."
 msgstr ""
+"Položky rýchleho spustenia je možné vytvoriť z<br>hraničnej ponuky ľubovoľného okna."
+"<br>Kliknutím na tlačidlo Pokračovať zobrazíte ukážku."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
 msgid ""
@@ -9503,12 +9523,18 @@ msgid ""
 "associated window can be returned to immediately<br>on demand by pushing the "
 "keyboard shortcut."
 msgstr ""
+"Rýchle spustenie je spôsob prepojenia <br>okien a aplikácií vybratých používateľom "
+"ku klávesovým skratkám. <br>Po vytvorení položky rýchleho spustenia<br>  "
+"pridružené okno je možné okamžite vrátiť<br>na požiadanie stlačením tlačidla "
+"klávesová skratka."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
 "This appears to be your first time using the Quickaccess module.<br>Would "
 "you like some usage tips?"
 msgstr ""
+"Zdá sa, že modul Rýchle spustenie používate prvýkrát.<br>Chceli"
+" by ste nejaké tipy na použitie?"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
