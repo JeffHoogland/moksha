@@ -2714,7 +2714,7 @@ msgstr "Súbory"
 #: src/bin/e_int_config_modules.c:55 src/modules/everything/e_mod_main.c:58
 #: src/modules/quickaccess/e_mod_main.c:35
 msgid "Launcher"
-msgstr "Rýchly Prístup"
+msgstr "Rýchle spúšťanie"
 
 #: src/bin/e_int_config_modules.c:56
 #: src/modules/conf_applications/e_int_config_defapps.c:330
@@ -6078,7 +6078,7 @@ msgstr "RÔZNE"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid "Quick Launcher:"
-msgstr "Rýchly prístup:"
+msgstr "Rýchle spúšťanie:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 msgid "Take Screenshot:"
@@ -7894,27 +7894,27 @@ msgstr "Maximálna rýchlosť"
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
 msgid "Everything Launcher"
-msgstr "Rýchly prístup"
+msgstr "Rýchly spúšťanie"
 
 #: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
-msgstr "Zobraziť rýchly prístup"
+msgstr "Zobraziť Rýchle spúšťanie"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
-msgstr "Rýchly prístup (nastavenie)"
+msgstr "Nastavenie Rýchleho spúšťania"
 
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
-msgstr "Modul rýchleho prístupu"
+msgstr "Modul Rýchleho spúšťania"
 
 #: src/modules/everything/e_mod_main.c:605
 msgid "Quick Launcher"
-msgstr "Rýchly prístup"
+msgstr "Rýchle spúšťanie"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
-msgstr "Rýchly prístup (Nastavenia)"
+msgstr "Rýchle spúšťanie (Nastavenie)"
 
 #: src/modules/everything/evry_config.c:373
 msgid "Available Plugins"
@@ -8086,15 +8086,15 @@ msgstr "Geometria Okna"
 
 #: src/modules/everything/evry_config.c:663
 msgid "Everything Collection"
-msgstr "Rýchly prístup - Kolekcia"
+msgstr "Kolekcia Rýchleho spúšťania"
 
 #: src/modules/everything/evry_gadget.c:169
 msgid "Everything Starter"
-msgstr "Rýchly prístup (Štart)"
+msgstr "Rýchle spúšťanie (Štart)"
 
 #: src/modules/everything/evry_gadget.c:587
 msgid "Everything Gadgets"
-msgstr "Rýchly prístup - Moduly"
+msgstr "Rýchle spúšťanie - Moduly"
 
 #: src/modules/everything/evry_gadget.c:685
 msgid "Plugin"
@@ -8154,7 +8154,7 @@ msgstr "Príkaz"
 #: src/modules/everything/evry_plug_apps.c:1363
 #: src/modules/everything/evry_plug_apps.c:1491
 msgid "Everything Applications"
-msgstr "Rýchly prístup - Aplikácie"
+msgstr "Aplikácie Rýchleho spúšťania"
 
 #: src/modules/everything/evry_plug_apps.c:1394
 msgid "Commands"
@@ -8172,7 +8172,7 @@ msgstr "Sudo GUI"
 #: src/modules/everything/evry_plug_collection.c:146
 #: src/modules/everything/evry_plug_files.c:1566
 msgid "Everything Plugin"
-msgstr "Doplnok rýchleho prístupu"
+msgstr "Doplnok Rýchleho spúšťania"
 
 #: src/modules/everything/evry_plug_calc.c:267
 msgid "Calculator"
@@ -8214,7 +8214,7 @@ msgstr "Premenovať súbory"
 #: src/modules/everything/evry_plug_files.c:1445
 #: src/modules/everything/evry_plug_files.c:1588
 msgid "Everything Files"
-msgstr "Rýchly prístup (Súbory)"
+msgstr "Súbory Rýchleho spúšťania"
 
 #: src/modules/everything/evry_plug_files.c:1472
 msgid "Show recent files"
@@ -8288,12 +8288,12 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-" Ok, tu je vysvetlenie <hilight>Rýchly Prístup</hilight>...<br> "
+" Ok, tu je vysvetlenie <hilight>Rýchleho spúšťania</hilight>...<br> "
 "Stačí zadať pár písmen veci, ktorú hľadáte. <br>"
 "Pomocou kurzora <hilight>&lt;hore/dole&gt;</hilight> vyberte zo zoznamu vecí.<br> "
 "Stlačením <hilight>&lt;tab&gt;</hilight> vyberte akciu a potom stlačte "
 "<hilight>&lt;návrat&gt;</hilight>.<br>"
-"Táto stránka sa nabudúce nezobrazí spustíte <highlight>Rýchly Prístup<</highlight>."
+"Táto stránka sa nabudúce nezobrazí spustíte <highlight>Rýchle Spúšťanie<</highlight>."
 "<br>    <hilight>&lt;Esc&gt;</hilight> zavrieť toto dialógové okno"
 "<br>    <hilight>&lt;?&gt;</hilight> zobraziť túto stránku"
 "<br>    <hilight>&lt;návrat&gt;</hilight> spustiť akciu"
@@ -9353,11 +9353,11 @@ msgstr "Prepnúť viditeľnosť"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:9
 msgid "Add Quickaccess For Current Window"
-msgstr "Pridať rýchly spustenie pre aktuálne okno"
+msgstr "Pridať Rýchly prístup pre aktuálne okno"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:10
 msgid "Remove Quickaccess From Current Window"
-msgstr "Odobrať rýchly spustenie z aktuálneho okna"
+msgstr "Odobrať Rýchly prístup z aktuálneho okna"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:265
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
@@ -9366,7 +9366,7 @@ msgstr "Odobrať rýchly spustenie z aktuálneho okna"
 #: src/modules/quickaccess/e_mod_quickaccess.c:392
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "Quickaccess Error"
-msgstr "Chyba rýchleho spustenie"
+msgstr "Chyba Rýchleho prístupu"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:265
 #: src/modules/quickaccess/e_mod_quickaccess.c:392
@@ -9407,7 +9407,7 @@ msgstr "Napríklad ako:"
 #: src/modules/quickaccess/e_mod_quickaccess.c:1247
 #: src/modules/quickaccess/e_mod_quickaccess.c:1264
 msgid "Quickaccess Help"
-msgstr "Pomoc s rýchlym spustením"
+msgstr "Pomoc s Rýchlym prístupom"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
 msgid "Cannot set relaunch for window without name and class!"
@@ -9446,7 +9446,7 @@ msgstr "Viac informácií"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:487
 msgid "The requested Quickaccess entry does not exist!"
-msgstr "Požadovaná položka rýchleho spustenia neexistuje!"
+msgstr "Požadovaná položka Rýchleho prístupu neexistuje!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:654
 msgid "Keybind Error"
@@ -9536,11 +9536,11 @@ msgstr ""
 msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
 msgstr ""
-"Novo zobrazené okno aktivuje<br>sekvenciu viazania rýchleho spustenia."
+"Novo zobrazené okno aktivuje<br>sekvenciu viazania Rýchleho prístupu."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
-msgstr "Prezentácia Rýchleho spustenia"
+msgstr "Prezentácia Rýchleho prístupu"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1205
 msgid "This is a demo dialog used in the Quickaccess tutorial"
@@ -9551,7 +9551,7 @@ msgid ""
 "Quickaccess entries can be created from<br>the border menu of any window."
 "<br>Click Continue to see a demonstration."
 msgstr ""
-"Položky rýchleho spustenia je možné vytvoriť z<br>hraničnej ponuky ľubovoľného okna."
+"Položky Rýchleho prístupu je možné vytvoriť z<br>hraničnej ponuky ľubovoľného okna."
 "<br>Kliknutím na tlačidlo Pokračovať zobrazíte ukážku."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
@@ -9562,7 +9562,7 @@ msgid ""
 "keyboard shortcut."
 msgstr ""
 "Rýchle spustenie je spôsob prepojenia <br>okien a aplikácií vybratých používateľom "
-"ku klávesovým skratkám. <br>Po vytvorení položky rýchleho spustenia<br>  "
+"ku klávesovým skratkám. <br>Po vytvorení položky Rýchleho prístupu<br>  "
 "pridružené okno je možné okamžite vrátiť<br>na požiadanie stlačením tlačidla "
 "klávesová skratka."
 
@@ -9576,7 +9576,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
-msgstr "rýchleho spustenia meno/identifikátor"
+msgstr "rýchly prístup meno/identifikátor"
 
 #: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
