@@ -94,9 +94,8 @@ msgid "No"
 msgstr "Ne"
 
 #: src/bin/e_actions.c:2160
-#, fuzzy
 msgid "Action Params Syntax Error"
-msgstr "Parametry činnosti"
+msgstr "Parametry činnosti Chyba syntaxe"
 
 #: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
 msgid "Exit"
@@ -1937,7 +1936,6 @@ msgstr ""
 "Prosím zadejte zkratku,<br><br>nebo klávesou <hilight>Esc</hilight> zrušte."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -3416,7 +3414,7 @@ msgid "Version: %s\n"
 msgstr "Verze: %s\n"
 
 #: src/bin/e_main.c:1313
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Options:\n"
 "\t-display DISPLAY\n"
@@ -3468,6 +3466,7 @@ msgstr ""
 "\t\tspustit se zamčenou obrazovkou, takže bude vyžadováno heslo.\n"
 "\t-i-really-know-what-i-am-doing-and-accept-full-responsibility-for-it\n"
 "\t\tPokud potřebujete tuto nápovědu, nepotřebujete tuto volbu.\n"
+"\t-version\n"
 
 #: src/bin/e_main.c:1367
 msgid ""
@@ -4161,7 +4160,7 @@ msgstr[1] "%li Sekundy"
 msgstr[2] "%li Sekund"
 
 #: src/bin/e_utils.c:1222
-#, fuzzy, c-format
+#, c-format
 msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] "Rok"
@@ -7801,77 +7800,71 @@ msgid "Powersaving behavior"
 msgstr "Chování šetření energií"
 
 #: src/modules/cpufreq/e_mod_main.c:414
-#, fuzzy
 msgid "Power State Min"
-msgstr "Vypínač počítače"
+msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:420
 msgid "Power State Max"
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
 "Vyskytla se chyba při pokusu nastavit<br>správce frekvence CPU pomocí "
-"nástroje<br>setfreq."
+"nástroje<ps/>setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Váš kernel nepodporuje<br> nastavování frekvence CPU. Možná vám chybí<br> "
-"jaderný modul či funkce, nebo vaše CPU<br> prostě nepodporuje tuto funkci."
+"Váš kernel nepodporuje<ps/> nastavování frekvence CPU. Možná vám chybí<ps/> "
+"jaderný modul či funkce, nebo vaše CPU<ps/> prostě nepodporuje tuto funkci."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Vyskytla se chyba při pokusu nastavit<br>frekvence CPU pomocí "
-"nástroje<br>setfreq."
+"Vyskytla se chyba při pokusu nastavit<ps/>frekvence CPU pomocí nástroje<ps/"
+">setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Vyskytla se chyba při pokusu nastavit<br>frekvence CPU pomocí "
-"nástroje<br>setfreq."
+"Vyskytla se chyba při pokusu nastavit<ps/>frekvence CPU pomocí nástroje<ps/"
+">setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
 msgid "Cpufreq Error"
 msgstr "Chyba nastavení frekvence CPU"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
-#, fuzzy
 msgid ""
 "The freqset binary in the cpufreq module<ps/>directory cannot be found (stat "
 "failed)"
 msgstr ""
-"Nelze nalézt program freqset v adresáři<br>modulu cpufreq (selhal stat)"
+"Nelze nalézt program freqset v adresáři<ps/>modulu cpufreq (selhal stat)"
 
 #: src/modules/cpufreq/e_mod_main.c:1474
 msgid "Cpufreq Permissions Error"
 msgstr "Chyba oprávnění cpufreq"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The freqset binary in the cpufreq module<ps/>is not owned by root or does "
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Program freqset modulu cpufreq<br>není vlastněn rootem nebo nemá "
-"nastaven<br>setuid bit. Prosím, nastavte ho tak.<br>Například:<br><br>sudo "
-"chown root %s<br>sudo chmod u+s,a+x %s<br>"
+"Program freqset modulu cpufreq<br>není vlastněn rootem nebo nemá nastaven<ps/"
+">setuid bit. Prosím, nastavte ho tak.<ps/>Například:<ps/><ps/>sudo chown "
+"root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -9261,7 +9254,6 @@ msgid "Check for available updates"
 msgstr "Kontrolovat dostupné aktualizace"
 
 #: src/modules/wizard/page_170.c:33
-#, fuzzy
 msgid ""
 "Moksha can check for new<br>versions, updates, security and<br>bugfixes, as "
 "well as available add-ons.<br><br>This is very useful, because it "
@@ -9426,16 +9418,17 @@ msgid "Cannot set relaunch for internal E dialog!"
 msgstr "Nemohu nastavit opětovné spuštění pro vnitřní dialog desktopu Moksha!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:368
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The selected window created with name:<br>%s<br>and class:<br>%s<br>could "
 "not be found in the Quickaccess app database<br>This means that either the "
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"nemohu nalézt v databázi aplikací Rychlého přístupu<br>To znamená, že buď "
-"aplikace nám není známa<br>nebo není míněna k použití s touto funkcí. "
-"<br>Prosím, vyberte co s tím:"
+"Vybrané okno vytvořené s názvem:<br>%s<br>a třídou:<br>%s<br>by mohlonemohu "
+"nalézt v databázi aplikací Rychlého přístupu<br>To znamená, že buď aplikace "
+"nám není známa<br>nebo není míněna k použití s touto funkcí. <br>Prosím, "
+"vyberte co s tím:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -10378,9 +10371,9 @@ msgid ""
 msgstr ""
 
 #: src/modules/places/e_mod_places.c:725
-#, fuzzy, c-format
+#, c-format
 msgid "Places warning!"
-msgstr "Nastavení modulu Místa"
+msgstr "Varování modulu Místa!"
 
 #: src/modules/places/e_mod_places.c:726
 #, c-format
@@ -10389,23 +10382,23 @@ msgstr ""
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 msgid "No Name"
@@ -10469,7 +10462,7 @@ msgstr "Limit hlasitosti dosažen!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
-msgstr ""
+msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
 msgid "Volume changed"
