@@ -6070,7 +6070,7 @@ msgstr "RŮZNÉ"
 
 #: src/modules/conf_keybindings/e_mod_main.c:283
 msgid "Quick Launcher:"
-msgstr "Spouštěč:"
+msgstr "Rychlý Spouštěč:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:289
 msgid "Take Screenshot:"
@@ -7889,27 +7889,27 @@ msgstr "Maximální rychlost"
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
 msgid "Everything Launcher"
-msgstr "Spouštěč Everything"
+msgstr "Rychlý spouštěč"
 
 #: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
-msgstr "Zobrazit spouštěč Everything"
+msgstr "Zobrazit Rychlý spouštěč"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
-msgstr "Nastavení Everything"
+msgstr "Nastavení Rychlého spouštěče"
 
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
-msgstr "Modul Everything"
+msgstr "Modul Rychlého spouštěče"
 
 #: src/modules/everything/e_mod_main.c:605
 msgid "Quick Launcher"
-msgstr "Spouštěč"
+msgstr "Rychlý spouštěč"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
-msgstr "Nastavení Everything"
+msgstr "Nastavení Rychlého spouštěče"
 
 #: src/modules/everything/evry_config.c:373
 msgid "Available Plugins"
