@@ -11,17 +11,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-20 08:58-0500\n"
 "PO-Revision-Date: 2010-11-28 18:55+0100\n"
 "Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Launguage: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2)\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -47,18 +49,16 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"Oto Moksha %s.\n"
-"Copyright © 12021, by the Moksha Dev Team.\n"
-"Mamy nadzieję, że jego użytkowanie sprawi Ci tyle przyjemności, co nam jego "
-"napisanie.\n"
-"\n"
+"<title>Copyright © 2024, by the Moksha Dev Team.</><br><br\n"
+"Mamy nadzieję, że korzystanie z tego oprogramowania będzie tak samo przyjemne, "
+"jak jego napisanie.<br><br>Aby się z nami skontaktować, odwiedź:<br><hilight>"
+"http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 #, fuzzy
