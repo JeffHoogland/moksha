@@ -3,14 +3,14 @@
 # This file is public domain.
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-20 08:58-0500\n"
-"PO-Revision-Date: 2023-12-23 21:49+0000\n"
+"PO-Revision-Date: 2024-01-22 01:00+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -1330,7 +1330,7 @@ msgstr "%s foi interrompido por um sinal de abortar."
 #: src/bin/e_exec.c:911
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr "%s foi interrompido por um erro de vírgula flutuante."
+msgstr "%s foi interrompido por um erro de ponto flutuante."
 
 #: src/bin/e_exec.c:915
 #, c-format
@@ -1345,12 +1345,12 @@ msgstr "%s foi interrompido por uma falha de segmentação."
 #: src/bin/e_exec.c:923
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
-msgstr "%s foi interrompido por um canal destruído."
+msgstr "%s foi interrompido por um canal corrompido."
 
 #: src/bin/e_exec.c:926
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
-msgstr "%s foi interrompido por um sinal de término."
+msgstr "%s foi interrompido por um sinal de terminação."
 
 #: src/bin/e_exec.c:930
 #, c-format
@@ -1360,14 +1360,13 @@ msgstr "%s foi interrompido por um erro de comunicação."
 #: src/bin/e_exec.c:933
 #, c-format
 msgid "%s was interrupted by the signal number %i."
-msgstr "%s foi interrompido pelo sinal %i."
+msgstr "%s foi interrompido pelo número de sinal %i."
 
 #: src/bin/e_exec.c:989
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Os detalhes remanescentes foram truncados. Grave os detalhes para os ver."
-"***\n"
+"***O restante resultado foi truncado. Grave o resultado para o ver.***\n"
 
 #: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
 msgid "Error Logs"
@@ -1397,7 +1396,7 @@ msgstr "Informações do sinal de erro"
 
 #: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
 msgid "Output Data"
-msgstr "Dados de saída"
+msgstr "Dados do resultado"
 
 #: src/bin/e_exec.c:1118
 msgid "There was no output."
