@@ -3,14 +3,14 @@
 # This file is public domain.
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
-"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
-"PO-Revision-Date: 2023-12-23 21:49+0000\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2024-01-03 11:30+0100\n"
+"PO-Revision-Date: 2024-01-22 00:25+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -778,7 +778,7 @@ msgstr "Hibernar agora"
 msgid "Lock"
 msgstr "Bloquear"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1454
 msgid "Cleanup Windows"
 msgstr "Limpar janelas"
 
@@ -1330,11 +1330,11 @@ msgstr "%s foi interrompido por um sinal de abortar."
 #: src/bin/e_exec.c:911
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
-msgstr "%s foi interrompido por um erro de vírgula flutuante."
+msgstr "%s foi interrompido por um erro de ponto flutuante."
 
 #: src/bin/e_exec.c:915
 #, c-format
-msgid "%s was interrupted by an Uninterruptible Kill Signal."
+msgid "%s was interrupted by an Uninterruptable Kill Signal."
 msgstr "%s foi interrompido por um sinal de terminar ininterrupto."
 
 #: src/bin/e_exec.c:919
@@ -1345,12 +1345,12 @@ msgstr "%s foi interrompido por uma falha de segmentação."
 #: src/bin/e_exec.c:923
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
-msgstr "%s foi interrompido por um canal destruído."
+msgstr "%s foi interrompido por um canal corrompido."
 
 #: src/bin/e_exec.c:926
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
-msgstr "%s foi interrompido por um sinal de término."
+msgstr "%s foi interrompido por um sinal de terminação."
 
 #: src/bin/e_exec.c:930
 #, c-format
@@ -1360,14 +1360,13 @@ msgstr "%s foi interrompido por um erro de comunicação."
 #: src/bin/e_exec.c:933
 #, c-format
 msgid "%s was interrupted by the signal number %i."
-msgstr "%s foi interrompido pelo sinal %i."
+msgstr "%s foi interrompido pelo número de sinal %i."
 
 #: src/bin/e_exec.c:989
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
-"***Os detalhes remanescentes foram truncados. Grave os detalhes para os ver."
-"***\n"
+"***O restante resultado foi truncado. Grave o resultado para o ver.***\n"
 
 #: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
 msgid "Error Logs"
@@ -1397,7 +1396,7 @@ msgstr "Informações do sinal de erro"
 
 #: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
 msgid "Output Data"
-msgstr "Dados de saída"
+msgstr "Dados do resultado"
 
 #: src/bin/e_exec.c:1118
 msgid "There was no output."
@@ -1689,7 +1688,7 @@ msgstr "Não a tudo"
 msgid "Yes to all"
 msgstr "Sim a tudo"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:703
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Aviso"
@@ -1919,8 +1918,8 @@ msgid "Stop moving"
 msgstr "Parar de mover"
 
 #: src/bin/e_gadcon.c:3099
-msgid "Insufficient gadcon support"
-msgstr "Suporte gadcon insuficiente"
+msgid "Insufficent gadcon support"
+msgstr "Suporte insuficiente ao gadcon"
 
 #: src/bin/e_gadcon.c:3100
 #, c-format
@@ -2839,33 +2838,42 @@ msgstr "Sobre o tema"
 msgid "Restart Moksha"
 msgstr "Reiniciar o Moksha"
 
-#: src/bin/e_int_menus.c:338
+#: src/bin/e_int_menus.c:344
 msgid "Favorite Apps"
 msgstr "Aplicações favoritas"
 
-#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
+#: src/bin/e_int_menus.c:349 src/bin/e_int_menus.c:815
 msgid "No applications"
 msgstr "Sem aplicações"
 
-#: src/bin/e_int_menus.c:362
+#: src/bin/e_int_menus.c:358
+#: src/modules/conf_display/e_int_config_desklock.c:386
+#: src/modules/conf_theme/e_mod_main.c:34
+#: src/modules/conf_theme/e_mod_main.c:232
+#: src/modules/conf_theme/e_mod_main.c:239
+#: src/modules/conf_theme/e_mod_main.c:268
+msgid "Wallpaper"
+msgstr "Papel de parede"
+
+#: src/bin/e_int_menus.c:377
 msgid "Virtual"
 msgstr "Virtual"
 
-#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:384 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Painéis"
 
-#: src/bin/e_int_menus.c:378
+#: src/bin/e_int_menus.c:393
 msgid "Show/Hide All Windows"
 msgstr "Mostrar/ocultar todas as janelas"
 
-#: src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:1042
 msgid "Set Virtual Desktops"
 msgstr "Definir áreas de trabalho virtuais"
 
-#: src/bin/e_int_menus.c:1397
+#: src/bin/e_int_menus.c:1412
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2874,29 +2882,29 @@ msgstr "Definir áreas de trabalho virtuais"
 msgid "Windows"
 msgstr "Janelas"
 
-#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
+#: src/bin/e_int_menus.c:1418 src/bin/e_int_menus.c:1614
 msgid "No windows"
 msgstr "Sem janelas"
 
-#: src/bin/e_int_menus.c:1452
+#: src/bin/e_int_menus.c:1467
 msgid "Lost Windows"
 msgstr "Janelas órfãs"
 
-#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
+#: src/bin/e_int_menus.c:1527 src/bin/e_int_menus.c:1627
 msgid "Untitled window"
 msgstr "Janela sem nome"
 
-#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1734 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Painel %s"
 
-#: src/bin/e_int_menus.c:1787
+#: src/bin/e_int_menus.c:1802
 msgid "Add a Shelf"
 msgstr "Adicionar painel"
 
-#: src/bin/e_int_menus.c:1794
+#: src/bin/e_int_menus.c:1809
 msgid "Delete a Shelf"
 msgstr "Eliminar painel"
 
@@ -5060,14 +5068,6 @@ msgstr "Papel de parede do tema"
 #: src/modules/conf_display/e_int_config_desklock.c:360
 msgid "Current Wallpaper"
 msgstr "Papel de parede atual"
-
-#: src/modules/conf_display/e_int_config_desklock.c:386
-#: src/modules/conf_theme/e_mod_main.c:34
-#: src/modules/conf_theme/e_mod_main.c:232
-#: src/modules/conf_theme/e_mod_main.c:239
-#: src/modules/conf_theme/e_mod_main.c:268
-msgid "Wallpaper"
-msgstr "Papel de parede"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:58
 msgid "Screen Saver Settings"
@@ -9564,31 +9564,31 @@ msgstr ""
 msgid "quick access name/identifier"
 msgstr "identificador/nome do acesso rápido"
 
-#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
+#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
 msgid "Systray Error"
 msgstr "Erro na área de notificação do sistema"
 
-#: src/modules/systray/e_mod_main.c:537
+#: src/modules/systray/e_mod_main.c:534
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr ""
 "Não é possível tornar a área de notificação invisível para coincidir com o "
 "painel."
 
-#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
+#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
 msgid "Another systray exists"
 msgstr "Já existe uma área de notificação do sistema"
 
-#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
+#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
 msgid "There can be only one systray gadget and another one already exists."
 msgstr ""
 "Apenas pode existir uma área de notificação de sistema e uma já existe."
 
-#: src/modules/systray/e_mod_main.c:953
+#: src/modules/systray/e_mod_main.c:950
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
 "A área de notificação não funciona num painel que esteja por baixo de tudo."
 
-#: src/modules/systray/e_mod_main.c:1148
+#: src/modules/systray/e_mod_main.c:1145
 msgid "Systray"
 msgstr "Área de notificação do sistema"
 
@@ -10031,27 +10031,27 @@ msgstr ""
 msgid "Empty"
 msgstr "Vazio"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:617
 msgid "Enter Presentation Mode"
 msgstr "Entrar no modo de demonstração"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:618
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "O Moksha está em modo de <b>apresentação</b>."
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:622
 msgid "Exited Presentation Mode"
 msgstr "Saiu do modo de demonstração"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:623
 msgid "Presentation mode is over."
 msgstr "Terminou o modo de apresentação."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:637
 msgid "Enter Offline Mode"
 msgstr "Entrar no modo offline"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:638
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10059,11 +10059,11 @@ msgstr ""
 "O Moksha está no modo <b>offline</b>.<br>Neste modo, os módulos que utilizem "
 "a rede irão parar de analisar os serviços remotos."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:644
 msgid "Exited Offline Mode"
 msgstr "Saiu do modo offline"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:645
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10071,7 +10071,7 @@ msgstr ""
 "Terminou o modo <b>offline</b>.<br>Os módulos que utilizam a rede irão "
 "retomar os serviços."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:703
 msgid "Notification expired!"
 msgstr "A notificação expirou!"
 
