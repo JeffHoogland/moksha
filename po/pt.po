@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-03 11:30+0100\n"
 "PO-Revision-Date: 2024-01-22 00:25+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
