@@ -13,17 +13,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
-"PO-Revision-Date: 2010-11-28 18:55+0100\n"
-"Last-Translator: Mariusz Kozakowski <11mariom@gmail.com>\n"
+"POT-Creation-Date: 2024-01-21 18:07-0500\n"
+"PO-Revision-Date: 2024-01-21 18:04-0500\n"
+"Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Launguage: pl\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
+"|| n%100>=20) ? 1 : 2);\n"
+"Launguage: pl\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -56,14 +57,13 @@ msgid ""
 "><br><br>"
 msgstr ""
 "<title>Copyright © 2024, by the Moksha Dev Team.</><br><br\n"
-"Mamy nadzieję, że korzystanie z tego oprogramowania będzie tak samo przyjemne, "
-"jak jego napisanie.<br><br>Aby się z nami skontaktować, odwiedź:<br><hilight>"
-"http://www.bodhilinux.com</><br><br>"
+"Mamy nadzieję, że korzystanie z tego oprogramowania będzie tak samo "
+"przyjemne, jak jego napisanie.<br><br>Aby się z nami skontaktować, odwiedź:"
+"<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
-#, fuzzy
 msgid "<title>The Team</><br><br>"
-msgstr "<title>Zespół</title>"
+msgstr "<title>Zespół</title><br><br>"
 
 #: src/bin/e_actions.c:154
 #, fuzzy
@@ -71,7 +71,7 @@ msgid "Profile: Switch"
 msgstr "Wybór profilu"
 
 #: src/bin/e_actions.c:430
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to kill %s.<br><br>Please keep in mind that all data from this "
 "window<br>which has not yet been saved will be lost!<br><br>Are you sure you "
@@ -108,9 +108,8 @@ msgid "Exit"
 msgstr "Zakończ"
 
 #: src/bin/e_actions.c:2279
-#, fuzzy
 msgid "Are you sure you want to exit Moksha?"
-msgstr "Czy na pewno chcesz wyjść?"
+msgstr "Czy na pewno chcesz wyjść z Moksha?"
 
 #: src/bin/e_actions.c:2281 src/bin/e_actions.c:2375 src/bin/e_actions.c:2435
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
@@ -125,7 +124,6 @@ msgid "Logout"
 msgstr "Wylogowanie"
 
 #: src/bin/e_actions.c:2373
-#, fuzzy
 msgid "Are you sure you want to logout?"
 msgstr "Czy na pewno chcesz się wylogować?"
 
@@ -134,16 +132,14 @@ msgid "Power off"
 msgstr "Wyłącz"
 
 #: src/bin/e_actions.c:2433
-#, fuzzy
 msgid "Are you sure you want to power off your computer?"
-msgstr "Czy na pewno chcesz się wylogować?"
+msgstr "Czy na pewno chcesz wyłączyć komputer?"
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3592
 msgid "Reboot"
 msgstr "Ponowne uruchomienie"
 
 #: src/bin/e_actions.c:2493
-#, fuzzy
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Czy na pewno chcesz uruchomić ponownie komputer?"
 
@@ -152,9 +148,8 @@ msgid "Suspend"
 msgstr "Usypianie"
 
 #: src/bin/e_actions.c:2558
-#, fuzzy
 msgid "Are you sure you want to suspend your computer?"
-msgstr "Czy na pewno chcesz się wylogować?"
+msgstr "Czy na pewno chcesz zawiesić komputer?"
 
 #: src/bin/e_actions.c:2622 src/bin/e_actions.c:3604
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
@@ -162,7 +157,6 @@ msgid "Hibernate"
 msgstr "Hibernacja"
 
 #: src/bin/e_actions.c:2623
-#, fuzzy
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Czy na pewno chcesz zahibernować komputer?"
 
@@ -270,14 +264,12 @@ msgid "Maximize Horizontally"
 msgstr "Maksymalizuj poziomo"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
-#, fuzzy
 msgid "Maximize Left"
-msgstr "Maksymalizuj"
+msgstr "Maksymalizacja lewej"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
-#, fuzzy
 msgid "Maximize Right"
-msgstr "Maksymalizuj"
+msgstr "Maksymalizacja w prawo"
 
 #: src/bin/e_actions.c:3222
 msgid "Maximize Fullscreen"
@@ -322,7 +314,7 @@ msgstr "Zwinięcie (Użytkownik)"
 
 #: src/bin/e_actions.c:3248
 msgid "syntax: \"(0|1) (up|down|left|right)\""
-msgstr ""
+msgstr "składnia: \"(0|1) (up|down|left|right)\""
 
 #: src/bin/e_actions.c:3252
 msgid "Toggle Borderless State"
@@ -387,7 +379,6 @@ msgid "Flip Desktop By..."
 msgstr "Przełączaj pulpity o..."
 
 #: src/bin/e_actions.c:3288
-#, fuzzy
 msgid "Flip To Previous Desktop"
 msgstr "Do poprzedniego pulpitu"
 
@@ -608,39 +599,32 @@ msgid "Undim"
 msgstr "Undim"
 
 #: src/bin/e_actions.c:3443
-#, fuzzy
 msgid "Backlight Set"
-msgstr "Ustaw podświetlenie"
+msgstr "Ustaw Podświetlenie"
 
 #: src/bin/e_actions.c:3445
-#, fuzzy
 msgid "Backlight Min"
-msgstr "Min. podświetlenie"
+msgstr "Min. Podświetlenie"
 
 #: src/bin/e_actions.c:3447
-#, fuzzy
 msgid "Backlight Mid"
-msgstr "Mid podświetlenia"
+msgstr "Mid Podświetlenia"
 
 #: src/bin/e_actions.c:3449
-#, fuzzy
 msgid "Backlight Max"
-msgstr "Max podświetlenie"
+msgstr "Max Podświetlenie"
 
 #: src/bin/e_actions.c:3452
-#, fuzzy
 msgid "Backlight Adjust"
-msgstr "podświetlenie Ustaw"
+msgstr "Regulacja Podświetlenia"
 
 #: src/bin/e_actions.c:3454
-#, fuzzy
 msgid "Backlight Up"
-msgstr "podświetlenie w górę"
+msgstr "Podświetlenie w górę"
 
 #: src/bin/e_actions.c:3456
-#, fuzzy
 msgid "Backlight Down"
-msgstr "Wyłączanie"
+msgstr "Podświetlenie w dół"
 
 #: src/bin/e_actions.c:3461
 #, fuzzy
@@ -657,9 +641,8 @@ msgid "Move By Coordinate Offset..."
 msgstr ""
 
 #: src/bin/e_actions.c:3476
-#, fuzzy
 msgid "Resize By..."
-msgstr "Opis Zmiany Rozmiaru"
+msgstr "Zmień rozmiar według..."
 
 #: src/bin/e_actions.c:3482
 #, fuzzy
@@ -764,14 +747,12 @@ msgid "Offline Mode Toggle"
 msgstr "Tryb offline"
 
 #: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
-#, fuzzy
 msgid "Moksha : Module"
-msgstr "Moksha: Tryby"
+msgstr "Moksha: Moduł"
 
 #: src/bin/e_actions.c:3568
-#, fuzzy
 msgid "Enable the named module"
-msgstr "Moduł Randr dla Moksha"
+msgstr ""
 
 #: src/bin/e_actions.c:3572
 msgid "Disable the named module"
@@ -814,14 +795,12 @@ msgid "Power Off"
 msgstr "Wyłącz"
 
 #: src/bin/e_actions.c:3596
-#, fuzzy
 msgid "Suspend Now"
-msgstr "Usypianie"
+msgstr "Zawieś teraz"
 
 #: src/bin/e_actions.c:3608
-#, fuzzy
 msgid "Hibernate Now"
-msgstr "Hibernacja"
+msgstr "Hibernuj teraz"
 
 #: src/bin/e_actions.c:3616
 msgid "Lock"
@@ -879,9 +858,8 @@ msgid "Color Selector"
 msgstr "Wybór koloru"
 
 #: src/bin/e_color_dialog.c:46
-#, fuzzy
 msgid "Select"
-msgstr "Ustawienia"
+msgstr "Wybierz"
 
 #: src/bin/e_color_dialog.c:47 src/bin/e_eap_editor.c:863
 #: src/bin/e_eap_editor.c:926 src/bin/e_entry_dialog.c:64 src/bin/e_fm.c:10059
@@ -967,17 +945,14 @@ msgid "Settings Upgraded"
 msgstr "Ustawienia zaktualizowane"
 
 #: src/bin/e_config.c:2099
-#, fuzzy
 msgid "The EET file handle is bad."
 msgstr "EET uchwyt plik jest zły."
 
 #: src/bin/e_config.c:2103
-#, fuzzy
 msgid "The file data is empty."
 msgstr "Dane plik jest pusty."
 
 #: src/bin/e_config.c:2107
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -986,19 +961,16 @@ msgstr ""
 "uprawnienia do plików."
 
 #: src/bin/e_config.c:2111
-#, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Pamięć zabrakło podczas przygotowywania zapisu.<br>Proszę wolnej pamięci w "
 "górę."
 
 #: src/bin/e_config.c:2115
-#, fuzzy
 msgid "This is a generic error."
 msgstr "Jest to ogólny błąd."
 
 #: src/bin/e_config.c:2119
-#, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -1011,64 +983,52 @@ msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
 #: src/bin/e_config.c:2127
-#, fuzzy
 msgid "You ran out of space while writing the file."
-msgstr "Jesteś zabrakło miejsca podczas zapisu pliku"
+msgstr "Jesteś zabrakło miejsca podczas zapisu pliku."
 
 #: src/bin/e_config.c:2131
-#, fuzzy
 msgid "The file was closed while writing."
 msgstr "Plik został zamknięty na niej podczas pisania."
 
 #: src/bin/e_config.c:2135
-#, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Pamięć -mapping (mmap) pliku nie powiodło się."
 
 #: src/bin/e_config.c:2139
-#, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Kodowanie nie powiodło się."
 
 #: src/bin/e_config.c:2143
-#, fuzzy
 msgid "Signature failed."
 msgstr "Hibernacja nieudana."
 
 #: src/bin/e_config.c:2147
-#, fuzzy
 msgid "The signature was invalid."
 msgstr "Podpis jest nieprawidłowy."
 
 #: src/bin/e_config.c:2151
-#, fuzzy
 msgid "Not signed."
-msgstr "(Żadnemu)"
+msgstr "Niepodpisany."
 
 #: src/bin/e_config.c:2155
-#, fuzzy
 msgid "Feature not implemented."
 msgstr "Funkcja nie zaimplementowana."
 
 #: src/bin/e_config.c:2159
-#, fuzzy
 msgid "PRNG was not seeded."
-msgstr "PRNG nie zaszczepiono."
+msgstr "PRNG nie zostało rozstawione."
 
 #: src/bin/e_config.c:2163
-#, fuzzy
 msgid "Encryption failed."
 msgstr "Szyfrowanie nie powiodło się."
 
 #: src/bin/e_config.c:2167
-#, fuzzy
 msgid "Decryption failed."
-msgstr "Restet nieudany."
+msgstr "Odszyfrowanie nie powiodło się."
 
 #: src/bin/e_config.c:2171
-#, fuzzy
 msgid "The error is unknown to Moksha."
-msgstr "Witaj w Moksha"
+msgstr "Błąd nie jest znany Mokszy."
 
 #: src/bin/e_config.c:2193
 #, c-format
@@ -1099,13 +1059,8 @@ msgstr "Zastosuj"
 #: src/bin/e_configure.c:29 src/modules/conf_shelves/e_mod_main.c:21
 #: src/modules/gadman/e_mod_main.c:23 src/modules/connman/e_mod_main.c:634
 #: src/modules/notification/e_mod_main.c:75
-#, fuzzy
 msgid "Extensions"
-msgstr ""
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
-"Dodatki\n"
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
-"Rozszerzenia"
+msgstr "Rozszerzenia"
 
 #: src/bin/e_configure.c:30 src/bin/e_configure.c:33 src/bin/e_configure.c:280
 #: src/modules/conf_paths/e_int_config_paths.c:80
@@ -1151,9 +1106,8 @@ msgid "Please enter your unlock password"
 msgstr "Podaj hasło odblokowujące ekran"
 
 #: src/bin/e_desklock.c:928
-#, fuzzy
 msgid "Authenticating..."
-msgstr "Inna aplikacja..."
+msgstr "Uwierzytelnianie..."
 
 #: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
@@ -1179,7 +1133,6 @@ msgid "Activate Presentation Mode?"
 msgstr "Włączyć tryb prezentacji?"
 
 #: src/bin/e_desklock.c:1307
-#, fuzzy
 msgid ""
 "You unlocked your desktop too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -1201,7 +1154,6 @@ msgid "Incomplete Window Properties"
 msgstr "Niekompletne właściwości okna"
 
 #: src/bin/e_eap_editor.c:182
-#, fuzzy
 msgid ""
 "The window you are creating an icon for<br>does not contain window name and "
 "class<br>properties. Without these, you will have to<br>use the window title "
@@ -1215,7 +1167,6 @@ msgstr ""
 "przy uruchomieniu programu<br>i nie zmienia się w trakcie jego działania"
 
 #: src/bin/e_eap_editor.c:235
-#, fuzzy
 msgid "Desktop Entry Editor"
 msgstr "Redaktor Desktop Entry"
 
@@ -1293,9 +1244,9 @@ msgid "Options"
 msgstr "Opcje"
 
 #: src/bin/e_eap_editor.c:823
-#, fuzzy, c-format
+#, c-format
 msgid "Select an Icon for '%s'"
-msgstr "Wybierz ikonę"
+msgstr "Wybierz ikonę dla '%s'"
 
 #: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
@@ -1345,23 +1296,21 @@ msgid "Run Error"
 msgstr "Błąd uruchamiania"
 
 #: src/bin/e_exec.c:495
-#, fuzzy
 msgid "Moksha was unable to get current directory"
 msgstr ""
-"Moksha nie był w stanie wczytać obrazu<br>ze względu na błąd konwersji."
 
 #: src/bin/e_exec.c:503
-#, fuzzy, c-format
+#, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
-msgstr "Moksha nie zdołał zinterpretować linii komend:<br><br>%s<br>"
+msgstr ""
 
 #: src/bin/e_exec.c:514
-#, fuzzy, c-format
+#, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
-msgstr "Moksha nie zdołał stworzyć procesu potomnego:<br><br>%s<br>"
+msgstr ""
 
 #: src/bin/e_exec.c:575
-#, fuzzy, c-format
+#, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha nie zdołał stworzyć procesu potomnego:<br><br>%s<br>"
 
@@ -1496,6 +1445,7 @@ msgid "%u file"
 msgid_plural "%u files"
 msgstr[0] "%1.0f plików"
 msgstr[1] "%1.0f plików"
+msgstr[2] ""
 
 #: src/bin/e_fm.c:3068
 msgid "Mount Error"
@@ -1571,9 +1521,8 @@ msgstr "Tryb widoku"
 #: src/bin/e_fm.c:8846 src/bin/e_fm.c:9006
 #: src/modules/everything/evry_config.c:526
 #: src/modules/fileman/e_mod_config.c:394
-#, fuzzy
 msgid "Sorting"
-msgstr "Nic"
+msgstr "Sortowanie"
 
 #: src/bin/e_fm.c:8864 src/bin/e_fm.c:9024
 msgid "Refresh View"
@@ -1584,9 +1533,8 @@ msgid "New..."
 msgstr "Nowy..."
 
 #: src/bin/e_fm.c:8895 src/bin/e_fm.c:9057 src/bin/e_fm.c:9088
-#, fuzzy
 msgid "Actions..."
-msgstr "Akcje"
+msgstr "Działania..."
 
 #: src/bin/e_fm.c:8922 src/bin/e_fm.c:9144 src/bin/e_fm.c:11661
 msgid "Link"
@@ -1645,9 +1593,8 @@ msgid "List"
 msgstr "Lista"
 
 #: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:467
-#, fuzzy
 msgid "Default View"
-msgstr "Domyślny"
+msgstr "Widok domyślny"
 
 #: src/bin/e_fm.c:9558
 #, c-format
@@ -1655,14 +1602,12 @@ msgid "Icon Size (%d)"
 msgstr "Wielkość ikony (%d)"
 
 #: src/bin/e_fm.c:9585
-#, fuzzy
 msgid "Could not create a directory!"
-msgstr "Błąd ładowania modułu"
+msgstr "Nie można utworzyć katalogu!"
 
 #: src/bin/e_fm.c:9600
-#, fuzzy
 msgid "Could not create a file!"
-msgstr "Błąd ładowania modułu"
+msgstr "Nie można utworzyć pliku!"
 
 #: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
 #: src/modules/conf_paths/e_int_config_paths.c:206
@@ -1670,9 +1615,8 @@ msgid "New Directory"
 msgstr "Nowy katalog"
 
 #: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
-#, fuzzy
 msgid "New File"
-msgstr "Plik:"
+msgstr "Nowy plik"
 
 #: src/bin/e_fm.c:9709 src/bin/e_fm.c:9730
 msgid "Already creating a new file for this directory!"
@@ -1684,14 +1628,12 @@ msgid "%s can't be written to!"
 msgstr ""
 
 #: src/bin/e_fm.c:9754
-#, fuzzy
 msgid "Directory"
 msgstr "Katalog"
 
 #: src/bin/e_fm.c:9759 src/modules/conf_applications/e_int_config_defapps.c:312
-#, fuzzy
 msgid "File"
-msgstr "Plik:"
+msgstr "Plik"
 
 #: src/bin/e_fm.c:9790
 msgid "Inherit parent settings"
@@ -1720,32 +1662,28 @@ msgid "Secure Deletion"
 msgstr "Rozdzielczość"
 
 #: src/bin/e_fm.c:9852
-#, fuzzy
 msgid "File Manager Settings"
-msgstr "Ustawienia menadżera plików Fileman"
+msgstr "Ustawienia Menedżera Plików"
 
 #: src/bin/e_fm.c:9857
-#, fuzzy
 msgid "File Icon Settings"
-msgstr "Ustawienia menadżera plików Fileman"
+msgstr "Ustawienia Ikon Plików"
 
 #: src/bin/e_fm.c:9935 src/bin/e_fm.c:10151
 msgid "Set background..."
 msgstr "Zmień tło..."
 
 #: src/bin/e_fm.c:9943
-#, fuzzy
 msgid "Clear background"
-msgstr "Zmień tło..."
+msgstr "Wyczyść tło"
 
 #: src/bin/e_fm.c:9950 src/bin/e_fm.c:10179
 msgid "Set overlay..."
 msgstr "Ustaw warstwę…"
 
 #: src/bin/e_fm.c:9956
-#, fuzzy
 msgid "Clear overlay"
-msgstr "Ustaw warstwę…"
+msgstr "Wyczyść warstwę"
 
 #: src/bin/e_fm.c:10273 src/bin/e_fm.c:10614
 #, c-format
@@ -1759,7 +1697,7 @@ msgstr "Zmień nazwę pliku"
 #: src/bin/e_fm.c:10366 src/bin/e_fm.c:10399
 #, c-format
 msgid "%s already exists!"
-msgstr ""
+msgstr "%s już istnieje!"
 
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10403
 #, c-format
@@ -1847,16 +1785,17 @@ msgstr[0] ""
 msgstr[1] ""
 "Jesteś pewien że chcesz usunąć<br>%d zaznaczonych plików w:<br><hilight>%s</"
 "hilight>?"
+msgstr[2] ""
 
 #: src/bin/e_fm_device.c:60
 #, c-format
 msgid "%s %s—%s"
-msgstr ""
+msgstr "%s %s—%s"
 
 #: src/bin/e_fm_device.c:67 src/bin/e_fm_device.c:74
 #, c-format
 msgid "%s—%s"
-msgstr ""
+msgstr "%s—%s"
 
 #: src/bin/e_fm_device.c:79
 #, c-format
@@ -1885,9 +1824,8 @@ msgid "Name:"
 msgstr "Nazwa:"
 
 #: src/bin/e_fm_prop.c:397
-#, fuzzy
 msgid "Location:"
-msgstr "Obrót ekranu"
+msgstr "Lokalizacja:"
 
 #: src/bin/e_fm_prop.c:404 src/bin/e_widget_filepreview.c:411
 #: src/bin/e_widget_filepreview.c:472 src/bin/e_widget_filepreview.c:524
@@ -1899,18 +1837,16 @@ msgid "Occupied blocks on disk:"
 msgstr ""
 
 #: src/bin/e_fm_prop.c:418
-#, fuzzy
 msgid "Last Accessed:"
-msgstr "Ostanio Czytany:"
+msgstr "Ostatnio uzyskiwany dostęp:"
 
 #: src/bin/e_fm_prop.c:425
 msgid "Last Modified:"
 msgstr "Ostatinio zmodyfikowany:"
 
 #: src/bin/e_fm_prop.c:432
-#, fuzzy
 msgid "Last Modified Permissions:"
-msgstr "Ostatinio zmodyfikowany:"
+msgstr "Ostatnio zmodyfikowane uprawnienia:"
 
 #: src/bin/e_fm_prop.c:439
 msgid "File Type:"
@@ -1921,9 +1857,8 @@ msgid "Permissions"
 msgstr "Uprawnienia"
 
 #: src/bin/e_fm_prop.c:451 src/bin/e_fm_prop.c:460 src/bin/e_fm_prop.c:469
-#, fuzzy
 msgid "read"
-msgstr "gotowy"
+msgstr ""
 
 #: src/bin/e_fm_prop.c:453 src/bin/e_fm_prop.c:462 src/bin/e_fm_prop.c:471
 msgid "write"
@@ -1931,7 +1866,7 @@ msgstr "zapisz"
 
 #: src/bin/e_fm_prop.c:455 src/bin/e_fm_prop.c:464 src/bin/e_fm_prop.c:473
 msgid "execute"
-msgstr ""
+msgstr "wykonywanie"
 
 #: src/bin/e_fm_prop.c:458
 #, fuzzy
@@ -2290,7 +2225,6 @@ msgstr "Okno"
 
 #: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
 #: src/modules/clock/e_mod_main.c:501
-#, fuzzy
 msgid "Always on Top"
 msgstr "Zawsze na wierzchu"
 
@@ -2299,7 +2233,6 @@ msgid "Sticky"
 msgstr "Przyklej"
 
 #: src/bin/e_int_border_menu.c:199
-#, fuzzy
 msgid "Shade"
 msgstr "Zwiń"
 
@@ -2325,7 +2258,6 @@ msgid "Create Icon"
 msgstr "Utwórz ikonę"
 
 #: src/bin/e_int_border_menu.c:632
-#, fuzzy
 msgid "Add to Favorites Menu"
 msgstr "Dodaj do menu Ulubione"
 
@@ -2370,14 +2302,13 @@ msgid "Remember"
 msgstr "Zapamiętaj"
 
 #: src/bin/e_int_border_menu.c:793
-#, fuzzy
 msgid "ICCCM/NetWM"
-msgstr "NetWM"
+msgstr "ICCCM/NetWM"
 
 #: src/bin/e_int_border_menu.c:967
-#, fuzzy, c-format
+#, c-format
 msgid "Screen %d"
-msgstr "Ekran"
+msgstr "Ekran %d"
 
 #: src/bin/e_int_border_menu.c:1063 src/bin/e_int_border_prop.c:157
 #: src/bin/e_int_border_prop.c:179
@@ -2405,14 +2336,12 @@ msgid "Select Border Style"
 msgstr "Wybierz typ obramowania"
 
 #: src/bin/e_int_border_menu.c:1231
-#, fuzzy
 msgid "Use Moksha Default Icon Preference"
-msgstr "Używaj domyślnych właściwości E17 dla ikon"
+msgstr "Używaj domyślnych właściwości Moksha dla ikon"
 
 #: src/bin/e_int_border_menu.c:1239
-#, fuzzy
 msgid "Use Application Provided Icon"
-msgstr "Użyj ikonę dostarczoną przez program "
+msgstr "Użyj ikonę dostarczoną przez program"
 
 #: src/bin/e_int_border_menu.c:1247
 msgid "Use User Defined Icon"
@@ -2444,22 +2373,22 @@ msgstr "Pasek zadań"
 #: src/bin/e_moveresize.c:155 src/bin/e_widget_filepreview.c:87
 #, c-format
 msgid "%i×%i"
-msgstr ""
+msgstr "%i×%i"
 
 #: src/bin/e_int_border_prop.c:131
 #, c-format
 msgid "%i,%i"
-msgstr ""
+msgstr "%i,%i"
 
 #: src/bin/e_int_border_prop.c:140
 #, c-format
 msgid "%1.3f"
-msgstr ""
+msgstr "%1.3f"
 
 #: src/bin/e_int_border_prop.c:143
 #, c-format
 msgid "%1.3f–%1.3f"
-msgstr ""
+msgstr "%1.3f–%1.3f"
 
 #: src/bin/e_int_border_prop.c:153 src/bin/e_int_border_prop.c:175
 #, fuzzy, c-format
@@ -2876,14 +2805,12 @@ msgid "Module Settings"
 msgstr "Ustawienia modułów"
 
 #: src/bin/e_int_config_modules.c:200
-#, fuzzy
 msgid "Load"
-msgstr "Załadowany"
+msgstr "Załaduj"
 
 #: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:605
-#, fuzzy
 msgid "Unload"
-msgstr "Nie Załadowany"
+msgstr "Rozładowany"
 
 #: src/bin/e_int_config_modules.c:346 src/bin/e_int_config_modules.c:633
 #, fuzzy
@@ -2965,9 +2892,8 @@ msgid "Applications"
 msgstr "Aplikacje"
 
 #: src/bin/e_int_menus.c:210
-#, fuzzy
 msgid "About Operating System"
-msgstr "Błąd systemu uwierzytelniania"
+msgstr "O systemie operacyjnym"
 
 #: src/bin/e_int_menus.c:216
 msgid "Help"
@@ -2978,28 +2904,24 @@ msgid "About Bodhi Linux"
 msgstr ""
 
 #: src/bin/e_int_menus.c:243
-#, fuzzy
 msgid "About Moksha Desktop"
-msgstr "O Moksha"
+msgstr "O Moksha Pulpit"
 
 #: src/bin/e_int_menus.c:249 src/bin/e_theme_about.c:21
 msgid "About Theme"
 msgstr "O wystroju"
 
 #: src/bin/e_int_menus.c:263
-#, fuzzy
 msgid "Restart Moksha"
 msgstr "Zrestartuj Moksha"
 
 #: src/bin/e_int_menus.c:338
-#, fuzzy
 msgid "Favorite Apps"
-msgstr "Ulubione"
+msgstr "Ulubione aplikacje"
 
 #: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
-#, fuzzy
 msgid "No applications"
-msgstr "(Brak aplikacji)"
+msgstr "Brak aplikacji"
 
 #: src/bin/e_int_menus.c:362
 msgid "Virtual"
@@ -3044,19 +2966,17 @@ msgstr "Inne Ustawienia"
 
 #: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "Shelf %s"
-msgstr "Pólka #"
+msgstr "Półka %s"
 
 #: src/bin/e_int_menus.c:1787
-#, fuzzy
 msgid "Add a Shelf"
-msgstr "Dodaj półkę"
+msgstr "Dodaj Półkę"
 
 #: src/bin/e_int_menus.c:1794
-#, fuzzy
 msgid "Delete a Shelf"
-msgstr "Skasuj półkę"
+msgstr "Skasuj Półkę"
 
 #: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
@@ -3080,14 +3000,14 @@ msgid "Allow windows to overlap the shelf"
 msgstr "Pozwól oknom na przykrywanie półki"
 
 #: src/bin/e_int_shelf_config.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "Height (%3.0f pixels)"
-msgstr "%3.0f pikseli"
+msgstr "Wysokość (%3.0f pikseli)"
 
 #: src/bin/e_int_shelf_config.c:230
-#, fuzzy, c-format
+#, c-format
 msgid "Icons size (%2.0f/5)"
-msgstr "Wielkość ikony (%d)"
+msgstr "Rozmiar ikon (%2.0f/5)"
 
 #: src/bin/e_int_shelf_config.c:233
 #, fuzzy
@@ -3143,29 +3063,24 @@ msgid "Show on specified Desktops"
 msgstr "Pokazuj na wybranych pulpitach"
 
 #: src/bin/e_main.c:291
-#, fuzzy
 msgid "Moksha cannot initialize Eina!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Eina!\n"
 
 #: src/bin/e_main.c:297
-#, fuzzy
 msgid "Moksha could not create a logging domain!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie mógł utworzyć domeny rejestrowania błędów!\n"
 
 #: src/bin/e_main.c:346
-#, fuzzy
 msgid "Moksha cannot initialize Eet!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Eet!\n"
 
 #: src/bin/e_main.c:355
-#, fuzzy
 msgid "Moksha cannot initialize Ecore!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore!\n"
 
 #: src/bin/e_main.c:369
-#, fuzzy
 msgid "Moksha cannot initialize EIO!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować EIO!\n"
 
 #: src/bin/e_main.c:381
 msgid ""
@@ -3191,44 +3106,36 @@ msgstr ""
 "Może masz zbyt mało pamięci?"
 
 #: src/bin/e_main.c:404
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_File!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_File\n"
 
 #: src/bin/e_main.c:413
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_Con!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_Con!\n"
 
 #: src/bin/e_main.c:422
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_Ipc!\n"
 
 #: src/bin/e_main.c:433
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_X!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_X!\n"
 
 #: src/bin/e_main.c:445
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_IMF!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_IMF!\n"
 
 #: src/bin/e_main.c:455
-#, fuzzy
 msgid "Moksha cannot initialize Ecore_Evas!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Ecore_Evas!\n"
 
 #: src/bin/e_main.c:465
-#, fuzzy
 msgid "Moksha cannot initialize Elementary!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Elementary!\n"
 
 #: src/bin/e_main.c:476
-#, fuzzy
 msgid "Moksha cannot initialize Emotion!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Emotion!\n"
 
 #: src/bin/e_main.c:491
 msgid ""
@@ -3251,14 +3158,12 @@ msgstr ""
 "Ecore oraz czy wspierają one programowe renderowanie do bufora."
 
 #: src/bin/e_main.c:509
-#, fuzzy
 msgid "Moksha cannot initialize Edje!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować Edje!\n"
 
 #: src/bin/e_main.c:521
-#, fuzzy
 msgid "Moksha cannot initialize E_Intl!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr "Moksha nie może zainicjować E_Intl!\n"
 
 #: src/bin/e_main.c:531
 msgid ""
@@ -3277,34 +3182,30 @@ msgstr ""
 "Może nie masz katalogu domowego lub dysk jest pełny?"
 
 #: src/bin/e_main.c:560
-#, fuzzy
 msgid "Moksha cannot set up its file registry system.\n"
-msgstr "Moksha nie mógł ustawić systemu rejestrowania."
+msgstr "Moksha nie może skonfigurować swojego systemu rejestru plików.\n"
 
 #: src/bin/e_main.c:569
-#, fuzzy
 msgid "Moksha cannot set up its config system.\n"
-msgstr "Moksha nie może ustawić swojego systemu konfiguracji."
+msgstr "Moksha nie może skonfigurować swojego systemu konfiguracyjnego.\n"
 
 #: src/bin/e_main.c:609
-#, fuzzy
 msgid "Moksha cannot initialize E_Xinerama!\n"
-msgstr "Moksha nie może uruchomić menadżera plików.\n"
+msgstr ""
+"Moksha nie może zainicjować E_Xinerama!\n"
+"\n"
 
 #: src/bin/e_main.c:618
-#, fuzzy
 msgid "Moksha cannot set up its environment.\n"
-msgstr "Moksha nie może ustawić swojego systemu wystrojów."
+msgstr "Moksha nie może skonfigurować środowiska.\n"
 
 #: src/bin/e_main.c:634
-#, fuzzy
 msgid "Moksha cannot set up its scale system.\n"
-msgstr "Moksha nie mógł ustawić systemu skalowania."
+msgstr "Moksha nie może skonfigurować swojego systemu skali.\n"
 
 #: src/bin/e_main.c:643
-#, fuzzy
 msgid "Moksha cannot set up its pointer system.\n"
-msgstr "Moksha nie może ustawić swojego systemu czcionek."
+msgstr "Moksha nie może ustawić systemu wskaźników.\n"
 
 #: src/bin/e_main.c:652
 msgid ""
@@ -3315,38 +3216,34 @@ msgstr ""
 "Może masz zbyt mało pamięci?"
 
 #: src/bin/e_main.c:669
-#, fuzzy
 msgid "Moksha cannot set up its font system.\n"
-msgstr "Moksha nie może ustawić swojego systemu czcionek."
+msgstr "Moksha nie może skonfigurować systemu czcionek.\n"
 
 #: src/bin/e_main.c:686
-#, fuzzy
 msgid "Moksha cannot set up its theme system.\n"
-msgstr "Moksha nie może ustawić swojego systemu wystrojów."
+msgstr "Moksha nie może skonfigurować swojego systemu tematycznego.\n"
 
 #: src/bin/e_main.c:702
-#, fuzzy
 msgid "Moksha cannot set up its init screen.\n"
-msgstr "Moksha nie może ustawić swojego systemu wspierania wielu języków."
+msgstr "Moksha nie może skonfigurować ekranu init.\n"
 
 #: src/bin/e_main.c:717
 msgid "Starting International Support"
 msgstr "Uruchamianie międzynarodowego wsparcia"
 
 #: src/bin/e_main.c:721
-#, fuzzy
 msgid "Moksha cannot set up its intl system.\n"
-msgstr "Moksha nie może ustawić swojego systemu wspierania wielu języków."
+msgstr "Moksha nie może skonfigurować swojego systemu INTL.\n"
 
 #: src/bin/e_main.c:730
-#, fuzzy
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
 "out of memory or disk space?"
 msgstr ""
-"Moksha nie może uruchomić systemu plików.\n"
-"Może masz zbyt mało pamięci?"
+"Moksha nie może zainicjować systemu pulpitu FDO.\n"
+"Być może nie masz uprawnień do ~/.cache/efreet lub are\n"
+"brak pamięci lub miejsca na dysku?"
 
 #: src/bin/e_main.c:755
 msgid "Setup Screens"
@@ -3361,82 +3258,68 @@ msgstr ""
 "systemie. Być może jest uruchomiony jakiś inny manedżer okien?\n"
 
 #: src/bin/e_main.c:767
-#, fuzzy
 msgid "Setup ACPI"
-msgstr "Ścieżki E"
+msgstr "Skonfiguruj ACPI"
 
 #: src/bin/e_main.c:774
-#, fuzzy
 msgid "Setup Backlight"
-msgstr "Ścieżki E"
+msgstr "Skonfiguruj Podświetlenie"
 
 #: src/bin/e_main.c:778
-#, fuzzy
 msgid "Moksha cannot configure the backlight.\n"
-msgstr "Moksha nie może skonfigurować opcji myszki."
+msgstr "Moksha nie może skonfigurować podświetlenia.\n"
 
 #: src/bin/e_main.c:785
-#, fuzzy
 msgid "Setup Powersave Modes"
-msgstr "Tryby instalacji Powersave"
+msgstr "Skonfiguruj tryby oszczędzania energii"
 
 #: src/bin/e_main.c:789
-#, fuzzy
 msgid "Moksha cannot set up its powersave modes.\n"
-msgstr "Moksha nie może ustawić trybów oszczędzania energii."
+msgstr "Moksha nie może skonfigurować trybów oszczędzania energii.\n"
 
 #: src/bin/e_main.c:796
 msgid "Setup Screensaver"
 msgstr "Opcje wygaszacza ekranu"
 
 #: src/bin/e_main.c:800
-#, fuzzy
 msgid "Moksha cannot configure the X screensaver.\n"
-msgstr "Moksha nie może skonfigurować X screensaver."
+msgstr "Moksha nie może skonfigurować wygaszacza ekranu X.\n"
 
 #: src/bin/e_main.c:807
-#, fuzzy
 msgid "Setup DPMS"
-msgstr "DPMS Konfiguracja"
+msgstr "Skonfiguruj DPMS"
 
 #: src/bin/e_main.c:811
-#, fuzzy
 msgid "Moksha cannot configure the DPMS settings.\n"
-msgstr "Moksha nie może skonfigurować opcji myszki."
+msgstr "Moksha nie może skonfigurować ustawień DPMS.\n"
 
 #: src/bin/e_main.c:818
 msgid "Setup Desklock"
 msgstr "Ustawienia blokady pulpitu"
 
 #: src/bin/e_main.c:822
-#, fuzzy
 msgid "Moksha cannot set up its desk locking system.\n"
-msgstr "Moksha nie może ustawić swojego systemu blokowania ekranu."
+msgstr "Moksha nie może skonfigurować systemu blokowania biurka.\n"
 
 #: src/bin/e_main.c:829
-#, fuzzy
 msgid "Setup Popups"
-msgstr "Popups Konfiguracja"
+msgstr "Skonfiguruj wyskakujące okienka"
 
 #: src/bin/e_main.c:833
-#, fuzzy
 msgid "Moksha cannot set up its popup system.\n"
-msgstr "Moksha nie może ustawić swojego systemu wyskakujących okien."
+msgstr "Moksha nie może skonfigurować systemu wyskakujących okienek.\n"
 
 #: src/bin/e_main.c:845
-#, fuzzy
 msgid "Setup Message Bus"
-msgstr "Bus Wiadomość Konfiguracja"
+msgstr "Skonfiguruj Magistralę Komunikatów"
 
 #: src/bin/e_main.c:852
-#, fuzzy
 msgid "Setup Paths"
-msgstr "Ścieżki E"
+msgstr "Ścieżki konfiguracji"
 
 #: src/bin/e_main.c:858
-#, fuzzy
 msgid "Setup System Controls"
-msgstr "Sterowanie systemem konfiguracji"
+msgstr "Skonfiguruj elementy sterujące systemu"
 
 #: src/bin/e_main.c:862
 msgid "Moksha cannot initialize the System Command system.\n"
@@ -3447,24 +3330,20 @@ msgid "Setup Actions"
 msgstr "Opcje akcji"
 
 #: src/bin/e_main.c:873
-#, fuzzy
 msgid "Moksha cannot set up its actions system.\n"
-msgstr "Moksha nie może ustawić swojego systemu zdarzeń."
+msgstr "Moksha nie może skonfigurować swojego systemu akcji.\n"
 
 #: src/bin/e_main.c:880
-#, fuzzy
 msgid "Setup Execution System"
-msgstr "Execution System setup"
+msgstr "Skonfiguruj system wykonawczy"
 
 #: src/bin/e_main.c:884
-#, fuzzy
 msgid "Moksha cannot set up its exec system.\n"
-msgstr "Moksha nie może ustawić swojego systemu wystrojów."
+msgstr "Moksha nie może skonfigurować swojego systemu exec.\n"
 
 #: src/bin/e_main.c:895
-#, fuzzy
 msgid "Setup Filemanager"
-msgstr "Menadżer plików"
+msgstr "Skonfiguruj Menedżera plików"
 
 #: src/bin/e_main.c:899
 msgid "Moksha cannot initialize the File manager.\n"
@@ -3475,99 +3354,86 @@ msgid "Setup Message System"
 msgstr "Ustawienia systemu wiadomości"
 
 #: src/bin/e_main.c:910
-#, fuzzy
 msgid "Moksha cannot set up its msg system.\n"
-msgstr "Moksha nie może ustawić swojego systemu wiadomości."
+msgstr ""
+"Moksha nie może skonfigurować swojego systemu przesyłania wiadomości.\n"
 
 #: src/bin/e_main.c:917
 msgid "Setup DND"
 msgstr "Ustawienia \"przeciągnij i upuść\""
 
 #: src/bin/e_main.c:921
-#, fuzzy
 msgid "Moksha cannot set up its dnd system.\n"
-msgstr "Moksha nie może ustawić swojego systemu \"przeciągnij i upuść\"."
+msgstr "Moksha nie może skonfigurować swojego systemu dnd.\n"
 
 #: src/bin/e_main.c:928
-#, fuzzy
 msgid "Setup Grab Input Handling"
-msgstr "Grab Postępowanie Ustawienia wejściowe"
+msgstr "Konfiguracja obsługi wejścia."
 
 #: src/bin/e_main.c:932
-#, fuzzy
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr ""
-"Moksha nie może ustawić swojego systemu obsługi przechwytu wprowadzania."
+"Moksha nie może skonfigurować swojego systemu obsługi danych wejściowych.\n"
 
 #: src/bin/e_main.c:939
 msgid "Setup Modules"
 msgstr "Ustawienia modułów"
 
 #: src/bin/e_main.c:943 src/bin/e_main.c:1128
-#, fuzzy
 msgid "Moksha cannot set up its module system.\n"
-msgstr "Moksha nie może ustawić swojego systemu modułów."
+msgstr "Moksha nie może ustawić swojego systemu modułowego.\n"
 
 #: src/bin/e_main.c:950
 msgid "Setup Remembers"
 msgstr "Ustaw przypomnienia"
 
 #: src/bin/e_main.c:954
-#, fuzzy
 msgid "Moksha cannot setup remember settings.\n"
-msgstr "Moksha nie może ustawić swojego systemu zapamiętywania."
+msgstr "Moksha nie może skonfigurować pamięci ustawień.\n"
 
 #: src/bin/e_main.c:961
 msgid "Setup Color Classes"
 msgstr "Ustawienia klas kolorów"
 
 #: src/bin/e_main.c:965
-#, fuzzy
 msgid "Moksha cannot set up its color class system.\n"
-msgstr "Moksha nie może ustawić swojego systemu klas kolorów."
+msgstr "Moksha nie może skonfigurować swojego systemu klas kolorów.\n"
 
 #: src/bin/e_main.c:972
-#, fuzzy
 msgid "Setup Gadcon"
 msgstr "Konfiguracja Gadcon"
 
 #: src/bin/e_main.c:976
-#, fuzzy
 msgid "Moksha cannot set up its gadget control system.\n"
-msgstr "Moksha nie może ustawić swojego systemu kontroli gadżetów."
+msgstr "Moksha nie może skonfigurować systemu kontroli gadżetów.\n"
 
 #: src/bin/e_main.c:983
 msgid "Setup Wallpaper"
 msgstr "Ustawienia tapety"
 
 #: src/bin/e_main.c:987
-#, fuzzy
 msgid "Moksha cannot set up its desktop background system.\n"
-msgstr "Moksha nie może ustawić systemu tła pulpitu"
+msgstr "Moksha nie może skonfigurować systemu tła pulpitu.\n"
 
 #: src/bin/e_main.c:994
 msgid "Setup Mouse"
 msgstr "Ustawienia myszki"
 
 #: src/bin/e_main.c:998
-#, fuzzy
 msgid "Moksha cannot configure the mouse settings.\n"
-msgstr "Moksha nie może skonfigurować opcji myszki."
+msgstr "Moksha nie może skonfigurować ustawień myszy.\n"
 
 #: src/bin/e_main.c:1005
-#, fuzzy
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
-msgstr "Moksha nie może ustawić systemu porządkowania plików."
+msgstr "Moksha nie może konfigurować układów klawiatury XKB.\n"
 
 #: src/bin/e_main.c:1011
-#, fuzzy
 msgid "Setup Bindings"
-msgstr "Wiązania Konfiguracja"
+msgstr "Skonfiguruj skróty"
 
 #: src/bin/e_main.c:1015
-#, fuzzy
 msgid "Moksha cannot set up its bindings system.\n"
-msgstr "Moksha nie może ustawić swojego systemu powiązań."
+msgstr "Moksha nie może skonfigurować systemu skrótów.\n"
 
 #: src/bin/e_main.c:1022
 msgid "Setup Thumbnailer"
@@ -3578,38 +3444,32 @@ msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha nie może ustawić swojego systemu tworzenia miniatur.\n"
 
 #: src/bin/e_main.c:1035
-#, fuzzy
 msgid "Moksha cannot initialize the Icon Cache system.\n"
-msgstr "Moksha nie może zainicjalizować systemu System Command.\n"
+msgstr "Moksha nie może zainicjować systemu Icon Cache.\n"
 
 #: src/bin/e_main.c:1044
-#, fuzzy
 msgid "Moksha cannot initialize the XSettings system.\n"
-msgstr "Moksha nie może ustawić swojego systemu tworzenia miniatur.\n"
+msgstr "Moksha nie może zainicjować systemu XSettings.\n"
 
 #: src/bin/e_main.c:1054
-#, fuzzy
 msgid "Moksha cannot initialize the Update system.\n"
-msgstr "Moksha nie może zainicjalizować systemu System Command.\n"
+msgstr "Moksha nie może zainicjować systemu aktualizacji.\n"
 
 #: src/bin/e_main.c:1063
-#, fuzzy
 msgid "Setup Desktop Environment"
-msgstr "Desktop Environment Konfiguracja"
+msgstr "Skonfiguruj środowisko pulpitu"
 
 #: src/bin/e_main.c:1067
-#, fuzzy
 msgid "Moksha cannot initialize its desktop environment.\n"
-msgstr "Moksha nie może ustawić swojego systemu wystrojów."
+msgstr "Moksha nie może zainicjować środowiska graficznego.\n"
 
 #: src/bin/e_main.c:1074
 msgid "Setup File Ordering"
 msgstr "Ustawienia porządkowania plików"
 
 #: src/bin/e_main.c:1078
-#, fuzzy
 msgid "Moksha cannot set up its order file system.\n"
-msgstr "Moksha nie może ustawić systemu porządkowania plików."
+msgstr "Moksha nie może skonfigurować swojego systemu plików zamówień.\n"
 
 #: src/bin/e_main.c:1093
 msgid "Load Modules"
@@ -3628,9 +3488,9 @@ msgid "Almost Done"
 msgstr "Prawie skończone"
 
 #: src/bin/e_main.c:1303
-#, fuzzy, c-format
+#, c-format
 msgid "Version: %s\n"
-msgstr "Uprawnienia"
+msgstr "Wersja: %s\n"
 
 #: src/bin/e_main.c:1313
 #, c-format
@@ -3685,37 +3545,36 @@ msgstr ""
 "Upewnij się, czy Evas wspiera programowe renderowanie do bufora.\n"
 
 #: src/bin/e_main.c:1664
-#, fuzzy
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
-"Moksha stwierdził, że Evas nie ładuje plików PNG. Sprawdź,\n"
-"czy Evas posiada moduł ładujący obrazy PNG.\n"
+"Moksha stwierdziła, że Evas nie może ładować plików SVG. \n"
+"Sprawdź, czy Evas obsługuje moduł ładujący SVG.\n"
+"\n"
 
 #: src/bin/e_main.c:1674
-#, fuzzy
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
 msgstr ""
-"Moksha stwierdził, że Evas nie ładuje plików JPG. Sprawdź,\n"
-"czy Evas posiada moduł ładujący obrazy JPG.\n"
+"Moksha stwierdziła, że Evas nie może ładować plików JPEG. \n"
+"Sprawdź, czy Evas obsługuje moduł ładujący JPEG.\n"
 
 #: src/bin/e_main.c:1684
-#, fuzzy
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
-"Moksha stwierdził, że Evas nie ładuje plików PNG. Sprawdź,\n"
-"czy Evas posiada moduł ładujący obrazy PNG.\n"
+"Moksha stwierdziła, że Evas nie może ładować plików PNG. \n"
+"Sprawdź, czy Evas obsługuje moduł ładujący PNG.\n"
+"\n"
 
 #: src/bin/e_main.c:1694
-#, fuzzy
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
-"Moksha stwierdził, że Evas nie ładuje plików EET. Sprawdź,\n"
-"czy Evas posiada moduł ładujący pliki EET.\n"
+"Moksha stwierdziła, że Evas nie może ładować plików EET. \n"
+"Sprawdź, czy Evas obsługuje moduł ładujący EET.\n"
+"\n"
 
 #: src/bin/e_main.c:1708
 msgid ""
@@ -3727,7 +3586,7 @@ msgstr ""
 "czcionek oraz czy systemowe ustawienia definiują czcionkę Sans.\n"
 
 #: src/bin/e_main.c:1927
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
 "loading the<br>module named: %s. This module has been disabled<br>and will "
@@ -3742,7 +3601,7 @@ msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha zawiesił się wcześnie podczas włączania i został zrestartowany."
 
 #: src/bin/e_main.c:1933
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
 "loading the module named: %s<br><br>This module has been disabled and will "
@@ -3753,7 +3612,6 @@ msgstr ""
 "wyłączony i nie będzie załadowany."
 
 #: src/bin/e_main.c:1941
-#, fuzzy
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3763,7 +3621,7 @@ msgstr ""
 "Moksha zawiesił się wcześnie podczas startu<br>i został uruchominy "
 "powtórnie. Wszystkie moduły zostały wyłączone<br>i nie będą załadowane, aby "
 "można było usunąć<br>problematyczne moduły z konfiguracji. "
-"Okno<br>konfiguracji modułów pozwala na ich powtórne wybranie."
+"Okno<br>konfiguracji modułów pozwala na ich powtórne wybranie.\n"
 
 #: src/bin/e_main.c:1949
 msgid ""
@@ -3778,12 +3636,12 @@ msgstr ""
 "konfiguracji modułów powinno pozwolić wybrać<br>moduły jeszcze raz."
 
 #: src/bin/e_module.c:170
-#, fuzzy, c-format
+#, c-format
 msgid "Loading Module: %s"
-msgstr "Załaduj moduł: %s"
+msgstr "Ładowanie modułu: %s"
 
 #: src/bin/e_module.c:219
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
 "be found in the<br>module search directories.<br>"
@@ -3796,7 +3654,7 @@ msgid "Error loading Module"
 msgstr "Błąd ładowania modułu"
 
 #: src/bin/e_module.c:230 src/bin/e_module.c:247
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
@@ -3805,7 +3663,6 @@ msgstr ""
 "<br>%s<br>Zgłoszony błąd to:<br>%s<br>"
 
 #: src/bin/e_module.c:252
-#, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Moduł nie zawiera wszystkich potrzebnych funkcji"
 
@@ -3825,16 +3682,15 @@ msgid "Moksha %s Module"
 msgstr "Moduł %s dla Moksha"
 
 #: src/bin/e_module.c:600
-#, fuzzy
 msgid "What action should be taken with this module?<br>"
-msgstr "Czy chciałbyś wyładować ten moduł?<br>"
+msgstr ""
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:669
 #: src/modules/clipboard/e_mod_main.c:756
 msgid "Keep"
-msgstr ""
+msgstr "Zachowaj"
 
 #: src/bin/e_module.c:807
 msgid ""
@@ -3844,17 +3700,14 @@ msgid ""
 msgstr ""
 
 #: src/bin/e_module.c:819
-#, fuzzy
 msgid "Unstable module tainting"
-msgstr "Wygładzanie Bytecode"
+msgstr "Niestabilne zanieczyszczenie modułu"
 
 #: src/bin/e_module.c:823
-#, fuzzy
 msgid "I know"
-msgstr "Nieznane"
+msgstr "Ja wiem"
 
 #: src/bin/e_screensaver.c:187
-#, fuzzy
 msgid ""
 "You disabled the screensaver too fast.<br><br>Would you like to enable "
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
@@ -4022,7 +3875,7 @@ msgid "System Check Done"
 msgstr "Skończono sprawdzanie systemu"
 
 #: src/bin/e_sys.c:440
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Logout is taking too long.<br>Some applications refuse to close.<br>Do you "
 "want to finish the logout<br>anyway without closing these<br>applications "
@@ -4030,7 +3883,7 @@ msgid ""
 msgstr ""
 "Wylogowanie trwa zbyt dlugo.<br>Niektóre z aplikacji nie chcą się zamknąć."
 "<br>Czy chcesz się wylogować mimo tego bez wcześnijeszego<br>zamykania tych "
-"aplikacji?<br><br>Samoczynne wylogowanie za %d sekund."
+"aplikacji?<br><br>%s<br>Samoczynne wylogowanie za %d sekund."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -4077,7 +3930,6 @@ msgstr ""
 "rozpoczął."
 
 #: src/bin/e_sys.c:613
-#, fuzzy
 msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
@@ -4086,7 +3938,6 @@ msgstr ""
 "rozpoczęły."
 
 #: src/bin/e_sys.c:619
-#, fuzzy
 msgid ""
 "Suspending.<br>Until suspend is complete you cannot perform<br>any other "
 "system actions."
@@ -4095,7 +3946,6 @@ msgstr ""
 "innych działań systemowych."
 
 #: src/bin/e_sys.c:625
-#, fuzzy
 msgid ""
 "Hibernating.<br>You cannot perform any other system actions<br>until this is "
 "complete."
@@ -4104,7 +3954,6 @@ msgstr ""
 "to jest kompletna."
 
 #: src/bin/e_sys.c:631
-#, fuzzy
 msgid "EEK! This should not happen."
 msgstr "EEK! To się nie powinno zdarzyć"
 
@@ -4117,9 +3966,8 @@ msgid "Reset failed."
 msgstr "Restet nieudany."
 
 #: src/bin/e_sys.c:664
-#, fuzzy
 msgid "Suspend failed."
-msgstr "Zawiesić się nie powiodła."
+msgstr "Zawieszenie nie powiodło się."
 
 #: src/bin/e_sys.c:668
 msgid "Hibernate failed."
@@ -4220,37 +4068,37 @@ msgstr ""
 "zostaną zamknięte<br> bądź usunięta blokada czasu działania."
 
 #: src/bin/e_utils.c:782
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f bytes"
 msgstr "%'.0f Bajtów"
 
 #: src/bin/e_utils.c:786
-#, fuzzy, c-format
+#, c-format
 msgid "%'.0f KiB"
 msgstr "%'.0f KB"
 
 #: src/bin/e_utils.c:790
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f MiB"
 msgstr "%'.1f GB"
 
 #: src/bin/e_utils.c:794
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GiB"
 msgstr "%'.1f GB"
 
 #: src/bin/e_utils.c:798
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f TiB"
 msgstr "%'.1f GB"
 
 #: src/bin/e_utils.c:817
-#, fuzzy, c-format
+#, c-format
 msgid "In the future"
 msgstr "W przyszłości"
 
 #: src/bin/e_utils.c:821
-#, fuzzy, c-format
+#, c-format
 msgid "In the last minute"
 msgstr "Podczas ostatniej minuty"
 
@@ -4260,6 +4108,7 @@ msgid "Last year"
 msgid_plural "%li Years ago"
 msgstr[0] "Ostatinio zmodyfikowany:"
 msgstr[1] "Ostatinio zmodyfikowany:"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:830
 #, c-format
@@ -4267,6 +4116,7 @@ msgid "Last month"
 msgid_plural "%li Months ago"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:835
 #, fuzzy, c-format
@@ -4274,6 +4124,7 @@ msgid "Last week"
 msgid_plural "%li Weeks ago"
 msgstr[0] "Ostatinio zmodyfikowany:"
 msgstr[1] "Ostatinio zmodyfikowany:"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:840
 #, c-format
@@ -4281,6 +4132,7 @@ msgid "Yesterday"
 msgid_plural "%li Days ago"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:845
 #, fuzzy, c-format
@@ -4288,6 +4140,7 @@ msgid "An hour ago"
 msgid_plural "%li Hours ago"
 msgstr[0] "%li godzin temu"
 msgstr[1] "%li godzin temu"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:850
 #, fuzzy, c-format
@@ -4295,6 +4148,7 @@ msgid "A minute ago"
 msgid_plural "%li Minutes ago"
 msgstr[0] "%li minut temu"
 msgstr[1] "%li minut temu"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:857 src/bin/e_widget_filepreview.c:679
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
@@ -4325,7 +4179,6 @@ msgid "Failed to create directory: %s .<br>A file of that name already exists."
 msgstr ""
 
 #: src/bin/e_utils.c:1098
-#, fuzzy
 msgid ""
 "Configuration data needed upgrading. Your old configuration<br>has been "
 "wiped and a new set of defaults initialized. This<br>will happen regularly "
@@ -4372,6 +4225,7 @@ msgid "A second"
 msgid_plural "%li Seconds"
 msgstr[0] "%.1f sekund"
 msgstr[1] "%.1f sekund"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1222
 #, c-format
@@ -4379,6 +4233,7 @@ msgid "One year"
 msgid_plural "%li Years"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1227
 #, c-format
@@ -4386,6 +4241,7 @@ msgid "One month"
 msgid_plural "%li Months"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1232
 #, c-format
@@ -4393,6 +4249,7 @@ msgid "One week"
 msgid_plural "%li Weeks"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1237
 #, c-format
@@ -4400,6 +4257,7 @@ msgid "One day"
 msgid_plural "%li Days"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1242
 #, fuzzy, c-format
@@ -4407,6 +4265,7 @@ msgid "An hour"
 msgid_plural "%li Hours"
 msgstr[0] "1 godzina"
 msgstr[1] "1 godzina"
+msgstr[2] ""
 
 #: src/bin/e_utils.c:1247
 #, fuzzy, c-format
@@ -4414,6 +4273,7 @@ msgid "A minute"
 msgid_plural "%li Minutes"
 msgstr[0] "%1.0f min."
 msgstr[1] "%1.0f min."
+msgstr[2] ""
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:313
@@ -4486,7 +4346,7 @@ msgstr "Typy MIME"
 #: src/bin/e_widget_filepreview.c:404
 #, c-format
 msgid "%3.1f%%"
-msgstr ""
+msgstr "%3.1f%%"
 
 #: src/bin/e_widget_filepreview.c:410
 msgid "Length:"
@@ -4625,7 +4485,7 @@ msgstr "Wyłącz po niżej;"
 #: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
 #, c-format
 msgid "%1.0f %%"
-msgstr ""
+msgstr "%1.0f %%"
 
 #: src/modules/battery/e_mod_config.c:255
 #, fuzzy
@@ -4645,7 +4505,7 @@ msgstr "Alarm gdy na:"
 #: src/modules/battery/e_mod_config.c:266
 #, c-format
 msgid "%1.0f min"
-msgstr ""
+msgstr "%1.0f min"
 
 #: src/modules/battery/e_mod_config.c:274 src/modules/places/e_mod_config.c:272
 #, fuzzy
@@ -4655,9 +4515,9 @@ msgstr "Auto odwołać w. .."
 #: src/modules/battery/e_mod_config.c:279
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:101
 #: src/modules/places/e_mod_config.c:277
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f s"
-msgstr "%1.0f fps"
+msgstr "%1.0f s"
 
 #: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
 #: src/modules/places/e_mod_config.c:284
@@ -4703,7 +4563,6 @@ msgid "Battery"
 msgstr "Bateria"
 
 #: src/modules/battery/e_mod_main.c:208
-#, fuzzy
 msgid "Power Management Timing"
 msgstr "Zarządzanie energią"
 
@@ -4784,15 +4643,15 @@ msgstr "%.1f sekund"
 
 #: src/modules/clock/e_mod_config.c:242
 msgid "12 h"
-msgstr ""
+msgstr "12 godz"
 
 #: src/modules/clock/e_mod_config.c:244
 msgid "24 h"
-msgstr ""
+msgstr "24 godz"
 
 #: src/modules/clock/e_mod_config.c:249
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: src/modules/clock/e_mod_config.c:254
 msgid "Full"
@@ -4810,7 +4669,7 @@ msgstr "Tylko do odczytu"
 
 #: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
-msgstr ""
+msgstr "ISO 8601"
 
 #: src/modules/clock/e_mod_config.c:262
 #, fuzzy
@@ -4828,11 +4687,11 @@ msgstr "Start"
 
 #: src/modules/clock/e_mod_config.c:282
 msgid "Weekend"
-msgstr ""
+msgstr "Koniec tygodnia"
 
 #: src/modules/clock/e_mod_config.c:292
 msgid "Days"
-msgstr ""
+msgstr "Dni"
 
 #: src/modules/clock/e_mod_config.c:314
 msgid "Set..."
@@ -5203,7 +5062,7 @@ msgstr "Animacja Przeskakiwania"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:204
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:275
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:248
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f s"
 msgstr "%1.1f sek."
 
@@ -5419,7 +5278,7 @@ msgid "Idle Fade Time"
 msgstr "Idle Fade Czas"
 
 #: src/modules/conf_display/e_int_config_dpms.c:164
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f second(s)"
 msgstr "%1.0f sekund"
 
@@ -5429,7 +5288,7 @@ msgid "Fade Time"
 msgstr "Według Czasu Modyfikacji"
 
 #: src/modules/conf_display/e_int_config_dpms.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f second(s)"
 msgstr "%1.1f sekund"
 
@@ -5720,9 +5579,9 @@ msgstr "spowolnienie tarcie"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:123
 #: src/modules/conf_performance/e_int_config_powermanagement.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f s"
-msgstr "%1.2f"
+msgstr "%1.2f sek."
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
 #, fuzzy
@@ -5740,7 +5599,6 @@ msgid "Theme"
 msgstr "Wystrój"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:307
-#, fuzzy
 msgid "X"
 msgstr "X"
 
@@ -5768,9 +5626,9 @@ msgstr "Przyspieszenie"
 #: src/modules/conf_interaction/e_int_config_mouse.c:380
 #: src/modules/fileman/e_mod_config.c:480
 #: src/modules/syscon/e_int_config_syscon.c:169
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f"
-msgstr "%1.1f MB"
+msgstr "%1.1f"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:343
 #, fuzzy
@@ -6380,19 +6238,16 @@ msgid "Lock System:"
 msgstr "Blokada nie powiodła się"
 
 #: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
 msgid "Show Main Menu:"
-msgstr "Pokaż główne menu"
+msgstr "Pokaż Główne Menu:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
 msgid "Show Favorites Menu:"
-msgstr "Pokaż menu Ulubione"
+msgstr "Pokaż Menu Ulubione:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
 msgid "System Controls:"
-msgstr "Sterowanie systemem"
+msgstr "Sterowanie Systemem:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:217
 msgid "DESKTOP"
@@ -7416,6 +7271,7 @@ msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d pikseli"
 msgstr[1] "%d pikseli"
+msgstr[2] ""
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
 #, fuzzy
@@ -7501,7 +7357,7 @@ msgstr ""
 #: src/modules/conf_theme/e_int_config_scale.c:314
 #, c-format
 msgid "%1.0f DPI"
-msgstr ""
+msgstr "%1.0f DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:318
 #, fuzzy
@@ -7509,9 +7365,9 @@ msgid "Custom scaling factor"
 msgstr "Własny współczynnik skalowania"
 
 #: src/modules/conf_theme/e_int_config_scale.c:321
-#, fuzzy, c-format
+#, c-format
 msgid "%1.2f x"
-msgstr "%1.2f"
+msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:325
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -7586,7 +7442,7 @@ msgstr "Błąd importowania wystroju"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
+msgstr "Wymienione pliki prawdopodobnie nie są motywami Moksha:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 #, fuzzy
@@ -7819,13 +7675,8 @@ msgid "Display"
 msgstr "Wyświetlanie"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:163
-#, fuzzy
 msgid "Placement"
-msgstr ""
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
-"Rozmieszczanie\n"
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
-"Położenie"
+msgstr "Rozmieszczanie"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:165
 msgid "Smart Placement"
@@ -8591,12 +8442,10 @@ msgid "Quick Navigation"
 msgstr "Szybka nawigacja"
 
 #: src/modules/everything/evry_config.c:516
-#, fuzzy
 msgid "Emacs style (ALT + n,p,f,b,m,i)"
-msgstr "Emacsopodobne (ALT n, p , f, b , m, i)"
+msgstr "Emacs styl (ALT n, p , f, b , m, i)"
 
 #: src/modules/everything/evry_config.c:518
-#, fuzzy
 msgid "Vi style (ALT + h,j,k,l,n,p,m,i)"
 msgstr "Vi styl (ALT h, j, k, l, n, p , m, i)"
 
@@ -8725,6 +8574,7 @@ msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: src/modules/everything/evry_plug_aggregator.c:302
 msgid "No plugins loaded"
@@ -8902,7 +8752,7 @@ msgstr "Zwykły"
 #: src/modules/everything/evry_plugin.c:187
 #, c-format
 msgid "Browse %s"
-msgstr ""
+msgstr "Przeglądaj %s"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -8963,6 +8813,7 @@ msgid "%d file"
 msgid_plural "%d files"
 msgstr[0] "%1.0f plików"
 msgstr[1] "%1.0f plików"
+msgstr[2] ""
 
 #: src/modules/fileman/e_fwin.c:2657
 msgid "Known Applications"
@@ -9010,22 +8861,22 @@ msgstr "Nieznany działanie od niewolnika jest przerywana"
 #: src/modules/fileman/e_fwin.c:3042
 #, c-format
 msgid "Copy of %s done"
-msgstr ""
+msgstr "Ukończono kopię %s"
 
 #: src/modules/fileman/e_fwin.c:3044
 #, c-format
 msgid "Copying %s (eta: %s)"
-msgstr ""
+msgstr "Kopiowanie %s (eta: %s)"
 
 #: src/modules/fileman/e_fwin.c:3049
 #, c-format
 msgid "Move of %s done"
-msgstr ""
+msgstr "Przenoszenie %s zakończone"
 
 #: src/modules/fileman/e_fwin.c:3051
 #, c-format
 msgid "Moving %s (eta: %s)"
-msgstr ""
+msgstr "Przenoszenie %s (eta: %s)"
 
 #: src/modules/fileman/e_fwin.c:3056
 #, fuzzy, c-format
@@ -9225,7 +9076,7 @@ msgstr ""
 #: src/modules/notification/e_mod_config.c:212
 #, c-format
 msgid "%2.0f"
-msgstr ""
+msgstr "%2.0f"
 
 #: src/modules/fileman/e_mod_config.c:490
 msgid "Tooltips"
@@ -9619,9 +9470,9 @@ msgid "Remove from bar"
 msgstr "Usuń gadżet"
 
 #: src/modules/ibar/e_mod_main.c:1600
-#, fuzzy, c-format
+#, c-format
 msgid "Icon %s"
-msgstr "Ikony"
+msgstr "Ikona %s"
 
 #: src/modules/ibar/e_mod_main.c:2923
 #, fuzzy
@@ -10368,7 +10219,7 @@ msgstr "Zapisz"
 #: src/modules/shot/e_mod_main.c:603
 #, c-format
 msgid "Uploaded %s / %s"
-msgstr ""
+msgstr "Przesłano %s / %s"
 
 #: src/modules/shot/e_mod_main.c:624
 #, fuzzy
@@ -10392,7 +10243,7 @@ msgstr ""
 
 #: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't open file"
-msgstr ""
+msgstr "Błąd — nie można otworzyć pliku"
 
 #: src/modules/shot/e_mod_main.c:694
 #, c-format
@@ -10865,12 +10716,8 @@ msgid "Critical"
 msgstr "Pionowo"
 
 #: src/modules/notification/e_mod_config.c:119
-#, fuzzy
 msgid "Default Timeout"
-msgstr ""
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
-"Domyślny\n"
-"#-#-#-#-#  pl.po  #-#-#-#-#\n"
+msgstr "Domyślny limit czasu"
 
 #: src/modules/notification/e_mod_config.c:120
 msgid "Force timeout for all notifications"
@@ -11146,7 +10993,7 @@ msgstr "System plików."
 
 #: src/modules/places/e_mod_config.c:244 src/modules/places/e_mod_places.c:1096
 msgid "Temp"
-msgstr ""
+msgstr "Tymczasowy"
 
 #: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
 #: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
@@ -11161,7 +11008,7 @@ msgstr "Pokaż pełną ścieżkę"
 
 #: src/modules/places/e_mod_config.c:265
 msgid "Capacity limit:"
-msgstr ""
+msgstr "Limit pojemności:"
 
 #: src/modules/places/e_mod_main.c:417
 #, fuzzy
@@ -11186,7 +11033,7 @@ msgstr ""
 
 #: src/modules/places/e_mod_places.c:831
 msgid "b"
-msgstr ""
+msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
 #, fuzzy
@@ -11244,7 +11091,7 @@ msgstr "Nieznane"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
-msgstr ""
+msgstr "Kontrola głośności EFL"
 
 #: src/modules/mixer/bin/main_window.c:125
 #, fuzzy
@@ -11278,7 +11125,7 @@ msgstr "Zmiana rozdzielczości"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
-msgstr ""
+msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
 #, fuzzy
@@ -11287,11 +11134,11 @@ msgstr "Zmiana rozdzielczości"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
-msgstr ""
+msgstr "Zwiększanie głośności"
 
 #: src/modules/mixer/e_mod_main.c:256
 msgid "Decrease Volume"
-msgstr ""
+msgstr "Zmniejsz poziom głośności"
 
 #: src/modules/mixer/e_mod_main.c:264
 #, fuzzy
