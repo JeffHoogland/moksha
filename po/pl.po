@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-21 18:07-0500\n"
-"PO-Revision-Date: 2024-01-21 18:04-0500\n"
+"POT-Creation-Date: 2024-01-21 20:08-0500\n"
+"PO-Revision-Date: 2024-01-21 19:45-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -3793,9 +3793,9 @@ msgid "Right-bottom Corner"
 msgstr ""
 
 #: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
-#, fuzzy, c-format
+#, c-format
 msgid "Shelf #%d"
-msgstr "Pólka #"
+msgstr "Półka #%d"
 
 #: src/bin/e_shelf.c:896
 msgid "Shelf Autohide Error"
@@ -3861,9 +3861,9 @@ msgid "Refresh"
 msgstr "Odśwież"
 
 #: src/bin/e_startup.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Starting %s"
-msgstr "Włączanie"
+msgstr "Rozpoczęcie %s"
 
 #: src/bin/e_sys.c:297
 msgid "Checking System Permissions"
@@ -4312,9 +4312,8 @@ msgid "G"
 msgstr ""
 
 #: src/bin/e_widget_csel.c:195
-#, fuzzy
 msgid "B"
-msgstr "przez"
+msgstr "B"
 
 #: src/bin/e_widget_csel.c:195
 msgid "H"
@@ -4584,9 +4583,8 @@ msgid "Remaining time: "
 msgstr ""
 
 #: src/modules/battery/e_mod_main.c:535
-#, fuzzy
 msgid "hr"
-msgstr "r"
+msgstr "godz"
 
 #: src/modules/battery/e_mod_main.c:645
 msgid "N/A"
@@ -6254,54 +6252,44 @@ msgid "DESKTOP"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
 msgid " Show the Desktop:"
 msgstr "Pokaż pulpit"
 
 #: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
 msgid " Switch to Desktop 0:"
-msgstr "Przełącz na pulpit 0"
+msgstr " Przełącz na pulpit 0:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
 msgid " Switch to Desktop 1:"
-msgstr "Przełącz na pulpit 1"
+msgstr " Przełącz na pulpit 1:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
 msgid " Switch to Desktop 2:"
-msgstr "Przełącz na pulpit 2"
+msgstr " Przełącz na pulpit 2:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
 msgid " Switch to Desktop 3:"
-msgstr "Przełącz na pulpit 3"
+msgstr "Przełącz na pulpit 3:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
 msgid " Switch to Desktop 4:"
-msgstr "Przełącz na pulpit 4"
+msgstr " Przełącz na pulpit 4:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
 msgid " Switch to Desktop 5:"
-msgstr "Przełącz na pulpit 5"
+msgstr " Przełącz na pulpit 5:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
 msgid " Switch to Desktop 6:"
-msgstr "Przełącz na pulpit 6"
+msgstr " Przełącz na pulpit 6:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
 msgid " Switch to Desktop 7:"
-msgstr "Przełącz na pulpit 7"
+msgstr "Przełącz na pulpit 7:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
 msgid " Switch to Desktop 8:"
-msgstr "Przełącz na pulpit 8"
+msgstr "Przełącz na pulpit 8:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:282
 msgid "MISCELLANEOUS"
@@ -6318,19 +6306,16 @@ msgid "Take Screenshot:"
 msgstr "Opcje ekranów"
 
 #: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
 msgid "Restart Moksha:"
-msgstr "Zrestartuj Moksha"
+msgstr "Zrestartuj Moksha:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
 msgid "Terminal console:"
-msgstr "Komenda Terminala"
+msgstr "Konsola terminala:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
 msgid "This Help:"
-msgstr "Ten pulpit"
+msgstr "Ta Pomoc:"
 
 #: src/modules/conf_keybindings/e_mod_main.c:327
 #, fuzzy
@@ -6362,9 +6347,8 @@ msgid "Menu Settings"
 msgstr "Ustawienia menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:176
-#, fuzzy
 msgid "Moksha Default"
-msgstr "Moksha"
+msgstr "Moksha Domyślne"
 
 #: src/modules/conf_menus/e_int_config_menus.c:184
 #, fuzzy
@@ -6446,9 +6430,9 @@ msgid "Menu Scroll Speed"
 msgstr "Prędkość przewijania menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:309
-#, fuzzy, c-format
+#, c-format
 msgid "%5.0f pixels/s"
-msgstr "%5.0f pikseli/sec"
+msgstr "%5.0f pikseli/s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:312
 #, fuzzy
@@ -6457,7 +6441,7 @@ msgstr "Próg szybkiego ruchu myszy"
 
 #: src/modules/conf_menus/e_int_config_menus.c:314
 #: src/modules/conf_window_manipulation/e_int_config_window_display.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%4.0f pixels/s"
 msgstr "%4.0f pikseli/sec"
 
@@ -6466,9 +6450,9 @@ msgid "Click Drag Timeout"
 msgstr "Opóźnienie przeciągania po kliknięciu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:319
-#, fuzzy, c-format
+#, c-format
 msgid "%2.2f s"
-msgstr "%1.1f sek"
+msgstr "%2.2f s"
 
 #: src/modules/conf_menus/e_int_config_menus.c:322
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:334
@@ -6478,7 +6462,6 @@ msgid "Miscellaneous"
 msgstr "Inne"
 
 #: src/modules/conf_paths/e_int_config_paths.c:59
-#, fuzzy
 msgid "Search Path Settings"
 msgstr "Ustawienia ścieżki wyszukiwania"
 
@@ -6518,9 +6501,8 @@ msgid "Messages"
 msgstr "Komunikaty"
 
 #: src/modules/conf_paths/e_int_config_paths.c:166
-#, fuzzy
 msgid "Moksha Paths"
-msgstr "Moksha"
+msgstr "Ścieżki Moksha"
 
 #: src/modules/conf_paths/e_int_config_paths.c:197
 msgid "Default Directories"
@@ -6532,14 +6514,12 @@ msgstr "Katalogi zdefiniowane przez użytkownika"
 
 #: src/modules/conf_paths/e_int_config_env.c:36
 #: src/modules/conf_paths/e_mod_main.c:24
-#, fuzzy
 msgid "Environment Variables"
-msgstr "Eksportowane zmienne środowiskowe"
+msgstr "Zmienne środowiska"
 
 #: src/modules/conf_paths/e_int_config_env.c:332
-#, fuzzy
 msgid "Unset"
-msgstr "Wstawka"
+msgstr "nieoprawny"
 
 #: src/modules/conf_paths/e_mod_main.c:20
 msgid "Search Directories"
@@ -6551,19 +6531,17 @@ msgstr "Opcje silnika"
 
 #: src/modules/conf_performance/e_int_config_engine.c:87
 #: src/modules/conf_performance/e_int_config_engine.c:108
-#, fuzzy
 msgid "Use ARGB instead of shaped windows"
-msgstr "Użyj argB zamiast okna o różnych kształtach"
+msgstr "Użyj ARGB zamiast okna o różnych kształtach"
 
 #: src/modules/conf_performance/e_int_config_engine.c:110
-#, fuzzy
 msgid ""
 "You have chosen to enable ARGB composite support,<br>but your current screen "
 "does not support composite.<br><br>Are you sure you wish to enable ARGB "
 "support?"
 msgstr ""
 "Wybrałeś , aby umożliwić ARGB composite wsparcie,<br>ale aktualny ekran nie "
-"obsługuje kompozytu.<br><br>Czy na pewno chcesz włączyć obsługę ARGB."
+"obsługuje kompozytu.<br><br>Czy na pewno chcesz włączyć obsługę ARGB?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 #, fuzzy
@@ -6602,9 +6580,9 @@ msgid "Font cache size"
 msgstr "Rozmiar pamięci podręcznej dla czcionek"
 
 #: src/modules/conf_performance/e_int_config_performance.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "%1.1f MiB"
-msgstr "%1.1f MB"
+msgstr "%1.1f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
@@ -6612,9 +6590,9 @@ msgstr "Rozmiar pamięci podręcznej dla obrazków"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
 #: src/modules/fileman/e_mod_config.c:418
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f MiB"
-msgstr "%1.0f MB"
+msgstr "%1.0f MiB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:144
 msgid "Caches"
@@ -6690,9 +6668,9 @@ msgstr "Średni"
 #: src/modules/conf_performance/e_int_config_powermanagement.c:282
 #: src/modules/conf_performance/e_int_config_powermanagement.c:321
 #: src/modules/conf_performance/e_int_config_powermanagement.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "%.0f s"
-msgstr "%1.0f fps"
+msgstr "%1.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
 #: src/modules/shot/e_mod_main.c:954
@@ -6733,19 +6711,18 @@ msgid "Restore On Startup"
 msgstr "Przywróć Zarządcę przy Starcie"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:129
-#, fuzzy, c-format
+#, c-format
 msgid "Configured Shelves: Display %d"
-msgstr "Skonfigurowane półki"
+msgstr "Skonfigurowane półki: Wyświetl %d"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:390
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete \"%s\"?"
-msgstr "Czy na pewno chcesz skasować tę półkę?"
+msgstr "Czy na pewno chcesz usunąć „%s”?"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
-#, fuzzy
 msgid "Confirm Shelf Deletion"
-msgstr "Potwierdź skasowanie"
+msgstr "Potwierdź usunięcie półki"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:141
 msgid "Wallpaper Settings"
@@ -7044,9 +7021,9 @@ msgid "Colors"
 msgstr "Kolory"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:273
-#, fuzzy, c-format
+#, c-format
 msgid "Color class: %s"
-msgstr "Kolor 1:"
+msgstr "Klasa koloru: %s"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:280
 #, c-format
@@ -7376,9 +7353,8 @@ msgid "Policy"
 msgstr "polityka"
 
 #: src/modules/conf_theme/e_int_config_scale.c:330
-#, fuzzy
 msgid "Minimum"
-msgstr "minimum"
+msgstr "Minimum"
 
 #: src/modules/conf_theme/e_int_config_scale.c:333
 #: src/modules/conf_theme/e_int_config_scale.c:340
@@ -7387,9 +7363,8 @@ msgid "%1.2f times"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
-#, fuzzy
 msgid "Maximum"
-msgstr "maksymalny"
+msgstr "Maksymalny"
 
 #: src/modules/conf_theme/e_int_config_scale.c:344
 #, fuzzy
@@ -7510,29 +7485,24 @@ msgid "Enable X Application Settings"
 msgstr "Ustawienia wystroju ikon"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:528
-#, fuzzy
 msgid "GTK Applications"
-msgstr "Aplikacje"
+msgstr "Aplikacje GTK"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:563
-#, fuzzy
 msgid "Enable icon theme for applications"
-msgstr "Użyj motywu ikon dla aplikacji"
+msgstr "Włącz motyw ikon dla aplikacji"
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:567
-#, fuzzy
 msgid "Enable icon theme for Moksha"
-msgstr "Witaj w Moksha"
+msgstr "Włącz motyw ikon dla Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:242
-#, fuzzy
 msgid "Moksha Theme"
-msgstr "Moduł Test dla Moksha"
+msgstr "Motyw Moksha"
 
 #: src/modules/conf_theme/e_mod_main.c:245
-#, fuzzy
 msgid "Application Theme (GTK & Icons)"
-msgstr "Aplikacja"
+msgstr "Motyw aplikacji (GTK i ikony)"
 
 #: src/modules/conf_theme/e_mod_main.c:254
 msgid "Borders"
@@ -8195,9 +8165,9 @@ msgid "%i MHz"
 msgstr "%i MHz"
 
 #: src/modules/cpufreq/e_mod_main.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "%'.1f GHz"
-msgstr "%'.1f GB"
+msgstr "%'.1f GHz"
 
 #: src/modules/cpufreq/e_mod_main.c:389
 msgid "Time Between Updates"
@@ -8581,9 +8551,8 @@ msgid "No plugins loaded"
 msgstr "Nie załadowano żadnego modułu"
 
 #: src/modules/everything/evry_plug_apps.c:1210
-#, fuzzy
 msgid "Exebuf"
-msgstr "Bufor wprowadzania"
+msgstr "Exebuf"
 
 #: src/modules/everything/evry_plug_apps.c:1225
 #: src/modules/everything/evry_plug_apps.c:1272
@@ -8637,7 +8606,6 @@ msgid "Terminal Command"
 msgstr "Komenda Terminala"
 
 #: src/modules/everything/evry_plug_apps.c:1400
-#, fuzzy
 msgid "Sudo GUI"
 msgstr "sudo GUI"
 
@@ -8745,9 +8713,9 @@ msgstr "Wyślij na pulpit"
 
 #: src/modules/everything/evry_plugin.c:177
 #: src/modules/everything/evry_plugin.c:208
-#, fuzzy, c-format
+#, c-format
 msgid "Show %s Plugin"
-msgstr "Zwykły"
+msgstr "Pokaż wtyczkę %s"
 
 #: src/modules/everything/evry_plugin.c:187
 #, c-format
@@ -8899,9 +8867,9 @@ msgid "Securely deleting files..."
 msgstr "Usuwanie plików ..."
 
 #: src/modules/fileman/e_fwin.c:3069
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown operation from slave %d"
-msgstr "Nieznany działanie od niewolnika jest przerywana"
+msgstr "Nieznana operacja z urządzenia podrzędnego %d"
 
 #: src/modules/fileman/e_fwin_nav.c:452
 #, fuzzy
@@ -8983,9 +8951,8 @@ msgid "Full Path In Title"
 msgstr "Tytuł ekranu powitalnego"
 
 #: src/modules/fileman/e_mod_config.c:350
-#, fuzzy
 msgid "Icons On Desktop"
-msgstr "Brak ikon na pulpicie"
+msgstr "Ikony na Pulpicie"
 
 #: src/modules/fileman/e_mod_config.c:353
 #, fuzzy
@@ -9643,12 +9610,10 @@ msgid "Urgent Windows"
 msgstr "Następne Okno"
 
 #: src/modules/pager/e_mod_config.c:461
-#, fuzzy
 msgid "Attention"
-msgstr "Akcja"
+msgstr "Uwaga"
 
 #: src/modules/pager/e_mod_config.c:462
-#, fuzzy
 msgid ""
 "You cannot use the right mouse button in the<br>shelf for this as it is "
 "already taken by internal<br>code for context menus.<br>This button only "
@@ -9704,16 +9669,14 @@ msgid "System Controls Settings"
 msgstr "Sterowanie systemem"
 
 #: src/modules/syscon/e_int_config_syscon.c:151
-#, fuzzy
 msgid "Secondary"
-msgstr "%.1f sekund"
+msgstr "Wtórny"
 
 #: src/modules/syscon/e_int_config_syscon.c:156
 msgid "Extra"
 msgstr ""
 
 #: src/modules/syscon/e_int_config_syscon.c:161
-#, fuzzy
 msgid "Icon Sizes"
 msgstr "Rozmiar ikony"
 
@@ -9829,9 +9792,8 @@ msgid "Select one"
 msgstr "Wybierz jeden"
 
 #: src/modules/wizard/page_170.c:25
-#, fuzzy
 msgid "Updates"
-msgstr "Stan"
+msgstr "Aktualizacje"
 
 #: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
@@ -9855,9 +9817,8 @@ msgid "Enable update checking"
 msgstr ""
 
 #: src/modules/wizard/page_180.c:27
-#, fuzzy
 msgid "Information"
-msgstr "Informacje odnośnika"
+msgstr "Informacja"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
@@ -9874,9 +9835,8 @@ msgid "Connection Manager"
 msgstr "Bez Wygładzania"
 
 #: src/modules/connman/e_mod_main.c:237
-#, fuzzy
 msgid "Missing Application"
-msgstr "Aplikacja"
+msgstr "Brakująca aplikacja"
 
 #: src/modules/connman/e_mod_main.c:238
 msgid ""
@@ -10193,9 +10153,9 @@ msgid "Error saving screenshot file"
 msgstr "Błąd ładowania modułu"
 
 #: src/modules/shot/e_mod_main.c:361
-#, fuzzy, c-format
+#, c-format
 msgid "Path: %s"
-msgstr "Ścieżki E"
+msgstr "Ścieżka: %s"
 
 #: src/modules/shot/e_mod_main.c:417
 #, fuzzy
@@ -10451,9 +10411,9 @@ msgid "Item width"
 msgstr "Minimalna Szerokość"
 
 #: src/modules/tasks/e_mod_config.c:107 src/modules/tasks/e_mod_config.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f px"
-msgstr "%.0f px"
+msgstr "%1.0f px"
 
 #: src/modules/tasks/e_mod_config.c:110
 #, fuzzy
@@ -10724,9 +10684,9 @@ msgid "Force timeout for all notifications"
 msgstr ""
 
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f sek."
+msgstr "%.1f sek."
 
 #: src/modules/notification/e_mod_config.c:137
 #, fuzzy
@@ -11036,24 +10996,20 @@ msgid "b"
 msgstr "b"
 
 #: src/modules/places/e_mod_places.c:836
-#, fuzzy
 msgid "KB"
-msgstr "przez"
+msgstr "KB"
 
 #: src/modules/places/e_mod_places.c:841
-#, fuzzy
 msgid "MB"
-msgstr "przez"
+msgstr "MB"
 
 #: src/modules/places/e_mod_places.c:846
-#, fuzzy
 msgid "GB"
-msgstr "przez"
+msgstr "GB"
 
 #: src/modules/places/e_mod_places.c:850
-#, fuzzy
 msgid "TB"
-msgstr "przez"
+msgstr "TB"
 
 #: src/modules/places/e_mod_places.c:886
 #, fuzzy
