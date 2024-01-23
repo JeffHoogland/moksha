@@ -730,7 +730,7 @@ _notif_delay_stop_cb(void *data)
 }
 
 void
-gadget_text(int number, int logo_jump)
+gadget_text(int number, Eina_Bool logo_jump)
 {
    Instance *inst = NULL;
    char *buf = (char *) malloc(sizeof(char) * HIST_MAX_DIGITS + 1);
