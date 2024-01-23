@@ -239,7 +239,7 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
                                   _button_cb_mouse_down, inst);
    notification_cfg->instances =
      eina_list_append(notification_cfg->instances, inst);
-   gadget_text(notification_cfg->new_item);
+   gadget_text(notification_cfg->new_item, 0);
    return gcc;
 }
 
@@ -249,11 +249,12 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    Instance *inst;
 
    inst = gcc->data;
-   if (inst->menu) {
-    e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-    e_object_del(E_OBJECT(inst->menu));
-    inst->menu = NULL;
-  }
+   if (inst->menu)
+     {
+       e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+       e_object_del(E_OBJECT(inst->menu));
+       inst->menu = NULL;
+     }
    if (notification_cfg)
      notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
    evas_object_del(inst->o_notif);
@@ -353,7 +354,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
      _mute_cb();
 
    if (ev->button == 1)  //left button
-      {
+     {
         unsigned dir = E_GADCON_ORIENT_VERT;
         Evas_Coord x, y, w, h;
         int cx, cy;
@@ -371,51 +372,51 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         Eina_List *l = NULL;
 
         if (notification_cfg->hist->history)
-        {
-          if (notification_cfg->reverse)
-            notification_cfg->hist->history = eina_list_reverse(notification_cfg->hist->history);
+          {
+            if (notification_cfg->reverse)
+              notification_cfg->hist->history = eina_list_reverse(notification_cfg->hist->history);
 
-          EINA_LIST_FOREACH(notification_cfg->hist->history, l, items) {
-             mi = e_menu_item_new(inst->menu);
-             Eina_Strbuf *buff = eina_strbuf_new();
-             int i;
+            EINA_LIST_FOREACH(notification_cfg->hist->history, l, items){
+              mi = e_menu_item_new(inst->menu);
+              Eina_Strbuf *buff = eina_strbuf_new();
+              int i;
 
-             if (notification_cfg->time_stamp){
+              if (notification_cfg->time_stamp){
                 eina_strbuf_append(buff, items->item_date_time);
                 eina_strbuf_append(buff, " ");
-             }
-             if (notification_cfg->show_app){
+              }
+              if (notification_cfg->show_app){
                 eina_strbuf_append(buff, items->item_app);
                 eina_strbuf_append(buff, ": ");
-             }
-             eina_strbuf_append(buff, items->item_title);
-             eina_strbuf_append(buff, ", ");
-             eina_strbuf_append(buff, items->item_body);
-             eina_strbuf_append(buff, " ");
-             eina_strbuf_replace_all(buff, "\n", " ");
+              }
+              eina_strbuf_append(buff, items->item_title);
+              eina_strbuf_append(buff, ", ");
+              eina_strbuf_append(buff, items->item_body);
+              eina_strbuf_append(buff, " ");
+              eina_strbuf_replace_all(buff, "\n", " ");
 
-             if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
-               i = eina_strbuf_length_get(buff);
-             else
-               i = notification_cfg->item_length;
+              if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
+                i = eina_strbuf_length_get(buff);
+              else
+                i = notification_cfg->item_length;
 
-             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL,
-                         eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));
+              e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL,
+                   eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));
 
-             eina_strbuf_free(buff);
+              eina_strbuf_free(buff);
 
-             notification_cfg->new_item = 0;
-             gadget_text(notification_cfg->new_item);
-             e_menu_item_disabled_set(mi, EINA_FALSE);
-             e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
+              notification_cfg->new_item = 0;
+              gadget_text(notification_cfg->new_item, 1);
+              e_menu_item_disabled_set(mi, EINA_FALSE);
+              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
 
-             if (strlen(items->item_icon) > 0)
-               e_util_menu_item_theme_icon_set(mi, items->item_icon);
-             else
-               e_menu_item_icon_file_set(mi,  items->item_icon_img);
-           }
+              if (strlen(items->item_icon) > 0)
+                e_util_menu_item_theme_icon_set(mi, items->item_icon);
+              else
+                e_menu_item_icon_file_set(mi,  items->item_icon_img);
+            }
           }
-          else
+        else
           {
             mi = e_menu_item_new(inst->menu);
             e_menu_item_label_set(mi, _("Empty"));
@@ -534,11 +535,11 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
    if (inst->gcc)
       e_gadcon_locked_set(inst->gcc->gadcon, EINA_FALSE);
    if (inst->menu)
-    {
-      e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-      e_object_del(E_OBJECT(inst->menu));
-      inst->menu = NULL;
-    }
+     {
+       e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+       e_object_del(E_OBJECT(inst->menu));
+       inst->menu = NULL;
+     }
 
    if (notification_cfg->reverse && notification_cfg->hist->history)
       notification_cfg->hist->history = eina_list_reverse(notification_cfg->hist->history);
@@ -729,7 +730,7 @@ _notif_delay_stop_cb(void *data)
 }
 
 void
-gadget_text(int number)
+gadget_text(int number, int logo_jump)
 {
    Instance *inst = NULL;
    char *buf = (char *) malloc(sizeof(char) * HIST_MAX_DIGITS + 1);
@@ -746,15 +747,14 @@ gadget_text(int number)
    if (notification_cfg->mute)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", "X");
 
-   if ((notification_cfg->new_item) && (notification_cfg->jump_delay > 0))
-   {
-     edje_object_signal_emit(inst->o_notif, "blink", "");
-     notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay,
+   if (notification_cfg->new_item && notification_cfg->jump_delay > 0 && logo_jump)
+     {
+       edje_object_signal_emit(inst->o_notif, "blink", "");
+       notification_cfg->jump_timer = ecore_timer_add(notification_cfg->jump_delay,
                                    _notif_delay_stop_cb, inst);
-   }
+     }
    else
      edje_object_signal_emit(inst->o_notif, "stop", "");
 
    E_FREE(buf);
 }
-

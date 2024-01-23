@@ -274,7 +274,7 @@ list_add_item(Popup_Data *popup)
      }
 
    notification_cfg->item_click = EINA_FALSE;
-   gadget_text(notification_cfg->new_item);
+   gadget_text(notification_cfg->new_item, 1);
    store_history(notification_cfg->hist);
 }
 
