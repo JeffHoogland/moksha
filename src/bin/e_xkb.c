@@ -4,6 +4,8 @@ static void _e_xkb_update_event(int);
 
 static int _e_xkb_cur_group = -1;
 
+static Ecore_Exe *cur_exe;
+
 EAPI int E_EVENT_XKB_CHANGED = 0;
 
 static Eina_Bool
@@ -27,11 +29,23 @@ _e_xkb_init_timer(void *data)
    return EINA_FALSE;
 }
 
+static Eina_Bool
+kb_exe_del(void *d EINA_UNUSED, int t EINA_UNUSED, Ecore_Exe_Event_Del *ev)
+{
+   if (ev->exe == cur_exe)
+     cur_exe = NULL;
+   return ECORE_CALLBACK_RENEW;
+}
+
 /* externally accessible functions */
 EAPI int
 e_xkb_init(void)
 {
-   E_EVENT_XKB_CHANGED = ecore_event_type_new();
+   if (!E_EVENT_XKB_CHANGED)
+     {
+        E_EVENT_XKB_CHANGED = ecore_event_type_new();
+        ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)kb_exe_del, NULL);
+     }
    e_xkb_update(-1);
    if (e_config->xkb.cur_layout)
      ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
@@ -143,7 +157,8 @@ e_xkb_update(int cur_group)
           }
      }
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
-   ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+   E_FREE_FUNC(cur_exe, ecore_exe_kill);
+   cur_exe = ecore_exe_run(eina_strbuf_string_get(buf), NULL);
    eina_strbuf_free(buf);
 }
 
