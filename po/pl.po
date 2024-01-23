@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-01-21 20:08-0500\n"
-"PO-Revision-Date: 2024-01-21 19:45-0500\n"
+"PO-Revision-Date: 2024-01-23 07:36-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -246,9 +246,8 @@ msgid "Fullscreen Mode Toggle"
 msgstr "Znacznik trybu pełnego ekranu"
 
 #: src/bin/e_actions.c:3202
-#, fuzzy
 msgid "Fullscreen Mode Enable"
-msgstr "Znacznik trybu pełnego ekranu"
+msgstr "Włączenie trybu pełnoekranowego"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
@@ -544,9 +543,8 @@ msgid "Window : List"
 msgstr "Okno : Lista"
 
 #: src/bin/e_actions.c:3407
-#, fuzzy
 msgid "Jump to window..."
-msgstr "Skocz do biurka"
+msgstr "Skocz do biurka..."
 
 #: src/bin/e_actions.c:3411
 msgid "Jump to window... or start..."
@@ -589,7 +587,6 @@ msgid "Send Mouse Forward/Back Screens..."
 msgstr "Przesuń mysz do przodu/tyłu o ... ekranów"
 
 #: src/bin/e_actions.c:3437
-#, fuzzy
 msgid "Dim"
 msgstr "przyciemniony"
 
@@ -627,14 +624,12 @@ msgid "Backlight Down"
 msgstr "Podświetlenie w dół"
 
 #: src/bin/e_actions.c:3461
-#, fuzzy
 msgid "Move To Center"
 msgstr "Przenieś do centrum"
 
 #: src/bin/e_actions.c:3465
-#, fuzzy
 msgid "Move To Coordinates..."
-msgstr "Przenieś do centrum"
+msgstr "Przejdź do współrzędnych..."
 
 #: src/bin/e_actions.c:3470
 msgid "Move By Coordinate Offset..."
@@ -645,14 +640,12 @@ msgid "Resize By..."
 msgstr "Zmień rozmiar według..."
 
 #: src/bin/e_actions.c:3482
-#, fuzzy
 msgid "Push in Direction..."
 msgstr "Naciśnij w kierunku ..."
 
 #: src/bin/e_actions.c:3488
-#, fuzzy
 msgid "Drag Icon..."
-msgstr "Utwórz ikonę"
+msgstr "Przeciągnij ikonę..."
 
 #: src/bin/e_actions.c:3493 src/bin/e_actions.c:3495 src/bin/e_actions.c:3497
 #: src/bin/e_actions.c:3503 src/bin/e_actions.c:3509 src/bin/e_actions.c:3511
@@ -676,14 +669,12 @@ msgid "To Desktop..."
 msgstr "Do pulpitu..."
 
 #: src/bin/e_actions.c:3509
-#, fuzzy
 msgid "To Next Screen"
-msgstr "Opcje ekranów"
+msgstr "Do następnego ekranu"
 
 #: src/bin/e_actions.c:3511
-#, fuzzy
 msgid "To Previous Screen"
-msgstr "Do poprzedniego pulpitu"
+msgstr "Do poprzedniego ekranu"
 
 #: src/bin/e_actions.c:3516
 msgid "Show Main Menu"
@@ -1071,9 +1062,8 @@ msgid "Modules"
 msgstr "Moduły"
 
 #: src/bin/e_configure.c:403
-#, fuzzy
 msgid "Preferences"
-msgstr "Właściwości ikony"
+msgstr "Preferencje"
 
 #: src/bin/e_container.c:124
 #, c-format
@@ -1440,12 +1430,12 @@ msgid "%s doesn't exist."
 msgstr "%s nie istnieje."
 
 #: src/bin/e_fm.c:2847 src/bin/e_fm.c:3806
-#, fuzzy, c-format
+#, c-format
 msgid "%u file"
 msgid_plural "%u files"
-msgstr[0] "%1.0f plików"
-msgstr[1] "%1.0f plików"
-msgstr[2] ""
+msgstr[0] "%u plik"
+msgstr[1] "%u pliki"
+msgstr[2] "%u plików"
 
 #: src/bin/e_fm.c:3068
 msgid "Mount Error"
@@ -1490,28 +1480,24 @@ msgid "Case Sensitive"
 msgstr "Rozróżniaj wielkość liter"
 
 #: src/bin/e_fm.c:8777 src/modules/fileman/e_mod_config.c:372
-#, fuzzy
 msgid "Sort By Extension"
-msgstr "Pokaż Rozszerzenie ikon"
+msgstr "Sortuj wg rozszerzenia"
 
 #: src/bin/e_fm.c:8783 src/modules/fileman/e_mod_config.c:375
 msgid "Sort By Modification Time"
 msgstr "Sortuj Po Czasie Modyfikacji"
 
 #: src/bin/e_fm.c:8789 src/modules/fileman/e_mod_config.c:378
-#, fuzzy
 msgid "Sort By Size"
-msgstr "Sortuj według daty"
+msgstr "Sortowane po rozmiarze"
 
 #: src/bin/e_fm.c:8798 src/modules/fileman/e_mod_config.c:386
-#, fuzzy
 msgid "Directories First"
-msgstr "Katalogi przeszukiwania"
+msgstr "Katalogi Najpierw"
 
 #: src/bin/e_fm.c:8804 src/modules/fileman/e_mod_config.c:390
-#, fuzzy
 msgid "Directories Last"
-msgstr "Katalogi przeszukiwania"
+msgstr "Katalogi Ostatnie"
 
 #: src/bin/e_fm.c:8837 src/bin/e_fm.c:8997
 #: src/modules/fileman/e_mod_config.c:314
@@ -1566,9 +1552,8 @@ msgid "Properties"
 msgstr "Ustawienia"
 
 #: src/bin/e_fm.c:9258
-#, fuzzy
 msgid "Application Properties"
-msgstr "Użyj ikonę dostarczoną przez program "
+msgstr "Właściwości Aplikacji"
 
 #: src/bin/e_fm.c:9266 src/bin/e_fm_prop.c:115
 msgid "File Properties"
@@ -1625,7 +1610,7 @@ msgstr ""
 #: src/bin/e_fm.c:9714 src/bin/e_fm.c:9735
 #, c-format
 msgid "%s can't be written to!"
-msgstr ""
+msgstr "Nie można pisać do %s!"
 
 #: src/bin/e_fm.c:9754
 msgid "Directory"
@@ -1702,12 +1687,11 @@ msgstr "%s już istnieje!"
 #: src/bin/e_fm.c:10369 src/bin/e_fm.c:10403
 #, c-format
 msgid "%s could not be renamed because it is protected"
-msgstr ""
+msgstr "Nie można zmienić nazwy %s, ponieważ jest chroniony"
 
 #: src/bin/e_fm.c:10372 src/bin/e_fm.c:10406
-#, fuzzy
 msgid "Internal filemanager error :("
-msgstr "Otwórz menadżer plików po zamontowaniu"
+msgstr "Wewnętrzny menedżer błędów plików :("
 
 #: src/bin/e_fm.c:10460 src/bin/e_fm.c:10681
 msgid "Retry"
@@ -1736,9 +1720,8 @@ msgid "File already exists, overwrite?<br><hilight>%s</hilight>"
 msgstr "Plik już istnieje, nadpisać?<br><hilight>%s</hilight>"
 
 #: src/bin/e_fm.c:10684
-#, fuzzy
 msgid "Move Source"
-msgstr "Opis Przesuwania"
+msgstr "Przenieś źródło"
 
 #: src/bin/e_fm.c:10685
 msgid "Ignore this"
@@ -1758,12 +1741,12 @@ msgid "Confirm Delete"
 msgstr "Potwierdź skasowanie"
 
 #: src/bin/e_fm.c:10894
-#, fuzzy, c-format
+#, c-format
 msgid "Are you sure you want to delete<br><hilight>%s</hilight>?"
 msgstr "Jesteś pewien że chcesz usunąć<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm.c:10899
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
@@ -1772,7 +1755,7 @@ msgstr ""
 "hilight>?"
 
 #: src/bin/e_fm.c:10909
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Are you sure you want to delete<br>the %d selected file in<br><hilight>%s</"
 "hilight>?"
@@ -1780,12 +1763,14 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Jesteś pewien że chcesz usunąć<br>%d zaznaczonych plików w:<br><hilight>%s</"
+"Jesteś pewien że chcesz usunąć<br>%d zaznaczonych plik w:<br><hilight>%s</"
 "hilight>?"
 msgstr[1] ""
-"Jesteś pewien że chcesz usunąć<br>%d zaznaczonych plików w:<br><hilight>%s</"
+"Jesteś pewien że chcesz usunąć<br>%d zaznaczonych pliki w:<br><hilight>%s</"
 "hilight>?"
 msgstr[2] ""
+"Jesteś pewien że chcesz usunąć<br>%d zaznaczonych plików w:<br><hilight>%s</"
+"hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -1922,12 +1907,11 @@ msgstr "Menadżer gadżetów"
 #: src/bin/e_gadcon.c:1409
 #, c-format
 msgid "%s does not support disabling autoscrolling"
-msgstr ""
+msgstr "%s nie obsługuje wyłączania automatycznego przewijania"
 
 #: src/bin/e_gadcon.c:1683 src/bin/e_int_border_menu.c:161
-#, fuzzy
 msgid "Move to"
-msgstr "Opis Przesuwania"
+msgstr "Przenieś się do"
 
 #: src/bin/e_gadcon.c:1755
 msgid "Automatically scroll contents"
@@ -1958,9 +1942,8 @@ msgid "Remove"
 msgstr "Usuń"
 
 #: src/bin/e_gadcon.c:2448
-#, fuzzy
 msgid "Stop moving"
-msgstr "Zakończ edycję"
+msgstr "Przestań sięruszać"
 
 #: src/bin/e_gadcon.c:3099
 msgid "Insufficient gadcon support"
@@ -1969,7 +1952,7 @@ msgstr ""
 #: src/bin/e_gadcon.c:3100
 #, c-format
 msgid "Module %s needs to support %s"
-msgstr ""
+msgstr "Moduł %s musi obsługiwać %s"
 
 #: src/bin/e_grab_dialog.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:4
@@ -1980,7 +1963,6 @@ msgstr ""
 "żeby anulować."
 
 #: src/bin/e_grab_dialog.c:5
-#, fuzzy
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,<br> "
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
@@ -2009,25 +1991,20 @@ msgstr ""
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
 #: src/bin/e_import_config_dialog.c:352 src/bin/e_import_config_dialog.c:362
-#, fuzzy
 msgid "Import Error"
-msgstr "Błąd importowania wystroju"
+msgstr "Błąd importu"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
-#, fuzzy
 msgid "Moksha was unable to import the image<br>due to a copy error."
-msgstr ""
-"Moksha nie był w stanie zaimportować wystroju<br>ze względu na błąd "
-"kopiowania."
+msgstr "Moksha nie mogła zaimportować obrazu<br>z powodu błędu kopiowania."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
-#, fuzzy
 msgid ""
 "Moksha was unable to import the image.<br><br>Are you sure this is a valid "
 "image?"
 msgstr ""
-"Moksha nie był w stanie zaimportować wystroju.<br><br>Czy to na pewno "
-"właściwy wystrój?"
+"Moksha nie mógł zaimportować obrazu.<br><br>Czy na pewno jest to prawidłowy "
+"obraz?"
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
@@ -2099,9 +2076,8 @@ msgid "%3.0f%%"
 msgstr "%3.0f%%"
 
 #: src/bin/e_import_config_dialog.c:530
-#, fuzzy
 msgid "Fill Color"
-msgstr "Kolory"
+msgstr "Kolor wypełnienia"
 
 #: src/bin/e_int_border_locks.c:66
 msgid "Window Locks"
@@ -2112,28 +2088,24 @@ msgid "Generic Locks"
 msgstr "Blokady ogólne"
 
 #: src/bin/e_int_border_locks.c:285
-#, fuzzy
 msgid "Prevent this window from moving on its own"
-msgstr "Zabezpiecz to okno przed przypadkowymi zmianami"
+msgstr ""
 
 #: src/bin/e_int_border_locks.c:287
-#, fuzzy
 msgid "Prevent this window from being changed by me"
 msgstr "Zabezpiecz to okno przed przypadkowymi zmianami"
 
 #: src/bin/e_int_border_locks.c:289
-#, fuzzy
 msgid "Prevent this window from being closed"
-msgstr "Poprzednie okno o tej samej klasie"
+msgstr ""
 
 #: src/bin/e_int_border_locks.c:291
 msgid "Do not allow the border to change on this window"
 msgstr "Nie pozwól na zmianę ramki tego okna"
 
 #: src/bin/e_int_border_locks.c:294
-#, fuzzy
 msgid "Remember the locks for this window"
-msgstr "Zapamiętaj Blokady dla tego okna i użyj ich następnym razem"
+msgstr ""
 
 #: src/bin/e_int_border_locks.c:308 src/bin/e_int_border_locks.c:327
 msgid "Prevent Changes In:"
@@ -2191,14 +2163,12 @@ msgid "Border style"
 msgstr "Typ ramki"
 
 #: src/bin/e_int_border_locks.c:346
-#, fuzzy
 msgid "User Locks"
-msgstr "Blokady ogólne"
+msgstr "Blokady Użytkownika"
 
 #: src/bin/e_int_border_locks.c:348
-#, fuzzy
 msgid "Prevent:"
-msgstr "Podgląd"
+msgstr "Zapobiec:"
 
 #: src/bin/e_int_border_locks.c:349
 msgid "Closing the window"
@@ -2396,9 +2366,9 @@ msgid "Withdrawn"
 msgstr "Wewnątrz"
 
 #: src/bin/e_int_border_prop.c:161 src/bin/e_int_border_prop.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "Iconic"
-msgstr "Ikona"
+msgstr "Ikonowy"
 
 #: src/bin/e_int_border_prop.c:216
 #, c-format
@@ -2446,9 +2416,9 @@ msgid "Southeast"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:256
-#, fuzzy, c-format
+#, c-format
 msgid "Static"
-msgstr "Stan"
+msgstr "Statyczny"
 
 #: src/bin/e_int_border_prop.c:298 src/modules/clock/e_mod_config.c:252
 #: src/modules/clock/e_mod_config.c:295
@@ -2525,9 +2495,8 @@ msgid "Resize Steps"
 msgstr "Kroki zmiany rozmiaru"
 
 #: src/bin/e_int_border_prop.c:457
-#, fuzzy
 msgid "Sizing"
-msgstr "Rozmiary"
+msgstr "Rozmiarowanie"
 
 #: src/bin/e_int_border_prop.c:460
 msgid "Aspect Ratio"
@@ -2562,9 +2531,8 @@ msgid "Gravity"
 msgstr "Grawitacja"
 
 #: src/bin/e_int_border_prop.c:469
-#, fuzzy
 msgid "States"
-msgstr "Stan"
+msgstr "Stany"
 
 #: src/bin/e_int_border_prop.c:472
 msgid "Take Focus"
@@ -2615,7 +2583,6 @@ msgid "Settings"
 msgstr ""
 
 #: src/bin/e_int_border_prop.c:505
-#, fuzzy
 msgid "Modal"
 msgstr "modalny"
 
@@ -2730,9 +2697,8 @@ msgid "Transience"
 msgstr "Rodzaj okna"
 
 #: src/bin/e_int_border_remember.c:688
-#, fuzzy
 msgid "Identifiers"
-msgstr "Stan Zwinięcia do Ikony"
+msgstr "Identyfikatory"
 
 #: src/bin/e_int_border_remember.c:707
 msgid "Icon Preference"
@@ -2771,7 +2737,6 @@ msgid "Start this program on login"
 msgstr "Uruchom ten program przy starcie"
 
 #: src/bin/e_int_config_modules.c:51
-#, fuzzy
 msgid "Utilities"
 msgstr "Użytkowe"
 
@@ -2901,7 +2866,7 @@ msgstr ""
 
 #: src/bin/e_int_menus.c:222
 msgid "About Bodhi Linux"
-msgstr ""
+msgstr "O Bodhi Linux"
 
 #: src/bin/e_int_menus.c:243
 msgid "About Moksha Desktop"
@@ -3736,23 +3701,20 @@ msgid "Vertical"
 msgstr "Pionowo"
 
 #: src/bin/e_shelf.c:72
-#, fuzzy
 msgid "Left"
-msgstr "w lewo;"
+msgstr "Lewy"
 
 #: src/bin/e_shelf.c:73
-#, fuzzy
 msgid "Right"
-msgstr "prawo;"
+msgstr "Prawy"
 
 #: src/bin/e_shelf.c:74
 msgid "Top"
 msgstr "Góra"
 
 #: src/bin/e_shelf.c:75
-#, fuzzy
 msgid "Bottom"
-msgstr "Dół Lewo"
+msgstr "Spód"
 
 #: src/bin/e_shelf.c:76
 #, fuzzy
@@ -4028,11 +3990,11 @@ msgstr "Ustaw zawartość paska narzędzi"
 
 #: src/bin/e_update.c:78
 msgid "Bother me later"
-msgstr ""
+msgstr "Powiedz mi później"
 
 #: src/bin/e_update.c:80
 msgid "Never tell me"
-msgstr ""
+msgstr "Nigdy mi nie mów"
 
 #: src/bin/e_update.c:83
 #, fuzzy
@@ -4075,22 +4037,22 @@ msgstr "%'.0f Bajtów"
 #: src/bin/e_utils.c:786
 #, c-format
 msgid "%'.0f KiB"
-msgstr "%'.0f KB"
+msgstr "%'.0f KiB"
 
 #: src/bin/e_utils.c:790
 #, c-format
 msgid "%'.1f MiB"
-msgstr "%'.1f GB"
+msgstr "%'.1f MiB"
 
 #: src/bin/e_utils.c:794
 #, c-format
 msgid "%'.1f GiB"
-msgstr "%'.1f GB"
+msgstr "%'.1f GiB"
 
 #: src/bin/e_utils.c:798
 #, c-format
 msgid "%'.1f TiB"
-msgstr "%'.1f GB"
+msgstr "%'.1f TiB"
 
 #: src/bin/e_utils.c:817
 #, c-format
@@ -4103,52 +4065,52 @@ msgid "In the last minute"
 msgstr "Podczas ostatniej minuty"
 
 #: src/bin/e_utils.c:825
-#, fuzzy, c-format
+#, c-format
 msgid "Last year"
 msgid_plural "%li Years ago"
-msgstr[0] "Ostatinio zmodyfikowany:"
-msgstr[1] "Ostatinio zmodyfikowany:"
-msgstr[2] ""
+msgstr[0] "Ostatni rok"
+msgstr[1] "%li Lata temu"
+msgstr[2] "%li Lat temu"
 
 #: src/bin/e_utils.c:830
 #, c-format
 msgid "Last month"
 msgid_plural "%li Months ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "W zeszłym miesiącu"
+msgstr[1] "%li miesiące temu"
+msgstr[2] "%li miesięcy temu"
 
 #: src/bin/e_utils.c:835
-#, fuzzy, c-format
+#, c-format
 msgid "Last week"
 msgid_plural "%li Weeks ago"
-msgstr[0] "Ostatinio zmodyfikowany:"
-msgstr[1] "Ostatinio zmodyfikowany:"
-msgstr[2] ""
+msgstr[0] "Zeszły tydzień"
+msgstr[1] "%li tygodnie temu"
+msgstr[2] "%li tygodni temu"
 
 #: src/bin/e_utils.c:840
 #, c-format
 msgid "Yesterday"
 msgid_plural "%li Days ago"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Wczoraj"
+msgstr[1] "%li dni temu"
+msgstr[2] "%li dni temu"
 
 #: src/bin/e_utils.c:845
-#, fuzzy, c-format
+#, c-format
 msgid "An hour ago"
 msgid_plural "%li Hours ago"
-msgstr[0] "%li godzin temu"
-msgstr[1] "%li godzin temu"
-msgstr[2] ""
+msgstr[0] "Godzinę temu"
+msgstr[1] "%li godziny temu"
+msgstr[2] "%li godzin temu"
 
 #: src/bin/e_utils.c:850
-#, fuzzy, c-format
+#, c-format
 msgid "A minute ago"
 msgid_plural "%li Minutes ago"
-msgstr[0] "%li minut temu"
-msgstr[1] "%li minut temu"
-msgstr[2] ""
+msgstr[0] "Minutę temu"
+msgstr[1] "%li minuty temu"
+msgstr[2] "%li minut temu"
 
 #: src/bin/e_utils.c:857 src/bin/e_widget_filepreview.c:679
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
@@ -4196,9 +4158,9 @@ msgstr ""
 "teraz ponownie skonfigurować wszystko<br>jak chcesz. Przepraszamy za kłopot."
 
 #: src/bin/e_utils.c:1107 src/bin/e_utils.c:1131
-#, fuzzy, c-format
+#, c-format
 msgid "%s Configuration Updated"
-msgstr "Zaktualizowano konfigurację"
+msgstr "%s Konfiguracja zaktualizowana"
 
 #: src/bin/e_utils.c:1120
 msgid ""
@@ -4217,63 +4179,63 @@ msgstr ""
 #: src/bin/e_utils.c:1214
 #, c-format
 msgid "Never"
-msgstr ""
+msgstr "Nigdy"
 
 #: src/bin/e_utils.c:1218
-#, fuzzy, c-format
+#, c-format
 msgid "A second"
 msgid_plural "%li Seconds"
-msgstr[0] "%.1f sekund"
-msgstr[1] "%.1f sekund"
-msgstr[2] ""
+msgstr[0] "Sekunda"
+msgstr[1] "%li sekundy"
+msgstr[2] "%li sekund"
 
 #: src/bin/e_utils.c:1222
 #, c-format
 msgid "One year"
 msgid_plural "%li Years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Jeden rok"
+msgstr[1] "%li lata"
+msgstr[2] "%li lat"
 
 #: src/bin/e_utils.c:1227
 #, c-format
 msgid "One month"
 msgid_plural "%li Months"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Jeden miesiąc"
+msgstr[1] "%li miesiące"
+msgstr[2] "%li miesięcy"
 
 #: src/bin/e_utils.c:1232
 #, c-format
 msgid "One week"
 msgid_plural "%li Weeks"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Jeden tydzień"
+msgstr[1] "%li tygodnie"
+msgstr[2] "%li tygodni"
 
 #: src/bin/e_utils.c:1237
 #, c-format
 msgid "One day"
 msgid_plural "%li Days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Pewnego dnia"
+msgstr[1] "%li dni"
+msgstr[2] "%li dni"
 
 #: src/bin/e_utils.c:1242
-#, fuzzy, c-format
+#, c-format
 msgid "An hour"
 msgid_plural "%li Hours"
-msgstr[0] "1 godzina"
-msgstr[1] "1 godzina"
-msgstr[2] ""
+msgstr[0] "Godzina"
+msgstr[1] "%li godziny"
+msgstr[2] "%li godzin"
 
 #: src/bin/e_utils.c:1247
-#, fuzzy, c-format
+#, c-format
 msgid "A minute"
 msgid_plural "%li Minutes"
-msgstr[0] "%1.0f min."
-msgstr[1] "%1.0f min."
-msgstr[2] ""
+msgstr[0] "Minutę"
+msgstr[1] "%li minuty"
+msgstr[2] "%li minut"
 
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:313
@@ -4305,11 +4267,11 @@ msgstr "Dół"
 
 #: src/bin/e_widget_csel.c:195
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: src/bin/e_widget_csel.c:195
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: src/bin/e_widget_csel.c:195
 msgid "B"
@@ -4317,30 +4279,28 @@ msgstr "B"
 
 #: src/bin/e_widget_csel.c:195
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: src/bin/e_widget_csel.c:195
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: src/bin/e_widget_csel.c:195
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: src/bin/e_widget_csel.c:275
 msgid "Alpha"
-msgstr ""
+msgstr "Alpha"
 
 #: src/bin/e_widget_filepreview.c:86 src/bin/e_widget_filepreview.c:413
 #: src/bin/e_widget_filepreview.c:523
-#, fuzzy
 msgid "Resolution:"
-msgstr "Rozdzielczość"
+msgstr "Rozdzielczość:"
 
 #: src/bin/e_widget_filepreview.c:94
-#, fuzzy
 msgid "Mime-type:"
-msgstr "Typy MIME"
+msgstr "Typy MIME:"
 
 #: src/bin/e_widget_filepreview.c:404
 #, c-format
@@ -4364,7 +4324,6 @@ msgid "Mount status:"
 msgstr ""
 
 #: src/bin/e_widget_filepreview.c:476
-#, fuzzy
 msgid "Type:"
 msgstr "Typ:"
 
@@ -4497,7 +4456,6 @@ msgid "Show low battery alert"
 msgstr "Pokaż niski alert baterii"
 
 #: src/modules/battery/e_mod_config.c:263
-#, fuzzy
 msgid "Alert when at:"
 msgstr "Alarm gdy na:"
 
@@ -4520,9 +4478,8 @@ msgstr "%1.0f s"
 
 #: src/modules/battery/e_mod_config.c:286 src/modules/places/e_mod_config.c:258
 #: src/modules/places/e_mod_config.c:284
-#, fuzzy
 msgid "Alert"
-msgstr "Sygnał"
+msgstr "Alarm"
 
 #: src/modules/battery/e_mod_config.c:292
 msgid "Auto Detect"
@@ -4796,11 +4753,11 @@ msgstr "custom Command"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:310
 msgid "Browser"
-msgstr ""
+msgstr "Przeglądarka"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:311
 msgid "E-Mail"
-msgstr ""
+msgstr "E-mail"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:313
 #: src/modules/places/e_mod_config.c:238 src/modules/places/e_mod_places.c:1078
@@ -4904,9 +4861,9 @@ msgid "Reset"
 msgstr "Resetowanie"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "Selected profile: %s"
-msgstr "Wybrane źródło paska"
+msgstr "Wybrany profil: %s"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:315
 msgid "Add New Profile"
@@ -5077,9 +5034,8 @@ msgid "Desktop Name"
 msgstr "Nazwa pulpitu"
 
 #: src/modules/conf_display/e_int_config_desk.c:182
-#, fuzzy
 msgid "Profile Name:"
-msgstr "Profil"
+msgstr "Nazwa profilu:"
 
 #: src/modules/conf_display/e_int_config_desk.c:188
 msgid "Desktop Wallpaper"
@@ -5211,9 +5167,8 @@ msgid "Screen Saver Settings"
 msgstr "Opcje wygaszacza ekranu"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:158
-#, fuzzy
 msgid "Enable screen blanking"
-msgstr "Włącz X Screensaver"
+msgstr "Włącz wyłączenie ekranu"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:163
 #: src/modules/syscon/e_int_config_syscon.c:167
@@ -5238,14 +5193,12 @@ msgstr "Wstrzymaj czas"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:188
 #: src/modules/conf_display/e_mod_main.c:32
-#, fuzzy
 msgid "Blanking"
-msgstr "zaślepka"
+msgstr "Wyłaczony ekran"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:192
-#, fuzzy
 msgid "Presentation mode enabled"
-msgstr "Tryb prezentacji"
+msgstr "Tryb prezentacji włączony"
 
 #: src/modules/conf_display/e_int_config_dpms.c:44
 #, fuzzy
@@ -5478,9 +5431,8 @@ msgid "(left clickable)"
 msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1425
-#, fuzzy
 msgid "(clickable)"
-msgstr "Klikalna krawędź"
+msgstr "(klikalne)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
@@ -5530,7 +5482,6 @@ msgstr "Wiązania krawędzi Ustawienia"
 #: src/modules/conf_interaction/e_mod_main.c:17
 #: src/modules/conf_keybindings/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:72
-#, fuzzy
 msgid "Input"
 msgstr "wkład"
 
@@ -5566,9 +5517,9 @@ msgid "Threshold for applying drag momentum"
 msgstr "Próg stosowania moment oporowy"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:114
-#, fuzzy, c-format
+#, c-format
 msgid "%1.0f pixels/s"
-msgstr "%1.0f pikseli"
+msgstr "%1.0f pikseli/s"
 
 #: src/modules/conf_interaction/e_int_config_interaction.c:120
 #, fuzzy
@@ -5606,9 +5557,8 @@ msgid "Idle effects"
 msgstr "Idle efekty"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:323
-#, fuzzy
 msgid "Cursor"
-msgstr "Pokaż kursor"
+msgstr "Kursor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:330
 #, fuzzy
@@ -5834,15 +5784,15 @@ msgstr "Dodaj Binding"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:349
 msgid "AC Adapter Unplugged"
-msgstr ""
+msgstr "Zasilacz sieciowy odłączony"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:350
 msgid "AC Adapter Plugged"
-msgstr ""
+msgstr "Podłączony zasilacz sieciowy"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:351
 msgid "Ac Adapter"
-msgstr ""
+msgstr "Zasilacz"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:356
 #, fuzzy
@@ -5855,14 +5805,12 @@ msgid "Fan"
 msgstr "Daleko"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:361
-#, fuzzy
 msgid "Lid Unknown"
-msgstr "Nieznane"
+msgstr "Pokrywa nieznana"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:362
-#, fuzzy
 msgid "Lid Closed"
-msgstr "Zamknij"
+msgstr "Pokrywa zamknięta"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:363
 msgid "Lid Opened"
@@ -5910,14 +5858,12 @@ msgid "Zoom In"
 msgstr "Powiększanie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
-#, fuzzy
 msgid "Brightness Down"
-msgstr "Wyłączanie"
+msgstr "Podświetlenie w Dół"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
-#, fuzzy
 msgid "Brightness Up"
-msgstr "podświetlenie w górę"
+msgstr "Podświetlenie w Górę"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 #, fuzzy
@@ -5936,29 +5882,24 @@ msgstr ""
 #: src/modules/notification/e_mod_main.c:439
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
-#, fuzzy
 msgid "Mute"
 msgstr "wyciszenie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:397
-#, fuzzy
 msgid "Volume"
-msgstr "Zmiana rozdzielczości"
+msgstr "Głośność"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
-#, fuzzy
 msgid "Brightness"
-msgstr "podświetlenie w górę"
+msgstr "Podświetlenie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
-#, fuzzy
 msgid "Volume Down"
-msgstr "W dół"
+msgstr "Ściszanie"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
-#, fuzzy
 msgid "Volume Up"
-msgstr "Zmiana rozdzielczości"
+msgstr "Zwiększ głośność"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:405
 msgid "Tablet On"
@@ -5969,7 +5910,6 @@ msgid "Tablet Off"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:411
-#, fuzzy
 msgid "Screenlock"
 msgstr "Blokada ekranu"
 
@@ -6135,7 +6075,7 @@ msgstr "Prawo Dół"
 #: src/modules/pager/e_mod_config.c:409
 #, c-format
 msgid "Button %i"
-msgstr ""
+msgstr "Przycisk %i"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1192
 #: src/modules/pager/e_mod_config.c:388
@@ -6146,7 +6086,7 @@ msgstr "Opcje myszki"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1214
 #, c-format
 msgid "Extra button (%d)"
-msgstr ""
+msgstr "Dodatkowy przycisk (%d)"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1230
 msgid "Mouse Wheel Up"
@@ -6160,12 +6100,12 @@ msgstr "W dół"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1236
 #, c-format
 msgid "Extra Wheel (%d) Up"
-msgstr ""
+msgstr "Dodatkowe koło (%d) w górę"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1238
 #, c-format
 msgid "Extra Wheel (%d) Down"
-msgstr ""
+msgstr "Dodatkowe koło (%d) w dół"
 
 #: src/modules/conf_keybindings/e_mod_main.c:119
 msgid "WINDOWS"
@@ -6323,9 +6263,8 @@ msgid "Basic Moksha Key Bindings"
 msgstr "Skróty myszy"
 
 #: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
 msgid "Edit"
-msgstr "Edytuj"
+msgstr "Edytować"
 
 #: src/modules/conf_keybindings/e_mod_main.c:375
 #, fuzzy
@@ -6418,7 +6357,7 @@ msgstr "Margines Automatycznego Przewijania"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
 msgid " Disable Icons in Menus"
-msgstr ""
+msgstr "Wyłącz ikony w Menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
 #, fuzzy
@@ -6599,7 +6538,6 @@ msgid "Caches"
 msgstr "Anuluj"
 
 #: src/modules/conf_performance/e_int_config_performance.c:148
-#, fuzzy
 msgid "Number of Edje files to cache"
 msgstr "Liczba Edje plików do pamięci podręcznej"
 
@@ -6609,9 +6547,8 @@ msgid "%1.0f files"
 msgstr "%1.0f plików"
 
 #: src/modules/conf_performance/e_int_config_performance.c:154
-#, fuzzy
 msgid "Number of Edje collections to cache"
-msgstr "Liczba Edje zbiorów do pamięci podręcznej"
+msgstr "Liczba kolekcji Edje do buforowania"
 
 #: src/modules/conf_performance/e_int_config_performance.c:156
 #, c-format
@@ -6619,9 +6556,8 @@ msgid "%1.0f collections"
 msgstr "%1.0f kolekcji"
 
 #: src/modules/conf_performance/e_int_config_performance.c:159
-#, fuzzy
 msgid "Edje Cache"
-msgstr "Anuluj"
+msgstr "Edje Cache"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:41
 #, fuzzy
@@ -6746,9 +6682,8 @@ msgstr "Obraz..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:513
 #: src/modules/conf_theme/e_int_config_wallpaper.c:664
-#, fuzzy
 msgid "Color..."
-msgstr "Kolory"
+msgstr "Kolor..."
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:680
 msgid "Where to place the Wallpaper"
@@ -7243,25 +7178,23 @@ msgid "Huge"
 msgstr "Ogromny"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
-msgstr[0] "%d pikseli"
-msgstr[1] "%d pikseli"
-msgstr[2] ""
+msgstr[0] "%d piksel"
+msgstr[1] "%d piksele"
+msgstr[2] "%d pikseli"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:427
-#, fuzzy
 msgid "Enable Custom Font Classes"
 msgstr "Włącz niestandardowe klasy Font"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:449
 #: src/modules/conf_theme/e_int_config_fonts.c:670
 msgid "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
-msgstr ""
+msgstr "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:629
-#, fuzzy
 msgid "Font Classes"
 msgstr "Klasy czcionki"
 
@@ -8196,7 +8129,6 @@ msgid "Power State Max"
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:514
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
@@ -8205,7 +8137,6 @@ msgstr ""
 "narzędzie setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:540
-#, fuzzy
 msgid ""
 "Your kernel does not support setting the<ps/>CPU frequency at all. You may "
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
@@ -8216,7 +8147,6 @@ msgstr ""
 "takiej funkcjonalności."
 
 #: src/modules/cpufreq/e_mod_main.c:566
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
@@ -8225,7 +8155,6 @@ msgstr ""
 "setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:594
-#, fuzzy
 msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
@@ -8234,9 +8163,8 @@ msgstr ""
 "setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:1466
-#, fuzzy
 msgid "Cpufreq Error"
-msgstr "Cpufreq"
+msgstr "Błąd częstotliwości procesora"
 
 #: src/modules/cpufreq/e_mod_main.c:1467
 msgid ""
@@ -8245,9 +8173,8 @@ msgid ""
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:1474
-#, fuzzy
 msgid "Cpufreq Permissions Error"
-msgstr "Uprawnienia"
+msgstr "Cpufreq Permissions Error"
 
 #: src/modules/cpufreq/e_mod_main.c:1475
 #, c-format
@@ -8258,29 +8185,24 @@ msgid ""
 msgstr ""
 
 #: src/modules/cpufreq/e_mod_main.c:1508
-#, fuzzy
 msgid "CPU Frequency"
-msgstr "Częstotliwość CPU BŁĄD"
+msgstr "Częstotliwości Procesora"
 
 #: src/modules/cpufreq/e_mod_config.c:38
-#, fuzzy
 msgid "Cpu Frequency Control Settings"
-msgstr "Moduł Kontroli Częstotliwości CPU"
+msgstr "Ustawienia Kontroli Częstotliwości Procesora"
 
 #: src/modules/cpufreq/e_mod_config.c:91
-#, fuzzy
 msgid "Update poll interval"
-msgstr "Cache flush przedział"
+msgstr "Zaktualizuj interwał sondowania"
 
 #: src/modules/cpufreq/e_mod_config.c:107
-#, fuzzy
 msgid "Minimum Power State"
-msgstr "Opcje myszki"
+msgstr "Stan Minimalnej Mocy"
 
 #: src/modules/cpufreq/e_mod_config.c:113
-#, fuzzy
 msgid "Maximum Power State"
-msgstr "Opcje myszki"
+msgstr "Stan Maksymalnej Mocy"
 
 #: src/modules/everything/e_mod_main.c:49
 #: src/modules/everything/evry_plugin.c:179
@@ -8542,9 +8464,9 @@ msgstr "Akcja"
 #, c-format
 msgid "%d item"
 msgid_plural "%d items"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d przedmiot"
+msgstr[1] "%d przedmioty"
+msgstr[2] "%d pozycji"
 
 #: src/modules/everything/evry_plug_aggregator.c:302
 msgid "No plugins loaded"
@@ -8577,7 +8499,7 @@ msgstr "Aplikacja"
 
 #: src/modules/everything/evry_plug_apps.c:1266
 msgid "Run with Sudo"
-msgstr ""
+msgstr "Biegaj z Sudo"
 
 #: src/modules/everything/evry_plug_apps.c:1279
 #: src/modules/fileman/e_fwin.c:252
@@ -8638,14 +8560,12 @@ msgid "Move to Trash"
 msgstr "Przenieś do kosza"
 
 #: src/modules/everything/evry_plug_files.c:1319
-#, fuzzy
 msgid "Open Directory"
-msgstr "Nowy katalog"
+msgstr "Otwarty Katalog"
 
 #: src/modules/everything/evry_plug_files.c:1323
-#, fuzzy
 msgid "Sort by Date"
-msgstr "Sortuj według nazwy"
+msgstr "Sortowanie według daty"
 
 #: src/modules/everything/evry_plug_files.c:1328
 msgid "Sort by Name"
@@ -8653,9 +8573,8 @@ msgstr "Sortuj według nazwy"
 
 #: src/modules/everything/evry_plug_files.c:1361
 #: src/modules/everything/evry_plug_files.c:1373
-#, fuzzy
 msgid "Recent Files"
-msgstr "Zmień Nazwę Pliku"
+msgstr "Ostatnie Pliki"
 
 #: src/modules/everything/evry_plug_files.c:1445
 #: src/modules/everything/evry_plug_files.c:1588
@@ -8664,22 +8583,18 @@ msgid "Everything Files"
 msgstr "Wszystko"
 
 #: src/modules/everything/evry_plug_files.c:1472
-#, fuzzy
 msgid "Show recent files"
-msgstr "Pokaż nowe pliki"
+msgstr "Pokaż najnowsze pliki"
 
 #: src/modules/everything/evry_plug_files.c:1476
-#, fuzzy
 msgid "Search recent files"
-msgstr "Szukaj najnowsze pliki"
+msgstr "Szukaj ostatnich plików"
 
 #: src/modules/everything/evry_plug_files.c:1480
-#, fuzzy
 msgid "Search cached files"
 msgstr "Szukaj plików w pamięci podręcznej"
 
 #: src/modules/everything/evry_plug_files.c:1484
-#, fuzzy
 msgid "Cache visited directories"
 msgstr "Cache odwiedził katalogi"
 
@@ -8694,9 +8609,8 @@ msgstr "Przesunięcie Cienia"
 
 #: src/modules/everything/evry_plug_text.c:63
 #: src/modules/everything/evry_plug_text.c:66
-#, fuzzy
 msgid "Text"
-msgstr "Opis przesuwania"
+msgstr "Tekst"
 
 #: src/modules/everything/evry_plug_windows.c:430
 msgid "Switch to Window"
@@ -8744,28 +8658,24 @@ msgid ""
 msgstr ""
 
 #: src/modules/everything/evry_view_tabs.c:93
-#, fuzzy
 msgid "Back"
-msgstr "podświetlenie"
+msgstr "z powrotem"
 
 #: src/modules/fileman/e_fwin.c:2083
 msgid "Other application..."
 msgstr "Inna aplikacja..."
 
 #: src/modules/fileman/e_fwin.c:2146
-#, fuzzy
 msgid "Go To Parent Directory"
-msgstr "Katalog wyżej"
+msgstr "Przejdź do katalogu nadrzędnego"
 
 #: src/modules/fileman/e_fwin.c:2156
-#, fuzzy
 msgid "Clone Window"
-msgstr "Uporządkuj okna"
+msgstr "Okno klonowania"
 
 #: src/modules/fileman/e_fwin.c:2162
-#, fuzzy
 msgid "Copy Path"
-msgstr "Ścieżki E"
+msgstr "Skopiuj ścieżkę"
 
 #: src/modules/fileman/e_fwin.c:2178
 msgid "Run"
@@ -8776,30 +8686,28 @@ msgid "Open"
 msgstr "Otwórz"
 
 #: src/modules/fileman/e_fwin.c:2614 src/modules/fileman/e_fwin.c:2639
-#, fuzzy, c-format
+#, c-format
 msgid "%d file"
 msgid_plural "%d files"
-msgstr[0] "%1.0f plików"
-msgstr[1] "%1.0f plików"
-msgstr[2] ""
+msgstr[0] "%d plik"
+msgstr[1] "%d pliki"
+msgstr[2] "%d plików"
 
 #: src/modules/fileman/e_fwin.c:2657
 msgid "Known Applications"
 msgstr "Znane aplikacje"
 
 #: src/modules/fileman/e_fwin.c:2667
-#, fuzzy
 msgid "Suggested Applications"
-msgstr "Wybierz menu aplikacji."
+msgstr "Sugerowane Aplikacje"
 
 #: src/modules/fileman/e_fwin.c:2702
 msgid "All Applications"
 msgstr "Wszystkie aplikacje"
 
 #: src/modules/fileman/e_fwin.c:2725
-#, fuzzy
 msgid "Custom Command"
-msgstr "custom Command"
+msgstr "Niestandardowe polecenie"
 
 #: src/modules/fileman/e_fwin.c:3016
 #, c-format
@@ -8847,12 +8755,12 @@ msgid "Moving %s (eta: %s)"
 msgstr "Przenoszenie %s (eta: %s)"
 
 #: src/modules/fileman/e_fwin.c:3056
-#, fuzzy, c-format
+#, c-format
 msgid "Delete done"
-msgstr "Usuń zrobić"
+msgstr "Usuń gotowe"
 
 #: src/modules/fileman/e_fwin.c:3058
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting files..."
 msgstr "Usuwanie plików ..."
 
@@ -8974,7 +8882,7 @@ msgstr "Użyj pojedynczego kliknięcia"
 
 #: src/modules/fileman/e_mod_config.c:403
 msgid "'cp+rm' instead of 'mv'"
-msgstr ""
+msgstr "'cp+rm' zamiast 'mv'"
 
 #: src/modules/fileman/e_mod_config.c:409
 #, fuzzy
@@ -10624,9 +10532,8 @@ msgid "Exited Presentation Mode"
 msgstr "Wyłączono tryb prezentacji"
 
 #: src/modules/notification/e_mod_main.c:628
-#, fuzzy
 msgid "Presentation mode is over."
-msgstr "Tryb prezentacji"
+msgstr "Tryb prezentacji dobiegł końca."
 
 #: src/modules/notification/e_mod_main.c:642
 msgid "Enter Offline Mode"
@@ -11035,32 +10942,27 @@ msgstr "wysuń"
 
 #: src/modules/places/backend_udisks1.c:347
 #: src/modules/places/backend_udisks2.c:576
-#, fuzzy
 msgid "Operation failed"
-msgstr "Restet nieudany."
+msgstr "Operacja nie powiodła się"
 
 #: src/modules/places/backend_udisks1.c:348
 #: src/modules/places/backend_udisks2.c:577
-#, fuzzy
 msgid "Unknown error"
-msgstr "Nieznane"
+msgstr "Nieznany błąd"
 
 #: src/modules/mixer/bin/main_window.c:85
 msgid "Efl Volume Control"
 msgstr "Kontrola głośności EFL"
 
 #: src/modules/mixer/bin/main_window.c:125
-#, fuzzy
 msgid "Playback"
 msgstr "Odtwarzanie"
 
 #: src/modules/mixer/bin/main_window.c:128
-#, fuzzy
 msgid "Outputs"
-msgstr "produkcja"
+msgstr "Produkcja"
 
 #: src/modules/mixer/bin/main_window.c:131
-#, fuzzy
 msgid "Inputs"
 msgstr "wkład"
 
@@ -11070,23 +10972,20 @@ msgid "Unmute"
 msgstr ""
 
 #: src/modules/mixer/e_mod_main.c:126
-#, fuzzy
 msgid "New volume"
-msgstr "Nowy tom"
+msgstr "Nowy wolumen"
 
 #: src/modules/mixer/e_mod_main.c:141
-#, fuzzy
 msgid "Volume limit reached!"
-msgstr "Zmiana rozdzielczości"
+msgstr "Osiągnięto limit głośności!"
 
 #: src/modules/mixer/e_mod_main.c:143
 msgid "EPulse"
 msgstr "EPulse"
 
 #: src/modules/mixer/e_mod_main.c:146
-#, fuzzy
 msgid "Volume changed"
-msgstr "Zmiana rozdzielczości"
+msgstr "Zmieniono głośność"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
@@ -11097,16 +10996,13 @@ msgid "Decrease Volume"
 msgstr "Zmniejsz poziom głośności"
 
 #: src/modules/mixer/e_mod_main.c:264
-#, fuzzy
 msgid "Mute volume"
-msgstr "Nowy tom"
+msgstr "Wycisz głośność"
 
 #: src/modules/mixer/e_mod_main.c:277
-#, fuzzy
 msgid "Volume Increase"
-msgstr "Zmiana rozdzielczości"
+msgstr "Wzrost głośności"
 
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
-#, fuzzy
 msgid "Volume Mute"
-msgstr "Zmiana rozdzielczości"
+msgstr "Wyciszenie głośności"
