@@ -52,7 +52,7 @@ e_xkb_init(void)
    else if (e_config->xkb.selected_layout)
      ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.sel_layout);
    else if (e_config->xkb.used_layouts)
-      ecore_timer_add(1.5, _e_xkb_init_timer, eina_list_data_get(e_config->xkb.used_layouts));
+     ecore_timer_add(1.5, _e_xkb_init_timer, eina_list_data_get(e_config->xkb.used_layouts));
    return 1;
 }
 
