@@ -225,7 +225,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    evas_object_event_callback_add(inst->o_xkbswitch, EVAS_CALLBACK_MOUSE_DOWN,
                                   _e_xkb_cb_mouse_down, inst);
    evas_object_event_callback_add(inst->o_xkbswitch, EVAS_CALLBACK_MOUSE_WHEEL,
-                                  _e_xkb_cb_mouse_wheel, inst);                                       
+                                  _e_xkb_cb_mouse_wheel, inst);
    /* Make the list know about the instance */
    instances = eina_list_append(instances, inst);
 
@@ -253,7 +253,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
                                        _e_xkb_cb_mouse_down);
         evas_object_event_callback_del(inst->o_xkbswitch,
                                        EVAS_CALLBACK_MOUSE_WHEEL,
-                                       _e_xkb_cb_mouse_wheel);                                 
+                                       _e_xkb_cb_mouse_wheel);
         evas_object_del(inst->o_xkbswitch);
         evas_object_del(inst->o_xkbflag);
      }
@@ -325,19 +325,15 @@ _xkb_menu_items_sort(const void *data1, const void *data2)
 static void
 _e_xkb_cb_mouse_wheel(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
-Evas_Event_Mouse_Wheel *ev = event;
+   Evas_Event_Mouse_Wheel *ev = event;
+   Instance *inst = data;
 
-Instance *inst = data;
-if (!inst) return;
-  
-if (ev->z == -1) // up
-     {
-        e_xkb_layout_next();
-     }
+   if (!inst) return;
+
+   if (ev->z == -1) // up
+     e_xkb_layout_next();
    else if (ev->z == 1) // down
-     {
-        e_xkb_layout_prev();
-     }
+     e_xkb_layout_prev();
 }
 
 static void
