@@ -422,6 +422,7 @@ _e_exec_cb_exec(void *data, Efreet_Desktop *desktop, char *exec, int remaining)
         if (startup_id < 0) startup_id = 0;
      }
    if (++startup_id < 1) startup_id = 1;
+   e_exehist_startup_id_set(startup_id);
    /* save previous env vars we need to save */
    penv_display = getenv("DISPLAY");
    if ((penv_display) && (launch->zone))
