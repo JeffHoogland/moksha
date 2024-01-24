@@ -1696,11 +1696,11 @@ e_util_open_quick_start(void)
    char buff[PATH_MAX];
 
    if (ecore_file_app_installed("bodhi-help"))
-   {
-      snprintf(buff, sizeof(buff), "bodhi-help -i");
-      zone = e_util_zone_current_get(e_manager_current_get());
-      e_exec(zone, NULL, buff, NULL, NULL);
-    }
+     {
+       snprintf(buff, sizeof(buff), "bodhi-help -i");
+       zone = e_util_zone_current_get(e_manager_current_get());
+       e_exec(zone, NULL, buff, NULL, NULL);
+     }
 }
 
 EAPI void
@@ -1712,48 +1712,48 @@ e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
    unsigned const int size = strlen(text)+1;
    
    if  (ecore_file_app_installed("xclip"))
-   {
-      if (type == ECORE_X_SELECTION_CLIPBOARD)
+     {
+       if (type == ECORE_X_SELECTION_CLIPBOARD)
          cmd = popen("xclip -selection c", "w");
-      else if (type == ECORE_X_SELECTION_PRIMARY)
+       else if (type == ECORE_X_SELECTION_PRIMARY)
          cmd = popen("xclip -selection p", "w");
-   }
+     }
    else
    if (ecore_file_app_installed("xsel"))
-   {
-     if (type == ECORE_X_SELECTION_CLIPBOARD)
-        cmd = popen("xsel -ib", "w");
-     else if (type == ECORE_X_SELECTION_PRIMARY)
-        cmd = popen("xsel -ip", "w");
-   }
+     {
+       if (type == ECORE_X_SELECTION_CLIPBOARD)
+         cmd = popen("xsel -ib", "w");
+       else if (type == ECORE_X_SELECTION_PRIMARY)
+         cmd = popen("xsel -ip", "w");
+     }
    else
-      goto fallback;
+     goto fallback;
 
    if (!cmd)
-   {
-     fprintf(stderr, "Moksha:clipboard %s\n", strerror(errno));
-     goto fallback;
-   }
+     {
+       fprintf(stderr, "Moksha:clipboard %s\n", strerror(errno));
+       goto fallback;
+     }
    size_t n = fwrite((const char*) text, 1, size, cmd);
    if ( (unsigned int) n != size)
-   {
-     fprintf(stderr, "Moksha:clipboard pipe error\n");
-     pclose(cmd);
-     goto fallback;
-   }
+     {
+       fprintf(stderr, "Moksha:clipboard pipe error\n");
+       pclose(cmd);
+       goto fallback;
+     }
 
    if (pclose(cmd))
-   { 
-     fprintf(stderr, "Moksha:clipboard command error\n" );
-     goto fallback;
-   }
+     {
+       fprintf(stderr, "Moksha:clipboard command error\n" );
+       goto fallback;
+     }
    return;
    
 fallback:
    if (type == ECORE_X_SELECTION_CLIPBOARD)
-      ecore_x_selection_clipboard_set(w, text, size);
+     ecore_x_selection_clipboard_set(w, text, size);
    else if (type == ECORE_X_SELECTION_PRIMARY)
-      ecore_x_selection_primary_set(w, text, size);
+     ecore_x_selection_primary_set(w, text, size);
    
 }
 
@@ -1768,12 +1768,13 @@ e_util_have_elm_theme(const char *name)
    
    list = elm_theme_name_available_list_new();
    EINA_LIST_FOREACH(list, li, th)
-   {
-      if (!strcmp(th, name))
-      {  ret = EINA_TRUE;
-         break;
-      }
-   }
+     {
+       if (!strcmp(th, name))
+         {
+           ret = EINA_TRUE;
+           break;
+         }
+     }
    elm_theme_name_available_list_free(list);
    return ret;
 }
@@ -1813,12 +1814,13 @@ e_util_have_icon_theme(const char *name)
    
    list = efreet_icon_theme_list_get();
    EINA_LIST_FOREACH(list, li, th)
-   {
-      if (!strcmp(th->name.internal, name))
-      {  ret = EINA_TRUE;
-         break;
-      }
-   }
+     {
+       if (!strcmp(th->name.internal, name))
+         {
+           ret = EINA_TRUE;
+           break;
+         }
+     }
    return ret;
 }
 
@@ -1829,14 +1831,14 @@ e_util_elm_icon_set()
    const char *icon_theme;
 
    if ((ct = e_theme_config_get("theme")))
-   {
-      icon_theme = e_config->icon_theme;
-      if (e_util_have_icon_theme(icon_theme))
-        {         
-          elm_config_icon_theme_set(icon_theme);
-          elm_config_all_flush();
-        }
-   }
+     {
+        icon_theme = e_config->icon_theme;
+        if (e_util_have_icon_theme(icon_theme))
+          {
+            elm_config_icon_theme_set(icon_theme);
+            elm_config_all_flush();
+          }
+     }
 }
 
 EAPI void
@@ -1851,13 +1853,13 @@ e_util_set_bodhi_elm_config()
 EAPI void 
 e_util_copy_safely(char* dst, const char* src, uint32_t len)
 {
-    strncpy(dst, src, len - 1);
-    dst[len - 1] = '\0';
+   strncpy(dst, src, len - 1);
+   dst[len - 1] = '\0';
 }
 
 EINTERN int
 e_systray_init(void)
 {
- E_EVENT_SYSTRAY_CHANGED = ecore_event_type_new();
- return 1;
+   E_EVENT_SYSTRAY_CHANGED = ecore_event_type_new();
+   return 1;
 }
