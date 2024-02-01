@@ -11,7 +11,8 @@ conf_keybindings_module_la_SOURCES = conf_keybindings/e_mod_main.c \
 			     conf_keybindings/e_mod_main.h \
 			     conf_keybindings/e_int_config_keybindings.c \
 			     conf_keybindings/e_int_config_mousebindings.c \
-			     conf_keybindings/e_int_config_acpibindings.c
+			     conf_keybindings/e_int_config_acpibindings.c \
+			     conf_keybindings/e_int_config_keybinds_viewer.c
 
 .PHONY: conf_keybindings install-conf_keybindings
 conf_keybindings: $(conf_keybindingspkg_LTLIBRARIES) $(conf_keybindings_DATA)
