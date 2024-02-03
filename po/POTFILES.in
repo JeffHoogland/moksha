@@ -169,6 +169,7 @@ src/modules/conf_intl/e_int_config_intl.c
 src/modules/conf_intl/e_mod_main.c
 src/modules/conf_keybindings/e_int_config_acpibindings.c
 src/modules/conf_keybindings/e_int_config_keybindings.c
+src/modules/conf_keybindings/e_int_config_keybinds_viewer.c
 src/modules/conf_keybindings/e_int_config_mousebindings.c
 src/modules/conf_keybindings/e_mod_main.c
 src/modules/conf_menus/e_int_config_menus.c
