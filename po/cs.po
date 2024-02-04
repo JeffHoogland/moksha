@@ -5893,7 +5893,7 @@ msgstr "Sejmi snímek obrazovky"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
 msgid "Terminal Console"
-msgstr "Konsole terminálu:"
+msgstr "Konsole terminálu"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
 msgid "This Help"
