@@ -224,16 +224,16 @@ msgstr "Vždy navrchu zakázať"
 #: src/bin/e_actions.c:3189
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
-msgstr "Zmeniť Ikonifikáciu"
+msgstr "Zmeniť Minimalizáciu"
 
 #: src/bin/e_actions.c:3193
 msgid "Iconic Mode Enable"
-msgstr "Povoliť Ikonifikáciu"
+msgstr "Povoliť Minimalizáciu"
 
 #: src/bin/e_actions.c:3198
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
-msgstr "Zmeniť Na celú obrazovku"
+msgstr "Na celú obrazovku"
 
 #: src/bin/e_actions.c:3202
 msgid "Fullscreen Mode Enable"
@@ -2126,7 +2126,7 @@ msgstr "Usporiadanie"
 
 #: src/bin/e_int_border_locks.c:315 src/bin/e_int_border_locks.c:334
 msgid "Iconified state"
-msgstr "Ikonifikovaný stav"
+msgstr "Minimalizácia"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
 #: src/bin/e_int_border_remember.c:710
@@ -5867,9 +5867,8 @@ msgstr ""
 "<br> Zvoľte iné priradenie."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
-#, fuzzy
 msgid "WINDOW"
-msgstr "OKNÁ"
+msgstr "OKNO"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
 #: src/modules/winlist/e_mod_main.c:41
@@ -5881,7 +5880,6 @@ msgid "SYSTEM"
 msgstr "SYSTÉM"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
 msgstr "Otvoriť Terminology:"
 
@@ -5910,14 +5908,12 @@ msgid "Take Screenshot"
 msgstr "Snímka obrazovky"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
 msgstr "Terminálové konzoly:"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
-msgstr "Táto nápoveda:"
+msgstr "Táto nápoveda"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
 msgid "Basic Moksha Key Bindings"
@@ -10422,84 +10418,3 @@ msgstr "Zvýšiť hlasitosť"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Stlmiť hlasitosť"
-
-#~ msgid "Close Window:"
-#~ msgstr "Zavrieť okno:"
-
-#~ msgid "Maximize Window:"
-#~ msgstr "Maximalizovať okno:"
-
-#~ msgid "Iconic Mode Toggle:"
-#~ msgstr "Minimalizovať okno:"
-
-#~ msgid "Fullscreen Mode Toggle:"
-#~ msgstr "Okno na celú obrazovku:"
-
-#~ msgid "Always On Top Toggle:"
-#~ msgstr "Vždy navrchu:"
-
-#~ msgid "Next Window:"
-#~ msgstr "Nasledujúce okno:"
-
-#~ msgid "Tile Right:"
-#~ msgstr "Maximalizovať vpravo:"
-
-#~ msgid "Tile Left:"
-#~ msgstr "Maximalizovať vľavo:"
-
-#~ msgid "Kill Window:"
-#~ msgstr "Ukončiť proces okna:"
-
-#~ msgid "Window Menu:"
-#~ msgstr "Menu okna:"
-
-#~ msgid "Lock System:"
-#~ msgstr "Zamknúť systém:"
-
-#~ msgid "Show Main Menu:"
-#~ msgstr "Zobraziť Hlavné menu:"
-
-#~ msgid "Show Favorites Menu:"
-#~ msgstr "Zobraziť Obľúbené:"
-
-#~ msgid "System Controls:"
-#~ msgstr "Systémové menu:"
-
-#~ msgid " Show the Desktop:"
-#~ msgstr " Zobraziť plochu:"
-
-#~ msgid " Switch to Desktop 0:"
-#~ msgstr " Prepnúť na plochu 0:"
-
-#~ msgid " Switch to Desktop 1:"
-#~ msgstr " Prepnúť na plochu 1:"
-
-#~ msgid " Switch to Desktop 2:"
-#~ msgstr " Prepnúť na plochu 2:"
-
-#~ msgid " Switch to Desktop 3:"
-#~ msgstr " Prepnúť na plochu 3:"
-
-#~ msgid " Switch to Desktop 4:"
-#~ msgstr " Prepnúť na plochu 4:"
-
-#~ msgid " Switch to Desktop 5:"
-#~ msgstr " Prepnúť na plochu 5:"
-
-#~ msgid " Switch to Desktop 6:"
-#~ msgstr " Prepnúť na plochu 6:"
-
-#~ msgid " Switch to Desktop 7:"
-#~ msgstr " Prepnúť na plochu 7:"
-
-#~ msgid " Switch to Desktop 8:"
-#~ msgstr " Prepnúť na plochu 8:"
-
-#~ msgid "Quick Launcher:"
-#~ msgstr "Rýchle spúšťanie:"
-
-#~ msgid "Take Screenshot:"
-#~ msgstr "Snímka obrazovky:"
-
-#~ msgid "Restart Moksha:"
-#~ msgstr "Reštart desktopu:"
