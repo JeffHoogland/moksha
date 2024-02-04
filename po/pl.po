@@ -6005,7 +6005,7 @@ msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
 msgid "WINDOW"
-msgstr ""
+msgstr "OKNO"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
 #: src/modules/winlist/e_mod_main.c:41
@@ -6017,7 +6017,6 @@ msgid "SYSTEM"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
 msgstr "Uruchom w konsoli"
 
@@ -6049,14 +6048,12 @@ msgid "Take Screenshot"
 msgstr "Opcje ekranów"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
-msgstr "Konsola terminala:"
+msgstr "Konsola terminala"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
-msgstr "Ta Pomoc:"
+msgstr "Ta Pomoc"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
 #, fuzzy
@@ -10915,96 +10912,3 @@ msgstr "Wzrost głośności"
 msgid "Volume Mute"
 msgstr "Wyciszenie głośności"
 
-#, fuzzy
-#~ msgid "Close Window:"
-#~ msgstr "Uporządkuj okna"
-
-#, fuzzy
-#~ msgid "Maximize Window:"
-#~ msgstr "Podnieś okno"
-
-#, fuzzy
-#~ msgid "Iconic Mode Toggle:"
-#~ msgstr "Znacznik ikonizacji"
-
-#, fuzzy
-#~ msgid "Fullscreen Mode Toggle:"
-#~ msgstr "Znacznik trybu pełnego ekranu"
-
-#, fuzzy
-#~ msgid "Always On Top Toggle:"
-#~ msgstr "Zawsze na wierzchu"
-
-#, fuzzy
-#~ msgid "Next Window:"
-#~ msgstr "Następne okno"
-
-#, fuzzy
-#~ msgid "Tile Right:"
-#~ msgstr "prawo;"
-
-#, fuzzy
-#~ msgid "Tile Left:"
-#~ msgstr "W lewo"
-
-#, fuzzy
-#~ msgid "Kill Window:"
-#~ msgstr "Wszystkim"
-
-#, fuzzy
-#~ msgid "Window Menu:"
-#~ msgstr "Menu Okna"
-
-#, fuzzy
-#~ msgid "Lock System:"
-#~ msgstr "Blokada nie powiodła się"
-
-#~ msgid "Show Main Menu:"
-#~ msgstr "Pokaż Główne Menu:"
-
-#~ msgid "Show Favorites Menu:"
-#~ msgstr "Pokaż Menu Ulubione:"
-
-#~ msgid "System Controls:"
-#~ msgstr "Sterowanie Systemem:"
-
-#~ msgid " Show the Desktop:"
-#~ msgstr "Pokaż pulpit"
-
-#~ msgid " Switch to Desktop 0:"
-#~ msgstr " Przełącz na pulpit 0:"
-
-#~ msgid " Switch to Desktop 1:"
-#~ msgstr " Przełącz na pulpit 1:"
-
-#~ msgid " Switch to Desktop 2:"
-#~ msgstr " Przełącz na pulpit 2:"
-
-#~ msgid " Switch to Desktop 3:"
-#~ msgstr "Przełącz na pulpit 3:"
-
-#~ msgid " Switch to Desktop 4:"
-#~ msgstr " Przełącz na pulpit 4:"
-
-#~ msgid " Switch to Desktop 5:"
-#~ msgstr " Przełącz na pulpit 5:"
-
-#~ msgid " Switch to Desktop 6:"
-#~ msgstr " Przełącz na pulpit 6:"
-
-#~ msgid " Switch to Desktop 7:"
-#~ msgstr "Przełącz na pulpit 7:"
-
-#~ msgid " Switch to Desktop 8:"
-#~ msgstr "Przełącz na pulpit 8:"
-
-#, fuzzy
-#~ msgid "Quick Launcher:"
-#~ msgstr "Uruchom"
-
-#, fuzzy
-#~ msgid "Take Screenshot:"
-#~ msgstr "Opcje ekranów"
-
-#~ msgid "Restart Moksha:"
-#~ msgstr "Zrestartuj Moksha:"

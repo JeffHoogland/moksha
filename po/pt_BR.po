@@ -5849,9 +5849,8 @@ msgstr ""
 "ação<br><hilight>%s</hilight>.<br>Por favor escolha outra sequência."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
-#, fuzzy
 msgid "WINDOW"
-msgstr "JANELAS"
+msgstr "JANELA"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
 #: src/modules/winlist/e_mod_main.c:41
@@ -5863,9 +5862,8 @@ msgid "SYSTEM"
 msgstr "SISTEMA"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
-msgstr "Abrir Terminology:"
+msgstr "Abrir Terminology"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
@@ -5892,12 +5890,10 @@ msgid "Take Screenshot"
 msgstr "Capturar tela"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
-msgstr "Console do terminal:"
+msgstr "Console do terminal"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
 msgstr "Esta ajuda:"
 
@@ -10407,84 +10403,3 @@ msgstr "Volume aumentado"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Volume no mudo"
-
-#~ msgid "Close Window:"
-#~ msgstr "Fechar janela:"
-
-#~ msgid "Maximize Window:"
-#~ msgstr "Maximizar janela:"
-
-#~ msgid "Iconic Mode Toggle:"
-#~ msgstr "Alternar modo ícone:"
-
-#~ msgid "Fullscreen Mode Toggle:"
-#~ msgstr "Alternar modo tela cheia:"
-
-#~ msgid "Always On Top Toggle:"
-#~ msgstr "Modo sempre à frente:"
-
-#~ msgid "Next Window:"
-#~ msgstr "Janela seguinte:"
-
-#~ msgid "Tile Right:"
-#~ msgstr "Empilhar à direita:"
-
-#~ msgid "Tile Left:"
-#~ msgstr "Empilhar à esquerda:"
-
-#~ msgid "Kill Window:"
-#~ msgstr "Forçar terminar janela:"
-
-#~ msgid "Window Menu:"
-#~ msgstr "Menu da janela:"
-
-#~ msgid "Lock System:"
-#~ msgstr "Bloquear sistema:"
-
-#~ msgid "Show Main Menu:"
-#~ msgstr "Mostrar menu principal:"
-
-#~ msgid "Show Favorites Menu:"
-#~ msgstr "Mostrar menu de favoritos:"
-
-#~ msgid "System Controls:"
-#~ msgstr "Controles do sistema:"
-
-#~ msgid " Show the Desktop:"
-#~ msgstr "Mostrar área de trabalho:"
-
-#~ msgid " Switch to Desktop 0:"
-#~ msgstr "Mudar para a área de trabalho 0:"
-
-#~ msgid " Switch to Desktop 1:"
-#~ msgstr "Mudar para a área de trabalho 1:"
-
-#~ msgid " Switch to Desktop 2:"
-#~ msgstr "Mudar para a área de trabalho 2:"
-
-#~ msgid " Switch to Desktop 3:"
-#~ msgstr "Mudar para a área de trabalho 3:"
-
-#~ msgid " Switch to Desktop 4:"
-#~ msgstr "Mudar para a área de trabalho 4:"
-
-#~ msgid " Switch to Desktop 5:"
-#~ msgstr "Mudar para a área de trabalho 5:"
-
-#~ msgid " Switch to Desktop 6:"
-#~ msgstr "Mudar para a área de trabalho 6:"
-
-#~ msgid " Switch to Desktop 7:"
-#~ msgstr "Mudar para a área de trabalho 7:"
-
-#~ msgid " Switch to Desktop 8:"
-#~ msgstr "Mudar para a área de trabalho 8:"
-
-#~ msgid "Quick Launcher:"
-#~ msgstr "Iniciador rápido:"
-
-#~ msgid "Take Screenshot:"
-#~ msgstr "Capturar tela:"
-
-#~ msgid "Restart Moksha:"
-#~ msgstr "Reiniciar o Moksha:"

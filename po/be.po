@@ -5851,9 +5851,8 @@ msgstr ""
 "<hilight>%s</hilight>.<br>Калі ласка, выберыце іншую паслядоўнасць клавіш."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
-#, fuzzy
 msgid "WINDOW"
-msgstr "ВОКНЫ"
+msgstr "AКНO"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
 #: src/modules/winlist/e_mod_main.c:41
@@ -5865,9 +5864,8 @@ msgid "SYSTEM"
 msgstr "СІСТЭМА"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
-msgstr "Адкрыць тэрмінал:"
+msgstr "Адкрыць тэрмінал"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
@@ -5894,14 +5892,12 @@ msgid "Take Screenshot"
 msgstr "Зрабіць здымак экрана"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
-msgstr "Камандны радок:"
+msgstr "Камандны радок"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
-msgstr "Гэта дапамога:"
+msgstr "Гэта дапамога"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
 msgid "Basic Moksha Key Bindings"
@@ -10410,84 +10406,3 @@ msgstr "Гучнасць павялічана"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Гук адключаны"
-
-#~ msgid "Close Window:"
-#~ msgstr "Закрыць акно:"
-
-#~ msgid "Maximize Window:"
-#~ msgstr "Разгарнуць акно:"
-
-#~ msgid "Iconic Mode Toggle:"
-#~ msgstr "Пераключыць партрэтны рэжым:"
-
-#~ msgid "Fullscreen Mode Toggle:"
-#~ msgstr "Пераключыць поўнаэкранны рэжым:"
-
-#~ msgid "Always On Top Toggle:"
-#~ msgstr "Пераключыць \"заўсёды зверху\""
-
-#~ msgid "Next Window:"
-#~ msgstr "Наступнае акно:"
-
-#~ msgid "Tile Right:"
-#~ msgstr "Плітка зправа:"
-
-#~ msgid "Tile Left:"
-#~ msgstr "Плітка злева:"
-
-#~ msgid "Kill Window:"
-#~ msgstr "Знішчыць акно:"
-
-#~ msgid "Window Menu:"
-#~ msgstr "Меню акна:"
-
-#~ msgid "Lock System:"
-#~ msgstr "Заблакіраваць сістэму:"
-
-#~ msgid "Show Main Menu:"
-#~ msgstr "Паказаць галоўнае меню:"
-
-#~ msgid "Show Favorites Menu:"
-#~ msgstr "Паказаць меню \"Абранае\""
-
-#~ msgid "System Controls:"
-#~ msgstr "Кіраванне сістэмай:"
-
-#~ msgid " Show the Desktop:"
-#~ msgstr " Паказаць працоўны стол:"
-
-#~ msgid " Switch to Desktop 0:"
-#~ msgstr " Перайсці да працоўнага стала 0:"
-
-#~ msgid " Switch to Desktop 1:"
-#~ msgstr " Перайсці да працоўнага стала 1:"
-
-#~ msgid " Switch to Desktop 2:"
-#~ msgstr " Перайсці да працоўнага стала 2:"
-
-#~ msgid " Switch to Desktop 3:"
-#~ msgstr " Перайсці да працоўнага стала 3:"
-
-#~ msgid " Switch to Desktop 4:"
-#~ msgstr " Перайсці да працоўнага стала 4:"
-
-#~ msgid " Switch to Desktop 5:"
-#~ msgstr " Перайсці да працоўнага стала 5:"
-
-#~ msgid " Switch to Desktop 6:"
-#~ msgstr " Перайсці да працоўнага стала 6:"
-
-#~ msgid " Switch to Desktop 7:"
-#~ msgstr " Перайсці да працоўнага стала 7:"
-
-#~ msgid " Switch to Desktop 8:"
-#~ msgstr " Перайсці да працоўнага стала 8:"
-
-#~ msgid "Quick Launcher:"
-#~ msgstr "Хуткі запуск:"
-
-#~ msgid "Take Screenshot:"
-#~ msgstr "Зрабіць здымак экрана:"
-
-#~ msgid "Restart Moksha:"
-#~ msgstr "Перазапусціць Moksha:"

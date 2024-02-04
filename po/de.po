@@ -5908,7 +5908,6 @@ msgstr ""
 "hilight>-Aktion verwendet.<br>Bitte wählen Sie eine andere Abfolge."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
-#, fuzzy
 msgid "WINDOW"
 msgstr "Fenster"
 
@@ -5922,9 +5921,8 @@ msgid "SYSTEM"
 msgstr "SYSTEM"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
-msgstr "Terminology öffnen:"
+msgstr "Terminology öffnen"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
@@ -5951,14 +5949,12 @@ msgid "Take Screenshot"
 msgstr "Bildschirmfoto machen"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
-msgstr "Terminal Konsole:"
+msgstr "Terminal Konsole"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
-msgstr "Diese Hilfe:"
+msgstr "Diese Hilfe"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
 msgid "Basic Moksha Key Bindings"
@@ -10497,84 +10493,3 @@ msgstr "Lautstärke vergrössern"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Lautstärke dämpfen"
-
-#~ msgid "Close Window:"
-#~ msgstr "Fenster schliessen:"
-
-#~ msgid "Maximize Window:"
-#~ msgstr "Fenster maximieren:"
-
-#~ msgid "Iconic Mode Toggle:"
-#~ msgstr "Icon-Modus-Umschalter:"
-
-#~ msgid "Fullscreen Mode Toggle:"
-#~ msgstr "Vollbildmodus umschalten:"
-
-#~ msgid "Always On Top Toggle:"
-#~ msgstr "Immer Oben umschalten:"
-
-#~ msgid "Next Window:"
-#~ msgstr "Nächstes Fenster:"
-
-#~ msgid "Tile Right:"
-#~ msgstr "Nach rechts kacheln:"
-
-#~ msgid "Tile Left:"
-#~ msgstr "Nach links kacheln:"
-
-#~ msgid "Kill Window:"
-#~ msgstr "Fenster schliessen:"
-
-#~ msgid "Window Menu:"
-#~ msgstr "Fenstermenü:"
-
-#~ msgid "Lock System:"
-#~ msgstr "System sperren:"
-
-#~ msgid "Show Main Menu:"
-#~ msgstr "Hauptmenü anzeigen:"
-
-#~ msgid "Show Favorites Menu:"
-#~ msgstr "Favoritenmenü anzeigen:"
-
-#~ msgid "System Controls:"
-#~ msgstr "Systemsteuerung:"
-
-#~ msgid " Show the Desktop:"
-#~ msgstr " Arbeitsfläche zeigen:"
-
-#~ msgid " Switch to Desktop 0:"
-#~ msgstr " Zu Arbeitsfläche 0 wechseln:"
-
-#~ msgid " Switch to Desktop 1:"
-#~ msgstr " Zu Arbeitsfläche 1 wechseln:"
-
-#~ msgid " Switch to Desktop 2:"
-#~ msgstr " Zu Arbeitsfläche 2 wechseln:"
-
-#~ msgid " Switch to Desktop 3:"
-#~ msgstr " Zu Arbeitsfläche 3 wechseln:"
-
-#~ msgid " Switch to Desktop 4:"
-#~ msgstr " Zu Arbeitsfläche 4 wechseln:"
-
-#~ msgid " Switch to Desktop 5:"
-#~ msgstr " Zu Arbeitsfläche 5 wechseln:"
-
-#~ msgid " Switch to Desktop 6:"
-#~ msgstr " Zu Arbeitsfläche 6 wechseln:"
-
-#~ msgid " Switch to Desktop 7:"
-#~ msgstr " Zu Arbeitsfläche 7 wechseln:"
-
-#~ msgid " Switch to Desktop 8:"
-#~ msgstr " Zu Arbeitsfläche 8 wechseln:"
-
-#~ msgid "Quick Launcher:"
-#~ msgstr "Schnellstarter:"
-
-#~ msgid "Take Screenshot:"
-#~ msgstr "Bildschirmfoto machen:"
-
-#~ msgid "Restart Moksha:"
-#~ msgstr "Moksha neustarten:"

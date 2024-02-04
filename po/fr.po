@@ -5880,9 +5880,8 @@ msgstr ""
 "séquence de raccourci clavier."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
-#, fuzzy
 msgid "WINDOW"
-msgstr "FENÊTRES"
+msgstr "FENÊTRE"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
 #: src/modules/winlist/e_mod_main.c:41
@@ -5894,9 +5893,8 @@ msgid "SYSTEM"
 msgstr "SYSTÈME"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
-#, fuzzy
 msgid "Open Terminology"
-msgstr "Ouvrir Terminology :"
+msgstr "Ouvrir Terminology"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
@@ -5923,14 +5921,12 @@ msgid "Take Screenshot"
 msgstr "Capturer l'écran"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
-#, fuzzy
 msgid "Terminal Console"
-msgstr "Console de terminal :"
+msgstr "Console de terminal"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
-#, fuzzy
 msgid "This Help"
-msgstr "Afficher l'aide :"
+msgstr "Afficher l'aide"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
 msgid "Basic Moksha Key Bindings"
