@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2024-01-17 20:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -33,6 +33,7 @@ msgstr "Об окружении Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -82,6 +83,7 @@ msgstr "Действительно хотите убить это окно?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "Убить"
 
@@ -177,6 +179,7 @@ msgid "Menu"
 msgstr "Меню"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "Меню Окна"
 
@@ -211,6 +214,7 @@ msgid "Sticky Mode Enable"
 msgstr "Включить \"липкий\" режим"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 msgid "Always On Top Toggle"
 msgstr "Переключить \"всегда наверху\""
 
@@ -223,6 +227,7 @@ msgid "Always On Top Disable"
 msgstr "Выключить \"всегда наверху\""
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "Переключить портретный режим "
 
@@ -231,6 +236,7 @@ msgid "Iconic Mode Enable"
 msgstr "Включить портретный режим"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "Переключить полноэкранный режим"
 
@@ -240,6 +246,7 @@ msgstr "Включить полноэкранный режим"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "Увеличить"
 
@@ -252,10 +259,12 @@ msgid "Maximize Horizontally"
 msgstr "Увеличить горизонтально"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 msgid "Maximize Left"
 msgstr "Увеличить влево"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 msgid "Maximize Right"
 msgstr "Увеличить вправо"
 
@@ -367,6 +376,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Перейти на предыдущий стол"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "Показать рабочий стол"
 
@@ -383,38 +393,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Перенести стол линейно..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "Перейти на рабочий стол 0"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "Перейти на рабочий стол 1"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "Перейти на рабочий стол 2"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "Перейти на рабочий стол 3"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "Перейти на рабочий стол 4"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "Перейти на рабочий стол 5"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "Перейти на рабочий стол 6"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "Перейти на рабочий стол 7"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "Перейти на рабочий стол 8"
 
@@ -661,10 +680,12 @@ msgid "To Previous Screen"
 msgstr "На предыдущий экран"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "Показать главное меню"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "Показать избранное меню"
 
@@ -777,6 +798,7 @@ msgid "Hibernate Now"
 msgstr "Перевести в спящий режим немедленно"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "Блокировка"
 
@@ -888,12 +910,12 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:"
-"<br>%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
+"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
+"%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -901,7 +923,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1006,9 +1028,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле."
-"<br>%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был "
-"удалён для предотвращения повреждения данных. <br>"
+"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле.<br>"
+"%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был удалён "
+"для предотвращения повреждения данных. <br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1260,37 +1282,37 @@ msgstr "Вставить"
 msgid "Select All"
 msgstr "Выделить всё"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Ошибка запуска"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha не смог определить текущий каталог"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha не смог перейти в каталог:<br><br>%s"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha не смог вернуться в каталог:<br><br>%s"
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha не смог запустить дочерний процесс:<br><br>%s"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "Ошибка запуска приложения"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1299,106 +1321,106 @@ msgstr ""
 "Moksha не смог запустить приложение:<br><br>%s<br><br>Приложение не "
 "запустилось."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "Ошибка исполнения приложения"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s неожиданно закончил исполнение."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Код выхода %i был возвращен из %s."
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s было прервано сигналом прерывания."
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s было прервано сигналом выхода."
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s было прервано сигналом аварийного прекращения работы."
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s было прервано ошибкой плавающей точки."
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s было прервано сигналом Uninterruptable Kill."
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s было прервано ошибкой сегментации."
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s было прервано ошибкой Broken Pipe."
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s было прервано сигналом завершения."
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s было прервано ошибкой Bus Error."
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s было прервано сигналом номер %i."
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "*** Остаток вывода был обрезан. Сохраните вывод для просмотра. ***\n"
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "Лог ошибки"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "Не было сообщения ошибки."
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "Сохранить это сообщение"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Этот лог об ошибке будет сохранён как %s/%s.log"
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "Информация об ошибке"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "Информация о сигнале ошибки"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "Выходные данные"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "Не было данных."
 
@@ -1689,7 +1711,7 @@ msgstr "Нет для всего"
 msgid "Yes to all"
 msgstr "Да для всего"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Предупреждение"
@@ -2540,10 +2562,10 @@ msgstr "Запрос позиции"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2839,6 +2861,7 @@ msgid "About Theme"
 msgstr "О теме"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 msgid "Restart Moksha"
 msgstr "Перезапустить Moksha"
 
@@ -3792,7 +3815,8 @@ msgstr "Расположение"
 msgid "Autohide"
 msgstr "Автоскрытие"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "Обновить"
 
@@ -5169,8 +5193,8 @@ msgstr "Стол"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Пусто>"
 
@@ -5369,7 +5393,7 @@ msgstr "Настройки привязок сигналов"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Ввод"
@@ -5644,7 +5668,7 @@ msgstr "Язык"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 msgid "ACPI Bindings"
 msgstr "Привязки ACPI"
 
@@ -5737,7 +5761,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5808,8 +5832,8 @@ msgid "Key Bindings Settings"
 msgstr "Настройки привязок клавиш"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "Привязки клавиш"
 
@@ -5824,12 +5848,72 @@ msgstr "Ошибка привязки клавиши"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Выбраная вами последовательность уже используется привязкой<br><hilight>%s</"
 "hilight>.<br>Пожалуйста, выберите другую последовательность."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#, fuzzy
+msgid "WINDOW"
+msgstr "ОКНА"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "Следующее окно"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr "СИСТЕМА"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "Открыть терминал:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "Управление системой"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr "РАБОЧИЙ СТОЛ"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr "ПРОЧЕЕ"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+msgid "Quick Launcher"
+msgstr "Быстрый запуск"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+msgid "Take Screenshot"
+msgstr "Сделать снимок экрана"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "Команда вызова терминала:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "Эта помощь:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+msgid "Basic Moksha Key Bindings"
+msgstr "Основные привязки клавиш"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "Изменить"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5858,7 +5942,7 @@ msgid "Mouse Binding Error"
 msgstr "Ошибка привязки мыши"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "Привязки мыши"
 
@@ -5954,159 +6038,15 @@ msgstr "Дополнительное колёсико (%d) вверх"
 msgid "Extra Wheel (%d) Down"
 msgstr "Дополнительное колёсико (%d) вниз"
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr "ОКНА"
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-msgid "Close Window:"
-msgstr "Закрыть окно"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-msgid "Maximize Window:"
-msgstr "Развернуть окно"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-msgid "Iconic Mode Toggle:"
-msgstr "Переключить портретный режим "
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-msgid "Fullscreen Mode Toggle:"
-msgstr "Переключить полноэкранный режим"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-msgid "Always On Top Toggle:"
-msgstr "Переключить \"всегда наверху\""
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-msgid "Next Window:"
-msgstr "Следующее окно"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-msgid "Tile Right:"
-msgstr "Правый:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-msgid "Tile Left:"
-msgstr "Верхний левый"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-msgid "Kill Window:"
-msgstr "Убить окно"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-msgid "Window Menu:"
-msgstr "Меню Окна"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr "СИСТЕМА"
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-msgid "Open Terminology:"
-msgstr "Открыть терминал:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-msgid "Lock System:"
-msgstr "Зафиксировать"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-msgid "Show Main Menu:"
-msgstr "Показать главное меню"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-msgid "Show Favorites Menu:"
-msgstr "Показать меню Избранное"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-msgid "System Controls:"
-msgstr "Управление системой"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr "РАБОЧИЙ СТОЛ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-msgid " Show the Desktop:"
-msgstr " Показать рабочий стол"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-msgid " Switch to Desktop 0:"
-msgstr " Перейти на рабочий стол 0"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-msgid " Switch to Desktop 1:"
-msgstr " Перейти на рабочий стол 1"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-msgid " Switch to Desktop 2:"
-msgstr " Перейти на рабочий стол 2"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-msgid " Switch to Desktop 3:"
-msgstr " Перейти на рабочий стол 3"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-msgid " Switch to Desktop 4:"
-msgstr " Перейти на рабочий стол 4"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-msgid " Switch to Desktop 5:"
-msgstr " Перейти на рабочий стол 5"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-msgid " Switch to Desktop 6:"
-msgstr " Перейти на рабочий стол 6"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-msgid " Switch to Desktop 7:"
-msgstr " Перейти на рабочий стол 7"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-msgid " Switch to Desktop 8:"
-msgstr " Перейти на рабочий стол 8"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr "ПРОЧЕЕ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-msgid "Quick Launcher:"
-msgstr "Быстрый запуск:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-msgid "Take Screenshot:"
-msgstr "Сделать снимок экрана:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-msgid "Restart Moksha:"
-msgstr "Перезапустить Moksha:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-msgid "Terminal console:"
-msgstr "Команда вызова терминала:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-msgid "This Help:"
-msgstr "Эта помощь:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-msgid "Basic Moksha Key Bindings"
-msgstr "Основные привязки клавиш"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "Изменить"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "Keybindings"
 msgstr "Привязки клавиш"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr "Показать привязки клавиш"
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 msgid "Show bindings"
 msgstr "Показать привязки"
 
@@ -7119,7 +7059,7 @@ msgid "Assign"
 msgstr "Назначить"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Очистить"
@@ -7598,7 +7538,7 @@ msgstr "Изменять размер по"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "Клавиатура"
 
@@ -7861,8 +7801,8 @@ msgid ""
 msgstr ""
 "Файл программы freqset в каталоге модуля<ps/>Частота ЦПУ не принадлежит "
 "пользователю<ps/>root или для неё не установлен бит setuid.<ps/>Пожалуйста, "
-"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
-"a+x %s<ps/>"
+"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
+"+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -7900,10 +7840,6 @@ msgstr "Конфигурация Всё"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Модуль Всё"
-
-#: src/modules/everything/e_mod_main.c:605
-msgid "Quick Launcher"
-msgstr "Быстрый запуск"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8270,11 +8206,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8288,12 +8224,12 @@ msgstr ""
 "ввод&gt;</hilight>.<br> Эта страничка не покажется при следующем запуске "
 "<hilight>Всё</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> закрыть этот "
 "диалог<br>    <hilight>&lt;?&gt;</hilight> показать эту страницу<br>    "
-"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;"
-"ctrl+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
-"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;"
-"ctrl+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    "
-"<hilight>&lt;ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с "
-"'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
+"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;ctrl"
+"+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
+"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;ctrl"
+"+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    <hilight>&lt;"
+"ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с 'x'<br>    "
+"<hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
 "плагинам<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> перейти к первому/"
 "последнему элементу<br>    <hilight>&lt;ctrl+1&gt;</hilight> переключение "
 "режимов просмотра<br>    <hilight>&lt;ctrl+2&gt;</hilight> переключение "
@@ -8778,10 +8714,6 @@ msgstr "Выравнивание"
 msgid "Window Switcher"
 msgstr "Переключение окон"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "Следующее окно"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Предыдущее окно"
@@ -9145,10 +9077,6 @@ msgstr "Выполнить действие по умолчанию после �
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
 msgstr "Действие по умолчанию"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "Управление системой"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 msgid "Show Menu"
@@ -9786,11 +9714,6 @@ msgstr "Снимок с задержкой"
 msgid "Take Shot"
 msgstr "Сделать снимок"
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-msgid "Take Screenshot"
-msgstr "Сделать снимок экрана"
-
 #: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr "Ошибка снимка"
@@ -10020,8 +9943,8 @@ msgid "Variant"
 msgstr "Вариант"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "Уведомления"
 
@@ -10041,32 +9964,32 @@ msgstr ""
 "Убедитесь, что нет других модулей, работающих в качестве сервера, и что "
 "служба D-Bus правильно установлена и работает."
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Пусто"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 msgid "Enter Presentation Mode"
 msgstr "Переход в режим презентации"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha в режиме <b>презентации</b>."
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 msgid "Exited Presentation Mode"
 msgstr "Режим Презентации отключен"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 msgid "Presentation mode is over."
 msgstr "Режим презентации завершён."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 msgid "Enter Offline Mode"
 msgstr "Включить автономный режим работы"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10074,11 +9997,11 @@ msgstr ""
 "Включен <b>автономный</b> режим работы.<br>В этом режиме модули, "
 "использующие сеть, прекратят её использование."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 msgid "Exited Offline Mode"
 msgstr "Выключить автономный режим"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10086,7 +10009,7 @@ msgstr ""
 "Режим <b>подключения к сети</b> активен. Модули, использующие сеть, "
 "продолжат работу."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 msgid "Notification expired!"
 msgstr "Уведомление устарело!"
 
@@ -10500,3 +10423,84 @@ msgstr "Громкость увеличена"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Звук выкл."
+
+#~ msgid "Close Window:"
+#~ msgstr "Закрыть окно"
+
+#~ msgid "Maximize Window:"
+#~ msgstr "Развернуть окно"
+
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "Переключить портретный режим "
+
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "Переключить полноэкранный режим"
+
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "Переключить \"всегда наверху\""
+
+#~ msgid "Next Window:"
+#~ msgstr "Следующее окно"
+
+#~ msgid "Tile Right:"
+#~ msgstr "Правый:"
+
+#~ msgid "Tile Left:"
+#~ msgstr "Верхний левый"
+
+#~ msgid "Kill Window:"
+#~ msgstr "Убить окно"
+
+#~ msgid "Window Menu:"
+#~ msgstr "Меню Окна"
+
+#~ msgid "Lock System:"
+#~ msgstr "Зафиксировать"
+
+#~ msgid "Show Main Menu:"
+#~ msgstr "Показать главное меню"
+
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "Показать меню Избранное"
+
+#~ msgid "System Controls:"
+#~ msgstr "Управление системой"
+
+#~ msgid " Show the Desktop:"
+#~ msgstr " Показать рабочий стол"
+
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr " Перейти на рабочий стол 0"
+
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr " Перейти на рабочий стол 1"
+
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr " Перейти на рабочий стол 2"
+
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr " Перейти на рабочий стол 3"
+
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr " Перейти на рабочий стол 4"
+
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr " Перейти на рабочий стол 5"
+
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr " Перейти на рабочий стол 6"
+
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr " Перейти на рабочий стол 7"
+
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr " Перейти на рабочий стол 8"
+
+#~ msgid "Quick Launcher:"
+#~ msgstr "Быстрый запуск:"
+
+#~ msgid "Take Screenshot:"
+#~ msgstr "Сделать снимок экрана:"
+
+#~ msgid "Restart Moksha:"
+#~ msgstr "Перезапустить Moksha:"

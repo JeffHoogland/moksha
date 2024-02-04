@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2024-01-17 16:56-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Català <enlightenment-devel@lists.sourceforge.net>\n"
@@ -34,6 +34,7 @@ msgstr "Quant a l'entorn Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -84,6 +85,7 @@ msgstr "Esteu segur que voleu matar aquesta finestra?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "Mata"
 
@@ -179,6 +181,7 @@ msgid "Menu"
 msgstr "Menú"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "Menú de finestra"
 
@@ -213,6 +216,7 @@ msgid "Sticky Mode Enable"
 msgstr "Activa mode enganxós"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 msgid "Always On Top Toggle"
 msgstr "Alterna sempre al damunt"
 
@@ -225,6 +229,7 @@ msgid "Always On Top Disable"
 msgstr "Desactiva sempre al damunt"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "Alterna mode minimitzat"
 
@@ -233,6 +238,7 @@ msgid "Iconic Mode Enable"
 msgstr "Activa mode minimitzat"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "Alterna mode pantalla completa"
 
@@ -242,6 +248,7 @@ msgstr "Activa mode pantalla completa"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "Maximitza"
 
@@ -254,10 +261,12 @@ msgid "Maximize Horizontally"
 msgstr "Maximitza horitzontalment"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 msgid "Maximize Left"
 msgstr "Maximitza esquerra"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 msgid "Maximize Right"
 msgstr "Maximitza dreta"
 
@@ -370,6 +379,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Canvia a l'escriptori previ"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "Mostra l'escriptori"
 
@@ -386,38 +396,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Canvia escriptori linealment ..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "Canvia a escriptori 0"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "Canvia a escriptori 1"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "Canvia a escriptori 2"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "Canvia a escriptori 3"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "Canvia a escriptori 4"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "Canvia a escriptori 5"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "Canvia a escriptori 6"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "Canvia a escriptori 7"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "Canvia a escriptori 8"
 
@@ -664,10 +683,12 @@ msgid "To Previous Screen"
 msgstr "Envia a la pantalla anterior"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "Mostra el menú principal"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "Mostra el menú preferits"
 
@@ -780,6 +801,7 @@ msgid "Hibernate Now"
 msgstr "Hiberna ara"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "Bloqueja"
 
@@ -899,7 +921,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -907,7 +929,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1268,37 +1290,37 @@ msgstr "Enganxa"
 msgid "Select All"
 msgstr "Selecciona tot"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Error d'execució"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha no ha pogut accedir al directori actual"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha no ha pogut accedir al directori:<br><br>%s"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha no ha pogut restaurar al directori:<br><br>%s"
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha no ha pogut crear un procés fill:<br><br>%s"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "Error d'execució de l'aplicació"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1307,108 +1329,108 @@ msgstr ""
 "Moksha no ha pogut executar l'aplicació.<br><br>%s<br><br> L'aplicació ha "
 "fallat en iniciar."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "Error en l'execució de l'aplicació"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s ha parat d'executar-se inesperadament."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Ha retornat el codi de sortida %i des de %s."
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s ha estat interromput per una senyal d'interrupció."
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s ha estat interromput per una senyal de sortida."
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s ha estat interromput per una senyal d'avortament."
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s ha estat interromput per un error de coma flotant."
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s ha estat interromput per un senyal de matar procés."
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s ha estat interromput per un error de segment."
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s ha estat interromput per un trencament de canonada."
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s ha estat interromput per un senyal de fi."
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s ha estat interromput per un error de Bus."
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s ha estat interromput pel senyal número %i."
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***El missatge de sortida ha estat truncat. Guardeu-lo per a veure'l complet."
 "***\n"
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "Registre d'errors"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "No hi ha missatge d'error."
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "Desa aquest missatge"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "El registre d'aquest error ha estat desat com a %s/%s.log"
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "Informació d'error"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "Informació del senyal d'error"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "Informació de sortida"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "No hi ha sortida."
 
@@ -1698,7 +1720,7 @@ msgstr "No a tot"
 msgid "Yes to all"
 msgstr "Sí a tot"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Alerta"
@@ -1752,11 +1774,11 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d "
-"a<br><hilight>%s</hilight>?"
+"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d a<br><hilight>"
+"%s</hilight>?"
 msgstr[1] ""
-"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d "
-"a<br><hilight>%s</hilight>?"
+"Esteu segur que voleu eliminar <br>el fitxer seleccionat %d a<br><hilight>"
+"%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2546,10 +2568,10 @@ msgstr "Demana posició"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2843,6 +2865,7 @@ msgid "About Theme"
 msgstr "Quant al tema"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 msgid "Restart Moksha"
 msgstr "Tornar a engegar Moksha"
 
@@ -3803,7 +3826,8 @@ msgstr "Orientació"
 msgid "Autohide"
 msgstr "Amaga automàticament"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "Refresca"
 
@@ -5173,8 +5197,8 @@ msgstr "Escriptori"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Cap>"
 
@@ -5374,7 +5398,7 @@ msgstr "Preferències senyals de drecera"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Entrada"
@@ -5650,7 +5674,7 @@ msgstr "Llengua"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 msgid "ACPI Bindings"
 msgstr "Dreceres ACPI"
 
@@ -5743,7 +5767,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5814,8 +5838,8 @@ msgid "Key Bindings Settings"
 msgstr "Preferències dreceres de teclat"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "Dreceres teclat"
 
@@ -5830,13 +5854,73 @@ msgstr "Error de drecera de teclat"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "La seqüència de drecera de tecles, que heu escollit, està essent utilitzada "
 "per l'acció<br><hilight>%s</hilight>. Si us plau escolliu una altra "
 "seqüència de tecles."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#, fuzzy
+msgid "WINDOW"
+msgstr "FINESTRES"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "Finestra següent"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr "SISTEMA"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "Obre Terminology:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "Controls sistema"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr "ESCRIPTORI"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr "DIVERS"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+msgid "Quick Launcher"
+msgstr "Executa"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+msgid "Take Screenshot"
+msgstr "Captura pantalla"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "Comanda de terminal:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "Aquesta Ajut"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+msgid "Basic Moksha Key Bindings"
+msgstr "Dreceres de tecles Moksha bàsiques"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "Edita"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5865,7 +5949,7 @@ msgid "Mouse Binding Error"
 msgstr "Error drecera de ratolí"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "Dreceres ratolí"
 
@@ -5961,159 +6045,15 @@ msgstr "Roda extra (%d) amunt"
 msgid "Extra Wheel (%d) Down"
 msgstr "Roda extra (%d) avall"
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr "FINESTRES"
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-msgid "Close Window:"
-msgstr "Tanca la finestra:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-msgid "Maximize Window:"
-msgstr "Maximitza Finestra:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-msgid "Iconic Mode Toggle:"
-msgstr "Alterna mode minimitzat:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-msgid "Fullscreen Mode Toggle:"
-msgstr "Alterna mode pantalla completa:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-msgid "Always On Top Toggle:"
-msgstr "Alterna sempre al damunt:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-msgid "Next Window:"
-msgstr "Finestra següent:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-msgid "Tile Right:"
-msgstr "Maximitzar a la dreta:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-msgid "Tile Left:"
-msgstr "Maximizar a la izquierda:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-msgid "Kill Window:"
-msgstr "Totes les finestres:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-msgid "Window Menu:"
-msgstr "Menú de finestra:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr "SISTEMA"
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-msgid "Open Terminology:"
-msgstr "Obre Terminology:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-msgid "Lock System:"
-msgstr "Bloqueig sistema:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-msgid "Show Main Menu:"
-msgstr "Mostra menú principal"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-msgid "Show Favorites Menu:"
-msgstr "Mostra el menú preferits:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-msgid "System Controls:"
-msgstr "Controls sistema:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr "ESCRIPTORI"
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-msgid " Show the Desktop:"
-msgstr "Mostra l'escriptori:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-msgid " Switch to Desktop 0:"
-msgstr "Canvia a escriptori 0:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-msgid " Switch to Desktop 1:"
-msgstr "Canvia a escriptori 1:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-msgid " Switch to Desktop 2:"
-msgstr "Canvia a escriptori 2:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-msgid " Switch to Desktop 3:"
-msgstr "Canvia a escriptori 3:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-msgid " Switch to Desktop 4:"
-msgstr "Canvia a escriptori 4:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-msgid " Switch to Desktop 5:"
-msgstr "Canvia a escriptori 5:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-msgid " Switch to Desktop 6:"
-msgstr "Canvia a escriptori 6:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-msgid " Switch to Desktop 7:"
-msgstr "Canvia a escriptori 7:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-msgid " Switch to Desktop 8:"
-msgstr "Canvia a escriptori 8:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr "DIVERS"
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-msgid "Quick Launcher:"
-msgstr "Executa:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-msgid "Take Screenshot:"
-msgstr "Captura pantalla:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-msgid "Restart Moksha:"
-msgstr "Tornar a engegar Moksha:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-msgid "Terminal console:"
-msgstr "Comanda de terminal:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-msgid "This Help:"
-msgstr "Aquesta Ajut"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-msgid "Basic Moksha Key Bindings"
-msgstr "Dreceres de tecles Moksha bàsiques"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "Edita"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "Keybindings"
 msgstr "Dreceres teclat"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr "Veure dreceres de tecles Moksha"
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 msgid "Show bindings"
 msgstr "Mostra dreceres"
 
@@ -7127,7 +7067,7 @@ msgid "Assign"
 msgstr "Assigna"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Esborra"
@@ -7606,7 +7546,7 @@ msgstr "Redimensiona per"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "Teclat"
 
@@ -7907,10 +7847,6 @@ msgstr "Configuració Everything"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Mòdul Everything"
-
-#: src/modules/everything/e_mod_main.c:605
-msgid "Quick Launcher"
-msgstr "Executa"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8276,11 +8212,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8297,8 +8233,8 @@ msgstr ""
 "aquesta pàgina<br>    <hilight>&lt;ENTER&gt;</hilight> executa "
 "acció<br><hilight>&lt;CTRL+ENTER&gt;</hilight> executa acció i continua<br> "
 "<hilight>&lt;TAB&gt;</hilight> canvia selecció<br><hilight>&lt;CRTL+TAB&gt;</"
-"hilight> completa entrada  (depèn de connector)<br>    <hilight>&lt;"
-"CTRL+'x'&gt;</hilight> salta al connector que comença per 'x'<br>    "
+"hilight> completa entrada  (depèn de connector)<br>    <hilight>&lt;CTRL"
+"+'x'&gt;</hilight> salta al connector que comença per 'x'<br>    "
 "<hilight>&lt;CRTL+esquerra</right&gt;</hilight> Desplaça a través de "
 "connectors<br>    <hilight>&lt;CTRL+amunt/avall&gt;</hilight> va al primer/"
 "últim element<br>    <hilight>&lt;CTRL+1&gt;</hilight> canvia mode vista "
@@ -8783,10 +8719,6 @@ msgstr "Alineament"
 msgid "Window Switcher"
 msgstr "Commutador de finestres"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "Finestra següent"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Finestra anterior"
@@ -9149,10 +9081,6 @@ msgstr "Fer acció per defecte després de temps d'espera"
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
 msgstr "Acció per defecte"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "Controls sistema"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 msgid "Show Menu"
@@ -9796,11 +9724,6 @@ msgstr "Captura postergada"
 msgid "Take Shot"
 msgstr "Captura finestra"
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-msgid "Take Screenshot"
-msgstr "Captura pantalla"
-
 #: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr "Error captura"
@@ -10030,8 +9953,8 @@ msgid "Variant"
 msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "Notificacions"
 
@@ -10051,32 +9974,32 @@ msgstr ""
 "Assegureu-vos que no hi ha cap mòdul actuant com a servidor i que D-Bus està "
 "instal·lat i funcionant de manera correcta"
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Buit"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 msgid "Enter Presentation Mode"
 msgstr "Entra al mode presentació"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha està en mode de <b>presentació</b>."
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 msgid "Exited Presentation Mode"
 msgstr "S'ha sortit del mode presentació"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 msgid "Presentation mode is over."
 msgstr "S'acaba la mode de presentació."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 msgid "Enter Offline Mode"
 msgstr "Entra mode desconnectat"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10084,11 +10007,11 @@ msgstr ""
 "Moksha és en mode <b>desconnectat</b>.<br>Mentre estigui desconnectat els "
 "mòduls que utilitzen la xarxa aturaran els serveis de sondeig remot."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 msgid "Exited Offline Mode"
 msgstr "S'ha sortit del mode desconnectat"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10096,7 +10019,7 @@ msgstr ""
 "Ara s'utilitza el mode <b>connectat<br>Els mòduls que utilitzen la xarxa "
 "restabliran les seves tasques."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 msgid "Notification expired!"
 msgstr "Notificació caducada!"
 
@@ -10506,3 +10429,84 @@ msgstr "Volum augmentat"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Volum silenciat"
+
+#~ msgid "Close Window:"
+#~ msgstr "Tanca la finestra:"
+
+#~ msgid "Maximize Window:"
+#~ msgstr "Maximitza Finestra:"
+
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "Alterna mode minimitzat:"
+
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "Alterna mode pantalla completa:"
+
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "Alterna sempre al damunt:"
+
+#~ msgid "Next Window:"
+#~ msgstr "Finestra següent:"
+
+#~ msgid "Tile Right:"
+#~ msgstr "Maximitzar a la dreta:"
+
+#~ msgid "Tile Left:"
+#~ msgstr "Maximizar a la izquierda:"
+
+#~ msgid "Kill Window:"
+#~ msgstr "Totes les finestres:"
+
+#~ msgid "Window Menu:"
+#~ msgstr "Menú de finestra:"
+
+#~ msgid "Lock System:"
+#~ msgstr "Bloqueig sistema:"
+
+#~ msgid "Show Main Menu:"
+#~ msgstr "Mostra menú principal"
+
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "Mostra el menú preferits:"
+
+#~ msgid "System Controls:"
+#~ msgstr "Controls sistema:"
+
+#~ msgid " Show the Desktop:"
+#~ msgstr "Mostra l'escriptori:"
+
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr "Canvia a escriptori 0:"
+
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr "Canvia a escriptori 1:"
+
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr "Canvia a escriptori 2:"
+
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr "Canvia a escriptori 3:"
+
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr "Canvia a escriptori 4:"
+
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr "Canvia a escriptori 5:"
+
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr "Canvia a escriptori 6:"
+
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr "Canvia a escriptori 7:"
+
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr "Canvia a escriptori 8:"
+
+#~ msgid "Quick Launcher:"
+#~ msgstr "Executa:"
+
+#~ msgid "Take Screenshot:"
+#~ msgstr "Captura pantalla:"
+
+#~ msgid "Restart Moksha:"
+#~ msgstr "Tornar a engegar Moksha:"

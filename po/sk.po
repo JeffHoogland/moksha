@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2024-01-18 19:40+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -28,6 +28,7 @@ msgstr "O desktope Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -77,6 +78,7 @@ msgstr "Ste si istý, že chcete násilne ukončiť toto okno?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "Násilne ukončiť"
 
@@ -172,6 +174,7 @@ msgid "Menu"
 msgstr "Menu"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "Menu Okna"
 
@@ -206,6 +209,7 @@ msgid "Sticky Mode Enable"
 msgstr "Povoliť Lepkavosť"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 msgid "Always On Top Toggle"
 msgstr "Vždy navrchu"
 
@@ -218,6 +222,7 @@ msgid "Always On Top Disable"
 msgstr "Vždy navrchu zakázať"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "Zmeniť Ikonifikáciu"
 
@@ -226,6 +231,7 @@ msgid "Iconic Mode Enable"
 msgstr "Povoliť Ikonifikáciu"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "Zmeniť Na celú obrazovku"
 
@@ -235,6 +241,7 @@ msgstr "Zobrazenie na celú obrazovku"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "Maximalizovať"
 
@@ -247,10 +254,12 @@ msgid "Maximize Horizontally"
 msgstr "Maximalizovať vodorovne"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 msgid "Maximize Left"
 msgstr "Maximalizovať vľavo"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 msgid "Maximize Right"
 msgstr "Maximalizovať vpravo"
 
@@ -362,6 +371,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Na predošlú plochu"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "Zobraziť plochu"
 
@@ -378,38 +388,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Preklopiť plochu lineárne..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "Prepnúť na plochu 0"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "Prepnúť na plochu 1"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "Prepnúť na plochu 2"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "Prepnúť na plochu 3"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "Prepnúť na plochu 4"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "Prepnúť na plochu 5"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "Prepnúť na plochu 6"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "Prepnúť na plochu 7"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "Prepnúť na plochu 8"
 
@@ -656,10 +675,12 @@ msgid "To Previous Screen"
 msgstr "Na predošlú obrazovku"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "Zobraziť Hlavné menu"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "Zobraziť menu Obľúbené"
 
@@ -772,6 +793,7 @@ msgid "Hibernate Now"
 msgstr "Režim spánku"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "Zamknúť"
 
@@ -891,7 +913,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -899,7 +921,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1258,37 +1280,37 @@ msgstr "Vložiť"
 msgid "Select All"
 msgstr "Vybrať všetky"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Chyba pri spustení"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha nemôže identifikovať aktuálny adresár"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha nemôže zmeniť adresár:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha nemôže obnoviť adresár:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha nemôže vytvoriť proces potomka:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "Chyba pri spustení aplikácie"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1297,108 +1319,108 @@ msgstr ""
 "Moksha nemôže spustiť aplikáciu.<br><br>%s<br><br>Aplikácia zlyhala pri "
 "spustení."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "Chyba pri spustení aplikácie"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s neočakávane ukončil svoj beh."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "Návratová hodnota %2$s vrátila aplikácia %1$i."
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s prerušil signál Interrupt."
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s bol prerušený signálom Quit."
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s prerušil signál Abort."
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s prerušila chyba pohyblivej desatinnej čiarky."
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s prerušil signál Uninterruptable Kill."
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s prerušila chyba segmentácie."
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s prerušila prerušená rúra."
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s prerušil signál Termination."
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s prerušila chyba zbernice."
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s prerušil signál č. %i."
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***Zvyšný výstup bol vynechaný vo výpise. Zobraziť ho môžete uložením "
 "výstupu.***\n"
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "Záznamy chýb"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "Žiadne chybové hlásenie."
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "Uložiť túto správu"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Tento chybový záznam sa uloží ako %s/%s.log"
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "Informácia o chybe"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "Informácia chybového signálu"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "Výstupné dáta"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "Žiaden výstup."
 
@@ -1689,7 +1711,7 @@ msgstr "Nie pre všetko"
 msgid "Yes to all"
 msgstr "Áno na všetko"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Upozornenia"
@@ -1741,9 +1763,15 @@ msgid ""
 msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
-msgstr[0] "Ste si istí, že chcete odstrániť<br>%d vybraný súbor v<br><hilight>%s</hilight>?"
-msgstr[1] "Ste si istí, že chcete odstrániť<br> %d vybrané súbory v<br><hilight>%s</hilight>?"
-msgstr[2] "Ste si istí, že chcete odstrániť<br>%d vybraných súborov v<br><hilight>%s</hilight>?"
+msgstr[0] ""
+"Ste si istí, že chcete odstrániť<br>%d vybraný súbor v<br><hilight>%s</"
+"hilight>?"
+msgstr[1] ""
+"Ste si istí, že chcete odstrániť<br> %d vybrané súbory v<br><hilight>%s</"
+"hilight>?"
+msgstr[2] ""
+"Ste si istí, že chcete odstrániť<br>%d vybraných súborov v<br><hilight>%s</"
+"hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2534,10 +2562,10 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2836,6 +2864,7 @@ msgid "About Theme"
 msgstr "O Téme"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 msgid "Restart Moksha"
 msgstr "Reštart Moksha desktopu"
 
@@ -3543,9 +3572,9 @@ msgid ""
 "loading the<br>module named: %s. This module has been disabled<br>and will "
 "not be loaded."
 msgstr ""
-"Moksha sa zrútila predčasne na začiatku a<br>bola reštartovaná. "
-"Pri načítavaní<br>modulu s názvom: %s sa vyskytla chyba. "
-"Tento modul bol zakázaný<br>a nebude načítaný."
+"Moksha sa zrútila predčasne na začiatku a<br>bola reštartovaná. Pri "
+"načítavaní<br>modulu s názvom: %s sa vyskytla chyba. Tento modul bol "
+"zakázaný<br>a nebude načítaný."
 
 #: src/bin/e_main.c:1932 src/bin/e_main.c:1948
 msgid "Moksha crashed early on start and has been restarted"
@@ -3795,7 +3824,8 @@ msgstr "Orientácia"
 msgid "Autohide"
 msgstr "Automatické skrývanie"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "Obnoviť"
 
@@ -5176,8 +5206,8 @@ msgstr "Plocha"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Žiadny>"
 
@@ -5375,7 +5405,7 @@ msgstr "Nastavenie signálových väzieb"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Vstup"
@@ -5650,7 +5680,7 @@ msgstr "Jazyk"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 msgid "ACPI Bindings"
 msgstr "ACPI väzby"
 
@@ -5743,7 +5773,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5814,8 +5844,8 @@ msgid "Key Bindings Settings"
 msgstr "Nastavenie Klávesových skratiek"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "Klávesové skratky"
 
@@ -5831,11 +5861,71 @@ msgstr "Chyba pri priraďovaní skratky"
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Priradenie, ktoré bolo vytvorené už bolo použité <br><hilight>%s</hilight>."
 "<br> Zvoľte iné priradenie."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#, fuzzy
+msgid "WINDOW"
+msgstr "OKNÁ"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "Nasledujúce okno"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr "SYSTÉM"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "Otvoriť Terminology:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "Nastavenie systému"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr "PLOCHA"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr "RÔZNE"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+msgid "Quick Launcher"
+msgstr "Rýchle spúšťanie"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+msgid "Take Screenshot"
+msgstr "Snímka obrazovky"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "Terminálové konzoly:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "Táto nápoveda:"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+msgid "Basic Moksha Key Bindings"
+msgstr "Základné klávesové skratky"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "Upraviť"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -5864,7 +5954,7 @@ msgid "Mouse Binding Error"
 msgstr "Chyba skratky pre myš"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "Skratky pre myš"
 
@@ -5960,159 +6050,15 @@ msgstr "Uvoľnenie extra kolieska (%d)"
 msgid "Extra Wheel (%d) Down"
 msgstr "Stlačenie extra kolieska (%d)"
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr "OKNÁ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-msgid "Close Window:"
-msgstr "Zavrieť okno:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-msgid "Maximize Window:"
-msgstr "Maximalizovať okno:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-msgid "Iconic Mode Toggle:"
-msgstr "Minimalizovať okno:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-msgid "Fullscreen Mode Toggle:"
-msgstr "Okno na celú obrazovku:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-msgid "Always On Top Toggle:"
-msgstr "Vždy navrchu:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-msgid "Next Window:"
-msgstr "Nasledujúce okno:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-msgid "Tile Right:"
-msgstr "Maximalizovať vpravo:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-msgid "Tile Left:"
-msgstr "Maximalizovať vľavo:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-msgid "Kill Window:"
-msgstr "Ukončiť proces okna:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-msgid "Window Menu:"
-msgstr "Menu okna:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr "SYSTÉM"
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-msgid "Open Terminology:"
-msgstr "Otvoriť Terminology:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-msgid "Lock System:"
-msgstr "Zamknúť systém:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-msgid "Show Main Menu:"
-msgstr "Zobraziť Hlavné menu:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-msgid "Show Favorites Menu:"
-msgstr "Zobraziť Obľúbené:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-msgid "System Controls:"
-msgstr "Systémové menu:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr "PLOCHA"
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-msgid " Show the Desktop:"
-msgstr " Zobraziť plochu:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-msgid " Switch to Desktop 0:"
-msgstr " Prepnúť na plochu 0:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-msgid " Switch to Desktop 1:"
-msgstr " Prepnúť na plochu 1:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-msgid " Switch to Desktop 2:"
-msgstr " Prepnúť na plochu 2:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-msgid " Switch to Desktop 3:"
-msgstr " Prepnúť na plochu 3:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-msgid " Switch to Desktop 4:"
-msgstr " Prepnúť na plochu 4:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-msgid " Switch to Desktop 5:"
-msgstr " Prepnúť na plochu 5:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-msgid " Switch to Desktop 6:"
-msgstr " Prepnúť na plochu 6:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-msgid " Switch to Desktop 7:"
-msgstr " Prepnúť na plochu 7:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-msgid " Switch to Desktop 8:"
-msgstr " Prepnúť na plochu 8:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr "RÔZNE"
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-msgid "Quick Launcher:"
-msgstr "Rýchle spúšťanie:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-msgid "Take Screenshot:"
-msgstr "Snímka obrazovky:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-msgid "Restart Moksha:"
-msgstr "Reštart desktopu:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-msgid "Terminal console:"
-msgstr "Terminálové konzoly:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-msgid "This Help:"
-msgstr "Táto nápoveda:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-msgid "Basic Moksha Key Bindings"
-msgstr "Základné klávesové skratky"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "Upraviť"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "Keybindings"
 msgstr "Klávesové skratky"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr "Zobraziť klávesové skratky"
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 msgid "Show bindings"
 msgstr "Zobraziť klávesové skratky"
 
@@ -7125,7 +7071,7 @@ msgid "Assign"
 msgstr "Priradiť"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Vyčistiť"
@@ -7606,7 +7552,7 @@ msgstr "Zmeniť veľkosť"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "Klávesnica"
 
@@ -7867,8 +7813,8 @@ msgid ""
 "not have the<ps/>setuid bit set. Please ensure this is the<ps/>case. For "
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
-"Binárny súbor frekvencií v module cpufreq<ps/> nevlastní root alebo "
-"nemá nastavený bit <ps/>setuid. Uistite sa, že ide o tento prípad <ps/>. "
+"Binárny súbor frekvencií v module cpufreq<ps/> nevlastní root alebo nemá "
+"nastavený bit <ps/>setuid. Uistite sa, že ide o tento prípad <ps/>. "
 "Napríklad:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
@@ -7907,10 +7853,6 @@ msgstr "Nastavenie Rýchleho spúšťania"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Modul Rýchleho spúšťania"
-
-#: src/modules/everything/e_mod_main.c:605
-msgid "Quick Launcher"
-msgstr "Rýchle spúšťanie"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8288,24 +8230,24 @@ msgid ""
 "</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
 "toggle thumb view modes"
 msgstr ""
-" Ok, tu je vysvetlenie <hilight>Rýchleho spúšťania</hilight>...<br> "
-"Stačí zadať pár písmen veci, ktorú hľadáte. <br>"
-"Pomocou kurzora <hilight>&lt;hore/dole&gt;</hilight> vyberte zo zoznamu vecí.<br> "
-"Stlačením <hilight>&lt;tab&gt;</hilight> vyberte akciu a potom stlačte "
-"<hilight>&lt;návrat&gt;</hilight>.<br>"
-"Táto stránka sa nabudúce nezobrazí spustíte <highlight>Rýchle Spúšťanie<</highlight>."
-"<br>    <hilight>&lt;Esc&gt;</hilight> zavrieť toto dialógové okno"
-"<br>    <hilight>&lt;?&gt;</hilight> zobraziť túto stránku"
-"<br>    <hilight>&lt;návrat&gt;</hilight> spustiť akciu"
-"<br>    <hilight>&lt;ctrl+return&gt;</hilight> spustiť akciu a pokračovať"
-"<br>    <hilight>&lt;tab&gt;</hilight> prepínať medzi selektormi"
-"<br>    <hilight>&lt;ctrl+tab&gt;</hilight> kompletný vstup (závisí od doplnku)"
-"<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> preskočiť na doplnok začínajúci na 'x'"
-"<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> prepínať medzi pluginmi"
-"<br>    <hilight>&lt;ctrl+hore/dole&gt;</hilight> prejsť na prvú/poslednú položku"
-"<br>    <hilight>&lt;ctrl+1&gt;</hilight> prepína režimy zobrazenia (ukončite túto stránku ;)"
-"<br>    <hilight>&lt;ctrl+2&gt;</hilight> prepína režimy zobrazenia zoznamu"
-"<br>    <hilight>&lt;ctrl+3&gt;</hilight> prepína režimy zobrazenia palcom"
+" Ok, tu je vysvetlenie <hilight>Rýchleho spúšťania</hilight>...<br> Stačí "
+"zadať pár písmen veci, ktorú hľadáte. <br>Pomocou kurzora <hilight>&lt;hore/"
+"dole&gt;</hilight> vyberte zo zoznamu vecí.<br> Stlačením <hilight>&lt;"
+"tab&gt;</hilight> vyberte akciu a potom stlačte <hilight>&lt;návrat&gt;</"
+"hilight>.<br>Táto stránka sa nabudúce nezobrazí spustíte <highlight>Rýchle "
+"Spúšťanie<</highlight>.<br>    <hilight>&lt;Esc&gt;</hilight> zavrieť toto "
+"dialógové okno<br>    <hilight>&lt;?&gt;</hilight> zobraziť túto "
+"stránku<br>    <hilight>&lt;návrat&gt;</hilight> spustiť akciu<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> spustiť akciu a pokračovať<br>    "
+"<hilight>&lt;tab&gt;</hilight> prepínať medzi selektormi<br>    <hilight>&lt;"
+"ctrl+tab&gt;</hilight> kompletný vstup (závisí od doplnku)<br>    "
+"<hilight>&lt;ctrl+'x'&gt;</hilight> preskočiť na doplnok začínajúci na "
+"'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> prepínať medzi "
+"pluginmi<br>    <hilight>&lt;ctrl+hore/dole&gt;</hilight> prejsť na prvú/"
+"poslednú položku<br>    <hilight>&lt;ctrl+1&gt;</hilight> prepína režimy "
+"zobrazenia (ukončite túto stránku ;)<br>    <hilight>&lt;ctrl+2&gt;</"
+"hilight> prepína režimy zobrazenia zoznamu<br>    <hilight>&lt;ctrl+3&gt;</"
+"hilight> prepína režimy zobrazenia palcom"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8785,10 +8727,6 @@ msgstr "Odsadenie"
 msgid "Window Switcher"
 msgstr "Prepínanie medzi oknami"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "Nasledujúce okno"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Predchádzajúce okno"
@@ -9150,10 +9088,6 @@ msgstr "Vykonať predvolenú operáciu s časovým odstupom"
 msgid "Default Action"
 msgstr "Predvolená operácia"
 
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "Nastavenie systému"
-
 #: src/modules/syscon/e_syscon_gadget.c:72
 msgid "Show Menu"
 msgstr "Zobraziť ponuku"
@@ -9267,15 +9201,16 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"Moksha môže kontrolovať nové<br>verzie, aktualizácie, zabezpečenie a<br>"
-"opravy chýb, ako aj dostupné doplnky.<br><br>Je to veľmi užitočné, pretože<br>"
-"vás informuje o dostupných opravách chýb a<br>bezpečnostné opravy, keď k nim dôjde."
-"V<br>dôsledkom toho sa Moksha pripojí k<br>enlightenment.org a odošle niektoré<br>"
-"informácie, podobne ako to môže urobiť ktorýkoľvek webový prehliadač. Žiadne osobné "
-"informácie, ako je<br>používateľské meno, heslo ani žiadne osobné súbory<br>"
-"nebudú prenášané. Ak sa vám to nepáči,<br>zakážte to nižšie. Dôrazne sa<br>"
-"odporúčame, aby ste túto možnosť nevypínali, pretože<br>"
-"by ste mohli byť zraniteľní alebo budete musieť žiť<br>s chybami."
+"Moksha môže kontrolovať nové<br>verzie, aktualizácie, zabezpečenie "
+"a<br>opravy chýb, ako aj dostupné doplnky.<br><br>Je to veľmi užitočné, "
+"pretože<br>vás informuje o dostupných opravách chýb a<br>bezpečnostné "
+"opravy, keď k nim dôjde.V<br>dôsledkom toho sa Moksha pripojí "
+"k<br>enlightenment.org a odošle niektoré<br>informácie, podobne ako to môže "
+"urobiť ktorýkoľvek webový prehliadač. Žiadne osobné informácie, ako "
+"je<br>používateľské meno, heslo ani žiadne osobné súbory<br>nebudú "
+"prenášané. Ak sa vám to nepáči,<br>zakážte to nižšie. Dôrazne "
+"sa<br>odporúčame, aby ste túto možnosť nevypínali, pretože<br>by ste mohli "
+"byť zraniteľní alebo budete musieť žiť<br>s chybami."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9383,13 +9318,13 @@ msgid ""
 "this<br>is a terminal which can change its window name.<br>Alternatively, "
 "you can add a data.item to"
 msgstr ""
-"Možnosť opätovného spustenia je určená na použitie<br>s terminálovými aplikáciami "
-"na vytvorenie trvalého<br>terminálu, ktorý sa po zatvorení znova otvorí, čo sa "
-"zvyčajne vyskytuje<br>v rozbaľovacích termináloch v štýle zemetrasenia.<br>"
-"Buď vybratá aplikácia nie je terminál<br>alebo nie je známy príznak príkazového "
-"riadka na zmenu<br>názvu okna terminálu. Neváhajte a odošlite hlásenie o chybe, "
-"ak<br>je to terminál, ktorý môže zmeniť názov okna.<br>Prípadne "
-"môžete pridať data.item do"
+"Možnosť opätovného spustenia je určená na použitie<br>s terminálovými "
+"aplikáciami na vytvorenie trvalého<br>terminálu, ktorý sa po zatvorení znova "
+"otvorí, čo sa zvyčajne vyskytuje<br>v rozbaľovacích termináloch v štýle "
+"zemetrasenia.<br>Buď vybratá aplikácia nie je terminál<br>alebo nie je známy "
+"príznak príkazového riadka na zmenu<br>názvu okna terminálu. Neváhajte a "
+"odošlite hlásenie o chybe, ak<br>je to terminál, ktorý môže zmeniť názov "
+"okna.<br>Prípadne môžete pridať data.item do"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
@@ -9427,10 +9362,10 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"Vybraté okno vytvorené s názvom:<br>%s<br>a triedou:<br>%s<br>nebolo "
-"možné nájsť v databáze aplikácie Rýchle spustenie<br>"
-"To znamená, že buď aplikáciu nepoznáme<br>alebo nie je určená na použitie s touto možnosťou."
-"<br>Vyberte akciu, ktorú chcete vykonať:"
+"Vybraté okno vytvorené s názvom:<br>%s<br>a triedou:<br>%s<br>nebolo možné "
+"nájsť v databáze aplikácie Rýchle spustenie<br>To znamená, že buď aplikáciu "
+"nepoznáme<br>alebo nie je určená na použitie s touto možnosťou.<br>Vyberte "
+"akciu, ktorú chcete vykonať:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
 #: src/modules/quickaccess/e_mod_quickaccess.c:977
@@ -9496,11 +9431,13 @@ msgid ""
 "window (not permanent)"
 msgstr ""
 "Možnosti, ktoré nájdete v ponuke Rýchle spustenie, sú nasledovné:"
-"<br><hilight>Automaticky skryť</hilight> – skryje okno vždy, keď stratí zameranie"
-"<br><hilight>Skryť namiesto zdvihnutia</hilight> – pri aktivácii bez zamerania skryje okno"
-"<br><highlight>Režim skoku</highlight> – Prepnite na pracovnú plochu Okná a namiesto zobrazenia/skrytia zdvihnite"
-"<br><hilight>Znovu spustiť po zatvorení</hilight> – Po zatvorení okna položky znova spustite príkaz"
-"<br><hilight>Prechodné</hilight> – Zapamätať si iba túto inštanciu okna (nie natrvalo)"
+"<br><hilight>Automaticky skryť</hilight> – skryje okno vždy, keď stratí "
+"zameranie<br><hilight>Skryť namiesto zdvihnutia</hilight> – pri aktivácii "
+"bez zamerania skryje okno<br><highlight>Režim skoku</highlight> – Prepnite "
+"na pracovnú plochu Okná a namiesto zobrazenia/skrytia "
+"zdvihnite<br><hilight>Znovu spustiť po zatvorení</hilight> – Po zatvorení "
+"okna položky znova spustite príkaz<br><hilight>Prechodné</hilight> – "
+"Zapamätať si iba túto inštanciu okna (nie natrvalo)"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:975
 msgid "You deleted it on your own, you rascal!<br>Way to go!"
@@ -9530,13 +9467,13 @@ msgid ""
 "The demo dialog has been bound to the keys you pressed.<br>Try pressing the "
 "same keys!"
 msgstr ""
-"Dialógové okno ukážky bolo viazané na stlačené klávesy.<br>Skús stlačiť rovnaké klávesy!"
+"Dialógové okno ukážky bolo viazané na stlačené klávesy.<br>Skús stlačiť "
+"rovnaké klávesy!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1197
 msgid ""
 "The newly displayed window will activate<br>the Quickaccess binding sequence."
-msgstr ""
-"Novo zobrazené okno aktivuje<br>sekvenciu viazania Rýchleho prístupu."
+msgstr "Novo zobrazené okno aktivuje<br>sekvenciu viazania Rýchleho prístupu."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1204
 msgid "Quickaccess Demo"
@@ -9551,8 +9488,8 @@ msgid ""
 "Quickaccess entries can be created from<br>the border menu of any window."
 "<br>Click Continue to see a demonstration."
 msgstr ""
-"Položky Rýchleho prístupu je možné vytvoriť z<br>hraničnej ponuky ľubovoľného okna."
-"<br>Kliknutím na tlačidlo Pokračovať zobrazíte ukážku."
+"Položky Rýchleho prístupu je možné vytvoriť z<br>hraničnej ponuky "
+"ľubovoľného okna.<br>Kliknutím na tlačidlo Pokračovať zobrazíte ukážku."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1248
 msgid ""
@@ -9561,44 +9498,44 @@ msgid ""
 "associated window can be returned to immediately<br>on demand by pushing the "
 "keyboard shortcut."
 msgstr ""
-"Rýchle spustenie je spôsob prepojenia <br>okien a aplikácií vybratých používateľom "
-"ku klávesovým skratkám. <br>Po vytvorení položky Rýchleho prístupu<br>  "
-"pridružené okno je možné okamžite vrátiť<br>na požiadanie stlačením tlačidla "
-"klávesová skratka."
+"Rýchle spustenie je spôsob prepojenia <br>okien a aplikácií vybratých "
+"používateľom ku klávesovým skratkám. <br>Po vytvorení položky Rýchleho "
+"prístupu<br>  pridružené okno je možné okamžite vrátiť<br>na požiadanie "
+"stlačením tlačidla klávesová skratka."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
 "This appears to be your first time using the Quickaccess module.<br>Would "
 "you like some usage tips?"
 msgstr ""
-"Zdá sa, že modul Rýchle spustenie používate prvýkrát.<br>Chceli"
-" by ste nejaké tipy na použitie?"
+"Zdá sa, že modul Rýchle spustenie používate prvýkrát.<br>Chceli by ste "
+"nejaké tipy na použitie?"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1312
 msgid "quick access name/identifier"
 msgstr "rýchly prístup meno/identifikátor"
 
-#: src/modules/systray/e_mod_main.c:533 src/modules/systray/e_mod_main.c:949
+#: src/modules/systray/e_mod_main.c:536 src/modules/systray/e_mod_main.c:952
 msgid "Systray Error"
 msgstr "Chyba Systray"
 
-#: src/modules/systray/e_mod_main.c:534
+#: src/modules/systray/e_mod_main.c:537
 msgid "Systray cannot set its background invisible to match its shelf."
 msgstr "Systray nemôže nastaviť svoje pozadie na transparentnom štýle lišty."
 
-#: src/modules/systray/e_mod_main.c:940 src/modules/systray/e_mod_main.c:1166
+#: src/modules/systray/e_mod_main.c:943 src/modules/systray/e_mod_main.c:1169
 msgid "Another systray exists"
 msgstr "Ďalší systray existuje"
 
-#: src/modules/systray/e_mod_main.c:941 src/modules/systray/e_mod_main.c:1167
+#: src/modules/systray/e_mod_main.c:944 src/modules/systray/e_mod_main.c:1170
 msgid "There can be only one systray gadget and another one already exists."
 msgstr "Tu môže byť len jeden widget systray a ďalší už existuje."
 
-#: src/modules/systray/e_mod_main.c:950
+#: src/modules/systray/e_mod_main.c:953
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr "Systray nemôže pracovať na lište, ktorá je nastavená pod všetkým."
 
-#: src/modules/systray/e_mod_main.c:1145
+#: src/modules/systray/e_mod_main.c:1148
 msgid "Systray"
 msgstr "Systray"
 
@@ -9780,11 +9717,6 @@ msgstr "Snímka s časovačom"
 #: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
 msgid "Take Shot"
 msgstr "Snímka okna"
-
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-msgid "Take Screenshot"
-msgstr "Snímka obrazovky"
 
 #: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
@@ -10013,8 +9945,8 @@ msgid "Variant"
 msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "Notifikácia"
 
@@ -10034,32 +9966,32 @@ msgstr ""
 "Chyba počas inicializácie DBus! Skontrolujte prosím, či je dbus správne "
 "nainštalovaný a beží"
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Prázdne"
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 msgid "Enter Presentation Mode"
 msgstr "Vstup do režimu Prezentácie"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha je v režime <br>prezentácie<br>."
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 msgid "Exited Presentation Mode"
 msgstr "Ukončenie režimu prezentácie"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 msgid "Presentation mode is over."
 msgstr "Režim prezentácie je ukončený."
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 msgid "Enter Offline Mode"
 msgstr "Vstup do offline režimu"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10067,11 +9999,11 @@ msgstr ""
 "Moksha je v <b>offline</b> režime.<br>Počas offline režimu,budú zastavené "
 "moduly ktoré využívajú vzdialené služby."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 msgid "Exited Offline Mode"
 msgstr "Ukončenie offline režimu"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10079,7 +10011,7 @@ msgstr ""
 "Teraz v <b>online</b> režime.<br>Moduly používajúce sieť znovu spustia bežné "
 "úlohy."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 msgid "Notification expired!"
 msgstr "Platnosť notifikácie vypršala!"
 
@@ -10490,3 +10422,84 @@ msgstr "Zvýšiť hlasitosť"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Stlmiť hlasitosť"
+
+#~ msgid "Close Window:"
+#~ msgstr "Zavrieť okno:"
+
+#~ msgid "Maximize Window:"
+#~ msgstr "Maximalizovať okno:"
+
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "Minimalizovať okno:"
+
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "Okno na celú obrazovku:"
+
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "Vždy navrchu:"
+
+#~ msgid "Next Window:"
+#~ msgstr "Nasledujúce okno:"
+
+#~ msgid "Tile Right:"
+#~ msgstr "Maximalizovať vpravo:"
+
+#~ msgid "Tile Left:"
+#~ msgstr "Maximalizovať vľavo:"
+
+#~ msgid "Kill Window:"
+#~ msgstr "Ukončiť proces okna:"
+
+#~ msgid "Window Menu:"
+#~ msgstr "Menu okna:"
+
+#~ msgid "Lock System:"
+#~ msgstr "Zamknúť systém:"
+
+#~ msgid "Show Main Menu:"
+#~ msgstr "Zobraziť Hlavné menu:"
+
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "Zobraziť Obľúbené:"
+
+#~ msgid "System Controls:"
+#~ msgstr "Systémové menu:"
+
+#~ msgid " Show the Desktop:"
+#~ msgstr " Zobraziť plochu:"
+
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr " Prepnúť na plochu 0:"
+
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr " Prepnúť na plochu 1:"
+
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr " Prepnúť na plochu 2:"
+
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr " Prepnúť na plochu 3:"
+
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr " Prepnúť na plochu 4:"
+
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr " Prepnúť na plochu 5:"
+
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr " Prepnúť na plochu 6:"
+
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr " Prepnúť na plochu 7:"
+
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr " Prepnúť na plochu 8:"
+
+#~ msgid "Quick Launcher:"
+#~ msgstr "Rýchle spúšťanie:"
+
+#~ msgid "Take Screenshot:"
+#~ msgstr "Snímka obrazovky:"
+
+#~ msgid "Restart Moksha:"
+#~ msgstr "Reštart desktopu:"

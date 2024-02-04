@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -31,6 +31,7 @@ msgstr "인라이튼먼트 정보"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -81,6 +82,7 @@ msgstr "이 창을 강제 종료 하시겠습니까?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "강제 종료"
 
@@ -177,6 +179,7 @@ msgid "Menu"
 msgstr "메뉴"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "창 메뉴"
 
@@ -211,6 +214,7 @@ msgid "Sticky Mode Enable"
 msgstr "고정 상태 활성화"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "항상 위"
@@ -226,6 +230,7 @@ msgid "Always On Top Disable"
 msgstr "항상 위"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "아이콘 상태 전환"
 
@@ -234,6 +239,7 @@ msgid "Iconic Mode Enable"
 msgstr "아이콘 상태 활성화"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "전체 화면 상태 전환"
 
@@ -243,6 +249,7 @@ msgstr "전체 화면 상태 활성화"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "최대화"
 
@@ -255,10 +262,12 @@ msgid "Maximize Horizontally"
 msgstr "가로로 최대화"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 msgid "Maximize Left"
 msgstr "왼편 최대화"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 msgid "Maximize Right"
 msgstr "오른편 최대화"
 
@@ -370,6 +379,7 @@ msgid "Flip To Previous Desktop"
 msgstr "이전 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "데스크톱 표시"
 
@@ -386,38 +396,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "연속으로 데스크톱 전환..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "0번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "1번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "2번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "3번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "4번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "5번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "6번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "7번 데스크톱으로 전환"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "8번 데스크톱으로 전환"
 
@@ -664,10 +683,12 @@ msgid "To Previous Screen"
 msgstr "이전 화면으로"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "메인 메뉴 표시"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "즐겨찾기 메뉴 표시"
 
@@ -780,6 +801,7 @@ msgid "Hibernate Now"
 msgstr "지금 최대 절전모드로 전환"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "잠그기"
 
@@ -899,7 +921,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -907,7 +929,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1263,37 +1285,37 @@ msgstr "붙여넣기"
 msgid "Select All"
 msgstr "전체 선택"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "실행 오류"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 msgid "Moksha was unable to get current directory"
 msgstr "인라이튼먼트가 현재 디렉터리를 가져올 수 없습니다"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "인라이튼먼트가 디렉터리 위치를 바꿀 수 없습니다:<br><br>%s"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "인라이튼먼트가 디렉터리로 돌아갈 수 없습니다:<br><br>%s"
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "인라이튼먼트가 자식 프로세스를 분할(fork)할 수 없습니다:<br><br>%s"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "프로그램 실행 오류"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1302,107 +1324,107 @@ msgstr ""
 "인라이튼먼트가 프로그램을 실행할 수 없습니다:<br><br>%s<br><br>프로그램 시작"
 "에 실패했습니다."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "프로그램 실행 오류"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s 프로그램이 갑작스럽게 동작을 멈추었습니다."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%2$s 프로그램이 %1$i 종료 코드를 남겼습니다."
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "인터럽트 시그널이 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "종료 시그널이 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "중지 시그널이 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "부동소수점 오류가 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "중단할 수 없는 강제 종료 시그널이 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "세그먼테이션 오류가 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "깨진 파이프가 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "중단 시그널이 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "버스 오류가 %s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%2$i번 시그널이 %1$s 프로그램을 중단했습니다."
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 "***나머지 출력 내용을 잘랐습니다. 출력 내용을 보시려면 저장하십시오.***\n"
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "오류 기록"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "오류 메시지가 없음."
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "이 메시지 저장"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "이 오류 기록은 %s/%s.log 파일로 저장합니다."
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "오류 메세지"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "시그널 정보 오류"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "출력 데이터"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "출력 내용이 없습니다."
 
@@ -1691,7 +1713,7 @@ msgstr "전부 아니요"
 msgid "Yes to all"
 msgstr "전부 예"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "경고"
@@ -2535,10 +2557,10 @@ msgstr "위치 지정 요청"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2831,6 +2853,7 @@ msgid "About Theme"
 msgstr "테마 정보"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "인라이튼먼트 사용을 환영합니다"
@@ -3790,7 +3813,8 @@ msgstr "방향"
 msgid "Autohide"
 msgstr "자동 숨기기"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "새로 고침"
 
@@ -5146,8 +5170,8 @@ msgstr "데스크"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<없음>"
 
@@ -5345,7 +5369,7 @@ msgstr "시그널 바인딩 설정"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "입력"
@@ -5628,7 +5652,7 @@ msgstr "언어"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 msgid "ACPI Bindings"
 msgstr "ACPI 바인딩"
 
@@ -5721,7 +5745,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5801,8 +5825,8 @@ msgid "Key Bindings Settings"
 msgstr "단축키 설정"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "단축키"
 
@@ -5817,12 +5841,73 @@ msgstr "단축키 오류"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "선택한 키 조합 시퀀스는 <hilight>%s</hilight> 동작이 이미<br> 사용중입니다."
 "<br>다른 키 조합 시퀀스를 선택해주십시오."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+msgid "WINDOW"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "다음 창"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "여기에 터미널 열기"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "시스템 제어"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "실행 아이콘"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+msgid "Take Screenshot"
+msgstr "화면 찍기"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "터미널 명령"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "이 데스크톱"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "마우스 바인딩"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "편집"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 #, fuzzy
@@ -5852,7 +5937,7 @@ msgid "Mouse Binding Error"
 msgstr "마우스 바인딩 오류"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "마우스 바인딩"
 
@@ -5948,191 +6033,16 @@ msgstr "추가 휠 (%d) 위로 굴리기"
 msgid "Extra Wheel (%d) Down"
 msgstr "추가 휠 (%d) 아래로 굴리기"
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
-msgid "Close Window:"
-msgstr "창 닫기"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
-msgid "Maximize Window:"
-msgstr "창을 맨 위로"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
-msgid "Iconic Mode Toggle:"
-msgstr "아이콘 상태 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
-msgid "Fullscreen Mode Toggle:"
-msgstr "전체 화면 상태 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
-msgid "Always On Top Toggle:"
-msgstr "항상 위"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
-msgid "Next Window:"
-msgstr "다음 창"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
-msgid "Tile Right:"
-msgstr "오른쪽:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
-msgid "Tile Left:"
-msgstr "상단 왼쪽"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
-msgid "Kill Window:"
-msgstr "모든 창"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
-msgid "Window Menu:"
-msgstr "창 메뉴"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
-msgid "Open Terminology:"
-msgstr "여기에 터미널 열기"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
-msgid "Lock System:"
-msgstr "잠금 실패"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
-msgid "Show Main Menu:"
-msgstr "메인 메뉴 표시"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
-msgid "Show Favorites Menu:"
-msgstr "즐겨찾기 메뉴 표시"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
-msgid "System Controls:"
-msgstr "시스템 제어"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
-msgid " Show the Desktop:"
-msgstr "데스크톱 표시"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
-msgid " Switch to Desktop 0:"
-msgstr "0번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
-msgid " Switch to Desktop 1:"
-msgstr "1번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
-msgid " Switch to Desktop 2:"
-msgstr "2번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
-msgid " Switch to Desktop 3:"
-msgstr "3번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
-msgid " Switch to Desktop 4:"
-msgstr "4번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
-msgid " Switch to Desktop 5:"
-msgstr "5번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
-msgid " Switch to Desktop 6:"
-msgstr "6번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
-msgid " Switch to Desktop 7:"
-msgstr "7번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
-msgid " Switch to Desktop 8:"
-msgstr "8번 데스크톱으로 전환"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
-msgid "Quick Launcher:"
-msgstr "실행 아이콘"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
-msgid "Take Screenshot:"
-msgstr "화면 찍기"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
-msgid "Restart Moksha:"
-msgstr "인라이튼먼트 사용을 환영합니다"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
-msgid "Terminal console:"
-msgstr "터미널 명령"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
-msgid "This Help:"
-msgstr "이 데스크톱"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
-msgid "Basic Moksha Key Bindings"
-msgstr "마우스 바인딩"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "편집"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 #, fuzzy
 msgid "Keybindings"
 msgstr "단축키"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 #, fuzzy
 msgid "Show bindings"
 msgstr "서랍 설정"
@@ -7150,7 +7060,7 @@ msgid "Assign"
 msgstr "할당"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "지우기"
@@ -7633,7 +7543,7 @@ msgstr "크기 바꾸기"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "키보드"
 
@@ -7944,11 +7854,6 @@ msgstr "Everything 설정"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Everything 모듈"
-
-#: src/modules/everything/e_mod_main.c:605
-#, fuzzy
-msgid "Quick Launcher"
-msgstr "실행 아이콘"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8319,11 +8224,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8337,8 +8242,8 @@ msgstr ""
 "hilight>키를 누르시면 됩니다.<br> 이 페이지는 여러분이 <hilight>모든 것</"
 "hilight>을 실행할 때 나타나지 않습니다.<br> <hilight>&lt;Esc&gt;</hilight> "
 "이 대화상자 닫기<br>    <hilight>&lt;?&gt;</hilight> 이 페이지 표시<br>    "
-"<hilight>&lt;return&gt;</hilight> 동작 실행<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> 동작 실행 후 계속<br>    <hilight>&lt;tab&gt;</"
+"<hilight>&lt;return&gt;</hilight> 동작 실행<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> 동작 실행 후 계속<br>    <hilight>&lt;tab&gt;</"
 "hilight> 선택간 전환<br>    <hilight>&lt;ctrl+tab&gt;</hilight> 완전한 입력"
 "(플러그인에 따름)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> 'x'로 시작하는 "
 "플러그인으로 건너뛰기<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> 플러"
@@ -8824,10 +8729,6 @@ msgstr "정렬"
 msgid "Window Switcher"
 msgstr "창 전환기"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "다음 창"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "이전 창"
@@ -9195,10 +9096,6 @@ msgstr "제한 시간 후 기본 동작 수행"
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
 msgstr "기본 동작"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "시스템 제어"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 #, fuzzy
@@ -9833,11 +9730,6 @@ msgstr "지연된 동작"
 msgid "Take Shot"
 msgstr "찍기"
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-msgid "Take Screenshot"
-msgstr "화면 찍기"
-
 #: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr "샷 오류"
@@ -10077,8 +9969,8 @@ msgid "Variant"
 msgstr "가변"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "알림"
 
@@ -10100,33 +9992,33 @@ msgstr ""
 "DBus를 초기화 하는 동안 오류가 발생했습니다! dbus가 올바르게 설치되었고 실행"
 "중인지 확인하십시오."
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 msgid "Enter Presentation Mode"
 msgstr "프리젠테이션 모드 진입"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 msgid "Exited Presentation Mode"
 msgstr "프리젠테이션 모드 나감"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "프리젠테이션 모드 전환"
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 msgid "Enter Offline Mode"
 msgstr "오프라인 모드 진입"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10134,11 +10026,11 @@ msgstr ""
 "인라이튼먼트가 <b>오프라인</b> 모드입니다.<br>오프라인 모드일 동안 네트워크"
 "를 사용하는 모듈은 원격 서비스의 실행을 중단할 것입니다."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 msgid "Exited Offline Mode"
 msgstr "오프라인 모드 나감"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10146,7 +10038,7 @@ msgstr ""
 "이제 <b>온라인</b> 모드입니다.<br>이제 네트워크를 사용하는 모듈의 작업을 재개"
 "할 것입니다."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 #, fuzzy
 msgid "Notification expired!"
 msgstr "알림"
@@ -10614,3 +10506,111 @@ msgstr "음량을 조절했습니다"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "음량을 조절했습니다"
+
+#, fuzzy
+#~ msgid "Close Window:"
+#~ msgstr "창 닫기"
+
+#, fuzzy
+#~ msgid "Maximize Window:"
+#~ msgstr "창을 맨 위로"
+
+#, fuzzy
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "아이콘 상태 전환"
+
+#, fuzzy
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "전체 화면 상태 전환"
+
+#, fuzzy
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "항상 위"
+
+#, fuzzy
+#~ msgid "Next Window:"
+#~ msgstr "다음 창"
+
+#, fuzzy
+#~ msgid "Tile Right:"
+#~ msgstr "오른쪽:"
+
+#, fuzzy
+#~ msgid "Tile Left:"
+#~ msgstr "상단 왼쪽"
+
+#, fuzzy
+#~ msgid "Kill Window:"
+#~ msgstr "모든 창"
+
+#, fuzzy
+#~ msgid "Window Menu:"
+#~ msgstr "창 메뉴"
+
+#, fuzzy
+#~ msgid "Lock System:"
+#~ msgstr "잠금 실패"
+
+#, fuzzy
+#~ msgid "Show Main Menu:"
+#~ msgstr "메인 메뉴 표시"
+
+#, fuzzy
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "즐겨찾기 메뉴 표시"
+
+#, fuzzy
+#~ msgid "System Controls:"
+#~ msgstr "시스템 제어"
+
+#, fuzzy
+#~ msgid " Show the Desktop:"
+#~ msgstr "데스크톱 표시"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr "0번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr "1번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr "2번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr "3번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr "4번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr "5번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr "6번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr "7번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr "8번 데스크톱으로 전환"
+
+#, fuzzy
+#~ msgid "Quick Launcher:"
+#~ msgstr "실행 아이콘"
+
+#, fuzzy
+#~ msgid "Take Screenshot:"
+#~ msgstr "화면 찍기"
+
+#, fuzzy
+#~ msgid "Restart Moksha:"
+#~ msgstr "인라이튼먼트 사용을 환영합니다"

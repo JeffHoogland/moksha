@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -30,6 +30,7 @@ msgstr "Moksha Hakkında"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -77,6 +78,7 @@ msgstr "Bu pencereyi sonlandırmak istediğinizden emin misiniz?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "Sonlandır"
 
@@ -173,6 +175,7 @@ msgid "Menu"
 msgstr "Menü"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "Pencere Menüsü"
 
@@ -207,6 +210,7 @@ msgid "Sticky Mode Enable"
 msgstr "Yapışkan Kip Etkin"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Her zaman üstte"
@@ -222,6 +226,7 @@ msgid "Always On Top Disable"
 msgstr "Her zaman üstte"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "Simgesel Kipi Değiştir"
 
@@ -230,6 +235,7 @@ msgid "Iconic Mode Enable"
 msgstr "Simgesel Kip Etkin"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "Tam Ekran Kipi Değiştir"
 
@@ -239,6 +245,7 @@ msgstr "Tam Ekran Kipi Etkin"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "Büyüt"
 
@@ -251,10 +258,12 @@ msgid "Maximize Horizontally"
 msgstr "Yatay Büyüt"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 msgid "Maximize Left"
 msgstr "Sola Genişlet"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 msgid "Maximize Right"
 msgstr "Sağa Genişlet"
 
@@ -366,6 +375,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Önceki Masaüstüne Çevir"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "Masaüstünü Göster"
 
@@ -382,38 +392,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Masaüstünü Doğrusal Olarak Çevir"
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "Masaüstü 0 'a geç"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "Masaüstü 1 'e geç"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "Masaüstü 2 'ye geç"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "Masaüstü 3 'e geç"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "Masaüstü 4 'e geç"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "Masaüstü 5 'e geç"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "Masaüstü 6 'ya geç"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "Masaüstü 7 'ye geç"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "Masaüstü 8 'e geç"
 
@@ -660,10 +679,12 @@ msgid "To Previous Screen"
 msgstr "Önceki Ekrana"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "Ana Menüyü Göster"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "Favoriler Menüsünü Göster"
 
@@ -776,6 +797,7 @@ msgid "Hibernate Now"
 msgstr "Şimdi uykuya geçir"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "Kilitle"
 
@@ -889,13 +911,12 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha ayar dosyalarını taşırken bir hata ile karşılaştı<br>şuradan:"
-"<br>%s<br><br>şuraya:<br>%s<br><br>Kalan işlemler güvenlik için iptal edildi."
-"<br>"
+"Moksha ayar dosyalarını taşırken bir hata ile karşılaştı<br>şuradan:<br>"
+"%s<br><br>şuraya:<br>%s<br><br>Kalan işlemler güvenlik için iptal edildi.<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -903,7 +924,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1251,37 +1272,37 @@ msgstr "Yapıştır"
 msgid "Select All"
 msgstr "Tümünü Seç"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Yürütme Hatası"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha mevcut dizini alamadı"
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha dizini değiştiremedi:<br><br>%s"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr ""
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha bir çocuk süreç üretemedi:<br><br>%s"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "Uygulama Yürütme Hatası"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1289,106 +1310,106 @@ msgid ""
 msgstr ""
 "Moksha uygulamayı çalıştıramadı:<br><br>%s<br><br>Uygulama çalıştırılamadı."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "Uygulama Çalıştırma Hatası"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s beklenmedik şekilde çalışmayı durdurdu."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%2$s 'den %1$i çıkış kodu geldi."
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s Kesme Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s Çık Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s Durdur Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s Ondalıklı Sayı Hatası ile durduruldu."
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s Durdurulamaz Sonlandırma Sinyali ile durduruldu."
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s Bölümleme Hatası tarafından durduruldu."
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s Hatalı İletici tarafından durduruldu."
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s Bitirme Sinyali tarafından durduruldu."
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s veri yolu Hatası tarafından durduruldu."
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s %i sinyal numarası tarafından durduruldu."
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***Kalan çıktı kesilmiş. Çıktıyı görünüme kaydet.***\n"
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "Hata Kayıtları"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "Hata mesajı yoktu"
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "Mesajı Kaydet"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Bu hata kaydı %s/%s.log olarak kaydedildi."
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "Hata Bilgisi"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "Hata Sinyali Bilgisi"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "Veri Çıktısı"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "Çıktı yok."
 
@@ -1678,7 +1699,7 @@ msgstr "Tümüne hayır"
 msgid "Yes to all"
 msgstr "Tümüne evet"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr ""
@@ -2520,10 +2541,10 @@ msgstr "Pozisyon İste"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2822,6 +2843,7 @@ msgid "About Theme"
 msgstr "Tema Hakkında"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Moksha'a Hoş Geldiniz"
@@ -3740,7 +3762,8 @@ msgstr "Yönelim"
 msgid "Autohide"
 msgstr "Otomatik Gizle"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "Yenile"
 
@@ -5090,8 +5113,8 @@ msgstr "Masaüstü"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Yok>"
 
@@ -5285,7 +5308,7 @@ msgstr ""
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "Giriş"
@@ -5566,7 +5589,7 @@ msgstr "Dil"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 msgid "ACPI Bindings"
 msgstr ""
 
@@ -5659,7 +5682,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5736,8 +5759,8 @@ msgid "Key Bindings Settings"
 msgstr "Kısayol Tuş Ayarları"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "Kısayol Tuşları"
 
@@ -5752,12 +5775,73 @@ msgstr "Kısayol Tuşu Hatası"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "Girdiğiniz kısayol tuşu dizisi, <hilight>%s</hilight> eylemi "
 "için<br>kullanılıyor. Lütfen farklı bir kısayol tuşu dizisi girin."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+msgid "WINDOW"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "Sonraki Pencere"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "Terminalde Çalıştır"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "Sistem Kontrolleri"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "Başlatıcı"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+msgid "Take Screenshot"
+msgstr "Ekran Görüntüsü Yakala"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "Konsol Komutu"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "Bu Masaüstü"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "Fare Kısayolları"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "Düzenle"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 #, fuzzy
@@ -5786,7 +5870,7 @@ msgid "Mouse Binding Error"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "Fare Kısayolları"
 
@@ -5882,191 +5966,16 @@ msgstr ""
 msgid "Extra Wheel (%d) Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
-msgid "Close Window:"
-msgstr "Pencereyi Yükselt"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
-msgid "Maximize Window:"
-msgstr "Pencereyi Yükselt"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
-msgid "Iconic Mode Toggle:"
-msgstr "Simgesel Kipi Değiştir"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
-msgid "Fullscreen Mode Toggle:"
-msgstr "Tam Ekran Kipi Değiştir"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
-msgid "Always On Top Toggle:"
-msgstr "Her zaman üstte"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
-msgid "Next Window:"
-msgstr "Sonraki Pencere"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
-msgid "Tile Right:"
-msgstr "Sağ:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
-msgid "Tile Left:"
-msgstr "Üst Sol"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
-msgid "Kill Window:"
-msgstr "Tüm pencereler"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
-msgid "Window Menu:"
-msgstr "Pencere Menüsü"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
-msgid "Open Terminology:"
-msgstr "Terminalde Çalıştır"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
-msgid "Lock System:"
-msgstr "Kilitleme Başarısız Oldu"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
-msgid "Show Main Menu:"
-msgstr "Ana Menüyü Göster"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
-msgid "Show Favorites Menu:"
-msgstr "Favoriler Menüsünü Göster"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
-msgid "System Controls:"
-msgstr "Sistem Kontrolleri"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
-msgid " Show the Desktop:"
-msgstr "Masaüstünü Göster"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
-msgid " Switch to Desktop 0:"
-msgstr "Masaüstü 0 'a geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
-msgid " Switch to Desktop 1:"
-msgstr "Masaüstü 1 'e geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
-msgid " Switch to Desktop 2:"
-msgstr "Masaüstü 2 'ye geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
-msgid " Switch to Desktop 3:"
-msgstr "Masaüstü 3 'e geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
-msgid " Switch to Desktop 4:"
-msgstr "Masaüstü 4 'e geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
-msgid " Switch to Desktop 5:"
-msgstr "Masaüstü 5 'e geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
-msgid " Switch to Desktop 6:"
-msgstr "Masaüstü 6 'ya geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
-msgid " Switch to Desktop 7:"
-msgstr "Masaüstü 7 'ye geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
-msgid " Switch to Desktop 8:"
-msgstr "Masaüstü 8 'e geç"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
-msgid "Quick Launcher:"
-msgstr "Başlatıcı"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
-msgid "Take Screenshot:"
-msgstr "Ekran Görüntüsü Yakala"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
-msgid "Restart Moksha:"
-msgstr "Moksha'a Hoş Geldiniz"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
-msgid "Terminal console:"
-msgstr "Konsol Komutu"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
-msgid "This Help:"
-msgstr "Bu Masaüstü"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
-msgid "Basic Moksha Key Bindings"
-msgstr "Fare Kısayolları"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "Düzenle"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 #, fuzzy
 msgid "Keybindings"
 msgstr "Kısayol Tuşları"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 #, fuzzy
 msgid "Show bindings"
 msgstr "Raf Ayarları"
@@ -7080,7 +6989,7 @@ msgid "Assign"
 msgstr "Ata"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Temizle"
@@ -7561,7 +7470,7 @@ msgstr "Şununla yeniden boyutlandır"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "Klavye"
 
@@ -7866,11 +7775,6 @@ msgstr "Herşey Yapılandırma Ayarları"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr ""
-
-#: src/modules/everything/e_mod_main.c:605
-#, fuzzy
-msgid "Quick Launcher"
-msgstr "Başlatıcı"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8241,11 +8145,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8749,10 +8653,6 @@ msgstr "Yerleşim"
 msgid "Window Switcher"
 msgstr "Pencere Değiştirici"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "Sonraki Pencere"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Önceki Pencere"
@@ -9119,10 +9019,6 @@ msgstr ""
 #: src/modules/syscon/e_int_config_syscon.c:172
 msgid "Default Action"
 msgstr "Öntanımlı Eylem"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "Sistem Kontrolleri"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 msgid "Show Menu"
@@ -9722,11 +9618,6 @@ msgstr "Ertelenmiş Eylem"
 msgid "Take Shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-msgid "Take Screenshot"
-msgstr "Ekran Görüntüsü Yakala"
-
 #: src/modules/shot/e_mod_main.c:1289
 msgid "Shot Error"
 msgstr ""
@@ -9963,8 +9854,8 @@ msgid "Variant"
 msgstr "Türev"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "Bildirim"
 
@@ -9986,33 +9877,33 @@ msgstr ""
 "DBus Başlatılması Sırasında Hata! dbus'ın doğru kurulduğundan ve "
 "çalıştığından emin olun."
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 msgid "Enter Presentation Mode"
 msgstr "Sunum Kipine Gir"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 msgid "Exited Presentation Mode"
 msgstr "Sunum Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Sunum Kipini Aç/Kapa"
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 msgid "Enter Offline Mode"
 msgstr "Çevrimdışı Moduna Gir"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10020,11 +9911,11 @@ msgstr ""
 "Enlightment <b>çevrimdışı</b> modunda.<br>Çevrimdışı modu sırasında, ağı "
 "kullanan modüller dış servislerden veri almayı durduracak."
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 msgid "Exited Offline Mode"
 msgstr "Çevrimdışı Modundan Çıkıldı"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10032,7 +9923,7 @@ msgstr ""
 "Şimdi <b>çevrimiçi</b> modunda.<br>Ağı kullanan modüller şimdi normal "
 "görevlerine devam edecek."
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Bildirim"
@@ -10482,3 +10373,111 @@ msgstr ""
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Close Window:"
+#~ msgstr "Pencereyi Yükselt"
+
+#, fuzzy
+#~ msgid "Maximize Window:"
+#~ msgstr "Pencereyi Yükselt"
+
+#, fuzzy
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "Simgesel Kipi Değiştir"
+
+#, fuzzy
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "Tam Ekran Kipi Değiştir"
+
+#, fuzzy
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "Her zaman üstte"
+
+#, fuzzy
+#~ msgid "Next Window:"
+#~ msgstr "Sonraki Pencere"
+
+#, fuzzy
+#~ msgid "Tile Right:"
+#~ msgstr "Sağ:"
+
+#, fuzzy
+#~ msgid "Tile Left:"
+#~ msgstr "Üst Sol"
+
+#, fuzzy
+#~ msgid "Kill Window:"
+#~ msgstr "Tüm pencereler"
+
+#, fuzzy
+#~ msgid "Window Menu:"
+#~ msgstr "Pencere Menüsü"
+
+#, fuzzy
+#~ msgid "Lock System:"
+#~ msgstr "Kilitleme Başarısız Oldu"
+
+#, fuzzy
+#~ msgid "Show Main Menu:"
+#~ msgstr "Ana Menüyü Göster"
+
+#, fuzzy
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "Favoriler Menüsünü Göster"
+
+#, fuzzy
+#~ msgid "System Controls:"
+#~ msgstr "Sistem Kontrolleri"
+
+#, fuzzy
+#~ msgid " Show the Desktop:"
+#~ msgstr "Masaüstünü Göster"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr "Masaüstü 0 'a geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr "Masaüstü 1 'e geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr "Masaüstü 2 'ye geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr "Masaüstü 3 'e geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr "Masaüstü 4 'e geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr "Masaüstü 5 'e geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr "Masaüstü 6 'ya geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr "Masaüstü 7 'ye geç"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr "Masaüstü 8 'e geç"
+
+#, fuzzy
+#~ msgid "Quick Launcher:"
+#~ msgstr "Başlatıcı"
+
+#, fuzzy
+#~ msgid "Take Screenshot:"
+#~ msgstr "Ekran Görüntüsü Yakala"
+
+#, fuzzy
+#~ msgid "Restart Moksha:"
+#~ msgstr "Moksha'a Hoş Geldiniz"

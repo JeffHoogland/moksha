@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2010-05-09 22:20+0100\n"
 "Last-Translator: Audun Gangsto <feitingen@gmail.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -28,6 +28,7 @@ msgstr "Om Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -74,6 +75,7 @@ msgstr "Er du sikker på at du vil drepe dette vinduet."
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "Drep"
 
@@ -178,6 +180,7 @@ msgid "Menu"
 msgstr "Meny"
 
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "Vindusmeny"
 
@@ -214,6 +217,7 @@ msgid "Sticky Mode Enable"
 msgstr "Sticky Mode Toggle"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Alltid på toppen"
@@ -229,6 +233,7 @@ msgid "Always On Top Disable"
 msgstr "Alltid på toppen"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 #, fuzzy
 msgid "Iconic Mode Toggle"
 msgstr "Ikonisk Mode Toggle"
@@ -239,6 +244,7 @@ msgid "Iconic Mode Enable"
 msgstr "Ikonisk Mode Toggle"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 #, fuzzy
 msgid "Fullscreen Mode Toggle"
 msgstr "Fullskjermmodus Toggle"
@@ -250,6 +256,7 @@ msgstr "Fullskjermmodus Toggle"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "Maksimér"
 
@@ -262,11 +269,13 @@ msgid "Maximize Horizontally"
 msgstr "Maksimer horisontalt"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 #, fuzzy
 msgid "Maximize Left"
 msgstr "Maksimér"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 #, fuzzy
 msgid "Maximize Right"
 msgstr "Maksimér"
@@ -383,6 +392,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Til Forrige Skrivebord"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "Vis Skrivebordet"
 
@@ -400,38 +410,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Vend Desktop lineært ..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "Bytt til skrivebord 0"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "Bytt til skrivebord 1"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "Bytt til skrivebord 2"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "Bytt til skrivebord 3"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "Bytt til skrivebord 4"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "Bytt til skrivebord 5"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "Bytt til skrivebord 6"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "Bytt til skrivebord 7"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "Bytt til skrivebord 8"
 
@@ -696,10 +715,12 @@ msgid "To Previous Screen"
 msgstr "Til Forrige Skrivebord"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "Vis Hovedmeny"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "Vis Favorittmeny"
 
@@ -816,6 +837,7 @@ msgid "Hibernate Now"
 msgstr "Dvalemodus"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "Lås"
 
@@ -925,7 +947,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -933,7 +955,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1314,42 +1336,42 @@ msgstr "Lim inn"
 msgid "Select All"
 msgstr "Velg Alle"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "Kjørefeil"
 
 # (hehe)
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 #, fuzzy
 msgid "Moksha was unable to get current directory"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, fuzzy, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, fuzzy, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
 # (hehe)
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, fuzzy, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha kunne ikke gafle en barneprosess:<br><br>%s<br>"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "Kjørefeil i applikasjon"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1358,106 +1380,106 @@ msgstr ""
 "Moksha klarte ikke kjøre applikasjonen:<br><br>%s<br><br>Applikasjonen "
 "startet ikke opp."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "Feil ved kjøring av applikasjon"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s sluttet uventet å kjøre."
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr ""
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr ""
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr ""
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr ""
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr ""
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr ""
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr ""
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr ""
 
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "Feillogger"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "Det var ingen feilmelding."
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "Lagre Denne Beskjeden"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "Denne feilloggen vil bli lagret som %s/%s.log"
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "Feilinformasjon"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "Feilsignalinformasjon"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "Utdata"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "Det var ingen utdata"
 
@@ -1774,7 +1796,7 @@ msgstr "Nei til alle"
 msgid "Yes to all"
 msgstr "Ja til alle"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Advarsel"
@@ -2680,10 +2702,10 @@ msgstr "Be om posisjon"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -3005,6 +3027,7 @@ msgid "About Theme"
 msgstr "Om tema"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Avslutt Moksha"
@@ -3817,8 +3840,8 @@ msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Det oppstod en feil ved lasting av modul: %s<br>Full sti til modulen:"
-"<br>%s<br>Følgende feil ble rapportert:<br>%s<br>"
+"Det oppstod en feil ved lasting av modul: %s<br>Full sti til modulen:<br>"
+"%s<br>Følgende feil ble rapportert:<br>%s<br>"
 
 #: src/bin/e_module.c:252
 #, fuzzy
@@ -4016,7 +4039,8 @@ msgstr "presentasjon"
 msgid "Autohide"
 msgstr "auto Hide"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "Oppdater"
 
@@ -5530,8 +5554,8 @@ msgstr "Desk"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "<Ingen>"
 
@@ -5743,7 +5767,7 @@ msgstr "Edge Bindinger Innstillinger"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 #, fuzzy
 msgid "Input"
@@ -6052,7 +6076,7 @@ msgstr "Språk"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 #, fuzzy
 msgid "ACPI Bindings"
 msgstr "Legg Binding"
@@ -6158,7 +6182,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -6239,8 +6263,8 @@ msgid "Key Bindings Settings"
 msgstr "Tastebindinger Innstillinger"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 #, fuzzy
 msgid "Key Bindings"
 msgstr "tastebindinger"
@@ -6257,10 +6281,74 @@ msgstr "Binding Key Feil"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+msgid "WINDOW"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "Neste vindu"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "Kjør i terminal"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+#, fuzzy
+msgid "System Controls"
+msgstr "System Controls"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "Start"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+#, fuzzy
+msgid "Take Screenshot"
+msgstr "skjermbilder for oppsett"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "Kjør ..."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "Dette Skrivebordet"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "Mus Bindinger"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+#, fuzzy
+msgid "Edit"
+msgstr "Endre"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
@@ -6286,7 +6374,7 @@ msgid "Mouse Binding Error"
 msgstr "Mus Bindinger"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 #, fuzzy
 msgid "Mouse Bindings"
 msgstr "Mus Bindinger"
@@ -6392,192 +6480,16 @@ msgstr ""
 msgid "Extra Wheel (%d) Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
-msgid "Close Window:"
-msgstr "Rydd vinduer"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
-msgid "Maximize Window:"
-msgstr "Hev vindu"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
-msgid "Iconic Mode Toggle:"
-msgstr "Ikonisk Mode Toggle"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
-msgid "Fullscreen Mode Toggle:"
-msgstr "Fullskjermmodus Toggle"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
-msgid "Always On Top Toggle:"
-msgstr "Alltid på toppen"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
-msgid "Next Window:"
-msgstr "Neste vindu"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
-msgid "Tile Right:"
-msgstr "Høyre:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
-msgid "Tile Left:"
-msgstr "Venstre:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
-msgid "Kill Window:"
-msgstr "Vinduer"
-
-#: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
-msgid "Window Menu:"
-msgstr "Vindusmeny"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
-msgid "Open Terminology:"
-msgstr "Kjør i terminal"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
-msgid "Lock System:"
-msgstr "Lås feilet"
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
-msgid "Show Main Menu:"
-msgstr "Vis Hovedmeny"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
-msgid "Show Favorites Menu:"
-msgstr "Vis Favorittmeny"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
-msgid "System Controls:"
-msgstr "System Controls"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
-msgid " Show the Desktop:"
-msgstr "Vis Skrivebordet"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
-msgid " Switch to Desktop 0:"
-msgstr "Bytt til skrivebord 0"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
-msgid " Switch to Desktop 1:"
-msgstr "Bytt til skrivebord 1"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
-msgid " Switch to Desktop 2:"
-msgstr "Bytt til skrivebord 2"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
-msgid " Switch to Desktop 3:"
-msgstr "Bytt til skrivebord 3"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
-msgid " Switch to Desktop 4:"
-msgstr "Bytt til skrivebord 4"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
-msgid " Switch to Desktop 5:"
-msgstr "Bytt til skrivebord 5"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
-msgid " Switch to Desktop 6:"
-msgstr "Bytt til skrivebord 6"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
-msgid " Switch to Desktop 7:"
-msgstr "Bytt til skrivebord 7"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
-msgid " Switch to Desktop 8:"
-msgstr "Bytt til skrivebord 8"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
-msgid "Quick Launcher:"
-msgstr "Start"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
-msgid "Take Screenshot:"
-msgstr "skjermbilder for oppsett"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
-msgid "Restart Moksha:"
-msgstr "Avslutt Moksha"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
-msgid "Terminal console:"
-msgstr "Kjør ..."
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
-msgid "This Help:"
-msgstr "Dette Skrivebordet"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
-msgid "Basic Moksha Key Bindings"
-msgstr "Mus Bindinger"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-#, fuzzy
-msgid "Edit"
-msgstr "Endre"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 #, fuzzy
 msgid "Keybindings"
 msgstr "tastebindinger"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 #, fuzzy
 msgid "Show bindings"
 msgstr "Hylleinnstillinger"
@@ -7755,7 +7667,7 @@ msgid "Assign"
 msgstr "tilordne"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 #, fuzzy
 msgid "Clear"
@@ -8318,7 +8230,7 @@ msgstr "Endre Størrelse"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 #, fuzzy
 msgid "Keyboard"
 msgstr "Tastatursnarvei"
@@ -8664,11 +8576,6 @@ msgstr "Pager oppsett"
 #, fuzzy
 msgid "Everything Module"
 msgstr "Alt"
-
-#: src/modules/everything/e_mod_main.c:605
-#, fuzzy
-msgid "Quick Launcher"
-msgstr "Start"
 
 #: src/modules/everything/evry_config.c:81
 #, fuzzy
@@ -9105,11 +9012,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -9653,10 +9560,6 @@ msgstr "Moksha"
 msgid "Window Switcher"
 msgstr "Vindustittel"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "Neste vindu"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "Forrige vindu"
@@ -10078,11 +9981,6 @@ msgstr "Nei , men øke timeout"
 #, fuzzy
 msgid "Default Action"
 msgstr "Applikasjoner"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-#, fuzzy
-msgid "System Controls"
-msgstr "System Controls"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 #, fuzzy
@@ -10702,12 +10600,6 @@ msgstr "Forsinket Handling"
 msgid "Take Shot"
 msgstr "skjermbilder for oppsett"
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-#, fuzzy
-msgid "Take Screenshot"
-msgstr "skjermbilder for oppsett"
-
 #: src/modules/shot/e_mod_main.c:1289
 #, fuzzy
 msgid "Shot Error"
@@ -10974,8 +10866,8 @@ msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 #, fuzzy
 msgid "Notification"
 msgstr "rotasjon"
@@ -10995,53 +10887,53 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Veksle Presentasjonsmodus"
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr "Frakoblet modus"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr "Frakoblet modus"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 #, fuzzy
 msgid "Notification expired!"
 msgstr "rotasjon"
@@ -11515,3 +11407,111 @@ msgstr "Endre oppløsning"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "Endre oppløsning"
+
+#, fuzzy
+#~ msgid "Close Window:"
+#~ msgstr "Rydd vinduer"
+
+#, fuzzy
+#~ msgid "Maximize Window:"
+#~ msgstr "Hev vindu"
+
+#, fuzzy
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "Ikonisk Mode Toggle"
+
+#, fuzzy
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "Fullskjermmodus Toggle"
+
+#, fuzzy
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "Alltid på toppen"
+
+#, fuzzy
+#~ msgid "Next Window:"
+#~ msgstr "Neste vindu"
+
+#, fuzzy
+#~ msgid "Tile Right:"
+#~ msgstr "Høyre:"
+
+#, fuzzy
+#~ msgid "Tile Left:"
+#~ msgstr "Venstre:"
+
+#, fuzzy
+#~ msgid "Kill Window:"
+#~ msgstr "Vinduer"
+
+#, fuzzy
+#~ msgid "Window Menu:"
+#~ msgstr "Vindusmeny"
+
+#, fuzzy
+#~ msgid "Lock System:"
+#~ msgstr "Lås feilet"
+
+#, fuzzy
+#~ msgid "Show Main Menu:"
+#~ msgstr "Vis Hovedmeny"
+
+#, fuzzy
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "Vis Favorittmeny"
+
+#, fuzzy
+#~ msgid "System Controls:"
+#~ msgstr "System Controls"
+
+#, fuzzy
+#~ msgid " Show the Desktop:"
+#~ msgstr "Vis Skrivebordet"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr "Bytt til skrivebord 0"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr "Bytt til skrivebord 1"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr "Bytt til skrivebord 2"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr "Bytt til skrivebord 3"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr "Bytt til skrivebord 4"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr "Bytt til skrivebord 5"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr "Bytt til skrivebord 6"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr "Bytt til skrivebord 7"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr "Bytt til skrivebord 8"
+
+#, fuzzy
+#~ msgid "Quick Launcher:"
+#~ msgstr "Start"
+
+#, fuzzy
+#~ msgid "Take Screenshot:"
+#~ msgstr "skjermbilder for oppsett"
+
+#, fuzzy
+#~ msgid "Restart Moksha:"
+#~ msgstr "Avslutt Moksha"

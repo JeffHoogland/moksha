@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-01-20 08:58-0500\n"
+"POT-Creation-Date: 2024-02-04 10:03+0100\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -27,6 +27,7 @@ msgstr "Moksha について"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -74,6 +75,7 @@ msgstr "本当にこのウィンドウを強制終了しますか"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
 msgid "Kill"
 msgstr "強制終了"
 
@@ -177,6 +179,7 @@ msgstr "メニュー"
 
 #
 #: src/bin/e_actions.c:3139
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
 msgid "Window Menu"
 msgstr "ウィンドウメニュー"
 
@@ -213,6 +216,7 @@ msgid "Sticky Mode Enable"
 msgstr "常時表示モード反転"
 
 #: src/bin/e_actions.c:3176
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "常に手前に表示"
@@ -228,6 +232,7 @@ msgid "Always On Top Disable"
 msgstr "常に手前に表示"
 
 #: src/bin/e_actions.c:3189
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
 msgid "Iconic Mode Toggle"
 msgstr "アイコンモード反転"
 
@@ -237,6 +242,7 @@ msgid "Iconic Mode Enable"
 msgstr "アイコンモード反転"
 
 #: src/bin/e_actions.c:3198
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
 msgid "Fullscreen Mode Toggle"
 msgstr "全画面モード反転"
 
@@ -247,6 +253,7 @@ msgstr "全画面モード反転"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
 msgid "Maximize"
 msgstr "最大化"
 
@@ -261,11 +268,13 @@ msgid "Maximize Horizontally"
 msgstr "水平に最大化"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
 #, fuzzy
 msgid "Maximize Left"
 msgstr "最大化"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
 #, fuzzy
 msgid "Maximize Right"
 msgstr "最大化"
@@ -386,6 +395,7 @@ msgid "Flip To Previous Desktop"
 msgstr "前のデスクトップへ"
 
 #: src/bin/e_actions.c:3293
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
 msgid "Show The Desktop"
 msgstr "デスクトップ背景を出す"
 
@@ -402,38 +412,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "デスクトップを順に移動する..."
 
 #: src/bin/e_actions.c:3316
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
 msgid "Switch To Desktop 0"
 msgstr "デスクトップ 0 に切り替える"
 
 #: src/bin/e_actions.c:3318
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
 msgid "Switch To Desktop 1"
 msgstr "デスクトップ 1 に切り替える"
 
 #: src/bin/e_actions.c:3320
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
 msgid "Switch To Desktop 2"
 msgstr "デスクトップ 2 に切り替える"
 
 #: src/bin/e_actions.c:3322
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
 msgid "Switch To Desktop 3"
 msgstr "デスクトップ 3 に切り替える"
 
 #: src/bin/e_actions.c:3324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
 msgid "Switch To Desktop 4"
 msgstr "デスクトップ 4 に切り替える"
 
 #: src/bin/e_actions.c:3326
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
 msgid "Switch To Desktop 5"
 msgstr "デスクトップ 5 に切り替える"
 
 #: src/bin/e_actions.c:3328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
 msgid "Switch To Desktop 6"
 msgstr "デスクトップ 6 に切り替える"
 
 #: src/bin/e_actions.c:3330
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
 msgid "Switch To Desktop 7"
 msgstr "デスクトップ 7 に切り替える"
 
 #: src/bin/e_actions.c:3332
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
 msgid "Switch To Desktop 8"
 msgstr "デスクトップ 8 に切り替える"
 
@@ -698,10 +717,12 @@ msgid "To Previous Screen"
 msgstr "前のデスクトップへ"
 
 #: src/bin/e_actions.c:3516
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
 msgid "Show Main Menu"
 msgstr "メインメニューを表示する"
 
 #: src/bin/e_actions.c:3518
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
 msgid "Show Favorites Menu"
 msgstr "お気に入りメニューを表示する"
 
@@ -819,6 +840,7 @@ msgid "Hibernate Now"
 msgstr "ハイバネート"
 
 #: src/bin/e_actions.c:3616
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
 msgid "Lock"
 msgstr "ロック"
 
@@ -940,7 +962,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
-#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:761
+#: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
 #: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
@@ -948,7 +970,7 @@ msgstr ""
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_mod_main.c:328
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
@@ -1055,9 +1077,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"設定ファイル書き出し中のエラーです.<br>%s<br><br>エラーが起きたのは"
-"<br>%s<br><br>です. 壊れたデータが使われないように, このファイルは削除されま"
-"した.<br>"
+"設定ファイル書き出し中のエラーです.<br>%s<br><br>エラーが起きたのは<br>"
+"%s<br><br>です. 壊れたデータが使われないように, このファイルは削除されました."
+"<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1314,38 +1336,38 @@ msgstr "貼り付け"
 msgid "Select All"
 msgstr "すべて選択"
 
-#: src/bin/e_exec.c:494 src/bin/e_exec.c:502 src/bin/e_exec.c:513
-#: src/bin/e_exec.c:574 src/bin/e_utils.c:184
+#: src/bin/e_exec.c:495 src/bin/e_exec.c:503 src/bin/e_exec.c:514
+#: src/bin/e_exec.c:575 src/bin/e_utils.c:184
 #: src/modules/conf_intl/e_int_config_imc.c:261
 #: src/modules/conf_intl/e_int_config_imc.c:510
 msgid "Run Error"
 msgstr "実行エラー"
 
-#: src/bin/e_exec.c:495
+#: src/bin/e_exec.c:496
 #, fuzzy
 msgid "Moksha was unable to get current directory"
 msgstr "画像の変換でエラーが発生したため画像が取り込めませんでした."
 
-#: src/bin/e_exec.c:503
+#: src/bin/e_exec.c:504
 #, fuzzy, c-format
 msgid "Moksha was unable to change to directory:<br><br>%s"
 msgstr "Moksha で以下のコマンドラインが処理できませんでした.<br><br>%s %s<br>"
 
-#: src/bin/e_exec.c:514
+#: src/bin/e_exec.c:515
 #, fuzzy, c-format
 msgid "Moksha was unable to restore to directory:<br><br>%s"
 msgstr "Moksha で以下の子プロセスが fork できませんでした.<br><br>%s<br>"
 
-#: src/bin/e_exec.c:575
+#: src/bin/e_exec.c:576
 #, fuzzy, c-format
 msgid "Moksha was unable to fork a child process:<br><br>%s"
 msgstr "Moksha で以下の子プロセスが fork できませんでした.<br><br>%s<br>"
 
-#: src/bin/e_exec.c:752
+#: src/bin/e_exec.c:753
 msgid "Application run error"
 msgstr "アプリケーション実行エラー"
 
-#: src/bin/e_exec.c:754
+#: src/bin/e_exec.c:755
 #, c-format
 msgid ""
 "Moksha was unable to run the application:<br><br>%s<br><br>The application "
@@ -1354,107 +1376,107 @@ msgstr ""
 "Moksha で以下のアプリケーションが実行できませんでした.<br><br>%s<br><br>この"
 "アプリケーションの起動に失敗しました."
 
-#: src/bin/e_exec.c:872
+#: src/bin/e_exec.c:873
 msgid "Application Execution Error"
 msgstr "アプリケーション実行エラー"
 
-#: src/bin/e_exec.c:885 src/bin/e_exec.c:887
+#: src/bin/e_exec.c:886 src/bin/e_exec.c:888
 #, c-format
 msgid "%s stopped running unexpectedly."
 msgstr "%s が突然停止しました"
 
-#: src/bin/e_exec.c:893
+#: src/bin/e_exec.c:894
 #, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%2$s から終了コード %1$i が返りました"
 
-#: src/bin/e_exec.c:901
+#: src/bin/e_exec.c:902
 #, c-format
 msgid "%s was interrupted by an Interrupt Signal."
 msgstr "%s に割り込みシグナルによる割り込みが入りました"
 
-#: src/bin/e_exec.c:904
+#: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
 msgstr "%s に Quit シグナルによる割り込みが入りました"
 
-#: src/bin/e_exec.c:908
+#: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
 msgstr "%s に Abort シグナルによる割り込みが入りました"
 
-#: src/bin/e_exec.c:911
+#: src/bin/e_exec.c:912
 #, c-format
 msgid "%s was interrupted by a Floating Point Error."
 msgstr "%s に浮動小数点エラーによる割り込みが入りました"
 
-#: src/bin/e_exec.c:915
+#: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
 msgstr "%s に割り込み不能 kill シグナルによる割り込みが入りました"
 
-#: src/bin/e_exec.c:919
+#: src/bin/e_exec.c:920
 #, c-format
 msgid "%s was interrupted by a Segmentation Fault."
 msgstr "%s にセグメンテーションフォールトによる割り込みが入りました"
 
-#: src/bin/e_exec.c:923
+#: src/bin/e_exec.c:924
 #, c-format
 msgid "%s was interrupted by a Broken Pipe."
 msgstr "%s に Broken Pipe による割り込みが入りました"
 
-#: src/bin/e_exec.c:926
+#: src/bin/e_exec.c:927
 #, c-format
 msgid "%s was interrupted by a Termination Signal."
 msgstr "%s に終了シグナルによる割り込みが入りました"
 
-#: src/bin/e_exec.c:930
+#: src/bin/e_exec.c:931
 #, c-format
 msgid "%s was interrupted by a Bus Error."
 msgstr "%s にバスエラーによる割り込みが入りました"
 
-#: src/bin/e_exec.c:933
+#: src/bin/e_exec.c:934
 #, c-format
 msgid "%s was interrupted by the signal number %i."
 msgstr "%s にシグナル番号 %i の割り込みが入りました"
 
-#: src/bin/e_exec.c:989
+#: src/bin/e_exec.c:990
 msgid ""
 "***The remaining output has been truncated. Save the output to view.***\n"
 msgstr "***残りは切り捨てられました. 出力を保存してから参照してください.***\n"
 
 #
-#: src/bin/e_exec.c:1048 src/bin/e_exec.c:1126 src/bin/e_exec.c:1133
+#: src/bin/e_exec.c:1049 src/bin/e_exec.c:1127 src/bin/e_exec.c:1134
 msgid "Error Logs"
 msgstr "エラーログ"
 
-#: src/bin/e_exec.c:1054 src/bin/e_exec.c:1134
+#: src/bin/e_exec.c:1055 src/bin/e_exec.c:1135
 msgid "There was no error message."
 msgstr "エラーメッセージはありませんでした"
 
-#: src/bin/e_exec.c:1058 src/bin/e_exec.c:1141
+#: src/bin/e_exec.c:1059 src/bin/e_exec.c:1142
 msgid "Save This Message"
 msgstr "このメッセージを保存する"
 
-#: src/bin/e_exec.c:1063 src/bin/e_exec.c:1066 src/bin/e_exec.c:1146
-#: src/bin/e_exec.c:1149
+#: src/bin/e_exec.c:1064 src/bin/e_exec.c:1067 src/bin/e_exec.c:1147
+#: src/bin/e_exec.c:1150
 #, c-format
 msgid "This error log will be saved as %s/%s.log"
 msgstr "このエラーログは %s/%s.log に保存されます"
 
-#: src/bin/e_exec.c:1092
+#: src/bin/e_exec.c:1093
 msgid "Error Information"
 msgstr "エラー情報"
 
-#: src/bin/e_exec.c:1100
+#: src/bin/e_exec.c:1101
 msgid "Error Signal Information"
 msgstr "エラーシグナル情報"
 
-#: src/bin/e_exec.c:1110 src/bin/e_exec.c:1117
+#: src/bin/e_exec.c:1111 src/bin/e_exec.c:1118
 msgid "Output Data"
 msgstr "出力データ"
 
-#: src/bin/e_exec.c:1118
+#: src/bin/e_exec.c:1119
 msgid "There was no output."
 msgstr "出力はありませんでした"
 
@@ -1763,7 +1785,7 @@ msgstr "すべて拒否"
 msgid "Yes to all"
 msgstr "すべて了承"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:708
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "警告"
@@ -2661,10 +2683,10 @@ msgstr "要求の位置"
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:361
-#: src/modules/xkbswitch/e_mod_main.c:402
-#: src/modules/notification/e_mod_main.c:338
-#: src/modules/notification/e_mod_main.c:452
+#: src/modules/xkbswitch/e_mod_main.c:357
+#: src/modules/xkbswitch/e_mod_main.c:398
+#: src/modules/notification/e_mod_main.c:339
+#: src/modules/notification/e_mod_main.c:453
 #: src/modules/clipboard/e_mod_main.c:298
 #: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
 msgid "Settings"
@@ -2964,6 +2986,7 @@ msgid "About Theme"
 msgstr "このテーマについて"
 
 #: src/bin/e_int_menus.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Moksha 再起動"
@@ -4001,7 +4024,8 @@ msgstr "プレゼンテーション"
 msgid "Autohide"
 msgstr "自動隠蔽"
 
-#: src/bin/e_shelf.c:2533 src/modules/conf_keybindings/e_mod_main.c:330
+#: src/bin/e_shelf.c:2533
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Refresh"
 msgstr "更新"
 
@@ -5435,8 +5459,8 @@ msgstr "デスク"
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:488
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:3
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:7
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:4
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:3
-#: src/modules/conf_keybindings/e_mod_main.c:4
 msgid "<None>"
 msgstr "無し"
 
@@ -5655,7 +5679,7 @@ msgstr "エッジバインディング設定"
 
 #: src/modules/conf_edgebindings/e_mod_main.c:17
 #: src/modules/conf_interaction/e_mod_main.c:17
-#: src/modules/conf_keybindings/e_mod_main.c:355
+#: src/modules/conf_keybindings/e_mod_main.c:36
 #: src/modules/xkbswitch/e_mod_main.c:72
 msgid "Input"
 msgstr "入力"
@@ -5943,7 +5967,7 @@ msgstr "言語"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:71
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:190
-#: src/modules/conf_keybindings/e_mod_main.c:367
+#: src/modules/conf_keybindings/e_mod_main.c:48
 #, fuzzy
 msgid "ACPI Bindings"
 msgstr "マウスバインド追加"
@@ -6049,7 +6073,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:439
+#: src/modules/notification/e_mod_main.c:440
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -6131,8 +6155,8 @@ msgid "Key Bindings Settings"
 msgstr "キーバインドの設定"
 
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:241
-#: src/modules/conf_keybindings/e_mod_main.c:347
-#: src/modules/conf_keybindings/e_mod_main.c:359
+#: src/modules/conf_keybindings/e_mod_main.c:28
+#: src/modules/conf_keybindings/e_mod_main.c:40
 msgid "Key Bindings"
 msgstr "キーバインド"
 
@@ -6147,12 +6171,74 @@ msgstr "キーシーケンスのバインドエラー"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "そのキーシーケンスはすでに以下のアクションで使われています.<br><hilight>%s</"
 "hilight><br>他のキーシーケンスを選んで下さい."
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+msgid "WINDOW"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/winlist/e_mod_main.c:41
+msgid "Next Window"
+msgstr "次のウィンドウ"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+msgid "SYSTEM"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#, fuzzy
+msgid "Open Terminology"
+msgstr "端末を開く"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
+msgid "System Controls"
+msgstr "システムコントロール"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+msgid "DESKTOP"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+msgid "MISCELLANEOUS"
+msgstr ""
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/everything/e_mod_main.c:605
+#, fuzzy
+msgid "Quick Launcher"
+msgstr "ランチャー"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:1313
+#, fuzzy
+msgid "Take Screenshot"
+msgstr "スクリーンを準備中"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#, fuzzy
+msgid "Terminal Console"
+msgstr "端末起動コマンド"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#, fuzzy
+msgid "This Help"
+msgstr "このデスクトップ"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#, fuzzy
+msgid "Basic Moksha Key Bindings"
+msgstr "マウスバインド"
+
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+msgid "Edit"
+msgstr "編集"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 #, fuzzy
@@ -6181,7 +6267,7 @@ msgid "Mouse Binding Error"
 msgstr "マウスバインド"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:288
-#: src/modules/conf_keybindings/e_mod_main.c:363
+#: src/modules/conf_keybindings/e_mod_main.c:44
 msgid "Mouse Bindings"
 msgstr "マウスバインド"
 
@@ -6279,192 +6365,16 @@ msgstr ""
 msgid "Extra Wheel (%d) Down"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:119
-msgid "WINDOWS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:120
-#, fuzzy
-msgid "Close Window:"
-msgstr "ウィンドウ整頓"
-
-#: src/modules/conf_keybindings/e_mod_main.c:126
-#, fuzzy
-msgid "Maximize Window:"
-msgstr "ウィンドウのレイズ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:132
-#, fuzzy
-msgid "Iconic Mode Toggle:"
-msgstr "アイコンモード反転"
-
-#: src/modules/conf_keybindings/e_mod_main.c:138
-#, fuzzy
-msgid "Fullscreen Mode Toggle:"
-msgstr "全画面モード反転"
-
-#: src/modules/conf_keybindings/e_mod_main.c:144
-#, fuzzy
-msgid "Always On Top Toggle:"
-msgstr "常に手前に表示"
-
-#: src/modules/conf_keybindings/e_mod_main.c:150
-#, fuzzy
-msgid "Next Window:"
-msgstr "次のウィンドウ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:156
-#, fuzzy
-msgid "Tile Right:"
-msgstr "右:"
-
-#: src/modules/conf_keybindings/e_mod_main.c:162
-#, fuzzy
-msgid "Tile Left:"
-msgstr "左へ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:168
-#, fuzzy
-msgid "Kill Window:"
-msgstr "全ウィンドウ"
-
-#
-#: src/modules/conf_keybindings/e_mod_main.c:174
-#, fuzzy
-msgid "Window Menu:"
-msgstr "ウィンドウメニュー"
-
-#: src/modules/conf_keybindings/e_mod_main.c:183
-msgid "SYSTEM"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:184
-#, fuzzy
-msgid "Open Terminology:"
-msgstr "端末を開く"
-
-#: src/modules/conf_keybindings/e_mod_main.c:190
-#, fuzzy
-msgid "Lock System:"
-msgstr "ロックに失敗しました."
-
-#: src/modules/conf_keybindings/e_mod_main.c:196
-#, fuzzy
-msgid "Show Main Menu:"
-msgstr "メインメニューを表示する"
-
-#: src/modules/conf_keybindings/e_mod_main.c:202
-#, fuzzy
-msgid "Show Favorites Menu:"
-msgstr "お気に入りメニューを表示する"
-
-#: src/modules/conf_keybindings/e_mod_main.c:208
-#, fuzzy
-msgid "System Controls:"
-msgstr "システムコントロール"
-
-#: src/modules/conf_keybindings/e_mod_main.c:217
-msgid "DESKTOP"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:219
-#, fuzzy
-msgid " Show the Desktop:"
-msgstr "デスクトップ背景を出す"
-
-#: src/modules/conf_keybindings/e_mod_main.c:225
-#, fuzzy
-msgid " Switch to Desktop 0:"
-msgstr "デスクトップ 0 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:231
-#, fuzzy
-msgid " Switch to Desktop 1:"
-msgstr "デスクトップ 1 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:237
-#, fuzzy
-msgid " Switch to Desktop 2:"
-msgstr "デスクトップ 2 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:243
-#, fuzzy
-msgid " Switch to Desktop 3:"
-msgstr "デスクトップ 3 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:249
-#, fuzzy
-msgid " Switch to Desktop 4:"
-msgstr "デスクトップ 4 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:255
-#, fuzzy
-msgid " Switch to Desktop 5:"
-msgstr "デスクトップ 5 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:261
-#, fuzzy
-msgid " Switch to Desktop 6:"
-msgstr "デスクトップ 6 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:267
-#, fuzzy
-msgid " Switch to Desktop 7:"
-msgstr "デスクトップ 7 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:273
-#, fuzzy
-msgid " Switch to Desktop 8:"
-msgstr "デスクトップ 8 に切り替える"
-
-#: src/modules/conf_keybindings/e_mod_main.c:282
-msgid "MISCELLANEOUS"
-msgstr ""
-
-#: src/modules/conf_keybindings/e_mod_main.c:283
-#, fuzzy
-msgid "Quick Launcher:"
-msgstr "ランチャー"
-
-#: src/modules/conf_keybindings/e_mod_main.c:289
-#, fuzzy
-msgid "Take Screenshot:"
-msgstr "スクリーンを準備中"
-
-#: src/modules/conf_keybindings/e_mod_main.c:295
-#, fuzzy
-msgid "Restart Moksha:"
-msgstr "Moksha 再起動"
-
-#: src/modules/conf_keybindings/e_mod_main.c:301
-#, fuzzy
-msgid "Terminal console:"
-msgstr "端末起動コマンド"
-
-#: src/modules/conf_keybindings/e_mod_main.c:307
-#, fuzzy
-msgid "This Help:"
-msgstr "このデスクトップ"
-
-#: src/modules/conf_keybindings/e_mod_main.c:327
-#, fuzzy
-msgid "Basic Moksha Key Bindings"
-msgstr "マウスバインド"
-
-#: src/modules/conf_keybindings/e_mod_main.c:329
-msgid "Edit"
-msgstr "編集"
-
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 #, fuzzy
 msgid "Keybindings"
 msgstr "キーバインド"
 
-#: src/modules/conf_keybindings/e_mod_main.c:375
+#: src/modules/conf_keybindings/e_mod_main.c:56
 msgid "View Moksha Keybindings"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_mod_main.c:380
+#: src/modules/conf_keybindings/e_mod_main.c:61
 #, fuzzy
 msgid "Show bindings"
 msgstr "シェルフの設定"
@@ -7521,7 +7431,7 @@ msgid "Assign"
 msgstr "設定"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:429
+#: src/modules/notification/e_mod_main.c:430
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "解除"
@@ -8036,7 +7946,7 @@ msgstr "変更サイズ"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:401
+#: src/modules/xkbswitch/e_mod_main.c:397
 msgid "Keyboard"
 msgstr "キーボード"
 
@@ -8360,11 +8270,6 @@ msgstr "Everythingの設定"
 #: src/modules/everything/e_mod_main.c:411
 msgid "Everything Module"
 msgstr "Everythingモジュール"
-
-#: src/modules/everything/e_mod_main.c:605
-#, fuzzy
-msgid "Quick Launcher"
-msgstr "ランチャー"
 
 #: src/modules/everything/evry_config.c:81
 msgid "Everything Settings"
@@ -8749,11 +8654,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -9288,10 +9193,6 @@ msgstr "配置"
 msgid "Window Switcher"
 msgstr "ウィンドウタイトル"
 
-#: src/modules/winlist/e_mod_main.c:41
-msgid "Next Window"
-msgstr "次のウィンドウ"
-
 #: src/modules/winlist/e_mod_main.c:43
 msgid "Previous Window"
 msgstr "前のウィンドウ"
@@ -9688,10 +9589,6 @@ msgstr "いいえ. しかしタイムアウトは増やす"
 #, fuzzy
 msgid "Default Action"
 msgstr "アプリケーションを選択する"
-
-#: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
-msgid "System Controls"
-msgstr "システムコントロール"
 
 #: src/modules/syscon/e_syscon_gadget.c:72
 #, fuzzy
@@ -10310,12 +10207,6 @@ msgstr "遅延動作"
 msgid "Take Shot"
 msgstr "スクリーンを準備中"
 
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
-#, fuzzy
-msgid "Take Screenshot"
-msgstr "スクリーンを準備中"
-
 #: src/modules/shot/e_mod_main.c:1289
 #, fuzzy
 msgid "Shot Error"
@@ -10584,8 +10475,8 @@ msgid "Variant"
 msgstr "ブルガリア語"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:273
-#: src/modules/notification/e_mod_main.c:369
+#: src/modules/notification/e_mod_main.c:274
+#: src/modules/notification/e_mod_main.c:370
 msgid "Notification"
 msgstr "通知"
 
@@ -10607,12 +10498,12 @@ msgstr ""
 "DBusの初期化に失敗しました！\r\n"
 "dbusが正しくインストールされて動作しているか確認してください。"
 
-#: src/modules/notification/e_mod_main.c:421
+#: src/modules/notification/e_mod_main.c:422
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:622
+#: src/modules/notification/e_mod_main.c:623
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr ""
@@ -10620,11 +10511,11 @@ msgstr ""
 "プレゼンテーションモード\n"
 "#-#-#-#-#  ja.po (Moksha DR17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:624
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:627
+#: src/modules/notification/e_mod_main.c:628
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr ""
@@ -10632,12 +10523,12 @@ msgstr ""
 "プレゼンテーションモード\n"
 "#-#-#-#-#  ja.po (Moksha DR17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:629
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "プレゼンテーションモード切換え"
 
-#: src/modules/notification/e_mod_main.c:642
+#: src/modules/notification/e_mod_main.c:643
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr ""
@@ -10645,13 +10536,13 @@ msgstr ""
 "オフラインモード\n"
 "#-#-#-#-#  ja.po (Moksha DR17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:644
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:649
+#: src/modules/notification/e_mod_main.c:650
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr ""
@@ -10659,13 +10550,13 @@ msgstr ""
 "オフラインモード\n"
 "#-#-#-#-#  ja.po (Moksha DR17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:651
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:708
+#: src/modules/notification/e_mod_main.c:709
 #, fuzzy
 msgid "Notification expired!"
 msgstr "通知ボックス"
@@ -11145,3 +11036,112 @@ msgstr "解像度の変更"
 #, fuzzy
 msgid "Volume Mute"
 msgstr "解像度の変更"
+
+#, fuzzy
+#~ msgid "Close Window:"
+#~ msgstr "ウィンドウ整頓"
+
+#, fuzzy
+#~ msgid "Maximize Window:"
+#~ msgstr "ウィンドウのレイズ"
+
+#, fuzzy
+#~ msgid "Iconic Mode Toggle:"
+#~ msgstr "アイコンモード反転"
+
+#, fuzzy
+#~ msgid "Fullscreen Mode Toggle:"
+#~ msgstr "全画面モード反転"
+
+#, fuzzy
+#~ msgid "Always On Top Toggle:"
+#~ msgstr "常に手前に表示"
+
+#, fuzzy
+#~ msgid "Next Window:"
+#~ msgstr "次のウィンドウ"
+
+#, fuzzy
+#~ msgid "Tile Right:"
+#~ msgstr "右:"
+
+#, fuzzy
+#~ msgid "Tile Left:"
+#~ msgstr "左へ"
+
+#, fuzzy
+#~ msgid "Kill Window:"
+#~ msgstr "全ウィンドウ"
+
+#
+#, fuzzy
+#~ msgid "Window Menu:"
+#~ msgstr "ウィンドウメニュー"
+
+#, fuzzy
+#~ msgid "Lock System:"
+#~ msgstr "ロックに失敗しました."
+
+#, fuzzy
+#~ msgid "Show Main Menu:"
+#~ msgstr "メインメニューを表示する"
+
+#, fuzzy
+#~ msgid "Show Favorites Menu:"
+#~ msgstr "お気に入りメニューを表示する"
+
+#, fuzzy
+#~ msgid "System Controls:"
+#~ msgstr "システムコントロール"
+
+#, fuzzy
+#~ msgid " Show the Desktop:"
+#~ msgstr "デスクトップ背景を出す"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 0:"
+#~ msgstr "デスクトップ 0 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 1:"
+#~ msgstr "デスクトップ 1 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 2:"
+#~ msgstr "デスクトップ 2 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 3:"
+#~ msgstr "デスクトップ 3 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 4:"
+#~ msgstr "デスクトップ 4 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 5:"
+#~ msgstr "デスクトップ 5 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 6:"
+#~ msgstr "デスクトップ 6 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 7:"
+#~ msgstr "デスクトップ 7 に切り替える"
+
+#, fuzzy
+#~ msgid " Switch to Desktop 8:"
+#~ msgstr "デスクトップ 8 に切り替える"
+
+#, fuzzy
+#~ msgid "Quick Launcher:"
+#~ msgstr "ランチャー"
+
+#, fuzzy
+#~ msgid "Take Screenshot:"
+#~ msgstr "スクリーンを準備中"
+
+#, fuzzy
+#~ msgid "Restart Moksha:"
+#~ msgstr "Moksha 再起動"
