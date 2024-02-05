@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-02-04 10:03+0100\n"
-"PO-Revision-Date: 2024-01-22 01:00+0000\n"
+"PO-Revision-Date: 2024-02-05 17:06+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -877,13 +877,14 @@ msgid ""
 "adding it in. You can re-configure things now to your<br>liking. Sorry for "
 "the hiccup in your settings.<br>"
 msgstr ""
-"As definições precisam de ser atualizadas. As suas antigas<br>definições "
-"serão apagadas e serão iniciados novos<br>valores padrão. Isto irá ocorrer "
-"repetidamente durante o<br> desenvolvimento e não deve reportar qualquer "
-"erro.<br>Isto significa que o Moksha precisa de dados<br>que as suas antigas "
-"definições não possuem.<br>Este conjunto de valores corrige a situação. Mais "
-"tarde<br>poderá configurar o Moksha ao seu gosto.<br>Desculpe qualquer "
-"inconveniente.<br>"
+"Os dados das definições precisam de ser atualizadas. As suas<br>definições "
+"antigas foram apagadas e foi iniciado um novo<br>conjunto de predefinições. "
+"Isto irá ocorrer regularmente durante o<br> desenvolvimento portanto não "
+"reporte qualquer erro.<br>Isto significa que o Moksha precisa de "
+"dados<br>que as suas definições antigas não possuem.<br>Este novo conjunto "
+"de predefinições irá corrigir a situação. Agora<br>pode voltar a configurar "
+"as coisas ao seu gosto.<br>Pedimos desculpa pelo problema nas suas "
+"definições.<br>"
 
 #: src/bin/e_config.c:971
 msgid ""
@@ -909,8 +910,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1578 src/bin/e_config.c:2203
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -982,7 +984,7 @@ msgstr "O ficheiro foi fechado durante a escrita."
 
 #: src/bin/e_config.c:2135
 msgid "Memory-mapping (mmap) of the file failed."
-msgstr "Falha ao fazer \"memory-mapping (mmap)\" do ficheiro."
+msgstr "Falha ao efetuar \"memory-mapping (mmap)\" do ficheiro."
 
 #: src/bin/e_config.c:2139
 msgid "X509 Encoding failed."
@@ -1010,11 +1012,11 @@ msgstr "O PRNG não foi semeado."
 
 #: src/bin/e_config.c:2163
 msgid "Encryption failed."
-msgstr "Falha ao codificar."
+msgstr "Falha ao encriptar."
 
 #: src/bin/e_config.c:2167
 msgid "Decryption failed."
-msgstr "Falha ao descodificar."
+msgstr "Falha ao desencriptar."
 
 #: src/bin/e_config.c:2171
 msgid "The error is unknown to Moksha."
@@ -1027,9 +1029,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"O Moksha produziu um erro ao escrever<br>o ficheiro de configurações.<br>"
-"%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado "
-"para evitar a danificação dos dados.<br>"
+"O Moksha produziu um erro ao gravar<br>o ficheiro de configuração."
+"<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi "
+"eliminado para evitar corromper os dados.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1090,8 +1092,9 @@ msgid ""
 "Locking the desktop failed because some application<br>has grabbed either "
 "the keyboard or the mouse or both<br>and their grab is unable to be broken."
 msgstr ""
-"O bloqueio da área de trabalho falhou pois uma aplicação<br> apoderou-se do "
-"teclado, do rato ou de ambos e<br>essa posse não pode ser quebrada."
+"Ocorreu um erro ao bloquear a área de trabalho pois uma aplicação<br> "
+"apoderou-se do teclado, do rato ou de ambos e<br>essa posse não pode ser "
+"quebrada."
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
@@ -1099,7 +1102,7 @@ msgstr "Introduza a palavra-passe de desbloqueio"
 
 #: src/bin/e_desklock.c:928
 msgid "Authenticating..."
-msgstr "Autenticação..."
+msgstr "Autenticando..."
 
 #: src/bin/e_desklock.c:933
 msgid "The password you entered is invalid. Try again."
@@ -1238,7 +1241,7 @@ msgstr "Opções"
 #: src/bin/e_eap_editor.c:823
 #, c-format
 msgid "Select an Icon for '%s'"
-msgstr "Escolha o ícone para %s"
+msgstr "Escolha o ícone para '%s'"
 
 #: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
@@ -1475,7 +1478,7 @@ msgstr "Erro"
 #: src/bin/e_fm.c:6652 src/bin/e_fm.c:6685
 #, c-format
 msgid "The recent DND operation requested for '%s' has failed."
-msgstr "Ocorreu um erro ao efetuar a operação para %s."
+msgstr "Ocorreu um erro ao efetuar a operação para '%s'."
 
 #: src/bin/e_fm.c:8771 src/modules/fileman/e_mod_config.c:369
 msgid "Case Sensitive"
@@ -1763,8 +1766,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -5838,8 +5841,9 @@ msgstr "Erro na combinação de teclas"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da combinação de teclas escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
@@ -8190,11 +8194,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8212,8 +8216,8 @@ msgstr ""
 "Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
 "</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
 "hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
-"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
-"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;"
+"Ctrl+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
 "<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
 "item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
 "visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
@@ -9588,7 +9592,7 @@ msgstr "Erro - Ficheiro não criado"
 #: src/modules/shot/e_mod_main.c:675
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
-msgstr "Não foi possível criar o ficheiro temporário %s: %s"
+msgstr "Não foi possível criar o ficheiro temporário '%s': %s"
 
 #: src/modules/shot/e_mod_main.c:693
 msgid "Error - Can't open file"
@@ -9597,7 +9601,7 @@ msgstr "Erro - Ficheiro não aberto"
 #: src/modules/shot/e_mod_main.c:694
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
-msgstr "Não foi possível abrir o ficheiro temporário %s: %s"
+msgstr "Não foi possível abrir o ficheiro temporário '%s': %s"
 
 #: src/modules/shot/e_mod_main.c:702
 msgid "Error - Bad size"
@@ -9606,7 +9610,7 @@ msgstr "Erro - Tamanho inválido"
 #: src/modules/shot/e_mod_main.c:703
 #, c-format
 msgid "Cannot get size of file '%s'"
-msgstr "Não foi possível obter o tamanho do ficheiro %s"
+msgstr "Não foi possível obter o tamanho do ficheiro '%s'"
 
 #: src/modules/shot/e_mod_main.c:713
 msgid "Error - Can't allocate memory"
