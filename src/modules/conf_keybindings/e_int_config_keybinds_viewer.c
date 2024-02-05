@@ -20,10 +20,10 @@ _key_binding_get(const char *action, const char *params)
    Eina_List *l = NULL;
    E_Config_Binding_Key *bi;
    Eina_Strbuf *b;
-   char mod[PATH_MAX];
-   char *ret;
+   char *mod, *ret;
 
    b = eina_strbuf_new();
+   mod = malloc(sizeof(char) * 32);
 
    EINA_LIST_FOREACH(e_config->key_bindings, l, bi)
      {
@@ -65,9 +65,11 @@ _key_binding_get(const char *action, const char *params)
                       sprintf(mod, "WIN %s", bi->key);
                       break;
              }
-
+           if (!strcmp(mod, "CTRL ALT space")) continue;
            if (eina_strbuf_length_get(b) > 0)
              eina_strbuf_append(b, "; ");
+           if (strlen(bi->key) == 1)
+             eina_str_toupper(&mod);
            eina_strbuf_append(b, mod);
            eina_stringshare_del(bi->action);
            eina_stringshare_del(bi->params);
@@ -76,6 +78,7 @@ _key_binding_get(const char *action, const char *params)
 
    ret = eina_strbuf_string_steal(b);
    eina_strbuf_free(b);
+   free(mod);
    if (ret[0]) return ret;
    free(ret);
    return strdup(TEXT_NONE_ACTION_KEY);
@@ -91,7 +94,7 @@ _key_dialog_del(void *data)
 static void
 _refresh_dialog(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 {
-  show_keybidings();
+   show_keybidings();
 }
 
 static void
