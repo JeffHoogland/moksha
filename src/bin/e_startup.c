@@ -213,7 +213,7 @@ _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
 }
 
 static Eina_Bool
-_e_startup_time_exceeded(void *data EINA_UNUSED)
+_e_startup_time_exceeded(void *data __UNUSED__)
 {
    fprintf(stderr, "Moksha: efreet didn't notify about cache update\n");
    /*_e_startup_error_dialog("E: Efreet did not update cache"

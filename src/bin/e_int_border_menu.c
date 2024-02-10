@@ -93,7 +93,7 @@ e_int_border_menu_hooks_clear(void)
 }
 
 static void
-_e_border_menu_cb_borderless(void *data, E_Menu *m EINA_UNUSED, E_Menu_Item *mi)
+_e_border_menu_cb_borderless(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi)
 {
    E_Border *bd = data;
 

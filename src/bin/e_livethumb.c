@@ -69,9 +69,9 @@ e_livethumb_vsize_get(Evas_Object *obj, Evas_Coord *w, Evas_Coord *h)
 }
 
 static void
-_e_livethumb_edje_preloaded(void *data EINA_UNUSED, Evas_Object *obj,
-                            const char *emission EINA_UNUSED,
-                            const char *source EINA_UNUSED)
+_e_livethumb_edje_preloaded(void *data __UNUSED__, Evas_Object *obj,
+                            const char *emission __UNUSED__,
+                            const char *source __UNUSED__)
 {
    evas_object_show(obj);
 }

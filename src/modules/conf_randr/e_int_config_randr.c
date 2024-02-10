@@ -13,17 +13,17 @@ struct _E_Config_Dialog_Data
 };
 
 /* local function prototypes */
-static void *_create_data(E_Config_Dialog *cfd EINA_UNUSED);
-static void _free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+static void *_create_data(E_Config_Dialog *cfd __UNUSED__);
+static void _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 static Evas_Object *_basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata);
-static int _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
-static int _basic_check(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata);
+static int _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
+static int _basic_check(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
 
-static void _randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _randr_cb_changed(void *data, Evas_Object *obj, void *event __UNUSED__);
 
 /* public functions */
 E_Config_Dialog *
-e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
+e_int_config_randr(E_Container *con, const char *params __UNUSED__)
 {
    E_Config_Dialog *cfd;
    E_Config_Dialog_View *v;
@@ -55,7 +55,7 @@ e_int_config_randr(E_Container *con, const char *params EINA_UNUSED)
 
 /* local functions */
 static void *
-_create_data(E_Config_Dialog *cfd EINA_UNUSED)
+_create_data(E_Config_Dialog *cfd __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
    
@@ -75,7 +75,7 @@ _create_data(E_Config_Dialog *cfd EINA_UNUSED)
 }
 
 static void 
-_free_data(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+_free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    /* if we have the randr smart widget, delete it */
    if (cfdata->o_randr)
@@ -157,7 +157,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+_basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    Eina_Bool change_primary = EINA_FALSE;
 
@@ -177,14 +177,14 @@ _basic_apply(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
 }
 
 static int 
-_basic_check(E_Config_Dialog *cfd EINA_UNUSED, E_Config_Dialog_Data *cfdata)
+_basic_check(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
    return ((e_randr_cfg->restore != cfdata->restore) || 
            (e_randr_cfg->primary != cfdata->primary));
 }
 
 static void 
-_randr_cb_changed(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_randr_cb_changed(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Config_Dialog *cfd;
    Eina_Bool changed = EINA_FALSE;

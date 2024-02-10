@@ -2108,7 +2108,7 @@ _pager_update_drop_position(Pager *p, Evas_Coord x, Evas_Coord y)
 }
 
 static void
-_pager_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info EINA_UNUSED)
+_pager_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
    Pager *p = data;
 

@@ -16,9 +16,9 @@ static E_Randr_Output_Config *_e_randr_config_output_find(Ecore_X_Randr_Output o
 static void _e_randr_config_screen_size_calculate(int *sw, int *sh);
 static void _e_randr_config_mode_geometry(Ecore_X_Randr_Mode mode, Ecore_X_Randr_Orientation orient, Eina_Rectangle *rect);
 
-static Eina_Bool _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
-static Eina_Bool _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
-static Eina_Bool _e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event);
+static Eina_Bool _e_randr_event_cb_screen_change(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_randr_event_cb_crtc_change(void *data __UNUSED__, int type __UNUSED__, void *event);
+static Eina_Bool _e_randr_event_cb_output_change(void *data __UNUSED__, int type __UNUSED__, void *event);
 
 /* local variables */
 static Eina_List *_randr_event_handlers = NULL;
@@ -574,7 +574,7 @@ _e_randr_config_restore(void)
 }
 
 static Eina_Bool 
-_e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_e_randr_event_cb_screen_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Screen_Change *ev;
    Eina_Bool changed = EINA_FALSE;
@@ -624,7 +624,7 @@ _e_randr_event_cb_screen_change(void *data EINA_UNUSED, int type EINA_UNUSED, vo
 }
 
 static Eina_Bool 
-_e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_e_randr_event_cb_crtc_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Randr_Crtc_Change *ev;
    Eina_List *l = NULL;
@@ -678,7 +678,7 @@ _e_randr_event_cb_crtc_change(void *data EINA_UNUSED, int type EINA_UNUSED, void
 }
 
 static Eina_Bool 
-_e_randr_event_cb_output_change(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_e_randr_event_cb_output_change(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Randr_Output_Change *ev;
    Eina_List *l = NULL;

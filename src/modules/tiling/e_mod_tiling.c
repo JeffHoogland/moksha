@@ -4057,8 +4057,8 @@ _update_current_desk(E_Desk *new)
 }
 
 static void
-_e_mod_menu_border_cb(void *data, E_Menu *m EINA_UNUSED,
-                      E_Menu_Item *mi EINA_UNUSED)
+_e_mod_menu_border_cb(void *data, E_Menu *m __UNUSED__,
+                      E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd = data;
 
@@ -4066,7 +4066,7 @@ _e_mod_menu_border_cb(void *data, E_Menu *m EINA_UNUSED,
 }
 
 static void
-_bd_hook(void *d EINA_UNUSED, E_Border *bd)
+_bd_hook(void *d __UNUSED__, E_Border *bd)
 {
    E_Menu_Item *mi;
    E_Menu *m;

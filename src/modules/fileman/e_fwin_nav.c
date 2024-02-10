@@ -241,7 +241,7 @@ _path_generate(Instance *inst, Evas_Object *break_obj)
 }
 
 static Eina_Bool
-_box_button_cb_dnd_drop(void *data, const char *type EINA_UNUSED)
+_box_button_cb_dnd_drop(void *data, const char *type __UNUSED__)
 {
    Instance *inst = data;
    Eina_Bool allow;
@@ -599,7 +599,7 @@ _cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event_info)
 }
 
 static void
-_cb_button_click(void *data, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_button_click(void *data, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Instance *inst = data;
    Nav_Item *ni;

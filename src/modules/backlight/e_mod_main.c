@@ -460,7 +460,7 @@ _e_mod_action_cb(E_Object *obj __UNUSED__,
 }
 
 static Eina_Bool
-_backlight_cb_mod_init_end(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev EINA_UNUSED)
+_backlight_cb_mod_init_end(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
 {
    Eina_List *l;
    Instance *inst;
@@ -475,7 +475,7 @@ _backlight_cb_mod_init_end(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev E
 }
 
 static Eina_Bool
-_backlight_cb_changed(void *d EINA_UNUSED, int type EINA_UNUSED, void *ev EINA_UNUSED)
+_backlight_cb_changed(void *d __UNUSED__, int type __UNUSED__, void *ev __UNUSED__)
 {
    Eina_List *l;
    Instance *inst;

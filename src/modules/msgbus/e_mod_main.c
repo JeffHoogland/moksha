@@ -22,7 +22,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m EINA_UNUSED)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    Eldbus_Service_Interface *iface;
    Eina_Array_Iterator iter;
@@ -36,7 +36,7 @@ e_modapi_shutdown(E_Module *m EINA_UNUSED)
 }
 
 EAPI int
-e_modapi_save(E_Module *m EINA_UNUSED)
+e_modapi_save(E_Module *m __UNUSED__)
 {
    return 1;
 }

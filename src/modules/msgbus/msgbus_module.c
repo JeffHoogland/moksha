@@ -30,7 +30,7 @@ static const Eldbus_Service_Interface_Desc module = {
 
 /* Modules Handlers */
 static Eldbus_Message *
-_e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    char *mod;
@@ -48,7 +48,7 @@ _e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                            const Eldbus_Message *msg)
 {
    char *mod;
@@ -68,7 +68,7 @@ _e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                            const Eldbus_Message *msg)
 {
    char *mod;
@@ -87,7 +87,7 @@ _e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                             const Eldbus_Message *msg)
 {
    char *mod;
@@ -106,7 +106,7 @@ _e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_list_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    Eina_List *l;

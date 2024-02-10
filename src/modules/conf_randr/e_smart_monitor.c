@@ -150,7 +150,7 @@ static void _e_smart_clip_unset(Evas_Object *obj);
 static void _e_smart_monitor_modes_fill(E_Smart_Data *sd);
 static int _e_smart_monitor_modes_sort(const void *data1, const void *data2);
 static void _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy);
-static Eina_Bool _e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event);
+static Eina_Bool _e_smart_monitor_background_update(void *data, int type __UNUSED__, void *event);
 static void _e_smart_monitor_position_set(E_Smart_Data *sd, Evas_Coord x, Evas_Coord y);
 static void _e_smart_monitor_resolution_set(E_Smart_Data *sd, Evas_Coord w, Evas_Coord h);
 static void _e_smart_monitor_pointer_push(Evas_Object *obj, const char *ptr);
@@ -162,28 +162,28 @@ static Ecore_X_Randr_Mode_Info *_e_smart_monitor_mode_find(E_Smart_Data *sd, Eva
 static inline double _e_smart_monitor_mode_refresh_rate_get(Ecore_X_Randr_Mode_Info *mode);
 static void _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj);
 
-static void _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
-static void _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED);
-static void _e_smart_monitor_thumb_cb_mouse_up(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
-static void _e_smart_monitor_thumb_cb_mouse_down(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event);
+static void _e_smart_monitor_thumb_cb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_monitor_thumb_cb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__);
+static void _e_smart_monitor_thumb_cb_mouse_up(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
+static void _e_smart_monitor_thumb_cb_mouse_down(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event);
 
-static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event);
-static void _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
-static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED);
+static void _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
+static void _e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_indicator_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
+static void _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__);
 
-static void _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
 
 static void _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
-static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event);
+static void _e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon __UNUSED__, void *event);
 static void _e_smart_monitor_move_event(E_Smart_Data *sd, Evas_Object *mon, void *event);
 
 static int _e_smart_monitor_rotation_amount_get(E_Smart_Data *sd, Evas_Event_Mouse_Move *ev);
@@ -1344,7 +1344,7 @@ _e_smart_monitor_background_set(E_Smart_Data *sd, int dx, int dy)
 }
 
 static Eina_Bool 
-_e_smart_monitor_background_update(void *data, int type EINA_UNUSED, void *event)
+_e_smart_monitor_background_update(void *data, int type __UNUSED__, void *event)
 {
    E_Smart_Data *sd;
    E_Event_Bg_Update *ev;
@@ -1568,7 +1568,7 @@ _e_smart_monitor_mode_refresh_rates_fill(Evas_Object *obj)
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+_e_smart_monitor_thumb_cb_mouse_in(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1577,7 +1577,7 @@ _e_smart_monitor_thumb_cb_mouse_in(void *data EINA_UNUSED, Evas *evas EINA_UNUSE
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event EINA_UNUSED)
+_e_smart_monitor_thumb_cb_mouse_out(void *data __UNUSED__, Evas *evas __UNUSED__, Evas_Object *obj, void *event __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1586,7 +1586,7 @@ _e_smart_monitor_thumb_cb_mouse_out(void *data EINA_UNUSED, Evas *evas EINA_UNUS
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+_e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Up *ev;
    Evas_Object *mon, *below;
@@ -1686,7 +1686,7 @@ _e_smart_monitor_thumb_cb_mouse_up(void *data, Evas *evas EINA_UNUSED, Evas_Obje
 }
 
 static void 
-_e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj, void *event)
+_e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, void *event)
 {
    Evas_Event_Mouse_Down *ev;
    Evas_Object *mon;
@@ -1723,7 +1723,7 @@ _e_smart_monitor_thumb_cb_mouse_down(void *data, Evas *evas EINA_UNUSED, Evas_Ob
 }
 
 static void 
-_e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
+_e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -1749,7 +1749,7 @@ _e_smart_monitor_frame_cb_mouse_move(void *data, Evas *evas EINA_UNUSED, Evas_Ob
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_resize_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1758,7 +1758,7 @@ _e_smart_monitor_frame_cb_resize_in(void *data EINA_UNUSED, Evas_Object *obj, co
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_resize_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1767,7 +1767,7 @@ _e_smart_monitor_frame_cb_resize_out(void *data EINA_UNUSED, Evas_Object *obj, c
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_rotate_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1776,7 +1776,7 @@ _e_smart_monitor_frame_cb_rotate_in(void *data EINA_UNUSED, Evas_Object *obj, co
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_rotate_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1785,7 +1785,7 @@ _e_smart_monitor_frame_cb_rotate_out(void *data EINA_UNUSED, Evas_Object *obj, c
 }
 
 static void 
-_e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_indicator_in(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1794,7 +1794,7 @@ _e_smart_monitor_frame_cb_indicator_in(void *data EINA_UNUSED, Evas_Object *obj,
 }
 
 static void 
-_e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_indicator_out(void *data __UNUSED__, Evas_Object *obj, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    LOGFN(__FILE__, __LINE__, __FUNCTION__);
 
@@ -1803,7 +1803,7 @@ _e_smart_monitor_frame_cb_indicator_out(void *data EINA_UNUSED, Evas_Object *obj
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -1837,7 +1837,7 @@ _e_smart_monitor_frame_cb_resize_start(void *data, Evas_Object *obj EINA_UNUSED,
 }
 
 static void 
-_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -1867,7 +1867,7 @@ _e_smart_monitor_frame_cb_resize_stop(void *data, Evas_Object *obj EINA_UNUSED, 
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -1898,7 +1898,7 @@ _e_smart_monitor_frame_cb_rotate_start(void *data, Evas_Object *obj EINA_UNUSED,
 }
 
 static void 
-_e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_rotate_stop(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -2024,7 +2024,7 @@ ret:
 }
 
 static void 
-_e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -2064,7 +2064,7 @@ _e_smart_monitor_frame_cb_indicator_toggle(void *data, Evas_Object *obj EINA_UNU
 }
 
 static void 
-_e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_e_smart_monitor_refresh_rate_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    Evas_Object *mon;
    E_Smart_Data *sd;
@@ -2212,7 +2212,7 @@ _e_smart_monitor_resize_event(E_Smart_Data *sd, Evas_Object *mon, void *event)
 }
 
 static void 
-_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon EINA_UNUSED, void *event)
+_e_smart_monitor_rotate_event(E_Smart_Data *sd, Evas_Object *mon __UNUSED__, void *event)
 {
    Evas_Event_Mouse_Move *ev;
    int rotation = 0;

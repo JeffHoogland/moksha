@@ -2657,7 +2657,7 @@ _ibar_cb_bd_prop(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Property *
 }
 
 static Eina_Bool
-_ibar_cb_bd_add_del(void *d EINA_UNUSED, int t EINA_UNUSED, E_Event_Border_Remove *ev)
+_ibar_cb_bd_add_del(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Remove *ev)
 {
    IBar *b;
    Eina_List *l, *ll;

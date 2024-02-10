@@ -439,7 +439,7 @@ e_int_menus_lost_clients_new(void)
 }
 
 static void
-_e_int_menus_inhibit_cb(void *data, E_Menu *m EINA_UNUSED, E_Menu_Item *mi EINA_UNUSED)
+_e_int_menus_inhibit_cb(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    uintptr_t cookie = (uintptr_t)data;
 

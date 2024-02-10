@@ -11,7 +11,7 @@ static int _log_dom = -1;
 #define ERR(...) EINA_LOG_DOM_ERR(_log_dom, __VA_ARGS__)
 
 static Eldbus_Message *
-cb_virtual_desktops(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_virtual_desktops(const Eldbus_Service_Interface *iface __UNUSED__,
                     const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
@@ -23,7 +23,7 @@ cb_virtual_desktops(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_show(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_show(const Eldbus_Service_Interface *iface __UNUSED__,
                 const Eldbus_Message *msg)
 {
    int x, y;
@@ -43,7 +43,7 @@ cb_desktop_show(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_show_by_name(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_show_by_name(const Eldbus_Service_Interface *iface __UNUSED__,
                         const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
@@ -75,7 +75,7 @@ cb_desktop_show_by_name(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_lock(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_lock(const Eldbus_Service_Interface *iface __UNUSED__,
                 const Eldbus_Message *msg)
 {
    DBG("desklock requested");
@@ -85,7 +85,7 @@ cb_desktop_lock(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_unlock(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_unlock(const Eldbus_Service_Interface *iface __UNUSED__,
                   const Eldbus_Message *msg)
 {
    DBG("deskunlock requested");
@@ -94,7 +94,7 @@ cb_desktop_unlock(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_bgadd(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_bgadd(const Eldbus_Service_Interface *iface __UNUSED__,
                  const Eldbus_Message *msg)
 {
    int container, zone, desk_x, desk_y;
@@ -116,7 +116,7 @@ cb_desktop_bgadd(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_bgdel(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_bgdel(const Eldbus_Service_Interface *iface __UNUSED__,
                  const Eldbus_Message *msg)
 {
    int container, zone, desk_x, desk_y;
@@ -137,7 +137,7 @@ cb_desktop_bgdel(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-cb_desktop_bglist(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_desktop_bglist(const Eldbus_Service_Interface *iface __UNUSED__,
                   const Eldbus_Message *msg)
 {
    Eina_List *list;

@@ -13,14 +13,14 @@ struct _E_Widget_Data
 /* local subsystem functions */
 
 static void
-_extern_obj_enable_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, void *event_info EINA_UNUSED)
+_extern_obj_enable_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd = data;
    wd->widgets_enable = eina_list_remove(wd->widgets_enable, obj);
 }
 
 static void
-_extern_obj_disable_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj, void *event_info EINA_UNUSED)
+_extern_obj_disable_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    E_Widget_Data *wd = data;
    wd->widgets_disable = eina_list_remove(wd->widgets_disable, obj);

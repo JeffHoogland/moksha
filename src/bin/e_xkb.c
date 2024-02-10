@@ -30,7 +30,7 @@ _e_xkb_init_timer(void *data)
 }
 
 static Eina_Bool
-kb_exe_del(void *d EINA_UNUSED, int t EINA_UNUSED, Ecore_Exe_Event_Del *ev)
+kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
 {
    if (ev->exe == cur_exe)
      cur_exe = NULL;

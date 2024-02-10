@@ -972,7 +972,7 @@ _clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__
 }
 
 static Eina_Bool
-_clock_time_update(void *d EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+_clock_time_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    e_int_clock_instances_redo(EINA_TRUE);
    return ECORE_CALLBACK_PASS_ON;

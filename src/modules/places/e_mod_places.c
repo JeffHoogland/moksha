@@ -763,7 +763,7 @@ _places_freespace_thread_cancel(void *data, Ecore_Thread *thread __UNUSED__)
 }
 
 static Eina_Bool
-_places_freespace_timer_cb(void *data EINA_UNUSED)
+_places_freespace_timer_cb(void *data __UNUSED__)
 {
    Volume *vol;
    Eina_List *l, *tdl = NULL;
@@ -799,7 +799,7 @@ _places_freespace_timer_cb(void *data EINA_UNUSED)
 }
 
 static Eina_Bool
-_places_screensaver_on_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+_places_screensaver_on_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (freespace_timer)
      {
@@ -811,7 +811,7 @@ _places_screensaver_on_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *ev
 }
 
 static Eina_Bool
-_places_screensaver_off_cb(void *data EINA_UNUSED, int type EINA_UNUSED, void *event EINA_UNUSED)
+_places_screensaver_off_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (!freespace_timer)
      freespace_timer = ecore_timer_add(PLACES_FREESPACE_INTERVAL,

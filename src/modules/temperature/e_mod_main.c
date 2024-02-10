@@ -317,7 +317,7 @@ _temperature_face_cb_menu_configure(void *data, E_Menu *m __UNUSED__, E_Menu_Ite
 }
 
 static Eina_Bool
-_temperature_face_shutdown(const Eina_Hash *hash EINA_UNUSED, const void *key EINA_UNUSED, void *hdata, void *fdata EINA_UNUSED)
+_temperature_face_shutdown(const Eina_Hash *hash __UNUSED__, const void *key __UNUSED__, void *hdata, void *fdata __UNUSED__)
 {
    Config_Face *inst;
 
@@ -380,7 +380,7 @@ _temperature_check_notify(void *data, Ecore_Thread *th, void *msg)
 }
 
 static void
-_temperature_check_done(void *data, Ecore_Thread *th EINA_UNUSED)
+_temperature_check_done(void *data, Ecore_Thread *th __UNUSED__)
 {
    _temperature_thread_free(data);
 }

@@ -769,19 +769,19 @@ _win_share_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 }
 
 static void
-_win_share_confirm_del(void *d EINA_UNUSED)
+_win_share_confirm_del(void *d __UNUSED__)
 {
    cd = NULL;
 }
 
 static void
-_win_share_confirm_yes(void *d EINA_UNUSED)
+_win_share_confirm_yes(void *d __UNUSED__)
 {
    _win_share_cb(NULL, NULL);
 }
 
 static void
-_win_share_confirm_cb(void *d EINA_UNUSED, void *d2 EINA_UNUSED)
+_win_share_confirm_cb(void *d __UNUSED__, void *d2 __UNUSED__)
 {
    if (cd) return;
    cd = e_confirm_dialog_show(_("Confirm Share"), NULL,

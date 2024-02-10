@@ -123,7 +123,7 @@ static const Eldbus_Service_Interface_Desc window_desc = {
 #define SCREENSAVER_PATH2  "/ScreenSaver"
 static void            _e_msgbus_screensaver_request_name_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending);
 static void            _e_msgbus_screensaver_inhibit_free(E_Msgbus_Data_Screensaver_Inhibit *inhibit);
-static void            _e_msgbus_screensaver_owner_change_cb(void *data EINA_UNUSED, const char *bus, const char *old_id, const char *new_id);
+static void            _e_msgbus_screensaver_owner_change_cb(void *data __UNUSED__, const char *bus, const char *old_id, const char *new_id);
 static Eldbus_Message *_e_msgbus_screensaver_inhibit_cb(const Eldbus_Service_Interface *iface, const Eldbus_Message *msg);
 static Eldbus_Message *_e_msgbus_screensaver_uninhibit_cb(const Eldbus_Service_Interface *iface, const Eldbus_Message *msg);
 static Eldbus_Message *_e_msgbus_screensaver_getactive_cb(const Eldbus_Service_Interface *iface, const Eldbus_Message *msg);
@@ -202,8 +202,8 @@ e_msgbus_interface_attach(const Eldbus_Service_Interface_Desc *desc)
 }
 
 static void
-_e_msgbus_core_request_name_cb(void *data EINA_UNUSED, const Eldbus_Message *msg,
-                          Eldbus_Pending *pending EINA_UNUSED)
+_e_msgbus_core_request_name_cb(void *data __UNUSED__, const Eldbus_Message *msg,
+                          Eldbus_Pending *pending __UNUSED__)
 {
    unsigned int flag;
 
@@ -225,7 +225,7 @@ _e_msgbus_core_request_name_cb(void *data EINA_UNUSED, const Eldbus_Message *msg
 
 /* Core Handlers */
 static Eldbus_Message *
-_e_msgbus_core_version_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_core_version_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                           const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
@@ -235,7 +235,7 @@ _e_msgbus_core_version_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_core_restart_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_core_restart_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                           const Eldbus_Message *msg)
 {
    e_sys_action_do(E_SYS_RESTART, NULL);
@@ -243,7 +243,7 @@ _e_msgbus_core_restart_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_core_shutdown_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_core_shutdown_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                            const Eldbus_Message *msg)
 {
    e_sys_action_do(E_SYS_EXIT, NULL);
@@ -254,9 +254,9 @@ _e_msgbus_core_shutdown_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 
 ///////////////////////////////////////////////////////////////////////////
 static void
-_e_msgbus_screensaver_request_name_cb(void *data EINA_UNUSED,
+_e_msgbus_screensaver_request_name_cb(void *data __UNUSED__,
                                       const Eldbus_Message *msg,
-                                      Eldbus_Pending *pending EINA_UNUSED)
+                                      Eldbus_Pending *pending __UNUSED__)
 {
    unsigned int flag;
 
@@ -292,7 +292,7 @@ _e_msgbus_screensaver_inhibit_free(E_Msgbus_Data_Screensaver_Inhibit *inhibit)
 }
 
 static void
-_e_msgbus_screensaver_owner_change_cb(void *data EINA_UNUSED, const char *bus EINA_UNUSED, const char *old_id, const char *new_id)
+_e_msgbus_screensaver_owner_change_cb(void *data __UNUSED__, const char *bus __UNUSED__, const char *old_id, const char *new_id)
 {
    Eina_List *l, *ll;
    E_Msgbus_Data_Screensaver_Inhibit *inhibit;
@@ -321,7 +321,7 @@ _e_msgbus_screensaver_owner_change_cb(void *data EINA_UNUSED, const char *bus EI
 }
 
 static Eldbus_Message *
-_e_msgbus_screensaver_inhibit_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_screensaver_inhibit_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                                  const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = NULL;
@@ -367,7 +367,7 @@ err:
 }
 
 static Eldbus_Message *
-_e_msgbus_screensaver_uninhibit_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_screensaver_uninhibit_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                                    const Eldbus_Message *msg)
 {
    unsigned int cookie = 0;
@@ -379,7 +379,7 @@ _e_msgbus_screensaver_uninhibit_cb(const Eldbus_Service_Interface *iface EINA_UN
 }
 
 static Eldbus_Message *
-_e_msgbus_screensaver_getactive_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_screensaver_getactive_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                                    const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = NULL;
@@ -421,7 +421,7 @@ e_msgbus_screensaver_inhibit_remove(unsigned int cookie)
 
 /* Modules Handlers */
 static Eldbus_Message *
-_e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    char *mod;
@@ -439,7 +439,7 @@ _e_msgbus_module_load_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                            const Eldbus_Message *msg)
 {
    char *mod;
@@ -459,7 +459,7 @@ _e_msgbus_module_unload_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                            const Eldbus_Message *msg)
 {
    char *mod;
@@ -478,7 +478,7 @@ _e_msgbus_module_enable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                             const Eldbus_Message *msg)
 {
    char *mod;
@@ -497,7 +497,7 @@ _e_msgbus_module_disable_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_module_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_module_list_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    Eina_List *l;
@@ -533,7 +533,7 @@ _e_msgbus_module_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 
 /* Profile Handlers */
 static Eldbus_Message *
-_e_msgbus_profile_set_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_profile_set_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    char *prof;
@@ -552,7 +552,7 @@ _e_msgbus_profile_set_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_profile_get_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_profile_get_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
@@ -565,7 +565,7 @@ _e_msgbus_profile_get_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_profile_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_profile_list_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                           const Eldbus_Message *msg)
 {
    Eina_List *l;
@@ -594,7 +594,7 @@ _e_msgbus_profile_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_profile_add_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_profile_add_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    char *prof;
@@ -608,7 +608,7 @@ _e_msgbus_profile_add_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 }
 
 static Eldbus_Message *
-_e_msgbus_profile_delete_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_profile_delete_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                             const Eldbus_Message *msg)
 {
    char *prof;
@@ -625,7 +625,7 @@ _e_msgbus_profile_delete_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 
 /* Window handlers */
 static Eldbus_Message *
-_e_msgbus_window_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
+_e_msgbus_window_list_cb(const Eldbus_Service_Interface *iface __UNUSED__,
                          const Eldbus_Message *msg)
 {
    const Eina_List *l;
@@ -665,7 +665,7 @@ _e_msgbus_window_list_cb(const Eldbus_Service_Interface *iface EINA_UNUSED,
 
 #define E_MSGBUS_WIN_ACTION_CB_BEGIN(NAME) \
    static Eldbus_Message * \
-   _e_msgbus_window_##NAME##_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, \
+   _e_msgbus_window_##NAME##_cb(const Eldbus_Service_Interface *iface __UNUSED__, \
                                 const Eldbus_Message *msg) { \
       E_Border *bd; \
       int xwin; \
@@ -712,7 +712,7 @@ E_MSGBUS_WIN_ACTION_CB_BEGIN(unmaximize)
 E_MSGBUS_WIN_ACTION_CB_END
 
 /*static Eldbus_Message *
-_e_msgbus_window_sendtodesktop_cb( const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Message *msg)
+_e_msgbus_window_sendtodesktop_cb( const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
    E_Client *ec;
    E_Zone * zone;

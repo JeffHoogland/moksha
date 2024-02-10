@@ -299,7 +299,7 @@ _unset_cb(void *data, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 
 
 static Evas_Object *
-_basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dialog_Data *cfdata)
+_basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data *cfdata)
 {
    Evas_Object *o, *ol, *oe, *ob, *oc;
    Eina_List *l;

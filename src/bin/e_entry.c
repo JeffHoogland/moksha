@@ -615,9 +615,9 @@ _e_entry_x_selection_update(Evas_Object *entry)
 
 static void
 _entry_paste_request_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
+      Evas_Object *obj __UNUSED__,
       const char *emission,
-      const char *source EINA_UNUSED)
+      const char *source __UNUSED__)
 {
    Ecore_X_Window xwin;
    E_Win *win;
@@ -650,27 +650,27 @@ _entry_paste_request_signal_cb(void *data,
 
 static void
 _entry_selection_changed_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    _e_entry_x_selection_update(data);
 }
 
 static void
 _entry_selection_all_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    e_entry_select_all(data);
 }
 
 static void
 _entry_copy_notify_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
 
@@ -682,9 +682,9 @@ _entry_copy_notify_signal_cb(void *data,
 
 static void
 _entry_cut_notify_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    E_Entry_Smart_Data *sd;
 
@@ -720,9 +720,9 @@ _entry_recalc_size(Evas_Object *object)
 
 static void
 _entry_changed_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    Evas_Object *object = data;
    E_Entry_Smart_Data *sd;
@@ -737,9 +737,9 @@ _entry_changed_signal_cb(void *data,
 
 static void
 _entry_cursor_changed_signal_cb(void *data,
-      Evas_Object *obj EINA_UNUSED,
-      const char *emission EINA_UNUSED,
-      const char *source EINA_UNUSED)
+      Evas_Object *obj __UNUSED__,
+      const char *emission __UNUSED__,
+      const char *source __UNUSED__)
 {
    Evas_Object *object = data;
    E_Entry_Smart_Data *sd;

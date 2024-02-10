@@ -204,19 +204,19 @@ _e_mod_action_winlist_key_cb(E_Object *obj, const char *params, Ecore_Event_Key 
 }
 
 static void
-_e_mod_action_winlist_edge_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, E_Event_Zone_Edge *ev EINA_UNUSED)
+_e_mod_action_winlist_edge_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__, E_Event_Zone_Edge *ev __UNUSED__)
 {
    e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from an edge binding"));
 }
 
 static void
-_e_mod_action_winlist_signal_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, const char *sig EINA_UNUSED, const char *src EINA_UNUSED)
+_e_mod_action_winlist_signal_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__, const char *sig __UNUSED__, const char *src __UNUSED__)
 {
    e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from a signal binding"));
 }
 
 static void
-_e_mod_action_winlist_acpi_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED, E_Event_Acpi *ev EINA_UNUSED)
+_e_mod_action_winlist_acpi_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__, E_Event_Acpi *ev __UNUSED__)
 {
    e_util_dialog_show(_("Winlist Error"), _("Winlist cannot be activated from an ACPI binding"));
 }

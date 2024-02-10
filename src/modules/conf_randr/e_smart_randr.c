@@ -42,13 +42,13 @@ static void _e_smart_hide(Evas_Object *obj);
 static void _e_smart_clip_set(Evas_Object *obj, Evas_Object *clip);
 static void _e_smart_clip_unset(Evas_Object *obj);
 
-static void _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
-static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
+static void _e_smart_randr_grid_cb_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
+static void _e_smart_randr_grid_cb_resize(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
 
 static Evas_Object *_e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc);
-static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
-static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED);
-static void _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED);
+static void _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
+static void _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__);
+static void _e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event __UNUSED__);
 
 static void _e_smart_randr_monitor_position_update(E_Smart_Data *sd, Evas_Object *obj, Evas_Object *skip);
 static void _e_smart_randr_monitor_position_normalize(E_Smart_Data *sd);
@@ -594,7 +594,7 @@ _e_smart_clip_unset(Evas_Object *obj)
 }
 
 static void 
-_e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_e_smart_randr_grid_cb_move(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
    Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
@@ -615,7 +615,7 @@ _e_smart_randr_grid_cb_move(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj
 }
 
 static void 
-_e_smart_randr_grid_cb_resize(void *data, Evas *evas EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_e_smart_randr_grid_cb_resize(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
    Evas_Coord gx = 0, gy = 0, gw = 0, gh = 0;
@@ -655,7 +655,7 @@ _e_smart_randr_monitor_crtc_find(E_Smart_Data *sd, Ecore_X_Randr_Crtc crtc)
 }
 
 static void 
-_e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    Evas_Object *randr;
 
@@ -666,7 +666,7 @@ _e_smart_randr_monitor_cb_changed(void *data, Evas_Object *obj EINA_UNUSED, void
 }
 
 static void 
-_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
    Evas_Object *randr;
@@ -690,7 +690,7 @@ _e_smart_randr_monitor_cb_moved(void *data, Evas_Object *obj, void *event EINA_U
 }
 
 static void 
-_e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event EINA_UNUSED)
+_e_smart_randr_monitor_cb_resized(void *data, Evas_Object *obj, void *event __UNUSED__)
 {
    E_Smart_Data *sd;
    Evas_Object *randr;

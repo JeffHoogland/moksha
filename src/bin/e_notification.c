@@ -393,7 +393,7 @@ _nedje_text_escape(const char *text)
 }
 
 static Eldbus_Message *
-notify_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Message *msg)
+notify_cb(const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
    E_Notification_Notify *n;
    Eldbus_Message_Iter *actions_iter, *hints_iter;
@@ -461,7 +461,7 @@ notify_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Messag
 }
 
 static Eldbus_Message *
-close_notification_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Message *msg)
+close_notification_cb(const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
    unsigned int id;
 
@@ -471,7 +471,7 @@ close_notification_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const E
 }
 
 static Eldbus_Message *
-capabilities_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Message *msg)
+capabilities_cb(const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
    int i;
@@ -490,7 +490,7 @@ capabilities_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_
 }
 
 static Eldbus_Message *
-server_info_cb(const Eldbus_Service_Interface *iface EINA_UNUSED, const Eldbus_Message *msg)
+server_info_cb(const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);
    eldbus_message_arguments_append(reply, "ssss",

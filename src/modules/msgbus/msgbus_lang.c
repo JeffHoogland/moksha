@@ -11,7 +11,7 @@ static int _log_dom = -1;
 #define ERR(...) EINA_LOG_DOM_ERR(_log_dom, __VA_ARGS__)
 
 static Eldbus_Message *
-cb_langs(const Eldbus_Service_Interface *iface EINA_UNUSED,
+cb_langs(const Eldbus_Service_Interface *iface __UNUSED__,
          const Eldbus_Message *msg)
 {
    Eldbus_Message *reply = eldbus_message_method_return_new(msg);

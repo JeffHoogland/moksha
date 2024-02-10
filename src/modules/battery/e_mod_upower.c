@@ -47,7 +47,7 @@ _ac_free(Ac_Adapter *ac)
 }
 
 static void
-_ac_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending EINA_UNUSED)
+_ac_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending __UNUSED__)
 {
    Ac_Adapter *ac = data;
    Eldbus_Message_Iter *array, *dict, *variant;
@@ -74,7 +74,7 @@ _ac_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending EI
 }
 
 static void
-_ac_changed_cb(void *data, const Eldbus_Message *msg EINA_UNUSED)
+_ac_changed_cb(void *data, const Eldbus_Message *msg __UNUSED__)
 {
    Ac_Adapter *ac = data;
    eldbus_proxy_property_get_all(ac->proxy, _ac_get_all_cb, ac);
@@ -110,7 +110,7 @@ static const char *bat_techologies[] = {
 };
 
 static void
-_bat_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending EINA_UNUSED)
+_bat_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending __UNUSED__)
 {
    Battery *bat = data;
    Eldbus_Message_Iter *array, *dict, *variant;
@@ -197,7 +197,7 @@ _bat_get_all_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending E
 }
 
 static void
-_bat_changed_cb(void *data, const Eldbus_Message *msg EINA_UNUSED)
+_bat_changed_cb(void *data, const Eldbus_Message *msg __UNUSED__)
 {
    Battery *bat = data;
    eldbus_proxy_property_get_all(bat->proxy, _bat_get_all_cb, bat);
@@ -225,7 +225,7 @@ _process_battery(Eldbus_Proxy *proxy)
 }
 
 static void
-_device_type_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending EINA_UNUSED)
+_device_type_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending *pending __UNUSED__)
 {
    Eldbus_Proxy *proxy = data;
    Eldbus_Message_Iter *variant;
@@ -276,7 +276,7 @@ _process_enumerate_path(const char *path)
 }
 
 static void
-_enumerate_cb(void *data EINA_UNUSED, const Eldbus_Message *msg, Eldbus_Pending *pending EINA_UNUSED)
+_enumerate_cb(void *data __UNUSED__, const Eldbus_Message *msg, Eldbus_Pending *pending __UNUSED__)
 {
    const char *path;
    Eldbus_Message_Iter *array;
@@ -289,7 +289,7 @@ _enumerate_cb(void *data EINA_UNUSED, const Eldbus_Message *msg, Eldbus_Pending 
 }
 
 static void
-_device_added_cb(void *data EINA_UNUSED, const Eldbus_Message *msg)
+_device_added_cb(void *data __UNUSED__, const Eldbus_Message *msg)
 {
    const char *path;
 
@@ -299,7 +299,7 @@ _device_added_cb(void *data EINA_UNUSED, const Eldbus_Message *msg)
 }
 
 static void
-_device_removed_cb(void *data EINA_UNUSED, const Eldbus_Message *msg)
+_device_removed_cb(void *data __UNUSED__, const Eldbus_Message *msg)
 {
    Battery *bat;
    Ac_Adapter *ac;

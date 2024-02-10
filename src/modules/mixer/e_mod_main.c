@@ -101,12 +101,12 @@ static int _notification_id = 0;
 static void     _mixer_popup_input_window_create(Instance *inst);
 static void     _mixer_popup_input_window_destroy(Instance *inst);
 static void     _popup_del(Instance *inst);
-static void     _notify_cb(void *data __UNUSED__, unsigned int id);
+static void     _notify_cb(void *data EINA_UNUSED, unsigned int id);
 
 static Context  *mixer_context = NULL;
 
 static void
-_notify_cb(void *data __UNUSED__, unsigned int id)
+_notify_cb(void *data EINA_UNUSED, unsigned int id)
 {
    _notification_id = id;
 }
@@ -817,7 +817,7 @@ e_modapi_save(E_Module *m EINA_UNUSED)
 }
 
 static Eina_Bool
-_mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *event)
+_mixer_popup_input_window_mouse_up_cb(void *data, int type EINA_UNUSED, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    Instance *inst = data;
@@ -831,7 +831,7 @@ _mixer_popup_input_window_mouse_up_cb(void *data, int type __UNUSED__, void *eve
 }
 
 static Eina_Bool
-_mixer_popup_input_window_key_down_cb(void *data, int type __UNUSED__, void *event)
+_mixer_popup_input_window_key_down_cb(void *data, int type EINA_UNUSED, void *event)
 {
    Ecore_Event_Key *ev = event;
    Instance *inst = data;

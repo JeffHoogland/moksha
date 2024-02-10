@@ -416,7 +416,7 @@ _e_static_grab_x(E_Static_Grab *grab)
 }
 
 int
-main(int argc, char **argv EINA_UNUSED)
+main(int argc, char **argv __UNUSED__)
 {
    E_Static_Grab_Module *module;
    Eina_List *l;

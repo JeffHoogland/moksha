@@ -82,7 +82,7 @@ _notification_popup_merge(E_Notification_Notify *n)
 }
 
 static void
-_notification_reshuffle_cb(void *data __UNUSED__, Evas *e EINA_UNUSED, Evas_Object *obj, void *event_info __UNUSED__)
+_notification_reshuffle_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    Popup_Data *popup;
    Eina_List *l, *l2;

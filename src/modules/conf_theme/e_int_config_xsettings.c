@@ -72,7 +72,7 @@ e_int_config_xsettings(E_Container *con, const char *params __UNUSED__)
 }
 
 static void
-_settings_changed(void *data, Evas_Object *obj EINA_UNUSED)
+_settings_changed(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata = data;
    Eina_Bool disable;

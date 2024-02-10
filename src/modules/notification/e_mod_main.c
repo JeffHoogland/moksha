@@ -156,7 +156,7 @@ e_modapi_init(E_Module *m)
 }
 
 EAPI int
-e_modapi_shutdown(E_Module *m EINA_UNUSED)
+e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (notification_cfg->jump_timer)
      ecore_timer_del(notification_cfg->jump_timer);
