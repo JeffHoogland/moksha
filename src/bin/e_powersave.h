@@ -2,12 +2,12 @@
 
 typedef enum _E_Powersave_Mode
 {
-   E_POWERSAVE_MODE_NONE,
-   E_POWERSAVE_MODE_LOW,
-   E_POWERSAVE_MODE_MEDIUM,
-   E_POWERSAVE_MODE_HIGH,
-   E_POWERSAVE_MODE_EXTREME,
-   E_POWERSAVE_MODE_FREEZE
+   E_POWERSAVE_MODE_NONE,    // no powersaving
+   E_POWERSAVE_MODE_LOW,     // normal power management - AC plugged in
+   E_POWERSAVE_MODE_MEDIUM,  // lots of battery available but not on AC
+   E_POWERSAVE_MODE_HIGH,    // have enough battery but good to save powwr
+   E_POWERSAVE_MODE_EXTREME, // low on battery save more
+   E_POWERSAVE_MODE_FREEZE   // really try and do as little as possible
 } E_Powersave_Mode;
 
 typedef struct _E_Powersave_Deferred_Action E_Powersave_Deferred_Action;
