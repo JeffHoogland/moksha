@@ -313,7 +313,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
             rg = e_widget_radio_group_new(&(cfdata->wins_xkb));
             ob = e_widget_radio_add(evas, _("Global"), 0, rg);
             e_widget_framelist_object_append(general, ob);
-            ob = e_widget_radio_add(evas, _("Per Application"), 1, rg);
+            ob = e_widget_radio_add(evas, _("Per Window"), 1, rg);
             e_widget_framelist_object_append(general, ob);
             e_widget_list_object_append(options, general, 1, 2, 0.0);
          }

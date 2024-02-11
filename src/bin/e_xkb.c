@@ -120,7 +120,7 @@ e_xkb_update(int cur_group)
    
    if (cur_group != -1)
      {
-        if (e_config->xkb.wins_xkb == XKB_PER_APP) //per app
+        if (e_config->xkb.wins_xkb == XKB_PER_WINDOW)
           {
             if (_e_focus == 0)
               bd_xkb_add(cur_group);

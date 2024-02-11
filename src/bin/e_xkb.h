@@ -4,7 +4,7 @@
 #define E_XKB_H
 
 #define XKB_GLOBAL 0
-#define XKB_PER_APP 1
+#define XKB_PER_WINDOW 1
 
 EAPI int e_xkb_init(void);
 EAPI int e_xkb_shutdown(void);
