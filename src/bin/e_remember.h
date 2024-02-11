@@ -15,6 +15,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_MATCH_ROLE             (1 << 3)
 #define E_REMEMBER_MATCH_TYPE             (1 << 4)
 #define E_REMEMBER_MATCH_TRANSIENT        (1 << 5)
+#define E_REMEMBER_MATCH_XKB              (1 << 6)
 
 #define E_REMEMBER_APPLY_POS              (1 << 0)
 #define E_REMEMBER_APPLY_SIZE             (1 << 1)
@@ -105,6 +106,10 @@ struct _E_Remember
       int           head;
       const char   *command;
       const char   *desktop_file;
+      const char   *cl_name;
+      const char   *cl_model;
+      const char   *cl_variant;
+      const char   *cl_option;
    } prop;
 };
 

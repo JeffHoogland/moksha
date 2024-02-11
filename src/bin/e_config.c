@@ -387,6 +387,10 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, prop.command, STR);
    E_CONFIG_VAL(D, T, prop.icon_preference, UCHAR);
    E_CONFIG_VAL(D, T, prop.desktop_file, STR);
+   E_CONFIG_VAL(D, T, prop.cl_name, STR);
+   E_CONFIG_VAL(D, T, prop.cl_model, STR);
+   E_CONFIG_VAL(D, T, prop.cl_variant, STR);
+   E_CONFIG_VAL(D, T, prop.cl_option, STR);
    E_CONFIG_VAL(D, T, prop.offer_resistance, UCHAR);
 
    _e_config_color_class_edd = E_CONFIG_DD_NEW("E_Color_Class", E_Color_Class);

@@ -206,6 +206,9 @@ struct _E_Border
    const char    *internal_icon;
    const char    *internal_icon_key;
    Eina_Bool      bg_evas_in : 1;
+   E_Config_XKB_Layout *cl;
+   E_Config_XKB_Option *op;
+   int xkb;
 
    struct
    {

@@ -3,6 +3,7 @@
 static void _e_xkb_update_event(int);
 
 static int _e_xkb_cur_group = -1;
+static int _e_focus = 0;
 
 static Ecore_Exe *cur_exe;
 
@@ -37,6 +38,48 @@ kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
+static Eina_Bool
+bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
+{
+   E_Border *bd;
+   Eina_List *l;
+   
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+       if (bd->focused)
+         {
+            if (bd->cl)
+              {
+                printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+                _e_focus = 1;
+                e_xkb_layout_set(bd->cl);
+                _e_focus = 0;
+              }
+            else 
+              printf("nie je cl\n");
+         }
+     }
+   return 1;
+}
+
+static void
+bd_xkb_add(int cur_group)
+{
+   E_Border *bd;
+   Eina_List *l;
+   
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+       if (bd->focused)
+         {   
+            printf("groups %d %d\n", cur_group, _e_xkb_cur_group);
+            if (cur_group != _e_xkb_cur_group)
+              bd->cl = e_config_xkb_layout_dup(e_xkb_layout_get());
+            printf("cl add %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+         }
+     }
+}
+
 /* externally accessible functions */
 EAPI int
 e_xkb_init(void)
@@ -46,6 +89,7 @@ e_xkb_init(void)
         E_EVENT_XKB_CHANGED = ecore_event_type_new();
         ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)kb_exe_del, NULL);
      }
+   ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, (Ecore_Event_Handler_Cb)bd_focus, NULL);
    e_xkb_update(-1);
    if (e_config->xkb.cur_layout)
      ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
@@ -71,18 +115,21 @@ e_xkb_update(int cur_group)
    Eina_Strbuf *buf;
 
    if ((!e_config->xkb.used_layouts) && (!e_config->xkb.used_options) && (!e_config->xkb.default_model)) return;
+   
    if (cur_group != -1)
      {
+        if (_e_focus == 0) 
+           bd_xkb_add(cur_group);
         _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
         e_deskenv_xmodmap_run();
         _e_xkb_update_event(cur_group);
+        
         return;
      }
    /* We put an empty -option here in order to override all previously
     * set options.
     */
-
    buf = eina_strbuf_new();
    eina_strbuf_append(buf, "setxkbmap ");
 
@@ -159,6 +206,7 @@ e_xkb_update(int cur_group)
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
    E_FREE_FUNC(cur_exe, ecore_exe_kill);
    cur_exe = ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+     
    eina_strbuf_free(buf);
 }
 
