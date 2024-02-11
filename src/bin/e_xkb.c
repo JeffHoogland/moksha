@@ -1,6 +1,7 @@
 #include "e.h"
 
 static void _e_xkb_update_event(int);
+static void bd_xkb_add(int cur_group);
 
 static int _e_xkb_cur_group = -1;
 static int _e_focus = 0;
@@ -51,6 +52,12 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
      {
        if (bd->focused)
          {
+            if (!bd->remember && !bd->cl)
+              {
+                bd_xkb_add(-2);  //add layout for newly opened win
+                printf("nemám bd->cl group %d\n", _e_xkb_cur_group);
+                return 1;
+              }
             if (bd->remember && bd->remember->prop.xkb)
               {
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
@@ -61,7 +68,6 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
                           break;
                        }
                   }
-                
                 if (bd->cl)
                   {
                     printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
@@ -108,8 +114,11 @@ bd_xkb_add(int cur_group)
                     rem->match |= E_REMEMBER_MATCH_TRANSIENT;
                     rem->apply |= E_REMEMBER_APPLY_XKB;
                     rem->prop.xkb = 1;
+                    e_remember_use(rem);
                     bd->remember = rem;
+                     
                     e_remember_update(bd);
+                    e_config_save_queue();
                   }
             //~ printf("cl add %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
               }
