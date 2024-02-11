@@ -18,7 +18,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
                             E_REMEMBER_APPLY_DESKTOP | E_REMEMBER_APPLY_SHADE | E_REMEMBER_APPLY_ZONE | \
                             E_REMEMBER_APPLY_SKIP_WINLIST | E_REMEMBER_APPLY_SKIP_PAGER | \
                             E_REMEMBER_APPLY_SKIP_TASKBAR | E_REMEMBER_APPLY_FULLSCREEN | E_REMEMBER_APPLY_ICON_PREF | \
-                            E_REMEMBER_APPLY_OFFER_RESISTANCE
+                            E_REMEMBER_APPLY_OFFER_RESISTANCE | E_REMEMBER_APPLY_XKB
 struct _E_Config_Dialog_Data
 {
    E_Border *border;
@@ -60,6 +60,7 @@ struct _E_Config_Dialog_Data
       int set_focus_on_start;
       int keep_settings;
       int offer_resistance;
+      int xkb;
    } remember;
 
    int applied;
@@ -249,6 +250,8 @@ done:
           cfdata->remember.set_focus_on_start = 1;
         if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
           cfdata->remember.offer_resistance = 1;
+        if (rem->apply & E_REMEMBER_APPLY_XKB)
+          cfdata->remember.xkb = 1;
      }
 
    if (!rem) cfdata->mode = MODE_NOTHING;
@@ -565,6 +568,8 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
      rem->apply |= E_REMEMBER_SET_FOCUS_ON_START;
    if (cfdata->remember.offer_resistance)
      rem->apply |= E_REMEMBER_APPLY_OFFER_RESISTANCE;
+   if (cfdata->remember.xkb)
+     rem->apply |= E_REMEMBER_APPLY_XKB;
 
    if (!rem->apply && !rem->prop.desktop_file)
      {
@@ -710,6 +715,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_check_add(evas, _("Stickiness"),
                            &(cfdata->remember.apply_sticky));
    e_widget_table_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
+    ob = e_widget_check_add(evas, _("Keep xkb layout"),
+                           &(cfdata->remember.xkb));
+   e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Virtual Desktop"),
                            &(cfdata->remember.apply_desktop));
    e_widget_table_object_append(of, ob, 1, 0, 1, 1, 1, 0, 1, 0);
@@ -736,9 +744,9 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    e_widget_table_object_append(of, ob, 1, 7, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Application file or name (.desktop)"),
                            &(cfdata->remember.apply_desktop_file));
-   e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(of, ob, 0, 8, 1, 1, 1, 0, 1, 0);
    ob = e_widget_entry_add(evas, &cfdata->desktop, NULL, NULL, NULL);
-   e_widget_table_object_append(of, ob, 0, 8, 2, 1, 1, 0, 1, 0);
+   e_widget_table_object_append(of, ob, 0, 9, 2, 1, 1, 0, 1, 0);
    e_widget_toolbook_page_append(o, NULL, _("Properties"), of, 1, 1, 1, 1, 0.5, 0.0);
 
    of = e_widget_table_add(evas, 0);

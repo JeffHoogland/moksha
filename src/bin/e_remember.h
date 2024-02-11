@@ -15,7 +15,6 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_MATCH_ROLE             (1 << 3)
 #define E_REMEMBER_MATCH_TYPE             (1 << 4)
 #define E_REMEMBER_MATCH_TRANSIENT        (1 << 5)
-#define E_REMEMBER_MATCH_XKB              (1 << 6)
 
 #define E_REMEMBER_APPLY_POS              (1 << 0)
 #define E_REMEMBER_APPLY_SIZE             (1 << 1)
@@ -34,6 +33,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_SET_FOCUS_ON_START     (1 << 14)
 #define E_REMEMBER_APPLY_FULLSCREEN       (1 << 15)
 #define E_REMEMBER_APPLY_OFFER_RESISTANCE (1 << 16)
+#define E_REMEMBER_APPLY_XKB              (1 << 17)
 
 #define E_REMEMBER_INTERNAL_DIALOGS       (1 << 0)
 #define E_REMEMBER_INTERNAL_FM_WINS       (1 << 1)
@@ -106,6 +106,7 @@ struct _E_Remember
       int           head;
       const char   *command;
       const char   *desktop_file;
+      int           xkb;
       const char   *cl_name;
       const char   *cl_model;
       const char   *cl_variant;
