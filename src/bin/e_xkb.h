@@ -3,6 +3,9 @@
 #ifndef E_XKB_H
 #define E_XKB_H
 
+#define XKB_GLOBAL 0
+#define XKB_PER_APP 1
+
 EAPI int e_xkb_init(void);
 EAPI int e_xkb_shutdown(void);
 EAPI void e_xkb_update(int);
