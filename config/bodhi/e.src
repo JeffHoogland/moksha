@@ -1943,7 +1943,7 @@ group "E_Config" struct {
             value "priority" int: -1000;
         }
     }
-    value "config_version" int: 1000020;
+    value "config_version" int: 1000021;
     value "show_splash" int: 1;
     value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaGreen.edj";
     value "desktop_default_name" string: "%i-%i";
@@ -2187,6 +2187,7 @@ group "E_Config" struct {
     value "update.check" uchar: 0;
     value "update.later" uchar: 0;
     value "xkb.only_label" int: 1;
+    value "xkb.wins_xkb" int: 0;
     value "xkb.default_model" string: "default";
     value "exe_always_single_instance" uchar: 0;
     value "use_desktop_window_profile" int: 0;
