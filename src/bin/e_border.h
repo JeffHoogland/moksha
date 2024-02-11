@@ -197,18 +197,17 @@ struct _E_Border
       int l, r, t, b;
    } client_inset;
 
-   Ecore_Evas    *bg_ecore_evas;
-   Evas          *bg_evas;
-   Ecore_X_Window bg_win;
-   Evas_Object   *bg_object;
-   Evas_Object   *icon_object;
-   Ecore_X_Window event_win;
-   const char    *internal_icon;
-   const char    *internal_icon_key;
-   Eina_Bool      bg_evas_in : 1;
-   E_Config_XKB_Layout *cl;
-   E_Config_XKB_Option *op;
-   int xkb;
+   Ecore_Evas           *bg_ecore_evas;
+   Evas                 *bg_evas;
+   Ecore_X_Window        bg_win;
+   Evas_Object          *bg_object;
+   Evas_Object          *icon_object;
+   Ecore_X_Window        event_win;
+   const char           *internal_icon;
+   const char           *internal_icon_key;
+   Eina_Bool             bg_evas_in : 1;
+   E_Config_XKB_Layout  *cl;
+   E_Config_XKB_Option  *op;
 
    struct
    {
