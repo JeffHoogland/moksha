@@ -414,6 +414,7 @@ struct _E_Config
       Eina_List  *used_layouts;
       Eina_List  *used_options;
       int         only_label;
+      int         wins_xkb;
       const char *default_model;
       int         cur_group;
       E_Config_XKB_Layout *current_layout;

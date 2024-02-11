@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    const char  *default_model;
 
    int          only_label;
+   int          wins_xkb;
 
    E_Dialog    *dlg_add_new;
 };
@@ -109,6 +110,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    /* Initialize options */
 
    cfdata->only_label = e_config->xkb.only_label;
+   cfdata->wins_xkb = e_config->xkb.wins_xkb;
    cfdata->cfg_options = NULL;
 
    lll = e_config->xkb.used_options;
@@ -191,6 +193,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    /* Save options */
    e_config->xkb.only_label = cfdata->only_label;
+   e_config->xkb.wins_xkb = cfdata->wins_xkb;
 
    EINA_LIST_FREE(e_config->xkb.used_options, oc)
      {
@@ -294,6 +297,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
          Evas_Coord mw, mh;
          Evas_Object *general;
          Evas_Object *scroller;
+         Evas_Object *ob;
+         E_Radio_Group *rg;
 
          general = e_widget_framelist_add(evas, _("Gadgets"), 0);
          {
@@ -302,6 +307,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                e_widget_framelist_object_append(general, only_label);
             }
             e_widget_list_object_append(options, general, 1, 1, 0.0);
+         }
+         general = e_widget_framelist_add(evas, _("Layout"), 0);
+         {
+            rg = e_widget_radio_group_new(&(cfdata->wins_xkb));
+            ob = e_widget_radio_add(evas, _("Global"), 0, rg);
+            e_widget_framelist_object_append(general, ob);
+            ob = e_widget_radio_add(evas, _("Per Application"), 1, rg);
+            e_widget_framelist_object_append(general, ob);
+            e_widget_list_object_append(options, general, 1, 2, 0.0);
          }
 
          lll = cfdata->cfg_options;

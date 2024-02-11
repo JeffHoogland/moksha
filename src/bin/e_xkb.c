@@ -44,6 +44,8 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
    E_Border *bd;
    Eina_List *l;
    
+   if (e_config->xkb.wins_xkb == 0) return 0;
+    
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
        if (bd->focused)
@@ -118,8 +120,11 @@ e_xkb_update(int cur_group)
    
    if (cur_group != -1)
      {
-        if (_e_focus == 0) 
-           bd_xkb_add(cur_group);
+        if (e_config->xkb.wins_xkb == 1) //per app
+          {
+            if (_e_focus == 0)
+              bd_xkb_add(cur_group);
+          }
         _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
         e_deskenv_xmodmap_run();
