@@ -42,7 +42,8 @@ static Eina_Bool
 bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
 {
    E_Border *bd;
-   Eina_List *l;
+   Eina_List *l, *ll;
+   E_Config_XKB_Layout *cl;
    
    if (e_config->xkb.wins_xkb == XKB_GLOBAL) return 0;
     
@@ -50,15 +51,29 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
      {
        if (bd->focused)
          {
-            if (bd->cl)
+            if (bd->remember && bd->remember->prop.xkb)
               {
-                printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
-                _e_focus = 1;
-                e_xkb_layout_set(bd->cl);
-                _e_focus = 0;
+                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                  {
+                     if (!strcmp(cl->name, bd->remember->prop.cl_name))
+                       {
+                          bd->cl = cl;
+                          break;
+                       }
+                  }
+                
+                if (bd->cl)
+                  {
+                    printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+                    _e_focus = 1;
+                    e_xkb_layout_set(bd->cl);
+                    _e_focus = 0;
+                  }
+                else
+                   printf("nie je cl\n");
               }
-            else 
-              printf("nie je cl\n");
+            else
+              printf("border nemá rem\n");
          }
      }
    return 1;
@@ -92,6 +107,7 @@ bd_xkb_add(int cur_group)
                     rem->match |= E_REMEMBER_MATCH_TYPE;
                     rem->match |= E_REMEMBER_MATCH_TRANSIENT;
                     rem->apply |= E_REMEMBER_APPLY_XKB;
+                    rem->prop.xkb = 1;
                     bd->remember = rem;
                     e_remember_update(bd);
                   }
