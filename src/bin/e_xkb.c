@@ -69,15 +69,34 @@ bd_xkb_add(int cur_group)
 {
    E_Border *bd;
    Eina_List *l;
+   E_Remember *rem = NULL;
    
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
        if (bd->focused)
-         {   
-            printf("groups %d %d\n", cur_group, _e_xkb_cur_group);
-            if (cur_group != _e_xkb_cur_group)
-              bd->cl = e_config_xkb_layout_dup(e_xkb_layout_get());
-            printf("cl add %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+         {
+            rem = bd->remember;
+            if (!rem)
+               rem = e_remember_new();
+            if (rem)
+              {
+                if (cur_group != _e_xkb_cur_group)
+                  {
+                    bd->cl = e_config_xkb_layout_dup(e_xkb_layout_get());
+                    rem->prop.cl_name = bd->cl->name;
+                    rem->prop.cl_model = bd->cl->model;
+                    rem->prop.cl_variant = bd->cl->variant;
+                    
+                    rem->match |= E_REMEMBER_MATCH_NAME;
+                    rem->match |= E_REMEMBER_MATCH_CLASS;
+                    rem->match |= E_REMEMBER_MATCH_TYPE;
+                    rem->match |= E_REMEMBER_MATCH_TRANSIENT;
+                    rem->apply |= E_REMEMBER_APPLY_XKB;
+                    bd->remember = rem;
+                    e_remember_update(bd);
+                  }
+            //~ printf("cl add %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+              }
          }
      }
 }
