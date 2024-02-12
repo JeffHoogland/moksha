@@ -108,10 +108,9 @@ bd_xkb_add(int cur_group)
                     rem->prop.cl_model = bd->cl->model;
                     rem->prop.cl_variant = bd->cl->variant;
                     
-                    rem->match |= E_REMEMBER_MATCH_NAME;
-                    rem->match |= E_REMEMBER_MATCH_CLASS;
-                    rem->match |= E_REMEMBER_MATCH_TYPE;
-                    rem->match |= E_REMEMBER_MATCH_TRANSIENT;
+                    /* Match NAME, CLASS, TYPE, TRANSIENT */
+                    rem->match |= 0b110011;
+                    /* Activate keeping xkb layer */
                     rem->apply |= E_REMEMBER_APPLY_XKB;
                     rem->prop.xkb = 1;
                     e_remember_use(rem);
