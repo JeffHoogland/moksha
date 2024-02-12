@@ -62,7 +62,9 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
               {
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
-                     if (!strcmp(cl->name, bd->remember->prop.cl_name))
+                     if (!strcmp(cl->name, bd->remember->prop.cl_name) && 
+                         !strcmp(cl->model, bd->remember->prop.cl_model) && 
+                         !strcmp(cl->variant, bd->remember->prop.cl_variant))
                        {
                           bd->cl = cl;
                           break;
@@ -113,9 +115,9 @@ bd_xkb_add(int cur_group)
                     /* Activate keeping xkb layer */
                     rem->apply |= E_REMEMBER_APPLY_XKB;
                     rem->prop.xkb = 1;
+                    /* store border rem */
                     e_remember_use(rem);
                     bd->remember = rem;
-                     
                     e_remember_update(bd);
                     e_config_save_queue();
                   }
