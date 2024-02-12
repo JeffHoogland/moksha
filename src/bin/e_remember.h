@@ -106,7 +106,7 @@ struct _E_Remember
       int           head;
       const char   *command;
       const char   *desktop_file;
-      int           xkb;
+      unsigned char xkb;
       const char   *cl_name;
       const char   *cl_model;
       const char   *cl_variant;

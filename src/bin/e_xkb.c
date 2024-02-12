@@ -52,36 +52,44 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
      {
        if (bd->focused)
          {
-            if (!bd->remember && !bd->cl)
+             printf("\nbd focus %p bd->rem %p\n", bd, bd->remember);
+            if (!bd->remember)
               {
-                bd_xkb_add(-2);  //add layout for newly opened win
-                printf("nemám bd->cl group %d\n", _e_xkb_cur_group);
-                return 1;
+                printf("nemám REM, new bd%p\n", bd);
+                if (!bd->cl) {
+                  bd_xkb_add(-2);  //add layout for newly opened win
+                  return 1;
+                }
               }
-            if (bd->remember && bd->remember->prop.xkb)
+            if (bd->remember)
               {
-                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                 if (bd->xkb)
                   {
-                     if (!strcmp(cl->name, bd->remember->prop.cl_name) && 
-                         !strcmp(cl->model, bd->remember->prop.cl_model) && 
-                         !strcmp(cl->variant, bd->remember->prop.cl_variant))
-                       {
-                          bd->cl = cl;
-                          break;
-                       }
-                  }
-                if (bd->cl)
-                  {
-                    printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
-                    _e_focus = 1;
-                    e_xkb_layout_set(bd->cl);
-                    _e_focus = 0;
+                    EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                      {
+                         if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
+                             !strcmp(cl->model, bd->remember->prop.cl_model) &&
+                             !strcmp(cl->variant, bd->remember->prop.cl_variant))
+                           {
+                              bd->cl = cl;
+                              break;
+                           }
+                      }
+                    if (bd->cl)
+                      {
+                        printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+                        _e_focus = 1;
+                        e_xkb_layout_set(bd->cl);
+                        _e_focus = 0;
+                      }
+                    else
+                       printf("nie je cl\n");
                   }
                 else
-                   printf("nie je cl\n");
+                  printf("border nemá xkb\n");
               }
             else
-              printf("border nemá rem\n");
+              printf("border nemá rem \n");
          }
      }
    return 1;
@@ -99,8 +107,10 @@ bd_xkb_add(int cur_group)
        if (bd->focused)
          {
             rem = bd->remember;
+
             if (!rem)
-               rem = e_remember_new();
+                rem = e_remember_new();
+
             if (rem)
               {
                 if (cur_group != _e_xkb_cur_group)
@@ -114,14 +124,17 @@ bd_xkb_add(int cur_group)
                     rem->match |= 0b110011;
                     /* Activate keeping xkb layer */
                     rem->apply |= E_REMEMBER_APPLY_XKB;
-                    rem->prop.xkb = 1;
+
                     /* store border rem */
-                    e_remember_use(rem);
+                    rem->apply_first_only = 0;
                     bd->remember = rem;
+                    bd->xkb = 1;
+                    bd->changed = 0;
+                    e_remember_default_match_set(rem, bd);
+                    e_remember_use(rem);
                     e_remember_update(bd);
-                    e_config_save_queue();
+                    printf("NEW bd: %p cl: %p rem: %p bdrem: %p: %s\n", bd, bd->cl, rem, bd->remember, bd->cl->name);
                   }
-                printf("nový %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
               }
          }
      }

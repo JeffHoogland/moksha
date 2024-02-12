@@ -452,7 +452,7 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      rem->prop.offer_resistance = bd->offer_resistance;
    if (rem->apply & E_REMEMBER_APPLY_XKB)
-     rem->prop.xkb = bd->xkb;
+     rem->prop.xkb = 1;
    rem->no_reopen = bd->internal_no_reopen;
    {
       E_Event_Remember_Update *ev;
@@ -905,7 +905,6 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
      bd->xkb = rem->prop.xkb;
    if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
      bd->want_focus = 1;
-
    if (temporary)
      _e_remember_free(rem);
 }
