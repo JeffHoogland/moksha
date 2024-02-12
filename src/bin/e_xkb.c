@@ -121,7 +121,7 @@ bd_xkb_add(int cur_group)
                     e_remember_update(bd);
                     e_config_save_queue();
                   }
-            //~ printf("cl add %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
+                printf("nový %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
               }
          }
      }

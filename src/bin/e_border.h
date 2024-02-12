@@ -208,6 +208,7 @@ struct _E_Border
    Eina_Bool             bg_evas_in : 1;
    E_Config_XKB_Layout  *cl;
    E_Config_XKB_Option  *op;
+   int                   xkb;
 
    struct
    {

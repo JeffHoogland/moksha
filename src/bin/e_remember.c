@@ -118,7 +118,8 @@ e_remember_internal_save(void)
                       E_REMEMBER_APPLY_SKIP_WINLIST |
                       E_REMEMBER_APPLY_SKIP_PAGER |
                       E_REMEMBER_APPLY_SKIP_TASKBAR |
-                      E_REMEMBER_APPLY_OFFER_RESISTANCE);
+                      E_REMEMBER_APPLY_OFFER_RESISTANCE |
+                      E_REMEMBER_APPLY_XKB);
         _e_remember_update(bd, rem);
 
         remembers->list = eina_list_append(remembers->list, rem);
@@ -450,6 +451,8 @@ _e_remember_update(E_Border *bd, E_Remember *rem)
      rem->prop.fullscreen = bd->fullscreen;
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      rem->prop.offer_resistance = bd->offer_resistance;
+   if (rem->apply & E_REMEMBER_APPLY_XKB)
+     rem->prop.xkb = bd->xkb;
    rem->no_reopen = bd->internal_no_reopen;
    {
       E_Event_Remember_Update *ev;
@@ -898,6 +901,8 @@ _e_remember_cb_hook_pre_post_fetch(void *data __UNUSED__, void *border)
      bd->icon_preference = rem->prop.icon_preference;
    if (rem->apply & E_REMEMBER_APPLY_OFFER_RESISTANCE)
      bd->offer_resistance = rem->prop.offer_resistance;
+   if (rem->apply & E_REMEMBER_APPLY_XKB)
+     bd->xkb = rem->prop.xkb;
    if (rem->apply & E_REMEMBER_SET_FOCUS_ON_START)
      bd->want_focus = 1;
 
