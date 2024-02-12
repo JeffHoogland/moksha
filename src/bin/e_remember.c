@@ -357,10 +357,9 @@ e_remember_default_match_set(E_Remember *rem, E_Border *bd)
 EAPI void
 e_remember_update(E_Border *bd)
 {
-   if (bd->new_client) return;
-   if (!bd->remember) return;
-   if (bd->remember->keep_settings) return;
-   _e_remember_update(bd, bd->remember);
+   //~ if (bd->new_client) return;
+   if ((!bd->remember) || bd->remember->keep_settings) return;
+   if (bd->remember) _e_remember_update(bd, bd->remember);
    e_config_save_queue();
 }
 
