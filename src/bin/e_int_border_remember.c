@@ -420,7 +420,6 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    e_remember_use(rem);
    e_remember_update(bd);
    cfdata->applied = 1;
-   printf("mame REM BASIC %p bd %p\n", rem, bd);
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
@@ -586,7 +585,6 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    cfdata->border->remember = rem;
    e_remember_update(cfdata->border);
    rem->keep_settings = cfdata->remember.keep_settings;
-   printf("mame REM ADVANCED %p bd %p\n", rem, bd);
    cfdata->applied = 1;
    e_config_save_queue();
    return 1; /* Apply was OK */

@@ -1,7 +1,7 @@
 #include "e.h"
 
 static void _e_xkb_update_event(int);
-static void bd_xkb_add(int cur_group);
+static void border_xkb_add(int cur_group);
 
 static int _e_xkb_cur_group = -1;
 static int _e_focus = 0;
@@ -40,7 +40,7 @@ kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
 }
 
 static Eina_Bool
-bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
+border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
 {
    E_Border *bd;
    Eina_List *l, *ll;
@@ -52,51 +52,37 @@ bd_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED_
      {
        if (bd->focused)
          {
-             printf("\nbd focus %p bd->rem %p\n", bd, bd->remember);
-            if (!bd->remember)
+            if ((!bd->remember) && (!bd->cl))
               {
-                printf("nemám REM, new bd%p\n", bd);
-                if (!bd->cl) {
-                  bd_xkb_add(-2);  //add layout for newly opened win
-                  return 1;
-                }
+                border_xkb_add(-2);  //add layout for newly opened win
+                return 1;
               }
-            if (bd->remember)
+            if (bd->remember && bd->xkb)
               {
-                 if (bd->xkb)
+                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
-                    EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                    if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
+                        !strcmp(cl->model, bd->remember->prop.cl_model) &&
+                        !strcmp(cl->variant, bd->remember->prop.cl_variant))
                       {
-                         if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
-                             !strcmp(cl->model, bd->remember->prop.cl_model) &&
-                             !strcmp(cl->variant, bd->remember->prop.cl_variant))
-                           {
-                              bd->cl = cl;
-                              break;
-                           }
+                         bd->cl = cl;
+                         break;
                       }
-                    if (bd->cl)
-                      {
-                        printf("cl set %p %s: %s\n", bd->cl, e_border_name_get(bd), bd->cl->name);
-                        _e_focus = 1;
-                        e_xkb_layout_set(bd->cl);
-                        _e_focus = 0;
-                      }
-                    else
-                       printf("nie je cl\n");
                   }
-                else
-                  printf("border nemá xkb\n");
+                if (bd->cl)
+                  {
+                    _e_focus = 1;
+                    e_xkb_layout_set(bd->cl);
+                    _e_focus = 0;
+                  }
               }
-            else
-              printf("border nemá rem \n");
          }
      }
    return 1;
 }
 
 static void
-bd_xkb_add(int cur_group)
+border_xkb_add(int cur_group)
 {
    E_Border *bd;
    Eina_List *l;
@@ -107,7 +93,6 @@ bd_xkb_add(int cur_group)
        if (bd->focused)
          {
             rem = bd->remember;
-
             if (!rem)
                 rem = e_remember_new();
 
@@ -126,14 +111,11 @@ bd_xkb_add(int cur_group)
                     rem->apply |= E_REMEMBER_APPLY_XKB;
 
                     /* store border rem */
-                    rem->apply_first_only = 0;
                     bd->remember = rem;
                     bd->xkb = 1;
-                    bd->changed = 0;
                     e_remember_default_match_set(rem, bd);
                     e_remember_use(rem);
                     e_remember_update(bd);
-                    printf("NEW bd: %p cl: %p rem: %p bdrem: %p: %s\n", bd, bd->cl, rem, bd->remember, bd->cl->name);
                   }
               }
          }
@@ -149,7 +131,7 @@ e_xkb_init(void)
         E_EVENT_XKB_CHANGED = ecore_event_type_new();
         ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)kb_exe_del, NULL);
      }
-   ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, (Ecore_Event_Handler_Cb)bd_focus, NULL);
+   ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, (Ecore_Event_Handler_Cb)border_focus, NULL);
    e_xkb_update(-1);
    if (e_config->xkb.cur_layout)
      ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
@@ -178,10 +160,10 @@ e_xkb_update(int cur_group)
    
    if (cur_group != -1)
      {
-        if (e_config->xkb.wins_xkb == XKB_PER_WINDOW)
+        if (e_config->xkb.wins_xkb == XKB_PER_APP)
           {
             if (_e_focus == 0)
-              bd_xkb_add(cur_group);
+              border_xkb_add(cur_group);
           }
         _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
