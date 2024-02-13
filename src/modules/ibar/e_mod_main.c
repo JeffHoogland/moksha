@@ -1179,6 +1179,7 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
    edje_object_part_box_remove(ic->menu->o_bg, "e.box", data);
 
    evas_object_del(data);
+
    if (eina_list_count(ic->exes) <= 1)
      {
         E_Exec_Instance *inst = eina_list_data_get(ic->exes);
@@ -1270,6 +1271,11 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
 
              evas_object_event_callback_add(img, EVAS_CALLBACK_DEL,
                                             _ibar_cb_icon_menu_img_del, it);
+             if (bd->client.icccm.urgent)
+               edje_object_signal_emit(it, "e,state,urgent", "e");
+             else
+               edje_object_signal_emit(it, "e,state,not_urgent", "e");
+
              txt = e_border_name_get(bd);
              w = h = 48;
              evas_object_show(img);
@@ -2657,6 +2663,28 @@ _ibar_cb_bd_prop(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Property *
 }
 
 static Eina_Bool
+_ibar_cb_bd_urgent_change(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Remove *event)
+{
+   E_Event_Border_Urgent_Change *ev;
+   Eina_List *l;
+   IBar *b;
+
+   ev = event;
+
+   EINA_LIST_FOREACH(ibars, l, b)
+     {
+       IBar_Icon *ic;
+
+       ic = eina_hash_find(b->icon_hash, _desktop_name_get(ev->border->desktop));
+       if (ev->border->client.icccm.urgent)
+         _ibar_icon_signal_emit(ic, "e,state,urgent", "e");
+       else
+        _ibar_icon_signal_emit(ic, "e,state,not_urgent", "e");
+     }
+   return EINA_TRUE;
+}
+
+static Eina_Bool
 _ibar_cb_bd_add_del(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Remove *ev)
 {
    IBar *b;
@@ -2912,6 +2940,8 @@ e_modapi_init(E_Module *m)
                          _ibar_cb_bd_add_del, NULL);
    E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_ADD,
                          _ibar_cb_bd_add_del, NULL);
+   E_LIST_HANDLER_APPEND(ibar_config->handlers, E_EVENT_BORDER_URGENT_CHANGE,
+                         _ibar_cb_bd_urgent_change, NULL);
 
    e_gadcon_provider_register(&_gadcon_class);
    ibar_orders = eina_hash_string_superfast_new(NULL);

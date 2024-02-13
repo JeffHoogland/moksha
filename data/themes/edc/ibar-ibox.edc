@@ -381,6 +381,16 @@ group { name: "e/modules/ibar/menu/item";
             rel1.to: "icon";
             rel2.to: "icon";
          }
+         description { state: "bounce1" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 0.15;
+            rel2.relative: 1.0 1.15;
+         }
+         description { state: "bounce2" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 -0.15;
+            rel2.relative: 1.0 0.85;
+         }
       }
       part { name: "e.text.title"; type: TEXT; mouse_events: 0;
          effect: SHADOW BOTTOM;
@@ -472,6 +482,29 @@ group { name: "e/modules/ibar/menu/item";
          target: "icon_clip";
          target: "glow";
          transition: DECELERATE 0.2;
+      }
+      program {
+         signal: "e,state,urgent"; source: "e";
+         action: STATE_SET "bounce1" 0.0;
+         target: "e.swallow.icon";
+         after: "urg1";
+      }
+      program { name: "urg1";
+         action: STATE_SET "bounce2" 0.0;
+         transition: DECELERATE 0.2;
+         target: "e.swallow.icon";
+         after: "urg2";
+      }
+      program { name: "urg2";
+         action: STATE_SET "bounce1" 0.0;
+         transition: ACCELERATE 0.2;
+         target: "e.swallow.icon";
+         after: "urg1";
+      }
+      program {
+         signal: "e,state,not_urgent"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.swallow.icon";
       }
    }
 }
