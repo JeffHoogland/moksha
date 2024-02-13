@@ -46,7 +46,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
    Eina_List *l, *ll;
    E_Config_XKB_Layout *cl;
    
-   if (e_config->xkb.wins_xkb == XKB_GLOBAL) return 0;
+   if (e_config->xkb.wins_xkb == XKB_GLOBAL) return ECORE_CALLBACK_RENEW;
     
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
@@ -57,7 +57,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                 border_xkb_add(-2);  //add layout for newly opened win
                 return 1;
               }
-            if (bd->remember && bd->xkb)
+            if (bd->remember && bd->remember->prop.xkb)
               {
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
@@ -78,7 +78,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
               }
          }
      }
-   return 1;
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -109,10 +109,10 @@ border_xkb_add(int cur_group)
                     rem->match |= 0b110011;
                     /* Activate keeping xkb layer */
                     rem->apply |= E_REMEMBER_APPLY_XKB;
-
-                    /* store border rem */
+                    rem->prop.xkb = 1;
+                    
+                    /* store border rem structure*/
                     bd->remember = rem;
-                    bd->xkb = 1;
                     e_remember_default_match_set(rem, bd);
                     e_remember_use(rem);
                     e_remember_update(bd);

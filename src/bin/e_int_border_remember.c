@@ -714,7 +714,7 @@ _advanced_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_D
    ob = e_widget_check_add(evas, _("Stickiness"),
                            &(cfdata->remember.apply_sticky));
    e_widget_table_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
-   ob = e_widget_check_add(evas, _("Keep xkb layout"),
+   ob = e_widget_check_add(evas, _("Keyboard Layout"),
                            &(cfdata->remember.xkb));
    e_widget_table_object_append(of, ob, 0, 7, 1, 1, 1, 0, 1, 0);
    ob = e_widget_check_add(evas, _("Virtual Desktop"),
