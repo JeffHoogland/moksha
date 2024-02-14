@@ -194,11 +194,11 @@ _basic_create_widgets(E_Config_Dialog      *cfd __UNUSED__,
 
     LIST_ADD(o, of);
 
-    /* Virtual desktop settings */
-    of = e_widget_framelist_add(evas, _("Virtual Desktops"), 0);
-    e_widget_label_add(evas,
+    of = e_widget_label_add(evas,
                        _("Number of columns used to tile per desk"
                           " (0 → tiling disabled):"));
+    LIST_ADD(o, of);
+    of = e_widget_framelist_add(evas, _("Virtual Desktops"), 0);
     cfdata->osf = e_widget_list_add(evas, 0, 1);
 
     /* Zone list */
