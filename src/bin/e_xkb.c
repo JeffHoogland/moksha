@@ -45,9 +45,9 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
    E_Border *bd;
    Eina_List *l, *ll;
    E_Config_XKB_Layout *cl;
-   
+
    if (e_config->xkb.wins_xkb == XKB_GLOBAL) return ECORE_CALLBACK_RENEW;
-    
+
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
        if (bd->focused)
@@ -105,8 +105,6 @@ border_xkb_add(int cur_group)
                     rem->prop.cl_model = bd->cl->model;
                     rem->prop.cl_variant = bd->cl->variant;
                     
-                    /* Match NAME, CLASS, TYPE, TRANSIENT */
-                    rem->match |= 0b110011;
                     /* Activate keeping xkb layer */
                     rem->apply |= E_REMEMBER_APPLY_XKB;
                     rem->prop.xkb = 1;
@@ -114,6 +112,8 @@ border_xkb_add(int cur_group)
                     /* store border rem structure*/
                     bd->remember = rem;
                     e_remember_default_match_set(rem, bd);
+                    if (bd->client.icccm.window_role)
+                      rem->match &= ~E_REMEMBER_MATCH_ROLE;
                     e_remember_use(rem);
                     e_remember_update(bd);
                   }
