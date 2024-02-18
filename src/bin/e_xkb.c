@@ -100,7 +100,7 @@ border_xkb_add(int cur_group)
               {
                 if (cur_group != _e_xkb_cur_group)
                   {
-                    bd->cl = e_config_xkb_layout_dup(e_xkb_layout_get());
+                    bd->cl = e_xkb_layout_get();
                     rem->prop.cl_name = bd->cl->name;
                     rem->prop.cl_model = bd->cl->model;
                     rem->prop.cl_variant = bd->cl->variant;
