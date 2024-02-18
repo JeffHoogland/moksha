@@ -22,6 +22,7 @@ static Evas_Object *_advanced_create_widgets(E_Config_Dialog *cfd, Evas *evas, E
 struct _E_Config_Dialog_Data
 {
    E_Border *border;
+   E_Remember *rem;
    /*- BASIC -*/
    int       mode;
    int       warned;
@@ -115,7 +116,10 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    E_Remember *rem;
 
    bd = cfdata->border;
-   rem = bd->remember;
+   if (bd)
+     rem = bd->remember;
+   else
+     rem = cfdata->rem;
 
    if (rem)
      {
@@ -268,7 +272,10 @@ _create_data(E_Config_Dialog *cfd)
    E_Config_Dialog_Data *cfdata;
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
-   cfdata->border = cfd->data;
+   if (!strcmp(cfd->class, "_border_remember_dialog"))
+     cfdata->border = cfd->data;
+   else
+     cfdata->rem = cfd->data;
    cfdata->applied = 1;
    return cfdata;
 }
@@ -428,7 +435,10 @@ static int
 _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
 {
    E_Border *bd = cfdata->border;
-   E_Remember *rem = bd->remember;
+   E_Remember *rem;
+
+   if (bd) rem = bd->remember;
+   else rem = cfdata->rem;
 
    if (!rem)
      {
@@ -571,7 +581,7 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    if (cfdata->remember.xkb)
      rem->apply |= E_REMEMBER_APPLY_XKB;
 
-   if (!rem->apply && !rem->prop.desktop_file)
+   if (bd && (!rem->apply && !rem->prop.desktop_file))
      {
         e_remember_unuse(rem);
         e_remember_del(rem);
@@ -580,12 +590,16 @@ _advanced_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
         return 1;
      }
 
-   _check_matches(rem, 1);
-   rem->keep_settings = 0;
-   cfdata->border->remember = rem;
-   e_remember_update(cfdata->border);
+  if (bd)
+     {
+        _check_matches(rem, 1);
+        rem->keep_settings = 0;
+        cfdata->border->remember = rem;
+        e_remember_update(cfdata->border);
+        cfdata->applied = 1;
+     }
    rem->keep_settings = cfdata->remember.keep_settings;
-   cfdata->applied = 1;
+
    e_config_save_queue();
    return 1; /* Apply was OK */
 }
