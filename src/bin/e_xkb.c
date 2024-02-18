@@ -52,30 +52,30 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
      {
        if (bd->focused)
          {
-            if ((!bd->remember) && (!bd->cl))
-              {
-                border_xkb_add(-2);  //add layout for newly opened win
-                return 1;
-              }
-            if (bd->remember && bd->remember->prop.xkb)
-              {
-                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
-                  {
-                    if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
-                        !strcmp(cl->model, bd->remember->prop.cl_model) &&
-                        !strcmp(cl->variant, bd->remember->prop.cl_variant))
-                      {
-                         bd->cl = cl;
-                         break;
-                      }
-                  }
-                if (bd->cl)
-                  {
-                    _e_focus = 1;
-                    e_xkb_layout_set(bd->cl);
-                    _e_focus = 0;
-                  }
-              }
+           if ((!bd->remember) && (!bd->cl))
+             {
+               border_xkb_add(-2);  //add layout for newly opened win
+               return 1;
+             }
+           if (bd->remember && bd->remember->prop.xkb)
+             {
+               EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                 {
+                   if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
+                       !strcmp(cl->model, bd->remember->prop.cl_model) &&
+                       !strcmp(cl->variant, bd->remember->prop.cl_variant))
+                     {
+                        bd->cl = cl;
+                        break;
+                     }
+                 }
+               if (bd->cl)
+                 {
+                   _e_focus = 1;
+                   e_xkb_layout_set(bd->cl);
+                   _e_focus = 0;
+                 }
+             }
          }
      }
    return ECORE_CALLBACK_RENEW;
@@ -92,40 +92,40 @@ border_xkb_add(int cur_group)
      {
        if (bd->focused)
          {
-            rem = bd->remember;
-            if (!rem)
-                rem = e_remember_new();
+           rem = bd->remember;
+           if (!rem)
+             rem = e_remember_new();
 
-            if (rem)
-              {
-                if (cur_group != _e_xkb_cur_group)
-                  {
-                    bd->cl = e_xkb_layout_get();
-                    rem->prop.cl_name = bd->cl->name;
-                    rem->prop.cl_model = bd->cl->model;
-                    rem->prop.cl_variant = bd->cl->variant;
+           if (rem)
+             {
+               if (cur_group != _e_xkb_cur_group)
+                 {
+                   bd->cl = e_xkb_layout_get();
+                   rem->prop.cl_name = bd->cl->name;
+                   rem->prop.cl_model = bd->cl->model;
+                   rem->prop.cl_variant = bd->cl->variant;
+
+                   /* activate keeping xkb layer */
+                   rem->apply |= E_REMEMBER_APPLY_XKB;
+                   rem->prop.xkb = 1;
                     
-                    /* Activate keeping xkb layer */
-                    rem->apply |= E_REMEMBER_APPLY_XKB;
-                    rem->prop.xkb = 1;
-                    
-                    /* store border rem structure*/
-                    bd->remember = rem;
-                    e_remember_default_match_set(rem, bd);
-                    if (bd->client.icccm.window_role)
-                      rem->match &= ~E_REMEMBER_MATCH_ROLE;
+                   /* store border rem structure */
+                   bd->remember = rem;
+                   e_remember_default_match_set(rem, bd);
+                   if (bd->client.icccm.window_role)
+                     rem->match &= ~E_REMEMBER_MATCH_ROLE;
 
-                    /* libreoffice hack for icccm name and class */
-                    if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
-                      {
-                        rem->name = eina_stringshare_add("soffice");
-                        rem->class = eina_stringshare_add("Soffice");
-                      }
+                   /* libreoffice hack for icccm name and class */
+                   if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
+                     {
+                       rem->name = eina_stringshare_add("soffice");
+                       rem->class = eina_stringshare_add("Soffice");
+                     }
 
-                    e_remember_use(rem);
-                    e_remember_update(bd);
-                  }
-              }
+                   e_remember_use(rem);
+                   e_remember_update(bd);
+                 }
+             }
          }
      }
 }
