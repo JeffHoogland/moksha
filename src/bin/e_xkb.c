@@ -114,8 +114,18 @@ border_xkb_add(int cur_group)
                     e_remember_default_match_set(rem, bd);
                     if (bd->client.icccm.window_role)
                       rem->match &= ~E_REMEMBER_MATCH_ROLE;
+                    
+                    /* libreoffice hack for icccm name and class */
+                    if (!strcmp(bd->client.icccm.name, "libreoffice"))
+                      {
+                        rem->name = eina_stringshare_add("soffice");
+                        rem->class = eina_stringshare_add("Soffice");
+                      }
+
                     e_remember_use(rem);
                     e_remember_update(bd);
+                    if (rem->name) eina_stringshare_del(rem->name);
+                    if (rem->class) eina_stringshare_del(rem->class);
                   }
               }
          }
