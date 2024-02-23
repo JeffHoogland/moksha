@@ -64,7 +64,7 @@ struct _E_Remember
       int           pos_w, pos_h;
       int           w, h;
       int           layer;
-      unsigned int maximize; //just direction
+      unsigned int  maximize; //just direction
 
       unsigned char lock_user_location;
       unsigned char lock_client_location;
