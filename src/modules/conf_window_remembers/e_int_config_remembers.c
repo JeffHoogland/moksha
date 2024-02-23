@@ -139,7 +139,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(ol, ow, 1, 0, 0.0);
 
    ow = e_widget_button_add(evas, _("Delete"), "list-remove",
-			    _cb_delete, cfdata, NULL);
+                _cb_delete, cfdata, NULL);
    cfdata->btn = ow;
 
    ow = e_widget_ilist_add(evas, 1, 1, NULL);
@@ -222,7 +222,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
         if ((rem->name) && (!strcmp(rem->name, "E"))) continue;
         /* Filter out the module config remembers */
         if ((rem->class) && (rem->class[0] == '_')) continue;
-	
+
         if (rem->name)
           e_widget_ilist_append(cfdata->list, NULL, rem->name, NULL, rem, NULL);
         else if (rem->class)
@@ -246,7 +246,7 @@ _fill_remembers(E_Config_Dialog_Data *cfdata)
 
         /* Garuntee we add only E's internal remembers */
         if ((!rem->name) || (strcmp(rem->name, "E"))) continue;
-	
+
         e_widget_ilist_append(cfdata->list, NULL, rem->class, NULL, rem, NULL);
      }
 
@@ -299,9 +299,9 @@ _cb_delete(void *data, void *data2 __UNUSED__)
         if ((!item) || (!item->selected)) continue;
         if (!(rem = e_widget_ilist_nth_data_get(cfdata->list, i))) continue;
         e_remember_del(rem);
-	last_selected = i;
+        last_selected = i;
         changed = 1;
-	++deleted;
+        ++deleted;
      }
 
    if (changed) e_config_save_queue();
@@ -327,38 +327,38 @@ _cb_list_change(void *data, Evas_Object *obj __UNUSED__)
 
    if ((selected = e_widget_ilist_selected_items_get(cfdata->list)))
      {
-	if ((item = eina_list_last_data_get(selected)))
-	  rem = e_widget_ilist_item_data_get(item);
+       if ((item = eina_list_last_data_get(selected)))
+       rem = e_widget_ilist_item_data_get(item);
      }
 
    if (!rem)
      {
-	e_widget_label_text_set(cfdata->name, _("No selection"));
-	e_widget_disabled_set(cfdata->name, 1);
-	e_widget_label_text_set(cfdata->class, _("No selection"));
-	e_widget_disabled_set(cfdata->class, 1);
-	e_widget_label_text_set(cfdata->title, _("No selection"));
-	e_widget_disabled_set(cfdata->title, 1);
-	e_widget_label_text_set(cfdata->role, _("No selection"));
-	e_widget_disabled_set(cfdata->role, 1);
+       e_widget_label_text_set(cfdata->name, _("No selection"));
+       e_widget_disabled_set(cfdata->name, 1);
+       e_widget_label_text_set(cfdata->class, _("No selection"));
+       e_widget_disabled_set(cfdata->class, 1);
+       e_widget_label_text_set(cfdata->title, _("No selection"));
+       e_widget_disabled_set(cfdata->title, 1);
+       e_widget_label_text_set(cfdata->role, _("No selection"));
+       e_widget_disabled_set(cfdata->role, 1);
      }
    else
      {
-	e_widget_label_text_set(cfdata->name,
-				rem->name ? rem->name : _("Any"));
-	e_widget_disabled_set(cfdata->name, !rem->name);
+       e_widget_label_text_set(cfdata->name,
+                rem->name ? rem->name : _("Any"));
+       e_widget_disabled_set(cfdata->name, !rem->name);
 
-	e_widget_label_text_set(cfdata->class,
-				rem->class ? rem->class : _("Any"));
-	e_widget_disabled_set(cfdata->class, !rem->class);
+       e_widget_label_text_set(cfdata->class,
+                rem->class ? rem->class : _("Any"));
+       e_widget_disabled_set(cfdata->class, !rem->class);
 
-	e_widget_label_text_set(cfdata->title,
-				rem->title ? rem->title : _("Any"));
-	e_widget_disabled_set(cfdata->title, !rem->title);
+       e_widget_label_text_set(cfdata->title,
+                rem->title ? rem->title : _("Any"));
+       e_widget_disabled_set(cfdata->title, !rem->title);
 
-	e_widget_label_text_set(cfdata->role,
-				rem->role ? rem->role : _("Any"));
-	e_widget_disabled_set(cfdata->role, !rem->role);
+       e_widget_label_text_set(cfdata->role,
+                rem->role ? rem->role : _("Any"));
+       e_widget_disabled_set(cfdata->role, !rem->role);
      }
 
    if (e_widget_ilist_selected_count_get(cfdata->list) < 1)
