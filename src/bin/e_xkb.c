@@ -58,10 +58,11 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
              {
                 bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
              }
+           /* just set the layout, no need to remember it */
            if (bd->cl)
              {
                 e_xkb_layout_set(bd->cl);
-                return 1;
+                return ECORE_CALLBACK_RENEW;
              }
            /* retrieve xkb settings from remember struct after app restart */
            if (bd->remember && bd->remember->prop.xkb)
@@ -106,7 +107,7 @@ border_xkb_add(int cur_group)
              {
                if (cur_group != _e_xkb_cur_group)
                  {
-                   bd->cl = e_xkb_layout_get();
+                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
                    rem->prop.cl_name = bd->cl->name;
                    rem->prop.cl_model = bd->cl->model;
                    rem->prop.cl_variant = bd->cl->variant;
@@ -187,7 +188,6 @@ e_xkb_update(int cur_group)
         ecore_x_xkb_select_group(cur_group);
         e_deskenv_xmodmap_run();
         _e_xkb_update_event(cur_group);
-        
         return;
      }
    /* We put an empty -option here in order to override all previously
