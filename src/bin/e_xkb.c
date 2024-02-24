@@ -52,17 +52,18 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
      {
        if (bd->focused)
          {
+           _e_focus = 1;
+           /* add the first layout to newly opened app window without rem */
            if ((!bd->remember) && (!bd->cl))
              {
-               /* add the first layout to newly opened app window */
-               bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+                bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
              }
            if (bd->cl)
              {
-               _e_focus = 1;
-               e_xkb_layout_set(bd->cl);
-               _e_focus = 0;
+                e_xkb_layout_set(bd->cl);
+                return 1;
              }
+           /* retrieve xkb settings from remember struct after app restart */
            if (bd->remember && bd->remember->prop.xkb)
              {
                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
@@ -74,14 +75,13 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                         bd->cl = cl;
                         if (bd->cl)
                           {
-                            _e_focus = 1;
-                            e_xkb_layout_set(bd->cl);
-                            _e_focus = 0;
+                             e_xkb_layout_set(bd->cl);
                              break;
                           }
                      }
                  }
              }
+           _e_focus = 0;
          }
      }
    return ECORE_CALLBACK_RENEW;
