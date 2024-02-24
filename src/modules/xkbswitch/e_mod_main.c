@@ -302,7 +302,7 @@ _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event)
 
    //INF("xkb group %d", ev->group);
    //~ e_config->xkb.cur_group = ev->group;
-   e_xkb_update(ev->group);
+   //~ e_xkb_update(ev->group);
    _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
 }

@@ -62,6 +62,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
            if (bd->cl)
              {
                 e_xkb_layout_set(bd->cl);
+                _e_focus = 0;
                 return ECORE_CALLBACK_RENEW;
              }
            /* retrieve xkb settings from remember struct after app restart */
