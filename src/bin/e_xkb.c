@@ -54,8 +54,14 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
          {
            if ((!bd->remember) && (!bd->cl))
              {
-               border_xkb_add(-2);  //add layout for newly opened win
-               return 1;
+               /* add the first layout to newly opened app window */
+               bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+             }
+           if (bd->cl)
+             {
+               _e_focus = 1;
+               e_xkb_layout_set(bd->cl);
+               _e_focus = 0;
              }
            if (bd->remember && bd->remember->prop.xkb)
              {
@@ -66,14 +72,14 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                        !strcmp(cl->variant, bd->remember->prop.cl_variant))
                      {
                         bd->cl = cl;
-                        break;
+                        if (bd->cl)
+                          {
+                            _e_focus = 1;
+                            e_xkb_layout_set(bd->cl);
+                            _e_focus = 0;
+                             break;
+                          }
                      }
-                 }
-               if (bd->cl)
-                 {
-                   _e_focus = 1;
-                   e_xkb_layout_set(bd->cl);
-                   _e_focus = 0;
                  }
              }
          }
