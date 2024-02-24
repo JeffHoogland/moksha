@@ -115,6 +115,10 @@ border_xkb_add(int cur_group)
                    if (bd->client.icccm.window_role)
                      rem->match &= ~E_REMEMBER_MATCH_ROLE;
 
+                   /* exclude app open/save file dialogs etc... */
+                   rem->match &= ~E_REMEMBER_MATCH_TYPE;
+                   rem->match &= ~E_REMEMBER_MATCH_TRANSIENT;
+
                    /* libreoffice hack for icccm name and class */
                    if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
                      {
