@@ -110,7 +110,6 @@ struct _E_Remember
       const char   *cl_name;
       const char   *cl_model;
       const char   *cl_variant;
-      const char   *cl_option;
    } prop;
 };
 
