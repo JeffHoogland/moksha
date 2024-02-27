@@ -110,7 +110,7 @@ border_xkb_add(int cur_group)
                  {
                   e_remember_del(rem);
                  }
-               else if (cur_group != e_xkb_cur_group)
+               else if (cur_group != _e_xkb_cur_group)
                  {
                    bd->cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
                    rem->prop.cl_name = bd->cl->name;
