@@ -557,7 +557,7 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 {
    E_Config_Dialog_Data *cfdata = dlg->data;
    E_Config_XKB_Layout *cl;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
    /* Configuration information */
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
    const char *model = e_widget_ilist_selected_value_get(cfdata->model_list);
@@ -580,7 +580,10 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
       Evas_Object *ic = e_icon_add(cfdata->evas);
       const char *name = cl->name;
 
-      e_xkb_e_icon_flag_setup(ic, name);
+      //~ e_xkb_e_icon_flag_setup(ic, name);
+      e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
+      e_icon_file_set (ic, icon_buf);
+
       snprintf(buf, sizeof(buf), "%s (%s, %s)",
                cl->name, cl->model, cl->variant);
       e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
@@ -619,7 +622,7 @@ _cb_dlg_fill_delay(void *data)
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
    E_XKB_Layout *layout;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 
@@ -635,7 +638,9 @@ _cb_dlg_fill_delay(void *data)
         Evas_Object *ic = e_icon_add(cfdata->dlg_evas);
         const char *name = layout->name;
 
-        e_xkb_e_icon_flag_setup(ic, name);
+        //~ e_xkb_e_icon_flag_setup(ic, name);
+        e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), layout->name);
+        e_icon_file_set (ic, icon_buf);
         snprintf(buf, sizeof(buf), "%s (%s)",
                  layout->description, layout->name);
         e_widget_ilist_append_full(cfdata->layout_list, ic, NULL, buf,
@@ -725,7 +730,7 @@ _cb_fill_delay(void *data)
    E_Config_XKB_Layout *cl;
    E_XKB_Model *model;
    int n = 0;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 
@@ -741,7 +746,9 @@ _cb_fill_delay(void *data)
         Evas_Object *ic = e_icon_add(cfdata->evas);
         const char *name = cl->name;
 
-        e_xkb_e_icon_flag_setup(ic, name);
+        //~ e_xkb_e_icon_flag_setup(ic, name);
+        e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
+        e_icon_file_set (ic, icon_buf);
         snprintf(buf, sizeof(buf), "%s (%s, %s)",
                  cl->name, cl->model, cl->variant);
         e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
