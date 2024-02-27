@@ -578,7 +578,7 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 
    {
       Evas_Object *ic = e_icon_add(cfdata->evas);
-      const char *name = cl->name;
+      //~ const char *name = cl->name;
 
       //~ e_xkb_e_icon_flag_setup(ic, name);
       e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
@@ -636,7 +636,7 @@ _cb_dlg_fill_delay(void *data)
    EINA_LIST_FOREACH(layouts, l, layout)
      {
         Evas_Object *ic = e_icon_add(cfdata->dlg_evas);
-        const char *name = layout->name;
+        //~ const char *name = layout->name;
 
         //~ e_xkb_e_icon_flag_setup(ic, name);
         e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), layout->name);
@@ -744,7 +744,7 @@ _cb_fill_delay(void *data)
    EINA_LIST_FOREACH(cfdata->cfg_layouts, l, cl)
      {
         Evas_Object *ic = e_icon_add(cfdata->evas);
-        const char *name = cl->name;
+        //~ const char *name = cl->name;
 
         //~ e_xkb_e_icon_flag_setup(ic, name);
         e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
