@@ -66,7 +66,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
              {
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
-                     if (bd->cl == cl)
+                     if ((bd->cl == cl) && (!strcmp(bd->cl->name, cl->name)))
                        {
                           found = EINA_TRUE;
                           break;
