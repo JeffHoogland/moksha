@@ -47,6 +47,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
    E_Border *bd;
    Eina_List *l, *ll;
    E_Config_XKB_Layout *cl;
+   Eina_Bool found = EINA_FALSE;
 
    if (e_config->xkb.wins_xkb == XKB_GLOBAL) return ECORE_CALLBACK_RENEW;
 
@@ -66,12 +67,16 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
                   {
                      if (bd->cl == cl)
-                        {
-                           e_xkb_layout_set(bd->cl);
-                           _e_focus = 0;
-                            break;
-                        }
+                       {
+                          found = EINA_TRUE;
+                          break;
+                       }
                   }
+                if (!found)
+                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+                e_xkb_layout_set(bd->cl);
+                _e_focus = 0;
+
                 return ECORE_CALLBACK_RENEW;
              }
            /* retrieve xkb settings from remember struct after app restart */
