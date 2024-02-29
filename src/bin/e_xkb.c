@@ -39,6 +39,8 @@ kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
+
+
 static Eina_Bool
 border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
 {
@@ -61,8 +63,15 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
            /* just set the layout, no need to remember it */
            if (bd->cl)
              {
-                e_xkb_layout_set(bd->cl);
-                _e_focus = 0;
+                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                  {
+                     if (bd->cl == cl)
+                        {
+                           e_xkb_layout_set(bd->cl);
+                           _e_focus = 0;
+                            break;
+                        }
+                  }
                 return ECORE_CALLBACK_RENEW;
              }
            /* retrieve xkb settings from remember struct after app restart */
