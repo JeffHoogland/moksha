@@ -5043,9 +5043,9 @@ _e_border_free(E_Border *bd)
      }
    if (bd->cl)
      {
-        eina_stringshare_del(bd->cl->name);
-        eina_stringshare_del(bd->cl->model);
-        eina_stringshare_del(bd->cl->variant);
+        if (bd->cl->name) eina_stringshare_del(bd->cl->name);
+        if (bd->cl->model) eina_stringshare_del(bd->cl->model);
+        if (bd->cl->variant) eina_stringshare_del(bd->cl->variant);
         E_FREE(bd->cl);
      }
 
