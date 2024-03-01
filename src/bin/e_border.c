@@ -5041,6 +5041,13 @@ _e_border_free(E_Border *bd)
              e_border_focus_lock_set(EINA_FALSE);
           }
      }
+   if (bd->cl)
+     {
+        eina_stringshare_del(bd->cl->name);
+        eina_stringshare_del(bd->cl->model);
+        eina_stringshare_del(bd->cl->variant);
+        E_FREE(bd->cl);
+     }
 
    E_FREE_LIST(bd->handlers, ecore_event_handler_del);
    if (bd->remember)
@@ -5048,6 +5055,8 @@ _e_border_free(E_Border *bd)
         E_Remember *rem;
 
         rem = bd->remember;
+        if (rem->name) eina_stringshare_del(rem->name);
+        if (rem->class) eina_stringshare_del(rem->class);
         bd->remember = NULL;
         e_remember_unuse(rem);
      }
