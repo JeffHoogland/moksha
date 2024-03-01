@@ -165,11 +165,31 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
-   E_Config_XKB_Layout *cl, *nl;
+   Eina_List *l, *ll, *clone = NULL;
+   E_Config_XKB_Layout *cl, *nl, *tl;
    E_Config_XKB_Option *oc;
    E_XKB_Dialog_Option *od;
+   E_Border *bd;
 
+   /* store the current bd layouts if exist */
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+     {
+       tl = E_NEW(E_Config_XKB_Layout, 1);
+       tl->name = eina_stringshare_add(cl->name);
+       tl->model = eina_stringshare_add(cl->model);
+       tl->variant = eina_stringshare_add(cl->variant);
+       clone = eina_list_append(clone, tl);
+
+       EINA_LIST_FOREACH(e_border_client_list(), ll, bd)
+         {
+           if (bd->cl)
+             {
+               if (!strcmp(bd->cl->name, tl->name))
+                 bd->cl = tl;
+             }
+         }
+     }
+   /* erase the whole list of current layouts */
    EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
      {
         eina_stringshare_del(cl->name);
@@ -184,6 +204,12 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         nl->name = eina_stringshare_ref(cl->name);
         nl->model = eina_stringshare_ref(cl->model);
         nl->variant = eina_stringshare_ref(cl->variant);
+
+        EINA_LIST_FOREACH(clone, ll, tl)
+         {
+            if (!strcmp(nl->name, tl->name))
+              nl = tl;
+         }
 
         e_config->xkb.used_layouts =
           eina_list_append(e_config->xkb.used_layouts, nl);
@@ -211,7 +237,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
 
    e_xkb_update(-1);
-   _xkb_update_icon(0);
+   //~ _xkb_update_icon(0);
 
    e_config_save_queue();
    return 1;

@@ -61,7 +61,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
              {
                 bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
              }
-           /* just set the layout, no need to remember it */
+           /* set the layout from stock, no need to remember it */
            if (bd->cl)
              {
                 EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
