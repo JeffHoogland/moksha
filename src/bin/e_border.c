@@ -5043,10 +5043,12 @@ _e_border_free(E_Border *bd)
      }
    if (bd->cl)
      {
-        if (bd->cl->name) eina_stringshare_del(bd->cl->name);
-        if (bd->cl->model) eina_stringshare_del(bd->cl->model);
-        if (bd->cl->variant) eina_stringshare_del(bd->cl->variant);
-        E_FREE(bd->cl);
+        E_Config_XKB_Layout *cl;
+
+        cl = bd->cl;
+        if (cl->name) eina_stringshare_del(cl->name);
+        if (cl->model) eina_stringshare_del(cl->model);
+        if (cl->variant) eina_stringshare_del(cl->variant);
      }
 
    E_FREE_LIST(bd->handlers, ecore_event_handler_del);
