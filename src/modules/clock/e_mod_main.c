@@ -1110,6 +1110,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
+   E_FREE_LIST(clock_eio_handlers, ecore_event_handler_del);
    if (act)
      {
         e_action_predef_name_del("Clock", "Toggle calendar");

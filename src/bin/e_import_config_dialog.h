@@ -11,17 +11,17 @@ struct _E_Import_Config_Dialog
    Ecore_End_Cb          ok;
    Ecore_Cb              cancel;
 
-   const char *file;
-   int   method;
-   int   external;
-   int   quality;
-   E_Color              color;
+   const char           *file;
+   int                   method;
+   int                   external;
+   int                   quality;
+   E_Color               color;
 
    Ecore_Exe            *exe;
    Ecore_Event_Handler  *exe_handler;
-   const char         *path;
-   char          *tmpf;
-   const char          *fdest;
+   const char           *path;
+   char                 *tmpf;
+   const char           *fdest;
 
    E_Dialog             *dia;
 };
