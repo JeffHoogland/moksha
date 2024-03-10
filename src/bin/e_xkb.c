@@ -58,9 +58,7 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
            _e_focus = 1;
            /* add the first layout to newly opened app window without rem */
            if ((!bd->remember) && (!bd->cl))
-             {
-                bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
-             }
+              bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
            /* set the layout from stock, no need to remember it */
            if (bd->cl)
              {
@@ -76,7 +74,6 @@ border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNU
                    bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
                 e_xkb_layout_set(bd->cl);
                 _e_focus = 0;
-
                 return ECORE_CALLBACK_RENEW;
              }
            /* retrieve xkb settings from remember struct after app restart */
@@ -122,9 +119,7 @@ border_xkb_add(int cur_group)
              {
                /* delete rem if the first layout is set */
                if (cur_group == 0 && rem->apply == (1 << 17))
-                 {
                   e_remember_del(rem);
-                 }
                else if (cur_group != _e_xkb_cur_group)
                  {
                    bd->cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
