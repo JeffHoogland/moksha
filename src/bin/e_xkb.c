@@ -109,6 +109,7 @@ border_xkb_add(int cur_group)
    E_Border *bd;
    Eina_List *l;
    E_Remember *rem = NULL;
+   const char *clasz, *name;
    
    EINA_LIST_FOREACH(e_border_client_list(), l, bd)
      {
@@ -137,13 +138,16 @@ border_xkb_add(int cur_group)
                     
                    /* store border rem structure */
                    bd->remember = rem;
-                   e_remember_default_match_set(rem, bd);
-                   if (bd->client.icccm.window_role)
-                     rem->match &= ~E_REMEMBER_MATCH_ROLE;
-
-                   /* exclude app open/save file dialogs etc... */
-                   rem->match &= ~E_REMEMBER_MATCH_TYPE;
-                   rem->match &= ~E_REMEMBER_MATCH_TRANSIENT;
+                   name = bd->client.icccm.name;
+                   if (!name || name[0] == 0) name = NULL;
+                   clasz = bd->client.icccm.class;
+                   if (!clasz || clasz[0] == 0) clasz = NULL;
+                   if (name && clasz)
+                     {
+                        rem->match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
+                        rem->name = eina_stringshare_ref(name);
+                        rem->class = eina_stringshare_ref(clasz);
+                     }
 
                    /* libreoffice hack for icccm name and class */
                    if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
