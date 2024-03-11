@@ -256,7 +256,7 @@ list_add_item(Popup_Data *popup)
    if (notification_cfg->new_item < notification_cfg->menu_items)
      notification_cfg->new_item++;
      
-   /* Add item to the menu if less then menu items limit */
+   /* Add item to the menu if less than menu items limit */
    if (eina_list_count(notification_cfg->hist->history) < notification_cfg->menu_items)
      notification_cfg->hist->history = eina_list_prepend(notification_cfg->hist->history, items);
    else
