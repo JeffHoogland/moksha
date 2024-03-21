@@ -167,9 +167,11 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    notification_popup_shutdown();
    e_notification_server_unregister();
 
-   _notification_cfg_free(notification_cfg);
    E_CONFIG_DD_FREE(conf_edd);
+   /* Tell E the module is now unloaded. Gets removed from shelves, etc. */
+   e_gadcon_provider_unregister(&_gadcon_class);
    notification_mod = NULL;
+   _notification_cfg_free(notification_cfg); 
    return 1;
 }
 
@@ -247,17 +249,19 @@ static void
 _gc_shutdown(E_Gadcon_Client *gcc)
 {
    Instance *inst;
+   
+   if (!(inst = gcc->data)) return;
 
-   inst = gcc->data;
    if (inst->menu)
      {
-       e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-       e_object_del(E_OBJECT(inst->menu));
+       //e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+       //e_object_del(E_OBJECT(inst->menu));
        inst->menu = NULL;
      }
    if (notification_cfg)
      notification_cfg->instances = eina_list_remove(notification_cfg->instances, inst);
-   evas_object_del(inst->o_notif);
+   
+   if (inst->o_notif) evas_object_del(inst->o_notif);
    E_FREE(inst);
 }
 
@@ -536,8 +540,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
       e_gadcon_locked_set(inst->gcc->gadcon, EINA_FALSE);
    if (inst->menu)
      {
-       e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-       e_object_del(E_OBJECT(inst->menu));
+       //e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
+       //e_object_del(E_OBJECT(inst->menu));
        inst->menu = NULL;
      }
 
