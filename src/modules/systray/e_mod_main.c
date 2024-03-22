@@ -171,7 +171,7 @@ _systray_size_apply_do(Instance *inst)
    
    o = edje_object_part_object_get(inst->ui.gadget, _part_box);
    if (!o) return;
-   //~ evas_object_size_hint_min_get(o, &w, &h); 
+   evas_object_size_hint_min_get(o, &w, &h);
 
    if (w < 1) w = 1;
    if (h < 1) h = 1;

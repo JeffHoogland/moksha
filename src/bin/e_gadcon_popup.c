@@ -165,7 +165,8 @@ _e_gadcon_popup_size_recalc(E_Gadcon_Popup *pop, Evas_Object *obj)
 static void
 _e_gadcon_popup_position(E_Gadcon_Popup *pop)
 {
-   Evas_Coord gx = 0, gy = 0, gw, gh, zw, zh, zx, zy, px, py, gap_x, gap_y;
+   Evas_Coord gx = 0, gy = 0, gw, gh, zw, zh, zx, zy, px, py;
+   Evas_Coord gap_x = 0, gap_y = 0;
    E_Shelf *es;
 
    /* Popup positioning */
@@ -180,8 +181,6 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
        gap_x = (es->w - gw) / 2;
        gap_y = (es->h - gh) / 2;
      }
-   else
-     gap_x = gap_y = 0;
 
    switch (pop->gcc->gadcon->orient)
      {

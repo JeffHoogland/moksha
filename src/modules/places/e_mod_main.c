@@ -22,7 +22,6 @@ static Eina_Bool _places_conf_timer(void *data);
 static Config_Item *_places_conf_item_get(const char *id);
 static void _places_icon_cb_mouse_down(void *data, Evas *evas, Evas_Object *obj, void *event);
 static void _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event);
-static void _places_cb_menu_post(void *data, E_Menu *menu __UNUSED__);
 static void _places_cb_menu_configure(void *data __UNUSED__, E_Menu *mn, E_Menu_Item *mi __UNUSED__);
 
 /* Local Variables */
@@ -239,12 +238,7 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
 
-   if (inst->menu)
-     {
-        e_menu_post_deactivate_callback_set(inst->menu, NULL, NULL);
-        e_object_del(E_OBJECT(inst->menu));
-        inst->menu = NULL;
-     }
+   if (inst->menu) inst->menu = NULL;
 
    if (inst->o_main)
      {
@@ -529,7 +523,6 @@ _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
 
         /* Each Gadget Client has a utility menu from the Container */
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        e_menu_post_deactivate_callback_set(m, _places_cb_menu_post, inst);
         inst->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y,
@@ -544,16 +537,6 @@ _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
      }
 }
 
-static void
-_places_cb_menu_post(void *data, E_Menu *menu __UNUSED__)
-{
-   Instance *inst = NULL;
-
-   if (!(inst = data)) return;
-   if (!inst->menu) return;
-   e_object_del(E_OBJECT(inst->menu));
-   inst->menu = NULL;
-}
 
 static void
 _places_cb_menu_configure(void *data __UNUSED__, E_Menu *mn, E_Menu_Item *mi __UNUSED__)
