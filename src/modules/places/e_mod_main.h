@@ -63,7 +63,6 @@ struct _Instance
    Evas_Object *o_icon;
    E_Gadcon_Popup *popup;
    Eina_Bool horiz;
-   E_Menu *menu;
    Config_Item *conf_item;
 };
 

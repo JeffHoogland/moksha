@@ -238,8 +238,6 @@ _gc_shutdown(E_Gadcon_Client *gcc)
    if (!(inst = gcc->data)) return;
    instances = eina_list_remove(instances, inst);
 
-   if (inst->menu) inst->menu = NULL;
-
    if (inst->o_main)
      {
         evas_object_event_callback_del(inst->o_main, EVAS_CALLBACK_MOUSE_DOWN,
@@ -506,8 +504,8 @@ _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
 
    if (!(inst = data)) return;
    ev = event;
-   if ((ev->button == 3) && (!inst->menu))
-     {
+   if (ev->button == 3)
+   {
         E_Menu *m;
 
         /* grab current zone */
@@ -523,7 +521,6 @@ _places_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUS
 
         /* Each Gadget Client has a utility menu from the Container */
         m = e_gadcon_client_util_menu_items_append(inst->gcc, m, 0);
-        inst->menu = m;
 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon, &x, &y,
                                           NULL, NULL);
