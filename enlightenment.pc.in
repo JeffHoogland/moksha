@@ -6,6 +6,7 @@ includedir=@includedir@/@PACKAGE@
 modules=@libdir@/@PACKAGE@/modules
 pkgdatadir=@datarootdir@/enlightenment/data
 themes=${pkgdatadir}/themes
+module_arch=@host_os@-@host_cpu@
 backgrounds=${pkgdatadir}/backgrounds
 config_apps=@prefix@/share/@PACKAGE@/config-apps
 release=@release@
