@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 20
+#define E_CONFIG_FILE_GENERATION 21
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -414,6 +414,7 @@ struct _E_Config
       Eina_List  *used_layouts;
       Eina_List  *used_options;
       int         only_label;
+      int         wins_xkb;
       const char *default_model;
       int         cur_group;
       E_Config_XKB_Layout *current_layout;

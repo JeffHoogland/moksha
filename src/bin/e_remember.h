@@ -33,6 +33,7 @@ typedef struct _E_Remember E_Remember;
 #define E_REMEMBER_SET_FOCUS_ON_START     (1 << 14)
 #define E_REMEMBER_APPLY_FULLSCREEN       (1 << 15)
 #define E_REMEMBER_APPLY_OFFER_RESISTANCE (1 << 16)
+#define E_REMEMBER_APPLY_XKB              (1 << 17)
 
 #define E_REMEMBER_INTERNAL_DIALOGS       (1 << 0)
 #define E_REMEMBER_INTERNAL_FM_WINS       (1 << 1)
@@ -63,7 +64,7 @@ struct _E_Remember
       int           pos_w, pos_h;
       int           w, h;
       int           layer;
-      unsigned int maximize; //just direction
+      unsigned int  maximize; //just direction
 
       unsigned char lock_user_location;
       unsigned char lock_client_location;
@@ -105,6 +106,10 @@ struct _E_Remember
       int           head;
       const char   *command;
       const char   *desktop_file;
+      unsigned char xkb;
+      const char   *cl_name;
+      const char   *cl_model;
+      const char   *cl_variant;
    } prop;
 };
 

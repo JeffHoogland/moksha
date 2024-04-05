@@ -1,8 +1,10 @@
 #include "e.h"
 
 static void _e_xkb_update_event(int);
+static void border_xkb_add(int cur_group);
 
 static int _e_xkb_cur_group = -1;
+static int _e_focus = 0;
 
 static Ecore_Exe *cur_exe;
 
@@ -37,6 +39,125 @@ kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
    return ECORE_CALLBACK_RENEW;
 }
 
+
+
+static Eina_Bool
+border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
+{
+   E_Border *bd;
+   Eina_List *l, *ll;
+   E_Config_XKB_Layout *cl;
+   Eina_Bool found = EINA_FALSE;
+
+   if (e_config->xkb.wins_xkb == XKB_GLOBAL) return ECORE_CALLBACK_RENEW;
+
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+       if (bd->focused)
+         {
+           _e_focus = 1;
+           /* add the first layout to newly opened app window without rem */
+           if ((!bd->remember) && (!bd->cl))
+              bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+           /* set the layout from stock, no need to remember it */
+           if (bd->cl)
+             {
+                EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                  {
+                     if ((bd->cl == cl) && (!strcmp(bd->cl->name, cl->name)))
+                       {
+                          found = EINA_TRUE;
+                          break;
+                       }
+                  }
+                if (!found)
+                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, 0);
+                e_xkb_layout_set(bd->cl);
+                _e_focus = 0;
+                return ECORE_CALLBACK_RENEW;
+             }
+           /* retrieve xkb settings from remember struct after app restart */
+           if (bd->remember && bd->remember->prop.xkb)
+             {
+               EINA_LIST_FOREACH(e_config->xkb.used_layouts, ll, cl)
+                 {
+                   if (!strcmp(cl->name, bd->remember->prop.cl_name) &&
+                       !strcmp(cl->model, bd->remember->prop.cl_model) &&
+                       !strcmp(cl->variant, bd->remember->prop.cl_variant))
+                     {
+                        bd->cl = cl;
+                        if (bd->cl)
+                          {
+                             e_xkb_layout_set(bd->cl);
+                             break;
+                          }
+                     }
+                 }
+             }
+           _e_focus = 0;
+         }
+     }
+   return ECORE_CALLBACK_RENEW;
+}
+
+static void
+border_xkb_add(int cur_group)
+{
+   E_Border *bd;
+   Eina_List *l;
+   E_Remember *rem = NULL;
+   const char *clasz, *name;
+   
+   EINA_LIST_FOREACH(e_border_client_list(), l, bd)
+     {
+       if (bd->focused)
+         {
+           rem = bd->remember;
+           if (!rem)
+             rem = e_remember_new();
+           if (rem)
+             {
+               /* delete rem if the first layout is set */
+               if (cur_group == 0 && rem->apply == (1 << 17))
+                  e_remember_del(rem);
+               else if (cur_group != _e_xkb_cur_group)
+                 {
+                   bd->cl = eina_list_nth(e_config->xkb.used_layouts, cur_group);
+                   rem->prop.cl_name = bd->cl->name;
+                   rem->prop.cl_model = bd->cl->model;
+                   rem->prop.cl_variant = bd->cl->variant;
+
+                   /* activate keeping xkb layer */
+                   rem->apply |= E_REMEMBER_APPLY_XKB;
+                   rem->prop.xkb = 1;
+                    
+                   /* store border rem structure */
+                   bd->remember = rem;
+                   name = bd->client.icccm.name;
+                   if (!name || name[0] == 0) name = NULL;
+                   clasz = bd->client.icccm.class;
+                   if (!clasz || clasz[0] == 0) clasz = NULL;
+                   if (name && clasz)
+                     {
+                        rem->match |= E_REMEMBER_MATCH_NAME | E_REMEMBER_MATCH_CLASS;
+                        rem->name = eina_stringshare_ref(name);
+                        rem->class = eina_stringshare_ref(clasz);
+                     }
+
+                   /* libreoffice hack for icccm name and class */
+                   if (e_util_glob_match(bd->client.icccm.name, "libreoffice"))
+                     {
+                       rem->name = eina_stringshare_add("soffice");
+                       rem->class = eina_stringshare_add("Soffice");
+                     }
+                   e_remember_use(rem);
+                   e_remember_update(bd);
+                 }
+             }
+         }
+     }
+}
+
 /* externally accessible functions */
 EAPI int
 e_xkb_init(void)
@@ -46,6 +167,7 @@ e_xkb_init(void)
         E_EVENT_XKB_CHANGED = ecore_event_type_new();
         ecore_event_handler_add(ECORE_EXE_EVENT_DEL, (Ecore_Event_Handler_Cb)kb_exe_del, NULL);
      }
+   ecore_event_handler_add(E_EVENT_BORDER_FOCUS_IN, (Ecore_Event_Handler_Cb)border_focus, NULL);
    e_xkb_update(-1);
    if (e_config->xkb.cur_layout)
      ecore_timer_add(1.5, _e_xkb_init_timer, e_config->xkb.current_layout);
@@ -71,8 +193,14 @@ e_xkb_update(int cur_group)
    Eina_Strbuf *buf;
 
    if ((!e_config->xkb.used_layouts) && (!e_config->xkb.used_options) && (!e_config->xkb.default_model)) return;
+   
    if (cur_group != -1)
      {
+        if (e_config->xkb.wins_xkb == XKB_PER_APP)
+          {
+            if (_e_focus == 0)
+              border_xkb_add(cur_group);
+          }
         _e_xkb_cur_group = cur_group;
         ecore_x_xkb_select_group(cur_group);
         e_deskenv_xmodmap_run();
@@ -82,7 +210,6 @@ e_xkb_update(int cur_group)
    /* We put an empty -option here in order to override all previously
     * set options.
     */
-
    buf = eina_strbuf_new();
    eina_strbuf_append(buf, "setxkbmap ");
 
@@ -159,6 +286,7 @@ e_xkb_update(int cur_group)
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
    E_FREE_FUNC(cur_exe, ecore_exe_kill);
    cur_exe = ecore_exe_run(eina_strbuf_string_get(buf), NULL);
+     
    eina_strbuf_free(buf);
 }
 

@@ -16,6 +16,7 @@ struct _E_Config_Dialog_Data
    const char  *default_model;
 
    int          only_label;
+   int          wins_xkb;
 
    E_Dialog    *dlg_add_new;
 };
@@ -109,6 +110,7 @@ _create_data(E_Config_Dialog *cfd __UNUSED__)
    /* Initialize options */
 
    cfdata->only_label = e_config->xkb.only_label;
+   cfdata->wins_xkb = e_config->xkb.wins_xkb;
    cfdata->cfg_options = NULL;
 
    lll = e_config->xkb.used_options;
@@ -163,11 +165,31 @@ _free_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 static int
 _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
-   Eina_List *l;
-   E_Config_XKB_Layout *cl, *nl;
+   Eina_List *l, *ll, *clone = NULL;
+   E_Config_XKB_Layout *cl, *nl, *tl;
    E_Config_XKB_Option *oc;
    E_XKB_Dialog_Option *od;
+   E_Border *bd;
 
+   /* store the current bd layouts if exist */
+   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
+     {
+       tl = E_NEW(E_Config_XKB_Layout, 1);
+       tl->name = eina_stringshare_add(cl->name);
+       tl->model = eina_stringshare_add(cl->model);
+       tl->variant = eina_stringshare_add(cl->variant);
+       clone = eina_list_append(clone, tl);
+
+       EINA_LIST_FOREACH(e_border_client_list(), ll, bd)
+         {
+           if (bd->cl)
+             {
+               if (!strcmp(bd->cl->name, tl->name))
+                 bd->cl = tl;
+             }
+         }
+     }
+   /* erase the whole list of current layouts */
    EINA_LIST_FREE(e_config->xkb.used_layouts, cl)
      {
         eina_stringshare_del(cl->name);
@@ -183,6 +205,12 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         nl->model = eina_stringshare_ref(cl->model);
         nl->variant = eina_stringshare_ref(cl->variant);
 
+        EINA_LIST_FOREACH(clone, ll, tl)
+         {
+            if (!strcmp(nl->name, tl->name))
+              nl = tl;
+         }
+
         e_config->xkb.used_layouts =
           eina_list_append(e_config->xkb.used_layouts, nl);
      }
@@ -191,6 +219,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    /* Save options */
    e_config->xkb.only_label = cfdata->only_label;
+   e_config->xkb.wins_xkb = cfdata->wins_xkb;
 
    EINA_LIST_FREE(e_config->xkb.used_options, oc)
      {
@@ -208,7 +237,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
 
    e_xkb_update(-1);
-   _xkb_update_icon(0);
+   //~ _xkb_update_icon(0);
 
    e_config_save_queue();
    return 1;
@@ -294,6 +323,8 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
          Evas_Coord mw, mh;
          Evas_Object *general;
          Evas_Object *scroller;
+         Evas_Object *ob;
+         E_Radio_Group *rg;
 
          general = e_widget_framelist_add(evas, _("Gadgets"), 0);
          {
@@ -302,6 +333,15 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                e_widget_framelist_object_append(general, only_label);
             }
             e_widget_list_object_append(options, general, 1, 1, 0.0);
+         }
+         general = e_widget_framelist_add(evas, _("Layout"), 0);
+         {
+            rg = e_widget_radio_group_new(&(cfdata->wins_xkb));
+            ob = e_widget_radio_add(evas, _("Global"), 0, rg);
+            e_widget_framelist_object_append(general, ob);
+            ob = e_widget_radio_add(evas, _("Per Application"), 1, rg);
+            e_widget_framelist_object_append(general, ob);
+            e_widget_list_object_append(options, general, 1, 2, 0.0);
          }
 
          lll = cfdata->cfg_options;
@@ -543,7 +583,7 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 {
    E_Config_Dialog_Data *cfdata = dlg->data;
    E_Config_XKB_Layout *cl;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
    /* Configuration information */
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
    const char *model = e_widget_ilist_selected_value_get(cfdata->model_list);
@@ -564,9 +604,12 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
 
    {
       Evas_Object *ic = e_icon_add(cfdata->evas);
-      const char *name = cl->name;
+      //~ const char *name = cl->name;
 
-      e_xkb_e_icon_flag_setup(ic, name);
+      //~ e_xkb_e_icon_flag_setup(ic, name);
+      e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
+      e_icon_file_set (ic, icon_buf);
+
       snprintf(buf, sizeof(buf), "%s (%s, %s)",
                cl->name, cl->model, cl->variant);
       e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
@@ -605,7 +648,7 @@ _cb_dlg_fill_delay(void *data)
    E_Config_Dialog_Data *cfdata;
    Eina_List *l;
    E_XKB_Layout *layout;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 
@@ -619,9 +662,11 @@ _cb_dlg_fill_delay(void *data)
    EINA_LIST_FOREACH(layouts, l, layout)
      {
         Evas_Object *ic = e_icon_add(cfdata->dlg_evas);
-        const char *name = layout->name;
+        //~ const char *name = layout->name;
 
-        e_xkb_e_icon_flag_setup(ic, name);
+        //~ e_xkb_e_icon_flag_setup(ic, name);
+        e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), layout->name);
+        e_icon_file_set (ic, icon_buf);
         snprintf(buf, sizeof(buf), "%s (%s)",
                  layout->description, layout->name);
         e_widget_ilist_append_full(cfdata->layout_list, ic, NULL, buf,
@@ -711,7 +756,7 @@ _cb_fill_delay(void *data)
    E_Config_XKB_Layout *cl;
    E_XKB_Model *model;
    int n = 0;
-   char buf[4096];
+   char buf[4096], icon_buf[PATH_MAX];
 
    if (!(cfdata = data)) return ECORE_CALLBACK_RENEW;
 
@@ -725,9 +770,11 @@ _cb_fill_delay(void *data)
    EINA_LIST_FOREACH(cfdata->cfg_layouts, l, cl)
      {
         Evas_Object *ic = e_icon_add(cfdata->evas);
-        const char *name = cl->name;
+        //~ const char *name = cl->name;
 
-        e_xkb_e_icon_flag_setup(ic, name);
+        //~ e_xkb_e_icon_flag_setup(ic, name);
+        e_xkb_flag_file_get(icon_buf, sizeof(icon_buf), cl->name);
+        e_icon_file_set (ic, icon_buf);
         snprintf(buf, sizeof(buf), "%s (%s, %s)",
                  cl->name, cl->model, cl->variant);
         e_widget_ilist_append_full(cfdata->used_list, ic, NULL, buf,
