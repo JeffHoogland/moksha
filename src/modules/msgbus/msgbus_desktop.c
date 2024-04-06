@@ -137,7 +137,7 @@ cb_desktop_bgdel(const Eldbus_Service_Interface *iface __UNUSED__,
 }
 
 static Eldbus_Message *
-cb_desktop_bgdefault(const Eldbus_Service_Interface *iface __UNUSED__,
+cb_desktop_bgset(const Eldbus_Service_Interface *iface __UNUSED__,
                  const Eldbus_Message *msg)
 {
    const char *path;
@@ -145,13 +145,28 @@ cb_desktop_bgdefault(const Eldbus_Service_Interface *iface __UNUSED__,
 
    if (!eldbus_message_arguments_get(msg, "s", &path))
      {
-        ERR("could not get Default arguments");
+        ERR("could not get SetDefault arguments");
         return reply;
      }
    DBG("default bg path=%s", path);
    e_bg_default_set(path);
    e_bg_update();
    e_config_save_queue();
+   return reply;
+}
+
+static Eldbus_Message *
+cb_desktop_bgget(const Eldbus_Service_Interface *iface __UNUSED__,
+                 const Eldbus_Message *msg)
+{
+   Eldbus_Message *reply = eldbus_message_method_return_new(msg);
+   const char *bg;
+
+   bg = e_config->desktop_default_background;
+   if (bg)
+      eldbus_message_arguments_append(reply, "s", bg);
+   else
+      eldbus_message_arguments_append(reply, "s", "");
    return reply;
 }
 
@@ -202,7 +217,8 @@ static const Eldbus_Method desktop_methods[] = {
 static const Eldbus_Method background_methods[] = {
    { "Add", ELDBUS_ARGS({"i", "container"}, {"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}, {"s", "path"}), NULL, cb_desktop_bgadd, 0 },
    { "Del", ELDBUS_ARGS({"i", "container"}, {"i", "zone"}, {"i", "desk_x"}, {"i", "desk_y"}), NULL, cb_desktop_bgdel, 0 },
-   { "Default", ELDBUS_ARGS({"s", "path"}), NULL, cb_desktop_bgdefault, 0 },
+   { "SetDefault", ELDBUS_ARGS({"s", "path"}), NULL, cb_desktop_bgset, 0 },
+   { "GetDefault", NULL, ELDBUS_ARGS({"s", "path"}), cb_desktop_bgget, 0 },
    { "List", NULL, ELDBUS_ARGS({"a(iiiis)", "array_of_bg"}), cb_desktop_bglist, 0 },
    { NULL, NULL, NULL, NULL, 0 }
 };
