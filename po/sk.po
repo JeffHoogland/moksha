@@ -43,7 +43,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -9969,7 +9968,7 @@ msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Chyba počas inicializácie DBus! Skontrolujte prosím, či je dbus správne "
+"Chyba počas inicializácie DBus! Skontrolujte prosím, či je D-Bus správne "
 "nainštalovaný a beží"
 
 #: src/modules/notification/e_mod_main.c:426

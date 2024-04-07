@@ -46,7 +46,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -9951,12 +9950,11 @@ msgid "Error during notification server initialization"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:130
-#, fuzzy
 msgid ""
 "Ensure there's no other module acting as a server and that D-Bus is "
 "correctly installed and running"
 msgstr ""
-"Chyba při inicializaci DBus! Prosím zkontrolujte, jestli máte dbus správně "
+"Chyba při inicializaci DBus! Prosím zkontrolujte, jestli máte D-Bus správně "
 "nainstalovaný a spuštěný."
 
 #: src/modules/notification/e_mod_main.c:426
@@ -10232,9 +10230,8 @@ msgid "Clear History"
 msgstr "Smazat historii"
 
 #: src/modules/classicmenu/e_mod_main.c:81
-#, fuzzy
 msgid "Blanking Block"
-msgstr "Vypínání displeje"
+msgstr "Vypínání displeje blokováno"
 
 #: src/modules/places/e_mod_config.c:66
 msgid "Places Settings"
