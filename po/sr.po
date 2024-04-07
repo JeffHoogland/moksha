@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-02-04 10:03+0100\n"
+"POT-Creation-Date: 2024-04-07 12:09+0200\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -31,7 +31,7 @@ msgstr "О Просвећењу"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -50,7 +50,7 @@ msgstr "Просвећење"
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
 "<title>Ауторска права &copy; 2021, развојна дружина Просвећења<br><br>Надамо "
@@ -84,7 +84,7 @@ msgstr "Да ли сте сигурни да желите да убијете о
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
 msgstr "Убиј"
 
@@ -181,7 +181,7 @@ msgid "Menu"
 msgstr "Изборник"
 
 #: src/bin/e_actions.c:3139
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Изборник прозора"
 
@@ -216,7 +216,7 @@ msgid "Sticky Mode Enable"
 msgstr "Омогући лепљивост"
 
 #: src/bin/e_actions.c:3176
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Увек на врху"
@@ -232,7 +232,7 @@ msgid "Always On Top Disable"
 msgstr "Увек на врху"
 
 #: src/bin/e_actions.c:3189
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Мења стање умањености"
 
@@ -241,7 +241,7 @@ msgid "Iconic Mode Enable"
 msgstr "Омогући стање умањености"
 
 #: src/bin/e_actions.c:3198
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Преко целог екрана"
 
@@ -251,7 +251,7 @@ msgstr "Омогући приказ преко целог екрана"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Увећај"
 
@@ -264,12 +264,12 @@ msgid "Maximize Horizontally"
 msgstr "Увећај водоравно"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 msgid "Maximize Left"
 msgstr "Увећај лево"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 msgid "Maximize Right"
 msgstr "Увећај десно"
 
@@ -381,7 +381,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Пребаци на претходну радну површ"
 
 #: src/bin/e_actions.c:3293
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Приказује радну површ"
 
@@ -398,47 +398,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Премешта редно радну површ..."
 
 #: src/bin/e_actions.c:3316
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Пређи на радну површ 0"
 
 #: src/bin/e_actions.c:3318
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Пређи на радну површ 1"
 
 #: src/bin/e_actions.c:3320
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Пређи на радну површ 2"
 
 #: src/bin/e_actions.c:3322
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Пређи на радну површ 3"
 
 #: src/bin/e_actions.c:3324
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Пређи на радну површ 4"
 
 #: src/bin/e_actions.c:3326
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Пређи на радну површ 5"
 
 #: src/bin/e_actions.c:3328
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Пређи на радну површ 6"
 
 #: src/bin/e_actions.c:3330
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Пређи на радну површ 7"
 
 #: src/bin/e_actions.c:3332
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Пређи на радну површ 8"
 
@@ -685,12 +685,12 @@ msgid "To Previous Screen"
 msgstr "На претходни екран"
 
 #: src/bin/e_actions.c:3516
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Прикажи главни изборник"
 
 #: src/bin/e_actions.c:3518
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Прикажи омиљени изборник"
 
@@ -803,7 +803,7 @@ msgid "Hibernate Now"
 msgstr "Замрзни сада"
 
 #: src/bin/e_actions.c:3616
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Закључај"
 
@@ -873,11 +873,11 @@ msgstr "Изаберите"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
 #: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Откажи"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:959
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -895,7 +895,7 @@ msgstr ""
 "задатих поставки ће то<br>поправити њиховим додавањем. Сада можете подесити "
 "ствари по својој<br>вољи. Извините због зачкољица у вашим поставкама.<br>"
 
-#: src/bin/e_config.c:971
+#: src/bin/e_config.c:976
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -909,11 +909,11 @@ msgstr ""
 "предострожност, ваше поставке су враћене на задате<br>вредности. Извините "
 "због непријатности.<br>"
 
-#: src/bin/e_config.c:1565 src/bin/e_config.c:2190
+#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
 msgid "Moksha Settings Write Problems"
 msgstr "Потешкоће писања поставки Просвећења"
 
-#: src/bin/e_config.c:1568
+#: src/bin/e_config.c:1573
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -922,38 +922,38 @@ msgstr ""
 "Дошло је до грешке приликом премештања датотека поставки Просвећења<br>из:"
 "<br>%s<br><br>у<br>%s<br><br>Остатак уписа је отказан због безбедности.<br>"
 
-#: src/bin/e_config.c:1578 src/bin/e_config.c:2203
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
-#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
+#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:349
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:528
+#: src/modules/xkbswitch/e_mod_config.c:568
 msgid "OK"
 msgstr "У реду"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2086
 msgid "Settings Upgraded"
 msgstr "Поставке су надограђене"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2104
 msgid "The EET file handle is bad."
 msgstr "Руковање ЕЕТ датотекама је лоше."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2108
 msgid "The file data is empty."
 msgstr "Датотека података је празна."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2112
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -961,17 +961,17 @@ msgstr ""
 "Ова датотека није уписива. Можда је диск само за читање,<br>или сте изгубили "
 "овлашћења над датотекама."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2116
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Док сам вршио припрему за упис, остало је мало простора у меморији."
 "<br>Молим, ослободите простор у меморији."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2120
 msgid "This is a generic error."
 msgstr "Ово је општа грешка."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2124
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -979,59 +979,59 @@ msgstr ""
 "Датотека поставки је превише велика.<br>Требала би бити врло мала (неколико "
 "стотина KB највише)."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2128
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Имате улазно/излазне грешке на диску.<br>Можда га требате заменити?"
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2132
 msgid "You ran out of space while writing the file."
 msgstr "Остали сте без простора на диску приликом уписа датотеке."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2136
 msgid "The file was closed while writing."
 msgstr "Датотека је затворена за време писања."
 
-#: src/bin/e_config.c:2135
+#: src/bin/e_config.c:2140
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Мапирање меморије (mmap) датотеке није успело."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2144
 msgid "X509 Encoding failed."
 msgstr "X509 шифровање није успело."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2148
 msgid "Signature failed."
 msgstr "Потписивање није успело."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2152
 msgid "The signature was invalid."
 msgstr "Није исправан потпис."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2156
 msgid "Not signed."
 msgstr "Није потписано."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2160
 msgid "Feature not implemented."
 msgstr "Није још подржано."
 
-#: src/bin/e_config.c:2159
+#: src/bin/e_config.c:2164
 msgid "PRNG was not seeded."
 msgstr "Није посејан псеудо насумични број ПРНГ."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2168
 msgid "Encryption failed."
 msgstr "Није успело шифровање."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2172
 msgid "Decryption failed."
 msgstr "Дешифровање није успело."
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2176
 msgid "The error is unknown to Moksha."
 msgstr "Просвећење не препознаје грешку."
 
-#: src/bin/e_config.c:2193
+#: src/bin/e_config.c:2198
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1243,7 +1243,7 @@ msgid "Show in Menus"
 msgstr "Прикажи у изборницима"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
-#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Могућности"
@@ -1561,8 +1561,8 @@ msgstr "Прикачи"
 msgid "Eject"
 msgstr "Избаци"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1581
+#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/modules/ibar/e_mod_main.c:1587
 msgid "Properties"
 msgstr "Особине"
 
@@ -1722,7 +1722,7 @@ msgstr "Не за све"
 msgid "Yes to all"
 msgstr "Да за све"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Упозорење"
@@ -1946,7 +1946,7 @@ msgstr "Изглед"
 #: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058
-#: src/modules/xkbswitch/e_mod_config.c:267
+#: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Remove"
 msgstr "Уклони"
 
@@ -2116,12 +2116,12 @@ msgid "Prevent Changes In:"
 msgstr "Спречи измене у:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
+#: src/bin/e_int_border_remember.c:710 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Положај"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
+#: src/bin/e_int_border_remember.c:713 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:294
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2130,7 +2130,7 @@ msgstr "Величина"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
+#: src/bin/e_int_border_remember.c:716 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Гомилање"
@@ -2140,12 +2140,12 @@ msgid "Iconified state"
 msgstr "Умањено стање"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:710
+#: src/bin/e_int_border_remember.c:728
 msgid "Stickiness"
 msgstr "Лепљивост"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:716
+#: src/bin/e_int_border_remember.c:737
 msgid "Shaded state"
 msgstr "Смотаност"
 
@@ -2154,7 +2154,7 @@ msgid "Maximized state"
 msgstr "Увећаност"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_remember.c:719
+#: src/bin/e_int_border_remember.c:740
 msgid "Fullscreen state"
 msgstr "Стање преко целог екрана"
 
@@ -2162,7 +2162,7 @@ msgstr "Стање преко целог екрана"
 msgid "Program Locks"
 msgstr "Закључавање програма"
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:704
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:722
 msgid "Border style"
 msgstr "Начин оквира"
 
@@ -2262,8 +2262,8 @@ msgstr "Прескочи"
 msgid "Border"
 msgstr "Оквир"
 
-#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
-#: src/bin/e_int_border_remember.c:701
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:623
+#: src/bin/e_int_border_remember.c:719
 msgid "Locks"
 msgstr "Закључавања"
 
@@ -2318,7 +2318,7 @@ msgstr "Користи икону програма"
 msgid "Use User Defined Icon"
 msgstr "Користи кориснички одређене иконе"
 
-#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:755
 msgid "Offer Resistance"
 msgstr "Понуди одбојност"
 
@@ -2458,7 +2458,7 @@ msgstr "НетВМ својства"
 msgid "ICCCM"
 msgstr "ИЦЦЦМ"
 
-#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
+#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:669
 msgid "Title"
 msgstr "Наслов"
 
@@ -2568,17 +2568,17 @@ msgstr "Захтевај положај"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:357
-#: src/modules/xkbswitch/e_mod_main.c:398
-#: src/modules/notification/e_mod_main.c:339
-#: src/modules/notification/e_mod_main.c:453
+#: src/modules/xkbswitch/e_mod_main.c:370
+#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/notification/e_mod_main.c:343
+#: src/modules/notification/e_mod_main.c:457
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "Подешавања"
 
@@ -2590,12 +2590,12 @@ msgstr "Променљив"
 msgid "Shaded"
 msgstr "Смотан"
 
-#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:731
+#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:752
 #: src/modules/quickaccess/e_mod_config.c:342
 msgid "Skip Taskbar"
 msgstr "Прескочи траку списка процеса"
 
-#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:728
+#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:749
 #: src/modules/quickaccess/e_mod_config.c:345
 msgid "Skip Pager"
 msgstr "Не приказуј у страничнику"
@@ -2604,15 +2604,15 @@ msgstr "Не приказуј у страничнику"
 msgid "Hidden"
 msgstr "Сакривен"
 
-#: src/bin/e_int_border_remember.c:89
+#: src/bin/e_int_border_remember.c:91
 msgid "Window Remember"
 msgstr "Памти прозор"
 
-#: src/bin/e_int_border_remember.c:301
+#: src/bin/e_int_border_remember.c:311
 msgid "Window properties are not a unique match"
 msgstr "Поставке прозора се не слажу јединствено"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:314
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -2636,11 +2636,11 @@ msgstr ""
 "Притисните<hilight>Откажи</hilight>ако <br>нисте сигурни и ништа се неће "
 "променити."
 
-#: src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_remember.c:511
 msgid "No match properties set"
 msgstr "Нису дате поставке поклапања"
 
-#: src/bin/e_int_border_remember.c:501
+#: src/bin/e_int_border_remember.c:514
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window <hilight>without "
@@ -2652,86 +2652,91 @@ msgstr ""
 "како да их запамти</hilight>.<br><br>Морате одредити најмање 1 особину за "
 "памћење овог прозора."
 
-#: src/bin/e_int_border_remember.c:601
+#: src/bin/e_int_border_remember.c:619
 msgid "Nothing"
 msgstr "Ништа"
 
-#: src/bin/e_int_border_remember.c:603
+#: src/bin/e_int_border_remember.c:621
 msgid "Size and Position"
 msgstr "Величина и положај"
 
-#: src/bin/e_int_border_remember.c:607
+#: src/bin/e_int_border_remember.c:625
 msgid "Size, Position and Locks"
 msgstr "Величина, положај и закључавања"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
+#: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
 msgid "All"
 msgstr "Све"
 
-#: src/bin/e_int_border_remember.c:627
+#: src/bin/e_int_border_remember.c:645
 msgid "Window name"
 msgstr "Име прозора"
 
-#: src/bin/e_int_border_remember.c:639
+#: src/bin/e_int_border_remember.c:657
 msgid "Window class"
 msgstr "Разред прозора"
 
-#: src/bin/e_int_border_remember.c:663
+#: src/bin/e_int_border_remember.c:681
 msgid "Window Role"
 msgstr "Улога прозора"
 
-#: src/bin/e_int_border_remember.c:675
+#: src/bin/e_int_border_remember.c:693
 msgid "Window type"
 msgstr "Врста прозора"
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:701
 msgid "wildcard matches are allowed"
 msgstr "поклапање џокер знакова је дозвољено"
 
-#: src/bin/e_int_border_remember.c:685
+#: src/bin/e_int_border_remember.c:703
 msgid "Transience"
 msgstr "Несталност"
 
-#: src/bin/e_int_border_remember.c:688
+#: src/bin/e_int_border_remember.c:706
 msgid "Identifiers"
 msgstr "Показатељи"
 
-#: src/bin/e_int_border_remember.c:707
+#: src/bin/e_int_border_remember.c:725
 msgid "Icon Preference"
 msgstr "Поставке икона"
 
-#: src/bin/e_int_border_remember.c:713
+#: src/bin/e_int_border_remember.c:731
+#: src/modules/conf_display/e_int_config_desklock.c:278
+msgid "Keyboard Layout"
+msgstr "Распоред тастатуре"
+
+#: src/bin/e_int_border_remember.c:734
 msgid "Virtual Desktop"
 msgstr "Нестварна радна површ"
 
-#: src/bin/e_int_border_remember.c:722
+#: src/bin/e_int_border_remember.c:743
 msgid "Current Screen"
 msgstr "Садашњи екран"
 
-#: src/bin/e_int_border_remember.c:725
+#: src/bin/e_int_border_remember.c:746
 msgid "Skip Window List"
 msgstr "Прескочи списак прозора"
 
-#: src/bin/e_int_border_remember.c:737
+#: src/bin/e_int_border_remember.c:758
 msgid "Application file or name (.desktop)"
 msgstr "Датотека или назив програма (.desktop)"
 
-#: src/bin/e_int_border_remember.c:745
+#: src/bin/e_int_border_remember.c:766
 msgid "Match only one window"
 msgstr "Пореди само са једним прозором"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:770
 msgid "Always focus on start"
 msgstr "Увек у жижи на покретању"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:774
 msgid "Keep current properties"
 msgstr "Задржавај садашње поставке"
 
-#: src/bin/e_int_border_remember.c:759
+#: src/bin/e_int_border_remember.c:780
 msgid "Start this program on login"
 msgstr "Покрени овај програм при пријави"
 
@@ -2743,7 +2748,7 @@ msgstr "Алатке"
 #: src/modules/everything/evry_plug_files.c:1335
 #: src/modules/everything/evry_plug_files.c:1348
 #: src/modules/everything/evry_plug_files.c:1566
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:56
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:55
 msgid "Files"
 msgstr "Датотеке"
 
@@ -2810,7 +2815,7 @@ msgstr "Садржај траке алата"
 msgid "Toolbar Settings"
 msgstr "Поставке траке са алатима"
 
-#: src/bin/e_int_toolbar_config.c:81
+#: src/bin/e_int_toolbar_config.c:81 src/modules/xkbswitch/e_mod_config.c:337
 msgid "Layout"
 msgstr "Распоред"
 
@@ -2875,7 +2880,7 @@ msgid "About Theme"
 msgstr "О теми"
 
 #: src/bin/e_int_menus.c:263
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:313
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Добродошли у Просвећење"
@@ -3827,7 +3832,7 @@ msgid "Rename Shelf"
 msgstr "Преименуј полицу"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
 msgid "Contents"
 msgstr "Садржаји"
 
@@ -3840,7 +3845,7 @@ msgid "Autohide"
 msgstr "Сам сакриј"
 
 #: src/bin/e_shelf.c:2533
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:351
 msgid "Refresh"
 msgstr "Освежи"
 
@@ -4276,19 +4281,19 @@ msgstr[2] "%li минута"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:291
 msgid "Add"
 msgstr "Додај"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:350
-#: src/modules/xkbswitch/e_mod_config.c:250
+#: src/modules/xkbswitch/e_mod_config.c:279
 msgid "Up"
 msgstr "Горе"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:354
-#: src/modules/xkbswitch/e_mod_config.c:256
+#: src/modules/xkbswitch/e_mod_config.c:285
 msgid "Down"
 msgstr "Доле"
 
@@ -5055,10 +5060,6 @@ msgstr "Користи прилагођену наредбу закључава�
 msgid "Locking"
 msgstr "Закључавање"
 
-#: src/modules/conf_display/e_int_config_desklock.c:278
-msgid "Keyboard Layout"
-msgstr "Распоред тастатуре"
-
 #: src/modules/conf_display/e_int_config_desklock.c:284
 msgid "Show on all screens"
 msgstr "Прикажи на свим екранима"
@@ -5205,7 +5206,7 @@ msgid "%1.1f second(s)"
 msgstr "%1.1f секунд(и)"
 
 #: src/modules/conf_display/e_mod_main.c:21
-#: src/modules/tiling/e_mod_config.c:198
+#: src/modules/tiling/e_mod_config.c:201
 msgid "Virtual Desktops"
 msgstr "Нестварне радне површи"
 
@@ -5802,7 +5803,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:440
+#: src/modules/notification/e_mod_main.c:444
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5904,65 +5905,65 @@ msgstr ""
 "Низ дугмади пречице који сте изабрали је већ у употреби за <br><hilight>%s</"
 "hilight> радњу.<br>Молим, изаберите други низ дугмади за пречицу."
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:109
 msgid "WINDOW"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:145
 #: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "Наредни прозор"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:183
 msgid "SYSTEM"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:184
 #, fuzzy
 msgid "Open Terminology"
 msgstr "Овде отвори терминал"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:212
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
 msgid "System Controls"
 msgstr "Управљачи система"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:222
 msgid "DESKTOP"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:297
 msgid "MISCELLANEOUS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:299
 #: src/modules/everything/e_mod_main.c:605
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "Покретач"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
 #: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
 #: src/modules/shot/e_mod_main.c:1313
 msgid "Take Screenshot"
 msgstr "Направи снимак екрана"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:320
 #, fuzzy
 msgid "Terminal Console"
 msgstr "Наредба терминала"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:327
 #, fuzzy
 msgid "This Help"
 msgstr "ова површ"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 #, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Пречице миша"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
 msgid "Edit"
 msgstr "Уреди"
 
@@ -6142,7 +6143,7 @@ msgstr "Примедбе"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:329
 msgid "Gadgets"
 msgstr "Справице"
 
@@ -7117,7 +7118,7 @@ msgid "Assign"
 msgstr "Додели"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:430
+#: src/modules/notification/e_mod_main.c:434
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Очисти"
@@ -7599,7 +7600,7 @@ msgstr "Промени величину за"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:397
+#: src/modules/xkbswitch/e_mod_main.c:410
 msgid "Keyboard"
 msgstr "Тастатура"
 
@@ -8920,31 +8921,31 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Да ли сте сигурни да желите избрисати овај извор траке?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2887
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "IBar"
 msgstr "Tрака"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
 msgid "Create new Icon"
 msgstr "Прави нову икону"
 
-#: src/modules/ibar/e_mod_main.c:1588
+#: src/modules/ibar/e_mod_main.c:1594
 #, fuzzy
 msgid "Add to bar"
 msgstr "Додај у Tраку"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1600
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Уклони стог"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1606
 #, c-format
 msgid "Icon %s"
 msgstr "Икона %s"
 
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "Focus IBar"
 msgstr "Узми Tраку у жижу"
 
@@ -9922,7 +9923,7 @@ msgstr "Прикажи наслове прозора"
 msgid "Key hints"
 msgstr "Кључни савети"
 
-#: src/modules/tiling/e_mod_config.c:200
+#: src/modules/tiling/e_mod_config.c:198
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 "Број коришћених колона за поплочавање по радном простору (0 → поплочавање "
@@ -10006,41 +10007,50 @@ msgstr "Пошаљи у доњи десни угао"
 msgid "Send to lower left corner"
 msgstr "Пошаљи у доњи леви угао"
 
-#: src/modules/xkbswitch/e_mod_config.c:73
+#: src/modules/xkbswitch/e_mod_config.c:74
 msgid "Keyboard Settings"
 msgstr "Поставке тастатуре"
 
-#: src/modules/xkbswitch/e_mod_config.c:276
+#: src/modules/xkbswitch/e_mod_config.c:305
 msgid "Configurations"
 msgstr "Поставке"
 
-#: src/modules/xkbswitch/e_mod_config.c:285
+#: src/modules/xkbswitch/e_mod_config.c:314
 msgid "Models"
 msgstr "Модели"
 
-#: src/modules/xkbswitch/e_mod_config.c:300
+#: src/modules/xkbswitch/e_mod_config.c:331
 msgid "Label only"
 msgstr "Само ознаке"
 
-#: src/modules/xkbswitch/e_mod_config.c:483
+#: src/modules/xkbswitch/e_mod_config.c:340
+msgid "Global"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:342
+#, fuzzy
+msgid "Per Application"
+msgstr "Програм"
+
+#: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
 msgstr "Додај нову поставку"
 
-#: src/modules/xkbswitch/e_mod_config.c:496
+#: src/modules/xkbswitch/e_mod_config.c:536
 msgid "Available"
 msgstr "Доступно"
 
-#: src/modules/xkbswitch/e_mod_config.c:503
+#: src/modules/xkbswitch/e_mod_config.c:543
 msgid "Model"
 msgstr "Модел"
 
-#: src/modules/xkbswitch/e_mod_config.c:510
+#: src/modules/xkbswitch/e_mod_config.c:550
 msgid "Variant"
 msgstr "Подврста"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:274
-#: src/modules/notification/e_mod_main.c:370
+#: src/modules/notification/e_mod_main.c:278
+#: src/modules/notification/e_mod_main.c:374
 msgid "Notification"
 msgstr "Обавештења"
 
@@ -10062,33 +10072,33 @@ msgstr ""
 "Грешка приликом покретања Д-сабирнице! Молим, проверите да ли је dbus "
 "правилно уграђен, и у погону."
 
-#: src/modules/notification/e_mod_main.c:422
+#: src/modules/notification/e_mod_main.c:426
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:627
 msgid "Enter Presentation Mode"
 msgstr "Покрени начин рада излагање"
 
-#: src/modules/notification/e_mod_main.c:624
+#: src/modules/notification/e_mod_main.c:628
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:632
 msgid "Exited Presentation Mode"
 msgstr "Изашао сам из начина рада излагања"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:633
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Прекидач начина рада излагања"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:647
 msgid "Enter Offline Mode"
 msgstr "Покрени рад ван мреже"
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:648
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -10096,11 +10106,11 @@ msgstr ""
 "Просвећење је у стању <b>ван мреже</b>. <br>За време рада ван мреже, "
 "јединице које користе мрежу ће обуставити добављање удаљених услуга."
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:654
 msgid "Exited Offline Mode"
 msgstr "Изишао сам из рада ван мреже"
 
-#: src/modules/notification/e_mod_main.c:651
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10108,7 +10118,7 @@ msgstr ""
 "Сада сам у стању <b>на мрежи</b>. Јединице<br>које користе мрежу ће "
 "наставити са редовним задацима."
 
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:713
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Обавештења"
@@ -10420,8 +10430,8 @@ msgstr "Датотеке"
 msgid "Temp"
 msgstr ""
 
-#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
+#: src/modules/places/e_mod_main.c:310 src/modules/places/e_mod_places.c:360
 #: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 #, fuzzy
 msgid "Places"
@@ -10436,7 +10446,7 @@ msgstr "Прикажи упозорење кад је батерија праз�
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:417
+#: src/modules/places/e_mod_main.c:409
 #, fuzzy
 msgid "Places Configuration Updated"
 msgstr "%s поставки је освежено"

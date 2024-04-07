@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-02-04 10:03+0100\n"
+"POT-Creation-Date: 2024-04-07 12:09+0200\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -36,7 +36,7 @@ msgstr "Pri Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -54,7 +54,7 @@ msgstr "Moksha"
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr "Ĉu vi ceste volas mortigi ĉi tiun fenestron?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
 msgstr "Mortigi"
 
@@ -181,7 +181,7 @@ msgid "Menu"
 msgstr "Menuo"
 
 #: src/bin/e_actions.c:3139
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Menuo de fenestro"
 
@@ -216,7 +216,7 @@ msgid "Sticky Mode Enable"
 msgstr "Fiksa reĝimo enŝaltita"
 
 #: src/bin/e_actions.c:3176
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Ĉiam supre"
@@ -232,7 +232,7 @@ msgid "Always On Top Disable"
 msgstr "Ĉiam supre"
 
 #: src/bin/e_actions.c:3189
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Baskulo de piktograma reĝimo"
 
@@ -241,7 +241,7 @@ msgid "Iconic Mode Enable"
 msgstr "Piktograma reĝimo enŝaltita"
 
 #: src/bin/e_actions.c:3198
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Baskulo de plenekrana reĝimo"
 
@@ -251,7 +251,7 @@ msgstr "Plenekrana reĝimo enŝaltita"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Maksimumigi"
 
@@ -264,12 +264,12 @@ msgid "Maximize Horizontally"
 msgstr "Maksimumigi horizontale"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 msgid "Maximize Left"
 msgstr "Maksimumigi maldekstren"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 msgid "Maximize Right"
 msgstr "Maksimumigi dekstren"
 
@@ -381,7 +381,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Renversi antaŭan labortabon"
 
 #: src/bin/e_actions.c:3293
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Montri la labortablon"
 
@@ -398,47 +398,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Renversi labortabon linie..."
 
 #: src/bin/e_actions.c:3316
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Ŝalti al la labortablo 0"
 
 #: src/bin/e_actions.c:3318
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Ŝalti al la labortablo 1"
 
 #: src/bin/e_actions.c:3320
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Ŝalti al la labortablo 2"
 
 #: src/bin/e_actions.c:3322
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Ŝalti al la labortablo 3"
 
 #: src/bin/e_actions.c:3324
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Ŝalti al la labortablo 4"
 
 #: src/bin/e_actions.c:3326
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Ŝalti al la labortablo 5"
 
 #: src/bin/e_actions.c:3328
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Ŝalti al la labortablo 6"
 
 #: src/bin/e_actions.c:3330
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Ŝalti al la labortablo 7"
 
 #: src/bin/e_actions.c:3332
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Ŝalti al la labortablo 8"
 
@@ -685,12 +685,12 @@ msgid "To Previous Screen"
 msgstr "Al antaŭa ekrano"
 
 #: src/bin/e_actions.c:3516
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Montri ĉefan menuon"
 
 #: src/bin/e_actions.c:3518
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Montri menuon de preferatoj"
 
@@ -803,7 +803,7 @@ msgid "Hibernate Now"
 msgstr "Pasivumigi nun"
 
 #: src/bin/e_actions.c:3616
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Ŝlosi"
 
@@ -872,11 +872,11 @@ msgstr "Elekti"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
 #: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Nuligi"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:959
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -894,7 +894,7 @@ msgstr ""
 "en. Vi povas agordi de nove aferojn aktuale laŭ via<br>ŝato. Pardonon pro la "
 "momenta problemeto en via agordo.<br>"
 
-#: src/bin/e_config.c:971
+#: src/bin/e_config.c:976
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -908,11 +908,11 @@ msgstr ""
 "malbone kaj<br>kiel antaŭ­zorgo via agordo estis restaŭrita per aprioroj."
 "<br>Bonvole pardonu por la ĝeno.<br>"
 
-#: src/bin/e_config.c:1565 src/bin/e_config.c:2190
+#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
 msgid "Moksha Settings Write Problems"
 msgstr "Problemoj de skribado de agordoj de Moksha"
 
-#: src/bin/e_config.c:1568
+#: src/bin/e_config.c:1573
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -921,38 +921,38 @@ msgstr ""
 "Moksha ricevis eraron dum movado de dosieroj<br>el:<br>%s<br><br>al:<br>"
 "%s<br><br>La cetero de skribo estis sekure ĉesigita.<br>"
 
-#: src/bin/e_config.c:1578 src/bin/e_config.c:2203
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
-#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
+#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:349
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:528
+#: src/modules/xkbswitch/e_mod_config.c:568
 msgid "OK"
 msgstr "Bone"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2086
 msgid "Settings Upgraded"
 msgstr "Agordoj ĝisdatigitaj"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2104
 msgid "The EET file handle is bad."
 msgstr "La priskribo de EET-dosiero nekorektas."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2108
 msgid "The file data is empty."
 msgstr "La datumo de dosiero malplenas."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2112
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -960,15 +960,15 @@ msgstr ""
 "La dosiero ne skribeblas. Eble la disko estas nurlega<br>aŭ vi perdis "
 "permesojn por viaj dosieroj."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2116
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Memoro ne sufiĉas por skribi.<br>Bonvole liberigu memoron."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2120
 msgid "This is a generic error."
 msgstr "Tio estas komuna eraro."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2124
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -976,60 +976,60 @@ msgstr ""
 "La dosiero de agordoj tro grandas.<br>Tio estus tre malpeza (kelkaj centoj "
 "da KB maksimume)."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2128
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "Vi havis erarojn de en/eligo sur la disko.<br>Ĉu vi eble bezonas anstatŭigon?"
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2132
 msgid "You ran out of space while writing the file."
 msgstr "Vi atingis limon de spaco dum skribado de dosiero."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2136
 msgid "The file was closed while writing."
 msgstr "La dosiero estis fermita dum skribado."
 
-#: src/bin/e_config.c:2135
+#: src/bin/e_config.c:2140
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Mapigo de memoro (mmap) de la dosiero fiaskis."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2144
 msgid "X509 Encoding failed."
 msgstr "Kodado de X509 fiaskis."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2148
 msgid "Signature failed."
 msgstr "Subskribo fiaskis."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2152
 msgid "The signature was invalid."
 msgstr "Subskribo nevalidas."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2156
 msgid "Not signed."
 msgstr "Ne subskribata."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2160
 msgid "Feature not implemented."
 msgstr "Trajto ne realigita."
 
-#: src/bin/e_config.c:2159
+#: src/bin/e_config.c:2164
 msgid "PRNG was not seeded."
 msgstr "Kkvazaŭstokasta nombro ne kreeblas."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2168
 msgid "Encryption failed."
 msgstr "Ĉifrado fiaskis."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2172
 msgid "Decryption failed."
 msgstr "Malĉifrado fiaskis."
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2176
 msgid "The error is unknown to Moksha."
 msgstr "Ĉi tiu eraro ne estas konata de Moksha."
 
-#: src/bin/e_config.c:2193
+#: src/bin/e_config.c:2198
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1240,7 +1240,7 @@ msgid "Show in Menus"
 msgstr "Montri en menuoj"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
-#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Elektebloj"
@@ -1558,8 +1558,8 @@ msgstr "Surmeti"
 msgid "Eject"
 msgstr "Elĵeti"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1581
+#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/modules/ibar/e_mod_main.c:1587
 msgid "Properties"
 msgstr "Ecoj"
 
@@ -1719,7 +1719,7 @@ msgstr "Ne por ĉiuj"
 msgid "Yes to all"
 msgstr "Jes por ĉiuj"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Averto"
@@ -1942,7 +1942,7 @@ msgstr "Aspekto"
 #: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058
-#: src/modules/xkbswitch/e_mod_config.c:267
+#: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Remove"
 msgstr "Forigi"
 
@@ -2112,12 +2112,12 @@ msgid "Prevent Changes In:"
 msgstr "Preventi ŝanĝojn en:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
+#: src/bin/e_int_border_remember.c:710 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Pozicio"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
+#: src/bin/e_int_border_remember.c:713 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:294
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2126,7 +2126,7 @@ msgstr "Grando"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
+#: src/bin/e_int_border_remember.c:716 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Stako"
@@ -2136,12 +2136,12 @@ msgid "Iconified state"
 msgstr "Piktogramigita stato"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:710
+#: src/bin/e_int_border_remember.c:728
 msgid "Stickiness"
 msgstr "Fikseco"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:716
+#: src/bin/e_int_border_remember.c:737
 msgid "Shaded state"
 msgstr "Ombra stato"
 
@@ -2150,7 +2150,7 @@ msgid "Maximized state"
 msgstr "Maksimumiga stato"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_remember.c:719
+#: src/bin/e_int_border_remember.c:740
 msgid "Fullscreen state"
 msgstr "Plenekrana stato"
 
@@ -2158,7 +2158,7 @@ msgstr "Plenekrana stato"
 msgid "Program Locks"
 msgstr "Ŝlosoj de programaroj"
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:704
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:722
 msgid "Border style"
 msgstr "Stilo de randoj"
 
@@ -2258,8 +2258,8 @@ msgstr "Preterpasi"
 msgid "Border"
 msgstr "Rando"
 
-#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
-#: src/bin/e_int_border_remember.c:701
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:623
+#: src/bin/e_int_border_remember.c:719
 msgid "Locks"
 msgstr "Ŝlosoj"
 
@@ -2314,7 +2314,7 @@ msgstr "Uzi piktogramon provizatan de aplikaĵo"
 msgid "Use User Defined Icon"
 msgstr "Uzi piktogramon difinitan de uzanto"
 
-#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:755
 msgid "Offer Resistance"
 msgstr "Krei rezistadon"
 
@@ -2454,7 +2454,7 @@ msgstr "Ecoj de NetWM"
 msgid "ICCCM"
 msgstr "ICCCM"
 
-#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
+#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:669
 msgid "Title"
 msgstr "Titolo"
 
@@ -2564,17 +2564,17 @@ msgstr "Peti pozicion"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:357
-#: src/modules/xkbswitch/e_mod_main.c:398
-#: src/modules/notification/e_mod_main.c:339
-#: src/modules/notification/e_mod_main.c:453
+#: src/modules/xkbswitch/e_mod_main.c:370
+#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/notification/e_mod_main.c:343
+#: src/modules/notification/e_mod_main.c:457
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "Agordoj"
 
@@ -2586,12 +2586,12 @@ msgstr "Modala"
 msgid "Shaded"
 msgstr "Ombrigita"
 
-#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:731
+#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:752
 #: src/modules/quickaccess/e_mod_config.c:342
 msgid "Skip Taskbar"
 msgstr "Preterpasi taskopleton"
 
-#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:728
+#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:749
 #: src/modules/quickaccess/e_mod_config.c:345
 msgid "Skip Pager"
 msgstr "Preterpasi paĝilon"
@@ -2600,15 +2600,15 @@ msgstr "Preterpasi paĝilon"
 msgid "Hidden"
 msgstr "Kaŝita"
 
-#: src/bin/e_int_border_remember.c:89
+#: src/bin/e_int_border_remember.c:91
 msgid "Window Remember"
 msgstr "Memorigo de fenestro"
 
-#: src/bin/e_int_border_remember.c:301
+#: src/bin/e_int_border_remember.c:311
 msgid "Window properties are not a unique match"
 msgstr "Ecoj de fenestro ne estas sola kongruo"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:314
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -2632,11 +2632,11 @@ msgstr ""
 "Alklaku <hilight>Nuligi</hilight> se vi<br>ne certas kaj nenio estos "
 "influita."
 
-#: src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_remember.c:511
 msgid "No match properties set"
 msgstr "Neniu eco de kongruo agordita"
 
-#: src/bin/e_int_border_remember.c:501
+#: src/bin/e_int_border_remember.c:514
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window <hilight>without "
@@ -2648,86 +2648,91 @@ msgstr ""
 "memorigi ilin</hilight>.<br><br>Vi specifu almenaŭ 1 manieron por memorigi "
 "ĉi tiun fenestron."
 
-#: src/bin/e_int_border_remember.c:601
+#: src/bin/e_int_border_remember.c:619
 msgid "Nothing"
 msgstr "Nenio"
 
-#: src/bin/e_int_border_remember.c:603
+#: src/bin/e_int_border_remember.c:621
 msgid "Size and Position"
 msgstr "Grando kaj pozicio"
 
-#: src/bin/e_int_border_remember.c:607
+#: src/bin/e_int_border_remember.c:625
 msgid "Size, Position and Locks"
 msgstr "Grando, pozicio kaj ŝlosoj"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
+#: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
 msgid "All"
 msgstr "Ĉiuj"
 
-#: src/bin/e_int_border_remember.c:627
+#: src/bin/e_int_border_remember.c:645
 msgid "Window name"
 msgstr "Nomo de fenestro"
 
-#: src/bin/e_int_border_remember.c:639
+#: src/bin/e_int_border_remember.c:657
 msgid "Window class"
 msgstr "Klaso de fenestro"
 
-#: src/bin/e_int_border_remember.c:663
+#: src/bin/e_int_border_remember.c:681
 msgid "Window Role"
 msgstr "Rolo de fenestro"
 
-#: src/bin/e_int_border_remember.c:675
+#: src/bin/e_int_border_remember.c:693
 msgid "Window type"
 msgstr "Speco de fenestro"
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:701
 msgid "wildcard matches are allowed"
 msgstr "ajnaj kongruoj estas permesitaj"
 
-#: src/bin/e_int_border_remember.c:685
+#: src/bin/e_int_border_remember.c:703
 msgid "Transience"
 msgstr "Forpasemo"
 
-#: src/bin/e_int_border_remember.c:688
+#: src/bin/e_int_border_remember.c:706
 msgid "Identifiers"
 msgstr "Identigiloj"
 
-#: src/bin/e_int_border_remember.c:707
+#: src/bin/e_int_border_remember.c:725
 msgid "Icon Preference"
 msgstr "Agordoj de piktogramo"
 
-#: src/bin/e_int_border_remember.c:713
+#: src/bin/e_int_border_remember.c:731
+#: src/modules/conf_display/e_int_config_desklock.c:278
+msgid "Keyboard Layout"
+msgstr "Klavararanĝo"
+
+#: src/bin/e_int_border_remember.c:734
 msgid "Virtual Desktop"
 msgstr "Virtuala labortablo"
 
-#: src/bin/e_int_border_remember.c:722
+#: src/bin/e_int_border_remember.c:743
 msgid "Current Screen"
 msgstr "Aktuala ekrano"
 
-#: src/bin/e_int_border_remember.c:725
+#: src/bin/e_int_border_remember.c:746
 msgid "Skip Window List"
 msgstr "Forigi el listo de fenstroj"
 
-#: src/bin/e_int_border_remember.c:737
+#: src/bin/e_int_border_remember.c:758
 msgid "Application file or name (.desktop)"
 msgstr "Dosiero aŭ nomo de aplikaĵo (.desktop)"
 
-#: src/bin/e_int_border_remember.c:745
+#: src/bin/e_int_border_remember.c:766
 msgid "Match only one window"
 msgstr "Kongrui nur unu fenestron"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:770
 msgid "Always focus on start"
 msgstr "Ĉiam fokusigi je komenco"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:774
 msgid "Keep current properties"
 msgstr "Manteni aktualajn ecojn"
 
-#: src/bin/e_int_border_remember.c:759
+#: src/bin/e_int_border_remember.c:780
 msgid "Start this program on login"
 msgstr "Startigi ĉi tiun programaron je ensaluto"
 
@@ -2739,7 +2744,7 @@ msgstr "Utilaĵoj"
 #: src/modules/everything/evry_plug_files.c:1335
 #: src/modules/everything/evry_plug_files.c:1348
 #: src/modules/everything/evry_plug_files.c:1566
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:56
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:55
 msgid "Files"
 msgstr "Dosieroj"
 
@@ -2806,7 +2811,7 @@ msgstr "Enhavo de ilobreto"
 msgid "Toolbar Settings"
 msgstr "Agordoj de ilobreto"
 
-#: src/bin/e_int_toolbar_config.c:81
+#: src/bin/e_int_toolbar_config.c:81 src/modules/xkbswitch/e_mod_config.c:337
 msgid "Layout"
 msgstr "Aranĝo"
 
@@ -2871,7 +2876,7 @@ msgid "About Theme"
 msgstr "Pri ĉi tiu etoso"
 
 #: src/bin/e_int_menus.c:263
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:313
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Bonvenon en Moksha"
@@ -3817,7 +3822,7 @@ msgid "Rename Shelf"
 msgstr "Alinomi breton"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
 msgid "Contents"
 msgstr "Enhavo"
 
@@ -3830,7 +3835,7 @@ msgid "Autohide"
 msgstr "Aŭtomate kaŝi"
 
 #: src/bin/e_shelf.c:2533
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:351
 msgid "Refresh"
 msgstr "Aktualigi"
 
@@ -4251,19 +4256,19 @@ msgstr[1] "%li minutoj"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:291
 msgid "Add"
 msgstr "Aldoni"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:350
-#: src/modules/xkbswitch/e_mod_config.c:250
+#: src/modules/xkbswitch/e_mod_config.c:279
 msgid "Up"
 msgstr "Supren"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:354
-#: src/modules/xkbswitch/e_mod_config.c:256
+#: src/modules/xkbswitch/e_mod_config.c:285
 msgid "Down"
 msgstr "Suben"
 
@@ -5032,10 +5037,6 @@ msgstr "Uzi propran komandon de enkranŝloso"
 msgid "Locking"
 msgstr "Ŝlosado"
 
-#: src/modules/conf_display/e_int_config_desklock.c:278
-msgid "Keyboard Layout"
-msgstr "Klavararanĝo"
-
 #: src/modules/conf_display/e_int_config_desklock.c:284
 msgid "Show on all screens"
 msgstr "Montri en ĉiuj ekranoj"
@@ -5182,7 +5183,7 @@ msgid "%1.1f second(s)"
 msgstr "%1.1f sekundo(j)"
 
 #: src/modules/conf_display/e_mod_main.c:21
-#: src/modules/tiling/e_mod_config.c:198
+#: src/modules/tiling/e_mod_config.c:201
 msgid "Virtual Desktops"
 msgstr "Virtualaj labortabloj"
 
@@ -5772,7 +5773,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:440
+#: src/modules/notification/e_mod_main.c:444
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5866,65 +5867,65 @@ msgstr ""
 "\"<br><hilight>%s</hilight>\".<br>Bonvole elektu alian bindon de klava "
 "sekvenco."
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:109
 msgid "WINDOW"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:145
 #: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "Sekvonta Fenestro"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:183
 msgid "SYSTEM"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:184
 #, fuzzy
 msgid "Open Terminology"
 msgstr "Malfermi terminalon ĉi tie"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:212
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
 msgid "System Controls"
 msgstr "Sistemaj kontroloj"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:222
 msgid "DESKTOP"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:297
 msgid "MISCELLANEOUS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:299
 #: src/modules/everything/e_mod_main.c:605
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "Lanĉilo"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
 #: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
 #: src/modules/shot/e_mod_main.c:1313
 msgid "Take Screenshot"
 msgstr "Krei ekrankopion"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:320
 #, fuzzy
 msgid "Terminal Console"
 msgstr "Terminala komando"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:327
 #, fuzzy
 msgid "This Help"
 msgstr "Ĉi tiu labortablo"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 #, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Musaj bindoj"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
 msgid "Edit"
 msgstr "Redakti"
 
@@ -6102,7 +6103,7 @@ msgstr "Komentoj"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:329
 msgid "Gadgets"
 msgstr "Akcesoraĵoj"
 
@@ -7074,7 +7075,7 @@ msgid "Assign"
 msgstr ""
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:430
+#: src/modules/notification/e_mod_main.c:434
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr ""
@@ -7555,7 +7556,7 @@ msgstr "Regrandigi per"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:397
+#: src/modules/xkbswitch/e_mod_main.c:410
 msgid "Keyboard"
 msgstr "Klavaro"
 
@@ -8865,29 +8866,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ĉu vi certas, ke vi deziras forigi tiun bar-fonton?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2887
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
 msgid "Create new Icon"
 msgstr "Krei novan piktogramon"
 
-#: src/modules/ibar/e_mod_main.c:1588
+#: src/modules/ibar/e_mod_main.c:1594
 msgid "Add to bar"
 msgstr "Aldoni en breton"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1600
 msgid "Remove from bar"
 msgstr "Forigi el breto"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1606
 #, c-format
 msgid "Icon %s"
 msgstr "Piktogramo %s"
 
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "Focus IBar"
 msgstr ""
 
@@ -9818,7 +9819,7 @@ msgstr "Montri titolon de fenestroj"
 msgid "Key hints"
 msgstr "Klavaj helpindikiloj"
 
-#: src/modules/tiling/e_mod_config.c:200
+#: src/modules/tiling/e_mod_config.c:198
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 
@@ -9900,41 +9901,50 @@ msgstr "Sendi en la subodekstra angulo"
 msgid "Send to lower left corner"
 msgstr "Sendi en la subomaldekstra angulo"
 
-#: src/modules/xkbswitch/e_mod_config.c:73
+#: src/modules/xkbswitch/e_mod_config.c:74
 msgid "Keyboard Settings"
 msgstr "Agordoj de klavaro"
 
-#: src/modules/xkbswitch/e_mod_config.c:276
+#: src/modules/xkbswitch/e_mod_config.c:305
 msgid "Configurations"
 msgstr "Konfiguraĵoj"
 
-#: src/modules/xkbswitch/e_mod_config.c:285
+#: src/modules/xkbswitch/e_mod_config.c:314
 msgid "Models"
 msgstr "Modeloj"
 
-#: src/modules/xkbswitch/e_mod_config.c:300
+#: src/modules/xkbswitch/e_mod_config.c:331
 msgid "Label only"
 msgstr ""
 
-#: src/modules/xkbswitch/e_mod_config.c:483
+#: src/modules/xkbswitch/e_mod_config.c:340
+msgid "Global"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:342
+#, fuzzy
+msgid "Per Application"
+msgstr "Aplikaĵo"
+
+#: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
 msgstr "Aldoni novajn agordojn"
 
-#: src/modules/xkbswitch/e_mod_config.c:496
+#: src/modules/xkbswitch/e_mod_config.c:536
 msgid "Available"
 msgstr "Disponebla"
 
-#: src/modules/xkbswitch/e_mod_config.c:503
+#: src/modules/xkbswitch/e_mod_config.c:543
 msgid "Model"
 msgstr "Modelo"
 
-#: src/modules/xkbswitch/e_mod_config.c:510
+#: src/modules/xkbswitch/e_mod_config.c:550
 msgid "Variant"
 msgstr "Variaĵo"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:274
-#: src/modules/notification/e_mod_main.c:370
+#: src/modules/notification/e_mod_main.c:278
+#: src/modules/notification/e_mod_main.c:374
 msgid "Notification"
 msgstr "Sciigo"
 
@@ -9953,33 +9963,33 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:422
+#: src/modules/notification/e_mod_main.c:426
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:627
 msgid "Enter Presentation Mode"
 msgstr "Startigi la prezentan reĝimon"
 
-#: src/modules/notification/e_mod_main.c:624
+#: src/modules/notification/e_mod_main.c:628
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:632
 msgid "Exited Presentation Mode"
 msgstr "Prezentada reĝimo finiĝis"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:633
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Baskulo de prezenta reĝimo"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:647
 msgid "Enter Offline Mode"
 msgstr "Ekigi senretan reĝimon"
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:648
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9987,11 +9997,11 @@ msgstr ""
 "Moksha nun estas en <b>senreta</b> reĝimo.<br>Dum senreta reĝimo, moduloj "
 "kiuj uzas reton ĉesos vokado de foraj servoj."
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:654
 msgid "Exited Offline Mode"
 msgstr "Senreta reĝimo finiĝis"
 
-#: src/modules/notification/e_mod_main.c:651
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -9999,7 +10009,7 @@ msgstr ""
 "Nun en <b>senreta</b> reĝimo.<br>Nun moduloj kiuj uzas reton daŭrigos "
 "ordinarajn taskojn."
 
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:713
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Sciigo"
@@ -10301,8 +10311,8 @@ msgstr "Dosiersistemo"
 msgid "Temp"
 msgstr "Provizora"
 
-#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
+#: src/modules/places/e_mod_main.c:310 src/modules/places/e_mod_places.c:360
 #: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "Ejoj"
@@ -10316,7 +10326,7 @@ msgstr "Montri averton de malalta bateria nivelo"
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:417
+#: src/modules/places/e_mod_main.c:409
 msgid "Places Configuration Updated"
 msgstr "La agordoj de Ejoj estas ĝisdatigitaj"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-02-04 10:03+0100\n"
+"POT-Creation-Date: 2024-04-07 12:09+0200\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -27,7 +27,7 @@ msgstr "Om Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -45,7 +45,7 @@ msgstr "Moksha"
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr "Är du säker på att du vill döda det här fönstret?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
 msgstr "Döda"
 
@@ -181,7 +181,7 @@ msgid "Menu"
 msgstr "Meny"
 
 #: src/bin/e_actions.c:3139
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Fönstermeny"
 
@@ -217,7 +217,7 @@ msgid "Sticky Mode Enable"
 msgstr "Gör klibbig"
 
 #: src/bin/e_actions.c:3176
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Alltid överst"
@@ -233,7 +233,7 @@ msgid "Always On Top Disable"
 msgstr "Alltid överst"
 
 #: src/bin/e_actions.c:3189
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Minimera"
 
@@ -243,7 +243,7 @@ msgid "Iconic Mode Enable"
 msgstr "Minimera"
 
 #: src/bin/e_actions.c:3198
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Aktivera helskärmsläge"
 
@@ -254,7 +254,7 @@ msgstr "Aktivera helskärmsläge"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Maximera"
 
@@ -267,13 +267,13 @@ msgid "Maximize Horizontally"
 msgstr "Maximera horisontalt"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 #, fuzzy
 msgid "Maximize Left"
 msgstr "Maximera"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 #, fuzzy
 msgid "Maximize Right"
 msgstr "Maximera"
@@ -396,7 +396,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Till föregående skrivbord"
 
 #: src/bin/e_actions.c:3293
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Visa skrivbordet"
 
@@ -413,47 +413,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Vänd skrivbord linjärt..."
 
 #: src/bin/e_actions.c:3316
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Byt till skrivbord 0"
 
 #: src/bin/e_actions.c:3318
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Byt till skrivbord 1"
 
 #: src/bin/e_actions.c:3320
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Byt till skrivbord 2"
 
 #: src/bin/e_actions.c:3322
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Byt till skrivbord 3"
 
 #: src/bin/e_actions.c:3324
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Byt till skrivbord 4"
 
 #: src/bin/e_actions.c:3326
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Byt till skrivbord 5"
 
 #: src/bin/e_actions.c:3328
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Byt till skrivbord 6"
 
 #: src/bin/e_actions.c:3330
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Byt till skrivbord 7"
 
 #: src/bin/e_actions.c:3332
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Byt till skrivbord 8"
 
@@ -719,12 +719,12 @@ msgid "To Previous Screen"
 msgstr "Till föregående skrivbord"
 
 #: src/bin/e_actions.c:3516
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Visa huvudmenyn"
 
 #: src/bin/e_actions.c:3518
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Visa favoritprogramsmenyn"
 
@@ -846,7 +846,7 @@ msgid "Hibernate Now"
 msgstr "Viloläge"
 
 #: src/bin/e_actions.c:3616
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Lås"
 
@@ -921,11 +921,11 @@ msgstr "Välj en"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
 #: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:959
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -936,7 +936,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:971
+#: src/bin/e_config.c:976
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -945,51 +945,51 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1565 src/bin/e_config.c:2190
+#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1568
+#: src/bin/e_config.c:1573
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1578 src/bin/e_config.c:2203
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
-#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
+#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:349
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:528
+#: src/modules/xkbswitch/e_mod_config.c:568
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2086
 msgid "Settings Upgraded"
 msgstr "Inställningar uppdaterade"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2104
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "EET filhandtag är dåligt."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2108
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Filen data är tom."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2112
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -998,17 +998,17 @@ msgstr ""
 "Filen är inte skrivbar. Kanske skivan är skrivskyddad<br>eller om du "
 "förlorat behörighet till dina filer."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2116
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Minne sprang ut medan du förbereder skriva.<br>Frigör minne."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2120
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Detta är en generisk fel."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2124
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -1017,71 +1017,71 @@ msgstr ""
 "Inställningsfilen är för stor.<br>Det bör vara mycket liten (några hundra KB "
 "som mest)."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2128
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2132
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Du sprang ut ur rummet medan du skriver filen"
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2136
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Ärendet avslutades på den medan du skriver."
 
-#: src/bin/e_config.c:2135
+#: src/bin/e_config.c:2140
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memory -mapping (mmap) för filen misslyckades."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2144
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Kodning misslyckats."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2148
 #, fuzzy
 msgid "Signature failed."
 msgstr "Signatur misslyckades."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2152
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Signaturen var ogiltigt."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2156
 #, fuzzy
 msgid "Not signed."
 msgstr "(Inga fönster)"
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2160
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Har inte genomförts."
 
-#: src/bin/e_config.c:2159
+#: src/bin/e_config.c:2164
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG inte ympades."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2168
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Kryptering misslyckades."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2172
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Beskrivning: Otillgänglig"
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2176
 #, fuzzy
 msgid "The error is unknown to Moksha."
 msgstr "Välkommen till Moksha"
 
-#: src/bin/e_config.c:2193
+#: src/bin/e_config.c:2198
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1299,7 +1299,7 @@ msgid "Show in Menus"
 msgstr "Visa i menyer"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
-#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Inställningar"
@@ -1637,8 +1637,8 @@ msgstr "Typsnitt"
 msgid "Eject"
 msgstr "mata"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1581
+#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/modules/ibar/e_mod_main.c:1587
 msgid "Properties"
 msgstr "Egenskaper"
 
@@ -1817,7 +1817,7 @@ msgstr "Nej till allt"
 msgid "Yes to all"
 msgstr "Ja till allt"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 #, fuzzy
 msgid "Warning"
@@ -2054,7 +2054,7 @@ msgstr "titta"
 #: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058
-#: src/modules/xkbswitch/e_mod_config.c:267
+#: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -2237,12 +2237,12 @@ msgid "Prevent Changes In:"
 msgstr ""
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
+#: src/bin/e_int_border_remember.c:710 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Position"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
+#: src/bin/e_int_border_remember.c:713 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:294
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2251,7 +2251,7 @@ msgstr "Storlek"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
+#: src/bin/e_int_border_remember.c:716 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Stapla"
@@ -2261,12 +2261,12 @@ msgid "Iconified state"
 msgstr "Minimerad"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:710
+#: src/bin/e_int_border_remember.c:728
 msgid "Stickiness"
 msgstr "Klibbigt"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:716
+#: src/bin/e_int_border_remember.c:737
 msgid "Shaded state"
 msgstr "Skuggat"
 
@@ -2275,7 +2275,7 @@ msgid "Maximized state"
 msgstr "Maximerat"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_remember.c:719
+#: src/bin/e_int_border_remember.c:740
 msgid "Fullscreen state"
 msgstr "Fullskärm"
 
@@ -2283,7 +2283,7 @@ msgstr "Fullskärm"
 msgid "Program Locks"
 msgstr ""
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:704
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:722
 msgid "Border style"
 msgstr "Ramstil"
 
@@ -2393,8 +2393,8 @@ msgstr "Hoppa"
 msgid "Border"
 msgstr "Ram"
 
-#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
-#: src/bin/e_int_border_remember.c:701
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:623
+#: src/bin/e_int_border_remember.c:719
 msgid "Locks"
 msgstr "Lås"
 
@@ -2456,7 +2456,7 @@ msgstr "Använd ansökan som Icon "
 msgid "Use User Defined Icon"
 msgstr "Använd Användardefinierad Icon"
 
-#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:755
 #, fuzzy
 msgid "Offer Resistance"
 msgstr "Resistens"
@@ -2601,7 +2601,7 @@ msgstr "NetWM Egenskaper"
 msgid "ICCCM"
 msgstr "ICCCM"
 
-#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
+#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:669
 msgid "Title"
 msgstr "Titel"
 
@@ -2716,17 +2716,17 @@ msgstr "Begär position"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:357
-#: src/modules/xkbswitch/e_mod_main.c:398
-#: src/modules/notification/e_mod_main.c:339
-#: src/modules/notification/e_mod_main.c:453
+#: src/modules/xkbswitch/e_mod_main.c:370
+#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/notification/e_mod_main.c:343
+#: src/modules/notification/e_mod_main.c:457
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "Inställningar"
 
@@ -2739,13 +2739,13 @@ msgstr "modal"
 msgid "Shaded"
 msgstr "Skymt"
 
-#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:731
+#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:752
 #: src/modules/quickaccess/e_mod_config.c:342
 #, fuzzy
 msgid "Skip Taskbar"
 msgstr "Hoppa aktivitetsfältet"
 
-#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:728
+#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:749
 #: src/modules/quickaccess/e_mod_config.c:345
 #, fuzzy
 msgid "Skip Pager"
@@ -2755,15 +2755,15 @@ msgstr "Hoppa Personsökare"
 msgid "Hidden"
 msgstr "Dold"
 
-#: src/bin/e_int_border_remember.c:89
+#: src/bin/e_int_border_remember.c:91
 msgid "Window Remember"
 msgstr "Fönsterminne"
 
-#: src/bin/e_int_border_remember.c:301
+#: src/bin/e_int_border_remember.c:311
 msgid "Window properties are not a unique match"
 msgstr "Fönsteregenskaperna är inte unika"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:314
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -2787,11 +2787,11 @@ msgstr ""
 "dina inställningar kommer att accepteras. Tryck <hilight>Avbryt</hilight> om "
 "du<br>inte är säker, då kommer inget att ändras."
 
-#: src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_remember.c:511
 msgid "No match properties set"
 msgstr "Inga matchande egenskaper satta"
 
-#: src/bin/e_int_border_remember.c:501
+#: src/bin/e_int_border_remember.c:514
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window <hilight>without "
@@ -2803,19 +2803,19 @@ msgstr ""
 "specificera hur den ska minnas det</hilight>.<br><br>Du måste specificera "
 "minst ett sätt att minnas detta fönster."
 
-#: src/bin/e_int_border_remember.c:601
+#: src/bin/e_int_border_remember.c:619
 msgid "Nothing"
 msgstr "Inget"
 
-#: src/bin/e_int_border_remember.c:603
+#: src/bin/e_int_border_remember.c:621
 msgid "Size and Position"
 msgstr "Storlek och position"
 
-#: src/bin/e_int_border_remember.c:607
+#: src/bin/e_int_border_remember.c:625
 msgid "Size, Position and Locks"
 msgstr "Storlek, position och lås"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
+#: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
@@ -2823,75 +2823,81 @@ msgstr "Storlek, position och lås"
 msgid "All"
 msgstr "Tillåt"
 
-#: src/bin/e_int_border_remember.c:627
+#: src/bin/e_int_border_remember.c:645
 #, fuzzy
 msgid "Window name"
 msgstr "Fönsternamn"
 
-#: src/bin/e_int_border_remember.c:639
+#: src/bin/e_int_border_remember.c:657
 #, fuzzy
 msgid "Window class"
 msgstr "Fönsterklass"
 
-#: src/bin/e_int_border_remember.c:663
+#: src/bin/e_int_border_remember.c:681
 msgid "Window Role"
 msgstr "Fönsterroll"
 
-#: src/bin/e_int_border_remember.c:675
+#: src/bin/e_int_border_remember.c:693
 msgid "Window type"
 msgstr "Fönstertyp"
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:701
 #, fuzzy
 msgid "wildcard matches are allowed"
 msgstr "jokertecken matcher får"
 
-#: src/bin/e_int_border_remember.c:685
+#: src/bin/e_int_border_remember.c:703
 msgid "Transience"
 msgstr "Transience"
 
-#: src/bin/e_int_border_remember.c:688
+#: src/bin/e_int_border_remember.c:706
 #, fuzzy
 msgid "Identifiers"
 msgstr "Minimerad"
 
-#: src/bin/e_int_border_remember.c:707
+#: src/bin/e_int_border_remember.c:725
 msgid "Icon Preference"
 msgstr "Ikonegenskaper"
 
-#: src/bin/e_int_border_remember.c:713
+#: src/bin/e_int_border_remember.c:731
+#: src/modules/conf_display/e_int_config_desklock.c:278
+#, fuzzy
+msgid "Keyboard Layout"
+msgstr "Tangentbordsgenväg"
+
+#: src/bin/e_int_border_remember.c:734
 msgid "Virtual Desktop"
 msgstr "Virtuellt skrivbord"
 
-#: src/bin/e_int_border_remember.c:722
+#: src/bin/e_int_border_remember.c:743
 #, fuzzy
 msgid "Current Screen"
 msgstr "nuvarande skärm"
 
-#: src/bin/e_int_border_remember.c:725
+#: src/bin/e_int_border_remember.c:746
 msgid "Skip Window List"
 msgstr "Ignorera fönsterlista"
 
-#: src/bin/e_int_border_remember.c:737
+#: src/bin/e_int_border_remember.c:758
 #, fuzzy
 msgid "Application file or name (.desktop)"
 msgstr "Programfilen eller namn (. Skrivbordet)"
 
-#: src/bin/e_int_border_remember.c:745
+#: src/bin/e_int_border_remember.c:766
 msgid "Match only one window"
 msgstr "Matcha bara ett fönster"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:770
 #, fuzzy
 msgid "Always focus on start"
 msgstr "Alltid fokus på start"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:774
 #, fuzzy
 msgid "Keep current properties"
 msgstr "Håll aktuella egenskaper"
 
-#: src/bin/e_int_border_remember.c:759
+#: src/bin/e_int_border_remember.c:780
 msgid "Start this program on login"
 msgstr "Starta programmet vid uppstart"
 
@@ -2904,7 +2910,7 @@ msgstr "Utilities"
 #: src/modules/everything/evry_plug_files.c:1335
 #: src/modules/everything/evry_plug_files.c:1348
 #: src/modules/everything/evry_plug_files.c:1566
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:56
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:55
 msgid "Files"
 msgstr "Filer"
 
@@ -2980,7 +2986,7 @@ msgstr "Verktygsfältsinnehåll"
 msgid "Toolbar Settings"
 msgstr "Toolbar Inställningar"
 
-#: src/bin/e_int_toolbar_config.c:81
+#: src/bin/e_int_toolbar_config.c:81 src/modules/xkbswitch/e_mod_config.c:337
 msgid "Layout"
 msgstr "Placering"
 
@@ -3046,7 +3052,7 @@ msgid "About Theme"
 msgstr "om Theme"
 
 #: src/bin/e_int_menus.c:263
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:313
 #, fuzzy
 msgid "Restart Moksha"
 msgstr "Starta om Moksha"
@@ -4051,7 +4057,7 @@ msgid "Rename Shelf"
 msgstr "Byt namn"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
 #, fuzzy
 msgid "Contents"
 msgstr "Kommentar"
@@ -4067,7 +4073,7 @@ msgid "Autohide"
 msgstr "Dölj automatiskt"
 
 #: src/bin/e_shelf.c:2533
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:351
 msgid "Refresh"
 msgstr "Uppdatera"
 
@@ -4506,19 +4512,19 @@ msgstr[1] "%1.0f minuter"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:291
 msgid "Add"
 msgstr "Lägg till"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:350
-#: src/modules/xkbswitch/e_mod_config.c:250
+#: src/modules/xkbswitch/e_mod_config.c:279
 msgid "Up"
 msgstr "Upp"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:354
-#: src/modules/xkbswitch/e_mod_config.c:256
+#: src/modules/xkbswitch/e_mod_config.c:285
 msgid "Down"
 msgstr "Ned"
 
@@ -5382,11 +5388,6 @@ msgstr "Anpassad Screenlock Kommando"
 msgid "Locking"
 msgstr "Lås"
 
-#: src/modules/conf_display/e_int_config_desklock.c:278
-#, fuzzy
-msgid "Keyboard Layout"
-msgstr "Tangentbordsgenväg"
-
 #: src/modules/conf_display/e_int_config_desklock.c:284
 #, fuzzy
 msgid "Show on all screens"
@@ -5556,7 +5557,7 @@ msgid "%1.1f second(s)"
 msgstr "%1.1f sekunder"
 
 #: src/modules/conf_display/e_mod_main.c:21
-#: src/modules/tiling/e_mod_config.c:198
+#: src/modules/tiling/e_mod_config.c:201
 msgid "Virtual Desktops"
 msgstr "Virtuella skrivbord"
 
@@ -6203,7 +6204,7 @@ msgid "Vaio"
 msgstr ""
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:440
+#: src/modules/notification/e_mod_main.c:444
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 #, fuzzy
@@ -6306,67 +6307,67 @@ msgid ""
 "%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:109
 msgid "WINDOW"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:145
 #: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "Nästa fönster"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:183
 msgid "SYSTEM"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:184
 #, fuzzy
 msgid "Open Terminology"
 msgstr "Kör i terminal"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:212
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
 #, fuzzy
 msgid "System Controls"
 msgstr "systemreglage"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:222
 msgid "DESKTOP"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:297
 msgid "MISCELLANEOUS"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:299
 #: src/modules/everything/e_mod_main.c:605
 #, fuzzy
 msgid "Quick Launcher"
 msgstr "Kör"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
 #: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
 #: src/modules/shot/e_mod_main.c:1313
 #, fuzzy
 msgid "Take Screenshot"
 msgstr "Setup Skärmar"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:320
 #, fuzzy
 msgid "Terminal Console"
 msgstr "Definierat kommando"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:327
 #, fuzzy
 msgid "This Help"
 msgstr "Detta skrivbord"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 #, fuzzy
 msgid "Basic Moksha Key Bindings"
 msgstr "Mus Bindningar"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
 msgid "Edit"
 msgstr "Ändra"
 
@@ -6554,7 +6555,7 @@ msgstr "Kommentar"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:329
 msgid "Gadgets"
 msgstr "Moduler"
 
@@ -7652,7 +7653,7 @@ msgid "Assign"
 msgstr "Tilldela"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:430
+#: src/modules/notification/e_mod_main.c:434
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Rensa"
@@ -8208,7 +8209,7 @@ msgstr "Ändra storlek"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:397
+#: src/modules/xkbswitch/e_mod_main.c:410
 #, fuzzy
 msgid "Keyboard"
 msgstr "Tangentbordsgenväg"
@@ -9686,32 +9687,32 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Är du säker på att du vill ta bort denna källa?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2887
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
 #, fuzzy
 msgid "Create new Icon"
 msgstr "Skapa ny ikon"
 
-#: src/modules/ibar/e_mod_main.c:1588
+#: src/modules/ibar/e_mod_main.c:1594
 #, fuzzy
 msgid "Add to bar"
 msgstr "Lägg till Ibar"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1600
 #, fuzzy
 msgid "Remove from bar"
 msgstr "Ta bort"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1606
 #, fuzzy, c-format
 msgid "Icon %s"
 msgstr "Ikoner"
 
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:2953
 #, fuzzy
 msgid "Focus IBar"
 msgstr "Fokus"
@@ -10717,7 +10718,7 @@ msgstr "Visa dolda filer"
 msgid "Key hints"
 msgstr "Kortkommando"
 
-#: src/modules/tiling/e_mod_config.c:200
+#: src/modules/tiling/e_mod_config.c:198
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 
@@ -10811,48 +10812,57 @@ msgstr ""
 msgid "Send to lower left corner"
 msgstr ""
 
-#: src/modules/xkbswitch/e_mod_config.c:73
+#: src/modules/xkbswitch/e_mod_config.c:74
 #, fuzzy
 msgid "Keyboard Settings"
 msgstr "Ibar Settings"
 
-#: src/modules/xkbswitch/e_mod_config.c:276
+#: src/modules/xkbswitch/e_mod_config.c:305
 #, fuzzy
 msgid "Configurations"
 msgstr "Konfiguration"
 
-#: src/modules/xkbswitch/e_mod_config.c:285
+#: src/modules/xkbswitch/e_mod_config.c:314
 #, fuzzy
 msgid "Models"
 msgstr "Moduler"
 
-#: src/modules/xkbswitch/e_mod_config.c:300
+#: src/modules/xkbswitch/e_mod_config.c:331
 #, fuzzy
 msgid "Label only"
 msgstr "Etikett"
 
-#: src/modules/xkbswitch/e_mod_config.c:483
+#: src/modules/xkbswitch/e_mod_config.c:340
+msgid "Global"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:342
+#, fuzzy
+msgid "Per Application"
+msgstr "Applikation"
+
+#: src/modules/xkbswitch/e_mod_config.c:523
 #, fuzzy
 msgid "Add New Configuration"
 msgstr "Panelkonfiguration"
 
-#: src/modules/xkbswitch/e_mod_config.c:496
+#: src/modules/xkbswitch/e_mod_config.c:536
 #, fuzzy
 msgid "Available"
 msgstr "Fyll allt tillgängligt utrymme"
 
-#: src/modules/xkbswitch/e_mod_config.c:503
+#: src/modules/xkbswitch/e_mod_config.c:543
 #, fuzzy
 msgid "Model"
 msgstr "Moduler"
 
-#: src/modules/xkbswitch/e_mod_config.c:510
+#: src/modules/xkbswitch/e_mod_config.c:550
 msgid "Variant"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:274
-#: src/modules/notification/e_mod_main.c:370
+#: src/modules/notification/e_mod_main.c:278
+#: src/modules/notification/e_mod_main.c:374
 msgid "Notification"
 msgstr "Notifiering"
 
@@ -10871,12 +10881,12 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:422
+#: src/modules/notification/e_mod_main.c:426
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:627
 #, fuzzy
 msgid "Enter Presentation Mode"
 msgstr ""
@@ -10884,11 +10894,11 @@ msgstr ""
 "Aktivera helskärmsläge\n"
 "#-#-#-#-#  sv.po (Moksha E17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:624
+#: src/modules/notification/e_mod_main.c:628
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:632
 #, fuzzy
 msgid "Exited Presentation Mode"
 msgstr ""
@@ -10896,12 +10906,12 @@ msgstr ""
 "Aktivera helskärmsläge\n"
 "#-#-#-#-#  sv.po (Moksha E17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:633
 #, fuzzy
 msgid "Presentation mode is over."
 msgstr "Presentation läge Växla"
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:647
 #, fuzzy
 msgid "Enter Offline Mode"
 msgstr ""
@@ -10909,13 +10919,13 @@ msgstr ""
 "Gör klibbig\n"
 "#-#-#-#-#  sv.po (Moksha E17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:648
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:654
 #, fuzzy
 msgid "Exited Offline Mode"
 msgstr ""
@@ -10923,13 +10933,13 @@ msgstr ""
 "Gör klibbig\n"
 "#-#-#-#-#  sv.po (Moksha E17)  #-#-#-#-#\n"
 
-#: src/modules/notification/e_mod_main.c:651
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
 msgstr ""
 
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:713
 #, fuzzy
 msgid "Notification expired!"
 msgstr "Notifiering"
@@ -11251,8 +11261,8 @@ msgstr "Filer"
 msgid "Temp"
 msgstr "Temp 1"
 
-#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
+#: src/modules/places/e_mod_main.c:310 src/modules/places/e_mod_places.c:360
 #: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "Platser"
@@ -11266,7 +11276,7 @@ msgstr "Visa fullständig sökväg"
 msgid "Capacity limit:"
 msgstr ""
 
-#: src/modules/places/e_mod_main.c:417
+#: src/modules/places/e_mod_main.c:409
 #, fuzzy
 msgid "Places Configuration Updated"
 msgstr "Konfigurationen uppgraderad"

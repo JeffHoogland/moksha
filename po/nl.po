@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-02-04 10:03+0100\n"
+"POT-Creation-Date: 2024-04-07 12:09+0200\n"
 "PO-Revision-Date: 2024-01-20 19:16-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Dutch\n"
@@ -31,7 +31,7 @@ msgstr "Over Moksha"
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:107
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
 msgid "Close"
@@ -46,10 +46,11 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
-"<br><br>To contact us please visit:<br><hilight>http://www.bodhilinux.com</"
+"<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
 "<title>Auteursrecht &copy; 2024, door de ontwikkelaarsploeg van Moksha.</"
@@ -83,7 +84,7 @@ msgstr "Weet u zeker dat u dit venster geforceerd wilt sluiten?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
 #: src/bin/e_int_border_menu.c:784
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:163
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
 msgstr "Geforceerd sluiten"
 
@@ -179,7 +180,7 @@ msgid "Menu"
 msgstr "Menu"
 
 #: src/bin/e_actions.c:3139
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:170
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Venstermenu"
 
@@ -214,7 +215,7 @@ msgid "Sticky Mode Enable"
 msgstr "Vastgezette modus inschakelen"
 
 #: src/bin/e_actions.c:3176
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:135
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 msgid "Always On Top Toggle"
 msgstr "Altijd op voorgrond omschakelen"
 
@@ -227,7 +228,7 @@ msgid "Always On Top Disable"
 msgstr "Altijd op voorgrond uitschakelen"
 
 #: src/bin/e_actions.c:3189
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:121
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Pictogrammodus omschakelen"
 
@@ -236,7 +237,7 @@ msgid "Iconic Mode Enable"
 msgstr "Pictogrammodus inschakelen"
 
 #: src/bin/e_actions.c:3198
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:128
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Volledig-scherm-modus omschakelen"
 
@@ -246,7 +247,7 @@ msgstr "Volledig-scherm-modus inschakelen"
 
 #: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:114
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Maximaliseren"
 
@@ -259,12 +260,12 @@ msgid "Maximize Horizontally"
 msgstr "Horizontaal maximaliseren"
 
 #: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:156
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 msgid "Maximize Left"
 msgstr "Links maximaliseren"
 
 #: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:149
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 msgid "Maximize Right"
 msgstr "Rechts maximaliseren"
 
@@ -376,7 +377,7 @@ msgid "Flip To Previous Desktop"
 msgstr "Draai naar vorig werkblad"
 
 #: src/bin/e_actions.c:3293
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:221
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Bureaublad weergeven"
 
@@ -393,47 +394,47 @@ msgid "Flip Desktop Linearly..."
 msgstr "Draai werkblad lineair..."
 
 #: src/bin/e_actions.c:3316
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:228
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Schakel naar werkblad 0"
 
 #: src/bin/e_actions.c:3318
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:235
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Schakel naar werkblad 1"
 
 #: src/bin/e_actions.c:3320
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:242
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Schakel naar werkblad 2"
 
 #: src/bin/e_actions.c:3322
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:249
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Schakel naar werkblad 3"
 
 #: src/bin/e_actions.c:3324
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:256
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Schakel naar werkblad 4"
 
 #: src/bin/e_actions.c:3326
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:263
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Schakel naar werkblad 5"
 
 #: src/bin/e_actions.c:3328
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:270
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Schakel naar werkblad 6"
 
 #: src/bin/e_actions.c:3330
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:277
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Schakel naar werkblad 7"
 
 #: src/bin/e_actions.c:3332
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:284
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Schakel naar werkblad 8"
 
@@ -680,12 +681,12 @@ msgid "To Previous Screen"
 msgstr "Naar vorig scherm"
 
 #: src/bin/e_actions.c:3516
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:195
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Hoofdmenu weergeven"
 
 #: src/bin/e_actions.c:3518
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:202
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Favorietenmenu Weergeven"
 
@@ -798,7 +799,7 @@ msgid "Hibernate Now"
 msgstr "Nu in slaapstand"
 
 #: src/bin/e_actions.c:3616
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:188
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Vergrendelen"
 
@@ -865,11 +866,11 @@ msgstr "Kiezen"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
 #: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:529
+#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Afbreken"
 
-#: src/bin/e_config.c:954
+#: src/bin/e_config.c:959
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -888,7 +889,7 @@ msgstr ""
 "oplossen<br>door het toe te voegen. U kunt uw dingen nu opnieuw instellen "
 "naar uw<br>wensen. Excuses voor de wijzigingen in uw instellingen.<br>"
 
-#: src/bin/e_config.c:971
+#: src/bin/e_config.c:976
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -903,11 +904,11 @@ msgstr ""
 "instellingen nu teruggezet naar de<br>standaarden. Excuses voor het ongemak."
 "<br>"
 
-#: src/bin/e_config.c:1565 src/bin/e_config.c:2190
+#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha-instellingen schrijfproblemen"
 
-#: src/bin/e_config.c:1568
+#: src/bin/e_config.c:1573
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -917,38 +918,38 @@ msgstr ""
 "instellingenbestanden<br>van:<br>%s<br><br>naar:<br>%s<br><br>De rest van "
 "het schrijven is afgebroken voor uw veiligheid.<br>"
 
-#: src/bin/e_config.c:1578 src/bin/e_config.c:2203
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
-#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:318
-#: src/bin/e_int_border_remember.c:507 src/bin/e_module.c:503
+#: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
 #: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:346
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:349
 #: src/modules/conf_theme/e_int_config_theme_import.c:119
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:528
+#: src/modules/xkbswitch/e_mod_config.c:568
 msgid "OK"
 msgstr "Oké"
 
-#: src/bin/e_config.c:2081
+#: src/bin/e_config.c:2086
 msgid "Settings Upgraded"
 msgstr "Instellingen opgewaardeerd"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2104
 msgid "The EET file handle is bad."
 msgstr "De EET-bestandsafhandelaar is slecht."
 
-#: src/bin/e_config.c:2103
+#: src/bin/e_config.c:2108
 msgid "The file data is empty."
 msgstr "Het gegevensbestand is leeg."
 
-#: src/bin/e_config.c:2107
+#: src/bin/e_config.c:2112
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -956,17 +957,17 @@ msgstr ""
 "Het bestand is niet schrijfbaar. Wellicht is de schijf alleen-lezen<br>of u "
 "bent de rechten op uw bestanden kwijt."
 
-#: src/bin/e_config.c:2111
+#: src/bin/e_config.c:2116
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Geheugen raakte op tijdens het voorbereiden van het schrijven.<br>Maak "
 "alstublieft geheugen vrij."
 
-#: src/bin/e_config.c:2115
+#: src/bin/e_config.c:2120
 msgid "This is a generic error."
 msgstr "Dit is een algemene fout."
 
-#: src/bin/e_config.c:2119
+#: src/bin/e_config.c:2124
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -974,60 +975,60 @@ msgstr ""
 "Het instellingenbestand is te groot.<br>Het zou heel klein moeten zijn "
 "(hooguit een paar honderd KB)."
 
-#: src/bin/e_config.c:2123
+#: src/bin/e_config.c:2128
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "U heeft I/O-fouten op uw schijf.<br>Misschien is hij aan vervanging toe?"
 
-#: src/bin/e_config.c:2127
+#: src/bin/e_config.c:2132
 msgid "You ran out of space while writing the file."
 msgstr "U kwam schijfruimte tekort terwijl het bestand geschreven werd."
 
-#: src/bin/e_config.c:2131
+#: src/bin/e_config.c:2136
 msgid "The file was closed while writing."
 msgstr "Het bestand werd gesloten tijdens het schrijven."
 
-#: src/bin/e_config.c:2135
+#: src/bin/e_config.c:2140
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Geheugentoewijzing (mmap) van bestand mislukte."
 
-#: src/bin/e_config.c:2139
+#: src/bin/e_config.c:2144
 msgid "X509 Encoding failed."
 msgstr "X509-codering mislukt."
 
-#: src/bin/e_config.c:2143
+#: src/bin/e_config.c:2148
 msgid "Signature failed."
 msgstr "Handtekening is mislukt."
 
-#: src/bin/e_config.c:2147
+#: src/bin/e_config.c:2152
 msgid "The signature was invalid."
 msgstr "De handtekening was ongeldig."
 
-#: src/bin/e_config.c:2151
+#: src/bin/e_config.c:2156
 msgid "Not signed."
 msgstr "Niet ondertekend."
 
-#: src/bin/e_config.c:2155
+#: src/bin/e_config.c:2160
 msgid "Feature not implemented."
 msgstr "Functie niet ingebouwd."
 
-#: src/bin/e_config.c:2159
+#: src/bin/e_config.c:2164
 msgid "PRNG was not seeded."
 msgstr "PRNG was niet uitgezaaid."
 
-#: src/bin/e_config.c:2163
+#: src/bin/e_config.c:2168
 msgid "Encryption failed."
 msgstr "Versleuteling is mislukt."
 
-#: src/bin/e_config.c:2167
+#: src/bin/e_config.c:2172
 msgid "Decryption failed."
 msgstr "Ontsleuteling is mislukt."
 
-#: src/bin/e_config.c:2171
+#: src/bin/e_config.c:2176
 msgid "The error is unknown to Moksha."
 msgstr "De fout is onbekend voor Moksha."
 
-#: src/bin/e_config.c:2193
+#: src/bin/e_config.c:2198
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1240,7 +1241,7 @@ msgid "Show in Menus"
 msgstr "Weergeven in menu's"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
-#: src/bin/e_int_border_remember.c:763 src/modules/xkbswitch/e_mod_config.c:334
+#: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
 #: src/modules/clipboard/e_mod_config.c:224
 msgid "Options"
 msgstr "Opties"
@@ -1561,8 +1562,8 @@ msgstr "Aankoppelen"
 msgid "Eject"
 msgstr "Uitwerpen"
 
-#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:742
-#: src/modules/ibar/e_mod_main.c:1581
+#: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
+#: src/modules/ibar/e_mod_main.c:1587
 msgid "Properties"
 msgstr "Eigenschappen"
 
@@ -1722,7 +1723,7 @@ msgstr "Nee op alles"
 msgid "Yes to all"
 msgstr "Ja op alles"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:709
+#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Waarschuwing"
@@ -1943,7 +1944,7 @@ msgstr "Uiterlijk"
 #: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
 #: src/modules/gadman/e_mod_gadman.c:1058
-#: src/modules/xkbswitch/e_mod_config.c:267
+#: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Remove"
 msgstr "Verwijderen"
 
@@ -2114,12 +2115,12 @@ msgid "Prevent Changes In:"
 msgstr "Voorkom veranderingen in:"
 
 #: src/bin/e_int_border_locks.c:309 src/bin/e_int_border_locks.c:328
-#: src/bin/e_int_border_remember.c:692 src/bin/e_int_shelf_config.c:222
+#: src/bin/e_int_border_remember.c:710 src/bin/e_int_shelf_config.c:222
 msgid "Position"
 msgstr "Positie"
 
 #: src/bin/e_int_border_locks.c:311 src/bin/e_int_border_locks.c:330
-#: src/bin/e_int_border_remember.c:695 src/bin/e_int_shelf_config.c:236
+#: src/bin/e_int_border_remember.c:713 src/bin/e_int_shelf_config.c:236
 #: src/modules/conf_interaction/e_int_config_mouse.c:294
 #: src/modules/conf_theme/e_int_config_fonts.c:441
 #: src/modules/conf_theme/e_int_config_fonts.c:661
@@ -2128,7 +2129,7 @@ msgstr "Grootte"
 
 #: src/bin/e_int_border_locks.c:313 src/bin/e_int_border_locks.c:332
 #: src/bin/e_int_border_menu.c:732 src/bin/e_int_border_prop.c:501
-#: src/bin/e_int_border_remember.c:698 src/bin/e_int_shelf_config.c:180
+#: src/bin/e_int_border_remember.c:716 src/bin/e_int_shelf_config.c:180
 #: src/modules/conf_window_manipulation/e_int_config_focus.c:291
 msgid "Stacking"
 msgstr "Stapeling"
@@ -2138,12 +2139,12 @@ msgid "Iconified state"
 msgstr "Pictogramstaat"
 
 #: src/bin/e_int_border_locks.c:317 src/bin/e_int_border_locks.c:336
-#: src/bin/e_int_border_remember.c:710
+#: src/bin/e_int_border_remember.c:728
 msgid "Stickiness"
 msgstr "Vastzetting"
 
 #: src/bin/e_int_border_locks.c:319 src/bin/e_int_border_locks.c:338
-#: src/bin/e_int_border_remember.c:716
+#: src/bin/e_int_border_remember.c:737
 msgid "Shaded state"
 msgstr "Ingeklapte status"
 
@@ -2152,7 +2153,7 @@ msgid "Maximized state"
 msgstr "Gemaximaliseerde status"
 
 #: src/bin/e_int_border_locks.c:323 src/bin/e_int_border_locks.c:342
-#: src/bin/e_int_border_remember.c:719
+#: src/bin/e_int_border_remember.c:740
 msgid "Fullscreen state"
 msgstr "Schermvullende status"
 
@@ -2160,7 +2161,7 @@ msgstr "Schermvullende status"
 msgid "Program Locks"
 msgstr "Programmavergrendelingen"
 
-#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:704
+#: src/bin/e_int_border_locks.c:344 src/bin/e_int_border_remember.c:722
 msgid "Border style"
 msgstr "Randstijl"
 
@@ -2260,8 +2261,8 @@ msgstr "Overslaan"
 msgid "Border"
 msgstr "Rand"
 
-#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:605
-#: src/bin/e_int_border_remember.c:701
+#: src/bin/e_int_border_menu.c:763 src/bin/e_int_border_remember.c:623
+#: src/bin/e_int_border_remember.c:719
 msgid "Locks"
 msgstr "Sloten"
 
@@ -2316,7 +2317,7 @@ msgstr "Gebruik door toepassing geleverd pictogram"
 msgid "Use User Defined Icon"
 msgstr "Gebruik gebruikergedefinieerd pictogram"
 
-#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:734
+#: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:755
 msgid "Offer Resistance"
 msgstr "Weerstand bieden"
 
@@ -2456,7 +2457,7 @@ msgstr "NetWM-eigenschappen"
 msgid "ICCCM"
 msgstr "ICCCM"
 
-#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:651
+#: src/bin/e_int_border_prop.c:444 src/bin/e_int_border_remember.c:669
 msgid "Title"
 msgstr "Titel"
 
@@ -2566,17 +2567,17 @@ msgstr "Verzoek positie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:357
-#: src/modules/xkbswitch/e_mod_main.c:398
-#: src/modules/notification/e_mod_main.c:339
-#: src/modules/notification/e_mod_main.c:453
+#: src/modules/xkbswitch/e_mod_main.c:370
+#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/notification/e_mod_main.c:343
+#: src/modules/notification/e_mod_main.c:457
 #: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:526
+#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -2588,12 +2589,12 @@ msgstr "Modaal"
 msgid "Shaded"
 msgstr "Opgerold"
 
-#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:731
+#: src/bin/e_int_border_prop.c:508 src/bin/e_int_border_remember.c:752
 #: src/modules/quickaccess/e_mod_config.c:342
 msgid "Skip Taskbar"
 msgstr "Sla taakbalk over"
 
-#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:728
+#: src/bin/e_int_border_prop.c:509 src/bin/e_int_border_remember.c:749
 #: src/modules/quickaccess/e_mod_config.c:345
 msgid "Skip Pager"
 msgstr "Sla pager over"
@@ -2602,15 +2603,15 @@ msgstr "Sla pager over"
 msgid "Hidden"
 msgstr "Verborgen"
 
-#: src/bin/e_int_border_remember.c:89
+#: src/bin/e_int_border_remember.c:91
 msgid "Window Remember"
 msgstr "Venster onthoudt"
 
-#: src/bin/e_int_border_remember.c:301
+#: src/bin/e_int_border_remember.c:311
 msgid "Window properties are not a unique match"
 msgstr "Venstereigenschappen zijn geen unieke overeenkomst"
 
-#: src/bin/e_int_border_remember.c:304
+#: src/bin/e_int_border_remember.c:314
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window that <hilight>does not "
@@ -2635,11 +2636,11 @@ msgstr ""
 "worden aanvaard. Druk op <hilight>Afbreken</hilight> als u<br>niet zeker "
 "bent en er zal niets veranderen."
 
-#: src/bin/e_int_border_remember.c:498
+#: src/bin/e_int_border_remember.c:511
 msgid "No match properties set"
 msgstr "Geen overeenkomende eigenschappen ingesteld"
 
-#: src/bin/e_int_border_remember.c:501
+#: src/bin/e_int_border_remember.c:514
 msgid ""
 "You are trying to ask Moksha to remember to apply<br>properties (such as "
 "size, location, border style etc.) to<br>a window <hilight>without "
@@ -2651,86 +2652,91 @@ msgstr ""
 "venster<hilight>zonder aan te geven hoe</hilight>.<br><br>Geef a.u.b. één "
 "manier aan hoe dit venster herinnerd moet worden."
 
-#: src/bin/e_int_border_remember.c:601
+#: src/bin/e_int_border_remember.c:619
 msgid "Nothing"
 msgstr "Niets"
 
-#: src/bin/e_int_border_remember.c:603
+#: src/bin/e_int_border_remember.c:621
 msgid "Size and Position"
 msgstr "Grootte en positie"
 
-#: src/bin/e_int_border_remember.c:607
+#: src/bin/e_int_border_remember.c:625
 msgid "Size, Position and Locks"
 msgstr "Grootte, positie en sloten"
 
-#: src/bin/e_int_border_remember.c:609 src/modules/conf/e_mod_main.c:253
+#: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
 #: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
 msgid "All"
 msgstr "Alles"
 
-#: src/bin/e_int_border_remember.c:627
+#: src/bin/e_int_border_remember.c:645
 msgid "Window name"
 msgstr "Vensternaam"
 
-#: src/bin/e_int_border_remember.c:639
+#: src/bin/e_int_border_remember.c:657
 msgid "Window class"
 msgstr "Vensterklasse"
 
-#: src/bin/e_int_border_remember.c:663
+#: src/bin/e_int_border_remember.c:681
 msgid "Window Role"
 msgstr "Vensterrol"
 
-#: src/bin/e_int_border_remember.c:675
+#: src/bin/e_int_border_remember.c:693
 msgid "Window type"
 msgstr "Venstertype"
 
-#: src/bin/e_int_border_remember.c:683
+#: src/bin/e_int_border_remember.c:701
 msgid "wildcard matches are allowed"
 msgstr "jokerkaart-overeenkomsten zijn toegestaan"
 
-#: src/bin/e_int_border_remember.c:685
+#: src/bin/e_int_border_remember.c:703
 msgid "Transience"
 msgstr "Tijdelijkheid"
 
-#: src/bin/e_int_border_remember.c:688
+#: src/bin/e_int_border_remember.c:706
 msgid "Identifiers"
 msgstr "Identificatiemiddelen"
 
-#: src/bin/e_int_border_remember.c:707
+#: src/bin/e_int_border_remember.c:725
 msgid "Icon Preference"
 msgstr "Pictogrameigenschap"
 
-#: src/bin/e_int_border_remember.c:713
+#: src/bin/e_int_border_remember.c:731
+#: src/modules/conf_display/e_int_config_desklock.c:278
+msgid "Keyboard Layout"
+msgstr "Toetsenbordindeling"
+
+#: src/bin/e_int_border_remember.c:734
 msgid "Virtual Desktop"
 msgstr "Virtueel werkblad"
 
-#: src/bin/e_int_border_remember.c:722
+#: src/bin/e_int_border_remember.c:743
 msgid "Current Screen"
 msgstr "Huidig scherm"
 
-#: src/bin/e_int_border_remember.c:725
+#: src/bin/e_int_border_remember.c:746
 msgid "Skip Window List"
 msgstr "Sla vensterlijst over"
 
-#: src/bin/e_int_border_remember.c:737
+#: src/bin/e_int_border_remember.c:758
 msgid "Application file or name (.desktop)"
 msgstr "Toepassingsbestand of -naam (.desktop)"
 
-#: src/bin/e_int_border_remember.c:745
+#: src/bin/e_int_border_remember.c:766
 msgid "Match only one window"
 msgstr "Kom met slechts één venster overeen"
 
-#: src/bin/e_int_border_remember.c:749
+#: src/bin/e_int_border_remember.c:770
 msgid "Always focus on start"
 msgstr "Altijd scherpstellen bij starten"
 
-#: src/bin/e_int_border_remember.c:753
+#: src/bin/e_int_border_remember.c:774
 msgid "Keep current properties"
 msgstr "Behoud huidige eigenschappen"
 
-#: src/bin/e_int_border_remember.c:759
+#: src/bin/e_int_border_remember.c:780
 msgid "Start this program on login"
 msgstr "Start dit programma bij aanmelding"
 
@@ -2742,7 +2748,7 @@ msgstr "Gereedschap"
 #: src/modules/everything/evry_plug_files.c:1335
 #: src/modules/everything/evry_plug_files.c:1348
 #: src/modules/everything/evry_plug_files.c:1566
-#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:56
+#: src/modules/fileman/e_mod_main.c:39 src/modules/places/e_mod_main.c:55
 msgid "Files"
 msgstr "Bestanden"
 
@@ -2809,7 +2815,7 @@ msgstr "Werkbalkinhoud"
 msgid "Toolbar Settings"
 msgstr "Werkbalkinstellingen"
 
-#: src/bin/e_int_toolbar_config.c:81
+#: src/bin/e_int_toolbar_config.c:81 src/modules/xkbswitch/e_mod_config.c:337
 msgid "Layout"
 msgstr "Vormgeving"
 
@@ -2872,7 +2878,7 @@ msgid "About Theme"
 msgstr "Over Thema"
 
 #: src/bin/e_int_menus.c:263
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:310
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:313
 msgid "Restart Moksha"
 msgstr "Moksha herstarten"
 
@@ -3817,7 +3823,7 @@ msgid "Rename Shelf"
 msgstr "Plank hernoemen"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1568
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
 msgid "Contents"
 msgstr "Inhoud"
 
@@ -3830,7 +3836,7 @@ msgid "Autohide"
 msgstr "Automatisch verbergen"
 
 #: src/bin/e_shelf.c:2533
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:351
 msgid "Refresh"
 msgstr "Verversen"
 
@@ -4255,19 +4261,19 @@ msgstr[1] "%li minuten"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:262
+#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:291
 msgid "Add"
 msgstr "Toevoegen"
 
 #: src/bin/e_widget_config_list.c:80
 #: src/modules/conf_applications/e_int_config_apps.c:350
-#: src/modules/xkbswitch/e_mod_config.c:250
+#: src/modules/xkbswitch/e_mod_config.c:279
 msgid "Up"
 msgstr "Omhoog"
 
 #: src/bin/e_widget_config_list.c:86
 #: src/modules/conf_applications/e_int_config_apps.c:354
-#: src/modules/xkbswitch/e_mod_config.c:256
+#: src/modules/xkbswitch/e_mod_config.c:285
 msgid "Down"
 msgstr "Omlaag"
 
@@ -5032,10 +5038,6 @@ msgstr "Aangepaste schermvergrendelingsopdracht gebruiken"
 msgid "Locking"
 msgstr "Vergrendeling"
 
-#: src/modules/conf_display/e_int_config_desklock.c:278
-msgid "Keyboard Layout"
-msgstr "Toetsenbordindeling"
-
 #: src/modules/conf_display/e_int_config_desklock.c:284
 msgid "Show on all screens"
 msgstr "Toon op alle schermen"
@@ -5182,7 +5184,7 @@ msgid "%1.1f second(s)"
 msgstr "%1.1f seconde(n)"
 
 #: src/modules/conf_display/e_mod_main.c:21
-#: src/modules/tiling/e_mod_config.c:198
+#: src/modules/tiling/e_mod_config.c:201
 msgid "Virtual Desktops"
 msgstr "Virtuele werkbladen"
 
@@ -5771,7 +5773,7 @@ msgid "Vaio"
 msgstr "Vaio"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:395
-#: src/modules/notification/e_mod_main.c:440
+#: src/modules/notification/e_mod_main.c:444
 #: src/modules/mixer/bin/playbacks_view.c:305
 #: src/modules/mixer/bin/sinks_view.c:263 src/modules/mixer/e_mod_main.c:441
 msgid "Mute"
@@ -5865,60 +5867,60 @@ msgstr ""
 "de <br><hilight> %s</hilight>-actie.<br>Kies alstublieft voor een andere "
 "toetscombinatie-binding."
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:106
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:109
 msgid "WINDOW"
 msgstr "VENSTER"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:142
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:145
 #: src/modules/winlist/e_mod_main.c:41
 msgid "Next Window"
 msgstr "Volgend venster"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:180
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:183
 msgid "SYSTEM"
 msgstr "SYSTEEM"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:181
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:184
 msgid "Open Terminology"
 msgstr "Terminology openen"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:209
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:212
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37
 msgid "System Controls"
 msgstr "Systeeminstellingen"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:219
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:222
 msgid "DESKTOP"
 msgstr "BUREAUBLAD"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:294
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:297
 msgid "MISCELLANEOUS"
 msgstr "DIVERS"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:296
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:299
 #: src/modules/everything/e_mod_main.c:605
 msgid "Quick Launcher"
 msgstr "Snelstarter"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:303
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
 #: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
 #: src/modules/shot/e_mod_main.c:1313
 msgid "Take Screenshot"
 msgstr "Schermafdruk maken"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:317
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:320
 msgid "Terminal Console"
 msgstr "Terminalvenster"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:324
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:327
 msgid "This Help"
 msgstr "Deze hulp"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:345
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:348
 msgid "Basic Moksha Key Bindings"
 msgstr "Eenvoudige toetsbindingen voor Moksha"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:347
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -6095,7 +6097,7 @@ msgstr "Commentaren"
 #: src/modules/conf_menus/e_int_config_menus.c:275
 #: src/modules/gadman/e_mod_config.c:232 src/modules/gadman/e_mod_main.c:25
 #: src/modules/gadman/e_mod_main.c:76 src/modules/gadman/e_mod_main.c:83
-#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:298
+#: src/modules/gadman/e_mod_main.c:205 src/modules/xkbswitch/e_mod_config.c:329
 msgid "Gadgets"
 msgstr "Mini's"
 
@@ -7067,7 +7069,7 @@ msgid "Assign"
 msgstr "Toewijzen"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
-#: src/modules/notification/e_mod_main.c:430
+#: src/modules/notification/e_mod_main.c:434
 #: src/modules/clipboard/e_mod_main.c:429
 msgid "Clear"
 msgstr "Wissen"
@@ -7547,7 +7549,7 @@ msgstr "Herschaal met"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:397
+#: src/modules/xkbswitch/e_mod_main.c:410
 msgid "Keyboard"
 msgstr "Toetsenbord"
 
@@ -8840,29 +8842,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Weet u zeker dat u deze balk-bron wilt verwijderen?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2887
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1557
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
 msgid "Create new Icon"
 msgstr "Creëer nieuw pictogram"
 
-#: src/modules/ibar/e_mod_main.c:1588
+#: src/modules/ibar/e_mod_main.c:1594
 msgid "Add to bar"
 msgstr "Voeg toe aan balk"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1600
 msgid "Remove from bar"
 msgstr "Verwijder uit balk"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1606
 #, c-format
 msgid "Icon %s"
 msgstr "Pictogram %s"
 
-#: src/modules/ibar/e_mod_main.c:2923
+#: src/modules/ibar/e_mod_main.c:2953
 msgid "Focus IBar"
 msgstr "Scherpstelling IBar"
 
@@ -9823,7 +9825,7 @@ msgstr "Toon venstertitels"
 msgid "Key hints"
 msgstr "Toetswenken"
 
-#: src/modules/tiling/e_mod_config.c:200
+#: src/modules/tiling/e_mod_config.c:198
 msgid "Number of columns used to tile per desk (0 → tiling disabled):"
 msgstr ""
 "Aantal kolommen gebruikt om te tegelen per werkblad (0 → tegelen "
@@ -9906,41 +9908,50 @@ msgstr "Stuur naar rechterbenedenhoek"
 msgid "Send to lower left corner"
 msgstr "Stuur naar linkerbenedenhoek"
 
-#: src/modules/xkbswitch/e_mod_config.c:73
+#: src/modules/xkbswitch/e_mod_config.c:74
 msgid "Keyboard Settings"
 msgstr "Toetsenbordinstellingen"
 
-#: src/modules/xkbswitch/e_mod_config.c:276
+#: src/modules/xkbswitch/e_mod_config.c:305
 msgid "Configurations"
 msgstr "Instellingen"
 
-#: src/modules/xkbswitch/e_mod_config.c:285
+#: src/modules/xkbswitch/e_mod_config.c:314
 msgid "Models"
 msgstr "Modellen"
 
-#: src/modules/xkbswitch/e_mod_config.c:300
+#: src/modules/xkbswitch/e_mod_config.c:331
 msgid "Label only"
 msgstr "Alleen etiket"
 
-#: src/modules/xkbswitch/e_mod_config.c:483
+#: src/modules/xkbswitch/e_mod_config.c:340
+msgid "Global"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:342
+#, fuzzy
+msgid "Per Application"
+msgstr "Toepassing"
+
+#: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
 msgstr "Nieuwe instellingen toevoegen"
 
-#: src/modules/xkbswitch/e_mod_config.c:496
+#: src/modules/xkbswitch/e_mod_config.c:536
 msgid "Available"
 msgstr "Beschikbaar"
 
-#: src/modules/xkbswitch/e_mod_config.c:503
+#: src/modules/xkbswitch/e_mod_config.c:543
 msgid "Model"
 msgstr "Model"
 
-#: src/modules/xkbswitch/e_mod_config.c:510
+#: src/modules/xkbswitch/e_mod_config.c:550
 msgid "Variant"
 msgstr "Variant"
 
 #: src/modules/notification/e_mod_main.c:78
-#: src/modules/notification/e_mod_main.c:274
-#: src/modules/notification/e_mod_main.c:370
+#: src/modules/notification/e_mod_main.c:278
+#: src/modules/notification/e_mod_main.c:374
 msgid "Notification"
 msgstr "Melding"
 
@@ -9960,32 +9971,32 @@ msgstr ""
 "Controleer of er geen andere module als server fungeert en of D-Bus  correct "
 "is geïnstalleerd en draait."
 
-#: src/modules/notification/e_mod_main.c:422
+#: src/modules/notification/e_mod_main.c:426
 #: src/modules/clipboard/e_mod_main.c:411
 msgid "Empty"
 msgstr "Leeg"
 
-#: src/modules/notification/e_mod_main.c:623
+#: src/modules/notification/e_mod_main.c:627
 msgid "Enter Presentation Mode"
 msgstr "Presentatiemodus activeren"
 
-#: src/modules/notification/e_mod_main.c:624
+#: src/modules/notification/e_mod_main.c:628
 msgid "Moksha is in <b>presentation</b> mode."
 msgstr "Moksha is in <b>presentatie</b>modus."
 
-#: src/modules/notification/e_mod_main.c:628
+#: src/modules/notification/e_mod_main.c:632
 msgid "Exited Presentation Mode"
 msgstr "Presentatiemodus beëindigd"
 
-#: src/modules/notification/e_mod_main.c:629
+#: src/modules/notification/e_mod_main.c:633
 msgid "Presentation mode is over."
 msgstr "Presentatiemodus is voorbij."
 
-#: src/modules/notification/e_mod_main.c:643
+#: src/modules/notification/e_mod_main.c:647
 msgid "Enter Offline Mode"
 msgstr "Internetloze modus activeren"
 
-#: src/modules/notification/e_mod_main.c:644
+#: src/modules/notification/e_mod_main.c:648
 msgid ""
 "Moksha is in <b>offline</b> mode.<br>During offline mode, modules that use "
 "network will stop polling remote services."
@@ -9994,11 +10005,11 @@ msgstr ""
 "zullen modules die het netwerk gebruiken stoppen met het gebruiken van "
 "diensten op afstand."
 
-#: src/modules/notification/e_mod_main.c:650
+#: src/modules/notification/e_mod_main.c:654
 msgid "Exited Offline Mode"
 msgstr "Internetloze modus beëindigd"
 
-#: src/modules/notification/e_mod_main.c:651
+#: src/modules/notification/e_mod_main.c:655
 msgid ""
 "Now in <b>online</b> mode.<br>Now modules that use network will resume "
 "regular tasks."
@@ -10006,7 +10017,7 @@ msgstr ""
 "Thans in <b>internet</b>modus. <br>Nu zullen modules die het netwerk "
 "gebruiken weer hun normale taken oppakken."
 
-#: src/modules/notification/e_mod_main.c:709
+#: src/modules/notification/e_mod_main.c:713
 msgid "Notification expired!"
 msgstr "Melding verlopen!"
 
@@ -10272,8 +10283,8 @@ msgstr "Bestandssysteem"
 msgid "Temp"
 msgstr "Temp"
 
-#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:58
-#: src/modules/places/e_mod_main.c:318 src/modules/places/e_mod_places.c:360
+#: src/modules/places/e_mod_config.c:252 src/modules/places/e_mod_main.c:57
+#: src/modules/places/e_mod_main.c:310 src/modules/places/e_mod_places.c:360
 #: src/modules/places/e_mod_places.c:729 src/modules/places/e_mod_places.c:1154
 msgid "Places"
 msgstr "Plaatsen"
@@ -10286,7 +10297,7 @@ msgstr "Toon waarschuwing voor volle schijf"
 msgid "Capacity limit:"
 msgstr "Capaciteitslimiet:"
 
-#: src/modules/places/e_mod_main.c:417
+#: src/modules/places/e_mod_main.c:409
 msgid "Places Configuration Updated"
 msgstr "Instelling van Plaatsen bijgewerkt"
 
