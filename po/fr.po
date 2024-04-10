@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-04-07 12:09+0200\n"
-"PO-Revision-Date: 2023-12-19 09:32+0100\n"
+"PO-Revision-Date: 2024-04-10 19:11+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -56,7 +56,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -66,7 +65,7 @@ msgstr ""
 "<title>Copyright &copy; 2024, par l'équipe de développement de Moksha</"
 "><br><br>Nous espérons que vous aurez autant de plaisir à utiliser ce "
 "logiciel que nous en avons eu à l'écrire.<br><br>Pour nous contacter, "
-"visitez :<br><hilight>http://www.bodhilinux.com</><br><br>"
+"visitez :<br><hilight>https://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
 msgid "<title>The Team</><br><br>"
@@ -9959,12 +9958,11 @@ msgstr "Étiquette uniquement"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: src/modules/xkbswitch/e_mod_config.c:342
-#, fuzzy
 msgid "Per Application"
-msgstr "Application"
+msgstr "Par application"
 
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
