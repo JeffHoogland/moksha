@@ -9892,12 +9892,11 @@ msgstr "Sólo etiqueta"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: src/modules/xkbswitch/e_mod_config.c:342
-#, fuzzy
 msgid "Per Application"
-msgstr "Aplicación"
+msgstr "Por aplicación"
 
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
