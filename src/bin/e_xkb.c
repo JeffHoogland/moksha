@@ -1,7 +1,6 @@
 #include "e.h"
 
 static void _e_xkb_update_event(int);
-static void border_xkb_add(int cur_group);
 
 static int _e_xkb_cur_group = -1;
 static int _e_focus = 0;
@@ -28,6 +27,7 @@ _e_xkb_init_timer(void *data)
              break;
           }
      }
+
    return EINA_FALSE;
 }
 
@@ -38,8 +38,6 @@ kb_exe_del(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev)
      cur_exe = NULL;
    return ECORE_CALLBACK_RENEW;
 }
-
-
 
 static Eina_Bool
 border_focus(void *d __UNUSED__, int t __UNUSED__, Ecore_Exe_Event_Del *ev __UNUSED__)
@@ -286,7 +284,7 @@ e_xkb_update(int cur_group)
    INF("SET XKB RUN: %s", eina_strbuf_string_get(buf));
    E_FREE_FUNC(cur_exe, ecore_exe_kill);
    cur_exe = ecore_exe_run(eina_strbuf_string_get(buf), NULL);
-     
+
    eina_strbuf_free(buf);
 }
 
