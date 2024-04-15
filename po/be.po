@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-04-07 12:09+0200\n"
-"PO-Revision-Date: 2024-01-18 17:00+0300\n"
+"PO-Revision-Date: 2024-04-14 21:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
 "Language: be\n"
@@ -43,7 +43,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -52,7 +51,7 @@ msgid ""
 msgstr ""
 "<title>Copyright &copy; 2024, каманда распрацоўшчыкаў Moksha</><br><br>Мы "
 "спадзяемся, што вам так спадабаецца карыстацца гэтай праграмай, як нам "
-"падабаецца яе пісаць.<br><br>Каб звязацца з намі, калі ласка, наведайце вэб-"
+"падабалася яе пісаць.<br><br>Каб звязацца з намі, калі ласка, наведайце вэб-"
 "сайт:<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -9915,12 +9914,11 @@ msgstr "Толькі пазнака"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
-msgstr ""
+msgstr "Глабальна"
 
 #: src/modules/xkbswitch/e_mod_config.c:342
-#, fuzzy
 msgid "Per Application"
-msgstr "Праграма"
+msgstr "Па праграмах"
 
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
