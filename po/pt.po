@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-04-07 12:09+0200\n"
-"PO-Revision-Date: 2024-04-11 21:18+0100\n"
+"PO-Revision-Date: 2024-04-16 13:05+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
-msgstr "Sobre o Moksha"
+msgstr "Acerca do Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
@@ -894,7 +894,7 @@ msgid ""
 "a precaution your settings have been now restored to<br>defaults. Sorry for "
 "the inconvenience.<br>"
 msgstr ""
-"As suas definições são mais recentes que as do Moksha.<br>Isto é muito "
+"As suas definições são mais RECENTES que as do Moksha.<br>Isto é muito "
 "estranho e só acontece se reverter a<br>versão do Moksha ou se copiar as "
 "definições de<br>um local em que está instalada uma versão mais recente do "
 "Moksha.<br>Isto é mau e, por precaução, as definições originais<br>foram "
@@ -902,7 +902,7 @@ msgstr ""
 
 #: src/bin/e_config.c:1570 src/bin/e_config.c:2195
 msgid "Moksha Settings Write Problems"
-msgstr "Erro ao escrever as definições do Moksha"
+msgstr "Erro ao gravar as definições do Moksha"
 
 #: src/bin/e_config.c:1573
 #, c-format
@@ -950,8 +950,8 @@ msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
 msgstr ""
-"Não pode escrever no ficheiro. Pode ser que o ficheiro<br>seja só de leitura "
-"ou que não tenha acesso aos ficheiros."
+"O ficheiro não pode ser gravado. Pode ser que o ficheiro<br>seja apenas de "
+"leitura ou que não tenha acesso aos ficheiros."
 
 #: src/bin/e_config.c:2116
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
@@ -976,7 +976,7 @@ msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituído?"
 
 #: src/bin/e_config.c:2132
 msgid "You ran out of space while writing the file."
-msgstr "Ficou sem espaço ao escrever o ficheiro."
+msgstr "Ficou sem espaço ao gravar o ficheiro."
 
 #: src/bin/e_config.c:2136
 msgid "The file was closed while writing."
@@ -1029,9 +1029,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"O Moksha produziu um erro ao gravar<br>o ficheiro de configuração."
-"<br>%s<br>O erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi "
-"eliminado para evitar corromper os dados.<br>"
+"O Moksha teve um erro ao gravar<br>o ficheiro de configuração.<br>%s<br>O "
+"erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado para "
+"evitar a corrupção de dados.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1081,7 +1081,8 @@ msgstr "Erro - sem suporte PAM"
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"O Moksha não foi compilado com suporte PAM<br>e o bloqueio não é permitido."
+"Não foi incorporado qualquer suporte a PAM no Moksha<br>pelo que o bloqueio "
+"está desativado."
 
 #: src/bin/e_desklock.c:303
 msgid "Lock Failed"
@@ -1094,7 +1095,7 @@ msgid ""
 msgstr ""
 "Ocorreu um erro ao bloquear a área de trabalho pois uma aplicação<br> "
 "apoderou-se do teclado, do rato ou de ambos e<br>essa posse não pode ser "
-"quebrada."
+"desfeita."
 
 #: src/bin/e_desklock.c:543
 msgid "Please enter your unlock password"
@@ -1110,7 +1111,7 @@ msgstr "A palavra-passe introduzida é inválida. Tente novamente."
 
 #: src/bin/e_desklock.c:970
 msgid "Authentication System Error"
-msgstr "Erro de autenticação"
+msgstr "Erro no sistema de autenticação"
 
 #: src/bin/e_desklock.c:971
 #, c-format
@@ -1120,8 +1121,8 @@ msgid ""
 "happening. Please report this bug."
 msgstr ""
 "Ocorreram erros durante a autenticação da sessão via PAM.<br>O código do "
-"erro foi <hilight>%i</hilight>.<br>Isto é mau e não deveria acontecer."
-"<br>Reporte este erro."
+"erro foi <hilight>%i</hilight>.<br>Isto é mau e não deveria estar a "
+"acontecer.<br>Comunique este erro."
 
 #: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:184
 msgid "Activate Presentation Mode?"
@@ -1133,9 +1134,9 @@ msgid ""
 "<b>presentation</b> mode and temporarily disable screen saver, lock and "
 "power saving?"
 msgstr ""
-"Desbloqueou a área de trabalho muito depressa.<br><br>Pretende ativar o modo "
-"de <b>demonstração</b> e inativar temporariamente a proteção de ecrã, os "
-"bloqueios e a poupança de energia?"
+"Desbloqueou a área de trabalho demasiado depressa.<br><br>Pretende ativar o "
+"modo de <b>demonstração</b> e inativar temporariamente a proteção de ecrã, o "
+"bloqueio e a poupança de energia?"
 
 #: src/bin/e_desklock.c:1317 src/bin/e_screensaver.c:197
 msgid "No, but increase timeout"
@@ -1143,11 +1144,11 @@ msgstr "Não, mas aumenta o tempo limite"
 
 #: src/bin/e_desklock.c:1319 src/bin/e_screensaver.c:199
 msgid "No, and stop asking"
-msgstr "Não e parar de perguntar"
+msgstr "Não, e parar de perguntar"
 
 #: src/bin/e_eap_editor.c:181
 msgid "Incomplete Window Properties"
-msgstr "Propriedades incompletas da janela"
+msgstr "Propriedades da janela incompletas"
 
 #: src/bin/e_eap_editor.c:182
 msgid ""
@@ -1158,8 +1159,8 @@ msgid ""
 msgstr ""
 "A janela para a qual está a criar um ícone<br>não contém o nome da janela "
 "nem as <br>propriedades da classe. Sem estes elementos<br>terá que utilizar "
-"o título da janela.<br>Isto só vai funcionar se o título da janela<br>for o "
-"mesmo no momento em que a janela<br>é iniciada e não for alterado."
+"o título da janela.<br>Isto só funcionará se o título da janela<br>for o "
+"mesmo no momento em que a janela<br>for iniciada e não alterar."
 
 #: src/bin/e_eap_editor.c:235
 msgid "Desktop Entry Editor"
@@ -1230,7 +1231,7 @@ msgstr "Executar no terminal"
 
 #: src/bin/e_eap_editor.c:789
 msgid "Show in Menus"
-msgstr "Mostrar no menu"
+msgstr "Mostrar nos menus"
 
 #: src/bin/e_eap_editor.c:792 src/bin/e_fm.c:8853 src/bin/e_fm.c:9013
 #: src/bin/e_int_border_remember.c:784 src/modules/xkbswitch/e_mod_config.c:374
@@ -1241,11 +1242,11 @@ msgstr "Opções"
 #: src/bin/e_eap_editor.c:823
 #, c-format
 msgid "Select an Icon for '%s'"
-msgstr "Escolha o ícone para '%s'"
+msgstr "Selecionar um ícone para '%s'"
 
 #: src/bin/e_eap_editor.c:889
 msgid "Select an Executable"
-msgstr "Escolha o executável"
+msgstr "Selecionar um executável"
 
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10881
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
@@ -1584,7 +1585,7 @@ msgstr "Lista"
 
 #: src/bin/e_fm.c:9536 src/modules/everything/evry_config.c:467
 msgid "Default View"
-msgstr "Visualização padrão"
+msgstr "Visualização predefinida"
 
 #: src/bin/e_fm.c:9558
 #, c-format
@@ -1593,11 +1594,11 @@ msgstr "Tamanho dos ícones (%d)"
 
 #: src/bin/e_fm.c:9585
 msgid "Could not create a directory!"
-msgstr "Não foi possível criar o diretório!"
+msgstr "Não foi possível criar um diretório!"
 
 #: src/bin/e_fm.c:9600
 msgid "Could not create a file!"
-msgstr "Não foi possível criar o ficheiro!"
+msgstr "Não foi possível criar um ficheiro!"
 
 #: src/bin/e_fm.c:9615 src/bin/e_fm.c:9642
 #: src/modules/conf_paths/e_int_config_paths.c:206
@@ -1610,12 +1611,12 @@ msgstr "Novo ficheiro"
 
 #: src/bin/e_fm.c:9709 src/bin/e_fm.c:9730
 msgid "Already creating a new file for this directory!"
-msgstr "Já está a criar o novo ficheiro neste diretório!"
+msgstr "Já está a criar o novo ficheiro para este diretório!"
 
 #: src/bin/e_fm.c:9714 src/bin/e_fm.c:9735
 #, c-format
 msgid "%s can't be written to!"
-msgstr "Não pode escrever em %s!"
+msgstr "Não pode gravar em %s!"
 
 #: src/bin/e_fm.c:9754
 msgid "Directory"
@@ -1694,7 +1695,7 @@ msgstr "%s não foi renomeado porque está protegido"
 
 #: src/bin/e_fm.c:10372 src/bin/e_fm.c:10406
 msgid "Internal filemanager error :("
-msgstr "Erro interno do gestor de ficheiro :("
+msgstr "Erro interno do gestor de ficheiros :("
 
 #: src/bin/e_fm.c:10460 src/bin/e_fm.c:10681
 msgid "Retry"
@@ -1754,7 +1755,7 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Tem a certeza que quer eliminar<br><hilight>estes</hilight> %d ficheiros "
+"Tem a certeza que quer eliminar<br><hilight>todos</hilight> os %d ficheiros "
 "de<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm.c:10909
@@ -1785,7 +1786,7 @@ msgstr "%s—%s"
 #: src/bin/e_fm_device.c:79
 #, c-format
 msgid "Flash Card—%s"
-msgstr "Cartão flash - %s"
+msgstr "Cartão de memória - %s"
 
 #: src/bin/e_fm_device.c:81
 #, c-format
@@ -1794,7 +1795,7 @@ msgstr "Desconhecido"
 
 #: src/bin/e_fm_device.c:343
 msgid "Removable Device"
-msgstr "Dispositivo amovível"
+msgstr "Dispositivo removível"
 
 #: src/bin/e_fm_prop.c:255
 #, c-format
@@ -1943,7 +1944,7 @@ msgstr "Parar de mover"
 
 #: src/bin/e_gadcon.c:3099
 msgid "Insufficient gadcon support"
-msgstr "Suporte gadcon insuficiente"
+msgstr "Suporte insuficiente a gadcon"
 
 #: src/bin/e_gadcon.c:3100
 #, c-format
@@ -1955,8 +1956,7 @@ msgstr "O módulo %s tem que suportar %s"
 msgid ""
 "Please press key sequence,<br><br>or <hilight>Escape</hilight> to abort."
 msgstr ""
-"Escolha a sequência de teclas<br><br>ou <hilight>Escape</hilight> para "
-"abortar."
+"Prima a sequência de teclas<br><br>ou <hilight>Esc</hilight> para abortar."
 
 #: src/bin/e_grab_dialog.c:5
 msgid ""
@@ -1966,7 +1966,7 @@ msgid ""
 msgstr ""
 "Prima e mantenha o modificador que quer utilizar<br>e prima qualquer botão "
 "do rato ou<br>mexa na roda para atribuir uma combinação.<br>Prima "
-"<hilight>Escape</highlight> para abortar."
+"<hilight>Esc</highlight> para abortar."
 
 #: src/bin/e_grab_dialog.c:128
 msgid "Mouse Binding Sequence"
@@ -1991,7 +1991,7 @@ msgstr "Erro ao importar"
 
 #: src/bin/e_import_dialog.c:75 src/bin/e_import_config_dialog.c:353
 msgid "Moksha was unable to import the image<br>due to a copy error."
-msgstr "O Moksha não conseguiu importar a<br>imagem devido a erros de cópia."
+msgstr "O Moksha não conseguiu importar a<br>imagem devido a erro ao copiar."
 
 #: src/bin/e_import_dialog.c:85 src/bin/e_import_config_dialog.c:363
 msgid ""
@@ -2003,11 +2003,11 @@ msgstr ""
 
 #: src/bin/e_import_dialog.c:163
 msgid "Select a Picture..."
-msgstr "Escolha a imagem..."
+msgstr "Selecione uma imagem..."
 
 #: src/bin/e_import_dialog.c:195
 msgid "Use"
-msgstr "Utilização"
+msgstr "Usar"
 
 #: src/bin/e_import_config_dialog.c:295
 #: src/modules/conf_theme/e_int_config_wallpaper.c:1144
@@ -2035,7 +2035,7 @@ msgstr "Esticar"
 #: src/bin/e_import_config_dialog.c:497 src/bin/e_int_border_prop.c:236
 #, c-format
 msgid "Center"
-msgstr "Centro"
+msgstr "Centrar"
 
 #: src/bin/e_import_config_dialog.c:501
 msgid "Tile"
@@ -2051,15 +2051,15 @@ msgstr "Preencher"
 
 #: src/bin/e_import_config_dialog.c:514
 msgid "Pan"
-msgstr "Pan"
+msgstr "Panorâmica"
 
 #: src/bin/e_import_config_dialog.c:522
 msgid "File Quality"
-msgstr "Qualidade"
+msgstr "Qualidade do ficheiro"
 
 #: src/bin/e_import_config_dialog.c:523
 msgid "Use original file"
-msgstr "Utilizar original"
+msgstr "Usar ficheiro original"
 
 #: src/bin/e_import_config_dialog.c:525
 #, c-format
@@ -2080,7 +2080,7 @@ msgstr "Bloqueios gerais"
 
 #: src/bin/e_int_border_locks.c:285
 msgid "Prevent this window from moving on its own"
-msgstr "Impedir que esta janela seja movida para si própria"
+msgstr "Impedir que esta janela se mova sozinha"
 
 #: src/bin/e_int_border_locks.c:287
 msgid "Prevent this window from being changed by me"
@@ -2189,7 +2189,7 @@ msgstr "Sempre por cima"
 
 #: src/bin/e_int_border_menu.c:185 src/bin/e_int_border_prop.c:506
 msgid "Sticky"
-msgstr "Fixa"
+msgstr "Fixar"
 
 #: src/bin/e_int_border_menu.c:199
 msgid "Shade"
@@ -2226,7 +2226,7 @@ msgstr "Adicionar à IBar"
 
 #: src/bin/e_int_border_menu.c:645
 msgid "Create Keyboard Shortcut"
-msgstr "Criar atalho de teclado"
+msgstr "Criar tecla de atalho"
 
 #: src/bin/e_int_border_menu.c:691
 #: src/modules/everything/evry_plug_windows.c:438
@@ -2279,7 +2279,7 @@ msgstr "Normal"
 
 #: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
-msgstr "Sempre por trás"
+msgstr "Sempre por baixo"
 
 #: src/bin/e_int_border_menu.c:1118
 msgid "Pin to Desktop"
@@ -2307,7 +2307,7 @@ msgstr "Utilizar ícones definidos pelo utilizador"
 
 #: src/bin/e_int_border_menu.c:1256 src/bin/e_int_border_remember.c:755
 msgid "Offer Resistance"
-msgstr "Criar resistência"
+msgstr "Oferecer resistência"
 
 #: src/bin/e_int_border_menu.c:1317
 msgid "Window List"
@@ -2350,17 +2350,17 @@ msgstr "%1.3f–%1.3f"
 #: src/bin/e_int_border_prop.c:153 src/bin/e_int_border_prop.c:175
 #, c-format
 msgid "Withdrawn"
-msgstr "Retirar"
+msgstr "Não visível"
 
 #: src/bin/e_int_border_prop.c:161 src/bin/e_int_border_prop.c:183
 #, c-format
 msgid "Iconic"
-msgstr "Icónico"
+msgstr "Minimizado"
 
 #: src/bin/e_int_border_prop.c:216
 #, c-format
 msgid "Forget/Unmap"
-msgstr "Esquecer/Restaurar"
+msgstr "Esquecer/Ocultar"
 
 #: src/bin/e_int_border_prop.c:220
 #, c-format
@@ -2748,7 +2748,7 @@ msgstr "Lançador"
 #: src/modules/conf_applications/e_int_config_defapps.c:330
 #: src/modules/conf_theme/e_int_config_fonts.c:57
 msgid "Core"
-msgstr "Núcleo"
+msgstr "Base"
 
 #: src/bin/e_int_config_modules.c:57
 msgid "Mobile"
@@ -2756,7 +2756,7 @@ msgstr "Móvel"
 
 #: src/bin/e_int_config_modules.c:98
 msgid "Module Settings"
-msgstr "Módulos"
+msgstr "Definições dos módulos"
 
 #: src/bin/e_int_config_modules.c:200
 msgid "Load"
@@ -2845,7 +2845,7 @@ msgstr "Aplicações"
 
 #: src/bin/e_int_menus.c:210
 msgid "About Operating System"
-msgstr "Sobre o sistema operativo"
+msgstr "Acerca do Sistema operativo"
 
 #: src/bin/e_int_menus.c:216
 msgid "Help"
@@ -2853,15 +2853,15 @@ msgstr "Ajuda"
 
 #: src/bin/e_int_menus.c:222
 msgid "About Bodhi Linux"
-msgstr "Sobre o Bodhi Linux"
+msgstr "Acerca do Bodhi Linux"
 
 #: src/bin/e_int_menus.c:243
 msgid "About Moksha Desktop"
-msgstr "Sobre o Moksha"
+msgstr "Acerca do Moksha"
 
 #: src/bin/e_int_menus.c:249 src/bin/e_theme_about.c:21
 msgid "About Theme"
-msgstr "Sobre o tema"
+msgstr "Acerca do Tema"
 
 #: src/bin/e_int_menus.c:263
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:313
@@ -2948,7 +2948,7 @@ msgstr "Por baixo de tudo"
 
 #: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
-msgstr "Permitir que as janelas cubram o painel"
+msgstr "Permitir que as janelas se sobreponham ao painel"
 
 #: src/bin/e_int_shelf_config.c:227
 #, c-format
@@ -3901,7 +3901,7 @@ msgid ""
 "Resetting.<br>You cannot do any other system actions<br>once a reboot has "
 "begun."
 msgstr ""
-"A restaurar.<br>Não pode executar quaisquer outras ações após iniciar o "
+"A reiniciar.<br>Não pode executar quaisquer outras ações após iniciar o "
 "processo."
 
 #: src/bin/e_sys.c:619
@@ -3930,7 +3930,7 @@ msgstr "Falha ao desligar."
 
 #: src/bin/e_sys.c:660
 msgid "Reset failed."
-msgstr "Falha ao restaurar."
+msgstr "Falha ao reiniciar."
 
 #: src/bin/e_sys.c:664
 msgid "Suspend failed."
@@ -3942,7 +3942,7 @@ msgstr "Falha ao hibernar."
 
 #: src/bin/e_sys.c:672
 msgid "EEK! This should not happen"
-msgstr "Isto não devia acontecer"
+msgstr "IRRA! Isto não deveria acontecer"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
@@ -3950,11 +3950,11 @@ msgstr "A desligar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:812
 msgid "Resetting"
-msgstr "A restaurar"
+msgstr "A reiniciar"
 
 #: src/bin/e_sys.c:815
 msgid "Resetting.<br><hilight>Please wait.</hilight>"
-msgstr "A restaurar.<br><hilight>Aguarde.</hilight>"
+msgstr "A reiniciar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:867
 msgid "Suspending"
@@ -3974,7 +3974,7 @@ msgstr "A hibernar.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_theme_about.c:25
 msgid "Select Theme"
-msgstr "Escolha o tema"
+msgstr "Selecionar tema"
 
 #: src/bin/e_theme.c:37
 msgid "Set As Theme"
@@ -3986,7 +3986,7 @@ msgstr "Parar de mover/redimensionar itens"
 
 #: src/bin/e_toolbar.c:248
 msgid "Begin Moving/Resizing Items"
-msgstr "Mover/redimensionar itens"
+msgstr "Começar a mover/redimensionar itens"
 
 #: src/bin/e_toolbar.c:261
 msgid "Set Toolbar Contents"
@@ -3994,7 +3994,7 @@ msgstr "Definir conteúdo da barra de ferramentas"
 
 #: src/bin/e_update.c:78
 msgid "Bother me later"
-msgstr "Avise-me mais tarde"
+msgstr "Avisar-me mais tarde"
 
 #: src/bin/e_update.c:80
 msgid "Never tell me"
@@ -4340,7 +4340,7 @@ msgstr "Modificado:"
 #: src/bin/e_widget_filepreview.c:841 src/bin/e_widget_filepreview.c:850
 #, c-format
 msgid "Read Only"
-msgstr "Só leitura"
+msgstr "Apenas leitura"
 
 #: src/bin/e_widget_filepreview.c:668 src/bin/e_widget_filepreview.c:857
 msgid "Read-Write"
@@ -4425,7 +4425,7 @@ msgstr "Hibernar ao atingir:"
 
 #: src/modules/battery/e_mod_config.c:248
 msgid "Shutdown when below:"
-msgstr "Desligar ao atingir:"
+msgstr "Encerrar ao atingir:"
 
 #: src/modules/battery/e_mod_config.c:251
 #: src/modules/battery/e_mod_config.c:270 src/modules/places/e_mod_config.c:268
@@ -4595,7 +4595,7 @@ msgstr "Números"
 
 #: src/modules/clock/e_mod_config.c:258
 msgid "Date Only"
-msgstr "Só data"
+msgstr "Apenas data"
 
 #: src/modules/clock/e_mod_config.c:260
 msgid "ISO 8601"
@@ -4710,7 +4710,7 @@ msgstr "Lançadores de aplicações"
 #: src/modules/conf_applications/e_int_config_defapps.c:304
 #: src/modules/conf_applications/e_mod_main.c:53
 msgid "Default Applications"
-msgstr "Aplicações padrão"
+msgstr "Aplicações predefinidas"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:297
 msgid "Custom Browser Command"
@@ -5434,7 +5434,7 @@ msgstr "%1.2f s"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
 msgid "Mouse and Touchpad Settings"
-msgstr "Definições de rato e painel tátil"
+msgstr "Definições do rato e do painel tátil"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -6531,7 +6531,7 @@ msgstr "Item da lista de janelas ativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:95
 msgid "Winlist Label"
-msgstr "Texto da lista de janelas"
+msgstr "Legenda da lista de janelas"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:96
 #: src/modules/conf_theme/e_int_config_fonts.c:67
@@ -6583,7 +6583,7 @@ msgstr "Texto da entrada inativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "Label Text"
-msgstr "Texto da etiqueta"
+msgstr "Texto da legenda"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Item Text Selected"
@@ -6647,7 +6647,7 @@ msgstr "Base para o fundo da moldura de deslocamento"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:132
 msgid "Module Label"
-msgstr "Etiqueta do módulo"
+msgstr "Legenda do módulo"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:133
 msgid "Composite Focus-out Color"
@@ -6742,11 +6742,11 @@ msgstr "Título das definições"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:69
 msgid "About Title"
-msgstr "Sobre o título"
+msgstr "Acerca do Título"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:70
 msgid "About Version"
-msgstr "Sobre a versão"
+msgstr "Acerca da Versão"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:72
 msgid "Desklock Title"
@@ -6790,7 +6790,7 @@ msgstr "Imagem"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:84
 msgid "Label"
-msgstr "Etiqueta"
+msgstr "Legenda"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:86
 msgid "Slider"
@@ -8638,15 +8638,15 @@ msgstr "Minimizadas nos outros ecrãs"
 
 #: src/modules/winlist/e_int_config_winlist.c:224
 msgid "Uniconify/Unshade"
-msgstr "Restaurar/Desenrolar"
+msgstr "Minimizar/Desenrolar"
 
 #: src/modules/winlist/e_int_config_winlist.c:226
 msgid "Warp mouse while selecting"
-msgstr "Enviar rato ao selecionar"
+msgstr "Mover o rato durante a seleção"
 
 #: src/modules/winlist/e_int_config_winlist.c:230
 msgid "Warp mouse at end"
-msgstr "Enviar rato no final"
+msgstr "Mover o rato para o final"
 
 #: src/modules/winlist/e_int_config_winlist.c:234
 msgid "Jump to desk"
@@ -8662,11 +8662,11 @@ msgstr "Seleção"
 
 #: src/modules/winlist/e_int_config_winlist.c:244
 msgid "Warp speed"
-msgstr "Velocidade do envio"
+msgstr "Velocidade de movimentação"
 
 #: src/modules/winlist/e_int_config_winlist.c:252
 msgid "Scroll Animation"
-msgstr "Deslocação animada"
+msgstr "Animação de deslocação"
 
 #: src/modules/winlist/e_int_config_winlist.c:257
 msgid "Scroll speed"
@@ -8741,7 +8741,7 @@ msgstr "Janela na direita"
 #: src/modules/winlist/e_mod_main.c:209 src/modules/winlist/e_mod_main.c:215
 #: src/modules/winlist/e_mod_main.c:221
 msgid "Winlist Error"
-msgstr "Erro Winlist"
+msgstr "Erro: Lista de janelas"
 
 #: src/modules/winlist/e_mod_main.c:209
 msgid "Winlist cannot be activated from an edge binding"
@@ -8773,11 +8773,11 @@ msgstr "Configuração"
 
 #: src/modules/ibar/e_mod_config.c:131
 msgid "Icon Labels"
-msgstr "Etiquetas dos ícones"
+msgstr "Legenda dos ícones"
 
 #: src/modules/ibar/e_mod_config.c:132
 msgid "Show icon label"
-msgstr "Mostrar texto dos ícones"
+msgstr "Mostrar legenda dos ícones"
 
 #: src/modules/ibar/e_mod_config.c:152
 msgid "Misc"
@@ -8785,7 +8785,7 @@ msgstr "Diversos"
 
 #: src/modules/ibar/e_mod_config.c:153
 msgid "Icon focus flash"
-msgstr "Piscar ícone em foco"
+msgstr "Pulsação dos ícones"
 
 #: src/modules/ibar/e_mod_config.c:155
 msgid "Lock icon move"
@@ -8863,7 +8863,7 @@ msgstr "Expandir quando na área de trabalho"
 
 #: src/modules/ibox/e_mod_config.c:101
 msgid "Show Icon Label"
-msgstr "Mostrar texto do ícone"
+msgstr "Mostrar legenda dos ícones"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -9131,7 +9131,7 @@ msgstr "Temperatura"
 
 #: src/modules/temperature/e_mod_main.c:76
 msgid "High CPU temperature!!"
-msgstr "Alta temperatura da CPU!!"
+msgstr "Temperatura elevada da CPU!!"
 
 #: src/modules/temperature/e_mod_main.c:77
 msgid "Check your device or settings!"
@@ -9151,11 +9151,11 @@ msgstr "Bem-vindo ao Moksha"
 
 #: src/modules/wizard/page_000.c:39 src/modules/wizard/page_040.c:37
 msgid "Please Wait As We Are Loading Moksha Settings!"
-msgstr "Aguarde, enquanto carregamos as definições do Moksha!"
+msgstr "Aguarde enquanto carregamos as definições do Moksha!"
 
 #: src/modules/wizard/page_010.c:189 src/modules/wizard/page_011.c:175
 msgid "Select one"
-msgstr "Escolha um"
+msgstr "Selecionar"
 
 #: src/modules/wizard/page_170.c:25
 msgid "Updates"
@@ -9163,7 +9163,7 @@ msgstr "Atualizações"
 
 #: src/modules/wizard/page_170.c:27
 msgid "Check for available updates"
-msgstr "Procurar atualizações"
+msgstr "Procurar por atualizações disponíveis"
 
 #: src/modules/wizard/page_170.c:33
 msgid ""
@@ -9177,16 +9177,16 @@ msgid ""
 "below. It is highly<br>advised that you do not disable this as it<br>may "
 "leave you vulnerable or having to live<br>with bugs."
 msgstr ""
-"O Moksha pode procurar novas<br>versões e atualizações para<br>o ambiente de "
-"trabalho e para os extras.<br><br>Esta funcionalidade pode ser útil<br>pois "
-"permite-lhe descobrir as<br>diversas correções à medida que são "
+"O Moksha pode procurar por novas<br>versões e atualizações para<br>o "
+"ambiente de trabalho e para os extras.<br><br>Esta funcionalidade pode ser "
+"útil<br>pois permite-lhe descobrir as<br>diversas correções à medida que são "
 "disponibilizadas<br>. Para o efeito, o Moksha<br>irá efetuar uma ligação ao "
 "enlightenment.org e<br>enviar algumas informações<br>tal como um navegador "
-"web faz.<br>Nenhuma informação pessoal (nome de utilizador,<br>palavras-"
-"passe ou ficheiros) será enviada. Se não quiser<br>ativar a funcionalidade, "
-"desative-a agora.<br>No entanto, recomendamos que<br>mantenha esta opção "
-"ativa, pois se não o fizer<br>poderá ficar vulnerável aos erros que possam "
-"existir no código."
+"de Internet faz.<br>Nenhuma informação pessoal (nome de utilizador,"
+"<br>palavras-passe ou ficheiros) será enviada. Se não quiser<br>ativar a "
+"funcionalidade, desative-a agora.<br>No entanto, recomendamos "
+"que<br>mantenha esta opção ativa, pois se não o fizer<br>poderá ficar "
+"vulnerável aos erros que possam existir no código."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9194,7 +9194,7 @@ msgstr "Ativar a procura por atualizações"
 
 #: src/modules/wizard/page_180.c:27
 msgid "Information"
-msgstr "Informações"
+msgstr "Informação"
 
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
@@ -9474,10 +9474,9 @@ msgid ""
 "associated window can be returned to immediately<br>on demand by pushing the "
 "keyboard shortcut."
 msgstr ""
-"O acesso rápido é um método para combinar<br>janelas e aplicações aos "
-"atalhos de teclado.<br>Assim que criar uma entrada de acesso rápido, "
-"a<br>janela ou aplicação pode ser aberta imediatamente através<br>do seu "
-"atalho de teclado."
+"O acesso rápido é um método para combinar<br>janelas e aplicações às teclas "
+"de atalho.<br>Assim que criar uma entrada de acesso rápido, a<br>janela ou "
+"aplicação pode ser aberta imediatamente através<br>da sua tecla de atalho."
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:1265
 msgid ""
@@ -9908,7 +9907,7 @@ msgstr "Modelos"
 
 #: src/modules/xkbswitch/e_mod_config.c:331
 msgid "Label only"
-msgstr "Apenas texto"
+msgstr "Apenas legenda"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
@@ -10011,7 +10010,7 @@ msgstr "Definições de notificações"
 
 #: src/modules/notification/e_mod_config.c:108
 msgid "Urgency"
-msgstr "Urgência"
+msgstr "Urgente"
 
 #: src/modules/notification/e_mod_config.c:109
 msgid "Levels of urgency to display:"
@@ -10069,11 +10068,11 @@ msgstr "Ordem invertida"
 #: src/modules/notification/e_mod_config.c:193
 #: src/modules/clipboard/e_mod_config.c:245
 msgid "Labels"
-msgstr "Etiquetas"
+msgstr "Legendas"
 
 #: src/modules/notification/e_mod_config.c:194
 msgid "Labels length"
-msgstr "Tamanho das etiquetas"
+msgstr "Tamanho das legendas"
 
 #: src/modules/notification/e_mod_config.c:201
 #: src/modules/clipboard/e_mod_config.c:256
@@ -10156,7 +10155,7 @@ msgstr " Temporizador"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
-msgstr " Comprimento da etiqueta"
+msgstr " Comprimento da legenda"
 
 #: src/modules/clipboard/e_mod_config.c:257
 msgid " Reverse Order"
@@ -10396,15 +10395,15 @@ msgstr "Volume alterado"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
-msgstr "Aumentar volume"
+msgstr "Aumenta o volume"
 
 #: src/modules/mixer/e_mod_main.c:256
 msgid "Decrease Volume"
-msgstr "Diminuir volume"
+msgstr "Diminui o volume"
 
 #: src/modules/mixer/e_mod_main.c:264
 msgid "Mute volume"
-msgstr "Silenciar"
+msgstr "Silenciar o som"
 
 #: src/modules/mixer/e_mod_main.c:277
 msgid "Volume Increase"
@@ -10412,4 +10411,4 @@ msgstr "Aumento do volume"
 
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
-msgstr "Volume mudo"
+msgstr "Som silenciado"
