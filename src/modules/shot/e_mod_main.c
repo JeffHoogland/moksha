@@ -1183,9 +1183,7 @@ _shot_dialog_key_down(void *data, Evas *e __UNUSED__, Evas_Object *o __UNUSED__,
    Evas_Event_Key_Down *ev = event;
    E_Dialog *dia = data;
 
-   if (strcmp(ev->key, "Return") == 0)
-     _shot_dialog_instant_cb(NULL, dia);
-   else if (strcmp(ev->key, "Escape") == 0)
+   if (strcmp(ev->key, "Escape") == 0)
      _shot_dialog_del(dia);
 }
 
