@@ -812,7 +812,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, xkb.selected_layout, STR);
    E_CONFIG_VAL(D, T, xkb.cur_layout, STR);
    E_CONFIG_VAL(D, T, xkb.desklock_layout, STR);
-   E_CONFIG_VAL(D, T, xkb.cur_group, INT);
+   //E_CONFIG_VAL(D, T, xkb.cur_group, INT);
 
    E_CONFIG_VAL(D, T, exe_always_single_instance, UCHAR);
 
