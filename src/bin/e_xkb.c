@@ -354,9 +354,8 @@ e_xkb_layout_set(const E_Config_XKB_Layout *cl)
 
    EINA_SAFETY_ON_NULL_RETURN(cl);
    if (e_config_xkb_layout_eq(e_config->xkb.current_layout, cl)) return;
-   cl2 = e_config_xkb_layout_dup(e_config->xkb.current_layout);
    e_config_xkb_layout_free(e_config->xkb.current_layout);
-   e_config->xkb.current_layout = cl2;
+   e_config->xkb.current_layout = e_config_xkb_layout_dup(cl);
    EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl2)
      {
         cur_group++;
