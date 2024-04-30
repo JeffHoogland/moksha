@@ -26,13 +26,13 @@ static void             _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E
 
 typedef struct _Instance
 {
-   E_Gadcon_Client *gcc;
+   E_Gadcon_Client     *gcc;
 
-   Evas_Object     *o_xkbswitch;
-   Evas_Object     *o_xkbflag;
+   Evas_Object         *o_xkbswitch;
+   Evas_Object         *o_xkbflag;
    E_Config_XKB_Layout *layout;
 
-   E_Menu          *lmenu;
+   E_Menu              *lmenu;
 } Instance;
 
 /* LIST OF INSTANCES */
@@ -183,13 +183,13 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
     *   The attempt below causes issues: heap-use-after-free. */
    if (!inst->layout)
       {
-          inst->layout = E_NEW(E_Config_XKB_Layout, 1);
-          // Initialize to defaults
-          inst->layout->name = eina_stringshare_ref("us");
-          inst->layout->variant = eina_stringshare_add("basic");
-          inst->layout->model = eina_stringshare_add("default");
-          e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, inst->layout);
-          e_xkb_update(-1);
+         inst->layout = E_NEW(E_Config_XKB_Layout, 1);
+         // Initialize to defaults
+         inst->layout->name = eina_stringshare_ref("us");
+         inst->layout->variant = eina_stringshare_add("basic");
+         inst->layout->model = eina_stringshare_add("default");
+         e_config->xkb.used_layouts = eina_list_prepend(e_config->xkb.used_layouts, inst->layout);
+         e_xkb_update(-1);
       }
 #endif
    if (e_config->xkb.only_label)
@@ -210,7 +210,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    if (!e_config->xkb.only_label)
      {
         inst->o_xkbflag = e_icon_add(gc->evas);
-        if (inst->layout)                             
+        if (inst->layout)
           e_xkb_e_icon_flag_setup(inst->o_xkbflag, inst->layout->name);
         else
           e_xkb_e_icon_flag_setup(inst->o_xkbflag, "us");
