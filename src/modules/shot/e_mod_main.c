@@ -372,6 +372,7 @@ static void
 clipboard_copy(const char *file)
 {
    FILE *f = fopen(file, "r");
+   unsigned char *fdatas = NULL;
    win_cp = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
 
    if (!f) return;
@@ -380,17 +381,17 @@ clipboard_copy(const char *file)
    fseek(f, 0, SEEK_SET);
    if (fsize > 0)
      {
-        fdata = malloc(fsize);
-        if (fdata)
+        fdatas = malloc(fsize);
+        if (fdatas)
           {
-             if (fread(fdata, fsize, 1, f) == 1)
+             if (fread(fdatas, fsize, 1, f) == 1)
                {
                   elm_cnp_selection_set(win_cp,
                                         ELM_SEL_TYPE_CLIPBOARD,
                                         ELM_SEL_FORMAT_IMAGE,
-                                        fdata, fsize);
+                                        fdatas, fsize);
                }
-             free(fdata);
+             free(fdatas);
           }
      }
    fclose(f);
@@ -1311,7 +1312,7 @@ e_modapi_init(E_Module *m)
       ("main/2",  _("Take Screenshot"), _e_mod_menu_add, NULL, NULL, NULL);
    border_hook = e_int_border_menu_hook_add(_bd_hook, NULL);
 
-  e_configure_registry_category_add("extensions", 90, "Takescreenshot",
+   e_configure_registry_category_add("extensions", 90, "Takescreenshot",
                                  NULL, "preferences-extensions");
 
    e_configure_registry_item_add("extensions/takescreenshot", 20, _("Screenshot Settings"),
@@ -1356,8 +1357,8 @@ e_modapi_init(E_Module *m)
           }
      }
 
-     fake_win = ecore_x_window_new(0, 0, 0, 1, 1);
-     if (!shot_conf) _shot_conf_new();
+   fake_win = ecore_x_window_new(0, 0, 0, 1, 1);
+   if (!shot_conf) _shot_conf_new();
    shot_conf->module = m;
 
    return m;
