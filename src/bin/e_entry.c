@@ -605,11 +605,11 @@ _e_entry_x_selection_update(Evas_Object *entry)
    else
      xwin = win->evas_win;
 
-   if (sd->password_mode)
-      return;
+   //if (sd->password_mode)
+   //   return;
 
    text = edje_object_part_text_selection_get(sd->entry_object, ENTRY_PART_NAME);
-   if (text)
+   if (text && !sd->password_mode)
      ecore_x_selection_primary_set(xwin, text, strlen(text) + 1);
 }
 
