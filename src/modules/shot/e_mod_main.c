@@ -49,7 +49,7 @@ static E_Border_Menu_Hook *border_hook = NULL;
 static Eina_Bool _shot_no_delay(void *data);
 static int _notification_id = 0;
 
-static void       _file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia);
+static void       _file_select_ok_cb(void *data, E_Dialog *dia);
 static void       _file_select_cancel_cb(void *data __UNUSED__, E_Dialog *dia);
 static void       _cb_dialog_yes(void *data __UNUSED__);
 static void       _cb_dialog_cancel(void *data __UNUSED__);
@@ -402,15 +402,28 @@ clipboard_copy(const char *file)
 #endif
 
 static void
-_file_select_ok_cb(void *data __UNUSED__, E_Dialog *dia)
+_file_select_ok_cb(void *data, E_Dialog *dia)
 {
    const char *file;
+   char *clip = data;
    Ecore_Exe *exe;
    char buf[150];
 
    dia = fsel_dia;
 
    file = e_widget_fsel_selection_path_get(o_fsel);
+
+   if (clip && !strcmp(clip, "clipboard"))
+     {
+       if ((!file) || (!file[0]) || (!eina_str_has_extension(file, ".png")))
+        {
+          e_util_dialog_show
+           (_("Error - Unknown format"),
+               _("Please use 'Perfect quality'<br>"
+                 "only for copying into Clipboard."));
+         return;
+        }
+     }
 
    if ((!file) || (!file[0]) || ((!eina_str_has_extension(file, ".jpg")) && (!eina_str_has_extension(file, ".png"))))
      {
@@ -458,7 +471,7 @@ _file_select_del_cb(void *d __UNUSED__)
 }
 
 static void
-_win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
+_win_save_cb(void *data, void *data2 __UNUSED__)
 {
    E_Dialog *dia;
    Evas_Object *o;
@@ -510,10 +523,12 @@ _win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
    if (!evas_object_key_grab(o, "Escape", mask, ~mask, 0)) printf("grab err\n");
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _save_key_down_cb, NULL);
 
-   if (shot_conf->full_dialog)
+   char *clip = NULL;
+   clip = data;
+   if (shot_conf->full_dialog && strcmp(clip, "clipboard"))
      e_dialog_show(dia);
    else
-    _file_select_ok_cb(NULL, NULL);
+    _file_select_ok_cb(clip, NULL);
 }
 
 static void
@@ -944,10 +959,10 @@ _shot_now(E_Zone *zone, E_Border *bd)
    o = e_widget_framelist_add(evas, _("Quality"), 0);
    ol = o;
 
-   if (EINA_DBL_EQ(shot_conf->pict_quality, 100.0)) quality=100;
-   if ((shot_conf->pict_quality>=80) && (shot_conf->pict_quality<100)) quality=90;
-   if ((shot_conf->pict_quality>=60) && (shot_conf->pict_quality<80)) quality=70;
-   if (shot_conf->pict_quality<60) quality=50;
+   if (EINA_DBL_EQ(shot_conf->pict_quality, 100.0)) quality = 100;
+   if ((shot_conf->pict_quality >= 80) && (shot_conf->pict_quality < 100)) quality = 90;
+   if ((shot_conf->pict_quality >= 60) && (shot_conf->pict_quality < 80)) quality = 70;
+   if (shot_conf->pict_quality < 60) quality = 50;
 
    rg = e_widget_radio_group_new(&quality);
    o = e_widget_radio_add(evas, _("Perfect"), 100, rg);
@@ -1027,6 +1042,8 @@ _shot_now(E_Zone *zone, E_Border *bd)
    o = e_widget_button_add(evas, _("Save"), NULL, _win_save_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Share"), NULL, _win_share_confirm_cb, win, NULL);
+   e_widget_list_object_append(o_box, o, 1, 0, 0.5);
+   o = e_widget_button_add(evas, _("Clipboard"), NULL, _win_save_cb, "clipboard", NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Cancel"), NULL, _win_cancel_cb, win, NULL);
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
