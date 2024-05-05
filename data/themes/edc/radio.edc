@@ -62,7 +62,7 @@ group { name: "e/widgets/radio";
          effect: SHADOW BOTTOM;
          scale: 1;
          description { state: "default" 0.0;
-            rel1.offset: 2 2;
+            rel1.offset: 4 2;
             rel1.to_x: "inset";
             rel1.relative: 1.0 0.0;
             rel2.offset: -3 -3;
