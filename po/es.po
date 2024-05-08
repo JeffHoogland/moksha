@@ -9538,7 +9538,7 @@ msgstr "Error - Formato desconocido"
 
 #: src/modules/shot/e_mod_main.c:422
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr ""
+msgstr "Por favor use 'Calidad  Perfecta'<br>sólo para copiar al portapapeles."
 
 #: src/modules/shot/e_mod_main.c:432
 msgid ""
