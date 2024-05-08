@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-04-07 12:09+0200\n"
+"POT-Creation-Date: 2024-05-08 12:02+0200\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: српски <српски <xfce-i18n@xfce.org>>\n"
@@ -33,7 +33,7 @@ msgstr "О Просвећењу"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
+#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
 msgid "Close"
 msgstr "Затвори"
 
@@ -162,7 +162,7 @@ msgstr "Да ли сте сигурни да желите замрзнути с�
 #: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
 #: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
 #: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
-#: src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "Прозор : радње"
 
@@ -567,7 +567,7 @@ msgstr "Скочи на прозор... или покрени..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Екран"
 
@@ -871,9 +871,9 @@ msgstr "Изаберите"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
-#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
+#: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Откажи"
 
@@ -2571,7 +2571,7 @@ msgstr "Захтевај положај"
 #: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
 #: src/modules/xkbswitch/e_mod_main.c:370
 #: src/modules/xkbswitch/e_mod_main.c:411
@@ -2667,7 +2667,7 @@ msgstr "Величина, положај и закључавања"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:991
 msgid "All"
 msgstr "Све"
 
@@ -5943,8 +5943,8 @@ msgid "Quick Launcher"
 msgstr "Покретач"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
+#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:1329
 msgid "Take Screenshot"
 msgstr "Направи снимак екрана"
 
@@ -6404,13 +6404,13 @@ msgid "e.g. Saving to disk"
 msgstr "нпр. чување на диску"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:958
+#: src/modules/shot/e_mod_main.c:974
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "низак"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:956
+#: src/modules/shot/e_mod_main.c:972
 msgid "Medium"
 msgstr "осредњи"
 
@@ -6422,7 +6422,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:954
+#: src/modules/shot/e_mod_main.c:970
 msgid "High"
 msgstr "висок"
 
@@ -9619,7 +9619,7 @@ msgstr ""
 msgid "Systray"
 msgstr "Системска касета"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
 #, fuzzy
 msgid "Screenshot"
 msgstr "Направи снимак екрана"
@@ -9653,11 +9653,15 @@ msgstr "Грешка при чувању датотеке снимка екра�
 msgid "Path: %s"
 msgstr "Путања: %s"
 
-#: src/modules/shot/e_mod_main.c:417
+#: src/modules/shot/e_mod_main.c:421 src/modules/shot/e_mod_main.c:431
 msgid "Error - Unknown format"
 msgstr "Грешка - непознати облик"
 
-#: src/modules/shot/e_mod_main.c:418
+#: src/modules/shot/e_mod_main.c:422
+msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:432
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9665,149 +9669,158 @@ msgstr ""
 "Датотека нема одговарајући наставак.<br>Молим, користите само „.jpg“ или „."
 "png“ наставке<br>јер остали облици тренутно<br>нису подржани."
 
-#: src/modules/shot/e_mod_main.c:485
+#: src/modules/shot/e_mod_main.c:499
 msgid "Select screenshot save location"
 msgstr "Подесите одредиште за чување снимака"
 
-#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
+#: src/modules/shot/e_mod_main.c:513 src/modules/shot/e_mod_main.c:1042
 msgid "Save"
 msgstr "Сачувај"
 
-#: src/modules/shot/e_mod_main.c:603
+#: src/modules/shot/e_mod_main.c:619
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Отпремљено %s / %s"
 
-#: src/modules/shot/e_mod_main.c:624
+#: src/modules/shot/e_mod_main.c:640
 msgid "Error - Upload Failed"
 msgstr "Грешка - отпремање није успело"
 
-#: src/modules/shot/e_mod_main.c:625
+#: src/modules/shot/e_mod_main.c:641
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Отпремање није успело уз шифру стања:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:674
+#: src/modules/shot/e_mod_main.c:690
 msgid "Error - Can't create file"
 msgstr "Грешка - Нисам успео да направим датотеку"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:691
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Нисам успео да направим привремену датотеку „%s“: %s"
 
-#: src/modules/shot/e_mod_main.c:693
+#: src/modules/shot/e_mod_main.c:709
 msgid "Error - Can't open file"
 msgstr "Грешка - нисам успео да отворим датотеку"
 
-#: src/modules/shot/e_mod_main.c:694
+#: src/modules/shot/e_mod_main.c:710
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Нисам успео да отворим привремену датотеку „%s„ : %s"
 
-#: src/modules/shot/e_mod_main.c:702
+#: src/modules/shot/e_mod_main.c:718
 msgid "Error - Bad size"
 msgstr "Грешка - лоша величина"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:719
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Нисам успео да добавим величину датотеке „%s“"
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:729
 msgid "Error - Can't allocate memory"
 msgstr "Грешка - нисам успео да обезбедим меморију"
 
-#: src/modules/shot/e_mod_main.c:714
+#: src/modules/shot/e_mod_main.c:730
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Нисам успео доделити меморију слици: %s"
 
-#: src/modules/shot/e_mod_main.c:721
+#: src/modules/shot/e_mod_main.c:737
 msgid "Error - Can't read picture"
 msgstr "Грешка - Нисам успео да прочитам слику"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:738
 msgid "Cannot read picture"
 msgstr "Нисам успео да прочитам слику"
 
-#: src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:760
 msgid "Uploading screenshot"
 msgstr "Отпремање снимка"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:765
 msgid "Uploading ..."
 msgstr "Отпремам ..."
 
-#: src/modules/shot/e_mod_main.c:754
+#: src/modules/shot/e_mod_main.c:770
 msgid "Screenshot is available at this location:"
 msgstr "Снима екрана је доступан на овом месту:"
 
-#: src/modules/shot/e_mod_main.c:763
+#: src/modules/shot/e_mod_main.c:779
 #, fuzzy
 msgid "Copy link"
 msgstr "Умножи"
 
-#: src/modules/shot/e_mod_main.c:787
+#: src/modules/shot/e_mod_main.c:803
 msgid "Confirm Share"
 msgstr "Потврди дељење"
 
-#: src/modules/shot/e_mod_main.c:788
+#: src/modules/shot/e_mod_main.c:804
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 "Ова слика ће бити отпремљена<br>на enlightenment.org. Биће јавно видљива."
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:806
 msgid "Confirm"
 msgstr "Потврди"
 
-#: src/modules/shot/e_mod_main.c:891
+#: src/modules/shot/e_mod_main.c:907
 msgid "Where to put Screenshot..."
 msgstr "Где сместити слике екрана..."
 
-#: src/modules/shot/e_mod_main.c:943
+#: src/modules/shot/e_mod_main.c:959
 msgid "Quality"
 msgstr "Квалитет"
 
-#: src/modules/shot/e_mod_main.c:952
+#: src/modules/shot/e_mod_main.c:968
 msgid "Perfect"
 msgstr "савршен"
 
-#: src/modules/shot/e_mod_main.c:1028
+#: src/modules/shot/e_mod_main.c:1044
 msgid "Share"
 msgstr "Дели"
 
-#: src/modules/shot/e_mod_main.c:1211
+#: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:353
+#: src/modules/clipboard/e_mod_main.c:922
+#: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
+#, fuzzy
+msgid "Clipboard"
+msgstr "Умножи у оставу исечака"
+
+#: src/modules/shot/e_mod_main.c:1227
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1220
+#: src/modules/shot/e_mod_main.c:1236
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1221
+#: src/modules/shot/e_mod_main.c:1237
 #, fuzzy
 msgid "Delayed shot"
 msgstr "Одложене радње"
 
-#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
 msgid "Take Shot"
 msgstr "Направи снимак"
 
-#: src/modules/shot/e_mod_main.c:1289
+#: src/modules/shot/e_mod_main.c:1305
 msgid "Shot Error"
 msgstr "Грешка снимка"
 
-#: src/modules/shot/e_mod_main.c:1290
+#: src/modules/shot/e_mod_main.c:1306
 msgid "Cannot initialize network"
 msgstr "Нисам успео да покренем мрежу"
 
-#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Поставке закључавања екрана"
@@ -10260,15 +10273,6 @@ msgstr ""
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
-#, fuzzy
-msgid "Clipboard"
-msgstr "Умножи у оставу исечака"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"

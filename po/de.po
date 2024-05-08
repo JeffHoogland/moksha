@@ -31,7 +31,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-04-07 12:09+0200\n"
+"POT-Creation-Date: 2024-05-08 12:02+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Christian Becker (xpistian) <xpistianbecker@gmail.com>\n"
 "Language-Team: \n"
@@ -54,7 +54,7 @@ msgstr "Über Moksha"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
+#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
 msgid "Close"
 msgstr "Schließen"
 
@@ -182,7 +182,7 @@ msgstr "Wollen Sie Ihren Computer wirklich in den Energiesparmodus versetzen?"
 #: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
 #: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
 #: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
-#: src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "Fenster: Aktionen"
 
@@ -584,7 +584,7 @@ msgstr "Springe zu Fenster... oder starte..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Bildschirm"
 
@@ -887,9 +887,9 @@ msgstr "Auswählen"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
-#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
+#: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -2594,7 +2594,7 @@ msgstr "Position anfordern"
 #: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
 #: src/modules/xkbswitch/e_mod_main.c:370
 #: src/modules/xkbswitch/e_mod_main.c:411
@@ -2690,7 +2690,7 @@ msgstr "Größe, Position und Sperren"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:991
 msgid "All"
 msgstr "Alle"
 
@@ -5945,8 +5945,8 @@ msgid "Quick Launcher"
 msgstr "Schnellstarter"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
+#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:1329
 msgid "Take Screenshot"
 msgstr "Bildschirmfoto machen"
 
@@ -6399,13 +6399,13 @@ msgid "e.g. Saving to disk"
 msgstr "z.B. Auf Festplatte speichern"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:958
+#: src/modules/shot/e_mod_main.c:974
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Niedrig"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:956
+#: src/modules/shot/e_mod_main.c:972
 msgid "Medium"
 msgstr "Mittel"
 
@@ -6417,7 +6417,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:954
+#: src/modules/shot/e_mod_main.c:970
 msgid "High"
 msgstr "Hoch"
 
@@ -9602,7 +9602,7 @@ msgstr ""
 msgid "Systray"
 msgstr "Infobereich"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
 msgid "Screenshot"
 msgstr "Bildschirmfoto"
 
@@ -9635,11 +9635,15 @@ msgstr "Fehler beim Speichern des Bildschirmfotos"
 msgid "Path: %s"
 msgstr "Pfad: %s"
 
-#: src/modules/shot/e_mod_main.c:417
+#: src/modules/shot/e_mod_main.c:421 src/modules/shot/e_mod_main.c:431
 msgid "Error - Unknown format"
 msgstr "Fehler - Unbekanntes Format"
 
-#: src/modules/shot/e_mod_main.c:418
+#: src/modules/shot/e_mod_main.c:422
+msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:432
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9648,94 +9652,94 @@ msgstr ""
 "png' Erweiterungen nutzen,<br>da andere Formate momentan<br>nicht  "
 "unterstützt werden."
 
-#: src/modules/shot/e_mod_main.c:485
+#: src/modules/shot/e_mod_main.c:499
 msgid "Select screenshot save location"
 msgstr "Ort zum Speichern des Bildschirmfotos auswählen"
 
-#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
+#: src/modules/shot/e_mod_main.c:513 src/modules/shot/e_mod_main.c:1042
 msgid "Save"
 msgstr "Speichern"
 
-#: src/modules/shot/e_mod_main.c:603
+#: src/modules/shot/e_mod_main.c:619
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "%s & %s hochgeladen"
 
-#: src/modules/shot/e_mod_main.c:624
+#: src/modules/shot/e_mod_main.c:640
 msgid "Error - Upload Failed"
 msgstr "Fehler - Hochladen fehlgeschlagen"
 
 # No need to translate "code" as code is a widely used term in germany without any proper translation.
-#: src/modules/shot/e_mod_main.c:625
+#: src/modules/shot/e_mod_main.c:641
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Hochladen fehlgeschlagen mit Statuscode:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:674
+#: src/modules/shot/e_mod_main.c:690
 msgid "Error - Can't create file"
 msgstr "Fehler - Datei kann nicht erstellt werden"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:691
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Temporäre Datei '%s' kann nicht erzeugt werden: %s"
 
-#: src/modules/shot/e_mod_main.c:693
+#: src/modules/shot/e_mod_main.c:709
 msgid "Error - Can't open file"
 msgstr "Fehler - Datei kann nicht geöffnet werden"
 
-#: src/modules/shot/e_mod_main.c:694
+#: src/modules/shot/e_mod_main.c:710
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Temporäre Datei '%s' kann nicht geöffnet werden: %s"
 
-#: src/modules/shot/e_mod_main.c:702
+#: src/modules/shot/e_mod_main.c:718
 msgid "Error - Bad size"
 msgstr "Fehler - Fehlerhafte Größe"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:719
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Größe der Datei '%s' kann nicht bestimmt werden"
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:729
 msgid "Error - Can't allocate memory"
 msgstr "Fehler - Speicher kann nicht alloziert werden"
 
-#: src/modules/shot/e_mod_main.c:714
+#: src/modules/shot/e_mod_main.c:730
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Speicher für Bild %s kann nicht alloziert werden"
 
-#: src/modules/shot/e_mod_main.c:721
+#: src/modules/shot/e_mod_main.c:737
 msgid "Error - Can't read picture"
 msgstr "Fehler - Bild kann nicht gelesen werden"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:738
 msgid "Cannot read picture"
 msgstr "Bild kann nicht gelesen werden"
 
-#: src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:760
 msgid "Uploading screenshot"
 msgstr "Lade Bildschirmfoto hoch"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:765
 msgid "Uploading ..."
 msgstr "Lädt hoch ..."
 
-#: src/modules/shot/e_mod_main.c:754
+#: src/modules/shot/e_mod_main.c:770
 msgid "Screenshot is available at this location:"
 msgstr "Bildschirmfoto ist an dieser Ort verfügbar:"
 
-#: src/modules/shot/e_mod_main.c:763
+#: src/modules/shot/e_mod_main.c:779
 msgid "Copy link"
 msgstr "Link kopieren"
 
-#: src/modules/shot/e_mod_main.c:787
+#: src/modules/shot/e_mod_main.c:803
 msgid "Confirm Share"
 msgstr "Teilen bestätigen"
 
-#: src/modules/shot/e_mod_main.c:788
+#: src/modules/shot/e_mod_main.c:804
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9743,27 +9747,35 @@ msgstr ""
 "Dieses Bild wird auf enlightenment.org<br>hochgeladen. Es wird öffentlich "
 "einsehbar sein."
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:806
 msgid "Confirm"
 msgstr "Bestätigen"
 
-#: src/modules/shot/e_mod_main.c:891
+#: src/modules/shot/e_mod_main.c:907
 msgid "Where to put Screenshot..."
 msgstr "Wohin mit dem Bildschirmfoto ..."
 
-#: src/modules/shot/e_mod_main.c:943
+#: src/modules/shot/e_mod_main.c:959
 msgid "Quality"
 msgstr "Qualität"
 
-#: src/modules/shot/e_mod_main.c:952
+#: src/modules/shot/e_mod_main.c:968
 msgid "Perfect"
 msgstr "Perfekt"
 
-#: src/modules/shot/e_mod_main.c:1028
+#: src/modules/shot/e_mod_main.c:1044
 msgid "Share"
 msgstr "Teilen"
 
-#: src/modules/shot/e_mod_main.c:1211
+#: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:353
+#: src/modules/clipboard/e_mod_main.c:922
+#: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#: src/modules/shot/e_mod_main.c:1227
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
@@ -9773,27 +9785,27 @@ msgstr ""
 "Bildschirmfoto-Einstellungen eingestellt<br>Momentane Verzögerung: <b> %d s</"
 "b>"
 
-#: src/modules/shot/e_mod_main.c:1220
+#: src/modules/shot/e_mod_main.c:1236
 msgid "Instant shot"
 msgstr "Sofort fotografieren"
 
-#: src/modules/shot/e_mod_main.c:1221
+#: src/modules/shot/e_mod_main.c:1237
 msgid "Delayed shot"
 msgstr "Verzögertes Foto"
 
-#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
 msgid "Take Shot"
 msgstr "Foto machen"
 
-#: src/modules/shot/e_mod_main.c:1289
+#: src/modules/shot/e_mod_main.c:1305
 msgid "Shot Error"
 msgstr "Foto Fehler"
 
-#: src/modules/shot/e_mod_main.c:1290
+#: src/modules/shot/e_mod_main.c:1306
 msgid "Cannot initialize network"
 msgstr "Netzwerk kann nicht initialisiert werden"
 
-#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
 msgid "Screenshot Settings"
 msgstr "Bildschirmsperren-Einstellungen"
 
@@ -10218,14 +10230,6 @@ msgstr " Leerzeichen trimmen"
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr " Zeilenumbrüche trimmen"
-
-#: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
-msgid "Clipboard"
-msgstr "Zwischenablage"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"

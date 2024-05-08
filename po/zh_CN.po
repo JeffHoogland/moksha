@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-04-07 12:09+0200\n"
+"POT-Creation-Date: 2024-05-08 12:02+0200\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -36,7 +36,7 @@ msgstr "关于 Moksha"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
+#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
 msgid "Close"
 msgstr "关闭"
 
@@ -163,7 +163,7 @@ msgstr "您确定要休眠您的电脑吗？"
 #: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
 #: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
 #: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
-#: src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "窗口：动作"
 
@@ -568,7 +568,7 @@ msgstr "跳转到桌面... 或开始..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "屏幕"
 
@@ -872,9 +872,9 @@ msgstr "选择"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
-#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
+#: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "取消"
 
@@ -2533,7 +2533,7 @@ msgstr "请求位置"
 #: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
 #: src/modules/xkbswitch/e_mod_main.c:370
 #: src/modules/xkbswitch/e_mod_main.c:411
@@ -2625,7 +2625,7 @@ msgstr "尺寸、位置和锁定"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:991
 msgid "All"
 msgstr "全部"
 
@@ -5835,8 +5835,8 @@ msgid "Quick Launcher"
 msgstr "启动器"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
+#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:1329
 msgid "Take Screenshot"
 msgstr "屏幕截图"
 
@@ -6294,13 +6294,13 @@ msgid "e.g. Saving to disk"
 msgstr "例如：保存到磁盘"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:958
+#: src/modules/shot/e_mod_main.c:974
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "低"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:956
+#: src/modules/shot/e_mod_main.c:972
 msgid "Medium"
 msgstr "中等"
 
@@ -6312,7 +6312,7 @@ msgid "%.0f s"
 msgstr "%.0f 秒"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:954
+#: src/modules/shot/e_mod_main.c:970
 msgid "High"
 msgstr "高"
 
@@ -9464,7 +9464,7 @@ msgstr ""
 msgid "Systray"
 msgstr "系统托盘"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
 #, fuzzy
 msgid "Screenshot"
 msgstr "屏幕截图"
@@ -9498,158 +9498,171 @@ msgstr "保存截图文件出错"
 msgid "Path: %s"
 msgstr "路径: %s"
 
-#: src/modules/shot/e_mod_main.c:417
+#: src/modules/shot/e_mod_main.c:421 src/modules/shot/e_mod_main.c:431
 msgid "Error - Unknown format"
 msgstr "错误 - 未知格式"
 
-#: src/modules/shot/e_mod_main.c:418
+#: src/modules/shot/e_mod_main.c:422
+msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:432
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr "文件没有扩展名。<br>请使用 .jpg 或 .png，<br>其他格式尚不支持。"
 
-#: src/modules/shot/e_mod_main.c:485
+#: src/modules/shot/e_mod_main.c:499
 msgid "Select screenshot save location"
 msgstr "选择截图保存位置"
 
-#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
+#: src/modules/shot/e_mod_main.c:513 src/modules/shot/e_mod_main.c:1042
 msgid "Save"
 msgstr "保存"
 
-#: src/modules/shot/e_mod_main.c:603
+#: src/modules/shot/e_mod_main.c:619
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "上传 %s / %s "
 
-#: src/modules/shot/e_mod_main.c:624
+#: src/modules/shot/e_mod_main.c:640
 msgid "Error - Upload Failed"
 msgstr "错误 - 上传失败"
 
-#: src/modules/shot/e_mod_main.c:625
+#: src/modules/shot/e_mod_main.c:641
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "上传失败，状态码：<br>%i"
 
-#: src/modules/shot/e_mod_main.c:674
+#: src/modules/shot/e_mod_main.c:690
 msgid "Error - Can't create file"
 msgstr "错误，不能创建文件"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:691
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "不能创建临时文件 '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:693
+#: src/modules/shot/e_mod_main.c:709
 msgid "Error - Can't open file"
 msgstr "错误 - 不能打开文件"
 
-#: src/modules/shot/e_mod_main.c:694
+#: src/modules/shot/e_mod_main.c:710
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "不能打开临时文件 %s: %s"
 
-#: src/modules/shot/e_mod_main.c:702
+#: src/modules/shot/e_mod_main.c:718
 msgid "Error - Bad size"
 msgstr "错误 - 大小错误"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:719
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "无法获取文件 %s 的大小"
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:729
 msgid "Error - Can't allocate memory"
 msgstr "错误 - 无法分配内存"
 
-#: src/modules/shot/e_mod_main.c:714
+#: src/modules/shot/e_mod_main.c:730
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "无法为图像 %s 分配内存 "
 
-#: src/modules/shot/e_mod_main.c:721
+#: src/modules/shot/e_mod_main.c:737
 msgid "Error - Can't read picture"
 msgstr "错误 - 不能读取图像"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:738
 msgid "Cannot read picture"
 msgstr "不能读取图像"
 
-#: src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:760
 msgid "Uploading screenshot"
 msgstr "上传截图"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:765
 msgid "Uploading ..."
 msgstr "上传中..."
 
-#: src/modules/shot/e_mod_main.c:754
+#: src/modules/shot/e_mod_main.c:770
 msgid "Screenshot is available at this location:"
 msgstr "截图保存位置："
 
-#: src/modules/shot/e_mod_main.c:763
+#: src/modules/shot/e_mod_main.c:779
 #, fuzzy
 msgid "Copy link"
 msgstr "复制"
 
-#: src/modules/shot/e_mod_main.c:787
+#: src/modules/shot/e_mod_main.c:803
 msgid "Confirm Share"
 msgstr "确认分享"
 
-#: src/modules/shot/e_mod_main.c:788
+#: src/modules/shot/e_mod_main.c:804
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr "这张图片将被上传至<br>enlightenment.org，对所有人可见。"
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:806
 msgid "Confirm"
 msgstr "确定"
 
-#: src/modules/shot/e_mod_main.c:891
+#: src/modules/shot/e_mod_main.c:907
 msgid "Where to put Screenshot..."
 msgstr "截图放置的地方..."
 
-#: src/modules/shot/e_mod_main.c:943
+#: src/modules/shot/e_mod_main.c:959
 msgid "Quality"
 msgstr "质量"
 
-#: src/modules/shot/e_mod_main.c:952
+#: src/modules/shot/e_mod_main.c:968
 msgid "Perfect"
 msgstr "完美"
 
-#: src/modules/shot/e_mod_main.c:1028
+#: src/modules/shot/e_mod_main.c:1044
 msgid "Share"
 msgstr "共享"
 
-#: src/modules/shot/e_mod_main.c:1211
+#: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:353
+#: src/modules/clipboard/e_mod_main.c:922
+#: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
+#, fuzzy
+msgid "Clipboard"
+msgstr "复制到剪贴板"
+
+#: src/modules/shot/e_mod_main.c:1227
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1220
+#: src/modules/shot/e_mod_main.c:1236
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1221
+#: src/modules/shot/e_mod_main.c:1237
 #, fuzzy
 msgid "Delayed shot"
 msgstr "延迟动作"
 
-#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
 msgid "Take Shot"
 msgstr "屏幕截图"
 
-#: src/modules/shot/e_mod_main.c:1289
+#: src/modules/shot/e_mod_main.c:1305
 msgid "Shot Error"
 msgstr "截图出错"
 
-#: src/modules/shot/e_mod_main.c:1290
+#: src/modules/shot/e_mod_main.c:1306
 msgid "Cannot initialize network"
 msgstr "无法初始化网络"
 
-#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "屏幕锁定设置"
@@ -10098,15 +10111,6 @@ msgstr ""
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
-#, fuzzy
-msgid "Clipboard"
-msgstr "复制到剪贴板"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"

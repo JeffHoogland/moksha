@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-04-07 12:09+0200\n"
+"POT-Creation-Date: 2024-05-08 12:02+0200\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -36,7 +36,7 @@ msgstr "Περί Moksha"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
-#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1223
+#: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
 msgid "Close"
 msgstr "Κλείσιμο"
 
@@ -166,7 +166,7 @@ msgstr "Είστε σίγουροι ότι θέλετε την αδρανοπο�
 #: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
 #: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
 #: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
-#: src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "Παράθυρο : Ενέργειες"
 
@@ -571,7 +571,7 @@ msgstr "Μετάβαση στο παράθυρο... ή εκκίνηση..."
 #: src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:971 src/modules/shot/e_mod_main.c:1301
+#: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Οθόνη"
 
@@ -875,9 +875,9 @@ msgstr "Επιλογή"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:501
-#: src/modules/shot/e_mod_main.c:764 src/modules/shot/e_mod_main.c:790
-#: src/modules/shot/e_mod_main.c:1030 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
+#: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
 msgid "Cancel"
 msgstr "Άκυρο"
 
@@ -2580,7 +2580,7 @@ msgstr "Αίτηση Θέσης"
 #: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
-#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1222
+#: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
 #: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
 #: src/modules/xkbswitch/e_mod_main.c:370
 #: src/modules/xkbswitch/e_mod_main.c:411
@@ -2679,7 +2679,7 @@ msgstr "Μέγεθος, Θέση και Κλειδώματα"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:975
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:991
 msgid "All"
 msgstr "Όλα"
 
@@ -5968,8 +5968,8 @@ msgid "Quick Launcher"
 msgstr "Εκκινητής"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:306
-#: src/modules/shot/e_mod_main.c:1272 src/modules/shot/e_mod_main.c:1301
-#: src/modules/shot/e_mod_main.c:1313
+#: src/modules/shot/e_mod_main.c:1288 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:1329
 msgid "Take Screenshot"
 msgstr "Λήψη Στιγμιοτύπου"
 
@@ -6426,13 +6426,13 @@ msgid "e.g. Saving to disk"
 msgstr "πχ Αποθήκευση στον δίσκο"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:958
+#: src/modules/shot/e_mod_main.c:974
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Χαμηλή"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:956
+#: src/modules/shot/e_mod_main.c:972
 msgid "Medium"
 msgstr "Μεσαία"
 
@@ -6444,7 +6444,7 @@ msgid "%.0f s"
 msgstr "%.0f s"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:954
+#: src/modules/shot/e_mod_main.c:970
 msgid "High"
 msgstr "Υψηλή"
 
@@ -9659,7 +9659,7 @@ msgstr ""
 msgid "Systray"
 msgstr "Πλαίσιο συστήματος"
 
-#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1214
+#: src/modules/shot/e_mod_main.c:85 src/modules/shot/e_mod_main.c:1230
 #, fuzzy
 msgid "Screenshot"
 msgstr "Λήψη Στιγμιοτύπου"
@@ -9693,11 +9693,15 @@ msgstr "Σφάλμα αποθήκευσης αρχείου στιγμιοτύπ�
 msgid "Path: %s"
 msgstr "Διαδρομή: %s"
 
-#: src/modules/shot/e_mod_main.c:417
+#: src/modules/shot/e_mod_main.c:421 src/modules/shot/e_mod_main.c:431
 msgid "Error - Unknown format"
 msgstr "Σφάλμα - Άγνωστη μορφή"
 
-#: src/modules/shot/e_mod_main.c:418
+#: src/modules/shot/e_mod_main.c:422
+msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
+msgstr ""
+
+#: src/modules/shot/e_mod_main.c:432
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9706,94 +9710,94 @@ msgstr ""
 "επεκτάσεις '.jpg' or '.png'<br>διότι δεν υποστηρίζονται άλλες μορφές<br>προς "
 "το παρόν."
 
-#: src/modules/shot/e_mod_main.c:485
+#: src/modules/shot/e_mod_main.c:499
 msgid "Select screenshot save location"
 msgstr "Επιλογή τοποθεσίας αποθήκευσης στιγμιοτύπου"
 
-#: src/modules/shot/e_mod_main.c:499 src/modules/shot/e_mod_main.c:1026
+#: src/modules/shot/e_mod_main.c:513 src/modules/shot/e_mod_main.c:1042
 msgid "Save"
 msgstr "Αποθήκευση"
 
-#: src/modules/shot/e_mod_main.c:603
+#: src/modules/shot/e_mod_main.c:619
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Απεστάλη %s / %s"
 
-#: src/modules/shot/e_mod_main.c:624
+#: src/modules/shot/e_mod_main.c:640
 msgid "Error - Upload Failed"
 msgstr "Σφάλμα - Αποτυχία Αποστολής"
 
-#: src/modules/shot/e_mod_main.c:625
+#: src/modules/shot/e_mod_main.c:641
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Αποτυχία ενημέρωσης με κωδικό κατάστασης:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:674
+#: src/modules/shot/e_mod_main.c:690
 msgid "Error - Can't create file"
 msgstr "Σφάλμα - Αδυναμία δημιουργίας αρχείου"
 
-#: src/modules/shot/e_mod_main.c:675
+#: src/modules/shot/e_mod_main.c:691
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Αδυναμία δημιουργίας προσωρινού αρχείου '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:693
+#: src/modules/shot/e_mod_main.c:709
 msgid "Error - Can't open file"
 msgstr "Σφάλμα - Αδυναμία ανοίγματος αρχείου"
 
-#: src/modules/shot/e_mod_main.c:694
+#: src/modules/shot/e_mod_main.c:710
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Αδυναμία ανοίγματος προσωρινού αρχείου '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:702
+#: src/modules/shot/e_mod_main.c:718
 msgid "Error - Bad size"
 msgstr "Σφάλμα - Λάθος μέγεθος"
 
-#: src/modules/shot/e_mod_main.c:703
+#: src/modules/shot/e_mod_main.c:719
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Αδυναμία λήψης μεγέθους αρχείου '%s'"
 
-#: src/modules/shot/e_mod_main.c:713
+#: src/modules/shot/e_mod_main.c:729
 msgid "Error - Can't allocate memory"
 msgstr "Σφάλμα - Αδυναμία κατανομής μνήμης"
 
-#: src/modules/shot/e_mod_main.c:714
+#: src/modules/shot/e_mod_main.c:730
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Αδυναμία κατανομής μνήμης για την εικόνα: %s"
 
-#: src/modules/shot/e_mod_main.c:721
+#: src/modules/shot/e_mod_main.c:737
 msgid "Error - Can't read picture"
 msgstr "Σφάλμα - Αδυναμία ανάγνωσης εικόνας"
 
-#: src/modules/shot/e_mod_main.c:722
+#: src/modules/shot/e_mod_main.c:738
 msgid "Cannot read picture"
 msgstr "Αδυναμία ανάγνωσης εικόνας"
 
-#: src/modules/shot/e_mod_main.c:744
+#: src/modules/shot/e_mod_main.c:760
 msgid "Uploading screenshot"
 msgstr "Αποστολή στιγμιοτύπου"
 
-#: src/modules/shot/e_mod_main.c:749
+#: src/modules/shot/e_mod_main.c:765
 msgid "Uploading ..."
 msgstr "Αποστολή..."
 
-#: src/modules/shot/e_mod_main.c:754
+#: src/modules/shot/e_mod_main.c:770
 msgid "Screenshot is available at this location:"
 msgstr "Το στιγμιότυπο είναι διαθέσιμο στην τοποθεσία:"
 
-#: src/modules/shot/e_mod_main.c:763
+#: src/modules/shot/e_mod_main.c:779
 #, fuzzy
 msgid "Copy link"
 msgstr "Αντιγραφή"
 
-#: src/modules/shot/e_mod_main.c:787
+#: src/modules/shot/e_mod_main.c:803
 msgid "Confirm Share"
 msgstr "Επιβεβαίωση Διαμοιρασμού"
 
-#: src/modules/shot/e_mod_main.c:788
+#: src/modules/shot/e_mod_main.c:804
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
@@ -9801,55 +9805,64 @@ msgstr ""
 "Αυτή η εικόνα θα μεταφορτωθεί<br>στο enlightenment.org. Θα είναι δημόσια "
 "ορατή."
 
-#: src/modules/shot/e_mod_main.c:790
+#: src/modules/shot/e_mod_main.c:806
 msgid "Confirm"
 msgstr "Επιβεβαίωση"
 
-#: src/modules/shot/e_mod_main.c:891
+#: src/modules/shot/e_mod_main.c:907
 msgid "Where to put Screenshot..."
 msgstr "Τοποθεσία Αποθήκευσης Στιγμιοτύπου..."
 
-#: src/modules/shot/e_mod_main.c:943
+#: src/modules/shot/e_mod_main.c:959
 msgid "Quality"
 msgstr "Ποιότητα"
 
-#: src/modules/shot/e_mod_main.c:952
+#: src/modules/shot/e_mod_main.c:968
 msgid "Perfect"
 msgstr "Τέλεια"
 
-#: src/modules/shot/e_mod_main.c:1028
+#: src/modules/shot/e_mod_main.c:1044
 msgid "Share"
 msgstr "Διαμοιρασμός"
 
-#: src/modules/shot/e_mod_main.c:1211
+#: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
+#: src/modules/clipboard/e_mod_main.c:353
+#: src/modules/clipboard/e_mod_main.c:922
+#: src/modules/clipboard/e_mod_main.c:923
+#: src/modules/clipboard/e_mod_main.c:924
+#, fuzzy
+msgid "Clipboard"
+msgstr "Αντιγραφή στο Πρόχειρο"
+
+#: src/modules/shot/e_mod_main.c:1227
 #, c-format
 msgid ""
 "Select the screenshot mode... <br>Delay time is set in the Screenshot module "
 "settings<br>The current delay time: <b> %d s</b>"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1220
+#: src/modules/shot/e_mod_main.c:1236
 msgid "Instant shot"
 msgstr ""
 
-#: src/modules/shot/e_mod_main.c:1221
+#: src/modules/shot/e_mod_main.c:1237
 #, fuzzy
 msgid "Delayed shot"
 msgstr "Καθυστερημένη ενέργεια"
 
-#: src/modules/shot/e_mod_main.c:1261 src/modules/shot/e_mod_main.c:1309
+#: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
 msgid "Take Shot"
 msgstr "Λήψη Στιγμιοτύπου"
 
-#: src/modules/shot/e_mod_main.c:1289
+#: src/modules/shot/e_mod_main.c:1305
 msgid "Shot Error"
 msgstr "Σφάλμα Λήψης Στιγμιοτύπου"
 
-#: src/modules/shot/e_mod_main.c:1290
+#: src/modules/shot/e_mod_main.c:1306
 msgid "Cannot initialize network"
 msgstr "Αδυναμία αρχικοποίησης δικτύου"
 
-#: src/modules/shot/e_mod_main.c:1319 src/modules/shot/e_mod_config.c:47
+#: src/modules/shot/e_mod_main.c:1335 src/modules/shot/e_mod_config.c:47
 #, fuzzy
 msgid "Screenshot Settings"
 msgstr "Ρυθμίσεις Κλειδώματος Οθόνης"
@@ -10304,15 +10317,6 @@ msgstr ""
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
 msgstr ""
-
-#: src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
-#, fuzzy
-msgid "Clipboard"
-msgstr "Αντιγραφή στο Πρόχειρο"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
