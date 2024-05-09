@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-05-08 12:02+0200\n"
-"PO-Revision-Date: 2024-04-16 13:05+0100\n"
+"PO-Revision-Date: 2024-05-09 16:03+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -115,11 +115,11 @@ msgstr "Sim"
 
 #: src/bin/e_actions.c:2372
 msgid "Logout"
-msgstr "Sair"
+msgstr "Terminar sessão"
 
 #: src/bin/e_actions.c:2373
 msgid "Are you sure you want to logout?"
-msgstr "Sair da sessão?"
+msgstr "Pretende terminar a sessão?"
 
 #: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
@@ -777,7 +777,7 @@ msgstr "Sistema"
 
 #: src/bin/e_actions.c:3580
 msgid "Log Out"
-msgstr "Sair"
+msgstr "Terminar sessão"
 
 #: src/bin/e_actions.c:3584
 msgid "Power Off Now"
@@ -910,8 +910,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1766,8 +1767,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -3847,17 +3848,17 @@ msgid ""
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "A sessão está a demorar muito tempo a terminar.<br>Algumas aplicações "
-"recusam-se a fechar.<br>Deseja terminar a sessão<br>de qualquer forma sem "
+"recusam-se a fechar.<br>Pretende terminar a sessão<br>de qualquer forma sem "
 "fechar primeiro<br>estas aplicações?<br><br>%s<br>A sessão irá terminar "
 "automaticamente dentro de %d segundos."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
-msgstr "Erro ao sair da sessão"
+msgstr "Erro ao terminar sessão"
 
 #: src/bin/e_sys.c:515
 msgid "Logout now"
-msgstr "Sair agora"
+msgstr "Terminar sessão agora"
 
 #: src/bin/e_sys.c:517
 msgid "Wait longer"
@@ -3869,11 +3870,11 @@ msgstr "Cancelar"
 
 #: src/bin/e_sys.c:563
 msgid "Logout in progress"
-msgstr "A sair da sessão"
+msgstr "Terminar sessão em curso"
 
 #: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
-msgstr "A sair da sessão.<br><hilight>Aguarde.</hilight>"
+msgstr "A terminar sessão.<br><hilight>Aguarde.</hilight>"
 
 #: src/bin/e_sys.c:595 src/bin/e_sys.c:650
 msgid "Moksha is busy with another request"
@@ -3884,8 +3885,8 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"A sair da sessão.<br>Não pode executar quaisquer outras ações após iniciar o "
-"processo."
+"A terminar sessão.<br>Não pode executar quaisquer outras ações<br>após "
+"iniciar o processo."
 
 #: src/bin/e_sys.c:607
 msgid ""
@@ -5841,8 +5842,9 @@ msgstr "Erro na combinação de teclas"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da combinação de teclas escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
@@ -8193,11 +8195,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8215,8 +8217,8 @@ msgstr ""
 "Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
 "</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
 "hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
-"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
-"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;"
+"Ctrl+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
 "<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
 "item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
 "visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
@@ -9556,14 +9558,17 @@ msgstr "Erro - Formato desconhecido"
 #: src/modules/shot/e_mod_main.c:422
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
 msgstr ""
+"Usar a opção 'Qualidade perfeita'<br> apenas para copiar para a área de "
+"transferência."
 
 #: src/modules/shot/e_mod_main.c:432
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
-"Não especificou uma extensão<br>Só pode utilizar a extensão .jpg ou .png "
-"se<br>outros formatos não forem suportados."
+"O ficheiro tem uma extensão não especificada.<br>Utilize apenas as extensões "
+"'.jpg' ou '.png',uma vez<br>que outros formatos não são atualmente "
+"suportados."
 
 #: src/modules/shot/e_mod_main.c:499
 msgid "Select screenshot save location"
