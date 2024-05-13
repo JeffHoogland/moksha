@@ -3035,6 +3035,11 @@ ACT_FN_GO(touchpad_toggle, __UNUSED__)
    e_mouse_update();
 }
 
+ACT_FN_GO(blank_now, __UNUSED__)
+{
+  e_dpms_force_update(EINA_TRUE);
+}
+
 ACT_FN_GO(kbd_layout, )
 {
    unsigned int x;
@@ -3633,8 +3638,12 @@ e_actions_init(void)
    ACT_GO(touchpad_toggle);
    e_action_predef_name_set(N_("Touchpad"),
                             N_("Touchpad on/off"), "touchpad_toggle",
-                            NULL, NULL, 1);
-
+                            NULL, NULL, 0);
+   /* blank now */
+   ACT_GO(blank_now);
+   e_action_predef_name_set(N_("Screen"),
+                            N_("Blank now"), "blank_now",
+                            NULL, NULL, 0);
    /* xkb */
    ACT_GO(kbd_layout);
    e_action_predef_name_set(N_("Keyboard Layouts"),

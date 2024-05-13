@@ -640,6 +640,9 @@ _restore_key_binding_defaults_cb(void *data,
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "o",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
                     "touchpad_toggle", NULL);
+   CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "b",
+                    E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT, 0,
+                    "blank_now", NULL);
    CFG_KEYBIND_DFLT(E_BINDING_CONTEXT_ANY, "F1",
                     E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_SHIFT, 0,
                     "screen_send_to", "0");

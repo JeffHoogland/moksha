@@ -1124,6 +1124,19 @@ while (!e_config)
                e_config->touch_off = 0;
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(22)
+            {
+               CONFIG_VERSION_UPDATE_INFO(22);
+               E_Config_Binding_Key *bi;
+
+               bi = E_NEW(E_Config_Binding_Key, 1);
+               bi->context = E_BINDING_CONTEXT_ANY;
+               bi->key = eina_stringshare_add("b");
+               bi->modifiers = E_BINDING_MODIFIER_CTRL | E_BINDING_MODIFIER_ALT;
+               bi->action = eina_stringshare_add("blank_now");
+               e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -1305,9 +1318,9 @@ while (!e_config)
 
      E_CONFIG_LIMIT(e_config->multiscreen_flip, 0, 1);
 
-	 E_CONFIG_LIMIT(e_config->backlight.normal, 0.05, 1.0);
-	 E_CONFIG_LIMIT(e_config->backlight.dim, 0.05, 1.0);
-	 E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0, 1);
+     E_CONFIG_LIMIT(e_config->backlight.normal, 0.05, 1.0);
+     E_CONFIG_LIMIT(e_config->backlight.dim, 0.05, 1.0);
+     E_CONFIG_LIMIT(e_config->backlight.idle_dim, 0, 1);
 
      if (!e_config->icon_theme)
        e_config->icon_theme = eina_stringshare_add("hicolor"); // FDO default

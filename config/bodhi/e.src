@@ -1584,6 +1584,13 @@ group "E_Config" struct {
         group "E_Config_Binding_Key" struct {
             value "context" int: 9;
             value "modifiers" int: 6;
+            value "key" string: "b";
+            value "action" string: "blank_now";
+            value "any_mod" uchar: 0;
+        }
+        group "E_Config_Binding_Key" struct {
+            value "context" int: 9;
+            value "modifiers" int: 6;
             value "key" string: "w";
             value "action" string: "window_menu";
             value "any_mod" uchar: 0;
@@ -1943,7 +1950,7 @@ group "E_Config" struct {
             value "priority" int: -1000;
         }
     }
-    value "config_version" int: 1000021;
+    value "config_version" int: 1000022;
     value "show_splash" int: 1;
     value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaGreen.edj";
     value "desktop_default_name" string: "%i-%i";

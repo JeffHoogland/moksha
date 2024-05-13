@@ -58,7 +58,7 @@ e_screensaver_update(void)
    Eina_Bool changed = EINA_FALSE;
 
    timeout = e_screensaver_timeout_get(EINA_TRUE);
-   
+
    interval = e_config->screensaver_interval;
    blanking = e_config->screensaver_blanking;
    expose = e_config->screensaver_expose;
@@ -280,6 +280,8 @@ _e_screensaver_handler_screensaver_off_cb(void *data __UNUSED__, int type __UNUS
      }
    else if (_e_screensaver_ask_presentation_count)
      _e_screensaver_ask_presentation_count = 0;
+
+   e_dpms_force_update(EINA_FALSE);
    return ECORE_CALLBACK_PASS_ON;
 }
 

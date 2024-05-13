@@ -58,7 +58,7 @@ e_dpms_update(void)
 }
 
 EAPI void
-e_dpms_force_update(void)
+e_dpms_force_update(Eina_Bool now)
 {
    unsigned int standby = 0, suspend = 0, off = 0;
    int enabled;
@@ -71,7 +71,10 @@ e_dpms_force_update(void)
    
    if (e_config->screensaver_enable)
      {
-        off = suspend = standby = e_screensaver_timeout_get(EINA_FALSE);
+        if (now)
+          off = suspend = standby = -5;
+        else
+          off = suspend = standby = e_screensaver_timeout_get(EINA_FALSE);
         standby += 5;
         suspend += 6;
         off += 7;
@@ -139,7 +142,7 @@ e_dpms_init(void)
    ecore_x_dpms_timeouts_get
      (&_e_dpms_timeout_standby, &_e_dpms_timeout_suspend, &_e_dpms_timeout_off);
 
-   e_dpms_force_update();
+   e_dpms_force_update(EINA_FALSE);
 
    return 1;
 }
