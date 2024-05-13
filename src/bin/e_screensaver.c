@@ -184,20 +184,20 @@ _e_screensaver_ask_presentation_mode(void)
    e_dialog_title_set(dia, _("Activate Presentation Mode?"));
    e_dialog_icon_set(dia, "dialog-ask", 64);
    e_dialog_text_set(dia,
-		     _("You disabled the screensaver too fast.<br><br>"
-		       "Would you like to enable <b>presentation</b> mode and "
-		       "temporarily disable screen saver, lock and power saving?"));
+             _("You disabled the screensaver too fast.<br><br>"
+               "Would you like to enable <b>presentation</b> mode and "
+               "temporarily disable screen saver, lock and power saving?"));
 
    e_object_del_attach_func_set(E_OBJECT(dia),
-				_e_screensaver_ask_presentation_del);
+               _e_screensaver_ask_presentation_del);
    e_dialog_button_add(dia, _("Yes"), NULL,
-		       _e_screensaver_ask_presentation_yes, NULL);
+               _e_screensaver_ask_presentation_yes, NULL);
    e_dialog_button_add(dia, _("No"), NULL,
-		       _e_screensaver_ask_presentation_no, NULL);
+               _e_screensaver_ask_presentation_no, NULL);
    e_dialog_button_add(dia, _("No, but increase timeout"), NULL,
-		       _e_screensaver_ask_presentation_no_increase, NULL);
+               _e_screensaver_ask_presentation_no_increase, NULL);
    e_dialog_button_add(dia, _("No, and stop asking"), NULL,
-		       _e_screensaver_ask_presentation_no_forever, NULL);
+               _e_screensaver_ask_presentation_no_forever, NULL);
 
    e_dialog_button_focus_num(dia, 0);
    e_widget_list_homogeneous_set(dia->box_object, 0);
@@ -205,7 +205,7 @@ _e_screensaver_ask_presentation_mode(void)
    e_dialog_show(dia);
 
    evas_object_event_callback_add(dia->bg_object, EVAS_CALLBACK_KEY_DOWN,
-				  _e_screensaver_ask_presentation_key_down, dia);
+                  _e_screensaver_ask_presentation_key_down, dia);
 
    _e_screensaver_ask_presentation_dia = dia;
 }
@@ -271,12 +271,12 @@ _e_screensaver_handler_screensaver_off_cb(void *data __UNUSED__, int type __UNUS
      }
    if ((last_start > 0.0) && (e_config->screensaver_ask_presentation))
      {
-	double current = ecore_loop_time_get();
-        
-	if ((last_start + e_config->screensaver_ask_presentation_timeout)
-            >= current)
-	  _e_screensaver_ask_presentation_mode();
-	last_start = 0.0;
+        double current = ecore_loop_time_get();
+
+        if ((last_start + e_config->screensaver_ask_presentation_timeout)
+              >= current)
+        _e_screensaver_ask_presentation_mode();
+        last_start = 0.0;
      }
    else if (_e_screensaver_ask_presentation_count)
      _e_screensaver_ask_presentation_count = 0;
@@ -396,13 +396,13 @@ e_screensaver_init(void)
      (E_EVENT_SCREENSAVER_ON, _e_screensaver_handler_screensaver_on_cb, NULL);
    _e_screensaver_handler_off = ecore_event_handler_add
      (E_EVENT_SCREENSAVER_OFF, _e_screensaver_handler_screensaver_off_cb, NULL);
-   
+
    _e_screensaver_handler_screensaver_notify = ecore_event_handler_add
      (ECORE_X_EVENT_SCREENSAVER_NOTIFY, _e_screensaver_handler_screensaver_notify_cb, NULL);
-   
+
    _e_screensaver_handler_config_mode = ecore_event_handler_add
      (E_EVENT_CONFIG_MODE_CHANGED, _e_screensaver_handler_config_mode_cb, NULL);
-   
+
    _e_screensaver_handler_border_fullscreen = ecore_event_handler_add
      (E_EVENT_BORDER_FULLSCREEN, _e_screensaver_handler_border_fullscreen_check_cb, NULL);
    _e_screensaver_handler_border_unfullscreen = ecore_event_handler_add
@@ -420,7 +420,7 @@ e_screensaver_init(void)
 
    _e_screensaver_handler_powersave = ecore_event_handler_add
      (E_EVENT_POWERSAVE_UPDATE, _e_screensaver_handler_powersave_cb, NULL);
-   
+
    _e_screensaver_timeout = ecore_x_screensaver_timeout_get();
 //   _e_screensaver_interval = ecore_x_screensaver_interval_get();
    _e_screensaver_blanking = ecore_x_screensaver_blank_get();
