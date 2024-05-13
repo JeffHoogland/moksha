@@ -13,14 +13,14 @@
 # rustyBSD <rustyBSD@gmx.fr>, 2015.
 # Raoul Hecky <raoul.hecky@gmail.com>, 2015.
 # Eliovir <eliovir@gmail.com>, 2013.
-# similar <similar@orange.fr>, 2020, 2021, 2022, 2023.
+# similar <similar@orange.fr>, 2020, 2021, 2022, 2023, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-05-08 12:02+0200\n"
-"PO-Revision-Date: 2024-04-10 19:11+0200\n"
+"PO-Revision-Date: 2024-05-11 13:52+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.3\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: src/bin/e_about.c:18
@@ -9603,7 +9603,7 @@ msgstr "Erreur : format inconnu"
 
 #: src/modules/shot/e_mod_main.c:422
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
-msgstr ""
+msgstr "Réservez la qualité optimale pour<br>la copie dans le presse-papiers."
 
 #: src/modules/shot/e_mod_main.c:432
 msgid ""
