@@ -820,9 +820,8 @@ msgid "Touchpad on/off"
 msgstr "Touchpad zap/vyp"
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Vypnutie obrazovky"
+msgstr "Vypnúť teraz"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
