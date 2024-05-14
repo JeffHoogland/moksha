@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-05-08 12:02+0200\n"
+"POT-Creation-Date: 2024-05-14 18:23+0200\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "Moksha について"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -33,8 +33,8 @@ msgstr "Moksha について"
 msgid "Close"
 msgstr "閉じる"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3545 src/bin/e_actions.c:3549
-#: src/bin/e_actions.c:3553 src/bin/e_main.c:710
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3550 src/bin/e_actions.c:3554
+#: src/bin/e_actions.c:3558 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:312
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "本当にこのウィンドウを強制終了しますか"
 
-#: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3167
 #: src/bin/e_int_border_menu.c:784
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
@@ -92,7 +92,7 @@ msgstr "いいえ"
 msgid "Action Params Syntax Error"
 msgstr "アクションパラメータ"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3554 src/bin/e_int_menus.c:269
 msgid "Exit"
 msgstr "終了"
 
@@ -127,7 +127,7 @@ msgstr "電源断"
 msgid "Are you sure you want to power off your computer?"
 msgstr "本当にログアウトしますか"
 
-#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3592
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3597
 msgid "Reboot"
 msgstr "再起動"
 
@@ -136,7 +136,7 @@ msgstr "再起動"
 msgid "Are you sure you want to reboot your computer?"
 msgstr "本当に再起動しますか"
 
-#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3600
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3605
 msgid "Suspend"
 msgstr "サスペンド"
 
@@ -145,7 +145,7 @@ msgstr "サスペンド"
 msgid "Are you sure you want to suspend your computer?"
 msgstr "本当にログアウトしますか"
 
-#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3604
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3609
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "ハイバネート"
@@ -155,213 +155,213 @@ msgstr "ハイバネート"
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "本当にハイバネートしますか"
 
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3128 src/bin/e_actions.c:3147
-#: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
-#: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
-#: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3122 src/bin/e_actions.c:3133 src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3157 src/bin/e_actions.c:3162 src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3466 src/bin/e_actions.c:3470 src/bin/e_actions.c:3475
+#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3487 src/bin/e_actions.c:3493
 #: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "ウィンドウ: 動作"
 
-#: src/bin/e_actions.c:3117 src/bin/e_fm.c:11653
+#: src/bin/e_actions.c:3122 src/bin/e_fm.c:11653
 msgid "Move"
 msgstr "移動"
 
-#: src/bin/e_actions.c:3128
+#: src/bin/e_actions.c:3133
 msgid "Resize"
 msgstr "サイズ変更"
 
-#: src/bin/e_actions.c:3139 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
-#: src/bin/e_actions.c:3520 src/bin/e_actions.c:3522 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3144 src/bin/e_actions.c:3521 src/bin/e_actions.c:3523
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3527 src/bin/e_actions.c:3529
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "メニュー"
 
 #
-#: src/bin/e_actions.c:3139
+#: src/bin/e_actions.c:3144
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "ウィンドウメニュー"
 
-#: src/bin/e_actions.c:3147 src/bin/e_int_border_menu.c:1092
+#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "上げる"
 
-#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1100
+#: src/bin/e_actions.c:3157 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "下げる"
 
 #
-#: src/bin/e_actions.c:3167 src/bin/e_actions.c:3171 src/bin/e_actions.c:3176
-#: src/bin/e_actions.c:3180 src/bin/e_actions.c:3184 src/bin/e_actions.c:3189
-#: src/bin/e_actions.c:3193 src/bin/e_actions.c:3198 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3208 src/bin/e_actions.c:3210 src/bin/e_actions.c:3213
-#: src/bin/e_actions.c:3216 src/bin/e_actions.c:3219 src/bin/e_actions.c:3222
-#: src/bin/e_actions.c:3224 src/bin/e_actions.c:3226 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3239
-#: src/bin/e_actions.c:3241 src/bin/e_actions.c:3243 src/bin/e_actions.c:3247
-#: src/bin/e_actions.c:3252 src/bin/e_actions.c:3257 src/bin/e_actions.c:3263
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3172 src/bin/e_actions.c:3176 src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3185 src/bin/e_actions.c:3189 src/bin/e_actions.c:3194
+#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3203 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3213 src/bin/e_actions.c:3215 src/bin/e_actions.c:3218
+#: src/bin/e_actions.c:3221 src/bin/e_actions.c:3224 src/bin/e_actions.c:3227
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3240 src/bin/e_actions.c:3242 src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3248 src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257 src/bin/e_actions.c:3262 src/bin/e_actions.c:3268
+#: src/bin/e_actions.c:3274
 msgid "Window : State"
 msgstr "ウィンドウ: 状態"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3172
 msgid "Sticky Mode Toggle"
 msgstr "常時表示モード反転"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3176
 #, fuzzy
 msgid "Sticky Mode Enable"
 msgstr "常時表示モード反転"
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3181
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "常に手前に表示"
 
-#: src/bin/e_actions.c:3180
+#: src/bin/e_actions.c:3185
 #, fuzzy
 msgid "Always On Top Enable"
 msgstr "常に手前に表示"
 
-#: src/bin/e_actions.c:3184
+#: src/bin/e_actions.c:3189
 #, fuzzy
 msgid "Always On Top Disable"
 msgstr "常に手前に表示"
 
-#: src/bin/e_actions.c:3189
+#: src/bin/e_actions.c:3194
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "アイコンモード反転"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3198
 #, fuzzy
 msgid "Iconic Mode Enable"
 msgstr "アイコンモード反転"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3203
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "全画面モード反転"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3207
 #, fuzzy
 msgid "Fullscreen Mode Enable"
 msgstr "全画面モード反転"
 
-#: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "最大化"
 
 #
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:430
+#: src/bin/e_actions.c:3215 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "垂直に最大化"
 
 #
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:441
+#: src/bin/e_actions.c:3218 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "水平に最大化"
 
-#: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/bin/e_actions.c:3221 src/bin/e_int_border_menu.c:452
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 #, fuzzy
 msgid "Maximize Left"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/bin/e_actions.c:3224 src/bin/e_int_border_menu.c:463
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 #, fuzzy
 msgid "Maximize Right"
 msgstr "最大化"
 
-#: src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3227
 msgid "Maximize Fullscreen"
 msgstr "全面表示"
 
 #
-#: src/bin/e_actions.c:3224
+#: src/bin/e_actions.c:3229
 msgid "Maximize Mode \"Smart\""
 msgstr "最大化モード \"賢く\""
 
-#: src/bin/e_actions.c:3226
+#: src/bin/e_actions.c:3231
 msgid "Maximize Mode \"Expand\""
 msgstr "最大化モード \"拡大\""
 
 #
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3233
 msgid "Maximize Mode \"Fill\""
 msgstr "最大化モード \"空きまで"
 
-#: src/bin/e_actions.c:3235
+#: src/bin/e_actions.c:3240
 msgid "Shade Up Mode Toggle"
 msgstr "上方シェード反転"
 
-#: src/bin/e_actions.c:3237
+#: src/bin/e_actions.c:3242
 msgid "Shade Down Mode Toggle"
 msgstr "下方シェード反転"
 
-#: src/bin/e_actions.c:3239
+#: src/bin/e_actions.c:3244
 msgid "Shade Left Mode Toggle"
 msgstr "左方シェード反転"
 
-#: src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246
 msgid "Shade Right Mode Toggle"
 msgstr "右方シェード反転"
 
-#: src/bin/e_actions.c:3243
+#: src/bin/e_actions.c:3248
 msgid "Shade Mode Toggle"
 msgstr "シェード状態反転"
 
 #
-#: src/bin/e_actions.c:3247
+#: src/bin/e_actions.c:3252
 #, fuzzy
 msgid "Set Shaded State"
 msgstr "シェード状態"
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3253
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr ""
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257
 msgid "Toggle Borderless State"
 msgstr "ボーダー無し状態反転"
 
-#: src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3262
 #, fuzzy
 msgid "Set Border"
 msgstr "ボーダー"
 
-#: src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3268
 #, fuzzy
 msgid "Cycle between Borders"
 msgstr "国境の間にサイクル"
 
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3274
 msgid "Toggle Pinned State"
 msgstr "位置固定状態反転"
 
 #
-#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3278
-#: src/bin/e_actions.c:3280 src/bin/e_actions.c:3282 src/bin/e_actions.c:3288
-#: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3304
-#: src/bin/e_actions.c:3310 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
-#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
-#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
-#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3336
-#: src/bin/e_actions.c:3338 src/bin/e_actions.c:3340 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3350 src/bin/e_actions.c:3352
-#: src/bin/e_actions.c:3354 src/bin/e_actions.c:3360 src/bin/e_actions.c:3366
-#: src/bin/e_actions.c:3372 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
-#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
-#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
-#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3397
-#: src/bin/e_actions.c:3399 src/bin/e_actions.c:3401 src/bin/e_actions.c:3616
-#: src/bin/e_actions.c:3621 src/bin/e_int_shelf_config.c:298
+#: src/bin/e_actions.c:3279 src/bin/e_actions.c:3281 src/bin/e_actions.c:3283
+#: src/bin/e_actions.c:3285 src/bin/e_actions.c:3287 src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298 src/bin/e_actions.c:3304 src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3315 src/bin/e_actions.c:3321 src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3325 src/bin/e_actions.c:3327 src/bin/e_actions.c:3329
+#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3333 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3337 src/bin/e_actions.c:3339 src/bin/e_actions.c:3341
+#: src/bin/e_actions.c:3343 src/bin/e_actions.c:3345 src/bin/e_actions.c:3351
+#: src/bin/e_actions.c:3353 src/bin/e_actions.c:3355 src/bin/e_actions.c:3357
+#: src/bin/e_actions.c:3359 src/bin/e_actions.c:3365 src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3377 src/bin/e_actions.c:3382 src/bin/e_actions.c:3384
+#: src/bin/e_actions.c:3386 src/bin/e_actions.c:3388 src/bin/e_actions.c:3390
+#: src/bin/e_actions.c:3392 src/bin/e_actions.c:3394 src/bin/e_actions.c:3396
+#: src/bin/e_actions.c:3398 src/bin/e_actions.c:3400 src/bin/e_actions.c:3402
+#: src/bin/e_actions.c:3404 src/bin/e_actions.c:3406 src/bin/e_actions.c:3621
+#: src/bin/e_actions.c:3626 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -369,195 +369,195 @@ msgstr "位置固定状態反転"
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3279
 msgid "Flip Desktop Left"
 msgstr "左のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3281
 msgid "Flip Desktop Right"
 msgstr "右のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3283
 msgid "Flip Desktop Up"
 msgstr "上のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:3280
+#: src/bin/e_actions.c:3285
 msgid "Flip Desktop Down"
 msgstr "下のデスクトップへ移動する"
 
-#: src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287
 msgid "Flip Desktop By..."
 msgstr "デスクトップを指定分移動する"
 
-#: src/bin/e_actions.c:3288
+#: src/bin/e_actions.c:3293
 #, fuzzy
 msgid "Flip To Previous Desktop"
 msgstr "前のデスクトップへ"
 
-#: src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "デスクトップ背景を出す"
 
-#: src/bin/e_actions.c:3299
+#: src/bin/e_actions.c:3304
 msgid "Show The Shelf"
 msgstr "シェルフを出す"
 
-#: src/bin/e_actions.c:3304
+#: src/bin/e_actions.c:3309
 msgid "Flip Desktop To..."
 msgstr "指定のデスクトップへ移動する..."
 
-#: src/bin/e_actions.c:3310
+#: src/bin/e_actions.c:3315
 msgid "Flip Desktop Linearly..."
 msgstr "デスクトップを順に移動する..."
 
-#: src/bin/e_actions.c:3316
+#: src/bin/e_actions.c:3321
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "デスクトップ 0 に切り替える"
 
-#: src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3323
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "デスクトップ 1 に切り替える"
 
-#: src/bin/e_actions.c:3320
+#: src/bin/e_actions.c:3325
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "デスクトップ 2 に切り替える"
 
-#: src/bin/e_actions.c:3322
+#: src/bin/e_actions.c:3327
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "デスクトップ 3 に切り替える"
 
-#: src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3329
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "デスクトップ 4 に切り替える"
 
-#: src/bin/e_actions.c:3326
+#: src/bin/e_actions.c:3331
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "デスクトップ 5 に切り替える"
 
-#: src/bin/e_actions.c:3328
+#: src/bin/e_actions.c:3333
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "デスクトップ 6 に切り替える"
 
-#: src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3335
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "デスクトップ 7 に切り替える"
 
-#: src/bin/e_actions.c:3332
+#: src/bin/e_actions.c:3337
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "デスクトップ 8 に切り替える"
 
-#: src/bin/e_actions.c:3334
+#: src/bin/e_actions.c:3339
 msgid "Switch To Desktop 9"
 msgstr "デスクトップ 9 に切り替える"
 
-#: src/bin/e_actions.c:3336
+#: src/bin/e_actions.c:3341
 msgid "Switch To Desktop 10"
 msgstr "デスクトップ 10 に切り替える"
 
-#: src/bin/e_actions.c:3338
+#: src/bin/e_actions.c:3343
 msgid "Switch To Desktop 11"
 msgstr "デスクトップ 11 に切り替える"
 
-#: src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3345
 msgid "Switch To Desktop..."
 msgstr "指定のデスクトップに切り替える"
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3351
 msgid "Flip Desktop Left (All Screens)"
 msgstr "左のデスクトップへ移動する(全スクリーン)"
 
-#: src/bin/e_actions.c:3348
+#: src/bin/e_actions.c:3353
 msgid "Flip Desktop Right (All Screens)"
 msgstr "右のデスクトップへ移動する(全スクリーン)"
 
-#: src/bin/e_actions.c:3350
+#: src/bin/e_actions.c:3355
 msgid "Flip Desktop Up (All Screens)"
 msgstr "上のデスクトップへ移動する(全スクリーン)"
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3357
 msgid "Flip Desktop Down (All Screens)"
 msgstr "下のデスクトップへ移動する(全スクリーン)"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3359
 msgid "Flip Desktop By... (All Screens)"
 msgstr "デスクトップを指定分移動する(全スクリーン)"
 
-#: src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3365
 msgid "Flip Desktop To... (All Screens)"
 msgstr "指定のデスクトップへ移動する...(全スクリーン)"
 
-#: src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3371
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "デスクトップを順に移動する...(全スクリーン)"
 
-#: src/bin/e_actions.c:3372
+#: src/bin/e_actions.c:3377
 #, fuzzy
 msgid "Flip Desktop In Direction..."
 msgstr "方向でデスクトップを反転させる..."
 
-#: src/bin/e_actions.c:3377
+#: src/bin/e_actions.c:3382
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "デスクトップ 0 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3384
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "デスクトップ 1 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3381
+#: src/bin/e_actions.c:3386
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "デスクトップ 2 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3383
+#: src/bin/e_actions.c:3388
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "デスクトップ 3 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3390
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "デスクトップ 4 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3387
+#: src/bin/e_actions.c:3392
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "デスクトップ 5 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3394
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "デスクトップ 6 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3396
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "デスクトップ 7 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3393
+#: src/bin/e_actions.c:3398
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "デスクトップ 8 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3395
+#: src/bin/e_actions.c:3400
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "デスクトップ 9 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3397
+#: src/bin/e_actions.c:3402
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "デスクトップ 10 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3399
+#: src/bin/e_actions.c:3404
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "デスクトップ 11 に切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3401
+#: src/bin/e_actions.c:3406
 msgid "Switch To Desktop... (All Screens)"
 msgstr "指定のデスクトップに切り替える(全スクリーン)"
 
-#: src/bin/e_actions.c:3407 src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3416
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -566,241 +566,241 @@ msgstr "指定のデスクトップに切り替える(全スクリーン)"
 msgid "Window : List"
 msgstr "ウィンドウ: ウィンドウリスト"
 
-#: src/bin/e_actions.c:3407
+#: src/bin/e_actions.c:3412
 #, fuzzy
 msgid "Jump to window..."
 msgstr "選択されたウィンドウがあるデスクトップへ移動する"
 
-#: src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3416
 msgid "Jump to window... or start..."
 msgstr ""
 
-#: src/bin/e_actions.c:3418 src/bin/e_actions.c:3420 src/bin/e_actions.c:3422
-#: src/bin/e_actions.c:3428 src/bin/e_actions.c:3430 src/bin/e_actions.c:3432
-#: src/bin/e_actions.c:3437 src/bin/e_actions.c:3440 src/bin/e_actions.c:3443
-#: src/bin/e_actions.c:3445 src/bin/e_actions.c:3447 src/bin/e_actions.c:3449
-#: src/bin/e_actions.c:3452 src/bin/e_actions.c:3454 src/bin/e_actions.c:3456
-#: src/modules/backlight/e_mod_main.c:509
+#: src/bin/e_actions.c:3423 src/bin/e_actions.c:3425 src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3433 src/bin/e_actions.c:3435 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442 src/bin/e_actions.c:3445 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3450 src/bin/e_actions.c:3452 src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3457 src/bin/e_actions.c:3459 src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3644 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "画面"
 
-#: src/bin/e_actions.c:3418
+#: src/bin/e_actions.c:3423
 msgid "Send Mouse To Screen 0"
 msgstr "マウスをスクリーン 0 へ移す"
 
-#: src/bin/e_actions.c:3420
+#: src/bin/e_actions.c:3425
 msgid "Send Mouse To Screen 1"
 msgstr "マウスをスクリーン 1 へ移す"
 
-#: src/bin/e_actions.c:3422
+#: src/bin/e_actions.c:3427
 msgid "Send Mouse To Screen..."
 msgstr "マウスを指定のスクリーンへ移す..."
 
-#: src/bin/e_actions.c:3428
+#: src/bin/e_actions.c:3433
 msgid "Send Mouse Forward 1 Screen"
 msgstr "マウスを次のスクリーンへ移す"
 
-#: src/bin/e_actions.c:3430
+#: src/bin/e_actions.c:3435
 msgid "Send Mouse Back 1 Screen"
 msgstr "マウスを前のスクリーンへ戻す"
 
-#: src/bin/e_actions.c:3432
+#: src/bin/e_actions.c:3437
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "マウスを指定のスクリーン分だけ前後に移す..."
 
-#: src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442
 #, fuzzy
 msgid "Dim"
 msgstr "薄暗い"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3445
 #, fuzzy
 msgid "Undim"
 msgstr "Undim"
 
-#: src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3448
 #, fuzzy
 msgid "Backlight Set"
 msgstr "バックライトのセット"
 
-#: src/bin/e_actions.c:3445
+#: src/bin/e_actions.c:3450
 #, fuzzy
 msgid "Backlight Min"
 msgstr "バックライト最小"
 
-#: src/bin/e_actions.c:3447
+#: src/bin/e_actions.c:3452
 #, fuzzy
 msgid "Backlight Mid"
 msgstr "バックライトミッド"
 
-#: src/bin/e_actions.c:3449
+#: src/bin/e_actions.c:3454
 #, fuzzy
 msgid "Backlight Max"
 msgstr "バックライト最大"
 
-#: src/bin/e_actions.c:3452
+#: src/bin/e_actions.c:3457
 #, fuzzy
 msgid "Backlight Adjust"
 msgstr "バックライトが調整"
 
-#: src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3459
 #, fuzzy
 msgid "Backlight Up"
 msgstr "ライトアップ"
 
-#: src/bin/e_actions.c:3456
+#: src/bin/e_actions.c:3461
 #, fuzzy
 msgid "Backlight Down"
 msgstr "シャットダウン"
 
-#: src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3466
 #, fuzzy
 msgid "Move To Center"
 msgstr "中央に移動"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3470
 #, fuzzy
 msgid "Move To Coordinates..."
 msgstr "中央に移動"
 
-#: src/bin/e_actions.c:3470
+#: src/bin/e_actions.c:3475
 msgid "Move By Coordinate Offset..."
 msgstr ""
 
-#: src/bin/e_actions.c:3476
+#: src/bin/e_actions.c:3481
 #, fuzzy
 msgid "Resize By..."
 msgstr "変更サイズ"
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3487
 #, fuzzy
 msgid "Push in Direction..."
 msgstr "方向に押し..."
 
-#: src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3493
 #, fuzzy
 msgid "Drag Icon..."
 msgstr "アイコン作成"
 
-#: src/bin/e_actions.c:3493 src/bin/e_actions.c:3495 src/bin/e_actions.c:3497
-#: src/bin/e_actions.c:3503 src/bin/e_actions.c:3509 src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3498 src/bin/e_actions.c:3500 src/bin/e_actions.c:3502
+#: src/bin/e_actions.c:3508 src/bin/e_actions.c:3514 src/bin/e_actions.c:3516
 msgid "Window : Moving"
 msgstr "ウィンドウ: 移動"
 
-#: src/bin/e_actions.c:3493
+#: src/bin/e_actions.c:3498
 msgid "To Next Desktop"
 msgstr "次のデスクトップへ"
 
-#: src/bin/e_actions.c:3495
+#: src/bin/e_actions.c:3500
 msgid "To Previous Desktop"
 msgstr "前のデスクトップへ"
 
-#: src/bin/e_actions.c:3497
+#: src/bin/e_actions.c:3502
 msgid "By Desktop #..."
 msgstr "指定分のデスクトップを移動"
 
-#: src/bin/e_actions.c:3503
+#: src/bin/e_actions.c:3508
 msgid "To Desktop..."
 msgstr "指定のデスクトップへ..."
 
-#: src/bin/e_actions.c:3509
+#: src/bin/e_actions.c:3514
 #, fuzzy
 msgid "To Next Screen"
 msgstr "スクリーンを準備中"
 
-#: src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3516
 #, fuzzy
 msgid "To Previous Screen"
 msgstr "前のデスクトップへ"
 
-#: src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:3521
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "メインメニューを表示する"
 
-#: src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3523
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "お気に入りメニューを表示する"
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3525
 msgid "Show All Applications Menu"
 msgstr "全アプリケーションメニューを表示する"
 
-#: src/bin/e_actions.c:3522
+#: src/bin/e_actions.c:3527
 msgid "Show Clients Menu"
 msgstr "クライアントメニューを表示する"
 
-#: src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3529
 msgid "Show Menu..."
 msgstr "指定のメニューを表示する..."
 
-#: src/bin/e_actions.c:3531 src/bin/e_actions.c:3536 src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3536 src/bin/e_actions.c:3541 src/bin/e_actions.c:3546
 #: src/modules/conf/e_mod_main.c:273
 #: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "コマンドの実行"
 
-#: src/bin/e_actions.c:3531 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3536 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "コマンド"
 
-#: src/bin/e_actions.c:3536 src/bin/e_eap_editor.c:699
+#: src/bin/e_actions.c:3541 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "アプリケーション"
 
-#: src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3546
 msgid "New Instance of Focused App"
 msgstr ""
 
-#: src/bin/e_actions.c:3545
+#: src/bin/e_actions.c:3550
 msgid "Restart"
 msgstr "再起動"
 
-#: src/bin/e_actions.c:3553
+#: src/bin/e_actions.c:3558
 msgid "Exit Now"
 msgstr "ただちに終了"
 
-#: src/bin/e_actions.c:3557 src/bin/e_actions.c:3562
+#: src/bin/e_actions.c:3562 src/bin/e_actions.c:3567
 msgid "Moksha : Mode"
 msgstr "Moksha : モード"
 
-#: src/bin/e_actions.c:3558
+#: src/bin/e_actions.c:3563
 msgid "Presentation Mode Toggle"
 msgstr "プレゼンテーションモード切換え"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3568
 msgid "Offline Mode Toggle"
 msgstr "オフラインモード切換え"
 
-#: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
+#: src/bin/e_actions.c:3572 src/bin/e_actions.c:3576 src/bin/e_actions.c:3580
 #, fuzzy
 msgid "Moksha : Module"
 msgstr "Moksha : モード"
 
-#: src/bin/e_actions.c:3568
+#: src/bin/e_actions.c:3573
 #, fuzzy
 msgid "Enable the named module"
 msgstr "Moksha Randr モジュール"
 
-#: src/bin/e_actions.c:3572
+#: src/bin/e_actions.c:3577
 msgid "Disable the named module"
 msgstr ""
 
-#: src/bin/e_actions.c:3576
+#: src/bin/e_actions.c:3581
 #, fuzzy
 msgid "Toggle the named module"
 msgstr "編集モード反転"
 
-#: src/bin/e_actions.c:3580 src/bin/e_actions.c:3584 src/bin/e_actions.c:3588
-#: src/bin/e_actions.c:3592 src/bin/e_actions.c:3596 src/bin/e_actions.c:3600
-#: src/bin/e_actions.c:3604 src/bin/e_actions.c:3608 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3585 src/bin/e_actions.c:3589 src/bin/e_actions.c:3593
+#: src/bin/e_actions.c:3597 src/bin/e_actions.c:3601 src/bin/e_actions.c:3605
+#: src/bin/e_actions.c:3609 src/bin/e_actions.c:3613 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -817,73 +817,78 @@ msgstr "編集モード反転"
 msgid "System"
 msgstr "システム"
 
-#: src/bin/e_actions.c:3580
+#: src/bin/e_actions.c:3585
 msgid "Log Out"
 msgstr "ログアウト"
 
-#: src/bin/e_actions.c:3584
+#: src/bin/e_actions.c:3589
 msgid "Power Off Now"
 msgstr "ただちに電源を切る"
 
-#: src/bin/e_actions.c:3588
+#: src/bin/e_actions.c:3593
 msgid "Power Off"
 msgstr "電源を切る"
 
-#: src/bin/e_actions.c:3596
+#: src/bin/e_actions.c:3601
 #, fuzzy
 msgid "Suspend Now"
 msgstr "サスペンド"
 
-#: src/bin/e_actions.c:3608
+#: src/bin/e_actions.c:3613
 #, fuzzy
 msgid "Hibernate Now"
 msgstr "ハイバネート"
 
-#: src/bin/e_actions.c:3616
+#: src/bin/e_actions.c:3621
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "ロック"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "ウィンドウ整頓"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Generic : Actions"
 msgstr "一般: 動作"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Delayed Action"
 msgstr "遅延動作"
 
-#: src/bin/e_actions.c:3634
+#: src/bin/e_actions.c:3639
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
 #, fuzzy
 msgid "Touchpad"
 msgstr "ランチャーに追加"
 
-#: src/bin/e_actions.c:3635
+#: src/bin/e_actions.c:3640
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
 #, fuzzy
 msgid "Touchpad on/off"
 msgstr "ランチャーに追加"
 
-#: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
+#: src/bin/e_actions.c:3645
+#, fuzzy
+msgid "Blank now"
+msgstr "ブランキング"
+
+#: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 #, fuzzy
 msgid "Keyboard Layouts"
 msgstr "キーボード"
 
-#: src/bin/e_actions.c:3641
+#: src/bin/e_actions.c:3650
 #, fuzzy
 msgid "Use keyboard layout"
 msgstr "キーボードショートカットを作成します。"
 
-#: src/bin/e_actions.c:3645
+#: src/bin/e_actions.c:3654
 #, fuzzy
 msgid "Next keyboard layout"
 msgstr "キーボードショートカットを作成します。"
 
-#: src/bin/e_actions.c:3649
+#: src/bin/e_actions.c:3658
 msgid "Previous keyboard layout"
 msgstr ""
 
@@ -947,11 +952,11 @@ msgstr ""
 "定をコピーしない限りあり得ません.<br>これではまずいので, 念のためデフォルトの"
 "設定に置き換えました.<br>ご不便をおかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha の設定書込時の問題"
 
-#: src/bin/e_config.c:1573
+#: src/bin/e_config.c:1586
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -960,7 +965,7 @@ msgstr ""
 "%s から %s へ設定ファイルの移動中にエラーが起きました.<br>安全のため書き出し"
 "はここで強制終了しました."
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -979,19 +984,19 @@ msgstr ""
 msgid "OK"
 msgstr "了解"
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "Settings Upgraded"
 msgstr "設定が更新されました"
 
-#: src/bin/e_config.c:2104
+#: src/bin/e_config.c:2117
 msgid "The EET file handle is bad."
 msgstr "EETファイルハンドルがおかしいです"
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2121
 msgid "The file data is empty."
 msgstr "ファイルデータが空です"
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2125
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -999,78 +1004,78 @@ msgstr ""
 "このファイルには書き込めません.<br>ディスクが読み出し専用になっているか書き込"
 "み権限がありません"
 
-#: src/bin/e_config.c:2116
+#: src/bin/e_config.c:2129
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "書き出し準備中のメモリ不足になりました. メモリ解放してください."
 
-#: src/bin/e_config.c:2120
+#: src/bin/e_config.c:2133
 #, fuzzy
 msgid "This is a generic error."
 msgstr "これは一般的なエラーです。"
 
-#: src/bin/e_config.c:2124
+#: src/bin/e_config.c:2137
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "設定ファイルが大きすぎます.<br>ずっと小さいはずです (せいぜい数百KB程度)"
 
-#: src/bin/e_config.c:2128
+#: src/bin/e_config.c:2141
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "ディスクの入出力エラーです. 交換した方がいいかも."
 
-#: src/bin/e_config.c:2132
+#: src/bin/e_config.c:2145
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "ファイル書き出し中にスペースが不足しました"
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2149
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "書き出し中にファイルがクローズされました"
 
-#: src/bin/e_config.c:2140
+#: src/bin/e_config.c:2153
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "ファイルのメモリマップ (mmap) が失敗しました"
 
-#: src/bin/e_config.c:2144
+#: src/bin/e_config.c:2157
 msgid "X509 Encoding failed."
 msgstr "X509エンコーディングが失敗しました"
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2161
 msgid "Signature failed."
 msgstr "署名に失敗しました"
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2165
 msgid "The signature was invalid."
 msgstr "署名が不正です"
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 msgid "Not signed."
 msgstr "署名がありません"
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2173
 msgid "Feature not implemented."
 msgstr "機能が未実装です"
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2177
 msgid "PRNG was not seeded."
 msgstr "PRNGの種がありません"
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2181
 msgid "Encryption failed."
 msgstr "暗号化が失敗しました"
 
-#: src/bin/e_config.c:2172
+#: src/bin/e_config.c:2185
 #, fuzzy
 msgid "Decryption failed."
 msgstr "復号化が失敗しました"
 
-#: src/bin/e_config.c:2176
+#: src/bin/e_config.c:2189
 msgid "The error is unknown to Moksha."
 msgstr "未知のエラーです"
 
-#: src/bin/e_config.c:2198
+#: src/bin/e_config.c:2211
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -4324,7 +4329,7 @@ msgstr[1] "%li 分前"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
 msgid "Unknown"
 msgstr "不明"
 
@@ -5562,25 +5567,25 @@ msgstr ""
 "<br><hilight>%s</hilight><br>他のエッジバインドシーケンスを選んで下さい."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1329
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1335
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 #, fuzzy
 msgid "SHIFT"
 msgstr "シフト"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1341
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 #, fuzzy
 msgid "WIN"
 msgstr "WINの"
@@ -6165,11 +6170,11 @@ msgstr "キーバインド"
 msgid "Single Super Key allowed"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1187
 msgid "Binding Key Error"
 msgstr "キーシーケンスのバインドエラー"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"

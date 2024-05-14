@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-05-08 12:02+0200\n"
+"POT-Creation-Date: 2024-05-14 18:23+0200\n"
 "PO-Revision-Date: 2024-04-14 21:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "Аб асяроддзі Moksha"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -34,8 +34,8 @@ msgstr "Аб асяроддзі Moksha"
 msgid "Close"
 msgstr "Закрыць"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3545 src/bin/e_actions.c:3549
-#: src/bin/e_actions.c:3553 src/bin/e_main.c:710
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3550 src/bin/e_actions.c:3554
+#: src/bin/e_actions.c:3558 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:312
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "Вы сапраўды жадаеце знішчыць гэта акно?"
 
-#: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3167
 #: src/bin/e_int_border_menu.c:784
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
@@ -95,7 +95,7 @@ msgstr "Не"
 msgid "Action Params Syntax Error"
 msgstr "Сінтаксічная памылка ў параметрах дзеяння"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3554 src/bin/e_int_menus.c:269
 msgid "Exit"
 msgstr "Выхад"
 
@@ -127,7 +127,7 @@ msgstr "Выключэнне"
 msgid "Are you sure you want to power off your computer?"
 msgstr "Вы сапраўды жадаеце выключыць ваш камп'ютар?"
 
-#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3592
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3597
 msgid "Reboot"
 msgstr "Перазагрузка"
 
@@ -135,7 +135,7 @@ msgstr "Перазагрузка"
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Вы сапраўды жадаеце перазагрузіць ваш камп'ютар?"
 
-#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3600
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3605
 msgid "Suspend"
 msgstr "Прыпыненне"
 
@@ -143,7 +143,7 @@ msgstr "Прыпыненне"
 msgid "Are you sure you want to suspend your computer?"
 msgstr "Вы сапрауды жадаеце прыпыніць ваш камп'ютар?"
 
-#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3604
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3609
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "Спячка"
@@ -152,194 +152,194 @@ msgstr "Спячка"
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Вы сапраўды жадаеце адправіць ваш камп'ютар у спячку?"
 
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3128 src/bin/e_actions.c:3147
-#: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
-#: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
-#: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3122 src/bin/e_actions.c:3133 src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3157 src/bin/e_actions.c:3162 src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3466 src/bin/e_actions.c:3470 src/bin/e_actions.c:3475
+#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3487 src/bin/e_actions.c:3493
 #: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "Акно : Дзеянні"
 
-#: src/bin/e_actions.c:3117 src/bin/e_fm.c:11653
+#: src/bin/e_actions.c:3122 src/bin/e_fm.c:11653
 msgid "Move"
 msgstr "Перамясціць"
 
-#: src/bin/e_actions.c:3128
+#: src/bin/e_actions.c:3133
 msgid "Resize"
 msgstr "Змяніць памер"
 
-#: src/bin/e_actions.c:3139 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
-#: src/bin/e_actions.c:3520 src/bin/e_actions.c:3522 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3144 src/bin/e_actions.c:3521 src/bin/e_actions.c:3523
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3527 src/bin/e_actions.c:3529
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "Меню"
 
-#: src/bin/e_actions.c:3139
+#: src/bin/e_actions.c:3144
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Меню Акна"
 
-#: src/bin/e_actions.c:3147 src/bin/e_int_border_menu.c:1092
+#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Вышэй"
 
-#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1100
+#: src/bin/e_actions.c:3157 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "Ніжэй"
 
-#: src/bin/e_actions.c:3167 src/bin/e_actions.c:3171 src/bin/e_actions.c:3176
-#: src/bin/e_actions.c:3180 src/bin/e_actions.c:3184 src/bin/e_actions.c:3189
-#: src/bin/e_actions.c:3193 src/bin/e_actions.c:3198 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3208 src/bin/e_actions.c:3210 src/bin/e_actions.c:3213
-#: src/bin/e_actions.c:3216 src/bin/e_actions.c:3219 src/bin/e_actions.c:3222
-#: src/bin/e_actions.c:3224 src/bin/e_actions.c:3226 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3239
-#: src/bin/e_actions.c:3241 src/bin/e_actions.c:3243 src/bin/e_actions.c:3247
-#: src/bin/e_actions.c:3252 src/bin/e_actions.c:3257 src/bin/e_actions.c:3263
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3172 src/bin/e_actions.c:3176 src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3185 src/bin/e_actions.c:3189 src/bin/e_actions.c:3194
+#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3203 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3213 src/bin/e_actions.c:3215 src/bin/e_actions.c:3218
+#: src/bin/e_actions.c:3221 src/bin/e_actions.c:3224 src/bin/e_actions.c:3227
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3240 src/bin/e_actions.c:3242 src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3248 src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257 src/bin/e_actions.c:3262 src/bin/e_actions.c:3268
+#: src/bin/e_actions.c:3274
 msgid "Window : State"
 msgstr "Акно : Стан"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3172
 msgid "Sticky Mode Toggle"
 msgstr "Пераключыць \"ліпкі\" рэжым"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3176
 msgid "Sticky Mode Enable"
 msgstr "Уключыць \"ліпкі\" рэжым"
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3181
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 msgid "Always On Top Toggle"
 msgstr "Пераключыць \"заўсёды наверсе\""
 
-#: src/bin/e_actions.c:3180
+#: src/bin/e_actions.c:3185
 msgid "Always On Top Enable"
 msgstr "Уключыць \"заўсёды наверсе\""
 
-#: src/bin/e_actions.c:3184
+#: src/bin/e_actions.c:3189
 msgid "Always On Top Disable"
 msgstr "Адключыць \"заўсёды наверсе\""
 
-#: src/bin/e_actions.c:3189
+#: src/bin/e_actions.c:3194
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Пераключыць партрэтны рэжым"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3198
 msgid "Iconic Mode Enable"
 msgstr "Уключыць партрэтны рэжым"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3203
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Пераключыць поўнаэкранны рэжым"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3207
 msgid "Fullscreen Mode Enable"
 msgstr "Уключыць поўнаэкранны рэжым"
 
-#: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Разгарнуць"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:430
+#: src/bin/e_actions.c:3215 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "Разгарнуць вертыкальна"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:441
+#: src/bin/e_actions.c:3218 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "Разгарнуць гарызантальна"
 
-#: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/bin/e_actions.c:3221 src/bin/e_int_border_menu.c:452
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 msgid "Maximize Left"
 msgstr "Разгарнуць улева"
 
-#: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/bin/e_actions.c:3224 src/bin/e_int_border_menu.c:463
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 msgid "Maximize Right"
 msgstr "Разгарнуць управа"
 
-#: src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3227
 msgid "Maximize Fullscreen"
 msgstr "Разгарнуць на ўвесь экран"
 
-#: src/bin/e_actions.c:3224
+#: src/bin/e_actions.c:3229
 msgid "Maximize Mode \"Smart\""
 msgstr "Рэжым разгортвання \"Разумны\""
 
-#: src/bin/e_actions.c:3226
+#: src/bin/e_actions.c:3231
 msgid "Maximize Mode \"Expand\""
 msgstr "Рэжым разгортвання \"Пашырыць\""
 
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3233
 msgid "Maximize Mode \"Fill\""
 msgstr "Рэжым разгортвання \"Запоўніць\""
 
-#: src/bin/e_actions.c:3235
+#: src/bin/e_actions.c:3240
 msgid "Shade Up Mode Toggle"
 msgstr "Пераключыць рэжым \"Згарнуць уверх\""
 
-#: src/bin/e_actions.c:3237
+#: src/bin/e_actions.c:3242
 msgid "Shade Down Mode Toggle"
 msgstr "Пераключыць рэжым \"Згарнуць уніз\""
 
-#: src/bin/e_actions.c:3239
+#: src/bin/e_actions.c:3244
 msgid "Shade Left Mode Toggle"
 msgstr "Пераключыць рэжым \"Згарнуць улева\""
 
-#: src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246
 msgid "Shade Right Mode Toggle"
 msgstr "Пераключыць рэжым \"Згарнуць управа\""
 
-#: src/bin/e_actions.c:3243
+#: src/bin/e_actions.c:3248
 msgid "Shade Mode Toggle"
 msgstr "Пераключыць рэжым \"Згарнуць\""
 
-#: src/bin/e_actions.c:3247
+#: src/bin/e_actions.c:3252
 msgid "Set Shaded State"
 msgstr "Задаць рэжым згортвання"
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3253
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr "Сінтаксіс: \"(0|1) (up|down|left|right)\""
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257
 msgid "Toggle Borderless State"
 msgstr "Пераключыць стан \"Без рамкі\""
 
-#: src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3262
 msgid "Set Border"
 msgstr "Задаць рамку"
 
-#: src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3268
 msgid "Cycle between Borders"
 msgstr "Пераключыцца паміж рамкамі"
 
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3274
 msgid "Toggle Pinned State"
 msgstr "Пераключыць замацаваны стан"
 
-#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3278
-#: src/bin/e_actions.c:3280 src/bin/e_actions.c:3282 src/bin/e_actions.c:3288
-#: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3304
-#: src/bin/e_actions.c:3310 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
-#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
-#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
-#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3336
-#: src/bin/e_actions.c:3338 src/bin/e_actions.c:3340 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3350 src/bin/e_actions.c:3352
-#: src/bin/e_actions.c:3354 src/bin/e_actions.c:3360 src/bin/e_actions.c:3366
-#: src/bin/e_actions.c:3372 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
-#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
-#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
-#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3397
-#: src/bin/e_actions.c:3399 src/bin/e_actions.c:3401 src/bin/e_actions.c:3616
-#: src/bin/e_actions.c:3621 src/bin/e_int_shelf_config.c:298
+#: src/bin/e_actions.c:3279 src/bin/e_actions.c:3281 src/bin/e_actions.c:3283
+#: src/bin/e_actions.c:3285 src/bin/e_actions.c:3287 src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298 src/bin/e_actions.c:3304 src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3315 src/bin/e_actions.c:3321 src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3325 src/bin/e_actions.c:3327 src/bin/e_actions.c:3329
+#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3333 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3337 src/bin/e_actions.c:3339 src/bin/e_actions.c:3341
+#: src/bin/e_actions.c:3343 src/bin/e_actions.c:3345 src/bin/e_actions.c:3351
+#: src/bin/e_actions.c:3353 src/bin/e_actions.c:3355 src/bin/e_actions.c:3357
+#: src/bin/e_actions.c:3359 src/bin/e_actions.c:3365 src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3377 src/bin/e_actions.c:3382 src/bin/e_actions.c:3384
+#: src/bin/e_actions.c:3386 src/bin/e_actions.c:3388 src/bin/e_actions.c:3390
+#: src/bin/e_actions.c:3392 src/bin/e_actions.c:3394 src/bin/e_actions.c:3396
+#: src/bin/e_actions.c:3398 src/bin/e_actions.c:3400 src/bin/e_actions.c:3402
+#: src/bin/e_actions.c:3404 src/bin/e_actions.c:3406 src/bin/e_actions.c:3621
+#: src/bin/e_actions.c:3626 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -347,193 +347,193 @@ msgstr "Пераключыць замацаваны стан"
 msgid "Desktop"
 msgstr "Працоўны стол"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3279
 msgid "Flip Desktop Left"
 msgstr "Перайсці да працоўнага стала улева"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3281
 msgid "Flip Desktop Right"
 msgstr "Перайсці да працоўнага стала управа"
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3283
 msgid "Flip Desktop Up"
 msgstr "Перайсці да працоўнага стала уверх"
 
-#: src/bin/e_actions.c:3280
+#: src/bin/e_actions.c:3285
 msgid "Flip Desktop Down"
 msgstr "Перайсці да працоўнага стала уніз"
 
-#: src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287
 msgid "Flip Desktop By..."
 msgstr "Перанесці працоўны стол праз..."
 
-#: src/bin/e_actions.c:3288
+#: src/bin/e_actions.c:3293
 msgid "Flip To Previous Desktop"
 msgstr "Перайсці да папярэдняга рабочага стала"
 
-#: src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Паказаць працоўны стол"
 
-#: src/bin/e_actions.c:3299
+#: src/bin/e_actions.c:3304
 msgid "Show The Shelf"
 msgstr "Паказаць паліцу"
 
-#: src/bin/e_actions.c:3304
+#: src/bin/e_actions.c:3309
 msgid "Flip Desktop To..."
 msgstr "Перанесці працоўны стол на..."
 
-#: src/bin/e_actions.c:3310
+#: src/bin/e_actions.c:3315
 msgid "Flip Desktop Linearly..."
 msgstr "Перанесці працоўны стол лінейна..."
 
-#: src/bin/e_actions.c:3316
+#: src/bin/e_actions.c:3321
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Перайсці да працоўнага стала 0"
 
-#: src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3323
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Перайсці да працоўнага стала 1"
 
-#: src/bin/e_actions.c:3320
+#: src/bin/e_actions.c:3325
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Перайсці да працоўнага стала 2"
 
-#: src/bin/e_actions.c:3322
+#: src/bin/e_actions.c:3327
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Перайсці да працоўнага стала 3"
 
-#: src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3329
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Перайсці да працоўнага стала 4"
 
-#: src/bin/e_actions.c:3326
+#: src/bin/e_actions.c:3331
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Перайсці да працоўнага стала 5"
 
-#: src/bin/e_actions.c:3328
+#: src/bin/e_actions.c:3333
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Перайсці да працоўнага стала 6"
 
-#: src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3335
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Перайсці да працоўнага стала 7"
 
-#: src/bin/e_actions.c:3332
+#: src/bin/e_actions.c:3337
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Перайсці да працоўнага стала 8"
 
-#: src/bin/e_actions.c:3334
+#: src/bin/e_actions.c:3339
 msgid "Switch To Desktop 9"
 msgstr "Перайсці да працоўнага стала 9"
 
-#: src/bin/e_actions.c:3336
+#: src/bin/e_actions.c:3341
 msgid "Switch To Desktop 10"
 msgstr "Перайсці да працоўнага стала 10"
 
-#: src/bin/e_actions.c:3338
+#: src/bin/e_actions.c:3343
 msgid "Switch To Desktop 11"
 msgstr "Перайсці да працоўнага стала 11"
 
-#: src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3345
 msgid "Switch To Desktop..."
 msgstr "Перайсці да працоўнага стала..."
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3351
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Перайсці да працоўнага стала злева (усе экраны)"
 
-#: src/bin/e_actions.c:3348
+#: src/bin/e_actions.c:3353
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Перайсці да працоўнага стала зправа (усе экраны)"
 
-#: src/bin/e_actions.c:3350
+#: src/bin/e_actions.c:3355
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Перайсці да працоўнага стала вышэй (усе экраны)"
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3357
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Перайсці да працоўнага стала ніжэй (усе экраны)"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3359
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Перанесці працоўны стол праз... (усе экраны)"
 
-#: src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3365
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Перанесці працоўны стол на... (усе экраны)"
 
-#: src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3371
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Перанесці працоўны стол лінейна (усе экраны)"
 
-#: src/bin/e_actions.c:3372
+#: src/bin/e_actions.c:3377
 msgid "Flip Desktop In Direction..."
 msgstr "Перанесці працоўны стол у накірунку..."
 
-#: src/bin/e_actions.c:3377
+#: src/bin/e_actions.c:3382
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Перайсці да працоўнага стала 0 (усе экраны)"
 
-#: src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3384
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Перайсці да працоўнага стала 1 (усе экраны)"
 
-#: src/bin/e_actions.c:3381
+#: src/bin/e_actions.c:3386
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Перайсці да працоўнага стала 2 (усе экраны)"
 
-#: src/bin/e_actions.c:3383
+#: src/bin/e_actions.c:3388
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Перайсці да працоўнага стала 3 (усе экраны)"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3390
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Перайсці да працоўнага стала 4 (усе экраны)"
 
-#: src/bin/e_actions.c:3387
+#: src/bin/e_actions.c:3392
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Перайсці да працоўнага стала 5 (усе экраны)"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3394
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Перайсці да працоўнага стала 6 (усе экраны)"
 
-#: src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3396
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Перайсці да працоўнага стала 7 (усе экраны)"
 
-#: src/bin/e_actions.c:3393
+#: src/bin/e_actions.c:3398
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Перайсці да працоўнага стала 8 (усе экраны)"
 
-#: src/bin/e_actions.c:3395
+#: src/bin/e_actions.c:3400
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Перайсці да працоўнага стала 9 (усе экраны)"
 
-#: src/bin/e_actions.c:3397
+#: src/bin/e_actions.c:3402
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Перайсці да працоўнага стала 10 (усе экраны)"
 
-#: src/bin/e_actions.c:3399
+#: src/bin/e_actions.c:3404
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Перайсці да працоўнага стала 11 (усе экраны)"
 
-#: src/bin/e_actions.c:3401
+#: src/bin/e_actions.c:3406
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Перайсці да працоўнага стала... (усе экраны)"
 
-#: src/bin/e_actions.c:3407 src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3416
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -542,221 +542,221 @@ msgstr "Перайсці да працоўнага стала... (усе экр�
 msgid "Window : List"
 msgstr "Акно : Спіс"
 
-#: src/bin/e_actions.c:3407
+#: src/bin/e_actions.c:3412
 msgid "Jump to window..."
 msgstr "Перайсці да акна..."
 
-#: src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3416
 msgid "Jump to window... or start..."
 msgstr "Перайсці да акна... або запусціць..."
 
-#: src/bin/e_actions.c:3418 src/bin/e_actions.c:3420 src/bin/e_actions.c:3422
-#: src/bin/e_actions.c:3428 src/bin/e_actions.c:3430 src/bin/e_actions.c:3432
-#: src/bin/e_actions.c:3437 src/bin/e_actions.c:3440 src/bin/e_actions.c:3443
-#: src/bin/e_actions.c:3445 src/bin/e_actions.c:3447 src/bin/e_actions.c:3449
-#: src/bin/e_actions.c:3452 src/bin/e_actions.c:3454 src/bin/e_actions.c:3456
-#: src/modules/backlight/e_mod_main.c:509
+#: src/bin/e_actions.c:3423 src/bin/e_actions.c:3425 src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3433 src/bin/e_actions.c:3435 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442 src/bin/e_actions.c:3445 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3450 src/bin/e_actions.c:3452 src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3457 src/bin/e_actions.c:3459 src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3644 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Экран"
 
-#: src/bin/e_actions.c:3418
+#: src/bin/e_actions.c:3423
 msgid "Send Mouse To Screen 0"
 msgstr "Адправіць мыш да экрана 0"
 
-#: src/bin/e_actions.c:3420
+#: src/bin/e_actions.c:3425
 msgid "Send Mouse To Screen 1"
 msgstr "Адправіць мыш да экрана 1"
 
-#: src/bin/e_actions.c:3422
+#: src/bin/e_actions.c:3427
 msgid "Send Mouse To Screen..."
 msgstr "Адправіць мыш да экрана..."
 
-#: src/bin/e_actions.c:3428
+#: src/bin/e_actions.c:3433
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Адправіць мыш на 1 экран наперад"
 
-#: src/bin/e_actions.c:3430
+#: src/bin/e_actions.c:3435
 msgid "Send Mouse Back 1 Screen"
 msgstr "Адправіць мыш на 1 экран назад"
 
-#: src/bin/e_actions.c:3432
+#: src/bin/e_actions.c:3437
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Адправіць мыш наперад/назад..."
 
-#: src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442
 msgid "Dim"
 msgstr "Цямней"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3445
 msgid "Undim"
 msgstr "Святлей"
 
-#: src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3448
 msgid "Backlight Set"
 msgstr "Падсветка задана"
 
-#: src/bin/e_actions.c:3445
+#: src/bin/e_actions.c:3450
 msgid "Backlight Min"
 msgstr "Падсветка мін."
 
-#: src/bin/e_actions.c:3447
+#: src/bin/e_actions.c:3452
 msgid "Backlight Mid"
 msgstr "Падсветка сяр."
 
-#: src/bin/e_actions.c:3449
+#: src/bin/e_actions.c:3454
 msgid "Backlight Max"
 msgstr "Падсветка макс."
 
-#: src/bin/e_actions.c:3452
+#: src/bin/e_actions.c:3457
 msgid "Backlight Adjust"
 msgstr "Рэгуляваць падсветку"
 
-#: src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3459
 msgid "Backlight Up"
 msgstr "Больш падсветкі"
 
-#: src/bin/e_actions.c:3456
+#: src/bin/e_actions.c:3461
 msgid "Backlight Down"
 msgstr "Менш падсветкі"
 
-#: src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3466
 msgid "Move To Center"
 msgstr "Перамясціць у цэнтр"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3470
 msgid "Move To Coordinates..."
 msgstr "Перамясціць да каардынат..."
 
-#: src/bin/e_actions.c:3470
+#: src/bin/e_actions.c:3475
 msgid "Move By Coordinate Offset..."
 msgstr "Перамясціць на зрух каардынат..."
 
-#: src/bin/e_actions.c:3476
+#: src/bin/e_actions.c:3481
 msgid "Resize By..."
 msgstr "Змяніць памер на..."
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3487
 msgid "Push in Direction..."
 msgstr "Зрух у накірунку..."
 
-#: src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3493
 msgid "Drag Icon..."
 msgstr "Перацягнуць значок..."
 
-#: src/bin/e_actions.c:3493 src/bin/e_actions.c:3495 src/bin/e_actions.c:3497
-#: src/bin/e_actions.c:3503 src/bin/e_actions.c:3509 src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3498 src/bin/e_actions.c:3500 src/bin/e_actions.c:3502
+#: src/bin/e_actions.c:3508 src/bin/e_actions.c:3514 src/bin/e_actions.c:3516
 msgid "Window : Moving"
 msgstr "Акно : Перамяшчэнне"
 
-#: src/bin/e_actions.c:3493
+#: src/bin/e_actions.c:3498
 msgid "To Next Desktop"
 msgstr "Да наступнага рабочага стала"
 
-#: src/bin/e_actions.c:3495
+#: src/bin/e_actions.c:3500
 msgid "To Previous Desktop"
 msgstr "Да папярэдняга рабочага стала"
 
-#: src/bin/e_actions.c:3497
+#: src/bin/e_actions.c:3502
 msgid "By Desktop #..."
 msgstr "Да рабочага стала #..."
 
-#: src/bin/e_actions.c:3503
+#: src/bin/e_actions.c:3508
 msgid "To Desktop..."
 msgstr "Да рабочага стала..."
 
-#: src/bin/e_actions.c:3509
+#: src/bin/e_actions.c:3514
 msgid "To Next Screen"
 msgstr "Да наступнага экрана"
 
-#: src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3516
 msgid "To Previous Screen"
 msgstr "Да папярэдняга экрана"
 
-#: src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:3521
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Паказаць галоўнае меню"
 
-#: src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3523
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Паказаць меню \"Абранае\""
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3525
 msgid "Show All Applications Menu"
 msgstr "Паказаць меню \"Усе праграмы\""
 
-#: src/bin/e_actions.c:3522
+#: src/bin/e_actions.c:3527
 msgid "Show Clients Menu"
 msgstr "Паказаць меню кліента"
 
-#: src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3529
 msgid "Show Menu..."
 msgstr "Паказаць меню"
 
-#: src/bin/e_actions.c:3531 src/bin/e_actions.c:3536 src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3536 src/bin/e_actions.c:3541 src/bin/e_actions.c:3546
 #: src/modules/conf/e_mod_main.c:273
 #: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Запуск"
 
-#: src/bin/e_actions.c:3531 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3536 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "Каманда"
 
-#: src/bin/e_actions.c:3536 src/bin/e_eap_editor.c:699
+#: src/bin/e_actions.c:3541 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Праграма"
 
-#: src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3546
 msgid "New Instance of Focused App"
 msgstr "Новы вобраз праграмы ў фокусе"
 
-#: src/bin/e_actions.c:3545
+#: src/bin/e_actions.c:3550
 msgid "Restart"
 msgstr "Перазапусціць"
 
-#: src/bin/e_actions.c:3553
+#: src/bin/e_actions.c:3558
 msgid "Exit Now"
 msgstr "Выйсці зараз"
 
-#: src/bin/e_actions.c:3557 src/bin/e_actions.c:3562
+#: src/bin/e_actions.c:3562 src/bin/e_actions.c:3567
 msgid "Moksha : Mode"
 msgstr "Moksha : Рэжым"
 
-#: src/bin/e_actions.c:3558
+#: src/bin/e_actions.c:3563
 msgid "Presentation Mode Toggle"
 msgstr "Пераключэнне рэжыму прэзентацыі"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3568
 msgid "Offline Mode Toggle"
 msgstr "Пераключэнне пазасеткавага рэжыму"
 
-#: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
+#: src/bin/e_actions.c:3572 src/bin/e_actions.c:3576 src/bin/e_actions.c:3580
 msgid "Moksha : Module"
 msgstr "Moksha : Модуль"
 
-#: src/bin/e_actions.c:3568
+#: src/bin/e_actions.c:3573
 msgid "Enable the named module"
 msgstr "Уключыць названы модуль"
 
-#: src/bin/e_actions.c:3572
+#: src/bin/e_actions.c:3577
 msgid "Disable the named module"
 msgstr "Адключыць названы модуль"
 
-#: src/bin/e_actions.c:3576
+#: src/bin/e_actions.c:3581
 msgid "Toggle the named module"
 msgstr "Пераключыць названы модуль"
 
-#: src/bin/e_actions.c:3580 src/bin/e_actions.c:3584 src/bin/e_actions.c:3588
-#: src/bin/e_actions.c:3592 src/bin/e_actions.c:3596 src/bin/e_actions.c:3600
-#: src/bin/e_actions.c:3604 src/bin/e_actions.c:3608 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3585 src/bin/e_actions.c:3589 src/bin/e_actions.c:3593
+#: src/bin/e_actions.c:3597 src/bin/e_actions.c:3601 src/bin/e_actions.c:3605
+#: src/bin/e_actions.c:3609 src/bin/e_actions.c:3613 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -773,66 +773,71 @@ msgstr "Пераключыць названы модуль"
 msgid "System"
 msgstr "Сістэма"
 
-#: src/bin/e_actions.c:3580
+#: src/bin/e_actions.c:3585
 msgid "Log Out"
 msgstr "Выхад"
 
-#: src/bin/e_actions.c:3584
+#: src/bin/e_actions.c:3589
 msgid "Power Off Now"
 msgstr "Выключыць зараз"
 
-#: src/bin/e_actions.c:3588
+#: src/bin/e_actions.c:3593
 msgid "Power Off"
 msgstr "Выключэнне"
 
-#: src/bin/e_actions.c:3596
+#: src/bin/e_actions.c:3601
 msgid "Suspend Now"
 msgstr "Прыпыніць зараз"
 
-#: src/bin/e_actions.c:3608
+#: src/bin/e_actions.c:3613
 msgid "Hibernate Now"
 msgstr "Адправіць у спячку зараз"
 
-#: src/bin/e_actions.c:3616
+#: src/bin/e_actions.c:3621
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Блакіраванне"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Прыбраць вокны"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Generic : Actions"
 msgstr "Агульнае : Дзеянні"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Delayed Action"
 msgstr "Адкладзеннае дзеянне"
 
-#: src/bin/e_actions.c:3634
+#: src/bin/e_actions.c:3639
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
 msgid "Touchpad"
 msgstr "Сэнсарная пляцоўка"
 
-#: src/bin/e_actions.c:3635
+#: src/bin/e_actions.c:3640
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
 msgid "Touchpad on/off"
 msgstr "Сэнсарную пляцоўку ўкл/адкл "
 
-#: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
+#: src/bin/e_actions.c:3645
+#, fuzzy
+msgid "Blank now"
+msgstr "Гашэнне"
+
+#: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
 msgstr "Раскладка клавіятуры"
 
-#: src/bin/e_actions.c:3641
+#: src/bin/e_actions.c:3650
 msgid "Use keyboard layout"
 msgstr "Задаць раскладку клавіятуры"
 
-#: src/bin/e_actions.c:3645
+#: src/bin/e_actions.c:3654
 msgid "Next keyboard layout"
 msgstr "Наступная раскладка клавіятуры"
 
-#: src/bin/e_actions.c:3649
+#: src/bin/e_actions.c:3658
 msgid "Previous keyboard layout"
 msgstr "Папярэдняя раскладка клавіятуры"
 
@@ -895,11 +900,11 @@ msgstr ""
 "таму замест вашых<br>былі усталяваны перадвызначыныя налады. Выбачайце за "
 "нязручнасці.<br>"
 
-#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 msgid "Moksha Settings Write Problems"
 msgstr "Праблемы пры захаванні налад Moksha"
 
-#: src/bin/e_config.c:1573
+#: src/bin/e_config.c:1586
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -908,7 +913,7 @@ msgstr ""
 "Moksha знайшоў памылку пры перамяшчэнні файлаў з наладамі<br>з:<br>"
 "%s<br><br>да:<br>%s<br><br>Запіс быў перапынены ў мэтах бяспекі.<br>"
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -927,19 +932,19 @@ msgstr ""
 msgid "OK"
 msgstr "Добра"
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "Settings Upgraded"
 msgstr "Налады абноўлены"
 
-#: src/bin/e_config.c:2104
+#: src/bin/e_config.c:2117
 msgid "The EET file handle is bad."
 msgstr "Дрэнны дэскрыптар файла EET."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2121
 msgid "The file data is empty."
 msgstr "Файл даных пусты."
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2125
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -947,16 +952,16 @@ msgstr ""
 "Файл недаступны для запісу. Магчыма дыск толькі для чытання<br>або вы "
 "страцілі дазвол на доступ да вашых файлаў."
 
-#: src/bin/e_config.c:2116
+#: src/bin/e_config.c:2129
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Скончылася памяць пры падрыхтоўцы да запісу.<br>Калі ласка, вызваліце памяць."
 
-#: src/bin/e_config.c:2120
+#: src/bin/e_config.c:2133
 msgid "This is a generic error."
 msgstr "Гэта агульная памылка."
 
-#: src/bin/e_config.c:2124
+#: src/bin/e_config.c:2137
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -964,60 +969,60 @@ msgstr ""
 "Файл з наладамі занадта вялікі.<br>Ён павінны быць вельмі малы (не больш за "
 "некалькі соцень КБ)."
 
-#: src/bin/e_config.c:2128
+#: src/bin/e_config.c:2141
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 "На дыску заўважаны памылкі ўводу/вываду.<br>Магчыма трэба яго замяніць?"
 
-#: src/bin/e_config.c:2132
+#: src/bin/e_config.c:2145
 msgid "You ran out of space while writing the file."
 msgstr "Скончылася прастора пры запісе файла."
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2149
 msgid "The file was closed while writing."
 msgstr "Файл быў закрыты пры запісе."
 
-#: src/bin/e_config.c:2140
+#: src/bin/e_config.c:2153
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Адлюстраванне файла на памяць не ўдалося."
 
-#: src/bin/e_config.c:2144
+#: src/bin/e_config.c:2157
 msgid "X509 Encoding failed."
 msgstr "Кадзіраванне X509 не ўдалося."
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2161
 msgid "Signature failed."
 msgstr "Памылка подпісу."
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2165
 msgid "The signature was invalid."
 msgstr "Подпіс памылковы."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 msgid "Not signed."
 msgstr "Не падпісана."
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2173
 msgid "Feature not implemented."
 msgstr "Функцыя не рэалізавана."
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2177
 msgid "PRNG was not seeded."
 msgstr "Не ўдалося задаць пачатковае значэнне ГПВЛ."
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2181
 msgid "Encryption failed."
 msgstr "Зашыфраваць не ўдалося."
 
-#: src/bin/e_config.c:2172
+#: src/bin/e_config.c:2185
 msgid "Decryption failed."
 msgstr "Расшыфраваць не ўдалася."
 
-#: src/bin/e_config.c:2176
+#: src/bin/e_config.c:2189
 msgid "The error is unknown to Moksha."
 msgstr "Гаэта памылка невядома для Moksha."
 
-#: src/bin/e_config.c:2198
+#: src/bin/e_config.c:2211
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -4119,7 +4124,7 @@ msgstr[2] "%li хвілін таму"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
 msgid "Unknown"
 msgstr "Невядомы"
 
@@ -5290,22 +5295,22 @@ msgstr ""
 "<hilight>%s</hilight><br>Калі ласка, выберыце іншы край для прызначэння."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1329
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1335
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1341
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 msgid "WIN"
 msgstr "WIN"
 
@@ -5838,11 +5843,11 @@ msgstr "Прызначэнні клавіш"
 msgid "Single Super Key allowed"
 msgstr "Адзіночная клавіша Super дазволена"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1187
 msgid "Binding Key Error"
 msgstr "Памылка прызначэння клавішы"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"

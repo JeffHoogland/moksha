@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-05-08 12:02+0200\n"
+"POT-Creation-Date: 2024-05-14 18:23+0200\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -28,7 +28,7 @@ msgstr ""
 msgid "About Moksha"
 msgstr "Περί Moksha"
 
-#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3157
+#: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
@@ -40,8 +40,8 @@ msgstr "Περί Moksha"
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: src/bin/e_about.c:23 src/bin/e_actions.c:3545 src/bin/e_actions.c:3549
-#: src/bin/e_actions.c:3553 src/bin/e_main.c:710
+#: src/bin/e_about.c:23 src/bin/e_actions.c:3550 src/bin/e_actions.c:3554
+#: src/bin/e_actions.c:3558 src/bin/e_main.c:710
 #: src/modules/conf_interaction/e_int_config_mouse.c:312
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
@@ -86,7 +86,7 @@ msgstr ""
 msgid "Are you sure you want to kill this window?"
 msgstr "Είστε σίγουροι ότι θέλετε να σκοτώσετε αυτό το παράθυρο?"
 
-#: src/bin/e_actions.c:445 src/bin/e_actions.c:3162
+#: src/bin/e_actions.c:445 src/bin/e_actions.c:3167
 #: src/bin/e_int_border_menu.c:784
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:166
 msgid "Kill"
@@ -105,7 +105,7 @@ msgstr "Όχι"
 msgid "Action Params Syntax Error"
 msgstr "Παράμετροι Ενέργειας"
 
-#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3549 src/bin/e_int_menus.c:269
+#: src/bin/e_actions.c:2278 src/bin/e_actions.c:3554 src/bin/e_int_menus.c:269
 msgid "Exit"
 msgstr "Έξοδος"
 
@@ -137,7 +137,7 @@ msgstr "Τερματισμός"
 msgid "Are you sure you want to power off your computer?"
 msgstr "Επιθυμείτε σίγουρα να τερματίσετε τον υπολογιστή σας;"
 
-#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3592
+#: src/bin/e_actions.c:2492 src/bin/e_actions.c:3597
 msgid "Reboot"
 msgstr "Επανεκκίνηση"
 
@@ -145,7 +145,7 @@ msgstr "Επανεκκίνηση"
 msgid "Are you sure you want to reboot your computer?"
 msgstr "Επιθυμείτε σίγουρα την επανεκκίνηση του υπολογιστή σας;"
 
-#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3600
+#: src/bin/e_actions.c:2557 src/bin/e_actions.c:3605
 msgid "Suspend"
 msgstr "Αναστολή"
 
@@ -153,7 +153,7 @@ msgstr "Αναστολή"
 msgid "Are you sure you want to suspend your computer?"
 msgstr "Επιθυμείτε σίγουρα την αναστολή του υπολογιστή σας;"
 
-#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3604
+#: src/bin/e_actions.c:2622 src/bin/e_actions.c:3609
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:379
 msgid "Hibernate"
 msgstr "Αδρανοποίηση"
@@ -162,197 +162,197 @@ msgstr "Αδρανοποίηση"
 msgid "Are you sure you want to hibernate your computer?"
 msgstr "Είστε σίγουροι ότι θέλετε την αδρανοποίηση του υπολογιστή σας;"
 
-#: src/bin/e_actions.c:3117 src/bin/e_actions.c:3128 src/bin/e_actions.c:3147
-#: src/bin/e_actions.c:3152 src/bin/e_actions.c:3157 src/bin/e_actions.c:3162
-#: src/bin/e_actions.c:3461 src/bin/e_actions.c:3465 src/bin/e_actions.c:3470
-#: src/bin/e_actions.c:3476 src/bin/e_actions.c:3482 src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3122 src/bin/e_actions.c:3133 src/bin/e_actions.c:3152
+#: src/bin/e_actions.c:3157 src/bin/e_actions.c:3162 src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3466 src/bin/e_actions.c:3470 src/bin/e_actions.c:3475
+#: src/bin/e_actions.c:3481 src/bin/e_actions.c:3487 src/bin/e_actions.c:3493
 #: src/modules/shot/e_mod_main.c:1325
 msgid "Window : Actions"
 msgstr "Παράθυρο : Ενέργειες"
 
-#: src/bin/e_actions.c:3117 src/bin/e_fm.c:11653
+#: src/bin/e_actions.c:3122 src/bin/e_fm.c:11653
 msgid "Move"
 msgstr "Μετακίνηση"
 
-#: src/bin/e_actions.c:3128
+#: src/bin/e_actions.c:3133
 msgid "Resize"
 msgstr "Αλλαγή μεγέθους"
 
-#: src/bin/e_actions.c:3139 src/bin/e_actions.c:3516 src/bin/e_actions.c:3518
-#: src/bin/e_actions.c:3520 src/bin/e_actions.c:3522 src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3144 src/bin/e_actions.c:3521 src/bin/e_actions.c:3523
+#: src/bin/e_actions.c:3525 src/bin/e_actions.c:3527 src/bin/e_actions.c:3529
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:338
 msgid "Menu"
 msgstr "Μενού"
 
-#: src/bin/e_actions.c:3139
+#: src/bin/e_actions.c:3144
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:173
 msgid "Window Menu"
 msgstr "Μενού παραθύρου"
 
-#: src/bin/e_actions.c:3147 src/bin/e_int_border_menu.c:1092
+#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1092
 #: src/modules/winlist/e_int_config_winlist.c:222
 msgid "Raise"
 msgstr "Ανύψωση"
 
-#: src/bin/e_actions.c:3152 src/bin/e_int_border_menu.c:1100
+#: src/bin/e_actions.c:3157 src/bin/e_int_border_menu.c:1100
 msgid "Lower"
 msgstr "Βύθιση"
 
-#: src/bin/e_actions.c:3167 src/bin/e_actions.c:3171 src/bin/e_actions.c:3176
-#: src/bin/e_actions.c:3180 src/bin/e_actions.c:3184 src/bin/e_actions.c:3189
-#: src/bin/e_actions.c:3193 src/bin/e_actions.c:3198 src/bin/e_actions.c:3202
-#: src/bin/e_actions.c:3208 src/bin/e_actions.c:3210 src/bin/e_actions.c:3213
-#: src/bin/e_actions.c:3216 src/bin/e_actions.c:3219 src/bin/e_actions.c:3222
-#: src/bin/e_actions.c:3224 src/bin/e_actions.c:3226 src/bin/e_actions.c:3228
-#: src/bin/e_actions.c:3235 src/bin/e_actions.c:3237 src/bin/e_actions.c:3239
-#: src/bin/e_actions.c:3241 src/bin/e_actions.c:3243 src/bin/e_actions.c:3247
-#: src/bin/e_actions.c:3252 src/bin/e_actions.c:3257 src/bin/e_actions.c:3263
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3172 src/bin/e_actions.c:3176 src/bin/e_actions.c:3181
+#: src/bin/e_actions.c:3185 src/bin/e_actions.c:3189 src/bin/e_actions.c:3194
+#: src/bin/e_actions.c:3198 src/bin/e_actions.c:3203 src/bin/e_actions.c:3207
+#: src/bin/e_actions.c:3213 src/bin/e_actions.c:3215 src/bin/e_actions.c:3218
+#: src/bin/e_actions.c:3221 src/bin/e_actions.c:3224 src/bin/e_actions.c:3227
+#: src/bin/e_actions.c:3229 src/bin/e_actions.c:3231 src/bin/e_actions.c:3233
+#: src/bin/e_actions.c:3240 src/bin/e_actions.c:3242 src/bin/e_actions.c:3244
+#: src/bin/e_actions.c:3246 src/bin/e_actions.c:3248 src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257 src/bin/e_actions.c:3262 src/bin/e_actions.c:3268
+#: src/bin/e_actions.c:3274
 msgid "Window : State"
 msgstr "Παράθυρο : Κατάσταση"
 
-#: src/bin/e_actions.c:3167
+#: src/bin/e_actions.c:3172
 msgid "Sticky Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία προσκόλλησης"
 
-#: src/bin/e_actions.c:3171
+#: src/bin/e_actions.c:3176
 msgid "Sticky Mode Enable"
 msgstr "Ενεργοποιημένη κατάσταση προσκόλλησης"
 
-#: src/bin/e_actions.c:3176
+#: src/bin/e_actions.c:3181
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:138
 #, fuzzy
 msgid "Always On Top Toggle"
 msgstr "Πάντα στην Κορυφή"
 
-#: src/bin/e_actions.c:3180
+#: src/bin/e_actions.c:3185
 #, fuzzy
 msgid "Always On Top Enable"
 msgstr "Πάντα στην Κορυφή"
 
-#: src/bin/e_actions.c:3184
+#: src/bin/e_actions.c:3189
 #, fuzzy
 msgid "Always On Top Disable"
 msgstr "Πάντα στην Κορυφή"
 
-#: src/bin/e_actions.c:3189
+#: src/bin/e_actions.c:3194
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:124
 msgid "Iconic Mode Toggle"
 msgstr "Εναλλαγή σε εικονιδιοποιημένη λειτουργία"
 
-#: src/bin/e_actions.c:3193
+#: src/bin/e_actions.c:3198
 msgid "Iconic Mode Enable"
 msgstr "Ενεργοποίηση εικονιδιοποιημένης λειτουργίας"
 
-#: src/bin/e_actions.c:3198
+#: src/bin/e_actions.c:3203
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:131
 msgid "Fullscreen Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία πλήρους οθόνης"
 
-#: src/bin/e_actions.c:3202
+#: src/bin/e_actions.c:3207
 msgid "Fullscreen Mode Enable"
 msgstr "Ενεργοποίηση Κατάστασης Πλήρους Οθόνης"
 
-#: src/bin/e_actions.c:3208 src/bin/e_int_border_menu.c:419
+#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:419
 #: src/bin/e_int_border_menu.c:679
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:117
 msgid "Maximize"
 msgstr "Μεγιστοποίηση"
 
-#: src/bin/e_actions.c:3210 src/bin/e_int_border_menu.c:430
+#: src/bin/e_actions.c:3215 src/bin/e_int_border_menu.c:430
 msgid "Maximize Vertically"
 msgstr "Μεγιστοποίηση κάθετα"
 
-#: src/bin/e_actions.c:3213 src/bin/e_int_border_menu.c:441
+#: src/bin/e_actions.c:3218 src/bin/e_int_border_menu.c:441
 msgid "Maximize Horizontally"
 msgstr "Μεγιστοποίηση οριζόντια"
 
-#: src/bin/e_actions.c:3216 src/bin/e_int_border_menu.c:452
+#: src/bin/e_actions.c:3221 src/bin/e_int_border_menu.c:452
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:159
 msgid "Maximize Left"
 msgstr "Μεγιστοποίηση Αριστερά"
 
-#: src/bin/e_actions.c:3219 src/bin/e_int_border_menu.c:463
+#: src/bin/e_actions.c:3224 src/bin/e_int_border_menu.c:463
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:152
 msgid "Maximize Right"
 msgstr "Μεγιστοποίηση Δεξιά"
 
-#: src/bin/e_actions.c:3222
+#: src/bin/e_actions.c:3227
 msgid "Maximize Fullscreen"
 msgstr "Μεγιστοποίηση σε πλήρη οθόνη"
 
-#: src/bin/e_actions.c:3224
+#: src/bin/e_actions.c:3229
 msgid "Maximize Mode \"Smart\""
 msgstr "Κατάσταση μεγιστοποίησης \"έξυπνη\""
 
-#: src/bin/e_actions.c:3226
+#: src/bin/e_actions.c:3231
 msgid "Maximize Mode \"Expand\""
 msgstr "Κατάσταση μεγιστοποίησης \"επέκταση\""
 
-#: src/bin/e_actions.c:3228
+#: src/bin/e_actions.c:3233
 msgid "Maximize Mode \"Fill\""
 msgstr "Κατάσταση μεγιστοποίησης \"γέμισμα\""
 
-#: src/bin/e_actions.c:3235
+#: src/bin/e_actions.c:3240
 msgid "Shade Up Mode Toggle"
 msgstr "Εναλλαγή Κατάσταση Σκίασης Επάνω"
 
-#: src/bin/e_actions.c:3237
+#: src/bin/e_actions.c:3242
 msgid "Shade Down Mode Toggle"
 msgstr "Εναλλαγή Κατάσταση Σκίασης Κάτω"
 
-#: src/bin/e_actions.c:3239
+#: src/bin/e_actions.c:3244
 msgid "Shade Left Mode Toggle"
 msgstr "Εναλλαγή Κατάσταση Σκίασης Αριστερά"
 
-#: src/bin/e_actions.c:3241
+#: src/bin/e_actions.c:3246
 msgid "Shade Right Mode Toggle"
 msgstr "Εναλλαγή Κατάσταση Σκίασης Δεξιά"
 
-#: src/bin/e_actions.c:3243
+#: src/bin/e_actions.c:3248
 msgid "Shade Mode Toggle"
 msgstr "Εναλλαγή Κατάστασης Σκίασης"
 
-#: src/bin/e_actions.c:3247
+#: src/bin/e_actions.c:3252
 msgid "Set Shaded State"
 msgstr "Ορισμός Κατάστασης Σκίασης"
 
-#: src/bin/e_actions.c:3248
+#: src/bin/e_actions.c:3253
 msgid "syntax: \"(0|1) (up|down|left|right)\""
 msgstr "σύνταξη \"(0|1) (up|down|left|right)\""
 
-#: src/bin/e_actions.c:3252
+#: src/bin/e_actions.c:3257
 msgid "Toggle Borderless State"
 msgstr "Εναλλαγή σε Κατάσταση χωρίς περίγραμμα"
 
-#: src/bin/e_actions.c:3257
+#: src/bin/e_actions.c:3262
 msgid "Set Border"
 msgstr "Ορισμός Περιγράμματος"
 
-#: src/bin/e_actions.c:3263
+#: src/bin/e_actions.c:3268
 msgid "Cycle between Borders"
 msgstr "Κύκλος μεταξύ Περιγραμμάτων"
 
-#: src/bin/e_actions.c:3269
+#: src/bin/e_actions.c:3274
 msgid "Toggle Pinned State"
 msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 
-#: src/bin/e_actions.c:3274 src/bin/e_actions.c:3276 src/bin/e_actions.c:3278
-#: src/bin/e_actions.c:3280 src/bin/e_actions.c:3282 src/bin/e_actions.c:3288
-#: src/bin/e_actions.c:3293 src/bin/e_actions.c:3299 src/bin/e_actions.c:3304
-#: src/bin/e_actions.c:3310 src/bin/e_actions.c:3316 src/bin/e_actions.c:3318
-#: src/bin/e_actions.c:3320 src/bin/e_actions.c:3322 src/bin/e_actions.c:3324
-#: src/bin/e_actions.c:3326 src/bin/e_actions.c:3328 src/bin/e_actions.c:3330
-#: src/bin/e_actions.c:3332 src/bin/e_actions.c:3334 src/bin/e_actions.c:3336
-#: src/bin/e_actions.c:3338 src/bin/e_actions.c:3340 src/bin/e_actions.c:3346
-#: src/bin/e_actions.c:3348 src/bin/e_actions.c:3350 src/bin/e_actions.c:3352
-#: src/bin/e_actions.c:3354 src/bin/e_actions.c:3360 src/bin/e_actions.c:3366
-#: src/bin/e_actions.c:3372 src/bin/e_actions.c:3377 src/bin/e_actions.c:3379
-#: src/bin/e_actions.c:3381 src/bin/e_actions.c:3383 src/bin/e_actions.c:3385
-#: src/bin/e_actions.c:3387 src/bin/e_actions.c:3389 src/bin/e_actions.c:3391
-#: src/bin/e_actions.c:3393 src/bin/e_actions.c:3395 src/bin/e_actions.c:3397
-#: src/bin/e_actions.c:3399 src/bin/e_actions.c:3401 src/bin/e_actions.c:3616
-#: src/bin/e_actions.c:3621 src/bin/e_int_shelf_config.c:298
+#: src/bin/e_actions.c:3279 src/bin/e_actions.c:3281 src/bin/e_actions.c:3283
+#: src/bin/e_actions.c:3285 src/bin/e_actions.c:3287 src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298 src/bin/e_actions.c:3304 src/bin/e_actions.c:3309
+#: src/bin/e_actions.c:3315 src/bin/e_actions.c:3321 src/bin/e_actions.c:3323
+#: src/bin/e_actions.c:3325 src/bin/e_actions.c:3327 src/bin/e_actions.c:3329
+#: src/bin/e_actions.c:3331 src/bin/e_actions.c:3333 src/bin/e_actions.c:3335
+#: src/bin/e_actions.c:3337 src/bin/e_actions.c:3339 src/bin/e_actions.c:3341
+#: src/bin/e_actions.c:3343 src/bin/e_actions.c:3345 src/bin/e_actions.c:3351
+#: src/bin/e_actions.c:3353 src/bin/e_actions.c:3355 src/bin/e_actions.c:3357
+#: src/bin/e_actions.c:3359 src/bin/e_actions.c:3365 src/bin/e_actions.c:3371
+#: src/bin/e_actions.c:3377 src/bin/e_actions.c:3382 src/bin/e_actions.c:3384
+#: src/bin/e_actions.c:3386 src/bin/e_actions.c:3388 src/bin/e_actions.c:3390
+#: src/bin/e_actions.c:3392 src/bin/e_actions.c:3394 src/bin/e_actions.c:3396
+#: src/bin/e_actions.c:3398 src/bin/e_actions.c:3400 src/bin/e_actions.c:3402
+#: src/bin/e_actions.c:3404 src/bin/e_actions.c:3406 src/bin/e_actions.c:3621
+#: src/bin/e_actions.c:3626 src/bin/e_int_shelf_config.c:298
 #: src/modules/conf_window_manipulation/e_int_config_clientlist.c:101
 #: src/modules/fileman/e_mod_menu.c:429 src/modules/ibox/e_mod_config.c:166
 #: src/modules/classicmenu/e_mod_main.c:72
@@ -360,193 +360,193 @@ msgstr "Εναλλαγή σε κατάσταση ακινητοποίησης"
 msgid "Desktop"
 msgstr "Επιφάνεια Εργασίας"
 
-#: src/bin/e_actions.c:3274
+#: src/bin/e_actions.c:3279
 msgid "Flip Desktop Left"
 msgstr "Περιστροφή επιφάνειας εργασίας αριστερά"
 
-#: src/bin/e_actions.c:3276
+#: src/bin/e_actions.c:3281
 msgid "Flip Desktop Right"
 msgstr "Περιστροφή επιφάνειας εργασίας δεξιά"
 
-#: src/bin/e_actions.c:3278
+#: src/bin/e_actions.c:3283
 msgid "Flip Desktop Up"
 msgstr "Περιστροφή επιφάνειας εργασίας επάνω"
 
-#: src/bin/e_actions.c:3280
+#: src/bin/e_actions.c:3285
 msgid "Flip Desktop Down"
 msgstr "Περιστροφή επιφάνειας εργασίας κάτω"
 
-#: src/bin/e_actions.c:3282
+#: src/bin/e_actions.c:3287
 msgid "Flip Desktop By..."
 msgstr "Περιστροφή επιφάνειας εργασίας κατά..."
 
-#: src/bin/e_actions.c:3288
+#: src/bin/e_actions.c:3293
 msgid "Flip To Previous Desktop"
 msgstr "Περιστροφή στην Προηγούμενη Επιφάνεια Εργασίας"
 
-#: src/bin/e_actions.c:3293
+#: src/bin/e_actions.c:3298
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:224
 msgid "Show The Desktop"
 msgstr "Εμφάνιση επιφάνειας εργασίας"
 
-#: src/bin/e_actions.c:3299
+#: src/bin/e_actions.c:3304
 msgid "Show The Shelf"
 msgstr "Εμφάνιση ραφιού"
 
-#: src/bin/e_actions.c:3304
+#: src/bin/e_actions.c:3309
 msgid "Flip Desktop To..."
 msgstr "Περιστροφή επιφάνειας εργασίας σε..."
 
-#: src/bin/e_actions.c:3310
+#: src/bin/e_actions.c:3315
 msgid "Flip Desktop Linearly..."
 msgstr "Περιστροφή επιφάνειας εργασίας γραμμικά..."
 
-#: src/bin/e_actions.c:3316
+#: src/bin/e_actions.c:3321
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:231
 msgid "Switch To Desktop 0"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 0"
 
-#: src/bin/e_actions.c:3318
+#: src/bin/e_actions.c:3323
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:238
 msgid "Switch To Desktop 1"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 1"
 
-#: src/bin/e_actions.c:3320
+#: src/bin/e_actions.c:3325
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:245
 msgid "Switch To Desktop 2"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 2"
 
-#: src/bin/e_actions.c:3322
+#: src/bin/e_actions.c:3327
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:252
 msgid "Switch To Desktop 3"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 3"
 
-#: src/bin/e_actions.c:3324
+#: src/bin/e_actions.c:3329
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:259
 msgid "Switch To Desktop 4"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 4"
 
-#: src/bin/e_actions.c:3326
+#: src/bin/e_actions.c:3331
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:266
 msgid "Switch To Desktop 5"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 5"
 
-#: src/bin/e_actions.c:3328
+#: src/bin/e_actions.c:3333
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:273
 msgid "Switch To Desktop 6"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 6"
 
-#: src/bin/e_actions.c:3330
+#: src/bin/e_actions.c:3335
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:280
 msgid "Switch To Desktop 7"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 7"
 
-#: src/bin/e_actions.c:3332
+#: src/bin/e_actions.c:3337
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:287
 msgid "Switch To Desktop 8"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 8"
 
-#: src/bin/e_actions.c:3334
+#: src/bin/e_actions.c:3339
 msgid "Switch To Desktop 9"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 9"
 
-#: src/bin/e_actions.c:3336
+#: src/bin/e_actions.c:3341
 msgid "Switch To Desktop 10"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 10"
 
-#: src/bin/e_actions.c:3338
+#: src/bin/e_actions.c:3343
 msgid "Switch To Desktop 11"
 msgstr "Εναλλαγή στην επιφάνεια εργασίας 11"
 
-#: src/bin/e_actions.c:3340
+#: src/bin/e_actions.c:3345
 msgid "Switch To Desktop..."
 msgstr "Εναλλαγή στην επιφάνεια εργασίας..."
 
-#: src/bin/e_actions.c:3346
+#: src/bin/e_actions.c:3351
 msgid "Flip Desktop Left (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας αριστερά (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3348
+#: src/bin/e_actions.c:3353
 msgid "Flip Desktop Right (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας δεξιά (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3350
+#: src/bin/e_actions.c:3355
 msgid "Flip Desktop Up (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας επάνω (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3352
+#: src/bin/e_actions.c:3357
 msgid "Flip Desktop Down (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας κάτω (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3354
+#: src/bin/e_actions.c:3359
 msgid "Flip Desktop By... (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας κατά... (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3360
+#: src/bin/e_actions.c:3365
 msgid "Flip Desktop To... (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας σε... (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3366
+#: src/bin/e_actions.c:3371
 msgid "Flip Desktop Linearly... (All Screens)"
 msgstr "Περιστροφή επιφάνειας εργασίας γραμμικά... (Σε όλες τις οθόνες)"
 
-#: src/bin/e_actions.c:3372
+#: src/bin/e_actions.c:3377
 msgid "Flip Desktop In Direction..."
 msgstr "Περιστροφή επιφάνειας εργασίας σε κατεύθυνση..."
 
-#: src/bin/e_actions.c:3377
+#: src/bin/e_actions.c:3382
 msgid "Switch To Desktop 0 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 0 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3379
+#: src/bin/e_actions.c:3384
 msgid "Switch To Desktop 1 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 1 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3381
+#: src/bin/e_actions.c:3386
 msgid "Switch To Desktop 2 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 2 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3383
+#: src/bin/e_actions.c:3388
 msgid "Switch To Desktop 3 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 3 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3385
+#: src/bin/e_actions.c:3390
 msgid "Switch To Desktop 4 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 4 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3387
+#: src/bin/e_actions.c:3392
 msgid "Switch To Desktop 5 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 5 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3389
+#: src/bin/e_actions.c:3394
 msgid "Switch To Desktop 6 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 6 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3391
+#: src/bin/e_actions.c:3396
 msgid "Switch To Desktop 7 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 7 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3393
+#: src/bin/e_actions.c:3398
 msgid "Switch To Desktop 8 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 8 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3395
+#: src/bin/e_actions.c:3400
 msgid "Switch To Desktop 9 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 9 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3397
+#: src/bin/e_actions.c:3402
 msgid "Switch To Desktop 10 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 10 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3399
+#: src/bin/e_actions.c:3404
 msgid "Switch To Desktop 11 (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας 11 (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3401
+#: src/bin/e_actions.c:3406
 msgid "Switch To Desktop... (All Screens)"
 msgstr "Αλλαγή στην επιφάνεια εργασίας... (Όλες οθόνες)"
 
-#: src/bin/e_actions.c:3407 src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3412 src/bin/e_actions.c:3416
 #: src/modules/winlist/e_mod_main.c:41 src/modules/winlist/e_mod_main.c:43
 #: src/modules/winlist/e_mod_main.c:45 src/modules/winlist/e_mod_main.c:48
 #: src/modules/winlist/e_mod_main.c:51 src/modules/winlist/e_mod_main.c:54
@@ -555,222 +555,222 @@ msgstr "Αλλαγή στην επιφάνεια εργασίας... (Όλες �
 msgid "Window : List"
 msgstr "Παράθυρο : Λίστα"
 
-#: src/bin/e_actions.c:3407
+#: src/bin/e_actions.c:3412
 msgid "Jump to window..."
 msgstr "Μετάβαση στο παράθυρο..."
 
-#: src/bin/e_actions.c:3411
+#: src/bin/e_actions.c:3416
 msgid "Jump to window... or start..."
 msgstr "Μετάβαση στο παράθυρο... ή εκκίνηση..."
 
-#: src/bin/e_actions.c:3418 src/bin/e_actions.c:3420 src/bin/e_actions.c:3422
-#: src/bin/e_actions.c:3428 src/bin/e_actions.c:3430 src/bin/e_actions.c:3432
-#: src/bin/e_actions.c:3437 src/bin/e_actions.c:3440 src/bin/e_actions.c:3443
-#: src/bin/e_actions.c:3445 src/bin/e_actions.c:3447 src/bin/e_actions.c:3449
-#: src/bin/e_actions.c:3452 src/bin/e_actions.c:3454 src/bin/e_actions.c:3456
-#: src/modules/backlight/e_mod_main.c:509
+#: src/bin/e_actions.c:3423 src/bin/e_actions.c:3425 src/bin/e_actions.c:3427
+#: src/bin/e_actions.c:3433 src/bin/e_actions.c:3435 src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442 src/bin/e_actions.c:3445 src/bin/e_actions.c:3448
+#: src/bin/e_actions.c:3450 src/bin/e_actions.c:3452 src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3457 src/bin/e_actions.c:3459 src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3644 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
 #: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Οθόνη"
 
-#: src/bin/e_actions.c:3418
+#: src/bin/e_actions.c:3423
 msgid "Send Mouse To Screen 0"
 msgstr "Αποστολή ποντικιού στη οθόνη 0"
 
-#: src/bin/e_actions.c:3420
+#: src/bin/e_actions.c:3425
 msgid "Send Mouse To Screen 1"
 msgstr "Αποστολή ποντικιού στη οθόνη 1"
 
-#: src/bin/e_actions.c:3422
+#: src/bin/e_actions.c:3427
 msgid "Send Mouse To Screen..."
 msgstr "Αποστολή ποντικιού στη οθόνη..."
 
-#: src/bin/e_actions.c:3428
+#: src/bin/e_actions.c:3433
 msgid "Send Mouse Forward 1 Screen"
 msgstr "Προώθηση ποντικιού κατά 1 οθόνη μπροστά"
 
-#: src/bin/e_actions.c:3430
+#: src/bin/e_actions.c:3435
 msgid "Send Mouse Back 1 Screen"
 msgstr "Προώθηση ποντικιού κατά 1 οθόνη πίσω"
 
-#: src/bin/e_actions.c:3432
+#: src/bin/e_actions.c:3437
 msgid "Send Mouse Forward/Back Screens..."
 msgstr "Προώθηση ποντικιού σε οθόνες Μπρος/Πίσω..."
 
-#: src/bin/e_actions.c:3437
+#: src/bin/e_actions.c:3442
 msgid "Dim"
 msgstr "Θάμπωμα"
 
-#: src/bin/e_actions.c:3440
+#: src/bin/e_actions.c:3445
 msgid "Undim"
 msgstr "Ξεθάμπωμα"
 
-#: src/bin/e_actions.c:3443
+#: src/bin/e_actions.c:3448
 msgid "Backlight Set"
 msgstr "Ρύθμιση οπίσθιου φωτισμού"
 
-#: src/bin/e_actions.c:3445
+#: src/bin/e_actions.c:3450
 msgid "Backlight Min"
 msgstr "Ελάχιστος οπίσθιος φωτισμός"
 
-#: src/bin/e_actions.c:3447
+#: src/bin/e_actions.c:3452
 msgid "Backlight Mid"
 msgstr "Μέσος οπίσθιος φωτισμός"
 
-#: src/bin/e_actions.c:3449
+#: src/bin/e_actions.c:3454
 msgid "Backlight Max"
 msgstr "Μέγιστος οπίσθιος φωτισμός"
 
-#: src/bin/e_actions.c:3452
+#: src/bin/e_actions.c:3457
 msgid "Backlight Adjust"
 msgstr "Προσαρμογή οπίσθιου φωτισμού"
 
-#: src/bin/e_actions.c:3454
+#: src/bin/e_actions.c:3459
 msgid "Backlight Up"
 msgstr "Αύξηση οπίσθιου φωτισμού"
 
-#: src/bin/e_actions.c:3456
+#: src/bin/e_actions.c:3461
 msgid "Backlight Down"
 msgstr "Ελάττωση οπίσθιου φωτισμού"
 
-#: src/bin/e_actions.c:3461
+#: src/bin/e_actions.c:3466
 msgid "Move To Center"
 msgstr "Μετακίνηση στο Κέντρο"
 
-#: src/bin/e_actions.c:3465
+#: src/bin/e_actions.c:3470
 msgid "Move To Coordinates..."
 msgstr "Μετακίνηση στις Συντεταγμένες..."
 
-#: src/bin/e_actions.c:3470
+#: src/bin/e_actions.c:3475
 msgid "Move By Coordinate Offset..."
 msgstr "Μετακίνηση Ανά Συντονισμένη Μετατόπιση..."
 
-#: src/bin/e_actions.c:3476
+#: src/bin/e_actions.c:3481
 msgid "Resize By..."
 msgstr "Αλλαγή μεγέθους ανά..."
 
-#: src/bin/e_actions.c:3482
+#: src/bin/e_actions.c:3487
 #, fuzzy
 msgid "Push in Direction..."
 msgstr "Προώθηση προς την κατεύθυνση ..."
 
-#: src/bin/e_actions.c:3488
+#: src/bin/e_actions.c:3493
 msgid "Drag Icon..."
 msgstr "Σύρετε το Εικονίδιο..."
 
-#: src/bin/e_actions.c:3493 src/bin/e_actions.c:3495 src/bin/e_actions.c:3497
-#: src/bin/e_actions.c:3503 src/bin/e_actions.c:3509 src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3498 src/bin/e_actions.c:3500 src/bin/e_actions.c:3502
+#: src/bin/e_actions.c:3508 src/bin/e_actions.c:3514 src/bin/e_actions.c:3516
 msgid "Window : Moving"
 msgstr "Παράθυρο : Μετακίνηση"
 
-#: src/bin/e_actions.c:3493
+#: src/bin/e_actions.c:3498
 msgid "To Next Desktop"
 msgstr "Στην επόμενη επιφάνεια εργασίας"
 
-#: src/bin/e_actions.c:3495
+#: src/bin/e_actions.c:3500
 msgid "To Previous Desktop"
 msgstr "Στην προηγούμενη επιφάνεια εργασίας"
 
-#: src/bin/e_actions.c:3497
+#: src/bin/e_actions.c:3502
 msgid "By Desktop #..."
 msgstr "Ανά επιφάνεια εργασίας #..."
 
-#: src/bin/e_actions.c:3503
+#: src/bin/e_actions.c:3508
 msgid "To Desktop..."
 msgstr "Στην επιφάνεια εργασίας..."
 
-#: src/bin/e_actions.c:3509
+#: src/bin/e_actions.c:3514
 msgid "To Next Screen"
 msgstr "Στην Επόμενη Οθόνη"
 
-#: src/bin/e_actions.c:3511
+#: src/bin/e_actions.c:3516
 msgid "To Previous Screen"
 msgstr "Στην Προηγούμενη Οθόνη"
 
-#: src/bin/e_actions.c:3516
+#: src/bin/e_actions.c:3521
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:198
 msgid "Show Main Menu"
 msgstr "Εμφάνιση κεντρικού μενού"
 
-#: src/bin/e_actions.c:3518
+#: src/bin/e_actions.c:3523
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:205
 msgid "Show Favorites Menu"
 msgstr "Εμφάνιση μενού αγαπημένων"
 
-#: src/bin/e_actions.c:3520
+#: src/bin/e_actions.c:3525
 msgid "Show All Applications Menu"
 msgstr "Εμφάνιση μενού όλων των εφαρμογών"
 
-#: src/bin/e_actions.c:3522
+#: src/bin/e_actions.c:3527
 msgid "Show Clients Menu"
 msgstr "Εμφάνιση μενού πελατών"
 
-#: src/bin/e_actions.c:3524
+#: src/bin/e_actions.c:3529
 msgid "Show Menu..."
 msgstr "Εμφάνιση μενού..."
 
-#: src/bin/e_actions.c:3531 src/bin/e_actions.c:3536 src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3536 src/bin/e_actions.c:3541 src/bin/e_actions.c:3546
 #: src/modules/conf/e_mod_main.c:273
 #: src/modules/everything/evry_plug_apps.c:1231
 #: src/modules/fileman/e_mod_main.c:55
 msgid "Launch"
 msgstr "Εκτέλεση"
 
-#: src/bin/e_actions.c:3531 src/bin/e_int_border_prop.c:468
+#: src/bin/e_actions.c:3536 src/bin/e_int_border_prop.c:468
 msgid "Command"
 msgstr "Εντολή"
 
-#: src/bin/e_actions.c:3536 src/bin/e_eap_editor.c:699
+#: src/bin/e_actions.c:3541 src/bin/e_eap_editor.c:699
 #: src/bin/e_int_border_menu.c:136
 #, c-format
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: src/bin/e_actions.c:3541
+#: src/bin/e_actions.c:3546
 msgid "New Instance of Focused App"
 msgstr "Νέο Στιγμιότυπο της Εστιασμένης Εφαρμογής"
 
-#: src/bin/e_actions.c:3545
+#: src/bin/e_actions.c:3550
 msgid "Restart"
 msgstr "Επανεκκίνηση"
 
-#: src/bin/e_actions.c:3553
+#: src/bin/e_actions.c:3558
 msgid "Exit Now"
 msgstr "Έξοδος Τώρα"
 
-#: src/bin/e_actions.c:3557 src/bin/e_actions.c:3562
+#: src/bin/e_actions.c:3562 src/bin/e_actions.c:3567
 msgid "Moksha : Mode"
 msgstr "Moksha : Λειτουργία"
 
-#: src/bin/e_actions.c:3558
+#: src/bin/e_actions.c:3563
 msgid "Presentation Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία παρουσίασης"
 
-#: src/bin/e_actions.c:3563
+#: src/bin/e_actions.c:3568
 msgid "Offline Mode Toggle"
 msgstr "Εναλλαγή σε λειτουργία εκτός σύνδεσης"
 
-#: src/bin/e_actions.c:3567 src/bin/e_actions.c:3571 src/bin/e_actions.c:3575
+#: src/bin/e_actions.c:3572 src/bin/e_actions.c:3576 src/bin/e_actions.c:3580
 msgid "Moksha : Module"
 msgstr "Moksha : Άρθρωμα"
 
-#: src/bin/e_actions.c:3568
+#: src/bin/e_actions.c:3573
 msgid "Enable the named module"
 msgstr "Ενεργοποίηση αρθρώματος με όνομα"
 
-#: src/bin/e_actions.c:3572
+#: src/bin/e_actions.c:3577
 msgid "Disable the named module"
 msgstr "Απενεργοποίηση αρθρώματος με όνομα"
 
-#: src/bin/e_actions.c:3576
+#: src/bin/e_actions.c:3581
 msgid "Toggle the named module"
 msgstr "Εναλλαγή του αρθρώματος με όνομα"
 
-#: src/bin/e_actions.c:3580 src/bin/e_actions.c:3584 src/bin/e_actions.c:3588
-#: src/bin/e_actions.c:3592 src/bin/e_actions.c:3596 src/bin/e_actions.c:3600
-#: src/bin/e_actions.c:3604 src/bin/e_actions.c:3608 src/bin/e_configure.c:411
+#: src/bin/e_actions.c:3585 src/bin/e_actions.c:3589 src/bin/e_actions.c:3593
+#: src/bin/e_actions.c:3597 src/bin/e_actions.c:3601 src/bin/e_actions.c:3605
+#: src/bin/e_actions.c:3609 src/bin/e_actions.c:3613 src/bin/e_configure.c:411
 #: src/bin/e_int_config_modules.c:52
 #: src/modules/conf_applications/e_int_config_apps.c:322
 #: src/modules/conf_display/e_int_config_desklock_fsel.c:87
@@ -787,68 +787,73 @@ msgstr "Εναλλαγή του αρθρώματος με όνομα"
 msgid "System"
 msgstr "Σύστημα"
 
-#: src/bin/e_actions.c:3580
+#: src/bin/e_actions.c:3585
 msgid "Log Out"
 msgstr "Αποσύνδεση"
 
-#: src/bin/e_actions.c:3584
+#: src/bin/e_actions.c:3589
 msgid "Power Off Now"
 msgstr "Τερματισμός τώρα"
 
-#: src/bin/e_actions.c:3588
+#: src/bin/e_actions.c:3593
 msgid "Power Off"
 msgstr "Τερματισμός"
 
-#: src/bin/e_actions.c:3596
+#: src/bin/e_actions.c:3601
 msgid "Suspend Now"
 msgstr "Αναστολή τώρα"
 
-#: src/bin/e_actions.c:3608
+#: src/bin/e_actions.c:3613
 msgid "Hibernate Now"
 msgstr "Αδρανοποίηση Τώρα"
 
-#: src/bin/e_actions.c:3616
+#: src/bin/e_actions.c:3621
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:191
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: src/bin/e_actions.c:3621 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1439
 msgid "Cleanup Windows"
 msgstr "Καθαρισμός παραθύρων"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Generic : Actions"
 msgstr "Γενικά : Ενέργειες"
 
-#: src/bin/e_actions.c:3626
+#: src/bin/e_actions.c:3631
 msgid "Delayed Action"
 msgstr "Καθυστερημένη ενέργεια"
 
-#: src/bin/e_actions.c:3634
+#: src/bin/e_actions.c:3639
 #: src/modules/conf_interaction/e_int_config_mouse.c:438
 #, fuzzy
 msgid "Touchpad"
 msgstr "Αφή"
 
-#: src/bin/e_actions.c:3635
+#: src/bin/e_actions.c:3640
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
 #, fuzzy
 msgid "Touchpad on/off"
 msgstr "Αφή"
 
-#: src/bin/e_actions.c:3640 src/bin/e_actions.c:3644 src/bin/e_actions.c:3648
+#: src/bin/e_actions.c:3645
+#, fuzzy
+msgid "Blank now"
+msgstr "Μαύρισμα"
+
+#: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
 msgstr "Διατάξεις Πληκτρολογίου"
 
-#: src/bin/e_actions.c:3641
+#: src/bin/e_actions.c:3650
 msgid "Use keyboard layout"
 msgstr "Χρήση διάταξης πληκτρολογίου"
 
-#: src/bin/e_actions.c:3645
+#: src/bin/e_actions.c:3654
 msgid "Next keyboard layout"
 msgstr "Επόμενη διάταξη πληκτρολογίου"
 
-#: src/bin/e_actions.c:3649
+#: src/bin/e_actions.c:3658
 msgid "Previous keyboard layout"
 msgstr "Προηγούμενη διάταξη πληκτρολογίου"
 
@@ -916,11 +921,11 @@ msgstr ""
 "ρυθμίσεις σας έχουν επανέλθει<br>στις προεπιλεγμένες. Συγγνώμη για την "
 "αναστάτωση.<br>"
 
-#: src/bin/e_config.c:1570 src/bin/e_config.c:2195
+#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
 msgid "Moksha Settings Write Problems"
 msgstr "Προβλήματα εγγραφής ρυθμίσεων του Moksha"
 
-#: src/bin/e_config.c:1573
+#: src/bin/e_config.c:1586
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -930,7 +935,7 @@ msgstr ""
 "%s<br><br>σε:<br>%s<br><br>Η υπόλοιπη εγγραφή έχει ματαιώθηκε για ασφάλεια."
 "<br>"
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -949,19 +954,19 @@ msgstr ""
 msgid "OK"
 msgstr "Εντάξει"
 
-#: src/bin/e_config.c:2086
+#: src/bin/e_config.c:2099
 msgid "Settings Upgraded"
 msgstr "Οι Ρυθμίσεις Αναβαθμίστηκαν"
 
-#: src/bin/e_config.c:2104
+#: src/bin/e_config.c:2117
 msgid "The EET file handle is bad."
 msgstr "Κατεστραμμένη διαχείριση αρχείου EET."
 
-#: src/bin/e_config.c:2108
+#: src/bin/e_config.c:2121
 msgid "The file data is empty."
 msgstr "Τα δεδομένα του αρχείου είναι κενά."
 
-#: src/bin/e_config.c:2112
+#: src/bin/e_config.c:2125
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -969,17 +974,17 @@ msgstr ""
 "Το αρχείο δεν είναι εγγράψιμο. Ίσως ο δίσκος είναι μόνο για ανάγνωση<br>ή "
 "έχετε χάσει τα δικαιώματα στα αρχεία σας."
 
-#: src/bin/e_config.c:2116
+#: src/bin/e_config.c:2129
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Εξαντλήθηκε η μνήμη κατά την προετοιμασία της εγγραφής.<br>Παρακαλώ "
 "ελευθερώστε την μνήμη."
 
-#: src/bin/e_config.c:2120
+#: src/bin/e_config.c:2133
 msgid "This is a generic error."
 msgstr "Αυτό είναι ένα γενικό σφάλμα."
 
-#: src/bin/e_config.c:2124
+#: src/bin/e_config.c:2137
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -987,59 +992,59 @@ msgstr ""
 "Το αρχείο ρυθμίσεων είναι πολύ μεγάλο.<br>Θα πρέπει να είναι πολύ μικρό (το "
 "πολύ μερικές εκατοντάδες KB)."
 
-#: src/bin/e_config.c:2128
+#: src/bin/e_config.c:2141
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Έχετε I/O σφάλματα στον δίσκο.<br>Μήπως χρειάζεται αντικατάσταση;"
 
-#: src/bin/e_config.c:2132
+#: src/bin/e_config.c:2145
 msgid "You ran out of space while writing the file."
 msgstr "Εξάντληση χώρου στον δίσκο κατά την εγγραφή του αρχείου."
 
-#: src/bin/e_config.c:2136
+#: src/bin/e_config.c:2149
 msgid "The file was closed while writing."
 msgstr "Το αρχείο έκλεισε κατά την εγγραφή."
 
-#: src/bin/e_config.c:2140
+#: src/bin/e_config.c:2153
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Αποτυχία αντιστοίχησης μνήμης (mmap) του αρχείου."
 
-#: src/bin/e_config.c:2144
+#: src/bin/e_config.c:2157
 msgid "X509 Encoding failed."
 msgstr "Αποτυχία Κωδικοποίησης X509."
 
-#: src/bin/e_config.c:2148
+#: src/bin/e_config.c:2161
 msgid "Signature failed."
 msgstr "Αποτυχία υπογραφής."
 
-#: src/bin/e_config.c:2152
+#: src/bin/e_config.c:2165
 msgid "The signature was invalid."
 msgstr "Μη έγκυρη υπογραφή."
 
-#: src/bin/e_config.c:2156
+#: src/bin/e_config.c:2169
 msgid "Not signed."
 msgstr "Μη υπογεγραμμένο."
 
-#: src/bin/e_config.c:2160
+#: src/bin/e_config.c:2173
 msgid "Feature not implemented."
 msgstr "Το χαρακτηριστικό δεν υλοποιήθηκε."
 
-#: src/bin/e_config.c:2164
+#: src/bin/e_config.c:2177
 msgid "PRNG was not seeded."
 msgstr "Το PRNG δεν μοιράστηκε."
 
-#: src/bin/e_config.c:2168
+#: src/bin/e_config.c:2181
 msgid "Encryption failed."
 msgstr "Αποτυχία Κρυπτογράφησης."
 
-#: src/bin/e_config.c:2172
+#: src/bin/e_config.c:2185
 msgid "Decryption failed."
 msgstr "Αποτυχία Αποκρυπτογράφησης."
 
-#: src/bin/e_config.c:2176
+#: src/bin/e_config.c:2189
 msgid "The error is unknown to Moksha."
 msgstr "Άγνωστο σφάλμα στο Moksha."
 
-#: src/bin/e_config.c:2198
+#: src/bin/e_config.c:2211
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -4167,7 +4172,7 @@ msgstr[1] "%li Λεπτά πριν"
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1189
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
 msgid "Unknown"
 msgstr "Άγνωστο"
 
@@ -5344,22 +5349,22 @@ msgstr ""
 "<br><hilight>%s</hilight>. <br>Παρακαλώ επιλέξτε άλλη άκρη να συνδυάσετε."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1324
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 msgid "CTRL"
 msgstr "CTRL"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1329
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 msgid "ALT"
 msgstr "ALT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1335
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 msgid "SHIFT"
 msgstr "SHIFT"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1341
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 msgid "WIN"
 msgstr "WIN"
 
@@ -5917,11 +5922,11 @@ msgstr "Συνδυασμοί Πλήκτρων"
 msgid "Single Super Key allowed"
 msgstr ""
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1184
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1187
 msgid "Binding Key Error"
 msgstr "Σφάλμα Συντόμευσης Πληκτρολογίου"
 
-#: src/modules/conf_keybindings/e_int_config_keybindings.c:1185
+#: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
 "The binding key sequence, that you choose, is already used by <br><hilight>"
