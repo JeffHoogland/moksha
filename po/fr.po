@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-05-14 18:23+0200\n"
-"PO-Revision-Date: 2024-05-11 13:52+0200\n"
+"PO-Revision-Date: 2024-05-15 10:17+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -134,11 +134,11 @@ msgstr "Voulez-vous vraiment fermer la session ?"
 
 #: src/bin/e_actions.c:2431 src/bin/e_sys.c:765
 msgid "Power off"
-msgstr "Éteindre"
+msgstr "Arrêt"
 
 #: src/bin/e_actions.c:2433
 msgid "Are you sure you want to power off your computer?"
-msgstr "Voulez-vous vraiment éteindre votre ordinateur ?"
+msgstr "Voulez-vous vraiment arrêter votre ordinateur ?"
 
 #: src/bin/e_actions.c:2492 src/bin/e_actions.c:3597
 msgid "Reboot"
@@ -792,11 +792,11 @@ msgstr "Déconnexion"
 
 #: src/bin/e_actions.c:3589
 msgid "Power Off Now"
-msgstr "Éteindre directement"
+msgstr "Arrêt immédiat"
 
 #: src/bin/e_actions.c:3593
 msgid "Power Off"
-msgstr "Éteindre"
+msgstr "Arrêt"
 
 #: src/bin/e_actions.c:3601
 msgid "Suspend Now"
@@ -834,9 +834,8 @@ msgid "Touchpad on/off"
 msgstr "(Dés)Activer le pavé tactile"
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Extinction de l'écran"
+msgstr "Extinction immédiate"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
@@ -1363,12 +1362,12 @@ msgstr "%s a été interrompu par un signal d'interruption."
 #: src/bin/e_exec.c:905
 #, c-format
 msgid "%s was interrupted by a Quit Signal."
-msgstr "%s a été interrompu par un signal de sortie."
+msgstr "%s a été interrompu par un signal de sortie (Quit)."
 
 #: src/bin/e_exec.c:909
 #, c-format
 msgid "%s was interrupted by an Abort Signal."
-msgstr "%s a été interrompu par un signal d'arrêt."
+msgstr "%s a été interrompu par un signal d'abandon (Abort)."
 
 #: src/bin/e_exec.c:912
 #, c-format
@@ -3924,7 +3923,7 @@ msgid ""
 "Powering off.<br>You cannot do any other system actions<br>once a shutdown "
 "has been started."
 msgstr ""
-"Extinction en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
+"Arrêt en cours.<br>Vous ne pouvez pas effectuer d'autres actions "
 "système<br>pendant cette phase."
 
 #: src/bin/e_sys.c:613
@@ -3957,7 +3956,7 @@ msgstr "ARGH ! ça ne devrait pas se produire…"
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
-msgstr "Impossible d'éteindre l'ordinateur."
+msgstr "L'arrêt a échoué."
 
 #: src/bin/e_sys.c:660
 msgid "Reset failed."
@@ -3977,7 +3976,7 @@ msgstr "ARGH ! ça ne devrait pas se produire"
 
 #: src/bin/e_sys.c:768
 msgid "Power off.<br><hilight>Please wait.</hilight>"
-msgstr "Extinction en cours.<br><hilight>Veuillez patienter.</hilight>"
+msgstr "Arrêt en cours.<br><hilight>Veuillez patienter.</hilight>"
 
 #: src/bin/e_sys.c:812
 msgid "Resetting"
