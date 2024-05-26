@@ -2529,6 +2529,9 @@ _e_menu_item_activate_char(const char *key_compose)
      {
         ll = m->items;
         mi = eina_list_data_get(ll);
+        /* segfault here on CTRL V in e_entry as ll and mi are NULL
+         *    prob due to efl_hack in e_entry */
+        if (!mi) return;
         /* Only check the current item if it wasn't active before. */
         if (!mi->separator && mi->label && !strncasecmp(key_compose, mi->label, strlen(key_compose)))
           {
