@@ -176,7 +176,7 @@ _gc_init(E_Gadcon *gc, const char *gcname, const char *id, const char *style)
    /* The gadget */
    inst->o_xkbswitch = edje_object_add(gc->evas);
    inst->layout = e_xkb_layout_get();
-   
+
 #if 0
    /* inst->layout is potentially null due to Bodhi changes in the wizard module
     *   specifically page_011 is never run and keyboard stuff is never initialized.
@@ -533,6 +533,7 @@ _e_xkb_cb_lmenu_set(void *data, E_Menu *mn __UNUSED__, E_Menu_Item *mi __UNUSED_
    e_xkb_layout_set(cl);
    e_config_xkb_layout_free(e_config->xkb.sel_layout);
    e_config->xkb.sel_layout = e_config_xkb_layout_dup(cl);
-   _xkb_update_icon(cur_group);
+   (void)cur_group;
+   //~ _xkb_update_icon(cur_group);
 }
 
