@@ -299,21 +299,6 @@ static Eina_Bool
 _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
-   Eina_List *l;
-   E_Config_XKB_Layout *cl;
-   int n = 0;
-
-   //INF("xkb group %d", ev->group);
-   //~ e_config->xkb.cur_group = ev->group;
-   EINA_LIST_FOREACH(e_config->xkb.used_layouts, l, cl)
-     {
-        if (ev->group == n)
-          {
-             e_xkb_layout_set(cl);
-             break;
-          }
-        n++;
-     }
 
    _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
