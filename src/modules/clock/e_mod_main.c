@@ -374,9 +374,15 @@ _clock_input_win_mouse_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Mouse_Button *ev = event;
    Instance *inst = data;
+   Eina_List *l;
 
    if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
-   _clock_popup_free(inst);
+   EINA_LIST_FOREACH(clock_instances, l, inst)
+     {
+       if (inst->popup)
+         _clock_popup_free(inst);
+     }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -386,12 +392,18 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
    Ecore_Event_Key *ev = event;
    Instance *inst = data;
    const char *keysym;
+   Eina_List *l;
 
    if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
 
    keysym = ev->key;
    if (!strcmp(keysym, "Escape"))
-      _clock_popup_free(inst);
+     {
+       EINA_LIST_FOREACH(clock_instances, l, inst)
+       if (inst->popup)
+         _clock_popup_free(inst);
+     }
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
