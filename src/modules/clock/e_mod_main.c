@@ -406,6 +406,7 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
      }
 
    bi = e_bindings_key_get("clock");
+   if (!bi) return;
    if (((bi->mod & ECORE_EVENT_MODIFIER_SHIFT) ||
         (bi->mod & ECORE_EVENT_MODIFIER_CTRL)) &&
         (!strcmp(keysym, bi->key)))
