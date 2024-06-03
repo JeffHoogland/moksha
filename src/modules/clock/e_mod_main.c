@@ -391,6 +391,7 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
 {
    Ecore_Event_Key *ev = event;
    Instance *inst = data;
+   E_Binding_Key *bi;
    const char *keysym;
    Eina_List *l;
 
@@ -402,6 +403,16 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
        EINA_LIST_FOREACH(clock_instances, l, inst)
        if (inst->popup)
          _clock_popup_free(inst);
+     }
+
+   bi = e_bindings_key_get("clock");
+   if (((bi->mod & ECORE_EVENT_MODIFIER_SHIFT) ||
+        (bi->mod & ECORE_EVENT_MODIFIER_CTRL)) &&
+        (!strcmp(keysym, bi->key)))
+     {
+        EINA_LIST_FOREACH(clock_instances, l, inst)
+        if (inst->popup)
+          _clock_popup_free(inst);
      }
 
    return ECORE_CALLBACK_PASS_ON;
