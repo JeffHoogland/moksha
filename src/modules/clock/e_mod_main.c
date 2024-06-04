@@ -378,10 +378,8 @@ _clock_input_win_mouse_down_cb(void *data, int type __UNUSED__, void *event)
 
    if (ev->window != inst->input_win) return ECORE_CALLBACK_PASS_ON;
    EINA_LIST_FOREACH(clock_instances, l, inst)
-     {
-       if (inst->popup)
-         _clock_popup_free(inst);
-     }
+     if (inst->popup)
+       _clock_popup_free(inst);
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -401,8 +399,8 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
    if (!strcmp(keysym, "Escape"))
      {
        EINA_LIST_FOREACH(clock_instances, l, inst)
-       if (inst->popup)
-         _clock_popup_free(inst);
+         if (inst->popup)
+           _clock_popup_free(inst);
      }
 
    bi = e_bindings_key_get("clock");
@@ -415,8 +413,8 @@ _clock_input_win_key_down_cb(void *data, int type __UNUSED__, void *event)
             (!strcmp(keysym, bi->key)))
          {
             EINA_LIST_FOREACH(clock_instances, l, inst)
-            if (inst->popup)
-              _clock_popup_free(inst);
+              if (inst->popup)
+                _clock_popup_free(inst);
          }
      }
 
