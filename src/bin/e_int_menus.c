@@ -334,10 +334,9 @@ e_int_menus_apps_empty()
    E_Menu_Item *mi;
 
    m = e_menu_new();
-
    e_menu_title_set(m, _("Favorite Apps"));
-   mi = e_menu_item_new(m);
 
+   mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("No applications"));
    e_util_menu_item_theme_icon_set(mi, "user-bookmarks");
    e_menu_item_disabled_set(mi, 1);
