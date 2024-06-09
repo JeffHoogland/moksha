@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-05-14 18:23+0200\n"
-"PO-Revision-Date: 2024-04-14 21:00+0300\n"
+"PO-Revision-Date: 2024-06-09 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
 "Language: be\n"
@@ -821,9 +821,8 @@ msgid "Touchpad on/off"
 msgstr "Сэнсарную пляцоўку ўкл/адкл "
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Гашэнне"
+msgstr "Пагасіць зараз"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"

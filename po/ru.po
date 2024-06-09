@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-05-14 18:23+0200\n"
-"PO-Revision-Date: 2024-04-14 21:00+0300\n"
+"PO-Revision-Date: 2024-06-09 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
 "Language: ru\n"
@@ -825,9 +825,8 @@ msgid "Touchpad on/off"
 msgstr "Тачпад вкл/выкл"
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Гашение"
+msgstr "Погасить сейчас"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
