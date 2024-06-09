@@ -67,16 +67,15 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Urheberrechte &copy; 2024, durch das Moksha Entwicklungsteam</"
-"><br><br>Wir hoffen, ihnen macht das Benutzen dieser Software so viel Spaß, "
-"wie uns das Schreiben.<br><br>Um uns zu Kontaktieren, besuchen Sie:"
+"<title>Urheberrechte &copy; 2024 beim Moksha Entwicklungsteam</><br><br>Wir "
+"hoffen, ihnen macht das Benutzen dieser Software so viel Spaß, wie uns das "
+"Schreiben.<br><br>Um uns zu Kontaktieren, besuchen Sie bitte:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -505,7 +504,7 @@ msgstr "Arbeitsfläche linear um ... wechseln (alle Bildschirme)"
 
 #: src/bin/e_actions.c:3377
 msgid "Flip Desktop In Direction..."
-msgstr "Arbeitsfläche in Richtung ... wechseln"
+msgstr "Arbeitsfläche in Richtung ... wechseln."
 
 #: src/bin/e_actions.c:3382
 msgid "Switch To Desktop 0 (All Screens)"
@@ -619,7 +618,7 @@ msgstr "Dimmen"
 # better ideas, anyone?
 #: src/bin/e_actions.c:3445
 msgid "Undim"
-msgstr "Entdimmen"
+msgstr "Nicht dimmen"
 
 #: src/bin/e_actions.c:3448
 msgid "Backlight Set"
@@ -667,7 +666,7 @@ msgstr "Größe ändern um ..."
 
 #: src/bin/e_actions.c:3487
 msgid "Push in Direction..."
-msgstr "In Richtung ... schieben"
+msgstr "In Richtung ... schieben."
 
 #: src/bin/e_actions.c:3493
 msgid "Drag Icon..."
@@ -844,14 +843,12 @@ msgstr "Touchpad"
 
 #: src/bin/e_actions.c:3640
 #: src/modules/conf_interaction/e_int_config_mouse.c:432
-#, fuzzy
 msgid "Touchpad on/off"
-msgstr "Touchpad"
+msgstr "Touchpad an/aus"
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Schwärzen"
+msgstr "Jetzt schwärzen"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
@@ -941,9 +938,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha konnte die Konfigurationsdateien nicht von<br>%s<br>nach<br>"
-"%s<br>verschieben.<br>Sicherheitshalber wurde der Schreibvorgang abgebrochen."
-"<br>"
+"Moksha konnte die Konfigurationsdateien nicht "
+"von<br>%s<br>nach<br>%s<br>verschieben.<br>Sicherheitshalber wurde der "
+"Schreibvorgang abgebrochen.<br>"
 
 #: src/bin/e_config.c:1596 src/bin/e_config.c:2221
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1792,8 +1789,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in <br><hilight>"
-"%s</hilight> löschen?"
+"Möchten Sie wirklich<br><hilight>alle</hilight> %d Dateien in "
+"<br><hilight>%s</hilight> löschen?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -3688,7 +3685,7 @@ msgstr ""
 
 #: src/bin/e_module.c:252
 msgid "Module does not contain all needed functions."
-msgstr "Das Modul enthält nicht alle benötigten Funktionen"
+msgstr "Das Modul enthält nicht alle benötigten Funktionen."
 
 #: src/bin/e_module.c:267
 #, c-format
@@ -3826,8 +3823,8 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "Auto-Verstecken der Modulablage wird mit der<br>aktuellen Konfiguration "
-"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter Allem"
-"\"<br>oder deaktivieren Sie Auto-Verstecken."
+"nicht richtig funktionieren:<br>Stellen Sie ihre Ablage auf \"Unter "
+"Allem\"<br>oder deaktivieren Sie Auto-Verstecken."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -3970,7 +3967,7 @@ msgstr ""
 
 #: src/bin/e_sys.c:631
 msgid "EEK! This should not happen."
-msgstr "Upps! Das sollte nicht passieren"
+msgstr "Upps! Das sollte nicht passieren."
 
 #: src/bin/e_sys.c:656
 msgid "Power off failed."
@@ -4683,7 +4680,7 @@ msgstr "Einstellen..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr "Einstellen..."
+msgstr "Einstellen… "
 
 #: src/modules/clock/e_mod_main.c:1058
 msgid "Toggle calendar"
@@ -5490,9 +5487,8 @@ msgid "%1.2f s"
 msgstr "%1.2f s"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:62
-#, fuzzy
 msgid "Mouse and Touchpad Settings"
-msgstr "Mauseinstellungen"
+msgstr "Einstellungen für Maus und Touchpad"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:289
 msgid "Show Cursor"
@@ -5589,7 +5585,7 @@ msgstr "Kantenscrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:422
 msgid "2 finger scrolling"
-msgstr "2 Finger Scrollen"
+msgstr "2-Finger-Scrollen"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:426
 msgid "Circular scrolling"
@@ -5600,9 +5596,8 @@ msgid "Touch"
 msgstr "Berührung"
 
 #: src/modules/conf_interaction/e_mod_main.c:24
-#, fuzzy
 msgid "Mouse and Touchpad"
-msgstr "Maushand"
+msgstr "Maus und Touchpad"
 
 #: src/modules/conf_intl/e_int_config_imc.c:103
 #: src/modules/conf_intl/e_mod_main.c:28
@@ -5908,8 +5903,9 @@ msgstr "Tastenbelegungsfehler"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Die gewählte Tastenbelegungsabfolge wird bereits von der <br><hilight>%s</"
 "hilight>-Aktion verwendet.<br>Bitte wählen Sie eine andere Abfolge."
@@ -7866,8 +7862,8 @@ msgid ""
 msgstr ""
 "Die freqset-Programmdatei im cpufreq-Modul<ps/>hat weder root-Rechte noch "
 "das<ps/>setuid-Bit gesetzt. Bitte stellen Sie sicher, dass<ps/>dies der Fall "
-"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
-"+x %s<ps/>"
+"ist.<ps/><ps/>Zum Beispiel:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
+"a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -7981,12 +7977,10 @@ msgid "Hide list"
 msgstr "Liste verbergen"
 
 #: src/modules/everything/evry_config.c:506
-#, fuzzy
 msgid "Search Mode"
-msgstr "Einfacher Modus"
+msgstr "Suchmodus"
 
 #: src/modules/everything/evry_config.c:507
-#, fuzzy
 msgid "Fuzzy mode"
 msgstr "Fuzzy-Modus"
 
@@ -8256,12 +8250,12 @@ msgstr "Auf Arbeitsfläche verschieben"
 #: src/modules/everything/evry_plugin.c:208
 #, c-format
 msgid "Show %s Plugin"
-msgstr " %s Erweiterung anzeigen"
+msgstr "%s Erweiterung anzeigen"
 
 #: src/modules/everything/evry_plugin.c:187
 #, c-format
 msgid "Browse %s"
-msgstr " %s durchsuchen"
+msgstr "%s durchsuchen"
 
 #: src/modules/everything/evry_view_help.c:67
 msgid ""
@@ -8272,11 +8266,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8294,8 +8288,8 @@ msgstr ""
 "<hilight>STRG+Enter</hilight>führt die Aktion aus und macht "
 "weiter<br><hilight>Tab</hilight> schaltet zwischen Auswählern "
 "um<br><hilight>STRG+Tab</hilight> zeigt die vollständige Eingabe (hängt vom "
-"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit \"x"
-"\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
+"Plugin ab)<br><hilight>STRG+x</hilight> Springt zum Plugin beginnend mit "
+"\"x\"<br><hilight>STRG+links/rechts</hilight> geht die Plugins "
 "durch<br><hilight>STRG+hoch/runter</hilight> geht zum ersten/letzten "
 "Eintrag<br><hilight>STRG+1</hilight> schaltet zwischen den Ansichten um "
 "(verlässt diese Seite ;)<br><hilight>STRG+2</hilight>schaltet die "
@@ -8881,7 +8875,6 @@ msgid "Menu on mouse over"
 msgstr "Menü beim herüberfahren mit der Maus zeigen"
 
 #: src/modules/ibar/e_mod_config.c:163
-#, fuzzy
 msgid "Moksha style control"
 msgstr "Steuerung im Moksha-Stil"
 
@@ -9647,6 +9640,8 @@ msgstr "Fehler - Unbekanntes Format"
 #: src/modules/shot/e_mod_main.c:422
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
 msgstr ""
+"'Perfekte Qualität' bitte nur <br>beim Kopieren in die Zwischenablage "
+"benutzen."
 
 #: src/modules/shot/e_mod_main.c:432
 msgid ""
@@ -9922,7 +9917,7 @@ msgstr "Spaltenanzahl für Kacheln pro Arbeitsfläche (0 → Kacheln deaktiviert
 # as per Tiling, non-translatable
 #: src/modules/tiling/e_mod_config.c:361
 msgid "Tiling Configuration"
-msgstr "Tiling Konfiguration"
+msgstr "Tiling-Konfiguration"
 
 # Float would translate to 'schwimmen', but in this case 'schweben' (hover) is more common in German.
 #: src/modules/tiling/e_mod_tiling.c:4098
@@ -10017,12 +10012,11 @@ msgstr "Nur Beschriftung"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: src/modules/xkbswitch/e_mod_config.c:342
-#, fuzzy
 msgid "Per Application"
-msgstr "Anwendung"
+msgstr "Je Anwendung"
 
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
@@ -10136,9 +10130,9 @@ msgid "Force timeout for all notifications"
 msgstr "Erzwinge Ablaufzeit für alle Benachrichtigungen"
 
 #: src/modules/notification/e_mod_config.c:122
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f s"
-msgstr "%1.1f s"
+msgstr "%.1f s"
 
 #: src/modules/notification/e_mod_config.c:137
 msgid "Popup Orientation"
