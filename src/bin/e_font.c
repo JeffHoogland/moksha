@@ -172,7 +172,7 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
         int len;
 
         len = s1 - font;
-        name = calloc(sizeof(char), len + 1);
+        name = calloc(len + 1, sizeof(char));
         strncpy(name, font, len);
 
         /* Get subname (should be english)  */
@@ -207,7 +207,7 @@ _e_font_fontconfig_name_parse(Eina_Hash **font_hash, E_Font_Properties *efp, con
 
                   len = s2 - style;
                   style_old = style;
-                  style = calloc(sizeof(char), len + 1);
+                  style = calloc(len + 1, sizeof(char));
                   strncpy(style, style_old, len);
                   efp->styles = eina_list_append(efp->styles, eina_stringshare_add(style));
                   free(style);
