@@ -47,16 +47,15 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos autorais &copy; 2024, pela equipe de desenvolvimento do "
-"Moksha</><br><br>Esperamos que goste de utilizar esta aplicação tanto quanto "
-"nós gostamos de desenvolvê-la.<br><br>Para nos contactar, visite:"
+"<title>Direitos autorais &copy; 2024, pela Equipa de Desenvolvimento Moksha"
+"</><br><br>Esperamos que goste de usar este software tanto quanto nós gostámos "
+"de o escrever.<br><br>Para nos contactar, visite:"
 "<br><hilight>http://www.bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -826,9 +825,8 @@ msgid "Touchpad on/off"
 msgstr "Touchpad ligado/desligado"
 
 #: src/bin/e_actions.c:3645
-#, fuzzy
 msgid "Blank now"
-msgstr "Escurecimento de tela"
+msgstr "Escurecimento da tela agora"
 
 #: src/bin/e_actions.c:3649 src/bin/e_actions.c:3653 src/bin/e_actions.c:3657
 msgid "Keyboard Layouts"
@@ -9932,9 +9930,8 @@ msgid "Global"
 msgstr ""
 
 #: src/modules/xkbswitch/e_mod_config.c:342
-#, fuzzy
 msgid "Per Application"
-msgstr "Aplicação"
+msgstr "Por aplicação"
 
 #: src/modules/xkbswitch/e_mod_config.c:523
 msgid "Add New Configuration"
