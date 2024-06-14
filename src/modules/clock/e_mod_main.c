@@ -13,8 +13,8 @@ typedef struct _Instance Instance;
 struct _Instance
 {
    E_Gadcon_Client *gcc;
-   Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal;
-   E_Gadcon_Popup  *popup;
+   Evas_Object     *o_clock, *o_table, *o_popclock, *o_cal, *o_tip;
+   E_Gadcon_Popup  *popup, *tip;
    Eina_List *handlers;
 
    int                  madj;
@@ -88,7 +88,6 @@ _clear_timestrs(Instance *inst)
 static void
 _todaystr_eval(Instance *inst, char *buf, int bufsz)
 {
-   
     struct timeval timev;
     struct tm *tm;
     time_t tt;
@@ -108,7 +107,7 @@ _todaystr_eval(Instance *inst, char *buf, int bufsz)
          else if (inst->cfg->show_date == 4)
            strftime(buf, bufsz, "%F", (const struct tm *)tm);
          else if (inst->cfg->show_date == 5)
-          strftime(buf, bufsz, inst->cfg->custom_date_const, (const struct tm *)tm);
+           strftime(buf, bufsz, inst->cfg->custom_date_const, (const struct tm *)tm);
 
          inst->cfg->timeset.hour = tm->tm_hour;
          inst->cfg->timeset.minute = tm->tm_min;
@@ -764,6 +763,47 @@ _clock_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED
 }
 
 static void
+_clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
+                    void *event_info __UNUSED__)
+{
+   Instance *inst = NULL;
+   char buf[1024];
+   time_t current_time;
+   struct tm *local_time;
+
+   if (!(inst = data)) return;
+   if (inst->tip) return;
+   if (inst->popup) return;
+
+   _todaystr_eval(inst, buf, sizeof (buf));
+   inst->tip = e_gadcon_popup_new(inst->gcc);
+
+   current_time = time(NULL);
+   local_time = localtime(&current_time);
+   memset(buf, 0, sizeof(buf));
+   strftime(buf, 1024, inst->cfg->custom_date_const, local_time);
+   inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
+
+   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
+   e_gadcon_popup_show(inst->tip);
+}
+
+static void
+_clock_cb_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
+                     void *event_info __UNUSED__)
+{
+   Instance *inst = NULL;
+
+   if (!(inst = data)) return;
+   if (!inst->tip) return;
+
+   evas_object_del(inst->o_tip);
+   e_object_del(E_OBJECT(inst->tip));
+   inst->tip = NULL;
+   inst->o_tip = NULL;
+}
+
+static void
 _clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Instance *inst = data;
@@ -851,10 +891,12 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    inst->gcc = gcc;
    inst->o_clock = o;
 
-   evas_object_event_callback_add(inst->o_clock,
-                                  EVAS_CALLBACK_MOUSE_DOWN,
-                                  _clock_cb_mouse_down,
-                                  inst);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
+                                  _clock_cb_mouse_down, inst);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_IN,
+                                  _clock_cb_mouse_in, inst);
+   evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_OUT,
+                                  _clock_cb_mouse_out, inst);
    clock_instances = eina_list_append(clock_instances, inst);
 
    if (!update_today) _update_today_timer(NULL);
