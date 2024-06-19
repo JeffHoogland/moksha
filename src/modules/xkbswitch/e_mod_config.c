@@ -237,7 +237,7 @@ _basic_apply(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
      }
 
    e_xkb_update(-1);
-   _xkb_update_icon(e_xkb_layout_num_get);
+   _xkb_update_icon(e_xkb_layout_num_get());
 
    e_config_save_queue();
    return 1;

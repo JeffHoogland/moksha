@@ -345,10 +345,10 @@ e_xkb_layout_get(void)
    return eina_list_nth(e_config->xkb.used_layouts, n);
 }
 
-EAPI int *
+EAPI int
 e_xkb_layout_num_get(void)
 {
-   unsigned int n = 0;
+   int n = 0;
 
    if (_e_xkb_cur_group >= 0)
      n = _e_xkb_cur_group;
