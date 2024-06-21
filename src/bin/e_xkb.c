@@ -348,7 +348,7 @@ e_xkb_layout_get(void)
 EAPI int
 e_xkb_layout_num_get(void)
 {
-   int n = 0;
+   unsigned int n = 0;
 
    if (_e_xkb_cur_group >= 0)
      n = _e_xkb_cur_group;
