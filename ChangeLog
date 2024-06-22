@@ -4,13 +4,13 @@
 
 2015-03-25 Samuel F. Baggen (Thanatermesis)
 
-		* included improvement in XDG_DATA_DIRS by zmike
-		* gettext version should match the one required in efl/elm
+        * included improvement in XDG_DATA_DIRS by zmike
+        * gettext version should match the one required in efl/elm
 
 2014-08-09 Samuel F. Baggen (Thanatermesis)
 
-		* fix for window border titles and sizes (backports)
-		* fix for text that looked "cut" in some elements like wizard buttons (backports)
+        * fix for window border titles and sizes (backports)
+        * fix for text that looked "cut" in some elements like wizard buttons (backports)
 
 2014-06-27 Samuel F. Baggen (Thanatermesis)
 
@@ -28,11 +28,11 @@
 
 2013-11-25 Tom Hacohen
 
-	* Entry: Fixed issues with entry not scrolling to cursor.
+        * Entry: Fixed issues with entry not scrolling to cursor.
 
 2013-11-05 Tom Hacohen
 
-	* wsod: Fixed gdb hangs when generating backtraces.
+        * wsod: Fixed gdb hangs when generating backtraces.
 
 2013-10-14 Eduardo Lima (Etrunko)
         * 0.17.5 release
@@ -51,7 +51,7 @@
 
 2013-08-02 Deon Thomas (PrinceAMD)
 
-	* fixed stall on startup because xinerama started before randr (backports).
+        * fixed stall on startup because xinerama started before randr (backports).
 
 2013-08-02 Eduardo Lima (Etrunko)
 
@@ -72,7 +72,7 @@
 
 2013-05-24 Christopher Michael
 
-	* added support for hotplugging monitors in randr code
+        * added support for hotplugging monitors in randr code
         * added support for setting Primary Output used by randr protocol
 
 2013-04-26 Mike Blumenkrantz
@@ -117,7 +117,7 @@
 
 2013-02-08 Cedric Bail
 
-	* remove call to efreet_menu_parse from a thread.
+        * remove call to efreet_menu_parse from a thread.
 
 2013-02-07 Mike Blumenkrantz
 
@@ -125,7 +125,7 @@
 
 2013-02-07 Cedric Bail
 
-	* enable image preloading for all e_widget_preview using edje
+        * enable image preloading for all e_widget_preview using edje
 
 2013-02-07 Carsten Haitzler
 
@@ -224,7 +224,7 @@
         * Tasks gadgets now apply the selected style
 
 2013-01-07 Tom "TAsn" Hacohen
-	* e_entry + e_scrollable: Fixed issues with smart members.
+        * e_entry + e_scrollable: Fixed issues with smart members.
 
 2013-01-07 Mike Blumenkrantz
  
@@ -232,7 +232,7 @@
 
 2013-01-07  Thomas Petazzoni
 
-	* Fix build with uClibc.
+        * Fix build with uClibc.
 
 2013-01-04 Lucas De Marchi
 
@@ -240,7 +240,7 @@
 
 2013-01-03  Cedric Bail
 
-	* Fix E17 restart after manually monitoring it
+        * Fix E17 restart after manually monitoring it
 
 2012-12-28  Tomas Cech
 
