@@ -299,7 +299,7 @@ static Eina_Bool
 _xkb_changed_state(void *data __UNUSED__, int type __UNUSED__, void *event)
 {
    Ecore_X_Event_Xkb *ev = (Ecore_X_Event_Xkb *)event;
-
+   e_xkb_update(ev->group);
    _xkb_update_icon(ev->group);
    return ECORE_CALLBACK_PASS_ON;
 }
