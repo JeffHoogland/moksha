@@ -84,7 +84,7 @@ group { name: "e/fileman/default/list/variable";
             color3: 0 0 0 128;
             color_class: "ilist_item";
             text { font: "Sans"; size: 10;
-               min: 1 1;
+               min: 0 1;
                align: 0.0 0.5;
                text_class: "ilist_item";
                ellipsis: 0.0;
