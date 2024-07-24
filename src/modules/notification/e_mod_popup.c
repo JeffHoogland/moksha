@@ -13,9 +13,6 @@ static void        _notification_popup_del(unsigned int                 id,
                                            E_Notification_Notify_Closed_Reason reason);
 static void        _notification_popdown(Popup_Data                  *popup,
                                          E_Notification_Notify_Closed_Reason reason);
-#define POPUP_LIMIT 7
-#define POPUP_GAP 10
-#define POPUP_TO_EDGE 15
 
 /* Util function protos */
 static void        _notification_format_message(Popup_Data *popup);
