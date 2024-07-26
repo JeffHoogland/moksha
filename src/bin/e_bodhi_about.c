@@ -1,7 +1,6 @@
 #include "e.h"
 
 #define BODHI_VERSION "7.0.0"
-#define BODHI_ABOUT_TITLE "About Bodhi"
 #define BODHI_ABOUT_TEXT "Bodhi Linux - The Enlightened Desktop"
 #define BODHI_ABOUT_AUTHORS \
     "Rbt 'ylee' Wiley<br>" \
@@ -52,12 +51,12 @@ e_bodhi_about_new(E_Container *con)
 {
    E_Obj_Dialog *od;
 
-   od =  e_obj_dialog_new(con, BODHI_ABOUT_TITLE, "E", "_about");
+   od =  e_obj_dialog_new(con, _("About Bodhi Linux"), "E", "_about");
    if (!od) return NULL;
    e_obj_dialog_obj_theme_set(od, "base/theme/about", "e/widgets/about/main");
    e_obj_dialog_obj_part_text_set(od, "e.text.label", _("Close"));
    e_obj_dialog_obj_part_text_set(od, "e.text.title",
-                                 BODHI_ABOUT_TITLE);
+                                 _("About Bodhi Linux"));
    e_obj_dialog_obj_part_text_set(od, "e.text.version",
                                   BODHI_VERSION);
    e_obj_dialog_obj_part_text_set(od, "e.textblock.about",
