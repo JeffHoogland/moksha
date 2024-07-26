@@ -43,13 +43,14 @@ struct _Tasks
 
 struct _Tasks_Item
 {
-   Tasks       *tasks; // Parent tasks
-   E_Border    *border; // The border this item points to
-   Evas_Object *o_item; // The edje theme object
-   Evas_Object *o_icon; // The icon
-   Eina_Bool    skip_taskbar : 1;
-   Evas_Object *win;
-   E_Popup     *popup;
+   Tasks           *tasks; // Parent tasks
+   E_Border        *border; // The border this item points to
+   Evas_Object     *o_item; // The edje theme object
+   Evas_Object     *o_icon; // The icon
+   Eina_Bool        skip_taskbar : 1;
+   Evas_Object     *win;
+   E_Popup         *popup;
+   E_Drop_Handler  *drop_handler;
    struct
    {
       unsigned char start :1;
@@ -75,7 +76,8 @@ static void         _tasks_item_refill(Tasks_Item *item);
 static void         _tasks_item_fill(Tasks_Item *item);
 static void         _tasks_item_free(Tasks_Item *item);
 static void         _tasks_item_signal_emit(Tasks_Item *item, char *sig, char *src);
-
+static void         _tasks_instance_drop_zone_recalc(Tasks_Item *item);
+static Eina_Bool    _tasks_autoresize(void *data __UNUSED__);
 
 static Config_Item *_tasks_config_item_get(const char *id);
 
@@ -86,6 +88,7 @@ static void         _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, E
 static void         _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
 static void         _tasks_cb_item_mouse_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info);
+static void         _tasks_cb_item_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__);
 
 static Eina_Bool    _tasks_cb_event_border_add(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_remove(void *data, int type, void *event);
@@ -100,7 +103,6 @@ static Eina_Bool    _tasks_cb_event_border_property(void *data, int type, void *
 static Eina_Bool    _tasks_cb_event_desk_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_systray_show(void *data, int type, void *event);
 static Eina_Bool    _tasks_cb_event_border_urgent_change(void *data, int type, void *event);
-static Eina_Bool    _tasks_autoresize(void *data __UNUSED__);
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -541,10 +543,29 @@ _tasks_item_find(Tasks *tasks, E_Border *border)
    return NULL;
 }
 
+static void
+_tasks_drop_cb_enter(void *data, const char *type, void *event_info __UNUSED__)
+{
+   E_Border *bd = NULL;
+   Tasks_Item *item = data;
+
+   if (!strcmp(type, "text/uri-list" ))
+     {
+        bd = item->border;
+        if (!bd) return;
+        if (bd->iconic) 
+          e_border_uniconify(bd);
+
+        e_border_raise(bd);
+     }
+}
+
 static Tasks_Item *
 _tasks_item_new(Tasks *tasks, E_Border *border)
 {
    Tasks_Item *item;
+   const char *drop[] = { "text/uri-list" };
+   Evas_Coord x, y, w, h;
 
    item = E_NEW(Tasks_Item, 1);
    e_object_ref(E_OBJECT(border));
@@ -575,6 +596,14 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
         edje_object_signal_emit(item->o_item, "e,state,icon_only", "e");
         edje_object_message_signal_process(item->o_item);
      }
+
+   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   item->drop_handler =
+     e_drop_handler_add(E_OBJECT(item->tasks->gcc), item,
+                        _tasks_drop_cb_enter, NULL,
+                        NULL, NULL,
+                        drop, 1, x, y, w, h);
+
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_DOWN,
                                   _tasks_cb_item_mouse_down, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_UP,
@@ -587,8 +616,9 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
                                   _tasks_cb_item_mouse_move, item);
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_OUT,
                                   _tasks_cb_item_mouse_out, item);
+   evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOVE,
+                                  _tasks_cb_item_move, item);
    evas_object_show(item->o_item);
-
    _tasks_item_fill(item);
    return item;
 }
@@ -656,6 +686,7 @@ _tasks_item_free(Tasks_Item *item)
 {
    if (item->o_icon) evas_object_del(item->o_icon);
    _tasks_adjacent_popup_destroy(item);
+   e_drop_handler_del(item->drop_handler);
    e_object_unref(E_OBJECT(item->border));
    evas_object_del(item->o_item);
    free(item);
@@ -857,6 +888,23 @@ _tasks_cb_item_mouse_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UN
      }
    else if (ev->z > 0)
      e_border_iconify(item->border);
+}
+
+static void
+_tasks_instance_drop_zone_recalc(Tasks_Item *item)
+{
+   Evas_Coord x, y, w, h;
+
+   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   e_drop_handler_geometry_set(item->drop_handler, x, y, w, h);
+}
+
+static void
+_tasks_cb_item_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   Tasks_Item *item = data;
+
+   _tasks_instance_drop_zone_recalc(item);
 }
 
 static void
