@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-05-14 18:23+0200\n"
+"POT-Creation-Date: 2024-07-27 09:45+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -26,7 +26,7 @@ msgid "About Moksha"
 msgstr "عن Mokshaِ"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
-#: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
@@ -806,7 +806,7 @@ msgstr "أسبِت اﻵن"
 msgid "Lock"
 msgstr "اقفل"
 
-#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1436
 msgid "Cleanup Windows"
 msgstr "تنظيف النوافذ"
 
@@ -853,6 +853,11 @@ msgstr "مخطط لوحة المفاتيح السابق"
 #: src/bin/e_bg.c:22
 msgid "Set As Background"
 msgstr "عين كخلفية"
+
+#: src/bin/e_bodhi_about.c:54 src/bin/e_bodhi_about.c:59
+#: src/bin/e_int_menus.c:222
+msgid "About Bodhi Linux"
+msgstr ""
 
 #: src/bin/e_color_dialog.c:26
 msgid "Color Selector"
@@ -1264,8 +1269,8 @@ msgstr "اختر ملف تنفيذي"
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:669
-#: src/modules/clipboard/e_mod_main.c:756
+#: src/modules/clipboard/e_mod_main.c:695
+#: src/modules/clipboard/e_mod_main.c:783
 msgid "Delete"
 msgstr "امح"
 
@@ -1558,7 +1563,7 @@ msgid "Eject"
 msgstr "اخرج"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1587
+#: src/modules/ibar/e_mod_main.c:1584
 msgid "Properties"
 msgstr "الخصائص"
 
@@ -2191,7 +2196,7 @@ msgid "Window"
 msgstr "نافذة"
 
 #: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
-#: src/modules/clock/e_mod_main.c:501
+#: src/modules/clock/e_mod_main.c:526
 msgid "Always on Top"
 msgstr "دائما في اﻷعلى"
 
@@ -2553,8 +2558,8 @@ msgstr "أطلب الموضع"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:506
-#: src/modules/clock/e_mod_main.c:763 src/modules/conf/e_conf.c:143
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
+#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2564,17 +2569,17 @@ msgstr "أطلب الموضع"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1577
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
+#: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:370
-#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/xkbswitch/e_mod_main.c:355
+#: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
 #: src/modules/notification/e_mod_main.c:457
-#: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
+#: src/modules/clipboard/e_mod_main.c:301
+#: src/modules/clipboard/e_mod_main.c:453 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "اﻹعدادات"
 
@@ -2861,10 +2866,6 @@ msgstr "خطأ نظام التوثيق"
 msgid "Help"
 msgstr "مساعدة إضافية"
 
-#: src/bin/e_int_menus.c:222
-msgid "About Bodhi Linux"
-msgstr ""
-
 #: src/bin/e_int_menus.c:243
 #, fuzzy
 msgid "About Moksha Desktop"
@@ -2880,34 +2881,34 @@ msgstr "عن السمة"
 msgid "Restart Moksha"
 msgstr "مرحبا بك في Mokshaِ"
 
-#: src/bin/e_int_menus.c:338
+#: src/bin/e_int_menus.c:337
 #, fuzzy
 msgid "Favorite Apps"
 msgstr "المفضلة"
 
-#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:797
 msgid "No applications"
 msgstr "بلا برامج"
 
-#: src/bin/e_int_menus.c:362
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "وهمي"
 
-#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "الرفوف"
 
-#: src/bin/e_int_menus.c:378
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "أظهر/أخفِ"
 
-#: src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:1024
 msgid "Set Virtual Desktops"
 msgstr "عين أسطح مكتب إفتراضية"
 
-#: src/bin/e_int_menus.c:1397
+#: src/bin/e_int_menus.c:1394
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2916,29 +2917,29 @@ msgstr "عين أسطح مكتب إفتراضية"
 msgid "Windows"
 msgstr "النوافذ"
 
-#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
+#: src/bin/e_int_menus.c:1400 src/bin/e_int_menus.c:1596
 msgid "No windows"
 msgstr "بلا نوافذ"
 
-#: src/bin/e_int_menus.c:1452
+#: src/bin/e_int_menus.c:1449
 msgid "Lost Windows"
 msgstr "النوافذ المفقودة"
 
-#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
+#: src/bin/e_int_menus.c:1509 src/bin/e_int_menus.c:1609
 msgid "Untitled window"
 msgstr "نافذة غير معنونة"
 
-#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1716 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "الرف %s"
 
-#: src/bin/e_int_menus.c:1787
+#: src/bin/e_int_menus.c:1784
 msgid "Add a Shelf"
 msgstr "أضف رفًّا"
 
-#: src/bin/e_int_menus.c:1794
+#: src/bin/e_int_menus.c:1791
 msgid "Delete a Shelf"
 msgstr "احذف رفًّا"
 
@@ -3642,8 +3643,8 @@ msgstr "ما نوع العملية التي يجب اتخاذها مع هذه ا
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:669
-#: src/modules/clipboard/e_mod_main.c:756
+#: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
+#: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "أبقِ"
 
@@ -3786,7 +3787,7 @@ msgid "Rename Shelf"
 msgstr "أعد تسمية الرف"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1571
 msgid "Contents"
 msgstr "المحتويات"
 
@@ -4579,8 +4580,8 @@ msgstr "ضبط"
 msgid "Time set"
 msgstr "المؤقتات"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:867
-#: src/modules/clock/e_mod_main.c:1058
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
+#: src/modules/clock/e_mod_main.c:1126
 msgid "Clock"
 msgstr "الساعة"
 
@@ -4654,7 +4655,7 @@ msgstr ""
 msgid "Set... "
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:1058
+#: src/modules/clock/e_mod_main.c:1126
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "اعرض التقويم"
@@ -7122,7 +7123,7 @@ msgstr "تعيينن"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:434
-#: src/modules/clipboard/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:440
 msgid "Clear"
 msgstr "امح"
 
@@ -7604,7 +7605,7 @@ msgstr "حجم بواسطة:"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:410
+#: src/modules/xkbswitch/e_mod_main.c:395
 msgid "Keyboard"
 msgstr "لوحة المفاتيح"
 
@@ -8935,31 +8936,31 @@ msgstr "لقد قمت بطلب محو  \"%s\".<br><br>هل تريد تأكيد �
 msgid "Are you sure you want to delete this bar source?"
 msgstr "هل تريد تأكيد مسح مصدر هذا الشريط؟"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
-#: src/modules/ibar/e_mod_main.c:2953
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2912
+#: src/modules/ibar/e_mod_main.c:2950
 msgid "IBar"
 msgstr "شريط التشغيل السريع (( IBar )) "
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1560
 msgid "Create new Icon"
 msgstr "إنشاء أيقونة جديدة"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1591
 #, fuzzy
 msgid "Add to bar"
 msgstr "أضف إلى  شريط التشغيل السريع IBar"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1597
 #, fuzzy
 msgid "Remove from bar"
 msgstr "أزل التكدس"
 
-#: src/modules/ibar/e_mod_main.c:1606
+#: src/modules/ibar/e_mod_main.c:1603
 #, c-format
 msgid "Icon %s"
 msgstr "أيقونة %s"
 
-#: src/modules/ibar/e_mod_main.c:2953
+#: src/modules/ibar/e_mod_main.c:2950
 msgid "Focus IBar"
 msgstr "Focus IBar"
 
@@ -9236,17 +9237,17 @@ msgstr "درجة حرارة منخفضة"
 msgid "Temperatures"
 msgstr "درجات الحرارة"
 
-#: src/modules/temperature/e_mod_main.c:73
-#: src/modules/temperature/e_mod_main.c:236
+#: src/modules/temperature/e_mod_main.c:72
+#: src/modules/temperature/e_mod_main.c:235
 msgid "Temperature"
 msgstr "درجة الحرارة"
 
-#: src/modules/temperature/e_mod_main.c:76
+#: src/modules/temperature/e_mod_main.c:75
 #, fuzzy
 msgid "High CPU temperature!!"
 msgstr "درجة حرارة عالية"
 
-#: src/modules/temperature/e_mod_main.c:77
+#: src/modules/temperature/e_mod_main.c:76
 #, fuzzy
 msgid "Check your device or settings!"
 msgstr "ابحث في المجلدات"
@@ -9784,10 +9785,10 @@ msgid "Share"
 msgstr "شارك"
 
 #: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
+#: src/modules/clipboard/e_mod_main.c:359
+#: src/modules/clipboard/e_mod_main.c:953
+#: src/modules/clipboard/e_mod_main.c:954
+#: src/modules/clipboard/e_mod_main.c:955
 #, fuzzy
 msgid "Clipboard"
 msgstr "إنسخ إلى لوحة الصور"
@@ -9876,7 +9877,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "حدد مكان حفظ صورة الشاشة"
 
-#: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
 msgstr "المهام"
 
@@ -10085,7 +10086,7 @@ msgstr ""
 "خطأ أثناء بدء DBus! رجاءا تفقد ما إذا كان dbus قد نصب بشكل صحيح و يعمل جيدا."
 
 #: src/modules/notification/e_mod_main.c:426
-#: src/modules/clipboard/e_mod_main.c:411
+#: src/modules/clipboard/e_mod_main.c:422
 msgid "Empty"
 msgstr ""
 
@@ -10311,56 +10312,56 @@ msgstr ""
 msgid "Clipboard Settings"
 msgstr "ضبط لوحة المفاتيح"
 
-#: src/modules/clipboard/e_mod_main.c:384
+#: src/modules/clipboard/e_mod_main.c:393
 #, fuzzy
 msgid "Lock item"
 msgstr "فشل القفل"
 
-#: src/modules/clipboard/e_mod_main.c:395
+#: src/modules/clipboard/e_mod_main.c:405
 #, fuzzy
 msgid "Edit item"
 msgstr "لا يوجد"
 
-#: src/modules/clipboard/e_mod_main.c:402
+#: src/modules/clipboard/e_mod_main.c:412
 #, fuzzy
 msgid "Delete item"
 msgstr "مذف مفتاح"
 
-#: src/modules/clipboard/e_mod_main.c:419
+#: src/modules/clipboard/e_mod_main.c:430
 #, fuzzy
 msgid "Ignore history"
 msgstr "تجاهل التلميح"
 
-#: src/modules/clipboard/e_mod_main.c:664
+#: src/modules/clipboard/e_mod_main.c:690
 #, fuzzy
 msgid "Confirm History Deletion"
 msgstr "أكِّد حذف الرف"
 
-#: src/modules/clipboard/e_mod_main.c:666
+#: src/modules/clipboard/e_mod_main.c:692
 #, fuzzy
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
 msgstr "لقد طلبت حذف هذا الرف.<br><br>هل أنت متاكد أنك تريد حذفه؟"
 
-#: src/modules/clipboard/e_mod_main.c:751
+#: src/modules/clipboard/e_mod_main.c:778
 #, fuzzy
 msgid "Confirm Item Deletion"
 msgstr "أكِّد حذف الرف"
 
-#: src/modules/clipboard/e_mod_main.c:753
+#: src/modules/clipboard/e_mod_main.c:780
 #, fuzzy
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr "لقد طلبت حذف هذا الرف.<br><br>هل أنت متاكد أنك تريد حذفه؟"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:808
 #, fuzzy
 msgid "Clipboard: Edit Item"
 msgstr "ضبط لوحة المفاتيح"
 
-#: src/modules/clipboard/e_mod_main.c:782
+#: src/modules/clipboard/e_mod_main.c:809
 msgid "Edit the item content:"
 msgstr ""
 

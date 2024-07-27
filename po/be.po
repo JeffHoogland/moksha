@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.0.17583\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-05-14 18:23+0200\n"
+"POT-Creation-Date: 2024-07-27 09:45+0200\n"
 "PO-Revision-Date: 2024-06-09 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: Belarusian <debian-l10n-belarusian@lists.debian.org>\n"
@@ -23,7 +23,7 @@ msgid "About Moksha"
 msgstr "Аб асяроддзі Moksha"
 
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
-#: src/bin/e_bodhi_about.c:58 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
+#: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
@@ -798,7 +798,7 @@ msgstr "Адправіць у спячку зараз"
 msgid "Lock"
 msgstr "Блакіраванне"
 
-#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1439
+#: src/bin/e_actions.c:3626 src/bin/e_int_menus.c:1436
 msgid "Cleanup Windows"
 msgstr "Прыбраць вокны"
 
@@ -843,6 +843,11 @@ msgstr "Папярэдняя раскладка клавіятуры"
 #: src/bin/e_bg.c:22
 msgid "Set As Background"
 msgstr "Задаць у якасці фону"
+
+#: src/bin/e_bodhi_about.c:54 src/bin/e_bodhi_about.c:59
+#: src/bin/e_int_menus.c:222
+msgid "About Bodhi Linux"
+msgstr "Аб Bodhi Linux"
 
 #: src/bin/e_color_dialog.c:26
 msgid "Color Selector"
@@ -1260,8 +1265,8 @@ msgstr "Выбраць выканальны файл"
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
-#: src/modules/clipboard/e_mod_main.c:669
-#: src/modules/clipboard/e_mod_main.c:756
+#: src/modules/clipboard/e_mod_main.c:695
+#: src/modules/clipboard/e_mod_main.c:783
 msgid "Delete"
 msgstr "Выдаліць"
 
@@ -1550,7 +1555,7 @@ msgid "Eject"
 msgstr "Вынуць"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1587
+#: src/modules/ibar/e_mod_main.c:1584
 msgid "Properties"
 msgstr "Уласцівасці"
 
@@ -2183,7 +2188,7 @@ msgid "Window"
 msgstr "Акно"
 
 #: src/bin/e_int_border_menu.c:170 src/bin/e_int_border_menu.c:1052
-#: src/modules/clock/e_mod_main.c:501
+#: src/modules/clock/e_mod_main.c:526
 msgid "Always on Top"
 msgstr "Заўсёды навярху"
 
@@ -2544,8 +2549,8 @@ msgstr "Запыт пазіцыі"
 #: src/bin/e_int_border_prop.c:477 src/bin/e_int_border_prop.c:512
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
-#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:506
-#: src/modules/clock/e_mod_main.c:763 src/modules/conf/e_conf.c:143
+#: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
+#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2555,17 +2560,17 @@ msgstr "Запыт пазіцыі"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1580
+#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1577
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
-#: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:294
+#: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:817
-#: src/modules/xkbswitch/e_mod_main.c:370
-#: src/modules/xkbswitch/e_mod_main.c:411
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/xkbswitch/e_mod_main.c:355
+#: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
 #: src/modules/notification/e_mod_main.c:457
-#: src/modules/clipboard/e_mod_main.c:298
-#: src/modules/clipboard/e_mod_main.c:442 src/modules/places/e_mod_main.c:518
+#: src/modules/clipboard/e_mod_main.c:301
+#: src/modules/clipboard/e_mod_main.c:453 src/modules/places/e_mod_main.c:518
 msgid "Settings"
 msgstr "Налады"
 
@@ -2851,10 +2856,6 @@ msgstr "Аб аперацыйнай сістэме"
 msgid "Help"
 msgstr "Дапамога"
 
-#: src/bin/e_int_menus.c:222
-msgid "About Bodhi Linux"
-msgstr "Аб Bodhi Linux"
-
 #: src/bin/e_int_menus.c:243
 msgid "About Moksha Desktop"
 msgstr "Аб Moksha Desktop"
@@ -2868,33 +2869,33 @@ msgstr "Аб тэме"
 msgid "Restart Moksha"
 msgstr "Перазапусціць Moksha"
 
-#: src/bin/e_int_menus.c:338
+#: src/bin/e_int_menus.c:337
 msgid "Favorite Apps"
 msgstr "Абраныя праграмы"
 
-#: src/bin/e_int_menus.c:343 src/bin/e_int_menus.c:800
+#: src/bin/e_int_menus.c:340 src/bin/e_int_menus.c:797
 msgid "No applications"
 msgstr "Няма праграм"
 
-#: src/bin/e_int_menus.c:362
+#: src/bin/e_int_menus.c:359
 msgid "Virtual"
 msgstr "Віртуальныя"
 
-#: src/bin/e_int_menus.c:369 src/modules/conf_shelves/e_mod_main.c:23
+#: src/bin/e_int_menus.c:366 src/modules/conf_shelves/e_mod_main.c:23
 #: src/modules/conf_shelves/e_mod_main.c:27
 #: src/modules/conf_shelves/e_mod_main.c:74
 msgid "Shelves"
 msgstr "Паліцы"
 
-#: src/bin/e_int_menus.c:378
+#: src/bin/e_int_menus.c:375
 msgid "Show/Hide All Windows"
 msgstr "Паказаць/схаваць усе вокны"
 
-#: src/bin/e_int_menus.c:1027
+#: src/bin/e_int_menus.c:1024
 msgid "Set Virtual Desktops"
 msgstr "Наладка віртуальных працоўных сталоў"
 
-#: src/bin/e_int_menus.c:1397
+#: src/bin/e_int_menus.c:1394
 #: src/modules/conf_window_manipulation/e_mod_main.c:17
 #: src/modules/conf_window_remembers/e_mod_main.c:14
 #: src/modules/everything/evry_plug_windows.c:425
@@ -2903,29 +2904,29 @@ msgstr "Наладка віртуальных працоўных сталоў"
 msgid "Windows"
 msgstr "Вокны"
 
-#: src/bin/e_int_menus.c:1403 src/bin/e_int_menus.c:1599
+#: src/bin/e_int_menus.c:1400 src/bin/e_int_menus.c:1596
 msgid "No windows"
 msgstr "Няма вокнаў"
 
-#: src/bin/e_int_menus.c:1452
+#: src/bin/e_int_menus.c:1449
 msgid "Lost Windows"
 msgstr "Страчаныя вокны"
 
-#: src/bin/e_int_menus.c:1512 src/bin/e_int_menus.c:1612
+#: src/bin/e_int_menus.c:1509 src/bin/e_int_menus.c:1609
 msgid "Untitled window"
 msgstr "Вокны без загалоўкаў"
 
-#: src/bin/e_int_menus.c:1719 src/bin/e_shelf.c:1699
+#: src/bin/e_int_menus.c:1716 src/bin/e_shelf.c:1699
 #: src/modules/conf_shelves/e_int_config_shelf.c:193
 #, c-format
 msgid "Shelf %s"
 msgstr "Паліца %s"
 
-#: src/bin/e_int_menus.c:1787
+#: src/bin/e_int_menus.c:1784
 msgid "Add a Shelf"
 msgstr "Дадаць паліцу"
 
-#: src/bin/e_int_menus.c:1794
+#: src/bin/e_int_menus.c:1791
 msgid "Delete a Shelf"
 msgstr "Выдаліць паліцу"
 
@@ -3661,8 +3662,8 @@ msgstr "Якое дзеянне распачаць ў дачыненні да г
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:394
-#: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:669
-#: src/modules/clipboard/e_mod_main.c:756
+#: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
+#: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Трымаць"
 
@@ -3807,7 +3808,7 @@ msgid "Rename Shelf"
 msgstr "Перайменаваць паліцу"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1574
+#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1571
 msgid "Contents"
 msgstr "Змест"
 
@@ -4564,8 +4565,8 @@ msgstr "Задаць"
 msgid "Time set"
 msgstr "Наладз. час"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:867
-#: src/modules/clock/e_mod_main.c:1058
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
+#: src/modules/clock/e_mod_main.c:1126
 msgid "Clock"
 msgstr "Гадзіннік"
 
@@ -4638,7 +4639,7 @@ msgstr "Задаць..."
 msgid "Set... "
 msgstr "Задаць... "
 
-#: src/modules/clock/e_mod_main.c:1058
+#: src/modules/clock/e_mod_main.c:1126
 msgid "Toggle calendar"
 msgstr "Пераключыць каляндар"
 
@@ -7057,7 +7058,7 @@ msgstr "Прызначыць"
 
 #: src/modules/conf_theme/e_int_config_theme.c:1426
 #: src/modules/notification/e_mod_main.c:434
-#: src/modules/clipboard/e_mod_main.c:429
+#: src/modules/clipboard/e_mod_main.c:440
 msgid "Clear"
 msgstr "Ачысціць"
 
@@ -7535,7 +7536,7 @@ msgstr "Змянення памеру на"
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:261
 #: src/modules/wizard/page_011.c:174 src/modules/xkbswitch/e_mod_main.c:75
 #: src/modules/xkbswitch/e_mod_main.c:273
-#: src/modules/xkbswitch/e_mod_main.c:410
+#: src/modules/xkbswitch/e_mod_main.c:395
 msgid "Keyboard"
 msgstr "Клавіятура"
 
@@ -8836,29 +8837,29 @@ msgstr ""
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Вы ўпэўнены, што жадаеце выдаліць гэту крыніцу панэлі?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2915
-#: src/modules/ibar/e_mod_main.c:2953
+#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2912
+#: src/modules/ibar/e_mod_main.c:2950
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1563
+#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1560
 msgid "Create new Icon"
 msgstr "Стварыць новы значок"
 
-#: src/modules/ibar/e_mod_main.c:1594
+#: src/modules/ibar/e_mod_main.c:1591
 msgid "Add to bar"
 msgstr "Дадаць на панэль"
 
-#: src/modules/ibar/e_mod_main.c:1600
+#: src/modules/ibar/e_mod_main.c:1597
 msgid "Remove from bar"
 msgstr "Выдаліць з панэлі"
 
-#: src/modules/ibar/e_mod_main.c:1606
+#: src/modules/ibar/e_mod_main.c:1603
 #, c-format
 msgid "Icon %s"
 msgstr "Значок %s"
 
-#: src/modules/ibar/e_mod_main.c:2953
+#: src/modules/ibar/e_mod_main.c:2950
 msgid "Focus IBar"
 msgstr "Факусаванне IBar"
 
@@ -9133,16 +9134,16 @@ msgstr "Паніжаная тэмпература"
 msgid "Temperatures"
 msgstr "Тэмпературы"
 
-#: src/modules/temperature/e_mod_main.c:73
-#: src/modules/temperature/e_mod_main.c:236
+#: src/modules/temperature/e_mod_main.c:72
+#: src/modules/temperature/e_mod_main.c:235
 msgid "Temperature"
 msgstr "Тэмпература"
 
-#: src/modules/temperature/e_mod_main.c:76
+#: src/modules/temperature/e_mod_main.c:75
 msgid "High CPU temperature!!"
 msgstr "Павышаная тэмпературы працэсара!"
 
-#: src/modules/temperature/e_mod_main.c:77
+#: src/modules/temperature/e_mod_main.c:76
 msgid "Check your device or settings!"
 msgstr "Праверце вашу прыладу або налады!"
 
@@ -9690,10 +9691,10 @@ msgid "Share"
 msgstr "Апублікаваць"
 
 #: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
-#: src/modules/clipboard/e_mod_main.c:353
-#: src/modules/clipboard/e_mod_main.c:922
-#: src/modules/clipboard/e_mod_main.c:923
-#: src/modules/clipboard/e_mod_main.c:924
+#: src/modules/clipboard/e_mod_main.c:359
+#: src/modules/clipboard/e_mod_main.c:953
+#: src/modules/clipboard/e_mod_main.c:954
+#: src/modules/clipboard/e_mod_main.c:955
 msgid "Clipboard"
 msgstr " Буфер абмену"
 
@@ -9774,7 +9775,7 @@ msgstr "Заўвага"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+PrtSc: здымак актыўнага акна"
 
-#: src/modules/tasks/e_mod_main.c:339 src/modules/tasks/e_mod_main.c:824
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
 msgid "Tasks"
 msgstr "Заданні"
 
@@ -9975,7 +9976,7 @@ msgstr ""
 "Bus правільна ініцыялізаваны і выконваецца"
 
 #: src/modules/notification/e_mod_main.c:426
-#: src/modules/clipboard/e_mod_main.c:411
+#: src/modules/clipboard/e_mod_main.c:422
 msgid "Empty"
 msgstr "Пуста"
 
@@ -10180,27 +10181,27 @@ msgstr " Элементы ў гісторыі"
 msgid "Clipboard Settings"
 msgstr " Налады буфера абмену"
 
-#: src/modules/clipboard/e_mod_main.c:384
+#: src/modules/clipboard/e_mod_main.c:393
 msgid "Lock item"
 msgstr " Замацаваць элемент"
 
-#: src/modules/clipboard/e_mod_main.c:395
+#: src/modules/clipboard/e_mod_main.c:405
 msgid "Edit item"
 msgstr "Рэдагаваць элемент"
 
-#: src/modules/clipboard/e_mod_main.c:402
+#: src/modules/clipboard/e_mod_main.c:412
 msgid "Delete item"
 msgstr "Выдаліць элемент"
 
-#: src/modules/clipboard/e_mod_main.c:419
+#: src/modules/clipboard/e_mod_main.c:430
 msgid "Ignore history"
 msgstr "Ігнараваць гісторыю"
 
-#: src/modules/clipboard/e_mod_main.c:664
+#: src/modules/clipboard/e_mod_main.c:690
 msgid "Confirm History Deletion"
 msgstr "Пацвердзіць выдаленне гісторыі"
 
-#: src/modules/clipboard/e_mod_main.c:666
+#: src/modules/clipboard/e_mod_main.c:692
 msgid ""
 "You wish to delete the clipboards history.<br><br>Are you sure you want to "
 "delete it?"
@@ -10208,22 +10209,22 @@ msgstr ""
 "Вы выдаляеце гісторыю буфера абмену.<br><br>Вы ўпэўнены, што жадаеце "
 "выдаліць яе?"
 
-#: src/modules/clipboard/e_mod_main.c:751
+#: src/modules/clipboard/e_mod_main.c:778
 msgid "Confirm Item Deletion"
 msgstr "Пацвердзіце выдаленне элемента"
 
-#: src/modules/clipboard/e_mod_main.c:753
+#: src/modules/clipboard/e_mod_main.c:780
 msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
 "Вы выдаляеце бягучы элемент.<br><br>Вы ўпэўнены, што жадаеце выдаліць яго?"
 
-#: src/modules/clipboard/e_mod_main.c:781
+#: src/modules/clipboard/e_mod_main.c:808
 msgid "Clipboard: Edit Item"
 msgstr "Буфер абмену: рэдагаваць элемент"
 
-#: src/modules/clipboard/e_mod_main.c:782
+#: src/modules/clipboard/e_mod_main.c:809
 msgid "Edit the item content:"
 msgstr "Рэдагаваць змест элемента"
 
