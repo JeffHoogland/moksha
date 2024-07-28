@@ -241,7 +241,7 @@ e_backlight_mode_set(E_Zone *zone, E_Backlight_Mode mode)
    if (e_config->backlight.mode == mode) return;
    pmode = e_config->backlight.mode;
    e_config->backlight.mode = mode;
-   if      (e_config->backlight.mode == E_BACKLIGHT_MODE_NORMAL)
+   if (e_config->backlight.mode == E_BACKLIGHT_MODE_NORMAL)
      {
         e_backlight_level_set(zone, e_config->backlight.normal, -1.0);
      }

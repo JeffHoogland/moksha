@@ -646,8 +646,8 @@ _e_drag_coords_update(const E_Drop_Handler *h, int *dx, int *dy)
            case E_ZONE_TYPE:
 // zone based drag targets are in a container thus their coords should be
 // screen-relative as containers just cover the screen
-//	     px = ((E_Zone *)(h->obj))->x;
-//	     py = ((E_Zone *)(h->obj))->y;
+//     px = ((E_Zone *)(h->obj))->x;
+//     py = ((E_Zone *)(h->obj))->y;
              break;
 
            case E_BORDER_TYPE:
@@ -797,7 +797,7 @@ _e_drag_update(Ecore_X_Window root, int x, int y, Ecore_X_Atom action)
          * a whole bunch of round-trips narrowing down the toplevel window
          * which contains the mouse */
         win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, ignore_win, 2);
-//	win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
+//   win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
      }
    else
      win = root;
@@ -923,7 +923,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
    ignore_win[1] = _drag_win;
    /* this is nasty - but necessary to get the window stacking */
    win = ecore_x_window_shadow_tree_at_xy_with_skip_get(root, x, y, ignore_win, 2);
-//   win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2);
+   /* win = ecore_x_window_at_xy_with_skip_get(x, y, ignore_win, 2); */
    zone = e_container_zone_at_point_get(_drag_current->container, x, y);
    /* Pass -1, -1, so that it is possible to drop at the edge. */
    if (zone) e_zone_flip_coords_handle(zone, -1, -1);
@@ -949,7 +949,7 @@ _e_drag_end(Ecore_X_Window root, int x, int y)
              _drag_current = NULL;
              e_object_del(E_OBJECT(tmp));
           }
-        //e_grabinput_release(_drag_win, _drag_win);
+        // e_grabinput_release(_drag_win, _drag_win);
         ecore_x_window_hide(_drag_win);
         return;
      }
@@ -1312,12 +1312,12 @@ _e_dnd_cb_event_dnd_position(void *data __UNUSED__, int type __UNUSED__, void *e
    int responsive;
 
    ev = event;
-//   double t1 = ecore_time_get(); ////
+// double t1 = ecore_time_get(); ////
    id = e_util_winid_str_get(ev->win);
    if (!eina_hash_find(_drop_win_hash, id))
      {
-//	double t2 = ecore_time_get() - t1; ////
-//	printf("DND POS EV 1 %3.7f\n", t2); ////
+// double t2 = ecore_time_get() - t1; ////
+// printf("DND POS EV 1 %3.7f\n", t2); ////
         return ECORE_CALLBACK_PASS_ON;
      }
 
@@ -1492,7 +1492,7 @@ _e_dnd_cb_event_dnd_selection(void *data __UNUSED__, int type __UNUSED__, void *
         for (i = 0; i < size; i++)
           {
              file[i] = text[i];
-//	     printf("'%d-%c' ", text[i], text[i]);
+//           printf("'%d-%c' ", text[i], text[i]);
              /*
                 if (text[i] == ' ')
                 {
@@ -1501,9 +1501,9 @@ _e_dnd_cb_event_dnd_selection(void *data __UNUSED__, int type __UNUSED__, void *
                 }
               */
           }
-//	printf("\n");
+// printf("\n");
         file[i] = '\0';
-//	printf("file: %d \"%s\"\n", i, file);
+// printf("file: %d \"%s\"\n", i, file);
         l = eina_list_append(l, file);
 
         _xdnd->data = l;

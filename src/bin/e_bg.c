@@ -539,7 +539,6 @@ _e_bg_event_bg_update_free(void *data __UNUSED__, void *event)
 static void
 _e_bg_handler_image_imported(const char *image_path, void *data __UNUSED__)
 {
-
    e_bg_default_set(image_path);
    e_bg_update();
    e_config_save_queue();

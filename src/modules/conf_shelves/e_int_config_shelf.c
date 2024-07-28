@@ -155,7 +155,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    _ilist_fill(cfdata);
    e_widget_disabled_set(cfdata->o_add, 0);
 
-
    return ol;
 }
 

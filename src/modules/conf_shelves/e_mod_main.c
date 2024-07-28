@@ -40,8 +40,8 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
    /* remove module-supplied menu additions */
    if (maug)
      {
-	e_int_menus_menu_augmentation_del("config/1", maug);
-	maug = NULL;
+       e_int_menus_menu_augmentation_del("config/1", maug);
+       maug = NULL;
      }
    while ((cfd = e_config_dialog_get("E", "extensions/shelves"))) 
      e_object_del(E_OBJECT(cfd));
