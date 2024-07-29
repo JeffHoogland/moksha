@@ -916,6 +916,7 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
    eina_stringshare_del(bgfile);
    edje_object_part_geometry_get(o, "e.swallow.background", NULL, NULL, &tw, &th);
    e_thumb_icon_size_set(obg, tw, th);
+   evas_object_size_hint_max_set(obg, tw, th);
    edje_object_part_swallow(o, "e.swallow.background", obg);
    e_thumb_icon_begin(obg);
    evas_object_show(obg);
