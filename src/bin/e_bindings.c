@@ -61,7 +61,7 @@ e_bindings_init(void)
                         ebk->any_mod, ebk->action, ebk->params);
 
    EINA_LIST_FOREACH(e_config->edge_bindings, l, ebe)
-     e_bindings_edge_add(ebe->context, ebe->edge, ebe->modifiers,
+     e_bindings_edge_add(ebe->context, ebe->edge, ebe->drag_only, ebe->modifiers,
                          ebe->any_mod, ebe->action, ebe->params, ebe->delay);
 
    EINA_LIST_FOREACH(e_config->signal_bindings, l, ebs)
@@ -179,7 +179,7 @@ e_bindings_edge_reset(void)
    E_FREE_LIST(edge_bindings, _e_bindings_edge_free);
 
    EINA_LIST_FOREACH(e_config->edge_bindings, l, ebe)
-     e_bindings_edge_add(ebe->context, ebe->edge, ebe->modifiers,
+     e_bindings_edge_add(ebe->context, ebe->edge, ebe->drag_only, ebe->modifiers,
                          ebe->any_mod, ebe->action, ebe->params, ebe->delay);
 }
 
@@ -607,7 +607,7 @@ e_bindings_key_up_event_find(E_Binding_Context ctxt, Ecore_Event_Key *ev)
 }
 
 EAPI void
-e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
+e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, Eina_Bool drag_only, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
 {
    E_Binding_Edge *binding;
 
@@ -617,6 +617,7 @@ e_bindings_edge_add(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
    binding->mod = mod;
    binding->any_mod = any_mod;
    binding->delay = delay;
+   binding->drag_only = drag_only;
    if (action) binding->action = eina_stringshare_add(action);
    if (params) binding->params = eina_stringshare_add(params);
    edge_bindings = eina_list_append(edge_bindings, binding);
@@ -680,7 +681,7 @@ e_bindings_edge_get(const char *action, E_Zone_Edge edge, int click)
 }
 
 EAPI void
-e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
+e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, Eina_Bool drag_only, E_Binding_Modifier mod, int any_mod, const char *action, const char *params, float delay)
 {
    E_Binding_Edge *binding;
    Eina_List *l, *ll;
@@ -692,8 +693,9 @@ e_bindings_edge_del(E_Binding_Context ctxt, E_Zone_Edge edge, E_Binding_Modifier
           {
              if ((binding->ctxt == ctxt) &&
                  (binding->mod == mod) &&
-                 EINA_FLT_EQ(binding->delay, delay) &&
+                 ((binding->delay * 1000) == (delay * 1000)) &&
                  (binding->any_mod == any_mod) &&
+                 (binding->drag_only == drag_only) &&
                  (((binding->action) && (action) && (!strcmp(binding->action, action))) ||
                   ((!binding->action) && (!action))) &&
                  (((binding->params) && (params) && (!strcmp(binding->params, params))) ||
@@ -730,6 +732,7 @@ e_bindings_edge_in_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event_Z
      {
         /* A value of <= -1.0 for the delay indicates it as a mouse-click binding on that edge */
         if (((binding->edge == ev->edge)) && (binding->delay >= 0.0) &&
+            ((binding->drag_only == ev->drag) || ev->drag) &&
             ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
@@ -819,8 +822,8 @@ e_bindings_edge_down_event_handle(E_Binding_Context ctxt, E_Object *obj, E_Event
    if (ev->modifiers & ECORE_EVENT_MODIFIER_WIN) mod |= E_BINDING_MODIFIER_WIN;
    EINA_LIST_FOREACH(edge_bindings, l, binding)
      {
-        if (((binding->edge == ev->edge)) && EINA_FLT_EQ(binding->delay, -1.0 * ev->button) &&
-            ((binding->any_mod) || (binding->mod == mod)))
+        if (((binding->edge == ev->edge)) && (binding->delay == -1.0 * ev->button) &&
+            (!binding->drag_only) && ((binding->any_mod) || (binding->mod == mod)))
           {
              if (_e_bindings_context_match(binding->ctxt, ctxt))
                {

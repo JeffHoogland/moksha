@@ -35,7 +35,7 @@ static void         _add_edge_binding_cb(void *data, void *data2);
 static void         _modify_edge_binding_cb(void *data, void *data2);
 
 /********* Helper *************************/
-static char        *_edge_binding_text_get(E_Zone_Edge edge, float delay, int mod);
+static char        *_edge_binding_text_get(E_Zone_Edge edge, float delay, int mod, int drag_only);
 static void         _auto_apply_changes(E_Config_Dialog_Data *cfdata);
 static void         _find_edge_binding_action(const char *action, const char *params, int *g, int *a, int *n);
 
@@ -65,6 +65,7 @@ struct _E_Config_Dialog_Data
       const char *cur;
       double      delay;
       int         click;
+      int         drag_only;
       int         button;
       int         cur_act, add;
       E_Zone_Edge edge;
@@ -76,7 +77,7 @@ struct _E_Config_Dialog_Data
    {
       Evas_Object *o_add, *o_mod, *o_del, *o_del_all;
       Evas_Object *o_binding_list, *o_action_list;
-      Evas_Object *o_params, *o_selector, *o_slider, *o_check, *o_button;
+      Evas_Object *o_params, *o_selector, *o_slider, *o_check, *o_check2, *o_button;
    } gui;
 
    const char      *params;
@@ -139,6 +140,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
         bi2->modifiers = bi->modifiers;
         bi2->any_mod = bi->any_mod;
         bi2->delay = bi->delay;
+        bi2->drag_only = bi->drag_only;
         bi2->action = eina_stringshare_ref(bi->action);
         bi2->params = eina_stringshare_ref(bi->params);
 
@@ -196,7 +198,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
    EINA_LIST_FREE(e_config->edge_bindings, bi)
      {
-        e_bindings_edge_del(bi->context, bi->edge, bi->modifiers, bi->any_mod,
+        e_bindings_edge_del(bi->context, bi->edge, bi->drag_only, bi->modifiers, bi->any_mod,
                             bi->action, bi->params, bi->delay);
         eina_stringshare_del(bi->action);
         eina_stringshare_del(bi->params);
@@ -212,13 +214,14 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
         bi->modifiers = bi2->modifiers;
         bi->any_mod = bi2->any_mod;
         bi->delay = bi2->delay;
+        bi->drag_only = bi2->drag_only;
         bi->action =
           ((!bi2->action) || (!bi2->action[0])) ? NULL : eina_stringshare_add(bi2->action);
         bi->params =
           ((!bi2->params) || (!bi2->params[0])) ? NULL : eina_stringshare_add(bi2->params);
 
         e_config->edge_bindings = eina_list_append(e_config->edge_bindings, bi);
-        e_bindings_edge_add(bi->context, bi->edge, bi->modifiers, bi->any_mod,
+        e_bindings_edge_add(bi->context, bi->edge, bi->drag_only, bi->modifiers, bi->any_mod,
                             bi->action, bi->params, bi->delay);
      }
 
@@ -389,6 +392,7 @@ _modify_edge_binding_cb(void *data, void *data2 __UNUSED__)
 
         bi = eina_list_nth(cfdata->binding.edge, n);
         cfdata->locals.edge = bi->edge;
+        cfdata->locals.drag_only = bi->drag_only;
         cfdata->locals.delay = ((double)bi->delay);
         if (bi->delay <= -1.0) cfdata->locals.click = 1, cfdata->locals.button = -bi->delay;
         else cfdata->locals.click = 0, cfdata->locals.button = 0;
@@ -768,7 +772,7 @@ _update_edge_binding_list(E_Config_Dialog_Data *cfdata)
 
         bi = l->data;
 
-        b = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers);
+        b = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers, bi->drag_only);
         if (!b) continue;
 
         ic = edje_object_add(cfdata->evas);
@@ -892,11 +896,23 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 
    cfdata->gui.o_check = os = e_widget_check_add(evas, _("Clickable edge"), &(cfdata->locals.click));
    e_widget_size_min_resize(os);
-   edje_object_part_swallow(o, "e.swallow.check", os);
    e_widget_on_change_hook_set(os, _edge_grab_wnd_check_changed_cb, cfdata);
+   edje_object_part_box_append(o, "e.box", os);
    evas_object_show(os);
-   if (cfdata->locals.click)
-     e_widget_disabled_set(cfdata->gui.o_slider, 1);
+   e_widget_size_min_get(os, &minw, &minh);
+   evas_object_size_hint_min_set(os, minw, minh);
+
+   cfdata->gui.o_check2 = os = e_widget_check_add(evas, _("Drag only"), &(cfdata->locals.drag_only));
+   e_widget_size_min_resize(os);
+   e_widget_on_change_hook_set(os, _edge_grab_wnd_check_changed_cb, cfdata);
+   edje_object_part_box_append(o, "e.box", os);
+   evas_object_show(os);
+   e_widget_size_min_get(os, &minw, &minh);
+   evas_object_size_hint_min_set(os, minw, minh);
+
+   e_widget_disabled_set(cfdata->gui.o_slider, cfdata->locals.click);
+   e_widget_disabled_set(cfdata->gui.o_check2, cfdata->locals.click);
+   e_widget_disabled_set(cfdata->gui.o_check, cfdata->locals.drag_only);
 
    edje_object_part_text_set(o, "e.text.description", TEXT_PRESS_EDGE_SEQUENCE);
 
@@ -923,7 +939,7 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
 
    if (cfdata->locals.edge)
      {
-        label = _edge_binding_text_get(cfdata->locals.edge, ((float)cfdata->locals.delay), cfdata->locals.modifiers);
+        label = _edge_binding_text_get(cfdata->locals.edge, ((float)cfdata->locals.delay), cfdata->locals.modifiers, cfdata->locals.drag_only);
         edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
         E_FREE(label);
      }
@@ -970,7 +986,8 @@ _edge_grab_wnd_slider_changed_cb(void *data, Evas_Object *obj __UNUSED__)
    if (!cfdata->locals.edge) return;
    label = _edge_binding_text_get(cfdata->locals.edge,
                                   ((float)cfdata->locals.delay),
-                                  cfdata->locals.modifiers);
+                                  cfdata->locals.modifiers,
+                                  cfdata->locals.drag_only);
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
    E_FREE(label);
 }
@@ -984,15 +1001,18 @@ _edge_grab_wnd_check_changed_cb(void *data, Evas_Object *obj __UNUSED__)
    if (cfdata->locals.click)
      {
         if (cfdata->locals.edge && cfdata->locals.button)
-          label = _edge_binding_text_get(cfdata->locals.edge, -1.0 * cfdata->locals.button, cfdata->locals.modifiers);
-        e_widget_disabled_set(cfdata->gui.o_slider, 1);
+          label = _edge_binding_text_get(cfdata->locals.edge, -1.0 * cfdata->locals.button, cfdata->locals.modifiers, cfdata->locals.drag_only);
      }
    else
      {
         if (cfdata->locals.edge)
-          label = _edge_binding_text_get(cfdata->locals.edge, ((float)cfdata->locals.delay), cfdata->locals.modifiers);
+          label = _edge_binding_text_get(cfdata->locals.edge, ((float)cfdata->locals.delay), cfdata->locals.modifiers, cfdata->locals.drag_only);
         e_widget_disabled_set(cfdata->gui.o_slider, 0);
      }
+
+   e_widget_disabled_set(cfdata->gui.o_slider, cfdata->locals.click);
+   e_widget_disabled_set(cfdata->gui.o_check2, cfdata->locals.click);
+   e_widget_disabled_set(cfdata->gui.o_check, cfdata->locals.drag_only);
 
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
    E_FREE(label);
@@ -1077,7 +1097,8 @@ stop:
 
    label = _edge_binding_text_get(cfdata->locals.edge,
                                   cfdata->locals.click ? (-1.0 * cfdata->locals.button) : ((float)cfdata->locals.delay),
-                                  cfdata->locals.modifiers);
+                                  cfdata->locals.modifiers,
+                                  cfdata->locals.drag_only);
    edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
    E_FREE(label);
 }
@@ -1097,6 +1118,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
         EINA_LIST_FOREACH(cfdata->binding.edge, l, bi)
           if ((bi->modifiers == cfdata->locals.modifiers) &&
               (bi->edge == cfdata->locals.edge) &&
+              (bi->drag_only == cfdata->locals.drag_only) &&
               (dblequal(bi->delay * 1000, cfdata->locals.delay * 1000)))
             {
                found = 1;
@@ -1114,6 +1136,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
                   if (bi == bi2) continue;
                   if ((bi->modifiers == cfdata->locals.modifiers) &&
                       (bi->edge == cfdata->locals.edge) &&
+                      (bi->drag_only == cfdata->locals.drag_only) &&
                       (dblequal(bi->delay * 1000, cfdata->locals.delay * 1000)))
                     {
                        found = 1;
@@ -1135,6 +1158,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
              bi->action = NULL;
              bi->params = NULL;
              bi->modifiers = cfdata->locals.modifiers;
+             bi->drag_only = cfdata->locals.drag_only;
              cfdata->binding.edge = eina_list_append(cfdata->binding.edge, bi);
           }
         else
@@ -1147,6 +1171,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
                   bi->modifiers = cfdata->locals.modifiers;
                   bi->delay = cfdata->locals.delay;
                   bi->edge = cfdata->locals.edge;
+                  bi->drag_only = cfdata->locals.drag_only;
                }
           }
 
@@ -1190,7 +1215,7 @@ _edge_grab_wnd_selection_apply(E_Config_Dialog_Data *cfdata)
           {
              char *label;
 
-             label = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers);
+             label = _edge_binding_text_get(bi->edge, bi->delay, bi->modifiers, bi->drag_only);
              e_widget_ilist_nth_label_set(cfdata->gui.o_binding_list, n, label);
              free(label);
           }
@@ -1343,7 +1368,7 @@ _find_edge_binding_action(const char *action, const char *params, int *g, int *a
 }
 
 static char *
-_edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
+_edge_binding_text_get(E_Zone_Edge edge, float delay, int mod, int drag_only)
 {
    Eina_Strbuf *b;
    char *ret;
@@ -1426,6 +1451,11 @@ _edge_binding_text_get(E_Zone_Edge edge, float delay, int mod)
           eina_strbuf_append(b, _("(clickable)"));
         else
           eina_strbuf_append_printf(b, "%.2fs", delay);
+     }
+   if (drag_only)
+     {
+        if (eina_strbuf_length_get(b)) eina_strbuf_append(b, " ");
+        eina_strbuf_append(b, _("(drag only)"));
      }
 
    ret = eina_strbuf_string_steal(b);

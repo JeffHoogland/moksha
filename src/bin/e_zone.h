@@ -127,6 +127,7 @@ struct _E_Event_Zone_Edge
    int         x, y;
    int         modifiers;
    int         button;
+   unsigned char drag : 1;
 };
 
 EINTERN int    e_zone_init(void);

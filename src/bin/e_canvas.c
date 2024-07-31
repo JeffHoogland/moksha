@@ -160,6 +160,12 @@ e_canvas_new(Ecore_X_Window win, int x, int y, int w, int h,
    return ee;
 }
 
+EAPI const Eina_List *
+e_canvas_list(void)
+{
+   return _e_canvases;
+}
+
 /* local subsystem functions */
 static Eina_Bool
 _e_canvas_cb_flush(void *data __UNUSED__)
@@ -167,4 +173,5 @@ _e_canvas_cb_flush(void *data __UNUSED__)
    e_canvas_cache_flush();
    return ECORE_CALLBACK_RENEW;
 }
+
 

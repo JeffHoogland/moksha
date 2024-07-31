@@ -282,6 +282,7 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, params, STR);
    E_CONFIG_VAL(D, T, edge, UCHAR);
    E_CONFIG_VAL(D, T, any_mod, UCHAR);
+   E_CONFIG_VAL(D, T, drag_only, UCHAR);
    E_CONFIG_VAL(D, T, delay, FLOAT);
 
    _e_config_bindings_signal_edd = E_CONFIG_DD_NEW("E_Config_Binding_Signal",
@@ -1791,6 +1792,7 @@ e_config_binding_edge_match(E_Config_Binding_Edge *eb_in)
             (eb->any_mod == eb_in->any_mod) &&
             (eb->edge == eb_in->edge) &&
             EINA_FLT_EQ(eb->delay, eb_in->delay) &&
+            (eb->drag_only == eb_in->drag_only) &&
             (((eb->action) && (eb_in->action) && (!strcmp(eb->action, eb_in->action))) ||
              ((!eb->action) && (!eb_in->action))) &&
             (((eb->params) && (eb_in->params) && (!strcmp(eb->params, eb_in->params))) ||
