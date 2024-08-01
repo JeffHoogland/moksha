@@ -943,6 +943,8 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
         edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", label);
         E_FREE(label);
      }
+   else
+     edje_object_part_text_set(cfdata->gui.o_selector, "e.text.selection", _("No edge selected"));
 
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN,
                                   _edge_grab_wnd_selected_edge_cb, cfdata);
