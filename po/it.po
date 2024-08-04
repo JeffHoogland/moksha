@@ -5368,14 +5368,12 @@ msgid "Clickable edge"
 msgstr "Bordo cliccabile"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Trascina icona..."
+msgstr "Solo trascinamento"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Nessun modulo selezionato."
+msgstr "Nessun bordo selezionato"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5452,7 +5450,7 @@ msgstr "(cliccabile col sinistro)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(solo trascinamento)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584

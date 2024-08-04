@@ -5295,14 +5295,12 @@ msgid "Clickable edge"
 msgstr "Klikbare rand"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Versleep pictogram..."
+msgstr "Alleen slepen"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Geen modules geselecteerd."
+msgstr "Geen rand geselecteerd"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5379,7 +5377,7 @@ msgstr "(aanklikbaar)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(alleen slepen)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584

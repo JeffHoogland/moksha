@@ -5292,14 +5292,12 @@ msgid "Clickable edge"
 msgstr "Cantonada clicable"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Arrossega icona..."
+msgstr "Només arrossega"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "No hi ha mòduls seleccionats."
+msgstr "No s'ha seleccionat cap vora"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"

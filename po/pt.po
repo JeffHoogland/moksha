@@ -5277,14 +5277,12 @@ msgid "Clickable edge"
 msgstr "Margem clicável"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Arrastar ícone..."
+msgstr "Apenas arrastar"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Nenhum módulo selecionado."
+msgstr "Nenhuma margem selecionada"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5361,7 +5359,7 @@ msgstr "(clicável)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(apenas arrastar)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584

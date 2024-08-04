@@ -5308,14 +5308,12 @@ msgid "Clickable edge"
 msgstr "Bord cliquable"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Glisser l'icône…"
+msgstr "Glisser uniquement"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Aucun module sélectionné."
+msgstr "Aucun bord sélectionné"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5393,7 +5391,7 @@ msgstr "(répond au clic)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(glisser uniquement)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584

@@ -5285,9 +5285,8 @@ msgid "Clickable edge"
 msgstr "Интерактивные края"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Тащить значок..."
+msgstr "Только перетаскивание"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
 #, fuzzy
@@ -5370,7 +5369,7 @@ msgstr "(кликабельно)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(Только перетаскивание)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
