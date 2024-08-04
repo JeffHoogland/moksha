@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-07-27 09:45+0200\n"
+"POT-Creation-Date: 2024-08-04 09:28+0200\n"
 "PO-Revision-Date: 2009-09-11 09:46+0000\n"
 "Last-Translator: Ibrahim Elias <imen802003@netscape.net>\n"
 "Language-Team: Malay <ms@li.org>\n"
@@ -27,7 +27,7 @@ msgstr "Mengenai Enlightment"
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
@@ -1014,7 +1014,7 @@ msgstr "memilih"
 msgid "Cancel"
 msgstr "membatalkan"
 
-#: src/bin/e_config.c:959
+#: src/bin/e_config.c:960
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -1025,7 +1025,7 @@ msgid ""
 "the hiccup in your settings.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:976
+#: src/bin/e_config.c:977
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -1034,18 +1034,18 @@ msgid ""
 "the inconvenience.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1584 src/bin/e_config.c:2210
 msgid "Moksha Settings Write Problems"
 msgstr ""
 
-#: src/bin/e_config.c:1586
+#: src/bin/e_config.c:1587
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
 
-#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
+#: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -1065,22 +1065,22 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2101
 #, fuzzy
 msgid "Settings Upgraded"
 msgstr "tetapan Dinaiktaraf"
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2119
 #, fuzzy
 msgid "The EET file handle is bad."
 msgstr "Pemegang fail EET buruk."
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2123
 #, fuzzy
 msgid "The file data is empty."
 msgstr "Data fail kosong."
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2127
 #, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
@@ -1089,19 +1089,19 @@ msgstr ""
 "Fail terebut tidak boleh ditulis. Mungkin cakera adalah<br>baca sahaja atau "
 "anda kehilangan keizinan kepada fail anda."
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2131
 #, fuzzy
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr ""
 "Memori berlari keluar sambil menyediakan tulis.<br>Sila memori sehingga "
 "percuma."
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2135
 #, fuzzy
 msgid "This is a generic error."
 msgstr "Ini adalah satu kesilapan yang generik."
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2139
 #, fuzzy
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
@@ -1110,70 +1110,70 @@ msgstr ""
 "Fail tetapan adalah terlalu besar.<br>Ia sepatutnya menjadi sangat kecil "
 "(beberapa ratus KB paling banyak)."
 
-#: src/bin/e_config.c:2141
+#: src/bin/e_config.c:2143
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr ""
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2147
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "Anda kehabisan ruang semasa menulis fail"
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2151
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "Fail yang telah ditutup pada semasa menulis."
 
-#: src/bin/e_config.c:2153
+#: src/bin/e_config.c:2155
 #, fuzzy
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Memori - pemetaan (mmap) fail gagal."
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2159
 #, fuzzy
 msgid "X509 Encoding failed."
 msgstr "X509 Pengekodan gagal."
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2163
 #, fuzzy
 msgid "Signature failed."
 msgstr "Tandatangan gagal."
 
-#: src/bin/e_config.c:2165
+#: src/bin/e_config.c:2167
 #, fuzzy
 msgid "The signature was invalid."
 msgstr "Tandatangan adalah tidak sah."
 
-#: src/bin/e_config.c:2169
+#: src/bin/e_config.c:2171
 #, fuzzy
 msgid "Not signed."
 msgstr "Tidak ditandatangani."
 
-#: src/bin/e_config.c:2173
+#: src/bin/e_config.c:2175
 #, fuzzy
 msgid "Feature not implemented."
 msgstr "Mempunyai tidak dilaksanakan."
 
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:2179
 #, fuzzy
 msgid "PRNG was not seeded."
 msgstr "PRNG tidak membenihkan."
 
-#: src/bin/e_config.c:2181
+#: src/bin/e_config.c:2183
 #, fuzzy
 msgid "Encryption failed."
 msgstr "Penyulitan gagal."
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2187
 #, fuzzy
 msgid "Decryption failed."
 msgstr "Dekripsi gagal."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2191
 msgid "The error is unknown to Moksha."
 msgstr ""
 
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2213
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1197,7 +1197,7 @@ msgid "Basic"
 msgstr "asas"
 
 #: src/bin/e_config_dialog.c:286
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:876
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:879
 #, fuzzy
 msgid "Apply"
 msgstr "memohon"
@@ -1426,14 +1426,14 @@ msgstr "Pilih laksana"
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10881
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:296
 #: src/modules/conf_paths/e_int_config_env.c:343
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
 #: src/modules/quickaccess/e_mod_config.c:277
@@ -3316,7 +3316,7 @@ msgid "Untitled window"
 msgstr "tingkap yang lain"
 
 #: src/bin/e_int_menus.c:1716 src/bin/e_shelf.c:1699
-#: src/modules/conf_shelves/e_int_config_shelf.c:193
+#: src/modules/conf_shelves/e_int_config_shelf.c:192
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "rak"
@@ -3409,7 +3409,7 @@ msgid "Hide duration"
 msgstr "menyembunyikan tempoh"
 
 #: src/bin/e_int_shelf_config.c:278
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:891
 #, c-format
 msgid "%.2f seconds"
 msgstr ""
@@ -4026,7 +4026,7 @@ msgid "What action should be taken with this module?<br>"
 msgstr "Adakah anda ingin untuk memunggah modul ini.<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
@@ -4506,7 +4506,7 @@ msgstr[1] ""
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
 #: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1245
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
@@ -4630,7 +4630,7 @@ msgstr[1] ""
 #: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:248
@@ -5743,18 +5743,18 @@ msgid ""
 "or make it<br>respond to edge clicks:"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:106
 #, fuzzy
 msgid "Edge Bindings Settings"
 msgstr "Pengikatan kelebihan Tetapan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:261
 #: src/modules/conf_edgebindings/e_mod_main.c:21
 #, fuzzy
 msgid "Edge Bindings"
 msgstr "The Edge pengikatan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:273
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:300
 #: src/modules/conf_paths/e_int_config_env.c:340
@@ -5762,7 +5762,7 @@ msgstr "The Edge pengikatan"
 msgid "Modify"
 msgstr "diubahsuai;"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:277
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:304
@@ -5770,7 +5770,7 @@ msgstr "diubahsuai;"
 msgid "Delete All"
 msgstr "Padam Semua"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:281
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:263
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
@@ -5778,7 +5778,7 @@ msgstr "Padam Semua"
 msgid "Restore Default Bindings"
 msgstr "Simpan semula pengikatan Default"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:286
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:268
@@ -5787,12 +5787,12 @@ msgstr "Simpan semula pengikatan Default"
 msgid "Action"
 msgstr "tindakan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:290
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:293
 #, fuzzy
 msgid "Mouse Button"
 msgstr "Alihkan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:299
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:275
@@ -5801,108 +5801,122 @@ msgstr "Alihkan"
 msgid "Action Params"
 msgstr "tindakan params"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:306
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
 #, fuzzy
 msgid "General Options"
 msgstr "Pilihan Umum"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:307
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:310
 #, fuzzy
 msgid "Allow binding activation with fullscreen windows"
 msgstr "Membenarkan pengaktifan mengikat dengan tingkap skrin penuh"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:312
 #, fuzzy
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
 msgstr "Membenarkan pengaktifan mengikat dengan tingkap skrin penuh"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:878
 #, fuzzy
 msgid "Edge Binding Sequence"
 msgstr "The Edge Sequence Binding"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:896
 #, fuzzy
 msgid "Clickable edge"
 msgstr "kelebihan yang boleh diklik"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1214
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
+#, fuzzy
+msgid "Drag only"
+msgstr "Seret Ikon ..."
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
+#, fuzzy
+msgid "No edge selected"
+msgstr "Tiada modul yang dipilih."
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 #, fuzzy
 msgid "Edge Binding Error"
 msgstr "tetikus pengikatan"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1242
 #, c-format
 msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1382
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1388
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1394
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 #, fuzzy
 msgid "SHIFT"
 msgstr "SHIFT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1400
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 #, fuzzy
 msgid "WIN"
 msgstr "MENANG"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1383
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1410
 msgid "Left Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1387
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1414
 msgid "Top Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1391
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1418
 #, fuzzy
 msgid "Right Edge"
 msgstr "kanan;"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1395
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1422
 msgid "Bottom Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1399
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1426
 msgid "Top Left Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1403
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1430
 msgid "Top Right Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1407
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1434
 msgid "Bottom Right Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1411
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1438
 msgid "Bottom Left Edge"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1423
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1450
 msgid "(left clickable)"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1425
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1452
 #, fuzzy
 msgid "(clickable)"
 msgstr "kelebihan yang boleh diklik"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
+msgid "(drag only)"
+msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
@@ -7098,12 +7112,12 @@ msgstr "Mengunci Permulaan"
 msgid "Configured Shelves: Display %d"
 msgstr "dikonfigurasikan rak"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_shelves/e_int_config_shelf.c:389
 #, fuzzy, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Adakah anda pasti anda mahu memadam rak ini."
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:393
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #, fuzzy
 msgid "Confirm Shelf Deletion"
 msgstr "mengesahkan Potong"

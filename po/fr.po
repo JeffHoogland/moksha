@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-07-27 09:45+0200\n"
+"POT-Creation-Date: 2024-08-04 09:28+0200\n"
 "PO-Revision-Date: 2024-05-15 10:17+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -40,7 +40,7 @@ msgstr "À propos de Moksha"
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
@@ -887,7 +887,7 @@ msgstr "Sélectionner"
 msgid "Cancel"
 msgstr "Annuler"
 
-#: src/bin/e_config.c:959
+#: src/bin/e_config.c:960
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -905,7 +905,7 @@ msgstr ""
 "votre ancienne configuration ne fournit pas.<br>Vous pouvez maintenant tout "
 "reconfigurer selon votre goût.<br>Désolé pour la gêne occasionnée.<br>"
 
-#: src/bin/e_config.c:976
+#: src/bin/e_config.c:977
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -921,11 +921,11 @@ msgstr ""
 "défaut de<br>votre configuration ont été restaurées.<br>Désolé pour le "
 "désagrément.<br>"
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1584 src/bin/e_config.c:2210
 msgid "Moksha Settings Write Problems"
 msgstr "Problèmes d'écriture de la configuration de Moksha"
 
-#: src/bin/e_config.c:1586
+#: src/bin/e_config.c:1587
 #, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -935,7 +935,7 @@ msgstr ""
 "configuration<br>de :<br>%s<br><br>vers :<br>%s<br><br>L'écriture a été "
 "abandonnée par sécurité.<br>"
 
-#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
+#: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -954,19 +954,19 @@ msgstr ""
 msgid "OK"
 msgstr "OK"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2101
 msgid "Settings Upgraded"
 msgstr "La configuration a été modifiée"
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2119
 msgid "The EET file handle is bad."
 msgstr "Le descripteur de fichier EET est incorrect."
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2123
 msgid "The file data is empty."
 msgstr "Aucune donnée dans le fichier."
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2127
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -974,15 +974,15 @@ msgstr ""
 "Le fichier n'est pas accessible en écriture. Le disque est peut-"
 "être<br>monté en lecture seule ou les permissions ont été modifiées."
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2131
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "Mémoire insuffisante pour l'écriture.<br>Libérez de la mémoire."
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2135
 msgid "This is a generic error."
 msgstr "Erreur générique."
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2139
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
@@ -990,59 +990,59 @@ msgstr ""
 "Le fichier de configuration est trop gros.<br>Il ne devrait pas dépasser "
 "quelques centaines de ko."
 
-#: src/bin/e_config.c:2141
+#: src/bin/e_config.c:2143
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "Erreurs d'E/S sur le disque.<br>Peut-être devriez-vous le remplacer ?"
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2147
 msgid "You ran out of space while writing the file."
 msgstr "Vous êtes tombé(e) à cours d'espace lors de l'écriture du fichier."
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2151
 msgid "The file was closed while writing."
 msgstr "Le fichier a été fermé pendant l'écriture."
 
-#: src/bin/e_config.c:2153
+#: src/bin/e_config.c:2155
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "Échec du mappage du fichier en mémoire (mmap)."
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2159
 msgid "X509 Encoding failed."
 msgstr "Échec de l'encodage X509."
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2163
 msgid "Signature failed."
 msgstr "Échec de la signature."
 
-#: src/bin/e_config.c:2165
+#: src/bin/e_config.c:2167
 msgid "The signature was invalid."
 msgstr "Signature invalide."
 
-#: src/bin/e_config.c:2169
+#: src/bin/e_config.c:2171
 msgid "Not signed."
 msgstr "Non signé."
 
-#: src/bin/e_config.c:2173
+#: src/bin/e_config.c:2175
 msgid "Feature not implemented."
 msgstr "Pas encore implémenté."
 
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:2179
 msgid "PRNG was not seeded."
 msgstr "Impossible de générer un nombre pseudo-aléatoire."
 
-#: src/bin/e_config.c:2181
+#: src/bin/e_config.c:2183
 msgid "Encryption failed."
 msgstr "Échec du chiffrement."
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2187
 msgid "Decryption failed."
 msgstr "Échec du déchiffrement."
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2191
 msgid "The error is unknown to Moksha."
 msgstr "Moksha ne reconnaît pas cette erreur."
 
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2213
 #, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1068,7 +1068,7 @@ msgid "Basic"
 msgstr "Basique"
 
 #: src/bin/e_config_dialog.c:286
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:876
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:879
 msgid "Apply"
 msgstr "Appliquer"
 
@@ -1272,14 +1272,14 @@ msgstr "Sélectionner un exécutable"
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10881
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:296
 #: src/modules/conf_paths/e_int_config_env.c:343
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
 #: src/modules/quickaccess/e_mod_config.c:277
@@ -2934,7 +2934,7 @@ msgid "Untitled window"
 msgstr "Fenêtre sans titre"
 
 #: src/bin/e_int_menus.c:1716 src/bin/e_shelf.c:1699
-#: src/modules/conf_shelves/e_int_config_shelf.c:193
+#: src/modules/conf_shelves/e_int_config_shelf.c:192
 #, c-format
 msgid "Shelf %s"
 msgstr "Rayon %s"
@@ -3013,7 +3013,7 @@ msgid "Hide duration"
 msgstr "Vitesse du masquage"
 
 #: src/bin/e_int_shelf_config.c:278
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:891
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f secondes"
@@ -3693,7 +3693,7 @@ msgid "What action should be taken with this module?<br>"
 msgstr "Que voulez-vous faire de ce module ?<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
@@ -4148,7 +4148,7 @@ msgstr[1] "il y a %li minutes"
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
 #: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1245
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
@@ -4272,7 +4272,7 @@ msgstr[1] "%li minutes"
 #: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:248
@@ -5237,37 +5237,37 @@ msgstr ""
 "<br><br>Vous avez le choix entre spécifier un délai<br>pour cette action en "
 "utilisant le curseur,<br>ou l'activer par un clic :"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:106
 msgid "Edge Bindings Settings"
 msgstr "Paramétrage des raccourcis des bords de l'écran"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:261
 #: src/modules/conf_edgebindings/e_mod_main.c:21
 msgid "Edge Bindings"
 msgstr "Raccourcis des bords"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:273
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:300
 #: src/modules/conf_paths/e_int_config_env.c:340
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:277
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:304
 msgid "Delete All"
 msgstr "Tout supprimer"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:281
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:263
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Restore Default Bindings"
 msgstr "Restaurer les raccourcis par défaut"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:286
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:268
@@ -5275,11 +5275,11 @@ msgstr "Restaurer les raccourcis par défaut"
 msgid "Action"
 msgstr "Action"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:290
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:293
 msgid "Mouse Button"
 msgstr "Bouton de souris"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:299
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:275
@@ -5287,31 +5287,41 @@ msgstr "Bouton de souris"
 msgid "Action Params"
 msgstr "Paramètres de l'action"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:306
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
 msgid "General Options"
 msgstr "Options générales"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:307
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:310
 msgid "Allow binding activation with fullscreen windows"
 msgstr "Autoriser l'activation du raccourci avec des fenêtres plein écran"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:312
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
 msgstr "Autoriser l'activation du raccourci avec plusieurs écrans (DANGER)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:878
 msgid "Edge Binding Sequence"
 msgstr "Séquence du raccourci des bords"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:896
 msgid "Clickable edge"
 msgstr "Bord cliquable"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1214
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
+#, fuzzy
+msgid "Drag only"
+msgstr "Glisser l'icône…"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
+#, fuzzy
+msgid "No edge selected"
+msgstr "Aucun module sélectionné."
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
 msgstr "Erreur de séquence du raccourci souris"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1242
 #, c-format
 msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
@@ -5321,65 +5331,69 @@ msgstr ""
 "l'action <hilight>%s</hilight>.<br>Choisissez une autre séquence pour le "
 "raccourci des bords."
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1382
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 msgid "CTRL"
 msgstr "Ctrl"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1388
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 msgid "ALT"
 msgstr "Alt"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1394
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 msgid "SHIFT"
 msgstr "Majuscule"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1400
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 msgid "WIN"
 msgstr "Win"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1383
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1410
 msgid "Left Edge"
 msgstr "Bord gauche"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1387
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1414
 msgid "Top Edge"
 msgstr "Bord supérieur"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1391
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1418
 msgid "Right Edge"
 msgstr "Bord droit"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1395
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1422
 msgid "Bottom Edge"
 msgstr "Bord inférieur"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1399
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1426
 msgid "Top Left Edge"
 msgstr "Coin gauche en haut"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1403
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1430
 msgid "Top Right Edge"
 msgstr "Coin droit en haut"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1407
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1434
 msgid "Bottom Right Edge"
 msgstr "Coin droit en bas"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1411
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1438
 msgid "Bottom Left Edge"
 msgstr "Coin gauche en bas"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1423
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1450
 msgid "(left clickable)"
 msgstr "(répond au clic gauche)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1425
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1452
 msgid "(clickable)"
 msgstr "(répond au clic)"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
+msgid "(drag only)"
+msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
@@ -6431,12 +6445,12 @@ msgstr "Restaurer au démarrage"
 msgid "Configured Shelves: Display %d"
 msgstr "Rayon(s) configuré(s) : écran %d"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_shelves/e_int_config_shelf.c:389
 #, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Voulez-vous vraiment supprimer « %s » ?"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:393
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 msgid "Confirm Shelf Deletion"
 msgstr "Confirmer la suppression du rayon"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-07-27 09:45+0200\n"
+"POT-Creation-Date: 2024-08-04 09:28+0200\n"
 "PO-Revision-Date: 2011-01-06 16:45+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: E17-jp <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgstr "Moksha について"
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
 #: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:877
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
 #: src/modules/everything/evry_plug_windows.c:452
 #: src/modules/fileman/e_fwin.c:2587 src/modules/shot/e_mod_main.c:1239
@@ -927,7 +927,7 @@ msgstr "選択"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/bin/e_config.c:959
+#: src/bin/e_config.c:960
 msgid ""
 "Settings data needed upgrading. Your old settings have<br>been wiped and a "
 "new set of defaults initialized. This<br>will happen regularly during "
@@ -944,7 +944,7 @@ msgstr ""
 "ルト設定<br>を追加すれば更新されます. これで好きなように設定できます.ちょっと"
 "面倒ですが, <br>よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:976
+#: src/bin/e_config.c:977
 msgid ""
 "Your settings are NEWER than Moksha. This is very<br>strange. This should "
 "not happen unless you downgraded<br>Moksha or copied the settings from a "
@@ -957,11 +957,11 @@ msgstr ""
 "定をコピーしない限りあり得ません.<br>これではまずいので, 念のためデフォルトの"
 "設定に置き換えました.<br>ご不便をおかけしますが, よろしくお願いします.<br>"
 
-#: src/bin/e_config.c:1583 src/bin/e_config.c:2208
+#: src/bin/e_config.c:1584 src/bin/e_config.c:2210
 msgid "Moksha Settings Write Problems"
 msgstr "Moksha の設定書込時の問題"
 
-#: src/bin/e_config.c:1586
+#: src/bin/e_config.c:1587
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
@@ -970,7 +970,7 @@ msgstr ""
 "%s から %s へ設定ファイルの移動中にエラーが起きました.<br>安全のため書き出し"
 "はここで強制終了しました."
 
-#: src/bin/e_config.c:1596 src/bin/e_config.c:2221
+#: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
@@ -989,19 +989,19 @@ msgstr ""
 msgid "OK"
 msgstr "了解"
 
-#: src/bin/e_config.c:2099
+#: src/bin/e_config.c:2101
 msgid "Settings Upgraded"
 msgstr "設定が更新されました"
 
-#: src/bin/e_config.c:2117
+#: src/bin/e_config.c:2119
 msgid "The EET file handle is bad."
 msgstr "EETファイルハンドルがおかしいです"
 
-#: src/bin/e_config.c:2121
+#: src/bin/e_config.c:2123
 msgid "The file data is empty."
 msgstr "ファイルデータが空です"
 
-#: src/bin/e_config.c:2125
+#: src/bin/e_config.c:2127
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<br>or you lost "
 "permissions to your files."
@@ -1009,78 +1009,78 @@ msgstr ""
 "このファイルには書き込めません.<br>ディスクが読み出し専用になっているか書き込"
 "み権限がありません"
 
-#: src/bin/e_config.c:2129
+#: src/bin/e_config.c:2131
 msgid "Memory ran out while preparing the write.<br>Please free up memory."
 msgstr "書き出し準備中のメモリ不足になりました. メモリ解放してください."
 
-#: src/bin/e_config.c:2133
+#: src/bin/e_config.c:2135
 #, fuzzy
 msgid "This is a generic error."
 msgstr "これは一般的なエラーです。"
 
-#: src/bin/e_config.c:2137
+#: src/bin/e_config.c:2139
 msgid ""
 "The settings file is too large.<br>It should be very small (a few hundred KB "
 "at most)."
 msgstr ""
 "設定ファイルが大きすぎます.<br>ずっと小さいはずです (せいぜい数百KB程度)"
 
-#: src/bin/e_config.c:2141
+#: src/bin/e_config.c:2143
 msgid "You have I/O errors on the disk.<br>Maybe it needs replacing?"
 msgstr "ディスクの入出力エラーです. 交換した方がいいかも."
 
-#: src/bin/e_config.c:2145
+#: src/bin/e_config.c:2147
 #, fuzzy
 msgid "You ran out of space while writing the file."
 msgstr "ファイル書き出し中にスペースが不足しました"
 
-#: src/bin/e_config.c:2149
+#: src/bin/e_config.c:2151
 #, fuzzy
 msgid "The file was closed while writing."
 msgstr "書き出し中にファイルがクローズされました"
 
-#: src/bin/e_config.c:2153
+#: src/bin/e_config.c:2155
 msgid "Memory-mapping (mmap) of the file failed."
 msgstr "ファイルのメモリマップ (mmap) が失敗しました"
 
-#: src/bin/e_config.c:2157
+#: src/bin/e_config.c:2159
 msgid "X509 Encoding failed."
 msgstr "X509エンコーディングが失敗しました"
 
-#: src/bin/e_config.c:2161
+#: src/bin/e_config.c:2163
 msgid "Signature failed."
 msgstr "署名に失敗しました"
 
-#: src/bin/e_config.c:2165
+#: src/bin/e_config.c:2167
 msgid "The signature was invalid."
 msgstr "署名が不正です"
 
-#: src/bin/e_config.c:2169
+#: src/bin/e_config.c:2171
 msgid "Not signed."
 msgstr "署名がありません"
 
-#: src/bin/e_config.c:2173
+#: src/bin/e_config.c:2175
 msgid "Feature not implemented."
 msgstr "機能が未実装です"
 
-#: src/bin/e_config.c:2177
+#: src/bin/e_config.c:2179
 msgid "PRNG was not seeded."
 msgstr "PRNGの種がありません"
 
-#: src/bin/e_config.c:2181
+#: src/bin/e_config.c:2183
 msgid "Encryption failed."
 msgstr "暗号化が失敗しました"
 
-#: src/bin/e_config.c:2185
+#: src/bin/e_config.c:2187
 #, fuzzy
 msgid "Decryption failed."
 msgstr "復号化が失敗しました"
 
-#: src/bin/e_config.c:2189
+#: src/bin/e_config.c:2191
 msgid "The error is unknown to Moksha."
 msgstr "未知のエラーです"
 
-#: src/bin/e_config.c:2211
+#: src/bin/e_config.c:2213
 #, fuzzy, c-format
 msgid ""
 "Moksha has had an error while writing<br>its config file.<br>%s<br><br>The "
@@ -1105,7 +1105,7 @@ msgid "Basic"
 msgstr "基本設定"
 
 #: src/bin/e_config_dialog.c:286
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:876
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:879
 msgid "Apply"
 msgstr "適用"
 
@@ -1313,14 +1313,14 @@ msgstr "プログラムの選択"
 #: src/bin/e_entry.c:495 src/bin/e_fm.c:9198 src/bin/e_fm.c:10881
 #: src/modules/conf_dialogs/e_int_config_profiles.c:135
 #: src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:269
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:812
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:201
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:251
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:296
 #: src/modules/conf_paths/e_int_config_env.c:343
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
 #: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
 #: src/modules/quickaccess/e_mod_config.c:277
@@ -3055,7 +3055,7 @@ msgid "Untitled window"
 msgstr "他のウィンドウ"
 
 #: src/bin/e_int_menus.c:1716 src/bin/e_shelf.c:1699
-#: src/modules/conf_shelves/e_int_config_shelf.c:193
+#: src/modules/conf_shelves/e_int_config_shelf.c:192
 #, fuzzy, c-format
 msgid "Shelf %s"
 msgstr "シェルフ #"
@@ -3136,7 +3136,7 @@ msgid "Hide duration"
 msgstr "隠蔽に要する時間"
 
 #: src/bin/e_int_shelf_config.c:278
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:888
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:891
 #, c-format
 msgid "%.2f seconds"
 msgstr "%.2f 秒"
@@ -3864,7 +3864,7 @@ msgid "What action should be taken with this module?<br>"
 msgstr "このモジュールをアンロードしますか？<br>"
 
 #: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
-#: src/modules/conf_shelves/e_int_config_shelf.c:394
+#: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
@@ -4327,7 +4327,7 @@ msgstr[1] "%li 分前"
 #: src/bin/e_widget_filepreview.c:680 src/bin/e_widget_filepreview.c:681
 #: src/bin/e_widget_filepreview.c:712 src/bin/e_widget_filepreview.c:723
 #: src/modules/conf_dialogs/e_int_config_profiles.c:298
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1218
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1245
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:587
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:421
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1192
@@ -4450,7 +4450,7 @@ msgstr[1] "%1.0f 分"
 #: src/modules/conf_applications/e_int_config_apps.c:334
 #: src/modules/conf_applications/e_int_config_apps_personal.c:93
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:263
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:197
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:248
@@ -5481,37 +5481,37 @@ msgstr ""
 "い.<br><br>スライダを使ってこの動作の遅延を指定するか, エッジクリックに応答し"
 "てください"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:105
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:106
 msgid "Edge Bindings Settings"
 msgstr "エッジバインディング設定"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:258
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:261
 #: src/modules/conf_edgebindings/e_mod_main.c:21
 msgid "Edge Bindings"
 msgstr "エッジバインディング"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:270
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:273
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:255
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:300
 #: src/modules/conf_paths/e_int_config_env.c:340
 msgid "Modify"
 msgstr "変更"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:274
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:277
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:816
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:259
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:304
 msgid "Delete All"
 msgstr "すべて削除"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:278
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:281
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:820
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:263
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:308
 msgid "Restore Default Bindings"
 msgstr "デフォルトのキーバインドに戻す"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:283
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:286
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:825
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:209
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:268
@@ -5519,12 +5519,12 @@ msgstr "デフォルトのキーバインドに戻す"
 msgid "Action"
 msgstr "アクション"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:290
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:293
 #, fuzzy
 msgid "Mouse Button"
 msgstr "マウスの設定"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:296
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:299
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:832
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:216
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:275
@@ -5532,33 +5532,43 @@ msgstr "マウスの設定"
 msgid "Action Params"
 msgstr "アクションパラメータ"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:306
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
 msgid "General Options"
 msgstr "一般オプション"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:307
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:310
 msgid "Allow binding activation with fullscreen windows"
 msgstr "全画面ウィンドウでバインディング動作を許可する"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:309
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:312
 #, fuzzy
 msgid "Allow binding activation with multiple screens (DANGEROUS!)"
 msgstr "全画面ウィンドウでバインディング動作を許可する"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:874
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:878
 msgid "Edge Binding Sequence"
 msgstr "エッジバインドシーケンス"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:893
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:896
 msgid "Clickable edge"
 msgstr "クリック可能エッジ"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1214
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
+#, fuzzy
+msgid "Drag only"
+msgstr "アイコン作成"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
+#, fuzzy
+msgid "No edge selected"
+msgstr "モジュールが選択されていません"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 #, fuzzy
 msgid "Edge Binding Error"
 msgstr "マウスバインド"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1215
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1242
 #, fuzzy, c-format
 msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
@@ -5567,78 +5577,82 @@ msgstr ""
 "そのバインドキーシーケンスはすでに以下のアクションで使われています."
 "<br><hilight>%s</hilight><br>他のエッジバインドシーケンスを選んで下さい."
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1355
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1382
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
 #, fuzzy
 msgid "CTRL"
 msgstr "CTRL"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1361
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1388
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1332
 #, fuzzy
 msgid "ALT"
 msgstr "ALT"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1367
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1394
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1338
 #, fuzzy
 msgid "SHIFT"
 msgstr "シフト"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1373
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1400
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1344
 #, fuzzy
 msgid "WIN"
 msgstr "WINの"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1383
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1410
 #, fuzzy
 msgid "Left Edge"
 msgstr "キー削除"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1387
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1414
 #, fuzzy
 msgid "Top Edge"
 msgstr "キー修正"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1391
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1418
 #, fuzzy
 msgid "Right Edge"
 msgstr "右上(縦)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1395
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1422
 #, fuzzy
 msgid "Bottom Edge"
 msgstr "左下(横)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1399
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1426
 #, fuzzy
 msgid "Top Left Edge"
 msgstr "左上(横)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1403
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1430
 #, fuzzy
 msgid "Top Right Edge"
 msgstr "右上(横)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1407
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1434
 #, fuzzy
 msgid "Bottom Right Edge"
 msgstr "右下(横)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1411
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1438
 #, fuzzy
 msgid "Bottom Left Edge"
 msgstr "左下(横)"
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1423
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1450
 msgid "(left clickable)"
 msgstr ""
 
-#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1425
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1452
 #, fuzzy
 msgid "(clickable)"
 msgstr "クリック可能エッジ"
+
+#: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
+msgid "(drag only)"
+msgstr ""
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
@@ -6765,13 +6779,13 @@ msgstr "起動時にガバナー復帰"
 msgid "Configured Shelves: Display %d"
 msgstr "利用可能なシェルフ"
 
-#: src/modules/conf_shelves/e_int_config_shelf.c:390
+#: src/modules/conf_shelves/e_int_config_shelf.c:389
 #, fuzzy, c-format
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "このシェルフを本当に削除しますか."
 
 #
-#: src/modules/conf_shelves/e_int_config_shelf.c:393
+#: src/modules/conf_shelves/e_int_config_shelf.c:392
 #, fuzzy
 msgid "Confirm Shelf Deletion"
 msgstr "削除確認"
