@@ -876,7 +876,6 @@ _edge_grab_wnd_show(E_Config_Dialog_Data *cfdata)
    if (!cfdata->locals.dia) return;
    e_dialog_parent_set(cfdata->locals.dia, cfdata->cfd->dia->win);
    e_dialog_title_set(cfdata->locals.dia, _("Edge Binding Sequence"));
-   e_dialog_icon_set(cfdata->locals.dia, "enlightenment/edges", 48);
    e_dialog_button_add(cfdata->locals.dia, _("Apply"), NULL, _edge_grab_wnd_cb_apply, cfdata);
    e_dialog_button_add(cfdata->locals.dia, _("Close"), NULL, _edge_grab_wnd_cb_close, cfdata);
    e_object_data_set(E_OBJECT(cfdata->locals.dia), cfdata);
