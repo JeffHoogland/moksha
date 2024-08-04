@@ -37,7 +37,7 @@ group { name: "e/modules/conf_edgebindings/selection";
       part { name: "e.swallow.background";
          type: SWALLOW;
          description { state: "default" 0.0;
-            min: 160 120;
+            min: 210 210;
             rel1.offset: 4 4;
             rel2.relative: 0.5 1.0;
             rel2.offset: -2 -5;
@@ -66,7 +66,7 @@ group { name: "e/modules/conf_edgebindings/selection";
             color3: 0 0 0 128;
             color_class: "label_text";
             fixed: 1 1;
-            text { font: "Sans"; size: 10;
+            text { font: "Sans"; size: 12;
                text_class: "label";
                min: 1 1;
                ellipsis: -1;
@@ -196,7 +196,7 @@ group { name: "e/modules/conf_edgebindings/selection";
             box { layout: "horizontal";
                padding: 0 0;
                align: 0.5 0.5;
-               min: 1 1;
+               min: 0 1;
             }
          }
       }
@@ -218,11 +218,11 @@ group { name: "e/modules/conf_edgebindings/selection";
          description { state: "default" 0.0;
             rel1 {
                relative: 1 0;
-               offset: 80 4;
-               to_x: "e.edge.right";
+               offset: 55 4;
+               to_x: "e.swallow.background";
             }
             rel2 {
-               offset: -80 -45;
+               offset: -45 -45;
             }
             text {
                style: "edge_binding_style";
