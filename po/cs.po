@@ -5282,14 +5282,12 @@ msgid "Clickable edge"
 msgstr "Okraj reagující na kliknutí"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Přetáhnout ikonu..."
+msgstr "S přetáhnutím"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Nebyl vybrán žádný modul."
+msgstr "Okraj nedefinován"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5358,15 +5356,15 @@ msgstr "Levý dolní roh"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1450
 msgid "(left clickable)"
-msgstr "(okraj reagující na kliknutí levým tlačitkem)"
+msgstr "(ostáva s kliknutím)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1452
 msgid "(clickable)"
-msgstr "(okraj reagující na kliknutí)"
+msgstr "(s kliknutím)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(s přetáhnutím)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
