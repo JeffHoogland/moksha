@@ -1,5 +1,5 @@
-# Portuguese translation of Moksha.
-#
+# Portuguese translation for Moksha.
+# Copyright (C) 2024 Bodhi Linux
 # This file is public domain.
 # Translators:
 # Sérgio Marques <smarquespt@gmail.com>, 2010-2015.
@@ -7,11 +7,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: moksha\n"
+"Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-08-04 09:28+0200\n"
-"PO-Revision-Date: 2024-05-16 23:11+0100\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2024-08-05 09:40+0100\n"
+"Last-Translator: Hugo Carvalho <hugo79@vivaldi.net>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
@@ -73,11 +73,11 @@ msgid ""
 msgstr ""
 "Está prestes a terminar %s.<br><br>Tenha em conta que todos os dados desta "
 "janela<br>que ainda não tenham sido gravados serão perdidos!<br><br>Terminar "
-"a janela?"
+"esta janela?"
 
 #: src/bin/e_actions.c:442
 msgid "Are you sure you want to kill this window?"
-msgstr "Terminar esta janela?"
+msgstr "Pretende terminar esta janela?"
 
 #: src/bin/e_actions.c:445 src/bin/e_actions.c:3167
 #: src/bin/e_int_border_menu.c:784
@@ -919,8 +919,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1368,7 +1369,7 @@ msgstr "%s foi interrompido por um erro de ponto flutuante."
 #: src/bin/e_exec.c:916
 #, c-format
 msgid "%s was interrupted by an Uninterruptible Kill Signal."
-msgstr "%s foi interrompido por um sinal de terminar ininterrupto."
+msgstr "%s foi interrompido por um sinal de término ininterrupto."
 
 #: src/bin/e_exec.c:920
 #, c-format
@@ -1775,8 +1776,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -3599,7 +3600,7 @@ msgid ""
 "problem<br>modules from your configuration. The module<br>configuration "
 "dialog should let you select your<br>modules again.\n"
 msgstr ""
-"O Moksha terminou inesperadamente ao iniciar a sessão<br>e foi reiniciado."
+"O Moksha terminou inesperadamente ao iniciar a sessão<br>e foi reiniciado. "
 "Todos os módulos foram desativados<br>e não serão carregados de modo a que "
 "possa<br>corrigir os problemas. O diálogo de configuração<br>dos módulos "
 "deve permitir-lhe escolher<br>os módulos a carregar.\n"
@@ -4708,7 +4709,7 @@ msgstr "Ordem"
 #: src/modules/conf_applications/e_int_config_apps_personal.c:39
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Personal Application Launchers"
-msgstr "Lançadores de aplicações"
+msgstr "Lançadores de aplicações pessoais"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:74
 #: src/modules/conf_applications/e_int_config_defapps.c:304
@@ -5858,8 +5859,9 @@ msgstr "Erro na combinação de teclas"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da combinação de teclas escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
@@ -7599,15 +7601,15 @@ msgstr "Gestão de processos"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:95
 msgid "Kill process if unclosable"
-msgstr "Terminar processos que não o possam ser"
+msgstr "Terminar o processo se não for possível fechar"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:97
 msgid "Kill process instead of client"
-msgstr "Terminar processo em vez do programa"
+msgstr "Terminar o processo em vez do cliente"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:99
 msgid "Kill timeout:"
-msgstr "Intervalo para terminar:"
+msgstr "Atraso no término do processo:"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_process.c:105
 msgid "Ping clients"
@@ -7836,7 +7838,7 @@ msgstr "Lançador Omni"
 
 #: src/modules/everything/e_mod_main.c:50
 msgid "Show Everything Launcher"
-msgstr "Mostrar Omni"
+msgstr "Mostrar o lançador Omni"
 
 #: src/modules/everything/e_mod_main.c:64
 msgid "Everything Configuration"
@@ -8210,11 +8212,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8232,8 +8234,8 @@ msgstr ""
 "Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
 "</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
 "hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
-"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
-"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;"
+"Ctrl+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
 "<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
 "item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
 "visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
