@@ -5260,14 +5260,12 @@ msgid "Clickable edge"
 msgstr "קצה שניתן ללחיצה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "לגרור סמל..."
+msgstr "לגרור בלבד"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "לא נבחרו מודולים."
+msgstr "לא נבחר קצה"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5344,7 +5342,7 @@ msgstr "(ניתן ללחיצה)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(לגרור בלבד)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
