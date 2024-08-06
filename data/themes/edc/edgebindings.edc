@@ -190,7 +190,7 @@ group { name: "e/modules/conf_edgebindings/selection";
                to_y: "e.text.description";
             }
             rel2 {
-               offset: -50 24;
+               offset: -50 0;
                to_y: "e.text.description";
             }
             box { layout: "horizontal";
