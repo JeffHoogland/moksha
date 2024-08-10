@@ -4228,7 +4228,7 @@ e_modapi_init(E_Module *m)
                N_("Toggle between rows and columns"), "tg_cols_rows",
                NULL, NULL, 0);
     ACTION_ADD(_G.act_swap, _e_mod_action_swap_cb,
-               N_("Swap a window with an other"), "swap",
+               N_("Swap a window with another"), "swap",
                NULL, NULL, 0);
 
     ACTION_ADD(_G.act_move, _e_mod_action_move_cb,
@@ -4420,7 +4420,7 @@ e_modapi_shutdown(E_Module *m __UNUSED__)
     ACTION_DEL(_G.act_addstack, "Add a stack", "add_stack");
     ACTION_DEL(_G.act_removestack, "Remove a stack", "remove_stack");
     ACTION_DEL(_G.act_tg_stack, "Toggle between rows and columns", "tg_cols_rows");
-    ACTION_DEL(_G.act_swap, "Swap a window with an other", "swap");
+    ACTION_DEL(_G.act_swap, "Swap a window with another", "swap");
 
     ACTION_DEL(_G.act_move, "Move window", "move");
     ACTION_DEL(_G.act_move_left, "Move window to the left", "move_left");
