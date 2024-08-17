@@ -1800,7 +1800,6 @@ _e_zone_detect_edge(E_Zone        *zone,
    else if ((win == zone->corner.left_bottom) ||
             (win == zone->corner.bottom_left))
      edge = E_ZONE_EDGE_BOTTOM_LEFT;
-   printf("%d", edge);
    return edge;
 }
 
