@@ -2332,24 +2332,30 @@ _e_menu_active_call_edit(void *event)
 {
    E_Menu_Item *mi;
    Ecore_Event_Mouse_Button *ev = event;
+   Efreet_Desktop *app = NULL;
 
    mi = _e_menu_item_active_get();
-    if (mi)
+   if (mi)
      {
-        if (mi->check)
-          e_menu_item_toggle_set(mi, !mi->toggle);
-        if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
-          e_menu_item_toggle_set(mi, 1);
-        if (mi->cb.func){
-          if (ev->buttons == 1)
-            mi->cb.func(mi->cb.data, mi->menu, mi);
-          else
-            e_desktop_edit(mi->menu->zone->container, mi->cb.data);
-          item_has_cb = 1;
-        }
-        else
-          item_has_cb = 0;
-        return 1;
+       if (mi->check)
+         e_menu_item_toggle_set(mi, !mi->toggle);
+       if ((mi->radio) && (!e_menu_item_toggle_get(mi)))
+         e_menu_item_toggle_set(mi, 1);
+       if (mi->cb.func)
+         {
+           if (ev->buttons == 1)
+             mi->cb.func(mi->cb.data, mi->menu, mi);
+           else
+             {
+               app = mi->cb.data;
+               if (app && app->eet)
+                 e_desktop_edit(mi->menu->zone->container, app);
+             }
+           item_has_cb = 1;
+         }
+       else
+         item_has_cb = 0;
+       return 1;
      }
    return -1;
 }
@@ -3100,7 +3106,9 @@ _e_menu_cb_mouse_up(void *data __UNUSED__, int type __UNUSED__, void *event)
          */
      }
    else
-     ret = _e_menu_active_call_edit(ev);
+     {
+       ret = _e_menu_active_call_edit(ev);
+     }
    _e_menu_activate_maybe_drag = 0;
    _e_menu_activate_dragging = 0;
    
