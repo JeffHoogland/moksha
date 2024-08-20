@@ -766,16 +766,16 @@ static void
 _clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
                     void *event_info __UNUSED__)
 {
-   Instance *inst = NULL;
+   Instance *inst = data;
    char buf[1024];
    time_t current_time;
    struct tm *local_time;
 
-   if (!(inst = data)) return;
+   if (!inst) return;
    if (inst->tip) return;
    if (inst->popup) return;
 
-   _todaystr_eval(inst, buf, sizeof (buf));
+   _todaystr_eval(inst, buf, sizeof (buf) - 1);
    inst->tip = e_gadcon_popup_new(inst->gcc);
 
    current_time = time(NULL);
