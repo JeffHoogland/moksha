@@ -779,11 +779,13 @@ _clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
 
    current_time = time(NULL);
    local_time = localtime(&current_time);
-   strftime(buf, sizeof(buf), inst->cfg->custom_date_const, local_time);
-   inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
-
-   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
-   e_gadcon_popup_show(inst->tip);
+   if (local_time)
+     {
+       strftime(buf, sizeof(buf), inst->cfg->custom_date_const, local_time);
+       inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
+       e_gadcon_popup_content_set(inst->tip, inst->o_tip);
+       e_gadcon_popup_show(inst->tip);
+     }
 }
 
 static void
