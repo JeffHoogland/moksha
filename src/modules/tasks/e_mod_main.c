@@ -549,14 +549,27 @@ _tasks_drop_cb_enter(void *data, const char *type, void *event_info __UNUSED__)
    E_Border *bd = NULL;
    Tasks_Item *item = data;
 
-   if (!strcmp(type, "text/uri-list" ))
+   if (!strcmp(type, "text/uri-list" ) || !strcmp(type, "text/x-moz-url" ) ||
+       !strcmp(type, "enlightenment/x-file" ))
      {
         bd = item->border;
         if (!bd) return;
-        if (bd->iconic) 
-          e_border_uniconify(bd);
+        E_Desk *desk;
 
-        e_border_raise(bd);
+        desk = e_desk_current_get(bd->zone);
+
+        if (desk != bd->desk && !bd->sticky)
+            e_desk_show(bd->desk);
+        if (bd->shaded)
+            e_border_unshade(bd, E_DIRECTION_UP);
+        if (!bd->visible)
+            e_border_show(bd);
+        if (bd->iconic)
+            e_border_uniconify(bd);
+        else
+            e_border_raise(bd);
+
+        e_border_focus_set(bd, 1, 1);
      }
 }
 
@@ -564,8 +577,7 @@ static Tasks_Item *
 _tasks_item_new(Tasks *tasks, E_Border *border)
 {
    Tasks_Item *item;
-   const char *drop[] = { "text/uri-list" };
-   Evas_Coord x, y, w, h;
+   const char *drop[] = {"text/uri-list","text/x-moz-url", "enlightenment/x-file"};
 
    item = E_NEW(Tasks_Item, 1);
    e_object_ref(E_OBJECT(border));
@@ -597,12 +609,11 @@ _tasks_item_new(Tasks *tasks, E_Border *border)
         edje_object_message_signal_process(item->o_item);
      }
 
-   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
    item->drop_handler =
      e_drop_handler_add(E_OBJECT(item->tasks->gcc), item,
                         _tasks_drop_cb_enter, NULL,
                         NULL, NULL,
-                        drop, 1, x, y, w, h);
+                        drop, 3, 0, 0, 0, 0);
 
    evas_object_event_callback_add(item->o_item, EVAS_CALLBACK_MOUSE_DOWN,
                                   _tasks_cb_item_mouse_down, item);
