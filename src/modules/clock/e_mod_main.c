@@ -775,17 +775,17 @@ _clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    if (inst->tip) return;
    if (inst->popup) return;
 
+   _todaystr_eval(inst, buf, sizeof (buf) - 1);
    inst->tip = e_gadcon_popup_new(inst->gcc);
 
    current_time = time(NULL);
    local_time = localtime(&current_time);
-   if (local_time)
-     {
-       strftime(buf, sizeof(buf), inst->cfg->custom_date_const, local_time);
-       inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
-       e_gadcon_popup_content_set(inst->tip, inst->o_tip);
-       e_gadcon_popup_show(inst->tip);
-     }
+   memset(buf, 0, sizeof(buf));
+   strftime(buf, 1024, inst->cfg->custom_date_const, local_time);
+   inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
+
+   e_gadcon_popup_content_set(inst->tip, inst->o_tip);
+   e_gadcon_popup_show(inst->tip);
 }
 
 static void
@@ -1075,6 +1075,47 @@ _clock_screensaver_off()
    return ECORE_CALLBACK_RENEW;
 }
 
+void
+_clock_config_new(void)
+{
+   Config_Item *ci;
+
+   clock_config = E_NEW(Config, 1);
+
+   ci = E_NEW(Config_Item, 1);
+   ci->id = eina_stringshare_add("clock.1");
+   ci->custom_date_const = eina_stringshare_add("%a, %d. %b");
+   ci->weekend.start = 6;
+   ci->weekend.len = 2;
+   ci->week.start = 1;
+   ci->digital_clock = 0;
+   ci->digital_24h = 0;
+   ci->show_seconds = 0;
+   ci->show_date = 0;
+   ci->always_on_top = 0;
+
+   clock_config->items = eina_list_append(clock_config->items, ci);
+   clock_config->version = MOD_CONFIG_FILE_VERSION;
+   e_config_save_queue();
+}
+
+void
+_clock_config_free(void)
+{
+   Config_Item *ci;
+
+   EINA_LIST_FREE(clock_config->items, ci)
+     {
+        eina_stringshare_del(ci->id);
+        eina_stringshare_del(ci->custom_date_const);
+        free(ci);
+     }
+
+   clock_config->module = NULL;
+   E_FREE(clock_config);
+}
+
+
 /* module setup */
 EAPI E_Module_Api e_modapi =
 {
@@ -1109,11 +1150,21 @@ e_modapi_init(E_Module *m)
 #define T Config
 #define D conf_edd
    E_CONFIG_LIST(D, T, items, conf_item_edd);
+   E_CONFIG_VAL(D, T, version, INT);
 
    clock_config = e_config_domain_load("module.clock", conf_edd);
 
-   if (!clock_config)
-     clock_config = E_NEW(Config, 1);
+   if (clock_config)
+     {
+        if (!e_util_module_config_check(_("Clock"), clock_config->version,
+                                               MOD_CONFIG_FILE_VERSION))
+          {
+             _clock_config_free();
+             clock_config = NULL;
+          }
+     }
+
+   if (!clock_config) _clock_config_new();
 
    act = e_action_add("clock");
    if (act)
