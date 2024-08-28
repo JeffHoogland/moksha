@@ -142,6 +142,7 @@ _e_startup_next_cb(void *data __UNUSED__)
    _e_startup();
 }
 
+#if 0
 static void
 _e_startup_error_dialog(const char *msg)
 {
@@ -158,6 +159,7 @@ _e_startup_error_dialog(const char *msg)
    e_win_no_remember_set(dia->win, 1);
    e_dialog_show(dia);
 }
+#endif
 
 static Eina_Bool
 _e_startup_event_cb(void *data, int ev_type __UNUSED__, void *ev)
