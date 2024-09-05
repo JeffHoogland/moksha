@@ -763,6 +763,17 @@ _clock_menu_cb_cfg(void *data, E_Menu *menu __UNUSED__, E_Menu_Item *mi __UNUSED
 }
 
 static void
+_clock_tip_free(void *data)
+{
+   Instance *inst = data;
+
+   evas_object_del(inst->o_tip);
+   e_object_del(E_OBJECT(inst->tip));
+   inst->tip = NULL;
+   inst->o_tip = NULL;
+}
+
+static void
 _clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
                     void *event_info __UNUSED__)
 {
@@ -775,12 +786,10 @@ _clock_cb_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    if (inst->tip) return;
    if (inst->popup) return;
 
-   _todaystr_eval(inst, buf, sizeof (buf) - 1);
    inst->tip = e_gadcon_popup_new(inst->gcc);
 
    current_time = time(NULL);
    local_time = localtime(&current_time);
-   memset(buf, 0, sizeof(buf));
    strftime(buf, 1024, inst->cfg->custom_date_const, local_time);
    inst->o_tip = e_widget_label_add(inst->tip->win->evas, buf);
 
@@ -797,10 +806,7 @@ _clock_cb_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    if (!(inst = data)) return;
    if (!inst->tip) return;
 
-   evas_object_del(inst->o_tip);
-   e_object_del(E_OBJECT(inst->tip));
-   inst->tip = NULL;
-   inst->o_tip = NULL;
+   _clock_tip_free(inst);
 }
 
 static void
@@ -811,6 +817,9 @@ _clock_cb_mouse_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj __UNUSE
 
    if (ev->button == 1)
      {
+        if (inst->tip)
+           _clock_tip_free(inst);
+
         if (inst->popup) _clock_popup_free(inst);
         else _clock_popup_new(inst);
      }
