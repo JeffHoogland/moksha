@@ -49,8 +49,8 @@ struct _E_Shelf
    unsigned char        toggle      : 1;
    unsigned char        edge        : 1;
    unsigned char        urgent_show : 1;
-   unsigned char        dummy : 1;
-   Eina_Bool            cfg_delete : 1;
+   unsigned char        dummy       : 1;
+   Eina_Bool            cfg_delete  : 1;
    unsigned int         locked;
 };
 
@@ -98,6 +98,6 @@ EAPI void             e_shelf_name_set(E_Shelf *es, const char *name);
 EAPI void             e_shelf_rename_dialog(E_Shelf *es);
 EAPI void             e_shelf_autohide_set(E_Shelf *es, int autohide_type);
 EAPI Eina_Bool        e_shelf_desk_visible(E_Shelf *es, E_Desk *desk);
-EAPI  void            e_shelf_conf_update(E_Shelf *es);
+EAPI void             e_shelf_conf_update(E_Shelf *es);
 #endif
 #endif
