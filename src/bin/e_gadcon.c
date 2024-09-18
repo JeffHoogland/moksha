@@ -2320,7 +2320,7 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
    Eina_List *l;
    E_Gadcon_Client *gcc2;
    Evas_Coord cx = 0, cy = 0, cw = 0, ch = 0;
-   int seq = 1;
+   int i = 1;
 
    /* Check if the gadcon client is in place */
    if (!gcc->hidden)
@@ -2337,44 +2337,64 @@ _e_gadcon_client_inject(E_Gadcon *gc, E_Gadcon_Client *gcc, int x, int y)
    /* If x, y is not inside any gadcon client, seq will be 0 and it's position
     * will later be used for placement. */
    gcc->state_info.seq = 0;
-   EINA_LIST_FOREACH(gc->clients, l, gcc2)
+   for (i = 0; i < 2; i++)
      {
-        if (gcc == gcc2) continue;
-        if (gcc2->hidden) continue;
-        if (gcc2->o_frame)
-          evas_object_geometry_get(gcc2->o_frame, &cx, &cy, &cw, &ch);
-        else if (gcc2->o_base)
-          evas_object_geometry_get(gcc2->o_base, &cx, &cy, &cw, &ch);
-        else return;  /* make clang happy */
-        if (e_gadcon_layout_orientation_get(gc->o_container))
+        /* two passes:
+         * - find sequence position to inject
+         * - update other gadget sequences
+         */
+        EINA_LIST_FOREACH(gc->clients, l, gcc2)
           {
-             if (E_INSIDE(x, y, cx, cy, cw / 2, ch))
+             if (gcc == gcc2) continue;
+             if (i == 1)
                {
-                  gcc->state_info.seq = seq++;
-                  gcc2->state_info.seq = seq++;
+                  /* on second pass, increment all sequence numbers which are
+                   * >= the injected gadget's sequence to get ordering right
+                   */
+                  if (gcc2->state_info.seq >= gcc->state_info.seq)
+                    gcc2->state_info.seq++;
+                  continue;
                }
-             else if (E_INSIDE(x, y, cx + cw / 2, cy, cw / 2, ch))
+             if (gcc2->hidden) continue;
+             if (gcc2->o_frame)
+               evas_object_geometry_get(gcc2->o_frame, &cx, &cy, &cw, &ch);
+             else if (gcc2->o_base)
+               evas_object_geometry_get(gcc2->o_base, &cx, &cy, &cw, &ch);
+             else return;  /* make clang happy */
+             if (e_gadcon_layout_orientation_get(gc->o_container))
                {
-                  gcc2->state_info.seq = seq++;
-                  gcc->state_info.seq = seq++;
+                  /* inside left half of gadget */
+                  if (E_INSIDE(x, y, cx, cy, cw / 2, ch))
+                    {
+                       /* place before */
+                       gcc->state_info.seq = gcc2->state_info.seq;
+                       break;
+                    }
+                  /* inside right half of gadget */
+                  else if (E_INSIDE(x, y, cx + cw / 2, cy, cw / 2, ch))
+                    {
+                       /* place after */
+                       gcc->state_info.seq = gcc2->state_info.seq + 1;
+                       break;
+                    }
                }
              else
-               gcc2->state_info.seq = seq++;
-          }
-        else
-          {
-             if (E_INSIDE(x, y, cx, cy, cw, ch / 2))
                {
-                  gcc->state_info.seq = seq++;
-                  gcc2->state_info.seq = seq++;
+              /* top half of gadget */
+                  if (E_INSIDE(x, y, cx, cy, cw, ch / 2))
+                    {
+                       /* place before */
+                       gcc->state_info.seq = gcc2->state_info.seq;
+                       break;
+                    }
+                  /* bottom half of gadget */
+                  else if (E_INSIDE(x, y, cx, cy + ch / 2, cw, ch / 2))
+                    {
+                       /* place after */
+                       gcc->state_info.seq = gcc2->state_info.seq + 1;
+                       break;
+                    }
                }
-             else if (E_INSIDE(x, y, cx, cy + ch / 2, cw, ch / 2))
-               {
-                  gcc2->state_info.seq = seq++;
-                  gcc->state_info.seq = seq++;
-               }
-             else
-               gcc2->state_info.seq = seq++;
           }
      }
 }
