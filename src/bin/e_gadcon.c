@@ -2596,7 +2596,7 @@ _e_gadcon_client_move_go(E_Gadcon_Client *gcc)
 
    if (e_gadcon_layout_orientation_get(gcc->gadcon->o_container))
      {
-        if (cy + e_config->drag_resist < 0 || cy - e_config->drag_resist > gh)
+        if (cy + e_config->drag_resist < 0 || cy - e_config->drag_resist >= gh)
           {
              _e_gadcon_client_drag_begin(gcc, cx, cy);
              return;
@@ -3785,7 +3785,7 @@ _e_gadcon_layout_smart_disown(Evas_Object *obj)
    E_Gadcon_Layout_Item *bi;
 
    if (!obj) return;
-   bi = evas_object_data_get(obj, "e_gadcon_layout_data");
+   bi = evas_object_data_del(obj, "e_gadcon_layout_data");
    if (!bi) return;
    if (!bi->sd->items)
      {
@@ -3796,8 +3796,7 @@ _e_gadcon_layout_smart_disown(Evas_Object *obj)
                                   _e_gadcon_layout_smart_item_del_hook);
    evas_object_smart_member_del(obj);
    evas_object_clip_unset(obj);
-   evas_object_data_del(obj, "e_gadcon_layout_data");
-   E_FREE(bi);
+   free(bi);
 }
 
 static void
