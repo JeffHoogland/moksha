@@ -2019,6 +2019,9 @@ _e_gadcon_free(E_Gadcon *gc)
    if (gc->o_container) evas_object_del(gc->o_container);
    eina_stringshare_del(gc->name);
    eina_stringshare_del(gc->edje.swallow_name);
+   if (gc->edje.o_parent)
+     evas_object_event_callback_del_full(gc->edje.o_parent, EVAS_CALLBACK_RESIZE,
+                                   (Evas_Object_Event_Cb)_e_gadcon_parent_resize_cb, gc);
    if (gc->config_dialog) e_object_del(E_OBJECT(gc->config_dialog));
    if (gc->drop_handler) e_drop_handler_del(gc->drop_handler);
    if (gc->cfg_delete)
