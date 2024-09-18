@@ -2014,6 +2014,8 @@ _e_gadcon_free(E_Gadcon *gc)
         gadcons = eina_list_remove(gadcons, gc);
      }
    eina_list_free(gc->populated_classes);
+   if (custom_populate_requests)
+     custom_populate_requests = eina_list_remove(custom_populate_requests, gc);
    if (gc->o_container) evas_object_del(gc->o_container);
    eina_stringshare_del(gc->name);
    eina_stringshare_del(gc->edje.swallow_name);
