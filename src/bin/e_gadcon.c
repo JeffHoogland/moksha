@@ -3087,8 +3087,6 @@ _e_gadcon_cb_dnd_drop(void *data, const char *type __UNUSED__, void *event __UNU
         if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
         return;
      }
-   /* still has refcount from drag */
-   e_object_del(E_OBJECT(gc->drag_gcc));
    gcc = gc->new_gcc;
 
    if (!gc->o_container)
@@ -3105,12 +3103,17 @@ _e_gadcon_cb_dnd_drop(void *data, const char *type __UNUSED__, void *event __UNU
         e_gadcon_custom_populate_request(gc);
         e_config_save_queue();
         if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
-        return;
+        goto cleanup;
      }
    if (gc->editing) e_gadcon_client_edit_begin(gc->new_gcc);
    gc->new_gcc = NULL;
    e_config_save_queue();
    if (gc->dnd_drop_cb) gc->dnd_drop_cb(gc, gc->drag_gcc);
+
+cleanup:
+   /* still has refcount from drag */
+   e_object_del(E_OBJECT(gc->drag_gcc));
+   gc->drag_gcc = NULL;
 }
 
 static int
