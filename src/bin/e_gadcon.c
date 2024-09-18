@@ -3127,13 +3127,17 @@ _e_gadcon_client_class_feature_check(const E_Gadcon_Client_Class *cc, const char
 }
 
 static void
-_e_gadcon_client_cb_menu_post(void *data, E_Menu *m __UNUSED__)
+_e_gadcon_client_cb_menu_post(void *data, E_Menu *m)
 {
    E_Gadcon_Client *gcc;
 
    if (!(gcc = data)) return;
    if (gcc->gadcon) e_gadcon_locked_set(gcc->gadcon, 0);
-   if (!gcc->menu) return;
+   if (gcc->menu != m)
+     {
+        e_object_del(E_OBJECT(m));
+        return;
+     }
    if (gcc->gadcon && gcc->gadcon->shelf && (gcc->menu == gcc->gadcon->shelf->menu)) gcc->gadcon->shelf->menu = NULL;
    e_object_del(E_OBJECT(gcc->menu));
    gcc->menu = NULL;
