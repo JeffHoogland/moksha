@@ -260,9 +260,10 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                }
 
              e_gadcon_locked_set(inst->gcc->gadcon, 1);
+             if (x < h) x = 0;
              e_menu_activate_mouse(inst->main_menu,
                                    e_util_zone_current_get(e_manager_current_get()),
-                                   x, y, w, h, dir, ev->timestamp);
+                                   x, cy - 2, w, h, dir, ev->timestamp);
              edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
           }
      }
