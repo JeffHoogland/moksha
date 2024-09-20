@@ -261,10 +261,25 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 
              e_gadcon_locked_set(inst->gcc->gadcon, 1);
 
-             if (dir == 3) //menu align for direction up only so far
+             if (dir == E_MENU_POP_DIRECTION_LEFT)
+               {
+                 if (ev->output.y < h + 10) y = cy; //zone snap
+                 x = x - 10;                        //shelf snap
+               }
+             if (dir == E_MENU_POP_DIRECTION_RIGHT)
+               {
+                 if (ev->output.y < h + 10) y = cy;
+                 x = cw - w + 3;
+               }
+             if (dir == E_MENU_POP_DIRECTION_UP)
                {
                  if (x < cx + w) x = cx;
                  if (y > ch) y = cy - 3;
+               }
+             if (dir == E_MENU_POP_DIRECTION_DOWN)
+               {
+                 if (x < cx + w) x = cx;
+                 y = ch - h + 3;
                }
 
              e_menu_activate_mouse(inst->main_menu,
