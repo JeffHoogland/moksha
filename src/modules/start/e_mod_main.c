@@ -198,11 +198,11 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
    if (ev->button == 1)
      {
         Evas_Coord x, y, w, h;
-        int cx, cy;
+        int cx, cy, ch = 0, cw = 0;
 
         evas_object_geometry_get(inst->o_button, &x, &y, &w, &h); 
         e_gadcon_canvas_zone_geometry_get(inst->gcc->gadcon,
-                                          &cx, &cy, NULL, NULL);
+                                          &cx, &cy, &cw, &ch);
         x += cx;
         y += cy;
         if (!inst->main_menu)
@@ -260,10 +260,16 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                }
 
              e_gadcon_locked_set(inst->gcc->gadcon, 1);
-             if (x < h) x = 0;
+
+             if (dir == 3) //menu align for direction up only so far
+               {
+                 if (x < cx + w) x = cx;
+                 if (y > ch) y = cy - 3;
+               }
+
              e_menu_activate_mouse(inst->main_menu,
                                    e_util_zone_current_get(e_manager_current_get()),
-                                   x, cy - 2, w, h, dir, ev->timestamp);
+                                   x, y, w, h, dir, ev->timestamp);
              edje_object_signal_emit(inst->o_button, "e,state,focused", "e");
           }
      }
