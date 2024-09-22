@@ -260,6 +260,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
                }
 
              e_gadcon_locked_set(inst->gcc->gadcon, 1);
+             
+             int zone_x = inst->gcc->gadcon->zone->x;
+             int zone_y = inst->gcc->gadcon->zone->y;
 
              if (dir == E_MENU_POP_DIRECTION_LEFT)
                {
@@ -269,7 +272,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
              if (dir == E_MENU_POP_DIRECTION_RIGHT)
                {
                  if (ev->output.y < h + 10) y = cy;
-                 x = cw - w + 3;
+                 x = zone_x + cw - w + 3;
                }
              if (dir == E_MENU_POP_DIRECTION_UP)
                {
@@ -279,7 +282,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
              if (dir == E_MENU_POP_DIRECTION_DOWN)
                {
                  if (x < cx + w) x = cx;
-                 y = ch - h + 3;
+                 y = zone_y + ch - h + 3;
                }
 
              e_menu_activate_mouse(inst->main_menu,
