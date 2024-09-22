@@ -263,11 +263,12 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
              
              int zone_x = inst->gcc->gadcon->zone->x;
              int zone_y = inst->gcc->gadcon->zone->y;
+             int zone_w = inst->gcc->gadcon->zone->w;
 
              if (dir == E_MENU_POP_DIRECTION_LEFT)
                {
-                 if (ev->output.y < h + 10) y = cy; //zone snap
-                 x = x - 10;                        //shelf snap
+                 if (ev->output.y < h + 10) y = cy;    //zone snap
+                 x = zone_x + zone_w - cw - 3;         //shelf snap
                }
              if (dir == E_MENU_POP_DIRECTION_RIGHT)
                {
