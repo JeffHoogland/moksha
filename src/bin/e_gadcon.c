@@ -2540,7 +2540,7 @@ _e_gadcon_cb_client_resize(void *data, Evas *evas __UNUSED__, Evas_Object *obj, 
 static void
 _e_gadcon_client_move_start(E_Gadcon_Client *gcc)
 {
-   int x, y, gy, gx;
+   int x, y, gy, gx, gcx, gcy;
 
    evas_object_raise(gcc->o_event);
    evas_object_stack_below(gcc->o_control, gcc->o_event);
@@ -2550,9 +2550,10 @@ _e_gadcon_client_move_start(E_Gadcon_Client *gcc)
    else
      {
         ecore_x_pointer_xy_get(gcc->gadcon->zone->container->win, &gcc->dx, &gcc->dy);
+        e_gadcon_canvas_zone_geometry_get(gcc->gadcon, &gcx, &gcy, NULL, NULL);
         evas_object_geometry_get(gcc->gadcon->o_container, &gx, &gy, NULL, NULL);
-        gcc->dx -= gx;
-        gcc->dy -= gy;
+        gcc->dx -= (gcx + gx);
+        gcc->dy -= (gcy + gy);
      }
 
    if (gcc->o_frame)
