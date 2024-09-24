@@ -869,7 +869,7 @@ _create_data(E_Config_Dialog *cfd)
 
    cfdata = E_NEW(E_Config_Dialog_Data, 1);
    cfdata->cfd = cfd;
-   
+
    o = evas_object_rectangle_add(cfd->dia->win->evas);
    mask = 0;
    kg = evas_object_key_grab(o, "KP_Enter", mask, ~mask, 0);
@@ -879,7 +879,7 @@ _create_data(E_Config_Dialog *cfd)
    kg = evas_object_key_grab(o, "Return", mask, ~mask, 0);
    if (!kg)
      fprintf(stderr, "ERROR: unable to redirect \"Return\" key events to object %p.\n", o);
-   
+
    evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN,
                                   _enter_key_down_cb, cfdata);
    ecore_timer_add(0.2, _focus_cb, cfdata);
@@ -1151,6 +1151,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
         i++;
      }
+
    E_FREE(cur_sig_loc);
    e_widget_ilist_go(ob);
    e_widget_ilist_thaw(ob);
@@ -1715,4 +1716,3 @@ _intl_charset_upper_get(const char *charset)
      }
    return NULL;
 }
-
