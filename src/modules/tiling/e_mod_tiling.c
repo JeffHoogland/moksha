@@ -204,8 +204,8 @@ is_tilable(const E_Border *bd)
     &&  bd->client.icccm.max_h > 0)
         return false;
 
-    if (bd->client.icccm.gravity == ECORE_X_GRAVITY_STATIC)
-        return false;
+    //~ if (bd->client.icccm.gravity == ECORE_X_GRAVITY_STATIC)
+        //~ return false;
 
     if (!tiling_g.config->tile_dialogs
             && ((bd->client.icccm.transient_for != 0)
