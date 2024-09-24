@@ -2249,8 +2249,8 @@ _e_menu_submenu_deactivate(E_Menu_Item *mi)
 {
    if (!mi->menu->active) return;
    mi->menu->have_submenu = 0;
-   //~ if (mi->submenu_post_cb.func)
-     //~ mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
+   if (mi->submenu_post_cb.func)
+     mi->submenu_post_cb.func(mi->submenu_post_cb.data, mi->menu, mi);
 }
 
 static void
