@@ -503,6 +503,15 @@ _cb_dn(void *data, void *data2 __UNUSED__)
    e_widget_ilist_selected_set(cfdata->used_list, (n + 1));
 }
 
+static Eina_Bool
+_focus_cb(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   e_widget_focus_set(cfdata->layout_list, 1);
+   return EINA_FALSE;
+}
+
 static E_Dialog *
 _dlg_add_new(E_Config_Dialog_Data *cfdata)
 {
@@ -521,6 +530,8 @@ _dlg_add_new(E_Config_Dialog_Data *cfdata)
 
    evas = e_win_evas_get(dlg->win);
    e_dialog_title_set(dlg, _("Add New Configuration"));
+
+   ecore_timer_add(0.2, _focus_cb, cfdata);
 
    /* The main toolbook, holds the lists and tabs */
    mainn = e_widget_toolbook_add(evas, 24, 24);
