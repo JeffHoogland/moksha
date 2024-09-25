@@ -7102,8 +7102,18 @@ _e_border_cb_mouse_move(void *data,
                (bd->mouse.current.my - bd->moveinfo.down.my);
           }
 
-         /* screen edge snap for maximize/restore window*/
-        if (window_snap_do(bd)) return ECORE_CALLBACK_PASS_ON;
+        {
+          /* We do not wanna snap feature in tiling mode */
+          E_Module *m2;
+
+          m2 = e_module_find("tiling");
+          if (!m2 || !m2->enabled)
+            {
+               /* screen edge snap for maximize/restore window */
+               if (window_snap_do(bd))
+                 return ECORE_CALLBACK_PASS_ON;
+            }
+        }
 
         new_x = x;
         new_y = y;
