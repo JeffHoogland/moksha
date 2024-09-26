@@ -13,4 +13,5 @@ group "Config" struct {
             value "always_on_top" int: 0;
         }
     }
+    value "version" int: 1000000;
 }
