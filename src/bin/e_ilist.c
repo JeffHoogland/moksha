@@ -42,6 +42,7 @@ static void      _e_smart_event_mouse_up(void *data, Evas *evas, Evas_Object *ob
 static void      _e_smart_event_key_down(void *data, Evas *evas, Evas_Object *obj, void *event_info);
 
 static void      _e_typebuf_add(Evas_Object *obj, const char *s);
+static void      _e_typebuf_back(Evas_Object *obj, const char *s);
 static void      _e_typebuf_match(Evas_Object *obj);
 static Eina_Bool _e_typebuf_timer_cb(void *data);
 static void      _e_typebuf_timer_update(Evas_Object *obj);
@@ -1093,7 +1094,9 @@ _e_smart_event_key_down(void *data, Evas *evas __UNUSED__, Evas_Object *obj, voi
      }
    else if (!strcmp(ev->key, "Escape"))
      _e_typebuf_clean(obj);
-   else if (strcmp(ev->key, "BackSpace") && strcmp(ev->key, "Tab") && ev->string)
+   else if (!strcmp(ev->key, "BackSpace"))
+     _e_typebuf_back(obj, ev->string);
+   else if (strcmp(ev->key, "Tab") && ev->string)
      _e_typebuf_add(obj, ev->string);
 
    sd->on_hold = 0;
@@ -1107,6 +1110,50 @@ _e_ilist_widget_hack_cb(E_Smart_Data *sd, Evas_Object *obj __UNUSED__, Evas_Obje
    evas_object_resize(sd->o_edje, w, h);
    sd->mw = w;
    sd->mh = h;
+}
+
+static void
+_e_typebuf_back(Evas_Object *obj, const char *s)
+{
+   int len;
+
+   INTERNAL_ENTRY;
+
+   if (!sd->typebuf.buf)
+     {
+        sd->typebuf.buf = malloc(16);
+        if (sd->typebuf.buf)
+          {
+             sd->typebuf.size = 16;
+             sd->typebuf.buf[0] = '\0';
+          }
+        else
+          {
+             _e_typebuf_clean(obj);
+             return;
+          }
+     }
+   len = strlen(sd->typebuf.buf);
+   if (len + strlen(s) + 2 + 1 >= sd->typebuf.size)
+     {
+        char *p = realloc(sd->typebuf.buf, sd->typebuf.size - strlen(s) + 16);
+        if (p)
+          {
+             sd->typebuf.buf = p;
+             sd->typebuf.size = sd->typebuf.size - strlen(s) + 16;
+          }
+        else
+          {
+             _e_typebuf_clean(obj);
+             return;
+          }
+     }
+
+   sd->typebuf.buf[len - 1] = '\0';
+   edje_object_part_text_set(sd->o_edje, "e.text.label", sd->typebuf.buf);
+   edje_object_signal_emit(sd->o_edje, "e,state,typebuf,start", "e");
+   _e_typebuf_match(obj);
+   _e_typebuf_timer_update(obj);
 }
 
 static void
@@ -1130,7 +1177,6 @@ _e_typebuf_add(Evas_Object *obj, const char *s)
              return;
           }
      }
-
    len = strlen(sd->typebuf.buf);
    if (len + strlen(s) + 2 + 1 >= sd->typebuf.size)
      {
