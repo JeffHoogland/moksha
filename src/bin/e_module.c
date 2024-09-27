@@ -63,6 +63,7 @@
 #define MOKSHA_EXTRA_MODULES \
         "alarm", \
         "calendar", \
+        "comptonmod", \
         "cpu", \
         "engage", \
         "flame", \
@@ -75,7 +76,8 @@
         "screenshot", \
         "slideshow", \
         "stickynotes", \
-        "tclock"  \
+        "tclock" \
+        "wincontrol" \
 
 /* local subsystem functions */
 static void      _e_module_free(E_Module *m);
@@ -145,7 +147,7 @@ e_module_all_load(void)
    char buf[128];
 
    _e_modules_initting = EINA_TRUE;
-   
+
    e_config->modules =
      eina_list_sort(e_config->modules, 0, _e_module_sort_priority);
 
@@ -713,10 +715,11 @@ _e_module_whitelist_check(void)
    unsigned int known = 0;
    int i;
    const char *s;
-  if (strcmp(getenv("MOKSHA_MODULE_SECURITY"),"0") == 0)
-  {
-     #define MOKSHA_ONLY_CORE
- }
+
+   if (strcmp(getenv("MOKSHA_MODULE_SECURITY"),"0") == 0)
+     {
+       #define MOKSHA_ONLY_CORE
+     }
 #ifdef MOKSHA_ONLY_CORE
         const char *goodmods[] = 
           {
@@ -735,7 +738,7 @@ _e_module_whitelist_check(void)
    EINA_LIST_FOREACH(_e_modules, l, m)
      {
         Eina_Bool ok;
-        
+
         if (!m->name) continue;
         ok = EINA_FALSE;
         for (i = 0; goodmods[i]; i++)
