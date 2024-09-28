@@ -2259,18 +2259,21 @@ _e_menu_reposition(E_Menu *m)
    Eina_List *l, *tmp;
    E_Menu_Item *mi;
    int parent_item_bottom;
+   int gap = 3;
 
    if (!m->parent_item) return;
    
    /* Menu direction on the right screen area */
    if ((posit < m->zone->x + m->zone->w / 2) || (!e_config->menu_scroll_toggle))
      {
-       m->cur.x = m->parent_item->menu->cur.x + m->parent_item->menu->cur.w;  //E style
+       m->cur.x = m->parent_item->menu->cur.x +
+                  m->parent_item->menu->cur.w + gap;  // E style with scroll anim
        scrl_toggle = EINA_FALSE;
      }
    else
      {
-       m->cur.x = m->parent_item->menu->cur.x - m->cur.w;                     //LXDE style
+       m->cur.x = m->parent_item->menu->cur.x -
+                  m->cur.w - gap;                     // Menu direction to the left
        scrl_toggle = EINA_TRUE;
      }
    parent_item_bottom = m->parent_item->menu->cur.y + m->parent_item->y;
@@ -2627,7 +2630,6 @@ _e_menu_activate_previous(void)
                }
              mi = mi->menu->parent_item;
              e_menu_item_active_set(mi, 1);
-             
              _e_menu_item_ensure_onscreen(mi);
           }
         return;
