@@ -19,19 +19,19 @@ e_obj_dialog_new(E_Container *con, char *title, char *class_name, char *class_cl
 
    if (!con)
      {
-	man = e_manager_current_get();
-	if (!man) return NULL;
-	con = e_container_current_get(man);
-	if (!con) con = e_container_number_get(man, 0);
-	if (!con) return NULL;
+       man = e_manager_current_get();
+       if (!man) return NULL;
+       con = e_container_current_get(man);
+       if (!con) con = e_container_number_get(man, 0);
+       if (!con) return NULL;
      }
    od = E_OBJECT_ALLOC(E_Obj_Dialog, E_OBJ_DIALOG_TYPE, _e_obj_dialog_free);
    if (!od) return NULL;
    od->win = e_win_new(con);
    if (!od->win)
      {
-	free(od);
-	return NULL;
+       free(od);
+       return NULL;
      }
    e_win_delete_callback_set(od->win, _e_obj_dialog_cb_delete);
    e_win_resize_callback_set(od->win, _e_obj_dialog_cb_resize);
@@ -62,8 +62,8 @@ e_obj_dialog_icon_set(E_Obj_Dialog *od, char *icon)
    E_OBJECT_TYPE_CHECK(od, E_OBJ_DIALOG_TYPE);
    if (od->win->border->internal_icon)
      {
-	eina_stringshare_del(od->win->border->internal_icon);
-	od->win->border->internal_icon = NULL;
+       eina_stringshare_del(od->win->border->internal_icon);
+       od->win->border->internal_icon = NULL;
      }
    if (icon)
      od->win->border->internal_icon = eina_stringshare_add(icon);
@@ -86,9 +86,9 @@ e_obj_dialog_show(E_Obj_Dialog *od)
    edje_object_size_max_get(od->bg_object, &w, &h);
    if ((w > 0) && (h > 0))
      {
-	if (w < mw) w = mw;
-	if (h < mh) h = mh;
-	e_win_size_max_set(od->win, w, h);
+       if (w < mw) w = mw;
+       if (h < mh) h = mh;
+       e_win_size_max_set(od->win, w, h);
      }
    s = edje_object_data_get(od->bg_object, "borderless");
    if (s && (!strcmp(s, "1")))
