@@ -38,7 +38,7 @@ group { name: "e/widgets/slider_horizontal";
       }
       part { name: "focus";
          description { state: "default" 0.0;
-            rel1.offset: -10 0;
+            rel1.offset: -7 -2;
             rel2.offset:  10 0;
             color: 255 255 255 128;
             image.normal: "win_glow.png";
@@ -292,8 +292,8 @@ group { name: "e/widgets/slider_vertical";
       }
       part { name: "focus";
          description { state: "default" 0.0;
-            rel1.offset: -10 0;
-            rel2.offset:  10 0;
+            rel1.offset: -5 -7;
+            rel2.offset:  3 0;
             color: 255 255 255 128;
             image.normal: "win_glow.png";
             image.border: 9 9 9 9;
