@@ -41,7 +41,7 @@ struct _Instance
    unsigned int     notification_id;
 };
 
-static void      _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, Eina_Bool have_power);
+static void      _battery_update(int full, int time_left, int time_full, int health, Eina_Bool have_battery, Eina_Bool have_power);
 static Eina_Bool _battery_cb_exe_data(void *data, int type, void *event);
 static Eina_Bool _battery_cb_exe_del(void *data, int type, void *event);
 static void      _button_cb_mouse_down(void *data, Evas *e, Evas_Object *obj, void *event_info);
@@ -255,6 +255,15 @@ _battery_face_time_set(Evas_Object *battery, int t)
 }
 
 static void
+_battery_face_health_set(Evas_Object *battery, int health)
+{
+   char buf[256];
+
+   snprintf(buf, sizeof(buf), "%i", health);
+   edje_object_part_text_set(battery, "e.text.health", buf);
+}
+
+static void
 _battery_face_cb_menu_powermanagement(void *data __UNUSED__, E_Menu *m, E_Menu_Item *mi __UNUSED__)
 {
    e_configure_registry_call("advanced/powermanagement", m->zone->container, NULL);
@@ -306,6 +315,7 @@ _battery_device_update(void)
    int have_battery = 0;
    int have_power = 0;
    int charging = 0;
+   int health = 0;
 
    int batnum = 0;
    int acnum = 0;
@@ -337,6 +347,9 @@ _battery_device_update(void)
              if (time_full < 0) time_full = bat->time_full;
              else time_full += bat->time_full;
           }
+        if ((bat->last_full_charge > 0) && (bat->design_charge > 0))
+           health = 100.0 * (double)bat->last_full_charge / bat->design_charge;
+
         charging += bat->charging;
      }
 
@@ -352,7 +365,7 @@ _battery_device_update(void)
    if (time_left < 1) time_left = -1;
    if (time_full < 1) time_full = -1;
 
-   _battery_update(full, time_left, time_full, have_battery, have_power);
+   _battery_update(full, time_left, time_full, health, have_battery, have_power);
 }
 
 void
@@ -455,6 +468,7 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
    Evas *e = NULL;
    Evas_Object *rect = NULL, *popup_bg = NULL;;
    int x, y, w, h;
+   char buf[256];
 
    if (warn)       //warn 1 = warning, warn 0 = actual state
      {
@@ -524,7 +538,6 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
      }
    else
      {
-       char buf[64] = "";
        snprintf(buf, sizeof(buf), "%s%s", _("Power now: "),
             edje_object_part_text_get(inst->o_battery, "e.text.reading"));
        edje_object_part_text_set(popup_bg, "e.text.title", buf);
@@ -538,6 +551,10 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
        else
          edje_object_part_text_set(popup_bg, "e.text.label", "");
      }
+
+   snprintf(buf, sizeof(buf), "%s%s%%", _("Health status: "),
+            edje_object_part_text_get(inst->o_battery, "e.text.health"));
+   edje_object_part_text_set(popup_bg, "e.text.health", buf);
 
    e_gadcon_popup_content_set(inst->warning, popup_bg);
    e_gadcon_popup_show(inst->warning);
@@ -595,7 +612,7 @@ _powersave_cb_config_update(void *data __UNUSED__, int type __UNUSED__, void *ev
 }
 
 static void
-_battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, Eina_Bool have_power)
+_battery_update(int full, int time_left, int time_full, int health, Eina_Bool have_battery, Eina_Bool have_power)
 {
    Eina_List *l;
    Instance *inst;
@@ -603,6 +620,7 @@ _battery_update(int full, int time_left, int time_full, Eina_Bool have_battery, 
 
    EINA_LIST_FOREACH(battery_config->instances, l, inst)
      {
+        _battery_face_health_set(inst->o_battery, health);
         if (have_power != battery_config->have_power)
           {
              if (have_power && (full < 100))
@@ -768,10 +786,11 @@ _battery_cb_exe_data(void *data __UNUSED__, int type __UNUSED__, void *event)
                   int time_full = 0;
                   int have_battery = 0;
                   int have_power = 0;
+                  int health = 0;
 
                   if (sscanf(ev->lines[i].line, "%i %i %i %i %i", &full, &time_left, &time_full,
                              &have_battery, &have_power) == 5)
-                    _battery_update(full, time_left, time_full,
+                    _battery_update(full, time_left, time_full, health,
                                     have_battery, have_power);
                   else
                     e_powersave_mode_set(E_POWERSAVE_MODE_LOW);
