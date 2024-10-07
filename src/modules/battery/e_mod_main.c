@@ -424,6 +424,7 @@ _battery_cb_warning_popup_timeout(void *data)
 
    inst = data;
    e_gadcon_popup_hide(inst->warning);
+   ecore_timer_del(battery_config->alert_timer);
    battery_config->alert_timer = NULL;
    mouse_down = EINA_FALSE;
    return ECORE_CALLBACK_DONE;
@@ -572,10 +573,10 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
         evas_object_repeat_events_set(rect, 1);
         evas_object_show(rect);
      }
-   
+
    _battery_face_time_set(inst->popup_battery, t);
    _battery_face_level_set(inst->popup_battery, percent);
-   
+
    if (warn)
      {
        edje_object_signal_emit(inst->popup_battery, "e,state,discharging", "e");
