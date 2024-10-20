@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-08-04 09:28+0200\n"
+"POT-Creation-Date: 2024-10-20 17:44+0200\n"
 "PO-Revision-Date: 2024-05-15 10:17+0200\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -38,7 +38,7 @@ msgstr "À propos de Moksha"
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
-#: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
+#: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
@@ -883,7 +883,7 @@ msgstr "Sélectionner"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
 #: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
-#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:580
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -940,8 +940,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:505
+#: src/bin/e_module.c:825 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -950,7 +950,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:568
+#: src/modules/xkbswitch/e_mod_config.c:579
 msgid "OK"
 msgstr "OK"
 
@@ -1054,7 +1054,7 @@ msgstr ""
 "était :<br>%s<br><br>Ce fichier a été supprimé pour éviter la corruption des "
 "données.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1942,16 +1942,16 @@ msgstr "Défilement automatique"
 msgid "Plain"
 msgstr "En plein"
 
-#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "En creux"
 
-#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Aspect"
 
-#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1961,15 +1961,15 @@ msgstr "Aspect"
 msgid "Remove"
 msgstr "Supprimer"
 
-#: src/bin/e_gadcon.c:2448
+#: src/bin/e_gadcon.c:2471
 msgid "Stop moving"
 msgstr "Insérer"
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3125
 msgid "Insufficient gadcon support"
 msgstr "Le support de gadcon est insuffisant"
 
-#: src/bin/e_gadcon.c:3100
+#: src/bin/e_gadcon.c:3126
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "Le module %s doit prendre en charge %s"
@@ -2566,7 +2566,7 @@ msgstr "Demande de position"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
-#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:838 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2580,7 +2580,7 @@ msgstr "Demande de position"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:859
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
@@ -2784,7 +2784,7 @@ msgstr "Paramétrage des modules"
 msgid "Load"
 msgstr "Activer"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:605
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:607
 msgid "Unload"
 msgstr "Désactiver"
 
@@ -3642,12 +3642,12 @@ msgstr ""
 "dialogue de configuration des modules vous permettra<br>de recharger vos "
 "modules."
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:172
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Chargement du module : %s"
 
-#: src/bin/e_module.c:219
+#: src/bin/e_module.c:221
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3656,11 +3656,11 @@ msgstr ""
 "Erreur de chargement du module %s.<br>Aucun module nommé « %s » n'est "
 "présent dans<br>le chemin de recherche des modules.<br>"
 
-#: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
+#: src/bin/e_module.c:224 src/bin/e_module.c:237 src/bin/e_module.c:255
 msgid "Error loading Module"
 msgstr "Erreur de chargement du module"
 
-#: src/bin/e_module.c:230 src/bin/e_module.c:247
+#: src/bin/e_module.c:232 src/bin/e_module.c:249
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3669,11 +3669,11 @@ msgstr ""
 "Erreur de chargement du module %s.<br>Le chemin absolu vers le module est :"
 "<br>%s<br>L'erreur rapportée est :<br>%s<br>"
 
-#: src/bin/e_module.c:252
+#: src/bin/e_module.c:254
 msgid "Module does not contain all needed functions."
 msgstr "Le module manque de certaines fonctions nécessaires."
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:269
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3683,23 +3683,23 @@ msgstr ""
 "ci requiert la version %i de l'API.<br>Or la version de l'API retournée par "
 "Moksha est : %i.<br>"
 
-#: src/bin/e_module.c:272
+#: src/bin/e_module.c:274
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Module %s de Moksha"
 
-#: src/bin/e_module.c:600
+#: src/bin/e_module.c:602
 msgid "What action should be taken with this module?<br>"
 msgstr "Que voulez-vous faire de ce module ?<br>"
 
-#: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:608 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Conserver"
 
-#: src/bin/e_module.c:807
+#: src/bin/e_module.c:810
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3709,11 +3709,11 @@ msgstr ""
 "peuvent provoquer bogues et plantages.<br>Désactivez-les avant tout rapport "
 "de bogue.<br><br>Module(s) instable(s) :<br><br>"
 
-#: src/bin/e_module.c:819
+#: src/bin/e_module.c:822
 msgid "Unstable module tainting"
 msgstr "Module instable détecté"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:826
 msgid "I know"
 msgstr "C'est compris"
 
@@ -4529,7 +4529,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Interface"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:491
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Batterie"
@@ -4538,36 +4538,41 @@ msgstr "Batterie"
 msgid "Power Management Timing"
 msgstr "Minutage de la gestion d'énergie"
 
-#: src/modules/battery/e_mod_main.c:479 src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:536
 msgid "Your battery is low!"
 msgstr "La batterie est faible !"
 
-#: src/modules/battery/e_mod_main.c:480 src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:495 src/modules/battery/e_mod_main.c:538
 msgid "AC power is recommended."
 msgstr "Branchement sur le secteur recommandé."
 
-#: src/modules/battery/e_mod_main.c:528
+#: src/modules/battery/e_mod_main.c:542
 msgid "Power now: "
 msgstr "Charge de la batterie : "
 
-#: src/modules/battery/e_mod_main.c:534
+#: src/modules/battery/e_mod_main.c:548
 msgid "Remaining time: "
 msgstr "Temps restant : "
 
-#: src/modules/battery/e_mod_main.c:535
+#: src/modules/battery/e_mod_main.c:549
 msgid "hr"
 msgstr "h"
 
-#: src/modules/battery/e_mod_main.c:645
+#: src/modules/battery/e_mod_main.c:556
+#, fuzzy
+msgid "Health status: "
+msgstr "Statut du montage :"
+
+#: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
 msgstr "N/A"
 
-#: src/modules/battery/e_mod_main.c:750 src/modules/battery/e_mod_main.c:752
-#: src/modules/battery/e_mod_main.c:759 src/modules/battery/e_mod_main.c:761
+#: src/modules/battery/e_mod_main.c:769 src/modules/battery/e_mod_main.c:771
+#: src/modules/battery/e_mod_main.c:778 src/modules/battery/e_mod_main.c:780
 msgid "ERROR"
 msgstr "ERREUR"
 
-#: src/modules/battery/e_mod_main.c:874
+#: src/modules/battery/e_mod_main.c:894
 msgid "Battery Meter"
 msgstr "Surveillance de la batterie"
 
@@ -4589,8 +4594,8 @@ msgstr "Définir"
 msgid "Time set"
 msgstr "Réglage de l'heure"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:944
+#: src/modules/clock/e_mod_main.c:1168 src/modules/clock/e_mod_main.c:1186
 msgid "Clock"
 msgstr "Horloge"
 
@@ -4663,7 +4668,7 @@ msgstr "Définir..."
 msgid "Set... "
 msgstr "Définir... "
 
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_main.c:1186
 msgid "Toggle calendar"
 msgstr "(Dés)Activer le calendrier"
 
@@ -5683,24 +5688,24 @@ msgid "Possible Locale problems"
 msgstr "Les paramètres régionaux peuvent poser problème"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1186
+#: src/modules/conf_intl/e_int_config_intl.c:1187
 msgid "Language Selector"
 msgstr "Sélecteur de langue"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1125
-#: src/modules/conf_intl/e_int_config_intl.c:1574
+#: src/modules/conf_intl/e_int_config_intl.c:1575
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "Système (par défaut)"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1160
-#: src/modules/conf_intl/e_int_config_intl.c:1237
+#: src/modules/conf_intl/e_int_config_intl.c:1161
+#: src/modules/conf_intl/e_int_config_intl.c:1238
 msgid "Locale Selected"
 msgstr "Paramètres régionaux"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1161
-#: src/modules/conf_intl/e_int_config_intl.c:1238
+#: src/modules/conf_intl/e_int_config_intl.c:1162
+#: src/modules/conf_intl/e_int_config_intl.c:1239
 msgid "Locale"
 msgstr "Localisation"
 
@@ -9829,7 +9834,7 @@ msgstr "Info"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+Imp. écran : capture d'écran de la fenêtre active"
 
-#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:866
 msgid "Tasks"
 msgstr "Tâches"
 
@@ -9922,7 +9927,8 @@ msgid "Toggle between rows and columns"
 msgstr "Passer des rangées aux colonnes"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-msgid "Swap a window with an other"
+#, fuzzy
+msgid "Swap a window with another"
 msgstr "Interchanger la fenêtre"
 
 #: src/modules/tiling/e_mod_tiling.c:4235
@@ -9993,19 +9999,19 @@ msgstr "Global"
 msgid "Per Application"
 msgstr "Par application"
 
-#: src/modules/xkbswitch/e_mod_config.c:523
+#: src/modules/xkbswitch/e_mod_config.c:532
 msgid "Add New Configuration"
 msgstr "Ajouter une configuration"
 
-#: src/modules/xkbswitch/e_mod_config.c:536
+#: src/modules/xkbswitch/e_mod_config.c:547
 msgid "Available"
 msgstr "Disponibilité"
 
-#: src/modules/xkbswitch/e_mod_config.c:543
+#: src/modules/xkbswitch/e_mod_config.c:554
 msgid "Model"
 msgstr "Modèle"
 
-#: src/modules/xkbswitch/e_mod_config.c:550
+#: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
 msgstr "Variante"
 

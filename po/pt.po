@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-08-04 09:28+0200\n"
+"POT-Creation-Date: 2024-10-20 17:44+0200\n"
 "PO-Revision-Date: 2024-08-06 00:22+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
@@ -27,7 +27,7 @@ msgstr "Acerca do Moksha"
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
-#: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
+#: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
@@ -872,7 +872,7 @@ msgstr "Selecionar"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
 #: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
-#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:580
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -919,17 +919,16 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
-"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
-"<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
+"%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:505
+#: src/bin/e_module.c:825 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -938,7 +937,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:568
+#: src/modules/xkbswitch/e_mod_config.c:579
 msgid "OK"
 msgstr "Aceitar"
 
@@ -1042,7 +1041,7 @@ msgstr ""
 "erro ocorreu no ficheiro:<br>%s<br>.<br>Este ficheiro foi eliminado para "
 "evitar a corrupção de dados.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1776,8 +1775,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
-"<br><hilight>%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
+"%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -1928,16 +1927,16 @@ msgstr "Deslocar conteúdo automaticamente"
 msgid "Plain"
 msgstr "Simples"
 
-#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "Moldura"
 
-#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "Aparência"
 
-#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1947,15 +1946,15 @@ msgstr "Aparência"
 msgid "Remove"
 msgstr "Remover"
 
-#: src/bin/e_gadcon.c:2448
+#: src/bin/e_gadcon.c:2471
 msgid "Stop moving"
 msgstr "Parar de mover"
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3125
 msgid "Insufficient gadcon support"
 msgstr "Suporte insuficiente a gadcon"
 
-#: src/bin/e_gadcon.c:3100
+#: src/bin/e_gadcon.c:3126
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "O módulo %s tem que suportar %s"
@@ -2554,7 +2553,7 @@ msgstr "Solicita posição"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
-#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:838 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2568,7 +2567,7 @@ msgstr "Solicita posição"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:859
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
@@ -2771,7 +2770,7 @@ msgstr "Definições dos módulos"
 msgid "Load"
 msgstr "Carregar"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:605
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:607
 msgid "Unload"
 msgstr "Descarregar"
 
@@ -3617,12 +3616,12 @@ msgstr ""
 "que possa corrigir os problemas.<br><br>O diálogo de configuração dos "
 "módulos deve permitir-lhe<br> escolher os módulos a carregar."
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:172
 #, c-format
 msgid "Loading Module: %s"
 msgstr "A carregar módulo: %s"
 
-#: src/bin/e_module.c:219
+#: src/bin/e_module.c:221
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3631,11 +3630,11 @@ msgstr ""
 "Ocorreu um erro ao carregar o módulo: %s<br>O módulo com o nome %s não foi "
 "encontrado nos diretórios de pesquisa dos módulos.<br>"
 
-#: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
+#: src/bin/e_module.c:224 src/bin/e_module.c:237 src/bin/e_module.c:255
 msgid "Error loading Module"
 msgstr "Erro ao carregar módulo"
 
-#: src/bin/e_module.c:230 src/bin/e_module.c:247
+#: src/bin/e_module.c:232 src/bin/e_module.c:249
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3644,11 +3643,11 @@ msgstr ""
 "Ocorreu um erro ao carregar o módulo: %s<br>A localização para o módulo é:"
 "<br>%s<br>O erro reportado foi:<br>%s.<br>"
 
-#: src/bin/e_module.c:252
+#: src/bin/e_module.c:254
 msgid "Module does not contain all needed functions."
 msgstr "O módulo não contém todas as funções necessárias."
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:269
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3657,23 +3656,23 @@ msgstr ""
 "Erro na API do módulo<br>Erro ao iniciar o módulo: %s<br>O módulo requer a "
 "versão mínima API: %i.<br>O módulo API com advertências é: %i.<br>"
 
-#: src/bin/e_module.c:272
+#: src/bin/e_module.c:274
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Módulo %s do Moksha"
 
-#: src/bin/e_module.c:600
+#: src/bin/e_module.c:602
 msgid "What action should be taken with this module?<br>"
 msgstr "Qual a ação que deve ser efetuada com este módulo?<br>"
 
-#: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:608 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Manter"
 
-#: src/bin/e_module.c:807
+#: src/bin/e_module.c:810
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3683,11 +3682,11 @@ msgstr ""
 "erros e falhas.<br>Remova-os antes de reportar qualquer erro<br><br>A lista "
 "dos módulos é a seguinte:<br><br>"
 
-#: src/bin/e_module.c:819
+#: src/bin/e_module.c:822
 msgid "Unstable module tainting"
 msgstr "Análise de módulos instáveis"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:826
 msgid "I know"
 msgstr "Eu sei"
 
@@ -4501,7 +4500,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "Equipamento"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:491
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "Bateria"
@@ -4510,36 +4509,41 @@ msgstr "Bateria"
 msgid "Power Management Timing"
 msgstr "Temporização da gestão de energia"
 
-#: src/modules/battery/e_mod_main.c:479 src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:536
 msgid "Your battery is low!"
 msgstr "A bateria está fraca!"
 
-#: src/modules/battery/e_mod_main.c:480 src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:495 src/modules/battery/e_mod_main.c:538
 msgid "AC power is recommended."
 msgstr "Deve ligar à corrente."
 
-#: src/modules/battery/e_mod_main.c:528
+#: src/modules/battery/e_mod_main.c:542
 msgid "Power now: "
 msgstr "Ligar agora: "
 
-#: src/modules/battery/e_mod_main.c:534
+#: src/modules/battery/e_mod_main.c:548
 msgid "Remaining time: "
 msgstr "Tempo restante: "
 
-#: src/modules/battery/e_mod_main.c:535
+#: src/modules/battery/e_mod_main.c:549
 msgid "hr"
 msgstr "hr"
 
-#: src/modules/battery/e_mod_main.c:645
+#: src/modules/battery/e_mod_main.c:556
+#, fuzzy
+msgid "Health status: "
+msgstr "Estado:"
+
+#: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
 msgstr "N/D"
 
-#: src/modules/battery/e_mod_main.c:750 src/modules/battery/e_mod_main.c:752
-#: src/modules/battery/e_mod_main.c:759 src/modules/battery/e_mod_main.c:761
+#: src/modules/battery/e_mod_main.c:769 src/modules/battery/e_mod_main.c:771
+#: src/modules/battery/e_mod_main.c:778 src/modules/battery/e_mod_main.c:780
 msgid "ERROR"
 msgstr "ERRO"
 
-#: src/modules/battery/e_mod_main.c:874
+#: src/modules/battery/e_mod_main.c:894
 msgid "Battery Meter"
 msgstr "Monitor de bateria"
 
@@ -4561,8 +4565,8 @@ msgstr "Definir"
 msgid "Time set"
 msgstr "Acertar relógio"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:944
+#: src/modules/clock/e_mod_main.c:1168 src/modules/clock/e_mod_main.c:1186
 msgid "Clock"
 msgstr "Relógio"
 
@@ -4635,7 +4639,7 @@ msgstr "Definir..."
 msgid "Set... "
 msgstr "Definir... "
 
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_main.c:1186
 msgid "Toggle calendar"
 msgstr "Mostrar calendário"
 
@@ -5652,24 +5656,24 @@ msgid "Possible Locale problems"
 msgstr "Problemas com idiomas"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1186
+#: src/modules/conf_intl/e_int_config_intl.c:1187
 msgid "Language Selector"
 msgstr "Seletor de idiomas"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1125
-#: src/modules/conf_intl/e_int_config_intl.c:1574
+#: src/modules/conf_intl/e_int_config_intl.c:1575
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "Definições do sistema"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1160
-#: src/modules/conf_intl/e_int_config_intl.c:1237
+#: src/modules/conf_intl/e_int_config_intl.c:1161
+#: src/modules/conf_intl/e_int_config_intl.c:1238
 msgid "Locale Selected"
 msgstr "Configuração regional escolhida"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1161
-#: src/modules/conf_intl/e_int_config_intl.c:1238
+#: src/modules/conf_intl/e_int_config_intl.c:1162
+#: src/modules/conf_intl/e_int_config_intl.c:1239
 msgid "Locale"
 msgstr "Configuração regional"
 
@@ -5859,9 +5863,8 @@ msgstr "Erro na combinação de teclas"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by "
-"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
-"sequence."
+"The binding key sequence, that you choose, is already used by <br><hilight>"
+"%s</hilight> action.<br>Please choose another binding key sequence."
 msgstr ""
 "A sequência da combinação de teclas escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra combinação."
@@ -8212,11 +8215,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
+"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
+"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
+"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
+"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8234,8 +8237,8 @@ msgstr ""
 "Ctrl+Enter&gt;</hilight> executa uma ação e continua<br><hilight>&lt;Tab&gt;"
 "</hilight> alterna entre os seletores<br>    <hilight>&lt;Ctrl+Tab&gt;</"
 "hilight> conclui a entrada (depende do plugin)<br>    <hilight>&lt;Ctrl+x&gt;"
-"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;"
-"Ctrl+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
+"</hilight> vai para o plugin que começa com \"x\"<br><hilight>&lt;Ctrl"
+"+esquerda/direita&gt;</hilight> troca entre os \"plugins\"<br>   "
 "<hilight>&lt;Ctrl+cima/baixo&gt;</hilight> vai para o primeiro/último "
 "item<br>   <hilight>&lt;Ctrl+1&gt;</hilight> alterna os modos de "
 "visualização (sai desta página)<br>    <hilight>&lt;Ctrl+2&gt;</hilight> "
@@ -9787,7 +9790,7 @@ msgstr "Informação"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+PrtSc: captura de ecrã da janela ativa"
 
-#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:866
 msgid "Tasks"
 msgstr "Tarefas"
 
@@ -9878,7 +9881,8 @@ msgid "Toggle between rows and columns"
 msgstr "Alternar entre linhas e colunas"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-msgid "Swap a window with an other"
+#, fuzzy
+msgid "Swap a window with another"
 msgstr "Trocar de uma janela para outra"
 
 #: src/modules/tiling/e_mod_tiling.c:4235
@@ -9949,19 +9953,19 @@ msgstr "Global"
 msgid "Per Application"
 msgstr "Por aplicação"
 
-#: src/modules/xkbswitch/e_mod_config.c:523
+#: src/modules/xkbswitch/e_mod_config.c:532
 msgid "Add New Configuration"
 msgstr "Adicionar nova configuração"
 
-#: src/modules/xkbswitch/e_mod_config.c:536
+#: src/modules/xkbswitch/e_mod_config.c:547
 msgid "Available"
 msgstr "Disponível"
 
-#: src/modules/xkbswitch/e_mod_config.c:543
+#: src/modules/xkbswitch/e_mod_config.c:554
 msgid "Model"
 msgstr "Modelo"
 
-#: src/modules/xkbswitch/e_mod_config.c:550
+#: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
 msgstr "Variante"
 

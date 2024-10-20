@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-08-04 09:28+0200\n"
+"POT-Creation-Date: 2024-10-20 17:44+0200\n"
 "PO-Revision-Date: 2013-12-01 01:53+0300\n"
 "Last-Translator: سمير حسين <almusalimalmusalimah@gmail.com>\n"
 "Language-Team: Arabic <almusalimalmusalimah@gmail.com>\n"
@@ -28,7 +28,7 @@ msgstr "عن Mokshaِ"
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
-#: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
+#: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
@@ -880,7 +880,7 @@ msgstr "حدد"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
 #: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
-#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:580
 msgid "Cancel"
 msgstr "ألغ"
 
@@ -932,8 +932,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:505
+#: src/bin/e_module.c:825 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -942,7 +942,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:568
+#: src/modules/xkbswitch/e_mod_config.c:579
 msgid "OK"
 msgstr "موافق"
 
@@ -1044,7 +1044,7 @@ msgstr ""
 "حصل Mokshaِ على خطأ أثناء كتابة <br>ملف إعداداته<br>%s<br>الملف الذي حدث فيه "
 "الخلل :<br>%s<br>تم حذف هذا الملف لتفادي تعليق أو افساد البيانات<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1936,16 +1936,16 @@ msgstr "لف المحتويات في لفافة تلقائياً"
 msgid "Plain"
 msgstr "بارز"
 
-#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "داخلي"
 
-#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "المظهر"
 
-#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1955,15 +1955,15 @@ msgstr "المظهر"
 msgid "Remove"
 msgstr "أزل"
 
-#: src/bin/e_gadcon.c:2448
+#: src/bin/e_gadcon.c:2471
 msgid "Stop moving"
 msgstr "توقف عن الحركة"
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3125
 msgid "Insufficient gadcon support"
 msgstr ""
 
-#: src/bin/e_gadcon.c:3100
+#: src/bin/e_gadcon.c:3126
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "الوحدة %s تحتاج لدعم %s"
@@ -2559,7 +2559,7 @@ msgstr "أطلب الموضع"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
-#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:838 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2573,7 +2573,7 @@ msgstr "أطلب الموضع"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:859
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
@@ -2775,7 +2775,7 @@ msgstr "إعدادات الوحدة"
 msgid "Load"
 msgstr "حمل"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:605
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:607
 msgid "Unload"
 msgstr "لا تحمل"
 
@@ -3591,12 +3591,12 @@ msgstr ""
 "و لن يتم تحميلها ﻷجل المساعدة<br> في إزالة أي مشكلة وحدات من إعداداتك."
 "<br><br>حوارات إعداد الوحدة ستدعك تختار<br>وحداتك مجددا.."
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:172
 #, c-format
 msgid "Loading Module: %s"
 msgstr "تحميل الوحدات: %s"
 
-#: src/bin/e_module.c:219
+#: src/bin/e_module.c:221
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3605,11 +3605,11 @@ msgstr ""
 "كان هنالك تحميل خاطئ للوحدة المسماة بـ : %s<br>لا وجود لوحدة مسماة بـ %s "
 "يمكن العثور عليها في<br>بحث مجلد الوحدات.<br>"
 
-#: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
+#: src/bin/e_module.c:224 src/bin/e_module.c:237 src/bin/e_module.c:255
 msgid "Error loading Module"
 msgstr "خلل في تحميل الوحدة"
 
-#: src/bin/e_module.c:230 src/bin/e_module.c:247
+#: src/bin/e_module.c:232 src/bin/e_module.c:249
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3618,12 +3618,12 @@ msgstr ""
 "كان هنالك تحميل خاطئ للوحدة المسماة بـ : %s<br>المسار الكامل إلى هذه الوحدة "
 "هو:<br>%s<br>الخطأ المبلغ عنه هو:<br>%s<br>"
 
-#: src/bin/e_module.c:252
+#: src/bin/e_module.c:254
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "لا تحتوي الوحدة على كل الوظائف المعتمد عليها"
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:269
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3632,23 +3632,23 @@ msgstr ""
 "خطأ بوحدة API <br>خطأ بتهيئة الوحدة: %s<br>حيث أنها تتطلب أقل إصدار لوحدة "
 "API من: %i.<br>الوحدة API التي تعمل بواسطة Moksha هي: %i.<br>"
 
-#: src/bin/e_module.c:272
+#: src/bin/e_module.c:274
 #, c-format
 msgid "Moksha %s Module"
 msgstr "وحدة  %s ﻹنلايتنمينت"
 
-#: src/bin/e_module.c:600
+#: src/bin/e_module.c:602
 msgid "What action should be taken with this module?<br>"
 msgstr "ما نوع العملية التي يجب اتخاذها مع هذه الوحدة؟<br>"
 
-#: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:608 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "أبقِ"
 
-#: src/bin/e_module.c:807
+#: src/bin/e_module.c:810
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3657,12 +3657,12 @@ msgstr ""
 "الوحدات التالية ليست قياسية لـ<br>Mokshaِ  و لربما ستسبب عللا و  تحطمات."
 "<br>لذا رجاء أزلها قبل اﻹبلاغ عن أي علة.<br><br>و الوحدات هي :<br><br>"
 
-#: src/bin/e_module.c:819
+#: src/bin/e_module.c:822
 #, fuzzy
 msgid "Unstable module tainting"
 msgstr "وحدات ملوثة غير مستقرة"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:826
 msgid "I know"
 msgstr "أعلم ذلك"
 
@@ -4517,7 +4517,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "العتاد"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:491
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "البطارية"
@@ -4526,37 +4526,42 @@ msgstr "البطارية"
 msgid "Power Management Timing"
 msgstr "توقيت إدارة الطاقة"
 
-#: src/modules/battery/e_mod_main.c:479 src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:536
 msgid "Your battery is low!"
 msgstr "بطارية الحاسب ضعيفة!"
 
-#: src/modules/battery/e_mod_main.c:480 src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:495 src/modules/battery/e_mod_main.c:538
 msgid "AC power is recommended."
 msgstr "يستحسن استخدام الطاقة الكهربائية."
 
-#: src/modules/battery/e_mod_main.c:528
+#: src/modules/battery/e_mod_main.c:542
 #, fuzzy
 msgid "Power now: "
 msgstr "إطفاء"
 
-#: src/modules/battery/e_mod_main.c:534
+#: src/modules/battery/e_mod_main.c:548
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:535
+#: src/modules/battery/e_mod_main.c:549
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:645
+#: src/modules/battery/e_mod_main.c:556
+#, fuzzy
+msgid "Health status: "
+msgstr "حالة التوصيل :"
+
+#: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
 msgstr "غير موجود"
 
-#: src/modules/battery/e_mod_main.c:750 src/modules/battery/e_mod_main.c:752
-#: src/modules/battery/e_mod_main.c:759 src/modules/battery/e_mod_main.c:761
+#: src/modules/battery/e_mod_main.c:769 src/modules/battery/e_mod_main.c:771
+#: src/modules/battery/e_mod_main.c:778 src/modules/battery/e_mod_main.c:780
 msgid "ERROR"
 msgstr "خطأ"
 
-#: src/modules/battery/e_mod_main.c:874
+#: src/modules/battery/e_mod_main.c:894
 msgid "Battery Meter"
 msgstr "مقياس البطارية"
 
@@ -4580,8 +4585,8 @@ msgstr "ضبط"
 msgid "Time set"
 msgstr "المؤقتات"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:944
+#: src/modules/clock/e_mod_main.c:1168 src/modules/clock/e_mod_main.c:1186
 msgid "Clock"
 msgstr "الساعة"
 
@@ -4655,7 +4660,7 @@ msgstr ""
 msgid "Set... "
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_main.c:1186
 #, fuzzy
 msgid "Toggle calendar"
 msgstr "اعرض التقويم"
@@ -5686,24 +5691,24 @@ msgid "Possible Locale problems"
 msgstr "مشكلات محلية محتملة"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1186
+#: src/modules/conf_intl/e_int_config_intl.c:1187
 msgid "Language Selector"
 msgstr "إختيار اللغة"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1125
-#: src/modules/conf_intl/e_int_config_intl.c:1574
+#: src/modules/conf_intl/e_int_config_intl.c:1575
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "النظام اﻹفتراضي"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1160
-#: src/modules/conf_intl/e_int_config_intl.c:1237
+#: src/modules/conf_intl/e_int_config_intl.c:1161
+#: src/modules/conf_intl/e_int_config_intl.c:1238
 msgid "Locale Selected"
 msgstr "اللغة المحلية المُختارة"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1161
-#: src/modules/conf_intl/e_int_config_intl.c:1238
+#: src/modules/conf_intl/e_int_config_intl.c:1162
+#: src/modules/conf_intl/e_int_config_intl.c:1239
 msgid "Locale"
 msgstr "المحليات"
 
@@ -9891,7 +9896,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "حدد مكان حفظ صورة الشاشة"
 
-#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:866
 msgid "Tasks"
 msgstr "المهام"
 
@@ -9987,7 +9992,8 @@ msgid "Toggle between rows and columns"
 msgstr "تنقل بين الصفوف و اﻷعمدة"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-msgid "Swap a window with an other"
+#, fuzzy
+msgid "Swap a window with another"
 msgstr "بدل نافذة مع أخرى"
 
 #: src/modules/tiling/e_mod_tiling.c:4235
@@ -10060,19 +10066,19 @@ msgstr ""
 msgid "Per Application"
 msgstr "التطبيق"
 
-#: src/modules/xkbswitch/e_mod_config.c:523
+#: src/modules/xkbswitch/e_mod_config.c:532
 msgid "Add New Configuration"
 msgstr "أضف إعدادات جديدة"
 
-#: src/modules/xkbswitch/e_mod_config.c:536
+#: src/modules/xkbswitch/e_mod_config.c:547
 msgid "Available"
 msgstr "متاح و متوفر"
 
-#: src/modules/xkbswitch/e_mod_config.c:543
+#: src/modules/xkbswitch/e_mod_config.c:554
 msgid "Model"
 msgstr "نموذج"
 
-#: src/modules/xkbswitch/e_mod_config.c:550
+#: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
 msgstr "متنوع"
 

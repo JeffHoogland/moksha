@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-08-04 09:28+0200\n"
+"POT-Creation-Date: 2024-10-20 17:44+0200\n"
 "PO-Revision-Date: 2015-12-21 22:14+0900\n"
 "Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
 "Language-Team: Korean <KO@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "인라이튼먼트 정보"
 #: src/bin/e_about.c:22 src/bin/e_actions.c:2163 src/bin/e_actions.c:3162
 #: src/bin/e_bodhi_about.c:57 src/bin/e_config_dialog.c:294 src/bin/e_fm.c:1067
 #: src/bin/e_int_border_menu.c:229 src/bin/e_int_border_prop.c:81
-#: src/bin/e_startup.c:156 src/bin/e_theme_about.c:24
+#: src/bin/e_startup.c:157 src/bin/e_theme_about.c:24
 #: src/modules/conf/e_conf.c:186
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:880
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:110
@@ -880,7 +880,7 @@ msgstr "선택"
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
 #: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
 #: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
-#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:569
+#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:580
 msgid "Cancel"
 msgstr "취소"
 
@@ -934,8 +934,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:503
-#: src/bin/e_module.c:822 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:505
+#: src/bin/e_module.c:825 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -944,7 +944,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:568
+#: src/modules/xkbswitch/e_mod_config.c:579
 msgid "OK"
 msgstr "확인"
 
@@ -1046,7 +1046,7 @@ msgstr ""
 "오류가 발생한 파일은<br>%s 입니다<br><br>데이터 깨짐을 방지하기 위해 이 파일"
 "을 삭제했습니다.<br>"
 
-#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:872
+#: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
 #: src/modules/conf_paths/e_mod_main.c:17
 #: src/modules/conf_performance/e_mod_main.c:17
@@ -1926,16 +1926,16 @@ msgstr "내용을 자동으로 스크롤"
 msgid "Plain"
 msgstr "일반"
 
-#: src/bin/e_gadcon.c:1781 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
 msgid "Inset"
 msgstr "덧붙임"
 
-#: src/bin/e_gadcon.c:1794 src/bin/e_int_config_modules.c:53
+#: src/bin/e_gadcon.c:1792 src/bin/e_int_config_modules.c:53
 #: src/modules/conf_theme/e_mod_main.c:237
 msgid "Look"
 msgstr "보기"
 
-#: src/bin/e_gadcon.c:1806 src/bin/e_widget_config_list.c:66
+#: src/bin/e_gadcon.c:1804 src/bin/e_widget_config_list.c:66
 #: src/modules/conf_applications/e_int_config_apps.c:317
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
@@ -1945,15 +1945,15 @@ msgstr "보기"
 msgid "Remove"
 msgstr "제거"
 
-#: src/bin/e_gadcon.c:2448
+#: src/bin/e_gadcon.c:2471
 msgid "Stop moving"
 msgstr "이동 중지"
 
-#: src/bin/e_gadcon.c:3099
+#: src/bin/e_gadcon.c:3125
 msgid "Insufficient gadcon support"
 msgstr "부족한 Gadcon 지원"
 
-#: src/bin/e_gadcon.c:3100
+#: src/bin/e_gadcon.c:3126
 #, c-format
 msgid "Module %s needs to support %s"
 msgstr "%s 모듈은 %s 지원이 필요합니다"
@@ -2552,7 +2552,7 @@ msgstr "위치 지정 요청"
 #: src/bin/e_int_config_modules.c:58 src/bin/e_int_menus.c:288
 #: src/bin/e_shelf.c:2512 src/modules/backlight/e_mod_main.c:309
 #: src/modules/battery/e_mod_main.c:202 src/modules/clock/e_mod_main.c:531
-#: src/modules/clock/e_mod_main.c:829 src/modules/conf/e_conf.c:143
+#: src/modules/clock/e_mod_main.c:838 src/modules/conf/e_conf.c:143
 #: src/modules/conf/e_conf.c:153 src/modules/conf/e_mod_main.c:102
 #: src/modules/conf_dialogs/e_mod_main.c:17
 #: src/modules/conf_interaction/e_int_config_mouse.c:287
@@ -2566,7 +2566,7 @@ msgstr "위치 지정 요청"
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:848
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:859
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
@@ -2764,7 +2764,7 @@ msgstr "모듈 설정"
 msgid "Load"
 msgstr "불러오기"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:605
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:607
 msgid "Unload"
 msgstr "불러오기 해제"
 
@@ -3615,12 +3615,12 @@ msgstr ""
 "지 않습니다.<br><br>모듈 설정 대화상자는 모듈을 다시 선택하게끔 해 줄 것입니"
 "다."
 
-#: src/bin/e_module.c:170
+#: src/bin/e_module.c:172
 #, c-format
 msgid "Loading Module: %s"
 msgstr "%s 모듈 읽기"
 
-#: src/bin/e_module.c:219
+#: src/bin/e_module.c:221
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3629,11 +3629,11 @@ msgstr ""
 "%s 이름을 가진 모듈을 불러오는 중 오류가 발생했습니다<br>모듈 검색 디렉터리에"
 "서 %s 이름을 가진<br>모듈을 찾을 수 없습니다.<br>"
 
-#: src/bin/e_module.c:222 src/bin/e_module.c:235 src/bin/e_module.c:253
+#: src/bin/e_module.c:224 src/bin/e_module.c:237 src/bin/e_module.c:255
 msgid "Error loading Module"
 msgstr "모듈 불러오기 오류"
 
-#: src/bin/e_module.c:230 src/bin/e_module.c:247
+#: src/bin/e_module.c:232 src/bin/e_module.c:249
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3642,12 +3642,12 @@ msgstr ""
 "%s 모듈을 불러오는데 오류가 발생했습니다.<br>이 모듈의 전체 경로는 <br>%s 입"
 "니다.<br>오류 보고서는 다음과 같습니다:<br>%s<br>"
 
-#: src/bin/e_module.c:252
+#: src/bin/e_module.c:254
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "모듈이 필요로 하는 기능을 포함하고 있지 않습니다."
 
-#: src/bin/e_module.c:267
+#: src/bin/e_module.c:269
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3656,23 +3656,23 @@ msgstr ""
 "모듈 API 오류<br>오류 초기화 모듈: %s<br>다음의 모듈 API 최소버전이 필요합니"
 "다: %i.<br>인라이튼먼트가 명시한 모듈 API 버전은 %i 입니다.<br>"
 
-#: src/bin/e_module.c:272
+#: src/bin/e_module.c:274
 #, c-format
 msgid "Moksha %s Module"
 msgstr "인라이튼먼트 %s 모듈"
 
-#: src/bin/e_module.c:600
+#: src/bin/e_module.c:602
 msgid "What action should be taken with this module?<br>"
 msgstr "이 모듈에 취해야 하는 동작이 무엇입니까?<br>"
 
-#: src/bin/e_module.c:606 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:608 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "그대로 유지"
 
-#: src/bin/e_module.c:807
+#: src/bin/e_module.c:810
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3682,11 +3682,11 @@ msgstr ""
 "다.<br>버그를 보고하기 전에 제거하십시오.<br><br>모듈 목록은 다음과 같습니다:"
 "<br><br>"
 
-#: src/bin/e_module.c:819
+#: src/bin/e_module.c:822
 msgid "Unstable module tainting"
 msgstr "불안정한 모듈의 오동작"
 
-#: src/bin/e_module.c:823
+#: src/bin/e_module.c:826
 msgid "I know"
 msgstr "알겠습니다"
 
@@ -4482,7 +4482,7 @@ msgstr "HAL"
 msgid "Hardware"
 msgstr "하드웨어"
 
-#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:476
+#: src/modules/battery/e_mod_main.c:155 src/modules/battery/e_mod_main.c:491
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:354
 msgid "Battery"
 msgstr "배터리"
@@ -4491,37 +4491,42 @@ msgstr "배터리"
 msgid "Power Management Timing"
 msgstr "전원 관리 시간 설정"
 
-#: src/modules/battery/e_mod_main.c:479 src/modules/battery/e_mod_main.c:521
+#: src/modules/battery/e_mod_main.c:494 src/modules/battery/e_mod_main.c:536
 msgid "Your battery is low!"
 msgstr "배터리가 부족합니다!"
 
-#: src/modules/battery/e_mod_main.c:480 src/modules/battery/e_mod_main.c:523
+#: src/modules/battery/e_mod_main.c:495 src/modules/battery/e_mod_main.c:538
 msgid "AC power is recommended."
 msgstr "AC 전원이 필요합니다."
 
-#: src/modules/battery/e_mod_main.c:528
+#: src/modules/battery/e_mod_main.c:542
 #, fuzzy
 msgid "Power now: "
 msgstr "전원 끄기"
 
-#: src/modules/battery/e_mod_main.c:534
+#: src/modules/battery/e_mod_main.c:548
 msgid "Remaining time: "
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:535
+#: src/modules/battery/e_mod_main.c:549
 msgid "hr"
 msgstr ""
 
-#: src/modules/battery/e_mod_main.c:645
+#: src/modules/battery/e_mod_main.c:556
+#, fuzzy
+msgid "Health status: "
+msgstr "마운트 상태:"
+
+#: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
 msgstr "없음"
 
-#: src/modules/battery/e_mod_main.c:750 src/modules/battery/e_mod_main.c:752
-#: src/modules/battery/e_mod_main.c:759 src/modules/battery/e_mod_main.c:761
+#: src/modules/battery/e_mod_main.c:769 src/modules/battery/e_mod_main.c:771
+#: src/modules/battery/e_mod_main.c:778 src/modules/battery/e_mod_main.c:780
 msgid "ERROR"
 msgstr "오류"
 
-#: src/modules/battery/e_mod_main.c:874
+#: src/modules/battery/e_mod_main.c:894
 msgid "Battery Meter"
 msgstr "배터리 측정기"
 
@@ -4545,8 +4550,8 @@ msgstr "설정"
 msgid "Time set"
 msgstr "알림 시계"
 
-#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:935
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:944
+#: src/modules/clock/e_mod_main.c:1168 src/modules/clock/e_mod_main.c:1186
 msgid "Clock"
 msgstr "시계"
 
@@ -4619,7 +4624,7 @@ msgstr ""
 msgid "Set... "
 msgstr ""
 
-#: src/modules/clock/e_mod_main.c:1126
+#: src/modules/clock/e_mod_main.c:1186
 msgid "Toggle calendar"
 msgstr "달력 전환"
 
@@ -5646,24 +5651,24 @@ msgid "Possible Locale problems"
 msgstr "가능한 로캘 문제"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1186
+#: src/modules/conf_intl/e_int_config_intl.c:1187
 msgid "Language Selector"
 msgstr "언어 선택"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1125
-#: src/modules/conf_intl/e_int_config_intl.c:1574
+#: src/modules/conf_intl/e_int_config_intl.c:1575
 #: src/modules/conf_menus/e_int_config_menus.c:171
 #: src/modules/wizard/page_010.c:197
 msgid "System Default"
 msgstr "시스템 기본값"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1160
-#: src/modules/conf_intl/e_int_config_intl.c:1237
+#: src/modules/conf_intl/e_int_config_intl.c:1161
+#: src/modules/conf_intl/e_int_config_intl.c:1238
 msgid "Locale Selected"
 msgstr "로캘 선택함"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1161
-#: src/modules/conf_intl/e_int_config_intl.c:1238
+#: src/modules/conf_intl/e_int_config_intl.c:1162
+#: src/modules/conf_intl/e_int_config_intl.c:1239
 msgid "Locale"
 msgstr "로캘"
 
@@ -9827,7 +9832,7 @@ msgstr ""
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "스크린샷 저장 위치를 선택하십시오"
 
-#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:855
+#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:866
 msgid "Tasks"
 msgstr "작업"
 
@@ -9923,7 +9928,8 @@ msgid "Toggle between rows and columns"
 msgstr "행 열 전환"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-msgid "Swap a window with an other"
+#, fuzzy
+msgid "Swap a window with another"
 msgstr "다른 창과 바꾸기"
 
 #: src/modules/tiling/e_mod_tiling.c:4235
@@ -9995,19 +10001,19 @@ msgstr ""
 msgid "Per Application"
 msgstr "프로그램"
 
-#: src/modules/xkbswitch/e_mod_config.c:523
+#: src/modules/xkbswitch/e_mod_config.c:532
 msgid "Add New Configuration"
 msgstr "새 설정 추가"
 
-#: src/modules/xkbswitch/e_mod_config.c:536
+#: src/modules/xkbswitch/e_mod_config.c:547
 msgid "Available"
 msgstr "사용 가능"
 
-#: src/modules/xkbswitch/e_mod_config.c:543
+#: src/modules/xkbswitch/e_mod_config.c:554
 msgid "Model"
 msgstr "모델"
 
-#: src/modules/xkbswitch/e_mod_config.c:550
+#: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
 msgstr "가변"
 
