@@ -4551,9 +4551,8 @@ msgid "hr"
 msgstr "hod"
 
 #: src/modules/battery/e_mod_main.c:556
-#, fuzzy
 msgid "Health status: "
-msgstr "Stav pripojenia:"
+msgstr "Životnosť batérie: "
 
 #: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
