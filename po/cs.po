@@ -9882,7 +9882,6 @@ msgid "Toggle between rows and columns"
 msgstr "Přepnout mezi řadkami a sloupci"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-#, fuzzy
 msgid "Swap a window with another"
 msgstr "Prohodit okno s jiným"
 
