@@ -4538,9 +4538,8 @@ msgid "hr"
 msgstr "ч"
 
 #: src/modules/battery/e_mod_main.c:556
-#, fuzzy
 msgid "Health status: "
-msgstr "Статус:"
+msgstr "Cтатус батери: "
 
 #: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
@@ -9895,7 +9894,6 @@ msgid "Toggle between rows and columns"
 msgstr "Переключиться между строками и столбцами"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-#, fuzzy
 msgid "Swap a window with another"
 msgstr "Поменять окно местом с другим окном"
 
