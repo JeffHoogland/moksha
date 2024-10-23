@@ -4530,9 +4530,8 @@ msgid "hr"
 msgstr "hr"
 
 #: src/modules/battery/e_mod_main.c:556
-#, fuzzy
 msgid "Health status: "
-msgstr "Estado de montaje:"
+msgstr "Estado de la batería: "
 
 #: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
@@ -9863,7 +9862,6 @@ msgid "Toggle between rows and columns"
 msgstr "Alternar filas/columnas"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-#, fuzzy
 msgid "Swap a window with another"
 msgstr "Intercambiar una ventana con otra"
 
