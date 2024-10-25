@@ -599,6 +599,13 @@ _dlg_add_cb_ok(void *data __UNUSED__, E_Dialog *dlg)
    const char *layout = e_widget_ilist_selected_value_get(cfdata->layout_list);
    const char *model = e_widget_ilist_selected_value_get(cfdata->model_list);
    const char *variant = e_widget_ilist_selected_value_get(cfdata->variant_list);
+   
+   if (eina_list_count(cfdata->cfg_layouts) >= 4)
+     {
+       e_util_dialog_internal(_("Warning"),_("The limit for setxkbmap "
+                                             "command is 4 layouts!"));
+       return;
+     }
 
    /* The new configuration */
    cl = E_NEW(E_Config_XKB_Layout, 1);
