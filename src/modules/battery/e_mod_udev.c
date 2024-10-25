@@ -94,6 +94,9 @@ static void
 _battery_udev_battery_add(const char *syspath)
 {
    Battery *bat;
+   const char *type, *test;
+   double full_design = 0.0;
+   double full = 0.0;
 
    if ((bat = _battery_battery_find(syspath)))
      {
@@ -101,6 +104,46 @@ _battery_udev_battery_add(const char *syspath)
         _battery_udev_battery_update(NULL, bat);
         return;
      }
+   type = eeze_udev_syspath_get_property(syspath, "POWER_SUPPLY_TYPE");
+   if (type)
+     {
+        if ((!strcmp(type, "USB")) || (!strcmp(type, "Mains")))
+          {
+             _battery_udev_ac_add(syspath);
+             eina_stringshare_del(type);
+             return;
+          }
+        if (!!strcmp(type, "Battery"))
+          {
+             eina_stringshare_del(type);
+             return;
+          }
+        eina_stringshare_del(type);
+     }
+   // filter out dummy batteries with no design and no full charge level
+   test = eeze_udev_syspath_get_property(syspath, "POWER_SUPPLY_ENERGY_FULL_DESIGN");
+   if (!test)
+     test = eeze_udev_syspath_get_property(syspath, "POWER_SUPPLY_CHARGE_FULL_DESIGN");
+   if (test)
+    {
+      full_design = strtod(test, NULL);
+      eina_stringshare_del(test);
+    }
+
+   test = eeze_udev_syspath_get_property(syspath, "POWER_SUPPLY_ENERGY_FULL");
+   if (!test)
+     test = eeze_udev_syspath_get_property(syspath, "POWER_SUPPLY_CHARGE_FULL");
+   if (test)
+    {
+      full = strtod(test, NULL);
+      eina_stringshare_del(test);
+    }
+
+   if ((eina_dbl_exact(full_design, 0)) &&
+       (eina_dbl_exact(full, 0)))
+    { // ignore this battery - no full and no full design
+      return;
+    }
 
    if (!(bat = E_NEW(Battery, 1)))
      {
@@ -109,9 +152,9 @@ _battery_udev_battery_add(const char *syspath)
      }
    bat->last_update = ecore_time_get();
    bat->udi = eina_stringshare_add(syspath);
-   bat->poll = ecore_poller_add(ECORE_POLLER_CORE, 
-				battery_config->poll_interval, 
-				_battery_udev_battery_update_poll, bat);
+   bat->poll = ecore_poller_add(ECORE_POLLER_CORE,
+                                battery_config->poll_interval,
+                                _battery_udev_battery_update_poll, bat);
    device_batteries = eina_list_append(device_batteries, bat);
    _battery_udev_battery_update(syspath, bat);
 }
