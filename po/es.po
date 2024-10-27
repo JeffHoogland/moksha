@@ -9952,7 +9952,7 @@ msgstr "Variante"
 
 #: src/modules/xkbswitch/e_mod_config.c:605
 msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr ""
+msgstr "El límite del comando setxkbmap es de 4 disposiciones de teclado."
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278
