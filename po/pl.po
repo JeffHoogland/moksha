@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2024-01-23 07:36-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: Polish\n"
@@ -1742,7 +1742,8 @@ msgstr "Nie dla wszystkich"
 msgid "Yes to all"
 msgstr "Tak dla wszystkich"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Ostrzeżenie"
@@ -10441,6 +10442,10 @@ msgstr "Przesuń"
 #, fuzzy
 msgid "Variant"
 msgstr "Bułgarski"
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
+msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278

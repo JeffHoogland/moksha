@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha E17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2009-03-08 02:01+0000\n"
 "Last-Translator: ersi <Unknown>\n"
 "Language-Team: Swedish\n"
@@ -1827,7 +1827,8 @@ msgstr "Nej till allt"
 msgid "Yes to all"
 msgstr "Ja till allt"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 #, fuzzy
 msgid "Warning"
@@ -10894,6 +10895,10 @@ msgstr "Moduler"
 
 #: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78

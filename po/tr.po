@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: E17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2013-09-10 23:23+0000\n"
 "Last-Translator: H. İbrahim Güngör <h.ibrahim.gungor@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
@@ -1709,7 +1709,8 @@ msgstr "Tümüne hayır"
 msgid "Yes to all"
 msgstr "Tümüne evet"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr ""
@@ -9899,6 +9900,10 @@ msgstr "Model"
 #: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
 msgstr "Türev"
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
+msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278

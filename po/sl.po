@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: trunk.HEAD\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2011-03-28 12:04+0100\n"
 "Last-Translator: Renato Rener <renato.rener@gmail.com>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -1790,7 +1790,8 @@ msgstr "Ne za vse"
 msgid "Yes to all"
 msgstr "Da za vse"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr ""
@@ -10468,6 +10469,10 @@ msgstr "Način"
 
 #: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78

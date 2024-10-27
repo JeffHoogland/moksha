@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2010-05-09 22:20+0100\n"
 "Last-Translator: Audun Gangsto <feitingen@gmail.com>\n"
 "Language-Team: E17-nb <LL@li.org>\n"
@@ -1806,7 +1806,8 @@ msgstr "Nei til alle"
 msgid "Yes to all"
 msgstr "Ja til alle"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "Advarsel"
@@ -10909,6 +10910,10 @@ msgstr "Flytt"
 
 #: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78

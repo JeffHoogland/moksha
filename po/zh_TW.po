@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-20 17:44+0200\n"
+"POT-Creation-Date: 2024-10-27 07:09+0100\n"
 "PO-Revision-Date: 2015-12-08 23:27+1200\n"
 "Last-Translator: Sam Lin <semin2006@gmail.com>\n"
 "Language-Team: none\n"
@@ -1683,7 +1683,8 @@ msgstr "不套用至全部"
 msgid "Yes to all"
 msgstr "套用至全部"
 
-#: src/bin/e_fm.c:10523 src/modules/notification/e_mod_main.c:713
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
 msgstr "警告"
@@ -9804,6 +9805,10 @@ msgstr "模式"
 
 #: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Variant"
+msgstr ""
+
+#: src/modules/xkbswitch/e_mod_config.c:605
+msgid "The limit for setxkbmap command is 4 layouts!"
 msgstr ""
 
 #: src/modules/notification/e_mod_main.c:78
