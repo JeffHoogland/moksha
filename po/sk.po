@@ -9985,7 +9985,7 @@ msgstr "Variant"
 
 #: src/modules/xkbswitch/e_mod_config.c:605
 msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr ""
+msgstr "Setxkbmap podporuje maximálne 4 rozloženia klávesnice!"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278
