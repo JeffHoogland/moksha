@@ -9984,7 +9984,7 @@ msgstr "Вариант"
 
 #: src/modules/xkbswitch/e_mod_config.c:605
 msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr ""
+msgstr "Ограничение для команды setxkbmap: 4 pаскладки клавиатуры!"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278
