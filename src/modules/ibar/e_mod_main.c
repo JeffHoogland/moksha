@@ -955,8 +955,11 @@ _ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src)
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
-       sprintf(buf, "%d", eina_list_count(exe->borders));
-       edje_object_part_text_set(ic->o_holder, "e.text.label", buf);
+       if (eina_list_count(exe->borders) > 0)
+         {
+           sprintf(buf, "%d", eina_list_count(exe->borders));
+           edje_object_part_text_set(ic->o_holder, "e.text.label", buf);
+         }
      }
 
    if (ic->o_holder)
