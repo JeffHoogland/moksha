@@ -4580,9 +4580,8 @@ msgid "hr"
 msgstr "Std"
 
 #: src/modules/battery/e_mod_main.c:556
-#, fuzzy
 msgid "Health status: "
-msgstr "Einhänge-Status:"
+msgstr "Status der Batterie: "
 
 #: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
@@ -10055,7 +10054,7 @@ msgstr "Variante"
 
 #: src/modules/xkbswitch/e_mod_config.c:605
 msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr ""
+msgstr "Die Grenze für den Befehl setxkbmap liegt bei 4 Tastaturbelegungen!"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278
