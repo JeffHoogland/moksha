@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-10-27 07:09+0100\n"
-"PO-Revision-Date: 2024-10-27 22:50+0000\n"
+"PO-Revision-Date: 2024-11-09 10:08+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -380,7 +380,7 @@ msgstr "Mostrar área de trabalho"
 
 #: src/bin/e_actions.c:3304
 msgid "Show The Shelf"
-msgstr "Mostrar painel"
+msgstr "Mostrar o painel"
 
 #: src/bin/e_actions.c:3309
 msgid "Flip Desktop To..."
@@ -2289,7 +2289,7 @@ msgstr "Normal"
 
 #: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
-msgstr "Sempre por baixo"
+msgstr "Sempre abaixo"
 
 #: src/bin/e_int_border_menu.c:1118
 msgid "Pin to Desktop"
@@ -2433,11 +2433,11 @@ msgstr "Nenhum"
 
 #: src/bin/e_int_border_prop.c:302
 msgid "Above"
-msgstr "Por cima"
+msgstr "Acima"
 
 #: src/bin/e_int_border_prop.c:306
 msgid "Below"
-msgstr "Por baixo"
+msgstr "Abaixo"
 
 #: src/bin/e_int_border_prop.c:385
 msgid "ICCCM Properties"
@@ -2929,11 +2929,11 @@ msgstr "Painel %s"
 
 #: src/bin/e_int_menus.c:1784
 msgid "Add a Shelf"
-msgstr "Adicionar painel"
+msgstr "Adicionar um painel"
 
 #: src/bin/e_int_menus.c:1791
 msgid "Delete a Shelf"
-msgstr "Eliminar painel"
+msgstr "Eliminar um painel"
 
 #: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
@@ -2942,15 +2942,15 @@ msgstr "Definições do painel"
 
 #: src/bin/e_int_shelf_config.c:171
 msgid "Above Everything"
-msgstr "Por cima de tudo"
+msgstr "Acima de tudo"
 
 #: src/bin/e_int_shelf_config.c:173
 msgid "Below Windows"
-msgstr "Por baixo das janelas"
+msgstr "Abaixo das janelas"
 
 #: src/bin/e_int_shelf_config.c:175
 msgid "Below Everything"
-msgstr "Por baixo de tudo"
+msgstr "Abaixo de tudo"
 
 #: src/bin/e_int_shelf_config.c:177
 msgid "Allow windows to overlap the shelf"
@@ -2977,7 +2977,7 @@ msgstr "Estilo"
 
 #: src/bin/e_int_shelf_config.c:250
 msgid "Auto-hide the shelf"
-msgstr "Ocultar automaticamente"
+msgstr "Ocultar automaticamente o painel"
 
 #: src/bin/e_int_shelf_config.c:255
 msgid "Show on mouse in"
@@ -3783,12 +3783,12 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "A ocultação do painel não vai funcionar<br>corretamente com a configuração "
-"atual.<br>Defina o painel para \"Por baixo de tudo\"<br>ou desative a "
-"ocultação automática."
+"atual.<br>Defina o painel para \"Abaixo de tudo\"<br>ou desative a ocultação "
+"automática."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
-msgstr "Adicionar um painel"
+msgstr "Adicionar novo painel"
 
 #: src/bin/e_shelf.c:1198
 msgid "Shelf Error"
@@ -6424,7 +6424,7 @@ msgstr "Tem a certeza que quer eliminar este \"%s\"?"
 
 #: src/modules/conf_shelves/e_int_config_shelf.c:392
 msgid "Confirm Shelf Deletion"
-msgstr "Confirmação"
+msgstr "Confirmar a eliminação do painel"
 
 #: src/modules/conf_theme/e_int_config_wallpaper.c:141
 msgid "Wallpaper Settings"
@@ -6566,7 +6566,7 @@ msgstr "Base para o fundo dos diálogos"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:98
 msgid "Shelf Background Base"
-msgstr "Base para o fundo do painel"
+msgstr "Base de fundo do painel"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:99
 msgid "File Manager Background Base"
@@ -7525,7 +7525,7 @@ msgstr "Permitir manipulação de janelas maximizadas"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
 msgid "Allow windows above fullscreen window"
-msgstr "Permitir janelas por cima de janelas em ecrã inteiro"
+msgstr "Permitir janelas acima da janela de ecrã inteiro"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 msgid "Snap windows to the screen edge"
@@ -9026,9 +9026,9 @@ msgid ""
 "already taken by internal<br>code for context menus.<br>This button only "
 "works in the popup."
 msgstr ""
-"Não pode utilizar o botão direito do rato neste<br>painel pois este já é "
-"objeto de manipulação<br>pelos menus de contexto.<br>Este botão só funciona "
-"nos alertas."
+"Não pode utilizar o botão direito do rato no<br>painel para este efeito, uma "
+"vez que já está ocupado<br>pelo código interno dos menus de contexto."
+"<br>Este botão apenas funciona nos alertas."
 
 #: src/modules/pager/e_mod_main.c:913
 msgid "This Desktop Settings"
@@ -9534,7 +9534,7 @@ msgstr ""
 #: src/modules/systray/e_mod_main.c:953
 msgid "Systray cannot work in a shelf that is set to below everything."
 msgstr ""
-"A área de notificação não funciona num painel que esteja por baixo de tudo."
+"A área de notificação não funciona num painel que esteja abaixo de tudo."
 
 #: src/modules/systray/e_mod_main.c:1148
 msgid "Systray"
