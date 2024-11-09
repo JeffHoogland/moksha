@@ -2167,7 +2167,7 @@ _ibar_manager_find(E_Manager *man)
    Eina_List *l;
    
    if (!z) return NULL;
-   // find iubar on current zone
+   // find ibar on current zone
    EINA_LIST_FOREACH(ibars, l, b)
      {
         if ((!b->inst) || (!b->inst->gcc) || (!b->inst->gcc->gadcon)) continue;
