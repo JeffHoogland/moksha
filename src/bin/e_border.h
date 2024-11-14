@@ -662,6 +662,8 @@ struct _E_Border
    E_Exec_Instance           *exe_inst;
    E_Pointer                 *pointer;
 
+   double                     desktop_last_change; // used to rate limit desktop lookups/changes
+
    unsigned char              comp_hidden   : 1;
 
    unsigned char              post_move   : 1;

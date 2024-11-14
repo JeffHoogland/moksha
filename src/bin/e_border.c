@@ -8623,6 +8623,17 @@ _e_border_eval0(E_Border *bd)
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN, bd);
 }
 
+////////////////////////////////////////////////
+
+static Eina_Bool
+_cb_e_border_dummy_wake_eval(void *data)
+{
+  Ecore_Timer **timer = data;
+
+  *timer = NULL;
+  return EINA_FALSE;
+}
+
 static void
 _e_border_eval(E_Border *bd)
 {
@@ -9305,6 +9316,10 @@ _e_border_eval(E_Border *bd)
 
    if (bd->changes.icon)
      {
+        double t_dif = ecore_loop_time_get() - bd->desktop_last_change;
+
+        if (t_dif > 0.2) // rate liomit to 5 times per sec
+          {
         if (bd->desktop && (!bd->new_client)) 
           {
              efreet_desktop_free(bd->desktop);
@@ -9444,6 +9459,21 @@ _e_border_eval(E_Border *bd)
                }
           }
         bd->changes.icon = 0;
+        bd->desktop_last_change = ecore_loop_time_get();
+    }
+      else
+         {
+           static Ecore_Timer *wakeup_timer = NULL;
+
+           // queue a wakeup in 0.2 sec if we ignored this change so a loop
+           // cycle will catch this on eval and time delta  will be > 0.2 
+           if (wakeup_timer)
+             ecore_timer_reset(wakeup_timer);
+           else
+             wakeup_timer = ecore_timer_add(0.2,
+                                            _cb_e_border_dummy_wake_eval,
+                                            &wakeup_timer);
+         }
 
    bd->new_client = 0;
    bd->changed = 0;
