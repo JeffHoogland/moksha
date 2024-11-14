@@ -501,6 +501,10 @@ struct _E_Border
       Ecore_X_Window_Attributes initial_attributes;
    } client;
 
+   struct {
+      unsigned int  steam_game_id;
+   } steam;
+
    E_Container_Shape *shape;
 
    unsigned int       visible : 1;

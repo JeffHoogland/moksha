@@ -9339,6 +9339,29 @@ _e_border_eval(E_Border *bd)
                bd->desktop = efreet_util_desktop_name_find(desktop);
           }
         if (!bd->desktop)
+             {
+               if (bd->steam.steam_game_id)
+                 {
+                   Efreet_Desktop *d;
+                   Eina_List *desks = efreet_util_desktop_name_glob_list("*");
+                   EINA_LIST_FREE(desks, d)
+                     {
+                       if (!d->exec) continue;
+                       if (!strncmp(d->exec, "steam ", 6))
+                         {
+                           const char *st = strstr(d->exec, "steam://rungameid/");
+                           if (st)
+                             {
+                               st += strlen("steam://rungameid/");
+                               unsigned int id = atoi(st);
+                               if (id == bd->steam.steam_game_id)
+                                 bd->desktop = d;
+                             }
+                         }
+                     }
+                 }
+             }
+        if (!bd->desktop)
           {
              if ((bd->client.icccm.name) && (bd->client.icccm.class))
                bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
@@ -9354,9 +9377,13 @@ _e_border_eval(E_Border *bd)
           }
         if (!bd->desktop)
           {
+             if (bd->client.icccm.class && bd->client.icccm.name &&
+                   (!strcmp(bd->client.icccm.class, "Steam")) &&
+                   (!strcmp(bd->client.icccm.name, "Steam")))
+                 bd->desktop = efreet_util_desktop_file_id_find("steam.desktop");
              /* libreoffice and maybe others match window class
                 with .desktop file name */
-             if (bd->client.icccm.class)
+             else if (bd->client.icccm.class)
                {
                   char buf[128];
                   snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
