@@ -8579,7 +8579,7 @@ msgstr "Pozadí"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Hover (Key Toggle)"
-msgstr ""
+msgstr "Nad pozadím (Přepínatelné klávesami)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163

@@ -8592,7 +8592,7 @@ msgstr "Pozadie"
 
 #: src/modules/gadman/e_mod_config.c:22
 msgid "Hover (Key Toggle)"
-msgstr "Umiestnite kurzor myši na prvok (Conmutador de Tecla)"
+msgstr "Nad pozadím (Prepínateľná klávesami)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
