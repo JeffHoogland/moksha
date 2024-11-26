@@ -1501,6 +1501,75 @@ _e_gadman_client_remove(void *data __UNUSED__, E_Gadcon_Client *gcc)
    e_object_del(E_OBJECT(gcc));
 }
 
+static Eina_Bool
+_gadman_shelf_orient_change(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
+{
+   E_Gadcon_Client *gcc = NULL;
+   E_Config_Gadcon_Client *cf_gcc;
+   E_Gadcon *gc;
+   E_Shelf *es;
+   E_Zone *zone;
+   Eina_List *l, *ll, *lll;
+   int x, y, w, h;
+
+   /* This loop cycles around all desktop gadgets and checks */
+   /* the shelf position conflicts - overlap                 */
+   /* it should cover the multiple screens as well           */
+
+   EINA_LIST_FOREACH(Man->gadcons[GADMAN_LAYER_BG], l, gc)
+     {
+       EINA_LIST_FOREACH(gc->cf->clients, ll, cf_gcc)
+         {
+           EINA_LIST_FOREACH(e_shelf_list(), lll, es)
+             {
+               gcc = e_gadcon_client_find(gc, cf_gcc);
+               evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
+               zone = gcc->gadcon->zone;
+               if (zone != es->zone) continue;
+               if (x > zone->x) x = x - zone->x;
+               if (y > zone->y) y = y - zone->y;
+
+               switch (es->gadcon->orient)
+                 {
+                   case E_GADCON_ORIENT_RIGHT:
+                   case E_GADCON_ORIENT_CORNER_RT:
+                   case E_GADCON_ORIENT_CORNER_RB:
+                     if (x + w > es->x)
+                       gcc->cf->geom.pos_x = ((double)x - es->w) / (double)gcc->gadcon->zone->w;
+                    break;
+
+                   case E_GADCON_ORIENT_LEFT:
+                   case E_GADCON_ORIENT_CORNER_LT:
+                   case E_GADCON_ORIENT_CORNER_LB:
+                     if (x < es->x + es->w)
+                       gcc->cf->geom.pos_x = ((double)x + es->w) / (double)gcc->gadcon->zone->w;
+                    break;
+
+                   case E_GADCON_ORIENT_TOP:
+                   case E_GADCON_ORIENT_CORNER_TL:
+                   case E_GADCON_ORIENT_CORNER_TR:
+                     if (y < es->y + es->h)
+                       gcc->cf->geom.pos_y = ((double)y + es->h) / (double)gcc->gadcon->zone->h;
+                    break;
+
+                   case E_GADCON_ORIENT_BOTTOM:
+                   case E_GADCON_ORIENT_CORNER_BL:
+                   case E_GADCON_ORIENT_CORNER_BR:
+                     if (y + h > es->y)
+                       gcc->cf->geom.pos_y = ((double)y - es->h) / (double)gcc->gadcon->zone->h;
+                    break;
+
+                   default:
+                    break;
+                 }
+               _apply_widget_position(gcc);
+            }
+        }
+     }
+
+   return ECORE_CALLBACK_RENEW;
+}
+
 static void
 _e_gadman_handlers_add(void)
 {
@@ -1508,6 +1577,7 @@ _e_gadman_handlers_add(void)
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_ZONE_DEL, _e_gadman_cb_zone_del, NULL);
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_UPDATE, _gadman_module_cb, NULL);
    E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_MODULE_INIT_END, _gadman_module_init_end_cb, NULL);
+   E_LIST_HANDLER_APPEND(_gadman_hdls, E_EVENT_SHELF_ADD, _gadman_shelf_orient_change, NULL);
 }
 
 static void
