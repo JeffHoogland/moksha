@@ -9964,7 +9964,6 @@ msgid "Toggle between rows and columns"
 msgstr "Zwischen Zeilen und Spalten umschalten"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-#, fuzzy
 msgid "Swap a window with another"
 msgstr "Ein Fenster mit einem anderen tauschen"
 
