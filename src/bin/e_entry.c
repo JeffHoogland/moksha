@@ -1,4 +1,8 @@
 #include "e.h"
+#ifdef HAVE_ELEMENTARY
+# include <Elementary.h>
+static Evas_Object * clipboard_win = NULL;
+#endif
 
 #define ENTRY_PART_NAME "e.text.text"
 
@@ -93,6 +97,9 @@ e_entry_add(Evas *evas)
      }
 
    _e_entry_smart_use++;
+   #ifdef HAVE_ELEMENTARY
+   clipboard_win = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
+   #endif
    return evas_object_smart_add(evas, _e_entry_smart);
 }
 
@@ -450,13 +457,6 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
    E_Entry_Smart_Data *sd;
    Evas_Event_Mouse_Down *event;
 
-   /* Efl version 1.24.x and greater destroy the abilty to copy and paste in e_entry
-    *  we disable this functionality to avoid questions from users.
-    *
-    * FIXME */
-
-   Eina_Bool efl_hack = (EFL_MINOR < 24);
-
    if ((!obj) || (!(sd = evas_object_smart_data_get(obj))))
      return;
    if (!(event = event_info))
@@ -499,7 +499,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
                        mi = e_menu_item_new(sd->popup);
                        e_menu_item_separator_set(mi, 1);
                        
-                       if (!s_passwd && efl_hack)
+                       if (!s_passwd)
                          {
                             mi = e_menu_item_new(sd->popup);
                             e_menu_item_label_set(mi, _("Cut"));
@@ -508,7 +508,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
                          }
                     }
                }
-             if (!s_passwd && efl_hack)
+             if (!s_passwd)
                {
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Copy"));
@@ -518,7 +518,7 @@ _e_entry_mouse_down_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *o
           }
         if (sd->enabled)
           {
-             if (!sd->noedit && efl_hack)
+             if (!sd->noedit)
                {
                   mi = e_menu_item_new(sd->popup);
                   e_menu_item_label_set(mi, _("Paste"));
@@ -576,7 +576,6 @@ _e_entry_x_selection_notify_handler(void *data, int type __UNUSED__, void *event
                }
           }
      }
-
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -613,16 +612,49 @@ _e_entry_x_selection_update(Evas_Object *entry)
      ecore_x_selection_primary_set(xwin, text, strlen(text) + 1);
 }
 
+static Eina_Bool
+_selection_data_cb(void *data EINA_UNUSED,
+                   Evas_Object *obj,
+                   Elm_Selection_Data *sel_data)
+{
+   char *buf = NULL;
+
+   if (!sel_data->data) return EINA_FALSE;
+
+   buf = malloc(sel_data->len + 1);
+   if (!buf)
+     {
+        ERR("Failed to allocate memory, obj: %p", obj);
+        return EINA_FALSE;
+     }
+   memcpy(buf, sel_data->data, sel_data->len);
+   buf[sel_data->len] = '\0';
+
+   char *text = evas_textblock_text_utf8_to_markup(
+         edje_object_part_object_get(obj, ENTRY_PART_NAME),
+         buf);
+   if (text)
+     {
+       edje_object_part_text_user_insert(obj,
+                      ENTRY_PART_NAME, text);
+       free(text);
+     }
+
+   free(buf);
+   return EINA_TRUE;
+}
+
+
 static void
 _entry_paste_request_signal_cb(void *data,
-      Evas_Object *obj __UNUSED__,
+      Evas_Object *obj,
       const char *emission,
       const char *source __UNUSED__)
 {
    Ecore_X_Window xwin;
    E_Win *win;
    E_Container *con;
-   
+
    if (!(win = e_win_evas_object_win_get(data)))
      {
         xwin = e_grabinput_key_win_get();
@@ -635,6 +667,14 @@ _entry_paste_request_signal_cb(void *data,
      }
    else
      xwin = win->evas_win;
+
+   #ifdef HAVE_ELEMENTARY
+   Elm_Sel_Type type = (emission[sizeof("entry,paste,request,")] == '1') ?
+     ELM_SEL_TYPE_PRIMARY : ELM_SEL_TYPE_CLIPBOARD;
+   elm_cnp_selection_get
+     (obj, type, ELM_SEL_FORMAT_TEXT, _selection_data_cb, NULL);
+   return;
+   #endif
 
    if (emission[sizeof("entry,paste,request,")] == '1')
      {
@@ -989,7 +1029,18 @@ _e_entry_cb_copy(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
                   xwin = ecore_evas_window_get(con->bg_ecore_evas);
                }
           }
-        ecore_x_selection_clipboard_set(xwin, range, strlen(range) + 1);
+         #ifdef HAVE_ELEMENTARY
+         elm_cnp_selection_set(clipboard_win,
+                        ELM_SEL_TYPE_PRIMARY,
+                        ELM_SEL_FORMAT_TEXT,
+                        range, strlen(range));
+         elm_cnp_selection_set(clipboard_win,
+                        ELM_SEL_TYPE_CLIPBOARD,
+                        ELM_SEL_FORMAT_TEXT,
+                        range, strlen(range));
+         #else
+         ecore_x_selection_clipboard_set(xwin, range, strlen(range) + 1);
+         #endif
      }
 }
 
@@ -1018,7 +1069,13 @@ _e_entry_cb_paste(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
              xwin = ecore_evas_window_get(con->bg_ecore_evas);
           }
      }
+
+   #ifdef HAVE_ELEMENTARY
+   elm_cnp_selection_get
+     (sd->entry_object, ELM_SEL_TYPE_CLIPBOARD, ELM_SEL_FORMAT_TEXT, _selection_data_cb, NULL);
+   #else
    ecore_x_selection_clipboard_request(xwin, ECORE_X_SELECTION_TARGET_UTF8_STRING);
+   #endif
 }
 
 static void
