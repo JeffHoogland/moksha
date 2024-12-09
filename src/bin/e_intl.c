@@ -630,7 +630,7 @@ e_intl_locale_parts_get(const char *locale)
    unsigned int locale_idx;
    int tmp_idx = 0;
 
-   /* Parse Loop - Seperators are _ . @ */
+   /* Parse Loop - Separators are _ . @ */
    for (locale_idx = 0; locale_idx < strlen(locale); locale_idx++)
      {
         char locale_char;
