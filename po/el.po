@@ -2600,7 +2600,7 @@ msgstr "Αίτηση Θέσης"
 #: src/modules/clipboard/e_mod_main.c:301
 #: src/modules/clipboard/e_mod_main.c:453 src/modules/places/e_mod_main.c:518
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #: src/bin/e_int_border_prop.c:505
 msgid "Modal"
@@ -6172,7 +6172,7 @@ msgstr "Κεντρικό μενού"
 #: src/modules/conf_menus/e_int_config_menus.c:260
 #: src/modules/fileman/e_mod_menu.c:437 src/modules/places/e_mod_config.c:247
 msgid "Favorites"
-msgstr ""
+msgstr "Αγαπημένα"
 
 #: src/modules/conf_menus/e_int_config_menus.c:266
 msgid "Applications Display"
@@ -7171,7 +7171,7 @@ msgstr "Σφάλμα Αρχείου Θέματος"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
+msgstr "Το %s πιθανώς δείν είναι θέμα του Moksha"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
@@ -8694,7 +8694,7 @@ msgstr "Τρέχον Κατάλογος"
 #: src/modules/fileman/e_mod_menu.c:421 src/modules/places/e_mod_config.c:232
 #: src/modules/places/e_mod_places.c:1060
 msgid "Home"
-msgstr "Home"
+msgstr "Αρχικός κατάλογος"
 
 #: src/modules/fileman/e_mod_menu.c:451
 msgid "Root"
@@ -9472,7 +9472,7 @@ msgstr ""
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:314
 msgid "Like so:"
-msgstr ""
+msgstr "Κάπως έτσι:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:316
 #: src/modules/quickaccess/e_mod_quickaccess.c:835
@@ -10170,7 +10170,7 @@ msgstr "Είσοδος σε Κατάσταση Παρουσίασης"
 
 #: src/modules/notification/e_mod_main.c:628
 msgid "Moksha is in <b>presentation</b> mode."
-msgstr ""
+msgstr "Είσοδος σε Κατάσταση Παρουσίασης"
 
 #: src/modules/notification/e_mod_main.c:632
 msgid "Exited Presentation Mode"
