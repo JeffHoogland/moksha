@@ -2,6 +2,7 @@
 Type=Link
 Name=Backlight
 Name[ca]=Il·luminació
+Name[cs]=Jas obrazovky
 Name[de]=Hintergrundbeleuchtung
 Name[eo]=Fona lumo
 Name[es]=Iluminación
@@ -21,6 +22,7 @@ Name[sr]=Позадинско светло
 Name[tr]=Ekran ışığı
 Comment=Backlight control slider gadget.
 Comment[ca]=Cursor per a controlar la retroil·luminació.
+Comment[cs]=Ovládání jasu obrazovky.
 Comment[de]=Hintergrundbeleuchtungschieberegler.
 Comment[eo]=Akcesorajo de kontrolo-ŝovilo de fona lumo.
 Comment[es]=Deslizador para controlar la iluminación.

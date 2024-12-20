@@ -2,6 +2,7 @@
 Type=Link
 Name=Access
 Name[ca]=Accessibilitat
+Name[cs]=Dostupnost
 Name[eo]=Atingo
 Name[es]=Accesibilidad
 Name[fr]=Accès
@@ -14,6 +15,7 @@ Name[ru]=Доступность
 Name[sk]=Dostupnosť
 Comment=Accessibility module designed to improve ease of use for the vision impaired and the blind.
 Comment[ca]=Mòdul d'accessibilitat dissenyat per a facilitar l'ús a persones amb discapacitat visual.
+Comment[cs]=Modul přístupnosti navržený tak, aby usnadnil používání pro nevidomé a slabozraké.
 Comment[eo]=Modulo por alirebleco elpensita por plifaciligi uzadon de vido ĉe misvidantoj kaj blinduloj.
 Comment[es]=Módulo de accesibilidad diseñado para facilitar el uso a ciegos y discapacitados visuales.
 Comment[fr]=Module d'accessibilité permettant d'améliorer l'expérience utilisateur des déficients visuels.
