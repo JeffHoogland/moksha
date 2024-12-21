@@ -2,6 +2,7 @@
 Type=Link
 Name=Screen
 Name[ca]=Pantalla
+Name[cs]=Obrazovka
 Name[de]=Bildschirm
 Name[eo]=Ekrano
 Name[es]=Pantalla
@@ -22,6 +23,7 @@ Name[sr]=Екран
 Name[tr]=Ekran
 Comment=Used to configure your screen.
 Comment[ca]=Configuració de la pantalla.
+Comment[cs]=Nastavení obrazovky.
 Comment[de]=Wird benutzt, um den Bildschirm zu konfigurieren
 Comment[eo]=Ekrano ne agordeblas.
 Comment[es]=Usado para configurar su pantalla.

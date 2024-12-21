@@ -2,6 +2,7 @@
 Type=Link
 Name=Interaction
 Name[ca]=Interacció
+Name[cs]=Interakce
 Name[de]=Interaktion
 Name[el]=Αλληλεπίδραση
 Name[eo]=Interago
@@ -22,6 +23,7 @@ Name[sr]=Међудејство
 Name[tr]=Etkileşim
 Comment=Configure Mouse and Touch input.
 Comment[ca]=Configura les entrades de ratolí i tàctil.
+Comment[cs]=Nastavení myši a touchpadu.
 Comment[de]=Maus und Berührungseingabe konfigurieren
 Comment[eo]=Agodi musan kaj tuŝeblan enigon.
 Comment[es]=Configure el ratón y la pantalla táctil.

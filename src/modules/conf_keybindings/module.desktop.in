@@ -2,6 +2,7 @@
 Type=Link
 Name=Input Control Settings
 Name[ca]=Preferències dels dispositius d'entrada
+Name[cs]=Nastavení vstupů
 Name[de]=Einstellungen der Eingangssteuerung
 Name[eo]=Agordoj de kontrolo de enigo
 Name[es]=Preferencias de los dispositivos de entrada
@@ -20,6 +21,7 @@ Name[sr]=Поставке управљања уносом
 Name[tr]=Giriş Denetemi Ayarları
 Comment=Key, Mouse and Button control settings.
 Comment[ca]=Configuració del teclat, ratolí i botons.
+Comment[cs]=Nastavení klávesnice, myši a ovládačů.
 Comment[de]=Steuerungseinstellungen der Tasten, der Maus und der Knöpfe.
 Comment[eo]=Agordoj de klavoj, musoj kaj butonoj.
 Comment[es]=Configuraciones del ratón, teclado y botones.

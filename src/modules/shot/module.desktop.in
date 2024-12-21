@@ -2,6 +2,7 @@
 Type=Link
 Name=Shot
 Name[ca]=Captura de pantalla
+Name[cs]=Snímek obrazovky
 Name[de]=Shot
 Name[el]=Shot
 Name[eo]=Ekrankopio
@@ -21,6 +22,7 @@ Name[sr]=Сликање радне површи
 Name[tr]=Ekran Görüntüsü
 Comment=Simple screenshot+save/upload module.
 Comment[ca]=Mòdul per a desar o compartir captures de pantalla.
+Comment[cs]=Jednoduchý modul pro ukladání a sdílení snímků obrazovky.
 Comment[de]=Einfaches Modul zum Speichern und Hochladen von Bildschirmfotos
 Comment[eo]=Simpla modulo por registri kaj kunhavigi ekrankopiojn.
 Comment[es]=Un módulo simple para guardar y subir capturas de pantalla.

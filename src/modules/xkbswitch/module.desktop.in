@@ -2,6 +2,7 @@
 Type=Link
 Name=Keyboard
 Name[ca]=Teclat
+Name[cs]=Klávesnice
 Name[de]=Tastatur
 Name[el]=Πληκτρολόγιο
 Name[eo]=Klavaro
@@ -23,6 +24,7 @@ Name[sr]=Тастатура
 Name[tr]=Klavye
 Comment=Keyboard layout configuration and switcher.
 Comment[ca]=Configuració i commutació de les disposicions del teclat.
+Comment[cs]=Konfigurace a přepínání rozložení kláves.
 Comment[de]=Konfiguration der Tastaturanordnung und Umschalter.
 Comment[eo]=Agordo de klavara arango kaj interŝanĝilo.
 Comment[es]=Configuración y conmutador de las disposiciones del teclado.
