@@ -501,10 +501,6 @@ struct _E_Border
       Ecore_X_Window_Attributes initial_attributes;
    } client;
 
-   struct {
-      unsigned int  steam_game_id;
-   } steam;
-
    E_Container_Shape *shape;
 
    unsigned int       visible : 1;
@@ -665,8 +661,6 @@ struct _E_Border
    Efreet_Desktop            *desktop;
    E_Exec_Instance           *exe_inst;
    E_Pointer                 *pointer;
-
-   double                     desktop_last_change; // used to rate limit desktop lookups/changes
 
    unsigned char              comp_hidden   : 1;
 

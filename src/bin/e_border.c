@@ -8623,17 +8623,6 @@ _e_border_eval0(E_Border *bd)
    _e_border_hook_call(E_BORDER_HOOK_EVAL_POST_BORDER_ASSIGN, bd);
 }
 
-////////////////////////////////////////////////
-
-static Eina_Bool
-_cb_e_border_dummy_wake_eval(void *data)
-{
-  Ecore_Timer **timer = data;
-
-  *timer = NULL;
-  return EINA_FALSE;
-}
-
 static void
 _e_border_eval(E_Border *bd)
 {
@@ -9316,163 +9305,132 @@ _e_border_eval(E_Border *bd)
 
    if (bd->changes.icon)
      {
-        double t_dif = ecore_loop_time_get() - bd->desktop_last_change;
-
-        if (t_dif > 0.2) // rate liomit to 5 times per sec
+        if (bd->desktop && (!bd->new_client)) 
           {
-            if (bd->desktop && (!bd->new_client)) 
-              {
-                efreet_desktop_free(bd->desktop);
-                bd->desktop = NULL;
-              }
-            if (bd->icon_object)
-              {
-                 evas_object_del(bd->icon_object);
-                 bd->icon_object = NULL;
-              }
-            if (bd->remember && bd->remember->prop.desktop_file)
-              {
-                 const char *desktop = bd->remember->prop.desktop_file;
+             efreet_desktop_free(bd->desktop);
+             bd->desktop = NULL;
+          }
+        if (bd->icon_object)
+          {
+             evas_object_del(bd->icon_object);
+             bd->icon_object = NULL;
+          }
+        if (bd->remember && bd->remember->prop.desktop_file)
+          {
+             const char *desktop = bd->remember->prop.desktop_file;
 
-                 bd->desktop = efreet_desktop_get(desktop);
-                 if (!bd->desktop)
-                   bd->desktop = efreet_util_desktop_name_find(desktop);
-              }
-            if (!bd->desktop)
-              {
-                if (bd->steam.steam_game_id)
-                  {
-                     Efreet_Desktop *d;
-                     Eina_List *desks = efreet_util_desktop_name_glob_list("*");
-                     EINA_LIST_FREE(desks, d)
-                       {
-                         if (!d->exec) continue;
-                         if (!strncmp(d->exec, "steam ", 6))
-                           {
-                             const char *st = strstr(d->exec, "steam://rungameid/");
-                             if (st)
-                               {
-                                 st += strlen("steam://rungameid/");
-                                 unsigned int id = atoi(st);
-                                 if (id == bd->steam.steam_game_id)
-                                   bd->desktop = d;
-                               }
-                           }
-                       }
-                   }
+             bd->desktop = efreet_desktop_get(desktop);
+             if (!bd->desktop)
+               bd->desktop = efreet_util_desktop_name_find(desktop);
+          }
+        if (!bd->desktop)
+          {
+             if ((bd->client.icccm.name) && (bd->client.icccm.class))
+               bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
+                                                               bd->client.icccm.class);
+          }
+        if (!bd->desktop && bd->internal)
+          {
+              /* Moksha internal dialogs to give a desktop file */
+              char buf[128];
+              snprintf(buf, sizeof(buf), "%s/enlightenment/modules/ibar/ibar.desktop", 
+                       e_prefix_lib_get());
+              bd->desktop = efreet_desktop_get(buf);
+          }
+        if (!bd->desktop)
+          {
+             /* libreoffice and maybe others match window class
+                with .desktop file name */
+             if (bd->client.icccm.class)
+               {
+                  char buf[128];
+                  snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
+                  bd->desktop = efreet_util_desktop_file_id_find(buf);
+                  if (!bd->desktop)
+                    {
+                       char *s;
+
+                       strncpy(buf, bd->client.icccm.class, sizeof(buf) - 1);
+                       s = buf;
+                       eina_str_tolower(&s);
+                       if (strcmp(s, bd->client.icccm.class))
+                         bd->desktop = efreet_util_desktop_exec_find(s);
+                    }
                }
-            if (!bd->desktop)
-              {
-                if ((bd->client.icccm.name) && (bd->client.icccm.class))
-                  bd->desktop = efreet_util_desktop_wm_class_find(bd->client.icccm.name,
-                                                                 bd->client.icccm.class);
-              }
-            if (!bd->desktop && bd->internal)
-              {
-                /* Moksha internal dialogs to give a desktop file */
-                 char buf[128];
-                 snprintf(buf, sizeof(buf), "%s/enlightenment/modules/ibar/ibar.desktop", 
-                          e_prefix_lib_get());
-                 bd->desktop = efreet_desktop_get(buf);
-              }
-            if (!bd->desktop)
-              {
-                 if (bd->client.icccm.class && bd->client.icccm.name &&
-                    (!strcmp(bd->client.icccm.class, "Steam")) &&
-                    (!strcmp(bd->client.icccm.name, "Steam")))
-                      bd->desktop = efreet_util_desktop_file_id_find("steam.desktop");
-                 /* libreoffice and maybe others match window class
-                    with .desktop file name */
-                 else if (bd->client.icccm.class)
-                   {
-                     char buf[128];
-                     snprintf(buf, sizeof(buf), "%s.desktop", bd->client.icccm.class);
-                     bd->desktop = efreet_util_desktop_file_id_find(buf);
-                     if (!bd->desktop)
-                       {
-                          char *s;
+          }
+        if (!bd->desktop)
+          {
+              /* an attempt to have a desktop for virtualbox and others.
+                 There is a space char in class name: virtualbox machine */
+             if (bd->client.icccm.class)
+               {
+                  char *check;
+                  check = strstr(bd->client.icccm.class, " ");
 
-                          strncpy(buf, bd->client.icccm.class, sizeof(buf) - 1);
-                          s = buf;
-                          eina_str_tolower(&s);
-                          if (strcmp(s, bd->client.icccm.class))
-                            bd->desktop = efreet_util_desktop_exec_find(s);
-                       }
-                   }
-              }
-            if (!bd->desktop)
-              {
-                 /* an attempt to have a desktop for virtualbox and others.
-                    There is a space char in class name: virtualbox machine */
-                 if (bd->client.icccm.class)
-                   {
-                      char *check;
-                      check = strstr(bd->client.icccm.class, " ");
+                  if (check)
+                    {
+                       char buf[128];
+                       int i = 0;
+                       const char *s;
 
-                      if (check)
-                        {
-                           char buf[128];
-                           int i = 0;
-                           const char *s;
+                       s = bd->client.icccm.class;
+                       for (; *s != ' '; s++, i++);
 
-                           s = bd->client.icccm.class;
-                           for (; *s != ' '; s++, i++);
+                       strncpy(buf, bd->client.icccm.class, i);
+                       buf[i] = '\0';
+                       bd->desktop = efreet_util_desktop_exec_find(buf);
+                    }
+               }
+          }
+        if (!bd->desktop)
+          {
+             bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
+                                                      bd->client.netwm.pid);
+             if (bd->desktop) efreet_desktop_ref(bd->desktop);
+          }
+        if (!bd->desktop && bd->client.icccm.name)
+          {
+             /* this works for most cases as fallback. useful when app is
+                run from a shell  */
+             bd->desktop = efreet_util_desktop_exec_find(bd->client.icccm.name);
+          }
+        if (!bd->desktop && bd->client.icccm.transient_for)
+          {
+             E_Border *bd2 = e_border_find_by_client_window(bd->client.icccm.transient_for);
+             if (bd2 && bd2->desktop)
+               {
+                  efreet_desktop_ref(bd2->desktop);
+                  bd->desktop = bd2->desktop;
+               }
+          }
+        if (bd->desktop)
+          {
+             ecore_x_window_prop_string_set(bd->client.win, E_ATOM_DESKTOP_FILE,
+                                            bd->desktop->orig_path);
+          }
 
-                           strncpy(buf, bd->client.icccm.class, i);
-                           buf[i] = '\0';
-                           bd->desktop = efreet_util_desktop_exec_find(buf);
-                        }
-                  }
-              }
-            if (!bd->desktop)
-              {
-                 bd->desktop = e_exec_startup_id_pid_find(bd->client.netwm.startup_id,
-                                                          bd->client.netwm.pid);
-                 if (bd->desktop) efreet_desktop_ref(bd->desktop);
-              }
-            if (!bd->desktop && bd->client.icccm.name)
-              {
-                /* this works for most cases as fallback. useful when app is
-                   run from a shell  */
-                 bd->desktop = efreet_util_desktop_exec_find(bd->client.icccm.name);
-              }
-            if (!bd->desktop && bd->client.icccm.transient_for)
-              {
-                 E_Border *bd2 = e_border_find_by_client_window(bd->client.icccm.transient_for);
-                 if (bd2 && bd2->desktop)
-                   {
-                      efreet_desktop_ref(bd2->desktop);
-                      bd->desktop = bd2->desktop;
-                   }
-              }
-            if (bd->desktop)
-              {
-                 ecore_x_window_prop_string_set(bd->client.win, E_ATOM_DESKTOP_FILE,
-                                                bd->desktop->orig_path);
-              }
+        bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
+        if ((bd->focused) && (bd->icon_object) && (e_icon_edje_get(bd->icon_object)))
+          e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
+        if (bd->bg_object)
+          {
+             evas_object_show(bd->icon_object);
+             edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
+          }
+        else
+          evas_object_hide(bd->icon_object);
 
-            bd->icon_object = e_border_icon_add(bd, bd->bg_evas);
-            if ((bd->focused) && (bd->icon_object) && (e_icon_edje_get(bd->icon_object)))
-               e_icon_edje_emit(bd->icon_object, "e,state,focused", "e");
-            if (bd->bg_object)
-              {
-                 evas_object_show(bd->icon_object);
-                 edje_object_part_swallow(bd->bg_object, "e.swallow.icon", bd->icon_object);
-              }
-           else
-              evas_object_hide(bd->icon_object);
+        {
+           E_Event_Border_Icon_Change *ev;
 
-           {
-               E_Event_Border_Icon_Change *ev;
-
-               ev = E_NEW(E_Event_Border_Icon_Change, 1);
-               ev->border = bd;
-               e_object_ref(E_OBJECT(bd));
-               //      e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
-               ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
-                              _e_border_event_border_icon_change_free, NULL);
-           }
-           bd->changes.icon = 0;
+           ev = E_NEW(E_Event_Border_Icon_Change, 1);
+           ev->border = bd;
+           e_object_ref(E_OBJECT(bd));
+           //      e_object_breadcrumb_add(E_OBJECT(bd), "border_icon_change_event");
+           ecore_event_add(E_EVENT_BORDER_ICON_CHANGE, ev,
+                           _e_border_event_border_icon_change_free, NULL);
+        }
+        bd->changes.icon = 0;
      }
 
     if (bd->desktop)
@@ -9486,21 +9444,6 @@ _e_border_eval(E_Border *bd)
                }
           }
         bd->changes.icon = 0;
-        bd->desktop_last_change = ecore_loop_time_get();
-    }
-      else
-         {
-           static Ecore_Timer *wakeup_timer = NULL;
-
-           // queue a wakeup in 0.2 sec if we ignored this change so a loop
-           // cycle will catch this on eval and time delta  will be > 0.2 
-           if (wakeup_timer)
-             ecore_timer_reset(wakeup_timer);
-           else
-             wakeup_timer = ecore_timer_add(0.2,
-                                            _cb_e_border_dummy_wake_eval,
-                                            &wakeup_timer);
-         }
 
    bd->new_client = 0;
    bd->changed = 0;
