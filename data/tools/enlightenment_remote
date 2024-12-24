@@ -52,6 +52,7 @@ OPTIONS:
   -window-uniconify OPT1 Request uniconify of window with xwin id OPT1
   -window-maximize OPT1 Request maximize of window with xwin id OPT1
   -window-unmaximize OPT1 Request unmaximize of window with xwin id OPT1
+  -window-sendtodesktop OPT1 OPT2 OPT3 OPT4 Send window to ZONE DESK_X DESK_Y
 
 Note: For more information see the '--help-dbus' option.
 "
@@ -434,6 +435,13 @@ er_window_unmaximize(){
    ERCI org.enlightenment.wm.Window.Unmaximize "$2"
 }
 
+#-------------------------------------------------------------------------------
+#   E Window sendtodesktop
+#-------------------------------------------------------------------------------
+er_window_sendtodesktop(){
+   ERCIIII org.enlightenment.wm.Window.SendToDesktop "$2" "$3" "$4" "$5"
+}
+
 
 #===  FUNCTION  ================================================================
 #          NAME:  Main
@@ -543,6 +551,9 @@ case "$1" in
    ;;
    -window-unmaximize)
       er_window_unmaximize "$@"
+   ;;
+   -window-sendtodesktop)
+      er_window_sendtodesktop "$@"
    ;;
 
    # This entry needs to be always the last option of the list (*)
