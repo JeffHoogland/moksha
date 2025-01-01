@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-10-27 07:09+0100\n"
-"PO-Revision-Date: 2024-01-18 19:40+0100\n"
+"PO-Revision-Date: 2025-01-01 08:29+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
 "Language: sk\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-11-10 07:12+0000\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: src/bin/e_about.c:18
@@ -5904,7 +5904,7 @@ msgstr "SYSTÉM"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:184
 msgid "Open Terminology"
-msgstr "Otvoriť Terminology:"
+msgstr "Otvoriť Terminology"
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:212
 #: src/modules/syscon/e_mod_main.c:31 src/modules/syscon/e_mod_main.c:37

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-10-27 07:09+0100\n"
-"PO-Revision-Date: 2024-01-17 20:18+0100\n"
+"PO-Revision-Date: 2025-01-01 08:30+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
@@ -9994,7 +9994,7 @@ msgid ""
 "correctly installed and running"
 msgstr ""
 "Chyba při inicializaci DBus! Prosím zkontrolujte, jestli máte D-Bus správně "
-"nainstalovaný a spuštěný."
+"nainstalovaný a spuštěný"
 
 #: src/modules/notification/e_mod_main.c:426
 #: src/modules/clipboard/e_mod_main.c:422
