@@ -1041,10 +1041,22 @@ _clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED_
 static Eina_Bool
 _clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   eio_monitor_del(clock_tz_monitor);
-   clock_tz_monitor = eio_monitor_add("/etc/localtime");
-   eio_monitor_del(clock_tz2_monitor);
-   clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+			if (clock_tz_monitor)
+					{
+								eio_monitor_del(clock_tz_monitor);
+								clock_tz_monitor = NULL;
+					}
+			if (ecore_file_exists("/etc/localtime"))
+					clock_tz_monitor = eio_monitor_add("/etc/localtime");
+
+			if (clock_tz2_monitor)
+					{
+								eio_monitor_del(clock_tz2_monitor);
+								clock_tz2_monitor = NULL;
+					}
+			if (ecore_file_exists("/etc/timezone"))
+					clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+   
    return ECORE_CALLBACK_RENEW;
 }
 
@@ -1187,7 +1199,7 @@ e_modapi_init(E_Module *m)
      }
 
    clock_config->module = m;
-    if (ecore_file_exists("/etc/localtime"))
+   if (ecore_file_exists("/etc/localtime"))
      clock_tz_monitor = eio_monitor_add("/etc/localtime");
    if (ecore_file_exists("/etc/timezone"))
      clock_tz2_monitor = eio_monitor_add("/etc/timezone");

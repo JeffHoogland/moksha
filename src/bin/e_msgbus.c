@@ -49,6 +49,7 @@ E_MSGBUS_WIN_ACTION_CB_PROTO(iconify);
 E_MSGBUS_WIN_ACTION_CB_PROTO(uniconify);
 E_MSGBUS_WIN_ACTION_CB_PROTO(maximize);
 E_MSGBUS_WIN_ACTION_CB_PROTO(unmaximize);
+E_MSGBUS_WIN_ACTION_CB_PROTO(sendtodesktop);
 
 /* local subsystem globals */
 EAPI E_Msgbus_Data *e_msgbus_data = NULL;
@@ -94,6 +95,7 @@ static const Eldbus_Method window_methods[] = {
      _e_msgbus_window_maximize_cb, 0 },
    { "Unmaximize", ELDBUS_ARGS({"i", "window_id"}), NULL,
      _e_msgbus_window_unmaximize_cb, 0 },
+   { "SendToDesktop", ELDBUS_ARGS({"i","window_id"},{"i","zone"},{"i","desk_x"},{"i","desk_y"}), NULL, _e_msgbus_window_sendtodesktop_cb, 0 },
    { NULL, NULL, NULL, NULL, 0}
 };
 
@@ -711,45 +713,50 @@ E_MSGBUS_WIN_ACTION_CB_BEGIN(unmaximize)
   e_border_unmaximize(bd, E_MAXIMIZE_BOTH);
 E_MSGBUS_WIN_ACTION_CB_END
 
-/*static Eldbus_Message *
+static Eldbus_Message *
 _e_msgbus_window_sendtodesktop_cb( const Eldbus_Service_Interface *iface __UNUSED__, const Eldbus_Message *msg)
 {
-   E_Client *ec;
-   E_Zone * zone;
-   E_Desk * desk;
-   Eina_List *l = NULL;
+   E_Border *bd;
+   E_Zone *zone;
+   Eina_List *lm, *lc, *lz;
+   E_Container *con;
+   E_Manager *man;
+   E_Desk *desk;
    int xwin, zonenum, xdesk, ydesk;
 
    if (!eldbus_message_arguments_get(msg, "iiii", &xwin, &zonenum, &xdesk, &ydesk))
      return eldbus_message_method_return_new(msg);
 
-   ec = e_pixmap_find_client(E_PIXMAP_TYPE_X, xwin);
-
-   if (ec)
-     {
-        EINA_LIST_FOREACH(e_comp->zones, l, zone)
-          {
-             if ((int)zone->num == zonenum)
-               {
-                  if (xdesk < zone->desk_x_count && ydesk < zone->desk_y_count)
+   //bd = e_pixmap_find_client(E_PIXMAP_TYPE_X, xwin);
+   bd = e_border_find_by_client_window(xwin);
+   
+   if (bd)
+      {
+            EINA_LIST_FOREACH(e_manager_list(), lm, man)
+                {
+                    EINA_LIST_FOREACH(man->containers, lc, con)
                     {
-                       E_Desk *old_desk = ec->desk;
-                       Eina_Bool was_focused = e_client_stack_focused_get(ec);
-
-                       desk = e_desk_at_xy_get(zone, xdesk, ydesk);
-                       if ((desk) && (desk != old_desk))
-                         {
-                            e_client_desk_set(ec, desk);
-                            if (was_focused)
-                              e_desk_last_focused_focus(old_desk);
-                         }
+                        EINA_LIST_FOREACH(con->zones, lz, zone)
+                        {
+                            if ((int)zone->num == zonenum)
+                            {
+                                if (xdesk < zone->desk_x_count && ydesk < zone->desk_y_count)
+                                    {
+                                    E_Desk *old_desk = bd->desk;
+                                    //Eina_Bool was_focused = e_client_stack_focused_get(bd);
+                                    Eina_Bool was_focused = bd->focused;
+                                    desk = e_desk_at_xy_get(zone, xdesk, ydesk);
+                                    if ((desk) && (desk != old_desk))
+                                        {
+                                            e_border_desk_set(bd, desk);
+                                            if (was_focused)
+                                            e_desk_last_focused_focus(old_desk);
+                                        }
+                                    }
+                            }
+                        }
                     }
-               }
-          }
-     }
-
-   return eldbus_message_method_return_new(msg);
-
-}*/
-
-
+                }
+      }
+    return eldbus_message_method_return_new(msg);
+}

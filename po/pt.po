@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2024-10-27 07:09+0100\n"
-"PO-Revision-Date: 2024-11-09 10:08+0000\n"
+"PO-Revision-Date: 2024-12-28 18:18+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -892,8 +892,7 @@ msgstr ""
 "reporte qualquer erro.<br>Isto significa que o Moksha precisa de "
 "dados<br>que as suas definições antigas não possuem.<br>Este novo conjunto "
 "de predefinições irá corrigir a situação. Agora<br>pode voltar a configurar "
-"as coisas ao seu gosto.<br>Pedimos desculpa pelo problema nas suas "
-"definições.<br>"
+"as coisas ao seu gosto.<br>Lamentamos o problema nas definições.<br>"
 
 #: src/bin/e_config.c:977
 msgid ""
@@ -907,7 +906,7 @@ msgstr ""
 "estranho e só acontece se reverter a<br>versão do Moksha ou se copiar as "
 "definições de<br>um local em que está instalada uma versão mais recente do "
 "Moksha.<br>Isto é mau e, por precaução, as definições originais<br>foram "
-"restauradas.<br>Desculpe qualquer inconveniente.<br>"
+"restauradas.<br>Lamentamos o incómodo.<br>"
 
 #: src/bin/e_config.c:1584 src/bin/e_config.c:2210
 msgid "Moksha Settings Write Problems"
@@ -2036,7 +2035,7 @@ msgstr "Definições de importação..."
 
 #: src/bin/e_import_config_dialog.c:491
 msgid "Fill and Stretch Options"
-msgstr "Opções de preenchimento e ajuste"
+msgstr "Opções de visualização"
 
 #: src/bin/e_import_config_dialog.c:493
 msgid "Stretch"
@@ -2045,11 +2044,11 @@ msgstr "Esticar"
 #: src/bin/e_import_config_dialog.c:497 src/bin/e_int_border_prop.c:236
 #, c-format
 msgid "Center"
-msgstr "Centrar"
+msgstr "Centro"
 
 #: src/bin/e_import_config_dialog.c:501
 msgid "Tile"
-msgstr "Lado a lado"
+msgstr "Mosaico"
 
 #: src/bin/e_import_config_dialog.c:506
 msgid "Within"
@@ -2061,7 +2060,7 @@ msgstr "Preencher"
 
 #: src/bin/e_import_config_dialog.c:514
 msgid "Pan"
-msgstr "Panorâmica"
+msgstr "Panorama"
 
 #: src/bin/e_import_config_dialog.c:522
 msgid "File Quality"
@@ -2855,7 +2854,7 @@ msgstr "Aplicações"
 
 #: src/bin/e_int_menus.c:210
 msgid "About Operating System"
-msgstr "Acerca do Sistema operativo"
+msgstr "Acerca do Sistema Operativo"
 
 #: src/bin/e_int_menus.c:216
 msgid "Help"
@@ -4164,8 +4163,7 @@ msgstr ""
 "repetidamente durante o<br>desenvolvimento e não deve reportar qualquer erro."
 "<br>Isto significa que o Moksha precisa de dados que as<br>suas antigas "
 "definições não possuem. Este conjunto de valores<br>corrige a situação. Mais "
-"tarde poderá configurar o Moksha<br>ao seu gosto. Desculpe qualquer "
-"inconveniente.<br>"
+"tarde poderá configurar o Moksha<br>ao seu gosto. Lamentamos o incómodo.<br>"
 
 #: src/bin/e_utils.c:1107 src/bin/e_utils.c:1131
 #, c-format
@@ -4184,7 +4182,7 @@ msgstr ""
 "é muito estranho e só acontece se reverter o módulo ou se<br>tiver copiado a "
 "configuração de um local em que está instalada<br>uma versão mais recente do "
 "módulo. Isto é mau e por precaução<br>as suas definições originais foram "
-"restauradas.<b>Desculpe qualquer inconveniente.<br>"
+"restauradas.<b>Lamentamos o incómodo.<br>"
 
 #: src/bin/e_utils.c:1214
 #, c-format
