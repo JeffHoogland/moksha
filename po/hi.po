@@ -1,7 +1,7 @@
-# SOME DESCRIPTIVE TITLE.
+# Hindi translation for moksha.
 # Copyright (C) YEAR Bodhi Linux
 # This file is distributed under the same license as the enlightenment package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Saurabh Landge <pagoda94>, 2025.
 #
 msgid ""
 msgstr ""
