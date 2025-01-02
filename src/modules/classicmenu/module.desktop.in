@@ -6,8 +6,10 @@ Name[cs]=Rozšířené menu
 Name[es]=Menú clásico
 Name[fi]=Perinteinen valikko
 Name[fr]=Menu classique
+Name[hi]=श्रेण्य मेनू
 Name[it]=Menù Classico
 Name[ka]=კლასიკური მენიუ
+Name[mr]=मेनू (अभिजात)
 Name[pt]=Menu Clássico
 Name[pt_BR]=Menu Clássico
 Name[ru]=Классическое меню
@@ -20,10 +22,13 @@ Comment[cs]=Moksha modul pro rozšíření hlavního menu o plochu a okna: půvo
 Comment[es]=Un módulo de Moksha para restaurar el Escritorio de E17 y los menús de ventanas al menú principal de Moksha.
 Comment[fi]=Moksha-moduuli jolla voit palauttaa e17:n työpöytä ja ikkunat-valikot Mokshan päävalikkoon.
 Comment[fr]=Un module Moksha pour restaurer les menus Bureau et Fenêtres d'E17 dans le menu principal de Moksha.
+Comment[hi]=मोक्ष मॉड्यूल e17 के डेस्कटॉप और विंडोज़ मेनू को मोक्ष के मुख्य मेनू में पुनर्स्थापित करने के लिए।
 Comment[it]=Un modulo Moksha per ripristinare il desktop e i menu Windows di e17 nel menu principale di Moksha.
 Comment[ka]=მოდული e17-ის დესკტოპის და Windows-ის მენიუების აღდგენისთვის Moksha-ს მთავარ მენიუში.
+Comment[mr]=मोक्षाच्या मुख्य मेनूमध्ये e17 चे डेस्कटॉप आणि विंडो मेनू पुनर्संचयित करण्यासाठी मोक्ष मॉड्यूल.
 Comment[pt]=Um módulo do Moksha para restaurar o menu do ambiente gráfico e janelas do E17 no menu principal do Moksha.
 Comment[pt_BR]=Módulo Moksha para restaurar a área de trabalho e os menus das janelas do e17 para o menu principal do Moksha.
 Comment[ru]=Модуль для включения в меню Moksha пунктов управления рабочим столом и окнами из e17.
-Comment[sk]=Moksha modul pre rozšírenie hlavnej ponuky o plochu a okná: pôvodné menu desktopu E17.  
+Comment[sk]=Moksha modul pre rozšírenie hlavnej ponuky o plochu a okná: pôvodné menu desktopu E17.
+
 
