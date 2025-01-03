@@ -45,6 +45,7 @@ const E_Intl_Pair basic_language_predefined_pairs[] =
    {"ko_KR.UTF-8", "kr_flag.png", "한국어"},
    {"ku.UTF-8", "ku_flag.png", "یدروك"},
    {"lt_LT.UTF-8", "lt_flag.png", "Lietuvių kalba"},
+   {"mr-IN.UTF-8", "in_flag.png", "मराठी"},
    {"ms_MY.UTF-8", "my_flag.png", "Bahasa Melayu"},
    {"nb_NO.UTF-8", "no_flag.png", "Norsk Bokmål"},
    {"nl_NL.UTF-8", "nl_flag.png", "Nederlands"},
