@@ -36,6 +36,7 @@ const E_Intl_Pair basic_language_predefined_pairs[] =
    {"fr_CH.UTF-8", "ch_flag.png", "Français (Suisse)"},
    {"fr_FR.UTF-8", "fr_flag.png", "Français"},
    {"he_HE.UTF-8", "il_flag.png", "עברית"},
+   {"hi-IN.UTF-8", "in_flag.png", "हिन्दी"},
    {"hr_HR.UTF-8", "hr_flag.png", "Hrvatski"},
    {"hu_HU.UTF-8", "hu_flag.png", "Magyar"},
    {"it_IT.UTF-8", "it_flag.png", "Italiano"},
