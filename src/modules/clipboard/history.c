@@ -51,12 +51,10 @@ _set_data_path(char *path)
     EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
 
     const char *temp_str = efreet_data_home_get();
-    if (!temp_str)
-       // Should never happen
-       return EINA_FALSE;
     Eina_Bool success = EINA_TRUE;
     const int len = snprintf(NULL, 0, "%s", temp_str)
                               + 1 + (temp_str[strlen(temp_str)-1] != '/');
+
     if (temp_str[0] == '/' ) {
 
       if (len <= PATH_MAX) {
@@ -172,8 +170,6 @@ read_history(Eina_List **items, unsigned ignore_ws, unsigned label_length)
       *items = NULL;
       return eet_close(history_file);
     }
-    /* Malloc properly sized str */
-    //CALLOC_DIGIT_STR(str, item_num);
 
     /* Read each item */
     for (i = 1; i <= item_num; i++){
