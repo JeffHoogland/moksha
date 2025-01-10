@@ -90,7 +90,7 @@ static int           _e_fm_op_idler_handle_error(int *mark, Eina_List **queue, E
 static Eina_Bool     _e_fm_op_work_idler(void *data);
 static Eina_Bool     _e_fm_op_scan_idler(void *data);
 
-static void          _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...);
+static void          _e_fm_op_send_error(E_Fm_Op_Task *task, E_Fm_Op_Type type, const char *fmt, ...) EINA_PRINTF(3, 4);
 static void          _e_fm_op_rollback(E_Fm_Op_Task *task);
 static void          _e_fm_op_update_progress_report_simple(int percent, const char *src, const char *dst);
 static void          _e_fm_op_update_progress(E_Fm_Op_Task *task, off_t _plus_e_fm_op_done, off_t _plus_e_fm_op_total);
