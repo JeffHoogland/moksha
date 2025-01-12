@@ -164,7 +164,6 @@ history_init(void)
    Hist_eet    *hist = E_NEW(Hist_eet, 1);
    char path[PATH_MAX] = {0};
 
-   printf("Notify hist init \n");
    _history_descriptor_init();
    if (_history_path(path) &&  ecore_file_exists(path))
      hist = load_history(path);
@@ -172,10 +171,10 @@ history_init(void)
      {
         hist = E_NEW(Hist_eet, 1);
         hist->version = HISTORY_VERSION;
-         // fixme: hist->path = ??
+        // fixme: hist->path = ??
      }
    hist->path=strdup(path);
-   printf("Notify hist init %s\n", hist->path);
+   // printf("Notify hist init %s\n", hist->path);
    return hist;
 }
 
