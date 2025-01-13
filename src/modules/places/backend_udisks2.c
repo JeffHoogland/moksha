@@ -646,5 +646,5 @@ _places_ud2_eject_func(Volume *vol, Eina_List *opts __UNUSED__)
    eldbus_object_send(bdata->drive_obj, msg, _places_udisks2_task_cb, vol, -1);
 }
 
-#undef // PDBG
+#undef PDBG
 #endif
