@@ -425,11 +425,6 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
                             NULL, &(cfdata->view.spring_delay), 150);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    
-   ob = e_widget_label_add(evas, _("Custom FM to open dirs"));
-   
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
-   ob = e_widget_entry_add(evas, &(cfdata->view.customFM), NULL, NULL, NULL);
-   e_widget_list_object_append(o, ob, 1, 1, 0.5);
    e_widget_toolbook_page_append(otb, NULL, _("Behavior"), o, 0, 0, 0, 0, 0.5, 0.0);
    /////////////////////////////////////////////////////////////
 
@@ -465,6 +460,13 @@ _basic_create(E_Config_Dialog *cfd  __UNUSED__,
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
    ob = e_widget_check_add(evas, _("Open filemanager on mount"),
                            &(cfdata->dbus.auto_open));
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   
+   ob = e_widget_label_add(evas, NULL);
+   e_widget_list_object_append(o, ob, 1, 1, 0.5);
+   ob = e_widget_label_add(evas, _("Use a custom file manager"));
+   e_widget_list_object_append(o, ob, 0, 1, 0.5);
+   ob = e_widget_entry_add(evas, &(cfdata->view.customFM), NULL, NULL, NULL);
    e_widget_list_object_append(o, ob, 1, 1, 0.5);
 
    e_widget_toolbook_page_append(otb, NULL, _("Device"), o, 0, 0, 0, 0, 0.5, 0.0);
