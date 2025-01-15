@@ -65,7 +65,7 @@ Eina_Bool
 _data_path(char *path)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
-   printf("NOTIFY set data path\n");
+
    const char *temp_str = efreet_data_home_get();
    if (!temp_str)
       // Should never happen
@@ -86,7 +86,7 @@ _data_path(char *path)
    }
    else
      PATH_MAX_ERR;
-   printf("NOTIFY %s\n", path);
+
    return success;
 }
 
@@ -102,7 +102,7 @@ _data_path(char *path)
  */
 Eina_Bool
 _history_path(char *path)
-{   printf("NOTIFY set path: %s\n", "one");
+{
    EINA_SAFETY_ON_NULL_RETURN_VAL(path, EINA_FALSE);
 
    char temp_str[PATH_MAX] = {0};
@@ -121,7 +121,7 @@ _history_path(char *path)
         PATH_MAX_ERR;
    } else
        success = EINA_FALSE;
-   printf("NOTIFY set path: %s\n", path);
+
    return success;
 }
 
@@ -164,7 +164,6 @@ history_init(void)
    Hist_eet    *hist = E_NEW(Hist_eet, 1);
    char path[PATH_MAX] = {0};
 
-   printf("Notify hist init \n");
    _history_descriptor_init();
    if (_history_path(path) &&  ecore_file_exists(path))
      hist = load_history(path);
@@ -172,10 +171,10 @@ history_init(void)
      {
         hist = E_NEW(Hist_eet, 1);
         hist->version = HISTORY_VERSION;
-         // fixme: hist->path = ??
+        // fixme: hist->path = ??
      }
    hist->path=strdup(path);
-   printf("Notify hist init %s\n", hist->path);
+   // printf("Notify hist init %s\n", hist->path);
    return hist;
 }
 
@@ -201,7 +200,7 @@ get_time(const char *delimiter)
             delimiter, timeinfo->tm_sec);
 
    ret = eina_stringshare_add(buf);
-   printf("NOTIFY get time %p %s\n", ret, ret);
+
    return ret;
 }
 

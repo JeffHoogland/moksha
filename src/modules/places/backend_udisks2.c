@@ -72,7 +72,7 @@ static Eldbus_Object *_places_ud2_object_manager = NULL;
 Eina_Bool
 places_udisks2_init(void)
 {
-   PDBG("init()\n");
+   // PDBG("init()\n");
 
    EINA_SAFETY_ON_FALSE_RETURN_VAL(eldbus_init(), EINA_FALSE);
 
@@ -92,7 +92,7 @@ places_udisks2_init(void)
 void
 places_udisks2_shutdown(void)
 {
-   PDBG("shutdown()\n");
+   // PDBG("shutdown()\n");
    E_FREE_FUNC(_places_ud2_object_manager, eldbus_object_unref);
    E_FREE_FUNC(_places_ud2_conn, eldbus_connection_unref);
    eldbus_shutdown();
@@ -217,7 +217,7 @@ _places_ud2_get_managed_objects_cb(void *data __UNUSED__, const Eldbus_Message *
 
    PLACES_ON_MSG_ERROR_RETURN(msg);
 
-   PDBG("GetManagedObjects\n");
+   // PDBG("GetManagedObjects\n");
    if (!eldbus_message_arguments_get(msg, "a{oa{sa{sv}}}", &objs_array))
      return;
    
@@ -245,7 +245,7 @@ _places_ud2_interfaces_added_cb(void *data __UNUSED__, const Eldbus_Message *msg
 
    if (eldbus_message_arguments_get(msg, "oa{sa{sv}}", &obj_path, &ifaces_array))
    {
-      PDBG("InterfacesAdded on obj: %s\n", obj_path);
+      // PDBG("InterfacesAdded on obj: %s\n", obj_path);
       // we are only interested at block_device objects
       if (eina_str_has_prefix(obj_path, UDISKS2_BLOCK_PREFIX))
          _places_ud2_read_block_ifaces(obj_path, ifaces_array, EINA_FALSE);
@@ -268,7 +268,7 @@ _places_ud2_interfaces_removed_cb(void *data __UNUSED__, const Eldbus_Message *m
 
    while (eldbus_message_iter_get_and_next(array_ifaces, 's', &iface_name))
    {
-      PDBG("InterfaceRemoved obj:%s - iface:%s\n", obj_path, iface_name);
+      // PDBG("InterfaceRemoved obj:%s - iface:%s\n", obj_path, iface_name);
       if (eina_streq(iface_name, UDISKS2_FILESYSTEM_IFACE) || 
           eina_streq(iface_name, UDISKS2_BLOCK_IFACE))
          if ((vol = places_volume_by_id_get(obj_path)))
@@ -293,7 +293,7 @@ _places_ud2_block_props_changed_cb(void *data, const Eldbus_Message *msg)
                                      &changed_props, &invalidated_props))
      return;
    
-   PDBG("PropertiesChanged  obj:%s - iface:%s\n", vol->id, iface_name);
+   // PDBG("PropertiesChanged  obj:%s - iface:%s\n", vol->id, iface_name);
    
    // atm we are only interested in the mounted state (on the FS iface)
    if (!eina_streq(iface_name, UDISKS2_FILESYSTEM_IFACE))
@@ -304,7 +304,7 @@ _places_ud2_block_props_changed_cb(void *data, const Eldbus_Message *msg)
       if (!eldbus_message_iter_arguments_get(props_entry, "sv", &prop_name, &var))
          continue;
 
-      PDBG("   Changed prop: %s\n", prop_name);
+      // PDBG("   Changed prop: %s\n", prop_name);
       if (eina_streq(prop_name, "MountPoints"))
       {
          Eldbus_Message_Iter *mounts_array, *ay;
@@ -334,7 +334,7 @@ _places_ud2_drive_props_changed_cb(void *data, const Eldbus_Message *msg)
                                      &changed_props, &invalidated_props))
      return;
    
-   PDBG("PropertiesChanged  obj:%s - iface:%s\n", vol->id, iface_name);
+   // PDBG("PropertiesChanged  obj:%s - iface:%s\n", vol->id, iface_name);
    if (eina_streq(iface_name, UDISKS2_DRIVE_IFACE))
       _places_ud2_read_drive_properies(vol, changed_props);
 }
@@ -357,7 +357,7 @@ _places_ud2_read_block_ifaces(const char *block_obj_path, Eldbus_Message_Iter *i
    unsigned long long blockdevice_size = 0;
    unsigned long long filesystem_size = 0;
 
-   PDBG("Parsing block_device: %s\n", block_obj_path);
+   // PDBG("Parsing block_device: %s\n", block_obj_path);
    
    while (eldbus_message_iter_get_and_next(ifaces_array, 'e', &iface_entry))
    {
@@ -427,7 +427,7 @@ _places_ud2_read_block_ifaces(const char *block_obj_path, Eldbus_Message_Iter *i
       }
    }
 
-   PDBG("Found device: %s\n", block_obj_path);
+   // PDBG("Found device: %s\n", block_obj_path);
 
    // create (or get an already created) places Volume
    Volume *vol = _places_ud2_volume_add(block_obj_path, drive_obj_path, first_time);
@@ -456,7 +456,7 @@ _places_ud2_read_block_ifaces(const char *block_obj_path, Eldbus_Message_Iter *i
       eldbus_proxy_property_get_all(proxy, _places_ud2_drive_props_cb, vol);
       eldbus_proxy_unref(proxy);
    } 
-   else PDBG("WARNING - NO DRIVE FOR OBJECT %s\n", block_obj_path);
+   // else PDBG("WARNING - NO DRIVE FOR OBJECT %s\n", block_obj_path);
 
 skip:
    if (device) free(device);
@@ -474,7 +474,7 @@ _places_ud2_drive_props_cb(void *data, const Eldbus_Message *msg, Eldbus_Pending
    EINA_SAFETY_ON_NULL_RETURN(vol);
    PLACES_ON_MSG_ERROR_RETURN(msg);
    EINA_SAFETY_ON_FALSE_RETURN(eldbus_message_arguments_get(msg, "a{sv}", &props_array));
-   PDBG("Drive properties for: %s\n", vol->id);
+   // PDBG("Drive properties for: %s\n", vol->id);
    _places_ud2_read_drive_properies(vol, props_array);
 }
 
@@ -536,7 +536,7 @@ static void
 _places_ud2_volume_finalize(Volume *vol)
 {
    Eina_Bool is_valid = EINA_TRUE;
-   PDBG("Validating %s\n", vol->id);
+   // PDBG("Validating %s\n", vol->id);
 
    // set mounted state
    if (vol->mount_point && vol->mount_point[0])
@@ -602,7 +602,7 @@ _places_ud2_mount_func(Volume *vol, Eina_List *opts __UNUSED__)
    // const char *opt_txt;
    // EINA_LIST_FOREACH(opts, l, opt_txt)
    // {
-   //    // PDBG("  opt: '%s'\n", opt_txt);
+   //    PDBG("  opt: '%s'\n", opt_txt);
    //    eldbus_message_iter_basic_append(array, 's', opt_txt);
    // }
    // eldbus_message_iter_container_close(main_iter, array);

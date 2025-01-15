@@ -391,6 +391,8 @@ _load_menu(const char *path)
    Efreet_Menu *menu, *entry;
    Eina_List *apps = NULL, *l;
 
+   if (!ecore_file_exists(path)) return NULL;
+
    menu = efreet_menu_parse(path);
    if ((!menu) || (!menu->entries)) goto end;
    EINA_LIST_FOREACH(menu->entries, l, entry)

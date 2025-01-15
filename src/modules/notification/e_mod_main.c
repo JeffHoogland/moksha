@@ -510,9 +510,9 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    Popup_Items *sel_item = (Popup_Items *) selected_item;
    
    #ifdef LEGACY_ARCH
-       PRINT("MENU ITEM CALL BACK %u %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
+       // PRINT("MENU ITEM CALL BACK %u %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
    #else
-       PRINT("MENU ITEM CALL BACK %lu %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
+       // PRINT("MENU ITEM CALL BACK %lu %p %p \n", strlen(sel_item->item_icon), sel_item->item_icon, sel_item->item_icon_img);
    #endif
    
    notification_cfg->item_click = EINA_TRUE;
@@ -586,7 +586,7 @@ static unsigned int
 _notification_notify(E_Notification_Notify *n)
 {
    unsigned int new_id;
-   PRINT("notification_notify\n");
+   // PRINT("notification_notify\n");
 
    if (notification_cfg->mute)
      return 0;
@@ -742,7 +742,7 @@ gadget_text(int number, Eina_Bool logo_jump)
    eina_convert_itoa(number, buf);
    if (!notification_cfg->instances) return;
    inst = eina_list_data_get(notification_cfg->instances);
-   PRINT("Gadget test %d %s\n\n", number, buf);
+   // PRINT("Gadget test %d %s\n\n", number, buf);
    if (number > 0 && notification_cfg->show_count)
      edje_object_part_text_set(inst->o_notif, "e.text.counter", buf);
    else
