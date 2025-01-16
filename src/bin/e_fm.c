@@ -2986,7 +2986,7 @@ e_fm2_client_data(Ecore_Ipc_Event_Client_Data *e)
              e_fm2_device_volume_add(v);
              if (v->mounted)
                e_fm2_device_mount(v, NULL, NULL, NULL, NULL, NULL);
-             else if (e_config->device_auto_mount && !v->mounted && !v->first_time)
+             else if (e_config->device_auto_mount && !v->mounted && v->first_time)
                _e_fm2_client_mount(v->udi, v->mount_point);
              if (e_config->device_desktop)
                e_fm2_device_show_desktop_icons();
