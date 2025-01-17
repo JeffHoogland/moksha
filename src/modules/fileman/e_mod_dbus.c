@@ -155,7 +155,7 @@ _e_fileman_dbus_daemon_open_file_cb(const Eldbus_Service_Interface *iface __UNUS
                                     const Eldbus_Message *msg)
 {
    Eina_List *handlers;
-   const char *param_file = NULL, *mime, *errmsg = "unknow error";
+   const char *param_file = NULL, *mime, *errmsg = "unknown error";
    char *real_file, *to_free = NULL;
    E_Zone *zone;
 

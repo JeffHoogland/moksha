@@ -996,7 +996,7 @@ static void _e_connman_system_name_owner_changed(void *data, DBusMessage *msg)
    else if (from[0] != '\0' && to[0] == '\0')
      _e_connman_system_name_owner_exit();
    else
-     ERR("unknow change from %s to %s", from, to);
+     ERR("Unknown change from %s to %s", from, to);
 }
 
 static void
