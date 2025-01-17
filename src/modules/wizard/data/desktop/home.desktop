@@ -2,6 +2,7 @@
 Type=Link
 Name=Home
 Name[ca]=Carpeta personal
+Name[cs]=Domovský adresář
 Name[de]=Persönlicher Ordner
 Name[eo]=Hejmo
 Name[es]=Carpeta personal
@@ -21,6 +22,7 @@ Name[sr]=Домаће
 Name[tr]=Ev Dizini
 Comment=The Directory containing all your personal files
 Comment[ca]=El directori conté tots els seus arxius personals
+Comment[cs]=Adresář obsahující všechny osobní soubory
 Comment[de]=Dieses Verzeichnis enthält alle Ihre persönlichen Daten
 Comment[eo]=La dosierujo enhavante viajn proprajn dosieroj
 Comment[es]=El directorio que contiene todos sus archivos personales
