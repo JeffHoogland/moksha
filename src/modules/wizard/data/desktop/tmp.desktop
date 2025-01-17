@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Link
 Name=Temp
-Name[ca]=Temp.
+Name[ca]=Temp
 Name[de]=Temporäre Daten
 Name[eo]=Dumtempaj
 Name[fi]=Väliaikaiset
@@ -32,6 +32,7 @@ Comment[mr]=तात्पुरते फाइल्स
 Comment[ms]=Fail sementara
 Comment[pl]=Pliki tymczasowe
 Comment[pt]=Ficheiros temporários
+Comment[sk]=Dočasné súbory
 Comment[ru]=Временные файлы
 Comment[sr]=Привремене датотеке
 Comment[tr]=Geçici dosyalar
