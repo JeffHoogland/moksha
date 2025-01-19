@@ -67,7 +67,7 @@ struct _IBar_Icon
    EINA_INLIST;
    IBar            *ibar;
    Evas_Object     *o_holder, *o_icon;
-   Evas_Object     *o_holder2, *o_icon2;
+   Evas_Object     *o_holder2, *o_icon2, *label_obj;
    Efreet_Desktop  *app;
    Ecore_Timer     *reset_timer;
    Ecore_Timer     *show_timer; //for menu
@@ -76,9 +76,7 @@ struct _IBar_Icon
    E_Exec_Instance *exe_inst;
    Eina_List       *exes; //all instances
    Eina_List       *exe_current;
-   Evas_Object     *win;
-   E_Popup         *popup;
-   E_Gadcon_Popup  *menu;
+   E_Gadcon_Popup  *menu, *popup;
    const char      *hashname;
    int              mouse_down;
    struct
@@ -1094,18 +1092,12 @@ _ibar_cb_icon_menu_hide_begin(IBar_Icon *ic)
 static void
 _adjacent_popup_destroy(IBar_Icon *ic)
 {
-   if (!ic->win) return;
-   if (ic->win)
-     {
-       evas_object_del(ic->win);
-       ic->win = NULL;
-     }
+   if (!ic->popup) return;
 
-   if (ic->popup)
-     {
-       e_popup_hide(ic->popup);
-       e_object_del(E_OBJECT(ic->popup));
-     }
+   e_object_del(E_OBJECT(ic->popup));
+   evas_object_del(ic->label_obj);
+   ic->popup = NULL;
+   ic->label_obj = NULL;
 }
 
 static void
@@ -1113,90 +1105,51 @@ _adjacent_label_popup(void *data)
 {
    IBar_Icon *ic;
    E_Zone *zone;
-   int height, gap;
-   Evas_Coord x, y, w, h;
-   Evas_Coord px = 0, py = 0;
-   Evas_Coord gx, gy, pw, gh;
-
-   Eina_Bool theme_check;
+   Evas_Coord x, y, gx, gy, gw, gh, iw, ih, ox, oy;
+   Evas_Object *label_obj;
+   char *label = "";
 
    ic = data;
 
    zone = ic->ibar->inst->gcc->gadcon->zone;
-   ic->popup = e_popup_new(zone, 0, 0, 0, 0);
-   ic->win = edje_object_add(ic->popup->evas);
-   theme_check = e_theme_edje_object_set(ic->win,
-                           "base/theme/modules/ibar",
-                           "e/modules/ibar/adjacent_label");
-
-   if (!theme_check) _adjacent_popup_destroy(ic);
-   evas_object_show(ic->win);
-
-   e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, &gh);
-   
-   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
+   ic->popup = e_gadcon_popup_new(ic->ibar->inst->gcc);
 
    switch (ic->ibar->inst->ci->eap_label)
      {
        case 0: /* Eap Name */
-         edje_object_part_text_set(ic->win, "e.text.label", ic->app->name);
+         label = ic->app->name;
         break;
 
        case 1: /* Eap Comment */
-         edje_object_part_text_set(ic->win, "e.text.label", ic->app->comment);
+         label = ic->app->comment;
         break;
 
        case 2: /* Eap Generic */
-         edje_object_part_text_set(ic->win, "e.text.label", ic->app->generic_name);
+         label = ic->app->generic_name;
         break;
      }
 
-   edje_object_size_min_calc(ic->win, &pw, NULL);
-   height = 20 * e_scale;
-   gap =  3 * e_scale;
+   label_obj = e_widget_label_add(ic->popup->win->evas, label);
+   ic->label_obj = label_obj;
 
-   switch (ic->ibar->inst->orient)
-     {
-       case E_GADCON_ORIENT_FLOAT:
-         px = x - zone->x + w / 2 - pw / 2;
-         if (y < height)
-           py = zone->y + y + h + gap;
-         else
-           py = zone->y + y - height - gap;
-        break;
-       case E_GADCON_ORIENT_LEFT:
-       case E_GADCON_ORIENT_CORNER_LT:
-       case E_GADCON_ORIENT_CORNER_LB:
-         px = x + w + 2 * gap;
-         py = zone->y + gy + y + h / 6;
-        break;
-       case E_GADCON_ORIENT_RIGHT:
-       case E_GADCON_ORIENT_CORNER_RT:
-       case E_GADCON_ORIENT_CORNER_RB:
-         px = gx - zone->x + x - pw - gap;
-         py = zone->y + gy + y + h / 6;
-       break;
-      case E_GADCON_ORIENT_BOTTOM:
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_BR:
-         px = gx - zone->x + x + (w - pw) / 2;
-         py = gy - zone->y - height - gap;
-       break;
-      case E_GADCON_ORIENT_TOP:
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_TR:
-         px = gx + zone->x + x + (w - pw) / 2;
-         py = zone->y + gh + gap;
-       break;
-       default:
-       break;
-     }
+   e_gadcon_popup_content_set(ic->popup, label_obj);
+   e_gadcon_popup_show(ic->popup);
 
-   px = E_CLAMP(px, zone->x, zone->x + zone->w - pw);
-   e_popup_move(ic->popup, px, py);
-   evas_object_resize(ic->win, pw, height);
-   e_popup_resize(ic->popup, pw, height);
-   e_popup_show(ic->popup);
+   evas_object_geometry_get(ic->o_holder, &x, &y, &iw, &ih);
+   e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, NULL);
+   evas_object_geometry_get(label_obj, NULL, NULL, &gw, &gh);
+
+   x -= ic->popup->win->zone->x;
+   y -= ic->popup->win->zone->y;
+   ox = ic->popup->win->x, oy = ic->popup->win->y;
+
+   if (e_box_orientation_get(ic->ibar->o_box))
+     ox = (x + (iw / 2)) - (gw / 2) + gx;
+   else
+     oy = (y + (ih / 2)) - (gh / 2) + gy;
+
+   ox = E_CLAMP(ox, 0, zone->w - gw);
+   e_popup_move(ic->popup->win, ox, oy);
 }
 
 static void
