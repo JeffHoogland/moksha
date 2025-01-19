@@ -48,8 +48,7 @@ struct _Tasks_Item
    Evas_Object     *o_item; // The edje theme object
    Evas_Object     *o_icon; // The icon
    Eina_Bool        skip_taskbar : 1;
-   Evas_Object     *win;
-   E_Popup         *popup;
+   E_Gadcon_Popup  *popup;
    E_Drop_Handler  *drop_handler;
    struct
    {
@@ -672,16 +671,10 @@ _tasks_item_add(Tasks *tasks, E_Border *border)
 static void
 _tasks_adjacent_popup_destroy(Tasks_Item *item)
 {
-   if (!item->win) return;
-   if (item->win){
-      evas_object_del(item->win);
-      item->win = NULL;
-   }
+   if (!item->popup) return;
 
-   if (item->popup){
-     e_popup_hide(item->popup);
-     e_object_del(E_OBJECT(item->popup));
-   }
+   e_object_del(E_OBJECT(item->popup));
+   item->popup = NULL;
 }
 
 static void
@@ -922,27 +915,16 @@ static void
 _tasks_adjacent_label_popup(void *data)
 {
    Tasks_Item *item;
+   Evas_Object *label_obj;
    E_Zone *zone;
-   int height, gap;
+   Evas_Coord x, y, gx, gy, gw, gh, iw, ih, ox, oy;
    const char *title;
-   Evas_Coord x, y, w, h, gx, gy, gh, pw;
-   Evas_Coord px = 0, py = 0;
    unsigned int max_len = 50;
 
    item = data;
+
    zone = item->tasks->gcc->gadcon->zone;
-   item->popup = e_popup_new(zone, 0, 0, 0, 0);
-   item->win = edje_object_add(item->popup->evas);
-   Eina_Bool theme_check = e_theme_edje_object_set(item->win,
-                            "base/theme/modules/ibar",
-                            "e/modules/ibar/adjacent_label");
-
-   if (!theme_check) _tasks_adjacent_popup_destroy(item);
-   e_popup_edje_bg_object_set(item->popup, item->win);
-   evas_object_show(item->win);
-
-   e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, NULL, &gh);
-   evas_object_geometry_get(item->o_item, &x, &y, &w, &h);
+   item->popup = e_gadcon_popup_new(item->tasks->gcc);
 
    title = e_border_name_get(item->border);
 
@@ -958,57 +940,32 @@ _tasks_adjacent_label_popup(void *data)
        strncpy(abbv, left, max_len / 2);
        strncat(abbv, "...", 4);
        strncat(abbv, right, max_len / 2);
-       edje_object_part_text_set(item->win, "e.text.label", abbv);
+       label_obj = e_widget_label_add(item->popup->win->evas, abbv);
        E_FREE(abbv);
      }
    else
-     edje_object_part_text_set(item->win, "e.text.label", title);
+     label_obj = e_widget_label_add(item->popup->win->evas, title);
 
-   edje_object_calc_force(item->win);
-   edje_object_size_min_calc(item->win, &pw, NULL);
-   height = 20 * e_scale;
-   gap =  3 * e_scale;
+   e_gadcon_popup_content_set(item->popup, label_obj);
+   e_gadcon_popup_show(item->popup);
 
-   switch (item->tasks->gcc->gadcon->orient)
-    {
-      case E_GADCON_ORIENT_FLOAT:
-        px = x - zone->x + w / 2 - pw / 2;
-        py = zone->y + y - height - gap;
-       break;
-      case E_GADCON_ORIENT_LEFT:
-      case E_GADCON_ORIENT_CORNER_LT:
-      case E_GADCON_ORIENT_CORNER_LB:
-        px = x + w + gap;
-        py = zone->y + gy + y + h / 6;
-       break;
-      case E_GADCON_ORIENT_RIGHT:
-      case E_GADCON_ORIENT_CORNER_RT:
-      case E_GADCON_ORIENT_CORNER_RB:
-        px = gx - zone->x + x - pw - gap;
-        py = zone->y + gy + y + h / 6;
-       break;
-      case E_GADCON_ORIENT_BOTTOM:
-      case E_GADCON_ORIENT_CORNER_BL:
-      case E_GADCON_ORIENT_CORNER_BR:
-        px = gx - zone->x + x + (w - pw) / 2;
-        py = gy - zone->y - height - gap;
-       break;
-      case E_GADCON_ORIENT_TOP:
-      case E_GADCON_ORIENT_CORNER_TL:
-      case E_GADCON_ORIENT_CORNER_TR:
-        px = gx + zone->x + x + (w - pw) / 2;
-        py = zone->y + gh + gap;
-       break;
-      default:
-       break;
-  }
+   evas_object_geometry_get(item->o_item, &x, &y, &iw, &ih);
+   e_gadcon_canvas_zone_geometry_get(item->tasks->gcc->gadcon, &gx, &gy, NULL, NULL);
+   evas_object_geometry_get(label_obj, NULL, NULL, &gw, &gh);
 
-   px = E_CLAMP(px, zone->x, zone->x + zone->w - pw);
-   e_popup_move(item->popup, px, py);
-   evas_object_resize(item->win, pw, height);
-   e_popup_resize(item->popup, pw, height);
-   e_popup_show(item->popup);
+   x -= item->popup->win->zone->x;
+   y -= item->popup->win->zone->y;
+   ox = item->popup->win->x, oy = item->popup->win->y;
+
+   if (e_box_orientation_get(item->tasks->o_items))
+     ox = (x + (iw / 2)) - (gw / 2) + gx;
+   else
+     oy = (y + (ih / 2)) - (gh / 2) + gy;
+
+   ox = E_CLAMP(ox, 0, zone->w - gw);
+   e_popup_move(item->popup->win, ox, oy);
 }
+
 
 static void
 _tasks_cb_item_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
