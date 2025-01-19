@@ -4,7 +4,7 @@
 /* Increment for Major Changes */
 #define MOD_CONFIG_FILE_EPOCH      1
 /* Increment for Minor Changes (ie: user doesn't need a new config) */
-#define MOD_CONFIG_FILE_GENERATION 0
+#define MOD_CONFIG_FILE_GENERATION 1
 #define MOD_CONFIG_FILE_VERSION    ((MOD_CONFIG_FILE_EPOCH * 1000000) + MOD_CONFIG_FILE_GENERATION)
 
 typedef struct _Config      Config;
@@ -27,6 +27,7 @@ struct _Config_Item
    const char *id;
    const char *dir;
    int show_label;
+   int show_label_adjac;
    int eap_label;
    int lock_move;
    int dont_add_nonorder;

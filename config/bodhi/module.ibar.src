@@ -4,6 +4,7 @@ group "IBar_Config" struct {
             value "id" string: "0";
             value "dir" string: "default";
             value "show_label" int: 1;
+            value "show_label_adjac" int: 0;
             value "eap_label" int: 0;
             value "focus_flash" int: 1;
             value "lock_move" int: 0;
@@ -17,6 +18,7 @@ group "IBar_Config" struct {
             value "id" string: "ibar.1";
             value "dir" string: "default";
             value "show_label" int: 1;
+            value "show_label_adjac" int: 0;
             value "eap_label" int: 0;
             value "focus_flash" int: 1;
             value "lock_move" int: 0;
@@ -25,5 +27,5 @@ group "IBar_Config" struct {
             value "control" int: 1;
        }
    }
-   value "version" int: 1000000;
+   value "version" int: 1000001;
 }

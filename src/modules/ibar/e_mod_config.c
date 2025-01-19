@@ -4,7 +4,7 @@
 struct _E_Config_Dialog_Data
 {
    const char       *dir;
-   int               show_label, eap_label;
+   int               show_label, eap_label, show_label_adjac;
    int               lock_move;
    int               track_launch;
    int               dont_add_nonorder;
@@ -16,6 +16,8 @@ struct _E_Config_Dialog_Data
    Evas_Object      *radio_name;
    Evas_Object      *radio_comment;
    Evas_Object      *radio_generic;
+   Evas_Object      *label_adj;
+   Evas_Object      *label;
    E_Confirm_Dialog *dialog_delete;
 };
 
@@ -32,6 +34,7 @@ static void         _cb_confirm_dialog_yes(void *data);
 static void         _cb_confirm_dialog_destroy(void *data);
 static void         _load_tlist(E_Config_Dialog_Data *cfdata);
 static void         _show_label_cb_change(void *data, Evas_Object *obj);
+static void         _show_label_adj_cb_change(void *data, Evas_Object *obj __UNUSED__);
 
 void
 _config_ibar_module(Config_Item *ci)
@@ -58,6 +61,7 @@ _config_ibar_module(Config_Item *ci)
                              _("IBar Settings"),
                              "E", "_e_mod_ibar_config_dialog",
                              buf, 0, v, ci);
+
    ibar_config->config_dialog = cfd;
 }
 
@@ -76,6 +80,7 @@ _fill_data(Config_Item *ci, E_Config_Dialog_Data *cfdata)
    cfdata->dont_add_nonorder = ci->dont_add_nonorder;
    cfdata->track_launch = !ci->dont_track_launch;
    cfdata->icon_menu_mouseover = !ci->dont_icon_menu_mouseover;
+   cfdata->show_label_adjac = ci->show_label_adjac;
 }
 
 static void *
@@ -129,23 +134,27 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dial
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
    of = e_widget_framelist_add(evas, _("Icon Labels"), 0);
-   ob = e_widget_check_add(evas, _("Show icon label"), &(cfdata->show_label));
-   e_widget_on_change_hook_set(ob, _show_label_cb_change, cfdata);
-   e_widget_framelist_object_append(of, ob);
+    cfdata->label = e_widget_check_add(evas, _("Overlapping Label"), &(cfdata->show_label));
+   e_widget_on_change_hook_set(cfdata->label, _show_label_cb_change, cfdata);
+   e_widget_framelist_object_append(of, cfdata->label);
+
+   cfdata->label_adj = e_widget_check_add(evas, _("Adjacent Label"), &(cfdata->show_label_adjac));
+   e_widget_on_change_hook_set(cfdata->label_adj, _show_label_adj_cb_change, cfdata);
+   e_widget_framelist_object_append(of, cfdata->label_adj);
 
    rg = e_widget_radio_group_new(&(cfdata->eap_label));
 
    cfdata->radio_name = e_widget_radio_add(evas, _("Name"), 0, rg);
    e_widget_framelist_object_append(of, cfdata->radio_name);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_name, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_name, 1);
 
    cfdata->radio_comment = e_widget_radio_add(evas, _("Comment"), 1, rg);
    e_widget_framelist_object_append(of, cfdata->radio_comment);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_comment, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_comment, 1);
 
    cfdata->radio_generic = e_widget_radio_add(evas, _("Generic"), 2, rg);
    e_widget_framelist_object_append(of, cfdata->radio_generic);
-   if (!cfdata->show_label) e_widget_disabled_set(cfdata->radio_generic, 1);
+   if ((!cfdata->show_label) && (!cfdata->show_label_adjac)) e_widget_disabled_set(cfdata->radio_generic, 1);
 
    e_widget_list_object_append(o, of, 1, 1, 0.5);
 
@@ -185,6 +194,7 @@ _basic_apply_data(E_Config_Dialog *cfd, E_Config_Dialog_Data *cfdata)
    ci->focus_flash = cfdata->focus_flash;
    ci->control = cfdata->control;
    ci->dont_icon_menu_mouseover = !cfdata->icon_menu_mouseover;
+   ci->show_label_adjac = cfdata->show_label_adjac;
    _ibar_config_update(ci);
    e_config_save_queue();
    return 1;
@@ -333,13 +343,43 @@ _load_tlist(E_Config_Dialog_Data *cfdata)
 }
 
 static void
+labels_show(void *data)
+{
+   E_Config_Dialog_Data *cfdata = data;
+
+   if (!cfdata) return;
+   if (cfdata->show_label || cfdata->show_label_adjac)
+     {
+       e_widget_disabled_set(cfdata->radio_name, 0);
+       e_widget_disabled_set(cfdata->radio_comment, 0);
+       e_widget_disabled_set(cfdata->radio_generic, 0);
+     }
+   else
+     {
+       e_widget_disabled_set(cfdata->radio_name, 1);
+       e_widget_disabled_set(cfdata->radio_comment, 1);
+       e_widget_disabled_set(cfdata->radio_generic, 1);
+     }
+}
+
+static void
 _show_label_cb_change(void *data, Evas_Object *obj __UNUSED__)
 {
    E_Config_Dialog_Data *cfdata;
 
    cfdata = data;
    if (!cfdata) return;
-   e_widget_disabled_set(cfdata->radio_name, !cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_comment, !cfdata->show_label);
-   e_widget_disabled_set(cfdata->radio_generic, !cfdata->show_label);
+
+   labels_show(cfdata);
+}
+
+static void
+_show_label_adj_cb_change(void *data, Evas_Object *obj __UNUSED__)
+{
+   E_Config_Dialog_Data *cfdata;
+
+   cfdata = data;
+   if (!cfdata) return;
+
+   labels_show(cfdata);
 }

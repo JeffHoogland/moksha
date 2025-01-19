@@ -76,6 +76,8 @@ struct _IBar_Icon
    E_Exec_Instance *exe_inst;
    Eina_List       *exes; //all instances
    Eina_List       *exe_current;
+   Evas_Object     *win;
+   E_Popup         *popup;
    E_Gadcon_Popup  *menu;
    const char      *hashname;
    int              mouse_down;
@@ -139,6 +141,8 @@ static void         _ibar_cb_icon_menu_img_del(void *data, Evas *e, Evas_Object 
 static Eina_Bool    _ibar_cb_out_hide_delay(void *data);
 static void         _ibar_icon_menu_show(IBar_Icon *ic, Eina_Bool grab);
 static void         _ibar_icon_menu_hide(IBar_Icon *ic, Eina_Bool grab);
+static void         _adjacent_popup_destroy(IBar_Icon *ic);
+
 
 static E_Config_DD *conf_edd = NULL;
 static E_Config_DD *conf_item_edd = NULL;
@@ -673,6 +677,7 @@ _ibar_config_item_get(const char *id)
    ci->id = eina_stringshare_add(id);
    ci->dir = eina_stringshare_add("default");
    ci->show_label = 1;
+   ci->show_label_adjac = 0;
    ci->eap_label = 0;
    ci->lock_move = 0;
    ci->dont_add_nonorder = 0;
@@ -849,6 +854,7 @@ _ibar_icon_free(IBar_Icon *ic)
 {
    E_Exec_Instance *inst;
 
+   _adjacent_popup_destroy(ic);
    if (ic->ibar->menu_icon == ic) ic->ibar->menu_icon = NULL;
    if (ic->ibar->ic_drop_before == ic) ic->ibar->ic_drop_before = NULL;
    if (ic->menu) e_object_data_set(E_OBJECT(ic->menu), NULL);
@@ -1083,6 +1089,113 @@ _ibar_cb_icon_menu_hide_begin(IBar_Icon *ic)
    if (!ic->menu) return;
    evas_object_pass_events_set(ic->menu->o_bg, 1);
    edje_object_signal_emit(ic->menu->o_bg, "e,action,hide", "e");
+}
+
+static void
+_adjacent_popup_destroy(IBar_Icon *ic)
+{
+   if (!ic->win) return;
+   if (ic->win)
+     {
+       evas_object_del(ic->win);
+       ic->win = NULL;
+     }
+
+   if (ic->popup)
+     {
+       e_popup_hide(ic->popup);
+       e_object_del(E_OBJECT(ic->popup));
+     }
+}
+
+static void
+_adjacent_label_popup(void *data)
+{
+   IBar_Icon *ic;
+   E_Zone *zone;
+   int height, gap;
+   Evas_Coord x, y, w, h;
+   Evas_Coord px = 0, py = 0;
+   Evas_Coord gx, gy, pw, gh;
+
+   Eina_Bool theme_check;
+
+   ic = data;
+
+   zone = ic->ibar->inst->gcc->gadcon->zone;
+   ic->popup = e_popup_new(zone, 0, 0, 0, 0);
+   ic->win = edje_object_add(ic->popup->evas);
+   theme_check = e_theme_edje_object_set(ic->win,
+                           "base/theme/modules/ibar",
+                           "e/modules/ibar/adjacent_label");
+
+   if (!theme_check) _adjacent_popup_destroy(ic);
+   evas_object_show(ic->win);
+
+   e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, &gh);
+   evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
+
+   switch (ic->ibar->inst->ci->eap_label)
+     {
+       case 0: /* Eap Name */
+         edje_object_part_text_set(ic->win, "e.text.label", ic->app->name);
+        break;
+
+       case 1: /* Eap Comment */
+         edje_object_part_text_set(ic->win, "e.text.label", ic->app->comment);
+        break;
+
+       case 2: /* Eap Generic */
+         edje_object_part_text_set(ic->win, "e.text.label", ic->app->generic_name);
+        break;
+     }
+
+   edje_object_size_min_calc(ic->win, &pw, NULL);
+   height = 20 * e_scale;
+   gap =  3 * e_scale;
+
+   switch (ic->ibar->inst->orient)
+     {
+       case E_GADCON_ORIENT_FLOAT:
+         px = x - zone->x + w / 2 - pw / 2;
+         if (y < height)
+           py = zone->y + y + h + gap;
+         else
+           py = zone->y + y - height - gap;
+        break;
+       case E_GADCON_ORIENT_LEFT:
+       case E_GADCON_ORIENT_CORNER_LT:
+       case E_GADCON_ORIENT_CORNER_LB:
+         px = x + w + gap;
+         py = zone->y + gy + y + h / 6;
+        break;
+       case E_GADCON_ORIENT_RIGHT:
+       case E_GADCON_ORIENT_CORNER_RT:
+       case E_GADCON_ORIENT_CORNER_RB:
+         px = gx - zone->x + x - pw - gap;
+         py = zone->y + gy + y + h / 6;
+       break;
+      case E_GADCON_ORIENT_BOTTOM:
+      case E_GADCON_ORIENT_CORNER_BL:
+      case E_GADCON_ORIENT_CORNER_BR:
+         px = gx - zone->x + x + (w - pw) / 2;
+         py = gy - zone->y - height - gap;
+       break;
+      case E_GADCON_ORIENT_TOP:
+      case E_GADCON_ORIENT_CORNER_TL:
+      case E_GADCON_ORIENT_CORNER_TR:
+         px = gx + zone->x + x + (w - pw) / 2;
+         py = zone->y + gh + gap;
+       break;
+       default:
+       break;
+     }
+
+   px = E_CLAMP(px, zone->x, zone->x + zone->w - pw);
+   e_popup_move(ic->popup, px, py);
+   evas_object_resize(ic->win, pw, height);
+   e_popup_resize(ic->popup, pw, height);
+   e_popup_show(ic->popup);
 }
 
 static void
@@ -1381,6 +1494,8 @@ _ibar_icon_menu_show(IBar_Icon *ic, Eina_Bool grab)
    ic->drag.dnd = 0;
    ic->mouse_down = 0;
    _ibar_icon_menu(ic, grab);
+   if (ic->ibar->inst->ci->show_label_adjac && !ic->menu)
+     _adjacent_label_popup(ic);
 }
 
 static void
@@ -1454,6 +1569,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
         else
           ic->hide_timer = ecore_timer_loop_add(0.75, _ibar_cb_out_hide_delay, ic);
      }
+   _adjacent_popup_destroy(ic);
 }
 
 static Eina_Bool
@@ -1908,6 +2024,7 @@ _ibar_cb_icon_move(void *data, Evas *e, Evas_Object *obj __UNUSED__, void *event
           sig = "e,origin,right";
      }
    _ibar_icon_signal_emit(ic, sig, "e");
+   _adjacent_popup_destroy(ic);
 }
 
 static void
@@ -2889,6 +3006,7 @@ e_modapi_init(E_Module *m)
    E_CONFIG_VAL(D, T, id, STR);
    E_CONFIG_VAL(D, T, dir, STR);
    E_CONFIG_VAL(D, T, show_label, INT);
+   E_CONFIG_VAL(D, T, show_label_adjac, INT);
    E_CONFIG_VAL(D, T, eap_label, INT);
    E_CONFIG_VAL(D, T, lock_move, INT);
    E_CONFIG_VAL(D, T, focus_flash, INT);
