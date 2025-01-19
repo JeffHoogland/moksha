@@ -61,7 +61,8 @@ _config_ibar_module(Config_Item *ci)
                              _("IBar Settings"),
                              "E", "_e_mod_ibar_config_dialog",
                              buf, 0, v, ci);
-
+   if (ibar_config->config_dialog)
+     e_object_del(E_OBJECT(ibar_config->config_dialog));
    ibar_config->config_dialog = cfd;
 }
 
