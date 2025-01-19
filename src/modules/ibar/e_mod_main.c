@@ -1133,6 +1133,7 @@ _adjacent_label_popup(void *data)
    evas_object_show(ic->win);
 
    e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, &gh);
+   
    evas_object_geometry_get(ic->o_holder2, &x, &y, &w, &h);
 
    switch (ic->ibar->inst->ci->eap_label)
@@ -1166,7 +1167,7 @@ _adjacent_label_popup(void *data)
        case E_GADCON_ORIENT_LEFT:
        case E_GADCON_ORIENT_CORNER_LT:
        case E_GADCON_ORIENT_CORNER_LB:
-         px = x + w + gap;
+         px = x + w + 2 * gap;
          py = zone->y + gy + y + h / 6;
         break;
        case E_GADCON_ORIENT_RIGHT:
@@ -1354,7 +1355,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    e_popup_name_set(ic->menu->win, "noshadow-ibarmenu");
    e_object_data_set(E_OBJECT(ic->menu), ic);
    E_OBJECT_DEL_SET(ic->menu, _ibar_cb_icon_menu_del);
-   
+
    zone = ic->ibar->inst->gcc->gadcon->zone;
    e = ic->menu->win->evas;
    o = edje_object_add(e);
@@ -1391,7 +1392,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              evas_object_show(img);
              e_popup_object_add(ic->menu->win, img);
              evas_object_size_hint_aspect_set(img, EVAS_ASPECT_CONTROL_BOTH, w, h);
-             
+
              edje_object_part_swallow(it, "e.swallow.icon", img);
              edje_object_part_text_set(it, "e.text.title", txt);
              if (bd->focused)
@@ -1449,7 +1450,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    edje_object_message_signal_process(o);
    e_gadcon_popup_show(ic->menu);
    ic->ibar->menu_icon = ic;
-   
+
    {
       Evas_Coord x, y, gx, gy, iw, ih, ox, oy;
       evas_object_geometry_get(ic->o_holder, &x, &y, &iw, &ih);
@@ -1462,7 +1463,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
         ox = (x + (iw / 2)) - (w / 2) + gx;
       else
         oy = (y + (ih / 2)) - (h / 2) + gy;
-     
+
       ox = E_CLAMP(ox, 0, zone->w - w);
       e_popup_move(ic->menu->win, ox, oy);
    }
