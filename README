@@ -6,7 +6,7 @@ Installing Moksha
 
 Requirements:
 -------------
-Autoconf version 2.71  is now required.
+Autoconf version 2.71 is now required.
 
 Dependencies for building under Bodhi:
   doxygen pkg-config libglib2.0-dev libssl-dev libpng12-dev libharfbuzz-dev
