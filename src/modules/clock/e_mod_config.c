@@ -334,7 +334,7 @@ _clock_date_time_set(E_Config_Dialog_Data *cfdata, Eina_Bool date)
    snprintf(pkexec_cmd, PATH_MAX, "pkexec env DISPLAY=%s XAUTHORITY=%s", getenv("DISPLAY"), getenv("XAUTHORITY"));
    cmd_sudo = eina_stringshare_add(pkexec_cmd);
    if (date)
-     snprintf(buf, sizeof(buf), "%s %s %i%i%i", cmd_sudo,
+     snprintf(buf, sizeof(buf), "%s %s %d%02d%02d", cmd_sudo,
               DATE_STRING_SET, cfdata->year, cfdata->month, cfdata->day);
    else
      snprintf(buf, sizeof(buf), "%s %s %0.0f:%0.0f:%0.0f", cmd_sudo,
