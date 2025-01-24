@@ -190,10 +190,7 @@ get_time(const char *delimiter)
    timeinfo = localtime( &rawtime );
 
    // FIXME: use eina_convert stuff
-   if (timeinfo->tm_hour < 10)
-     snprintf(hour, sizeof(hour), "0%d", timeinfo->tm_hour);
-   else
-     snprintf(hour, sizeof(hour), "%d", timeinfo->tm_hour);
+   snprintf(hour, sizeof(hour), "%02d", timeinfo->tm_hour);
 
    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %s%s%02d%s%02d", timeinfo->tm_year + 1900,
             timeinfo->tm_mon + 1, timeinfo->tm_mday, hour, delimiter, timeinfo->tm_min,
