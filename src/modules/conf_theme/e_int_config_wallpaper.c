@@ -52,7 +52,7 @@ static void             _cb_color_del(void *data);
 static void             _cb_color_cancel(E_Color_Dialog *dia __UNUSED__, E_Color *color __UNUSED__, void *data);
 static const char*      _edj_gen(Import *import);
 static Eina_Bool        _cb_edje_cc_exit(void *data, int type __UNUSED__, void *event);
-static Eina_Bool         _image_size(const char *path, int *w, int *h);
+static Eina_Bool        _image_size(const char *path, int *w, int *h);
 static void             _import_free(Import *import);
  
 #define E_CONFIG_WALLPAPER_ALL    0
