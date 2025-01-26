@@ -813,6 +813,7 @@ _cb_color_select(E_Color_Dialog *dia __UNUSED__, E_Color *color, void *data)
    import->data = (void*) cfdata;
    eina_stringshare_replace(&cfdata->bg, _edj_gen(import));
 }
+
 static void
 _cb_color_cancel(E_Color_Dialog *dia __UNUSED__, E_Color *color __UNUSED__, void *data)
 {

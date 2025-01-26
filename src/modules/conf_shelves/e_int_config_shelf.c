@@ -30,10 +30,10 @@ struct _E_Config_Dialog_Data
    Eina_List           *handlers;
    Eina_List           *shelves;
    E_Config_Dialog     *cfd;
-   E_Entry_Dialog    *dia_new_shelf;
+   E_Entry_Dialog      *dia_new_shelf;
    char                *new_shelf;
-   Eina_Bool           header;
-   unsigned int num_shelves;
+   Eina_Bool            header;
+   unsigned int         num_shelves;
 };
 
 static E_Config_Dialog_Data *_cfdata;
