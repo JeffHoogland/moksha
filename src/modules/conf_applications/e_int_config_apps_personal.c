@@ -7,7 +7,7 @@ struct _E_Config_Dialog_Data
 
    struct
    {
-      Evas_Object *list, *add, *del, *edit;
+      Evas_Object *list, *del, *edit;
    } obj;
 };
 
@@ -92,7 +92,6 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_ilist_go(li);
 
    ob = e_widget_button_add(evas, _("Add"), "list-add", _btn_cb_add, cfdata, NULL);
-   cfdata->obj.add = ob;
    e_widget_table_object_append(of, ob, 0, 2, 1, 1, 1, 1, 1, 0);
 
    ob = e_widget_button_add(evas, _("Remove"), "list-remove", _btn_cb_del, cfdata, NULL);
