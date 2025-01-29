@@ -898,39 +898,42 @@ _edj_gen(Import *import)
      {
         anim = eina_str_has_extension(import->file, "gif");
         imgdir = ecore_file_dir_get(import->file);
-       if (!imgdir) ipart[0] = '\0';
-       else
-        {
-          snprintf(ipart, sizeof(ipart), "-id %s", e_util_filename_escape(imgdir));
-          free(imgdir);
-        }
+        if (!imgdir)
+          {
+            ipart[0] = '\0';
+          }
+        else
+          {
+            snprintf(ipart, sizeof(ipart), "-id %s", e_util_filename_escape(imgdir));
+            free(imgdir);
+          }
+        if (!_image_size(import->file, &w, &h))
+          {
+            _import_free(import);
+            return NULL;
+          }
 
-      if (!_image_size(import->file, &w, &h))
-       {
-          _import_free(import);
-          return NULL;
-       }
 
-
-     if (import->external)
-       {
-          fstrip = strdupa(e_util_filename_escape(import->file));
-          snprintf(enc, sizeof(enc), "USER");
-       }
-     else
-       {
-          if (file)
-            fstrip = strdupa(e_util_filename_escape(file));
-          if (import->quality == 100)
-            snprintf(enc, sizeof(enc), "COMP");
-          else
-            snprintf(enc, sizeof(enc), "LOSSY %i", import->quality);
-       }
+        if (import->external)
+          {
+            fstrip = strdupa(e_util_filename_escape(import->file));
+            snprintf(enc, sizeof(enc), "USER");
+          }
+        else
+          {
+            if (file)
+              fstrip = strdupa(e_util_filename_escape(file));
+            if (import->quality == 100)
+              snprintf(enc, sizeof(enc), "COMP");
+            else
+              snprintf(enc, sizeof(enc), "LOSSY %i", import->quality);
+          }
      }
+
    switch (import->method)
      {
-      case IMPORT_STRETCH:
-        fprintf(f,
+       case IMPORT_STRETCH:
+         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
@@ -945,8 +948,8 @@ _edj_gen(Import *import)
                 , fstrip, enc, anim ? "" : "data.item: \"noanimation\" \"1\";\n", w, h, fstrip);
         break;
 
-      case IMPORT_TILE:
-        fprintf(f,
+       case IMPORT_TILE:
+         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
@@ -964,8 +967,8 @@ _edj_gen(Import *import)
                 , fstrip, enc, anim ? "" : "data.item: \"noanimation\" \"1\";\n", w, h, fstrip, w, h);
         break;
 
-      case IMPORT_CENTER:
-        fprintf(f,
+       case IMPORT_CENTER:
+         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
@@ -985,10 +988,10 @@ _edj_gen(Import *import)
                 , fstrip, enc, anim ? "" : "data.item: \"noanimation\" \"1\";\n", w, h, cr, cg, cb, ca, w, h, w, h, fstrip);
         break;
 
-      case IMPORT_SCALE_ASPECT_IN:
-        locale = e_intl_language_get();
-        setlocale(LC_NUMERIC, "C");
-        fprintf(f,
+       case IMPORT_SCALE_ASPECT_IN:
+         locale = e_intl_language_get();
+         setlocale(LC_NUMERIC, "C");
+         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
@@ -1007,13 +1010,13 @@ _edj_gen(Import *import)
                 "} } } } }\n"
                 , fstrip, enc, anim ? "" : "data.item: \"noanimation\" \"1\";\n",
                 w, h, cr, cg, cb, ca, (double)w / (double)h, (double)w / (double)h, fstrip);
-        setlocale(LC_NUMERIC, locale);
-        break;
+         setlocale(LC_NUMERIC, locale);
+         break;
 
-      case IMPORT_SCALE_ASPECT_OUT:
-        locale = e_intl_language_get();
-        setlocale(LC_NUMERIC, "C");
-        fprintf(f,
+       case IMPORT_SCALE_ASPECT_OUT:
+         locale = e_intl_language_get();
+         setlocale(LC_NUMERIC, "C");
+         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
@@ -1028,12 +1031,12 @@ _edj_gen(Import *import)
                 "} } } } }\n"
                 , fstrip, enc, anim ? "" : "data.item: \"noanimation\" \"1\";\n",
                 w, h, (double)w / (double)h, (double)w / (double)h, fstrip);
-        setlocale(LC_NUMERIC, locale);
-        break;
+         setlocale(LC_NUMERIC, locale);
+         break;
 
-      case IMPORT_PAN:
-        locale = e_intl_language_get();
-        setlocale(LC_NUMERIC, "C");
+       case IMPORT_PAN:
+         locale = e_intl_language_get();
+         setlocale(LC_NUMERIC, "C");
         fprintf(f,
                 "images { image: \"%s\" %s; }\n"
                 "collections {\n"
@@ -1095,8 +1098,8 @@ _edj_gen(Import *import)
         setlocale(LC_NUMERIC, locale);
         break;
 
-      case IMPORT_COLOR:
-        fprintf(f,
+       case IMPORT_COLOR:
+         fprintf(f,
                 "collections {\n"
                 "group { name: \"e/desktop/background\";\n"
                 "parts {\n"
@@ -1106,7 +1109,7 @@ _edj_gen(Import *import)
                 "} }\n } } }\n"
                 , cr, cg, cb, ca);
         break;
-      default:
+       default:
         /* shouldn't happen */
         break;
      }
