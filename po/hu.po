@@ -3047,9 +3047,8 @@ msgid "Windows"
 msgstr "Ablakok"
 
 #: src/bin/e_int_menus.c:1400 src/bin/e_int_menus.c:1596
-#, fuzzy
 msgid "No windows"
-msgstr "(Nincsenek ablakok)"
+msgstr "Nincsenek ablakok"
 
 #: src/bin/e_int_menus.c:1449
 msgid "Lost Windows"
