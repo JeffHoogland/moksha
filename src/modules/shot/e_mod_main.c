@@ -133,7 +133,7 @@ _shot_conf_new(void)
    IFMODCFG(0x008e);
 
    shot_conf->view_enable = 1;
-   snprintf(buff, sizeof(buff), "xdg-open");
+   snprintf(buff, sizeof(buff), "enlightenment_open");
    shot_conf->viewer = eina_stringshare_add(buff);
    snprintf(buf, sizeof(buf), "desktop");
    shot_conf->path = eina_stringshare_add(buf);
