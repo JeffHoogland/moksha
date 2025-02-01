@@ -3022,7 +3022,6 @@ msgid "Windows"
 msgstr "Okna"
 
 #: src/bin/e_int_menus.c:1400 src/bin/e_int_menus.c:1596
-#, fuzzy
 msgid "No windows"
 msgstr "Brez okna"
 

@@ -2885,7 +2885,7 @@ msgstr "Langai"
 
 #: src/bin/e_int_menus.c:1400 src/bin/e_int_menus.c:1596
 msgid "No windows"
-msgstr ""
+msgstr "Nėra langų"
 
 #: src/bin/e_int_menus.c:1449
 msgid "Lost Windows"
