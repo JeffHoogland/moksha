@@ -1348,7 +1348,7 @@ static void
 _e_border_menu_cb_fav_add(void *data, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {
    E_Border *bd;
-   Efreet_Menu *menu=NULL;
+   Efreet_Menu *menu = NULL;
    char buf[PATH_MAX];
 
    if (!(bd = data)) return;

@@ -185,7 +185,7 @@ get_time(const char *delimiter)
    struct tm * timeinfo;
    char buf[64] = "";
    char hour[32];
-   Eina_Stringshare *ret=NULL;
+   Eina_Stringshare *ret = NULL;
    time(&rawtime);
    timeinfo = localtime( &rawtime );
 

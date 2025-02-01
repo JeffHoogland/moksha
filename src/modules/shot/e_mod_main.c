@@ -21,7 +21,7 @@ static Ecore_X_Window fake_win;
 
 static E_Action *border_act = NULL, *act = NULL;
 static E_Int_Menu_Augmentation *maug = NULL;
-static Ecore_Timer *timer=NULL, *border_timer=NULL, *timer_sec = NULL;
+static Ecore_Timer *timer = NULL, *border_timer = NULL, *timer_sec = NULL;
 static E_Win *win = NULL;
 E_Confirm_Dialog *cd = NULL;
 
