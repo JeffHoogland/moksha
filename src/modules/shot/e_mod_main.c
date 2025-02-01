@@ -90,7 +90,6 @@ _notify(int counter,const char *text_header, const char *text, const int wait, i
    n.timeout = wait;
    e_notification_client_send(&n, _notify_cb, NULL);
 
-
 return EINA_FALSE;
 }
 
@@ -438,11 +437,11 @@ _file_select_ok_cb(void *data, E_Dialog *dia)
    _save_to(file);
 
    if ((shot_conf->view_enable) && (shot_conf->viewer))
-   {
+     {
        snprintf(buf, sizeof(buf), "%s %s",shot_conf->viewer, file);
        exe = e_util_exe_safe_run(buf, NULL);
        if (exe) ecore_exe_free(exe);
-   }
+     }
 
 #ifdef HAVE_ELEMENTARY
    if (shot_conf->clipboard)
@@ -1132,10 +1131,10 @@ _e_mod_action_border_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
    bd = e_border_focused_get();
    if (!bd) return;
    if (border_timer)
-      {
-         ecore_timer_del(border_timer);
-         border_timer = NULL;
-      }
+     {
+        ecore_timer_del(border_timer);
+        border_timer = NULL;
+     }
    _shot_now(NULL, bd);
 }
 
@@ -1158,12 +1157,12 @@ _e_mod_action_cb(E_Object *obj, Eina_Bool instant)
    if (!zone) zone = e_util_zone_current_get(e_manager_current_get());
    if (!zone) return;
    if (timer)
-      {
-         ecore_timer_del(timer);
-         timer = NULL;
-         ecore_timer_del(timer_sec);
-         timer_sec = NULL;
-      }
+     {
+        ecore_timer_del(timer);
+        timer = NULL;
+        ecore_timer_del(timer_sec);
+        timer_sec = NULL;
+     }
 
   _shot(zone, instant);
 }
@@ -1215,10 +1214,11 @@ _show_dialog(E_Object *obj, const char *params __UNUSED__)
 
    if (_show_dialog_dia) return;
 
-   if (!shot_conf->mode_dialog){
+   if (!shot_conf->mode_dialog)
+     {
        _e_mod_action_cb(obj, EINA_FALSE);
        return;
-   }
+     }
 
    if (!(man = e_manager_current_get())) return;
    if (!(con = e_container_current_get(man))) return;
