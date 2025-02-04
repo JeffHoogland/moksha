@@ -174,7 +174,7 @@ _e_test_internal(E_Container *con)
    e_dialog_title_set(dia, "A Test Dialog");
 
    o = e_icon_add(dia->win->evas);
-   e_icon_file_set(o, "/home/raster/scroll.png");
+   e_icon_file_set(o, "/usr/share/bodhi/test/scroll.png");
    evas_object_resize(o, 1024, 768);
    evas_object_focus_set(o, 1);
    evas_object_show(o);
@@ -289,39 +289,39 @@ _e_test_internal(E_Container *con)
    e_ilist_append(o, o3, "Item 1", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/palette.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/palette.png");
    e_ilist_append(o, o3, "Item 2 (Some really long text goes here for testing)", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/mozilla.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/mozilla.png");
    e_ilist_append(o, o3, "Item 3 (Medium length)", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/trash_open.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/trash_open.png");
    e_ilist_append(o, o3, "Item POOP", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/watch.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/watch.png");
    e_ilist_append(o, o3, "Item BLING BLING", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/quake3.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/quake3.png");
    e_ilist_append(o, o3, "Sukebelinth", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/opera6.png");
    e_ilist_append(o, o3, "A header", 1, NULL, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/opera6.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/opera6.png");
    e_ilist_append(o, o3, "Panties", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/drawer_open.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/drawer_open.png");
    e_ilist_append(o, o3, "Flimbert the cagey", 0, _e_test_sel, NULL, NULL, NULL);
 
    o3 = e_icon_add(dia->win->evas);
-   e_icon_file_set(o3, "/home/raster/C/stuff/icons/cd.png");
+   e_icon_file_set(o3, "/usr/share/bodhi/test/icons/cd.png");
    e_ilist_append(o, o3, "Norbert", 0, _e_test_sel, NULL, NULL, NULL);
 
    e_ilist_size_min_get(o, &mw, &mh);
@@ -677,28 +677,28 @@ _e_test_internal(E_Container *con)
    o = e_slidesel_add(dia->win->evas);
    e_slidesel_item_distance_set(o, 64);
    e_slidesel_item_add(o, "blah / item 1",
-		       "/home/raster/pix/OLD/Download/Crystalline____a.jpg",
+		       "/usr/share/bodhi/test/OLD/Crystalline____a.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / smelly fish",
-		       "/home/raster/pix/OLD/Download/Reluctant_Sunrise.jpg",
+		       "/usr/share/bodhi/test/OLD/Reluctant_Sunrise.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / pong",
-		       "/home/raster/pix/OLD/Download/Soft_Wings.jpg",
+		       "/usr/share/bodhi/test/OLD/Soft_Wings.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / on a stick",
-		       "/home/raster/pix/OLD/Download/Stock_rose_1.jpg",
+		       "/usr/share/bodhi/test/OLD/Stock_rose_1.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / oath",
-		       "/home/raster/pix/OLD/Download/The_Eyes_Of_A_Killer.jpg",
+		       "/usr/share/bodhi/test/OLD/The_Eyes_Of_A_Killer.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / yiiihaaaaa",
-		       "/home/raster/pix/OLD/Download/lady_bug.jpg",
+		       "/usr/share/bodhi/test/OLD/lady_bug.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / blah blah blah",
-		       "/home/raster/pix/OLD/Download/ocean_rocks_covered_by_ash.jpg",
+		       "/usr/share/bodhi/test/OLD/ocean_rocks_covered_by_ash.jpg",
 		       NULL, NULL);
    e_slidesel_item_add(o, "blah / bing bing bing",
-		       "/home/raster/pix/OLD/Download/orange_chair_heaven_falling.jpg",
+		       "/usr/share/bodhi/test/OLD/orange_chair_heaven_falling.jpg",
 		       NULL, NULL);
 
    e_box_pack_end(ob, o);
@@ -748,31 +748,31 @@ _e_test_timer(void *data)
 
    o = e_widget_toolbar_add(dia->win->evas, 48, 48);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_hdd.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_hdd.png");
    e_widget_toolbar_item_append(o, ic, "HDD", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_cd.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_cd.png");
    e_widget_toolbar_item_append(o, ic, "CD", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_desktop.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_desktop.png");
    e_widget_toolbar_item_append(o, ic, "Desktop", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_home.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_home.png");
    e_widget_toolbar_item_append(o, ic, "Home", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_root.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_root.png");
    e_widget_toolbar_item_append(o, ic, "Root", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_tmp.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_tmp.png");
    e_widget_toolbar_item_append(o, ic, "Temp", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_globe.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_globe.png");
    e_widget_toolbar_item_append(o, ic, "World", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_mixer.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_mixer.png");
    e_widget_toolbar_item_append(o, ic, "Mixer", NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_performance.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_performance.png");
    e_widget_toolbar_item_append(o, ic, "Perform", NULL, NULL, NULL);
 
    e_widget_toolbar_scrollable_set(o, 1);
@@ -815,31 +815,31 @@ _e_test_timer(void *data)
 
    o = e_widget_toolbar_add(dia->win->evas, 48, 48);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_hdd.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_hdd.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_cd.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_cd.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_desktop.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_desktop.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_home.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_home.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_root.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_root.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_efm_tmp.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_efm_tmp.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_globe.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_globe.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_mixer.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_mixer.png");
    e_widget_toolbar_item_append(o, ic, NULL, NULL, NULL, NULL);
    ic = e_icon_add(dia->win->evas);
-   e_icon_file_set(ic, "/home/raster/C/e17/data/themes/images/icon_performance.png");
+   e_icon_file_set(ic, "/usr/share/bodhi/test/themes/images/icon_performance.png");
    e_widget_toolbar_item_append(o, ic, "x", NULL, NULL, NULL);
 
    e_widget_toolbar_scrollable_set(o, 1);
