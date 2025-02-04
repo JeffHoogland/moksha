@@ -237,7 +237,7 @@ e_volume_mount(E_Volume *v)
        break;
 #endif
      default:
-       printf("raster can't mount disks by himself!\n");
+       printf("EFM Error: No Backend available\n");
        (void)v;
     }
 }
@@ -262,7 +262,7 @@ e_volume_unmount(E_Volume *v)
        break;
 #endif
      default:
-       printf("raster can't unmount disks by himself!\n");
+       printf("EFM Error: No Backend available\n");
        (void)v;
     }
 }
@@ -286,7 +286,7 @@ e_volume_eject(E_Volume *v)
        break;
 #endif
      default:
-       printf("raster can't eject disks by himself!\n");
+       printf("EFM Error: No Backend available\n");
        (void)v;
     }
 }
@@ -307,7 +307,7 @@ e_volume_find(const char *udi)
         return _e_fm_main_eeze_volume_find(udi);
 #endif
       default:
-        printf("raster can't find disks by himself!\n");
+        printf("EFM Error: No Backend available\n");
         (void)udi;
      }
    return NULL;
@@ -332,7 +332,7 @@ e_storage_del(const char *udi)
        break;
 #endif
      default:
-       printf("raster can't delete disks by himself!\n");
+       printf("EFM Error: No Backend available\n");
        (void)udi;
     }
 }
@@ -353,7 +353,7 @@ e_storage_find(const char *udi)
        return _e_fm_main_eeze_storage_find(udi);
 #endif
      default:
-       printf("raster can't find disks by himself!\n");
+       printf("EFM Error: No Backend available\n");
        (void)udi;
     }
   return NULL;
