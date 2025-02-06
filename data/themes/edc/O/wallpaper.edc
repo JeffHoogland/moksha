@@ -128,6 +128,7 @@
                   font: "Sans:style=Bold";
                   size: 10;
                   min: 1 1;
+                  ellipsis: -1;
                   align: 0.5 1.0;
                }
             }
