@@ -223,20 +223,21 @@
          }
          part {
             name: "tb2";
-            description {
+            description {;
                state: "default" 0.0;
-               color_class: "dialog_base";
+               //~ color_class: "dialog_base";
+               color: 75 75 75 255;
                rel1 {
                   to_x: "e.swallow.extras";
                   to_y: "e.swallow.extras";
                   relative: 0.0 0.0;
-                  offset: -4 -7;
+                  offset: 0 -7;
                }
                rel2 {
                   to_x: "e.swallow.extras";
                   to_y: "e.swallow.extras";
                   relative: 1.0 1.0;
-                  offset: -10 3;
+                  offset: 17 3;
                }
                image {
                   normal: "O/wp-tb2.png";
