@@ -330,7 +330,9 @@
             description {
                state: "default" 0.0;
                rel1.to: "aup";
+               rel1.offset: -3 -3;
                rel2.to: "aup";
+               rel2.offset:  3  3;
                color: 0 0 0 0;
             }
          }
@@ -526,6 +528,14 @@
             signal: "mouse,down,1";
             source: "ain";
             action: SIGNAL_EMIT "e,action,panel,hide" "e";
+            after: "in_nodelay";
+         }
+         program {
+            name: "in_nodelay";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "aout";
+            after: "in2";
          }
          program {
             name: "in";
