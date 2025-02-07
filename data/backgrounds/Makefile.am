@@ -1,6 +1,13 @@
+MAINTAINERCLEANFILES = Makefile.in
 filesdir = $(datadir)/enlightenment/data/backgrounds
-files_DATA = 
+files_DATA = \
+Dunes.edj \
+Enlightenment.edj \
+Flat-Fan.edj \
+Flat-Stone-Pattern.edj \
+Squiggle.edj \
+Sunset-Hills.edj \
+Wetleaf.edj 
 
-install-data-local:
-	$(MKDIR_P) $(DESTDIR)$(filesdir)
 
+EXTRA_DIST = $(files_DATA)
