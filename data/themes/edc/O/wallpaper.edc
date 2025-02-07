@@ -532,6 +532,7 @@
             signal: "e,action,panel,hide";
             source: "e";
             action: STATE_SET "default" 0.0;
+            transition: LINEAR 0.8;
             target: "aout";
             after: "in2";
          }
