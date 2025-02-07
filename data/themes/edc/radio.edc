@@ -66,9 +66,9 @@ group { name: "e/widgets/radio";
             rel1.to_x: "inset";
             rel1.relative: 1.0 0.0;
             rel2.offset: -3 -3;
-            color: 21 21 21 255;
-            color3: 255 255 255 25;
-            //~ color_class: "radio_text";
+            color: 255 255 255 255;
+            color3: 0 0 0 128;
+            color_class: "radio_text";
             text { font: "Sans"; size: 10;
                min: 1 1;
                ellipsis: -1;
@@ -78,7 +78,7 @@ group { name: "e/widgets/radio";
          }
          description { state: "disabled" 0.0;
             inherit: "default" 0.0;
-            color: 91 91 91 255;
+            color: 21 21 21 255;
             color3: 255 255 255 25;
          }
       }
