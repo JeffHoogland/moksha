@@ -120,7 +120,7 @@
                rel2 {
                   to: "bot2";
                   relative: 1.0 1.0;
-                  offset: -3 -11;
+                  offset: -3 -20;
                }
                color: 255 255 255 255;
                color3: 0 0 0 32;
