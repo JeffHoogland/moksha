@@ -83,10 +83,6 @@ if USE_MODULE_CONF
 include Makefile_conf.am
 endif
 
-if USE_MODULE_CONF_WALLPAPER2
-include Makefile_conf_wallpaper2.am
-endif
-
 if USE_MODULE_CONF_THEME
 include Makefile_conf_theme.am
 endif
