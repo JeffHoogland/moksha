@@ -332,6 +332,9 @@ main(int argc, char **argv)
    e_util_env_set("DESKTOP", moksha);
    e_util_env_set("XDG_CURRENT_DESKTOP", "Enlightenment");
    e_util_env_set("MOKSHA_VERSION", PACKAGE_VERSION);
+#ifdef ELM_XDG
+   e_util_env_set("ELM_CONFIG_DIR_XDG", "1");
+#endif  
    TS("Environment Variables Done");
 
    TS("Parse Arguments");
