@@ -198,7 +198,11 @@ _xdg_data_dirs_augment(void)
    /* set menu prefix so we get our e menu */
    if (!getenv("XDG_MENU_PREFIX"))
      {
+#ifdef MOKSHA_MENU
         e_util_env_set("XDG_MENU_PREFIX", "moksha-");
+#else
+        e_util_env_set("XDG_MENU_PREFIX", "e-");
+#endif
      }
 
 }
