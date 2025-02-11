@@ -354,6 +354,14 @@ AC_ARG_ENABLE([install-sysactions],
 AC_MSG_RESULT([$e_cv_enable_install_sysactions])
 AM_CONDITIONAL(INSTALL_SYSACTIONS, test x${e_cv_enable_install_sysactions} = xyes)
 
+AC_MSG_CHECKING([whether to install enlightenment.menu])
+AC_ARG_ENABLE([install-enlightenment-menu],
+  AS_HELP_STRING([--disable-enlightenment-menu],[disable installing /etc/xdg/menus/e-applications.menu @<:@default=enabled@:>@]),
+    [e_cv_enable_install_enlightenment_menu=$enableval],
+    AC_CACHE_VAL([e_cv_enable_install_enlightenment_menu], [e_cv_enable_install_enlightenment_menu=yes]))
+AC_MSG_RESULT([$e_cv_enable_install_enlightenment_menu])
+AM_CONDITIONAL(INSTALL_ENLIGHTENMENT_MENU, test x${e_cv_enable_install_enlightenment_menu} = xyes)
+
 AC_MSG_CHECKING([whether to install wizard desktop files])
 AC_ARG_ENABLE([install-wizard-desktop],
   AS_HELP_STRING([--disable-wizard-desktop],[disable installing home Desktop files @<:@default=disabled@:>@]),
@@ -1094,6 +1102,12 @@ Preferred Backends:
  * udisks2_mount........: $e_cv_want_mount_udisks2
  * eeze_mount...........: $e_cv_want_mount_eeze
 DEVICE_EOF
+echo
+
+cat << MENU_EOF
+Install Enlightenment Menu
+ * enabled........: $e_cv_enable_install_enlightenment_menu
+MENU_EOF
 echo
 
 cat << WIZARD_EOF
