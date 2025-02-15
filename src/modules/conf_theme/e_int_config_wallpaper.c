@@ -510,7 +510,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
                             _cb_import, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 0, 0, 0);
 
-   ow = e_widget_button_add(evas, _("Color..."), NULL,
+   ow = e_widget_button_add(evas, _("Color..."), "preferences-color",
                             _cb_color, cfdata, NULL);
    e_widget_table_object_append(ot, ow, 1, 1, 1, 1, 1, 0, 0, 0);
 
