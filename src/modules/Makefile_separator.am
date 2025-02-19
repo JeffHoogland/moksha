@@ -1,0 +1,15 @@
+separatordir = $(MDIR)/separator
+separator_DATA = separator/e-module-separator.edj \
+	       separator/module.desktop
+
+EXTRA_DIST += $(separator_DATA)
+
+separatorpkgdir = $(MDIR)/separator/$(MODULE_ARCH)
+separatorpkg_LTLIBRARIES = separator/module.la
+
+separator_module_la_SOURCES = separator/e_mod_main.h \
+			    separator/e_mod_main.c
+
+.PHONY: separator install-separator
+separator: $(separatorpkg_LTLIBRARIES) $(separator_DATA)
+install-separator: install-separatorDATA install-separatorpkgLTLIBRARIES

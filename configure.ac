@@ -925,6 +925,7 @@ AC_E_OPTIONAL_MODULE([access], false)
 AC_E_OPTIONAL_MODULE([clipboard], true)
 AC_E_OPTIONAL_MODULE([places], true,[CHECK_MODULE_PLACES])
 AC_E_OPTIONAL_MODULE([classicmenu], true)
+AC_E_OPTIONAL_MODULE([separator], true)
 
 SUSPEND=""
 HIBERNATE=""
@@ -1020,6 +1021,7 @@ src/modules/cpufreq/module.desktop
 src/modules/ibox/module.desktop
 src/modules/start/module.desktop
 src/modules/winlist/module.desktop
+src/modules/separator/module.desktop
 src/modules/fileman/module.desktop
 src/modules/conf/module.desktop
 src/modules/conf_theme/module.desktop

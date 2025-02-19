@@ -207,6 +207,10 @@ if USE_MODULE_CLASSICMENU
 include Makefile_classicmenu.am
 endif
 
+if USE_MODULE_SEPARATOR
+include Makefile_separator.am
+endif
+
 #if HAVE_WAYLAND_DRM
 #include Makefile_wl_drm.am
 #endif

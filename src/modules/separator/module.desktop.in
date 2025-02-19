@@ -1,0 +1,26 @@
+[Desktop Entry]
+Type=Link
+Name=Separator
+Name[be]=Раздзяляльнік
+Name[cs]=Oddělovač
+Name[es]=Separador
+Name[de]=Trenner
+Name[fr]=Séparateur
+Name[pt]=Separador
+Name[ru]=Разделитель
+Name[sk]=Oddeľovač
+Name[it]=Separatore
+Name[pl]=Oddzielacz
+Icon=e-module-separator
+X-Enlightenment-ModuleType=utils
+Comment=The separator module for Moksha shelf.
+Comment[be]=Модуль раздзяляльніка да паліцы Moksha.
+Comment[cs]=Modul oddělovače pro lištu desktopu Moksha.
+Comment[es]=El módulo separador para el panel de Moksha.
+Comment[de]=Das Trennmodul für das Moksha-Regal.
+Comment[fr]=Module séparateur pour le rayon de Moksha.
+Comment[pt]=Módulo separador para o painel do Moksha.
+Comment[ru]=Модуль разделителя для полки Moksha.
+Comment[sk]=Modul oddeľovača pre lištu desktopu Moksha.
+Comment[it]=Modulo di separazione per il pannello Moksha.
+Comment[pl]=Moduł oddzielania do panelu Moksha.
