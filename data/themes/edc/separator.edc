@@ -1,0 +1,52 @@
+images.image: "separator.png" COMP;
+
+	group { "modules/separator/main";
+		parts {
+			rect { "base"; mouse;
+				desc { "default";
+				   color: 0 0 0 0;
+				}
+			}
+			part { "separator";
+				desc { "default";
+					min: 3 3;
+					max: 3 99999;
+					image.normal: "separator.png";
+					image.border: 2 2 2 2;
+				}
+				desc { "vertical";
+					inherit;
+					max: 99999 3;
+				}
+				desc { "blank";
+					inherit;
+					hid;
+				}
+			}
+	}
+	programs
+	  {
+		program
+			{
+				signal: "horizontal_shelf";
+				source: "";
+				action: STATE_SET "default" 0.0;
+				target: "separator";
+			}
+		program
+			{
+				signal: "vertical_shelf";
+				source: "";
+				action: STATE_SET "vertical" 0.0;
+				target: "separator";
+			}
+		program
+			{
+				signal: "hide_separator";
+				source: "";
+				action: STATE_SET "blank" 0.0;
+				target: "separator";
+			}
+	
+	  }
+}
