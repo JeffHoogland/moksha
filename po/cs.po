@@ -4,7 +4,7 @@
 #
 # Vít Pelčák <vit@pelcak.org>, 2011.
 # Tomáš Čech <sleep_walker@suse.cz>, 2015.
-# Štefan Uram <thewaiter@centrum.sk>, 2023.
+# Štefan Uram <thewaiter@centrum.sk>, 2025.
 #
 msgid ""
 msgstr ""
@@ -46,7 +46,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -8811,12 +8810,11 @@ msgstr "Zobrazit popisek ikony"
 
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Popisek přes ikonu"
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Zobrazit popisek ikony"
+msgstr "Popisek vedle ikony"
 
 #: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
@@ -8824,7 +8822,7 @@ msgstr "Různé"
 
 #: src/modules/ibar/e_mod_config.c:163
 msgid "Icon focus flash"
-msgstr ""
+msgstr "Animace ikony"
 
 #: src/modules/ibar/e_mod_config.c:165
 msgid "Lock icon move"
@@ -8832,7 +8830,7 @@ msgstr "Uzamknout pohyb ikon"
 
 #: src/modules/ibar/e_mod_config.c:167
 msgid "Don't add items on launch"
-msgstr ""
+msgstr "Nepřdávat položku po spuštění"
 
 #: src/modules/ibar/e_mod_config.c:169
 msgid "Track launch"
@@ -10448,12 +10446,5 @@ msgstr "ZVypnout zvuk"
 
 # FIXME
 #: src/modules/separator/e_mod_main.c:127
-#, fuzzy
 msgid "Separator"
-msgstr "Rozdělit skupinu"
-
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "Vlastní FM pro otevření adresářů"
-
-#~ msgid "Show icon label"
-#~ msgstr "Zobrazit popisek ikony"
+msgstr "Oddělovač"
