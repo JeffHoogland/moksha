@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-12 12:20+0100\n"
+"POT-Creation-Date: 2025-02-19 20:33+0100\n"
 "PO-Revision-Date: 2025-02-12 12:46+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
@@ -8631,7 +8631,7 @@ msgstr "Image personnalisée"
 msgid "Custom Color"
 msgstr "Couleur personnalisée"
 
-#: src/modules/gadman/e_mod_config.c:221
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -10491,6 +10491,11 @@ msgstr "Augmentation du volume"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Son coupé"
+
+#: src/modules/separator/e_mod_main.c:127
+#, fuzzy
+msgid "Separator"
+msgstr "Groupe séparé"
 
 #~ msgid "Custom FM to open dirs"
 #~ msgstr "Gestionnaire de fichiers personnalisé"

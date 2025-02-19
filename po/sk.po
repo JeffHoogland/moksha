@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2024-10-27 07:09+0100\n"
+"POT-Creation-Date: 2025-02-19 20:33+0100\n"
 "PO-Revision-Date: 2025-01-01 08:29+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Slovakian\n"
@@ -35,7 +35,7 @@ msgid "Close"
 msgstr "Zatvoriť"
 
 #: src/bin/e_about.c:23 src/bin/e_actions.c:3550 src/bin/e_actions.c:3554
-#: src/bin/e_actions.c:3558 src/bin/e_main.c:710
+#: src/bin/e_actions.c:3558 src/bin/e_main.c:717
 #: src/modules/conf_interaction/e_int_config_mouse.c:312
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:240
 #: src/modules/wizard/page_000.c:36
@@ -43,8 +43,9 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
+#, fuzzy
 msgid ""
-"<title>Copyright &copy; 2024, by the Moksha Development Team</><br><br>We "
+"<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
@@ -106,7 +107,7 @@ msgstr "Ste si istý, že chcete skončiť?"
 #: src/bin/e_actions.c:2495 src/bin/e_actions.c:2560 src/bin/e_actions.c:2625
 #: src/bin/e_confirm_dialog.c:52 src/bin/e_desklock.c:1313 src/bin/e_fm.c:10519
 #: src/bin/e_screensaver.c:193 src/modules/quickaccess/e_mod_quickaccess.c:1267
-#: src/modules/shot/e_mod_main.c:319
+#: src/modules/shot/e_mod_main.c:318
 msgid "Yes"
 msgstr "Áno"
 
@@ -557,7 +558,7 @@ msgstr "Prejsť do okna... alebo na štart..."
 #: src/bin/e_actions.c:3644 src/modules/backlight/e_mod_main.c:509
 #: src/modules/conf_display/e_mod_main.c:17
 #: src/modules/conf_randr/e_mod_main.c:19 src/modules/ibox/e_mod_config.c:135
-#: src/modules/shot/e_mod_main.c:987 src/modules/shot/e_mod_main.c:1317
+#: src/modules/shot/e_mod_main.c:986 src/modules/shot/e_mod_main.c:1317
 msgid "Screen"
 msgstr "Obrazovka"
 
@@ -867,9 +868,9 @@ msgstr "Vybrať"
 #: src/modules/syscon/e_syscon.c:122
 #: src/modules/quickaccess/e_mod_quickaccess.c:319
 #: src/modules/quickaccess/e_mod_quickaccess.c:381
-#: src/modules/shot/e_mod_main.c:319 src/modules/shot/e_mod_main.c:515
-#: src/modules/shot/e_mod_main.c:780 src/modules/shot/e_mod_main.c:806
-#: src/modules/shot/e_mod_main.c:1048 src/modules/xkbswitch/e_mod_config.c:580
+#: src/modules/shot/e_mod_main.c:318 src/modules/shot/e_mod_main.c:514
+#: src/modules/shot/e_mod_main.c:779 src/modules/shot/e_mod_main.c:805
+#: src/modules/shot/e_mod_main.c:1047 src/modules/xkbswitch/e_mod_config.c:587
 msgid "Cancel"
 msgstr "Zrušiť"
 
@@ -925,8 +926,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:505
-#: src/bin/e_module.c:825 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
+#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -935,7 +936,7 @@ msgstr ""
 #: src/modules/cpufreq/e_mod_main.c:517 src/modules/cpufreq/e_mod_main.c:544
 #: src/modules/cpufreq/e_mod_main.c:569 src/modules/cpufreq/e_mod_main.c:597
 #: src/modules/fileman/e_int_config_mime_edit.c:315
-#: src/modules/xkbswitch/e_mod_config.c:579
+#: src/modules/xkbswitch/e_mod_config.c:586
 msgid "OK"
 msgstr "OK"
 
@@ -1174,11 +1175,11 @@ msgstr "Editor záznamov plochy"
 #: src/bin/e_eap_editor.c:678 src/bin/e_int_border_prop.c:445
 #: src/bin/e_int_border_prop.c:499 src/modules/conf_intl/e_int_config_imc.c:886
 #: src/modules/conf_menus/e_int_config_menus.c:267
-#: src/modules/ibar/e_mod_config.c:138
+#: src/modules/ibar/e_mod_config.c:148
 msgid "Name"
 msgstr "Názov"
 
-#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:142
+#: src/bin/e_eap_editor.c:689 src/modules/ibar/e_mod_config.c:152
 msgid "Comment"
 msgstr "Komentár"
 
@@ -1265,7 +1266,7 @@ msgstr "Vybrať spustiteľný súbor"
 #: src/modules/conf_shelves/e_int_config_shelf.c:139
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:141
-#: src/modules/ibar/e_mod_config.c:120 src/modules/ibar/e_mod_config.c:219
+#: src/modules/ibar/e_mod_config.c:126 src/modules/ibar/e_mod_config.c:230
 #: src/modules/quickaccess/e_mod_config.c:277
 #: src/modules/quickaccess/e_mod_config.c:307
 #: src/modules/clipboard/e_mod_main.c:695
@@ -1560,7 +1561,7 @@ msgid "Eject"
 msgstr "Vysunúť"
 
 #: src/bin/e_fm.c:9250 src/bin/e_int_border_remember.c:763
-#: src/modules/ibar/e_mod_main.c:1584
+#: src/modules/ibar/e_mod_main.c:1654
 msgid "Properties"
 msgstr "Vlastnosti"
 
@@ -1720,7 +1721,7 @@ msgstr "Nie pre všetko"
 msgid "Yes to all"
 msgstr "Áno na všetko"
 
-#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:605
+#: src/bin/e_fm.c:10523 src/modules/xkbswitch/e_mod_config.c:402
 #: src/modules/notification/e_mod_main.c:713
 #: src/modules/places/e_mod_places.c:649
 msgid "Warning"
@@ -1925,11 +1926,11 @@ msgstr "Presunúť na"
 msgid "Automatically scroll contents"
 msgstr "Automaticky rolovať obsah"
 
-#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1002
+#: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1007
 msgid "Plain"
 msgstr "Plochý"
 
-#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1010
+#: src/bin/e_gadcon.c:1780 src/modules/gadman/e_mod_gadman.c:1015
 msgid "Inset"
 msgstr "Vsadený"
 
@@ -1943,7 +1944,7 @@ msgstr "Vzhľad"
 #: src/modules/conf_applications/e_int_config_apps.c:338
 #: src/modules/conf_applications/e_int_config_apps.c:358
 #: src/modules/conf_applications/e_int_config_apps_personal.c:97
-#: src/modules/gadman/e_mod_gadman.c:1058
+#: src/modules/gadman/e_mod_gadman.c:1063
 #: src/modules/xkbswitch/e_mod_config.c:296
 msgid "Remove"
 msgstr "Odstrániť"
@@ -2022,12 +2023,12 @@ msgid "Use"
 msgstr "Použiť"
 
 #: src/bin/e_import_config_dialog.c:295
-#: src/modules/conf_theme/e_int_config_wallpaper.c:1144
+#: src/modules/conf_theme/e_int_config_wallpaper.c:1148
 msgid "Picture Import Error"
 msgstr "Zlyhal import obrázku"
 
 #: src/bin/e_import_config_dialog.c:296
-#: src/modules/conf_theme/e_int_config_wallpaper.c:1145
+#: src/modules/conf_theme/e_int_config_wallpaper.c:1149
 msgid "Moksha was unable to import the picture<br>due to conversion errors."
 msgstr ""
 "Moksha nie je schopný importovať obrázok<br><br>vzhľadom ku chybe konverzie."
@@ -2567,11 +2568,11 @@ msgstr "Vyžadovať umiestnenie"
 #: src/modules/everything/evry_gadget.c:511
 #: src/modules/everything/evry_gadget.c:695
 #: src/modules/everything/evry_plug_settings.c:183
-#: src/modules/ibar/e_mod_main.c:460 src/modules/ibar/e_mod_main.c:1577
+#: src/modules/ibar/e_mod_main.c:462 src/modules/ibar/e_mod_main.c:1647
 #: src/modules/ibox/e_mod_main.c:302 src/modules/ibox/e_mod_main.c:678
 #: src/modules/pager/e_mod_main.c:893 src/modules/temperature/e_mod_main.c:293
 #: src/modules/connman/e_mod_main.c:459 src/modules/shot/e_mod_main.c:1238
-#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:859
+#: src/modules/shot/e_mod_config.c:98 src/modules/tasks/e_mod_main.c:852
 #: src/modules/xkbswitch/e_mod_main.c:355
 #: src/modules/xkbswitch/e_mod_main.c:396
 #: src/modules/notification/e_mod_main.c:343
@@ -2669,7 +2670,7 @@ msgstr "Veľkosť, umiestnenie a zámky"
 #: src/bin/e_int_border_remember.c:627 src/modules/conf/e_mod_main.c:253
 #: src/modules/everything/evry_gadget.c:644
 #: src/modules/everything/evry_plug_aggregator.c:313
-#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:991
+#: src/modules/everything/evry_view.c:1628 src/modules/shot/e_mod_main.c:990
 msgid "All"
 msgstr "Všetko"
 
@@ -2777,7 +2778,7 @@ msgstr "Nastavenie Modulov"
 msgid "Load"
 msgstr "Zapnúť"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:607
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
 msgid "Unload"
 msgstr "Vypnúť"
 
@@ -3023,27 +3024,27 @@ msgstr "Zobraziť na všetkých plochách"
 msgid "Show on specified Desktops"
 msgstr "Zobraziť na určených plochách"
 
-#: src/bin/e_main.c:291
+#: src/bin/e_main.c:295
 msgid "Moksha cannot initialize Eina!\n"
 msgstr "Moksha nemôže inicializovať Eina!.\n"
 
-#: src/bin/e_main.c:297
+#: src/bin/e_main.c:301
 msgid "Moksha could not create a logging domain!\n"
 msgstr "Moksha nemôže vytvoriť doménu logov.\n"
 
-#: src/bin/e_main.c:346
+#: src/bin/e_main.c:353
 msgid "Moksha cannot initialize Eet!\n"
 msgstr "Moksha nemôže inicializovať Eet!.\n"
 
-#: src/bin/e_main.c:355
+#: src/bin/e_main.c:362
 msgid "Moksha cannot initialize Ecore!\n"
 msgstr "Moksha nemôže inicializovať Ecore!.\n"
 
-#: src/bin/e_main.c:369
+#: src/bin/e_main.c:376
 msgid "Moksha cannot initialize EIO!\n"
 msgstr "Moksha nemôže inicializovať EIO!\n"
 
-#: src/bin/e_main.c:381
+#: src/bin/e_main.c:388
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3051,7 +3052,7 @@ msgstr ""
 "Moksha nemôže nastaviť handler signálu exit.\n"
 "Možno máte nedostatok pamäte?"
 
-#: src/bin/e_main.c:388
+#: src/bin/e_main.c:395
 msgid ""
 "Moksha cannot set up a HUP signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3059,7 +3060,7 @@ msgstr ""
 "Moksha nemôže nastaviť handler signálu HUP.\n"
 "Možno máte nedostatok pamäte?"
 
-#: src/bin/e_main.c:395
+#: src/bin/e_main.c:402
 msgid ""
 "Moksha cannot set up a USER signal handler.\n"
 "Perhaps you are out of memory?"
@@ -3067,39 +3068,39 @@ msgstr ""
 "Moksha nemôže nastaviť handler signálu HUP.\n"
 "Možno máte nedostatok pamäte?"
 
-#: src/bin/e_main.c:404
+#: src/bin/e_main.c:411
 msgid "Moksha cannot initialize Ecore_File!\n"
 msgstr "Moksha nemôže inicializovať Ecore_File!\n"
 
-#: src/bin/e_main.c:413
+#: src/bin/e_main.c:420
 msgid "Moksha cannot initialize Ecore_Con!\n"
 msgstr "Moksha nemôže inicializovať Ecore_Con!\n"
 
-#: src/bin/e_main.c:422
+#: src/bin/e_main.c:429
 msgid "Moksha cannot initialize Ecore_Ipc!\n"
 msgstr "Moksha nemôže inicializovať Ecore_Ipc!\n"
 
-#: src/bin/e_main.c:433
+#: src/bin/e_main.c:440
 msgid "Moksha cannot initialize Ecore_X!\n"
 msgstr "Moksha nemôže inicializovať Ecore_X!\n"
 
-#: src/bin/e_main.c:445
+#: src/bin/e_main.c:452
 msgid "Moksha cannot initialize Ecore_IMF!\n"
 msgstr "Moksha nemôže inicializovať Ecore_IMF!\n"
 
-#: src/bin/e_main.c:455
+#: src/bin/e_main.c:462
 msgid "Moksha cannot initialize Ecore_Evas!\n"
 msgstr "Moksha nemôže inicializovať Ecore_Evas!\n"
 
-#: src/bin/e_main.c:465
+#: src/bin/e_main.c:472
 msgid "Moksha cannot initialize Elementary!\n"
 msgstr "Moksha nemôže inicializovať Elementary!\n"
 
-#: src/bin/e_main.c:476
+#: src/bin/e_main.c:483
 msgid "Moksha cannot initialize Emotion!\n"
 msgstr "Moksha nemôže inicializovať Emotion!\n"
 
-#: src/bin/e_main.c:491
+#: src/bin/e_main.c:498
 msgid ""
 "Moksha found ecore_evas doesn't support the Software X11\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3109,7 +3110,7 @@ msgstr ""
 "vykresľovanie v Evas. Prosím skontrolujte, či Evas a\n"
 "Ecore podporujú engine so softvérovým vykresľovaním cez X11."
 
-#: src/bin/e_main.c:499
+#: src/bin/e_main.c:506
 msgid ""
 "Moksha found ecore_evas doesn't support the Software Buffer\n"
 "rendering in Evas. Please check your installation of Evas and\n"
@@ -3120,15 +3121,15 @@ msgstr ""
 "v Evas. Prosím skontrolujte, či Evas a\n"
 " Ecore podporujú engine s vykresľovaním cez softvérový  buffer."
 
-#: src/bin/e_main.c:509
+#: src/bin/e_main.c:516
 msgid "Moksha cannot initialize Edje!\n"
 msgstr "Moksha nemôže inicializovať Edje!\n"
 
-#: src/bin/e_main.c:521
+#: src/bin/e_main.c:528
 msgid "Moksha cannot initialize E_Intl!\n"
 msgstr "Moksha nemôže zinicializovať E_Intl!\n"
 
-#: src/bin/e_main.c:531
+#: src/bin/e_main.c:538
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
@@ -3136,7 +3137,7 @@ msgstr ""
 "Moksha nemôže zinicializovať záchranno-poplašný systém.\n"
 "Máte nastavenú premennú DISPLAY?"
 
-#: src/bin/e_main.c:550
+#: src/bin/e_main.c:557
 msgid ""
 "Moksha cannot create directories in your home directory.\n"
 "Perhaps you have no home directory or the disk is full?"
@@ -3144,31 +3145,31 @@ msgstr ""
 "Moksha nemôže vytvoriť adresáre vo Vašom domovskom adresári.\n"
 "Možno nemáte domovský adresár alebo je disk plný?"
 
-#: src/bin/e_main.c:560
+#: src/bin/e_main.c:567
 msgid "Moksha cannot set up its file registry system.\n"
 msgstr "Moksha nemôže nastaviť svoj súbor registra systému.\n"
 
-#: src/bin/e_main.c:569
+#: src/bin/e_main.c:576
 msgid "Moksha cannot set up its config system.\n"
 msgstr "Moksha nemôže nastaviť svoj konfiguračný sysstém.\n"
 
-#: src/bin/e_main.c:609
+#: src/bin/e_main.c:616
 msgid "Moksha cannot initialize E_Xinerama!\n"
 msgstr "Moksha nemôže inicializovať E_Xinerama!\n"
 
-#: src/bin/e_main.c:618
+#: src/bin/e_main.c:625
 msgid "Moksha cannot set up its environment.\n"
 msgstr "Moksha nemôže nastaviť svoje prostredie.\n"
 
-#: src/bin/e_main.c:634
+#: src/bin/e_main.c:641
 msgid "Moksha cannot set up its scale system.\n"
 msgstr "Moksha nemôže nastaviť rozsah systému.\n"
 
-#: src/bin/e_main.c:643
+#: src/bin/e_main.c:650
 msgid "Moksha cannot set up its pointer system.\n"
 msgstr "Moksha nemôže nastaviť ukazovateľ systému.\n"
 
-#: src/bin/e_main.c:652
+#: src/bin/e_main.c:659
 msgid ""
 "Moksha cannot set up paths for finding files.\n"
 "Perhaps you are out of memory?"
@@ -3176,27 +3177,27 @@ msgstr ""
 "Moksha nemôže nastaviť cesty pre vyhľadávanie súborov.\n"
 "Možno máte nedostatok pamäte?"
 
-#: src/bin/e_main.c:669
+#: src/bin/e_main.c:676
 msgid "Moksha cannot set up its font system.\n"
 msgstr "Moksha nemôže spustiť systém fontov.\n"
 
-#: src/bin/e_main.c:686
+#: src/bin/e_main.c:693
 msgid "Moksha cannot set up its theme system.\n"
 msgstr "Moksha nemôže spustiť systém tém.\n"
 
-#: src/bin/e_main.c:702
+#: src/bin/e_main.c:709
 msgid "Moksha cannot set up its init screen.\n"
 msgstr "Moksha nemôže nastaviť inicializačnú obrazovku.\n"
 
-#: src/bin/e_main.c:717
+#: src/bin/e_main.c:724
 msgid "Starting International Support"
 msgstr "Spúšťam medzinárodnú podporu"
 
-#: src/bin/e_main.c:721
+#: src/bin/e_main.c:728
 msgid "Moksha cannot set up its intl system.\n"
 msgstr "Moksha nemôže nastaviť systém jazykov.\n"
 
-#: src/bin/e_main.c:730
+#: src/bin/e_main.c:737
 msgid ""
 "Moksha cannot initialize the FDO desktop system.\n"
 "Perhaps you lack permissions on ~/.cache/efreet or are\n"
@@ -3206,11 +3207,11 @@ msgstr ""
 "Možno kvôli absencii povolení v ~/.cache/efreet\n"
 "prípadne nedostatok pamäte?"
 
-#: src/bin/e_main.c:755
+#: src/bin/e_main.c:762
 msgid "Setup Screens"
 msgstr "Nastaviť obrazovky"
 
-#: src/bin/e_main.c:759
+#: src/bin/e_main.c:766
 msgid ""
 "Moksha set up window management for all the screens on your system\n"
 "failed. Perhaps another window manager is running?\n"
@@ -3218,240 +3219,240 @@ msgstr ""
 "Nastavenie manažéra okien na všetkých obrazovkách v systéme zlyhalo.\n"
 "Nebeží už iný okenný manažér?\n"
 
-#: src/bin/e_main.c:767
+#: src/bin/e_main.c:774
 msgid "Setup ACPI"
 msgstr "Nastavenie ACPI"
 
-#: src/bin/e_main.c:774
+#: src/bin/e_main.c:781
 msgid "Setup Backlight"
 msgstr "Nastavenie podsvietenia"
 
-#: src/bin/e_main.c:778
+#: src/bin/e_main.c:785
 msgid "Moksha cannot configure the backlight.\n"
 msgstr "Moksha nie je schopná konfigurovať podsvietenie.\n"
 
-#: src/bin/e_main.c:785
+#: src/bin/e_main.c:792
 msgid "Setup Powersave Modes"
 msgstr "Nastavenie úsporných režimov"
 
-#: src/bin/e_main.c:789
+#: src/bin/e_main.c:796
 msgid "Moksha cannot set up its powersave modes.\n"
 msgstr "Moksha nemôže nastaviť svoje módy šetrenia.\n"
 
-#: src/bin/e_main.c:796
+#: src/bin/e_main.c:803
 msgid "Setup Screensaver"
 msgstr "Nastaviť šetrič obrazovky"
 
-#: src/bin/e_main.c:800
+#: src/bin/e_main.c:807
 msgid "Moksha cannot configure the X screensaver.\n"
 msgstr "Moksha nemôže nakonfigurovať X šetrič.\n"
 
-#: src/bin/e_main.c:807
+#: src/bin/e_main.c:814
 msgid "Setup DPMS"
 msgstr "Nastavenie DPMS"
 
-#: src/bin/e_main.c:811
+#: src/bin/e_main.c:818
 msgid "Moksha cannot configure the DPMS settings.\n"
 msgstr "Moksha nemôže nakonfigurovať DPMS nastavenia.\n"
 
-#: src/bin/e_main.c:818
+#: src/bin/e_main.c:825
 msgid "Setup Desklock"
 msgstr "Nastavenie zámku plochy"
 
-#: src/bin/e_main.c:822
+#: src/bin/e_main.c:829
 msgid "Moksha cannot set up its desk locking system.\n"
 msgstr "Moksha nemôže nastaviť systém pre uzamknutie plochy.\n"
 
-#: src/bin/e_main.c:829
+#: src/bin/e_main.c:836
 msgid "Setup Popups"
 msgstr "Nastaviť vyskakovacie okná"
 
-#: src/bin/e_main.c:833
+#: src/bin/e_main.c:840
 msgid "Moksha cannot set up its popup system.\n"
 msgstr "Moksha nemôže nastaviť popup systém.\n"
 
-#: src/bin/e_main.c:845
+#: src/bin/e_main.c:852
 msgid "Setup Message Bus"
 msgstr "Nastavenia Message Bus"
 
-#: src/bin/e_main.c:852
+#: src/bin/e_main.c:859
 msgid "Setup Paths"
 msgstr "Nastavenie ciest"
 
-#: src/bin/e_main.c:858
+#: src/bin/e_main.c:865
 msgid "Setup System Controls"
 msgstr "Inštalačný systém kontroly"
 
-#: src/bin/e_main.c:862
+#: src/bin/e_main.c:869
 msgid "Moksha cannot initialize the System Command system.\n"
 msgstr "Moksha nemôže inicializovať systémové príkazy.\n"
 
-#: src/bin/e_main.c:869
+#: src/bin/e_main.c:876
 msgid "Setup Actions"
 msgstr "Nastaviť operácie"
 
-#: src/bin/e_main.c:873
+#: src/bin/e_main.c:880
 msgid "Moksha cannot set up its actions system.\n"
 msgstr "Moksha nemôže spustiť systém operácií.\n"
 
-#: src/bin/e_main.c:880
+#: src/bin/e_main.c:887
 msgid "Setup Execution System"
 msgstr "Nastavenie Systému vykonávača"
 
-#: src/bin/e_main.c:884
+#: src/bin/e_main.c:891
 msgid "Moksha cannot set up its exec system.\n"
 msgstr "Moksha nemôže nastaviť exec systém.\n"
 
-#: src/bin/e_main.c:895
+#: src/bin/e_main.c:902
 msgid "Setup Filemanager"
 msgstr "Nastavenie Správcu súborov"
 
-#: src/bin/e_main.c:899
+#: src/bin/e_main.c:906
 msgid "Moksha cannot initialize the File manager.\n"
 msgstr "Moksha nemôže inicializovať Správcu súborov.\n"
 
-#: src/bin/e_main.c:906
+#: src/bin/e_main.c:913
 msgid "Setup Message System"
 msgstr "Nastaviť systémové správy"
 
-#: src/bin/e_main.c:910
+#: src/bin/e_main.c:917
 msgid "Moksha cannot set up its msg system.\n"
 msgstr "Moksha nemôže nastaviť systém správ.\n"
 
-#: src/bin/e_main.c:917
+#: src/bin/e_main.c:924
 msgid "Setup DND"
 msgstr "Nastavenie DND"
 
-#: src/bin/e_main.c:921
+#: src/bin/e_main.c:928
 msgid "Moksha cannot set up its dnd system.\n"
 msgstr "Moksha nemôže nastaviť systém dnd.\n"
 
-#: src/bin/e_main.c:928
+#: src/bin/e_main.c:935
 msgid "Setup Grab Input Handling"
 msgstr "Nastaviť zachytenie vstupnej manipulácie"
 
-#: src/bin/e_main.c:932
+#: src/bin/e_main.c:939
 msgid "Moksha cannot set up its grab input handling system.\n"
 msgstr "Moksha nemôže nastaviť systém na spracovanie vstupu.\n"
 
-#: src/bin/e_main.c:939
+#: src/bin/e_main.c:946
 msgid "Setup Modules"
 msgstr "Nastavenie modulov"
 
-#: src/bin/e_main.c:943 src/bin/e_main.c:1128
+#: src/bin/e_main.c:950 src/bin/e_main.c:1135
 msgid "Moksha cannot set up its module system.\n"
 msgstr "Moksha nemôže nastaviť systém modulov.\n"
 
-#: src/bin/e_main.c:950
+#: src/bin/e_main.c:957
 msgid "Setup Remembers"
 msgstr "Nastaviť zapamätanie"
 
-#: src/bin/e_main.c:954
+#: src/bin/e_main.c:961
 msgid "Moksha cannot setup remember settings.\n"
 msgstr "Moksha nemôže nastaviť systém zapamätania.\n"
 
-#: src/bin/e_main.c:961
+#: src/bin/e_main.c:968
 msgid "Setup Color Classes"
 msgstr "Nastavenie triedy farieb"
 
-#: src/bin/e_main.c:965
+#: src/bin/e_main.c:972
 msgid "Moksha cannot set up its color class system.\n"
 msgstr "Moksha nemôže nastaviť systém tried farieb.\n"
 
-#: src/bin/e_main.c:972
+#: src/bin/e_main.c:979
 msgid "Setup Gadcon"
 msgstr "Nastavenie Widgetu"
 
-#: src/bin/e_main.c:976
+#: src/bin/e_main.c:983
 msgid "Moksha cannot set up its gadget control system.\n"
 msgstr "Moksha nemôže nastaviť systém pre ovládanie widgetov.\n"
 
-#: src/bin/e_main.c:983
+#: src/bin/e_main.c:990
 msgid "Setup Wallpaper"
 msgstr "Nastaviť obrázok pozadia"
 
-#: src/bin/e_main.c:987
+#: src/bin/e_main.c:994
 msgid "Moksha cannot set up its desktop background system.\n"
 msgstr "Desktopu sa nepodarilo nastaviť systém pozadia plochy.\n"
 
-#: src/bin/e_main.c:994
+#: src/bin/e_main.c:1001
 msgid "Setup Mouse"
 msgstr "Nastaviť myš"
 
-#: src/bin/e_main.c:998
+#: src/bin/e_main.c:1005
 msgid "Moksha cannot configure the mouse settings.\n"
 msgstr "Moksha nemôže konfigurovať nastavenia myši.\n"
 
-#: src/bin/e_main.c:1005
+#: src/bin/e_main.c:1012
 msgid "Moksha cannot setup XKB Keyboard layouts.\n"
 msgstr "Moksha nemôže nastaviť systém klávesníc.\n"
 
-#: src/bin/e_main.c:1011
+#: src/bin/e_main.c:1018
 msgid "Setup Bindings"
 msgstr "Nastaviť Skratky"
 
-#: src/bin/e_main.c:1015
+#: src/bin/e_main.c:1022
 msgid "Moksha cannot set up its bindings system.\n"
 msgstr "Moksha nemôže nastaviť systém skratiek.\n"
 
-#: src/bin/e_main.c:1022
+#: src/bin/e_main.c:1029
 msgid "Setup Thumbnailer"
 msgstr "Nastaviť náhľady"
 
-#: src/bin/e_main.c:1026
+#: src/bin/e_main.c:1033
 msgid "Moksha cannot initialize the Thumbnailing system.\n"
 msgstr "Moksha nemôže inicializovať systém náhľadov.\n"
 
-#: src/bin/e_main.c:1035
+#: src/bin/e_main.c:1042
 msgid "Moksha cannot initialize the Icon Cache system.\n"
 msgstr "Moksha nemôže inicializovať systém ikon.\n"
 
-#: src/bin/e_main.c:1044
+#: src/bin/e_main.c:1051
 msgid "Moksha cannot initialize the XSettings system.\n"
 msgstr "Moksha nemôže inicializovať XSettings.\n"
 
-#: src/bin/e_main.c:1054
+#: src/bin/e_main.c:1061
 msgid "Moksha cannot initialize the Update system.\n"
 msgstr "Moksha nemôže inicializovať systém aktualizácie.\n"
 
-#: src/bin/e_main.c:1063
+#: src/bin/e_main.c:1070
 msgid "Setup Desktop Environment"
 msgstr "Nastavenie prostredia desktopu"
 
-#: src/bin/e_main.c:1067
+#: src/bin/e_main.c:1074
 msgid "Moksha cannot initialize its desktop environment.\n"
 msgstr "Moksha nemôže inicializovať prostredie desktopu.\n"
 
-#: src/bin/e_main.c:1074
+#: src/bin/e_main.c:1081
 msgid "Setup File Ordering"
 msgstr "Nastavenie zoradenia súborov"
 
-#: src/bin/e_main.c:1078
+#: src/bin/e_main.c:1085
 msgid "Moksha cannot set up its order file system.\n"
 msgstr "Moksha nemôže nastaviť svoj systém zoradenia súborov.\n"
 
-#: src/bin/e_main.c:1093
+#: src/bin/e_main.c:1100
 msgid "Load Modules"
 msgstr "Spustiť moduly"
 
-#: src/bin/e_main.c:1124
+#: src/bin/e_main.c:1131
 msgid "Setup Shelves"
 msgstr "Nastaviť lišty"
 
-#: src/bin/e_main.c:1135
+#: src/bin/e_main.c:1142
 msgid "Configure Shelves"
 msgstr "Konfigurovať lišty"
 
-#: src/bin/e_main.c:1146
+#: src/bin/e_main.c:1153
 msgid "Almost Done"
 msgstr "Takmer hotovo"
 
-#: src/bin/e_main.c:1303
+#: src/bin/e_main.c:1310
 #, c-format
 msgid "Version: %s\n"
 msgstr "Verzia: %s\n"
 
-#: src/bin/e_main.c:1313
+#: src/bin/e_main.c:1320
 #, c-format
 msgid ""
 "Options:\n"
@@ -3506,7 +3507,7 @@ msgstr ""
 "\t\tAk potrebujete túto nápovedu, nepotrebujete túto možnosť.\n"
 "\t-version\n"
 
-#: src/bin/e_main.c:1367
+#: src/bin/e_main.c:1374
 msgid ""
 "You are executing enlightenment directly. This is\n"
 "bad. Please do not execute the \"enlightenment\"\n"
@@ -3522,11 +3523,11 @@ msgstr ""
 "a spustenie akýchkoľvek ďalších požadovaných služieb atď.\n"
 "predtým, než začne bežať samotná Moksha.\n"
 
-#: src/bin/e_main.c:1648
+#: src/bin/e_main.c:1655
 msgid "Testing Format Support"
 msgstr "Testujem podporu formátu"
 
-#: src/bin/e_main.c:1652
+#: src/bin/e_main.c:1659
 msgid ""
 "Moksha found Evas can't create a buffer canvas. Please check\n"
 "Evas has Software Buffer engine support.\n"
@@ -3535,7 +3536,7 @@ msgstr ""
 "skontroluj,\n"
 "že Evas má podporu pre softvérový buffer engine.\n"
 
-#: src/bin/e_main.c:1664
+#: src/bin/e_main.c:1671
 msgid ""
 "Moksha found Evas can't load SVG files. Check Evas has SVG loader support.\n"
 msgstr ""
@@ -3543,7 +3544,7 @@ msgstr ""
 "podporu\n"
 "pre nahrávanie SVG.\n"
 
-#: src/bin/e_main.c:1674
+#: src/bin/e_main.c:1681
 msgid ""
 "Moksha found Evas can't load JPEG files. Check Evas has JPEG loader "
 "support.\n"
@@ -3552,7 +3553,7 @@ msgstr ""
 "podporu\n"
 "pre nahrávanie JPEG.\n"
 
-#: src/bin/e_main.c:1684
+#: src/bin/e_main.c:1691
 msgid ""
 "Moksha found Evas can't load PNG files. Check Evas has PNG loader support.\n"
 msgstr ""
@@ -3560,7 +3561,7 @@ msgstr ""
 "podporu\n"
 "pre nahrávanie PNG.\n"
 
-#: src/bin/e_main.c:1694
+#: src/bin/e_main.c:1701
 msgid ""
 "Moksha found Evas can't load EET files. Check Evas has EET loader support.\n"
 msgstr ""
@@ -3568,7 +3569,7 @@ msgstr ""
 "podporu\n"
 "pre nahrávanie EET.\n"
 
-#: src/bin/e_main.c:1708
+#: src/bin/e_main.c:1715
 msgid ""
 "Moksha found Evas can't load the 'Sans' font. Check Evas has fontconfig\n"
 "support and system fontconfig defines a 'Sans' font.\n"
@@ -3576,7 +3577,7 @@ msgstr ""
 "Moksha zistil, že Evas nemôže nahrať 'Sans' písmo. Skontrolujte, či má Evas\n"
 "podporu fontconfig a či fontconfig definuje 'Sans' písmo.\n"
 
-#: src/bin/e_main.c:1927
+#: src/bin/e_main.c:1934
 #, c-format
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. There was an error "
@@ -3587,11 +3588,11 @@ msgstr ""
 "načítavaní<br>modulu s názvom: %s sa vyskytla chyba. Tento modul bol "
 "zakázaný<br>a nebude načítaný."
 
-#: src/bin/e_main.c:1932 src/bin/e_main.c:1948
+#: src/bin/e_main.c:1939 src/bin/e_main.c:1955
 msgid "Moksha crashed early on start and has been restarted"
 msgstr "Moksha desktop havaroval na začiatku a bol reštartovaný"
 
-#: src/bin/e_main.c:1933
+#: src/bin/e_main.c:1940
 #, c-format
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>There was an error "
@@ -3602,7 +3603,7 @@ msgstr ""
 "spúšťania modulu s názvom: %s<br><br>Tento modul bol zakázaný a nebude "
 "spustený."
 
-#: src/bin/e_main.c:1941
+#: src/bin/e_main.c:1948
 msgid ""
 "Moksha crashed early on start and has<br>been restarted. All modules have "
 "been disabled<br>and will not be loaded to help remove any "
@@ -3614,7 +3615,7 @@ msgstr ""
 "problému<br>modulu vo vašej konfigurácii. Dialóg<br>nastavenie modulu vám "
 "vyberie<br>moduly znova.\n"
 
-#: src/bin/e_main.c:1949
+#: src/bin/e_main.c:1956
 msgid ""
 "Moksha crashed early on start and has been restarted.<br>All modules have "
 "been disabled and will not be loaded to help<br>remove any problem modules "
@@ -3626,12 +3627,12 @@ msgstr ""
 "problému<br><br>modulu vo vašej konfigurácii. Dialóg nastavenie modulu vám "
 "vyberie<br>moduly znova."
 
-#: src/bin/e_module.c:172
+#: src/bin/e_module.c:171
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Spúšťanie modulov: %s"
 
-#: src/bin/e_module.c:221
+#: src/bin/e_module.c:220
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3640,11 +3641,11 @@ msgstr ""
 "Došlo k chybe pri načítaní modulu: %s<br>Žiadny modul s názvom %s nebol "
 "nájdený v<br>priečinkoch s modulmi.<br>"
 
-#: src/bin/e_module.c:224 src/bin/e_module.c:237 src/bin/e_module.c:255
+#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
 msgid "Error loading Module"
 msgstr "Chyba pri nahrávaní modulu"
 
-#: src/bin/e_module.c:232 src/bin/e_module.c:249
+#: src/bin/e_module.c:231 src/bin/e_module.c:248
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3653,11 +3654,11 @@ msgstr ""
 "Došlo k chybe pri načítaní modulu: %s<br>Úplná cesta k modulu je:<br>"
 "%s<br>Došlo k chybe:<br>%s<br>"
 
-#: src/bin/e_module.c:254
+#: src/bin/e_module.c:253
 msgid "Module does not contain all needed functions."
 msgstr "Modul neobsahuje všetky potrebné funkcie."
 
-#: src/bin/e_module.c:269
+#: src/bin/e_module.c:268
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3666,23 +3667,23 @@ msgstr ""
 "Chyba API Modulu<br>Chyba pri inicializácii modulu: %s<br>Je potrebný API "
 "modul minimálne vo verzii: %i.<br>API modul v Moksha je vo verzii: %i.<br>"
 
-#: src/bin/e_module.c:274
+#: src/bin/e_module.c:273
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s Modul"
 
-#: src/bin/e_module.c:602
+#: src/bin/e_module.c:601
 msgid "What action should be taken with this module?<br>"
 msgstr "Aká operácia s modulom by mala byť vykonaná?<br>"
 
-#: src/bin/e_module.c:608 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
-#: src/modules/ibar/e_mod_config.c:219 src/modules/clipboard/e_mod_main.c:695
+#: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Ponechať"
 
-#: src/bin/e_module.c:810
+#: src/bin/e_module.c:809
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3692,11 +3693,11 @@ msgstr ""
 "a pády.<br>Prosím, odstráňte ich pred hlásením akýchkoľvek chýb."
 "<br><br>Zoznam neštandardných modulov:<br><br>"
 
-#: src/bin/e_module.c:822
+#: src/bin/e_module.c:821
 msgid "Unstable module tainting"
 msgstr "Chyba pri nahrávaní modulu"
 
-#: src/bin/e_module.c:826
+#: src/bin/e_module.c:825
 msgid "I know"
 msgstr "I know"
 
@@ -3717,14 +3718,14 @@ msgstr "Plávajúci"
 #: src/bin/e_shelf.c:70
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:223
 #: src/modules/everything/evry_config.c:591
-#: src/modules/gadman/e_mod_gadman.c:1030
+#: src/modules/gadman/e_mod_gadman.c:1035
 msgid "Horizontal"
 msgstr "Horizontálne"
 
 #: src/bin/e_shelf.c:71
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:225
 #: src/modules/everything/evry_config.c:584
-#: src/modules/gadman/e_mod_gadman.c:1038
+#: src/modules/gadman/e_mod_gadman.c:1043
 msgid "Vertical"
 msgstr "Vertikálne"
 
@@ -3823,7 +3824,7 @@ msgid "Rename Shelf"
 msgstr "Premenovať lištu"
 
 #: src/bin/e_shelf.c:2507 src/modules/conf_shelves/e_int_config_shelf.c:145
-#: src/modules/ibar/e_mod_main.c:454 src/modules/ibar/e_mod_main.c:1571
+#: src/modules/ibar/e_mod_main.c:456 src/modules/ibar/e_mod_main.c:1641
 msgid "Contents"
 msgstr "Obsah"
 
@@ -4262,7 +4263,7 @@ msgstr[2] "%li minút"
 #: src/bin/e_widget_config_list.c:60
 #: src/modules/conf_applications/e_int_config_apps.c:313
 #: src/modules/conf_applications/e_int_config_apps.c:334
-#: src/modules/conf_applications/e_int_config_apps_personal.c:93
+#: src/modules/conf_applications/e_int_config_apps_personal.c:94
 #: src/modules/conf_dialogs/e_int_config_profiles.c:133
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:266
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:809
@@ -4271,7 +4272,7 @@ msgstr[2] "%li minút"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:294
 #: src/modules/conf_paths/e_int_config_env.c:337
 #: src/modules/conf_shelves/e_int_config_shelf.c:137
-#: src/modules/ibar/e_mod_config.c:118 src/modules/xkbswitch/e_mod_config.c:291
+#: src/modules/ibar/e_mod_config.c:124 src/modules/xkbswitch/e_mod_config.c:291
 msgid "Add"
 msgstr "Pridať"
 
@@ -4587,7 +4588,7 @@ msgid "Time set"
 msgstr "Nastaviť čas"
 
 #: src/modules/clock/e_mod_config.c:232 src/modules/clock/e_mod_main.c:944
-#: src/modules/clock/e_mod_main.c:1168 src/modules/clock/e_mod_main.c:1186
+#: src/modules/clock/e_mod_main.c:1180 src/modules/clock/e_mod_main.c:1198
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -4660,7 +4661,7 @@ msgstr "Nastaviť..."
 msgid "Set... "
 msgstr "Nastaviť... "
 
-#: src/modules/clock/e_mod_main.c:1186
+#: src/modules/clock/e_mod_main.c:1198
 msgid "Toggle calendar"
 msgstr "Prepnúť zobrazenie kalendára"
 
@@ -4693,11 +4694,11 @@ msgstr "Prezentácia"
 msgid "Offline"
 msgstr "Nepripojený"
 
-#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:442
-#: src/modules/fileman/e_mod_config.c:445
-#: src/modules/fileman/e_mod_config.c:448
-#: src/modules/fileman/e_mod_config.c:451
-#: src/modules/fileman/e_mod_config.c:454 src/modules/gadman/e_mod_config.c:208
+#: src/modules/conf/e_mod_main.c:460 src/modules/fileman/e_mod_config.c:437
+#: src/modules/fileman/e_mod_config.c:440
+#: src/modules/fileman/e_mod_config.c:443
+#: src/modules/fileman/e_mod_config.c:446
+#: src/modules/fileman/e_mod_config.c:449 src/modules/gadman/e_mod_config.c:208
 msgid "Mode"
 msgstr "Režim"
 
@@ -4731,10 +4732,15 @@ msgstr "Aplikácia pri odomknutí obrazovky"
 msgid "Order"
 msgstr "Poradie"
 
-#: src/modules/conf_applications/e_int_config_apps_personal.c:39
+#: src/modules/conf_applications/e_int_config_apps_personal.c:40
 #: src/modules/conf_applications/e_mod_main.c:25
 msgid "Personal Application Launchers"
 msgstr "Vlastný spúšťač aplikácií"
+
+#: src/modules/conf_applications/e_int_config_apps_personal.c:102
+#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
+msgid "Edit"
+msgstr "Upraviť"
 
 #: src/modules/conf_applications/e_int_config_defapps.c:74
 #: src/modules/conf_applications/e_int_config_defapps.c:304
@@ -5511,7 +5517,7 @@ msgstr "Akcelerácia"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:339
 #: src/modules/conf_interaction/e_int_config_mouse.c:380
-#: src/modules/fileman/e_mod_config.c:480
+#: src/modules/fileman/e_mod_config.c:482
 #: src/modules/syscon/e_int_config_syscon.c:169
 #, c-format
 msgid "%1.1f"
@@ -5648,17 +5654,17 @@ msgstr ""
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
 msgstr "Moksha nevie importovať konfiguráciu<br>z dôvodu chyby pri kopírovaní."
 
-#: src/modules/conf_intl/e_int_config_intl.c:605
+#: src/modules/conf_intl/e_int_config_intl.c:607
 #: src/modules/conf_intl/e_mod_main.c:20
 msgid "Language Settings"
 msgstr "Nastavenie jazyka"
 
-#: src/modules/conf_intl/e_int_config_intl.c:630
+#: src/modules/conf_intl/e_int_config_intl.c:632
 #: src/modules/conf_intl/e_mod_main.c:24
 msgid "Desklock Language Settings"
 msgstr "Nastavenie jazyka zámku obrazovky"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1001
+#: src/modules/conf_intl/e_int_config_intl.c:1003
 #, c-format
 msgid ""
 "You have some extra locale environment<br>variables set that may interfere "
@@ -5671,33 +5677,33 @@ msgstr ""
 "chcete vyhnúť použite<br>Nastavenie premenných prostredia pre ich "
 "deaktiváciu.<br>Premenné, ktoré môžu ovplyvniť zobrazenie sú:<br>%s"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1009
+#: src/modules/conf_intl/e_int_config_intl.c:1011
 msgid "Possible Locale problems"
 msgstr "Možné problémy s lokalizáciou"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1094
-#: src/modules/conf_intl/e_int_config_intl.c:1187
+#: src/modules/conf_intl/e_int_config_intl.c:1096
+#: src/modules/conf_intl/e_int_config_intl.c:1189
 msgid "Language Selector"
 msgstr "Výber jazyka"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1125
-#: src/modules/conf_intl/e_int_config_intl.c:1575
+#: src/modules/conf_intl/e_int_config_intl.c:1127
+#: src/modules/conf_intl/e_int_config_intl.c:1577
 #: src/modules/conf_menus/e_int_config_menus.c:171
-#: src/modules/wizard/page_010.c:197
+#: src/modules/wizard/page_010.c:199
 msgid "System Default"
 msgstr "Predvolené nastavenie"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1161
-#: src/modules/conf_intl/e_int_config_intl.c:1238
+#: src/modules/conf_intl/e_int_config_intl.c:1163
+#: src/modules/conf_intl/e_int_config_intl.c:1240
 msgid "Locale Selected"
 msgstr "Vybranie národného prostredia"
 
-#: src/modules/conf_intl/e_int_config_intl.c:1162
-#: src/modules/conf_intl/e_int_config_intl.c:1239
+#: src/modules/conf_intl/e_int_config_intl.c:1164
+#: src/modules/conf_intl/e_int_config_intl.c:1241
 msgid "Locale"
 msgstr "Národné prostredie"
 
-#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:188
+#: src/modules/conf_intl/e_mod_main.c:17 src/modules/wizard/page_010.c:190
 msgid "Language"
 msgstr "Jazyk"
 
@@ -5942,10 +5948,6 @@ msgstr "Táto nápoveda"
 msgid "Basic Moksha Key Bindings"
 msgstr "Základné klávesové skratky"
 
-#: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:350
-msgid "Edit"
-msgstr "Upraviť"
-
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:7
 msgid ""
 "Please hold any modifier you want<br>and press any button on your mouse,"
@@ -6108,7 +6110,7 @@ msgid "Applications Display"
 msgstr "Zobrazenie aplikácií"
 
 #: src/modules/conf_menus/e_int_config_menus.c:269
-#: src/modules/ibar/e_mod_config.c:146
+#: src/modules/ibar/e_mod_config.c:156
 msgid "Generic"
 msgstr "Všeobecný názov"
 
@@ -6379,13 +6381,13 @@ msgid "e.g. Saving to disk"
 msgstr "napr. Uloženie na disk"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:235
-#: src/modules/shot/e_mod_main.c:974
+#: src/modules/shot/e_mod_main.c:973
 #: src/modules/notification/e_mod_config.c:111
 msgid "Low"
 msgstr "Nízka"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:274
-#: src/modules/shot/e_mod_main.c:972
+#: src/modules/shot/e_mod_main.c:971
 msgid "Medium"
 msgstr "Stredná"
 
@@ -6397,7 +6399,7 @@ msgid "%.0f s"
 msgstr "%.0f sek"
 
 #: src/modules/conf_performance/e_int_config_powermanagement.c:313
-#: src/modules/shot/e_mod_main.c:970
+#: src/modules/shot/e_mod_main.c:969
 msgid "High"
 msgstr "Vysoká"
 
@@ -8504,44 +8506,44 @@ msgid "Spring Delay"
 msgstr "Čas oneskorenia"
 
 #: src/modules/fileman/e_mod_config.c:428
-msgid "Custom FM to open dirs"
-msgstr "Vlastný FM pre otvorenie priečinku"
-
-#: src/modules/fileman/e_mod_config.c:433
 #: src/modules/quickaccess/e_mod_config.c:252
 #: src/modules/quickaccess/e_mod_config.c:348
 msgid "Behavior"
 msgstr "Funkcie"
 
-#: src/modules/fileman/e_mod_config.c:460
+#: src/modules/fileman/e_mod_config.c:455
 msgid "Show device icons on desktop"
 msgstr "Zobraziť ikony zariadení na ploche"
 
-#: src/modules/fileman/e_mod_config.c:463 src/modules/places/e_mod_config.c:205
+#: src/modules/fileman/e_mod_config.c:458 src/modules/places/e_mod_config.c:205
 msgid "Mount volumes on insert"
 msgstr "Pripojiť zariadenia pri vložení"
 
-#: src/modules/fileman/e_mod_config.c:466
+#: src/modules/fileman/e_mod_config.c:461
 msgid "Open filemanager on mount"
 msgstr "Otvoriť správcu súborov pri pripojení zväzku"
 
-#: src/modules/fileman/e_mod_config.c:470
+#: src/modules/fileman/e_mod_config.c:467 src/modules/places/e_mod_config.c:216
+msgid "Use a custom file manager"
+msgstr "Použiť vlastného správcu súborov"
+
+#: src/modules/fileman/e_mod_config.c:472
 msgid "Device"
 msgstr "Zariadenie"
 
-#: src/modules/fileman/e_mod_config.c:474
+#: src/modules/fileman/e_mod_config.c:476
 msgid "Show tooltip"
 msgstr "Zobraziť plávajúcu nápovedu"
 
-#: src/modules/fileman/e_mod_config.c:478
+#: src/modules/fileman/e_mod_config.c:480
 msgid "Tooltip delay"
 msgstr "Zotrvanie plávajúcej nápovedy"
 
-#: src/modules/fileman/e_mod_config.c:484
+#: src/modules/fileman/e_mod_config.c:486
 msgid "Tooltip size (Screen percentage)"
 msgstr "Veľkosť plávajúcej nápovedy"
 
-#: src/modules/fileman/e_mod_config.c:486
+#: src/modules/fileman/e_mod_config.c:488
 #: src/modules/notification/e_mod_config.c:196
 #: src/modules/notification/e_mod_config.c:204
 #: src/modules/notification/e_mod_config.c:212
@@ -8549,7 +8551,7 @@ msgstr "Veľkosť plávajúcej nápovedy"
 msgid "%2.0f"
 msgstr "%2.0f"
 
-#: src/modules/fileman/e_mod_config.c:490
+#: src/modules/fileman/e_mod_config.c:492
 msgid "Tooltips"
 msgstr "Plávajúca nápoveda"
 
@@ -8619,7 +8621,7 @@ msgstr "Vlastný obrázok"
 msgid "Custom Color"
 msgstr "Vlastná farba"
 
-#: src/modules/gadman/e_mod_config.c:221
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
 msgid "Transparent"
 msgstr "Priehľadný"
 
@@ -8632,19 +8634,19 @@ msgstr "Animácie"
 msgid "Background Options"
 msgstr "Nastavenie pozadia"
 
-#: src/modules/gadman/e_mod_gadman.c:992
+#: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
 msgstr "Presun/zmena veľkosti widgetu"
 
-#: src/modules/gadman/e_mod_gadman.c:1022
+#: src/modules/gadman/e_mod_gadman.c:1027
 msgid "Free"
 msgstr "Voľné"
 
-#: src/modules/gadman/e_mod_gadman.c:1046
+#: src/modules/gadman/e_mod_gadman.c:1051
 msgid "Appearance"
 msgstr "Vzhľad"
 
-#: src/modules/gadman/e_mod_gadman.c:1067
+#: src/modules/gadman/e_mod_gadman.c:1072
 msgid "Add other gadgets"
 msgstr "Pridať daľšie widgety"
 
@@ -8803,63 +8805,68 @@ msgstr "Prepínanie okien nemôže byť aktivované ACPI skratkami"
 msgid "Select a window"
 msgstr "Vybrať Okno"
 
-#: src/modules/ibar/e_mod_config.c:58
+#: src/modules/ibar/e_mod_config.c:61
 msgid "IBar Settings"
 msgstr "Nastavenia IBar"
 
-#: src/modules/ibar/e_mod_config.c:110
+#: src/modules/ibar/e_mod_config.c:116
 msgid "Selected source"
 msgstr "Vybraný zdroj"
 
-#: src/modules/ibar/e_mod_config.c:122
+#: src/modules/ibar/e_mod_config.c:128
 msgid "Setup"
 msgstr "Nastavenie"
 
-#: src/modules/ibar/e_mod_config.c:131
+#: src/modules/ibar/e_mod_config.c:137
 msgid "Icon Labels"
 msgstr "Nastavenie názvu ikon"
 
-#: src/modules/ibar/e_mod_config.c:132
-msgid "Show icon label"
-msgstr "Zobrazovať názov ikony"
+#: src/modules/ibar/e_mod_config.c:138
+msgid "Overlapping Label"
+msgstr ""
 
-#: src/modules/ibar/e_mod_config.c:152
+#: src/modules/ibar/e_mod_config.c:142
+#, fuzzy
+msgid "Adjacent Label"
+msgstr "Nastavenie názvu ikon"
+
+#: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
 msgstr "Rôzne"
 
-#: src/modules/ibar/e_mod_config.c:153
+#: src/modules/ibar/e_mod_config.c:163
 msgid "Icon focus flash"
 msgstr "Animácia ikony"
 
-#: src/modules/ibar/e_mod_config.c:155
+#: src/modules/ibar/e_mod_config.c:165
 msgid "Lock icon move"
 msgstr "Zamknúť presúvanie ikon"
 
-#: src/modules/ibar/e_mod_config.c:157
+#: src/modules/ibar/e_mod_config.c:167
 msgid "Don't add items on launch"
 msgstr "Nepridávať položku po spustení"
 
-#: src/modules/ibar/e_mod_config.c:159
+#: src/modules/ibar/e_mod_config.c:169
 msgid "Track launch"
 msgstr "Sledovať spustenie"
 
-#: src/modules/ibar/e_mod_config.c:161
+#: src/modules/ibar/e_mod_config.c:171
 msgid "Menu on mouse over"
 msgstr "Ponuka pre ikonu"
 
-#: src/modules/ibar/e_mod_config.c:163
+#: src/modules/ibar/e_mod_config.c:173
 msgid "Moksha style control"
 msgstr "Ovládanie štýlom Moksha"
 
-#: src/modules/ibar/e_mod_config.c:199
+#: src/modules/ibar/e_mod_config.c:210
 msgid "Create new IBar source"
 msgstr "Vytvoriť nový zdroj Ibar"
 
-#: src/modules/ibar/e_mod_config.c:200
+#: src/modules/ibar/e_mod_config.c:211
 msgid "Enter a name for this new source:"
 msgstr "Pridať názov pre tento nový zdroj:"
 
-#: src/modules/ibar/e_mod_config.c:214
+#: src/modules/ibar/e_mod_config.c:225
 #, c-format
 msgid ""
 "You requested to delete \"%s\".<br><br>Are you sure you want to delete this "
@@ -8867,33 +8874,33 @@ msgid ""
 msgstr ""
 "Požadujete vymazať \"%s\".<br><br>Ste si istý, že chcete vymazať tento zdroj?"
 
-#: src/modules/ibar/e_mod_config.c:218
+#: src/modules/ibar/e_mod_config.c:229
 msgid "Are you sure you want to delete this bar source?"
 msgstr "Ste si istý, že chcete zmazať tento zdroj?"
 
-#: src/modules/ibar/e_mod_main.c:327 src/modules/ibar/e_mod_main.c:2912
-#: src/modules/ibar/e_mod_main.c:2950
+#: src/modules/ibar/e_mod_main.c:329 src/modules/ibar/e_mod_main.c:2984
+#: src/modules/ibar/e_mod_main.c:3022
 msgid "IBar"
 msgstr "IBar"
 
-#: src/modules/ibar/e_mod_main.c:443 src/modules/ibar/e_mod_main.c:1560
+#: src/modules/ibar/e_mod_main.c:445 src/modules/ibar/e_mod_main.c:1630
 msgid "Create new Icon"
 msgstr "Vytvoriť novú ikonu"
 
-#: src/modules/ibar/e_mod_main.c:1591
+#: src/modules/ibar/e_mod_main.c:1661
 msgid "Add to bar"
 msgstr "Pridať do iBar sekcie"
 
-#: src/modules/ibar/e_mod_main.c:1597
+#: src/modules/ibar/e_mod_main.c:1667
 msgid "Remove from bar"
 msgstr "Odstrániť z iBar sekcie"
 
-#: src/modules/ibar/e_mod_main.c:1603
+#: src/modules/ibar/e_mod_main.c:1673
 #, c-format
 msgid "Icon %s"
 msgstr "Ikon %s"
 
-#: src/modules/ibar/e_mod_main.c:2950
+#: src/modules/ibar/e_mod_main.c:3022
 msgid "Focus IBar"
 msgstr "Aktivácia IBar-u"
 
@@ -9196,7 +9203,7 @@ msgstr "Vitajte v Moksha desktop"
 msgid "Please Wait As We Are Loading Moksha Settings!"
 msgstr "Moment, nahráva sa nastavenie desktopu Moksha!"
 
-#: src/modules/wizard/page_010.c:189 src/modules/wizard/page_011.c:175
+#: src/modules/wizard/page_010.c:191 src/modules/wizard/page_011.c:175
 msgid "Select one"
 msgstr "Vyberte položku"
 
@@ -9562,19 +9569,19 @@ msgstr "Systray"
 msgid "Screenshot"
 msgstr "Snímka obrazovky"
 
-#: src/modules/shot/e_mod_main.c:102
+#: src/modules/shot/e_mod_main.c:101
 msgid "Screenshot in: "
 msgstr "Snímka za: "
 
-#: src/modules/shot/e_mod_main.c:117
+#: src/modules/shot/e_mod_main.c:116
 msgid "Screenshot stored in"
 msgstr "Snímka uložená v"
 
-#: src/modules/shot/e_mod_main.c:312
+#: src/modules/shot/e_mod_main.c:311
 msgid "Error - Folder does not exist"
 msgstr "Chyba - Priečinok neexistuje"
 
-#: src/modules/shot/e_mod_main.c:314
+#: src/modules/shot/e_mod_main.c:313
 msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
@@ -9582,24 +9589,24 @@ msgstr ""
 "Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Settings-"
 "All-Advanced-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
 
-#: src/modules/shot/e_mod_main.c:360
+#: src/modules/shot/e_mod_main.c:359
 msgid "Error saving screenshot file"
 msgstr "Chyba pri ukladaní súboru snímku obrazovky"
 
-#: src/modules/shot/e_mod_main.c:361
+#: src/modules/shot/e_mod_main.c:360
 #, c-format
 msgid "Path: %s"
 msgstr "Cesta: %s"
 
-#: src/modules/shot/e_mod_main.c:421 src/modules/shot/e_mod_main.c:431
+#: src/modules/shot/e_mod_main.c:420 src/modules/shot/e_mod_main.c:430
 msgid "Error - Unknown format"
 msgstr "Chyba - Neznámy formát"
 
-#: src/modules/shot/e_mod_main.c:422
+#: src/modules/shot/e_mod_main.c:421
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
 msgstr "Prosím, použite 'Najvyššiu kvalitu'<br>pre kopírovanie do schránky."
 
-#: src/modules/shot/e_mod_main.c:432
+#: src/modules/shot/e_mod_main.c:431
 msgid ""
 "File has an unspecified extension.<br>Please use '.jpg' or '.png' "
 "extensions<br>only as other formats are not<br>supported currently."
@@ -9607,120 +9614,120 @@ msgstr ""
 "Súbor má nešpecifikovanú príponu.<br>Používajte iba prípony '.jpg' alebo '."
 "png',<br>pretože iné formáty nie sú v<br>súčasnosti podporova."
 
-#: src/modules/shot/e_mod_main.c:499
+#: src/modules/shot/e_mod_main.c:498
 msgid "Select screenshot save location"
 msgstr "Zvoliť cestu pre uloženie snímok"
 
-#: src/modules/shot/e_mod_main.c:513 src/modules/shot/e_mod_main.c:1042
+#: src/modules/shot/e_mod_main.c:512 src/modules/shot/e_mod_main.c:1041
 msgid "Save"
 msgstr "Uložiť"
 
-#: src/modules/shot/e_mod_main.c:619
+#: src/modules/shot/e_mod_main.c:618
 #, c-format
 msgid "Uploaded %s / %s"
 msgstr "Nahrané %s / %s"
 
-#: src/modules/shot/e_mod_main.c:640
+#: src/modules/shot/e_mod_main.c:639
 msgid "Error - Upload Failed"
 msgstr "Chyba pri uploade"
 
-#: src/modules/shot/e_mod_main.c:641
+#: src/modules/shot/e_mod_main.c:640
 #, c-format
 msgid "Upload failed with status code:<br>%i"
 msgstr "Upload zlyhal s kom:<br>%i"
 
-#: src/modules/shot/e_mod_main.c:690
+#: src/modules/shot/e_mod_main.c:689
 msgid "Error - Can't create file"
 msgstr "Chyba - Nie je možné vytvoriť súbor"
 
-#: src/modules/shot/e_mod_main.c:691
+#: src/modules/shot/e_mod_main.c:690
 #, c-format
 msgid "Cannot create temporary file '%s': %s"
 msgstr "Nie je možné vytvoriť dočasný súbor '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:709
+#: src/modules/shot/e_mod_main.c:708
 msgid "Error - Can't open file"
 msgstr "Chyba - Nie je možné otvoriť súbor"
 
-#: src/modules/shot/e_mod_main.c:710
+#: src/modules/shot/e_mod_main.c:709
 #, c-format
 msgid "Cannot open temporary file '%s': %s"
 msgstr "Nie je možné otvoriť dočasný súbor '%s': %s"
 
-#: src/modules/shot/e_mod_main.c:718
+#: src/modules/shot/e_mod_main.c:717
 msgid "Error - Bad size"
 msgstr "Chyba - Nesprávna veľkosť"
 
-#: src/modules/shot/e_mod_main.c:719
+#: src/modules/shot/e_mod_main.c:718
 #, c-format
 msgid "Cannot get size of file '%s'"
 msgstr "Nie je možné získať veľkosť súboru '%s'"
 
-#: src/modules/shot/e_mod_main.c:729
+#: src/modules/shot/e_mod_main.c:728
 msgid "Error - Can't allocate memory"
 msgstr "Chyba - nie je možné alokovať pamäť"
 
-#: src/modules/shot/e_mod_main.c:730
+#: src/modules/shot/e_mod_main.c:729
 #, c-format
 msgid "Cannot allocate memory for picture: %s"
 msgstr "Nemôže alokovať pamäť pre obrázok: %s"
 
-#: src/modules/shot/e_mod_main.c:737
+#: src/modules/shot/e_mod_main.c:736
 msgid "Error - Can't read picture"
 msgstr "Chyba - Nie je možné načítať obrázok"
 
-#: src/modules/shot/e_mod_main.c:738
+#: src/modules/shot/e_mod_main.c:737
 msgid "Cannot read picture"
 msgstr "Nie je možné načítať obrázok"
 
-#: src/modules/shot/e_mod_main.c:760
+#: src/modules/shot/e_mod_main.c:759
 msgid "Uploading screenshot"
 msgstr "Upload obrázku"
 
-#: src/modules/shot/e_mod_main.c:765
+#: src/modules/shot/e_mod_main.c:764
 msgid "Uploading ..."
 msgstr "Upload ..."
 
-#: src/modules/shot/e_mod_main.c:770
+#: src/modules/shot/e_mod_main.c:769
 msgid "Screenshot is available at this location:"
 msgstr "Obrázok bol uložený na link:"
 
-#: src/modules/shot/e_mod_main.c:779
+#: src/modules/shot/e_mod_main.c:778
 msgid "Copy link"
 msgstr "Kopírovať link"
 
-#: src/modules/shot/e_mod_main.c:803
+#: src/modules/shot/e_mod_main.c:802
 msgid "Confirm Share"
 msgstr "Potvrdiť upload"
 
-#: src/modules/shot/e_mod_main.c:804
+#: src/modules/shot/e_mod_main.c:803
 msgid ""
 "This image will be uploaded<br>to enlightenment.org. It will be publicly "
 "visible."
 msgstr ""
 "Snímok bude uložený na<br>enlightenment.org. Bude prístupný verejnosti."
 
-#: src/modules/shot/e_mod_main.c:806
+#: src/modules/shot/e_mod_main.c:805
 msgid "Confirm"
 msgstr "Potvrdiť"
 
-#: src/modules/shot/e_mod_main.c:907
+#: src/modules/shot/e_mod_main.c:906
 msgid "Where to put Screenshot..."
 msgstr "Kam uložiť snímku..."
 
-#: src/modules/shot/e_mod_main.c:959
+#: src/modules/shot/e_mod_main.c:958
 msgid "Quality"
 msgstr "Kvalita"
 
-#: src/modules/shot/e_mod_main.c:968
+#: src/modules/shot/e_mod_main.c:967
 msgid "Perfect"
 msgstr "Najvyššia"
 
-#: src/modules/shot/e_mod_main.c:1044
+#: src/modules/shot/e_mod_main.c:1043
 msgid "Share"
 msgstr "Zdieľať"
 
-#: src/modules/shot/e_mod_main.c:1046 src/modules/clipboard/e_mod_config.c:219
+#: src/modules/shot/e_mod_main.c:1045 src/modules/clipboard/e_mod_config.c:219
 #: src/modules/clipboard/e_mod_main.c:359
 #: src/modules/clipboard/e_mod_main.c:953
 #: src/modules/clipboard/e_mod_main.c:954
@@ -9805,7 +9812,7 @@ msgstr "Info"
 msgid "Alt+PrtSc: screenshot active window"
 msgstr "Alt+PrtSc: snímka aktívneho okna"
 
-#: src/modules/tasks/e_mod_main.c:341 src/modules/tasks/e_mod_main.c:866
+#: src/modules/tasks/e_mod_main.c:340 src/modules/tasks/e_mod_main.c:859
 msgid "Tasks"
 msgstr "Panel úloh"
 
@@ -9967,25 +9974,25 @@ msgstr "Globálne"
 msgid "Per Application"
 msgstr "Pre aplikáciu"
 
-#: src/modules/xkbswitch/e_mod_config.c:532
+#: src/modules/xkbswitch/e_mod_config.c:402
+msgid "The limit for setxkbmap command is 4 layouts!"
+msgstr "Setxkbmap podporuje maximálne 4 rozloženia klávesnice!"
+
+#: src/modules/xkbswitch/e_mod_config.c:539
 msgid "Add New Configuration"
 msgstr "Pridať novú konfiguráciu"
 
-#: src/modules/xkbswitch/e_mod_config.c:547
+#: src/modules/xkbswitch/e_mod_config.c:554
 msgid "Available"
 msgstr "K dispozícii"
 
-#: src/modules/xkbswitch/e_mod_config.c:554
+#: src/modules/xkbswitch/e_mod_config.c:561
 msgid "Model"
 msgstr "Model"
 
-#: src/modules/xkbswitch/e_mod_config.c:561
+#: src/modules/xkbswitch/e_mod_config.c:568
 msgid "Variant"
 msgstr "Variant"
-
-#: src/modules/xkbswitch/e_mod_config.c:605
-msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr "Setxkbmap podporuje maximálne 4 rozloženia klávesnice!"
 
 #: src/modules/notification/e_mod_main.c:78
 #: src/modules/notification/e_mod_main.c:278
@@ -10297,10 +10304,6 @@ msgstr "Pripojiť zariadenie počas štartu"
 msgid "Open filemanager on insert"
 msgstr "Otvoriť správcu súborov pri vložení"
 
-#: src/modules/places/e_mod_config.c:216
-msgid "Use a custom file manager"
-msgstr "Použiť vlastného správcu súborov"
-
 #: src/modules/places/e_mod_config.c:229
 msgid "Show in menu"
 msgstr "Zobraziť v ponuke"
@@ -10457,3 +10460,13 @@ msgstr "Zvýšiť hlasitosť"
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
 msgstr "Stlmiť hlasitosť"
+
+#: src/modules/separator/e_mod_main.c:127
+msgid "Separator"
+msgstr "Oddeľovač"
+
+#~ msgid "Custom FM to open dirs"
+#~ msgstr "Vlastný FM pre otvorenie priečinku"
+
+#~ msgid "Show icon label"
+#~ msgstr "Zobrazovať názov ikony"
