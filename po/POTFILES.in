@@ -319,3 +319,4 @@ src/modules/mixer/lib/epulse_ml.c
 src/modules/mixer/lib/translation.h
 src/modules/mixer/e_mod_main.c
 src/modules/mixer/e_mod_main.h
+src/modules/separator/e_mod_main.c
