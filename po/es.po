@@ -49,7 +49,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -5287,14 +5286,12 @@ msgid "Clickable edge"
 msgstr "Borde clickable"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Arrastrar icono..."
+msgstr "Sólo arrastrar"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "No hay módulos seleccionados."
+msgstr "No hay borde seleccionado"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -8793,12 +8790,11 @@ msgstr "Etiquetas de icono"
 
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Etiqueta Sobrepuesta"
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Etiquetas de icono"
+msgstr "Etiqueta Adyacente"
 
 #: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
@@ -10430,12 +10426,5 @@ msgid "Volume Mute"
 msgstr "Volumen silenciado"
 
 #: src/modules/separator/e_mod_main.c:127
-#, fuzzy
 msgid "Separator"
-msgstr "Separar grupo"
-
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "Administrador de Archivos personalizado para abrir directorios"
-
-#~ msgid "Show icon label"
-#~ msgstr "Mostrar la etiqueta del icono"
+msgstr "Separador"
