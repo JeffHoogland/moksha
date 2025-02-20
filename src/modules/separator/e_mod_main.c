@@ -63,7 +63,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Separator *sep;
    Instance *inst;
    E_Gadcon_Client *gcc;
-   char buf[PATH_MAX];
 
    inst = E_NEW(Instance, 1);   
    inst->ci = _config_item_get(id);
@@ -71,13 +70,9 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    sep = E_NEW(Separator, 1);
    sep->inst = inst;
 
-   snprintf(buf, sizeof(buf), "%s/separator.edj", 
-            e_module_dir_get(sep_conf->module));
-
    sep->o_icon = edje_object_add(gc->evas);
    e_theme_edje_object_set(sep->o_icon, "base/theme/modules/separator",
                                              "modules/separator/main");
-     //~ edje_object_file_set(sep->o_icon, buf, "modules/separator/main");
    evas_object_show(sep->o_icon);
 
    gcc = e_gadcon_client_new(gc, name, id, style, sep->o_icon);
