@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2025-02-19 20:33+0100\n"
-"PO-Revision-Date: 2025-02-12 12:46+0100\n"
+"PO-Revision-Date: 2025-02-20 11:00+0100\n"
 "Last-Translator: Philippe Jean Guillaumie <similar@orange.fr>\n"
 "Language-Team: French\n"
 "Language: fr\n"
@@ -10493,9 +10493,8 @@ msgid "Volume Mute"
 msgstr "Son coupé"
 
 #: src/modules/separator/e_mod_main.c:127
-#, fuzzy
 msgid "Separator"
-msgstr "Groupe séparé"
+msgstr "Séparateur"
 
 #~ msgid "Custom FM to open dirs"
 #~ msgstr "Gestionnaire de fichiers personnalisé"
