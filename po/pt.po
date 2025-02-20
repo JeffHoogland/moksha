@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2025-02-19 20:33+0100\n"
-"PO-Revision-Date: 2025-02-16 14:11+0000\n"
+"PO-Revision-Date: 2025-02-20 21:42+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -45,7 +45,6 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -919,8 +918,9 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os ficheiros de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi abortada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
@@ -1776,8 +1776,8 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:<br><hilight>"
-"%s</hilight>?"
+"Tem a certeza que quer eliminar<br>%d ficheiro selecionado de:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
 "Tem a certeza que quer eliminar<br>os %d ficheiros selecionados de:"
 "<br><hilight>%s</hilight>?"
@@ -5868,8 +5868,9 @@ msgstr "Erro na tecla de atalho"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da tecla de atalho escolhida já está a ser utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Escolha outra tecla atalho."
@@ -6544,20 +6545,20 @@ msgstr "Redimensionar texto"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:93
 msgid "Winlist Item"
-msgstr "Item da lista de janelas"
+msgstr "Item da troca de janelas"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:94
 msgid "Winlist Item Active"
-msgstr "Item da lista de janelas ativa"
+msgstr "Item da troca de janelas ativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:95
 msgid "Winlist Label"
-msgstr "Legenda da lista de janelas"
+msgstr "Etiqueta da troca de janelas"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:96
 #: src/modules/conf_theme/e_int_config_fonts.c:67
 msgid "Winlist Title"
-msgstr "Título da lista de janelas"
+msgstr "Título da troca de janelas"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:97
 msgid "Dialog Background Base"
@@ -6604,7 +6605,7 @@ msgstr "Texto da entrada inativa"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:111
 msgid "Label Text"
-msgstr "Texto da legenda"
+msgstr "Texto da etiqueta"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:112
 msgid "List Item Text Selected"
@@ -6668,7 +6669,7 @@ msgstr "Base para o fundo da moldura de deslocamento"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:132
 msgid "Module Label"
-msgstr "Legenda do módulo"
+msgstr "Etiqueta do módulo"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:133
 msgid "Composite Focus-out Color"
@@ -6811,7 +6812,7 @@ msgstr "Imagem"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:84
 msgid "Label"
-msgstr "Legenda"
+msgstr "Etiqueta"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:86
 msgid "Slider"
@@ -8216,11 +8217,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8795,16 +8796,15 @@ msgstr "Configuração"
 
 #: src/modules/ibar/e_mod_config.c:137
 msgid "Icon Labels"
-msgstr "Legenda dos ícones"
+msgstr "Etiquetas de ícones"
 
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Etiqueta sobreposta"
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Legenda dos ícones"
+msgstr "Etiqueta adjacente"
 
 #: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
@@ -8890,7 +8890,7 @@ msgstr "Expandir quando estiver na área de trabalho"
 
 #: src/modules/ibox/e_mod_config.c:101
 msgid "Show Icon Label"
-msgstr "Mostrar legenda dos ícones"
+msgstr "Mostrar etiqueta de ícones"
 
 #: src/modules/ibox/e_mod_config.c:105
 msgid "Display Name"
@@ -9949,7 +9949,7 @@ msgstr "Modelos"
 
 #: src/modules/xkbswitch/e_mod_config.c:331
 msgid "Label only"
-msgstr "Apenas legenda"
+msgstr "Apenas etiqueta"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
@@ -10114,11 +10114,11 @@ msgstr "Ordem invertida"
 #: src/modules/notification/e_mod_config.c:193
 #: src/modules/clipboard/e_mod_config.c:245
 msgid "Labels"
-msgstr "Legendas"
+msgstr "Etiquetas"
 
 #: src/modules/notification/e_mod_config.c:194
 msgid "Labels length"
-msgstr "Tamanho das legendas"
+msgstr "Tamanho das etiquetas"
 
 #: src/modules/notification/e_mod_config.c:201
 #: src/modules/clipboard/e_mod_config.c:256
@@ -10193,7 +10193,7 @@ msgstr " Temporizador"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
-msgstr " Comprimento da legenda"
+msgstr " Comprimento da etiqueta"
 
 #: src/modules/clipboard/e_mod_config.c:257
 msgid " Reverse Order"
@@ -10448,9 +10448,8 @@ msgid "Volume Mute"
 msgstr "Silenciar volume"
 
 #: src/modules/separator/e_mod_main.c:127
-#, fuzzy
 msgid "Separator"
-msgstr "Grupo separado"
+msgstr "Separador"
 
 #~ msgid "Custom FM to open dirs"
 #~ msgstr "Gestor de ficheiros personalizado para abrir diretórios"
