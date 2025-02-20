@@ -45,6 +45,7 @@
         "pager", \
         "places", \
         "quickaccess", \
+        "separator", \
         "shot", \
         "start", \
         "syscon", \
@@ -76,6 +77,7 @@
         "slideshow", \
         "stickynotes", \
         "tclock" \
+        "wallscape" \
         "wincontrol" \
 
 /* local subsystem functions */
