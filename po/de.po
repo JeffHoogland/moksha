@@ -8868,12 +8868,11 @@ msgstr "Symbolbeschriftungen"
 
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Überlappendes Symbol"
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Symbolbeschriftungen"
+msgstr "Benachbartes Symbol"
 
 #: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
@@ -10534,12 +10533,6 @@ msgid "Volume Mute"
 msgstr "Lautstärke dämpfen"
 
 #: src/modules/separator/e_mod_main.c:122
-#, fuzzy
 msgid "Separator"
-msgstr "Gruppe trennen"
+msgstr "Trenner"
 
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "Benutzerdefinierter Dateiverwalter zum öffnen von Ordnern"
-
-#~ msgid "Show icon label"
-#~ msgstr "Symbolbeschriftung anzeigen"
