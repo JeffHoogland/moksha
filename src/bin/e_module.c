@@ -13,7 +13,6 @@
         "classicmenu", \
         "clipboard", \
         "clock", \
-        "comp", \
         "conf", \
         "conf_applications", \
         "conf_dialogs", \
