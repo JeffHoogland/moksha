@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2024-01-10 19:58-0300\n"
 "Last-Translator: Samuel Pecci <srpecci@yahoo.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -921,16 +921,17 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"O Moksha produziu um erro ao mover os arquivos de configuração<br>de:<br>"
-"%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança.<br>"
+"O Moksha produziu um erro ao mover os arquivos de configuração<br>de:"
+"<br>%s<br><br>para:<br>%s<br><br>A tarefa foi terminada para sua segurança."
+"<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1780,8 +1781,8 @@ msgstr[0] ""
 "Tem certeza que quer apagar<br>%d arquivo selecionado de:<br><hilight>%s</"
 "hilight>?"
 msgstr[1] ""
-"Tem certeza que quer apagar<br>os %d arquivos selecionados de:<br><hilight>"
-"%s</hilight>?"
+"Tem certeza que quer apagar<br>os %d arquivos selecionados de:"
+"<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2773,7 +2774,7 @@ msgstr "Configurações dos módulos"
 msgid "Load"
 msgstr "Carregar"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Descarregar"
 
@@ -3620,12 +3621,12 @@ msgstr ""
 "os problemas.<br><br>O diálogo de configuração dos módulos deve permitir-lhe "
 "escolher os módulos a carregar."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Carregando módulo: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3634,24 +3635,24 @@ msgstr ""
 "Ocorreu um erro ao carregar o módulo: %s<br>O módulo com o nome %s não foi "
 "encontrado nos diretórios dos módulos.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Erro ao carregar módulo"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Ocorreu um erro ao carregar o módulo: %s<br>O caminho para o módulo é:<br>"
-"%s<br>O erro reportado foi:<br>%s<br>"
+"Ocorreu um erro ao carregar o módulo: %s<br>O caminho para o módulo é:"
+"<br>%s<br>O erro reportado foi:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "O módulo não contém todas as funções necessárias"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3660,23 +3661,23 @@ msgstr ""
 "Erro na API do módulo<br>Erro ao iniciar o módulo: %s<br>O módulo requer a "
 "versão mínima API: %i.<br>O API de módulos informada pelo Moksha é: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Módulo %s do Moksha"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Qual a ação que deve ser efetuada com este módulo?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Manter"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3686,11 +3687,11 @@ msgstr ""
 "erros<br>Por favor remova-os antes de reportar qualquer erro<br><br>A lista "
 "dos módulos é a seguinte:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Análise de módulos instáveis"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Eu sei"
 
@@ -5391,8 +5392,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"O par sinal-fonte que você introduziu já está em uso<br>pela ação <highlight>"
-"%s</highlight>.<br>"
+"O par sinal-fonte que você introduziu já está em uso<br>pela ação "
+"<highlight>%s</highlight>.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5659,8 +5660,8 @@ msgstr ""
 "Você tem algumas variáveis de ambiente que podem interferir com a correta "
 "exibição no idioma escolhido.<br>Se não as quiser afetadas, utilize as "
 "configurações das variáveis de ambiente para não utilizá-las.<br>As "
-"variáveis de ambiente que podem afetar o seu idioma são as seguintes:<br><br>"
-"%s"
+"variáveis de ambiente que podem afetar o seu idioma são as seguintes:"
+"<br><br>%s"
 
 #: src/modules/conf_intl/e_int_config_intl.c:1011
 msgid "Possible Locale problems"
@@ -5874,8 +5875,9 @@ msgstr "Erro na associação de tecla"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "A sequência da associação de tecla escolhida já está sendo utilizada pela "
 "ação<br><hilight>%s</hilight>.<br>Por favor escolha outra sequência."
@@ -8221,11 +8223,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8601,7 +8603,7 @@ msgstr "Imagem personalizada"
 msgid "Custom Color"
 msgstr "Cor personalizada"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Transparente"
 
@@ -10450,7 +10452,7 @@ msgstr "Volume aumentado"
 msgid "Volume Mute"
 msgstr "Volume no mudo"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Grupo separado"

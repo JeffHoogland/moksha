@@ -64,20 +64,33 @@
         "calendar", \
         "comptonmod", \
         "cpu", \
+        "desktitle", \
+        "deskshow", \
+        "diskio", \
+        "drawer", \
         "engage", \
+        "extramenu", \
         "flame", \
         "forecasts", \
+        "launcher-dictionary", \
+        "launcher-spellchecker", \
+        "mail", \
         "mem", \
+        "moon", \
         "net", \
         "penguins", \
+        "photo", \
         "productivity", \
         "rain", \
         "screenshot", \
         "slideshow", \
+        "snow", \
         "stickynotes", \
-        "tclock" \
-        "wallscape" \
-        "wincontrol" \
+        "tclock", \
+        "wallscape", \
+        "wincontrol", \
+        "winlist-ng", \
+        "winselector" \
 
 /* local subsystem functions */
 static void      _e_module_free(E_Module *m);

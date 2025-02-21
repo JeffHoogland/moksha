@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2024-01-12 18:20-0500\n"
 "Last-Translator: translate.google.com <moksha@bodhilinux.com>\n"
 "Language-Team: \n"
@@ -940,8 +940,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1051,8 +1051,8 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Moksha ჰქონდა შეცდომა<br>მისი კონფიგურაციის ფაილის დაწერისას.<br>"
-"%s<br><br>ფაილი, სადაც მოხდა შეცდომა იყო:<br>%s<br><br>ეს ფაილი "
+"Moksha ჰქონდა შეცდომა<br>მისი კონფიგურაციის ფაილის დაწერისას."
+"<br>%s<br><br>ფაილი, სადაც მოხდა შეცდომა იყო:<br>%s<br><br>ეს ფაილი "
 "წაიშალადაზიანებული მონაცემების თავიდან ასაცილებლად.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
@@ -2802,7 +2802,7 @@ msgstr "მოდულის პარამეტრები"
 msgid "Load"
 msgstr "ჩატვირთვა"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "გამოტვირთვა"
 
@@ -3673,12 +3673,12 @@ msgstr ""
 "კონფიგურაციიდან. მოდულის<br>კონფიგურაცია დიალოგმა უნდა მოგცემთ ხელახლა "
 "აირჩიოთ თქვენი<br>მოდულები."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "მოდულის ჩატვირთვა: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3687,11 +3687,11 @@ msgstr ""
 "მოდულის სახელწოდებით ჩატვირთვისას მოხდა შეცდომა: %s<br>მოდული, სახელად %s, "
 "ვერიპოვება<br>მოდულის საძიებო დირექტორიაში.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "შეცდომა მოდულის ჩატვირთვისას"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3700,11 +3700,11 @@ msgstr ""
 "მოდულის ჩატვირთვისას მოხდა შეცდომა, სახელად: %s<br>სრული გზა ამისკენმოდული "
 "არის:<br>%s<br>შეცდომის შესახებ მოხსენებული იყო:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "მოდული არ შეიცავს ყველა საჭირო ფუნქციას."
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3714,23 +3714,23 @@ msgstr ""
 "მინიმუმსმოდულის API ვერსია: %i.<br>მოქშას მიერ რეკლამირებული მოდული API "
 "არის: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s მოდული"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "რა ქმედება უნდა განხორციელდეს ამ მოდულით?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "დატოვება"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3740,11 +3740,11 @@ msgstr ""
 "შეცდომებიდა ავარია.<br>გთხოვთ, წაშალოთ ისინი შეცდომების შესახებ "
 "შეტყობინებამდე.<br><br>The მოდულების სია ასეთია:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "მოდულის არასტაბილური დაბინძურება"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "ვიცი"
 
@@ -5934,8 +5934,9 @@ msgstr "შებოჭვის გასაღების შეცდომ�
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "შესაბამისი კლავიშების თანმიმდევრობა, რომელსაც თქვენ აირჩევთ, უკვე "
 "გამოიყენება<br><hilight>%s</hilight> მოქმედებით.<br>გთხოვთ, აირჩიოთ სხვა "
@@ -7893,8 +7894,8 @@ msgid ""
 "example:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a+x %s<ps/>"
 msgstr ""
 "freqset ორობითი cpufreq მოდულში<ps/> არ ეკუთვნის root-ს ან არ აქვს<ps/"
-">setuid ბიტის ნაკრები.მაგალითად:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+">setuid ბიტის ნაკრები.მაგალითად:<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8298,11 +8299,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8324,9 +8325,9 @@ msgstr ""
 "დანამატზე დაწყებული 'x'-ით<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> "
 "ციკლი დანამატების მეშვეობით<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> "
 "გადადით პირველ/ბოლო პუნქტზე<br>    <hilight>&lt;ctrl+1&gt;</hilight> "
-"გადართეთ ნახვის რეჟიმები (გადით ამ გვერდიდან ;)<br>    <hilight>&lt;ctrl"
-"+2&gt;</hilight> სიის ხედვის რეჟიმების გადართვა<br>    <hilight>&lt;ctrl"
-"+3&gt;</hilight> ცერის ხედვის რეჟიმების გადართვა"
+"გადართეთ ნახვის რეჟიმები (გადით ამ გვერდიდან ;)<br>    <hilight>&lt;"
+"ctrl+2&gt;</hilight> სიის ხედვის რეჟიმების გადართვა<br>    <hilight>&lt;"
+"ctrl+3&gt;</hilight> ცერის ხედვის რეჟიმების გადართვა"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8682,7 +8683,7 @@ msgstr "ხელით მითითებული გამოსახუ�
 msgid "Custom Color"
 msgstr "ფერის არჩევა"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "გამჭვირვალე"
 
@@ -9456,9 +9457,9 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"შერჩეული ფანჯარა, რომელიც შექმნილია სახელით:<br>%s<br>და კლასით:<br>"
-"%s<br>ვერ მოიძებნა სწრაფი წვდომის აპლიკაციის მონაცემთა ბაზაში<br>ეს ნიშნავს, "
-"რომ აპი ჩვენთვის უცნობია<br>ან არ არის განკუთვნილი ამ პარამეტრით "
+"შერჩეული ფანჯარა, რომელიც შექმნილია სახელით:<br>%s<br>და კლასით:"
+"<br>%s<br>ვერ მოიძებნა სწრაფი წვდომის აპლიკაციის მონაცემთა ბაზაში<br>ეს "
+"ნიშნავს, რომ აპი ჩვენთვის უცნობია<br>ან არ არის განკუთვნილი ამ პარამეტრით "
 "გამოსაყენებლად.<br>გთხოვთ, აირჩიოთ სამოქმედო მოქმედება:"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:379
@@ -10544,7 +10545,7 @@ msgstr "მოცულობის გაზრდა"
 msgid "Volume Mute"
 msgstr "ხმის დადუმება"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "ცალკე ჯგუფი"

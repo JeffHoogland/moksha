@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2024-07-22 19:52+0300\n"
 "Last-Translator: AG\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -914,16 +914,16 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"לMoksha הייתה שגיאה בעת הזזת קבצי הגדרות<br>מ:<br>%s<br><br>אל:<br>"
-"%s<br><br>The שאר הכתיבה הופסקה כאמצעי זהירות.<br>"
+"לMoksha הייתה שגיאה בעת הזזת קבצי הגדרות<br>מ:<br>%s<br><br>אל:"
+"<br>%s<br><br>The שאר הכתיבה הופסקה כאמצעי זהירות.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -2749,7 +2749,7 @@ msgstr "הגדרות המודול"
 msgid "Load"
 msgstr "לטעון"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "פריקת מודול"
 
@@ -3595,12 +3595,12 @@ msgstr ""
 "כדי<br>לסייע בהסרת מודולים בעיתיים כלשהם מהתצורה שלך.<br><br>חלונית תצורת "
 "המודולים אמורה לאפשר לך לבחור<br>במודולים שלך שוב."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "טעינת מודולים: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3609,24 +3609,24 @@ msgstr ""
 "ארעה שגיאה בטעינת המודול בשם: %s<br>לא נמצא מודל בשם %s<br>בתיקיות חיפוש "
 "המודולים.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "שגיאה בטעינת מודול"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"ארעה שגיאה בטעינת מודול בשם: %s<br>הנתיב המלא למודול זה הינו:<br>"
-"%s<br>השגיאה שדווחה הינה:<br>%s<br>"
+"ארעה שגיאה בטעינת מודול בשם: %s<br>הנתיב המלא למודול זה הינו:"
+"<br>%s<br>השגיאה שדווחה הינה:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "המודול אינו מכיל את כל הפונקציות הנחוצות."
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3635,23 +3635,23 @@ msgstr ""
 "שגיאה ב־API של המודול<br>שגיאה בהפעלת המודול: %s<br>גירסת ה־API של המודול "
 "צריכה להיות לפחות: %i.<br>מודול ה־API המפורסם על ידי Moksha הינו: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "מודול ה־%s של Moksha"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "איזו פעולה יש לבצע עם המודול הזה?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "לשמור"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3661,11 +3661,11 @@ msgstr ""
 "והתרסקויות. <br> נא להסיר אותם לפני דיווח על שגיאות.<br><br>רשימת המודולים "
 "היא זאת:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "זיהום מודולים לא יציבים"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "ידוע לי"
 
@@ -3829,8 +3829,8 @@ msgid ""
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "הניתוק אורך זמן רב מדי.<br> כמה מהיישומים מסרבים להסגר.<br>האם ברצונך לסיים "
-"את תהליך הניתוק<br>בכל זאת מבלי לסגור<br>יישומים אלו תחילה?<br><br>"
-"%s<br>ניתוק אוטומטי בעוד %d שניות."
+"את תהליך הניתוק<br>בכל זאת מבלי לסגור<br>יישומים אלו תחילה?"
+"<br><br>%s<br>ניתוק אוטומטי בעוד %d שניות."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3982,9 +3982,9 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"גירסת enlightenment <br> אינה בגירסה האחרונה.<br> הגירסה האחרונה היא <br><br>"
-"%s<br><br> בבקשה לבקר ב www.enlightenment.org<br> או לעדכן את חבילות המערכת "
-"<br> כדי לקבל גירסה חדשה."
+"גירסת enlightenment <br> אינה בגירסה האחרונה.<br> הגירסה האחרונה היא "
+"<br><br>%s<br><br> בבקשה לבקר ב www.enlightenment.org<br> או לעדכן את חבילות "
+"המערכת <br> כדי לקבל גירסה חדשה."
 
 #: src/bin/e_utils.c:185 src/modules/conf_intl/e_int_config_imc.c:262
 #: src/modules/conf_intl/e_int_config_imc.c:511
@@ -5849,8 +5849,9 @@ msgstr "שגיאת איגוד מפתח"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "רצף איגוד המפתח שבחרת נמצא כבר בשימוש ע\"י הפעולה<br><hilight>%s</hilight> ."
 "<br> נא לבחור רצף איגוד מפתח שונה."
@@ -8198,11 +8199,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8578,7 +8579,7 @@ msgstr "תמונה מותאמת אישית"
 msgid "Custom Color"
 msgstr "צבע מותאם אישית"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "שקוף"
 
@@ -10403,7 +10404,7 @@ msgstr "הגברת עוצמה"
 msgid "Volume Mute"
 msgstr "השתקת קול"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "הפרדת קבוצות"

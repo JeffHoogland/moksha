@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2013-12-01 22:49+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: General\n"
@@ -928,16 +928,16 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha ricevis eraron dum movado de dosieroj<br>el:<br>%s<br><br>al:<br>"
-"%s<br><br>La cetero de skribo estis sekure ĉesigita.<br>"
+"Moksha ricevis eraron dum movado de dosieroj<br>el:<br>%s<br><br>al:"
+"<br>%s<br><br>La cetero de skribo estis sekure ĉesigita.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1046,8 +1046,8 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Moksha ricevis eraron dum skribado<br>de sia dosiero de agordoj.<br>"
-"%s<br><br>La dosiero, kie la eraro okazis, estis:<br>%s<br><br>Ĉi tiu "
+"Moksha ricevis eraron dum skribado<br>de sia dosiero de agordoj."
+"<br>%s<br><br>La dosiero, kie la eraro okazis, estis:<br>%s<br><br>Ĉi tiu "
 "dosiero estis forigita por eviti korupton de datumoj.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
@@ -2782,7 +2782,7 @@ msgstr "Agordoj de modulo"
 msgid "Load"
 msgstr "Ŝargi"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Malŝargi"
 
@@ -3632,12 +3632,12 @@ msgstr ""
 "de via agordo. La modulo de<br><br>agordo permesos elekti viajn modulojn de "
 "nove."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Ŝargante modulon: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3646,11 +3646,11 @@ msgstr ""
 "Okazis eraro dum ŝargo de modulo nomata: %s<br>Neniu modulo nomata %s "
 "troveblas en la dosiero<br>de moduloj.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Eraro dum ŝargo de modulo"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3659,35 +3659,35 @@ msgstr ""
 "Okazis eraro dum ŝargo de modulo nomata: %s<br>La plena vojo por tiu modulo "
 "estas:<br>%s<br>La raportata eraro estis:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Modulo ne enhavas ĉiujn bezonatajn funkciojn"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha-a \"%s\" Modulo"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Kiun agadon devus trakti tiu modulo?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Teni"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3699,11 +3699,11 @@ msgstr ""
 "standard ones for<br>Moksha and may cause bugs and crashes.<br>Please remove "
 "them before reporting any bugs.<br><br>The module list is as follows:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Defekto de nestabila modulo"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Mi scias"
 
@@ -5323,8 +5323,8 @@ msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
-"La bindo de edje kiun vi elektis estis jam uzita de<br> agado de <hilight>"
-"%s</hilight>.<br>Bonvole elektu alian Edje por bindo."
+"La bindo de edje kiun vi elektis estis jam uzita de<br> agado de "
+"<hilight>%s</hilight>.<br>Bonvole elektu alian Edje por bindo."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1382
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
@@ -5891,8 +5891,9 @@ msgstr "Eraro de klava bindo"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La bindo de klava sekvenco, kiun vi elektis, estas jam uzita de la agado "
 "\"<br><hilight>%s</hilight>\".<br>Bonvole elektu alian bindon de klava "
@@ -8257,11 +8258,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8275,16 +8276,17 @@ msgstr ""
 "revenbutono&gt;</hilight>.<br> Tiu paĝo ne vidiĝos venontfoje kiam vi lanĉos "
 "<hilight>modulon Ĉio</hilight>.<br>    <hilight>&lt;Esk&gt;</hilight> fermas "
 "tiun dialogon<br>    <hilight>&lt;?&gt;</hilight> vidigas tiun paĝon<br>    "
-"<hilight>&lt;revenbutono&gt;</hilight> lanĉas agadon<br>    <hilight>&lt;ktrl"
-"+revevenbutono&gt;</hilight> lanĉas agadon kaj daŭras<br>    <hilight>&lt;"
-"tab&gt;</hilight> baskulas inter elektiloj<br>    <hilight>&lt;ktrl+tab&gt;</"
-"hilight> kompletigas enigon (laŭ etendilo)<br>    <hilight>&lt;ktrl+'x'&gt;</"
-"hilight> saltas al etendilo kies nomo ekas per  'x'<br>    <hilight>&lt;ktrl"
-"+maldekstro/dekstro&gt;</hilight> ciclas inter etendiloj<br>    <hilight>&lt;"
-"ktrl+supro/subo&gt;</hilight> iras al unua/lasta ero<br>    <hilight>&lt;ktrl"
-"+1&gt;</hilight> baskulas vidajn reĝimojn (fermas tiun paĝoj ;)<br>    "
-"<hilight>&lt;ktrl+2&gt;</hilight> baskulas vidajn moduloj de listo<br>    "
-"<hilight>&lt;ktrl+3&gt;</hilight> baskulas vidajn reĝimojn de bildetoj"
+"<hilight>&lt;revenbutono&gt;</hilight> lanĉas agadon<br>    <hilight>&lt;"
+"ktrl+revevenbutono&gt;</hilight> lanĉas agadon kaj daŭras<br>    "
+"<hilight>&lt;tab&gt;</hilight> baskulas inter elektiloj<br>    <hilight>&lt;"
+"ktrl+tab&gt;</hilight> kompletigas enigon (laŭ etendilo)<br>    <hilight>&lt;"
+"ktrl+'x'&gt;</hilight> saltas al etendilo kies nomo ekas per  'x'<br>    "
+"<hilight>&lt;ktrl+maldekstro/dekstro&gt;</hilight> ciclas inter "
+"etendiloj<br>    <hilight>&lt;ktrl+supro/subo&gt;</hilight> iras al unua/"
+"lasta ero<br>    <hilight>&lt;ktrl+1&gt;</hilight> baskulas vidajn reĝimojn "
+"(fermas tiun paĝoj ;)<br>    <hilight>&lt;ktrl+2&gt;</hilight> baskulas "
+"vidajn moduloj de listo<br>    <hilight>&lt;ktrl+3&gt;</hilight> baskulas "
+"vidajn reĝimojn de bildetoj"
 
 #: src/modules/everything/evry_view_tabs.c:93
 msgid "Back"
@@ -8636,7 +8638,7 @@ msgstr "Propra bildo"
 msgid "Custom Color"
 msgstr "Propra koloro"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Travidebla"
 
@@ -10506,7 +10508,7 @@ msgstr "Laŭteco ŝanĝita"
 msgid "Volume Mute"
 msgstr "Portilo"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Disigi grupon"

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2015-12-20 22:40+0800\n"
 "Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -933,8 +933,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -2744,7 +2744,7 @@ msgstr "模块设置"
 msgid "Load"
 msgstr "加载"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "卸载"
 
@@ -3577,12 +3577,12 @@ msgstr ""
 "Moksha 在启动前崩溃，现已重新启动。<br>所有模块都被禁用，以便排除您配置中出错"
 "的模块。<br><br>模块配置对话框将会引导您重新选择模块。"
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "载入模块：%s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, fuzzy, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3590,25 +3590,25 @@ msgid ""
 msgstr ""
 "载入模块 %s 时发生错误。<br>在模块搜索路径中<br>没有找到名为 %s 的模块。<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "载入模块时出错"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, fuzzy, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"载入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下：<br>"
-"%s<br>"
+"载入模块 %s 时发生错误。<br>该模块的全路径是：<br>%s<br>错误报告如下："
+"<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "模块没包括所有必需的功能"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3617,34 +3617,34 @@ msgstr ""
 "模块 API 错误<br>启动模块错误：%s<br>要求最小的模块 API 版本号：%i。"
 "<br>Moksha给的模块版本号：%i。<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s 模块"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr ""
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "保持"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr ""
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "我知道了"
 
@@ -5822,8 +5822,9 @@ msgstr "绑定按键错误"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "您选择的按键绑定序列，<br>已经被<hilight>%s</hilight>动作使用。<br>请选择其他"
 "按键绑定序列。"
@@ -8195,11 +8196,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8213,13 +8214,13 @@ msgstr ""
 "<br>按 <hilight>&lt;Esc&gt;</hilight> 关闭这个对话框，<br>按 <hilight>&lt;?"
 "&gt;</hilight> 显示此页，<br>按 <hilight>&lt;回车键&gt;</hilight> 运行动作，"
 "<br>按<hilight>&lt;ctrl+return&gt;</hilight> 运行动作并继续，<br>  按  "
-"<hilight>&lt;tab&gt;</hilight> 在选择器之间切换。<br>   按 <hilight>&lt;ctrl"
-"+tab&gt;</hilight> 完成输入(依赖于插件)<br>   按 <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> 跳至以“x”开头的插件，<br>   按 <hilight>&lt;ctrl+左/右方向键&gt;</"
-"hilight> 在插件之间循环，<br>   按 <hilight>&lt;ctrl+上/下方向键&gt;</"
-"hilight> 跳至项目的开头/结尾<br>   按 <hilight>&lt;ctrl+1&gt;</hilight> 切换"
-"查看模式(退出此页)<br>   按 <hilight>&lt;ctrl+2&gt;</hilight> 切换列表显示模"
-"式<br> 按 <hilight>&lt;ctrl+3&gt;</hilight> 切换缩略图查看模式"
+"<hilight>&lt;tab&gt;</hilight> 在选择器之间切换。<br>   按 <hilight>&lt;"
+"ctrl+tab&gt;</hilight> 完成输入(依赖于插件)<br>   按 <hilight>&lt;"
+"ctrl+'x'&gt;</hilight> 跳至以“x”开头的插件，<br>   按 <hilight>&lt;ctrl+左/右"
+"方向键&gt;</hilight> 在插件之间循环，<br>   按 <hilight>&lt;ctrl+上/下方向键"
+"&gt;</hilight> 跳至项目的开头/结尾<br>   按 <hilight>&lt;ctrl+1&gt;</"
+"hilight> 切换查看模式(退出此页)<br>   按 <hilight>&lt;ctrl+2&gt;</hilight> 切"
+"换列表显示模式<br> 按 <hilight>&lt;ctrl+3&gt;</hilight> 切换缩略图查看模式"
 
 #: src/modules/everything/evry_view_tabs.c:93
 #, fuzzy
@@ -8573,7 +8574,7 @@ msgstr "自定义图像"
 msgid "Custom Color"
 msgstr "自定义颜色"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "透明"
 
@@ -10450,7 +10451,7 @@ msgstr "音量改变"
 msgid "Volume Mute"
 msgstr "音量改变"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "分割组别"

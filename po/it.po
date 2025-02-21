@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2024-01-17 07:56-0500\n"
 "Last-Translator: Robert Wiley <ylee@bodhilinux.com>\n"
 "Language-Team: none\n"
@@ -930,8 +930,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1043,9 +1043,9 @@ msgid ""
 "to avoid corrupt data.<br>"
 msgstr ""
 "Moksha ha avuto un errore mentre<br>scriveva il suo file di "
-"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:<br>"
-"%s<br><br>Questo file è stato cancellato per evitare<br>corruzione di dati."
-"<br>"
+"configurazione<br>%s<br><br>Il file dove è avvenuto l'errore è:"
+"<br>%s<br><br>Questo file è stato cancellato per evitare<br>corruzione di "
+"dati.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1172,9 +1172,9 @@ msgid ""
 "time the window starts up, and does not<br>change."
 msgstr ""
 "La finestra per la quale state creando un'icona<br>non contiene le proprietà "
-"\"nome finestra\" e<br>\"classe\". Senza di queste dovrete utilizzare<br>"
-"\"titolo finestra\". Questo funzionerà solo se<br>il titolo sarà identico "
-"all'avvio della finestra<br>e non cambierà in seguito."
+"\"nome finestra\" e<br>\"classe\". Senza di queste dovrete "
+"utilizzare<br>\"titolo finestra\". Questo funzionerà solo se<br>il titolo "
+"sarà identico all'avvio della finestra<br>e non cambierà in seguito."
 
 #: src/bin/e_eap_editor.c:235
 msgid "Desktop Entry Editor"
@@ -2780,7 +2780,7 @@ msgstr "Gestione moduli"
 msgid "Load"
 msgstr "Carica"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Scarica"
 
@@ -3697,12 +3697,12 @@ msgstr ""
 "configurazione<br>dei moduli dovrebbe permettervi di "
 "selezionare<br>nuovamente i vostri moduli."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Caricamento modulo: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3711,11 +3711,11 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Non ho potuto trovare "
 "nessun modulo di nome %s nelle<br>directory di ricerca dei moduli.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Errore nel caricamento del modulo"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3724,11 +3724,11 @@ msgstr ""
 "C'è stato un errore nel caricamento del modulo: %s<br>Il percorso completo "
 "del modulo è:<br>%s<br>L'errore riportato è stato:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "Il modulo non contiene tutte le funzioni necessarie"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3738,23 +3738,23 @@ msgstr ""
 "richiede una versione minima dell'API dei moduli di: %i.<br>L'API dei moduli "
 "dichiarata da Moksha è: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Modulo %s di Moksha"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Quale azione dovrebbe essere eseguita con questo modulo?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Mantieni"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3764,11 +3764,11 @@ msgstr ""
 "causare problemi.<br>Si prega di rimuoverli prima di segnalare bug."
 "<br>Questo è l'elenco dei moduli:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Caricamento moduli instabili"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Lo so"
 
@@ -3863,9 +3863,9 @@ msgid ""
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
 "La scomparsa automatica della mensola non<br>funziona correttamente con "
-"l'attuale<br>configurazione, si prega di impostare<br>\"Al di sotto di tutto"
-"\" o di disabilitare<br>la scomparsa automatica nelle proprietà<br>della "
-"mensola."
+"l'attuale<br>configurazione, si prega di impostare<br>\"Al di sotto di "
+"tutto\" o di disabilitare<br>la scomparsa automatica nelle "
+"proprietà<br>della mensola."
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -3938,8 +3938,8 @@ msgid ""
 msgstr ""
 "La chiusura della sessione sta prendendo troppo tempo.<br>Alcune "
 "applicazioni rifiutano di chiudersi.<br>Volete chiudere comunque la sessione "
-"senza aspettare<br>prima la chiusura di queste applicazioni?<br><br><br>"
-"%s<br>Chiusura automatica tra %d secondi."
+"senza aspettare<br>prima la chiusura di queste applicazioni?"
+"<br><br><br>%s<br>Chiusura automatica tra %d secondi."
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -5962,8 +5962,9 @@ msgstr "Errore di associazione"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "La combinazione di tasti che avete scelto è già usata<br>dall'azione "
 "<hilight>%s</hilight>.<br>Si prega di scegliere una combinazione diversa."
@@ -7912,8 +7913,8 @@ msgid ""
 msgstr ""
 "Il binario freqset del modulo Cpufreq non<ps/>è di proprietà di root o non "
 "ha il bit<ps/>setuid impostato. Si prega di fare in modo<ps/>che sia così, "
-"ad esempio con questi comandi:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u"
-"+s,a+x %s<ps/>"
+"ad esempio con questi comandi:<ps/><ps/>sudo chown root %s<ps/>sudo chmod "
+"u+s,a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8316,11 +8317,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8695,7 +8696,7 @@ msgstr "Immagine personalizzata"
 msgid "Custom Color"
 msgstr "Colore personalizzato"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Trasparente"
 
@@ -10560,7 +10561,7 @@ msgstr "Aumento del volume"
 msgid "Volume Mute"
 msgstr "Volume disattivato"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Gruppo a parte"

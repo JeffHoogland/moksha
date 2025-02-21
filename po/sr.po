@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2013-09-10 23:21+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: Serbian\n"
@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Launchpad-Export-Date: 2013-09-11 05:23+0000\n"
 "X-Generator: Launchpad (build 16761)\n"
 
@@ -937,8 +937,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1048,9 +1048,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Просвећење је имало грешку приликом уписа <br>њених датотека поставки.<br>"
-"%s<br><br>Датотека због које се јавила грешка је:<br>%s<br><br>Ова датотека "
-"је избрисана да би се спречио упис неисправних података.<br>"
+"Просвећење је имало грешку приликом уписа <br>њених датотека поставки."
+"<br>%s<br><br>Датотека због које се јавила грешка је:<br>%s<br><br>Ова "
+"датотека је избрисана да би се спречио упис неисправних података.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -1787,11 +1787,11 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Да ли сте сигурни да желите обрисати<br> %d означену датотеку из<br><hilight>"
-"%s</hilight>?"
+"Да ли сте сигурни да желите обрисати<br> %d означену датотеку "
+"из<br><hilight>%s</hilight>?"
 msgstr[1] ""
-"Да ли сте сигурни да желите обрисати<br> %d означене датотеке из<br><hilight>"
-"%s</hilight>?"
+"Да ли сте сигурни да желите обрисати<br> %d означене датотеке "
+"из<br><hilight>%s</hilight>?"
 msgstr[2] ""
 "Да ли сте сигурни да желите обрисати<br> %d означених датотека из "
 "<br><hilight>%s</hilight>?"
@@ -2786,7 +2786,7 @@ msgstr "Поставке јединице"
 msgid "Load"
 msgstr "Учитај"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Избаци из меморије"
 
@@ -3641,12 +3641,12 @@ msgstr ""
 "јединица са потешкоћама из ваших поставки.<br><br> Прозорче поставки "
 "јединица ће вам омогућити поновни одабир ваших<br> јединица."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Учитавам јединицу: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3655,11 +3655,11 @@ msgstr ""
 "Десила се грешка приликом учитавања јединице назива: %s<br>Нема пронађених "
 "јединица са именом %s у<br>фасциклама зa претрагу јединица.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Грешка приликом учитавања јединице"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3668,12 +3668,12 @@ msgstr ""
 "Десила се грешка приликом  учитавања јединице назване: %s<br>Пуна путања до "
 "ове јединице је:<br>%s<br>Пријављена је грешка:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Јединица не садржи све потребне функције"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3682,23 +3682,23 @@ msgstr ""
 "Десила се грешка јединице АПИ<br>Грешка покретања јединице: %s<br>Потребно  "
 "најниже АПИ издање је:  %i.<br>АПИ јединица Просвећења је %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Јединица %s Просвећења"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Која радња треба бити предузета са овом јединицом?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Задржи"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3708,11 +3708,11 @@ msgstr ""
 "и отказе.<br>Молим, уклоните их пре пријаве грешака.<br><br>Списак јединица "
 "ј следећи:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Загађење непостојане јединице"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Знам"
 
@@ -5930,8 +5930,9 @@ msgstr "Грешка тастера пречице"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Низ дугмади пречице који сте изабрали је већ у употреби за <br><hilight>%s</"
 "hilight> радњу.<br>Молим, изаберите други низ дугмади за пречицу."
@@ -8311,11 +8312,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8692,7 +8693,7 @@ msgstr "Прилагођена слика"
 msgid "Custom Color"
 msgstr "Прилагођена боја"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Провидно"
 
@@ -10628,7 +10629,7 @@ msgstr "Гласноћа је промењена"
 msgid "Volume Mute"
 msgstr "Гласноћа је промењена"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Раздвоји врсту"

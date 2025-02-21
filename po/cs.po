@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: moksha 0.4.1.17786\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2025-01-01 08:30+0100\n"
 "Last-Translator: Štefan Uram <thewaiter@centrum.sk>\n"
 "Language-Team: Czech\n"
@@ -927,8 +927,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1036,8 +1036,8 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Mokshau selhalo zapisování<br>jeho konfiguračního souboru.<br>"
-"%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
+"Mokshau selhalo zapisování<br>jeho konfiguračního souboru."
+"<br>%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
 "smazán, aby nedošlo k porušení dat.<br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
@@ -1763,8 +1763,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:<br><hilight>"
-"%s</hilight> ?"
+"Opravdu chcete smazat<br><hilight>všech</hilight> %d souborů v:"
+"<br><hilight>%s</hilight> ?"
 
 #: src/bin/e_fm.c:10909
 #, c-format
@@ -2771,7 +2771,7 @@ msgstr "Nastavení modulů"
 msgid "Load"
 msgstr "Načíst"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Uvolnit"
 
@@ -3614,12 +3614,12 @@ msgstr ""
 "problém. Dialog<br>nastavení modulů vám pomůže aktivovat<br>vaše moduly "
 "znovu."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Nahrávání modulu: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3628,24 +3628,24 @@ msgstr ""
 "Došlo k chybě při načítání modulu %s.<br>Žádný modul s názvem %s nebyl "
 "nazelen<br>v adresářích pro hledání modulů.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Chyba nahrávání modulu"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:<br>"
-"%s<br>Nahlášená chyba je:<br>%s<br>"
+"Došlo k chybě při načítání modulu %s.<br>Plná cesta k modulu je:"
+"<br>%s<br>Nahlášená chyba je:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "Modul neobsahuje všechny potřebné funkce."
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3654,23 +3654,23 @@ msgstr ""
 "Chyba v API modulů.<br>Chyba nahrávání modulu: %s<br>Je zapotřebí API modul "
 "s verzí minimálně %i.<br>API modul v desktopu Moksha má verzi %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s modul"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Jakou akci provést s tímto modulem?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Ponechat"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3680,11 +3680,11 @@ msgstr ""
 "způsobit chyby a pády.<br>Prosím, odstraňte je před hlášením jakýchkoli chyb."
 "<br><br>Seznam nestandardních modulů:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Kontaminace nestabilním modulem"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Vím"
 
@@ -5872,8 +5872,9 @@ msgstr "Chyba klávesové zkratky"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Klávesová zkratka, kterou jste zadali, je již použita <br><hilight>%s</"
 "hilight> akcí.<br>Prosím vyberte si jinou zkratku."
@@ -8226,11 +8227,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8243,8 +8244,8 @@ msgstr ""
 "tab&bt;</highlight> pro výběr akce, pak stiskněte <highlight>&lt;return&gt;</"
 "highlight>.<br>    <highlight>&lt;Esc&gt;</highlight> zavře tento "
 "dialog<br>    <highlight>&lt;?&gt;</highlight>zobrazí tuto nápovědu<br>    "
-"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;ctrl"
-"+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
+"<highlight>&lt;return&gt;</highlight> vyvolá akci<br>    <highlight>&lt;"
+"ctrl+return&gt;</ highlight> vyvolá akci bez zavření tohoto dialogu<br>    "
 "<highlight>&lt;ctrl+tab&gt;</highlight> doplní vstup (závisí na "
 "pluginu)<br>    <highlight>&lt;ctrl+'x'&gt;</ highlight> přejde na plugin "
 "začínající na 'x'<br>    <highlight>&lt;ctrl+doleva/ doprava&gt;</highlight> "
@@ -8607,7 +8608,7 @@ msgstr "Vlastní obrázek"
 msgid "Custom Color"
 msgstr "Vlastní barva"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Průhledný"
 
@@ -10445,6 +10446,6 @@ msgid "Volume Mute"
 msgstr "ZVypnout zvuk"
 
 # FIXME
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 msgid "Separator"
 msgstr "Oddělovač"

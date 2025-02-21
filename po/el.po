@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2013-01-27 12:40+0200\n"
 "Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
 "Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
@@ -936,17 +936,17 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Παρουσιάστηκε σφάλμα κατά την μεταφορά των αρχείων ρυθμίσεων<br>από:<br>"
-"%s<br><br>σε:<br>%s<br><br>Η υπόλοιπη εγγραφή έχει ματαιώθηκε για ασφάλεια."
-"<br>"
+"Παρουσιάστηκε σφάλμα κατά την μεταφορά των αρχείων ρυθμίσεων<br>από:"
+"<br>%s<br><br>σε:<br>%s<br><br>Η υπόλοιπη εγγραφή έχει ματαιώθηκε για "
+"ασφάλεια.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -2800,7 +2800,7 @@ msgid "Load"
 msgstr "Ενεργοποίηση"
 
 # Παλιά μετάφραση ήταν Αποφόρτηση
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Απενεργοποίηση"
 
@@ -3665,12 +3665,12 @@ msgstr ""
 "τα προβληματικά<br>αρθρώματα από τις ρυθμίσεις σας.<br><br>Το παράθυρο "
 "ρυθμίσεων αρθρωμάτων σας επιτρέπει να επιλέξετε<br>και πάλι αρθρώματά σας."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Φόρτωση Αρθρωμάτος: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3679,11 +3679,11 @@ msgstr ""
 "Παρουσιάστηκε σφάλμα κατά τη φόρτωση του αρθρώματος με όνομα: %s<br>Κανένα "
 "άρθρωμα με όνομα %s δεν βρέθηκε<br>στους καταλόγους αρθρωμάτων.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Σφάλμα φόρτωσης Αρθρώματος"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3692,12 +3692,12 @@ msgstr ""
 "Παρουσιάστηκε σφάλμα φόρτωσης του αρθρώματος %s<br>Η πλήρης διαδρομή στο "
 "άρθρωμα είναι:<br>%s<br>Η αναφορά σφάλματος ήταν:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Το άρθρωμα δεν περιέχει όλες τις απαραίτητες λειτουργίες"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3707,23 +3707,23 @@ msgstr ""
 "%s<br>Απαιτεί ελάχιστη έκδοση API αρθρώματος: %i.<br>Το API του αρθρώματος "
 "που υπάρχει στο Moksha είναι: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Άρθρωμα %s του Moksha"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Ποια ενέργεια θέλετε να γίνει με αυτό το άρθρωμα;<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Διατήρηση"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3733,11 +3733,11 @@ msgstr ""
 "προκαλέσουν σφάλματα και καταρρεύσεις.<br>Παρακαλώ αφαιρέστε τα πριν "
 "αναφερθούν σφάλματα.<br><br>Ακολουθεί η λίστα των αρθρωμάτων:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Κατεστραμμένο ασταθές άρθρωμα"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Γνωρίζω"
 
@@ -5955,8 +5955,9 @@ msgstr "Σφάλμα Συντόμευσης Πληκτρολογίου"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Ο συνδυασμός συντόμευσης πληκτρολογίου που επιλέξατε, χρησιμοποιείται ήδη "
 "από το <br><hilight>%s</hilight>. <br>Παρακαλώ επιλέξτε έναν άλλο συνδυασμό."
@@ -7954,8 +7955,8 @@ msgid ""
 msgstr ""
 "Το εκτελέσιμο freqset στο άρθρωμα cpufreq<br>δεν είναι ιδιοκτησία του root ή "
 "δεν έχει οριστεί το<br>setuid. Παρακαλώ διασφαλίστε ότι αυτό είναι "
-"το<br>πρόβλημα. Για παράδειγμα:<br><br>sudo chown root %s<br>sudo chmod u+s,a"
-"+x %s<br>"
+"το<br>πρόβλημα. Για παράδειγμα:<br><br>sudo chown root %s<br>sudo chmod u+s,"
+"a+x %s<br>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 #, fuzzy
@@ -8369,11 +8370,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8733,7 +8734,7 @@ msgstr "Προσαρμοσμένη Εικόνα"
 msgid "Custom Color"
 msgstr "Προσαρμοσμένο Χρώμα"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Διαφανής"
 
@@ -10659,7 +10660,7 @@ msgstr "Η ένταση άλλαξε"
 msgid "Volume Mute"
 msgstr "Η ένταση άλλαξε"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Διαχωρισμός ομάδας"

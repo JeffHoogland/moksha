@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment 0.4.1.18166\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2025-01-02 03:27+0530\n"
 "Last-Translator: Saurabh Landge <pagoda94>\n"
 "Language-Team: Moksha\n"
@@ -923,8 +923,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1117,8 +1117,9 @@ msgid ""
 "The error code was <hilight>%i</hilight>.<br>This is bad and should not be "
 "happening. Please report this bug."
 msgstr ""
-"PAM के माध्यम से प्रमाणीकरण सत्र सेट अप करते समय त्रुटियाँ हुईं। त्रुटि कोड था <hilight>"
-"%i</hilight>.<br>यह खराब है और ऐसा नहीं होना चाहिए। कृपया इस बग को रिपोर्ट करें।"
+"PAM के माध्यम से प्रमाणीकरण सत्र सेट अप करते समय त्रुटियाँ हुईं। त्रुटि कोड था "
+"<hilight>%i</hilight>.<br>यह खराब है और ऐसा नहीं होना चाहिए। कृपया इस बग को "
+"रिपोर्ट करें।"
 
 #: src/bin/e_desklock.c:1304 src/bin/e_screensaver.c:184
 msgid "Activate Presentation Mode?"
@@ -2752,7 +2753,7 @@ msgstr "मॉड्यूल सेटिंग्स"
 msgid "Load"
 msgstr "लोड"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "अनलोड"
 
@@ -3596,12 +3597,12 @@ msgstr ""
 "समस्या मॉड्यूल को हटा दें।<br><br>मॉड्यूल कॉन्फ़िगरेशन संवाद आपको अपना चयन करने देना "
 "चाहिए<br>मॉड्यूल फिर से।"
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "लोड हो रहा है मॉड्यूल: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3610,24 +3611,24 @@ msgstr ""
 "नामित मॉड्यूल लोड करने में कोई त्रुटि थी: %s<br>नाम %s का कोई मॉड्यूल में नहीं मिल "
 "सका<br>मॉड्यूल खोज निर्देशिका।<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "मॉड्यूल लोड करने में त्रुटि"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
 "module is:<br>%s<br>The error reported was:<br>%s<br>"
 msgstr ""
-"नामित मॉड्यूल लोड करने में कोई त्रुटि थी: %s<br>इस मॉड्यूल का पूरा पथ है:<br>"
-"%s<br>रिपोर्ट की गई त्रुटि थी:<br>%s<br>"
+"नामित मॉड्यूल लोड करने में कोई त्रुटि थी: %s<br>इस मॉड्यूल का पूरा पथ है:"
+"<br>%s<br>रिपोर्ट की गई त्रुटि थी:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "मॉड्यूल में सभी आवश्यक कार्य नहीं हैं।"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3636,23 +3637,23 @@ msgstr ""
 "मॉड्यूल एपीआई त्रुटि<br>मॉड्यूल प्रारंभ करने में त्रुटि: %s<br>इसके लिए न्यूनतम मॉड्यूल एपीआई "
 "संस्करण की आवश्यकता होती है: %i.<br>Moksha द्वारा विज्ञापित मॉड्यूल एपीआई है: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha %s मॉड्यूल"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "इस मॉड्यूल के साथ क्या कार्रवाई की जानी चाहिए?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "बनाए रखना"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3662,11 +3663,11 @@ msgstr ""
 "<br>कृपया किसी भी बग की रिपोर्ट करने से पहले उन्हें हटा दें।<br><br>मॉड्यूल सूची "
 "निम्नानुसार है:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "अस्थिर मॉड्यूल दाग"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "मुझे मालूम है"
 
@@ -3759,8 +3760,8 @@ msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
-"शेल्फ स्वतः छिपाना ठीक से काम नहीं करेगा<br>वर्तमान विन्यास के साथ; अपने शेल्फ को<br>"
-"\"सब कुछ नीचे\" या ऑटोहाइडिंग अक्षम करें।"
+"शेल्फ स्वतः छिपाना ठीक से काम नहीं करेगा<br>वर्तमान विन्यास के साथ; अपने शेल्फ "
+"को<br>\"सब कुछ नीचे\" या ऑटोहाइडिंग अक्षम करें।"
 
 #: src/bin/e_shelf.c:1177
 msgid "Add New Shelf"
@@ -3830,8 +3831,8 @@ msgid ""
 "first?<br><br>%s<br>Auto logout in %d seconds."
 msgstr ""
 "लॉगआउट में बहुत अधिक समय लग रहा है।<br>कुछ एप्लिकेशन बंद होने से इनकार करते हैं।<br>क्या "
-"आप लॉगआउट समाप्त करना चाहते हैं<br>वैसे भी इन्हें बंद किए बिना<br>आवेदन पहले?<br><br>"
-"%s<br>सेकंड में %d ऑटो लॉगआउट।"
+"आप लॉगआउट समाप्त करना चाहते हैं<br>वैसे भी इन्हें बंद किए बिना<br>आवेदन पहले?"
+"<br><br>%s<br>सेकंड में %d ऑटो लॉगआउट।"
 
 #: src/bin/e_sys.c:513
 msgid "Logout problems"
@@ -3990,8 +3991,8 @@ msgid ""
 "latest version is:<br><br>%s<br><br>Please visit www.enlightenment.org<br>or "
 "update your system packages<br>to get a new version."
 msgstr ""
-"आपका ज्ञानोदय संस्करण है<br>वर्तमान नवीनतम रिलीज़ नहीं।<br>नवीनतम संस्करण है:<br><br>"
-"%s<br><br>कृपया www.enlightenment.org पर जाएँ<br>या अपने सिस्टम पैकेज अपडेट "
+"आपका ज्ञानोदय संस्करण है<br>वर्तमान नवीनतम रिलीज़ नहीं।<br>नवीनतम संस्करण है:"
+"<br><br>%s<br><br>कृपया www.enlightenment.org पर जाएँ<br>या अपने सिस्टम पैकेज अपडेट "
 "करें<br>एक नया संस्करण प्राप्त करने के लिए।"
 
 #: src/bin/e_utils.c:185 src/modules/conf_intl/e_int_config_imc.c:262
@@ -5355,8 +5356,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"आपके द्वारा दर्ज किए गए सिग्नल और स्रोत पहले से ही उपयोग किए जा रहे हैं<br><hilight>"
-"%s</hilight> मुक़दमा।<br>"
+"आपके द्वारा दर्ज किए गए सिग्नल और स्रोत पहले से ही उपयोग किए जा रहे "
+"हैं<br><hilight>%s</hilight> मुक़दमा।<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 msgid "Add Signal Binding"
@@ -5835,8 +5836,9 @@ msgstr "बाइंडिंग कुंजी त्रुटि"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "बाध्यकारी कुंजी अनुक्रम, जिसे आप चुनते हैं, पहले से ही द्वारा उपयोग किया जाता है "
 "<br><hilight>%s</hilight> मुक़दमा।<br>कृपया एक और बाध्यकारी कुंजी अनुक्रम चुनें।"
@@ -8178,11 +8180,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8191,12 +8193,13 @@ msgid ""
 msgstr ""
 " डायलॉग<br><hilight><?></hilight> इस पेज को दिखाएं<br><hilight><return></"
 "hilight> कार्रवाई चलाएं<br><hilight><ctrl+return></hilight> कार्रवाई चलाएं और "
-"जारी रखें<br><hilight><tab></hilight> चयनकर्ताओं के बीच टॉगल करें<br><hilight><ctrl"
-"+tab></hilight> इनपुट को पूरा करें (प्लगइन पर निर्भर करता है)<br><hilight><ctrl"
-"+'x'></hilight> 'x' से शुरू होने वाले प्लगइन पर जाएं<br><hilight><ctrl+left/right></"
-"hilight> प्लगइनों के बीच साइक्लिंग करें<br><hilight><ctrl+up/down></hilight> पहले/"
-"आखिरी आइटम पर जाएं<br><hilight><ctrl+1></hilight> व्यू मोड्स को टॉगल करें (इस पेज से "
-"बाहर निकलें ;)<br><hilight><ctrl+2></hilight> सूची दृश्य मोड्स को टॉगल "
+"जारी रखें<br><hilight><tab></hilight> चयनकर्ताओं के बीच टॉगल "
+"करें<br><hilight><ctrl+tab></hilight> इनपुट को पूरा करें (प्लगइन पर निर्भर करता "
+"है)<br><hilight><ctrl+'x'></hilight> 'x' से शुरू होने वाले प्लगइन पर "
+"जाएं<br><hilight><ctrl+left/right></hilight> प्लगइनों के बीच साइक्लिंग "
+"करें<br><hilight><ctrl+up/down></hilight> पहले/आखिरी आइटम पर "
+"जाएं<br><hilight><ctrl+1></hilight> व्यू मोड्स को टॉगल करें (इस पेज से बाहर "
+"निकलें ;)<br><hilight><ctrl+2></hilight> सूची दृश्य मोड्स को टॉगल "
 "करें<br><hilight><ctrl+3></hilight> थंब व्यू मोड्स को टॉगल करें"
 
 #: src/modules/everything/evry_view_tabs.c:93
@@ -8549,7 +8552,7 @@ msgstr "कस्टम छवि"
 msgid "Custom Color"
 msgstr "कस्टम रंग"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "पारदर्शी"
 
@@ -10379,7 +10382,7 @@ msgstr "वॉल्यूम में वृद्धि"
 msgid "Volume Mute"
 msgstr "वॉल्यूम म्यूट"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "अलग समूह"

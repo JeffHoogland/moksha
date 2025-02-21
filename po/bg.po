@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha DR17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2009-11-06 10:39+0000\n"
 "Last-Translator: Viktor Kojouharov <Unknown>\n"
 "Language-Team: English <en@li.org>\n"
@@ -986,8 +986,8 @@ msgstr ""
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1889,8 +1889,8 @@ msgid ""
 "Are you sure you want to delete<br><hilight>all</hilight> the %d files "
 "in<br><hilight>%s</hilight>?"
 msgstr ""
-"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:<br><hilight>"
-"%s</hilight>?"
+"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:"
+"<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm.c:10909
 #, fuzzy, c-format
@@ -1901,11 +1901,11 @@ msgid_plural ""
 "Are you sure you want to delete<br>the %d selected files in<br><hilight>%s</"
 "hilight>?"
 msgstr[0] ""
-"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:<br><hilight>"
-"%s</hilight>?"
+"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:"
+"<br><hilight>%s</hilight>?"
 msgstr[1] ""
-"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:<br><hilight>"
-"%s</hilight>?"
+"Сигурни ли сте, че искате да изтриете <br>%d избрани файла в:"
+"<br><hilight>%s</hilight>?"
 
 #: src/bin/e_fm_device.c:60
 #, c-format
@@ -2932,7 +2932,7 @@ msgstr "Настройки на модули"
 msgid "Load"
 msgstr "Локал"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 #, fuzzy
 msgid "Unload"
 msgstr "Изключване на модул"
@@ -3833,12 +3833,12 @@ msgstr ""
 "модули да се отстранят. <br>Може сами да си ги включите чрез "
 "конфигурационния панел."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, fuzzy, c-format
 msgid "Loading Module: %s"
 msgstr "Зареждане на модули"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, fuzzy, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3847,11 +3847,11 @@ msgstr ""
 "Имало е грешка при зареждане на модула %s<br>Не е бил намерен модул с име "
 "%s<br>в папките за търсене на модули<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Грешка при зареждане на модул"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, fuzzy, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3863,47 +3863,47 @@ msgstr ""
 "Съобщената грешка е:\n"
 "%s"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 #, fuzzy
 msgid "Module does not contain all needed functions."
 msgstr "Модулът не съдържа всички нужни функции"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
 "module API version of: %i.<br>The module API advertized by Moksha is: %i.<br>"
 msgstr ""
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Moksha·%s·Модул"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 #, fuzzy
 msgid "What action should be taken with this module?<br>"
 msgstr "Искате ли да изключите този модул?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr ""
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
 "module list is as follows:<br><br>"
 msgstr ""
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr ""
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 #, fuzzy
 msgid "I know"
 msgstr "Незнаен"
@@ -5649,8 +5649,8 @@ msgid ""
 "The edge binding that you chose is already used by<br><hilight>%s</hilight> "
 "action.<br>Please choose another edge to bind."
 msgstr ""
-"Серията от бързи клавиши която избрахте се използва от действие.<br><hilight>"
-"%s</hilight>.Изберете друга серия."
+"Серията от бързи клавиши която избрахте се използва от действие."
+"<br><hilight>%s</hilight>.Изберете друга серия."
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1382
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1327
@@ -5734,8 +5734,8 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"Серията от бързи клавиши която избрахте се използва от действие.<br><hilight>"
-"%s</hilight>.Изберете друга серия."
+"Серията от бързи клавиши която избрахте се използва от действие."
+"<br><hilight>%s</hilight>.Изберете друга серия."
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
 #, fuzzy
@@ -6271,11 +6271,12 @@ msgstr "Грешка в настройката"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
-"Серията от бързи клавиши която избрахте се използва от действие.<br><hilight>"
-"%s</hilight>.Изберете друга серия."
+"Серията от бързи клавиши която избрахте се използва от действие."
+"<br><hilight>%s</hilight>.Изберете друга серия."
 
 #: src/modules/conf_keybindings/e_int_config_keybinds_viewer.c:109
 msgid "WINDOW"
@@ -8901,11 +8902,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -9299,7 +9300,7 @@ msgstr "избор на изображението"
 msgid "Custom Color"
 msgstr "в цвят по избор"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 #, fuzzy
 msgid "Transparent"
 msgstr "прозрачен"
@@ -11328,7 +11329,7 @@ msgstr "Смяна на разделителна способност"
 msgid "Volume Mute"
 msgstr "Смяна на разделителна способност"
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Отделна група"

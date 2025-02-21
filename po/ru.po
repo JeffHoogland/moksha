@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Moksha 0.17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
-"POT-Creation-Date: 2025-02-19 20:33+0100\n"
+"POT-Creation-Date: 2025-02-21 08:17-0500\n"
 "PO-Revision-Date: 2024-06-09 17:00+0300\n"
 "Last-Translator: R0bur <robursw@gmail.com>\n"
 "Language-Team: ru <enlightenment-intl@lists.sourceforge.net>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: UTF-8\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -920,16 +920,16 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:<br>"
-"%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
+"Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:"
+"<br>%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
 #: src/bin/e_config_dialog.c:284 src/bin/e_eap_editor.c:861
 #: src/bin/e_eap_editor.c:924 src/bin/e_entry_dialog.c:63 src/bin/e_exec.c:762
 #: src/bin/e_fm.c:10058 src/bin/e_fm.c:10788 src/bin/e_fm_prop.c:624
 #: src/bin/e_import_config_dialog.c:540 src/bin/e_int_border_remember.c:328
-#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:504
-#: src/bin/e_module.c:824 src/bin/e_sys.c:634 src/bin/e_sys.c:675
+#: src/bin/e_int_border_remember.c:520 src/bin/e_module.c:518
+#: src/bin/e_module.c:838 src/bin/e_sys.c:634 src/bin/e_sys.c:675
 #: src/bin/e_update.c:76 src/bin/e_utils.c:599
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:636
 #: src/modules/conf_intl/e_int_config_imc_import.c:120
@@ -1038,9 +1038,9 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле.<br>"
-"%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был удалён "
-"для предотвращения повреждения данных. <br>"
+"При записи настроек Moksha <br>возникла ошибка в конфигурационном файле."
+"<br>%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был "
+"удалён для предотвращения повреждения данных. <br>"
 
 #: src/bin/e_config_dialog.c:232 src/modules/battery/e_mod_main.c:892
 #: src/modules/conf_edgebindings/e_mod_main.c:19
@@ -2775,7 +2775,7 @@ msgstr "Настройки модулей"
 msgid "Load"
 msgstr "Загрузить"
 
-#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:606
+#: src/bin/e_int_config_modules.c:205 src/bin/e_module.c:620
 msgid "Unload"
 msgstr "Выгрузить"
 
@@ -3617,12 +3617,12 @@ msgstr ""
 "проблему с модулями в вашей конфигурации.<br><br>Диалог конфигурации модулей "
 "позволит вам выбрать нужные<br>модули заново."
 
-#: src/bin/e_module.c:171
+#: src/bin/e_module.c:185
 #, c-format
 msgid "Loading Module: %s"
 msgstr "Загрузка модуля: %s"
 
-#: src/bin/e_module.c:220
+#: src/bin/e_module.c:234
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>No module named %s could "
@@ -3631,11 +3631,11 @@ msgstr ""
 "Произошла ошибка загрузки модуля с именем: %s<br>Модуль с именем %s не был "
 "найден в<br>каталогах поиска модулей.<br>"
 
-#: src/bin/e_module.c:223 src/bin/e_module.c:236 src/bin/e_module.c:254
+#: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
 msgstr "Ошибка загрузки модуля"
 
-#: src/bin/e_module.c:231 src/bin/e_module.c:248
+#: src/bin/e_module.c:245 src/bin/e_module.c:262
 #, c-format
 msgid ""
 "There was an error loading the module named: %s<br>The full path to this "
@@ -3644,11 +3644,11 @@ msgstr ""
 "Произошла ошибка загрузки модуля с именем: %s<br>Полный путь до этого модуля:"
 "<br>%s<br>Сообщение об ошибке:<br>%s<br>"
 
-#: src/bin/e_module.c:253
+#: src/bin/e_module.c:267
 msgid "Module does not contain all needed functions."
 msgstr "Модуль не содержит всех требуемых функций"
 
-#: src/bin/e_module.c:268
+#: src/bin/e_module.c:282
 #, c-format
 msgid ""
 "Module API Error<br>Error initializing Module: %s<br>It requires a minimum "
@@ -3658,23 +3658,23 @@ msgstr ""
 "минимальную версию API модулей: %i.<br>Версия API модуля объявленная для "
 "Moksha: %i.<br>"
 
-#: src/bin/e_module.c:273
+#: src/bin/e_module.c:287
 #, c-format
 msgid "Moksha %s Module"
 msgstr "Модуль %s для Moksha"
 
-#: src/bin/e_module.c:601
+#: src/bin/e_module.c:615
 msgid "What action should be taken with this module?<br>"
 msgstr "Какие действия следует применить к этому модулю?<br>"
 
-#: src/bin/e_module.c:607 src/modules/conf_dialogs/e_int_config_profiles.c:339
+#: src/bin/e_module.c:621 src/modules/conf_dialogs/e_int_config_profiles.c:339
 #: src/modules/conf_shelves/e_int_config_shelf.c:393
 #: src/modules/ibar/e_mod_config.c:230 src/modules/clipboard/e_mod_main.c:695
 #: src/modules/clipboard/e_mod_main.c:783
 msgid "Keep"
 msgstr "Оставить"
 
-#: src/bin/e_module.c:809
+#: src/bin/e_module.c:823
 msgid ""
 "The following modules are not standard ones for<br>Moksha and may cause bugs "
 "and crashes.<br>Please remove them before reporting any bugs.<br><br>The "
@@ -3684,11 +3684,11 @@ msgstr ""
 "причиной ошибок и<br>падений. Пожалуйста удалите их перед тем,<br>как делать "
 "сообщения об ошибках.<br><br>Список этих модулей таков:<br><br>"
 
-#: src/bin/e_module.c:821
+#: src/bin/e_module.c:835
 msgid "Unstable module tainting"
 msgstr "Загаживание нестабильными модулями"
 
-#: src/bin/e_module.c:825
+#: src/bin/e_module.c:839
 msgid "I know"
 msgstr "Я знаю"
 
@@ -5878,8 +5878,9 @@ msgstr "Ошибка привязки клавиши"
 #: src/modules/conf_keybindings/e_int_config_keybindings.c:1188
 #, c-format
 msgid ""
-"The binding key sequence, that you choose, is already used by <br><hilight>"
-"%s</hilight> action.<br>Please choose another binding key sequence."
+"The binding key sequence, that you choose, is already used by "
+"<br><hilight>%s</hilight> action.<br>Please choose another binding key "
+"sequence."
 msgstr ""
 "Выбраная вами последовательность уже используется привязкой<br><hilight>%s</"
 "hilight>.<br>Пожалуйста, выберите другую последовательность."
@@ -7823,8 +7824,8 @@ msgid ""
 msgstr ""
 "Файл программы freqset в каталоге модуля<ps/>Частота ЦПУ не принадлежит "
 "пользователю<ps/>root или для неё не установлен бит setuid.<ps/>Пожалуйста, "
-"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,a"
-"+x %s<ps/>"
+"исправьте это. Например так:<ps/><ps/>sudo chown root %s<ps/>sudo chmod u+s,"
+"a+x %s<ps/>"
 
 #: src/modules/cpufreq/e_mod_main.c:1508
 msgid "CPU Frequency"
@@ -8228,11 +8229,11 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;ctrl"
-"+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;</"
-"hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</hilight> "
-"complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</"
-"hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
+"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
+"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
+"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
+"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
+"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
 "right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
 "down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
 "hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
@@ -8246,12 +8247,12 @@ msgstr ""
 "ввод&gt;</hilight>.<br> Эта страничка не покажется при следующем запуске "
 "<hilight>Всё</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> закрыть этот "
 "диалог<br>    <hilight>&lt;?&gt;</hilight> показать эту страницу<br>    "
-"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;ctrl"
-"+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
-"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;ctrl"
-"+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    <hilight>&lt;"
-"ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с 'x'<br>    "
-"<hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
+"<hilight>&lt;ввод&gt;</hilight> выполнить действие<br>    <hilight>&lt;"
+"ctrl+ввод&gt;</hilight> выполнить действие и продолжить<br>    <hilight>&lt;"
+"tab&gt;</hilight> переключение между селекторами<br>    <hilight>&lt;"
+"ctrl+tab&gt;</hilight> дополнить ввод (зависит от плагина)<br>    "
+"<hilight>&lt;ctrl+'x'&gt;</hilight> перейти к плагину начинающемуся с "
+"'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> циклический переход по "
 "плагинам<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> перейти к первому/"
 "последнему элементу<br>    <hilight>&lt;ctrl+1&gt;</hilight> переключение "
 "режимов просмотра<br>    <hilight>&lt;ctrl+2&gt;</hilight> переключение "
@@ -8609,7 +8610,7 @@ msgstr "Пользовательское изображение"
 msgid "Custom Color"
 msgstr "Пользовательский цвет"
 
-#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:275
+#: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
 msgstr "Прозрачный"
 
@@ -10463,7 +10464,7 @@ msgstr "Громкость увеличена"
 msgid "Volume Mute"
 msgstr "Звук выкл."
 
-#: src/modules/separator/e_mod_main.c:127
+#: src/modules/separator/e_mod_main.c:122
 #, fuzzy
 msgid "Separator"
 msgstr "Отдельная группа"
