@@ -1605,6 +1605,7 @@ _e_border_move_resize_internal(E_Border *bd,
      {
         bd->need_shape_merge = 1;
         bd->need_shape_export = 1;
+        bd->changes.size = 1;
      }
    if (bd->shaped_input)
      {
@@ -10057,7 +10058,6 @@ _e_border_resize_begin(E_Border *bd)
         grabbed = 0;
         return 0;
      }
-
    if (bd->client.netwm.sync.request)
      {
         bd->client.netwm.sync.alarm = ecore_x_sync_alarm_new(bd->client.netwm.sync.counter);
