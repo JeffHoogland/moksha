@@ -1605,6 +1605,7 @@ _e_border_move_resize_internal(E_Border *bd,
      {
         bd->need_shape_merge = 1;
         bd->need_shape_export = 1;
+        bd->changed = 1;
         bd->changes.size = 1;
      }
    if (bd->shaped_input)
