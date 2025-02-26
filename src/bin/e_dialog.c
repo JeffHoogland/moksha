@@ -22,6 +22,7 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    Evas_Object *o;
    Evas_Modifier_Mask mask;
    Eina_Bool kg;
+   const char *s;
 
    if (!con)
      {
@@ -58,6 +59,11 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
    edje_object_signal_emit(dia->bg_object, "e,state,no_resizable", "e");
 
    o = evas_object_rectangle_add(e_win_evas_get(dia->win));
+
+   s = edje_object_data_get(dia->bg_object, "shaped");
+   if (s && (!strcmp(s, "1")))
+     e_win_shaped_set(dia->win, 1);
+
    dia->event_object = o;
    mask = 0;
    kg = evas_object_key_grab(o, "Tab", mask, ~mask, 0);
