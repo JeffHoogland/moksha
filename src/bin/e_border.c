@@ -2757,7 +2757,6 @@ _e_border_maximize(E_Border *bd, E_Maximize max)
         if (bd->bg_object)
           {
              edje_object_signal_emit(bd->bg_object, "e,action,maximize", "e");
-             edje_object_signal_emit(bd->bg_object, "e,state,focused", "e");
              _e_border_client_inset_calc(bd);
           }
         e_border_resize_limit(bd, &w, &h);
