@@ -1611,6 +1611,14 @@ e_config_profile_save(void)
    Eet_File *ef;
    char buf[4096], buf2[4096];
    int ok = 0;
+   static signed char nosave = -1;
+   
+   if (nosave == -1)
+     {
+        if ((s = getenv("M_CONF_PROFILE_NOSAVE")) && atoi(s)) nosave = 1;
+        else nosave = 0;
+     }
+   if (nosave == 1) return 1;
 
    /* FIXME: check for other sessions fo E running */
    e_user_dir_concat_static(buf, "config/profile.cfg");
