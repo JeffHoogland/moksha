@@ -1610,6 +1610,7 @@ e_config_profile_save(void)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
+   const char *s;
    int ok = 0;
    static signed char nosave = -1;
    
