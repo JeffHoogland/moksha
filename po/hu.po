@@ -11144,9 +11144,8 @@ msgid "Volume Mute"
 msgstr "Felbontás módosítása"
 
 #: src/modules/separator/e_mod_main.c:122
-#, fuzzy
 msgid "Separator"
-msgstr "Csoprt elválasztása"
+msgstr "Szeparátor"
 
 #, fuzzy
 #~ msgid "Custom FM to open dirs"
