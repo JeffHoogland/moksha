@@ -58,8 +58,6 @@ e_popup_new(E_Zone *zone, int x, int y, int w, int h)
         free(pop);
         return NULL;
      }
-   /* avoid excess exposes when shaped - set damage avoid to 1 */
-//   ecore_evas_avoid_damage_set(pop->ecore_evas, 1);
 
    e_canvas_add(pop->ecore_evas);
    pop->shape = e_container_shape_add(pop->zone->container);
@@ -205,7 +203,11 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
              e_container_window_raise(pop->zone->container, pop->evas_win, pop->layer);
           }
         else
-          ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
+          {
+            ecore_evas_shaped_set(pop->ecore_evas, pop->shaped);
+            /* avoid excess exposes when shaped - set damage avoid to 1 */
+            ecore_evas_avoid_damage_set(pop->ecore_evas, ECORE_EVAS_AVOID_DAMAGE_EXPOSE);
+          }
      }
    else
      {

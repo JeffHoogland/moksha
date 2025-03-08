@@ -8552,6 +8552,10 @@ _e_border_eval0(E_Border *bd)
              bd->w += (bd->client_inset.l + bd->client_inset.r);
              bd->h += (bd->client_inset.t + bd->client_inset.b);
              ecore_evas_shaped_set(bd->bg_ecore_evas, bd->shaped);
+             //  if bd->shape is 1 it means ECORE_EVAS_AVOID_DAMAGE_EXPOSE 
+             //  for ecore_evas_avoid_damage_set
+             ecore_evas_avoid_damage_set(bd->bg_ecore_evas, bd->shaped);
+             
              bd->changes.size = 1;
              /*  really needed ? */
              ecore_x_window_move(bd->client.shell_win,

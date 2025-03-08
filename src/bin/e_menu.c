@@ -1818,7 +1818,12 @@ _e_menu_realize(E_Menu *m)
              eina_hash_add(_e_menu_hash, e_util_winid_str_get(m->evas_win), m);
           }
         else
-          ecore_evas_shaped_set(m->ecore_evas, m->shaped);
+          {
+            ecore_evas_shaped_set(m->ecore_evas, m->shaped);
+            /* avoid excess exposes when shaped - set damage avoid to 1 */
+            ecore_evas_avoid_damage_set(m->ecore_evas, ECORE_EVAS_AVOID_DAMAGE_EXPOSE);
+          }
+          
      }
 
    ecore_x_netwm_window_type_set(m->evas_win, ECORE_X_WINDOW_TYPE_MENU);
