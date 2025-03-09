@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: e17\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2025-02-21 08:17-0500\n"
-"PO-Revision-Date: 2024-01-10 19:58-0300\n"
+"PO-Revision-Date: 2025-03-08 22:20-0300\n"
 "Last-Translator: Samuel Pecci <srpecci@yahoo.com>\n"
 "Language-Team: Brazilian Portuguese\n"
 "Language: pt_BR\n"
@@ -47,16 +47,15 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
 "<br><br>To contact us please visit:<br><hilight>https://www.bodhilinux.com</"
 "><br><br>"
 msgstr ""
-"<title>Direitos autorais &copy; 2024, pela Equipa de Desenvolvimento Moksha</"
-"><br><br>Esperamos que goste de usar este software tanto quanto nós gostámos "
-"de o escrever.<br><br>Para nos contactar, visite:<br><hilight>http://www."
+"<title>Direitos autorais &copy; 2025, pela Equipw de Desenvolvimento Moksha</"
+"><br><br>Esperamos que goste de usar este software tanto quanto nós gostamos "
+"de escrevê-lo.<br><br>Para entrar em contato, visite:<br><hilight>http://www."
 "bodhilinux.com</><br><br>"
 
 #: src/bin/e_about.c:71
@@ -4534,9 +4533,8 @@ msgid "hr"
 msgstr "hr"
 
 #: src/modules/battery/e_mod_main.c:556
-#, fuzzy
 msgid "Health status: "
-msgstr "Montado:"
+msgstr "Situação de saúde:"
 
 #: src/modules/battery/e_mod_main.c:664
 msgid "N/A"
@@ -4641,7 +4639,7 @@ msgstr "Definir..."
 
 #: src/modules/clock/e_mod_config.c:320
 msgid "Set... "
-msgstr "Definir..."
+msgstr "Tempo remanescente:"
 
 #: src/modules/clock/e_mod_main.c:1198
 msgid "Toggle calendar"
@@ -5291,14 +5289,12 @@ msgid "Clickable edge"
 msgstr "Margem clicável"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:904
-#, fuzzy
 msgid "Drag only"
-msgstr "Arrastar ícone..."
+msgstr "Arrastar apenas"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Nenhum módulo selecionado."
+msgstr "Nenhuma borda selecionada"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -5375,7 +5371,7 @@ msgstr "(clicável)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1459
 msgid "(drag only)"
-msgstr ""
+msgstr "(arrastar somente)"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:574
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:584
@@ -8243,12 +8239,12 @@ msgstr ""
 "<br><hilight>&lt;Esc&gt;</hilight> fecha este diálogo<br><hilight>&lt;?&gt;</"
 "hilight> mostra esta página<br><hilight>&lt;return&gt;</hilight> executa uma "
 "ação<br><hilight>&lt;ctrl+return&gt;</hilight> executa uma ação e "
-"continua<br><hilight>&lt;tab&gt;</hilight> alterna entre os "
-"seletores<br><hilight>&lt;ctrl+tab&gt;</hilight> completa a entrada (depende "
-"do <i>plugin</i>)<br><hilight>&lt;ctrl+x&gt;</hilight> vai para o plugin que "
-"começa com \"x\"<br><hilight>&lt;ctrl+left/right&gt;</hilight> troca entre "
-"os \"plug-ins\"<br><hilight>&lt;ctrl+cima/baixo&gt;</hilight> vai para o "
-"primeiro/último item<br><hilight>&lt;ctrl+1&gt;</hilight> alterna os modos "
+"continua<br><hilight>&lt;tab&gt;</hilight> alterna entre as "
+"seleções<br><hilight>&lt;ctrl+tab&gt;</hilight> completa a entrada (depende "
+"do <i>plugin</i>)<br><hilight>&lt;ctrl+\"x\"&gt;</hilight> vai para o plugin "
+"que começa com \"x\"<br><hilight>&lt;ctrl+left/right&gt;</hilight> circula "
+"entre os \"plug-ins\"<br><hilight>&lt;ctrl+cima/baixo&gt;</hilight> vai para "
+"o primeiro/último item<br><hilight>&lt;ctrl+1&gt;</hilight> alterna os modos "
 "de visualização (sai desta página ;)<br><hilight>&lt;ctrl+2&gt;</hilight> "
 "alterna os modos de visualização em lista<br><hilight>&lt;ctrl+3&gt;</"
 "hilight> alterna os modos de visualização em miniaturas"
@@ -8805,12 +8801,11 @@ msgstr "Mostrar texto do ícone"
 
 #: src/modules/ibar/e_mod_config.c:138
 msgid "Overlapping Label"
-msgstr ""
+msgstr "Etiqueta sobreposta"
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
-msgstr "Mostrar texto do ícone"
+msgstr "Etiqueta adjacente"
 
 #: src/modules/ibar/e_mod_config.c:162
 msgid "Misc"
@@ -9592,6 +9587,8 @@ msgstr "Erro - Formato desconhecido"
 #: src/modules/shot/e_mod_main.c:421
 msgid "Please use 'Perfect quality'<br>only for copying into Clipboard."
 msgstr ""
+"Por favor usar \"Perfect quality\"<br>apenas para copiar para a Área de "
+"Transferência."
 
 #: src/modules/shot/e_mod_main.c:431
 msgid ""
@@ -9892,7 +9889,6 @@ msgid "Toggle between rows and columns"
 msgstr "Alternar entre linhas e colunas"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
-#, fuzzy
 msgid "Swap a window with another"
 msgstr "Trocar uma janela por outra"
 
@@ -9958,7 +9954,7 @@ msgstr "Somente texto"
 
 #: src/modules/xkbswitch/e_mod_config.c:340
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: src/modules/xkbswitch/e_mod_config.c:342
 msgid "Per Application"
@@ -9966,7 +9962,7 @@ msgstr "Por aplicação"
 
 #: src/modules/xkbswitch/e_mod_config.c:402
 msgid "The limit for setxkbmap command is 4 layouts!"
-msgstr ""
+msgstr "O limite para o comando setxkbmap é de 4 layouts!"
 
 #: src/modules/xkbswitch/e_mod_config.c:539
 msgid "Add New Configuration"
@@ -10174,11 +10170,11 @@ msgstr "Ignorar espaço em branco"
 
 #: src/modules/clipboard/e_mod_config.c:212
 msgid " Trim Whitespace"
-msgstr "Arrumar espaço em branco"
+msgstr "Ajustar espaço em branco"
 
 #: src/modules/clipboard/e_mod_config.c:215
 msgid " Trim Newlines"
-msgstr "Arrumar quebras de linha"
+msgstr "Ajustar quebras de linha"
 
 #: src/modules/clipboard/e_mod_config.c:225
 msgid " Save History"
@@ -10194,7 +10190,7 @@ msgstr "Salvar todas as seleções"
 
 #: src/modules/clipboard/e_mod_config.c:234
 msgid " Timer"
-msgstr "Temporizadores"
+msgstr "Temporizador"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
@@ -10453,9 +10449,8 @@ msgid "Volume Mute"
 msgstr "Volume no mudo"
 
 #: src/modules/separator/e_mod_main.c:122
-#, fuzzy
 msgid "Separator"
-msgstr "Grupo separado"
+msgstr "Separador"
 
 #~ msgid "Custom FM to open dirs"
 #~ msgstr "Gerenciador de arquivos personalizado para abrir diretórios"
