@@ -13,6 +13,7 @@ Name[hu]=Kimenet
 Name[ja]=レイアウト
 Name[ka]=განლაგება
 Name[lt]=Išdėstymas
+Name[ml]=ലേഔട്ട്
 Name[mr]=लेआउट
 Name[ms]=Bentangan
 Name[pl]=Układ
@@ -33,6 +34,7 @@ Comment[hi]=लेआउट नीतियों को लागू करन�
 Comment[ka]=გამოიყენება განლაგების პოლიტიკის აღსასრულებლად. ზოგადად არ გამოიყენება დესკტოპის კომპიუტერისთვის.
 Comment[hu]=A kimeneti szabályok kierőszakolása. Nem használható asztali PC-ken.
 Comment[it]=Usato per forzare delle regole di layout. In genere non applicabile ad un PC desktop.
+Comment[ml]=ലേഔട്ട് നയങ്ങൾ നടപ്പിലാക്കാൻ ഉപയോഗിക്കുന്നു. ഒരു ഡെസ്ക്ടോപ്പ് PC-ക്ക് സാധാരണയായി ബാധകമല്ല.
 Comment[mr]=लेआउट धोरणांची अंमलबजावणी करण्यासाठी वापरले जाते. सामान्यतः डेस्कटॉप पीसीसाठी लागू होत नाही.
 Comment[ms]=Digunakan untuk paksa polisi bentangan. Secara amnya tidak boleh dilaksana untuk PC dektop.
 Comment[pt]=Permite-lhe definir as políticas de disposição. Normalmente não se aplica a computadores de secretária.

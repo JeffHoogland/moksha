@@ -15,6 +15,7 @@ Name[ja]=システムトレイ
 Name[ka]=Systray
 Name[it]=Systray
 Name[lt]=Sistemos dėklas
+Name[ml]=സിസ്ട്രേ
 Name[mr]=सिस्टम ट्रे
 Name[ms]=Systray
 Name[pt]=Área de notificação
@@ -36,6 +37,7 @@ Comment[hi]=सिस्टम ट्रे जिसमें स्काइ�
 Comment[it]=Un'area che contiene le icone di notifica di applicazioni come Skype, Pidgin, Kopete e altre.
 Comment[ka]=სისტემის უჯრა, რომელიც შეიცავს აპლიკაციების ხატულებს, როგორიცაა Skype, Pidgin, Kopete და სხვა.
 Comment[lt]=sistemos dėklas, kuriame rodomos fone veikiančių programų ikonėlės, pvz. Skype, Pidgin, VLC ar kitos.
+Comment[ml]=Skype, Pidgin, Kopete എന്നിവയും മറ്റും പോലുള്ള ആപ്ലിക്കേഷൻ ഐക്കണുകൾ അടങ്ങുന്ന സിസ്റ്റം ട്രേ.
 Comment[mr]=Skype, Pidgin, Kopete आणि इतर सारखे ऍप्लिकेशन्स आयकॉन धारण करणारी सिस्टीम ट्रे.
 Comment[ms]=talam sistem yang memegang ikon aplikasi seperti Skype, Pidgin, Kopete dan lain-lain.
 Comment[pt]=Área de notificação que exibe os ícones de diversas aplicações.

@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=iBar
+Name[ml]=ഐബാർ
 Comment=iBar dummy desktop
+Comment[ml]=ഐബാർ ഡമ്മി ഡെസ്‌ക്‌ടോപ്പ്
 Terminal=false
 Icon=preferences-system
 Exec=

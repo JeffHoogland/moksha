@@ -10,10 +10,11 @@ Name[fi]=Shot
 Name[fr]=Capture d'écran
 Name[gl]=Shot
 Name[hi]=Shot
+Name[it]=Istantanea
 Name[ja]=撮影
 Name[ka]=გადაიღეთ სკრინშოტი
 Name[ko]=스크린샷
-Name[it]=Istantanea
+Name[ml]=ശോട്ട്
 Name[mr]=Shot
 Name[ms]=Syot
 Name[pt]=Captura de ecrã
@@ -35,6 +36,7 @@ Comment[hi]=सरल स्क्रीनशॉट+सेव व अपलो�
 Comment[it]=Semplice modulo per il salvataggio e l'upload di istantanee del desktop.
 Comment[ka]=მარტივი ეკრანის სურათი და მოდული შენახვა/ატვირთვა.
 Comment[ko]=간단한 스크린샷 저장/공유 모듈
+Comment[ml]=ലളിതമായ സ്ക്രീൻഷോട്ട്+സേവ്/അപ്ലോഡ് മൊഡ്യൂൾ.
 Comment[mr]=सरल स्क्रीनशॉट+सेव व अपलोड मॉड्यूल।
 Comment[ms]=Modul muat naik/simpan+cekupan skrin mudah.
 Comment[pt]=Módulo para capturar, gravar e enviar capturas de ecrã.
