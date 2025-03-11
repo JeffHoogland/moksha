@@ -16,6 +16,7 @@ Name[ja]=通知
 Name[ka]=შეტყობინება
 Name[ko]=알림
 Name[lt]=Pranešimai
+Name[ml]=അറിയിപ്പ്
 Name[mr]=अधिसूचना
 Name[ms]=Pemberitahuan
 Name[pl]=Powiadomienia
@@ -39,6 +40,7 @@ Comment[hi]=अधिसूचना-डेमन विकल्प। यद�
 Comment[hu]=notification-daemon alternatíva. Egy esemény megtörténtét jelzi.
 Comment[it]=Alternativa a notification-daemon. Mostra un popup al verificarsi di un evento.
 Comment[ka]=შეტყობინების დემონის ალტერნატივა. ამომხტარი ფანჯარა, თუ მოვლენა მოხდა.
+Comment[ml]=നോട്ടിഫിക്കേഷന്-ഡീമൻ എന്നതിന് പകരമായി. ഒരു ഇവൻ്റ് സംഭവിച്ചാൽ പോപ്പപ്പ് ചെയ്യുക.
 Comment[mr]=सूचना-डिमन पर्यायी. एखादी घटना घडल्यास पॉपअप करा.
 Comment[ms]=Alternatif notification-daemon. Timbulkan jika peristiwa berlaku.
 Comment[pt]=Uma alternativa ao notification-daemon. Mostra alertas sobre eventos.
