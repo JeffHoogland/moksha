@@ -194,7 +194,7 @@ e_popup_edje_bg_object_set(E_Popup *pop, Evas_Object *o)
           pop->shaped = 1;
         else
           pop->shaped = 0;
-        if (e_config->use_composite)
+        if (ecore_x_screen_is_composited(0) || e_config->use_composite)
           {
              ecore_evas_alpha_set(pop->ecore_evas, pop->shaped);
              eina_hash_del(_e_popup_hash, e_util_winid_str_get(pop->evas_win), pop);
