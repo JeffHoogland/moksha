@@ -328,7 +328,7 @@ e_shelf_zone_new(E_Zone *zone, const char *name, const char *style, int popup, E
       ev = E_NEW(E_Event_Shelf, 1);
       ev->shelf = es;
       ecore_event_add(E_EVENT_SHELF_ADD, ev, NULL, NULL);
-      es->icons_offset = ecore_timer_add(0.5, _e_shelf_delay_populate, es);
+      ecore_timer_add(0.1, _e_shelf_delay_populate, es);
    }
 
    return es;
@@ -1070,7 +1070,7 @@ _e_shelf_delay_populate(void *data)
 
    e_gadcon_unpopulate(es->gadcon);
    e_gadcon_populate(es->gadcon);
-   return EINA_FALSE;
+   return ECORE_CALLBACK_CANCEL;
 }
 
 static void
@@ -1133,7 +1133,7 @@ e_shelf_config_new(E_Zone *zone, E_Config_Shelf *cf_es)
    e_shelf_orient(es, cf_es->orient);
    e_shelf_position_calc(es);
    e_shelf_send_offset(es);
-   e_shelf_populate(es);
+   //~ e_shelf_populate(es);
 
    if (cf_es->desk_show_mode)
      {
@@ -1307,11 +1307,6 @@ _e_shelf_free(E_Shelf *es)
      {
         ecore_timer_del(es->instant_timer);
         es->instant_timer = NULL;
-     }
-   if (es->icons_offset)
-     {
-        ecore_timer_del(es->icons_offset);
-        es->icons_offset = NULL;
      }
 
    if (es->menu)
