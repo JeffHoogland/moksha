@@ -12,9 +12,9 @@
 
 #define RETRY_TIMEOUT 2.0
 
-#define SETTING_TYPE_INT	0
-#define SETTING_TYPE_STRING	1
-#define SETTING_TYPE_COLOR	2
+#define SETTING_TYPE_INT    0
+#define SETTING_TYPE_STRING 1
+#define SETTING_TYPE_COLOR  2
 
 #define OFFSET_ADD(n) ((n + 4 - 1) & (~(4 - 1)))
 
@@ -296,17 +296,17 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
 
    switch (s->type)
      {
-      case SETTING_TYPE_INT:
-        tmp32 = s->i.value;
-        memcpy(buffer, &tmp32, sizeof(C32));
-        buffer += 4;
-        break;
+       case SETTING_TYPE_INT:
+         tmp32 = s->i.value;
+         memcpy(buffer, &tmp32, sizeof(C32));
+         buffer += 4;
+         break;
 
-      case SETTING_TYPE_STRING:
-        str_len = strlen(s->s.value);
-        tmp32 = str_len;
-        memcpy(buffer, &tmp32, sizeof(C32));
-        buffer += 4;
+       case SETTING_TYPE_STRING:
+         str_len = strlen(s->s.value);
+         tmp32 = str_len;
+         memcpy(buffer, &tmp32, sizeof(C32));
+         buffer += 4;
 
          memcpy(buffer, s->s.value, str_len);
          buffer += str_len;
@@ -316,20 +316,20 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
          buffer += len;
          break;
 
-      case SETTING_TYPE_COLOR:
-        tmp16 = s->c.red;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.green;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.blue;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.alpha;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        break;
+       case SETTING_TYPE_COLOR:
+         tmp16 = s->c.red;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.green;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.blue;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.alpha;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         break;
      }
 
    return buffer;
@@ -638,8 +638,8 @@ _e_xsettings_stop(void)
      {
         if (sm->timer_retry)
           ecore_timer_del(sm->timer_retry);
-        
-		if (!stopping)
+
+        if (!stopping)
            _e_xsettings_deactivate(sm);
 
         E_FREE(sm);

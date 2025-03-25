@@ -23,16 +23,16 @@ e_scale_update(void)
 
    if (e_config->scale.use_dpi)
      {
-	dpi = ecore_x_dpi_get();
-	e_scale = (double)dpi / (double)e_config->scale.base_dpi;
-	if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
-	else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
+        dpi = ecore_x_dpi_get();
+        e_scale = (double)dpi / (double)e_config->scale.base_dpi;
+        if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
+        else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
      }
    else if (e_config->scale.use_custom)
      {
-	e_scale = e_config->scale.factor;
-	if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
-	else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
+        e_scale = e_config->scale.factor;
+        if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
+        else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
      }
 
    edje_scale_set(e_scale);
