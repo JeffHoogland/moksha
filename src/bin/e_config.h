@@ -38,7 +38,7 @@ typedef struct _E_Event_Config_Icon_Theme   E_Event_Config_Icon_Theme;
 /* increment this whenever a new set of config values are added but the users
  * config doesn't need to be wiped - simply new values need to be put in
  */
-#define E_CONFIG_FILE_GENERATION 22
+#define E_CONFIG_FILE_GENERATION 23
 #define E_CONFIG_FILE_VERSION    ((E_CONFIG_FILE_EPOCH * 1000000) + E_CONFIG_FILE_GENERATION)
 
 struct _E_Config
@@ -317,9 +317,11 @@ struct _E_Config
       double        min; // GUI
       double        max; // GUI
       double        factor; // GUI
+      int           xapp_base_dpi; // GUI
       int           base_dpi; // GUI
       unsigned char use_dpi; // GUI
       unsigned char use_custom; // GUI
+      unsigned char set_xapp_dpi; // GUI
    } scale;
 
    unsigned char show_cursor; // GUI

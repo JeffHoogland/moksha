@@ -12,9 +12,9 @@
 
 #define RETRY_TIMEOUT 2.0
 
-#define SETTING_TYPE_INT	0
-#define SETTING_TYPE_STRING	1
-#define SETTING_TYPE_COLOR	2
+#define SETTING_TYPE_INT    0
+#define SETTING_TYPE_STRING 1
+#define SETTING_TYPE_COLOR  2
 
 #define OFFSET_ADD(n) ((n + 4 - 1) & (~(4 - 1)))
 
@@ -59,7 +59,12 @@ static Eina_Bool reset = EINA_FALSE;
 static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
-//static const char _setting_xft_dpi[]         = "Xft/DPI";
+static const char _setting_xft_dpi[]         = "Xft/DPI";
+static const char _setting_xft_antialias[] = "Xft/Antialias";
+static const char _setting_xft_autohint[] = "Xft/Autohint";
+static const char _setting_xft_hinting[] = "Xft/Hinting";
+static const char _setting_xft_hintstyle[] = "Xft/HintStyle";
+static const char _setting_xft_rgba[] = "Xft/RGBA";
 static const char *_setting_theme = NULL;
 static const char *_setting_icon_theme = NULL;
 static unsigned int event_ignore = 0;
@@ -219,7 +224,6 @@ _e_xsettings_string_set(const char *name, const char *value)
    s->last_change = ecore_x_current_time_get();
 }
 
-#if 0
 static void
 _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
 {
@@ -264,7 +268,6 @@ _e_xsettings_int_set(const char *name, int value, Eina_Bool set)
    s->length = 12;
    s->length += OFFSET_ADD(strlen(name));
 }
-#endif
 
 static unsigned char *
 _e_xsettings_copy(unsigned char *buffer, Setting *s)
@@ -296,17 +299,17 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
 
    switch (s->type)
      {
-      case SETTING_TYPE_INT:
-        tmp32 = s->i.value;
-        memcpy(buffer, &tmp32, sizeof(C32));
-        buffer += 4;
-        break;
+       case SETTING_TYPE_INT:
+         tmp32 = s->i.value;
+         memcpy(buffer, &tmp32, sizeof(C32));
+         buffer += 4;
+         break;
 
-      case SETTING_TYPE_STRING:
-        str_len = strlen(s->s.value);
-        tmp32 = str_len;
-        memcpy(buffer, &tmp32, sizeof(C32));
-        buffer += 4;
+       case SETTING_TYPE_STRING:
+         str_len = strlen(s->s.value);
+         tmp32 = str_len;
+         memcpy(buffer, &tmp32, sizeof(C32));
+         buffer += 4;
 
          memcpy(buffer, s->s.value, str_len);
          buffer += str_len;
@@ -316,20 +319,20 @@ _e_xsettings_copy(unsigned char *buffer, Setting *s)
          buffer += len;
          break;
 
-      case SETTING_TYPE_COLOR:
-        tmp16 = s->c.red;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.green;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.blue;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        tmp16 = s->c.alpha;
-        memcpy(buffer, &tmp16, sizeof(C16));
-        buffer += 2;
-        break;
+       case SETTING_TYPE_COLOR:
+         tmp16 = s->c.red;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.green;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.blue;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         tmp16 = s->c.alpha;
+         memcpy(buffer, &tmp16, sizeof(C16));
+         buffer += 2;
+         break;
      }
 
    return buffer;
@@ -534,10 +537,13 @@ _e_xsettings_font_set(void)
              const char *p;
 
              /* TODO better way to convert evas font sizes? */
-             if (size < 0) size /= -10;
-             if (size < 5) size = 5;
-             if (size > 25) size = 25;
-             snprintf(size_buf, sizeof(size_buf), "%d", size);
+             if (!size) size = 12;
+             else if (size < 0) size /= -10;
+             else if (size < 5) size = 5;
+             else if (size > 25) size = 25;
+             
+              /* Convert from pixels to point. */
+             snprintf(size_buf, sizeof(size_buf), "%1.1f", (float) size * 0.75);
 
              buf = eina_strbuf_new();
              eina_strbuf_append(buf, efp->name);
@@ -548,7 +554,8 @@ _e_xsettings_font_set(void)
                   eina_strbuf_append_char(buf, ' ');
                }
              eina_strbuf_append(buf, size_buf);
-             _e_xsettings_string_set(_setting_font_name, eina_strbuf_string_get(buf));
+             _e_xsettings_string_set(_setting_font_name, 
+                                     eina_strbuf_string_get(buf));
              eina_strbuf_free(buf);
              e_font_properties_free(efp);
              return;
@@ -558,6 +565,28 @@ _e_xsettings_font_set(void)
      }
 
    _e_xsettings_string_set(_setting_font_name, NULL);
+}
+
+static void
+_e_xsettings_dpi_set(void)
+{
+   if (e_config->scale.set_xapp_dpi)
+     _e_xsettings_int_set(_setting_xft_dpi,
+                          (double)e_config->scale.xapp_base_dpi * e_scale * 1024.0,
+                          EINA_TRUE);
+   _e_xsettings_int_set(_setting_xft_antialias,
+                        1,
+                        EINA_TRUE);
+   _e_xsettings_int_set(_setting_xft_hinting,
+                        1,
+                        EINA_TRUE);
+   _e_xsettings_int_set(_setting_xft_autohint,
+                        0,
+                        EINA_TRUE);
+   _e_xsettings_string_set(_setting_xft_hintstyle,
+                           "hintfull");
+   _e_xsettings_string_set(_setting_xft_rgba,
+                           "none");
 }
 
 #if 0
@@ -606,7 +635,8 @@ _e_xsettings_start(void)
    E_Manager *man;
 
    if (running) return;
-
+   
+   _e_xsettings_dpi_set();
    _e_xsettings_theme_set();
    _e_xsettings_icon_theme_set();
    _e_xsettings_font_set();
@@ -638,8 +668,8 @@ _e_xsettings_stop(void)
      {
         if (sm->timer_retry)
           ecore_timer_del(sm->timer_retry);
-        
-		if (!stopping)
+
+        if (!stopping)
            _e_xsettings_deactivate(sm);
 
         E_FREE(sm);
@@ -703,6 +733,7 @@ e_xsettings_config_update(void)
      }
    else
      {
+        _e_xsettings_dpi_set();
         _e_xsettings_theme_set();
         _e_xsettings_icon_theme_set();
         _e_xsettings_font_set();

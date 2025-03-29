@@ -956,8 +956,10 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, scale.max, DOUBLE);
    E_CONFIG_VAL(D, T, scale.factor, DOUBLE);
    E_CONFIG_VAL(D, T, scale.base_dpi, INT);
+   E_CONFIG_VAL(D, T, scale.xapp_base_dpi, INT);
    E_CONFIG_VAL(D, T, scale.use_dpi, UCHAR);
    E_CONFIG_VAL(D, T, scale.use_custom, UCHAR);
+   E_CONFIG_VAL(D, T, scale.set_xapp_dpi, UCHAR);
 
    E_CONFIG_VAL(D, T, show_cursor, UCHAR);
    E_CONFIG_VAL(D, T, idle_cursor, UCHAR);
@@ -1375,6 +1377,13 @@ while (!e_config)
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(23)
+            {
+               CONFIG_VERSION_UPDATE_INFO(23);
+               e_config->scale.xapp_base_dpi = 75;
+               e_config->scale.set_xapp_dpi = 1;
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -1492,6 +1501,12 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->dpms_standby_timeout, 30, 5400);
      E_CONFIG_LIMIT(e_config->dpms_suspend_timeout, 30, 5400);
      E_CONFIG_LIMIT(e_config->dpms_off_timeout, 30, 5400);
+
+     E_CONFIG_LIMIT(e_config->scale.min, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.max, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.factor, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.base_dpi, 10, 4000);
+     E_CONFIG_LIMIT(e_config->scale.xapp_base_dpi, 10, 4000);
 
      E_CONFIG_LIMIT(e_config->backlight.timer, 1, 3600);
 
