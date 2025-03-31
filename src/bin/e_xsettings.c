@@ -543,7 +543,7 @@ _e_xsettings_font_set(void)
              else if (size > 25) size = 25;
              
               /* Convert from pixels to point. */
-             snprintf(size_buf, sizeof(size_buf), "%1.1f", (float) size * 0.75);
+             snprintf(size_buf, sizeof(size_buf), "%1.1f", (float) size);
 
              buf = eina_strbuf_new();
              eina_strbuf_append(buf, efp->name);
