@@ -148,8 +148,8 @@ _e_config_pending_file_del(const char *path)
 
         eina_hash_del(_e_config_pending_files, path, ef);
         eina_lock_release(&_e_config_pending_files_lock);
-        //~ err = eet_sync_sync(ef);
-        err = eet_sync(ef);
+        err = eet_sync_sync(ef); //since EFL 1.27
+        //~ err = eet_sync(ef);
         switch (err)
           {
            case EET_ERROR_NONE:
