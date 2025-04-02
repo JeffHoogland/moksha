@@ -15,13 +15,6 @@ e_scale_shutdown(void)
    return 1;
 }
 
-EAPI double
-e_scale_dpi_get(void)
-{
-   int x_core_dpi = ecore_x_dpi_get();
-   return x_core_dpi;
-}
-
 EAPI void
 e_scale_update(void)
 {
