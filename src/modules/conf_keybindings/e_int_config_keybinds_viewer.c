@@ -4,6 +4,7 @@
 #define TEXT_NONE_ACTION_KEY    _("<None>")
 
 static E_Dialog *dia;
+static Eina_Bool show = EINA_FALSE;
 
 static void
 _edit_bindings()
@@ -89,11 +90,13 @@ _key_dialog_del(void *data)
 {
    if (dia == data)
      dia = NULL;
+   show = EINA_FALSE;
 }
 
 static void
 _refresh_dialog(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 {
+   show = EINA_TRUE;
    show_keybidings();
 }
 
@@ -340,7 +343,8 @@ fill_dia_data(void *data __UNUSED__, E_Dialog *dialog __UNUSED__)
 void
 show_keybidings()
 {
-   if (dia) e_util_defer_object_del(E_OBJECT(dia));
+   if (dia && !show) return;
+   else e_util_defer_object_del(E_OBJECT(dia));
 
    dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
                       "E", "_show_keybindings");
