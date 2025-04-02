@@ -60,11 +60,11 @@ static const char _setting_icon_theme_name[] = "Net/IconThemeName";
 static const char _setting_theme_name[]      = "Net/ThemeName";
 static const char _setting_font_name[]       = "Gtk/FontName";
 static const char _setting_xft_dpi[]         = "Xft/DPI";
-static const char _setting_xft_antialias[] = "Xft/Antialias";
-static const char _setting_xft_autohint[] = "Xft/Autohint";
-static const char _setting_xft_hinting[] = "Xft/Hinting";
-static const char _setting_xft_hintstyle[] = "Xft/HintStyle";
-static const char _setting_xft_rgba[] = "Xft/RGBA";
+static const char _setting_xft_antialias[]   = "Xft/Antialias";
+static const char _setting_xft_autohint[]    = "Xft/Autohint";
+static const char _setting_xft_hinting[]     = "Xft/Hinting";
+static const char _setting_xft_hintstyle[]   = "Xft/HintStyle";
+static const char _setting_xft_rgba[]        = "Xft/RGBA";
 static const char *_setting_theme = NULL;
 static const char *_setting_icon_theme = NULL;
 static unsigned int event_ignore = 0;
@@ -541,7 +541,7 @@ _e_xsettings_font_set(void)
              else if (size < 0) size /= -10;
              else if (size < 5) size = 5;
              else if (size > 25) size = 25;
-             
+
               /* Convert from pixels to point. */
              snprintf(size_buf, sizeof(size_buf), "%1.1f", (float) size);
 
@@ -593,12 +593,10 @@ _e_xsettings_dpi_set(void)
 static void
 _e_xsettings_xft_set(void)
 {
-
    if (e_config->scale.use_dpi)
      _e_xsettings_int_set(_setting_xft_dpi, e_config->scale.base_dpi, EINA_TRUE);
    else
      _e_xsettings_int_set(_setting_xft_dpi, 0, EINA_FALSE);
-
 }
 #endif
 
@@ -635,7 +633,7 @@ _e_xsettings_start(void)
    E_Manager *man;
 
    if (running) return;
-   
+
    _e_xsettings_dpi_set();
    _e_xsettings_theme_set();
    _e_xsettings_icon_theme_set();
