@@ -43,6 +43,7 @@ e_scale_update(void)
      }
 
    edje_scale_set(e_scale);
+   snprintf(buf, sizeof(buf), "%1.3f", e_scale);
    e_util_env_set("E_SCALE", buf);
    e_hints_scale_update();
    e_xsettings_config_update();
