@@ -14,7 +14,6 @@ static int _e_config_revisions = 9;
 static void      _e_config_save_cb(void *data);
 static void      _e_config_free(E_Config *cfg);
 static Eina_Bool _e_config_cb_timer(void *data);
-static int       _e_config_eet_close_handle(Eet_File *ef, char *file);
 
 /* local subsystem globals */
 static int _e_config_save_block = 0;
@@ -52,14 +51,23 @@ EAPI int E_EVENT_CONFIG_ICON_THEME = 0;
 EAPI int E_EVENT_CONFIG_MODE_CHANGED = 0;
 EAPI int E_EVENT_CONFIG_LOADED = 0;
 
-static E_Dialog *_e_config_error_dialog = NULL;
+static Eina_Lock  _e_config_pending_files_lock;
+static Eina_Hash *_e_config_pending_files = NULL;
+static Eina_Thread_Queue *_e_config_thread_thq = NULL;
 
-static void
-_e_config_error_dialog_cb_delete(void *dia)
+typedef enum
 {
-   if (dia == _e_config_error_dialog)
-     _e_config_error_dialog = NULL;
-}
+   E_CONFIG_SAVE_THREAD_SAVE,
+   E_CONFIG_SAVE_THREAD_QUIT
+} E_Config_Save_Thread_Message_Type;
+
+typedef struct _E_Config_Save_Thread_Message
+{
+   Eina_Thread_Queue_Msg head;
+   E_Config_Save_Thread_Message_Type type;
+   char *path, *destpath;
+} E_Config_Save_Thread_Message;
+
 
 static const char *
 _e_config_profile_name_get(Eet_File *ef)
@@ -91,6 +99,225 @@ _e_config_profile_name_get(Eet_File *ef)
         free(data);
      }
    return s;
+}
+
+static Eet_File *
+_e_config_pending_file_find(const char *path)
+{
+   Eet_File *ef, *ef2;
+
+   eina_lock_take(&_e_config_pending_files_lock);
+   ef = eina_hash_find(_e_config_pending_files, path);
+   if (!ef)
+     {
+        eina_lock_release(&_e_config_pending_files_lock);
+        // do this unlocked as it could block for a while
+        ef = eet_open(path, EET_FILE_MODE_WRITE);
+        eina_lock_take(&_e_config_pending_files_lock);
+        if (ef)
+          {
+             // handle race due to the above unlock and lock - should be
+             // super rare...
+             ef2 = eina_hash_find(_e_config_pending_files, path);
+             if (ef2)
+               {
+                  eina_hash_del(_e_config_pending_files, path, ef2);
+                  eet_close(ef2);
+               }
+             eina_hash_add(_e_config_pending_files, path, ef);
+          }
+        else
+          printf("CF: Error: file find %s - create new fail\n", path);
+     }
+   eina_lock_release(&_e_config_pending_files_lock);
+   return ef;
+}
+
+static Eina_Bool
+_e_config_pending_file_del(const char *path)
+{
+   Eet_File *ef;
+   Eina_Bool ok = EINA_FALSE;
+
+   eina_lock_take(&_e_config_pending_files_lock);
+   ef = eina_hash_find(_e_config_pending_files, path);
+   if (ef)
+     {
+        Eet_Error err;
+        const char *erstr = "";
+
+        eina_hash_del(_e_config_pending_files, path, ef);
+        eina_lock_release(&_e_config_pending_files_lock);
+        err = eet_sync_sync(ef); //since EFL 1.27
+        //~ err = eet_sync(ef);
+        switch (err)
+          {
+           case EET_ERROR_NONE:
+             ok = EINA_TRUE;
+             /* all good - no error */
+             break;
+           case EET_ERROR_BAD_OBJECT:
+             erstr = _("The EET file handle is bad.");
+             break;
+           case EET_ERROR_EMPTY:
+             erstr = _("The file data is empty.");
+             break;
+           case EET_ERROR_NOT_WRITABLE:
+             erstr = _("The file is not writable. Perhaps the disk is read-only<ps/>or you lost permissions to your files.");
+             break;
+           case EET_ERROR_OUT_OF_MEMORY:
+             erstr = _("Memory ran out while preparing the write.<ps/>Please free up memory.");
+             break;
+           case EET_ERROR_WRITE_ERROR:
+             erstr = _("This is a generic error.");
+             break;
+           case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
+             erstr = _("The settings file is too large.<ps/>It should be very small (a few hundred KB at most).");
+             break;
+           case EET_ERROR_WRITE_ERROR_IO_ERROR:
+             erstr = _("You have I/O errors on the disk.<ps/>Maybe it needs replacing?");
+             break;
+           case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
+             erstr = _("You ran out of space while writing the file.");
+             break;
+           case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
+             erstr = _("The file was closed while writing.");
+             break;
+           case EET_ERROR_MMAP_FAILED:
+             erstr = _("Memory-mapping (mmap) of the file failed.");
+             break;
+           case EET_ERROR_X509_ENCODING_FAILED:
+             erstr = _("X509 Encoding failed.");
+             break;
+           case EET_ERROR_SIGNATURE_FAILED:
+             erstr = _("Signature failed.");
+             break;
+           case EET_ERROR_INVALID_SIGNATURE:
+             erstr = _("The signature was invalid.");
+             break;
+           case EET_ERROR_NOT_SIGNED:
+             erstr = _("Not signed.");
+             break;
+           case EET_ERROR_NOT_IMPLEMENTED:
+             erstr = _("Feature not implemented.");
+             break;
+           case EET_ERROR_PRNG_NOT_SEEDED:
+             erstr = _("PRNG was not seeded.");
+             break;
+           case EET_ERROR_ENCRYPT_FAILED:
+             erstr = _("Encryption failed.");
+             break;
+           case EET_ERROR_DECRYPT_FAILED:
+             erstr = _("Decryption failed.");
+             break;
+           default: /* if we get here eet added errors we don't know */
+             erstr = _("The error is unknown to Enlightenment.");
+             break;
+          }
+        eet_close(ef);
+        if (!ok) printf("CF: Write Error: %s\n", erstr);
+     }
+   else
+     eina_lock_release(&_e_config_pending_files_lock);
+   return ok;
+}
+
+static void
+_e_config_save_thread_main(void *data EINA_UNUSED, Ecore_Thread *eth)
+{
+   E_Config_Save_Thread_Message *msg;
+   void *ref;
+   Eina_Bool run = EINA_TRUE;
+
+   while (run)
+     {
+        msg = eina_thread_queue_wait(_e_config_thread_thq, &ref);
+        switch (msg->type)
+          {
+           case E_CONFIG_SAVE_THREAD_SAVE:
+             if (_e_config_pending_file_del(msg->path))
+               {
+                  Eina_Bool ret = EINA_TRUE;
+
+                  if (_e_config_revisions > 0)
+                    {
+                       int i;
+                       char bsrc[4096], bdst[4096];
+
+                       for (i = _e_config_revisions; i > 1; i--)
+                         {
+                            snprintf(bsrc, sizeof(bsrc), "%s.%i", msg->destpath, i - 1);
+                            snprintf(bdst, sizeof(bdst), "%s.%i", msg->destpath, i);
+                            if ((ecore_file_exists(bsrc)) &&
+                                (ecore_file_size(bsrc)))
+                              {
+                                 ret = ecore_file_mv(bsrc, bdst);
+                                 if (!ret)
+                                   {
+                                      printf("CF: Error: Can't rename %s to %s\n", bsrc, bdst);
+                                      break;
+                                   }
+                              }
+                         }
+                       if (ret)
+                         {
+                            snprintf(bdst, sizeof(bdst), "%s.1", msg->destpath);
+                            ecore_file_mv(msg->destpath, bdst);
+                         }
+                    }
+                  if (!ecore_file_mv(msg->path, msg->destpath))
+                    printf("CF: Error: Can't rename %s to %s\n", msg->path, msg->destpath);
+                  // open another tmp file now in a thread ready for writes next
+                  // time. This can just dangle - no harm
+                  _e_config_pending_file_find(msg->path);
+                  ecore_thread_feedback(eth, strdup(msg->destpath));
+               }
+             free(msg->path);
+             free(msg->destpath);
+             break;
+           case E_CONFIG_SAVE_THREAD_QUIT:
+             run = EINA_FALSE;
+             break;
+           default:
+             break;
+          }
+        eina_thread_queue_wait_done(_e_config_thread_thq, ref);
+     }
+}
+
+static void
+_e_config_save_thread_notify(void *data EINA_UNUSED, Ecore_Thread *eth EINA_UNUSED, void *msgdata)
+{
+   char *path = msgdata;
+   free(path);
+}
+
+static void
+_e_config_save_thread_end(void *data EINA_UNUSED, Ecore_Thread *eth EINA_UNUSED)
+{
+   ecore_main_loop_quit();
+}
+
+static void
+_e_config_save_thread_cancel(void *data EINA_UNUSED, Ecore_Thread *eth EINA_UNUSED)
+{
+   ecore_main_loop_quit();
+}
+
+static void
+_e_config_save_thread_send(E_Config_Save_Thread_Message_Type type, const char *path, const char *destpath)
+{
+   E_Config_Save_Thread_Message *msg;
+   void *ref;
+
+   msg = eina_thread_queue_send
+     (_e_config_thread_thq, sizeof(E_Config_Save_Thread_Message), &ref);
+   msg->type = type;
+   if (path) msg->path = strdup(path);
+   else msg->path = NULL;
+   if (destpath) msg->destpath = strdup(destpath);
+   else msg->destpath = NULL;
+   eina_thread_queue_send_done(_e_config_thread_thq, ref);
 }
 
 static void
@@ -729,8 +956,10 @@ _e_config_edd_init(Eina_Bool old)
    E_CONFIG_VAL(D, T, scale.max, DOUBLE);
    E_CONFIG_VAL(D, T, scale.factor, DOUBLE);
    E_CONFIG_VAL(D, T, scale.base_dpi, INT);
+   E_CONFIG_VAL(D, T, scale.xapp_base_dpi, INT);
    E_CONFIG_VAL(D, T, scale.use_dpi, UCHAR);
    E_CONFIG_VAL(D, T, scale.use_custom, UCHAR);
+   E_CONFIG_VAL(D, T, scale.set_xapp_dpi, UCHAR);
 
    E_CONFIG_VAL(D, T, show_cursor, UCHAR);
    E_CONFIG_VAL(D, T, idle_cursor, UCHAR);
@@ -858,6 +1087,16 @@ e_config_init(void)
    E_EVENT_CONFIG_ICON_THEME = ecore_event_type_new();
    E_EVENT_CONFIG_MODE_CHANGED = ecore_event_type_new();
    E_EVENT_CONFIG_LOADED = ecore_event_type_new();
+
+   eina_lock_new(&_e_config_pending_files_lock);
+   _e_config_pending_files = eina_hash_string_superfast_new(NULL);
+
+   _e_config_thread_thq = eina_thread_queue_new();
+   ecore_thread_feedback_run(_e_config_save_thread_main,
+                             _e_config_save_thread_notify,
+                             _e_config_save_thread_end,
+                             _e_config_save_thread_cancel,
+                             NULL, EINA_TRUE);
 
    /* if environment var set - use this profile name */
    _e_config_profile = eina_stringshare_add(getenv("E_CONF_PROFILE"));
@@ -1138,6 +1377,13 @@ while (!e_config)
                e_config->key_bindings = eina_list_append(e_config->key_bindings, bi);
                e_config_save_queue();
             }
+          CONFIG_VERSION_CHECK(23)
+            {
+               CONFIG_VERSION_UPDATE_INFO(23);
+               e_config->scale.xapp_base_dpi = 75;
+               e_config->scale.set_xapp_dpi = 1;
+               e_config_save_queue();
+            }
      }
 
      e_config->config_version = E_CONFIG_FILE_VERSION;
@@ -1256,6 +1502,12 @@ while (!e_config)
      E_CONFIG_LIMIT(e_config->dpms_suspend_timeout, 30, 5400);
      E_CONFIG_LIMIT(e_config->dpms_off_timeout, 30, 5400);
 
+     E_CONFIG_LIMIT(e_config->scale.min, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.max, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.factor, 0.1, 40.0);
+     E_CONFIG_LIMIT(e_config->scale.base_dpi, 10, 4000);
+     E_CONFIG_LIMIT(e_config->scale.xapp_base_dpi, 10, 4000);
+
      E_CONFIG_LIMIT(e_config->backlight.timer, 1, 3600);
 
      E_CONFIG_LIMIT(e_config->screensaver_timeout, 30, 5400);
@@ -1357,6 +1609,12 @@ e_config_save_flush(void)
         e_powersave_deferred_action_del(_e_config_save_defer);
         _e_config_save_defer = NULL;
         _e_config_save_cb(NULL);
+     }
+   if (!e_main_loop_running)
+     {
+        _e_config_save_thread_send(E_CONFIG_SAVE_THREAD_QUIT, NULL, NULL);
+        // wait for save thread to exit...
+        ecore_main_loop_begin();
      }
 }
 
@@ -1568,43 +1826,6 @@ e_config_domain_system_load(const char *domain, E_Config_DD *edd)
    return data;
 }
 
-static void
-_e_config_mv_error(const char *from, const char *to)
-{
-   if (!_e_config_error_dialog)
-     {
-        E_Dialog *dia;
-
-        dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-                           "E", "_sys_error_logout_slow");
-        if (dia)
-          {
-             char buf[8192];
-
-             e_dialog_title_set(dia, _("Moksha Settings Write Problems"));
-             e_dialog_icon_set(dia, "dialog-error", 64);
-             snprintf(buf, sizeof(buf),
-                      _("Moksha has had an error while moving config files<br>"
-                        "from:<br>"
-                        "%s<br>"
-                        "<br>"
-                        "to:<br>"
-                        "%s<br>"
-                        "<br>"
-                        "The rest of the write has been aborted for safety.<br>"),
-                      from, to);
-             e_dialog_text_set(dia, buf);
-             e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
-             e_dialog_button_focus_num(dia, 0);
-             e_win_centered_set(dia->win, 1);
-             e_object_del_attach_func_set(E_OBJECT(dia),
-                                          _e_config_error_dialog_cb_delete);
-             e_dialog_show(dia);
-             _e_config_error_dialog = dia;
-          }
-     }
-}
-
 EAPI int
 e_config_profile_save(void)
 {
@@ -1625,48 +1846,12 @@ e_config_profile_save(void)
    e_user_dir_concat_static(buf, "config/profile.cfg");
    e_user_dir_concat_static(buf2, "config/profile.cfg.tmp");
 
-   ef = eet_open(buf2, EET_FILE_MODE_WRITE);
+   ef = _e_config_pending_file_find(buf2);
    if (ef)
      {
         ok = eet_write(ef, "config", _e_config_profile,
                        strlen(_e_config_profile), 0);
-        if (_e_config_eet_close_handle(ef, buf2))
-          {
-             Eina_Bool ret = EINA_TRUE;
-
-             if (_e_config_revisions > 0)
-               {
-                  int i;
-                  char bsrc[4096], bdst[4096];
-
-                  for (i = _e_config_revisions; i > 1; i--)
-                    {
-                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.%i.cfg", i - 1);
-                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.%i.cfg", i);
-                       if ((ecore_file_exists(bsrc)) &&
-                           (ecore_file_size(bsrc)))
-                         {
-                            ret = ecore_file_mv(bsrc, bdst);
-                            if (!ret)
-                              {
-                                 _e_config_mv_error(bsrc, bdst);
-                                 break;
-                              }
-                         }
-                    }
-                  if (ret)
-                    {
-                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/profile.cfg");
-                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/profile.1.cfg");
-                       ecore_file_mv(bsrc, bdst);
-//                       if (!ret)
-//                          _e_config_mv_error(bsrc, bdst);
-                    }
-               }
-             ret = ecore_file_mv(buf2, buf);
-             if (!ret) _e_config_mv_error(buf2, buf);
-          }
-        ecore_file_unlink(buf2);
+        _e_config_save_thread_send(E_CONFIG_SAVE_THREAD_SAVE, buf2, buf);
      }
    return ok;
 }
@@ -1686,7 +1871,7 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
 {
    Eet_File *ef;
    char buf[4096], buf2[4096];
-   int ok = 0, ret;
+   int ok = 0;
    size_t len, len2;
 
    if (_e_config_save_block) return 0;
@@ -1711,36 +1896,12 @@ e_config_domain_save(const char *domain, E_Config_DD *edd, const void *data)
    memcpy(buf2, buf, len);
    memcpy(buf2 + len, ".tmp", sizeof(".tmp"));
 
-   ef = eet_open(buf2, EET_FILE_MODE_WRITE);
+   ef = _e_config_pending_file_find(buf2);
    if (ef)
      {
-        ok = eet_data_write(ef, edd, "config", data, 1);
-        if (_e_config_eet_close_handle(ef, buf2))
-          {
-             if (_e_config_revisions > 0)
-               {
-                  int i;
-                  char bsrc[4096], bdst[4096];
-
-                  for (i = _e_config_revisions; i > 1; i--)
-                    {
-                       e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.%i.cfg", _e_config_profile, domain, i - 1);
-                       e_user_dir_snprintf(bdst, sizeof(bdst), "config/%s/%s.%i.cfg", _e_config_profile, domain, i);
-                       if ((ecore_file_exists(bsrc)) &&
-                           (ecore_file_size(bsrc)))
-                         {
-                            ecore_file_mv(bsrc, bdst);
-                         }
-                    }
-                  e_user_dir_snprintf(bsrc, sizeof(bsrc), "config/%s/%s.cfg", _e_config_profile, domain);
-                  e_user_dir_snprintf(bdst, sizeof(bdst), "config/%s/%s.1.cfg", _e_config_profile, domain);
-                  ecore_file_mv(bsrc, bdst);
-               }
-             ret = ecore_file_mv(buf2, buf);
-             if (!ret)
-               ERR("*** Error saving config. ***");
-          }
-        ecore_file_unlink(buf2);
+        ok = eet_data_write(ef, edd, "config", data,
+                            EET_COMPRESSION_SUPERFAST);
+        _e_config_save_thread_send(E_CONFIG_SAVE_THREAD_SAVE, buf2, buf);
      }
    return ok;
 }
@@ -2111,134 +2272,3 @@ _e_config_cb_timer(void *data)
    return 0;
 }
 
-static int
-_e_config_eet_close_handle(Eet_File *ef, char *file)
-{
-   Eet_Error err;
-   char *erstr = NULL;
-
-   err = eet_close(ef);
-   switch (err)
-     {
-      case EET_ERROR_NONE:
-        /* all good - no error */
-        break;
-
-      case EET_ERROR_BAD_OBJECT:
-        erstr = _("The EET file handle is bad.");
-        break;
-
-      case EET_ERROR_EMPTY:
-        erstr = _("The file data is empty.");
-        break;
-
-      case EET_ERROR_NOT_WRITABLE:
-        erstr = _("The file is not writable. Perhaps the disk is read-only<br>or you lost permissions to your files.");
-        break;
-
-      case EET_ERROR_OUT_OF_MEMORY:
-        erstr = _("Memory ran out while preparing the write.<br>Please free up memory.");
-        break;
-
-      case EET_ERROR_WRITE_ERROR:
-        erstr = _("This is a generic error.");
-        break;
-
-      case EET_ERROR_WRITE_ERROR_FILE_TOO_BIG:
-        erstr = _("The settings file is too large.<br>It should be very small (a few hundred KB at most).");
-        break;
-
-      case EET_ERROR_WRITE_ERROR_IO_ERROR:
-        erstr = _("You have I/O errors on the disk.<br>Maybe it needs replacing?");
-        break;
-
-      case EET_ERROR_WRITE_ERROR_OUT_OF_SPACE:
-        erstr = _("You ran out of space while writing the file.");
-        break;
-
-      case EET_ERROR_WRITE_ERROR_FILE_CLOSED:
-        erstr = _("The file was closed while writing.");
-        break;
-
-      case EET_ERROR_MMAP_FAILED:
-        erstr = _("Memory-mapping (mmap) of the file failed.");
-        break;
-
-      case EET_ERROR_X509_ENCODING_FAILED:
-        erstr = _("X509 Encoding failed.");
-        break;
-
-      case EET_ERROR_SIGNATURE_FAILED:
-        erstr = _("Signature failed.");
-        break;
-
-      case EET_ERROR_INVALID_SIGNATURE:
-        erstr = _("The signature was invalid.");
-        break;
-
-      case EET_ERROR_NOT_SIGNED:
-        erstr = _("Not signed.");
-        break;
-
-      case EET_ERROR_NOT_IMPLEMENTED:
-        erstr = _("Feature not implemented.");
-        break;
-
-      case EET_ERROR_PRNG_NOT_SEEDED:
-        erstr = _("PRNG was not seeded.");
-        break;
-
-      case EET_ERROR_ENCRYPT_FAILED:
-        erstr = _("Encryption failed.");
-        break;
-
-      case EET_ERROR_DECRYPT_FAILED:
-        erstr = _("Decryption failed.");
-        break;
-
-      default: /* if we get here eet added errors we don't know */
-        erstr = _("The error is unknown to Moksha.");
-        break;
-     }
-   if (erstr)
-     {
-        /* delete any partially-written file */
-        ecore_file_unlink(file);
-        /* only show dialog for first error - further ones are likely */
-        /* more of the same error */
-        if (!_e_config_error_dialog)
-          {
-             E_Dialog *dia;
-
-             dia = e_dialog_new(e_container_current_get(e_manager_current_get()),
-                                "E", "_sys_error_logout_slow");
-             if (dia)
-               {
-                  char buf[8192];
-
-                  e_dialog_title_set(dia, _("Moksha Settings Write Problems"));
-                  e_dialog_icon_set(dia, "dialog-error", 64);
-                  snprintf(buf, sizeof(buf),
-                           _("Moksha has had an error while writing<br>"
-                             "its config file.<br>"
-                             "%s<br>"
-                             "<br>"
-                             "The file where the error occurred was:<br>"
-                             "%s<br>"
-                             "<br>"
-                             "This file has been deleted to avoid corrupt data.<br>"),
-                           erstr, file);
-                  e_dialog_text_set(dia, buf);
-                  e_dialog_button_add(dia, _("OK"), NULL, NULL, NULL);
-                  e_dialog_button_focus_num(dia, 0);
-                  e_win_centered_set(dia->win, 1);
-                  e_object_del_attach_func_set(E_OBJECT(dia),
-                                               _e_config_error_dialog_cb_delete);
-                  e_dialog_show(dia);
-                  _e_config_error_dialog = dia;
-               }
-          }
-        return 0;
-     }
-   return 1;
-}

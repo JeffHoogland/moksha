@@ -39,4 +39,17 @@ e_scale_update(void)
    snprintf(buf, sizeof(buf), "%1.3f", e_scale);
    e_util_env_set("E_SCALE", buf);
    e_hints_scale_update();
+   e_xsettings_config_update();
+   if (e_config->scale.set_xapp_dpi)
+     {
+        snprintf(buf, sizeof(buf), "%i",
+                 (int)((double)e_config->scale.xapp_base_dpi * e_scale));
+        ecore_x_resource_db_string_set("Xft.dpi", buf);
+        ecore_x_resource_db_string_set("Xft.hinting", "1");
+        ecore_x_resource_db_string_set("Xft.antialias", "1");
+        ecore_x_resource_db_string_set("Xft.autohint", "0");
+        ecore_x_resource_db_string_set("Xft.hintstyle", "hintfull");
+        ecore_x_resource_db_string_set("Xft.rgba", "none");
+        ecore_x_resource_db_flush();
+     }
 }

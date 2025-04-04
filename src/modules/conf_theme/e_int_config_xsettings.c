@@ -527,7 +527,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_list_object_append(ol, ow, 0, 0, 0.0);
    e_widget_toolbook_page_append(otb, NULL, _("GTK Applications"), ol, 
                                  1, 1, 1, 1, 0.5, 0.0);
-
+   
    ol = e_widget_list_add(evas, 0, 0);
    ilist = e_widget_ilist_add(evas, 24, 24, &(cfdata->icon_theme));
    cfdata->gui.icon_list = ilist;

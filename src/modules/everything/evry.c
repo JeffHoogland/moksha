@@ -778,10 +778,10 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
    e_theme_edje_object_set(o, "base/theme/modules/everything",
                            "e/modules/everything/main");
 
-   if ((shape_option = edje_object_data_get(o, "shaped")) &&
-       (!strcmp(shape_option, "1")))
+   if ((shape_option = edje_object_data_get(o, "shaped")))
      {
-        win->shaped = EINA_TRUE;
+        if (!strcmp(shape_option, "1")) win->shaped = EINA_TRUE;
+        if (!strcmp(shape_option, "2")) win->shaped = EINA_FALSE;
 
         if (e_config->use_composite)
           {
@@ -796,7 +796,11 @@ _evry_window_new(E_Zone *zone, E_Zone_Edge edge)
              offset_s = tmp ? atoi(tmp) : 0;
           }
         else
-          ecore_evas_shaped_set(win->ewin->ecore_evas, 1);
+          {
+            ecore_evas_shaped_set(win->ewin->ecore_evas, 1);
+            ecore_evas_avoid_damage_set(win->ewin->ecore_evas,
+                                        ECORE_EVAS_AVOID_DAMAGE_EXPOSE);
+          }
      }
 
    edje_object_size_min_calc(o, &mw, &mh);
@@ -1981,6 +1985,7 @@ _evry_cb_key_down(void *data, int type __UNUSED__, void *event)
         ewin->border->internal = 1;
         ewin->border->internal_ecore_evas = ewin->ecore_evas;
         ewin->border->internal_no_remember = 1;
+        edje_object_signal_emit(win->o_main, "e,state,border_show", "e");
         e_border_show(ewin->border);
 
         win->grab = 0;

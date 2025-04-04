@@ -483,7 +483,7 @@ static int
 _e_util_layer_map(int layer)
 {
    int pos = 0;
-   
+
    if (layer < 0) layer = 0;
    pos = 1 + (layer / 50);
    if (pos > 10) pos = 10;
@@ -1344,7 +1344,7 @@ _e_util_default_terminal_get(const char *defaults_list)
    Efreet_Desktop *tdesktop = NULL;
    Efreet_Ini *ini;
    const char *s;
-   
+
    ini = efreet_ini_new(defaults_list);
    if ((ini) && (ini->data) &&
        (efreet_ini_section_set(ini, "Default Applications")) &&
@@ -1391,7 +1391,7 @@ e_util_terminal_desktop_get(void)
         tdesktop = _e_util_default_terminal_get(buf);
         if (tdesktop) return tdesktop;
      }
-   
+
    for (i = 0; terms[i]; i++)
      {
         tdesktop = efreet_util_desktop_file_id_find(terms[i]);
@@ -1683,24 +1683,24 @@ EAPI void
 e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
 {
    EINA_SAFETY_ON_NULL_RETURN(text);
-   
+
    FILE *cmd = NULL;
-   unsigned const int size = strlen(text)+1;
-   
-   if  (ecore_file_app_installed("xclip"))
-     {
-       if (type == ECORE_X_SELECTION_CLIPBOARD)
-         cmd = popen("xclip -selection c", "w");
-       else if (type == ECORE_X_SELECTION_PRIMARY)
-         cmd = popen("xclip -selection p", "w");
-     }
-   else
+   unsigned const int size = strlen(text) + 1;
+
    if (ecore_file_app_installed("xsel"))
      {
        if (type == ECORE_X_SELECTION_CLIPBOARD)
          cmd = popen("xsel -ib", "w");
        else if (type == ECORE_X_SELECTION_PRIMARY)
          cmd = popen("xsel -ip", "w");
+     }
+   else
+   if (ecore_file_app_installed("xclip"))
+     {
+       if (type == ECORE_X_SELECTION_CLIPBOARD)
+         cmd = popen("xclip -selection c", "w");
+       else if (type == ECORE_X_SELECTION_PRIMARY)
+         cmd = popen("xclip -selection p", "w");
      }
    else
      goto fallback;
@@ -1724,13 +1724,13 @@ e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
        goto fallback;
      }
    return;
-   
+
 fallback:
    if (type == ECORE_X_SELECTION_CLIPBOARD)
      ecore_x_selection_clipboard_set(w, text, size);
    else if (type == ECORE_X_SELECTION_PRIMARY)
      ecore_x_selection_primary_set(w, text, size);
-   
+
 }
 
 #ifdef HAVE_ELEMENTARY
@@ -1741,7 +1741,7 @@ e_util_have_elm_theme(const char *name)
    Eina_List *list, *li;
    char *th;
    Eina_Bool ret = EINA_FALSE;
-   
+
    list = elm_theme_name_available_list_new();
    EINA_LIST_FOREACH(list, li, th)
      {
@@ -1785,9 +1785,9 @@ e_util_have_icon_theme(const char *name)
 {
    Eina_List *list, *li;
    const Efreet_Icon_Theme *th;
-   
+
    Eina_Bool ret = EINA_FALSE;
-   
+
    list = efreet_icon_theme_list_get();
    EINA_LIST_FOREACH(list, li, th)
      {

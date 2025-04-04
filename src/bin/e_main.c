@@ -129,6 +129,7 @@ EAPI Eina_Bool starting = EINA_TRUE;
 EAPI Eina_Bool stopping = EINA_FALSE;
 EAPI Eina_Bool restart = EINA_FALSE;
 EAPI Eina_Bool e_nopause = EINA_FALSE;
+EAPI Eina_Bool e_main_loop_running = EINA_FALSE;
 
 static Eina_Bool
 _xdg_check_str(const char *env, const char *str)
@@ -1159,10 +1160,13 @@ main(int argc, char **argv)
 
    TS("MAIN LOOP AT LAST");
    if (!setjmp(x_fatal_buff))
-     ecore_main_loop_begin();
+     {
+        e_main_loop_running = EINA_TRUE;
+        ecore_main_loop_begin();
+     }
    else
      CRI("FATAL: X Died. Connection gone. Abbreviated Shutdown\n");
-
+   e_main_loop_running = EINA_FALSE;
    inloop = EINA_FALSE;
    stopping = EINA_TRUE;
 
