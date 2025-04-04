@@ -1687,7 +1687,7 @@ e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
    FILE *cmd = NULL;
    unsigned const int size = strlen(text) + 1;
    
-   if (ecore_file_app_installed("xclip"))
+   if (ecore_file_app_installed("xsel"))
      {
        if (type == ECORE_X_SELECTION_CLIPBOARD)
          cmd = popen("xsel -ib", "w");
@@ -1695,7 +1695,7 @@ e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
          cmd = popen("xsel -ip", "w");
      }
    else
-   if (ecore_file_app_installed("xsel"))
+   if (ecore_file_app_installed("xclip"))
      {
        if (type == ECORE_X_SELECTION_CLIPBOARD)
          cmd = popen("xclip -selection c", "w");
