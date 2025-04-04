@@ -1685,22 +1685,22 @@ e_util_clipboard(Ecore_X_Window w, const char *text, Ecore_X_Selection type)
    EINA_SAFETY_ON_NULL_RETURN(text);
    
    FILE *cmd = NULL;
-   unsigned const int size = strlen(text)+1;
+   unsigned const int size = strlen(text) + 1;
    
-   if  (ecore_file_app_installed("xclip"))
-     {
-       if (type == ECORE_X_SELECTION_CLIPBOARD)
-         cmd = popen("xclip -selection c", "w");
-       else if (type == ECORE_X_SELECTION_PRIMARY)
-         cmd = popen("xclip -selection p", "w");
-     }
-   else
-   if (ecore_file_app_installed("xsel"))
+   if (ecore_file_app_installed("xclip"))
      {
        if (type == ECORE_X_SELECTION_CLIPBOARD)
          cmd = popen("xsel -ib", "w");
        else if (type == ECORE_X_SELECTION_PRIMARY)
          cmd = popen("xsel -ip", "w");
+     }
+   else
+   if (ecore_file_app_installed("xsel"))
+     {
+       if (type == ECORE_X_SELECTION_CLIPBOARD)
+         cmd = popen("xclip -selection c", "w");
+       else if (type == ECORE_X_SELECTION_PRIMARY)
+         cmd = popen("xclip -selection p", "w");
      }
    else
      goto fallback;
