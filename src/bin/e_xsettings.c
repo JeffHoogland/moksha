@@ -629,17 +629,6 @@ _e_xsettings_dpi_set(void)
                            "none");
 }
 
-#if 0
-static void
-_e_xsettings_xft_set(void)
-{
-   if (e_config->scale.use_dpi)
-     _e_xsettings_int_set(_setting_xft_dpi, e_config->scale.base_dpi, EINA_TRUE);
-   else
-     _e_xsettings_int_set(_setting_xft_dpi, 0, EINA_FALSE);
-}
-#endif
-
 static void
 _e_xsettings_cursor_path_set(void)
 {
