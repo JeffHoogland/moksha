@@ -1950,7 +1950,7 @@ group "E_Config" struct {
             value "priority" int: -1000;
         }
     }
-    value "config_version" int: 1000022;
+    value "config_version" int: 1000023;
     value "show_splash" int: 1;
     value "init_default_theme" string: "/usr/share/enlightenment/data/themes/MokshaGreen.edj";
     value "desktop_default_name" string: "%i-%i";
