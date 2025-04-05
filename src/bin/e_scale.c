@@ -39,6 +39,7 @@ e_scale_update(void)
    snprintf(buf, sizeof(buf), "%1.3f", e_scale);
    e_util_env_set("E_SCALE", buf);
    e_hints_scale_update();
+   e_pointers_size_set(e_config->cursor_size);
    e_xsettings_config_update();
    if (e_config->scale.set_xapp_dpi)
      {
