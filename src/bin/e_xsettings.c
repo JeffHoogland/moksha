@@ -517,6 +517,44 @@ _e_xsettings_theme_set(void)
    _e_xsettings_string_set(_setting_theme_name, NULL);
 }
 
+static int
+_dbl_to_str(char *buf, size_t buf_size, double val, int decimals)
+{
+   int ival;
+   size_t l = 0;
+
+   if (val < 0)
+     {
+        if (buf_size < 2) return -1;
+        val = -val;
+        buf[0] = '-';
+        buf[1] = 0;
+        l++;
+     }
+   ival = val;
+   snprintf(buf + l, buf_size - l, "%i", ival);
+   if (decimals <= 0) return 0;
+   l = strlen(buf);
+   if (l >= (buf_size - 2)) return -1;
+   buf[l] = '.';
+   buf[l + 1] = 0;
+   l++;
+
+   while (decimals > 0)
+     {
+        if (l >= (buf_size - 1)) return -1;
+        val *= 10.0;
+        ival = val;
+        val = val - ival;
+        buf[l] = '0' + (ival % 10);
+        buf[l + 1] = 0;
+        l++;
+        if (l >= (buf_size - 1)) return -1;
+        decimals--;
+     }
+   return 0;
+}
+
 static void
 _e_xsettings_font_set(void)
 {
@@ -537,13 +575,15 @@ _e_xsettings_font_set(void)
              const char *p;
 
              /* TODO better way to convert evas font sizes? */
-             if (!size) size = 12;
-             else if (size < 0) size /= -10;
-             else if (size < 5) size = 5;
-             else if (size > 25) size = 25;
+             if      (!size)      size  =   10; // default if not set
+             else if (size < 0)   size /=  -10; // in 1/10th units
+
+             // limit sizes
+             if      (size < 5)   size  =    5; // don't allow too small
+             else if (size > 100) size  =  100; // don't allow silly sizes
 
               /* Convert from pixels to point. */
-             snprintf(size_buf, sizeof(size_buf), "%1.1f", (float) size);
+             _dbl_to_str(size_buf, sizeof(size_buf), (double)size, 0);
 
              buf = eina_strbuf_new();
              eina_strbuf_append(buf, efp->name);
