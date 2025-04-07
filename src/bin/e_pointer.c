@@ -251,7 +251,7 @@ _e_pointer_canvas_add(E_Pointer *p)
    int rmethod;
 
    if (!p) return;
-   p->w = p->h = (double)e_config->cursor_size * e_scale;
+   p->w = p->h = (double)e_config->cursor_size * e_scale * 0.85;
 
    /* create evas */
    p->evas = evas_new();
