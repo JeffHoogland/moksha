@@ -377,7 +377,7 @@ e_menu_activate_mouse(E_Menu *m, E_Zone *zone, int x, int y, int w, int h, int d
         m->cur.y = y + h;
         break;
      }
-     
+
    posit = m->cur.x;
 
    pmi = _e_menu_item_active_get();
