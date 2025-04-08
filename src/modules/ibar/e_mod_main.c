@@ -674,8 +674,8 @@ _ibar_config_item_get(const char *id)
    ci = E_NEW(Config_Item, 1);
    ci->id = eina_stringshare_add(id);
    ci->dir = eina_stringshare_add("default");
-   ci->show_label = 1;
-   ci->show_label_adjac = 0;
+   ci->show_label = 0;
+   ci->show_label_adjac = 1;
    ci->eap_label = 0;
    ci->lock_move = 0;
    ci->dont_add_nonorder = 0;
@@ -2914,8 +2914,8 @@ _ibar_config_new(void)
    ci = E_NEW(Config_Item, 1);
    ci->id = eina_stringshare_add("ibar.1");
    ci->dir = eina_stringshare_add("default");
-   ci->show_label = 1;
-   ci->show_label_adjac = 0;
+   ci->show_label = 0;
+   ci->show_label_adjac = 1;
    ci->eap_label = 0;
    ci->lock_move = 0;
    ci->dont_add_nonorder = 0;
