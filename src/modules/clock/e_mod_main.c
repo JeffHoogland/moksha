@@ -675,7 +675,7 @@ e_int_clock_instances_redo(Eina_Bool all)
         edje_object_part_text_set(o, "e.text.today", todaystr);
         edje_object_message_signal_process(o);
         _eval_instance_size(inst);
-        
+
         if (inst->o_popclock)
           {
              o = inst->o_popclock;
@@ -1041,22 +1041,22 @@ _clock_eio_update(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED_
 static Eina_Bool
 _clock_eio_error(void *d __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-			if (clock_tz_monitor)
-					{
-								eio_monitor_del(clock_tz_monitor);
-								clock_tz_monitor = NULL;
-					}
-			if (ecore_file_exists("/etc/localtime"))
-					clock_tz_monitor = eio_monitor_add("/etc/localtime");
+   if (clock_tz_monitor)
+     {
+        eio_monitor_del(clock_tz_monitor);
+        clock_tz_monitor = NULL;
+     }
+   if (ecore_file_exists("/etc/localtime"))
+     clock_tz_monitor = eio_monitor_add("/etc/localtime");
 
-			if (clock_tz2_monitor)
-					{
-								eio_monitor_del(clock_tz2_monitor);
-								clock_tz2_monitor = NULL;
-					}
-			if (ecore_file_exists("/etc/timezone"))
-					clock_tz2_monitor = eio_monitor_add("/etc/timezone");
-   
+   if (clock_tz2_monitor)
+     {
+        eio_monitor_del(clock_tz2_monitor);
+        clock_tz2_monitor = NULL;
+     }
+   if (ecore_file_exists("/etc/timezone"))
+     clock_tz2_monitor = eio_monitor_add("/etc/timezone");
+
    return ECORE_CALLBACK_RENEW;
 }
 

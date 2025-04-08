@@ -176,9 +176,9 @@ show_time_cb(void *data, void *data2 __UNUSED__)
 {
    Evas_Object *win, *bx, *ck, *bt;
    E_Config_Dialog_Data *cfdata = data;
-   
+
    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
-   
+
    if (cfdata->win) return;
 
    win = elm_win_util_standard_add("clock", _("Time set"));
@@ -198,7 +198,7 @@ show_time_cb(void *data, void *data2 __UNUSED__)
    evas_object_size_hint_min_set(ck, 80 * e_scale, 40 * e_scale);
    elm_box_pack_end(bx, ck);
    evas_object_show(ck);
-   
+
    bt = elm_button_add(win);
    elm_object_text_set(bt, _("Set"));
    cfdata->ck = ck;
@@ -219,7 +219,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    char daynames[7][64];
    struct tm tm;
    int i;
-   
+
    memset(&tm, 0, sizeof(struct tm));
    for (i = 0; i < 7; i++)
      {
@@ -247,7 +247,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_table_object_append(tab, of, 0, 0, 1, 1, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Date"), 0);
-   
+
    rg = e_widget_radio_group_new(&(cfdata->cfg.show_date));
    ob = e_widget_radio_add(evas, _("None"), 0, rg);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
@@ -265,7 +265,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 1, 0, 0); 
 
    e_widget_table_object_append(tab, of, 0, 1, 1, 1, 1, 1, 1, 1);
-   
+
    of = e_widget_frametable_add(evas, _("Week"), 0);
 
    ob = e_widget_label_add(evas, _("Start"));
@@ -310,7 +310,7 @@ _basic_create_widgets(E_Config_Dialog *cfd __UNUSED__,
    e_widget_table_object_append(tab, of, 2, 0, 1, 2, 1, 1, 1, 1);
 
    of = e_widget_frametable_add(evas, _("Time set"), 0);
-   
+
    ob = e_widget_button_add(evas, _("Set..."), "configure", show_time_cb, cfdata, NULL);
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 1, 1, 1, 0, 0);
    e_widget_table_object_append(tab, of, 3, 0, 1, 1, 1, 1, 1, 1);
@@ -351,15 +351,15 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 
    ci = cfd->data;
    memcpy(ci, &(cfdata->cfg), sizeof(Config_Item));
-   
+
    if (ci->custom_date_const) eina_stringshare_del(ci->custom_date_const);
    ci->custom_date_const = eina_stringshare_add(cfdata->custom_dat);
-   
+
    ci->changed = EINA_TRUE;
    e_config_save_queue();
    e_int_clock_instances_redo(EINA_FALSE);
    ci->changed = EINA_FALSE;
-   
+
    return 1;
 }
 
