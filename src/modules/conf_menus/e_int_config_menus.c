@@ -300,9 +300,9 @@ _basic_create(E_Config_Dialog *cfd __UNUSED__, Evas *evas, E_Config_Dialog_Data 
                                  0.5, 0.0);
 
    ol = e_widget_list_add(evas, 0, 0);
-   ow = e_widget_check_add(evas, _(" Disable Icons in Menus"), &(cfdata->hide_icons));
+   ow = e_widget_check_add(evas, _("Disable Icons in Menus"), &(cfdata->hide_icons));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
-   ow = e_widget_check_add(evas, _(" Smart Menu Orientation"), &(cfdata->scroll_toggle));
+   ow = e_widget_check_add(evas, _("Smart Menu Orientation"), &(cfdata->scroll_toggle));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
    ow = e_widget_label_add(evas, _("Menu Scroll Speed"));
    e_widget_list_object_append(ol, ow, 1, 0, 0.5);
