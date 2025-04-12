@@ -1,9 +1,6 @@
 #include "e.h"
 
 #define TEXT_NONE_ACTION_KEY    _("<None>")
-#define TEXT_PRESS_KEY_SEQUENCE _("Please press key sequence,<br><br>" \
-                                  "or <hilight>Escape</hilight> to abort.")
-
 #define TEXT_NO_PARAMS          _("<None>")
 #define TEXT_NO_MODIFIER_HEADER _("Single key")
 
