@@ -1471,7 +1471,8 @@ ACT_FN_GO(window_zone_move_by, )
    else if ((unsigned int)move >= eina_list_count(bd->zone->container->zones))
      move = 0;
    zone = eina_list_nth(bd->zone->container->zones, move);
-   if ((!zone) || (zone->num != (unsigned int)move)) return;
+   if ((!zone)) return;
+   if (bd->zone == zone) return;
    max = bd->maximized;
    fs = bd->fullscreen_policy;
    fullscreen = bd->fullscreen;
