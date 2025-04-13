@@ -2265,8 +2265,15 @@ _e_menu_reposition(E_Menu *m)
    E_Menu_Item *mi;
    int parent_item_bottom;
    int gap = 3;
+   const char *gap_str;
 
    if (!m->parent_item) return;
+   
+   // a possibility to change menus gap from theme
+   // data.item: "gap" "0"; // no gap
+   gap_str = edje_object_data_get(m->bg_object, "gap");
+   if (gap_str)
+     gap = atoi(gap_str);
    
    /* Menu direction on the right screen area */
    if ((posit < m->zone->x + m->zone->w / 2) || (!e_config->menu_scroll_toggle))
