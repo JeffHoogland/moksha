@@ -8,7 +8,7 @@ group { name: "e/widgets/entry/scrollframe";
             rel1.offset: 1 1;
             rel2.to: "inset";
             rel2.offset: -2 -2;
-            color: 48 48 48 255;
+            color: 48 48 48 96;
          }
       }
       part { name: "clipper"; type: RECT;
