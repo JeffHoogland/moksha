@@ -1031,6 +1031,11 @@ _evry_selector_cb_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
         if (ev->flags)
           evry_plugin_action(sel->win, 1);
      }
+   else if (ev->button == 3)
+     {
+       evry_hide(sel->win, 0);
+       return;
+     }
 }
 
 static void
