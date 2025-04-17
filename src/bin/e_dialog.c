@@ -62,7 +62,10 @@ _e_dialog_internal_new(E_Container *con, const char *name, const char *class, in
 
    s = edje_object_data_get(dia->bg_object, "shaped");
    if (s && (!strcmp(s, "1")))
-     e_win_shaped_set(dia->win, 1);
+     {
+       e_win_shaped_set(dia->win, 1);
+       e_win_avoid_damage_set(dia->win, 1);
+     }
 
    dia->event_object = o;
    mask = 0;
