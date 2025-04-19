@@ -209,14 +209,15 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_TR:
         py = gy + gh;
         px = (gx + (gw / 2)) - (pop->w / 2);
-        if ((px + pop->w) >= (zx + zw))
-          px = gx + gw - pop->w;
-        else if (px < zx)
-          px = zx;
-        else if (gx + pop->w >= es->x + es->w) // Adjust to shelf limits
+         if (px + pop->w >= es->x + es->w)   // Adjust to shelf limits
           px = es->x + es->w - pop->w;
         else if (px <= es->x)
           px = es->x;
+        else if ((px + pop->w) >= (zx + zw)) // Adjust to zone limits
+          px = gx + gw - pop->w;
+        else if (px < zx)
+          px = zx;
+
         py = MIN(zy + zh - gh - pop->h + 3, py + gap_y + 5);
         break;
 
@@ -225,14 +226,15 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
       case E_GADCON_ORIENT_CORNER_BR:
         py = gy - pop->h;
         px = (gx + (gw / 2)) - (pop->w / 2);
-        if ((px + pop->w) >= (zx + zw))
-          px = gx + gw - pop->w;
-        else if (px < zx)
-          px = zx;
-        else if (gx + pop->w >= es->x + es->w) // Adjust to shelf limits
+        if (px + pop->w >= es->x + es->w)    // Adjust to shelf limits
           px = es->x + es->w - pop->w;
         else if (px <= es->x)
           px = es->x;
+        else if ((px + pop->w) >= (zx + zw)) // Adjust to zone limits
+          px = gx + gw - pop->w;
+        else if (px < zx)
+          px = zx;
+        
         py = MIN(zy + zh - gh - pop->h - 3, py - gap_y - 5);
         break;
 
