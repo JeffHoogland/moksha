@@ -213,6 +213,10 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
+        else if (gx + pop->w >= es->x + es->w) // Adjust to shelf limits
+          px = es->x + es->w - pop->w;
+        else if (px <= es->x)
+          px = es->x;
         py = MIN(zy + zh - gh - pop->h + 3, py + gap_y + 5);
         break;
 
@@ -225,6 +229,10 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
           px = gx + gw - pop->w;
         else if (px < zx)
           px = zx;
+        else if (gx + pop->w >= es->x + es->w) // Adjust to shelf limits
+          px = es->x + es->w - pop->w;
+        else if (px <= es->x)
+          px = es->x;
         py = MIN(zy + zh - gh - pop->h - 3, py - gap_y - 5);
         break;
 
