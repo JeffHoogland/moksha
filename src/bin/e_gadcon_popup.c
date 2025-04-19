@@ -243,9 +243,9 @@ _e_gadcon_popup_position(E_Gadcon_Popup *pop)
         else
           py = gy + gh;
         if ((px + pop->w) >= (zx + zw))
-          px = gx + gw - pop->w;
+          px = gx + gw - pop->w - 3;
         else if (px < zx)
-          px = zx;
+          px = zx + 3;
         break;
 
       default:
