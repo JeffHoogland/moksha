@@ -543,40 +543,36 @@ _tasks_item_find(Tasks *tasks, E_Border *border)
 }
 
 static void
-_tasks_drop_cb_enter(void *data, const char *type, void *event_info __UNUSED__)
+_tasks_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
    E_Border *bd = NULL;
    Tasks_Item *item = data;
 
-   if (!strcmp(type, "text/uri-list" ) || !strcmp(type, "text/x-moz-url" ) ||
-       !strcmp(type, "enlightenment/x-file" ))
-     {
-        bd = item->border;
-        if (!bd) return;
-        E_Desk *desk;
+   bd = item->border;
+   if (!bd) return;
+   E_Desk *desk;
 
-        desk = e_desk_current_get(bd->zone);
+   desk = e_desk_current_get(bd->zone);
 
-        if (desk != bd->desk && !bd->sticky)
-            e_desk_show(bd->desk);
-        if (bd->shaded)
-            e_border_unshade(bd, E_DIRECTION_UP);
-        if (!bd->visible)
-            e_border_show(bd);
-        if (bd->iconic)
-            e_border_uniconify(bd);
-        else
-            e_border_raise(bd);
+   if (desk != bd->desk && !bd->sticky)
+       e_desk_show(bd->desk);
+   if (bd->shaded)
+       e_border_unshade(bd, E_DIRECTION_UP);
+   if (!bd->visible)
+       e_border_show(bd);
+   if (bd->iconic)
+       e_border_uniconify(bd);
+   else
+       e_border_raise(bd);
 
-        e_border_focus_set(bd, 1, 1);
-     }
+   e_border_focus_set(bd, 1, 1);
 }
 
 static Tasks_Item *
 _tasks_item_new(Tasks *tasks, E_Border *border)
 {
    Tasks_Item *item;
-   const char *drop[] = {"text/uri-list","text/x-moz-url", "enlightenment/x-file"};
+   const char *drop[] = { "text/uri-list", "text/x-moz-url", "enlightenment/x-file" };
 
    item = E_NEW(Tasks_Item, 1);
    e_object_ref(E_OBJECT(border));
