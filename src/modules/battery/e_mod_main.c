@@ -16,6 +16,7 @@ double current_power;
 int current_time_left;
 Eina_Bool bat_charging;
 Eina_Bool mouse_down = EINA_FALSE;
+static Ecore_Timer *popup_timer;
 
 /* and actually define the gadcon class that this module provides (just 1) */
 static const E_Gadcon_Client_Class _gadcon_class =
@@ -439,6 +440,11 @@ _battery_cb_warning_popup_hide(void *data, Evas *e __UNUSED__, Evas_Object *obj 
    mouse_down = EINA_FALSE;
    if ((!inst) || (!inst->warning)) return;
    e_gadcon_popup_hide(inst->warning);
+   if (popup_timer)
+     {
+       ecore_timer_del(popup_timer);
+       popup_timer = NULL;
+     }
 }
 
 static void
@@ -590,7 +596,7 @@ _battery_warning_popup(Instance *inst, int t, double percent, int warn)
          }
      }
    else
-     ecore_timer_add(5.0 ,_battery_cb_warning_popup_timeout, inst);
+     popup_timer = ecore_timer_add(5.0 ,_battery_cb_warning_popup_timeout, inst);
 }
 
 static Eina_Bool
