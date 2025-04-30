@@ -1506,7 +1506,6 @@ _gadman_shelf_orient_change(void *d __UNUSED__, int type __UNUSED__, void *event
 {
    E_Gadcon_Client *gcc = NULL;
    E_Config_Gadcon_Client *cf_gcc;
-   //~ E_Gadcon *gc;
    E_Shelf *es;
    E_Zone *zone;
    Eina_List *l, *ll, *lll;
