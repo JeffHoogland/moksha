@@ -1506,7 +1506,7 @@ _gadman_shelf_orient_change(void *d __UNUSED__, int type __UNUSED__, void *event
 {
    E_Gadcon_Client *gcc = NULL;
    E_Config_Gadcon_Client *cf_gcc;
-   E_Gadcon *gc;
+   //~ E_Gadcon *gc;
    E_Shelf *es;
    E_Zone *zone;
    Eina_List *l, *ll, *lll;
@@ -1516,55 +1516,52 @@ _gadman_shelf_orient_change(void *d __UNUSED__, int type __UNUSED__, void *event
    /* the shelf position conflicts - overlap                 */
    /* it should cover the multiple screens as well           */
 
-   EINA_LIST_FOREACH(Man->gadcons[GADMAN_LAYER_BG], l, gc)
+   EINA_LIST_FOREACH_SAFE(Man->gadgets[GADMAN_LAYER_BG], l, ll, cf_gcc)
      {
-       EINA_LIST_FOREACH(gc->cf->clients, ll, cf_gcc)
+       EINA_LIST_FOREACH(e_shelf_list(), lll, es)
          {
-           EINA_LIST_FOREACH(e_shelf_list(), lll, es)
+           gcc = e_gadcon_client_find(NULL, cf_gcc);
+           evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
+           zone = gcc->gadcon->zone;
+           if (zone != es->zone) continue;
+           if (x > zone->x) x = x - zone->x;
+           if (y > zone->y) y = y - zone->y;
+
+           switch (es->gadcon->orient)
              {
-               gcc = e_gadcon_client_find(gc, cf_gcc);
-               evas_object_geometry_get(gcc->o_frame, &x, &y, &w, &h);
-               zone = gcc->gadcon->zone;
-               if (zone != es->zone) continue;
-               if (x > zone->x) x = x - zone->x;
-               if (y > zone->y) y = y - zone->y;
+               case E_GADCON_ORIENT_RIGHT:
+               case E_GADCON_ORIENT_CORNER_RT:
+               case E_GADCON_ORIENT_CORNER_RB:
+                 if (x + w > es->x)
+                   gcc->cf->geom.pos_x = ((double)x - es->w) / (double)gcc->gadcon->zone->w;
+                break;
 
-               switch (es->gadcon->orient)
-                 {
-                   case E_GADCON_ORIENT_RIGHT:
-                   case E_GADCON_ORIENT_CORNER_RT:
-                   case E_GADCON_ORIENT_CORNER_RB:
-                     if (x + w > es->x)
-                       gcc->cf->geom.pos_x = ((double)x - es->w) / (double)gcc->gadcon->zone->w;
-                    break;
+               case E_GADCON_ORIENT_LEFT:
+               case E_GADCON_ORIENT_CORNER_LT:
+               case E_GADCON_ORIENT_CORNER_LB:
+                 if (x < es->x + es->w)
+                   gcc->cf->geom.pos_x = ((double)x + es->w) / (double)gcc->gadcon->zone->w;
+                break;
 
-                   case E_GADCON_ORIENT_LEFT:
-                   case E_GADCON_ORIENT_CORNER_LT:
-                   case E_GADCON_ORIENT_CORNER_LB:
-                     if (x < es->x + es->w)
-                       gcc->cf->geom.pos_x = ((double)x + es->w) / (double)gcc->gadcon->zone->w;
-                    break;
+               case E_GADCON_ORIENT_TOP:
+               case E_GADCON_ORIENT_CORNER_TL:
+               case E_GADCON_ORIENT_CORNER_TR:
+                 if (y < es->y + es->h)
+                   gcc->cf->geom.pos_y = ((double)y + es->h) / (double)gcc->gadcon->zone->h;
+                break;
 
-                   case E_GADCON_ORIENT_TOP:
-                   case E_GADCON_ORIENT_CORNER_TL:
-                   case E_GADCON_ORIENT_CORNER_TR:
-                     if (y < es->y + es->h)
-                       gcc->cf->geom.pos_y = ((double)y + es->h) / (double)gcc->gadcon->zone->h;
-                    break;
+               case E_GADCON_ORIENT_BOTTOM:
+               case E_GADCON_ORIENT_CORNER_BL:
+               case E_GADCON_ORIENT_CORNER_BR:
+                 if (y + h > es->y)
+                   gcc->cf->geom.pos_y = ((double)y - es->h) / (double)gcc->gadcon->zone->h;
+                break;
 
-                   case E_GADCON_ORIENT_BOTTOM:
-                   case E_GADCON_ORIENT_CORNER_BL:
-                   case E_GADCON_ORIENT_CORNER_BR:
-                     if (y + h > es->y)
-                       gcc->cf->geom.pos_y = ((double)y - es->h) / (double)gcc->gadcon->zone->h;
-                    break;
-
-                   default:
-                    break;
-                 }
-               _apply_widget_position(gcc);
-            }
-        }
+               default:
+                break;
+             }
+           _apply_widget_position(gcc);
+         }
      }
 
    return ECORE_CALLBACK_RENEW;
