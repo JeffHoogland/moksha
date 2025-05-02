@@ -10429,19 +10429,19 @@ msgstr "Volume alterado"
 
 #: src/modules/mixer/e_mod_main.c:248
 msgid "Increase Volume"
-msgstr "Aumenta o volume"
+msgstr "Aumentar volume"
 
 #: src/modules/mixer/e_mod_main.c:256
 msgid "Decrease Volume"
-msgstr "Diminui o volume"
+msgstr "Diminuir volume"
 
 #: src/modules/mixer/e_mod_main.c:264
 msgid "Mute volume"
-msgstr "Silenciar o volume"
+msgstr "Silenciar volume"
 
 #: src/modules/mixer/e_mod_main.c:277
 msgid "Volume Increase"
-msgstr "Aumento do volume"
+msgstr "Aumentar volume"
 
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
@@ -10450,9 +10450,3 @@ msgstr "Silenciar volume"
 #: src/modules/separator/e_mod_main.c:122
 msgid "Separator"
 msgstr "Separador"
-
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "Gestor de ficheiros personalizado para abrir diretórios"
-
-#~ msgid "Show icon label"
-#~ msgstr "Mostrar legenda dos ícones"
