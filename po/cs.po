@@ -1921,7 +1921,7 @@ msgstr "Přesunout na"
 
 #: src/bin/e_gadcon.c:1755
 msgid "Automatically scroll contents"
-msgstr "Automaticky skorolovat obsah"
+msgstr "Automaticky skrolovat obsah"
 
 #: src/bin/e_gadcon.c:1768 src/modules/gadman/e_mod_gadman.c:1007
 msgid "Plain"
@@ -3626,7 +3626,7 @@ msgid ""
 "be found in the<br>module search directories.<br>"
 msgstr ""
 "Došlo k chybě při načítání modulu %s.<br>Žádný modul s názvem %s nebyl "
-"nazelen<br>v adresářích pro hledání modulů.<br>"
+"nalezen<br>v adresářích pro hledání modulů.<br>"
 
 #: src/bin/e_module.c:237 src/bin/e_module.c:250 src/bin/e_module.c:268
 msgid "Error loading Module"
@@ -3778,7 +3778,7 @@ msgid ""
 "Shelf autohiding will not work properly<br>with the current configuration; "
 "set your shelf to<br>\"Below Everything\" or disable autohiding."
 msgstr ""
-"Automatické skrývání panelu nebude fungovat správně<br>se stávajíci "
+"Automatické skrývání panelu nebude fungovat správně<br>se stávající "
 "konfigurací; nastavte v panelu<br>\"Pod vším\" nebo vypněte automatické "
 "skrývání."
 
@@ -4412,7 +4412,7 @@ msgstr "Použít notifikace pro upozornění"
 
 #: src/modules/battery/e_mod_config.c:235
 msgid "Check every:"
-msgstr "Kontrolova každých:"
+msgstr "Kontrolovat každých:"
 
 #: src/modules/battery/e_mod_config.c:237
 #: src/modules/conf_performance/e_int_config_performance.c:128
@@ -5129,7 +5129,7 @@ msgstr "Časový limit"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:171
 msgid "Suspend on blank"
-msgstr "Uspat při vypnutí displaye"
+msgstr "Uspat při vypnutí displeje"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:175
 msgid "Suspend even if AC"
@@ -5366,7 +5366,7 @@ msgstr "Levý dolní roh"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1450
 msgid "(left clickable)"
-msgstr "(ostáva s kliknutím)"
+msgstr "(ponechat s kliknutím)"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1452
 msgid "(clickable)"
@@ -5519,7 +5519,7 @@ msgstr "Tlačítka"
 #: src/modules/conf_interaction/e_int_config_mouse.c:353
 #: src/modules/conf_interaction/e_int_config_mouse.c:392
 msgid "Middle mouse button emulation"
-msgstr "ProEmulace středního tlačítka"
+msgstr "Pro Emulaci středního tlačítka"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:366
 msgid "Mouse"
@@ -6668,7 +6668,7 @@ msgstr "Základní pozadí rámu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:127
 msgid "Scroller Frame Background Base"
-msgstr "Základní pozadí posuvajícího rámu"
+msgstr "Základní pozadí posouvajícího rámu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:132
 msgid "Module Label"
@@ -9376,7 +9376,7 @@ msgid ""
 "app is unknown to us<br>or it is not intended for use with this option."
 "<br>Please choose an action to take:"
 msgstr ""
-"Vybrané okno vytvořené s názvem:<br>%s<br>a třídou:<br>%s<br>by mohlonemohu "
+"Vybrané okno vytvořené s názvem:<br>%s<br>a třídou:<br>%s<br>nebylo možné "
 "nalézt v databázi aplikací Rychlého přístupu<br>To znamená, že buď aplikace "
 "nám není známa<br>nebo není míněna k použití s touto funkcí. <br>Prosím, "
 "vyberte co s tím:"
