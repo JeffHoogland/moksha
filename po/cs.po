@@ -281,7 +281,7 @@ msgstr "Režim maximalizace \"Roztáhnout\""
 
 #: src/bin/e_actions.c:3233
 msgid "Maximize Mode \"Fill\""
-msgstr "Režim maxilaizace \"Vyplnit\""
+msgstr "Režim maximalizace \"Vyplnit\""
 
 #: src/bin/e_actions.c:3240
 msgid "Shade Up Mode Toggle"
@@ -905,7 +905,7 @@ msgid ""
 msgstr ""
 "Vaše nastavení je NOVĚJŠÍ než Moksha. To je velice<br>zvláštní. Nemělo by se "
 "to stát, pokud jste ovšem nedowngradovali<br>Moksha nebo nekopírovali "
-"soubory s nastavením z místa, kde<br>běžela novější verze Mokshau. Je to zlé "
+"soubory s nastavením z místa, kde<br>běžela novější verze Moksha. Je to zlé "
 "a jako protiopatření<br>bylo vaše nastavení vráceno do původních hodnot."
 "<br>Omlouváme se za způsobené potíže.<br>"
 
@@ -919,7 +919,7 @@ msgid ""
 "Moksha has had an error while moving config files<br>from:<br>%s<br><br>to:"
 "<br>%s<br><br>The rest of the write has been aborted for safety.<br>"
 msgstr ""
-"V Mokshau nastal problém při přesunu<br>souborů nastavení z:<br>%s<br><br>do:"
+"V Moksha nastal problém při přesunu<br>souborů nastavení z:<br>%s<br><br>do:"
 "<br>%s<br><br>Zbytek byl přerušen kvůli bezpečnosti.<br>"
 
 #: src/bin/e_config.c:1597 src/bin/e_config.c:2223
@@ -1027,7 +1027,7 @@ msgstr "Dešifrování selhalo."
 
 #: src/bin/e_config.c:2191
 msgid "The error is unknown to Moksha."
-msgstr "Chyba je Mokshau neznámá."
+msgstr "Chyba je v Moksha neznámá."
 
 #: src/bin/e_config.c:2213
 #, c-format
@@ -1036,7 +1036,7 @@ msgid ""
 "file where the error occurred was:<br>%s<br><br>This file has been deleted "
 "to avoid corrupt data.<br>"
 msgstr ""
-"Mokshau selhalo zapisování<br>jeho konfiguračního souboru."
+"V Moksha selhalo zapisování<br>jeho konfiguračního souboru."
 "<br>%s<br><br>Soubor, u kterého nastala chyba:<br>%s<br><br>Tento soubor byl "
 "smazán, aby nedošlo k porušení dat.<br>"
 
@@ -1088,7 +1088,7 @@ msgstr "Chyba - žádná podpora PAM"
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
 msgstr ""
-"PAM podpora nebyla do Mokshau zakompilována, takže<br>zamykání plochy bylo "
+"PAM podpora nebyla do desktopu Moksha zakompilována, takže<br>zamykání plochy bylo "
 "zakázáno."
 
 #: src/bin/e_desklock.c:303
@@ -1972,7 +1972,7 @@ msgid ""
 "or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "highlight> to abort."
 msgstr ""
-"Prosím stiskněte modifikátor, který chcete<br>a tlačitko myši,<br> nebo "
+"Prosím stiskněte modifikátor, který chcete<br>a tlačítko myši,<br> nebo "
 "použijte kolečko, k nastavení zkratky.<br>Stiskněte <hilight>Escape</"
 "highlight> ke zrušení."
 
@@ -1989,7 +1989,7 @@ msgid ""
 "A previous instance of Moksha is still active\n"
 "on this screen. Aborting startup.\n"
 msgstr ""
-"Přechozí instance Mokshau je stále aktivní\n"
+"Přechozí instance Moksha je stále aktivní\n"
 "na této obrazovce. Ruším start.\n"
 
 #: src/bin/e_import_dialog.c:74 src/bin/e_import_dialog.c:84
@@ -2301,7 +2301,7 @@ msgstr "Vybrat styl okrajů"
 
 #: src/bin/e_int_border_menu.c:1231
 msgid "Use Moksha Default Icon Preference"
-msgstr "Použít výchozí výběr ikon Mokshau"
+msgstr "Použít výchozí výběr ikon Moksha"
 
 #: src/bin/e_int_border_menu.c:1239
 msgid "Use Application Provided Icon"
@@ -2622,7 +2622,7 @@ msgstr ""
 "velikost, umístění, styl okrajů oken atd.) pro<br>okno, které <hilight>nemá "
 "unikátní vlastnosti</hilight>.<br><br>To znamená, že sdílí Název/Třídu, "
 "průhlednost, úlohu a další vlastnost s více než jedním oknem na obrazovce a "
-"pokud seuloží takové<br>nastavení pro toto okno, aplikuje si i na všechna "
+"pokud se uloží takové<br>nastavení pro toto okno, aplikuje si i na všechna "
 "ostatní okna,<br>která mají stejné vlastnosti.<br><br>Je vhodné zapnout "
 "volbu <hilight>Aplikuj pouze pro jedno okno</hilight> v případě, že "
 "si<br>přejete, aby nastavení platila jen pro jednu instanci tohoto okna "
@@ -2825,7 +2825,7 @@ msgid ""
 "input<br>method configuration is correct and<br>that your "
 "configuration's<br>executable is in your PATH<br>"
 msgstr ""
-"Chyba při spouštění vstupní metody.<br><br>Prosím ujistětě se, že "
+"Chyba při spouštění vstupní metody.<br><br>Prosím ujistěte se, že "
 "vaše<br>nastavení vstupní metody je správné a<br>soubor pro spuštění metody "
 "je v PATH<br>"
 
@@ -3019,30 +3019,30 @@ msgstr "Zobrazit na vybraných plochách"
 
 #: src/bin/e_main.c:295
 msgid "Moksha cannot initialize Eina!\n"
-msgstr "Mokshau se nepodařilo inicializovat Eina!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Eina!\n"
 
 #: src/bin/e_main.c:301
 msgid "Moksha could not create a logging domain!\n"
-msgstr "Mokshau se nepodařilo začít logovat!\n"
+msgstr "Desktopu Moksha se nepodařilo začít logovat!\n"
 
 #: src/bin/e_main.c:353
 msgid "Moksha cannot initialize Eet!\n"
-msgstr "Mokshau se nepodařilo inicializovat Eet!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Eet!\n"
 
 #: src/bin/e_main.c:362
 msgid "Moksha cannot initialize Ecore!\n"
-msgstr "Mokshau se nepodařilo inicializovat Ecore!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat Ecore!\n"
 
 #: src/bin/e_main.c:376
 msgid "Moksha cannot initialize EIO!\n"
-msgstr "Mokshau se nepodařilo inicializovat EIO!\n"
+msgstr "Desktopu Moksha se nepodařilo inicializovat EIO!\n"
 
 #: src/bin/e_main.c:388
 msgid ""
 "Moksha cannot set up an exit signal handler.\n"
 "Perhaps you are out of memory?"
 msgstr ""
-"Mokshau se nepodařilo nastavit obsluhu signálu exit.\n"
+"Desktopu Moksha se nepodařilo nastavit obsluhu signálu exit.\n"
 "Nedošla paměť?"
 
 #: src/bin/e_main.c:395
@@ -3871,7 +3871,7 @@ msgstr "Zrušit odhlašování"
 
 #: src/bin/e_sys.c:563
 msgid "Logout in progress"
-msgstr "Probíhá odhlašení"
+msgstr "Probíhá odhlášení"
 
 #: src/bin/e_sys.c:566
 msgid "Logout in progress.<br><hilight>Please wait.</hilight>"
@@ -5391,7 +5391,7 @@ msgid ""
 "The signal and source that you entered are already used by<br><hilight>%s</"
 "hilight> action.<br>"
 msgstr ""
-"Signál a zdroj, který jste vybralí již má nastavenu vazbu<br><hilight>%s</"
+"Signál a zdroj, který jste vybrali již má nastavenu vazbu<br><hilight>%s</"
 "hilight> na akci.<br>"
 
 #: src/modules/conf_edgebindings/e_int_config_signalbindings.c:634
@@ -5631,7 +5631,7 @@ msgid ""
 "really a valid configuration?"
 msgstr ""
 "Moksha nemohl importovat nastavení.<br><br>Jste si jisti, že je to "
-"opravdusprávná konfigurace?"
+"opravdu správná konfigurace?"
 
 #: src/modules/conf_intl/e_int_config_imc_import.c:300
 msgid "Moksha was unable to import the configuration<br>due to a copy error."
@@ -5938,7 +5938,7 @@ msgid ""
 "<br>or roll a wheel, to assign mouse binding.<br>Press <hilight>Escape</"
 "hilight> to abort."
 msgstr ""
-"Prosím stiskněte modifikátor, který chcete<br>a tlačitko myši,<br> nebo "
+"Prosím stiskněte modifikátor, který chcete<br>a tlačítko myši,<br> nebo "
 "použijte kolečko, k nastavení zkratky.<br>Stiskněte <hilight>Escape</"
 "highlight> ke zrušení."
 
@@ -6259,7 +6259,7 @@ msgid ""
 "support?"
 msgstr ""
 "Vybrali jste podporu kompozice ARGB,<br>ale vaše aktuální obrazovka tuto "
-"kompozicinepodporuje.<br><br>Opravdu chcete kompozitní ARGB povolit?"
+"kompozici nepodporuje.<br><br>Opravdu chcete kompozitní ARGB povolit?"
 
 #: src/modules/conf_performance/e_int_config_engine.c:114
 msgid "Enable"
@@ -8040,7 +8040,7 @@ msgstr "Everything - Kolekce"
 
 #: src/modules/everything/evry_gadget.c:169
 msgid "Everything Starter"
-msgstr "Spuštěč Everything"
+msgstr "Spouštěč Everything"
 
 #: src/modules/everything/evry_gadget.c:587
 msgid "Everything Gadgets"
@@ -8445,7 +8445,7 @@ msgstr "Pohled"
 
 #: src/modules/fileman/e_mod_config.c:344
 msgid "File Extensions"
-msgstr "Připony souborů"
+msgstr "Přípony souborů"
 
 #: src/modules/fileman/e_mod_config.c:347
 msgid "Full Path In Title"
@@ -8490,7 +8490,7 @@ msgstr "Maximální velikost souboru pro náhled"
 # WTF?
 #: src/modules/fileman/e_mod_config.c:422
 msgid "Spring Delay"
-msgstr "Spring zpoždění"
+msgstr "Čas zpoždění"
 
 #: src/modules/fileman/e_mod_config.c:428
 #: src/modules/quickaccess/e_mod_config.c:252
@@ -8831,7 +8831,7 @@ msgstr "Uzamknout pohyb ikon"
 
 #: src/modules/ibar/e_mod_config.c:167
 msgid "Don't add items on launch"
-msgstr "Nepřdávat položku po spuštění"
+msgstr "Nepřidávat položku po spuštění"
 
 #: src/modules/ibar/e_mod_config.c:169
 msgid "Track launch"
@@ -9220,11 +9220,11 @@ msgstr ""
 "<br>bezpečnostních a jiných oprav,<br>stejně jako dostupných modulů."
 "<br><br>To je velmi užitečné, protože vás uvědomí<br>o dostupných opravách, "
 "když se vyskytnou.<br>Moksha se připojí k enlightenment.org<br>a dotáže se "
-"stejně, jako by to učinil<br>webový prohlížec. Žádné osobní "
+"stejně, jako by to učinil<br>webový prohlížeč. Žádné osobní "
 "informace<br>jako uživatelské jméno, heslo ani žádné<br>soubory nebudou "
 "přeneseny. Pokud toto nechcete,<br>vypněte to prosím níže. Je velmi "
 "doporučováno<br>toto nevypínat, protože vás to může zanechat "
-"zranitelné<br>nebos chybami."
+"zranitelné<br>nebo s chybami."
 
 #: src/modules/wizard/page_170.c:54
 msgid "Enable update checking"
@@ -9237,7 +9237,7 @@ msgstr "Informace"
 #: src/modules/wizard/page_180.c:33
 msgid "A taskbar can be added to<br>show open windows and applications."
 msgstr ""
-"Je možné přidat Seznam úkolú<br>pro zobrazení otevřených oken a aplikací."
+"Je možné přidat Seznam úkolů<br>pro zobrazení otevřených oken a aplikací."
 
 #: src/modules/wizard/page_180.c:39
 msgid "Enable Taskbar"
@@ -9336,7 +9336,7 @@ msgid ""
 msgstr ""
 "Použití možnosti 'Znovu spouštět' je slouží pro vytvoření trvalého<br> "
 "terminálu, který se znovu otevře, když je zavřen, obvykle k vidění<br> u "
-"vysouvácích quake-style terminálů.<br>Buď vybraná aplikace není "
+"vysouvacích quake-style terminálů.<br>Buď vybraná aplikace není "
 "terminál<br>nebo parametr pro změnu jména jeho okna<br>není známo. Pokud "
 "tento terminál dokáže změnit jméno okna, nebojte se nahlásit chybu.<br> "
 "Můžete také přidat data.item"
@@ -9362,7 +9362,7 @@ msgstr "Nápověda Rychlého přístupu"
 #: src/modules/quickaccess/e_mod_quickaccess.c:343
 msgid "Cannot set relaunch for window without name and class!"
 msgstr ""
-"Nemohu nastavit opětovné spustění pro okno, které nemá ani jméno ani třídu!"
+"Nemohu nastavit opětovné spuštění pro okno, které nemá ani jméno ani třídu!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:350
 msgid "Cannot set relaunch for internal E dialog!"
@@ -9736,7 +9736,7 @@ msgstr ""
 
 #: src/modules/shot/e_mod_main.c:1237
 msgid "Delayed shot"
-msgstr "Zpožděný snímek obzrazovky"
+msgstr "Zpožděný snímek obrazovky"
 
 #: src/modules/shot/e_mod_main.c:1277 src/modules/shot/e_mod_main.c:1325
 msgid "Take Shot"
@@ -9756,7 +9756,7 @@ msgstr "Nastavení snímku obrazovky"
 
 #: src/modules/shot/e_mod_config.c:100
 msgid " Show the screenshot mode dialog"
-msgstr " Zobrazit režím snímání obrazovky"
+msgstr " Zobrazit režim snímání obrazovky"
 
 #: src/modules/shot/e_mod_config.c:103
 msgid " Screenshot guide (quality/share/save)"
@@ -9772,11 +9772,11 @@ msgstr " Zkopírovat do schránky"
 
 #: src/modules/shot/e_mod_config.c:112
 msgid " Launch app after screenshot"
-msgstr " Otevrít snímek v aplikaci"
+msgstr " Otevřít snímek v aplikaci"
 
 #: src/modules/shot/e_mod_config.c:115
 msgid "Application for opening:"
-msgstr "Aplikace pro otevřní snímku:"
+msgstr "Aplikace pro prohlížení snímku:"
 
 #: src/modules/shot/e_mod_config.c:121
 msgid "Folder for saving screenshots:"
@@ -9886,7 +9886,7 @@ msgstr "Odstranit zásobník"
 
 #: src/modules/tiling/e_mod_tiling.c:4228
 msgid "Toggle between rows and columns"
-msgstr "Přepnout mezi řadkami a sloupci"
+msgstr "Přepnout mezi řádkami a sloupci"
 
 #: src/modules/tiling/e_mod_tiling.c:4231
 msgid "Swap a window with another"
@@ -10244,7 +10244,7 @@ msgid ""
 "You wish to delete the current item.<br><br>Are you sure you want to delete "
 "it?"
 msgstr ""
-"Požádali jste o smazáni polžky historie.<br><br>Opravdu ji chcete smazat?"
+"Požádali jste o smazáni položky historie.<br><br>Opravdu ji chcete smazat?"
 
 #: src/modules/clipboard/e_mod_main.c:808
 msgid "Clipboard: Edit Item"
@@ -10443,7 +10443,7 @@ msgstr "Změněna zvýšena"
 
 #: src/modules/mixer/e_mod_main.c:284 src/modules/mixer/e_mod_main.c:291
 msgid "Volume Mute"
-msgstr "ZVypnout zvuk"
+msgstr "Vypnout zvuk"
 
 # FIXME
 #: src/modules/separator/e_mod_main.c:122
