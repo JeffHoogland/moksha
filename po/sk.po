@@ -69,7 +69,7 @@ msgid ""
 "want to kill this window?"
 msgstr ""
 "Chystáte sa násilne ukončiť %s.<br><br>pamätajte prosím, že všetky údaje "
-"tohto okna,<br>ktoré deteraz neboli uložené sa stratia!<br><br>Ste si istý, "
+"tohto okna,<br>ktoré doteraz neboli uložené sa stratia!<br><br>Ste si istý, "
 "že chcete násilne ukončiť toto okno?"
 
 #: src/bin/e_actions.c:442
@@ -595,23 +595,23 @@ msgstr "Rozjasniť"
 
 #: src/bin/e_actions.c:3448
 msgid "Backlight Set"
-msgstr "Nastavenie Podsvietenia"
+msgstr "Nastavenie jasu"
 
 #: src/bin/e_actions.c:3450
 msgid "Backlight Min"
-msgstr "Podsvietenie Min"
+msgstr "Jas Min"
 
 #: src/bin/e_actions.c:3452
 msgid "Backlight Mid"
-msgstr "Podsvietenie Stred"
+msgstr "Jas Stred"
 
 #: src/bin/e_actions.c:3454
 msgid "Backlight Max"
-msgstr "Podsvietenie Max"
+msgstr "Jas Max"
 
 #: src/bin/e_actions.c:3457
 msgid "Backlight Adjust"
-msgstr "Nastavenie podsvietenia"
+msgstr "Nastavenie Jasu"
 
 #: src/bin/e_actions.c:3459
 msgid "Backlight Up"
@@ -1081,7 +1081,7 @@ msgstr "Kontajner %d"
 
 #: src/bin/e_desklock.c:238
 msgid "Error - no PAM support"
-msgstr "Chyba - chýba popdora PAM"
+msgstr "Chyba - chýba podpora PAM"
 
 #: src/bin/e_desklock.c:239
 msgid "No PAM support was built into Moksha, so<br>desk locking is disabled."
@@ -1870,7 +1870,7 @@ msgstr "Skupina:"
 
 #: src/bin/e_fm_prop.c:467
 msgid "Others:"
-msgstr "Ďaľšie:"
+msgstr "Ďalšie:"
 
 #: src/bin/e_fm_prop.c:480 src/bin/e_import_config_dialog.c:477
 #: src/bin/e_widget_fsel.c:348
@@ -2938,7 +2938,7 @@ msgstr "Pridať lištu"
 
 #: src/bin/e_int_menus.c:1791
 msgid "Delete a Shelf"
-msgstr "Odstránniť lištu"
+msgstr "Odstrániť lištu"
 
 #: src/bin/e_int_shelf_config.c:46
 #: src/modules/conf_shelves/e_int_config_shelf.c:55
@@ -3126,14 +3126,14 @@ msgstr "Moksha nemôže inicializovať Edje!\n"
 
 #: src/bin/e_main.c:528
 msgid "Moksha cannot initialize E_Intl!\n"
-msgstr "Moksha nemôže zinicializovať E_Intl!\n"
+msgstr "Moksha nemôže inicializovať E_Intl!\n"
 
 #: src/bin/e_main.c:538
 msgid ""
 "Moksha cannot initialize its emergency alert system.\n"
 "Have you set your DISPLAY variable?"
 msgstr ""
-"Moksha nemôže zinicializovať záchranno-poplašný systém.\n"
+"Moksha nemôže inicializovať záchranno-poplašný systém.\n"
 "Máte nastavenú premennú DISPLAY?"
 
 #: src/bin/e_main.c:557
@@ -3150,7 +3150,7 @@ msgstr "Moksha nemôže nastaviť svoj súbor registra systému.\n"
 
 #: src/bin/e_main.c:576
 msgid "Moksha cannot set up its config system.\n"
-msgstr "Moksha nemôže nastaviť svoj konfiguračný sysstém.\n"
+msgstr "Moksha nemôže nastaviť svoj konfiguračný systém.\n"
 
 #: src/bin/e_main.c:616
 msgid "Moksha cannot initialize E_Xinerama!\n"
@@ -3224,11 +3224,11 @@ msgstr "Nastavenie ACPI"
 
 #: src/bin/e_main.c:781
 msgid "Setup Backlight"
-msgstr "Nastavenie podsvietenia"
+msgstr "Nastavenie jasu"
 
 #: src/bin/e_main.c:785
 msgid "Moksha cannot configure the backlight.\n"
-msgstr "Moksha nie je schopná konfigurovať podsvietenie.\n"
+msgstr "Moksha nie je schopná konfigurovať jas.\n"
 
 #: src/bin/e_main.c:792
 msgid "Setup Powersave Modes"
@@ -3492,7 +3492,7 @@ msgstr ""
 "\t\tnapr: -fake-xinerama-screen 800x600+0+0 -fake-xinerama-screen "
 "800x600+800+0\n"
 "\t-profile CONF_PROFILE\n"
-"\t\tPoužiť profil PROFIL miesto použivatelského predvoleného alebo "
+"\t\tPoužiť profil PROFIL miesto používateľského predvoleného alebo "
 "jednoducho \"predvoleného\".\n"
 "\t-good\n"
 "\t\tByť dobrý.\n"
@@ -3898,7 +3898,7 @@ msgid ""
 "Logging out.<br>You cannot perform other system actions<br>once a logout has "
 "begun."
 msgstr ""
-"Odhlásenie.<br>Nemôžete vykonať ďalšie operaácie systému<br>odhlásenie "
+"Odhlásenie.<br>Nemôžete vykonať ďalšie operácie systému<br>odhlásenie "
 "začalo."
 
 #: src/bin/e_sys.c:607
@@ -4410,11 +4410,11 @@ msgstr "Nastavenie prístupu"
 #: src/modules/backlight/e_mod_main.c:422
 #: src/modules/conf_display/e_mod_main.c:36
 msgid "Backlight"
-msgstr "Podsvietenie"
+msgstr "Jas"
 
 #: src/modules/backlight/e_mod_main.c:509
 msgid "Backlight Controls"
-msgstr "Ovládanie podsvietenia"
+msgstr "Ovládanie Jasu"
 
 #: src/modules/battery/e_mod_config.c:64
 msgid "Battery Monitor Settings"
@@ -4442,7 +4442,7 @@ msgstr "%1.0f dielov"
 
 #: src/modules/battery/e_mod_config.c:242
 msgid "Suspend when below:"
-msgstr "Ǔsporný režim ak je menej ako:"
+msgstr "Úsporný režim ak je menej ako:"
 
 #: src/modules/battery/e_mod_config.c:245
 msgid "Hibernate when below:"
@@ -4788,7 +4788,7 @@ msgstr "Vykonať príkaz"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:94
 msgid "Only launch single instances"
-msgstr "Spustiť len jednu inštaciu"
+msgstr "Spustiť len jednu inštanciu"
 
 #: src/modules/conf_applications/e_int_config_deskenv.c:99
 msgid "X11 Basics"
@@ -4824,7 +4824,7 @@ msgstr "Vytvor spúšťač aplikácie"
 
 #: src/modules/conf_applications/e_mod_main.c:62
 msgid "IBar Other"
-msgstr "IBar ďaľší"
+msgstr "IBar ďalší"
 
 #: src/modules/conf_dialogs/e_int_config_profiles.c:53
 msgid "Profile Selector"
@@ -5153,7 +5153,7 @@ msgstr "Šetriaci režim pri vypnutom napájaní"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:180
 msgid "Suspend delay"
-msgstr "Čas do spustenia šetriaceho režimud"
+msgstr "Čas do spustenia šetriaceho režimu"
 
 #: src/modules/conf_display/e_int_config_screensaver.c:188
 #: src/modules/conf_display/e_mod_main.c:32
@@ -5166,11 +5166,11 @@ msgstr "Prepnúť do režimu prezentácie"
 
 #: src/modules/conf_display/e_int_config_dpms.c:44
 msgid "Backlight Settings"
-msgstr "Nastavenie podsvietenia"
+msgstr "Nastavenie Jasu"
 
 #: src/modules/conf_display/e_int_config_dpms.c:150
 msgid "Normal Backlight"
-msgstr "Normálne podsvietenie"
+msgstr "Normálny Jas"
 
 #: src/modules/conf_display/e_int_config_dpms.c:152
 #: src/modules/conf_display/e_int_config_dpms.c:158
@@ -5182,7 +5182,7 @@ msgstr "%3.0f"
 
 #: src/modules/conf_display/e_int_config_dpms.c:156
 msgid "Dim Backlight"
-msgstr "Tlmené podsvietenie"
+msgstr "Stlmiť jas"
 
 #: src/modules/conf_display/e_int_config_dpms.c:162
 msgid "Idle Fade Time"
@@ -5374,7 +5374,7 @@ msgstr "Pravý horný okraj"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1434
 msgid "Bottom Right Edge"
-msgstr "Pravý dolý okraj"
+msgstr "Pravý dolný okraj"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1438
 msgid "Bottom Left Edge"
@@ -5507,7 +5507,7 @@ msgstr "Kurzor"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:330
 msgid "Mouse Hand"
-msgstr "Nastevenie tlačidiel myši"
+msgstr "Nastavenie tlačidiel myši"
 
 #: src/modules/conf_interaction/e_int_config_mouse.c:338
 #: src/modules/conf_interaction/e_int_config_mouse.c:378
@@ -5762,7 +5762,7 @@ msgstr "Tlačidlo Úsporný režim"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:373
 msgid "Thermal"
-msgstr "Teplotné čido"
+msgstr "Teplotné čidlo"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:375
 msgid "Video"
@@ -5782,11 +5782,11 @@ msgstr "Priblížiť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:385
 msgid "Brightness Down"
-msgstr "Znížiť podsvietenie"
+msgstr "Znížiť jas"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:387
 msgid "Brightness Up"
-msgstr "Zvýšiť podsvietenie"
+msgstr "Zvýšiť jas"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:389
 msgid "Assist"
@@ -5813,11 +5813,11 @@ msgstr "Hlasitosť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:399
 msgid "Brightness"
-msgstr "Podsvietenie"
+msgstr "Jas"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:401
 msgid "Volume Down"
-msgstr "Znížiť hlasitisť"
+msgstr "Znížiť hlasitosť"
 
 #: src/modules/conf_keybindings/e_int_config_acpibindings.c:403
 msgid "Volume Up"
@@ -5968,7 +5968,7 @@ msgid ""
 "conflict with existing edje signal bindings.<br>FIXME!!!"
 msgstr ""
 "Nemôžem nastaviť väzbu na koliesko myši bez modifikátora<br> na okno: "
-"konflikt medzi existujúcími väzbami signálov Edje.<br>FIXME!!!"
+"konflikt medzi existujúcimi väzbami signálov Edje.<br>FIXME!!!"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:252
 msgid "Mouse Binding Error"
@@ -5981,7 +5981,7 @@ msgstr "Skratky pre myš"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:328
 msgid "Action Context"
-msgstr "Kontext činnotí"
+msgstr "Kontext činností"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:330
 #: src/modules/conf_window_remembers/e_int_config_remembers.c:348
@@ -6006,7 +6006,7 @@ msgstr "Zóna"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:354
 msgid "Container"
-msgstr "Kontajnér"
+msgstr "Kontajner"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:358
 msgid "Manager"
@@ -6051,7 +6051,7 @@ msgstr "Stredné tlačidlo"
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1214
 #, c-format
 msgid "Extra button (%d)"
-msgstr "Tlačitko %i"
+msgstr "Tlačidlo %i"
 
 #: src/modules/conf_keybindings/e_int_config_mousebindings.c:1230
 msgid "Mouse Wheel Up"
@@ -6090,7 +6090,7 @@ msgstr "Nastavenie ponuky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:176
 msgid "Moksha Default"
-msgstr "Predvolnené nastavenie Moksha"
+msgstr "Predvolené nastavenie Moksha"
 
 #: src/modules/conf_menus/e_int_config_menus.c:184
 msgid "Personal Default"
@@ -6244,7 +6244,7 @@ msgstr "Základné priečinky"
 
 #: src/modules/conf_paths/e_int_config_paths.c:204
 msgid "User Defined Directories"
-msgstr "Uživateľom definované priečinky"
+msgstr "Užívateľom definované priečinky"
 
 #: src/modules/conf_paths/e_int_config_env.c:36
 #: src/modules/conf_paths/e_mod_main.c:24
@@ -6305,11 +6305,11 @@ msgstr "Povoliť oneskorenie spustenia modulu"
 
 #: src/modules/conf_performance/e_int_config_performance.c:126
 msgid "Cache flush interval"
-msgstr "Interval uvoľňóvania vyrovnávacej pamäte"
+msgstr "Interval uvoľňovania vyrovnávacej pamäte"
 
 #: src/modules/conf_performance/e_int_config_performance.c:132
 msgid "Font cache size"
-msgstr "Veľkosť vyrovnávecej pamäte písma"
+msgstr "Veľkosť vyrovnávacej pamäti písma"
 
 #: src/modules/conf_performance/e_int_config_performance.c:134
 #, c-format
@@ -6318,7 +6318,7 @@ msgstr "%1.1f MB"
 
 #: src/modules/conf_performance/e_int_config_performance.c:138
 msgid "Image cache size"
-msgstr "Veľkost vyrovnávacej pamäte obrázkov"
+msgstr "Veľkosť vyrovnávacej pamäte obrázkov"
 
 #: src/modules/conf_performance/e_int_config_performance.c:140
 #: src/modules/fileman/e_mod_config.c:418
@@ -6693,7 +6693,7 @@ msgstr "Názov modulu"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:133
 msgid "Composite Focus-out Color"
-msgstr "Farba kompoztnej deaktivácie"
+msgstr "Kompozitná farba zaostrenia"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:165
 #: src/modules/conf_theme/e_mod_main.c:248
@@ -6751,7 +6751,7 @@ msgstr "Farby sú závislé na možnostiach témy."
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:860
 msgid "Window Manager"
-msgstr "Správca okienr"
+msgstr "Správca okien"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:862
 #: src/modules/conf_theme/e_int_config_fonts.c:81
@@ -6760,7 +6760,7 @@ msgstr "Widgety"
 
 #: src/modules/conf_theme/e_int_config_color_classes.c:868
 msgid "Others"
-msgstr "Ďaľšie"
+msgstr "Ďalšie"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:59
 msgid "Title Bar"
@@ -6964,7 +6964,7 @@ msgstr "Meno núdzového fontu"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:704
 msgid "Enable Fallbacks"
-msgstr "Povoliť núdové fonty"
+msgstr "Povoliť núdzové fonty"
 
 #: src/modules/conf_theme/e_int_config_fonts.c:713
 msgid "Hinting / Fallbacks"
@@ -7121,7 +7121,7 @@ msgstr ""
 #: src/modules/conf_theme/e_int_config_theme_import.c:293
 msgid "Moksha was unable to import the theme<br>due to a copy error."
 msgstr ""
-"Moksha nie je schopná importovať mtému<br><br>vzhľadom ku chybe pri "
+"Moksha nie je schopná importovať tému<br><br>vzhľadom ku chybe pri "
 "kopírovaní."
 
 #: src/modules/conf_theme/e_int_config_xsettings.c:68
@@ -7548,7 +7548,7 @@ msgstr "Povoliť manipuláciu s maximalizovanými oknami"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:234
 msgid "Allow windows above fullscreen window"
-msgstr "Povoliť oknám byť nad oknami v plnoobrazovkom režime"
+msgstr "Povoliť oknám byť nad oknami v celoobrazovkom režime"
 
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:237
 msgid "Snap windows to the screen edge"
@@ -7885,11 +7885,11 @@ msgstr "Dostupné doplnky"
 
 #: src/modules/everything/evry_config.c:379
 msgid "Move Up"
-msgstr "Posunút hore"
+msgstr "Posunúť hore"
 
 #: src/modules/everything/evry_config.c:382
 msgid "Move Down"
-msgstr "Posunút dole"
+msgstr "Posunúť dole"
 
 #: src/modules/everything/evry_config.c:388
 #: src/modules/connman/e_mod_main.c:323
@@ -8264,7 +8264,7 @@ msgstr ""
 "ctrl+tab&gt;</hilight> kompletný vstup (závisí od doplnku)<br>    "
 "<hilight>&lt;ctrl+'x'&gt;</hilight> preskočiť na doplnok začínajúci na "
 "'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> prepínať medzi "
-"pluginmi<br>    <hilight>&lt;ctrl+hore/dole&gt;</hilight> prejsť na prvú/"
+"plaginmi<br>    <hilight>&lt;ctrl+hore/dole&gt;</hilight> prejsť na prvú/"
 "poslednú položku<br>    <hilight>&lt;ctrl+1&gt;</hilight> prepína režimy "
 "zobrazenia (ukončite túto stránku ;)<br>    <hilight>&lt;ctrl+2&gt;</"
 "hilight> prepína režimy zobrazenia zoznamu<br>    <hilight>&lt;ctrl+3&gt;</"
@@ -8276,7 +8276,7 @@ msgstr "Späť"
 
 #: src/modules/fileman/e_fwin.c:2083
 msgid "Other application..."
-msgstr "Ďaľšia aplikácia..."
+msgstr "Ďalšia aplikácia..."
 
 #: src/modules/fileman/e_fwin.c:2146
 msgid "Go To Parent Directory"
@@ -9188,7 +9188,7 @@ msgstr "Skontrolujte svoje zariadenie!"
 
 #: src/modules/wizard/e_wizard.c:246 src/modules/wizard/e_wizard.c:276
 msgid "Next"
-msgstr "Ďaľší"
+msgstr "Ďalší"
 
 #: src/modules/wizard/e_wizard.c:249 src/modules/wizard/e_wizard.c:281
 msgid "Please Wait..."
@@ -9331,7 +9331,7 @@ msgstr "Chyba Rýchleho prístupu"
 #: src/modules/quickaccess/e_mod_quickaccess.c:265
 #: src/modules/quickaccess/e_mod_quickaccess.c:392
 msgid "Could not determine command for starting this application!"
-msgstr "Nie je možné určiť príkaz pre sputenie tejto aplikácie!"
+msgstr "Nie je možné určiť príkaz pre spustenie tejto aplikácie!"
 
 #: src/modules/quickaccess/e_mod_quickaccess.c:304
 msgid ""
@@ -9585,8 +9585,8 @@ msgid ""
 "Change folder in Take Screenshot settings<br><br>Menu-Settings-All-Advanced-"
 "Take Screenshot<br><br>Would you like to set up it now?"
 msgstr ""
-"Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Settings-"
-"All-Advanced-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
+"Zmena priečinku v nastavení modulu 'Snímka Obrazovky'<br><br>Menu-Nastavenie-"
+"Všetko-Pokročilé-Snímka Obrazovky<br><br>Prajete si nastaviť teraz?"
 
 #: src/modules/shot/e_mod_main.c:359
 msgid "Error saving screenshot file"
@@ -9611,7 +9611,7 @@ msgid ""
 "extensions<br>only as other formats are not<br>supported currently."
 msgstr ""
 "Súbor má nešpecifikovanú príponu.<br>Používajte iba prípony '.jpg' alebo '."
-"png',<br>pretože iné formáty nie sú v<br>súčasnosti podporova."
+"png',<br>pretože iné formáty nie sú v<br>súčasnosti podporované."
 
 #: src/modules/shot/e_mod_main.c:498
 msgid "Select screenshot save location"
@@ -9773,7 +9773,7 @@ msgstr " Zobraziť ponuku režimov"
 
 #: src/modules/shot/e_mod_config.c:103
 msgid " Screenshot guide (quality/share/save)"
-msgstr " Sprievodca snímkou (kvalita/zdielanie/uloženie)"
+msgstr " Sprievodca snímkou (kvalita/zdieľanie/uloženie)"
 
 #: src/modules/shot/e_mod_config.c:106
 msgid " Show notifications"
@@ -10132,7 +10132,7 @@ msgstr "Názvy položiek"
 
 #: src/modules/notification/e_mod_config.c:194
 msgid "Labels length"
-msgstr "Śirka textu položky"
+msgstr "Šírka textu položky"
 
 #: src/modules/notification/e_mod_config.c:201
 #: src/modules/clipboard/e_mod_config.c:256
@@ -10207,7 +10207,7 @@ msgstr " Časovač"
 
 #: src/modules/clipboard/e_mod_config.c:249
 msgid " Label Length"
-msgstr " Śirka textu položky"
+msgstr " Širka textu položky"
 
 #: src/modules/clipboard/e_mod_config.c:257
 msgid " Reverse Order"
