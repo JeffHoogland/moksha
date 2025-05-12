@@ -954,8 +954,8 @@ _ibar_icon_signal_emit(IBar_Icon *ic, const char *sig, char *src)
    E_Exec_Instance *exe;
    char buf[24];
 
-   if ((!ic->exes) || (eina_list_count(ic->exes) == 0))
-     edje_object_part_text_set(ic->o_holder, "e.text.label", "");
+   //~ if ((!ic->exes) || (eina_list_count(ic->exes) == 0))
+   edje_object_part_text_set(ic->o_holder, "e.text.label", "");
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
