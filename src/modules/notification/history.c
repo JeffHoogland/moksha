@@ -161,19 +161,19 @@ _history_descriptor_init(void)
 Hist_eet *
 history_init(void)
 {
-   Hist_eet    *hist = E_NEW(Hist_eet, 1);
-   char path[PATH_MAX] = {0};
+   Hist_eet *hist = E_NEW(Hist_eet, 1);
+   //~ char path[PATH_MAX] = {0};
 
    _history_descriptor_init();
-   if (_history_path(path) &&  ecore_file_exists(path))
-     hist = load_history(path);
-   else
+   //~ if (_history_path(path) &&  ecore_file_exists(path))
+     //~ hist = load_history(path);
+   //~ else
      {
         hist = E_NEW(Hist_eet, 1);
         hist->version = HISTORY_VERSION;
         // fixme: hist->path = ??
      }
-   hist->path=strdup(path);
+   //~ hist->path=strdup(path);
    // printf("Notify hist init %s\n", hist->path);
    return hist;
 }
@@ -271,7 +271,7 @@ list_add_item(Popup_Data *popup)
 
    notification_cfg->item_click = EINA_FALSE;
    gadget_text(notification_cfg->new_item, 1);
-   store_history(notification_cfg->hist);
+   //~ store_history(notification_cfg->hist);
 }
 
 void
@@ -285,16 +285,15 @@ popup_items_free(Popup_Items *items)
         Eina_List *l_next;
         E_Notification_Notify_Action *act;
 
-
-       EINA_LIST_FOREACH_SAFE(items->actions, l, l_next, act)
-        {
-           eina_stringshare_del(act->label);
-           eina_stringshare_del(act->action);
-           free(act);
-           items->actions = eina_list_remove_list(items->actions, l);
-        }
-      eina_list_free(items->actions);
-    }
+        EINA_LIST_FOREACH_SAFE(items->actions, l, l_next, act)
+          {
+            eina_stringshare_del(act->label);
+            eina_stringshare_del(act->action);
+            free(act);
+            items->actions = eina_list_remove_list(items->actions, l);
+          }
+        eina_list_free(items->actions);
+     }
    eina_stringshare_del(items->item_date_time);
    eina_stringshare_del(items->item_app);
    eina_stringshare_del(items->item_icon);
@@ -309,7 +308,7 @@ popup_items_free(Popup_Items *items)
 Hist_eet *
 load_history(const char *filename)
 {
-   Hist_eet * hist = NULL;
+   Hist_eet *hist = NULL;
    Eet_File *ef = eet_open(filename, EET_FILE_MODE_READ);
    if (!ef)
      {
@@ -323,8 +322,8 @@ load_history(const char *filename)
 
    if (hist->version != HISTORY_VERSION)
      {
-        fprintf(stderr,
-                "WARNING: version %#x was too old, upgrading it to %#x\n",
+       fprintf(stderr,
+               "WARNING: version %#x was too old, upgrading it to %#x\n",
                 hist->version, HISTORY_VERSION);
 
        hist->version = HISTORY_VERSION;

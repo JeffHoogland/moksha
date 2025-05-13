@@ -149,7 +149,7 @@ e_modapi_init(E_Module *m)
    // running code at different commits, was NULL later segfaults.
    if (!notification_cfg->blacklist)
       notification_cfg->blacklist = eina_stringshare_add("");
-      
+
    notification_cfg->hist = history_init();
 
    return m;
@@ -525,7 +525,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    if (sel_item->item_icon_img)
        ecore_file_remove(sel_item->item_icon_img);
 
-   store_history(notification_cfg->hist);
+   // store_history(notification_cfg->hist);
 }
 
 static void
@@ -558,7 +558,7 @@ clear_menu(void)
    if (notification_cfg->hist->history)
      E_FREE_LIST(notification_cfg->hist->history, popup_items_free);
 
-   store_history(notification_cfg->hist);
+   // store_history(notification_cfg->hist);
 }
 
 static void
