@@ -74,7 +74,6 @@ _data_path(char *path)
    const int len = snprintf(NULL, 0, "%s", temp_str)
                              + 1 + (temp_str[strlen(temp_str)-1] != '/');
    if (temp_str[0] == '/' ) {
-
      if (len <= PATH_MAX) {
        snprintf(path, strlen(temp_str)+1, "%s", temp_str);
        // Ensure XDG_DATA_HOME terminates in '/'
@@ -108,7 +107,7 @@ _history_path(char *path)
    char temp_str[PATH_MAX] = {0};
    Eina_Bool success = EINA_TRUE;
 
-   if(_data_path(path)) {
+   if (_data_path(path)) {
        const int len = snprintf(NULL, 0, "%s%s/%s", path, NOTIFICATION_MOD_NAME, HISTORY_NAME) + 1;
        if (len <= PATH_MAX) {
          strncpy(temp_str, path, PATH_MAX-1);
