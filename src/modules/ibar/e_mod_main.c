@@ -1477,7 +1477,7 @@ _ibar_icon_mouse_in_timer(void *data)
 static void
 _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
-  IBar_Icon *ic;
+   IBar_Icon *ic;
 
    ic = data;
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
@@ -2120,7 +2120,7 @@ _ibar_inst_cb_move(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
-   int x,y;
+   int x, y;
 
    ev = event_info;
    inst = data;
