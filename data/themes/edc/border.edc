@@ -407,14 +407,6 @@ group { name: "e/widgets/border/default/border";
             color: 0 0 0 0;
          }
       }
-      part { name: "e.event.resize.tl"; type: RECT;
-         description { state: "default" 0.0;
-            rel2.relative: 0.0 0.0;
-            min: 32 4;
-            align: 0.0 0.0;
-            color: 0 0 0 0;
-         }
-      }
       part { name: "e.event.resize.t"; type: RECT;
          description { state: "default" 0.0;
             rel1.relative: 1.0 0.0;
@@ -426,21 +418,20 @@ group { name: "e/widgets/border/default/border";
             color: 0 0 0 0;
          }
       }
-      part { name: "e.event.resize.tr"; type: RECT;
-         description { state: "default" 0.0;
-            rel1.relative: 1.0 0.0;
-            rel2.relative: 1.0 0.0;
-            min: 32 4;
-            align: 1.0 0.0;
-            color: 0 0 0 0;
-         }
-      }
       part { name: "e.event.resize.l"; type: RECT;
          description { state: "default" 0.0;
             rel1.relative: 0.0 0.0;
             rel2.relative: 0.0 1.0;
-            rel1.offset: 0 0;
+            rel1.offset: 0 8;
             rel2.offset: 5 0;
+            align: 0.0 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "e.event.resize.tl"; type: RECT;
+         description { state: "default" 0.0;
+            rel2.relative: 0.0 0.0;
+            min: 32 8;
             align: 0.0 0.0;
             color: 0 0 0 0;
          }
@@ -452,6 +443,15 @@ group { name: "e/widgets/border/default/border";
             rel1.offset: -5 0;
             rel2.offset: 0 0;
             align: 0.0 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "e.event.resize.tr"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel2.relative: 1.0 0.0;
+            min: 32 8;
+            align: 1.0 0.0;
             color: 0 0 0 0;
          }
       }
