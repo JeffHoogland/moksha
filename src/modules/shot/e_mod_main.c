@@ -911,7 +911,7 @@ _shot_now(E_Zone *zone, E_Border *bd)
    e_win_name_class_set(win, "E", "_shot_dialog");
 
    o = edje_object_add(evas);
-   o_bg = o;;
+   o_bg = o;
    e_theme_edje_object_set(o, "base/theme/dialog", "e/widgets/dialog/main");
    evas_object_move(o, 0, 0);
    evas_object_show(o);
