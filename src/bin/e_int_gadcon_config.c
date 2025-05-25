@@ -491,7 +491,7 @@ _cb_del_advanced(void *data, void *data2 __UNUSED__)
    E_Config_Gadcon_Client *cf_gcc;
    const Eina_List *l, *sel, *ll, *lll, *llll;
    E_Ilist_Item *ili;
-   int x = 0, refresh = 0;;
+   int x = 0, refresh = 0;
 
    sel = e_widget_ilist_items_get(cfdata->advanced.o_list);
    EINA_LIST_FOREACH_SAFE(sel, ll, lll, ili)

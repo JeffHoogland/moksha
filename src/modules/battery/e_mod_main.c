@@ -473,7 +473,7 @@ static void
 _battery_warning_popup(Instance *inst, int t, double percent, int warn)
 {
    Evas *e = NULL;
-   Evas_Object *rect = NULL, *popup_bg = NULL;;
+   Evas_Object *rect = NULL, *popup_bg = NULL;
    int x, y, w, h;
    char buf[256];
 

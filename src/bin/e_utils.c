@@ -170,7 +170,7 @@ e_util_head_exec(int head, const char *cmd)
      {
         *p2 = 0;
         snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);
-        *p2 = '.';;
+        *p2 = '.';
      }
    else if (p1) /* "blah:x */
       snprintf(buf, sizeof(buf), "%s.%i", penv_display, head);

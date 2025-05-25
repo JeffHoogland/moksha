@@ -2470,7 +2470,7 @@ _e_fwin_file_open_dialog(E_Fwin_Page *page,
    E_Fm2_Icon_Info *ici;
    char buf[PATH_MAX + sizeof("removable:")];
    Eina_Bool has_default = EINA_FALSE;
-   int need_dia = 0, n = 0;;
+   int need_dia = 0, n = 0;
 
    n = eina_list_count(files);
 

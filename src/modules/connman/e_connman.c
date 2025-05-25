@@ -216,7 +216,7 @@ static void _service_parse_prop_changed(struct Connman_Service *cs,
         uint8_t strength;
         dbus_message_iter_get_basic(value, &strength);
         cs->strength = strength;
-        DBG("New strength: %d", strength);;
+        DBG("New strength: %d", strength);
      }
    else if (strcmp(prop_name, "Security") == 0)
      {

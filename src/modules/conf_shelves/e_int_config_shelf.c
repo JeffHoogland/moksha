@@ -418,7 +418,7 @@ _cb_dialog_destroy(void *data)
    E_Config_Dialog_Data *cfdata = _cfdata;
 
    if (!_cfdata) return;
-   es = data;;
+   es = data;
    if (e_object_is_del(E_OBJECT(es))) return;
    e_object_unref(E_OBJECT(es));
    _widgets_disable(cfdata, 0, EINA_TRUE);
