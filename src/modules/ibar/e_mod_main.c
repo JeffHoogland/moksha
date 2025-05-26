@@ -1191,7 +1191,6 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
             e_border_focus_set(bd, 1, 1);
          }
      }
-   //~ e_border_activate(bd, 1);
    if (ic)
      _ibar_cb_icon_menu_hide_begin(ic);
 }
@@ -1602,7 +1601,6 @@ _ibar_cb_icon_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUS
           }
         else
           _ibar_mouse_left_click(ic);
-        //~ _ibar_icon_menu_show(ic, EINA_TRUE);
      }
    else if (ev->button == 3)
      {
@@ -1730,7 +1728,6 @@ _ibar_cb_icon_wheel(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    if (!ic->exes) return;
 
    cur = e_border_focused_get();
-   //~ cur = e_border_stack_bottom_get(cur);
    if (cur && cur->exe_inst)
      {
         EINA_LIST_FOREACH(ic->exes, l, exe)
@@ -2626,7 +2623,6 @@ _ibar_go_focus(void)
    if (!man) return;
    _ibar_focus_win = ecore_x_window_input_new(man->root, -10, -20, 1, 1);
     ecore_x_window_show(_ibar_focus_win);
-   //~ _ibar_focus_win = e_comp_get(man)->ee_win;
    if (!e_grabinput_get(0, 0, _ibar_focus_win))
      {
         _ibar_focus_win = 0;
@@ -2760,7 +2756,7 @@ _ibar_cb_bd_add_del(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Remove 
    E_Exec_Instance *exe;
    int client_num = 0;
 
-   if (!ev->border->desktop) return ECORE_CALLBACK_RENEW; //can't do anything here :(
+   if (!ev->border->desktop) return ECORE_CALLBACK_RENEW; // can't do anything here :(
    EINA_LIST_FOREACH(ibars, l, b)
      {
         IBar_Icon *ic;
@@ -2796,7 +2792,7 @@ _ibar_cb_exec_del(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *exe)
    IBar *b;
    Eina_List *l;
 
-   if (!exe->desktop) return ECORE_CALLBACK_RENEW; //can't do anything here :(
+   if (!exe->desktop) return ECORE_CALLBACK_RENEW; // can't do anything here :(
    EINA_LIST_FOREACH(ibars, l, b)
      {
         IBar_Icon *ic;
@@ -2835,9 +2831,9 @@ _ibar_cb_exec_new_client(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *
    Eina_List *l;
    Eina_Bool skip;
 
-   if (!exe->desktop) return ECORE_CALLBACK_RENEW; //can't do anything here :(
+   if (!exe->desktop) return ECORE_CALLBACK_RENEW; // can't do anything here :(
    if (!exe->desktop->icon) return ECORE_CALLBACK_RENEW;
-   bd = eina_list_last_data_get(exe->borders); //only care about last (new) one
+   bd = eina_list_last_data_get(exe->borders); // only care about last (new) one
    skip = bd->client.netwm.state.skip_taskbar;
    EINA_LIST_FOREACH(ibars, l, b)
      {
@@ -2872,7 +2868,7 @@ _ibar_cb_exec_new(void *d __UNUSED__, int t __UNUSED__, E_Exec_Instance *exe)
    Eina_List *l;
    Eina_Bool skip = EINA_TRUE;
 
-   if (!exe->desktop) return ECORE_CALLBACK_RENEW; //can't do anything here :(
+   if (!exe->desktop) return ECORE_CALLBACK_RENEW; // can't do anything here :(
    if (!exe->desktop->icon) return ECORE_CALLBACK_RENEW;
    EINA_LIST_FOREACH(exe->borders, l, bd)
      if (!bd->client.netwm.state.skip_taskbar)
