@@ -893,7 +893,7 @@ _ibar_icon_free(IBar_Icon *ic)
    if (ic->ibar->ic_drop_before == ic)
      ic->ibar->ic_drop_before = NULL;
    _ibar_icon_empty(ic);
-    EINA_LIST_FREE(ic->exes, inst)
+   EINA_LIST_FREE(ic->exes, inst)
      {
         E_Border *bd;
         Eina_List *ll;
