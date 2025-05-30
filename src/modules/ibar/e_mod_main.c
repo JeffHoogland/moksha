@@ -866,6 +866,7 @@ _ibar_icon_free(IBar_Icon *ic)
    E_FREE_FUNC(ic->timer, ecore_timer_del);
    E_FREE_FUNC(ic->hide_timer, ecore_timer_del);
    E_FREE_FUNC(ic->show_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
 
    ic->ibar->icons = eina_inlist_remove(ic->ibar->icons, EINA_INLIST_GET(ic));
    eina_hash_del_by_key(ic->ibar->icon_hash, ic->hashname);
