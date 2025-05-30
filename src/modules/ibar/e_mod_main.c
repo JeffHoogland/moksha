@@ -53,6 +53,7 @@ struct _IBar
    Evas_Object     *o_sep;
    unsigned int     not_in_order_count;
    IBar_Icon       *ic_drop_before;
+   IBar_Icon       *ic_enter_before;
    int              drop_before;
    Eina_Hash       *icon_hash;
    Eina_Inlist     *icons;
@@ -72,6 +73,7 @@ struct _IBar_Icon
    Ecore_Timer     *reset_timer;
    Ecore_Timer     *show_timer; //for menu
    Ecore_Timer     *timer;
+   Ecore_Timer     *cycle_timer;
    Ecore_Timer     *hide_timer;
    E_Exec_Instance *exe_inst;
    Eina_List       *exes; //all instances
@@ -102,7 +104,7 @@ static void         _ibar_orient_set(IBar *b, int horizontal);
 static void         _ibar_resize_handle(IBar *b);
 static void         _ibar_instance_drop_zone_recalc(Instance *inst);
 static Config_Item *_ibar_config_item_get(const char *id);
-static IBar_Icon   *_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y);
+static IBar_Icon   *_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y, int pass);
 static IBar_Icon   *_ibar_icon_new(IBar *b, Efreet_Desktop *desktop, Eina_Bool notinorder);
 static IBar_Icon   *_ibar_icon_notinorder_new(IBar *b, E_Exec_Instance *exe);
 static void         _ibar_icon_free(IBar_Icon *ic);
@@ -147,6 +149,7 @@ static E_Config_DD *conf_item_edd = NULL;
 
 static Eina_Hash *ibar_orders = NULL;
 static Eina_List *ibars = NULL;
+static unsigned int cur_bd;
 
 Config *ibar_config = NULL;
 
@@ -745,7 +748,7 @@ _ibar_sep_create(IBar *b)
 }
 
 static IBar_Icon *
-_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
+_ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y, int pass)
 {
    IBar_Icon *ic;
 
@@ -754,7 +757,10 @@ _ibar_icon_at_coord(IBar *b, Evas_Coord x, Evas_Coord y)
         Evas_Coord dx, dy, dw, dh;
 
         /* block drops in the non-order section */
-        if (ic->not_in_order) continue;
+        if (pass)
+          {
+            if (ic->not_in_order) continue;
+          }
         evas_object_geometry_get(ic->o_holder, &dx, &dy, &dw, &dh);
         if (E_INSIDE(x, y, dx, dy, dw, dh))
           return ic;
@@ -1511,6 +1517,7 @@ _ibar_cb_icon_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    ic = data;
    E_FREE_FUNC(ic->reset_timer, ecore_timer_del);
    E_FREE_FUNC(ic->show_timer, ecore_timer_del);
+   E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
    ic->focused = EINA_FALSE;
    _ibar_icon_signal_emit(ic, "e,state,unfocused", "e");
    if (ic->ibar->inst->ci->show_label)
@@ -2047,7 +2054,7 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
    inst->ibar->dnd_y = y;
 
    if (inst->ibar->o_drop) e_box_unpack(inst->ibar->o_drop);
-   ic = _ibar_icon_at_coord(inst->ibar, x, y);
+   ic = _ibar_icon_at_coord(inst->ibar, x, y, 1);
 
    inst->ibar->ic_drop_before = ic;
    if (ic)
@@ -2083,14 +2090,77 @@ _ibar_drop_position_update(Instance *inst, Evas_Coord x, Evas_Coord y)
 }
 
 static void
+border_show(void *data)
+{
+   E_Border *bd = data;
+
+   if (bd->shaded)
+     e_border_unshade(bd, E_DIRECTION_UP);
+   if (!bd->visible)
+     e_border_show(bd);
+   if (bd->iconic)
+     e_border_uniconify(bd);
+   else
+     e_border_raise(bd);
+
+   e_border_focus_set(bd, 1, 1);
+}
+
+static Eina_Bool
+borders_cycle_do(void *data)
+{
+   Eina_List *borders = data;
+   E_Border *bd;
+
+   bd = eina_list_nth(borders, cur_bd);
+   border_show(bd);
+
+   if (eina_list_count(borders) == cur_bd + 1)
+     {
+       cur_bd = 0;
+       return EINA_TRUE;
+     }
+   cur_bd++;
+   return EINA_TRUE;
+}
+
+static void
 _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Enter *ev;
    Instance *inst;
    Evas_Object *o, *o2;
+   Eina_List *l;
+   E_Exec_Instance *exe;
+   E_Border *bd;
 
    ev = event_info;
    inst = data;
+
+   if (!strcmp(type, "text/uri-list"))
+     {
+        IBar_Icon *ic;
+        ic = _ibar_icon_at_coord(inst->ibar, ev->x, ev->y, 0);
+        if (!ic) return;
+        if (ic->exes)
+          {
+            if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
+              {
+                cur_bd = 0;
+                EINA_LIST_FOREACH(ic->exes, l, exe)
+                  {
+                     bd = eina_list_nth(exe->borders, cur_bd);
+                     border_show(bd);
+                     inst->ibar->ic_enter_before = ic;
+                     if (eina_list_count(exe->borders) == 1) return;
+                     cur_bd++;
+                     ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
+                  }
+              }
+           }
+        return;
+     }
+
    o = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
    inst->ibar->o_drop = o;
    o2 = edje_object_add(evas_object_evas_get(inst->ibar->o_box));
@@ -2113,14 +2183,54 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
 }
 
 static void
-_ibar_inst_cb_move(void *data, const char *type __UNUSED__, void *event_info)
+_ibar_inst_cb_move(void *data, const char *type, void *event_info)
 {
    E_Event_Dnd_Move *ev;
    Instance *inst;
    int x, y;
+   IBar_Icon *ic, *ic_before, *ic_enter;
+   Eina_List *l;
+   E_Exec_Instance *exe;
+   E_Border *bd;
 
    ev = event_info;
    inst = data;
+
+   if (!strcmp(type, "text/uri-list"))
+     {
+       ic = _ibar_icon_at_coord(inst->ibar, ev->x, ev->y, 0);
+       if (!ic) return;
+
+       if (ic != inst->ibar->ic_drop_before)
+         {
+           ic_before = inst->ibar->ic_drop_before;
+           if (ic_before) E_FREE_FUNC(ic_before->cycle_timer, ecore_timer_del);
+           ic_enter = inst->ibar->ic_enter_before;
+           if (ic_enter) E_FREE_FUNC(ic_enter->cycle_timer, ecore_timer_del);
+           if (ic) E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
+
+           ev = event_info;
+           inst = data;
+           if (ic->exes)
+             {
+               if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
+                 {
+                   cur_bd = 0;
+                   EINA_LIST_FOREACH(ic->exes, l, exe)
+                     {
+                       bd = eina_list_nth(exe->borders, cur_bd);
+                       border_show(bd);
+                       inst->ibar->ic_enter_before = ic;
+                       if (eina_list_count(exe->borders) == 1) return;
+                       cur_bd++;
+                       ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
+                     }
+                 }
+              }
+            return;
+         }
+     }
+
    _ibar_drop_position_update(inst, ev->x, ev->y);
    //~ e_gadcon_client_autoscroll_update(inst->gcc, ev->x, ev->y);
    evas_object_geometry_get(inst->ibar->o_outerbox, &x, &y, NULL, NULL);
@@ -2131,8 +2241,11 @@ static void
 _ibar_inst_cb_leave(void *data, const char *type __UNUSED__, void *event_info __UNUSED__)
 {
    Instance *inst;
+   IBar_Icon *ic;
 
    inst = data;
+   ic = inst->ibar->ic_enter_before;
+   if (ic) E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
    inst->ibar->ic_drop_before = NULL;
    evas_object_del(inst->ibar->o_drop);
    inst->ibar->o_drop = NULL;
@@ -2172,7 +2285,11 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
           }
      }
    else if (!strcmp(type, "text/uri-list"))
-     fl = ev->data;
+     {
+       //~ fl = ev->data;
+       ic = inst->ibar->ic_drop_before;
+       if (ic) E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
+     }
 
    ic = inst->ibar->ic_drop_before;
    if (ic)
@@ -2197,8 +2314,8 @@ _ibar_inst_cb_drop(void *data, const char *type, void *event_info)
         if (!ic) goto atend;
         if (app)
           e_order_prepend_relative(ic->ibar->io->eo, app, ic->app);
-        else if (fl)
-          e_order_files_prepend_relative(ic->ibar->io->eo, fl, ic->app);
+        //~ else if (fl)
+          //~ e_order_files_prepend_relative(ic->ibar->io->eo, fl, ic->app);
      }
    else
      {
