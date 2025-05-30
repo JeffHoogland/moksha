@@ -2094,7 +2094,12 @@ static void
 border_show(void *data)
 {
    E_Border *bd = data;
+   E_Desk *desk;
 
+   desk = e_desk_current_get(bd->zone);
+
+   if (desk != bd->desk && !bd->sticky)
+     e_desk_show(bd->desk);
    if (bd->shaded)
      e_border_unshade(bd, E_DIRECTION_UP);
    if (!bd->visible)
