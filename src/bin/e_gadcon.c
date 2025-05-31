@@ -1109,14 +1109,14 @@ e_gadcon_client_new(E_Gadcon *gc, const char *name, const char *id __UNUSED__, c
    else if (gcc->o_base)
      e_gadcon_layout_pack(gc->o_container, gcc->o_base);
    if (gcc->o_base) evas_object_show(gcc->o_base);
-   {
-      E_Event_Gadcon_Client_Add *ev;
+     {
+       E_Event_Gadcon_Client_Add *ev;
 
-      ev = E_NEW(E_Event_Gadcon_Client_Add, 1);
-      ev->gcc = gcc;
-      e_object_ref(E_OBJECT(gcc));
-      ecore_event_add(E_EVENT_GADCON_CLIENT_ADD, ev, _e_gadcon_client_event_free, NULL);
-   }
+       ev = E_NEW(E_Event_Gadcon_Client_Add, 1);
+       ev->gcc = gcc;
+       e_object_ref(E_OBJECT(gcc));
+       ecore_event_add(E_EVENT_GADCON_CLIENT_ADD, ev, _e_gadcon_client_event_free, NULL);
+     }
    return gcc;
 }
 

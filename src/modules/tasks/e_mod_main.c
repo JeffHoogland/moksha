@@ -550,20 +550,20 @@ _tasks_drop_cb_enter(void *data, const char *type __UNUSED__, void *event_info _
 
    bd = item->border;
    if (!bd) return;
-   E_Desk *desk;
 
+   E_Desk *desk;
    desk = e_desk_current_get(bd->zone);
 
    if (desk != bd->desk && !bd->sticky)
-       e_desk_show(bd->desk);
+     e_desk_show(bd->desk);
    if (bd->shaded)
-       e_border_unshade(bd, E_DIRECTION_UP);
+     e_border_unshade(bd, E_DIRECTION_UP);
    if (!bd->visible)
-       e_border_show(bd);
+     e_border_show(bd);
    if (bd->iconic)
-       e_border_uniconify(bd);
+     e_border_uniconify(bd);
    else
-       e_border_raise(bd);
+     e_border_raise(bd);
 
    e_border_focus_set(bd, 1, 1);
 }
