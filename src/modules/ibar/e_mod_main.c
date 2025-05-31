@@ -2122,10 +2122,8 @@ borders_cycle_do(void *data)
    border_show(bd);
 
    if (eina_list_count(borders) == cur_bd + 1)
-     {
-       cur_bd = 0;
-       return EINA_TRUE;
-     }
+     cur_bd = -1;
+
    cur_bd++;
    return EINA_TRUE;
 }
