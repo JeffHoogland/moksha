@@ -2153,8 +2153,9 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
                 cur_bd = 0;
                 EINA_LIST_FOREACH(ic->exes, l, exe)
                   {
+                     if (!exe->borders) continue;
                      bd = eina_list_nth(exe->borders, cur_bd);
-                     border_show(bd);
+                     if (bd) border_show(bd);
                      inst->ibar->ic_enter_before = ic;
                      if (eina_list_count(exe->borders) == 1) return;
                      cur_bd++;
@@ -2220,8 +2221,9 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
                    cur_bd = 0;
                    EINA_LIST_FOREACH(ic->exes, l, exe)
                      {
+                       if (!exe->borders) continue;
                        bd = eina_list_nth(exe->borders, cur_bd);
-                       border_show(bd);
+                       if (bd) border_show(bd);
                        inst->ibar->ic_enter_before = ic;
                        if (eina_list_count(exe->borders) == 1) return;
                        cur_bd++;
