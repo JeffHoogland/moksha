@@ -2156,8 +2156,8 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
                      if (!exe->borders) continue;
                      bd = eina_list_nth(exe->borders, cur_bd);
                      if (bd) border_show(bd);
-                     inst->ibar->ic_enter_before = ic;
                      if (eina_list_count(exe->borders) == 1) return;
+                     inst->ibar->ic_enter_before = ic;
                      cur_bd++;
                      ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
                   }
@@ -2224,8 +2224,8 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
                        if (!exe->borders) continue;
                        bd = eina_list_nth(exe->borders, cur_bd);
                        if (bd) border_show(bd);
-                       inst->ibar->ic_enter_before = ic;
                        if (eina_list_count(exe->borders) == 1) return;
+                       inst->ibar->ic_enter_before = ic;
                        cur_bd++;
                        ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
                      }
