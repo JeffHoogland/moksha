@@ -2118,13 +2118,13 @@ borders_cycle_do(void *data)
    Eina_List *borders = data;
    E_Border *bd;
 
+   cur_bd++;
    bd = eina_list_nth(borders, cur_bd);
    border_show(bd);
 
    if (eina_list_count(borders) == cur_bd + 1)
      cur_bd = -1;
 
-   cur_bd++;
    return EINA_TRUE;
 }
 
@@ -2146,6 +2146,7 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
         IBar_Icon *ic;
         ic = _ibar_icon_at_coord(inst->ibar, ev->x, ev->y, 0);
         if (!ic) return;
+        E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
         if (ic->exes)
           {
             if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
@@ -2158,7 +2159,6 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
                      if (bd) border_show(bd);
                      if (eina_list_count(exe->borders) == 1) return;
                      inst->ibar->ic_enter_before = ic;
-                     cur_bd++;
                      ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
                   }
               }
@@ -2213,7 +2213,6 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
            ic_enter = inst->ibar->ic_enter_before;
            if (ic_enter) E_FREE_FUNC(ic_enter->cycle_timer, ecore_timer_del);
            if (ic) E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
-
            if (ic->exes)
              {
                if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
@@ -2226,7 +2225,6 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
                        if (bd) border_show(bd);
                        if (eina_list_count(exe->borders) == 1) return;
                        inst->ibar->ic_enter_before = ic;
-                       cur_bd++;
                        ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
                      }
                  }
