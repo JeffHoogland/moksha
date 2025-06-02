@@ -2212,7 +2212,7 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
            if (ic_before) E_FREE_FUNC(ic_before->cycle_timer, ecore_timer_del);
            ic_enter = inst->ibar->ic_enter_before;
            if (ic_enter) E_FREE_FUNC(ic_enter->cycle_timer, ecore_timer_del);
-           if (ic) E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
+           E_FREE_FUNC(ic->cycle_timer, ecore_timer_del);
            if (ic->exes)
              {
                if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
