@@ -612,8 +612,7 @@ e_int_menus_init(void)
 EINTERN void
 e_int_menus_shutdown(void)
 {
-   if (_e_int_menus_app_cleaner) ecore_timer_del(_e_int_menus_app_cleaner);
-   _e_int_menus_app_cleaner = NULL;
+   E_FREE_FUNC(_e_int_menus_app_cleaner, ecore_timer_del);
    eina_hash_free(_e_int_menus_app_menus_waiting);
    _e_int_menus_app_menus_waiting = NULL;
    efreet_menu_free(_e_int_menus_app_menu_default);

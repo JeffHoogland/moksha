@@ -451,8 +451,7 @@ e_shelf_toggle(E_Shelf *es, int show)
    E_OBJECT_TYPE_CHECK(es, E_SHELF_TYPE);
 
    es->toggle = show;
-   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
-   es->autohide_timer = NULL;
+   E_FREE_FUNC(es->autohide_timer, ecore_timer_del);
    if (es->locked) return;
    es->interrupted = -1;
    es->urgent_show = 0;
@@ -469,11 +468,7 @@ e_shelf_toggle(E_Shelf *es, int show)
           }
         else
           {
-             if (es->hide_timer)
-               {
-                  ecore_timer_del(es->hide_timer);
-                  es->hide_timer = NULL;
-               }
+             E_FREE_FUNC(es->hide_timer, ecore_timer_del);
              if (!es->hide_animator)
                es->hide_animator =
                  ecore_animator_add(_e_shelf_cb_hide_animator, es);
@@ -485,11 +480,7 @@ e_shelf_toggle(E_Shelf *es, int show)
         edje_object_signal_emit(es->o_base, "e,state,hidden", "e");
         if (es->instant_delay >= 0.0)
           {
-             if (es->hide_timer)
-               {
-                  ecore_timer_del(es->hide_timer);
-                  es->hide_timer = NULL;
-               }
+             E_FREE_FUNC(es->hide_timer, ecore_timer_del);
              es->hidden = 1;
              if (!es->instant_timer)
                es->instant_timer =
@@ -1293,21 +1284,9 @@ _e_shelf_free(E_Shelf *es)
         es->autohide = NULL;
      }
 
-   if (es->hide_timer)
-     {
-        ecore_timer_del(es->hide_timer);
-        es->hide_timer = NULL;
-     }
-   if (es->hide_animator)
-     {
-        ecore_animator_del(es->hide_animator);
-        es->hide_animator = NULL;
-     }
-   if (es->instant_timer)
-     {
-        ecore_timer_del(es->instant_timer);
-        es->instant_timer = NULL;
-     }
+   E_FREE_FUNC(es->hide_timer, ecore_timer_del);
+   E_FREE_FUNC(es->hide_animator, ecore_animator_del);
+   E_FREE_FUNC(es->instant_timer, ecore_timer_del);
 
    if (es->menu)
      {
@@ -1315,11 +1294,7 @@ _e_shelf_free(E_Shelf *es)
         e_object_del(E_OBJECT(es->menu));
         es->menu = NULL;
      }
-   if (es->module_init_end_timer)
-     {
-        ecore_timer_del(es->module_init_end_timer);
-        es->module_init_end_timer = NULL;
-     }
+   E_FREE_FUNC(es->module_init_end_timer, ecore_timer_del);
    if (es->dummy)
      {
         evas_object_event_callback_del_full(es->o_base, EVAS_CALLBACK_DEL, 
@@ -1354,8 +1329,7 @@ _e_shelf_free(E_Shelf *es)
           }
         e_object_del(E_OBJECT(es->popup));
      }
-   if (es->autohide_timer) ecore_timer_del(es->autohide_timer);
-   es->autohide_timer = NULL;
+   E_FREE_FUNC(es->autohide_timer, ecore_timer_del);
    es->popup = NULL;
 
    ev = E_NEW(E_Event_Shelf, 1);
