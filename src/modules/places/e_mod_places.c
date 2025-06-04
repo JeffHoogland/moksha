@@ -104,26 +104,10 @@ places_init(void)
 void
 places_shutdown(void)
 {
-    if (places_screensaver_on_handler)
-     {
-        ecore_event_handler_del(places_screensaver_on_handler);
-        places_screensaver_on_handler = NULL;
-     }
-   if (places_screensaver_off_handler)
-     {
-        ecore_event_handler_del(places_screensaver_off_handler);
-        places_screensaver_off_handler = NULL;
-     }
-   if (freespace_timer)
-     {
-        ecore_timer_del(freespace_timer);
-        freespace_timer = NULL;
-     }
-   if (freespace_thread)
-     {
-        ecore_thread_cancel(freespace_thread);
-        freespace_thread = NULL;
-     }
+   E_FREE_FUNC(places_screensaver_on_handler, ecore_event_handler_del);
+   E_FREE_FUNC(places_screensaver_off_handler, ecore_event_handler_del);
+   E_FREE_FUNC(freespace_timer, ecore_timer_del);
+   E_FREE_FUNC(freespace_thread, ecore_thread_cancel);
 
    while (volumes)
      places_volume_del((Volume*)volumes->data);
@@ -801,11 +785,7 @@ _places_freespace_timer_cb(void *data __UNUSED__)
 static Eina_Bool
 _places_screensaver_on_cb(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
-   if (freespace_timer)
-     {
-        ecore_timer_del(freespace_timer);
-        freespace_timer = NULL;
-     }
+   E_FREE_FUNC(freespace_timer, ecore_timer_del);
 
    return ECORE_CALLBACK_PASS_ON;
 }
