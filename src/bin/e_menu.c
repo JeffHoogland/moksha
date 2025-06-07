@@ -1941,7 +1941,7 @@ _e_menu_items_layout_update(E_Menu *m)
      {
         e_zone_useful_geometry_get(m->zone, NULL, NULL, NULL, &zh);
         maxh = zh * 4;
-        if (maxh > 30000) maxh = 30000;  // 32k x 32k mx coord limit for wins
+        if (maxh > 30000) maxh = 30000;  // 32k x 32k max coord limit for wins
         max_items = (maxh / min_h) - 1;
       }
 #endif
