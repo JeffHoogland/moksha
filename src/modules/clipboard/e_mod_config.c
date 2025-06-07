@@ -38,7 +38,7 @@ struct _E_Config_Dialog_Data
   int   ignore_ws_copy; /* Should we not copy White space only             */
   int   trim_ws;        /* Should we trim White space from selection       */
   int   trim_nl;        /* Should we trim new lines from selection         */
-  int   ignore_hist;        /* Should we trim new lines from selection         */
+  int   ignore_hist;    /* Should we trim new lines from selection         */
 };
 
 static int           _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata);
@@ -74,24 +74,24 @@ _fill_data(E_Config_Dialog_Data *cfdata)
   cfdata->sync_state.select = clip_cfg->clip_select;
   cfdata->sync_state.sync   = clip_cfg->sync;
   cfdata->init_label_length = clip_cfg->label_length;
-  cfdata->init_save_timer = clip_cfg->save_timer;
-  cfdata->save.state      = clip_cfg->persistence;
-  cfdata->clip_copy       = clip_cfg->clip_copy;
-  cfdata->clip_select     = clip_cfg->clip_select;
-  cfdata->sync            = clip_cfg->sync;
-  cfdata->persistence     = clip_cfg->persistence;
-  cfdata->hist_reverse    = clip_cfg->hist_reverse;
-  cfdata->hist_items      = clip_cfg->hist_items;
-  cfdata->confirm_clear   = clip_cfg->confirm_clear;
-  cfdata->autosave        = clip_cfg->autosave;
-  cfdata->save.autostate  = clip_cfg->autosave;
-  cfdata->save_timer      = clip_cfg->save_timer/60; // Time is in seconds
-  cfdata->label_length    = clip_cfg->label_length;
-  cfdata->ignore_ws       = clip_cfg->ignore_ws;
-  cfdata->ignore_ws_copy  = clip_cfg->ignore_ws_copy;
-  cfdata->trim_ws         = clip_cfg->trim_ws;
-  cfdata->trim_nl         = clip_cfg->trim_nl;
-  cfdata->ignore_hist     = clip_cfg->ignore_hist;
+  cfdata->init_save_timer   = clip_cfg->save_timer;
+  cfdata->save.state        = clip_cfg->persistence;
+  cfdata->clip_copy         = clip_cfg->clip_copy;
+  cfdata->clip_select       = clip_cfg->clip_select;
+  cfdata->sync              = clip_cfg->sync;
+  cfdata->persistence       = clip_cfg->persistence;
+  cfdata->hist_reverse      = clip_cfg->hist_reverse;
+  cfdata->hist_items        = clip_cfg->hist_items;
+  cfdata->confirm_clear     = clip_cfg->confirm_clear;
+  cfdata->autosave          = clip_cfg->autosave;
+  cfdata->save.autostate    = clip_cfg->autosave;
+  cfdata->save_timer        = clip_cfg->save_timer / 60; // Time in seconds
+  cfdata->label_length      = clip_cfg->label_length;
+  cfdata->ignore_ws         = clip_cfg->ignore_ws;
+  cfdata->ignore_ws_copy    = clip_cfg->ignore_ws_copy;
+  cfdata->trim_ws           = clip_cfg->trim_ws;
+  cfdata->trim_nl           = clip_cfg->trim_nl;
+  cfdata->ignore_hist       = clip_cfg->ignore_hist;
 }
 
 static int
@@ -105,7 +105,7 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 
   clip_cfg->clip_copy      = cfdata->clip_copy;
   clip_cfg->clip_select    = cfdata->clip_select;
-  clip_cfg->sync           = efl_hack ? cfdata->sync : 0;// CF_DEFAULT_SYNC;
+  clip_cfg->sync           = efl_hack ? cfdata->sync : 0; // CF_DEFAULT_SYNC;
   clip_cfg->persistence    = cfdata->persistence;
   clip_cfg->hist_reverse   = cfdata->hist_reverse;
 
@@ -119,38 +119,40 @@ _basic_apply_data(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
   clip_cfg->confirm_clear  = cfdata->confirm_clear;
   clip_cfg->autosave       = cfdata->autosave;
   if (EINA_DBL_NONZERO(cfdata->save_timer))
-    clip_cfg->save_timer   = 60*cfdata->save_timer; // Time in seconds
+    clip_cfg->save_timer   = 60 * cfdata->save_timer; // Time in seconds
   else
     clip_cfg->save_timer   = 1;
   /* Do we need to kill or restart save_timer */
   if (cfdata->persistence && !cfdata->autosave)
-  {
-    if (clip_inst->save_timer)
     {
-      clip_save(clip_inst->items, EINA_TRUE); // Save history before start timer */
-      clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
+      if (clip_inst->save_timer)
+        {
+          clip_save(clip_inst->items, EINA_TRUE); // Save history before start timer */
+          clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
+        }
+      else if (!EINA_DBL_EQ(cfdata->save_timer, cfdata->init_save_timer))
+        {
+          clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
+          ecore_timer_del(clip_inst->save_timer);
+          clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
+        }
     }
-    else if (!EINA_DBL_EQ(cfdata->save_timer, cfdata->init_save_timer))
-    {
-      clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
-      ecore_timer_del(clip_inst->save_timer);
-      clip_inst->save_timer = ecore_timer_loop_add(clip_cfg->save_timer, cb_clipboard_save, NULL);
-    }
-  }
   else if (!cfdata->persistence || cfdata->autosave)
-    if (clip_inst->save_timer)
     {
-      clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
-      ecore_timer_del(clip_inst->save_timer);
-      clip_inst->save_timer = NULL;
-     }
+      if (clip_inst->save_timer)
+       {
+         clip_save(clip_inst->items, EINA_TRUE); // Save history before stopping timer */
+         ecore_timer_del(clip_inst->save_timer);
+         clip_inst->save_timer = NULL;
+       }
+    }
 
   /* Has clipboard label name length changed ? */
   if (!EINA_DBL_EQ(cfdata->label_length, cfdata->init_label_length))
-  {
-    clip_cfg->label_length_changed = EINA_TRUE;
-    cfdata->init_label_length = cfdata->label_length;
-  }
+    {
+      clip_cfg->label_length_changed = EINA_TRUE;
+      cfdata->init_label_length = cfdata->label_length;
+    }
   clip_cfg->label_length   = cfdata->label_length;
 
   clip_cfg->ignore_ws      = cfdata->ignore_ws;
@@ -196,12 +198,12 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
   e_widget_framelist_object_append(of, ob);
 
   if (efl_hack)
-  {
+    {
       ob = e_widget_check_add(evas, _(" Synchronize Clipboards"), &(cfdata->sync));
       WIDGET_DISABLED_SET(!(cfdata->clip_copy && cfdata->clip_select), ob, EINA_TRUE);
       cfdata->sync_widget = ob;
       e_widget_framelist_object_append(of, ob);
-  }
+    }
   e_widget_list_object_append(o, of, 1, 0, 1.0);
 
   /* Content Config Section */
@@ -278,7 +280,7 @@ config_clipboard_module(E_Container *con, const char *params __UNUSED__)
   E_Config_Dialog_View *v;
   char buf[128];
 
-  if(e_config_dialog_find("Clipboard", "extensions/clipboard")) return NULL;
+  if (e_config_dialog_find("Clipboard", "extensions/clipboard")) return NULL;
 
   v = E_NEW(E_Config_Dialog_View, 1);
   if (!v) return NULL;
@@ -337,12 +339,13 @@ _sync_state_changed(E_Config_Dialog_Data *cfdata)
   if (!efl_hack) return EINA_FALSE;
   if ((cfdata->sync_state.copy   != cfdata->clip_copy) ||
       (cfdata->sync_state.select != cfdata->clip_select) ||
-      (cfdata->sync_state.sync   != cfdata->sync)) {
-    cfdata->sync_state.copy   = cfdata->clip_copy;
-    cfdata->sync_state.select = cfdata->clip_select;
-    cfdata->sync_state.sync   = cfdata->sync;
-    return EINA_TRUE;
-  }
+      (cfdata->sync_state.sync   != cfdata->sync))
+    {
+      cfdata->sync_state.copy   = cfdata->clip_copy;
+      cfdata->sync_state.select = cfdata->clip_select;
+      cfdata->sync_state.sync   = cfdata->sync;
+      return EINA_TRUE;
+    }
   return EINA_FALSE;
 }
 
@@ -350,28 +353,35 @@ static int
 _update_widget(E_Config_Dialog_Data *cfdata)
 {
   if (!cfdata->sync_widget) return 1;
-  if(cfdata->clip_copy && cfdata->clip_select) {
-    e_widget_disabled_set(cfdata->sync_widget, EINA_FALSE);
-  } else {
-    e_widget_check_checked_set(cfdata->sync_widget, 0);
-    e_widget_disabled_set(cfdata->sync_widget, EINA_TRUE);
-  }
+  if (cfdata->clip_copy && cfdata->clip_select)
+    {
+      e_widget_disabled_set(cfdata->sync_widget, EINA_FALSE);
+    }
+  else
+    {
+      e_widget_check_checked_set(cfdata->sync_widget, 0);
+      e_widget_disabled_set(cfdata->sync_widget, EINA_TRUE);
+    }
   if (!cfdata->persistence)
-  {
-    e_widget_disabled_set(cfdata->autosave_widget, EINA_TRUE);
-    cfdata->save.state = cfdata->persistence;
-  } else {
-    e_widget_disabled_set(cfdata->autosave_widget, EINA_FALSE);
-    cfdata->save.state = cfdata->persistence;
-  }
+    {
+      e_widget_disabled_set(cfdata->autosave_widget, EINA_TRUE);
+      cfdata->save.state = cfdata->persistence;
+    }
+  else
+    {
+      e_widget_disabled_set(cfdata->autosave_widget, EINA_FALSE);
+      cfdata->save.state = cfdata->persistence;
+    }
   if (!cfdata->autosave && cfdata->save.state)
-  {
-    e_widget_disabled_set(cfdata->save_timer_widget, EINA_FALSE);
-    e_widget_disabled_set(cfdata->label_timer_widget, EINA_FALSE);
-  } else if (!cfdata->save.state || cfdata->autosave) {
-    e_widget_disabled_set(cfdata->save_timer_widget, EINA_TRUE);
-    e_widget_disabled_set(cfdata->label_timer_widget, EINA_TRUE);
-  }
+    {
+      e_widget_disabled_set(cfdata->save_timer_widget, EINA_FALSE);
+      e_widget_disabled_set(cfdata->label_timer_widget, EINA_FALSE);
+    }
+  else if (!cfdata->save.state || cfdata->autosave)
+    {
+      e_widget_disabled_set(cfdata->save_timer_widget, EINA_TRUE);
+      e_widget_disabled_set(cfdata->label_timer_widget, EINA_TRUE);
+    }
   cfdata->save.autostate = cfdata->autosave;
   return 1;
 }
@@ -383,16 +393,18 @@ truncate_history(const unsigned int n)
 
   EINA_SAFETY_ON_NULL_RETURN_VAL(clip_inst, EET_ERROR_BAD_OBJECT);
   clip_inst->update_history = EINA_TRUE;
-  if (clip_inst->items) {
-    if (eina_list_count(clip_inst->items) > n) {
-      Eina_List *last, *discard;
-      last = eina_list_nth_list(clip_inst->items, n-1);
-      clip_inst->items = eina_list_split_list(clip_inst->items, last, &discard);
-      if (discard)
-        E_FREE_LIST(discard, free_clip_data);
-      err = clip_save(clip_inst->items, EINA_TRUE);
+  if (clip_inst->items)
+    {
+      if (eina_list_count(clip_inst->items) > n)
+        {
+          Eina_List *last, *discard;
+          last = eina_list_nth_list(clip_inst->items, n-1);
+          clip_inst->items = eina_list_split_list(clip_inst->items, last, &discard);
+          if (discard)
+            E_FREE_LIST(discard, free_clip_data);
+          err = clip_save(clip_inst->items, EINA_TRUE);
+        }
     }
-  }
   else
     err = EET_ERROR_EMPTY;
   return err;
