@@ -1948,7 +1948,7 @@ _e_menu_items_layout_update(E_Menu *m)
 
    EINA_LIST_FOREACH(m->items, l, mi)
      {
-         if (cur_items >= max_items)
+        if (cur_items >= max_items)
           {
              _e_menu_item_unrealize(mi);
              continue;
