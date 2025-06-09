@@ -16,6 +16,7 @@ struct _E_Pointer_Stack
 
 static Eina_List *_e_pointers = NULL;
 static Eina_List *handlers = NULL;
+static Eina_Bool init = EINA_FALSE;
 
 static void      _e_pointer_canvas_add(E_Pointer *p);
 static void      _e_pointer_canvas_del(E_Pointer *p);
@@ -65,6 +66,7 @@ e_pointer_init(void)
      eina_list_append(handlers,
                       ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
                                               _e_pointer_cb_mouse_wheel, NULL));
+   init = EINA_FALSE;
    return 1;
 }
 
@@ -409,6 +411,12 @@ _e_pointer_type_set(E_Pointer  *p,
              p->hot.y = y;
           }
         p->hot.update = 1;
+        if (!init)
+          {
+            edje_object_signal_emit(p->pointer_object, "e,state,init", "e");
+            edje_object_message_signal_process(p->pointer_object);
+            init = EINA_TRUE;
+          }
         return;
      }
 fallback:

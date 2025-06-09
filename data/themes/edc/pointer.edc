@@ -2,13 +2,29 @@ group { name: "e/pointer/enlightenment/default/color";
    images.image: "pointer.png" COMP;
    images.image: "pointer_glow.png" COMP;
    parts {
+      part { name: "parent"; type: RECT;
+         scale: 1;
+         description { state: "default" 0.0;
+            color: 255 255 255 255; // no cc
+//            FIXED_SIZE(32, 32)
+         }
+         description { state: "suspend" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.5 0.5;
+            rel2.relative: 0.5 0.5;
+            color: 255 255 255 0; // no cc
+         }
+      }
       part { name: "base";
+         clip_to: "parent";
          description { state: "default" 0.0;
             image.normal: "pointer.png";
+            rel.to: "parent";
          }
       }
       part { name: "glow";
          description { state: "default" 0.0;
+            rel.to: "base";
             image.normal: "pointer_glow.png";
             color: 255 255 255 0;
          }
@@ -33,6 +49,18 @@ group { name: "e/pointer/enlightenment/default/color";
       }
    }
    programs {
+      program {
+         signal: "e,state,init"; source: "e";
+         action: STATE_SET "suspend" 0.0;
+         target: "parent";
+         after: "load2";
+      }
+      program { name: "load2";
+         action: STATE_SET "default" 0.0;
+         transition: SINUSOIDAL 1.0;
+         in: 1.0 0.0;
+         target: "parent";
+      }
       program {
          signal: "e,action,mouse,down"; source: "e";
          action: STATE_SET "visible" 0.0;
