@@ -50,22 +50,14 @@ static Eina_Bool _e_pointer_cb_idle_poller(void *data);
 EINTERN int
 e_pointer_init(void)
 {
-   handlers =
-     eina_list_append(handlers,
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN,
-                                              _e_pointer_cb_mouse_down, NULL));
-   handlers =
-     eina_list_append(handlers,
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP,
-                                              _e_pointer_cb_mouse_up, NULL));
-   handlers =
-     eina_list_append(handlers,
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE,
-                                              _e_pointer_cb_mouse_move, NULL));
-   handlers =
-     eina_list_append(handlers,
-                      ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL,
-                                              _e_pointer_cb_mouse_wheel, NULL));
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_MOUSE_BUTTON_DOWN,
+                         _e_pointer_cb_mouse_down, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_MOUSE_BUTTON_UP,
+                         _e_pointer_cb_mouse_up, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_MOUSE_MOVE,
+                         _e_pointer_cb_mouse_move, NULL);
+   E_LIST_HANDLER_APPEND(handlers, ECORE_EVENT_MOUSE_WHEEL,
+                         _e_pointer_cb_mouse_wheel, NULL);
    init = EINA_FALSE;
    return 1;
 }
@@ -74,6 +66,7 @@ EINTERN int
 e_pointer_shutdown(void)
 {
    E_FREE_LIST(handlers, ecore_event_handler_del);
+   init = EINA_FALSE;
    return 1;
 }
 
