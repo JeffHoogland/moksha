@@ -1,12 +1,13 @@
+efl_version: 1 25;
 #include "macros.edc"
 
- data {
-	item: "gtk-theme"		"E17gtk";
-	item: "icon-theme"		"Enlightenment-X";
-	
-	// theme api version. from 1.10 on we will check version to avoid
-	// compat issues
-	item: "version"			"110";
+data {
+   item: "gtk-theme"    "E17gtk";
+   item: "icon-theme"   "Enlightenment-X";
+
+   // theme api version. from 1.10 on we will check version to avoid
+   // compat issues
+   item: "version"      "125";
 }
 
 collections {
