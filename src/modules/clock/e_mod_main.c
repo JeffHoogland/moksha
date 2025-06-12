@@ -1083,14 +1083,14 @@ _clock_fd_update(void *d __UNUSED__, Ecore_Fd_Handler *fdh)
 }
 
 static Eina_Bool
-_clock_screensaver_on()
+_clock_screensaver_on(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    E_FREE_FUNC(update_today, ecore_timer_del);
    return ECORE_CALLBACK_RENEW;
 }
 
 static Eina_Bool
-_clock_screensaver_off()
+_clock_screensaver_off(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (clock_instances) _update_today_timer(NULL);
    return ECORE_CALLBACK_RENEW;
