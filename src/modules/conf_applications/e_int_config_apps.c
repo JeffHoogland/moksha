@@ -216,7 +216,7 @@ _cache_update_timer(void *d __UNUSED__)
 }
 
 static Eina_Bool
-_cache_update()
+_cache_update(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 {
    if (cache_timer)
      ecore_timer_loop_reset(cache_timer);
