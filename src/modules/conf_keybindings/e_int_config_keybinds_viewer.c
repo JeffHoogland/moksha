@@ -7,10 +7,11 @@ static E_Dialog *dia;
 static Eina_Bool show = EINA_FALSE;
 
 static void
-_edit_bindings()
+_edit_bindings(void *data, E_Dialog *dia)
 {
+   (void)data;
+   (void)dia;
    E_Container *con;
-
    con = e_container_current_get(e_manager_current_get());
    e_int_config_keybindings(con, NULL);
 }
