@@ -7,7 +7,7 @@ static E_Dialog *dia;
 static Eina_Bool show = EINA_FALSE;
 
 static void
-_edit_bindings()
+_edit_bindings(void *data __UNUSED__, E_Dialog *dlg __UNUSED__)
 {
    E_Container *con;
 

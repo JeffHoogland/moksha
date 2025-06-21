@@ -14,7 +14,13 @@ EAPI E_Module_Api e_modapi =
 };
 
 static void
-_show_keybidings_cb()
+_show_keybidings_menu_cb(void *data __UNUSED__, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
+{
+   show_keybidings();
+}
+
+static void
+_show_keybidings_cb(E_Object *obj __UNUSED__, const char *params __UNUSED__)
 {
    show_keybidings();
 }
@@ -27,7 +33,7 @@ _e_mod_menu_add(void *data __UNUSED__, E_Menu *m)
    mi = e_menu_item_new(m);
    e_menu_item_label_set(mi, _("Key Bindings"));
    e_util_menu_item_theme_icon_set(mi, "preferences-desktop-keyboard-shortcuts");
-   e_menu_item_callback_set(mi, _show_keybidings_cb, NULL);
+   e_menu_item_callback_set(mi, _show_keybidings_menu_cb, NULL);
 }
 
 EAPI void *
