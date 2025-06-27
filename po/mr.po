@@ -8761,7 +8761,6 @@ msgid "Overlapping Label"
 msgstr ""
 
 #: src/modules/ibar/e_mod_config.c:142
-#, fuzzy
 msgid "Adjacent Label"
 msgstr "आयकॉन लेबल"
 
