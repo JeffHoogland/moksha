@@ -2888,6 +2888,12 @@ _ibar_cb_bd_add_del(void *d __UNUSED__, int t __UNUSED__, E_Event_Border_Remove 
              else
                _ibar_icon_signal_emit(ic, "e,state,on", "e");
 
+             if (b->menu_icon == ic)
+               {
+                  Eina_Bool grabbed = b->menu_icon->menu_grabbed;
+                  _ibar_icon_menu_hide(ic, grabbed);
+               }
+
              if (ic->not_in_order)
                {
                   EINA_LIST_FOREACH(ic->exes, ll, exe)
