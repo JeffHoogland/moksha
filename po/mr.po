@@ -10393,8 +10393,3 @@ msgstr "व्हॉल्यूम बद्ध"
 msgid "Separator"
 msgstr "स्वतंत्र गट"
 
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "सानुकूल एफएम डायर उघडण्यासाठी"
-
-#~ msgid "Show icon label"
-#~ msgstr "आयकॉन लेबल दाखवा"

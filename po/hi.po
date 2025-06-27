@@ -11649,8 +11649,3 @@ msgstr "वॉल्यूम म्यूट"
 msgid "Separator"
 msgstr "सेपरेटर"
 
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "निर्देशिका खोलने के लिए कस्टम FM"
-
-#~ msgid "Show icon label"
-#~ msgstr "आइकन लेबल दिखाएं"
