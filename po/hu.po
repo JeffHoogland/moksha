@@ -8761,7 +8761,7 @@ msgstr "Egyéni szín"
 
 #: src/modules/gadman/e_mod_config.c:221 src/modules/separator/e_mod_main.c:270
 msgid "Transparent"
-msgstr "Átlátszóság"
+msgstr "Átlátszó"
 
 #: src/modules/gadman/e_mod_config.c:228
 #: src/modules/winlist/e_int_config_winlist.c:266
