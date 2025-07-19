@@ -38,15 +38,15 @@ EAPI int
 e_modapi_shutdown(E_Module *m __UNUSED__)
 {
    if (maug_desk)
-   {
-      e_int_menus_menu_augmentation_del(DEFAULT_MENU_PLACEMENT, maug_desk);
-      maug_desk = NULL;
-   }
+     {
+        e_int_menus_menu_augmentation_del(DEFAULT_MENU_PLACEMENT, maug_desk);
+        maug_desk = NULL;
+     }
    if (maug_win)
-   {
-      e_int_menus_menu_augmentation_del(DEFAULT_MENU_PLACEMENT, maug_win);
-      maug_win = NULL;
-   }
+     {
+        e_int_menus_menu_augmentation_del(DEFAULT_MENU_PLACEMENT, maug_win);
+        maug_win = NULL;
+     }
    e_object_unref(E_OBJECT(dat));
    return 1;
 }
@@ -83,7 +83,6 @@ _e_mod_menu_desktop_add(void *data __UNUSED__, E_Menu *m)
         e_menu_item_submenu_set(mi, subm);
      }
    e_object_unref(E_OBJECT(subm));
-
 }
 
 static void
@@ -100,5 +99,4 @@ _e_mod_menu_win_add(void *data __UNUSED__, E_Menu *m)
    /* The necessary (??) to prevent
     *  the submenu from having a title.           */
    e_object_data_set(E_OBJECT(subm), dat);
-
 }
