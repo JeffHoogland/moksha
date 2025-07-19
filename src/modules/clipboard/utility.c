@@ -5,7 +5,7 @@
 
 char * _sanitize_ln(char *text, const unsigned int n, const int mode);
 
-char *strip_whitespace(char *str, int mode);
+char * strip_whitespace(char *str, int mode);
 int isnewline(const int c);
 
 Eina_Bool
@@ -104,7 +104,7 @@ _sanitize_ln(char *text, const unsigned int n, const int mode)
       /* is it a tab */
       if (chr == 9){
         // default tab
-        for (k=0; k<4; k++, i++){
+        for (k = 0; k < 4; k++, i++){
           if (i == n) break;
           *temp++ = ' ';
         }
@@ -161,7 +161,7 @@ strip_whitespace(char *str, int mode)
     end--;
 
   // Write new null terminator
-  *(end+1) = 0;
+  *(end + 1) = 0;
 
   return str;
 }
