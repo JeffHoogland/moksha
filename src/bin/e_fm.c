@@ -10313,8 +10313,9 @@ _e_fm2_icon_entry_widget_add(E_Fm2_Icon *ic)
      e_grabinput_get(0, 0, ic->keygrab);
    edje_object_part_swallow(ic->obj, "e.swallow.entry", ic->entry_widget);
    evas_object_show(ic->entry_widget);
+   edje_object_signal_emit(ic->obj, "e,state,rename,on", "e");
    e_widget_entry_text_set(ic->entry_widget, ic->info.file);
-   e_widget_focus_set(ic->entry_widget, 0);
+   e_widget_focus_set(ic->entry_widget, 1);
    e_widget_entry_select_all(ic->entry_widget);
    ic->sd->iop_icon = ic;
    ic->sd->typebuf.disabled = EINA_TRUE;
@@ -10335,6 +10336,7 @@ _e_fm2_icon_entry_widget_del(E_Fm2_Icon *ic)
    if (ic->keygrab)
      e_grabinput_release(0, ic->keygrab);
    ic->keygrab = 0;
+   edje_object_signal_emit(ic->obj, "e,state,rename,off", "e");
 }
 
 #if 1

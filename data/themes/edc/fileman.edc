@@ -556,6 +556,7 @@ group { name: "e/fileman/default/icon/fixed";
       }
       part { name: "label2"; type: TEXTBLOCK; mouse_events: 0;
          scale: 1;
+         clip_to: "textmaster";
          description { state: "default" 0.0;
             align: 0.5 0.0;
             rel1.to: "e.text.label";
@@ -573,6 +574,16 @@ group { name: "e/fileman/default/icon/fixed";
          description { state: "selected" 0.0;
             inherit: "default" 0.0;
             visible: 1;
+         }
+      }
+      part { name: "textmaster"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.offset: -20 -20;
+            rel2.offset: 19 19;
+         }
+         description { state: "hidden" 0.0;
+            inherit: "default" 0.0;
+            visible: 0;
          }
       }
 //////////////////////////
@@ -722,6 +733,16 @@ group { name: "e/fileman/default/icon/fixed";
       }
    }
    programs {
+      program { name: "rename-on";
+         signal: "e,state,rename,on"; source: "e";
+         action: STATE_SET "hidden" 0.0;
+         target: "textmaster";
+      }
+      program { name: "rename-off";
+         signal: "e,state,rename,off"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "textmaster";
+      }
       program {
          signal: "e,state,selected"; source: "e";
          action: STATE_SET "selected" 0.0;
