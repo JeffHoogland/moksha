@@ -98,6 +98,24 @@ _e_config_profile_name_get(Eet_File *ef)
           s = eina_stringshare_add_length(data, data_len);
         free(data);
      }
+   if (s)
+     {
+        char buf[PATH_MAX];
+        char buf2[PATH_MAX];
+
+        e_user_dir_snprintf(buf, sizeof(buf), "config/%s", s);
+        if (!ecore_file_is_dir(buf))
+          {
+             snprintf(buf2, sizeof(buf2), "config/%s", s);
+             e_prefix_data_concat_static(buf, buf2);
+             if (!ecore_file_is_dir(buf))
+               {
+                  printf("CF: warning - profile [%s] dir does not exist in user or system dirs\n", s);
+                  eina_stringshare_del(s);
+                  s = NULL;
+               }
+          }
+     }
    return s;
 }
 
@@ -1121,19 +1139,24 @@ e_config_init(void)
 
              for (i = 1; i <= _e_config_revisions; i++)
                {
-                  e_user_dir_snprintf(buf, sizeof(buf), "config/profile.%i.cfg", i);
+                  e_user_dir_snprintf(buf, sizeof(buf), "config/profile.cfg.%i", i);
                   ef = eet_open(buf, EET_FILE_MODE_READ);
                   if (ef)
                     {
+                       printf("CF: warning - falling back to %s\n", buf);
                        _e_config_profile = _e_config_profile_name_get(ef);
                        eet_close(ef);
                        ef = NULL;
                        if (_e_config_profile) break;
+                       printf("CF: warning - fallback to %s can't read profile\n", buf);
                     }
+                  else if (ecore_file_exists(buf))
+                    printf("CF: warning - fallback to %s failing to open\n", buf);
                }
              if (!_e_config_profile)
                {
                   /* use system if no user profile config */
+                  printf("CF: fallback to system profile config file\n");
                   e_prefix_data_concat_static(buf, "data/config/profile.cfg");
                   ef = eet_open(buf, EET_FILE_MODE_READ);
                }
@@ -1143,6 +1166,8 @@ e_config_init(void)
              _e_config_profile = _e_config_profile_name_get(ef);
              eet_close(ef);
              ef = NULL;
+             if (!_e_config_profile)
+               printf("CF: warning - can't read profile\n");
           }
         if (!_e_config_profile)
           {
@@ -1793,16 +1818,21 @@ e_config_domain_load(const char *domain, E_Config_DD *edd)
 
    for (i = 1; i <= _e_config_revisions; i++)
      {
-        e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.%i.cfg",
+        e_user_dir_snprintf(buf, sizeof(buf), "config/%s/%s.cfg.%i",
                             _e_config_profile, domain, i);
         ef = eet_open(buf, EET_FILE_MODE_READ);
         if (ef)
           {
+             printf("CF: warning - falling back to %s\n", buf);
              data = eet_data_read(ef, edd, "config");
              eet_close(ef);
              if (data) return data;
+             printf("CF: warning - fallback to %s can't read config\n", buf);
           }
+        else if (ecore_file_exists(buf))
+          printf("CF: warning - fallback to %s failing to open\n", buf);
      }
+   printf("CF: fallback to system config config file for [%s]\n", domain);
    return e_config_domain_system_load(domain, edd);
 }
 
