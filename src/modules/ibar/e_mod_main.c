@@ -69,6 +69,7 @@ struct _IBar_Icon
    IBar            *ibar;
    Evas_Object     *o_holder, *o_icon;
    Evas_Object     *o_holder2, *o_icon2, *label_obj;
+   Eina_List       *border_objs;
    Efreet_Desktop  *app;
    Ecore_Timer     *reset_timer;
    Ecore_Timer     *show_timer; //for menu
@@ -857,6 +858,14 @@ static void
 _ibar_icon_free(IBar_Icon *ic)
 {
    E_Exec_Instance *inst;
+   Evas_Object *o;
+
+   EINA_LIST_FREE(ic->border_objs, o)
+     {
+        evas_object_event_callback_del(o, EVAS_CALLBACK_DEL,
+                                       _ibar_cb_icon_menu_img_del);
+        evas_object_del(o);
+     }
 
    _adjacent_popup_destroy(ic);
    if (ic->ibar->menu_icon == ic) ic->ibar->menu_icon = NULL;
@@ -1245,6 +1254,8 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
    if (!ic) return; //menu is closing
 
    evas_object_data_del(obj, "ibar_icon");
+   ic->border_objs = eina_list_remove(ic->border_objs, obj);
+
    if (!ic->menu) return; //who knows
    edje_object_part_box_remove(ic->menu->o_bg, "e.box", data);
 
@@ -1330,14 +1341,17 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
         EINA_LIST_FOREACH(exe->borders, ll, bd)
           {
              if (bd->client.netwm.state.skip_taskbar) continue;
+
              it = edje_object_add(e);
-             
              e_theme_edje_object_set(it, "base/theme/modules/ibar",
                                      "e/modules/ibar/menu/item");
              evas_object_data_set(it, "ibar_icon", ic);
+             evas_object_data_set(it, "border", bd);
+             ic->border_objs = eina_list_append(ic->border_objs, it);
              e_popup_object_add(ic->menu->win, it);
              img = e_border_icon_add(bd, evas_object_evas_get(it));
              evas_object_data_set(img, "ibar_icon", ic);
+             ic->border_objs = eina_list_append(ic->border_objs, img);
 
              evas_object_event_callback_add(img, EVAS_CALLBACK_DEL,
                                             _ibar_cb_icon_menu_img_del, it);
