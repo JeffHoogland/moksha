@@ -62,8 +62,8 @@ struct _Instance
 typedef struct _Mod_Inst Mod_Inst;
 struct _Mod_Inst
 {
-    /* Sructure to store a global module instance in
-     *   complete with a hidden window for event notification purposes */
+    /* Structure to store a global module instance in
+     * complete with a hidden window for event notification purposes */
 
     Instance *inst;
     /* A pointer to an Ecore window used to
