@@ -1292,6 +1292,13 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
 }
 
 static void
+_ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+{
+   E_Border *bd = data;
+   e_border_raise(bd);
+}
+
+static void
 _ibar_icon_menu_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic = data;
@@ -1349,6 +1356,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
              ic->border_objs = eina_list_append(ic->border_objs, it);
              e_popup_object_add(ic->menu->win, it);
              img = e_border_icon_add(bd, evas_object_evas_get(it));
+             evas_object_event_callback_add(img, EVAS_CALLBACK_MOUSE_IN, _ibar_icon_menu_mouse_in_cb, bd);
+
              evas_object_data_set(img, "ibar_icon", ic);
              ic->border_objs = eina_list_append(ic->border_objs, img);
 
