@@ -1296,6 +1296,7 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __U
 {
    E_Border *bd = data;
    e_border_raise(bd);
+   e_border_focus_set(bd, 1, 1);
 }
 
 static void
