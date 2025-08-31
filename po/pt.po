@@ -578,15 +578,15 @@ msgstr "Enviar rato para o ecrã..."
 
 #: src/bin/e_actions.c:3433
 msgid "Send Mouse Forward 1 Screen"
-msgstr "Avançar o rato 1 ecrã"
+msgstr "Enviar o rato para a frente 1 ecrã"
 
 #: src/bin/e_actions.c:3435
 msgid "Send Mouse Back 1 Screen"
-msgstr "Recuar o rato 1 ecrã"
+msgstr "Enviar o rato para trás 1 ecrã"
 
 #: src/bin/e_actions.c:3437
 msgid "Send Mouse Forward/Back Screens..."
-msgstr "Recuar ou avançar o rato nos ecrãs..."
+msgstr "Enviar o rato para a frente/para trás nos ecrãs..."
 
 #: src/bin/e_actions.c:3442
 msgid "Dim"
@@ -2288,7 +2288,7 @@ msgstr "Normal"
 
 #: src/bin/e_int_border_menu.c:1074
 msgid "Always Below"
-msgstr "Sempre abaixo"
+msgstr "Sempre por baixo"
 
 #: src/bin/e_int_border_menu.c:1118
 msgid "Pin to Desktop"
@@ -3722,51 +3722,51 @@ msgstr "Vertical"
 
 #: src/bin/e_shelf.c:72
 msgid "Left"
-msgstr "À esquerda"
+msgstr "Esquerda"
 
 #: src/bin/e_shelf.c:73
 msgid "Right"
-msgstr "À direita"
+msgstr "Direita"
 
 #: src/bin/e_shelf.c:74
 msgid "Top"
-msgstr "Em cima"
+msgstr "Superior"
 
 #: src/bin/e_shelf.c:75
 msgid "Bottom"
-msgstr "Em baixo"
+msgstr "Inferior"
 
 #: src/bin/e_shelf.c:76
 msgid "Top-left Corner"
-msgstr "Em cima (à esquerda)"
+msgstr "Canto superior esquerdo"
 
 #: src/bin/e_shelf.c:77
 msgid "Top-right Corner"
-msgstr "Em cima (à direita)"
+msgstr "Canto superior direito"
 
 #: src/bin/e_shelf.c:78
 msgid "Bottom-left Corner"
-msgstr "Em baixo (à esquerda)"
+msgstr "Canto inferior esquerdo"
 
 #: src/bin/e_shelf.c:79
 msgid "Bottom-right Corner"
-msgstr "Em baixo (à direita)"
+msgstr "Canto inferior direito"
 
 #: src/bin/e_shelf.c:80
 msgid "Left-top Corner"
-msgstr "À esquerda (em cima)"
+msgstr "Canto superior esquerdo"
 
 #: src/bin/e_shelf.c:81
 msgid "Right-top Corner"
-msgstr "À direita (em cima)"
+msgstr "Canto superior direito"
 
 #: src/bin/e_shelf.c:82
 msgid "Left-bottom Corner"
-msgstr "À esquerda (em baixo)"
+msgstr "Canto inferior esquerdo"
 
 #: src/bin/e_shelf.c:83
 msgid "Right-bottom Corner"
-msgstr "À direita (em baixo)"
+msgstr "Canto inferior direito"
 
 #: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1176
 #, c-format
