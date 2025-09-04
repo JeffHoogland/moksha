@@ -1477,8 +1477,6 @@ _ibar_icon_menu_show(IBar_Icon *ic, Eina_Bool grab)
    ic->drag.dnd = 0;
    ic->mouse_down = 0;
    _ibar_icon_menu(ic, grab);
-   if (ic->ibar->inst->ci->show_label_adjac && !ic->menu)
-     _adjacent_label_popup(ic);
 }
 
 static void
@@ -1500,6 +1498,8 @@ _ibar_icon_mouse_in_timer(void *data)
 
    ic->show_timer = NULL;
    _ibar_icon_menu_show(ic, EINA_FALSE);
+   if (ic->ibar->inst->ci->show_label_adjac && !ic->menu)
+     _adjacent_label_popup(ic);
    return EINA_FALSE;
 }
 
