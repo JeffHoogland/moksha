@@ -1153,7 +1153,7 @@ _adjacent_label_popup(void *data)
 
    evas_object_geometry_get(ic->o_holder, &x, &y, &iw, &ih);
    e_gadcon_canvas_zone_geometry_get(ic->ibar->inst->gcc->gadcon, &gx, &gy, NULL, NULL);
-   evas_object_geometry_get(label_obj, NULL, NULL, &gw, &gh);
+   evas_object_geometry_get(ic->popup->o_bg, NULL, NULL, &gw, &gh);
 
    x -= ic->popup->win->zone->x;
    y -= ic->popup->win->zone->y;
