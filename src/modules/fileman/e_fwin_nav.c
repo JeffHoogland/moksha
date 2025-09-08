@@ -5,11 +5,11 @@ typedef struct _Instance Instance;
 typedef struct Nav_Item
 {
    EINA_INLIST;
-   Instance *inst;
-   Evas_Object *o;
-   Eina_List *handlers;
-   Eio_Monitor *monitor;
-   const char *path;
+   Instance           *inst;
+   Evas_Object        *o;
+   Eina_List          *handlers;
+   Eio_Monitor        *monitor;
+   const char         *path;
 } Nav_Item;
 
 struct _Instance
@@ -18,15 +18,15 @@ struct _Instance
 
    E_Toolbar          *tbar;
 
-   E_Drop_Handler    *dnd_handler;
-   Evas_Object *dnd_obj;
-   char *dnd_path;
+   E_Drop_Handler     *dnd_handler;
+   Evas_Object        *dnd_obj;
+   char               *dnd_path;
 
    Evas_Object        *o_base, *o_box, *o_fm, *o_scroll;
 
    // buttons
-   Nav_Item          *sel_ni;
-   Eina_Inlist       *l_buttons;
+   Nav_Item           *sel_ni;
+   Eina_Inlist        *l_buttons;
    Eina_List          *history, *current;
    int                 ignore_dir;
 
