@@ -2191,7 +2191,7 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
           {
             if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
                exe_borders_cycle(ic);
-           }
+          }
         return;
      }
 
@@ -2243,8 +2243,8 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
              {
                if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
                  exe_borders_cycle(ic);
-              }
-            return;
+             }
+           return;
          }
      }
 
