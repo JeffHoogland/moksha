@@ -2152,14 +2152,31 @@ borders_cycle_do(void *data)
 }
 
 static void
+exe_borders_cycle(void *data)
+{
+   IBar_Icon *ic = data;
+   E_Exec_Instance *exe;
+   Eina_List *l;
+   E_Border *bd;
+ 
+   cur_bd = 0;
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+     {
+       if (!exe->borders) continue;
+       bd = eina_list_nth(exe->borders, cur_bd);
+       if (bd) border_show(bd);
+       if (eina_list_count(exe->borders) == 1) return;
+       ic->ibar->inst->ibar->ic_enter_before = ic;
+       ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
+     }
+}
+
+static void
 _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
 {
    E_Event_Dnd_Enter *ev;
    Instance *inst;
    Evas_Object *o, *o2;
-   Eina_List *l;
-   E_Exec_Instance *exe;
-   E_Border *bd;
 
    ev = event_info;
    inst = data;
@@ -2173,18 +2190,7 @@ _ibar_inst_cb_enter(void *data, const char *type __UNUSED__, void *event_info)
         if (ic->exes)
           {
             if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
-              {
-                cur_bd = 0;
-                EINA_LIST_FOREACH(ic->exes, l, exe)
-                  {
-                     if (!exe->borders) continue;
-                     bd = eina_list_nth(exe->borders, cur_bd);
-                     if (bd) border_show(bd);
-                     if (eina_list_count(exe->borders) == 1) return;
-                     inst->ibar->ic_enter_before = ic;
-                     ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
-                  }
-              }
+               exe_borders_cycle(ic);
            }
         return;
      }
@@ -2217,9 +2223,6 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
    Instance *inst;
    int x, y;
    IBar_Icon *ic, *ic_before, *ic_enter;
-   Eina_List *l;
-   E_Exec_Instance *exe;
-   E_Border *bd;
 
    ev = event_info;
    inst = data;
@@ -2239,18 +2242,7 @@ _ibar_inst_cb_move(void *data, const char *type, void *event_info)
            if (ic->exes)
              {
                if (!ic->ibar->inst->ci->dont_icon_menu_mouseover)
-                 {
-                   cur_bd = 0;
-                   EINA_LIST_FOREACH(ic->exes, l, exe)
-                     {
-                       if (!exe->borders) continue;
-                       bd = eina_list_nth(exe->borders, cur_bd);
-                       if (bd) border_show(bd);
-                       if (eina_list_count(exe->borders) == 1) return;
-                       inst->ibar->ic_enter_before = ic;
-                       ic->cycle_timer = ecore_timer_loop_add(1.5, borders_cycle_do, exe->borders);
-                     }
-                 }
+                 exe_borders_cycle(ic);
               }
             return;
          }
