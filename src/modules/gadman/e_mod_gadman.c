@@ -114,15 +114,15 @@ gadman_init(E_Module *m)
    e_container_shape_change_callback_add(Man->container, on_shape_change, NULL);
 
    /* create and register "desktop" location */
-   location = Man->location[GADMAN_LAYER_BG] = e_gadcon_location_new("Desktop", E_GADCON_SITE_DESKTOP,
-                                    _e_gadman_client_add, NULL,
+   location = Man->location[GADMAN_LAYER_BG] = e_gadcon_location_new(_("Desktop"), E_GADCON_SITE_DESKTOP,
+                                    _e_gadman_client_add, (intptr_t*)(long)GADMAN_LAYER_BG,
                                     _e_gadman_client_remove, NULL);
    e_gadcon_location_set_icon_name(location, "desktop");
    e_gadcon_location_register(location);
 
    /* create and register "desktop hover" location */
-   location = Man->location[GADMAN_LAYER_TOP] = e_gadcon_location_new("Desktop Hover", E_GADCON_SITE_DESKTOP,
-                                    _e_gadman_client_add, NULL,
+   location = Man->location[GADMAN_LAYER_TOP] = e_gadcon_location_new(_("Desktop Overlay"), E_GADCON_SITE_DESKTOP,
+                                    _e_gadman_client_add, (intptr_t*)(long)GADMAN_LAYER_TOP,
                                     _e_gadman_client_remove, NULL);
    e_gadcon_location_set_icon_name(location, "desktop");
    e_gadcon_location_register(location);
