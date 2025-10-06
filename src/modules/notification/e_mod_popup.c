@@ -795,7 +795,7 @@ _notification_popup_del(unsigned int                 id,
              break;
           }
      }
-     notification_cfg->item_click = EINA_FALSE;
+   notification_cfg->item_click = EINA_FALSE;
 }
 
 static void

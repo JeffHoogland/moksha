@@ -417,7 +417,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
               if (strlen(items->item_icon) > 0)
                 e_util_menu_item_theme_icon_set(mi, items->item_icon);
               else
-                e_menu_item_icon_file_set(mi,  items->item_icon_img);
+                e_menu_item_icon_file_set(mi, items->item_icon_img);
             }
           }
         else
