@@ -250,7 +250,7 @@ truncate_menu(const unsigned int n)
          }
         E_FREE_LIST(discard, popup_items_free);
       }
-      store_history(notification_cfg->hist);
+      //~ store_history(notification_cfg->hist);
     }
   }
   else
