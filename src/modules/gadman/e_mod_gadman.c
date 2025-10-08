@@ -1488,9 +1488,9 @@ on_hide_stop(void *data __UNUSED__, Evas_Object *o __UNUSED__, const char *em __
 }
 
 static int
-_e_gadman_client_add(void *data __UNUSED__, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc)
+_e_gadman_client_add(void *data, E_Gadcon_Client *gcc, const E_Gadcon_Client_Class *cc)
 {
-   return !!gadman_gadget_add(cc, gcc, GADMAN_LAYER_BG);
+   return !!gadman_gadget_add(cc, gcc, (intptr_t)data);
 }
 
 static void
