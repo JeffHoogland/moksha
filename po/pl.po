@@ -891,7 +891,6 @@ msgid "The file data is empty."
 msgstr "Dany plik jest pusty."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -900,7 +899,6 @@ msgstr ""
 "stracił uprawnienia do plików."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
 "Zabrakło pamięci podczas przygotowywania zapisu.<br>Proszę zwolnij pamięć."
@@ -910,7 +908,6 @@ msgid "This is a generic error."
 msgstr "Jest to ogólny błąd."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
@@ -919,7 +916,6 @@ msgstr ""
 "najwyżej)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr "Na dysku występują błędy I/O.<br>Może trzeba go wymienić?"
 
@@ -968,9 +964,8 @@ msgid "Decryption failed."
 msgstr "Odszyfrowanie nie powiodło się."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
-msgstr "Błąd nie znany Mokszy."
+msgstr "Enlightenment nie zna tego błędu."
 
 #: src/bin/e_config.c:1224
 msgid ""
@@ -6139,14 +6134,12 @@ msgid "Autoscroll"
 msgstr "Automatyczne przewijanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
 msgstr "Wyłącz ikony w Menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Inteligentna orientacja menu"
+msgstr "Inteligentna orientacja menu"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6998,14 +6991,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Wybrana aplikacja"
+msgstr "Ustaw DPI aplikacji"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Aplikacje"
+msgstr "DPI Bazy aplikacji"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8590,9 +8581,8 @@ msgid "Background"
 msgstr "Tło"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Najedź (przełączanie klawiszy)"
+msgstr "Pokrycie (przełączanie klawiszy)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8633,9 +8623,8 @@ msgid "Background Options"
 msgstr "Ustawienia tła pulpitu"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Plik desktop"
+msgstr "Nakrycie pulpitu"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
