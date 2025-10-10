@@ -8624,7 +8624,7 @@ msgstr "Ustawienia tła pulpitu"
 
 #: src/modules/gadman/e_mod_gadman.c:124
 msgid "Desktop Overlay"
-msgstr "Nakrycie pulpitu"
+msgstr "Pokrycie pulpitu"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
