@@ -886,7 +886,6 @@ msgid "The file data is empty."
 msgstr "Data souboru jsou prázdná."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -895,7 +894,6 @@ msgstr ""
 "k souborům."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr "Došla paměť při přípravě k zápisu.<br>Prosím uvolněte ji."
 
@@ -904,7 +902,6 @@ msgid "This is a generic error."
 msgstr "Toto je obecná chyba."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
@@ -913,7 +910,6 @@ msgstr ""
 "stovek KB)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr "Máte I/O chyby na disku.<br>Nepotřebuje ho vyměnit?"
 
@@ -962,9 +958,8 @@ msgid "Decryption failed."
 msgstr "Dešifrování selhalo."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
-msgstr "Chyba je v Moksha neznámá."
+msgstr "Neznmámá chyba v Moksha desktopu."
 
 #: src/bin/e_config.c:1224
 msgid ""
@@ -6116,14 +6111,12 @@ msgid "Autoscroll"
 msgstr "Automaticky rolovat"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Nezobrazovat ikony v nabídce"
+msgstr "Nezobrazovat ikony v nabídce"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Inteligentní Orientace nabídky"
+msgstr "Inteligentní Orientace nabídky"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6978,14 +6971,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Vybrané aplikace"
+msgstr "Nastavit DPI pro aplikace"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Aplikace"
+msgstr "DPI pro aplikace"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8572,7 +8563,6 @@ msgid "Background"
 msgstr "Pozadí"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
 msgstr "Nad pozadím (Přepínatelné klávesami)"
 
@@ -8615,9 +8605,8 @@ msgid "Background Options"
 msgstr "Možnosti pozadí"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Desktop soubor"
+msgstr "Vrstva Nad Desktopem"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
