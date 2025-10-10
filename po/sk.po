@@ -882,7 +882,6 @@ msgid "The file data is empty."
 msgstr "Súbor dát je prázdny."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -891,7 +890,6 @@ msgstr ""
 "stratili oprávnenie k súborom."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr "Pamäť plná pri príprave zápisu.<br>Prosím uvoľniť pamäť."
 
@@ -900,18 +898,16 @@ msgid "This is a generic error."
 msgstr "Všeobecná chyba."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Súbor nastavení je príliš veľký.<br>Mal by to byť veľmi malý (niekoľko "
+"Súbor nastavení je príliš veľký.<br>Mal by byť veľmi malý (len niekoľko "
 "stoviek KB najviac)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
-msgstr "Máte V/V chyby na disku.<br>Nepotrebujete ho vymeniť?"
+msgstr "Máte I/O chyby na disku.<br>Nepotrebujete ho vymeniť?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -958,7 +954,6 @@ msgid "Decryption failed."
 msgstr "Dešifrovanie zlyhalo."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "Neznáma chyba v desktope Moksha."
 
@@ -6130,18 +6125,16 @@ msgid "Autoscroll"
 msgstr "Automatické rolovanie"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Nezobrazovať Ikony v ponuke"
+msgstr "Nezobrazovať Ikony v ponuke"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Inteligentná orientácia"
+msgstr "Inteligentná orientácia"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
-msgstr "Rýchlosti rolovania"
+msgstr "Rýchlosť rolovania"
 
 #: src/modules/conf_menus/e_int_config_menus.c:309
 #, c-format
@@ -6990,14 +6983,12 @@ msgid "%1.2f x"
 msgstr "%1.2f"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Vybrané aplikácie"
+msgstr "Nastaviť DPI aplikácií"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Aplikácie"
+msgstr "DPI Aplikácií"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8583,9 +8574,8 @@ msgid "Background"
 msgstr "Pozadie"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Nad pozadím (Prepínateľná klávesami)"
+msgstr "Vrstva nad (Prepínateľná klávesami)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8626,9 +8616,8 @@ msgid "Background Options"
 msgstr "Nastavenie pozadia"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Súbor plochy"
+msgstr "Vrstva nad desktopom"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
