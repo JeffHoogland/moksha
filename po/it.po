@@ -883,7 +883,6 @@ msgid "The file data is empty."
 msgstr "Il file non contiene dati."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -892,7 +891,6 @@ msgstr ""
 "sola<br>lettura o non si hanno più i permessi."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
 "Memoria esaurita mentre si preparava<br>la scrittura. Si prega di liberare "
@@ -903,7 +901,6 @@ msgid "This is a generic error."
 msgstr "Questo è un errore generico."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
@@ -912,7 +909,6 @@ msgstr ""
 "(al massimo qualche centinaio di KB)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr ""
 "Ci sono errori di I/O sul disco.<br>Forse ha bisogno di essere sostituito?"
@@ -962,9 +958,8 @@ msgid "Decryption failed."
 msgstr "Decifratura fallita."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
-msgstr "L'errore è sconosciuto a Moksha."
+msgstr "L'errore è sconosciuto a Enlightenment."
 
 #: src/bin/e_config.c:1224
 msgid ""
@@ -6204,12 +6199,10 @@ msgid "Autoscroll"
 msgstr "Autoscorrimento"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
 msgstr "Disabilita icone nei menù"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
 msgstr "Orientamento intelligente del menu"
 
@@ -7063,14 +7056,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Applicazioni selezionate"
+msgstr "Imposta DPI Applicazioni"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Applicazioni"
+msgstr "DPI Base Applicazioni"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8653,9 +8644,8 @@ msgid "Background"
 msgstr "Sfondo"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Livello nascosto (tasti visualizzazione)"
+msgstr "Copertura (tasto commutazione)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8696,9 +8686,8 @@ msgid "Background Options"
 msgstr "Opzioni dello sfondo"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "File desktop"
+msgstr "Copertura Desktop"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
