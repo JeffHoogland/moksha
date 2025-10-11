@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: moksha 0.4.1\n"
 "Report-Msgid-Bugs-To: moksha@bodhilinux.com\n"
 "POT-Creation-Date: 2025-10-10 18:24+0200\n"
-"PO-Revision-Date: 2025-02-20 21:42+0000\n"
+"PO-Revision-Date: 2025-10-10 23:40+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <hugokarvalho@hotmail.com>\n"
 "Language: pt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
 #: src/bin/e_about.c:18
 msgid "About Moksha"
@@ -885,37 +885,33 @@ msgid "The file data is empty."
 msgstr "O ficheiro está vazio."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"O ficheiro não pode ser gravado. Pode ser que o ficheiro<br>seja apenas de "
-"leitura ou que não tenha acesso aos ficheiros."
+"O ficheiro não pode ser gravado. Pode ser que o ficheiro<ps/>seja apenas de "
+"leitura ou tenha perdido as permissões dos seus ficheiros."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Ficou sem memória ao preparar o ficheiro.<br>Liberte espaço de memória."
+"Ficou sem memória ao preparar o ficheiro.<ps/>Liberte espaço de memória."
 
 #: src/bin/e_config.c:190
 msgid "This is a generic error."
 msgstr "Este é um erro genérico."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"O ficheiro das definições é muito grande.<br>Em princípio seria pequeno "
+"O ficheiro das definições é muito grande.<ps/>Em princípio seria pequeno "
 "(algumas centenas de KB)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
-msgstr "Possui erros de E/S no disco.<br>Talvez precise de ser substituído?"
+msgstr "Possui erros de E/S no disco.<ps/>Talvez precise de ser substituído?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -962,9 +958,8 @@ msgid "Decryption failed."
 msgstr "Falha ao desencriptar."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
-msgstr "O erro não é reconhecido pelo Moksha."
+msgstr "O erro é desconhecido para o Moksha."
 
 #: src/bin/e_config.c:1224
 msgid ""
@@ -1655,11 +1650,11 @@ msgstr "Remover imagem de fundo"
 
 #: src/bin/e_fm.c:9950 src/bin/e_fm.c:10179
 msgid "Set overlay..."
-msgstr "Definir sobreposição..."
+msgstr "Definir camada acima..."
 
 #: src/bin/e_fm.c:9956
 msgid "Clear overlay"
-msgstr "Remover sobreposição"
+msgstr "Limpar camada acima"
 
 #: src/bin/e_fm.c:10273 src/bin/e_fm.c:10616
 #, c-format
@@ -6111,14 +6106,12 @@ msgid "Autoscroll"
 msgstr "Deslocação automática"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Desativar ícones nos menus"
+msgstr "Desativar ícones nos menus"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Orientação do menu inteligente"
+msgstr "Orientação inteligente"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6970,14 +6963,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Aplicação selecionada"
+msgstr "Definir DPI da aplicação"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Aplicações"
+msgstr "Base de aplicações DPI"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8208,16 +8199,16 @@ msgid ""
 "<hilight>&lt;return&gt;</hilight>.<br> This page will not show up next time "
 "you run <hilight>everything</hilight>.<br>    <hilight>&lt;Esc&gt;</hilight> "
 "close this Dialog<br>    <hilight>&lt;?&gt;</hilight> show this page<br>    "
-"<hilight>&lt;return&gt;</hilight> run action<br>    <hilight>&lt;"
-"ctrl+return&gt;</hilight> run action and continue<br>    <hilight>&lt;tab&gt;"
-"</hilight> toggle between selectors<br>    <hilight>&lt;ctrl+tab&gt;</"
-"hilight> complete input (depends on plugin)<br>    <hilight>&lt;ctrl+'x'&gt;"
-"</hilight> jump to plugin beginning with 'x'<br>    <hilight>&lt;ctrl+left/"
-"right&gt;</hilight> cycle through plugins<br>    <hilight>&lt;ctrl+up/"
-"down&gt;</hilight> go to first/last item<br>    <hilight>&lt;ctrl+1&gt;</"
-"hilight> toggle view modes (exit this page ;)<br>    <hilight>&lt;ctrl+2&gt;"
-"</hilight> toggle list view modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> "
-"toggle thumb view modes"
+"<hilight>&lt;return&gt;</hilight> run action<br>    "
+"<hilight>&lt;ctrl+return&gt;</hilight> run action and continue<br>    "
+"<hilight>&lt;tab&gt;</hilight> toggle between selectors<br>    "
+"<hilight>&lt;ctrl+tab&gt;</hilight> complete input (depends on "
+"plugin)<br>    <hilight>&lt;ctrl+'x'&gt;</hilight> jump to plugin beginning "
+"with 'x'<br>    <hilight>&lt;ctrl+left/right&gt;</hilight> cycle through "
+"plugins<br>    <hilight>&lt;ctrl+up/down&gt;</hilight> go to first/last "
+"item<br>    <hilight>&lt;ctrl+1&gt;</hilight> toggle view modes (exit this "
+"page ;)<br>    <hilight>&lt;ctrl+2&gt;</hilight> toggle list view "
+"modes<br>    <hilight>&lt;ctrl+3&gt;</hilight> toggle thumb view modes"
 msgstr ""
 "  Muito bem, aqui vai uma pequena explicação acerca do <hilight>Início "
 "rápido</hilight>...<br>  Basta digitar algumas letras do que está a procurar."
@@ -8561,9 +8552,8 @@ msgid "Background"
 msgstr "Fundo"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Invisível (trocar com teclas)"
+msgstr "Camada acima (alternável com teclas)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8604,9 +8594,8 @@ msgid "Background Options"
 msgstr "Opções de fundo"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Ficheiro .desktop"
+msgstr "Camada acima da área de trabalho"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
