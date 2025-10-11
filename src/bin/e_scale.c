@@ -1,4 +1,5 @@
 #include "e.h"
+#include <Elementary.h>
 
 EAPI double e_scale = 1.0;
 
@@ -34,7 +35,8 @@ e_scale_update(void)
         if (e_scale > e_config->scale.max) e_scale = e_config->scale.max;
         else if (e_scale < e_config->scale.min) e_scale = e_config->scale.min;
      }
-
+   elm_config_scale_set(e_scale);
+   elm_config_all_flush();
    edje_scale_set(e_scale);
    snprintf(buf, sizeof(buf), "%1.3f", e_scale);
    e_util_env_set("E_SCALE", buf);
