@@ -886,12 +886,12 @@ msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"Súbor nie je zapisovateľný. Možno je disk iba na čítanie<br>alebo ste "
+"Súbor nie je zapisovateľný. Možno je disk iba na čítanie<ps/>alebo ste "
 "stratili oprávnenie k súborom."
 
 #: src/bin/e_config.c:187
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
-msgstr "Pamäť plná pri príprave zápisu.<br>Prosím uvoľniť pamäť."
+msgstr "Pamäť plná pri príprave zápisu.<ps/>Prosím uvoľniť pamäť."
 
 #: src/bin/e_config.c:190
 msgid "This is a generic error."
@@ -902,7 +902,7 @@ msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Súbor nastavení je príliš veľký.<br>Mal by byť veľmi malý (len niekoľko "
+"Súbor nastavení je príliš veľký.<ps/>Mal by byť veľmi malý (len niekoľko "
 "stoviek KB najviac)."
 
 #: src/bin/e_config.c:196
@@ -7763,7 +7763,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Došlo k chybe pri pokuse nastaviť <br>správcu frekvencie cpu<br>pomocou "
+"Došlo k chybe pri pokuse nastaviť <ps/>správcu frekvencie cpu<br>pomocou "
 "utility modulu setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:540
@@ -7772,7 +7772,7 @@ msgid ""
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Vaše jadro nepodporuje nastavovanie <br>frekvencie CPU. Zrejme Vám "
+"Vaše jadro nepodporuje nastavovanie <ps/>frekvencie CPU. Zrejme Vám "
 "chýbajú<br>moduly pre jadro alebo podpora, alebo Vaše CPU<br>jednoducho "
 "neumožňuje zmenu frekvencie."
 
@@ -7781,7 +7781,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Došlo k chybe pri pokuse nastaviť<br>frekvenciu cpu pomocou utility "
+"Došlo k chybe pri pokuse nastaviť<ps/>frekvenciu cpu pomocou utility "
 "modulu<br> setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:594
@@ -7789,7 +7789,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Došlo k chybe pri pokuse nastaviť<br>frekvenciu cpu pomocou utility "
+"Došlo k chybe pri pokuse nastaviť<ps/>frekvenciu cpu pomocou utility "
 "modulu<br> setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:1466

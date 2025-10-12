@@ -890,12 +890,12 @@ msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"Soubor není zapisovatelný. Možná je disk pouze pro<br>čtení nebo chybí práva "
+"Soubor není zapisovatelný. Možná je disk pouze pro čtení<ps/>nebo chybí práva "
 "k souborům."
 
 #: src/bin/e_config.c:187
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
-msgstr "Došla paměť při přípravě k zápisu.<br>Prosím uvolněte ji."
+msgstr "Došla paměť při přípravě k zápisu.<ps/>Prosím uvolněte ji."
 
 #: src/bin/e_config.c:190
 msgid "This is a generic error."
@@ -906,12 +906,12 @@ msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Soubor s nastavením je moc velký.<br>Měl by být velmi malý (maximálně pár "
+"Soubor s nastavením je moc velký.<ps/>Měl by být velmi malý (maximálně pár "
 "stovek KB)."
 
 #: src/bin/e_config.c:196
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
-msgstr "Máte I/O chyby na disku.<br>Nepotřebuje ho vyměnit?"
+msgstr "Máte I/O chyby na disku.<ps/>Nepotřebuje ho vyměnit?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -7047,7 +7047,7 @@ msgstr "Chyba souboru motivu"
 #: src/modules/conf_theme/e_int_config_theme.c:621
 #, c-format
 msgid "The listed files are probably not Moksha themes:<ps/>%s"
-msgstr ""
+msgstr "Soubory v seznamu pravdepodobne nejsou témama:<ps/>%s"
 
 #: src/modules/conf_theme/e_int_config_theme.c:786
 msgid " Import..."
@@ -7754,7 +7754,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Vyskytla se chyba při pokusu nastavit<br>správce frekvence CPU pomocí "
+"Vyskytla se chyba při pokusu nastavit<ps/>správce frekvence CPU pomocí "
 "nástroje<ps/>setfreq."
 
 #: src/modules/cpufreq/e_mod_main.c:540
