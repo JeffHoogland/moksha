@@ -895,13 +895,13 @@ msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"Plik nie jest zapisywalny. Być może dysk jest tylko w trybie odczytu<br>lub "
+"Plik nie jest zapisywalny. Być może dysk jest tylko w trybie odczytu<ps/>lub "
 "stracił uprawnienia do plików."
 
 #: src/bin/e_config.c:187
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Zabrakło pamięci podczas przygotowywania zapisu.<br>Proszę zwolnij pamięć."
+"Zabrakło pamięci podczas przygotowywania zapisu.<ps/>Proszę zwolnij pamięć."
 
 #: src/bin/e_config.c:190
 msgid "This is a generic error."
@@ -912,12 +912,12 @@ msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Plik ustawień jest zbyt duży.<br>Powinien być bardzo mały (kilkaset KB co "
+"Plik ustawień jest zbyt duży.<ps/>Powinien być bardzo mały (kilkaset KB co "
 "najwyżej)."
 
 #: src/bin/e_config.c:196
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
-msgstr "Na dysku występują błędy I/O.<br>Może trzeba go wymienić?"
+msgstr "Na dysku występują błędy I/O.<ps/>Może trzeba go wymienić?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -7771,7 +7771,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency governor via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Wystąpił błąd podczas ustawiania zarządcy częstoliwością<br>cpu poprzez "
+"Wystąpił błąd podczas ustawiania zarządcy częstoliwością<ps/>cpu poprzez "
 "narzędzie setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:540
@@ -7780,7 +7780,7 @@ msgid ""
 "be missing<ps/>Kernel modules or features, or your CPU<ps/>simply does not "
 "support this feature."
 msgstr ""
-"Twój kernel nie wspiera wcale ustawiania<br>częstotliwości CPU. Być może "
+"Twój kernel nie wspiera wcale ustawiania<ps/>częstotliwości CPU. Być może "
 "brakuje<br> modułów lub funkcji kernel albo twój CPU<br> po prostu nie ma "
 "takiej funkcjonalności."
 
@@ -7789,7 +7789,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu frequency setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Wystąpił błąd podczas ustawiania częstoliwości cpu<br>poprzez narzędzie "
+"Wystąpił błąd podczas ustawiania częstoliwości cpu<ps/>poprzez narzędzie "
 "setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:594
@@ -7797,7 +7797,7 @@ msgid ""
 "There was an error trying to set the<ps/>cpu power state setting via the "
 "module's<ps/>setfreq utility."
 msgstr ""
-"Wystąpił błąd podczas ustalania częstoliwości cpu<br>poprzez narzędzie "
+"Wystąpił błąd podczas ustalania częstoliwości cpu<ps/>poprzez narzędzie "
 "setfreq modułu."
 
 #: src/modules/cpufreq/e_mod_main.c:1466

@@ -888,12 +888,12 @@ msgid ""
 "permissions to your files."
 msgstr ""
 "Il file non è scrivibile. Forse il disco e' montato in modalità "
-"sola<br>lettura o non si hanno più i permessi."
+"sola<ps/>lettura o non si hanno più i permessi."
 
 #: src/bin/e_config.c:187
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Memoria esaurita mentre si preparava<br>la scrittura. Si prega di liberare "
+"Memoria esaurita mentre si preparava<ps/>la scrittura. Si prega di liberare "
 "della memoria."
 
 #: src/bin/e_config.c:190
@@ -905,13 +905,13 @@ msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Il file di impostazioni è troppo grande.<br>Dovrebbe essere molto piccolo "
+"Il file di impostazioni è troppo grande.<ps/>Dovrebbe essere molto piccolo "
 "(al massimo qualche centinaio di KB)."
 
 #: src/bin/e_config.c:196
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr ""
-"Ci sono errori di I/O sul disco.<br>Forse ha bisogno di essere sostituito?"
+"Ci sono errori di I/O sul disco.<ps/>Forse ha bisogno di essere sostituito?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
