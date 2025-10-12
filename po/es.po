@@ -889,19 +889,17 @@ msgid "The file data is empty."
 msgstr "El archivo de datos está vacío."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"El archivo no tiene permisos de escritura. Tal vez el disco es de sólo "
-"lectura<br>o ha perdido los permisos."
+"No se puede grabar el archivo. Tal vez el disco<ps/>es de sólo lectura o ha "
+"perdido los permisos."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Se quedó sin memoria mientras se prepara la escritura.<br>Por favor, libere "
+"Se quedó sin memoria mientras se prepara la escritura.<ps/>Por favor, libere "
 "memoria."
 
 #: src/bin/e_config.c:190
@@ -909,19 +907,17 @@ msgid "This is a generic error."
 msgstr "Este es un error genérico."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"El archivo de configuración es demasiado grande.<br>Debería ser muy pequeño "
+"El archivo de configuración es demasiado grande.<ps/>Debería ser muy pequeño "
 "(unos pocos cientos de KB como máximo)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr ""
-"Tiene errores de entrada/salida en el disco.<br>¿Quizá haya que cambiarlo?"
+"Tiene errores de entrada/salida en el disco.<ps/>¿Quizá haya que cambiarlo?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -968,7 +964,6 @@ msgid "Decryption failed."
 msgstr "El descifrado falló."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "El error es desconocido en Moksha."
 
@@ -6106,14 +6101,12 @@ msgid "Autoscroll"
 msgstr "Autodesplazamiento"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Deshabilitar iconos en menús"
+msgstr "Deshabilitar iconos en menús"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Orientación inteligente del menú"
+msgstr "Orientación inteligente del menú"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -6964,14 +6957,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
 msgid "Set Application DPI"
-msgstr "Aplicación seleccionada"
+msgstr "Seleccione DPI de la aplicación"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
 msgid "Application Base DPI"
-msgstr "Aplicaciones"
+msgstr "DPI de base de la aplicación"
 
 #: src/modules/conf_theme/e_int_config_scale.c:337
 #: src/modules/conf_window_manipulation/e_int_config_window_geometry.c:209
@@ -8553,9 +8544,8 @@ msgid "Background"
 msgstr "Fondo"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Desplaza sobre un elemento (conmutador de tecla)"
+msgstr "Capa (conmutador de tecla)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8596,9 +8586,8 @@ msgid "Background Options"
 msgstr "Opciones del fondo"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Archivo de escritorio"
+msgstr "Capa encima del escritorio"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
