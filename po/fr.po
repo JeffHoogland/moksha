@@ -8585,7 +8585,6 @@ msgid "Background"
 msgstr "Fond"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
 msgstr "Surimpression (action d'activation)"
 
@@ -8628,9 +8627,8 @@ msgid "Background Options"
 msgstr "Options du fond"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Fichier desktop"
+msgstr "Surimpression sur le bureau"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
