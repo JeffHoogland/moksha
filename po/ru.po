@@ -888,37 +888,33 @@ msgid "The file data is empty."
 msgstr "Файл данных пуст."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"Не получилось записать файл. Возможно диск защищён от записи,<br>либо у вас "
+"Не получилось записать файл. Возможно диск защищён от записи,<ps/>либо у вас "
 "нет прав на файлы."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Кончилась память при подготовке к записи.<br>Пожалуйста освободите память."
+"Кончилась память при подготовке к записи.<ps/>Пожалуйста освободите память."
 
 #: src/bin/e_config.c:190
 msgid "This is a generic error."
 msgstr "Это стандартная ошибка."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Файл настроек слишком большой.<br>Он должен быть гораздо меньше<br>(максимум "
+"Файл настроек слишком большой.<ps/>Он должен быть гораздо меньше<br>(максимум "
 "несколько сотен КБ)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
-msgstr "На диске замечены ошибки ввода-вывода.<br>Возможно стоит его заменить?"
+msgstr "На диске замечены ошибки ввода-вывода.<ps/>Возможно стоит его заменить?"
 
 #: src/bin/e_config.c:199
 msgid "You ran out of space while writing the file."
@@ -965,7 +961,6 @@ msgid "Decryption failed."
 msgstr "Расшифровка не удалось."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
 msgstr "Эта ошибка не известна Moksha."
 
@@ -5279,9 +5274,8 @@ msgid "Drag only"
 msgstr "Только перетаскивание"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:946
-#, fuzzy
 msgid "No edge selected"
-msgstr "Не выбран ни один модуль."
+msgstr "Не выбран ни один модуль"
 
 #: src/modules/conf_edgebindings/e_int_config_edgebindings.c:1241
 msgid "Edge Binding Error"
@@ -6122,14 +6116,12 @@ msgid "Autoscroll"
 msgstr "Автопрокрутка"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Убрать значки в меню"
+msgstr "Убрать значки в меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Умное ориентирование меню"
+msgstr "Умное ориентирование меню"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -8574,7 +8566,6 @@ msgid "Background"
 msgstr "Фон"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
 msgstr "Всплывающий слой (Переключается клавишами)"
 
@@ -8617,9 +8608,8 @@ msgid "Background Options"
 msgstr "Настройки фона"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr "Файл .desktop"
+msgstr "Всплывающий слой"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
@@ -10463,35 +10453,6 @@ msgid "Volume Mute"
 msgstr "Звук выкл."
 
 #: src/modules/separator/e_mod_main.c:122
-#, fuzzy
 msgid "Separator"
 msgstr "Отдельная группа"
 
-#~ msgid "Moksha Settings Write Problems"
-#~ msgstr "Проблемы сохранения параметров Moksha"
-
-#, c-format
-#~ msgid ""
-#~ "Moksha has had an error while moving config files<br>from:"
-#~ "<br>%s<br><br>to:<br>%s<br><br>The rest of the write has been aborted for "
-#~ "safety.<br>"
-#~ msgstr ""
-#~ "Moksha обнаружил сбой при перемещении файлов конфигурации<br>из:"
-#~ "<br>%s<br><br>в:<br>%s<br><br>Запись была прервана в целях безопасности."
-#~ "<br>"
-
-#, c-format
-#~ msgid ""
-#~ "Moksha has had an error while writing<br>its config file."
-#~ "<br>%s<br><br>The file where the error occurred was:<br>%s<br><br>This "
-#~ "file has been deleted to avoid corrupt data.<br>"
-#~ msgstr ""
-#~ "При записи настроек Moksha <br>возникла ошибка в конфигурационном файле."
-#~ "<br>%s<br><br>Файл в котором возникла ошибка:<br>%s<br><br>Этот файл был "
-#~ "удалён для предотвращения повреждения данных. <br>"
-
-#~ msgid "Custom FM to open dirs"
-#~ msgstr "Пользовательский ФМ для каталогов"
-
-#~ msgid "Show icon label"
-#~ msgstr "Показывать метку значка"
