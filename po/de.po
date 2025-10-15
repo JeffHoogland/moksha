@@ -910,19 +910,17 @@ msgid "The file data is empty."
 msgstr "Die Dateidaten sind leer."
 
 #: src/bin/e_config.c:184
-#, fuzzy
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
 msgstr ""
-"Die Datei kann nicht beschrieben werden. Vielleicht ist die<br>Platte nur "
+"Die Datei kann nicht beschrieben werden. Vielleicht ist die<ps/>Platte nur "
 "lesbar oder Sie haben die Berechtigungen<br>für ihre Dateien verloren."
 
 #: src/bin/e_config.c:187
-#, fuzzy
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr ""
-"Kein freier Speicher mehr beim Vorbereiten<br>des Schreibvorgangs. Bitte "
+"Kein freier Speicher mehr beim Vorbereiten<ps/>des Schreibvorgangs. Bitte "
 "geben Sie zusätzlichen<br>Speicher frei."
 
 #: src/bin/e_config.c:190
@@ -930,19 +928,17 @@ msgid "This is a generic error."
 msgstr "Dies ist ein allgemeiner Fehler."
 
 #: src/bin/e_config.c:193
-#, fuzzy
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr ""
-"Die Einstellungsdatei ist zu groß.<br>Sie sollte eigentlich sehr klein "
+"Die Einstellungsdatei ist zu groß.<ps/>Sie sollte eigentlich sehr klein "
 "sein<br>(höchstens einige Hundert KB)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr ""
-"Es gibt Lese-/Schreib-Fehler auf Ihrer Platte.<br>Vielleicht muss sie "
+"Es gibt Lese-/Schreib-Fehler auf Ihrer Platte.<ps/>Vielleicht muss sie "
 "ersetzt werden?"
 
 #: src/bin/e_config.c:199
@@ -990,9 +986,8 @@ msgid "Decryption failed."
 msgstr "Entschlüsseln fehlgeschlagen."
 
 #: src/bin/e_config.c:232
-#, fuzzy
 msgid "The error is unknown to Enlightenment."
-msgstr "Dieser Fehler ist Moksha unbekannt."
+msgstr "Dieser Fehler ist Moksha nicht bekannt."
 
 #: src/bin/e_config.c:1224
 msgid ""
@@ -6170,14 +6165,12 @@ msgid "Autoscroll"
 msgstr "Autoscroll"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
 msgid "Disable Icons in Menus"
-msgstr " Symbole in Menüs ausblenden"
+msgstr "Symbole in Menüs ausblenden"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
 msgid "Smart Menu Orientation"
-msgstr " Intelligente Menüanordnung"
+msgstr "Intelligente Menüanordnung"
 
 #: src/modules/conf_menus/e_int_config_menus.c:307
 msgid "Menu Scroll Speed"
@@ -8629,9 +8622,8 @@ msgid "Background"
 msgstr "Hintergrund"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
 msgid "Overlay (Key Toggle)"
-msgstr "Schweben (Tastenumschaltung)"
+msgstr "Überlagerung (Aktionsumschaltung)"
 
 #: src/modules/gadman/e_mod_config.c:79 src/modules/gadman/e_mod_config.c:156
 #: src/modules/gadman/e_mod_main.c:163
@@ -8672,9 +8664,8 @@ msgid "Background Options"
 msgstr "Hintergrundeinstellungen"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
 msgid "Desktop Overlay"
-msgstr ".desktop-Datei"
+msgstr "Arbeitsflächen Überlagerung"
 
 #: src/modules/gadman/e_mod_gadman.c:997
 msgid "Begin move/resize"
