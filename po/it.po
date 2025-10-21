@@ -10074,11 +10074,11 @@ msgstr "Variante"
 #: src/modules/notification/e_mod_main.c:278
 #: src/modules/notification/e_mod_main.c:374
 msgid "Notification"
-msgstr "Notification"
+msgstr "Notifiche"
 
 #: src/modules/notification/e_mod_main.c:108
 msgid "Notification Module"
-msgstr "Modulo Notification"
+msgstr "Modulo Notifiche"
 
 #: src/modules/notification/e_mod_main.c:129
 msgid "Error during notification server initialization"
