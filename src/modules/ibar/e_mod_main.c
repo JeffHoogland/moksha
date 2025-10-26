@@ -1828,6 +1828,12 @@ _ibar_instance_watch(void *data, E_Exec_Instance *inst, E_Exec_Watch_Type type)
         if (!eina_list_data_find(ic->exes, inst))
           ic->exes = eina_list_append(ic->exes, inst);
         break;
+      case E_EXEC_WATCH_TIMEOUT:
+        if (ic->starting) _ibar_icon_signal_emit(ic, "e,state,started", "e");
+        ic->starting = EINA_FALSE;
+        if (!ic->exes) _ibar_icon_signal_emit(ic, "e,state,on", "e");
+        if (ic->exe_inst == inst) ic->exe_inst = NULL;
+        break;
       default:
         break;
      }
