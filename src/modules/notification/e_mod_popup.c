@@ -576,7 +576,37 @@ _notification_popup_refresh(Popup_Data *popup)
         evas_object_image_filled_set(popup->app_icon, EINA_TRUE);
         evas_object_image_alpha_set(popup->app_icon, EINA_TRUE);
         evas_object_image_size_get(popup->app_icon, &w, &h);
+        
+        char dir[PATH_MAX];
+        if (notification_cfg->instances)
+        {
+          snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get());
+          if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+
+          int n = snprintf(0, 0, "%s/%s_%s.png", dir,
+                   popup->notif->summary, get_time("-"));
+          if (n < 0)
+            {
+              perror ("snprintf failed");
+              abort ();
+            }
+
+          char *image_path = (char *) malloc(n + 1);
+          snprintf(image_path, n + 1, "%s/%s_%s.png", dir,
+                   popup->notif->summary, get_time("-"));
+          if (n < 0)
+            {
+              perror ("snprintf failed");
+              abort ();
+            }
+
+          if (!strstr(notification_cfg->blacklist, popup->app_name))
+            evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
+          popup->app_icon_image = strdup(image_path);
+          E_FREE(image_path);
+        }
      }
+   evas_object_image_size_get(popup->app_icon, &w, &h);
 
    if (!popup->app_icon)
      {
