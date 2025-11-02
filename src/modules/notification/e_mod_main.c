@@ -519,8 +519,6 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
 
    if (sel_item->item_icon_img)
        ecore_file_remove(sel_item->item_icon_img);
-
-   // store_history(notification_cfg->hist);
 }
 
 static void
