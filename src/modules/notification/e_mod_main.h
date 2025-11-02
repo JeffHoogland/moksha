@@ -18,13 +18,6 @@
 #define HIST_MAX   50
 #define HIST_MAX_DIGITS 2
 
-typedef struct _Hist_eet
-{
-  unsigned int version;
-  char *path;
-  Eina_List *history;
-} Hist_eet;
-
 
 typedef enum   _Popup_Corner Popup_Corner;
 typedef struct _Config Config;
@@ -92,11 +85,11 @@ struct _Config
     Eina_Bool offline;
   } last_config_mode;
 
-  Ecore_Event_Handler  *handler;
-  Eina_List  *popups;
-  Hist_eet *  hist;
-  unsigned int         next_id;
-  int         new_item;
+  Ecore_Event_Handler *handler;
+  Eina_List *popups;
+  Eina_List *history;
+  unsigned int  next_id;
+  int new_item;
 
   //Ecore_Timer *initial_mode_timer;
   Ecore_Timer *jump_timer;

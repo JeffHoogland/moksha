@@ -150,8 +150,6 @@ e_modapi_init(E_Module *m)
    if (!notification_cfg->blacklist)
       notification_cfg->blacklist = eina_stringshare_add("");
 
-   notification_cfg->hist = history_init();
-
    return m;
 }
 
@@ -375,12 +373,12 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         
         Eina_List *l = NULL;
 
-        if (notification_cfg->hist->history)
+        if (notification_cfg->history)
           {
             if (notification_cfg->reverse)
-              notification_cfg->hist->history = eina_list_reverse(notification_cfg->hist->history);
+              notification_cfg->history = eina_list_reverse(notification_cfg->history);
 
-            EINA_LIST_FOREACH(notification_cfg->hist->history, l, items){
+            EINA_LIST_FOREACH(notification_cfg->history, l, items){
               mi = e_menu_item_new(inst->menu);
               Eina_Strbuf *buff = eina_strbuf_new();
               int i;
@@ -433,9 +431,9 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         mi = e_menu_item_new(inst->menu);
         e_menu_item_label_set(mi, _("Clear"));
         e_util_menu_item_theme_icon_set(mi, "edit-clear");
-        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->hist->history);
+        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->history);
 
-        if (notification_cfg->hist->history)
+        if (notification_cfg->history)
           e_menu_item_disabled_set(mi, EINA_FALSE);
         else
           e_menu_item_disabled_set(mi, EINA_TRUE);
@@ -448,7 +446,7 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
           e_menu_item_toggle_set(mi, 1);
         else
           e_menu_item_toggle_set(mi, 0);
-        e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->hist->history);
+        e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->history);
 
         mi = e_menu_item_new(inst->menu);
         e_menu_item_separator_set(mi, EINA_TRUE);
@@ -504,7 +502,6 @@ static void
 _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSED__)
 {  // fix me 
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
-   EINA_SAFETY_ON_NULL_RETURN(notification_cfg->hist);
    EINA_SAFETY_ON_NULL_RETURN(selected_item);
 
    Popup_Items *sel_item = (Popup_Items *) selected_item;
@@ -517,7 +514,7 @@ _cb_menu_item(void *selected_item, E_Menu *m __UNUSED__, E_Menu_Item *mi __UNUSE
    
    notification_cfg->item_click = EINA_TRUE;
    /* remove the current item from the list */
-   notification_cfg->hist->history = eina_list_remove(notification_cfg->hist->history, sel_item);
+   notification_cfg->history = eina_list_remove(notification_cfg->history, sel_item);
 
    // FIXME: ACTIONS
    _notification_show_actions(sel_item);
@@ -545,8 +542,8 @@ _cb_menu_post_deactivate(void *data, E_Menu *menu __UNUSED__)
        inst->menu = NULL;
      }
 
-   if (notification_cfg->reverse && notification_cfg->hist->history)
-      notification_cfg->hist->history = eina_list_reverse(notification_cfg->hist->history);
+   if (notification_cfg->reverse && notification_cfg->history)
+      notification_cfg->history = eina_list_reverse(notification_cfg->history);
 }
 
 
@@ -554,22 +551,18 @@ static void
 clear_menu(void)
 {
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
-   EINA_SAFETY_ON_NULL_RETURN(notification_cfg->hist);
-   if (notification_cfg->hist->history)
-     E_FREE_LIST(notification_cfg->hist->history, popup_items_free);
-
-   // store_history(notification_cfg->hist);
+   if (notification_cfg->history)
+     E_FREE_LIST(notification_cfg->history, popup_items_free);
 }
 
 static void
 _clear_menu_cb(void)
 {
    EINA_SAFETY_ON_NULL_RETURN(notification_cfg);
-   EINA_SAFETY_ON_NULL_RETURN(notification_cfg->hist);
    Popup_Items *items;
    Eina_List *l;
 
-   EINA_LIST_FOREACH(notification_cfg->hist->history, l, items) {
+   EINA_LIST_FOREACH(notification_cfg->history, l, items) {
      if (ecore_file_exists(items->item_icon_img))
        {
          if (!ecore_file_remove(items->item_icon_img))
