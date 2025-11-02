@@ -373,129 +373,127 @@ _button_cb_mouse_down(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
         
         Eina_List *l = NULL;
 
-        if (notification_cfg->history)
-          {
-            if (notification_cfg->reverse)
-              notification_cfg->history = eina_list_reverse(notification_cfg->history);
+        if (notification_cfg->history) {
+           if (notification_cfg->reverse)
+             notification_cfg->history = eina_list_reverse(notification_cfg->history);
 
-            EINA_LIST_FOREACH(notification_cfg->history, l, items){
-              mi = e_menu_item_new(inst->menu);
-              Eina_Strbuf *buff = eina_strbuf_new();
-              int i;
+           EINA_LIST_FOREACH(notification_cfg->history, l, items) {
+             mi = e_menu_item_new(inst->menu);
+             Eina_Strbuf *buff = eina_strbuf_new();
+             int i;
 
-              if (notification_cfg->time_stamp){
-                eina_strbuf_append(buff, items->item_date_time);
-                eina_strbuf_append(buff, " ");
-              }
-              if (notification_cfg->show_app){
-                eina_strbuf_append(buff, items->item_app);
-                eina_strbuf_append(buff, ": ");
-              }
-              eina_strbuf_append(buff, items->item_title);
-              eina_strbuf_append(buff, ", ");
-              eina_strbuf_append(buff, items->item_body);
-              eina_strbuf_append(buff, " ");
-              eina_strbuf_replace_all(buff, "\n", " ");
+             if (notification_cfg->time_stamp) {
+               eina_strbuf_append(buff, items->item_date_time);
+               eina_strbuf_append(buff, " ");
+             }
+             if (notification_cfg->show_app) {
+               eina_strbuf_append(buff, items->item_app);
+               eina_strbuf_append(buff, ": ");
+             }
+             eina_strbuf_append(buff, items->item_title);
+             eina_strbuf_append(buff, ", ");
+             eina_strbuf_append(buff, items->item_body);
+             eina_strbuf_append(buff, " ");
+             eina_strbuf_replace_all(buff, "\n", " ");
 
-              if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
-                i = eina_strbuf_length_get(buff);
-              else
-                i = notification_cfg->item_length;
+             if (eina_strbuf_length_get(buff) <  notification_cfg->item_length)
+               i = eina_strbuf_length_get(buff);
+             else
+               i = notification_cfg->item_length;
 
-              e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL,
-                   eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));
+             e_menu_item_label_set(mi, evas_textblock_text_markup_to_utf8(NULL,
+                  eina_strbuf_string_get(eina_strbuf_substr_get(buff, 0, i))));
 
-              eina_strbuf_free(buff);
+             eina_strbuf_free(buff);
 
-              notification_cfg->new_item = 0;
-              gadget_text(notification_cfg->new_item, 1);
-              e_menu_item_disabled_set(mi, EINA_FALSE);
-              e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
+             notification_cfg->new_item = 0;
+             gadget_text(notification_cfg->new_item, 1);
+             e_menu_item_disabled_set(mi, EINA_FALSE);
+             e_menu_item_callback_set(mi, (E_Menu_Cb)_cb_menu_item, items);
 
-              if (strlen(items->item_icon) > 0)
-                e_util_menu_item_theme_icon_set(mi, items->item_icon);
-              else
-                e_menu_item_icon_file_set(mi, items->item_icon_img);
-            }
-          }
-        else
-          {
-            mi = e_menu_item_new(inst->menu);
-            e_menu_item_label_set(mi, _("Empty"));
-            e_menu_item_disabled_set(mi, EINA_TRUE);
-          }
-
-        mi = e_menu_item_new(inst->menu);
-        e_menu_item_separator_set(mi, EINA_TRUE);
-
-        mi = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(mi, _("Clear"));
-        e_util_menu_item_theme_icon_set(mi, "edit-clear");
-        e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->history);
-
-        if (notification_cfg->history)
-          e_menu_item_disabled_set(mi, EINA_FALSE);
-        else
-          e_menu_item_disabled_set(mi, EINA_TRUE);
-
-        mi = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(mi, _("Mute"));
-        e_menu_item_check_set(mi, 1);
-        e_util_menu_item_theme_icon_set(mi, "audio-volume-muted");
-        if (notification_cfg->mute)
-          e_menu_item_toggle_set(mi, 1);
-        else
-          e_menu_item_toggle_set(mi, 0);
-        e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->history);
-
-        mi = e_menu_item_new(inst->menu);
-        e_menu_item_separator_set(mi, EINA_TRUE);
-
-        mi = e_menu_item_new(inst->menu);
-        e_menu_item_label_set(mi, _("Settings"));
-        e_util_menu_item_theme_icon_set(mi, "preferences-system");
-        e_menu_item_callback_set(mi, _cb_config_show, NULL);
-
-        if (ev) {
-          e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
-
-          switch (inst->gcc->gadcon->orient) {
-          case E_GADCON_ORIENT_TOP:
-          case E_GADCON_ORIENT_CORNER_TL:
-          case E_GADCON_ORIENT_CORNER_TR:
-            dir = E_MENU_POP_DIRECTION_DOWN;
-            break;
-
-          case E_GADCON_ORIENT_BOTTOM:
-          case E_GADCON_ORIENT_CORNER_BL:
-          case E_GADCON_ORIENT_CORNER_BR:
-            dir = E_MENU_POP_DIRECTION_UP;
-            break;
-
-          case E_GADCON_ORIENT_LEFT:
-          case E_GADCON_ORIENT_CORNER_LT:
-          case E_GADCON_ORIENT_CORNER_LB:
-            dir = E_MENU_POP_DIRECTION_RIGHT;
-            break;
-
-          case E_GADCON_ORIENT_RIGHT:
-          case E_GADCON_ORIENT_CORNER_RT:
-          case E_GADCON_ORIENT_CORNER_RB:
-            dir = E_MENU_POP_DIRECTION_LEFT;
-            break;
-
-          case E_GADCON_ORIENT_FLOAT:
-          case E_GADCON_ORIENT_HORIZ:
-          case E_GADCON_ORIENT_VERT:
-            default:
-            dir = E_MENU_POP_DIRECTION_AUTO;
-           break;
-          }
+             if (strlen(items->item_icon) > 0)
+               e_util_menu_item_theme_icon_set(mi, items->item_icon);
+             else
+               e_menu_item_icon_file_set(mi, items->item_icon_img);
+           }
        }
-       e_menu_activate_mouse(inst->menu,
-                        e_util_zone_current_get(e_manager_current_get()),
-                        x, y, w, h, dir, ev->timestamp);
-    }
+       else {
+          mi = e_menu_item_new(inst->menu);
+          e_menu_item_label_set(mi, _("Empty"));
+          e_menu_item_disabled_set(mi, EINA_TRUE);
+       }
+
+       mi = e_menu_item_new(inst->menu);
+       e_menu_item_separator_set(mi, EINA_TRUE);
+
+       mi = e_menu_item_new(inst->menu);
+       e_menu_item_label_set(mi, _("Clear"));
+       e_util_menu_item_theme_icon_set(mi, "edit-clear");
+       e_menu_item_callback_set(mi, (E_Menu_Cb) _clear_menu_cb, notification_cfg->history);
+
+       if (notification_cfg->history)
+         e_menu_item_disabled_set(mi, EINA_FALSE);
+       else
+         e_menu_item_disabled_set(mi, EINA_TRUE);
+
+       mi = e_menu_item_new(inst->menu);
+       e_menu_item_label_set(mi, _("Mute"));
+       e_menu_item_check_set(mi, 1);
+       e_util_menu_item_theme_icon_set(mi, "audio-volume-muted");
+       if (notification_cfg->mute)
+         e_menu_item_toggle_set(mi, 1);
+       else
+         e_menu_item_toggle_set(mi, 0);
+       e_menu_item_callback_set(mi, (E_Menu_Cb) _mute_cb, notification_cfg->history);
+
+       mi = e_menu_item_new(inst->menu);
+       e_menu_item_separator_set(mi, EINA_TRUE);
+
+       mi = e_menu_item_new(inst->menu);
+       e_menu_item_label_set(mi, _("Settings"));
+       e_util_menu_item_theme_icon_set(mi, "preferences-system");
+       e_menu_item_callback_set(mi, _cb_config_show, NULL);
+
+       if (ev) {
+         e_menu_post_deactivate_callback_set(inst->menu, _cb_menu_post_deactivate, inst);
+
+         switch (inst->gcc->gadcon->orient) {
+         case E_GADCON_ORIENT_TOP:
+         case E_GADCON_ORIENT_CORNER_TL:
+         case E_GADCON_ORIENT_CORNER_TR:
+           dir = E_MENU_POP_DIRECTION_DOWN;
+           break;
+
+         case E_GADCON_ORIENT_BOTTOM:
+         case E_GADCON_ORIENT_CORNER_BL:
+         case E_GADCON_ORIENT_CORNER_BR:
+           dir = E_MENU_POP_DIRECTION_UP;
+           break;
+
+         case E_GADCON_ORIENT_LEFT:
+         case E_GADCON_ORIENT_CORNER_LT:
+         case E_GADCON_ORIENT_CORNER_LB:
+           dir = E_MENU_POP_DIRECTION_RIGHT;
+           break;
+
+         case E_GADCON_ORIENT_RIGHT:
+         case E_GADCON_ORIENT_CORNER_RT:
+         case E_GADCON_ORIENT_CORNER_RB:
+           dir = E_MENU_POP_DIRECTION_LEFT;
+           break;
+
+         case E_GADCON_ORIENT_FLOAT:
+         case E_GADCON_ORIENT_HORIZ:
+         case E_GADCON_ORIENT_VERT:
+           default:
+           dir = E_MENU_POP_DIRECTION_AUTO;
+          break;
+         }
+      }
+      e_menu_activate_mouse(inst->menu,
+                       e_util_zone_current_get(e_manager_current_get()),
+                       x, y, w, h, dir, ev->timestamp);
+   }
 }
 
 static void
