@@ -18,6 +18,7 @@ static void        _notification_popdown(Popup_Data                  *popup,
 static void        _notification_format_message(Popup_Data *popup);
 //static void        _notification_actions(Popup_Data *popup);
 static int         next_pos = 0;
+static int         file_name_inc = 0;
 
 static Eina_Bool
 _notification_timer_cb(Popup_Data *popup)
@@ -524,7 +525,9 @@ _notification_popup_refresh(Popup_Data *popup)
 
                 file = ecore_file_file_get(icon_path);
                 if (*file == '.') file = file + 1;
-                snprintf(dir, sizeof(dir), "%s/notification/%s.png", efreet_data_home_get(),file);
+                file_name_inc++;
+                if (file_name_inc > notification_cfg->menu_items) file_name_inc = 0;
+                snprintf(dir, sizeof(dir), "%s/notification/%s%d.png", efreet_data_home_get(), file, file_name_inc);
                 if (!notification_cfg->item_click)
                   ecore_file_cp(icon_path, dir);
                 popup->app_icon_image = strdup(dir);
