@@ -150,6 +150,8 @@ e_modapi_init(E_Module *m)
    if (!notification_cfg->blacklist)
       notification_cfg->blacklist = eina_stringshare_add("");
 
+   dir_clear();
+
    return m;
 }
 
@@ -222,7 +224,6 @@ _gc_init(E_Gadcon *gc, const char *name, const char *id, const char *style)
    Evas_Object *o;
    E_Gadcon_Client *gcc;
    Instance *inst;
-
 
    inst = E_NEW(Instance, 1);
    o = edje_object_add(gc->evas);

@@ -126,3 +126,30 @@ popup_items_free(Popup_Items *items)
    E_FREE(items);
 }
 
+int
+dir_clear(void)
+{
+   char dir[256];
+   snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get());
+   Eina_List *files = ecore_file_ls(dir);
+   char *file;
+
+   EINA_LIST_FREE(files, file) {
+      char path[PATH_MAX];
+      snprintf(path, sizeof(path), "%s/%s", dir, file);
+
+      if (ecore_file_is_dir(path)) {
+          printf("Skipping directory: %s\n", path);
+      } else {
+          if (ecore_file_remove(path)) {
+              printf("Deleted: %s\n", path);
+          } else {
+              printf("Failed to delete: %s\n", path);
+          }
+      }
+        free(file);
+    }
+
+   return 0;
+}
+
