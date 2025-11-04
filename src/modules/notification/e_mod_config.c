@@ -235,22 +235,20 @@ truncate_menu(const unsigned int n)
   Popup_Items *items;
 
   EINA_SAFETY_ON_NULL_RETURN_VAL(notification_cfg, EET_ERROR_BAD_OBJECT);
-  EINA_SAFETY_ON_NULL_RETURN_VAL(notification_cfg->hist, EET_ERROR_BAD_OBJECT);
 
-  if (notification_cfg->hist->history) {
-    if (eina_list_count(notification_cfg->hist->history) > n) {
+  if (notification_cfg->history) {
+    if (eina_list_count(notification_cfg->history) > n) {
       Eina_List *last, *discard, *l;
-      last = eina_list_nth_list(notification_cfg->hist->history, n-1);
-      notification_cfg->hist->history = eina_list_split_list(notification_cfg->hist->history, last, &discard);
-      if (discard){
+      last = eina_list_nth_list(notification_cfg->history, n-1);
+      notification_cfg->history = eina_list_split_list(notification_cfg->history, last, &discard);
+      if (discard) {
          EINA_LIST_FOREACH(discard, l, items) {
            ret = ecore_file_remove(items->item_icon_img);
            if (!ret)
               printf("Notif: Error during files removing!\n");
          }
-        E_FREE_LIST(discard, popup_items_free);
+         E_FREE_LIST(discard, popup_items_free);
       }
-      //~ store_history(notification_cfg->hist);
     }
   }
   else
@@ -300,5 +298,3 @@ _basic_apply(E_Config_Dialog      *cfd __UNUSED__,
    e_modapi_save(notification_mod);
    return 1;
 }
-
-
