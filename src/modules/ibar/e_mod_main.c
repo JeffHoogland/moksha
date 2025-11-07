@@ -1292,11 +1292,37 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
 }
 
 static void
-_ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
+_ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
-   E_Border *bd = data;
-   e_border_raise(bd);
-   e_border_focus_set(bd, 1, 1);
+   IBar_Icon *ic;
+   E_Border *border = data;
+   E_Exec_Instance *exe;
+   Eina_List *l;
+
+   ic = evas_object_data_get(obj, "ibar_icon");
+   if (!ic) return;
+
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+     {
+        Eina_List *ll;
+        E_Border *bd;
+
+        EINA_LIST_FOREACH(exe->borders, ll, bd)
+          {
+            if (bd == border)
+              {
+                if (bd->iconic)
+                  {
+                    e_border_uniconify(bd);
+                  }
+                e_border_raise(bd);
+                e_border_focus_set(bd, 0, 0);
+                
+              }
+            else
+              e_border_lower(bd);
+          }
+     }
 }
 
 static void
