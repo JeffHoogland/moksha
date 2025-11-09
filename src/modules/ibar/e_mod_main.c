@@ -82,6 +82,7 @@ struct _IBar_Icon
    E_Gadcon_Popup  *menu, *popup;
    const char      *hashname;
    int              mouse_down;
+   int              menu_mouse_up;
    struct
    {
       unsigned char start : 1;
@@ -1177,9 +1178,11 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
    E_Manager *man;
    E_Container *con;
    int gx, gy;
-   
+
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
+   ic->menu_mouse_up = 1;
+
    if (ev->button == 3)
      {
         man = e_manager_current_get();
@@ -1194,6 +1197,7 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
      {
         e_border_uniconify(bd);
         e_border_focus_set(bd, 1, 1);
+        bd->was_iconic = 1;
      }
    else
      {
@@ -1203,9 +1207,10 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
          }
        else
          {
-            e_border_raise(bd);
+            //~ e_border_raise(bd);
             e_border_focus_set(bd, 1, 1);
          }
+       bd->was_iconic = 0;
      }
    if (ic)
      _ibar_cb_icon_menu_hide_begin(ic);
@@ -1301,6 +1306,7 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
 
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
+   if (ic->menu_mouse_up) return;
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
@@ -1314,13 +1320,20 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
                 if (bd->iconic)
                   {
                     e_border_uniconify(bd);
+                    bd->was_iconic = 1;
                   }
+                else
+                  bd->was_iconic = 0;
                 e_border_raise(bd);
-                e_border_focus_set(bd, 0, 0);
-                
+                e_border_focus_set(bd, 0, 1);
               }
             else
-              e_border_lower(bd);
+              {
+                if (bd->was_iconic)
+                  e_border_iconify(bd);
+                else
+                  e_border_lower(bd);
+              }
           }
      }
 }
@@ -1336,12 +1349,28 @@ static void
 _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic = data;
+   E_Exec_Instance *exe;
+   Eina_List *l;
 
    if (e_menu_grab_window_get()) return;
    if (ic->hide_timer)
      ecore_timer_loop_reset(ic->hide_timer);
    else
      ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
+
+   if (ic->menu_mouse_up) return;
+
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+     {
+        Eina_List *ll;
+        E_Border *bd;
+
+        EINA_LIST_FOREACH(exe->borders, ll, bd)
+          {
+            if (bd->was_iconic)
+              e_border_iconify(bd);
+          }
+     }
 }
 
 static void
@@ -1355,6 +1384,7 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    E_Zone *zone;
 
    if (!ic->exes) return; //FIXME
+   ic->menu_mouse_up = 0;
    ic->menu = e_gadcon_popup_new(ic->ibar->inst->gcc);
    e_popup_name_set(ic->menu->win, "noshadow-ibarmenu");
    e_object_data_set(E_OBJECT(ic->menu), ic);
