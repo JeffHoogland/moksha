@@ -83,6 +83,8 @@ struct _IBar_Icon
    const char      *hashname;
    int              mouse_down;
    int              menu_mouse_up;
+   int              menu_mouse_in;
+   E_Desk          *current_desk;
    struct
    {
       unsigned char start : 1;
@@ -1201,13 +1203,12 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
      }
    else
      {
-       if (bd->focused)
+       if (bd->focused && !ic->menu_mouse_in)
          {
             e_border_iconify(bd);
          }
        else
          {
-            //~ e_border_raise(bd);
             e_border_focus_set(bd, 1, 1);
          }
        bd->was_iconic = 0;
@@ -1307,6 +1308,7 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
    ic = evas_object_data_get(obj, "ibar_icon");
    if (!ic) return;
    if (ic->menu_mouse_up) return;
+   ic->menu_mouse_in = 1;
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
@@ -1317,6 +1319,7 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
           {
             if (bd == border)
               {
+                e_desk_show(bd->desk);
                 if (bd->iconic)
                   {
                     e_border_uniconify(bd);
@@ -1325,7 +1328,7 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
                 else
                   bd->was_iconic = 0;
                 e_border_raise(bd);
-                e_border_focus_set(bd, 0, 1);
+                e_border_focus_set(bd, 1, 1);
               }
             else
               {
@@ -1359,6 +1362,7 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
 
    if (ic->menu_mouse_up) return;
+   e_desk_show(ic->current_desk);
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
@@ -1385,6 +1389,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
 
    if (!ic->exes) return; //FIXME
    ic->menu_mouse_up = 0;
+   ic->menu_mouse_in = 0;
+   ic->current_desk = e_desk_current_get(ic->ibar->inst->gcc->gadcon->zone);
    ic->menu = e_gadcon_popup_new(ic->ibar->inst->gcc);
    e_popup_name_set(ic->menu->win, "noshadow-ibarmenu");
    e_object_data_set(E_OBJECT(ic->menu), ic);
