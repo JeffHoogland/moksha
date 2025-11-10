@@ -1203,15 +1203,11 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
      }
    else
      {
-       if (bd->focused && !ic->menu_mouse_in)
-         {
-            e_border_iconify(bd);
-         }
-       else
-         {
-            e_border_focus_set(bd, 1, 1);
-         }
-       bd->was_iconic = 0;
+        if (bd->focused && !ic->menu_mouse_in)
+          e_border_iconify(bd);
+        else
+          e_border_focus_set(bd, 1, 1);
+        bd->was_iconic = 0;
      }
    if (ic)
      _ibar_cb_icon_menu_hide_begin(ic);
