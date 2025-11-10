@@ -1206,7 +1206,10 @@ _ibar_cb_icon_menu_mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
         if (bd->focused && !ic->menu_mouse_in)
           e_border_iconify(bd);
         else
-          e_border_focus_set(bd, 1, 1);
+          {
+            e_border_raise(bd);
+            e_border_focus_set(bd, 1, 1);
+          }
         bd->was_iconic = 0;
      }
    if (ic)
@@ -1348,29 +1351,12 @@ static void
 _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info __UNUSED__)
 {
    IBar_Icon *ic = data;
-   E_Exec_Instance *exe;
-   Eina_List *l;
 
    if (e_menu_grab_window_get()) return;
    if (ic->hide_timer)
      ecore_timer_loop_reset(ic->hide_timer);
    else
      ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
-
-   if (ic->menu_mouse_up) return;
-   e_desk_show(ic->current_desk);
-
-   EINA_LIST_FOREACH(ic->exes, l, exe)
-     {
-        Eina_List *ll;
-        E_Border *bd;
-
-        EINA_LIST_FOREACH(exe->borders, ll, bd)
-          {
-            if (bd->was_iconic)
-              e_border_iconify(bd);
-          }
-     }
 }
 
 static void
@@ -1587,6 +1573,24 @@ _ibar_cb_out_hide_delay(void *data)
    IBar_Icon *ic = data;
 
    ic->hide_timer = NULL;
+   E_Exec_Instance *exe;
+   Eina_List *l;
+
+   if (ic->menu_mouse_up) return EINA_FALSE;
+   e_desk_show(ic->current_desk);
+
+   EINA_LIST_FOREACH(ic->exes, l, exe)
+     {
+        Eina_List *ll;
+        E_Border *bd;
+
+        EINA_LIST_FOREACH(exe->borders, ll, bd)
+          {
+            if (bd->was_iconic)
+              e_border_iconify(bd);
+          }
+     }
+
    _ibar_icon_menu_hide(ic, EINA_FALSE);
    return EINA_FALSE;
 }
