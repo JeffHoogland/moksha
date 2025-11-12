@@ -1571,10 +1571,10 @@ static Eina_Bool
 _ibar_cb_out_hide_delay(void *data)
 {
    IBar_Icon *ic = data;
-
-   ic->hide_timer = NULL;
    E_Exec_Instance *exe;
    Eina_List *l;
+
+   ic->hide_timer = NULL;
 
    if (ic->menu_mouse_up) return EINA_FALSE;
    e_desk_show(ic->current_desk);
