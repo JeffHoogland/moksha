@@ -76,6 +76,7 @@ struct _IBar_Icon
    Ecore_Timer     *timer;
    Ecore_Timer     *cycle_timer;
    Ecore_Timer     *hide_timer;
+   Ecore_Timer     *img_timer;
    E_Exec_Instance *exe_inst;
    Eina_List       *exes; //all instances
    Eina_List       *exe_current;
@@ -1296,18 +1297,18 @@ _ibar_cb_icon_menu_img_del(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
       evas_object_resize(ic->menu->o_bg, w, h);
 }
 
-static void
-_ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+static Eina_Bool
+_ibar_icon_menu_mouse_in_delay(void *data)
 {
    IBar_Icon *ic;
    E_Border *border = data;
    E_Exec_Instance *exe;
    Eina_List *l;
 
-   ic = evas_object_data_get(obj, "ibar_icon");
-   if (!ic) return;
-   if (ic->menu_mouse_up) return;
+   ic = evas_object_data_get(border->bg_object, "ibar_icon");
+   if (!ic) return EINA_FALSE;
    ic->menu_mouse_in = 1;
+   ic->img_timer = NULL;
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
@@ -1338,6 +1339,21 @@ _ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, vo
               }
           }
      }
+   return EINA_FALSE;
+}
+
+static void
+_ibar_icon_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
+{
+   IBar_Icon *ic;
+   E_Border *bd = data;
+
+   ic = evas_object_data_get(obj, "ibar_icon");
+   if (!ic) return;
+   if (ic->menu_mouse_up) return;
+
+   evas_object_data_set(bd->bg_object, "ibar_icon", ic);
+   ic->img_timer = ecore_timer_loop_add(0.3, _ibar_icon_menu_mouse_in_delay, bd);
 }
 
 static void
@@ -1357,6 +1373,7 @@ _ibar_icon_menu_mouse_out(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNU
      ecore_timer_loop_reset(ic->hide_timer);
    else
      ic->hide_timer = ecore_timer_loop_add(0.5, _ibar_cb_out_hide_delay, ic);
+   E_FREE_FUNC(ic->img_timer, ecore_timer_del);
 }
 
 static void
