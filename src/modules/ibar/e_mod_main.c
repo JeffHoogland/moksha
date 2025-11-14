@@ -1567,16 +1567,14 @@ _ibar_cb_icon_mouse_in(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED
      }
 }
 
-static Eina_Bool
-_ibar_cb_out_hide_delay(void *data)
+static void
+ibar_bd_iconify(void *data)
 {
    IBar_Icon *ic = data;
    E_Exec_Instance *exe;
    Eina_List *l;
 
-   ic->hide_timer = NULL;
-
-   if (ic->menu_mouse_up) return EINA_FALSE;
+   if (ic->menu_mouse_up) return;
    e_desk_show(ic->current_desk);
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
@@ -1590,7 +1588,16 @@ _ibar_cb_out_hide_delay(void *data)
               e_border_iconify(bd);
           }
      }
+}
 
+static Eina_Bool
+_ibar_cb_out_hide_delay(void *data)
+{
+   IBar_Icon *ic = data;
+
+   ic->hide_timer = NULL;
+
+   ibar_bd_iconify(ic);
    _ibar_icon_menu_hide(ic, EINA_FALSE);
    return EINA_FALSE;
 }
