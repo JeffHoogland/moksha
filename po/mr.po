@@ -43,7 +43,7 @@ msgid "Moksha"
 msgstr "Moksha"
 
 #: src/bin/e_about.c:28
-#, fuzzy
+
 msgid ""
 "<title>Copyright &copy; 2025, by the Moksha Development Team</><br><br>We "
 "hope you enjoy using this software as much as we enjoyed writing it."
@@ -883,7 +883,7 @@ msgid "The file data is empty."
 msgstr "फाईल डेटा रिकामा आहे."
 
 #: src/bin/e_config.c:184
-#, fuzzy
+
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -892,7 +892,7 @@ msgstr ""
 "परवानग्या गमावल्या."
 
 #: src/bin/e_config.c:187
-#, fuzzy
+
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr "लेखनची तयारी करताना मेमरी संपली.<br>कृपया मेमरी मोकळी करा."
 
@@ -901,14 +901,14 @@ msgid "This is a generic error."
 msgstr "ही एक सामान्य त्रुटी आहे."
 
 #: src/bin/e_config.c:193
-#, fuzzy
+
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
 msgstr "सेटिंग्ज फाईल खूप मोठी आहे.<br>ते खूप लहान (जास्तीत जास्त काहीशे केबी) असावे."
 
 #: src/bin/e_config.c:196
-#, fuzzy
+
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr "आपल्याकडे डिस्कवर I/O त्रुटी आहेत.<br>कदाचित ते बदलण्याची गरज आहे का?"
 
@@ -957,7 +957,7 @@ msgid "Decryption failed."
 msgstr "डिक्रिप्शन अयशस्वी झाले."
 
 #: src/bin/e_config.c:232
-#, fuzzy
+
 msgid "The error is unknown to Enlightenment."
 msgstr "चूक Moksha-ला माहित नाही."
 
@@ -6077,12 +6077,12 @@ msgid "Autoscroll"
 msgstr "ऑटोस्क्रॉल"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
+
 msgid "Disable Icons in Menus"
 msgstr " मेनूमध्ये चिन्हे अक्षम करा"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
+
 msgid "Smart Menu Orientation"
 msgstr " स्मार्ट मेनू ओरिएंटेशन"
 
@@ -6936,12 +6936,12 @@ msgid "%1.2f x"
 msgstr "%1.2f x"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
+
 msgid "Set Application DPI"
 msgstr "निवडलेला अर्ज"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
+
 msgid "Application Base DPI"
 msgstr "अर्ज"
 
@@ -8520,7 +8520,7 @@ msgid "Background"
 msgstr "पार्श्वभूमी"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
+
 msgid "Overlay (Key Toggle)"
 msgstr "होवर (की टॉगल)"
 
@@ -8563,7 +8563,7 @@ msgid "Background Options"
 msgstr "पार्श्वभूमी पर्याय"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
+
 msgid "Desktop Overlay"
 msgstr "डेस्कटॉप फाइल"
 
@@ -10387,7 +10387,7 @@ msgid "Volume Mute"
 msgstr "व्हॉल्यूम बद्ध"
 
 #: src/modules/separator/e_mod_main.c:122
-#, fuzzy
+
 msgid "Separator"
 msgstr "स्वतंत्र गट"
 

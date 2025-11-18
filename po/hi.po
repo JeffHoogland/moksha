@@ -658,7 +658,7 @@ msgid "To Previous Desktop"
 msgstr "पिछले डेस्कटॉप पर"
 
 #: src/bin/e_actions.c:3503
-#, fuzzy
+
 msgid "By Desktop #..."
 msgstr "डेस्कटॉप द्वारा#..."
 
@@ -882,7 +882,7 @@ msgid "The file data is empty."
 msgstr "फ़ाइल डेटा रिक्त है."
 
 #: src/bin/e_config.c:184
-#, fuzzy
+
 msgid ""
 "The file is not writable. Perhaps the disk is read-only<ps/>or you lost "
 "permissions to your files."
@@ -891,7 +891,7 @@ msgstr ""
 "अनुमति खो दी है."
 
 #: src/bin/e_config.c:187
-#, fuzzy
+
 msgid "Memory ran out while preparing the write.<ps/>Please free up memory."
 msgstr "लेखन की तैयारी करते समय मेमोरी समाप्त हो गई।<br> कृपया मेमोरी खाली करें."
 
@@ -900,7 +900,7 @@ msgid "This is a generic error."
 msgstr "यह एक सामान्य त्रुटि है."
 
 #: src/bin/e_config.c:193
-#, fuzzy
+
 msgid ""
 "The settings file is too large.<ps/>It should be very small (a few hundred "
 "KB at most)."
@@ -908,7 +908,7 @@ msgstr ""
 "सेटिंग्स फ़ाइल बहुत बड़ी है.<br> इसका आकार बहुत छोटा होना चाहिए (अधिकतम कुछ सौ KB)."
 
 #: src/bin/e_config.c:196
-#, fuzzy
+
 msgid "You have I/O errors on the disk.<ps/>Maybe it needs replacing?"
 msgstr "आपकी डिस्क पर I/O त्रुटियाँ हैं.<br> शायद इसे बदलने की जरूरत है?"
 
@@ -957,7 +957,7 @@ msgid "Decryption failed."
 msgstr "डिक्रिप्शन विफल हुआ."
 
 #: src/bin/e_config.c:232
-#, fuzzy
+
 msgid "The error is unknown to Enlightenment."
 msgstr "मोक्ष को इस त्रुटि का पता नहीं है।"
 
@@ -1309,7 +1309,7 @@ msgid "%s stopped running unexpectedly."
 msgstr "%s अप्रत्याशित रूप से चलना बंद हो गया."
 
 #: src/bin/e_exec.c:894
-#, fuzzy, c-format
+#, c-format
 msgid "An exit code of %i was returned from %s."
 msgstr "%i से %s का निकास कोड लौटाया गया।"
 
@@ -3725,7 +3725,7 @@ msgid "Right-bottom Corner"
 msgstr "दायाँ-निचला कोना"
 
 #: src/bin/e_shelf.c:270 src/bin/e_shelf.c:1167
-#, fuzzy, c-format
+#, c-format
 msgid "Shelf #%d"
 msgstr "शेल्फ़#%d"
 
@@ -4993,7 +4993,7 @@ msgid "Show on current screen"
 msgstr "वर्तमान स्क्रीन पर दिखाएँ"
 
 #: src/modules/conf_display/e_int_config_desklock.c:294
-#, fuzzy
+
 msgid "Show on screen #:"
 msgstr "स्क्रीन पर दिखाएँ#:"
 
@@ -6081,12 +6081,12 @@ msgid "Autoscroll"
 msgstr "स्वतः स्क्रॉल"
 
 #: src/modules/conf_menus/e_int_config_menus.c:303
-#, fuzzy
+
 msgid "Disable Icons in Menus"
 msgstr "मेनू में आइकन अक्षम करें"
 
 #: src/modules/conf_menus/e_int_config_menus.c:305
-#, fuzzy
+
 msgid "Smart Menu Orientation"
 msgstr "स्मार्ट मेनू ओरिएंटेशन"
 
@@ -6853,7 +6853,7 @@ msgstr "कस्टम फ़ॉन्ट क्लास सक्षम क�
 
 #: src/modules/conf_theme/e_int_config_fonts.c:449
 #: src/modules/conf_theme/e_int_config_fonts.c:670
-#, fuzzy
+
 msgid "English 012 #!? 日本語 にほんご ソフト 中文 華語 한국"
 msgstr "अंग्रेजी 012#!? 日本語 中文 華語 한국"
 
@@ -6940,12 +6940,12 @@ msgid "%1.2f x"
 msgstr "%1.2f एक्स"
 
 #: src/modules/conf_theme/e_int_config_scale.c:327
-#, fuzzy
+
 msgid "Set Application DPI"
 msgstr "चयनित आवेदन"
 
 #: src/modules/conf_theme/e_int_config_scale.c:331
-#, fuzzy
+
 msgid "Application Base DPI"
 msgstr "अनुप्रयोगों"
 
@@ -8525,7 +8525,7 @@ msgid "Background"
 msgstr "पृष्ठभूमि"
 
 #: src/modules/gadman/e_mod_config.c:22
-#, fuzzy
+
 msgid "Overlay (Key Toggle)"
 msgstr "होवर (कुंजी टॉगल)"
 
@@ -8568,7 +8568,7 @@ msgid "Background Options"
 msgstr "पृष्ठभूमि विकल्प"
 
 #: src/modules/gadman/e_mod_gadman.c:124
-#, fuzzy
+
 msgid "Desktop Overlay"
 msgstr "डेस्कटॉप फ़ाइल"
 
