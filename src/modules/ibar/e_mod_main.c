@@ -1354,8 +1354,7 @@ _ibar_img_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
    if (ic->menu_mouse_up) return;
 
    evas_object_data_set(bd->bg_object, "ibar_icon", ic);
-   if (ic->img_timer_out)
-     E_FREE_FUNC(ic->img_timer_out, ecore_timer_del);
+   E_FREE_FUNC(ic->img_timer_out, ecore_timer_del);
    ic->img_timer_in = ecore_timer_loop_add(0.3, _ibar_img_menu_mouse_in_delay, bd);
 }
 
