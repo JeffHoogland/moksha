@@ -74,6 +74,7 @@
         "forecasts", \
         "launcher-dictionary", \
         "launcher-spellchecker", \
+        "launcher-places", \
         "mail", \
         "mem", \
         "moon", \
