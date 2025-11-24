@@ -224,17 +224,17 @@ _eval_instance_position(Instance *inst)
          horiz = EINA_FALSE;
         break;
 
-     default:
-        horiz = EINA_TRUE;
-    }
+       default:
+         horiz = EINA_TRUE;
+     }
 
-    if (inst->gcc->gadcon->shelf)
-      {
-        if (horiz)
-          edje_object_signal_emit(inst->sep->o_icon, "horizontal_shelf", "");
-        else
-          edje_object_signal_emit(inst->sep->o_icon, "vertical_shelf", "");
-      }
+   if (inst->gcc->gadcon->shelf)
+     {
+       if (horiz)
+         edje_object_signal_emit(inst->sep->o_icon, "horizontal_shelf", "");
+       else
+         edje_object_signal_emit(inst->sep->o_icon, "vertical_shelf", "");
+     }
 }
 
 static void
