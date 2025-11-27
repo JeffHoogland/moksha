@@ -1310,6 +1310,9 @@ _ibar_img_menu_mouse_in_delay(void *data)
    if (!ic) return EINA_FALSE;
    ic->menu_mouse_in = 1;
    ic->img_timer_in = NULL;
+   
+   /* Cycle between all app's instance windows       */
+   /* Raise and focus window related to item's image */
 
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
@@ -1373,8 +1376,10 @@ ibar_bd_iconify(void *data)
    Eina_List *l;
 
    if (ic->menu_mouse_up) return;
+   
+   /* Iconify the former iconified border */
    e_desk_show(ic->current_desk);
-
+   
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
         Eina_List *ll;
@@ -2274,6 +2279,7 @@ exe_borders_cycle(void *data)
    E_Border *bd;
 
    cur_bd = 0;
+
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
        if (!exe->borders) continue;
