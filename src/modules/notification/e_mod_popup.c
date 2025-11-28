@@ -609,7 +609,6 @@ _notification_popup_refresh(Popup_Data *popup)
           E_FREE(image_path);
         }
      }
-   evas_object_image_size_get(popup->app_icon, &w, &h);
 
    if (!popup->app_icon)
      {
