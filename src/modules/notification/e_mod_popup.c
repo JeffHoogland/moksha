@@ -519,19 +519,19 @@ _notification_popup_refresh(Popup_Data *popup)
 
              /* Grab icon stored in /tmp and copy to notif dir */
              if (notification_cfg->instances)
-             {
-                char dir[PATH_MAX];
-                const char *file;
+               {
+                  char dir[PATH_MAX];
+                  const char *file;
 
-                file = ecore_file_file_get(icon_path);
-                if (*file == '.') file = file + 1;
-                file_name_inc++;
-                if (file_name_inc > notification_cfg->menu_items) file_name_inc = 0;
-                snprintf(dir, sizeof(dir), "%s/notification/%s%d.png", efreet_data_home_get(), file, file_name_inc);
-                if (!notification_cfg->item_click)
-                  ecore_file_cp(icon_path, dir);
-                popup->app_icon_image = strdup(dir);
-             }
+                  file = ecore_file_file_get(icon_path);
+                  if (*file == '.') file = file + 1;
+                  file_name_inc++;
+                  if (file_name_inc > notification_cfg->menu_items) file_name_inc = 0;
+                  snprintf(dir, sizeof(dir), "%s/notification/%s%d.png", efreet_data_home_get(), file, file_name_inc);
+                  if (!notification_cfg->item_click)
+                    ecore_file_cp(icon_path, dir);
+                  popup->app_icon_image = strdup(dir);
+               }
              /*                                                 */
 
              if (icon_path[0] == '/')
@@ -582,32 +582,32 @@ _notification_popup_refresh(Popup_Data *popup)
         
         char dir[PATH_MAX];
         if (notification_cfg->instances)
-        {
-          snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get());
-          if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
+          {
+            snprintf(dir, sizeof(dir), "%s/notification", efreet_data_home_get());
+            if (!ecore_file_exists(dir)) ecore_file_mkdir(dir);
 
-          int n = snprintf(0, 0, "%s/%s_%s.png", dir,
-                   popup->notif->summary, get_time("-"));
-          if (n < 0)
-            {
-              perror ("snprintf failed");
-              abort ();
-            }
+            int n = snprintf(0, 0, "%s/%s_%s.png", dir,
+                     popup->notif->summary, get_time("-"));
+            if (n < 0)
+              {
+                perror ("snprintf failed");
+                abort ();
+              }
 
-          char *image_path = (char *) malloc(n + 1);
-          snprintf(image_path, n + 1, "%s/%s_%s.png", dir,
-                   popup->notif->summary, get_time("-"));
-          if (n < 0)
-            {
-              perror ("snprintf failed");
-              abort ();
-            }
+            char *image_path = (char *) malloc(n + 1);
+            snprintf(image_path, n + 1, "%s/%s_%s.png", dir,
+                     popup->notif->summary, get_time("-"));
+            if (n < 0)
+              {
+                perror ("snprintf failed");
+                abort ();
+              }
 
-          if (!strstr(notification_cfg->blacklist, popup->app_name))
-            evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
-          popup->app_icon_image = strdup(image_path);
-          E_FREE(image_path);
-        }
+            if (!strstr(notification_cfg->blacklist, popup->app_name))
+              evas_object_image_save(popup->app_icon, image_path, NULL, NULL);
+            popup->app_icon_image = strdup(image_path);
+            E_FREE(image_path);
+         }
      }
 
    if (!popup->app_icon)
