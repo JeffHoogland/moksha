@@ -1,5 +1,11 @@
 #include "e.h"
 
+typedef struct _E_Rect_Smart_Data E_Rect_Smart_Data;
+struct _E_Rect_Smart_Data
+{
+   Evas_Object *evas_object;
+};
+
 typedef struct _E_Widget_Data E_Widget_Data;
 struct _E_Widget_Data
 {
@@ -12,6 +18,11 @@ struct _E_Widget_Data
 };
 
 /* local subsystem functions */
+static void _e_rect_smart_add(Evas_Object *object);
+static void _e_rect_smart_del(Evas_Object *object);
+static void _e_rect_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y);
+static void _e_rect_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h);
+static void _e_rect_color_set(Evas_Object *obj, int r, int g, int b, int a);
 static void _e_wid_del_hook(Evas_Object *obj);
 static void _e_wid_focus_hook(Evas_Object *obj);
 static void _e_wid_disable_hook(Evas_Object *obj);
@@ -21,6 +32,38 @@ static void _e_wid_out(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_changed_cb(void *data, Evas_Object *obj, void *event_info);
 static void _e_wid_keydown(void *data, Evas *e, Evas_Object *obj, void *event_info);
 static void _e_wid_movresz(void *data, Evas *e, Evas_Object *obj, void *event_info);
+
+static Evas_Smart *_e_rect_smart = NULL;
+static int _e_rect_smart_use = 0;
+
+static Evas_Object *
+e_rect_add(Evas *evas)
+{
+   if (!_e_rect_smart)
+     {
+       static const Evas_Smart_Class sc = {
+         .name       = "e_rect",
+         .version    = EVAS_SMART_CLASS_VERSION,
+         .add        = _e_rect_smart_add,
+         .del        = _e_rect_smart_del,
+         .move       = _e_rect_smart_move,
+         .resize     = _e_rect_smart_resize,
+         .show       = NULL,
+         .hide       = NULL,
+         .color_set  = _e_rect_color_set,
+         .clip_set   = NULL,
+         .clip_unset = NULL,
+         .calculate  = NULL,
+         .member_add = NULL,
+         .member_del = NULL,
+       };
+       _e_rect_smart = evas_smart_class_new(&sc);
+       _e_rect_smart_use = 0;
+     }
+
+   _e_rect_smart_use++;
+   return evas_object_smart_add(evas, _e_rect_smart);
+}
 
 /* externally accessible functions */
 
@@ -35,6 +78,7 @@ static void _e_wid_movresz(void *data, Evas *e, Evas_Object *obj, void *event_in
  * The current value will be used to initialize the entry
  * @return Returns the new entry widget
  */
+
 EAPI Evas_Object *
 e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, void *data2), void *data, void *data2)
 {
@@ -62,12 +106,10 @@ e_widget_entry_add(Evas *evas, char **text_location, void (*func) (void *data, v
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOVE, _e_wid_movresz, obj);
    evas_object_event_callback_add(o, EVAS_CALLBACK_RESIZE, _e_wid_movresz, obj);
    
-   o = evas_object_rectangle_add(evas);
+   //~ o = evas_object_rectangle_add(evas);
+   o = e_rect_add(evas);
    wd->o_inout = o;
-   evas_object_repeat_events_set(o, EINA_TRUE);
-   evas_object_color_set(o, 0, 0, 0, 0);
    e_widget_sub_object_add(obj, o);
-   evas_object_smart_member_add(o, obj);
    evas_object_show(o);
    
    evas_object_event_callback_add(o, EVAS_CALLBACK_MOUSE_DOWN, _e_wid_focus_steal, obj);
@@ -306,4 +348,62 @@ _e_wid_movresz(void *data, Evas *e __UNUSED__, Evas_Object *obj, void *event_inf
         evas_object_move(wd->o_inout, x, y);
         evas_object_resize(wd->o_inout, w, h);
      }
+}
+
+static void
+_e_rect_smart_add(Evas_Object *object)
+{
+   Evas *evas;
+   E_Rect_Smart_Data *sd;
+
+   if ((!object) || !(evas = evas_object_evas_get(object)))
+     return;
+
+   sd = calloc(1, sizeof(E_Rect_Smart_Data));
+   if (!sd) return;
+
+   evas_object_smart_data_set(object, sd);
+
+   sd->evas_object = evas_object_rectangle_add(evas);
+   evas_object_smart_member_add(sd->evas_object, object);
+   evas_object_repeat_events_set(sd->evas_object, EINA_TRUE);
+   evas_object_color_set(sd->evas_object, 0, 0, 0, 0);
+   evas_object_show(sd->evas_object);
+}
+
+static void
+_e_rect_smart_del(Evas_Object *object)
+{
+   E_Rect_Smart_Data *sd;
+
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+
+   evas_object_del(sd->evas_object);
+   free(sd);
+   evas_object_smart_data_set(object, NULL);
+}
+
+static void _e_rect_smart_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y)
+{
+    E_Rect_Smart_Data *sd = evas_object_smart_data_get(obj);
+    if (!sd) return;
+    evas_object_move(sd->evas_object, x, y);
+}
+
+static void _e_rect_smart_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h)
+{
+    E_Rect_Smart_Data *sd = evas_object_smart_data_get(obj);
+    if (!sd) return;
+    evas_object_resize(sd->evas_object, w, h);
+}
+
+static void
+_e_rect_color_set(Evas_Object *object, int r, int g, int b, int a)
+{
+   E_Rect_Smart_Data *sd;
+
+   if ((!object) || !(sd = evas_object_smart_data_get(object)))
+     return;
+   evas_object_color_set(sd->evas_object, r, g, b, a);
 }
