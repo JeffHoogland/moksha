@@ -1021,7 +1021,6 @@ _shot_now(E_Zone *zone, E_Border *bd)
 
              e_widget_list_object_append(o_hlist, ol, 1, 0, 0.5);
           }
-
      }
    e_widget_list_object_append(o_content, o_hlist, 0, 0, 0.5);
 
@@ -1099,7 +1098,7 @@ _shot_delay_border(void *data)
 static void
 _shot_border(E_Border *bd)
 {
-   if (border_timer)  ecore_timer_del(border_timer);
+   if (border_timer) ecore_timer_del(border_timer);
    border_timer = ecore_timer_add(1.0, _shot_delay_border, bd);
 }
 
@@ -1107,15 +1106,15 @@ static void
 _shot(E_Zone *zone, Eina_Bool instant)
 {
    if (!instant)
-       shot_conf->count = shot_conf->delay;
+     shot_conf->count = shot_conf->delay;
 
    if (timer) ecore_timer_del(timer);
    if (timer_sec) ecore_timer_del(timer_sec);
 
    if (shot_conf->delay > 0)
-       timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
+     timer_sec = ecore_timer_add(1.0, _timer_cb, zone);
    else
-       timer = ecore_timer_add(1.0, _shot_no_delay, zone);
+     timer = ecore_timer_add(1.0, _shot_no_delay, zone);
 }
 
 static void
@@ -1268,6 +1267,7 @@ _bd_hook(void *d __UNUSED__, E_Border *bd)
    /* position menu item just before first separator */
    EINA_LIST_FOREACH(m->items, l, mi)
      if (mi->separator) break;
+
    if ((!mi) || (!mi->separator)) return;
    l = eina_list_prev(l);
    mi = eina_list_data_get(l);
