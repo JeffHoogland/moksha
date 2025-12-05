@@ -70,6 +70,9 @@ struct _IBar_Icon
    Evas_Object     *o_holder, *o_icon;
    Evas_Object     *o_holder2, *o_icon2, *label_obj;
    Eina_List       *border_objs;
+   E_Border        *bd_above;
+   E_Border        *bd_below;
+   E_Border        *bd_focused;
    Efreet_Desktop  *app;
    Ecore_Timer     *reset_timer;
    Ecore_Timer     *show_timer; //for menu
@@ -1331,6 +1334,20 @@ _ibar_img_menu_mouse_in_delay(void *data)
                   }
                 else
                   bd->was_iconic = 0;
+
+                Eina_List *lll;
+                E_Border *bd2;
+
+                /* find prev and next border in borders list */
+                EINA_LIST_FOREACH(e_border_focus_stack_get(), lll, bd2)
+                  {
+                    if (bd2 == bd)
+                      {
+                        ic->bd_below = eina_list_data_get(eina_list_prev(lll));
+                        ic->bd_above = eina_list_data_get(eina_list_next(lll));
+                        break;
+                      }
+                  }
                 e_border_raise(bd);
                 e_border_focus_set(bd, 1, 1);
               }
@@ -1338,8 +1355,6 @@ _ibar_img_menu_mouse_in_delay(void *data)
               {
                 if (bd->was_iconic)
                   e_border_iconify(bd);
-                else
-                  e_border_lower(bd);
               }
           }
      }
@@ -1358,7 +1373,7 @@ _ibar_img_menu_mouse_in_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj, voi
 
    evas_object_data_set(bd->bg_object, "ibar_icon", ic);
    E_FREE_FUNC(ic->img_timer_out, ecore_timer_del);
-   ic->img_timer_in = ecore_timer_loop_add(0.3, _ibar_img_menu_mouse_in_delay, bd);
+   ic->img_timer_in = ecore_timer_loop_add(0.4, _ibar_img_menu_mouse_in_delay, bd);
 }
 
 static void
@@ -1376,8 +1391,6 @@ ibar_bd_iconify(void *data)
    Eina_List *l;
 
    if (ic->menu_mouse_up) return;
-   
-   /* Iconify the former iconified border */
    e_desk_show(ic->current_desk);
    
    EINA_LIST_FOREACH(ic->exes, l, exe)
@@ -1387,8 +1400,19 @@ ibar_bd_iconify(void *data)
 
         EINA_LIST_FOREACH(exe->borders, ll, bd)
           {
+            /* Iconify the former iconified border */
             if (bd->was_iconic)
               e_border_iconify(bd);
+            else
+              {
+                /* get raised border back into stack */
+                if (ic->bd_above)
+                  e_border_stack_below(bd, ic->bd_above);
+                else if (ic->bd_below)
+                  e_border_stack_above(bd, ic->bd_below);
+              }
+            e_border_raise(ic->bd_focused);
+            e_border_focus_set(ic->bd_focused, 1, 1);
           }
      }
 }
@@ -1408,7 +1432,7 @@ _ibar_img_menu_mouse_out_cb(void *data, Evas *e __UNUSED__, Evas_Object *obj __U
 {
    IBar_Icon *ic = data;
    if (!ic) return;
-
+   E_FREE_FUNC(ic->img_timer_in, ecore_timer_del);
    ic->img_timer_out = ecore_timer_loop_add(0.4, _ibar_img_menu_mouse_out_delay, ic);
 }
 
@@ -1448,6 +1472,8 @@ _ibar_icon_menu(IBar_Icon *ic, Eina_Bool grab)
    o = edje_object_add(e);
    e_theme_edje_object_set(o, "base/theme/modules/ibar",
                            "e/modules/ibar/menu");
+   ic->bd_focused = e_border_focused_get();
+
    EINA_LIST_FOREACH(ic->exes, l, exe)
      {
         Evas_Object *img;
