@@ -292,11 +292,14 @@ _fill_files_ilist(void *data)
              char buf[PATH_MAX];
              Eina_Bool gtk2 = EINA_FALSE;
              Eina_Bool gtk3 = EINA_FALSE;
+             Eina_Bool gtk4 = EINA_FALSE;
              snprintf(buf, sizeof(buf), "%s/gtk-2.0", theme);
              gtk2 = ecore_file_is_dir(buf);
              snprintf(buf, sizeof(buf), "%s/gtk-3.0", theme);
              gtk3 = ecore_file_is_dir(buf);
-             if ((!gtk2) && (!gtk3)) continue;
+             snprintf(buf, sizeof(buf), "%s/gtk-4.0", theme);
+             gtk4 = ecore_file_is_dir(buf);
+             if ((!gtk2) && (!gtk3) && (!gtk4) ) continue;
 
              tmp = strrchr(theme, '/');
              if (tmp)
@@ -318,6 +321,11 @@ _fill_files_ilist(void *data)
                   if (gtk3 && (len > 5))
                     {
                        strcat(label, " (v3)");
+                       len -= 5;
+                    }
+                  if (gtk4 && (len > 5))
+                    {
+                       strcat(label, " (v4)");
                        len -= 5;
                     }
                   

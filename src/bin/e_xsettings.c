@@ -487,6 +487,43 @@ _e_xsettings_done_cb(void *data __UNUSED__, Eio_File *handler __UNUSED__, const 
 }
 
 static void
+gtk4_symlink_create(const char *theme_name)
+{
+   char buf[4096];
+   char path[4096];
+   const char *dir;
+   Eina_Bool exists = EINA_FALSE;
+   Eina_List *xdg_dirs, *l;
+
+   if (!theme_name) return;
+
+   /* create gtk-4.0 folder in .config */
+   snprintf(buf, sizeof(buf), "%s/gtk-4.0", efreet_config_home_get());
+   if (!ecore_file_is_dir(buf))
+     ecore_file_mkdir(buf);
+
+   /* check all themes destinations */
+   xdg_dirs = efreet_data_dirs_get();
+   EINA_LIST_FOREACH(xdg_dirs, l, dir)
+     {
+        snprintf(path, sizeof(path), "%s/themes/%s/gtk-4.0/gtk.css", dir, theme_name);
+        if (ecore_file_exists(path))
+          {
+            exists = EINA_TRUE;
+            break;
+          }
+     }
+
+   /* create symlink to the selected GTK 4 theme file */
+   if (exists)
+     {
+       snprintf(buf, sizeof(buf), "%s/gtk-4.0/gtk.css", efreet_config_home_get());
+       ecore_file_unlink(buf);
+       ecore_file_symlink(path, buf);
+     }
+}
+
+static void
 _e_xsettings_theme_set(void)
 {
    if (e_config->xsettings.match_e17_theme)
@@ -501,11 +538,14 @@ _e_xsettings_theme_set(void)
                   e_user_homedir_snprintf(buf, sizeof(buf), ".themes/%s", _setting_theme);
                   eio_op = eio_file_direct_stat(buf, _e_xsettings_done_cb, _e_xsettings_error_cb, NULL);
                   e_config->xsettings.net_theme_name = eina_stringshare_add(_setting_theme);
+                  gtk4_symlink_create(e_config->xsettings.net_theme_name);
                   setting = EINA_TRUE;
                   return;
                }
           }
      }
+   else
+     gtk4_symlink_create(e_config->xsettings.net_theme_name);
 
    if (e_config->xsettings.net_theme_name)
      {
