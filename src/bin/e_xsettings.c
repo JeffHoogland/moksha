@@ -515,12 +515,11 @@ gtk4_symlink_create(const char *theme_name)
      }
 
    /* create symlink to the selected GTK 4 theme file */
-   if (exists)
-     {
-       snprintf(buf, sizeof(buf), "%s/gtk-4.0/gtk.css", efreet_config_home_get());
-       ecore_file_unlink(buf);
-       ecore_file_symlink(path, buf);
-     }
+   snprintf(buf, sizeof(buf), "%s/gtk-4.0/gtk.css", efreet_config_home_get());
+   if (ecore_file_exists(buf))
+     ecore_file_unlink(buf);
+   if (exists) 
+     ecore_file_symlink(path, buf);
 }
 
 static void
