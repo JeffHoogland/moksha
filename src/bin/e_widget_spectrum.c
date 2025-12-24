@@ -98,31 +98,31 @@ e_widget_spectrum_update(Evas_Object *obj, int redraw)
    switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
-	 vy = wd->cv->g / 255.0;
-	 vx = wd->cv->b / 255.0;
-	 break;
+         vy = wd->cv->g / 255.0;
+         vx = wd->cv->b / 255.0;
+         break;
       case E_COLOR_COMPONENT_G:
-	 vy = wd->cv->b / 255.0;
-	 vx = wd->cv->r / 255.0;
-	 break;
+         vy = wd->cv->b / 255.0;
+         vx = wd->cv->r / 255.0;
+         break;
       case E_COLOR_COMPONENT_B:
-	 vy = wd->cv->r / 255.0;
-	 vx = wd->cv->g / 255.0;
-	 break;
+         vy = wd->cv->r / 255.0;
+         vx = wd->cv->g / 255.0;
+         break;
       case E_COLOR_COMPONENT_H:
-	 vy = wd->cv->s;
-	 vx = wd->cv->v;
-	 break;
+         vy = wd->cv->s;
+         vx = wd->cv->v;
+         break;
       case E_COLOR_COMPONENT_S:
-	 vy = wd->cv->v;
-	 vx = wd->cv->h / 360.0;
-	 break;
+         vy = wd->cv->v;
+         vx = wd->cv->h / 360.0;
+         break;
       case E_COLOR_COMPONENT_V:
-	 vy = wd->cv->h / 360.0;
-	 vx = wd->cv->s;
-	 break;
-     case E_COLOR_COMPONENT_MAX:
-	break;
+         vy = wd->cv->h / 360.0;
+         vx = wd->cv->s;
+         break;
+      case E_COLOR_COMPONENT_MAX:
+         break;
      }
    edje_object_part_drag_value_set(wd->o_edje, "cursor", vx, vy);
 }
@@ -177,13 +177,13 @@ _e_wid_focus_hook(Evas_Object *obj)
    wd = e_widget_data_get(obj);
    if (e_widget_focus_get(obj))
      {
-	edje_object_signal_emit(wd->o_edje, "e,state,focused", "e");
-	evas_object_focus_set(wd->o_edje, 1);
+       edje_object_signal_emit(wd->o_edje, "e,state,focused", "e");
+       evas_object_focus_set(wd->o_edje, 1);
      }
    else
      {
-	edje_object_signal_emit(wd->o_edje, "e,state,unfocused", "e");
-	evas_object_focus_set(wd->o_edje, 0);
+       edje_object_signal_emit(wd->o_edje, "e,state,unfocused", "e");
+       evas_object_focus_set(wd->o_edje, 0);
      }
 }
 
@@ -227,37 +227,37 @@ _e_wid_mouse_handle(Evas_Object *obj, int mx, int my)
    switch (wd->mode)
      {
       case E_COLOR_COMPONENT_R:
-	 wd->cv->g = vy * 255;
-	 wd->cv->b = vx * 255;
-	 e_color_update_rgb(wd->cv);
-	 break;
+         wd->cv->g = vy * 255;
+         wd->cv->b = vx * 255;
+         e_color_update_rgb(wd->cv);
+         break;
       case E_COLOR_COMPONENT_G:
-	 wd->cv->b = vy * 255;
-	 wd->cv->r = vx * 255;
-	 e_color_update_rgb(wd->cv);
-	 break;
+         wd->cv->b = vy * 255;
+         wd->cv->r = vx * 255;
+         e_color_update_rgb(wd->cv);
+         break;
       case E_COLOR_COMPONENT_B:
-	 wd->cv->r = vy * 255;
-	 wd->cv->g = vx * 255;
-	 e_color_update_rgb(wd->cv);
-	 break;
+         wd->cv->r = vy * 255;
+         wd->cv->g = vx * 255;
+         e_color_update_rgb(wd->cv);
+         break;
       case E_COLOR_COMPONENT_H:
-	 wd->cv->s = vy;
-	 wd->cv->v = vx;
-	 e_color_update_hsv(wd->cv);
-	 break;
+         wd->cv->s = vy;
+         wd->cv->v = vx;
+         e_color_update_hsv(wd->cv);
+         break;
       case E_COLOR_COMPONENT_S:
-	 wd->cv->v = vy;
-	 wd->cv->h = vx * 360;
-	 e_color_update_hsv(wd->cv);
-	 break;
+         wd->cv->v = vy;
+         wd->cv->h = vx * 360;
+         e_color_update_hsv(wd->cv);
+         break;
       case E_COLOR_COMPONENT_V:
-	 wd->cv->h = vy * 360;
-	 wd->cv->s = vx;
-	 e_color_update_hsv(wd->cv);
-	 break;
+         wd->cv->h = vy * 360;
+         wd->cv->s = vx;
+         e_color_update_hsv(wd->cv);
+         break;
       case E_COLOR_COMPONENT_MAX:
-	 break;
+         break;
      }
    e_widget_change(obj);
 }
@@ -302,6 +302,6 @@ _e_wid_cb_move(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void
 
    if (wd->dragging == 1)
      {
-	_e_wid_mouse_handle(o_wid, ev->cur.canvas.x, ev->cur.canvas.y);
+       _e_wid_mouse_handle(o_wid, ev->cur.canvas.x, ev->cur.canvas.y);
      }
 }

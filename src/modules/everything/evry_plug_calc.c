@@ -317,8 +317,8 @@ _set_bc_scale(void)
 {
    const char* s = getenv("MOKSHA_BC_SCALE");
    if (s)
-   {  long int lscale = strtol (s,NULL,10);
-	  if (lscale > 0  && lscale <51)
-	    bc_scale = (int) lscale;
+   {  long int lscale = strtol (s, NULL, 10);
+      if (lscale > 0  && lscale < 51)
+        bc_scale = (int) lscale;
    }
 }

@@ -151,27 +151,27 @@ _e_spectrum_smart_init(void)
 {
    if (_e_spectrum_smart) return;
      {
-	static const Evas_Smart_Class sc =
-	  {
-	     "e_spectrum",
-	       EVAS_SMART_CLASS_VERSION,
-	       _e_spectrum_smart_add,
-	       _e_spectrum_smart_del,
-	       _e_spectrum_smart_move,
-	       _e_spectrum_smart_resize,
-	       _e_spectrum_smart_show,
-	       _e_spectrum_smart_hide,
-	       _e_spectrum_smart_color_set,
-	       _e_spectrum_smart_clip_set,
-	       _e_spectrum_smart_clip_unset,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL,
-	       NULL
-	  };
+        static const Evas_Smart_Class sc =
+          {
+             "e_spectrum",
+               EVAS_SMART_CLASS_VERSION,
+               _e_spectrum_smart_add,
+               _e_spectrum_smart_del,
+               _e_spectrum_smart_move,
+               _e_spectrum_smart_resize,
+               _e_spectrum_smart_show,
+               _e_spectrum_smart_hide,
+               _e_spectrum_smart_color_set,
+               _e_spectrum_smart_clip_set,
+               _e_spectrum_smart_clip_unset,
+               NULL,
+               NULL,
+               NULL,
+               NULL,
+               NULL,
+               NULL,
+               NULL
+          };
         _e_spectrum_smart = evas_smart_class_new(&sc);
      }
 }
@@ -182,31 +182,31 @@ _e_spectrum_color_calc(E_Spectrum *sp, float vx, float vy, float vz, int *r, int
    switch (sp->mode)
      {
       case E_COLOR_COMPONENT_R:
-	 *r = 255 * vz;
-	 *g = 255 * vy;
-	 *b = 255 * vx;
-	 break;
+         *r = 255 * vz;
+         *g = 255 * vy;
+         *b = 255 * vx;
+         break;
       case E_COLOR_COMPONENT_G:
-	 *r = 255 * vx;
-	 *g = 255 * vz;
-	 *b = 255 * vy;
-	 break;
+         *r = 255 * vx;
+         *g = 255 * vz;
+         *b = 255 * vy;
+         break;
       case E_COLOR_COMPONENT_B:
-	 *r = 255 * vy;
-	 *g = 255 * vx;
-	 *b = 255 * vz;
-	 break;
+         *r = 255 * vy;
+         *g = 255 * vx;
+         *b = 255 * vz;
+         break;
       case E_COLOR_COMPONENT_H:
-	 evas_color_hsv_to_rgb(vz * 360.0, vy, vx, r, g, b);
-	 break;
+         evas_color_hsv_to_rgb(vz * 360.0, vy, vx, r, g, b);
+         break;
       case E_COLOR_COMPONENT_S:
-	 evas_color_hsv_to_rgb(vx * 360.0, vz, vy, r, g, b);
-	 break;
+         evas_color_hsv_to_rgb(vx * 360.0, vz, vy, r, g, b);
+         break;
       case E_COLOR_COMPONENT_V:
-	 evas_color_hsv_to_rgb(vy * 360.0, vx, vz, r, g, b);
-	 break;
+         evas_color_hsv_to_rgb(vy * 360.0, vx, vz, r, g, b);
+         break;
       default:
-	 break;
+         break;
      }
 }
 
@@ -221,41 +221,41 @@ _e_spectrum_2d_color_at(E_Spectrum *sp, int x, int y, int *r, int *g, int *b)
   switch (sp->mode)
     {
      case E_COLOR_COMPONENT_R:
-	rr = sp->cv->r;
-	gg = (1 - (y / (double)(sp->ih))) * 255;
-	bb = (x / (double)(sp->iw)) * 255;
-	break;
+        rr = sp->cv->r;
+        gg = (1 - (y / (double)(sp->ih))) * 255;
+        bb = (x / (double)(sp->iw)) * 255;
+        break;
      case E_COLOR_COMPONENT_G:
-	rr = (x / (double)(sp->iw)) * 255;
-	gg = sp->cv->g;
-	bb = (1 - (y / (double)(sp->ih))) * 255;
-	break;
+        rr = (x / (double)(sp->iw)) * 255;
+        gg = sp->cv->g;
+        bb = (1 - (y / (double)(sp->ih))) * 255;
+        break;
      case E_COLOR_COMPONENT_B:
-	rr = (1 - (y / (double)(sp->ih))) * 255;
-	gg = (x / (double)(sp->iw)) * 255;
-	bb = sp->cv->b;
-	break;
+        rr = (1 - (y / (double)(sp->ih))) * 255;
+        gg = (x / (double)(sp->iw)) * 255;
+        bb = sp->cv->b;
+        break;
      case E_COLOR_COMPONENT_H:
-	h = sp->cv->h;
-	s = 1 - (y / (double)(sp->ih));
-	v = x / (double)(sp->iw);
-	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
-	break;
+        h = sp->cv->h;
+        s = 1 - (y / (double)(sp->ih));
+        v = x / (double)(sp->iw);
+        evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
+        break;
      case E_COLOR_COMPONENT_S:
-	s = sp->cv->s;
-	v = 1 - (y / (double)(sp->ih));
-	h = x / (double)(sp->iw) * 360;
-	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
-	break;
+        s = sp->cv->s;
+        v = 1 - (y / (double)(sp->ih));
+        h = x / (double)(sp->iw) * 360;
+        evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
+        break;
      case E_COLOR_COMPONENT_V:
-	v = sp->cv->v;
-	h = (1 - (y / (double)(sp->ih))) * 360;
-	s = x / (double)(sp->iw);
-	evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
-	break;
+        v = sp->cv->v;
+        h = (1 - (y / (double)(sp->ih))) * 360;
+        s = x / (double)(sp->iw);
+        evas_color_hsv_to_rgb(h, s, v, &rr, &gg, &bb);
+        break;
      case E_COLOR_COMPONENT_MAX:
      default:
-	return;
+        return;
     }
 
   if (r) *r = rr;
@@ -282,40 +282,40 @@ _e_spectrum_redraw(void *d)
   switch (sp->mode)
     {
      case E_COLOR_COMPONENT_R:
-	vz = (float)sp->cv->r / 255;
-	break;
+        vz = (float)sp->cv->r / 255;
+        break;
      case E_COLOR_COMPONENT_G:
-	vz = (float)sp->cv->g / 255;
-	break;
+        vz = (float)sp->cv->g / 255;
+        break;
      case E_COLOR_COMPONENT_B:
-	vz = (float)sp->cv->b / 255;
-	break;
+        vz = (float)sp->cv->b / 255;
+        break;
      case E_COLOR_COMPONENT_H:
-	vz = sp->cv->h / 360;
-	break;
+        vz = sp->cv->h / 360;
+        break;
      case E_COLOR_COMPONENT_S:
-	vz = sp->cv->s;
-	break;
+        vz = sp->cv->s;
+        break;
      case E_COLOR_COMPONENT_V:
-	vz = sp->cv->v;
-	break;
+        vz = sp->cv->v;
+        break;
      case E_COLOR_COMPONENT_MAX:
-	break;
+        break;
     }
 
   for (i = 0; i < sp->ih; i++)
     {
        vy = (float)i / sp->ih;
        for (j = 0; j < sp->iw; j++)
-	 {
-	    vx = (float)j / sp->iw;
-	    _e_spectrum_color_calc(sp, vx, vy, vz, &r, &g, &b);
-	    data[(i * sp->iw) + j] =
-	      (sp->cv->a << 24) |
-	      (((r * sp->cv->a) / 255) << 16) |
-	      (((g * sp->cv->a) / 255) <<  8) |
-	      (((b * sp->cv->a) / 255)      );
-	 }
+         {
+            vx = (float)j / sp->iw;
+            _e_spectrum_color_calc(sp, vx, vy, vz, &r, &g, &b);
+            data[(i * sp->iw) + j] =
+              (sp->cv->a << 24) |
+              (((r * sp->cv->a) / 255) << 16) |
+              (((g * sp->cv->a) / 255) <<  8) |
+              (((b * sp->cv->a) / 255)      );
+         }
     }
 
   evas_object_image_data_set(sp->o_spectrum, data);
@@ -345,7 +345,7 @@ e_spectrum_mode_set(Evas_Object *o, E_Color_Component mode)
 {
   E_Spectrum *sp;
 
-   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
+  if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 
@@ -359,7 +359,7 @@ e_spectrum_mode_get(Evas_Object *o)
 {
   E_Spectrum *sp;
 
-   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERR(0);
+  if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERR(0);
   sp = evas_object_smart_data_get(o);
   if (!sp) return -1;
 
@@ -371,7 +371,7 @@ e_spectrum_color_value_set(Evas_Object *o, E_Color *cv)
 {
   E_Spectrum *sp;
 
-   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
+  if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 
@@ -384,7 +384,7 @@ e_spectrum_update(Evas_Object *o)
 {
   E_Spectrum *sp;
 
-   if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
+  if (evas_object_smart_smart_get(o) != _e_spectrum_smart) SMARTERRNR();
   sp = evas_object_smart_data_get(o);
   if (!sp) return;
 
