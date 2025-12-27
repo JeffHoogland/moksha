@@ -520,7 +520,7 @@ _cb_event_selection(Instance *instance, int type __UNUSED__, Ecore_X_Event_Selec
    Eina_Bool cb_ret = (EFL_MINOR < 24) ? ECORE_CALLBACK_PASS_ON : ECORE_CALLBACK_DONE;
 
    if (clip_inst->items)
-     last =  ((Clip_Data *) eina_list_data_get (clip_inst->items))->content;
+     last = ((Clip_Data *) eina_list_data_get (clip_inst->items))->content;
 
    if ((text_data = clipboard.get_text(event)))
      {
@@ -966,7 +966,7 @@ e_modapi_init (E_Module *m)
    /* Create an invisible window for clipboard input purposes
     *   It is my understanding this should not displayed.*/
     // clip_inst->win = ecore_x_window_input_new(0, 10, 10, 100, 100);
-    clip_inst->win = ecore_x_window_new(0, 0, 0, 1, 1);
+   clip_inst->win = ecore_x_window_new(0, 0, 0, 1, 1);
 
    /* Now add some callbacks to handle clipboard events */
    ecore_x_fixes_selection_notification_request(ecore_x_atom_get("CLIPBOARD"));
