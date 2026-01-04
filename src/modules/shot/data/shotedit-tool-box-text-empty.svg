@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="40"
+   height="40"
+   viewBox="0 0 10.583333 10.583333"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="shotedit-tool-box-text-empty.svg"
+   inkscape:export-filename="/home/raster/C/shotedit/shotedit-tool-box-logo.png"
+   inkscape:export-xdpi="384"
+   inkscape:export-ydpi="384"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient564">
+      <stop
+         id="stop565"
+         offset="0"
+         style="stop-color:#000;stop-opacity:1;" />
+      <stop
+         id="stop566"
+         offset="1"
+         style="stop-color:#fff;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient567"
+       xlink:href="#linearGradient564" />
+    <radialGradient
+       fy="0.5"
+       fx="0.5"
+       r="0.5"
+       cy="0.5"
+       cx="0.5"
+       id="radialGradient568"
+       xlink:href="#linearGradient564" />
+    <radialGradient
+       id="radialGradient620"
+       xlink:href="#linearGradient564" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter5796"
+       x="-0.096"
+       width="1.192"
+       y="-0.096"
+       height="1.192">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.28"
+         id="feGaussianBlur5798" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#404040"
+     bordercolor="#202020"
+     borderopacity="1"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="13.825"
+     inkscape:cx="20"
+     inkscape:cy="20"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     width="40px"
+     inkscape:showpageshadow="false"
+     inkscape:window-width="1206"
+     inkscape:window-height="1372"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:snap-global="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4518"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-286.41667)">
+    <path
+       id="path5794"
+       transform="matrix(0.26458333,0,0,0.26458333,0,286.41667)"
+       d="M 4 4 L 4 6 L 4 12 L 6 12 L 6 6 L 12 6 L 12 4 L 6 4 L 4 4 z M 28 4 L 28 6 L 34 6 L 34 12 L 36 12 L 36 6 L 36 4 L 34 4 L 28 4 z M 12 12 L 12 16 C 12 15.000013 13 14 14 14 L 17 14 C 18 14 19 15.000013 19 16 L 19 26 C 19 26.999987 18 28 17 28 L 23 28 C 22 28 21 26.999987 21 26 L 21 16 C 21 15.000013 22 14 23 14 L 26 14 C 27 14 28 15.000013 28 16 L 28 12 L 12 12 z M 4 28 L 4 34 L 4 36 L 6 36 L 12 36 L 12 34 L 6 34 L 6 28 L 4 28 z M 34 28 L 34 34 L 28 34 L 28 36 L 34 36 L 36 36 L 36 34 L 36 28 L 34 28 z "
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5796);opacity:0.5" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 4 4 L 4 6 L 4 12 L 6 12 L 6 6 L 12 6 L 12 4 L 6 4 L 4 4 z M 28 4 L 28 6 L 34 6 L 34 12 L 36 12 L 36 6 L 36 4 L 34 4 L 28 4 z M 12 12 L 12 16 C 12 15.000013 13 14 14 14 L 17 14 C 18 14 19 15.000013 19 16 L 19 26 C 19 26.999987 18 28 17 28 L 23 28 C 22 28 21 26.999987 21 26 L 21 16 C 21 15.000013 22 14 23 14 L 26 14 C 27 14 28 15.000013 28 16 L 28 12 L 12 12 z M 4 28 L 4 34 L 4 36 L 6 36 L 12 36 L 12 34 L 6 34 L 6 28 L 4 28 z M 34 28 L 34 34 L 28 34 L 28 36 L 34 36 L 36 36 L 36 34 L 36 28 L 34 28 z "
+       transform="matrix(0.26458333,0,0,0.26458333,0,286.41667)"
+       id="path5749" />
+  </g>
+</svg>

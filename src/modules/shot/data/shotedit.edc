@@ -1,0 +1,883 @@
+collections {
+#define ICON(x) \
+  group { name: "e/modules/shot/icon/"x; \
+    images.image: "shotedit-"x".png" COMP; \
+    parts { \
+      part { name: "icon"; \
+        description { state: "default" 0.0; \
+          aspect: 1.0 1.0; aspect_preference: BOTH; \
+          image.normal: "shotedit-"x".png"; \
+        } \
+      } \
+    } \
+  }
+  ICON("zoom")
+  ICON("zoom-in")
+  ICON("zoom-out")
+
+#define TOOL_ICON(x) \
+  group { name: "e/modules/shot/tool/icon/"x; \
+    images.image: "shotedit-tool-"x".png" COMP; \
+    parts { \
+      part { name: "icon"; \
+        description { state: "default" 0.0; \
+          aspect: 1.0 1.0; aspect_preference: BOTH; \
+          image.normal: "shotedit-tool-"x".png"; \
+        } \
+      } \
+    } \
+  }
+  TOOL_ICON("crop")
+  TOOL_ICON("modify")
+  TOOL_ICON("delete")
+  TOOL_ICON("line-arrow")
+  TOOL_ICON("line-arrow2")
+  TOOL_ICON("line-arrow0")
+  TOOL_ICON("box-solid")
+  TOOL_ICON("box-malloc")
+  TOOL_ICON("box-demalloc")
+  TOOL_ICON("box-finger")
+  TOOL_ICON("box-logo")
+  TOOL_ICON("box-foot")
+  TOOL_ICON("box-walk")
+  TOOL_ICON("box-outline-box")
+  TOOL_ICON("box-outline-circle")
+  TOOL_ICON("box-text-empty")
+  TOOL_ICON("box-text-plain")
+  TOOL_ICON("box-text-cloud")
+  TOOL_ICON("box-text-cloud2")
+  TOOL_ICON("box-text-speech")
+  TOOL_ICON("box-text-speech2")
+  TOOL_ICON("box-text-kaboom")
+  TOOL_ICON("box-text-kapow")
+  group { name: "e/modules/shot/tool/crop";
+    parts {
+      part { name: "e/drag/rel1"; type: SPACER;
+        dragable.x: 1 1 0;
+        dragable.y: 1 1 0;
+        description { state: "default" 0.0;
+          rel2.relative: 0.0 0.0;
+          rel2.offset: 0 0;
+          max: 0 0;
+          fixed: 1 1;
+        }
+      }
+      part { name: "e/drag/rel2"; type: SPACER;
+        dragable.x: 1 1 0;
+        dragable.y: 1 1 0;
+        description { state: "default" 0.0;
+          rel2.relative: 0.0 0.0;
+          rel2.offset: 0 0;
+          max: 0 0;
+          fixed: 1 1;
+        }
+      }
+
+      part { name: "box-top"; type: RECT;
+        mouse_events: 0;
+        description { state: "default" 0.0;
+          rel2.to_y: "e/drag/rel1";
+          rel2.relative: 1.0 0.0;
+          color: 0 0 0 192;
+        }
+      }
+      part { name: "box-bottom"; type: RECT;
+        mouse_events: 0;
+        description { state: "default" 0.0;
+          rel1.to_y: "e/drag/rel2";
+          rel1.relative: 0.0 1.0;
+          color: 0 0 0 192;
+        }
+      }
+      part { name: "box-left"; type: RECT;
+        mouse_events: 0;
+        description { state: "default" 0.0;
+          rel1.to_y: "box-top";
+          rel1.relative: 0.0 1.0;
+          rel2.to_y: "box-bottom";
+          rel2.to_x: "e/drag/rel1";
+          rel2.relative: 0.0 0.0;
+          color: 0 0 0 192;
+        }
+      }
+      part { name: "box-right"; type: RECT;
+        mouse_events: 0;
+        description { state: "default" 0.0;
+          rel1.to_x: "e/drag/rel2";
+          rel1.to_y: "box-top";
+          rel1.relative: 1.0 1.0;
+          rel2.to_y: "box-bottom";
+          rel2.relative: 1.0 0.0;
+          color: 0 0 0 192;
+        }
+      }
+#define HANDLE(_name, _relnamex, _relnamey, _rel, _x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4, _x5, _y5, _x6, _y6, _x7, _y7, _x8, _y8) \
+      part { name: "mod-"_name"1"; type: RECT; \
+        scale: 1; \
+        description { state: "default" 0.0; \
+          rel.to_x: "e/drag/"_relnamex; \
+          rel.to_y: "e/drag/"_relnamey; \
+          rel1.offset: _x1 _y1; \
+          rel2.offset: _x2 _y2; \
+          rel2.relative: _rel; \
+          color: 255 255 255 255; \
+          offscale; \
+        } \
+      } \
+      part { name: "mod-"_name"2"; type: RECT; \
+        scale: 1; \
+        description { state: "default" 0.0; \
+          rel.to_x: "e/drag/"_relnamex; \
+          rel.to_y: "e/drag/"_relnamey; \
+          rel1.offset: _x3 _y3; \
+          rel2.offset: _x4 _y4; \
+          rel2.relative: _rel; \
+          color: 255 255 255 255; \
+          offscale; \
+        } \
+      } \
+      part { name: "mod-"_name"h1"; type: RECT; \
+        scale: 1; \
+        description { state: "default" 0.0; \
+          rel.to_x: "e/drag/"_relnamex; \
+          rel.to_y: "e/drag/"_relnamey; \
+          rel1.offset: _x5 _y5; \
+          rel2.offset: _x6 _y6; \
+          rel2.relative: _rel; \
+          color: 0 0 0 0; \
+          offscale; \
+        } \
+      } \
+      part { name: "mod-"_name"h2"; type: RECT; \
+        scale: 1; \
+        description { state: "default" 0.0; \
+          rel.to_x: "e/drag/"_relnamex; \
+          rel.to_y: "e/drag/"_relnamey; \
+          rel1.offset: _x7 _y7; \
+          rel2.offset: _x8 _y8; \
+          rel2.relative: _rel; \
+          color: 0 0 0 0; \
+          offscale; \
+        } \
+      } \
+      program { signal: "mouse,down,1"; source: "mod-"_name"h*"; \
+        action: SIGNAL_EMIT "action,resize,"_name",begin" "e"; \
+      }
+
+      HANDLE("tl", "rel1", "rel1", 0.0 0.0, -18, -4, 17, -1, -4, -18, -1, 17,
+             -36, -36, 17, -1, -36, -36,  -1, 17)
+      HANDLE("tr", "rel2", "rel1", 1.0 0.0, -18, -4, 17, -1,  0, -18,  3, 17,
+             -18, -36, 35, -1,   0, -36,  35, 35)
+      HANDLE("bl", "rel1", "rel2", 0.0 1.0, -18,  0, 17,  3, -4, -18, -1, 17,
+             -36,   0, 17, 35, -36, -18,  -1, 35)
+      HANDLE("br", "rel2", "rel2", 1.0 1.0, -18,  0, 17,  3,  0, -18,  3, 17,
+             -18,   0, 35, 35,   0, -36,  35, 35)
+    }
+  }
+  group { name: "e/modules/shot/tool/line/handle";
+    images.image: "shotedit-edit-circle.png" COMP;
+    parts {
+      part { name: "move";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 18 18;
+          image.normal: "shotedit-edit-circle.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow";
+    images.image: "shotedit-arrow.png" COMP;
+    parts {
+      part { name: "arrow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 20 20;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-arrow.png";
+          image.border: 44 88 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-arrow-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 0 0 0 128;
+          image.normal: "shotedit-arrow-shadow.png";
+          image.border: 96 140 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow2";
+    images.image: "shotedit-arrow2.png" COMP;
+    parts {
+      part { name: "arrow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 20 20;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-arrow2.png";
+          image.border: 88 88 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow2/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-arrow2-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 0 0 0 128;
+          image.normal: "shotedit-arrow2-shadow.png";
+          image.border: 140 140 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow0";
+    images.image: "shotedit-arrow0.png" COMP;
+    parts {
+      part { name: "arrow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 20 20;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-arrow0.png";
+          image.border: 88 88 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/line/arrow0/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-arrow0-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 0 0 0 128;
+          image.normal: "shotedit-arrow0-shadow.png";
+          image.border: 140 140 0 0;
+          image.border_scale: 1;
+          image.border_scale_by: 0.25;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/tool/box/handle";
+    images.image: "shotedit-edit-move.png" COMP;
+    images.image: "shotedit-edit-diag1.png" COMP;
+    images.image: "shotedit-edit-diag2.png" COMP;
+    images.image: "shotedit-edit-rot1.png" COMP;
+    images.image: "shotedit-edit-rot2.png" COMP;
+    images.image: "shotedit-edit-rot3.png" COMP;
+    images.image: "shotedit-edit-rot4.png" COMP;
+    parts {
+      part { name: "move"; type: RECT;
+        description { state: "default" 0.0;
+          color: 0 0 0 0;
+          rel1.offset: 10 10;
+          rel2.offset: -11 -11;
+        }
+        description { state: "disabled" 0.0;
+          inherit: "default" 0.0;
+          visible: 0;
+        }
+      }
+      program { signal: "mouse,down,1"; source: "move";
+        action: SIGNAL_EMIT "action,move,begin" "e";
+      }
+      program { signal: "e,state,moveall,off"; source: "e";
+        action: STATE_SET "disabled" 0.0;
+        target: "move";
+      }
+      program { signal: "e,state,moveall,on"; source: "e";
+        action: STATE_SET "default" 0.0;
+        target: "move";
+      }
+      part { name: "mod";
+        description { state: "default" 0.0;
+          rel.to: "move";
+          rel1.relative: 0.5 0.5;
+          rel2.relative: 0.5 0.5;
+          min: 18 18;
+          image.normal: "shotedit-edit-move.png";
+        }
+      }
+      program { signal: "mouse,down,1"; source: "mod";
+        action: SIGNAL_EMIT "action,move,begin" "e";
+      }
+      part { name: "mod-tl";
+        description { state: "default" 0.0;
+          rel.to: "move";
+          rel1.relative: 0.0 0.0;
+          rel2.relative: 0.0 0.0;
+          min: 18 18;
+          image.normal: "shotedit-edit-diag1.png";
+        }
+        description { state: "resize" 0.0;
+          inherit: "default" 0.0;
+          image.normal: "shotedit-edit-rot1.png";
+        }
+      }
+      program { signal: "mouse,down,1"; source: "mod-tl";
+        action: SIGNAL_EMIT "action,resize,tl,begin" "e";
+      }
+      part { name: "mod-tr";
+        description { state: "default" 0.0;
+          rel.to: "move";
+          rel1.relative: 1.0 0.0;
+          rel2.relative: 1.0 0.0;
+          min: 18 18;
+          image.normal: "shotedit-edit-diag2.png";
+        }
+        description { state: "resize" 0.0;
+          inherit: "default" 0.0;
+          image.normal: "shotedit-edit-rot2.png";
+        }
+      }
+      program { signal: "mouse,down,1"; source: "mod-tr";
+        action: SIGNAL_EMIT "action,resize,tr,begin" "e";
+      }
+      part { name: "mod-bl";
+        description { state: "default" 0.0;
+          rel.to: "move";
+          rel1.relative: 0.0 1.0;
+          rel2.relative: 0.0 1.0;
+          min: 18 18;
+          image.normal: "shotedit-edit-diag2.png";
+        }
+        description { state: "resize" 0.0;
+          inherit: "default" 0.0;
+          image.normal: "shotedit-edit-rot4.png";
+        }
+      }
+      program { signal: "mouse,down,1"; source: "mod-bl";
+        action: SIGNAL_EMIT "action,resize,bl,begin" "e";
+      }
+      part { name: "mod-br";
+        description { state: "default" 0.0;
+          rel.to: "move";
+          rel1.relative: 1.0 1.0;
+          rel2.relative: 1.0 1.0;
+          min: 18 18;
+          image.normal: "shotedit-edit-diag1.png";
+        }
+        description { state: "resize" 0.0;
+          inherit: "default" 0.0;
+          image.normal: "shotedit-edit-rot3.png";
+        }
+      }
+      program { signal: "mouse,down,1"; source: "mod-br";
+        action: SIGNAL_EMIT "action,resize,br,begin" "e";
+      }
+      program { signal: "e,state,resize"; source: "e";
+        action: STATE_SET "resize" 0.0;
+        target: "mod-tl";
+        target: "mod-tr";
+        target: "mod-bl";
+        target: "mod-br";
+      }
+      program { signal: "e,state,move"; source: "e";
+        action: STATE_SET "default" 0.0;
+        target: "mod-tl";
+        target: "mod-tr";
+        target: "mod-bl";
+        target: "mod-br";
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/solid";
+    parts {
+      part { name: "box"; type: RECT;
+        scale: 1;
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          rel1.offset: 10 10;
+          rel2.offset: -11 -11;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/solid/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-box-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 0 0 0 128;
+          image.normal: "shotedit-box-shadow.png";
+          image.border: 60 60 60 60;
+          image.border_scale: 1;
+          image.border_scale_by: 0.5;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/malloc";
+    images.image: "shotedit-malloc.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          image.normal: "shotedit-malloc.png";
+          min: 32 32;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/malloc/shadow";
+    parts {
+    }
+  }
+  group { name: "e/modules/shot/item/box/demalloc";
+    images.image: "shotedit-demalloc.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          image.normal: "shotedit-demalloc.png";
+          min: 32 32;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/demalloc/shadow";
+    parts {
+    }
+  }
+  group { name: "e/modules/shot/item/box/finger";
+    images.image: "shotedit-finger.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          min: 40 18;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-finger.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/finger/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-finger-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        description { state: "default" 0.0;
+          min: 60 38;
+          color: 0 0 0 128;
+          image.normal: "shotedit-finger-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/logo";
+    images.image: "shotedit-e-logo.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          min: 30 40;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-e-logo.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/logo/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-e-logo-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        description { state: "default" 0.0;
+          min: 50 60;
+          color: 0 0 0 128;
+          image.normal: "shotedit-e-logo-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/foot";
+    images.image: "shotedit-foot.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          image.normal: "shotedit-foot.png";
+          min: 45 55;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/foot/shadow";
+    parts {
+    }
+  }
+  group { name: "e/modules/shot/item/box/walk";
+    images.image: "shotedit-walk.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-walk.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/walk/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-walk-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        description { state: "default" 0.0;
+          min: 50 50;
+          color: 0 0 0 128;
+          image.normal: "shotedit-walk-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/outline-box";
+    images.image: "shotedit-outline-box.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-outline-box.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/outline-box/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-outline-box-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        description { state: "default" 0.0;
+          min: 50 50;
+          color: 0 0 0 128;
+          image.normal: "shotedit-outline-box-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/outline-circle";
+    images.image: "shotedit-outline-circle.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          min: 40 40;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-outline-circle.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/outline-circle/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-outline-circle-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        description { state: "default" 0.0;
+          min: 50 50;
+          color: 0 0 0 128;
+          image.normal: "shotedit-outline-circle-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/empty";
+    data.item: "entry_style" "DEFAULT='font=Sans style=outline outline_color=#0008 font_size=20 color=#fff align=center'";
+    parts {
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/empty/shadow";
+    parts {
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/plain";
+    parts {
+      part { name: "box"; type: RECT;
+        scale: 1;
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          rel1.offset: 10 10;
+          rel2.offset: -11 -11;
+          offscale;
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 20 20;
+          rel2.offset: -21 -21;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/plain/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-box-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: 60 60;
+          color: 0 0 0 128;
+          image.normal: "shotedit-box-shadow.png";
+          image.border: 60 60 60 60;
+          image.border_scale: 1;
+          image.border_scale_by: 0.5;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/cloud";
+    data.item: "entry_style" "DEFAULT='font=IndieFlower font_size=25 color=#000 align=center'";
+    images.image: "shotedit-cloud.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-cloud.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 45 45;
+          rel2.offset: -46 -46;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/cloud/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-cloud-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: (45+45+50) (45+45+50);
+          color: 0 0 0 128;
+          image.normal: "shotedit-cloud-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/cloud2";
+    data.item: "entry_style" "DEFAULT='font=intuitive font_size=25 color=#000 align=center'";
+    images.image: "shotedit-cloud2.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-cloud2.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 45 45;
+          rel2.offset: -46 -46;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/cloud2/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-cloud2-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: (45+45+50) (45+45+50);
+          color: 0 0 0 128;
+          image.normal: "shotedit-cloud2-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/speech";
+    data.item: "entry_style" "DEFAULT='font=Yantiq font_size=25 color=#000 align=center'";
+    images.image: "shotedit-speech.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-speech.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 35 35;
+          rel2.offset: -36 -56;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/speech/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-speech-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: (35+35+50) (45+55+50);
+          color: 0 0 0 128;
+          image.normal: "shotedit-speech-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/speech2";
+    data.item: "entry_style" "DEFAULT='font=Yantiq font_size=25 color=#000 align=center'";
+    images.image: "shotedit-speech2.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-speech2.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 35 35;
+          rel2.offset: -36 -56;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/speech2/shadow";
+    data.item: "offset_x" "0";
+    data.item: "offset_y" "10";
+    images.image: "shotedit-speech2-shadow.png" COMP;
+    parts {
+      part { name: "shadow";
+        scale: 1;
+        description { state: "default" 0.0;
+          min: (35+35+50) (45+55+50);
+          color: 0 0 0 128;
+          image.normal: "shotedit-speech2-shadow.png";
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/kaboom";
+    data.item: "entry_style" "DEFAULT='font=Puk-Regular font_size=45 color=#000 align=center'";
+    images.image: "shotedit-kaboom.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-kaboom.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 15 15;
+          rel2.offset: -16 -16;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/kaboom/shadow";
+    parts {
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/kapow";
+    data.item: "entry_style" "DEFAULT='font=Puk-Regular font_size=45 color=#000 align=center'";
+    images.image: "shotedit-kapow.png" COMP;
+    parts {
+      part { name: "box";
+        description { state: "default" 0.0;
+          color: 255 255 255 255;
+          color_class: "color";
+          image.normal: "shotedit-kapow.png";
+        }
+      }
+      part { name: "e.swallow.entry"; type: SWALLOW;
+        scale: 1;
+        description { state: "default" 0.0;
+          rel1.offset: 15 15;
+          rel2.offset: -16 -16;
+          max: 9999 0;
+          offscale;
+        }
+      }
+    }
+  }
+  group { name: "e/modules/shot/item/box/text/kapow/shadow";
+    parts {
+    }
+  }
+}

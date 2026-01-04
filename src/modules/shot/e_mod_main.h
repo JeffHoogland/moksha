@@ -1,55 +1,41 @@
-#ifndef E_MOD_MAIN_H
-#define E_MOD_MAIN_H
+#include "e.h"
+#include <time.h>
+#include <sys/mman.h>
+#include <Elementary.h>
 
-//~ #ifdef ENABLE_NLS
-//~ # include <libintl.h>
-//~ # define D_(string) dgettext(PACKAGE, string)
-//~ #else
-//~ # define bindtextdomain(domain,dir)
-//~ # define bind_textdomain_codeset(domain,codeset)
-//~ # define D_(string) (string)
-//~ #endif
-
-/* Macros used for config file versioning */
-/* You can increment the EPOCH value if the old configuration is not
- * compatible anymore, it creates an entire new one.
- * You need to increment GENERATION when you add new values to the
- * configuration file but is not needed to delete the existing conf  */
-#define MOD_CONFIG_FILE_EPOCH 0x0002
-#define MOD_CONFIG_FILE_GENERATION 0x008e
-#define MOD_CONFIG_FILE_VERSION \
-   ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
-
-/* More mac/def; Define your own. What do you need ? */
-#define CONN_DEVICE_ETHERNET 0
-
-/* We create a structure config for our module, and also a config structure
- * for every item element (you can have multiple gadgets for the same module) */
-
-typedef struct _Config Config;
-typedef struct _Config_Item Config_Item;
-
-struct _Config 
-{
-   E_Module *module;
-   E_Config_Dialog *cfd;
-   Eina_List *conf_items;
-
-   int count, notify, version, full_dialog, mode_dialog, clipboard;
-
-   const char *viewer;
-   const char *path;
-   unsigned char view_enable;
-   double delay, pict_quality;
-};
-
-EAPI void *e_modapi_init(E_Module *m);
-EAPI int e_modapi_shutdown(E_Module *m);
-EAPI int e_modapi_save(E_Module *m);
-
-/* Function for calling the module's Configuration Dialog */
-E_Config_Dialog *e_int_config_shot_module(E_Container *con, const char *params);
-
-extern Config *shot_conf;
-
+#if defined(__FreeBSD__) || defined(__DragonFly__)
+# include <sys/types.h>
+# include <sys/sysctl.h>
 #endif
+
+extern E_Module *shot_module;
+
+#define MAXZONES 64
+
+void         share_save              (const char *cmd, const char *file, Eina_Bool copy);
+void         share_write_end_watch   (void *data);
+void         share_write_status_watch(void *data);
+void         share_dialog_show       (void);
+void         share_confirm           (void);
+Eina_Bool    share_have              (void);
+void         share_abort             (void);
+void         preview_dialog_show     (E_Zone *zone, E_Border *bd, const char *params, void *dst, int sx, int sy, int sw, int sh);
+Eina_Bool    preview_have            (void);
+void         preview_abort           (void);
+Evas_Object *preview_image_get       (void);
+void         save_to                 (const char *file, Eina_Bool copy);
+void         save_show               (Eina_Bool save);
+
+Evas_Object *ui_edit(Evas_Object *window, Evas_Object *o_bg, E_Zone *zone,
+                     E_Border *bd, void *dst, int sx, int sy, int sw, int sh,
+                     Evas_Object **o_img_ret);
+void         ui_edit_prepare(void);
+void         ui_edit_crop_screen_set(int x, int y, int w, int h);
+
+void         win_delay(void);
+void         delay_abort(void);
+
+
+extern Evas_Object *win;
+extern int quality;
+extern Eina_Rectangle crop;
