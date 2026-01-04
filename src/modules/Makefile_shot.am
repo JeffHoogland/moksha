@@ -1,6 +1,7 @@
 shotdir = $(MDIR)/shot
 shot_DATA = shot/e-module-shot.edj \
-	    shot/module.desktop
+	    shot/module.desktop \
+	    shot/data/shotedit.edj
 
 EXTRA_DIST += $(shot_DATA) \
 	      shot/data/shotedit.edc
