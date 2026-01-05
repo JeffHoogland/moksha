@@ -86,16 +86,11 @@ _shot_post(void *buffer, Evas *e, void *event __UNUSED__)
 static void
 _shot_now(E_Zone *zone, E_Border *bd, const char *params)
 {
-   int x, y, w, h;
-   if (preview_have() || share_have() || (snap)) return;
-   if ((!zone) && (!bd)) return;
-   
-   
-   
    E_Manager *sman = NULL;
    Ecore_X_Image *img;
    unsigned char *src;
    unsigned int *dst;
+   int x, y, w, h;
    int bpl = 0, rows = 0, bpp = 0, sw, sh;
    Ecore_X_Window xwin, root;
    Ecore_X_Visual visual;
@@ -103,14 +98,13 @@ _shot_now(E_Zone *zone, E_Border *bd, const char *params)
    Ecore_X_Screen *scr;
    Ecore_X_Window_Attributes watt;
    Ecore_X_Colormap colormap;
-   
-   
-   Ecore_Evas *ee = ecore_evas_new(NULL,
-                       0, 0, 1, 1,
-                       NULL);
-   Evas *e;
-   e = ecore_evas_get(ee);
-   
+
+   if (preview_have() || share_have() || (snap)) return;
+   if ((!zone) && (!bd)) return;
+
+   Ecore_Evas *ee = ecore_evas_buffer_new(1, 1);
+   Evas *e = ecore_evas_get(ee);
+
    watt.visual = 0;
    if (zone)
      {
@@ -138,7 +132,7 @@ _shot_now(E_Zone *zone, E_Border *bd, const char *params)
         sw = E_CLAMP(sw, 1, bd->zone->x + bd->zone->w - x);
         sh = E_CLAMP(sh, 1, bd->zone->y + bd->zone->h - y);
      }
-   
+
    if (!ecore_x_window_attributes_get(xwin, &watt)) return;
    visual = watt.visual;
    img = ecore_x_image_new(w, h, visual, ecore_x_window_depth_get(xwin));
@@ -151,7 +145,7 @@ _shot_now(E_Zone *zone, E_Border *bd, const char *params)
    ecore_x_image_to_argb_convert(src, bpp, bpl, colormap, visual,
                                  0, 0, sw, sh,
                                  dst, (sw * sizeof(int)), 0, 0);
-   
+
    if (eina_streq(ecore_evas_engine_name_get(ee), "buffer"))
      {
         preview_dialog_show(zone, bd, params,

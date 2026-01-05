@@ -42,5 +42,5 @@ shot_module_la_LIBADD += @ENOTIFY_LIBS@
 endif 
 
 .PHONY: shot install-shot
-shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)
-install-shot: install-shotDATA install-shotpkgLTLIBRARIES
+shot: $(shotpkg_LTLIBRARIES) $(shot_DATA)  $(shotpkg_PROGRAMS)
+install-shot: install-shotDATA install-shotpkgLTLIBRARIES install-shotpkgPROGRAMS
