@@ -230,7 +230,7 @@ share_dialog_show(void)
    e_dialog_button_add(dia, _("Cancel"), NULL, _upload_cancel_cb, NULL);
    e_object_del_attach_func_set(E_OBJECT(dia), _win_share_del);
    share_write_status_watch(eina_list_last_data_get(dia->buttons));
-   elm_win_center(evas, 1, 1);
+   e_win_centered_set(dia->win, 1);
    e_dialog_show(dia);
 }
 
