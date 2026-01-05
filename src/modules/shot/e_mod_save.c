@@ -194,7 +194,7 @@ save_show(Eina_Bool copy)
    if (!ecore_file_exists(path2)) ecore_file_cp(path, path2);
    if (!copy)
      {
-        a = e_action_find("fileman_show");
+        a = e_action_find("fileman");
         if (a)
           {
              a->func.go(NULL, "$E_HOME_DIR/shots");
