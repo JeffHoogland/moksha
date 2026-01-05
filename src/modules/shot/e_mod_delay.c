@@ -4,20 +4,20 @@ static Evas_Object *delay_win = NULL;
 static double delay = 5.0;
 
 static void
-_cb_delay(void *data EINA_UNUSED, Evas_Object *obj, void *event_info EINA_UNUSED)
+_cb_delay(void *data __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    delay = elm_slider_value_get(obj);
 }
 
 static void
-_win_delete_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_win_delete_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
 //   E_FREE_FUNC(delay_win, evas_object_del);
    delay_win = NULL;
 }
 
 static void
-_cb_ok(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_ok(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    E_Action *a = e_action_find("shot_delay");
    E_FREE_FUNC(delay_win, evas_object_del);
@@ -31,7 +31,7 @@ _cb_ok(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNU
 }
 
 static void
-_cb_cancel(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_cancel(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    E_FREE_FUNC(delay_win, evas_object_del);
 }

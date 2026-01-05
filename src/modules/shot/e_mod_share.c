@@ -37,7 +37,7 @@ _cnp_thread_io(void *data)
    fseek(f, 0, SEEK_END);
    fsize = ftell(f);
    fseek(f, 0, SEEK_SET);
-   
+
    if (fsize > 0)
      {
         fdata = malloc(fsize);
@@ -68,7 +68,7 @@ _cnp_file(const char *file)
 
 // the upload dialog
 static void
-_upload_ok_cb(void *data EINA_UNUSED, E_Dialog *dia)
+_upload_ok_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    // ok just hides dialog and does background upload
    o_label = NULL;
@@ -78,7 +78,7 @@ _upload_ok_cb(void *data EINA_UNUSED, E_Dialog *dia)
 }
 
 static void
-_upload_cancel_cb(void *data EINA_UNUSED, E_Dialog *dia)
+_upload_cancel_cb(void *data __UNUSED__, E_Dialog *dia)
 {
    o_label = NULL;
    if (dia) e_util_defer_object_del(E_OBJECT(dia));
@@ -87,10 +87,10 @@ _upload_cancel_cb(void *data EINA_UNUSED, E_Dialog *dia)
 }
 
 static Eina_Bool
-_img_write_end_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
+_img_write_end_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Del *ev = event;
-                 
+
    if (ev->exe != img_write_exe) return EINA_TRUE;
    _share_done();
    if ((cnp) && (cnp_file))
@@ -103,7 +103,7 @@ _img_write_end_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_img_write_out_cb(void *data, int ev_type EINA_UNUSED, void *event)
+_img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
 {
    Ecore_Exe_Event_Data *ev = event;
    int i;
@@ -183,7 +183,7 @@ share_write_status_watch(void *data)
 }
 
 static void
-_win_share_del(void *data EINA_UNUSED)
+_win_share_del(void *data __UNUSED__)
 {
    if (handlers)
      ecore_event_handler_data_set(eina_list_last_data_get(handlers), NULL);
@@ -236,13 +236,13 @@ share_dialog_show(void)
 
 // confirm dialog that it's ok to share
 static void
-_win_share_confirm_del(void *d EINA_UNUSED)
+_win_share_confirm_del(void *d __UNUSED__)
 {
    cd = NULL;
 }
 
 static void
-_win_share_confirm_yes(void *d EINA_UNUSED)
+_win_share_confirm_yes(void *d __UNUSED__)
 {
    share_dialog_show();
 }

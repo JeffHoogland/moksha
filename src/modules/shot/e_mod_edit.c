@@ -147,7 +147,7 @@ draw_handle_box_update(void)
 }
 
 static void
-_cb_modify_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_modify_mouse_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Down *ev = info;
 
@@ -175,7 +175,7 @@ _cb_modify_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *
 }
 
 static void
-_cb_modify_mouse_up(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_modify_mouse_up(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Up *ev = info;
 
@@ -224,7 +224,7 @@ angle_get(int x1, int y1, int x2, int y2, int px, int py, double ang, int nx, in
 }
 
 static void
-_cb_modify_mouse_move(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, void *info)
+_cb_modify_mouse_move(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *info)
 {
    Evas_Event_Mouse_Move *ev = info;
    int mx, my;
@@ -360,31 +360,31 @@ _cb_modify_mouse_move(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *
 }
 
 static void
-_cb_mod_move(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_mod_move(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    modify_box_mode = MODIFY_BOX_MOVE;
 }
 
 static void
-_cb_mod_resize_tl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_mod_resize_tl(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    modify_box_mode = MODIFY_BOX_RESIZE_TL;
 }
 
 static void
-_cb_mod_resize_tr(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_mod_resize_tr(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    modify_box_mode = MODIFY_BOX_RESIZE_TR;
 }
 
 static void
-_cb_mod_resize_bl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_mod_resize_bl(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    modify_box_mode = MODIFY_BOX_RESIZE_BL;
 }
 
 static void
-_cb_mod_resize_br(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_mod_resize_br(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    modify_box_mode = MODIFY_BOX_RESIZE_BR;
 }
@@ -547,7 +547,7 @@ draw_modify_begin(Evas_Object *o)
 }
 
 static void
-_cb_draw_none_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_draw_none_mouse_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Down *ev = info;
 
@@ -566,7 +566,7 @@ _cb_draw_none_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Objec
 }
 
 static void
-_cb_draw_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, void *info)
+_cb_draw_mouse_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj, void *info)
 {
    Evas_Event_Mouse_Down *ev = info;
 
@@ -807,7 +807,7 @@ line_down(int x, int y)
 }
 
 static void
-line_up(int x EINA_UNUSED, int y EINA_UNUSED)
+line_up(int x __UNUSED__, int y __UNUSED__)
 {
    line_mouse_pressed = EINA_FALSE;
    o_line = NULL;
@@ -1074,7 +1074,7 @@ box_down(int x, int y)
 }
 
 static void
-box_up(int x EINA_UNUSED, int y EINA_UNUSED)
+box_up(int x __UNUSED__, int y __UNUSED__)
 {
    box_mouse_pressed = EINA_FALSE;
    o_box = NULL;
@@ -1140,7 +1140,7 @@ crop_resize_begin(void)
 }
 
 static void
-_cb_crop_resize_tl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_crop_resize_tl(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Coord x, y;
 
@@ -1153,7 +1153,7 @@ _cb_crop_resize_tl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const c
 }
 
 static void
-_cb_crop_resize_tr(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_crop_resize_tr(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Coord x, y;
 
@@ -1166,7 +1166,7 @@ _cb_crop_resize_tr(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const c
 }
 
 static void
-_cb_crop_resize_bl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_crop_resize_bl(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Coord x, y;
 
@@ -1179,7 +1179,7 @@ _cb_crop_resize_bl(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const c
 }
 
 static void
-_cb_crop_resize_br(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, const char *emission EINA_UNUSED, const char *source EINA_UNUSED)
+_cb_crop_resize_br(void *data __UNUSED__, Evas_Object *obj __UNUSED__, const char *emission __UNUSED__, const char *source __UNUSED__)
 {
    Evas_Coord x, y;
 
@@ -1474,28 +1474,28 @@ zoom_set(int slot)
 }
 
 static void
-_cb_tool_zoom_plus(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_tool_zoom_plus(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    elm_scroller_gravity_set(o_scroll, 0.5, 0.5);
    zoom_set(zoom + 1);
 }
 
 static void
-_cb_tool_zoom_reset(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_tool_zoom_reset(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    elm_scroller_gravity_set(o_scroll, 0.5, 0.5);
    zoom_set(ZOOM_NONE);
 }
 
 static void
-_cb_tool_zoom_minus(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_tool_zoom_minus(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    elm_scroller_gravity_set(o_scroll, 0.5, 0.5);
    zoom_set(zoom - 1);
 }
 
 static void
-_cb_edit_wheel(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_edit_wheel(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Wheel *ev = info;
 
@@ -1524,7 +1524,7 @@ _cb_edit_wheel(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EIN
 }
 
 static void
-_cb_edit_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_edit_mouse_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Down *ev = info;
 
@@ -1554,7 +1554,7 @@ _cb_edit_mouse_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *ob
 }
 
 static void
-_cb_edit_mouse_up(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_edit_mouse_up(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Up *ev = info;
 
@@ -1583,7 +1583,7 @@ _cb_edit_mouse_up(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj 
 }
 
 static void
-_cb_edit_mouse_move(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info)
+_cb_edit_mouse_move(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info)
 {
    Evas_Event_Mouse_Move *ev = info;
 
@@ -1628,7 +1628,7 @@ static int       _tool_info_count = 0;
 static Tool_Info tool_info[100] =  { { 0 } };
 
 static void
-_cb_tool_changed(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSED)
+_cb_tool_changed(void *data __UNUSED__, Evas_Object *obj, void *info __UNUSED__)
 {
    int val = elm_radio_value_get(obj);
 
@@ -1645,7 +1645,7 @@ _cb_tool_changed(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSE
 }
 
 static void
-_cb_color_change(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSED)
+_cb_color_change(void *data __UNUSED__, Evas_Object *obj, void *info __UNUSED__)
 {
    Evas_Object *o;
 
@@ -1686,7 +1686,7 @@ colorsel_set(void)
 //////////////////////////////////////////////////////////////////////////////
 // ui setup
 static void
-_cb_win_del(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *info EINA_UNUSED)
+_cb_win_del(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *info __UNUSED__)
 {
    line_mouse_pressed = EINA_FALSE;
    box_mouse_pressed = EINA_FALSE;
@@ -1721,7 +1721,7 @@ _focfix(void *data)
 }
 
 static void
-_cb_col_changed(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSED)
+_cb_col_changed(void *data __UNUSED__, Evas_Object *obj, void *info __UNUSED__)
 {
    color_sel = elm_radio_value_get(obj);
    elm_colorselector_color_set(o_colorsel,
@@ -1730,7 +1730,7 @@ _cb_col_changed(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSED
 }
 
 static void
-_cb_win_focus(void *data EINA_UNUSED, Evas_Object *obj, void *info EINA_UNUSED)
+_cb_win_focus(void *data __UNUSED__, Evas_Object *obj, void *info __UNUSED__)
 {
    if ((tool_mode == TOOL_MODIFY) &&
        (o_box) && (evas_object_data_get(o_box, "entry")))

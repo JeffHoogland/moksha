@@ -2,11 +2,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include "e.h"
 
 static Ecore_Con_Url *url_up = NULL;
 
 static Eina_Bool
-_upload_data_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
+_upload_data_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Url_Data *ev = event;
 
@@ -24,7 +25,7 @@ _upload_data_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
 }
 
 static Eina_Bool
-_upload_progress_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
+_upload_progress_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
    size_t total, current;
    Ecore_Con_Event_Url_Progress *ev = event;
@@ -41,7 +42,7 @@ _upload_progress_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event
 }
 
 static Eina_Bool
-_upload_complete_cb(void *data EINA_UNUSED, int ev_type EINA_UNUSED, void *event)
+_upload_complete_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
 {
    Ecore_Con_Event_Url_Complete *ev = event;
 

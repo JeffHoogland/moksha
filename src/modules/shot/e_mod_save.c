@@ -21,7 +21,7 @@ _rgba_data_free(Rgba_Writer_Data *rdata)
 }
 
 static void
-_cb_rgba_writer_do(void *data, Ecore_Thread *th EINA_UNUSED)
+_cb_rgba_writer_do(void *data, Ecore_Thread *th __UNUSED__)
 {
    Rgba_Writer_Data *rdata = data;
    if (write(rdata->fd, rdata->data, rdata->size) < 0)
@@ -29,12 +29,11 @@ _cb_rgba_writer_do(void *data, Ecore_Thread *th EINA_UNUSED)
 }
 
 static void
-_cb_rgba_writer_done(void *data, Ecore_Thread *th EINA_UNUSED)
+_cb_rgba_writer_done(void *data, Ecore_Thread *th __UNUSED__)
 {
    Rgba_Writer_Data *rdata = data;
    char buf[PATH_MAX];
-   
-   
+
    if (rdata->outfile)
      snprintf(buf, sizeof(buf), "%s/%s/upload '%s' %i %i %i %i '%s'",
               e_module_dir_get(shot_module), MODULE_ARCH,
@@ -45,13 +44,13 @@ _cb_rgba_writer_done(void *data, Ecore_Thread *th EINA_UNUSED)
               e_module_dir_get(shot_module), MODULE_ARCH,
               rdata->path, rdata->w, rdata->h, rdata->stride,
               rdata->quality);
-   
+
    share_save(buf, rdata->outfile, rdata->copy);
    _rgba_data_free(rdata);
 }
 
 static void
-_cb_rgba_writer_cancel(void *data, Ecore_Thread *th EINA_UNUSED)
+_cb_rgba_writer_cancel(void *data, Ecore_Thread *th __UNUSED__)
 {
    Rgba_Writer_Data *rdata = data;
    _rgba_data_free(rdata);

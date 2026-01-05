@@ -7,50 +7,50 @@ int          quality = 90;
 Eina_Rectangle crop = { 0, 0, 0, 0 };
 
 static void
-_win_save_cb(void *data EINA_UNUSED, void *data2 EINA_UNUSED)
+_win_save_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    save_show(EINA_FALSE);
 }
 
 static void
-_win_copy_cb(void *data EINA_UNUSED, void *data2 EINA_UNUSED)
+_win_copy_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    save_show(EINA_TRUE);
 }
 
 static void
-_win_share_cb(void *d EINA_UNUSED, void *d2 EINA_UNUSED)
+_win_share_cb(void *d __UNUSED__, void *d2 __UNUSED__)
 {
    share_confirm();
 }
 
 static void
-_win_delay_cb(void *d EINA_UNUSED, void *d2 EINA_UNUSED)
+_win_delay_cb(void *d __UNUSED__, void *d2 __UNUSED__)
 {
    E_FREE_FUNC(win, evas_object_del);
    win_delay();
 }
 
 static void
-_win_cancel_cb(void *data EINA_UNUSED, void *data2 EINA_UNUSED)
+_win_cancel_cb(void *data __UNUSED__, void *data2 __UNUSED__)
 {
    E_FREE_FUNC(win, evas_object_del);
 }
 
 static void
-_win_delete_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event EINA_UNUSED)
+_win_delete_cb(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event __UNUSED__)
 {
    win = NULL;
 }
 
 static void
-_quality_change_cb(void *data EINA_UNUSED, Evas_Object *obj, void *event_info EINA_UNUSED)
+_quality_change_cb(void *data __UNUSED__, Evas_Object *obj, void *event_info __UNUSED__)
 {
    quality = elm_slider_value_get(obj);
 }
 
 static void
-_cb_key_down(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event)
+_cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, void *event)
 {
    Evas_Event_Key_Down *ev = event;
 
