@@ -4,7 +4,7 @@
  *
  * @defgroup Module_Shot Screenshot
  *
- * Takes screen shots and can submit them to http://enlightenment.org
+ * Takes screen shots and can submit them to http://imgur.com
  *
  * @}
  */
