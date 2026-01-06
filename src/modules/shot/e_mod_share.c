@@ -102,6 +102,30 @@ _img_write_end_cb(void *data __UNUSED__, int ev_type __UNUSED__, void *event)
    return EINA_FALSE;
 }
 
+static char *
+imgur_link_from_string(const char *s)
+{
+   const char *p, *q;
+   char *out;
+   int len;
+
+   p = strstr(s, "\"link\":\"");
+   if (!p) return NULL;
+   p += 8;
+
+   q = strchr(p, '"');
+   if (!q) return NULL;
+
+   len = q - p;
+   out = malloc(len + 1);
+   if (!out) return NULL;
+
+   memcpy(out, p, len);
+   out[len] = '\0';
+
+   return out;
+}
+
 static Eina_Bool
 _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
 {
@@ -145,8 +169,12 @@ _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
           {
              if (data) e_widget_disabled_set(data, 1);
              if ((o_entry) && (url_ret))
-             e_widget_entry_text_set(o_entry, url_ret);
-             _share_done();
+               {
+                 char *link = imgur_link_from_string(url_ret);
+                 e_widget_entry_text_set(o_entry, link);
+                 free(link);
+                 _share_done();
+               }
              break;
           }
      }
@@ -253,9 +281,8 @@ share_confirm(void)
    if (cd) return;
    cd = e_confirm_dialog_show
      (_("Confirm Share"), NULL,
-      _("This image will be uploaded without any encryption<ps/>"
-        "to enlightenment.org. All screenshots uploaded are<ps/>"
-        "available to everyone with no restrictions."),
+      _("Are you sure you want to upload this image<ps/>"
+        "publically to imgur.com?"),
       _("Confirm"), _("Cancel"),
       _win_share_confirm_yes, NULL,
       NULL, NULL, _win_share_confirm_del, NULL);

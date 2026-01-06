@@ -179,17 +179,19 @@ elm_main(int argc, char **argv)
                   if ((h1) && (h2) && (h3))
                     {
                        url_up = ecore_con_url_new
-                         ("https://www.enlightenment.org/shot.php");
+                         ("https://api.imgur.com/3/image");
                        if (url_up)
                          {
                             // why use http 1.1? proxies like squid don't
                             // handle 1.1 posts with expect like curl uses
                             // by default, so go to 1.0 and this all works
                             // dandily out of the box
+                            ecore_con_url_additional_header_add(url_up, "Authorization",
+                                       "Client-ID 67aecc7e6662370");
                             ecore_con_url_http_version_set
                               (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
                             ecore_con_url_post
-                              (url_up, fdata, fsize, "application/x-e-shot");
+                              (url_up, fdata, fsize, "image/jpeg");
                             // need loop to run to drive the uploading
                             elm_run();
                          }
