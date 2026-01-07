@@ -1822,7 +1822,7 @@ ui_edit(Evas_Object *window, Evas_Object *o_bg, E_Zone *zone,
    Evas *evas, *evas2;
    Evas_Object *o, *tb, *tb2, *sc, *fr, *bx, *radg, *rad, *bx_ret, *sc2;
    int w, h;
-   
+
    //~ E_Container *con = NULL;
    E_Container *con = e_container_current_get(e_manager_current_get());
    //~ con = zone->container;
@@ -1880,7 +1880,7 @@ ui_edit(Evas_Object *window, Evas_Object *o_bg, E_Zone *zone,
           }
         //~ count = eina_list_count(e_comp->clients);
         count = eina_list_count(e_border_client_list());
-        
+
         if (count > 0)
           {
              crop_window_areas = calloc(count + 1, sizeof(Crop_Area));
@@ -2124,7 +2124,7 @@ ui_edit(Evas_Object *window, Evas_Object *o_bg, E_Zone *zone,
 
    img_w = edit_w = sw;
    img_h = edit_h = sh;
-   
+
    win2 = o = elm_win_add(win, "inlined", ELM_WIN_INLINED_IMAGE);
    evas_object_resize(win2, edit_w, edit_h);
    //~ evas_object_show(o);

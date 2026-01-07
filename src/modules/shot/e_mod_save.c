@@ -81,7 +81,7 @@ save_to(const char *file, Eina_Bool copy)
                   int w = 0, h = 0;
                   int stride = evas_object_image_stride_get(img);
                   unsigned char *src_data = evas_object_image_data_get(img, EINA_FALSE);
-                  
+
                   evas_object_image_size_get(img, &w, &h);
                   if ((stride > 0) && (src_data) && (h > 0))
                     {

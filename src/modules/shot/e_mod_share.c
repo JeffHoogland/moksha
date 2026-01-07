@@ -30,9 +30,9 @@ _cnp_thread_io(void *data)
    unsigned char *fdata = NULL;
    ssize_t fsize = 0;
    FILE *f = fopen(file, "r");
-   
+
    win_cp = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
-    
+
    if (!f) goto err;
    fseek(f, 0, SEEK_END);
    fsize = ftell(f);

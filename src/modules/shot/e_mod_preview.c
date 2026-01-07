@@ -68,7 +68,7 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
    int w, h;
    char smode[128], squal[128], sscreen[128];
    Evas_Modifier_Mask mask;
-   
+
    win = o = elm_win_add(NULL, NULL, ELM_WIN_BASIC);
    evas = evas_object_evas_get(o);
    elm_win_title_set(o, _("Select action to take with screenshot"));
@@ -85,7 +85,7 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
    mask = 0;
    if (evas_object_key_grab(o, "Escape", mask, ~mask, 0))
      evas_object_event_callback_add(o, EVAS_CALLBACK_KEY_DOWN, _cb_key_down, win);
-     
+
    o_bx = o = ui_edit(win, o_bg, zone, bd, dst, sx, sy, sw, sh, &o_img);
 
    o_sl = o = elm_slider_add(win);
