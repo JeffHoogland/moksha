@@ -74,7 +74,8 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
    elm_win_title_set(o, _("Select action to take with screenshot"));
    elm_win_autodel_set(win, EINA_TRUE);
    evas_object_event_callback_add(o, EVAS_CALLBACK_DEL, _win_delete_cb, NULL);
-   //~ ecore_evas_name_class_set(e_win_ee_get(o), "E", "_shot_dialog");
+   Ecore_Evas *ee = ecore_evas_ecore_evas_get(evas);
+   ecore_evas_name_class_set(ee, "E", "_shot_dialog");
 
    o_bg = o = elm_layout_add(win);
    evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
