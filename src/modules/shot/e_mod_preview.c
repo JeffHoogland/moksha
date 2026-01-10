@@ -3,7 +3,7 @@
 static Evas_Object *o_img = NULL;
 
 Evas_Object *win = NULL;
-int          quality = 90;
+int          quality = 100;
 Eina_Rectangle crop = { 0, 0, 0, 0 };
 
 static void
