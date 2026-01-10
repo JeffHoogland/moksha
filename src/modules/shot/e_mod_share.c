@@ -172,6 +172,8 @@ _img_write_out_cb(void *data, int ev_type __UNUSED__, void *event)
                {
                  char *link = imgur_link_from_string(url_ret);
                  e_widget_entry_text_set(o_entry, link);
+                 e_widget_entry_select_all(o_entry);
+                 e_widget_focus_set(o_entry, 1);
                  free(link);
                  _share_done();
                }
