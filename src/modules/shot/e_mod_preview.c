@@ -190,12 +190,12 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
         evas_object_show(win);
         //~ e_win_border_icon_set(win, "screenshot");
         if (!e_widget_focus_get(o_bg)) e_widget_focus_set(o_box, 1);
-        if (bd)
-          {
+        //~ if (bd)
+          //~ {
              //~ E_Border *b = e_win_border_get(win);
-             E_Border *b = bd;
-             if (b) evas_object_layer_set(bd->bg_evas, bd->layer);
-          }
+             //~ E_Border *b = bd;
+             //~ if (b) evas_object_layer_set(bd->bg_evas, bd->layer);
+          //~ }
      }
 }
 
