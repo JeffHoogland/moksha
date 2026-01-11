@@ -191,7 +191,7 @@ elm_main(int argc, char **argv)
                             ecore_con_url_http_version_set
                               (url_up, ECORE_CON_URL_HTTP_VERSION_1_0);
                             ecore_con_url_post
-                              (url_up, fdata, fsize, "image/jpeg");
+                              (url_up, fdata, fsize, "image/png");
                             // need loop to run to drive the uploading
                             elm_run();
                          }
